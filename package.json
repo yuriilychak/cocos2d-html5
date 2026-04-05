@@ -1,0 +1,31 @@
+{
+  "name": "cocos2d-html5",
+  "version": "3.15.0",
+  "description": "Cocos2d-html5 is a cross-platform 2D game engine written in Javascript, based on Cocos2d-X and licensed under MIT. It supports canvas and WebGL rendering.",
+  "homepage": "http://www.cocos2d-x.org",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "cocos2d-x",
+    "cocos2d",
+    "game",
+    "engine",
+    "webgl",
+    "canvas",
+    "2d",
+    "html5"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "build:full": "rollup -c --environment BUILD:full",
+    "build:core": "rollup -c --environment BUILD:core",
+    "dev": "serve template -l 8080 --no-clipboard",
+    "clean": "rm -rf lib/"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "magic-string": "^0.30.21",
+    "rollup": "^4.18.0",
+    "serve": "^14.2.0"
+  }
+}

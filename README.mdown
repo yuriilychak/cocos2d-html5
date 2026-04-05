@@ -27,6 +27,35 @@ Contact us
    * Forum: [http://forum.cocos2d-x.org][5]
    * Twitter: [http://www.twitter.com/cocos2dhtml5][6]
    * Sina Microblog: [http://t.sina.com.cn/cocos2dhtml5][7]
+
+Build
+------------------
+
+The engine is built with npm and Rollup. Requires Node.js 18+.
+
+```bash
+# Install dependencies
+npm install
+
+# Build both full and core bundles (output in lib/)
+npm run build
+
+# Build only the full engine bundle
+npm run build:full
+
+# Build only the core bundle
+npm run build:core
+
+# Remove build artifacts
+npm run clean
+
+# Start a dev server for the template project (http://localhost:8080)
+npm run dev
+```
+
+**Build outputs:**
+   * `lib/cocos2d-js-v3.15-min.js` — Full engine + extensions (minified, with source map)
+   * `lib/cocos2d-js-v3.15-core-min.js` — Core engine only (minified, with source map)
    
 [1]: http://www.cocos2d-x.org "Cocos2d-html5"
 [2]: http://www.cocos2d-x.org "Cocos2d-X"
