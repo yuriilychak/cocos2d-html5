@@ -49,7 +49,7 @@ npm run build:core
 # Remove build artifacts
 npm run clean
 
-# Start a dev server for the template project (http://localhost:8080)
+# Start a dev server for the template project (http://localhost:8080/template/)
 npm run dev
 ```
 

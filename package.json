@@ -19,7 +19,7 @@
     "build": "rollup -c",
     "build:full": "rollup -c --environment BUILD:full",
     "build:core": "rollup -c --environment BUILD:core",
-    "dev": "serve template -l 8080 --no-clipboard",
+    "dev": "serve . -l 8080 --no-clipboard",
     "clean": "rm -rf lib/"
   },
   "devDependencies": {
