@@ -415,20 +415,6 @@ cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
 cc.defineGetterSetter(_p, "shaderProgram", _p.getShaderProgram, _p.setShaderProgram);
 
 
-/**
- * <p>
- *    creates a cc.SpriteBatchNodeCanvas with a file image (.png, .jpg etc) with a default capacity of 29 children.<br/>
- *    The capacity will be increased in 33% in runtime if it run out of space.<br/>
- *    The file will be loaded using the TextureMgr.<br/>
- * </p>
- * @deprecated since v3.0, please use new construction instead
- * @see cc.SpriteBatchNode
- * @param {String|cc.Texture2D} fileImage
- * @return {cc.SpriteBatchNode}
- */
-cc.SpriteBatchNode.create = function (fileImage) {
-    return new cc.SpriteBatchNode(fileImage);
-};
 
 /**
  * @deprecated since v3.0, please use new construction instead

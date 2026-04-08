@@ -141,17 +141,6 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
     }
 });
 
-/**
- * Creates an animation frame.
- * @deprecated since v3.0, please use the new construction instead
- * @param {cc.SpriteFrame} spriteFrame
- * @param {Number} delayUnits
- * @param {object} userInfo
- * @see cc.AnimationFrame
- */
-cc.AnimationFrame.create = function(spriteFrame,delayUnits,userInfo){
-    return new cc.AnimationFrame(spriteFrame,delayUnits,userInfo);
-};
 
 /**
  * <p>
@@ -426,18 +415,6 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
     },
 });
 
-/**
- * Creates an animation.
- * @deprecated since v3.0, please use new construction instead
- * @see cc.Animation
- * @param {Array} frames
- * @param {Number} delay
- * @param {Number} [loops=1]
- * @return {cc.Animation}
- */
-cc.Animation.create = function (frames, delay, loops) {
-    return new cc.Animation(frames, delay, loops);
-};
 
 /**
  * @deprecated since v3.0, please use new construction instead
