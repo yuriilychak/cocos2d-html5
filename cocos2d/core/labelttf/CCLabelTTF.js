@@ -892,22 +892,6 @@ delete cc._tmp.PrototypeLabelTTF;
 // Only support style in this format: "18px Verdana" or "18px 'Helvetica Neue'"
 cc.LabelTTF._fontStyleRE = /^(\d+)px\s+['"]?([\w\s\d]+)['"]?$/;
 
-/**
- * creates a cc.LabelTTF from a font name, alignment, dimension and font size
- * @deprecated since v3.0, please use the new construction instead
- * @see cc.LabelTTF
- * @static
- * @param {String} text
- * @param {String|cc.FontDefinition} [fontName="Arial"]
- * @param {Number} [fontSize=16]
- * @param {cc.Size} [dimensions=cc.size(0,0)]
- * @param {Number} [hAlignment=cc.TEXT_ALIGNMENT_LEFT]
- * @param {Number} [vAlignment=cc.VERTICAL_TEXT_ALIGNMENT_TOP]
- * @return {cc.LabelTTF|Null}
- */
-cc.LabelTTF.create = function (text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
-    return new cc.LabelTTF(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
-};
 
 /**
  * @deprecated since v3.0, please use the new construction instead
