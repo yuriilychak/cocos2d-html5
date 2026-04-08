@@ -132,17 +132,6 @@ cc.TransitionProgress = cc.TransitionScene.extend(/** @lends cc.TransitionProgre
     }
 });
 
-/**
- * create a cc.TransitionProgress object
- * @deprecated since v3.0,please use new cc.TransitionProgress(t, scene) instead.
- * @function
- * @param {Number} t time
- * @param {cc.Scene} scene
- * @return {cc.TransitionProgress}
- */
-cc.TransitionProgress.create = function (t, scene) {
-    return new cc.TransitionProgress(t, scene);
-};
 
 /**
  *  cc.TransitionRadialCCW transition.<br/>
@@ -183,18 +172,6 @@ cc.TransitionProgressRadialCCW = cc.TransitionProgress.extend(/** @lends cc.Tran
     }
 });
 
-/**
- * create a cc.TransitionProgressRadialCCW object
- * @deprecated since v3.0,please use new cc.TransitionProgressRadialCCW(t, scene) instead.
- * @param {Number} t time
- * @param {cc.Scene} scene
- * @return {cc.TransitionProgressRadialCCW}
- * @example
- * var trans = new cc.TransitionProgressRadialCCW(time,scene);
- */
-cc.TransitionProgressRadialCCW.create = function (t, scene) {
-    return new cc.TransitionProgressRadialCCW(t, scene);
-};
 
 /**
  * cc.TransitionRadialCW transition.<br/>
@@ -234,20 +211,6 @@ cc.TransitionProgressRadialCW = cc.TransitionProgress.extend(/** @lends cc.Trans
     }
 });
 
-/**
- * create a cc.TransitionProgressRadialCW object
- * @deprecated since v3.0,please use cc.TransitionProgressRadialCW(t, scene) instead.
- * @param {Number} t time
- * @param {cc.Scene} scene
- * @return {cc.TransitionProgressRadialCW}
- */
-cc.TransitionProgressRadialCW.create = function (t, scene) {
-    var tempScene = new cc.TransitionProgressRadialCW();
-    if ((tempScene !== null) && (tempScene.initWithDuration(t, scene))) {
-        return tempScene;
-    }
-    return new cc.TransitionProgressRadialCW(t, scene);
-};
 
 /**
  * cc.TransitionProgressHorizontal transition.<br/>
@@ -288,16 +251,6 @@ cc.TransitionProgressHorizontal = cc.TransitionProgress.extend(/** @lends cc.Tra
     }
 });
 
-/**
- * create a cc.TransitionProgressHorizontal object
- * @deprecated since v3.0,please use new cc.TransitionProgressHorizontal(t, scene) instead.
- * @param {Number} t time
- * @param {cc.Scene} scene
- * @return {cc.TransitionProgressHorizontal}
- */
-cc.TransitionProgressHorizontal.create = function (t, scene) {
-    return new cc.TransitionProgressHorizontal(t, scene);
-};
 
 /**
  * cc.TransitionProgressVertical transition.
@@ -338,16 +291,6 @@ cc.TransitionProgressVertical = cc.TransitionProgress.extend(/** @lends cc.Trans
     }
 });
 
-/**
- * create a cc.TransitionProgressVertical object
- * @deprecated since v3.0,please use new cc.TransitionProgressVertical(t, scene) instead.
- * @param {Number} t time
- * @param {cc.Scene} scene
- * @return {cc.TransitionProgressVertical}
- */
-cc.TransitionProgressVertical.create = function (t, scene) {
-    return new cc.TransitionProgressVertical(t, scene);
-};
 
 /**
  * cc.TransitionProgressInOut transition.

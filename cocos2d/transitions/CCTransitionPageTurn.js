@@ -137,16 +137,3 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
     }
 });
 
-/**
- * Creates a base transition with duration and incoming scene.<br/>
- * If back is true then the effect is reversed to appear as if the incoming<br/>
- * scene is being turned from left over the outgoing scene.
- * @deprecated since v3.0,please use new cc.TransitionPageTurn(t, scene, backwards) instead.
- * @param {Number} t time in seconds
- * @param {cc.Scene} scene
- * @param {Boolean} backwards
- * @return {cc.TransitionPageTurn}
- */
-cc.TransitionPageTurn.create = function (t, scene, backwards) {
-    return new cc.TransitionPageTurn(t, scene, backwards);
-};
