@@ -231,17 +231,3 @@ cc.defineGetterSetter(_p, "stencil", _p.getStencil, _p.setStencil);
 _p.alphaThreshold;
 cc.defineGetterSetter(_p, "alphaThreshold", _p.getAlphaThreshold, _p.setAlphaThreshold);
 
-
-/**
- * Creates and initializes a clipping node with an other node as its stencil. <br/>
- * The stencil node will be retained.
- * @deprecated since v3.0, please use "new cc.ClippingNode(stencil)" instead
- * @param {cc.Node} [stencil=null]
- * @return {cc.ClippingNode}
- * @example
- * //example
- * new cc.ClippingNode(stencil);
- */
-cc.ClippingNode.create = function (stencil) {
-    return new cc.ClippingNode(stencil);
-};
