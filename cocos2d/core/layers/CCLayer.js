@@ -131,15 +131,6 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
     }
 });
 
-/**
- * Creates a layer
- * @deprecated since v3.0, please use the new construction instead
- * @see cc.Layer
- * @return {cc.Layer|Null}
- */
-cc.Layer.create = function () {
-    return new cc.Layer();
-};
 
 /**
  * <p>
@@ -323,18 +314,6 @@ cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
     }
 });
 
-/**
- * Creates a cc.Layer with color, width and height in Points
- * @deprecated since v3.0 please use the new construction instead
- * @see cc.LayerColor
- * @param {cc.Color} color
- * @param {Number|Null} [width=]
- * @param {Number|Null} [height=]
- * @return {cc.LayerColor}
- */
-cc.LayerColor.create = function (color, width, height) {
-    return new cc.LayerColor(color, width, height);
-};
 
 //LayerColor - Getter Setter
 (function () {
@@ -642,19 +621,6 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
     }
 });
 
-/**
- * Creates a gradient layer
- * @deprecated since v3.0, please use the new construction instead
- * @see cc.layerGradient
- * @param {cc.Color} start starting color
- * @param {cc.Color} end ending color
- * @param {cc.Point|Null} v
- * @param {Array|NULL} stops
- * @return {cc.LayerGradient}
- */
-cc.LayerGradient.create = function (start, end, v, stops) {
-    return new cc.LayerGradient(start, end, v, stops);
-};
 //LayerGradient - Getter Setter
 (function () {
     var proto = cc.LayerGradient.prototype;
@@ -771,12 +737,3 @@ cc.LayerMultiplex = cc.Layer.extend(/** @lends cc.LayerMultiplex# */{
     }
 });
 
-/**
- * Creates a cc.LayerMultiplex with one or more layers using a variable argument list.
- * @deprecated since v3.0, please use new construction instead
- * @see cc.LayerMultiplex
- * @return {cc.LayerMultiplex|Null}
- */
-cc.LayerMultiplex.create = function (/*Multiple Arguments*/) {
-    return new cc.LayerMultiplex(Array.prototype.slice.call(arguments));
-};
