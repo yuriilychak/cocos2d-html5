@@ -2593,16 +2593,6 @@ cc.Node = cc.Class.extend(
   }
 );
 
-/**
- * Allocates and initializes a node.
- * @deprecated since v3.0, please use new construction instead.
- * @see cc.Node
- * @return {cc.Node}
- */
-cc.Node.create = function () {
-  return new cc.Node();
-};
-
 cc.Node._stateCallbackType = {
   onEnter: 1,
   onExit: 2,
