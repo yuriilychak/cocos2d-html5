@@ -1,6 +1,7 @@
 lib
 /web.config
-.idea
+.idea/
+.history/
 build
 aspnet_client
 node_modules
