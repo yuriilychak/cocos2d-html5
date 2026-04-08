@@ -316,15 +316,6 @@ cc.actionInterval = function (d) {
     return new cc.ActionInterval(d);
 };
 
-/**
- * Please use cc.actionInterval instead.
- * An interval action is an action that takes place within a certain period of time.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.actionInterval instead.
- * @param {Number} d duration in seconds
- * @return {cc.ActionInterval}
- */
-cc.ActionInterval.create = cc.actionInterval;
 
 /**
  * Runs actions sequentially, one after another.
@@ -522,15 +513,6 @@ cc.sequence = function (/*Multiple Arguments*/tempArray) {
     return result;
 };
 
-/**
- * Please use cc.sequence instead.
- * helper constructor to create an array of sequenceable actions
- * @static
- * @deprecated since v3.0 <br /> Please use cc.sequence instead.
- * @param {Array|cc.FiniteTimeAction} tempArray
- * @return {cc.Sequence}
- */
-cc.Sequence.create = cc.sequence;
 
 /** creates the action
  * @param {cc.FiniteTimeAction} actionOne
@@ -716,16 +698,6 @@ cc.repeat = function (action, times) {
     return new cc.Repeat(action, times);
 };
 
-/**
- * Please use cc.repeat instead
- * Creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30)
- * @static
- * @deprecated since v3.0 <br /> Please use cc.repeat instead.
- * @param {cc.FiniteTimeAction} action
- * @param {Number} times
- * @return {cc.Repeat}
- */
-cc.Repeat.create = cc.repeat;
 
 
 /**  Repeats an action for ever.  <br/>
@@ -853,18 +825,6 @@ cc.repeatForever = function (action) {
     return new cc.RepeatForever(action);
 };
 
-/**
- * Please use cc.repeatForever instead
- * Create a acton which repeat forever
- * @static
- * @deprecated since v3.0 <br /> Please use cc.repeatForever instead.
- * @param {cc.FiniteTimeAction} action
- * @return {cc.RepeatForever}
- * @param {Array|cc.FiniteTimeAction} tempArray
- * @example
- * var action = new cc.Spawn(cc.jumpBy(2, cc.p(300, 0), 50, 4), cc.rotateBy(2, 720));
- */
-cc.RepeatForever.create = cc.repeatForever;
 
 
 /** Spawn a new action immediately
@@ -1016,15 +976,6 @@ cc.spawn = function (/*Multiple Arguments*/tempArray) {
     return prev;
 };
 
-/**
- * Please use cc.spawn instead.
- * Create a spawn action which runs several actions in parallel.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.spawn instead.
- * @param {Array|cc.FiniteTimeAction}tempArray
- * @return {cc.Spawn}
- */
-cc.Spawn.create = cc.spawn;
 
 /**
  * @param {cc.FiniteTimeAction} action1
@@ -1165,18 +1116,6 @@ cc.rotateTo = function (duration, deltaAngleX, deltaAngleY) {
     return new cc.RotateTo(duration, deltaAngleX, deltaAngleY);
 };
 
-/**
- * Please use cc.rotateTo instead
- * Creates a RotateTo action with separate rotation angles.
- * To specify the angle of rotation.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.rotateTo instead.
- * @param {Number} duration duration in seconds
- * @param {Number} deltaAngleX deltaAngleX in degrees.
- * @param {Number} [deltaAngleY] deltaAngleY in degrees.
- * @return {cc.RotateTo}
- */
-cc.RotateTo.create = cc.rotateTo;
 
 
 /**
@@ -1284,18 +1223,6 @@ cc.RotateBy = cc.ActionInterval.extend(/** @lends cc.RotateBy# */{
 cc.rotateBy = function (duration, deltaAngleX, deltaAngleY) {
     return new cc.RotateBy(duration, deltaAngleX, deltaAngleY);
 };
-/**
- * Please use cc.rotateBy instead.
- * Rotates a cc.Node object clockwise a number of degrees by modifying it's rotation attribute.
- * Relative to its properties to modify.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.rotateBy instead.
- * @param {Number} duration duration in seconds
- * @param {Number} deltaAngleX deltaAngleX in degrees
- * @param {Number} [deltaAngleY] deltaAngleY in degrees
- * @return {cc.RotateBy}
- */
-cc.RotateBy.create = cc.rotateBy;
 
 
 /**
@@ -1435,17 +1362,6 @@ cc.MoveBy = cc.ActionInterval.extend(/** @lends cc.MoveBy# */{
 cc.moveBy = function (duration, deltaPos, deltaY) {
     return new cc.MoveBy(duration, deltaPos, deltaY);
 };
-/**
- * Please use cc.moveBy instead.
- * Relative to its coordinate moves a certain distance.
- * @static
- * @deprecated since v3.0 please use cc.moveBy instead.
- * @param {Number} duration duration in seconds
- * @param {cc.Point|Number} deltaPos
- * @param {Number} deltaY
- * @return {cc.MoveBy}
- */
-cc.MoveBy.create = cc.moveBy;
 
 
 /**
@@ -1534,17 +1450,6 @@ cc.MoveTo = cc.MoveBy.extend(/** @lends cc.MoveTo# */{
 cc.moveTo = function (duration, position, y) {
     return new cc.MoveTo(duration, position, y);
 };
-/**
- * Please use cc.moveTo instead.
- * Moving to the specified coordinates.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.moveTo instead.
- * @param {Number} duration duration in seconds
- * @param {cc.Point|Number} position
- * @param {Number} y
- * @return {cc.MoveTo}
- */
-cc.MoveTo.create = cc.moveTo;
 
 /**
  * Skews a cc.Node object to given angles by modifying it's skewX and skewY attributes
@@ -1654,18 +1559,6 @@ cc.SkewTo = cc.ActionInterval.extend(/** @lends cc.SkewTo# */{
 cc.skewTo = function (t, sx, sy) {
     return new cc.SkewTo(t, sx, sy);
 };
-/**
- * Please use cc.skewTo instead.
- * Skews a cc.Node object to given angles by modifying it's skewX and skewY attributes。
- * Changes to the specified value.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.skewTo instead.
- * @param {Number} t time in seconds
- * @param {Number} sx
- * @param {Number} sy
- * @return {cc.SkewTo}
- */
-cc.SkewTo.create = cc.skewTo;
 
 /**
  * Skews a cc.Node object by skewX and skewY degrees.
@@ -1756,18 +1649,6 @@ cc.SkewBy = cc.SkewTo.extend(/** @lends cc.SkewBy# */{
 cc.skewBy = function (t, sx, sy) {
     return new cc.SkewBy(t, sx, sy);
 };
-/**
- * Please use cc.skewBy instead. <br />
- * Skews a cc.Node object by skewX and skewY degrees. <br />
- * Relative to its attribute modification.
- * @static
- * @deprecated since v3.0 please use cc.skewBy instead.
- * @param {Number} t time in seconds
- * @param {Number} sx sx skew in degrees for X axis
- * @param {Number} sy sy skew in degrees for Y axis
- * @return {cc.SkewBy}
- */
-cc.SkewBy.create = cc.skewBy;
 
 
 /**
@@ -1922,20 +1803,6 @@ cc.JumpBy = cc.ActionInterval.extend(/** @lends cc.JumpBy# */{
 cc.jumpBy = function (duration, position, y, height, jumps) {
     return new cc.JumpBy(duration, position, y, height, jumps);
 };
-/**
- * Please use cc.jumpBy instead. <br />
- * Moves a cc.Node object simulating a parabolic jump movement by modifying it's position attribute. <br />
- * Relative to its movement.
- * @static
- * @deprecated since v3.0 please use cc.jumpBy instead.
- * @param {Number} duration
- * @param {cc.Point|Number} position
- * @param {Number} [y]
- * @param {Number} height
- * @param {Number} jumps
- * @return {cc.JumpBy}
- */
-cc.JumpBy.create = cc.jumpBy;
 
 /**
  * Moves a cc.Node object to a parabolic position simulating a jump movement by modifying it's position attribute. <br />
@@ -2032,20 +1899,6 @@ cc.JumpTo = cc.JumpBy.extend(/** @lends cc.JumpTo# */{
 cc.jumpTo = function (duration, position, y, height, jumps) {
     return new cc.JumpTo(duration, position, y, height, jumps);
 };
-/**
- * Please use cc.jumpTo instead.
- * Moves a cc.Node object to a parabolic position simulating a jump movement by modifying it's position attribute. <br />
- * Jump to the specified location.
- * @static
- * @deprecated since v3.0 please use cc.jumpTo instead.
- * @param {Number} duration
- * @param {cc.Point|Number} position
- * @param {Number} [y]
- * @param {Number} height
- * @param {Number} jumps
- * @return {cc.JumpTo}
- */
-cc.JumpTo.create = cc.jumpTo;
 
 /**
  * @function
@@ -2208,17 +2061,6 @@ cc.BezierBy = cc.ActionInterval.extend(/** @lends cc.BezierBy# */{
 cc.bezierBy = function (t, c) {
     return new cc.BezierBy(t, c);
 };
-/**
- * Please use cc.bezierBy instead.
- * An action that moves the target with a cubic Bezier curve by a certain distance.
- * Relative to its movement.
- * @static
- * @deprecated since v3.0 please use cc.bezierBy instead.
- * @param {Number} t time in seconds
- * @param {Array} c Array of points
- * @return {cc.BezierBy}
- */
-cc.BezierBy.create = cc.bezierBy;
 
 
 /** An action that moves the target with a cubic Bezier curve to a destination point.
@@ -2299,15 +2141,6 @@ cc.BezierTo = cc.BezierBy.extend(/** @lends cc.BezierTo# */{
 cc.bezierTo = function (t, c) {
     return new cc.BezierTo(t, c);
 };
-/**
- * Please use cc.bezierTo instead
- * @static
- * @deprecated since v3.0 please use cc.bezierTo instead.
- * @param {Number} t
- * @param {Array} c array of points
- * @return {cc.BezierTo}
- */
-cc.BezierTo.create = cc.bezierTo;
 
 
 /** Scales a cc.Node object to a zoom factor by modifying it's scale attribute.
@@ -2414,17 +2247,6 @@ cc.ScaleTo = cc.ActionInterval.extend(/** @lends cc.ScaleTo# */{
 cc.scaleTo = function (duration, sx, sy) { //function overload
     return new cc.ScaleTo(duration, sx, sy);
 };
-/**
- * Please use cc.scaleTo instead.
- * Scales a cc.Node object to a zoom factor by modifying it's scale attribute.
- * @static
- * @deprecated since v3.0 please use cc.scaleTo instead.
- * @param {Number} duration
- * @param {Number} sx  scale parameter in X
- * @param {Number} [sy] scale parameter in Y, if Null equal to sx
- * @return {cc.ScaleTo}
- */
-cc.ScaleTo.create = cc.scaleTo;
 
 
 /** Scales a cc.Node object a zoom factor by modifying it's scale attribute.
@@ -2483,18 +2305,6 @@ cc.ScaleBy = cc.ScaleTo.extend(/** @lends cc.ScaleBy# */{
 cc.scaleBy = function (duration, sx, sy) {
     return new cc.ScaleBy(duration, sx, sy);
 };
-/**
- * Please use cc.scaleBy instead.
- * Scales a cc.Node object a zoom factor by modifying it's scale attribute.
- * Relative to its changes.
- * @static
- * @deprecated since v3.0 please use cc.scaleBy() instead.
- * @param {Number} duration duration in seconds
- * @param {Number} sx sx  scale parameter in X
- * @param {Number|Null} [sy=] sy scale parameter in Y, if Null equal to sx
- * @return {cc.ScaleBy}
- */
-cc.ScaleBy.create = cc.scaleBy;
 
 /** Blinks a cc.Node object by modifying it's visible attribute
  * @class
@@ -2597,16 +2407,6 @@ cc.Blink = cc.ActionInterval.extend(/** @lends cc.Blink# */{
 cc.blink = function (duration, blinks) {
     return new cc.Blink(duration, blinks);
 };
-/**
- * Please use cc.blink instead.
- * Blinks a cc.Node object by modifying it's visible attribute.
- * @static
- * @deprecated since v3.0 please use cc.blink instead.
- * @param {Number} duration  duration in seconds
- * @param blinks blinks in times
- * @return {cc.Blink}
- */
-cc.Blink.create = cc.blink;
 
 /** Fades an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  * @warning This action doesn't support "reverse"
@@ -2689,16 +2489,6 @@ cc.FadeTo = cc.ActionInterval.extend(/** @lends cc.FadeTo# */{
 cc.fadeTo = function (duration, opacity) {
     return new cc.FadeTo(duration, opacity);
 };
-/**
- * Please use cc.fadeTo instead.
- * Fades an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
- * @static
- * @deprecated since v3.0 please use cc.fadeTo instead.
- * @param {Number} duration
- * @param {Number} opacity 0-255, 0 is transparent
- * @return {cc.FadeTo}
- */
-cc.FadeTo.create = cc.fadeTo;
 
 /** Fades In an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 0 to 255.<br/>
  * The "reverse" of this action is FadeOut
@@ -2766,15 +2556,6 @@ cc.FadeIn = cc.FadeTo.extend(/** @lends cc.FadeIn# */{
 cc.fadeIn = function (duration) {
     return new cc.FadeIn(duration);
 };
-/**
- * Please use cc.fadeIn instead.
- * Fades In an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 0 to 255.
- * @static
- * @deprecated since v3.0 please use cc.fadeIn() instead.
- * @param {Number} duration duration in seconds
- * @return {cc.FadeIn}
- */
-cc.FadeIn.create = cc.fadeIn;
 
 
 /** Fades Out an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 255 to 0.
@@ -2833,15 +2614,6 @@ cc.FadeOut = cc.FadeTo.extend(/** @lends cc.FadeOut# */{
 cc.fadeOut = function (d) {
     return new cc.FadeOut(d);
 };
-/**
- * Please use cc.fadeOut instead.
- * Fades Out an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 255 to 0.
- * @static
- * @deprecated since v3.0 please use cc.fadeOut instead.
- * @param {Number} d  duration in seconds
- * @return {cc.FadeOut}
- */
-cc.FadeOut.create = cc.fadeOut;
 
 /** Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
  * @warning This action doesn't support "reverse"
@@ -2944,18 +2716,6 @@ cc.TintTo = cc.ActionInterval.extend(/** @lends cc.TintTo# */{
 cc.tintTo = function (duration, red, green, blue) {
     return new cc.TintTo(duration, red, green, blue);
 };
-/**
- * Please use cc.tintTo instead.
- * Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
- * @static
- * @deprecated since v3.0 please use cc.tintTo instead.
- * @param {Number} duration
- * @param {Number} red 0-255
- * @param {Number} green  0-255
- * @param {Number} blue 0-255
- * @return {cc.TintTo}
- */
-cc.TintTo.create = cc.tintTo;
 
 
 /**  Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
@@ -3074,19 +2834,6 @@ cc.TintBy = cc.ActionInterval.extend(/** @lends cc.TintBy# */{
 cc.tintBy = function (duration, deltaRed, deltaGreen, deltaBlue) {
     return new cc.TintBy(duration, deltaRed, deltaGreen, deltaBlue);
 };
-/**
- * Please use cc.tintBy instead.
- * Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
- * Relative to their own color change.
- * @static
- * @deprecated since v3.0 please use cc.tintBy instead.
- * @param {Number} duration  duration in seconds
- * @param {Number} deltaRed
- * @param {Number} deltaGreen
- * @param {Number} deltaBlue
- * @return {cc.TintBy}
- */
-cc.TintBy.create = cc.tintBy;
 
 /** Delays the action a certain amount of seconds
  * @class
@@ -3136,15 +2883,6 @@ cc.DelayTime = cc.ActionInterval.extend(/** @lends cc.DelayTime# */{
 cc.delayTime = function (d) {
     return new cc.DelayTime(d);
 };
-/**
- * Please use cc.delayTime instead.
- * Delays the action a certain amount of seconds
- * @static
- * @deprecated since v3.0 please use cc.delaTime instead.
- * @param {Number} d duration in seconds
- * @return {cc.DelayTime}
- */
-cc.DelayTime.create = cc.delayTime;
 
 /**
  * <p>
@@ -3250,15 +2988,6 @@ cc.ReverseTime = cc.ActionInterval.extend(/** @lends cc.ReverseTime# */{
 cc.reverseTime = function (action) {
     return new cc.ReverseTime(action);
 };
-/**
- * Please use cc.reverseTime instead.
- * Executes an action in reverse order, from time=duration to time=0.
- * @static
- * @deprecated since v3.0 please use cc.reverseTime instead.
- * @param {cc.FiniteTimeAction} action
- * @return {cc.ReverseTime}
- */
-cc.ReverseTime.create = cc.reverseTime;
 
 
 /**  Animates a sprite given the name of an Animation
@@ -3452,15 +3181,6 @@ cc.Animate = cc.ActionInterval.extend(/** @lends cc.Animate# */{
 cc.animate = function (animation) {
     return new cc.Animate(animation);
 };
-/**
- * Please use cc.animate instead
- * create the animate with animation
- * @static
- * @deprecated since v3.0 please use cc.animate instead.
- * @param {cc.Animation} animation
- * @return {cc.Animate}
- */
-cc.Animate.create = cc.animate;
 
 /**
  * <p>
@@ -3566,13 +3286,3 @@ cc.TargetedAction = cc.ActionInterval.extend(/** @lends cc.TargetedAction# */{
 cc.targetedAction = function (target, action) {
     return new cc.TargetedAction(target, action);
 };
-/**
- * Please use cc.targetedAction instead
- * Create an action with the specified action and forced target
- * @static
- * @deprecated since v3.0 please use cc.targetedAction instead.
- * @param {cc.Node} target
- * @param {cc.FiniteTimeAction} action
- * @return {cc.TargetedAction}
- */
-cc.TargetedAction.create = cc.targetedAction;

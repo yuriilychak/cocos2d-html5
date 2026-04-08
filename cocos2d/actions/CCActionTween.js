@@ -153,15 +153,3 @@ cc.actionTween = function (duration, key, from, to) {
     return new cc.ActionTween(duration, key, from, to);
 };
 
-/**
- * Please use cc.actionTween instead.
- * Creates an initializes the action with the property name (key), and the from and to parameters.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.actionTween instead.
- * @param {Number} duration
- * @param {String} key
- * @param {Number} from
- * @param {Number} to
- * @return {cc.ActionTween}
- */
-cc.ActionTween.create = cc.actionTween;

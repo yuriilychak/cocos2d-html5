@@ -139,16 +139,6 @@ cc.actionEase = function (action) {
     return new cc.ActionEase(action);
 };
 
-/**
- * Please use cc.actionEase instead
- * creates the action of ActionEase
- *
- * @param {cc.ActionInterval} action
- * @return {cc.ActionEase}
- * @static
- * @deprecated since v3.0 please use cc.actionEase(action) instead.
- */
-cc.ActionEase.create = cc.actionEase;
 
 /**
  * Base class for Easing actions with rate parameters
@@ -246,19 +236,6 @@ cc.easeRateAction = function (action, rate) {
     return new cc.EaseRateAction(action, rate);
 };
 
-/**
- * Please use cc.easeRateAction instead. <br />
- * Creates the action with the inner action and the rate parameter.
- *
- * @param {cc.ActionInterval} action
- * @param {Number} rate
- * @return {cc.EaseRateAction}
- * @static
- * @deprecated since v3.0 please use cc.easeRateAction(action, rate)
- * @example
- * var moveEaseRateAction = cc.easeRateAction(action, 3.0);
- */
-cc.EaseRateAction.create = cc.easeRateAction;
 
 /**
  * cc.EaseIn action with a rate. From slow to fast.

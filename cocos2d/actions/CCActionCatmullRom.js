@@ -319,19 +319,6 @@ cc.cardinalSplineTo = function (duration, points, tension) {
     return new cc.CardinalSplineTo(duration, points, tension);
 };
 
-/**
- * Please use cc.cardinalSplineTo instead. <br />
- * creates an action with a Cardinal Spline array of points and tension
- *
- * @function
- * @param {Number} duration
- * @param {Array} points array of control points
- * @param {Number} tension
- * @return {cc.CardinalSplineTo}
- * @static
- * @deprecated since v3.0 please use cc.cardinalSplineTo(duration, points, tension) instead.
- */
-cc.CardinalSplineTo.create = cc.cardinalSplineTo;
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
@@ -456,18 +443,6 @@ cc.cardinalSplineBy = function (duration, points, tension) {
     return new cc.CardinalSplineBy(duration, points, tension);
 };
 
-/**
- * Please use cc.cardinalSplineBy instead.
- * creates an action with a Cardinal Spline array of points and tension.
- * @function
- * @param {Number} duration
- * @param {Array} points
- * @param {Number} tension
- * @return {cc.CardinalSplineBy}
- * @static
- * @deprecated since v3.0 please use cc.cardinalSplineBy(duration, points, tension);
- */
-cc.CardinalSplineBy.create = cc.cardinalSplineBy;
 
 /**
  * An action that moves the target with a CatmullRom curve to a destination point.<br/>
@@ -530,17 +505,6 @@ cc.CatmullRomTo = cc.CardinalSplineTo.extend(/** @lends cc.CatmullRomTo# */{
 cc.catmullRomTo = function (dt, points) {
     return new cc.CatmullRomTo(dt, points);
 };
-/**
- * Please use cc.catmullRomTo instead.
- * creates an action with a Cardinal Spline array of points and tension.
- *
- * @param {Number} dt
- * @param {Array} points
- * @return {cc.CatmullRomTo}
- * @static
- * @deprecated since v3.0 please use cc.catmullRomTo(dt, points) instead.
- */
-cc.CatmullRomTo.create = cc.catmullRomTo;
 
 /**
  * An action that moves the target with a CatmullRom curve by a certain distance.  <br/>
@@ -603,10 +567,3 @@ cc.CatmullRomBy = cc.CardinalSplineBy.extend({
 cc.catmullRomBy = function (dt, points) {
     return new cc.CatmullRomBy(dt, points);
 };
-/**
- * Please use cc.catmullRomBy instead
- * Creates an action with a Cardinal Spline array of points and tension
- * @static
- * @deprecated since v3.0 please cc.catmullRomBy(dt, points) instead.
- */
-cc.CatmullRomBy.create = cc.catmullRomBy;

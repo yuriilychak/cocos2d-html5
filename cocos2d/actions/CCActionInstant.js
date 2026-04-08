@@ -131,13 +131,6 @@ cc.show = function () {
     return new cc.Show();
 };
 
-/**
- * Show the Node. Please use cc.show instead.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.show instead.
- * @return {cc.Show}
- */
-cc.Show.create = cc.show;
 
 /**
  * Hide the node.
@@ -190,16 +183,6 @@ cc.hide = function () {
     return new cc.Hide();
 };
 
-/**
- * Hide the node. Please use cc.hide instead.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.hide instead.
- * @return {cc.Hide}
- * @example
- * // example
- * var hideAction = cc.hide();
- */
-cc.Hide.create = cc.hide;
 
 /**
  * Toggles the visibility of a node.
@@ -248,13 +231,6 @@ cc.toggleVisibility = function () {
     return new cc.ToggleVisibility();
 };
 
-/**
- * Toggles the visibility of a node. Please use cc.toggleVisibility instead.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.toggleVisibility instead.
- * @return {cc.ToggleVisibility}
- */
-cc.ToggleVisibility.create = cc.toggleVisibility;
 
 /**
  * Delete self in the next frame.
@@ -290,7 +266,8 @@ cc.RemoveSelf = cc.ActionInstant.extend({
     },
 
     /**
-     * Initialization of the node, please do not call this function by yourself, you should pass the parameters to constructor to initialize it .
+     * Initialization of the node, please do not call this function by yourself, you should pass the parameters to constructor to initialize it
+.
      * @param isNeedCleanUp
      * @returns {boolean}
      */
@@ -332,16 +309,6 @@ cc.removeSelf = function(isNeedCleanUp){
     return new cc.RemoveSelf(isNeedCleanUp);
 };
 
-/**
- * Please use cc.removeSelf instead.
- * Create a RemoveSelf object with a flag indicate whether the target should be cleaned up while removing.
- *
- * @static
- * @deprecated since v3.0 <br /> Please use cc.removeSelf instead.
- * @param {Boolean} [isNeedCleanUp=true]
- * @return {cc.RemoveSelf}
- */
-cc.RemoveSelf.create = cc.removeSelf;
 
 /**
  * Flips the sprite horizontally.
@@ -419,16 +386,6 @@ cc.flipX = function (flip) {
     return new cc.FlipX(flip);
 };
 
-/**
- * Plese use cc.flipX instead.
- * Create a FlipX action to flip or unflip the target
- *
- * @static
- * @deprecated since v3.0 <br /> Plese use cc.flipX instead.
- * @param {Boolean} flip Indicate whether the target should be flipped or not
- * @return {cc.FlipX}
- */
-cc.FlipX.create = cc.flipX;
 
 /**
  * Flips the sprite vertically
@@ -507,16 +464,6 @@ cc.flipY = function (flip) {
     return new cc.FlipY(flip);
 };
 
-/**
- * Please use cc.flipY instead
- * Create a FlipY action to flip or unflip the target
- *
- * @static
- * @deprecated since v3.0 <br /> Please use cc.flipY instead.
- * @param {Boolean} flip
- * @return {cc.FlipY}
- */
-cc.FlipY.create = cc.flipY;
 
 /**
  * Places the node in a certain position
@@ -601,16 +548,6 @@ cc.place = function (pos, y) {
     return new cc.Place(pos, y);
 };
 
-/**
- * Please use cc.place instead.
- * Creates a Place action with a position.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.place instead.
- * @param {cc.Point|Number} pos
- * @param {Number} [y]
- * @return {cc.Place}
- */
-cc.Place.create = cc.place;
 
 
 /**
@@ -736,14 +673,3 @@ cc.callFunc = function (selector, selectorTarget, data) {
     return new cc.CallFunc(selector, selectorTarget, data);
 };
 
-/**
- * Please use cc.callFunc instead.
- * Creates the action with the callback.
- * @static
- * @deprecated since v3.0 <br /> Please use cc.callFunc instead.
- * @param {function} selector
- * @param {object|null} [selectorTarget]
- * @param {*|null} [data] data for function, it accepts all data types.
- * @return {cc.CallFunc}
- */
-cc.CallFunc.create = cc.callFunc;
