@@ -411,15 +411,3 @@ _p.clearColorVal;
 cc.defineGetterSetter(_p, "clearColorVal", _p.getClearColor, _p.setClearColor);
 
 
-/**
- * creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid
- * @deprecated since v3.0 please use new cc.RenderTexture() instead.
- * @param {Number} width
- * @param {Number} height
- * @param {cc.IMAGE_FORMAT_JPEG|cc.IMAGE_FORMAT_PNG|cc.IMAGE_FORMAT_RAWDATA} format
- * @param {Number} depthStencilFormat
- * @return {cc.RenderTexture}
- */
-cc.RenderTexture.create = function (width, height, format, depthStencilFormat) {
-    return new cc.RenderTexture(width, height, format, depthStencilFormat);
-};
