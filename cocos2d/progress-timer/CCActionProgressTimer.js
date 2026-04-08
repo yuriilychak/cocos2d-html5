@@ -114,16 +114,6 @@ cc.ProgressTo = cc.ActionInterval.extend(/** @lends cc.ProgressTo# */{
 cc.progressTo = function (duration, percent) {
     return new cc.ProgressTo(duration, percent);
 };
-/**
- * Please use cc.progressTo instead
- * Creates and initializes with a duration and a percent
- * @static
- * @deprecated since v3.0,please use cc.progressTo instead.
- * @param {Number} duration duration in seconds
- * @param {Number} percent
- * @return {cc.ProgressTo}
- */
-cc.ProgressTo.create = cc.progressTo;
 
 /**
  * Progress from a percentage to another percentage
@@ -215,13 +205,3 @@ cc.ProgressFromTo = cc.ActionInterval.extend(/** @lends cc.ProgressFromTo# */{
 cc.progressFromTo = function (duration, fromPercentage, toPercentage) {
     return new cc.ProgressFromTo(duration, fromPercentage, toPercentage);
 };
-/**
- * Creates and initializes the action with a duration, a "from" percentage and a "to" percentage
- * @static
- * @deprecated since v3.0,please use cc.ProgressFromTo(duration, fromPercentage, toPercentage) instead.
- * @param {Number} duration duration in seconds
- * @param {Number} fromPercentage
- * @param {Number} toPercentage
- * @return {cc.ProgressFromTo}
- */
-cc.ProgressFromTo.create = cc.progressFromTo;
