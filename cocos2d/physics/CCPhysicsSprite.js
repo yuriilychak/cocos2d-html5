@@ -417,16 +417,6 @@
     cc.defineGetterSetter(_p, "dirty", _p.isDirty, _p.setDirty);
 
 
-    /**
-     * Create a PhysicsSprite with filename and rect
-     * @deprecated since v3.0, please use new cc.PhysicsSprite(fileName, rect) instead
-     * @param {String|cc.Texture2D|cc.SpriteFrame} fileName
-     * @param {cc.Rect} rect
-     * @return {cc.PhysicsSprite}
-     */
-    cc.PhysicsSprite.create = function (fileName, rect) {
-        return new cc.PhysicsSprite(fileName, rect);
-    };
 
     /**
      * @deprecated since v3.0, please use new cc.PhysicsSprite(spriteFrameName) instead

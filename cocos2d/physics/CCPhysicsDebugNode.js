@@ -201,12 +201,3 @@ cc.PhysicsDebugNode = cc.DrawNode.extend({
     }
 });
 
-/**
- * Create a debug node for a regular Chipmunk space.
- * @deprecated since v3.0, please use new cc.PhysicsDebugNode(space)
- * @param {cp.Space} space
- * @return {cc.PhysicsDebugNode}
- */
-cc.PhysicsDebugNode.create = function (space) {
-    return new cc.PhysicsDebugNode(space);
-};
