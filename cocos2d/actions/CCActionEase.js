@@ -1641,20 +1641,6 @@ cc.EaseBounceOut = cc.EaseBounce.extend(/** @lends cc.EaseBounceOut# */{
     }
 });
 
-/**
- * Creates the action. <br />
- * Eased bounce effect at the ending.
- * @static
- * @deprecated since v3.0 please use action.easing(cc.easeBounceOut())
- * @param {cc.ActionInterval} action
- * @return {cc.EaseBounceOut}
- *
- * @example
- * action.easing(cc.easeBounceOut());
- */
-cc.EaseBounceOut.create = function (action) {
-    return new cc.EaseBounceOut(action);
-};
 
 cc._easeBounceOutObj = {
     easing: function(dt){
