@@ -187,17 +187,6 @@ var _p = cc.MenuItem.prototype;
 _p.enabled;
 cc.defineGetterSetter(_p, "enabled", _p.isEnabled, _p.setEnabled);
 
-/**
- * creates an empty menu item with target and callback<br/>
- * Not recommended to use the base class, should use more defined menu item classes
- * @deprecated since v3.0, please use new cc.MenuItem(callback,target) instead
- * @param {function|String} callback callback
- * @param {cc.Node} target
- * @return {cc.MenuItem}
- */
-cc.MenuItem.create = function (callback, target) {
-    return new cc.MenuItem(callback, target);
-};
 
 /**
  *  Any cc.Node that supports the cc.LabelProtocol protocol can be added.<br/>
@@ -412,16 +401,6 @@ _p.label;
 cc.defineGetterSetter(_p, "label", _p.getLabel, _p.setLabel);
 
 
-/**
- * @deprecated since v3.0 ,please use new cc.MenuItemLabel(label,selector,target) instead
- * @param {cc.Node} label
- * @param {function|String|Null} [selector=]
- * @param {cc.Node|Null} [target=]
- * @return {cc.MenuItemLabel}
- */
-cc.MenuItemLabel.create = function (label, selector, target) {
-    return new cc.MenuItemLabel(label, selector, target);
-};
 
 /**
  * Helper class that creates a MenuItemLabel class with a LabelAtlas
@@ -482,21 +461,6 @@ cc.MenuItemAtlasFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemAtlasFont# 
     }
 });
 
-/**
- * create menu item from string with font
- * @deprecated since v3.0 ,please use new cc.MenuItemAtlasFont() instead.
- * @param {String} value the text to display
- * @param {String} charMapFile the character map file
- * @param {Number} itemWidth
- * @param {Number} itemHeight
- * @param {String} startCharMap a single character
- * @param {function|String|Null} [callback=null]
- * @param {cc.Node|Null} [target=]
- * @return {cc.MenuItemAtlasFont}
- */
-cc.MenuItemAtlasFont.create = function (value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
-    return new cc.MenuItemAtlasFont(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target);
-};
 
 /**
  * Helper class that creates a CCMenuItemLabel class with a Label
@@ -644,17 +608,6 @@ cc.MenuItemFont.fontName = function () {
     return cc._globalFontName;
 };
 
-/**
- * create a menu item from string
- * @deprecated since v3.0, please use new construction instead
- * @param {String} value the text to display
- * @param {String|function|Null} callback the callback to run, either in function name or pass in the actual function
- * @param {cc.Node|Null} target the target to run callback
- * @return {cc.MenuItemFont}
- */
-cc.MenuItemFont.create = function (value, callback, target) {
-    return new cc.MenuItemFont(value, callback, target);
-};
 
 
 /**
@@ -954,19 +907,6 @@ cc.defineGetterSetter(_p, "selectedImage", _p.getSelectedImage, _p.setSelectedIm
 _p.disabledImage;
 cc.defineGetterSetter(_p, "disabledImage", _p.getDisabledImage, _p.setDisabledImage);
 
-/**
- * create a menu item from sprite
- * @deprecated since v3.0 please use new cc.MenuItemSprite(normalSprite, selectedSprite, three, four, five) instead
- * @param {Image} normalSprite normal state image
- * @param {Image|Null} selectedSprite selected state image
- * @param {Image|cc.Node|Null} three disabled state image OR target node
- * @param {String|function|cc.Node|Null} four callback function name in string or actual function, OR target Node
- * @param {String|function|Null} five callback function name in string or actual function
- * @return {cc.MenuItemSprite}
- */
-cc.MenuItemSprite.create = function (normalSprite, selectedSprite, three, four, five) {
-    return new cc.MenuItemSprite(normalSprite, selectedSprite, three, four, five || undefined);
-};
 
 /**
  * cc.MenuItemImage accepts images as items.<br/>
@@ -1078,19 +1018,6 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
     }
 });
 
-/**
- * creates a new menu item image
- * @deprecated since v3.0, please use new cc.MenuItemImage(normalImage, selectedImage, three, four, five) instead.
- * @param {String} normalImage file name for normal state
- * @param {String} selectedImage image for selected state
- * @param {String|cc.Node} three Disabled image OR callback function
- * @param {String|function|Null} [four] callback function, either name in string or pass the whole function OR the target
- * @param {cc.Node|String|function|Null} [five] cc.Node target to run callback when clicked
- * @return {cc.MenuItemImage}
- */
-cc.MenuItemImage.create = function (normalImage, selectedImage, three, four, five) {
-    return new cc.MenuItemImage(normalImage, selectedImage, three, four, five);
-};
 
 
 /**
@@ -1356,16 +1283,3 @@ _p.selectedIndex;
 cc.defineGetterSetter(_p, "selectedIndex", _p.getSelectedIndex, _p.setSelectedIndex);
 
 
-/**
- * create a simple container class that "toggles" it's inner items<br/>
- * The inner items can be any MenuItem
- * @deprecated since v3.0 please use new cc.MenuItemToggle(params) instead
- * @return {cc.MenuItemToggle}
- */
-cc.MenuItemToggle.create = function (/*Multiple arguments follow*/) {
-    if ((arguments.length > 0) && (arguments[arguments.length - 1] == null))
-        cc.log("parameters should not be ending with null in Javascript");
-    var ret = new cc.MenuItemToggle();
-    ret.initWithItems(Array.prototype.slice.apply(arguments));
-    return ret;
-};
