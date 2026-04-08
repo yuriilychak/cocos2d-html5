@@ -107,7 +107,6 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         var save = new cc.MenuItemFont("Save", this.saveCB, this);
         var clear = new cc.MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
         var menu = new cc.Menu(save, clear);
-        // var menu = cc.Menu.create(clear);
         menu.alignItemsVertically();
         menu.x = winSize.width - 70;
         menu.y = winSize.height - 80;

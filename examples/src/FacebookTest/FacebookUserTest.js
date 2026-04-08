@@ -46,7 +46,7 @@ var FacebookUserTest = FacebookTest.extend({
 
         window.facebook = window.facebook || (window["plugin"] ? window["plugin"]["FacebookAgent"]["getInstance"]() : null);
 
-        var menu = cc.Menu.create();
+        var menu = new cc.Menu();
         for (var action in button_share) {
             var label = new cc.LabelTTF(action, "Arial", 22);
             var item = new cc.MenuItemLabel(label, this[button_share[action]], this);

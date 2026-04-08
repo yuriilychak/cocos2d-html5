@@ -43,7 +43,6 @@ var EffectsBaseLayer = BaseTestLayer.extend({
     onNextCallback:function (sender) {
         var s = new EffectsTestScene();
         s.addChild(nextEffectsTest());
-        //director.runScene(cc.TransitionZoomFlipX.create(5, s));
         director.runScene(s);
     },
     onBackCallback:function (sender) {
@@ -434,7 +433,6 @@ var PageTurn3DInRectTest = BaseTestLayer.extend({
     onNextCallback:function (sender) {
         var s = new EffectsTestScene();
         s.addChild(nextEffectsTest());
-        //director.runScene(cc.TransitionZoomFlipX.create(5, s));
         director.runScene(s);
     },
     onBackCallback:function (sender) {

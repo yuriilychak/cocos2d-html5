@@ -80,17 +80,17 @@ var EaseSpriteDemo = BaseTestLayer.extend({
     },
 
     onRestartCallback:function (sender) {
-        var s = new EaseActionsTestScene();//cc.Scene.create();
+        var s = new EaseActionsTestScene();
         s.addChild(restartEaseActionsTest());
         director.runScene(s);
     },
     onNextCallback:function (sender) {
-        var s = new EaseActionsTestScene();//cc.Scene.create();
+        var s = new EaseActionsTestScene();
         s.addChild(nextEaseActionsTest());
         director.runScene(s);
     },
     onBackCallback:function (sender) {
-        var s = new EaseActionsTestScene();//cc.Scene.create();
+        var s = new EaseActionsTestScene();
         s.addChild(previousEaseActionsTest());
         director.runScene(s);
     },
@@ -151,14 +151,9 @@ var SpriteEase = EaseSpriteDemo.extend({
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
 
-        //old api
-        //var move_ease_in = cc.EaseIn.create(move.clone(), 2.0);
 
         var move_ease_in = move.clone().easing(cc.easeIn(2.0));
         var move_ease_in_back = move_ease_in.reverse();
-
-        //old api
-        //var move_ease_out = cc.EaseOut.create(move.clone(), 2.0);
 
         var move_ease_out = move.clone().easing(cc.easeOut(2.0));
         var move_ease_out_back = move_ease_out.reverse();
@@ -221,22 +216,12 @@ var SpriteEaseInOut = EaseSpriteDemo.extend({
         this._super();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
-        //	id move_back = move.reverse();
-
-        //old api
-        //var move_ease_inout1 = cc.EaseInOut.create(move.clone(), 2.0);
 
         var move_ease_inout1 = move.clone().easing(cc.easeInOut(2.0));
         var move_ease_inout_back1 = move_ease_inout1.reverse();
 
-        //old api
-        //var move_ease_inout2 = cc.EaseInOut.create(move.clone(), 3.0);
-
         var move_ease_inout2 = move.clone().easing(cc.easeInOut(3.0));
         var move_ease_inout_back2 = move_ease_inout2.reverse();
-
-        //old api
-        //var move_ease_inout3 = cc.EaseInOut.create(move.clone(), 4.0);
 
         var move_ease_inout3 = move.clone().easing(cc.easeInOut(4.0));
         var move_ease_inout_back3 = move_ease_inout3.reverse();
@@ -270,9 +255,6 @@ var SpriteEaseExponential = EaseSpriteDemo.extend({
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
-
-        //old api
-        //var move_ease_in = cc.EaseExponentialIn.create(move.clone());
 
         var move_ease_in = move.clone().easing(cc.easeExponentialIn());
         var move_ease_in_back = move_ease_in.reverse();
@@ -310,9 +292,6 @@ var SpriteEaseExponentialInOut = EaseSpriteDemo.extend({
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
 
-        //old api
-        //var move_ease = cc.EaseExponentialInOut.create(move.clone());
-
         var move_ease = move.clone().easing(cc.easeExponentialInOut());
         var move_ease_back = move_ease.reverse();
 
@@ -345,14 +324,8 @@ var SpriteEaseSine = EaseSpriteDemo.extend({
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
 
-        //old api
-        //var move_ease_in = cc.EaseSineIn.create(move.clone());
-
         var move_ease_in = move.clone().easing(cc.easeSineIn());
         var move_ease_in_back = move_ease_in.reverse();
-
-        //old api
-        //var move_ease_out = cc.EaseSineOut.create(move.clone());
 
         var move_ease_out = move.clone().easing(cc.easeSineOut());
         var move_ease_out_back = move_ease_out.reverse();
@@ -388,7 +361,7 @@ var SpriteEaseSineInOut = EaseSpriteDemo.extend({
         var move_back = move.reverse();
 
         //old api
-        //var move_ease = cc.EaseSineInOut.create(move.clone());
+        //var move_ease = cc.EaseSineInOutmove.clone());
 
         var move_ease = move.clone().easing(cc.easeSineInOut());
         var move_ease_back = move_ease.reverse();
@@ -422,14 +395,8 @@ var SpriteEaseElastic = EaseSpriteDemo.extend({
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
 
-        //old api
-        //var move_ease_in = cc.EaseElasticIn.create(move.clone());
-
         var move_ease_in = move.clone().easing(cc.easeElasticIn());
         var move_ease_in_back = move_ease_in.reverse();
-
-        //old api
-        //var move_ease_out = cc.EaseElasticOut.create(move.clone());
 
         var move_ease_out = move.clone().easing(cc.easeElasticOut());
         var move_ease_out_back = move_ease_out.reverse();
@@ -462,20 +429,11 @@ var SpriteEaseElasticInOut = EaseSpriteDemo.extend({
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
 
-        //old api
-        //var move_ease_inout1 = cc.EaseElasticInOut.create(move.clone(), 0.3);
-
         var move_ease_inout1 = move.clone().easing(cc.easeElasticInOut(0.3));
         var move_ease_inout_back1 = move_ease_inout1.reverse();
 
-        //old api
-        //var move_ease_inout2 = cc.EaseElasticInOut.create(move.clone(), 0.45);
-
         var move_ease_inout2 = move.clone().easing(cc.easeElasticInOut(0.45));
         var move_ease_inout_back2 = move_ease_inout2.reverse();
-
-        //old api
-        //var move_ease_inout3 = cc.EaseElasticInOut.create(move.clone(), 0.6);
 
         var move_ease_inout3 = move.clone().easing(cc.easeElasticInOut(0.6));
         var move_ease_inout_back3 = move_ease_inout3.reverse();
@@ -509,14 +467,8 @@ var SpriteEaseBounce = EaseSpriteDemo.extend({
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
 
-        //old api
-        //var move_ease_in = cc.EaseBounceIn.create(move.clone());
-
         var move_ease_in = move.clone().easing(cc.easeBounceIn());
         var move_ease_in_back = move_ease_in.reverse();
-
-        //old api
-        //var move_ease_out = cc.EaseBounceOut.create(move.clone());
 
         var move_ease_out = move.clone().easing(cc.easeBounceOut());
         var move_ease_out_back = move_ease_out.reverse();
@@ -550,9 +502,6 @@ var SpriteEaseBounceInOut = EaseSpriteDemo.extend({
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
 
-        //old api
-        //var move_ease = cc.EaseBounceInOut.create(move.clone());
-
         var move_ease = move.clone().easing(cc.easeBounceInOut());
         var move_ease_back = move_ease.reverse();
 
@@ -585,14 +534,8 @@ var SpriteEaseBack = EaseSpriteDemo.extend({
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
 
-        //old api
-        //var move_ease_in = cc.EaseBackIn.create(move.clone());
-
         var move_ease_in = move.clone().easing(cc.easeBackIn());
         var move_ease_in_back = move_ease_in.reverse();
-
-        //old api
-        //var move_ease_out = cc.EaseBackOut.create(move.clone());
 
         var move_ease_out = move.clone().easing(cc.easeBackOut());
         var move_ease_out_back = move_ease_out.reverse();
@@ -625,9 +568,6 @@ var SpriteEaseBackInOut = EaseSpriteDemo.extend({
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
-
-        //old api
-        //var move_ease = cc.EaseBackInOut.create(move.clone());
 
         var move_ease = move.clone().easing(cc.easeBackInOut());
         var move_ease_back = move_ease.reverse();
@@ -784,8 +724,6 @@ var SpriteEaseBezierTest = EaseSpriteDemo.extend({
             cc.p(300 / 480 * 800, 100 / 320 * 450)
         ];
         var bezierForward = cc.bezierBy(3, bezier);
-        //var bezierEaseForward = cc.EaseBezierAction.create(bezierForward);
-        //bezierEaseForward.setBezierParamer(0.5, 0.5, 1.0, 1.0);
         var bezierEaseForward = bezierForward.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
 
         var bezierEaseBack = bezierEaseForward.reverse();
@@ -799,15 +737,11 @@ var SpriteEaseBezierTest = EaseSpriteDemo.extend({
             cc.p(200 / 480 * 800, 160 / 320 * 450)
         ];
         var bezierTo1 = cc.bezierTo(2, bezier2);
-        //var bezierEaseTo1 = cc.EaseBezierAction.create(bezierTo1);
-        //bezierEaseTo1.setBezierParamer(0.5, 0.5, 1.0, 1.0);
         var bezierEaseTo1 = bezierTo1.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
 
         // sprite 3
         this._kathia.setPosition(cc.p(667, 225));
         var bezierTo2 = cc.bezierTo(2, bezier2);
-        //var bezierEaseTo2 = cc.EaseBezierAction.create(bezierTo2);
-        //bezierEaseTo2.setBezierParamer(0.0, 0.5, -5.0, 1.0);
         var bezierEaseTo2 = bezierTo2.easing(cc.easeBezierAction(0.0, 0.5, -5.0, 1.0));
 
 
@@ -835,11 +769,9 @@ var SpriteEaseQuadraticTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease_in = cc.EaseQuadraticActionIn.create(move.clone());
         var move_ease_in = move.clone().easing(cc.easeQuadraticActionIn());
         var move_ease_in_back = move_ease_in.reverse();
 
-        //var move_ease_out = cc.EaseQuadraticActionOut.create(move.clone());
         var move_ease_out = move.clone().easing(cc.easeQuadraticActionOut());
         var move_ease_out_back = move_ease_out.reverse();
 
@@ -872,7 +804,6 @@ var SpriteEaseQuadraticInOutTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease = cc.EaseQuadraticActionInOut.create(move.clone());
         var move_ease = move.clone().easing(cc.easeQuadraticActionInOut());
         var move_ease_back = move_ease.reverse();
 
@@ -904,11 +835,9 @@ var SpriteEaseQuarticTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease_in = cc.EaseQuarticActionIn.create(move.clone() );
         var move_ease_in = move.clone().easing(cc.easeQuarticActionIn());
         var move_ease_in_back = move_ease_in.reverse();
 
-        //var move_ease_out = cc.EaseQuarticActionOut.create(move.clone() );
         var move_ease_out = move.clone().easing(cc.easeQuarticActionOut());
         var move_ease_out_back = move_ease_out.reverse();
 
@@ -939,7 +868,6 @@ var SpriteEaseQuarticInOutTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease = cc.EaseQuarticActionInOut.create(move.clone() );
         var move_ease = move.clone().easing(cc.easeQuarticActionInOut());
         var move_ease_back = move_ease.reverse();
 
@@ -971,11 +899,9 @@ var SpriteEaseQuinticTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease_in = cc.EaseQuinticActionIn.create(move.clone() );
         var move_ease_in = move.clone().easing(cc.easeQuinticActionIn());
         var move_ease_in_back = move_ease_in.reverse();
 
-        //var move_ease_out = cc.EaseQuinticActionOut.create(move.clone() );
         var move_ease_out = move.clone().easing(cc.easeQuinticActionOut());
         var move_ease_out_back = move_ease_out.reverse();
 
@@ -1008,7 +934,6 @@ var SpriteEaseQuinticInOutTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease = cc.EaseQuinticActionInOut.create(move.clone() );
         var move_ease = move.clone().easing(cc.easeQuinticActionInOut());
         var move_ease_back = move_ease.reverse();
 
@@ -1040,11 +965,9 @@ var SpriteEaseCircleTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease_in = cc.EaseCircleActionIn.create(move.clone() );
         var move_ease_in = move.clone().easing(cc.easeCircleActionIn());
         var move_ease_in_back = move_ease_in.reverse();
 
-        //var move_ease_out = cc.EaseCircleActionOut.create(move.clone() );
         var move_ease_out = move.clone().easing(cc.easeCircleActionOut());
         var move_ease_out_back = move_ease_out.reverse();
 
@@ -1076,7 +999,6 @@ var SpriteEaseCircleInOutTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease = cc.EaseCircleActionInOut.create(move.clone() );
         var move_ease = move.clone().easing(cc.easeCircleActionInOut());
         var move_ease_back = move_ease.reverse();
 
@@ -1108,11 +1030,9 @@ var SpriteEaseCubicTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease_in = cc.EaseCubicActionIn.create(move.clone() );
         var move_ease_in = move.clone().easing(cc.easeCubicActionIn());
         var move_ease_in_back = move_ease_in.reverse();
 
-        //var move_ease_out = cc.EaseCubicActionOut.create(move.clone() );
         var move_ease_out = move.clone().easing(cc.easeCubicActionOut());
         var move_ease_out_back = move_ease_out.reverse();
 
@@ -1145,7 +1065,6 @@ var SpriteEaseCubicInOutTest = EaseSpriteDemo.extend({
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        //var move_ease = cc.EaseCubicActionInOut.create(move.clone() );
         var move_ease = move.clone().easing(cc.easeCubicActionInOut());
         var move_ease_back = move_ease.reverse();
 
