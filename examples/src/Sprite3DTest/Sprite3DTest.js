@@ -382,15 +382,12 @@ var Animate3DTest = (function(){
                 this._swim = new cc.RepeatForever(animate);
                 sprite.runAction(this._swim);
 
-                this._swim.retain();
                 this._hurt = new jsb.Animate3D(animation, 1.933, 2.8);
-                this._hurt.retain();
 
                 this._state = State.SWIMMING;
             }
 
             this._moveAction = cc.moveBy(4.0, cc.p(-s.width / 5 * 3, 0));
-            this._moveAction.retain();
             var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
             seq.setTag(100);
             sprite.runAction(seq);
@@ -400,7 +397,6 @@ var Animate3DTest = (function(){
             var sprite = this._sprite;
             sprite.stopActionByTag(100);
             var inverse = this._moveAction.reverse();
-            inverse.retain();
             this._moveAction.release();
             this._moveAction = inverse;
             var rot = cc.rotateBy(1, {x : 0, y : 180, z : 0});
@@ -712,7 +708,6 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         }
 
         this._moveAction = cc.moveBy(4, cc.p(-s.width * 3 / 5, 0));
-        this._moveAction.retain();
         var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
         seq.setTag(100);
         sprite.runAction(seq);
@@ -728,7 +723,6 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         var sprite = this._sprite;
         sprite.stopActionByTag(100);
         var inverse = this._moveAction.reverse();
-        inverse.retain();
         this._moveAction.release();
         this._moveAction = inverse;
         var rot = cc.rotateBy(1, {x : 0, y : 180, z : 0});

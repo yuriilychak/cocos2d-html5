@@ -33,7 +33,6 @@ var ControlSliderTest = ControlScene.extend({
 
             // Add a label in which the slider value will be displayed
             this._displayValueLabel = new cc.LabelTTF("Move the slider thumb!\nThe lower slider is restricted.", "Marker Felt", 32);
-            this._displayValueLabel.retain();
             this._displayValueLabel.anchorX = 0.5;
             this._displayValueLabel.anchorY = -1.0;
             this._displayValueLabel.x = screenSize.width / 1.7;

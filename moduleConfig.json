@@ -273,22 +273,6 @@
             "progress-timer", "transitions", "labels", "compression", "particle",
             "text-input", "menus", "tilemap", "parallax", "audio"
         ],
-
-        "ccbreader" : [
-            "core", "audio", "gui", "menus", "particle", "actions", "labels",
-
-            "extensions/ccb-reader/CCNodeLoader.js",
-            "extensions/ccb-reader/CCBReaderUtil.js",
-            "extensions/ccb-reader/CCControlLoader.js",
-            "extensions/ccb-reader/CCSpriteLoader.js",
-            "extensions/ccb-reader/CCNodeLoaderLibrary.js",
-            "extensions/ccb-reader/CCBReader.js",
-            "extensions/ccb-reader/CCBValue.js",
-            "extensions/ccb-reader/CCBKeyframe.js",
-            "extensions/ccb-reader/CCBSequence.js",
-            "extensions/ccb-reader/CCBRelativePositioning.js",
-            "extensions/ccb-reader/CCBAnimationManager.js"
-        ],
         "editbox" : [
             "core", "gui",
 
@@ -430,11 +414,6 @@
 
             "external/pluginx/Plugin.js"
         ],
-        "plugin-facebook" : [
-            "external/pluginx/platform/facebook_sdk.js",
-            "external/pluginx/platform/facebook.js"
-        ],
-
         "spine":[
             "core",
 
@@ -469,7 +448,7 @@
             "external/gaf/Library/GAFShaderManager.js",
             "external/gaf/Library/GAFAtlasLoader.js"
         ],
-        "extensions" : ["gui", "ccbreader", "editbox", "cocostudio", "spine", "ccpool"],
+        "extensions" : ["gui", "editbox", "cocostudio", "spine", "ccpool"],
 
         "box2d" : [
             "core", "physics",
@@ -488,7 +467,7 @@
         "socketio" : [
             "external/socketio/socket.io.min.js"
         ],
-        "external" : ["box2d", "chipmunk", "socketio", "pluginx", "gaf"]
+        "external" : ["box2d", "chipmunk", "socketio", "gaf"]
     },
     "bootFile" : "CCBoot.js"
 }

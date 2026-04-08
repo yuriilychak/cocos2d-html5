@@ -48,7 +48,6 @@ var ControlSwitchTest = ControlScene.extend({
             layer_width += background.width;
 
             this._displayValueLabel = new cc.LabelTTF("#color", "Marker Felt", 30);
-            this._displayValueLabel.retain();
 
             this._displayValueLabel.x = background.x;
             this._displayValueLabel.y = background.y;

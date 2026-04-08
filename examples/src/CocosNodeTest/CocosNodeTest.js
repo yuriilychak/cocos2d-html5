@@ -242,10 +242,6 @@ var CCNodeTest5 = TestNodeDemo.extend({
         var sp1 = this.getChildByTag(TAG_SPRITE1);
         var sp2 = this.getChildByTag(TAG_SPRITE2);
 
-        // hack for JSB.
-        sp1.retain();
-        sp2.retain();
-
         this.removeChild(sp1, false);
         this.removeChild(sp2, true);
 
@@ -325,10 +321,6 @@ var CCNodeTest6 = TestNodeDemo.extend({
         //----start3----onAddAndRemove
         var sp1 = this.getChildByTag(TAG_SPRITE1);
         var sp2 = this.getChildByTag(TAG_SPRITE2);
-
-        // hack for JSB.
-        sp1.retain();
-        sp2.retain();
 
         this.removeChild(sp1, false);
         this.removeChild(sp2, true);

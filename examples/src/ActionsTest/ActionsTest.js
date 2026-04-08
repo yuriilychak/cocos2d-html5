@@ -2317,7 +2317,6 @@ var Issue1305 = ActionsDemo.extend({
         this.centerSprites(0);
 
         this._spriteTmp = new cc.Sprite(s_pathGrossini);
-        this._spriteTmp.retain();
         /* c++ can't support block, so we use CCCallFuncN instead.
          [spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
          NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");

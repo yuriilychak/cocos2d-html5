@@ -24,21 +24,8 @@
 
 // Resources prefix
 var s_resprefix = "";
-
-var ccbjs = "";
 // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
 // so the respath will modify to res,
-if (!cc.sys.isNative)
-{
-    if (cc.game.config && cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
-        ccbjs = "../../js-tests/resjs/";
-    }
-    else
-    {
-        ccbjs = "";
-    }
-
-}
 
 var s_pathGrossini = "Images/grossini.png";
 var s_pathSister1 = "Images/grossinis_sister1.png";
@@ -322,27 +309,6 @@ var g_s9s_blocks = [
 ];
 
 var g_opengl_resources = [
-    //preload shader source
-    ccbjs + "Shaders/example_Outline.fsh",
-    ccbjs + "Shaders/example_Outline.vsh",
-    ccbjs + "Shaders/example_Blur.fsh",
-    ccbjs + "Shaders/example_ColorBars.fsh",
-    ccbjs + "Shaders/example_ColorBars.vsh",
-    ccbjs + "Shaders/example_Flower.fsh",
-    ccbjs + "Shaders/example_Flower.vsh",
-    ccbjs + "Shaders/example_Heart.fsh",
-    ccbjs + "Shaders/example_Heart.vsh",
-    ccbjs + "Shaders/example_Julia.fsh",
-    ccbjs + "Shaders/example_Julia.vsh",
-    ccbjs + "Shaders/example_Mandelbrot.fsh",
-    ccbjs + "Shaders/example_Mandelbrot.vsh",
-    ccbjs + "Shaders/example_Monjori.fsh",
-    ccbjs + "Shaders/example_Monjori.vsh",
-    ccbjs + "Shaders/example_Plasma.fsh",
-    ccbjs + "Shaders/example_Plasma.vsh",
-    ccbjs + "Shaders/example_Twist.fsh",
-    ccbjs + "Shaders/example_Twist.vsh",
-
     "fonts/west_england-64.fnt",
     "fonts/west_england-64.png"
 ];
@@ -484,47 +450,6 @@ var g_extensions = [
     s_extensions_buttonHighlighted,
     s_extensions_ribbon,
 
-    //ccbi resource
-    ccbjs + "ccb/HelloCocosBuilder.ccbi",
-    ccbjs + "ccb/ccb/TestAnimations.ccbi",
-    ccbjs + "ccb/ccb/TestAnimationsSub.ccbi",
-    ccbjs + "ccb/ccb/TestButtons.ccbi",
-    ccbjs + "ccb/ccb/TestHeader.ccbi",
-    ccbjs + "ccb/ccb/TestLabels.ccbi",
-    ccbjs + "ccb/ccb/TestMenus.ccbi",
-    ccbjs + "ccb/ccb/TestParticleSystems.ccbi",
-    ccbjs + "ccb/ccb/TestScrollViews.ccbi",
-    ccbjs + "ccb/ccb/TestScrollViewsContentA.ccbi",
-    ccbjs + "ccb/ccb/TestSprites.ccbi",
-
-    ccbjs + "ccb/ccbParticleStars.png",
-    ccbjs + "ccb/btn-test-0.png",
-    ccbjs + "ccb/animated-grossini.png",
-    ccbjs + "ccb/btn-a-0.png",
-    ccbjs + "ccb/btn-a-1.png",
-    ccbjs + "ccb/btn-a-2.png",
-    ccbjs + "ccb/btn-b-0.png",
-    ccbjs + "ccb/btn-b-1.png",
-    ccbjs + "ccb/btn-b-2.png",
-    ccbjs + "ccb/btn-back-0.png",
-    ccbjs + "ccb/btn-back-1.png",
-    ccbjs + "ccb/btn-test-0.png",
-    ccbjs + "ccb/btn-test-1.png",
-    ccbjs + "ccb/btn-test-2.png",
-    ccbjs + "ccb/burst.png",
-    ccbjs + "ccb/flower.jpg",
-    ccbjs + "ccb/grossini-generic.png",
-    ccbjs + "ccb/jungle.png",
-    ccbjs + "ccb/jungle-left.png",
-    ccbjs + "ccb/jungle-right.png",
-    ccbjs + "ccb/logo.png",
-    ccbjs + "ccb/logo-icon.png",
-    ccbjs + "ccb/markerfelt24shadow.png",
-    ccbjs + "ccb/particle-fire.png",
-    ccbjs + "ccb/particle-smoke.png",
-    ccbjs + "ccb/particle-snow.png",
-    ccbjs + "ccb/particle-stars.png",
-    ccbjs + "ccb/scale-9-demo.png",
     "extensions/green_edit.png",
     "extensions/orange_edit.png",
     "extensions/yellow_edit.png",
@@ -544,11 +469,6 @@ var g_extensions = [
     "extensions/potentiometerTrack.png",
     "extensions/CCControlColourPickerSpriteSheet.plist",
     "extensions/CCControlColourPickerSpriteSheet.png",
-
-    ccbjs + "ccb/markerfelt24shadow.fnt",
-
-    ccbjs + "ccb/grossini-generic.plist",
-    ccbjs + "ccb/animated-grossini.plist"
 ];
 
 var g_ui = [

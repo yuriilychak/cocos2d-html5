@@ -34,13 +34,6 @@ var TEST_COCOSBUILDER = 2;
 var TEST_HTTPCLIENT = 3;
 
 var extensionsTestItemNames = [
-    /*    {
-     itemTitle:"NotificationCenterTest",
-     testScene:function () {
-     //runNotificationCenterTest();
-     cc.log("not implement");
-     }
-     },*/
     {
         itemTitle:"CCControlButtonTest",
         testScene:function () {
@@ -49,22 +42,6 @@ var extensionsTestItemNames = [
 	        cc.director.runScene(pScene);
         }
     },
-    {
-        itemTitle:"CocosBuilderTest",
-        testScene:function () {
-            var pScene = new CocosBuilderTestScene();
-            if (pScene) {
-                pScene.runThisTest();
-            }
-        }
-    },
-    /*    {
-     itemTitle:"HttpClientTest",
-     testScene:function () {
-     //runHttpClientTest();
-     cc.log("not implement");
-     }
-     },*/
     {
         itemTitle:"TableViewTest",
         testScene:function () {
@@ -96,28 +73,6 @@ if (!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os){
         itemTitle:"EditBoxTest",
         testScene:function () {
             runEditBoxTest();
-        }
-    });
-}
-
-if (cc.sys.isNative && cc.sys.OS_IOS == cc.sys.os) {
-    extensionsTestItemNames.push({
-        itemTitle:"PluginTest",
-        testScene:function () {
-            var testScene = pluginXSceneManager.currentPluginXScene();
-            cc.director.runScene(testScene);
-        }
-    });
-}
-
-if (cc.sys.isNative) {
-    extensionsTestItemNames.push({
-        itemTitle:"AssetsManagerTest",
-        testScene:function () {
-            var testScene = new AssetsManagerLoaderScene();
-            if (testScene) {
-                testScene.runThisTest();
-            }
         }
     });
 }

@@ -585,7 +585,6 @@ var ShaderNode = cc.GLNode.extend({
             this.anchorY = 0.5;
 
             this.shader = cc.GLProgram.create(vertexShader, framentShader);
-            this.shader.retain();
             this.shader.addAttribute("aVertex", cc.VERTEX_ATTRIB_POSITION);
             this.shader.link();
             this.shader.updateUniforms();

@@ -64,7 +64,7 @@ var ControlColourPickerTest = ControlScene.extend({
             layer_width += background.width;
 
             this._colorLabel = new cc.LabelTTF("#color", "Marker Felt", 30);
-            this._colorLabel.retain();
+
 
             this._colorLabel.x = background.x;
             this._colorLabel.y = background.y;

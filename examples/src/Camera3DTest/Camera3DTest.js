@@ -774,7 +774,6 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
             camera.setPosition3D(cc.math.vec3(-100, 0, 0));
             camera.lookAt(cc.math.vec3(1000, 0, 0));
             this._moveAction = cc.moveBy(4, cc.p(200, 0));
-            this._moveAction.retain();
             var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
             seq.setTag(100);
             camera.runAction(seq);
@@ -806,7 +805,6 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
     reachEndCallBack:function(){
         this._cameraFirst.stopActionByTag(100);
         var inverse = this._moveAction.reverse();
-        inverse.retain();
         this._moveAction.release();
         this._moveAction = inverse;
         var rot = cc.rotateBy(1, cc.math.vec3(0, 180, 0));

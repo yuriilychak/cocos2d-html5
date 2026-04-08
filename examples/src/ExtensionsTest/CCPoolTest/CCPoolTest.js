@@ -171,7 +171,6 @@ var MySprite = cc.Sprite.extend({
         this._hp = 0;
         this._mp = 0;
         this._sp = 0;
-        this.retain();//if in jsb
         this.setVisible(false);
         this.removeFromParent(true);
     },

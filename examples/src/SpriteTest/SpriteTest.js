@@ -2947,12 +2947,10 @@ var SpriteHybrid = SpriteTestDemo.extend({
         var p = this.getChildByTag(TAG_NODE);
         var frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
         var sprite1 = new cc.Sprite(frame);
-        sprite1.retain();
         p.addChild(sprite1, 1000);
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 2;
         var sprite2 = new cc.Sprite(frame);
-        sprite2.retain();
         p.addChild(sprite2, 1000);
         sprite2.x = winSize.width / 2;
         sprite2.y = winSize.height / 2;

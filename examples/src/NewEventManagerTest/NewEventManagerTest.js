@@ -620,7 +620,6 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
         this.runAction(cc.sequence(cc.delayTime(5.0),
             cc.callFunc(function () {
                 this._spriteSaved = true;
-                this._sprite.retain();
                 this._sprite.removeFromParent(false);
             }, this),
             cc.delayTime(5.0),
@@ -785,11 +784,6 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
         this._event4 = dispatcher.addCustomListener(cc.Director.EVENT_PROJECTION_CHANGED, function(event) {
             selfPointer._label4.setString("Projection: " + selfPointer._count4++);
         });
-
-        this._event1.retain();
-        this._event2.retain();
-        this._event3.retain();
-        this._event4.retain();
 
         this.scheduleUpdate();
     },

@@ -308,7 +308,6 @@ var HoleDemo = BaseClippingNodeTest.extend({
         stencil.drawPoly(rectangle, cc.color(255, 0, 0, 255), 0, cc.color(255, 255, 255, 0));
 
         this._outerClipper = new cc.ClippingNode();
-        this._outerClipper.retain();
         var transform = cc.affineTransformMakeIdentity();
         transform = cc.affineTransformScale(transform, target.scale, target.scale);
 
@@ -330,12 +329,10 @@ var HoleDemo = BaseClippingNodeTest.extend({
         holesClipper.addChild(target);
 
         this._holes = new cc.Node();
-        this._holes.retain();
 
         holesClipper.addChild(this._holes);
 
         this._holesStencil = new cc.Node();
-        this._holesStencil.retain();
 
         holesClipper.stencil = this._holesStencil;
         this._outerClipper.addChild(holesClipper);

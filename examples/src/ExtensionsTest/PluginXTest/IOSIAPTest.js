@@ -89,7 +89,6 @@ var IAPTestLayer = PluginXTest.extend({
         this.toastLayer.setTag(TAG_TOAST);
         label.x = cc.winSize.width / 2;
         label.y = cc.winSize.height / 2;
-        this.toastLayer.retain();
         this.toastLayer.setColor(cc.color(100, 100, 100, 100));
     },
     addTouch: function (bool) {
