@@ -161,9 +161,6 @@ cc.ActionEase.create = cc.actionEase;
  * @deprecated since v3.0 please cc.easeRateAction(action, 3.0);
  *
  * @example
- * //The old usage
- * cc.EaseRateAction.create(action, 3.0);
- * //The new usage
  * var moveEaseRateAction = cc.easeRateAction(action, 3.0);
  */
 cc.EaseRateAction = cc.ActionEase.extend(/** @lends cc.EaseRateAction# */{
@@ -259,9 +256,6 @@ cc.easeRateAction = function (action, rate) {
  * @static
  * @deprecated since v3.0 please use cc.easeRateAction(action, rate)
  * @example
- * //The old usage
- * cc.EaseRateAction.create(action, 3.0);
- * //The new usage
  * var moveEaseRateAction = cc.easeRateAction(action, 3.0);
  */
 cc.EaseRateAction.create = cc.easeRateAction;
@@ -275,9 +269,6 @@ cc.EaseRateAction.create = cc.easeRateAction;
  * @deprecated since v3.0 please use action.easing(cc.easeIn(3));
  *
  * @example
- * //The old usage
- * cc.EaseIn.create(action, 3);
- * //The new usage
  * action.easing(cc.easeIn(3.0));
  */
 cc.EaseIn = cc.EaseRateAction.extend(/** @lends cc.EaseIn# */{
@@ -320,9 +311,6 @@ cc.EaseIn = cc.EaseRateAction.extend(/** @lends cc.EaseIn# */{
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeIn(3))
  *
  * @example
- * //The old usage
- * cc.EaseIn.create(action, 3);
- * //The new usage
  * action.easing(cc.easeIn(3.0));
  *
  * @param {cc.ActionInterval} action
@@ -365,9 +353,6 @@ cc.easeIn = function (rate) {
  * @deprecated since v3.0 please use action.easing(cc.easeOut(3))
  *
  * @example
- * //The old usage
- * cc.EaseOut.create(action, 3);
- * //The new usage
  * action.easing(cc.easeOut(3.0));
  */
 cc.EaseOut = cc.EaseRateAction.extend(/** @lends cc.EaseOut# */{
@@ -409,9 +394,6 @@ cc.EaseOut = cc.EaseRateAction.extend(/** @lends cc.EaseOut# */{
  * @deprecated since v3.0 <br /> Please use cc.easeOut instead.
  *
  * @example
- * //The old usage
- * cc.EaseOut.create(action, 3);
- * //The new usage
  * action.easing(cc.easeOut(3.0));
  *
  * @param {cc.ActionInterval} action
@@ -454,9 +436,6 @@ cc.easeOut = function (rate) {
  * @deprecated since v3.0 please use action.easing(cc.easeInOut(3.0))
  *
  * @example
- * //The old usage
- * cc.EaseInOut.create(action, 3);
- * //The new usage
  * action.easing(cc.easeInOut(3.0));
  */
 cc.EaseInOut = cc.EaseRateAction.extend(/** @lends cc.EaseInOut# */{
@@ -501,9 +480,6 @@ cc.EaseInOut = cc.EaseRateAction.extend(/** @lends cc.EaseInOut# */{
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeInOut(3.0))
  *
  * @example
- * //The old usage
- * cc.EaseInOut.create(action, 3);
- * //The new usage
  * action.easing(cc.easeInOut(3.0));
  *
  * @param {cc.ActionInterval} action
@@ -551,9 +527,6 @@ cc.easeInOut = function (rate) {
  * @deprecated since v3.0 please action.easing(cc.easeExponentialIn())
  *
  * @example
- * //The old usage
- * cc.EaseExponentialIn.create(action);
- * //The new usage
  * action.easing(cc.easeExponentialIn());
  */
 cc.EaseExponentialIn = cc.ActionEase.extend(/** @lends cc.EaseExponentialIn# */{
@@ -597,9 +570,6 @@ cc.EaseExponentialIn = cc.ActionEase.extend(/** @lends cc.EaseExponentialIn# */{
  * @return {cc.EaseExponentialIn}
  *
  * @example
- * //The old usage
- * cc.EaseExponentialIn.create(action);
- * //The new usage
  * action.easing(cc.easeExponentialIn());
  */
 cc.EaseExponentialIn.create = function (action) {
@@ -639,9 +609,6 @@ cc.easeExponentialIn = function(){
  * @deprecated since v3.0 please use action.easing(cc.easeExponentialOut())
  *
  * @example
- * //The old usage
- * cc.EaseExponentialOut.create(action);
- * //The new usage
  * action.easing(cc.easeExponentialOut());
  */
 cc.EaseExponentialOut = cc.ActionEase.extend(/** @lends cc.EaseExponentialOut# */{
@@ -685,9 +652,6 @@ cc.EaseExponentialOut = cc.ActionEase.extend(/** @lends cc.EaseExponentialOut# *
  * @return {Object}
  *
  * @example
- * //The old usage
- * cc.EaseExponentialOut.create(action);
- * //The new usage
  * action.easing(cc.easeExponentialOut());
  */
 cc.EaseExponentialOut.create = function (action) {
@@ -728,9 +692,6 @@ cc.easeExponentialOut = function(){
  * @deprecated since v3.0 please use action.easing(cc.easeExponentialInOut)
  *
  * @example
- * //The old usage
- * cc.EaseExponentialInOut.create(action);
- * //The new usage
  * action.easing(cc.easeExponentialInOut());
  */
 cc.EaseExponentialInOut = cc.ActionEase.extend(/** @lends cc.EaseExponentialInOut# */{
@@ -781,9 +742,6 @@ cc.EaseExponentialInOut = cc.ActionEase.extend(/** @lends cc.EaseExponentialInOu
  * @return {cc.EaseExponentialInOut}
  *
  * @example
- * //The old usage
- * cc.EaseExponentialInOut.create(action);
- * //The new usage
  * action.easing(cc.easeExponentialInOut());
  */
 cc.EaseExponentialInOut.create = function (action) {
@@ -830,9 +788,6 @@ cc.easeExponentialInOut = function(){
  * @deprecated since v3.0 please use action.easing(cc.easeSineIn())
  *
  * @example
- * //The old usage
- * cc.EaseSineIn.create(action);
- * //The new usage
  * action.easing(cc.easeSineIn());
  */
 cc.EaseSineIn = cc.ActionEase.extend(/** @lends cc.EaseSineIn# */{
@@ -877,9 +832,6 @@ cc.EaseSineIn = cc.ActionEase.extend(/** @lends cc.EaseSineIn# */{
  * @return {cc.EaseSineIn}
  *
  * @example
- * //The old usage
- * cc.EaseSineIn.create(action);
- * //The new usage
  * action.easing(cc.easeSineIn());
  */
 cc.EaseSineIn.create = function (action) {
@@ -918,9 +870,6 @@ cc.easeSineIn = function(){
  * @deprecated since v3.0 please use action.easing(cc.easeSineOut())
  *
  * @example
- * //The old usage
- * cc.EaseSineOut.create(action);
- * //The new usage
  * action.easing(cc.easeSineOut());
  */
 cc.EaseSineOut = cc.ActionEase.extend(/** @lends cc.EaseSineOut# */{
@@ -965,9 +914,6 @@ cc.EaseSineOut = cc.ActionEase.extend(/** @lends cc.EaseSineOut# */{
  * @return {cc.EaseSineOut}
  *
  * @example
- * //The old usage
- * cc.EaseSineOut.create(action);
- * //The new usage
  * action.easing(cc.easeSineOut());
  */
 cc.EaseSineOut.create = function (action) {
@@ -1007,9 +953,6 @@ cc.easeSineOut = function(){
  * @deprecated since v3.0 please use action.easing(cc.easeSineInOut())
  *
  * @example
- * //The old usage
- * cc.EaseSineInOut.create(action);
- * //The new usage
  * action.easing(cc.easeSineInOut());
  */
 cc.EaseSineInOut = cc.ActionEase.extend(/** @lends cc.EaseSineInOut# */{
@@ -1054,9 +997,6 @@ cc.EaseSineInOut = cc.ActionEase.extend(/** @lends cc.EaseSineInOut# */{
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeSineInOut())
  *
  * @example
- * //The old usage
- * cc.EaseSineInOut.create(action);
- * //The new usage
  * action.easing(cc.easeSineInOut());
  */
 cc.EaseSineInOut.create = function (action) {
@@ -1183,9 +1123,6 @@ cc.EaseElastic.create = function (action, period) {
  * @deprecated since v3.0 please use action.easing(cc.easeElasticIn())
  *
  * @example
- * //The old usage
- * cc.EaseElasticIn.create(action, period);
- * //The new usage
  * action.easing(cc.easeElasticIn(period));
  */
 cc.EaseElasticIn = cc.EaseElastic.extend(/** @lends cc.EaseElasticIn# */{
@@ -1234,9 +1171,6 @@ cc.EaseElasticIn = cc.EaseElastic.extend(/** @lends cc.EaseElasticIn# */{
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeElasticIn(period))
  *
  * @example
- * //The old usage
- * cc.EaseElasticIn.create(action, period);
- * //The new usage
  * action.easing(cc.easeElasticIn(period));
  *
  * @param {cc.ActionInterval} action
@@ -1300,9 +1234,6 @@ cc.easeElasticIn = function (period) {
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeElasticOut(period))
  *
  * @example
- * //The old usage
- * cc.EaseElasticOut.create(action, period);
- * //The new usage
  * action.easing(cc.easeElasticOut(period));
  */
 cc.EaseElasticOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticOut# */{
@@ -1354,9 +1285,6 @@ cc.EaseElasticOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticOut# */{
  * @return {cc.EaseElasticOut}
  *
  * @example
- * //The old usage
- * cc.EaseElasticOut.create(action, period);
- * //The new usage
  * action.easing(cc.easeElasticOut(period));
  */
 cc.EaseElasticOut.create = function (action, period) {
@@ -1409,9 +1337,6 @@ cc.easeElasticOut = function (period) {
  * @deprecated since v3.0 please use action.easing(cc.easeElasticInOut())
  *
  * @example
- * //The old usage
- * cc.EaseElasticInOut.create(action, period);
- * //The new usage
  * action.easing(cc.easeElasticInOut(period));
  */
 cc.EaseElasticInOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticInOut# */{
@@ -1471,9 +1396,6 @@ cc.EaseElasticInOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticInOut# */{
  * @return {cc.EaseElasticInOut}
  *
  * @example
- * //The old usage
- * cc.EaseElasticInOut.create(action, period);
- * //The new usage
  * action.easing(cc.easeElasticInOut(period));
  */
 cc.EaseElasticInOut.create = function (action, period) {
@@ -1589,9 +1511,6 @@ cc.EaseBounce.create = function (action) {
  * @deprecated since v3.0 please use action.easing(cc.easeBounceIn())
  *
  * @example
- * //The old usage
- * cc.EaseBounceIn.create(action);
- * //The new usage
  * action.easing(cc.easeBounceIn());
  */
 cc.EaseBounceIn = cc.EaseBounce.extend(/** @lends cc.EaseBounceIn# */{
@@ -1635,9 +1554,6 @@ cc.EaseBounceIn = cc.EaseBounce.extend(/** @lends cc.EaseBounceIn# */{
  * @return {cc.EaseBounceIn}
  *
  * @example
- * //The old usage
- * cc.EaseBounceIn.create(action);
- * //The new usage
  * action.easing(cc.easeBounceIn());
  */
 cc.EaseBounceIn.create = function (action) {
@@ -1691,9 +1607,6 @@ cc.easeBounceIn = function(){
  * @deprecated since v3.0 please use action.easing(cc.easeBounceOut())
  *
  * @example
- * //The old usage
- * cc.EaseBounceOut.create(action);
- * //The new usage
  * action.easing(cc.easeBounceOut());
  */
 cc.EaseBounceOut = cc.EaseBounce.extend(/** @lends cc.EaseBounceOut# */{
@@ -1737,9 +1650,6 @@ cc.EaseBounceOut = cc.EaseBounce.extend(/** @lends cc.EaseBounceOut# */{
  * @return {cc.EaseBounceOut}
  *
  * @example
- * //The old usage
- * cc.EaseBounceOut.create(action);
- * //The new usage
  * action.easing(cc.easeBounceOut());
  */
 cc.EaseBounceOut.create = function (action) {
@@ -1778,9 +1688,6 @@ cc.easeBounceOut = function(){
  * @deprecated since v3.0 <br /> Please use acton.easing(cc.easeBounceInOut())
  *
  * @example
- * //The old usage
- * cc.EaseBounceInOut.create(action);
- * //The new usage
  * action.easing(cc.easeBounceInOut());
  */
 cc.EaseBounceInOut = cc.EaseBounce.extend(/** @lends cc.EaseBounceInOut# */{
@@ -1830,9 +1737,6 @@ cc.EaseBounceInOut = cc.EaseBounce.extend(/** @lends cc.EaseBounceInOut# */{
  * @return {cc.EaseBounceInOut}
  *
  * @example
- * //The old usage
- * cc.EaseBounceInOut.create(action);
- * //The new usage
  * action.easing(cc.easeBounceInOut());
  */
 cc.EaseBounceInOut.create = function (action) {
@@ -1878,9 +1782,6 @@ cc.easeBounceInOut = function(){
  * @deprecated since v3.0 please use action.easing(cc.easeBackIn())
  *
  * @example
- * //The old usage
- * cc.EaseBackIn.create(action);
- * //The new usage
  * action.easing(cc.easeBackIn());
  */
 cc.EaseBackIn = cc.ActionEase.extend(/** @lends cc.EaseBackIn# */{
@@ -1926,9 +1827,6 @@ cc.EaseBackIn = cc.ActionEase.extend(/** @lends cc.EaseBackIn# */{
  * @return {cc.EaseBackIn}
  *
  * @example
- * //The old usage
- * cc.EaseBackIn.create(action);
- * //The new usage
  * action.easing(cc.easeBackIn());
  */
 cc.EaseBackIn.create = function (action) {
@@ -1968,9 +1866,6 @@ cc.easeBackIn = function(){
  * @deprecated since v3.0 please use action.easing(cc.easeBackOut());
  *
  * @example
- * //The old usage
- * cc.EaseBackOut.create(action);
- * //The new usage
  * action.easing(cc.easeBackOut());
  */
 cc.EaseBackOut = cc.ActionEase.extend(/** @lends cc.EaseBackOut# */{
@@ -2015,9 +1910,6 @@ cc.EaseBackOut = cc.ActionEase.extend(/** @lends cc.EaseBackOut# */{
  * @return {cc.EaseBackOut}
  *
  * @example
- * //The old usage
- * cc.EaseBackOut.create(action);
- * //The new usage
  * action.easing(cc.easeBackOut());
  */
 cc.EaseBackOut.create = function (action) {
@@ -2058,9 +1950,6 @@ cc.easeBackOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeBackInOut())
  *
  * @example
- * //The old usage
- * cc.EaseBackInOut.create(action);
- * //The new usage
  * action.easing(cc.easeBackInOut());
  */
 cc.EaseBackInOut = cc.ActionEase.extend(/** @lends cc.EaseBackInOut# */{
@@ -2112,9 +2001,6 @@ cc.EaseBackInOut = cc.ActionEase.extend(/** @lends cc.EaseBackInOut# */{
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeBackInOut())
  *
  * @example
- * //The old usage
- * cc.EaseBackInOut.create(action);
- * //The new usage
  * action.easing(cc.easeBackInOut());
  */
 cc.EaseBackInOut.create = function (action) {
@@ -2161,10 +2047,6 @@ cc.easeBackInOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeBezierAction())
  *
  * @example
- * //The old usage
- * var action = cc.EaseBezierAction.create(action);
- * action.setBezierParamer(0.5, 0.5, 1.0, 1.0);
- * //The new usage
  * action.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
  */
 cc.EaseBezierAction = cc.ActionEase.extend(/** @lends cc.EaseBezierAction# */{
@@ -2246,10 +2128,6 @@ cc.EaseBezierAction = cc.ActionEase.extend(/** @lends cc.EaseBezierAction# */{
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeBezierAction())
  *
  * @example
- * //The old usage
- * var action = cc.EaseBezierAction.create(action);
- * action.setBezierParamer(0.5, 0.5, 1.0, 1.0);
- * //The new usage
  * action.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
  */
 cc.EaseBezierAction.create = function(action){
@@ -2290,9 +2168,6 @@ cc.easeBezierAction = function(p0, p1, p2, p3){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuadraticAction())
  *
  * @example
- * //The old usage
- * cc.EaseQuadraticActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeQuadraticActionIn());
  */
 cc.EaseQuadraticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuadraticActionIn# */{
@@ -2343,9 +2218,6 @@ cc.EaseQuadraticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuadraticActio
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuadraticAction())
  *
  * @example
- * //The old usage
- * cc.EaseQuadraticActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeQuadraticActionIn());
  */
 cc.EaseQuadraticActionIn.create = function(action){
@@ -2382,9 +2254,6 @@ cc.easeQuadraticActionIn = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuadraticActionOut())
  *
  * @example
- * //The old usage
- * cc.EaseQuadraticActionOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuadraticActionOut());
  */
 cc.EaseQuadraticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuadraticActionOut# */{
@@ -2434,9 +2303,6 @@ cc.EaseQuadraticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuadraticActi
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuadraticActionOut())
  *
  * @example
- * //The old usage
- * cc.EaseQuadraticActionOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuadraticActionOut());
  */
 cc.EaseQuadraticActionOut.create = function(action){
@@ -2473,9 +2339,6 @@ cc.easeQuadraticActionOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuadraticActionInOut())
  *
  * @example
- * //The old usage
- * cc.EaseQuadraticActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuadraticActionInOut());
  */
 cc.EaseQuadraticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuadraticActionInOut# */{
@@ -2530,9 +2393,6 @@ cc.EaseQuadraticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuadraticAc
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuadraticActionInOut())
  *
  * @example
- * //The old usage
- * cc.EaseQuadraticActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuadraticActionInOut());
  *
  * @param action
@@ -2573,9 +2433,6 @@ cc.easeQuadraticActionInOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuarticActionIn());
  *
  * @example
- * //The old usage
- * cc.EaseQuarticActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeQuarticActionIn());
  */
 cc.EaseQuarticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuarticActionIn# */{
@@ -2622,9 +2479,6 @@ cc.EaseQuarticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuarticActionIn#
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuarticActionIn());
  *
  * @example
- * //The old usage
- * cc.EaseQuarticActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeQuarticActionIn());
  *
  * @param action
@@ -2664,9 +2518,6 @@ cc.easeQuarticActionIn = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.QuarticActionOut());
  *
  * @example
- * //The old usage
- * cc.EaseQuarticActionOut.create(action);
- * //The new usage
  * action.easing(cc.EaseQuarticActionOut());
  */
 cc.EaseQuarticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuarticActionOut# */{
@@ -2714,9 +2565,6 @@ cc.EaseQuarticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuarticActionOu
  * @deprecated since v3.0 <br /> Please use action.easing(cc.QuarticActionOut());
  *
  * @example
- * //The old usage
- * cc.EaseQuarticActionOut.create(action);
- * //The new usage
  * action.easing(cc.EaseQuarticActionOut());
  *
  * @param action
@@ -2757,9 +2605,6 @@ cc.easeQuarticActionOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuarticActionInOut());
  *
  * @example
- * //The old usage
- * cc.EaseQuarticActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuarticActionInOut());
  */
 cc.EaseQuarticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuarticActionInOut# */{
@@ -2810,9 +2655,6 @@ cc.EaseQuarticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuarticAction
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuarticActionInOut());
  *
  * @example
- * //The old usage
- * cc.EaseQuarticActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuarticActionInOut());
  *
  * @param action
@@ -2849,9 +2691,6 @@ cc.easeQuarticActionInOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuinticActionIn());
  *
  * @example
- * //The old usage
- * cc.EaseQuinticActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeQuinticActionIn());
  */
 cc.EaseQuinticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuinticActionIn# */{
@@ -2898,9 +2737,6 @@ cc.EaseQuinticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuinticActionIn#
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuinticActionIn());
  *
  * @example
- * //The old usage
- * cc.EaseQuinticActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeQuinticActionIn());
  *
  * @param action
@@ -2941,9 +2777,6 @@ cc.easeQuinticActionIn = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuadraticActionOut());
  *
  * @example
- * //The old usage
- * cc.EaseQuinticActionOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuadraticActionOut());
  */
 cc.EaseQuinticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuinticActionOut# */{
@@ -2991,9 +2824,6 @@ cc.EaseQuinticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuinticActionOu
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuadraticActionOut());
  *
  * @example
- * //The old usage
- * cc.EaseQuinticActionOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuadraticActionOut());
  *
  * @param action
@@ -3034,9 +2864,6 @@ cc.easeQuinticActionOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuinticActionInOut());
  *
  * @example
- * //The old usage
- * cc.EaseQuinticActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuinticActionInOut());
  */
 cc.EaseQuinticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuinticActionInOut# */{
@@ -3087,9 +2914,6 @@ cc.EaseQuinticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuinticAction
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeQuinticActionInOut());
  *
  * @example
- * //The old usage
- * cc.EaseQuinticActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeQuinticActionInOut());
  *
  * @param action
@@ -3130,9 +2954,6 @@ cc.easeQuinticActionInOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCircleActionIn());
  *
  * @example
- * //The old usage
- * cc.EaseCircleActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeCircleActionIn());
  */
 cc.EaseCircleActionIn = cc.ActionEase.extend(/** @lends cc.EaseCircleActionIn# */{
@@ -3179,9 +3000,6 @@ cc.EaseCircleActionIn = cc.ActionEase.extend(/** @lends cc.EaseCircleActionIn# *
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCircleActionIn());
  *
  * @example
- * //The old usage
- * cc.EaseCircleActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeCircleActionIn());
  *
  * @param action
@@ -3222,9 +3040,6 @@ cc.easeCircleActionIn = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCircleActionOut());
  *
  * @example
- * //The old usage
- * cc.EaseCircleActionOut.create(action);
- * //The new usage
  * action.easing(cc.easeCircleActionOut());
  */
 cc.EaseCircleActionOut = cc.ActionEase.extend(/** @lends cc.EaseCircleActionOut# */{
@@ -3272,9 +3087,6 @@ cc.EaseCircleActionOut = cc.ActionEase.extend(/** @lends cc.EaseCircleActionOut#
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCircleActionOut());
  *
  * @example
- * //The old usage
- * cc.EaseCircleActionOut.create(action);
- * //The new usage
  * action.easing(cc.easeCircleActionOut());
  *
  * @param action
@@ -3315,9 +3127,6 @@ cc.easeCircleActionOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCircleActionInOut());
  *
  * @example
- * //The old usage
- * cc.EaseCircleActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeCircleActionInOut());
  */
 cc.EaseCircleActionInOut = cc.ActionEase.extend(/** @lends cc.EaseCircleActionInOut# */{
@@ -3368,9 +3177,6 @@ cc.EaseCircleActionInOut = cc.ActionEase.extend(/** @lends cc.EaseCircleActionIn
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCircleActionInOut());
  *
  * @example
- * //The old usage
- * cc.EaseCircleActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeCircleActionInOut());
  *
  * @param action
@@ -3411,9 +3217,6 @@ cc.easeCircleActionInOut = function(){
  * @deprecated since v3.0 <br /> action.easing(cc.easeCubicActionIn());
  *
  * @example
- * //The old usage
- * cc.EaseCubicActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeCubicActionIn());
  */
 cc.EaseCubicActionIn = cc.ActionEase.extend(/** @lends cc.EaseCubicActionIn# */{
@@ -3460,9 +3263,6 @@ cc.EaseCubicActionIn = cc.ActionEase.extend(/** @lends cc.EaseCubicActionIn# */{
  * @deprecated since v3.0 <br /> action.easing(cc.easeCubicActionIn());
  *
  * @example
- * //The old usage
- * cc.EaseCubicActionIn.create(action);
- * //The new usage
  * action.easing(cc.easeCubicActionIn());
  *
  * @param action
@@ -3503,9 +3303,6 @@ cc.easeCubicActionIn = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCubicActionOut());
  *
  * @example
- * //The old usage
- * cc.EaseCubicActionOut.create(action);
- * //The new usage
  * action.easing(cc.easeCubicActionOut());
  */
 cc.EaseCubicActionOut = cc.ActionEase.extend(/** @lends cc.EaseCubicActionOut# */{
@@ -3553,9 +3350,6 @@ cc.EaseCubicActionOut = cc.ActionEase.extend(/** @lends cc.EaseCubicActionOut# *
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCubicActionOut());
  *
  * @example
- * //The old usage
- * cc.EaseCubicActionOut.create(action);
- * //The new usage
  * action.easing(cc.easeCubicActionOut());
  *
  * @param action
@@ -3596,9 +3390,6 @@ cc.easeCubicActionOut = function(){
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCubicActionInOut());
  *
  * @example
- * //The old usage
- * cc.EaseCubicActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeCubicActionInOut());
  */
 cc.EaseCubicActionInOut = cc.ActionEase.extend(/** @lends cc.EaseCubicActionInOut# */{
@@ -3649,9 +3440,6 @@ cc.EaseCubicActionInOut = cc.ActionEase.extend(/** @lends cc.EaseCubicActionInOu
  * @deprecated since v3.0 <br /> Please use action.easing(cc.easeCubicActionInOut());
  *
  * @example
- * //The old usage
- * cc.EaseCubicActionInOut.create(action);
- * //The new usage
  * action.easing(cc.easeCubicActionInOut());
  *
  * @param action
