@@ -514,20 +514,3 @@ cc.MotionStreak = cc.Node.extend(/** @lends cc.MotionStreak# */{
     }
 });
 
-/**
- * Please use new cc.MotionStreak instead. <br />
- * Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename or texture
- * @deprecated since v3.0 please use new cc.MotionStreak instead.
- * @param {Number} fade time to fade
- * @param {Number} minSeg minimum segment size
- * @param {Number} stroke stroke's width
- * @param {Number} color
- * @param {string|cc.Texture2D} texture texture filename or texture
- * @return {cc.MotionStreak}
- * @example
- * //example
- * new cc.MotionStreak(2, 3, 32, cc.color.GREEN, s_streak);
- */
-cc.MotionStreak.create = function (fade, minSeg, stroke, color, texture) {
-    return new cc.MotionStreak(fade, minSeg, stroke, color, texture);
-};
