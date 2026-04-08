@@ -99,12 +99,3 @@ _p.target;
 cc.defineGetterSetter(_p, "target", null, _p.setTarget);
 
 
-/**
- * Creates a NodeGrid. <br />
- * Implementation cc.NodeGrid
- * @deprecated since v3.0 please new cc.NodeGrid instead.
- * @return {cc.NodeGrid}
- */
-cc.NodeGrid.create = function () {
-    return new cc.NodeGrid();
-};
