@@ -917,16 +917,6 @@ _p.tileHeight;
 cc.defineGetterSetter(_p, "tileHeight", _p._getTileHeight, _p._setTileHeight);
 
 
-/**
- * Creates a TMX Format with a tmx file or content string
- * @deprecated since v3.0 please use new cc.TMXMapInfo(tmxFile, resourcePath) instead.
- * @param {String} tmxFile fileName or content string
- * @param {String} resourcePath  If tmxFile is a file name ,it is not required.If tmxFile is content string ,it is must required.
- * @return {cc.TMXMapInfo}
- */
-cc.TMXMapInfo.create = function (tmxFile, resourcePath) {
-    return new cc.TMXMapInfo(tmxFile, resourcePath);
-};
 
 
 cc.loader.register(["tmx", "tsx"], cc._txtLoader);

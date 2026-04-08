@@ -790,14 +790,3 @@ _p.tileHeight;
 cc.defineGetterSetter(_p, "tileHeight", _p._getTileHeight, _p._setTileHeight);
 
 
-/**
- * Creates a cc.TMXLayer with an tile set info, a layer info and a map info
- * @deprecated since v3.0 please use new cc.TMXLayer(tilesetInfo, layerInfo, mapInfo) instead.
- * @param {cc.TMXTilesetInfo} tilesetInfo
- * @param {cc.TMXLayerInfo} layerInfo
- * @param {cc.TMXMapInfo} mapInfo
- * @return {cc.TMXLayer|Null}
- */
-cc.TMXLayer.create = function (tilesetInfo, layerInfo, mapInfo) {
-    return new cc.TMXLayer(tilesetInfo, layerInfo, mapInfo);
-};
