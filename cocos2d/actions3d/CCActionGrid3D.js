@@ -135,17 +135,6 @@ cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
 cc.waves3D = function (duration, gridSize, waves, amplitude) {
     return new cc.Waves3D(duration, gridSize, waves, amplitude);
 };
-/**
- * Please use cc.waves3D instead. <br />
- * Create a wave 3d action with duration, grid size, waves and amplitude.
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} waves
- * @param {Number} amplitude
- * @static
- * @deprecated since v3.0 <br /> Please use cc.waves3D instead.
- */
-cc.Waves3D.create = cc.waves3D;
 
 /**
  * cc.FlipX3D action. <br />
@@ -271,16 +260,6 @@ cc.flipX3D = function (duration) {
     return new cc.FlipX3D(duration);
 };
 
-/**
- * Please use cc.flipX3D instead. <br />
- * Create a Flip X 3D action with duration. <br />
- * Flip around.
- * @param {Number} duration
- * @return {cc.FlipX3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.flipX3D instead.
- */
-cc.FlipX3D.create = cc.flipX3D;
 
 /**
  * cc.FlipY3D action. <br />
@@ -383,15 +362,6 @@ cc.flipY3D = function (duration) {
     return new cc.FlipY3D(duration);
 };
 
-/**
- * Please use cc.flipY3D instead. <br />
- * Create a flip Y 3d action with duration.
- * @param {Number} duration
- * @return {cc.FlipY3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.flipY3D instead.
- */
-cc.FlipY3D.create = cc.flipY3D;
 
 /**
  * cc.Lens3D action. <br />
@@ -553,18 +523,6 @@ cc.lens3D = function (duration, gridSize, position, radius) {
     return new cc.Lens3D(duration, gridSize, position, radius);
 };
 
-/**
- * Please use cc.lens3D instead
- * creates a lens 3d action with center position, radius
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {cc.Point} position
- * @param {Number} radius
- * @return {cc.Lens3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.lens3D instead.
- */
-cc.Lens3D.create = cc.lens3D;
 
 /**
  * cc.Ripple3D action. <br />
@@ -720,20 +678,6 @@ cc.ripple3D = function (duration, gridSize, position, radius, waves, amplitude) 
     return new cc.Ripple3D(duration, gridSize, position, radius, waves, amplitude);
 };
 
-/**
- * Please use cc.ripple3D instead
- * creates a ripple 3d action with radius, number of waves, amplitude
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {cc.Point} position
- * @param {Number} radius
- * @param {Number} waves
- * @param {Number} amplitude
- * @return {cc.Ripple3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.ripple3D instead.
- */
-cc.Ripple3D.create = cc.ripple3D;
 
 /**
  * cc.Shaky3D action. <br />
@@ -816,18 +760,6 @@ cc.shaky3D = function (duration, gridSize, range, shakeZ) {
     return new cc.Shaky3D(duration, gridSize, range, shakeZ);
 };
 
-/**
- * Please use cc.shaky3D instead
- * creates the action with a range, shake Z vertices, a grid and duration
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} range
- * @param {Boolean} shakeZ
- * @return {cc.Shaky3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.shaky3D instead.
- */
-cc.Shaky3D.create = cc.shaky3D;
 
 /**
  * cc.Liquid action. <br />
@@ -942,18 +874,6 @@ cc.liquid = function (duration, gridSize, waves, amplitude) {
     return new cc.Liquid(duration, gridSize, waves, amplitude);
 };
 
-/**
- * Please use cc.liquid instead
- * creates the action with amplitude, a grid and duration
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} waves
- * @param {Number} amplitude
- * @return {cc.Liquid}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.liquid instead.
- */
-cc.Liquid.create = cc.liquid;
 
 /**
  * cc.Waves action. <br />
@@ -1083,20 +1003,6 @@ cc.waves = function (duration, gridSize, waves, amplitude, horizontal, vertical)
     return new cc.Waves(duration, gridSize, waves, amplitude, horizontal, vertical);
 };
 
-/**
- * Please use cc.waves instead
- * initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} waves
- * @param {Number} amplitude
- * @param {Boolean} horizontal
- * @param {Boolean} vertical
- * @return {cc.Waves}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.waves instead.
- */
-cc.Waves.create = cc.waves;
 
 /** @brief  */
 /**
@@ -1241,17 +1147,3 @@ cc.Twirl = cc.Grid3DAction.extend(/** @lends cc.Twirl# */{
 cc.twirl = function (duration, gridSize, position, twirls, amplitude) {
     return new cc.Twirl(duration, gridSize, position, twirls, amplitude);
 };
-
-/**
- * Please use cc.twirl instead
- * creates the action with center position, number of twirls, amplitude, a grid size and duration
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {cc.Point} position
- * @param {Number} twirls
- * @param {Number} amplitude
- * @return {cc.Twirl}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.twirl instead.
- */
-cc.Twirl.create = cc.twirl;

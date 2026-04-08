@@ -134,16 +134,6 @@ cc.gridAction = function (duration, gridSize) {
     return new cc.GridAction(duration, gridSize);
 };
 
-/**
- * Please use cc.gridAction instead. <br />
- * Creates the action with size and duration.
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @return {cc.GridAction}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.gridAction instead.
- */
-cc.GridAction.create = cc.gridAction;
 
 /**
  * Base class for cc.Grid3D actions. <br/>
@@ -227,16 +217,6 @@ cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.Grid3DAction# */{
 cc.grid3DAction = function (duration, gridSize) {
     return new cc.Grid3DAction(duration, gridSize);
 };
-/**
- * Please use cc.grid3DAction instead. <br />
- * creates the action with size and duration. <br />
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @return {cc.Grid3DAction}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.grid3DAction instead.
- */
-cc.Grid3DAction.create = cc.grid3DAction;
 
 /**
  * Base class for cc.TiledGrid3D actions.
@@ -312,16 +292,6 @@ cc.tiledGrid3DAction = function (duration, gridSize) {
     return new cc.TiledGrid3DAction(duration, gridSize);
 };
 
-/**
- * Please use cc.tiledGrid3DAction instead
- * Creates the action with duration and grid size
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @return {cc.TiledGrid3DAction}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.tiledGrid3DAction instead.
- */
-cc.TiledGrid3DAction.create = cc.tiledGrid3DAction;
 
 /**
  * <p>
@@ -357,14 +327,6 @@ cc.StopGrid = cc.ActionInstant.extend(/** @lends cc.StopGrid# */{
 cc.stopGrid = function () {
     return new cc.StopGrid();
 };
-/**
- * Please use cc.stopGrid instead
- * Allocates and initializes the action
- * @return {cc.StopGrid}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.stopGrid instead.
- */
-cc.StopGrid.create = cc.stopGrid;
 
 /**
  * cc.ReuseGrid action
@@ -416,12 +378,3 @@ cc.ReuseGrid = cc.ActionInstant.extend(/** @lends cc.ReuseGrid# */{
 cc.reuseGrid = function (times) {
     return new cc.ReuseGrid(times);
 };
-/**
- * Please use cc.reuseGrid instead
- * creates an action with the number of times that the current grid will be reused
- * @param {Number} times
- * @return {cc.ReuseGrid}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.reuseGrid instead.
- */
-cc.ReuseGrid.create = cc.reuseGrid;

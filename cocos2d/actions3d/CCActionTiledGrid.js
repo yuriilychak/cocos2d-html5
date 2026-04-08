@@ -120,19 +120,6 @@ cc.shakyTiles3D = function (duration, gridSize, range, shakeZ) {
     return new cc.ShakyTiles3D(duration, gridSize, range, shakeZ);
 };
 
-/**
- * Please use cc.shakyTiles3D instead. <br />
- * creates the action with a range, whether or not to shake Z vertices, a grid size, and duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} range
- * @param {Boolean} shakeZ
- * @return {cc.ShakyTiles3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.shakyTiles3D instead.
- */
-cc.ShakyTiles3D.create = cc.shakyTiles3D;
 
 /**
  * cc.ShatteredTiles3D action. <br />
@@ -234,19 +221,6 @@ cc.shatteredTiles3D = function (duration, gridSize, range, shatterZ) {
     return new cc.ShatteredTiles3D(duration, gridSize, range, shatterZ);
 };
 
-/**
- * Please use cc.shatteredTiles3D instead. <br />
- * Creates the action with a range, whether of not to shatter Z vertices, a grid size and duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} range
- * @param {Boolean} shatterZ
- * @return {cc.ShatteredTiles3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.shatteredTiles3D instead.
- */
-cc.ShatteredTiles3D.create = cc.shatteredTiles3D;
 
 /**
  * A Tile composed of position, startPosition and delta.
@@ -429,18 +403,6 @@ cc.shuffleTiles = function (duration, gridSize, seed) {
     return new cc.ShuffleTiles(duration, gridSize, seed);
 };
 
-/**
- * Please use cc.shuffleTiles instead. <br />
- * Creates the action with a random seed, the grid size and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} seed
- * @return {cc.ShuffleTiles}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.shuffleTiles instead.
- */
-cc.ShuffleTiles.create = cc.shuffleTiles;
 
 /**
  * cc.FadeOutTRTiles action. Fades out the tiles in a Top-Right direction. <br />
@@ -538,17 +500,6 @@ cc.fadeOutTRTiles = function (duration, gridSize) {
     return new cc.FadeOutTRTiles(duration, gridSize);
 };
 
-/**
- * Please use cc.fadeOutTRTiles instead. <br />
- * Creates the action with the grid size and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param duration
- * @param gridSize
- * @return {cc.FadeOutTRTiles}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.fadeOutTRTiles instead.
- */
-cc.FadeOutTRTiles.create = cc.fadeOutTRTiles;
 
 /**
  * cc.FadeOutBLTiles action. Fades out the tiles in a Bottom-Left direction. <br />
@@ -586,17 +537,6 @@ cc.fadeOutBLTiles = function (duration, gridSize) {
     return new cc.FadeOutBLTiles(duration, gridSize);
 };
 
-/**
- * Please use cc.fadeOutBLTiles instead. <br />
- * Creates the action with the grid size and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param duration
- * @param gridSize
- * @return {cc.FadeOutBLTiles}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.fadeOutBLTiles instead.
- */
-cc.FadeOutBLTiles.create = cc.fadeOutBLTiles;
 
 /**
  * cc.FadeOutUpTiles action. Fades out the tiles in upwards direction. <br />
@@ -642,17 +582,6 @@ cc.fadeOutUpTiles = function (duration, gridSize) {
     return new cc.FadeOutUpTiles(duration, gridSize);
 };
 
-/**
- * Please use cc.fadeOutUpTiles instead. <br />
- * Creates the action with the grid size and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @return {cc.FadeOutUpTiles}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.fadeOutUpTiles instead.
- */
-cc.FadeOutUpTiles.create = cc.fadeOutUpTiles;
 
 /**
  * cc.FadeOutDownTiles action. Fades out the tiles in downwards direction. <br />
@@ -685,17 +614,6 @@ cc.FadeOutDownTiles = cc.FadeOutUpTiles.extend(/** @lends cc.FadeOutDownTiles# *
 cc.fadeOutDownTiles = function (duration, gridSize) {
     return new cc.FadeOutDownTiles(duration, gridSize);
 };
-/**
- * Please use cc.fadeOutDownTiles instead. <br />
- * Creates the action with the grid size and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @return {cc.FadeOutDownTiles}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.fadeOutDownTiles instead.
- */
-cc.FadeOutDownTiles.create = cc.fadeOutDownTiles;
 
 /**
  * cc.TurnOffTiles action.<br/>
@@ -831,18 +749,6 @@ cc.TurnOffTiles = cc.TiledGrid3DAction.extend(/** @lends cc.TurnOffTiles# */{
 cc.turnOffTiles = function (duration, gridSize, seed) {
     return new cc.TurnOffTiles(duration, gridSize, seed);
 };
-/**
- * Please use cc.turnOffTiles instead. <br />
- * Creates the action with a random seed, the grid size and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number|Null} [seed=0]
- * @return {cc.TurnOffTiles}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.turnOffTiles instead.
- */
-cc.TurnOffTiles.create = cc.turnOffTiles;
 
 /**
  * cc.WavesTiles3D action. <br />
@@ -958,19 +864,6 @@ cc.WavesTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.WavesTiles3D# */{
 cc.wavesTiles3D = function (duration, gridSize, waves, amplitude) {
     return new cc.WavesTiles3D(duration, gridSize, waves, amplitude);
 };
-/**
- * Please use cc.wavesTiles3D instead
- * creates the action with a number of waves, the waves amplitude, the grid size and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} waves
- * @param {Number} amplitude
- * @return {cc.WavesTiles3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.wavesTiles3D instead.
- */
-cc.WavesTiles3D.create = cc.wavesTiles3D;
 
 /**
  * cc.JumpTiles3D action.  A sin function is executed to move the tiles across the Z axis. <br />
@@ -1101,19 +994,6 @@ cc.jumpTiles3D = function (duration, gridSize, numberOfJumps, amplitude) {
     return new cc.JumpTiles3D(duration, gridSize, numberOfJumps, amplitude);
 };
 
-/**
- * Please use cc.jumpTiles3D instead
- * creates the action with the number of jumps, the sin amplitude, the grid size and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {Number} numberOfJumps
- * @param {Number} amplitude
- * @return {cc.JumpTiles3D}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.jumpTiles3D instead.
- */
-cc.JumpTiles3D.create = cc.jumpTiles3D;
 
 /**
  * cc.SplitRows action. <br />
@@ -1195,17 +1075,6 @@ cc.splitRows = function (duration, rows) {
     return new cc.SplitRows(duration, rows);
 };
 
-/**
- * Please use cc.splitRows instead
- * creates the action with the number of rows to split and the duration. <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {Number} rows
- * @return {cc.SplitRows}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.splitRows instead.
- */
-cc.SplitRows.create = cc.splitRows;
 
 /**
  * cc.SplitCols action. <br />
@@ -1286,15 +1155,3 @@ cc.SplitCols = cc.TiledGrid3DAction.extend(/** @lends cc.SplitCols# */{
 cc.splitCols = function (duration, cols) {
     return new cc.SplitCols(duration, cols);
 };
-
-/**
- * Please use cc.splitCols instead.
- * creates the action with the number of columns to split and the duration.  <br />
- * Reference the test cases (Effects Test)
- * @param {Number} duration
- * @param {Number} cols
- * @return {cc.SplitCols}
- * @static
- * @deprecated since v3.0 <br /> Please use cc.splitCols instead.
- */
-cc.SplitCols.create = cc.splitCols;
