@@ -131,16 +131,6 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
     },
 
     /**
-     * Returns the id of cc.Touch
-     * @return {Number}
-     * @deprecated since v3.0, please use getID() instead
-     */
-    getId:function () {
-        cc.log("getId is deprecated. Please use getID instead.");
-        return this._id;
-    },
-
-    /**
      * Sets information to touch
      * @param {Number} id
      * @param  {Number} x

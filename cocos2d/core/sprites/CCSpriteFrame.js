@@ -95,16 +95,6 @@ cc.SpriteFrame = cc.Class.extend(
     },
 
     /**
-     * Add a event listener for texture loaded event.
-     * @param {Function} callback
-     * @param {Object} target
-     * @deprecated since 3.1, please use addEventListener instead
-     */
-    addLoadedEventListener: function (callback, target) {
-      this.addEventListener("load", callback, target);
-    },
-
-    /**
      * Gets the rect of the frame in the texture
      * @return {cc.Rect}
      */

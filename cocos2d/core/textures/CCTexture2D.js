@@ -366,16 +366,6 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             },
 
             /**
-             * add listener for loaded event
-             * @param {Function} callback
-             * @param {cc.Node} target
-             * @deprecated since 3.1, please use addEventListener instead
-             */
-            addLoadedEventListener: function (callback, target) {
-                this.addEventListener("load", callback, target);
-            },
-
-            /**
              * remove listener from listeners by target
              * @param {cc.Node} target
              */

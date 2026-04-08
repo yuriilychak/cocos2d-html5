@@ -70,27 +70,6 @@ cc.UINT_MAX = 0xffffffff;
 
 /**
  * <p>
- * simple macro that swaps 2 variables<br/>
- *  modified from c++ macro, you need to pass in the x and y variables names in string, <br/>
- *  and then a reference to the whole object as third variable
- * </p>
- * @param {String} x
- * @param {String} y
- * @param {Object} ref
- * @function
- * @deprecated since v3.0
- */
-cc.swap = function (x, y, ref) {
-    if (cc.isObject(ref) && !cc.isUndefined(ref.x) && !cc.isUndefined(ref.y)) {
-        var tmp = ref[x];
-        ref[x] = ref[y];
-        ref[y] = tmp;
-    } else
-        cc.log(cc._LogInfos.swap);
-};
-
-/**
- * <p>
  *     Linear interpolation between 2 numbers, the ratio sets how much it is biased to each end
  * </p>
  * @param {Number} a number A

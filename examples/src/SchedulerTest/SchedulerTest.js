@@ -494,7 +494,7 @@ var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
 
         var priority = 0;  // priority 0. default.
         var paused = false; // not paused, queue it now.
-        scheduler.scheduleUpdateForTarget(this, priority, paused);
+        scheduler.scheduleUpdate(this, priority, paused);
 
         var interval = 0.25; // every 1/4 of second
         var repeat = cc.REPEAT_FOREVER; // how many repeats. cc.REPEAT_FOREVER means forever
@@ -586,9 +586,9 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
         tamara.runAction(new cc.Speed(action2, 1.5));
         kathia.runAction(new cc.Speed(action3, 1.0));
         
-        cc.director.getScheduler().scheduleUpdateForTarget(this._newScheduler, 0, false);
+        cc.director.getScheduler().scheduleUpdate(this._newScheduler, 0, false);
         
-        this._newScheduler.scheduleUpdateForTarget(this._newActionManager, 0, false);
+        this._newScheduler.scheduleUpdate(this._newActionManager, 0, false);
 
         var emitter = new cc.ParticleFireworks();
         emitter.setTexture( cc.textureCache.addImage(s_stars1) );
@@ -656,7 +656,7 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
     onExit: function() {
         cc.director.getScheduler().setTimeScale(1);
         // restore scale
-        cc.director.getScheduler().unscheduleUpdateForTarget(this._newScheduler);
+        cc.director.getScheduler().unscheduleUpdate(this._newScheduler);
         this._super();
     },
 

@@ -166,38 +166,6 @@ cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
         return this._blendFunc;
     },
 
-    /**
-     * Changes width and height
-     * @deprecated since v3.0 please use setContentSize instead
-     * @see cc.Node#setContentSize
-     * @param {Number} w width
-     * @param {Number} h height
-     */
-    changeWidthAndHeight: function (w, h) {
-        this.width = w;
-        this.height = h;
-    },
-
-    /**
-     * Changes width in Points
-     * @deprecated since v3.0 please use setContentSize instead
-     * @see cc.Node#setContentSize
-     * @param {Number} w width
-     */
-    changeWidth: function (w) {
-        this.width = w;
-    },
-
-    /**
-     * change height in Points
-     * @deprecated since v3.0 please use setContentSize instead
-     * @see cc.Node#setContentSize
-     * @param {Number} h height
-     */
-    changeHeight: function (h) {
-        this.height = h;
-    },
-
     setOpacityModifyRGB: function (value) {
     },
 

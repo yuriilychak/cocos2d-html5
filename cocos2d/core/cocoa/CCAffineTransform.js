@@ -113,20 +113,6 @@ cc.affineTransformMakeIdentity = function () {
 };
 
 /**
- * <p>Create a identity transformation matrix: <br/>
- * [ 1, 0, 0, <br/>
- *   0, 1, 0 ]</p>
- * @function
- *
- * @return {cc.AffineTransform}
- * @deprecated since v3.0, please use cc.affineTransformMakeIdentity() instead
- * @see cc.affineTransformMakeIdentity
- */
-cc.affineTransformIdentity = function () {
-    return {a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0};
-};
-
-/**
  * Apply the affine transformation on a rect.
  * @function
  *

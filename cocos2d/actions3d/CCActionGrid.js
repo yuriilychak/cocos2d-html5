@@ -160,32 +160,12 @@ cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.Grid3DAction# */{
     },
 
     /**
-     * returns the vertex than belongs to certain position in the grid.                           <br/>
-     * It will be deprecated in future, please use getVertex instead.
-     * @param {cc.Point} position
-     * @return {cc.Vertex3F}
-     */
-    vertex:function (position) {
-        return this.getVertex(position);
-    },
-
-    /**
      * returns the vertex than belongs to certain position in the grid
      * @param {cc.Point} position
      * @return {cc.Vertex3F}
      */
     getVertex: function(position){
         return this.target.grid.getVertex(position);
-    },
-
-    /**
-     * returns the non-transformed vertex than belongs to certain position in the grid          <br/>
-     * It will be deprecated in future, please use getVertex instead.
-     * @param {cc.Point} position
-     * @return {cc.Vertex3F}
-     */
-    originalVertex:function (position) {
-        return this.getOriginalVertex(position);
     },
 
     /**
@@ -226,32 +206,12 @@ cc.grid3DAction = function (duration, gridSize) {
 cc.TiledGrid3DAction = cc.GridAction.extend(/** @lends cc.TiledGrid3DAction# */{
 
     /**
-     * returns the tile that belongs to a certain position of the grid        <br/>
-     * It will be deprecated in future, please use getTile instead.
-     * @param {cc.Point} position
-     * @return {cc.Quad3}
-     */
-    tile:function (position) {
-        return this.getTile(position);
-    },
-
-    /**
      * returns the tile that belongs to a certain position of the grid
      * @param {cc.Point} position
      * @return {cc.Quad3}
      */
     getTile:function (position) {
         return this.target.grid.tile(position);
-    },
-
-    /**
-     * returns the non-transformed tile that belongs to a certain position of the grid               <br/>
-     * It will be deprecated in future, please use getOriginalTile instead.
-     * @param {cc.Point} position
-     * @return {cc.Quad3}
-     */
-    originalTile:function (position) {
-        return this.getOriginalTile(position);
     },
 
     /**

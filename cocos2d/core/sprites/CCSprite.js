@@ -146,16 +146,6 @@ cc.Sprite = cc.Node.extend(
     },
 
     /**
-     * Add a event listener for texture loaded event.
-     * @param {Function} callback
-     * @param {Object} target
-     * @deprecated since 3.1, please use addEventListener instead
-     */
-    addLoadedEventListener: function (callback, target) {
-      this.addEventListener("load", callback, target);
-    },
-
-    /**
      * Returns whether or not the Sprite needs to be updated in the Atlas
      * @return {Boolean} True if the sprite needs to be updated in the Atlas, false otherwise.
      */
@@ -734,16 +724,6 @@ cc.Sprite = cc.Node.extend(
     },
 
     /**
-     * Sets a new display frame to the sprite.
-     * @param {cc.SpriteFrame|String} newFrame
-     * @deprecated
-     */
-    setDisplayFrame: function (newFrame) {
-      cc.log(cc._LogInfos.Sprite_setDisplayFrame);
-      this.setSpriteFrame(newFrame);
-    },
-
-    /**
      * Returns whether or not a cc.SpriteFrame is being displayed
      * @function
      * @param {cc.SpriteFrame} frame
@@ -751,15 +731,6 @@ cc.Sprite = cc.Node.extend(
      */
     isFrameDisplayed: function (frame) {
       return this._renderCmd.isFrameDisplayed(frame);
-    },
-
-    /**
-     * Returns the current displayed frame.
-     * @deprecated since 3.4, please use getSpriteFrame instead
-     * @return {cc.SpriteFrame}
-     */
-    displayFrame: function () {
-      return this.getSpriteFrame();
     },
 
     /**

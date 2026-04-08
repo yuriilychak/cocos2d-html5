@@ -75,47 +75,6 @@ cc.SpriteBatchNode = cc.Node.extend(
 
     /**
      * <p>
-     *    Same as addChild
-     * </p>
-     * @param {cc.Sprite} child
-     * @param {Number} z zOrder
-     * @param {Number} aTag
-     * @return {cc.SpriteBatchNode}
-     * @deprecated since v3.12
-     */
-    addSpriteWithoutQuad: function (child, z, aTag) {
-      this.addChild(child, z, aTag);
-      return this;
-    },
-
-    // property
-    /**
-     * Return null, no texture atlas is used any more
-     * @return {cc.TextureAtlas}
-     * @deprecated since v3.12
-     */
-    getTextureAtlas: function () {
-      return null;
-    },
-
-    /**
-     * TextureAtlas of cc.SpriteBatchNode setter
-     * @param {cc.TextureAtlas} textureAtlas
-     * @deprecated since v3.12
-     */
-    setTextureAtlas: function (textureAtlas) {},
-
-    /**
-     * Return Descendants of cc.SpriteBatchNode
-     * @return {Array}
-     * @deprecated since v3.12
-     */
-    getDescendants: function () {
-      return this._children;
-    },
-
-    /**
-     * <p>
      *    Initializes a cc.SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
      *    The capacity will be increased in 33% in runtime if it run out of space.<br/>
      *    The file will be loaded using the TextureMgr.<br/>
@@ -149,12 +108,6 @@ cc.SpriteBatchNode = cc.Node.extend(
     },
 
     /**
-     * Do nothing
-     * @deprecated since v3.12
-     */
-    increaseAtlasCapacity: function () {},
-
-    /**
      * Removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
      * @warning Removing a child from a cc.SpriteBatchNode is very slow
      * @param {Number} index
@@ -162,60 +115,6 @@ cc.SpriteBatchNode = cc.Node.extend(
      */
     removeChildAtIndex: function (index, doCleanup) {
       this.removeChild(this._children[index], doCleanup);
-    },
-
-    /**
-     * Do nothing
-     * @param {cc.Sprite} pobParent
-     * @param {Number} index
-     * @return {Number}
-     * @deprecated since v3.12
-     */
-    rebuildIndexInOrder: function (pobParent, index) {
-      return index;
-    },
-
-    /**
-     * Returns highest atlas index in child
-     * @param {cc.Sprite} sprite
-     * @return {Number}
-     * @deprecated since v3.12
-     */
-    highestAtlasIndexInChild: function (sprite) {
-      var children = sprite.children;
-      if (!children || children.length === 0) return sprite.zIndex;
-      else return this.highestAtlasIndexInChild(children[children.length - 1]);
-    },
-
-    /**
-     * Returns lowest atlas index in child
-     * @param {cc.Sprite} sprite
-     * @return {Number}
-     * @deprecated since v3.12
-     */
-    lowestAtlasIndexInChild: function (sprite) {
-      var children = sprite.children;
-      if (!children || children.length === 0) return sprite.zIndex;
-      else return this.lowestAtlasIndexInChild(children[children.length - 1]);
-    },
-
-    /**
-     * Returns index for child
-     * @param {cc.Sprite} sprite
-     * @return {Number}
-     * @deprecated since v3.12
-     */
-    atlasIndexForChild: function (sprite) {
-      return sprite.zIndex;
-    },
-
-    /**
-     * Sprites use this to start sortChildren, don't call this manually
-     * @param {Boolean} reorder
-     * @deprecated since v3.12
-     */
-    reorderBatch: function (reorder) {
-      this._reorderChildDirty = reorder;
     },
 
     /**
@@ -261,28 +160,6 @@ cc.SpriteBatchNode = cc.Node.extend(
       sprite._renderCmd.transform(this._renderCmd, true);
     },
 
-    /**
-     * <p>
-     *    Same as addChild(sprite, index)
-     * </p>
-     * @function
-     * @param {cc.Sprite} sprite
-     * @param {Number} index
-     * @deprecated since v3.12
-     */
-    insertQuadFromSprite: function (sprite, index) {
-      this.addChild(sprite, index);
-    },
-
-    /**
-     * Same as addChild(sprite, index)
-     * @param {cc.Sprite} sprite The child sprite
-     * @param {Number} index The insert index
-     * @deprecated since v3.12
-     */
-    insertChild: function (sprite, index) {
-      this.addChild(sprite, index);
-    },
 
     /**
      * Add child at the end
@@ -294,17 +171,6 @@ cc.SpriteBatchNode = cc.Node.extend(
       var lastLocalZOrder =
         this._children[this._children.length - 1]._localZOrder;
       this.addChild(sprite.lastLocalZOrder + 1);
-    },
-
-    /**
-     * Same as removeChild
-     * @function
-     * @param {cc.Sprite} sprite
-     * @param {Boolean} [cleanup=true]  true if all running actions and callbacks on the child node will be cleanup, false otherwise.
-     * @deprecated since v3.12
-     */
-    removeSpriteFromAtlas: function (sprite, cleanup) {
-      this.removeChild(sprite, cleanup);
     },
 
     /**

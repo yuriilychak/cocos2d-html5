@@ -85,17 +85,6 @@ cc.MenuItem = cc.Node.extend(/** @lends cc.MenuItem# */{
     },
 
     /**
-     * set the target/selector of the menu item
-     * @param {function|String} selector
-     * @param {cc.Node} rec
-     * @deprecated since v3.0
-     */
-    setTarget: function (selector, rec) {
-        this._target = rec;
-        this._callback = selector;
-    },
-
-    /**
      * return whether MenuItem is Enabled
      * @return {Boolean}
      */
@@ -1243,14 +1232,6 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
                     locItems[it].enabled = enabled;
             }
         }
-    },
-
-    /**
-     * returns the selected item   (deprecated in -x, please use getSelectedItem instead.)
-     * @return {cc.MenuItem}
-     */
-    selectedItem: function () {
-        return this.subItems[this._selectedIndex];
     },
 
     /**

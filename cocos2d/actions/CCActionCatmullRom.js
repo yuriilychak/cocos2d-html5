@@ -100,14 +100,6 @@ cc.cloneControlPoints = function (controlPoints) {
 };
 
 /**
- * returns a new clone of the controlPoints
- * @deprecated since v3.0 please use cc.cloneControlPoints() instead.
- * @param controlPoints
- * @returns {Array}
- */
-cc.copyControlPoints = cc.cloneControlPoints;
-
-/**
  * returns a point from the array
  *
  * @param {Array} controlPoints
@@ -199,7 +191,11 @@ cc.CardinalSplineTo = cc.ActionInterval.extend(/** @lends cc.CardinalSplineTo# *
      */
     clone:function () {
         var action = new cc.CardinalSplineTo();
-        action.initWithDuration(this._duration, cc.copyControlPoints(this._points), this._tension);
+        action.initWithDuration(
+          this._duration,
+          cc.cloneControlPoints(this._points),
+          this._tension
+        );
         return action;
     },
 
@@ -424,7 +420,7 @@ cc.CardinalSplineBy = cc.CardinalSplineTo.extend(/** @lends cc.CardinalSplineBy#
      */
     clone:function () {
         var a = new cc.CardinalSplineBy();
-        a.initWithDuration(this._duration, cc.copyControlPoints(this._points), this._tension);
+        a.initWithDuration(this._duration, cc.cloneControlPoints(this._points), this._tension);
         return a;
     }
 });
@@ -486,7 +482,10 @@ cc.CatmullRomTo = cc.CardinalSplineTo.extend(/** @lends cc.CatmullRomTo# */{
      */
     clone:function () {
         var action = new cc.CatmullRomTo();
-        action.initWithDuration(this._duration, cc.copyControlPoints(this._points));
+        action.initWithDuration(
+          this._duration,
+          cc.cloneControlPoints(this._points)
+        );
         return action;
     }
 });
@@ -550,7 +549,10 @@ cc.CatmullRomBy = cc.CardinalSplineBy.extend({
      */
     clone:function () {
         var action = new cc.CatmullRomBy();
-        action.initWithDuration(this._duration, cc.copyControlPoints(this._points));
+        action.initWithDuration(
+          this._duration,
+          cc.cloneControlPoints(this._points)
+        );
         return action;
     }
 });

@@ -61,18 +61,6 @@ cc.Action = cc.Class.extend(
 
     /**
      * to copy object with deep copy.
-     *
-     * @deprecated since v3.0 please use .clone
-     *
-     * @return {cc.Action}
-     */
-    copy: function () {
-      cc.log("copy is deprecated. Please use clone instead.");
-      return this.clone();
-    },
-
-    /**
-     * to copy object with deep copy.
      * returns a clone of action.
      *
      * @return {cc.Action}

@@ -90,20 +90,6 @@ cc.textureCache = /** @lends cc.textureCache# */{
      * Returns an already created texture. Returns null if the texture doesn't exist.
      * @param {String} textureKeyName
      * @return {cc.Texture2D|Null}
-     * @deprecated
-     * @example
-     * //example
-     * var key = cc.textureCache.textureForKey("hello.png");
-     */
-    textureForKey: function (textureKeyName) {
-        cc.log(cc._LogInfos.textureCache_textureForKey);
-        return this.getTextureForKey(textureKeyName);
-    },
-
-    /**
-     * Returns an already created texture. Returns null if the texture doesn't exist.
-     * @param {String} textureKeyName
-     * @return {cc.Texture2D|Null}
      * @example
      * //example
      * var key = cc.textureCache.getTextureForKey("hello.png");

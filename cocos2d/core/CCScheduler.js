@@ -545,31 +545,6 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
         this._currentTarget = null;
     },
 
-    /**
-     * <p>
-     *   The scheduled method will be called every 'interval' seconds.</br>
-     *   If paused is YES, then it won't be called until it is resumed.<br/>
-     *   If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.<br/>
-     *   If the callback function is already scheduled, then only the interval parameter will be updated without re-scheduling it again.<br/>
-     *   repeat let the action be repeated repeat + 1 times, use cc.REPEAT_FOREVER to let the action run continuously<br/>
-     *   delay is the amount of time the action will wait before it'll start<br/>
-     * </p>
-     * @deprecated since v3.4 please use .schedule
-     * @param {cc.Class} target
-     * @param {function} callback_fn
-     * @param {Number} interval
-     * @param {Number} repeat
-     * @param {Number} delay
-     * @param {Boolean} paused
-     * @example
-     * //register a schedule to scheduler
-     * cc.director.getScheduler().scheduleCallbackForTarget(this, function, interval, repeat, delay, !this._isRunning );
-     */
-    scheduleCallbackForTarget: function(target, callback_fn, interval, repeat, delay, paused){
-        //cc.log("scheduleCallbackForTarget is deprecated. Please use schedule.");
-        this.schedule(callback_fn, target, interval, repeat, delay, paused, target.__instanceId + "");
-    },
-
     schedule: function (callback, target, interval, repeat, delay, paused, key) {
         var isSelector = false;
         if (typeof callback !== "function") {
@@ -945,90 +920,6 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
             return elementUpdate.entry.paused;
         }
         return false;
-    },
-
-    /**
-     * <p>
-     *    Schedules the 'update' callback_fn for a given target with a given priority.<br/>
-     *    The 'update' callback_fn will be called every frame.<br/>
-     *    The lower the priority, the earlier it is called.
-     * </p>
-     * @deprecated since v3.4 please use .scheduleUpdate
-     * @param {cc.Class} target
-     * @param {Number} priority
-     * @param {Boolean} paused
-     * @example
-     * //register this object to scheduler
-     * cc.director.getScheduler().scheduleUpdateForTarget(this, priority, !this._isRunning );
-     */
-    scheduleUpdateForTarget: function(target, priority, paused){
-        //cc.log("scheduleUpdateForTarget is deprecated. Please use scheduleUpdate.");
-        this.scheduleUpdate(target, priority, paused);
-    },
-
-    /**
-     * <p>
-     *   Unschedule a callback function for a given target.<br/>
-     *   If you want to unschedule the "update", use unscheudleUpdateForTarget.
-     * </p>
-     * @deprecated since v3.4 please use .unschedule
-     * @param {cc.Class} target
-     * @param {function} callback callback[Function] or key[String]
-     * @example
-     * //unschedule a callback of target
-     * cc.director.getScheduler().unscheduleCallbackForTarget(function, this);
-     */
-    unscheduleCallbackForTarget:function (target, callback) {
-        //cc.log("unscheduleCallbackForTarget is deprecated. Please use unschedule.");
-        this.unschedule(callback, target);
-    },
-
-    /**
-     * Unschedules the update callback function for a given target
-     * @param {cc.Class} target
-     * @deprecated since v3.4 please use .unschedule
-     * @example
-     * //unschedules the "update" method.
-     * cc.director.getScheduler().unscheduleUpdateForTarget(this);
-     */
-    unscheduleUpdateForTarget:function (target) {
-        //cc.log("unscheduleUpdateForTarget is deprecated. Please use unschedule.");
-        this.unscheduleUpdate(target);
-    },
-
-    /**
-     * Unschedules all function callbacks for a given target. This also includes the "update" callback function.
-     * @deprecated since v3.4 please use .unscheduleAll
-     * @param {cc.Class} target
-     */
-    unscheduleAllCallbacksForTarget: function(target){
-        //cc.log("unscheduleAllCallbacksForTarget is deprecated. Please use unscheduleAll.");
-        this.unschedule(target.__instanceId + "", target);
-    },
-
-    /**
-     *  <p>
-     *      Unschedules all function callbacks from all targets. <br/>
-     *      You should NEVER call this method, unless you know what you are doing.
-     *  </p>
-     * @deprecated since v3.4 please use .unscheduleAllWithMinPriority
-     */
-    unscheduleAllCallbacks: function(){
-        //cc.log("unscheduleAllCallbacks is deprecated. Please use unscheduleAll.");
-        this.unscheduleAllWithMinPriority(cc.Scheduler.PRIORITY_SYSTEM);
-    },
-
-    /**
-     * <p>
-     *    Unschedules all function callbacks from all targets with a minimum priority.<br/>
-     *    You should only call this with kCCPriorityNonSystemMin or higher.
-     * </p>
-     * @deprecated since v3.4 please use .unscheduleAllWithMinPriority
-     * @param {Number} minPriority
-     */
-    unscheduleAllCallbacksWithMinPriority:function (minPriority) {
-        //cc.log("unscheduleAllCallbacksWithMinPriority is deprecated. Please use unscheduleAllWithMinPriority.");
-        this.unscheduleAllWithMinPriority(minPriority);
     }
 });
 

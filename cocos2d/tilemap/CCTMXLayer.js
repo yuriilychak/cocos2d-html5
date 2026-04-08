@@ -465,8 +465,6 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
 
         return (tile & cc.TMX_TILE_FLIPPED_MASK) >>> 0;
     },
-    // XXX: deprecated
-    // tileGIDAt:getTileGIDAt,
 
     /**
      * <p>Sets the tile gid (gid = tile global id) at a given tile coordinate.<br />
@@ -572,8 +570,6 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
 
         return (tile & cc.TMX_TILE_FLIPPED_ALL) >>> 0;
     },
-    // XXX: deprecated
-    // tileFlagAt:getTileFlagsAt,
 
     /**
      * Removes a tile at given tile coordinate
@@ -632,8 +628,6 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         }
         return cc.pointPixelsToPoints(ret);
     },
-    // XXX: Deprecated. For backward compatibility only
-    // positionAt:getPositionAt,
 
     _positionForIsoAt:function (pos) {
         return cc.p(this._mapTileSize.width / 2 * ( this._layerSize.width + pos.x - pos.y - 1),

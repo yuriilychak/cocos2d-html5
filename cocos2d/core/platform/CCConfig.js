@@ -161,7 +161,6 @@ cc.TEXTURE_ATLAS_USE_VAO = 0;
  * </p>
  * @constant
  * @type {Number}
- * @deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
  */
 cc.TEXTURE_NPOT_SUPPORT = 0;
 

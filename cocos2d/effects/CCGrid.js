@@ -336,16 +336,6 @@ cc.Grid3D = cc.GridBase.extend(/** @lends cc.Grid3D# */{
     },
 
     /**
-     * returns the vertex at a given position      <br/>
-     * It will be deprecated in future, please use getVertex instead.
-     * @param {cc.Point} pos
-     * @return {cc.Vertex3F}
-     */
-    vertex: function (pos) {
-        return this.getVertex(pos);
-    },
-
-    /**
      * returns the vertex at a given position
      * @param {cc.Point} pos
      * @return {cc.Vertex3F}
@@ -356,16 +346,6 @@ cc.Grid3D = cc.GridBase.extend(/** @lends cc.Grid3D# */{
         var index = 0 | ((pos.x * (this._gridSize.height + 1) + pos.y) * 3);
         var locVertices = this._vertices;
         return new cc.Vertex3F(locVertices[index], locVertices[index + 1], locVertices[index + 2]);
-    },
-
-    /**
-     * returns the original (non-transformed) vertex at a given position             <br/>
-     * It will be deprecated in future, please use getOriginalVertex instead.
-     * @param {cc.Point} pos
-     * @return {cc.Vertex3F}
-     */
-    originalVertex: function (pos) {
-        return this.getOriginalVertex(pos);
     },
 
     /**
@@ -597,16 +577,6 @@ cc.TiledGrid3D = cc.GridBase.extend(/** @lends cc.TiledGrid3D# */{
     },
 
     /**
-     * returns the tile at the given position    <br/>
-     * It will be deprecated in future, please use getTile instead.
-     * @param {cc.Point} pos
-     * @return {cc.Quad3}
-     */
-    tile: function (pos) {
-        return this.getTile(pos);
-    },
-
-    /**
      * returns the tile at the given position
      * @param {cc.Point} pos
      * @return {cc.Quad3}
@@ -638,16 +608,6 @@ cc.TiledGrid3D = cc.GridBase.extend(/** @lends cc.TiledGrid3D# */{
             new cc.Vertex3F(locOriginalVertices[idx + 3], locOriginalVertices[idx + 4], locOriginalVertices[idx + 5]),
             new cc.Vertex3F(locOriginalVertices[idx + 6], locOriginalVertices[idx + 7], locOriginalVertices[idx + 8]),
             new cc.Vertex3F(locOriginalVertices[idx + 9], locOriginalVertices[idx + 10], locOriginalVertices[idx + 11]));
-    },
-
-    /**
-     * returns the original tile (untransformed) at the given position.      <br/>
-     * It will be deprecated in future, please use getOriginalTile instead.
-     * @param {cc.Point} pos
-     * @return {cc.Quad3}
-     */
-    originalTile: function (pos) {
-        return this.getOriginalTile(pos);
     },
 
     /**

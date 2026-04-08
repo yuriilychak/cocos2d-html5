@@ -163,17 +163,6 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
     },
 
     /**
-     * add texture loaded event listener. <br />
-     * Will execute the callback in the loaded.
-     * @param {Function} callback
-     * @param {Object} target
-     * @deprecated since 3.1, please use addEventListener instead
-     */
-    addLoadedEventListener: function (callback, target) {
-        this.addEventListener("load", callback, target);
-    },
-
-    /**
      * Conforms to cc.RGBAProtocol protocol.
      * @return {Boolean}
      */
@@ -453,16 +442,6 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
 
     _setStringForSetter: function (newString) {
         this.setString(newString, false);
-    },
-
-    /**
-     * Set the text. <br />
-     * Change this Label display string.
-     * @deprecated since v3.0 please use .setString
-     * @param label
-     */
-    setCString: function (label) {
-        this.setString(label, true);
     },
 
     // calc the text all with in a line
