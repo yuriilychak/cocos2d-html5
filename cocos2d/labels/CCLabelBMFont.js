@@ -202,7 +202,8 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
     },
 
     /**
-     * Initialization of the node, please do not call this function by yourself, you should pass the parameters to constructor to initialize it .
+     * Initialization of the node, please do not call this function by yourself, you should pass the parameters to constructor to initialize it
+.
      */
     init: function () {
         return this.initWithString(null, null, null, null, null);
@@ -879,19 +880,6 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
     cc.defineGetterSetter(p, "texture", p.getTexture, p.setTexture);
 })();
 
-/**
- * creates a bitmap font atlas with an initial string and the FNT file
- * @deprecated since v3.0 please use new cc.LabelBMFont
- * @param {String} str
- * @param {String} fntFile
- * @param {Number} [width=-1]
- * @param {Number} [alignment=cc.TEXT_ALIGNMENT_LEFT]
- * @param {cc.Point} [imageOffset=cc.p(0,0)]
- * @return {cc.LabelBMFont|Null}
- */
-cc.LabelBMFont.create = function (str, fntFile, width, alignment, imageOffset) {
-    return new cc.LabelBMFont(str, fntFile, width, alignment, imageOffset);
-};
 
 cc.FntFrameCache = {};
 

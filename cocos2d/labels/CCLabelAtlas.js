@@ -202,23 +202,4 @@ cc.LabelAtlas = cc.LabelBMFont.extend(/** @lends cc.LabelBMFont# */{
 
 });
 
-/**
- * <p>
- *     Please use new cc.LabelAtlas instead. <br />
- *     Create a label atlas. <br />
- *     It accepts two groups of parameters:                                                            <br/>
- *         a) string, fntFile                                                                               <br/>
- *         b) label, textureFilename, width, height, startChar                                              <br/>
- * </p>
- * @deprecated since v3.0 please use new cc.LabelAtlas
- * @param {String} strText
- * @param {String} charMapFile  charMapFile or fntFile
- * @param {Number} [itemWidth=0]
- * @param {Number} [itemHeight=0]
- * @param {Number} [startCharMap=""]
- * @return {cc.LabelAtlas} returns the LabelAtlas object on success
- */
-cc.LabelAtlas.create = function (strText, charMapFile, itemWidth, itemHeight, startCharMap) {
-    return new cc.LabelAtlas(strText, charMapFile, itemWidth, itemHeight, startCharMap);
-};
 
