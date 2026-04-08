@@ -1011,16 +1011,6 @@ cc.GLProgram = cc.Class.extend(
   }
 );
 
-/**
- * Create a cc.GLProgram object
- * @deprecated since v3.0, please use new cc.GLProgram(vShaderFileName, fShaderFileName) instead
- * @param {String} vShaderFileName
- * @param {String} fShaderFileName
- * @returns {cc.GLProgram}
- */
-cc.GLProgram.create = function (vShaderFileName, fShaderFileName) {
-  return new cc.GLProgram(vShaderFileName, fShaderFileName);
-};
 
 cc.GLProgram._highpSupported = null;
 
