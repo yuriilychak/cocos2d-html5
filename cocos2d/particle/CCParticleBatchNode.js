@@ -526,13 +526,3 @@ _p.texture;
 cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
 
 
-/**
- * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
- * @deprecated since v3.0 please use new cc.ParticleBatchNode(filename, capacity) instead.
- * @param {String|cc.Texture2D} fileImage
- * @param {Number} capacity
- * @return {cc.ParticleBatchNode}
- */
-cc.ParticleBatchNode.create = function (fileImage, capacity) {
-    return new cc.ParticleBatchNode(fileImage, capacity);
-};

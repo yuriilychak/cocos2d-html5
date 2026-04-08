@@ -2148,18 +2148,6 @@ _p.texture;
 cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
 
 
-/**
- * <p> return the string found by key in dict. <br/>
- *    This plist files can be create manually or with Particle Designer:<br/>
- *    http://particledesigner.71squared.com/<br/>
- * </p>
- * @deprecated since v3.0 please use new cc.ParticleSysytem(plistFile) instead.
- * @param {String|Number} plistFile
- * @return {cc.ParticleSystem}
- */
-cc.ParticleSystem.create = function (plistFile) {
-    return new cc.ParticleSystem(plistFile);
-};
 
 /**
  * <p> return the string found by key in dict. <br/>
