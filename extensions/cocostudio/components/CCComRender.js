@@ -77,15 +77,3 @@ ccs.ComRender = ccs.Component.extend(/** @lends ccs.ComRender# */{
         this._render = node;
     }
 });
-
-/**
- * allocates and initializes a ComRender.
- * @deprecated since v3.0, please use new construction instead.
- * @return {ccs.ComRender}
- * @example
- * // example
- * var com = ccs.ComRender.create();
- */
-ccs.ComRender.create = function (node, comName) {
-    return new ccs.ComRender(node, comName);
-};

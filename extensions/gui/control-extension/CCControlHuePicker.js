@@ -206,13 +206,3 @@ _p.startPos;
 cc.defineGetterSetter(_p, "startPos", _p.getStartPos);
 
 _p = null;
-
-/**
- * @deprecated
- * @param target
- * @param pos
- * @returns {ControlHuePicker}
- */
-cc.ControlHuePicker.create = function (target, pos) {
-    return new cc.ControlHuePicker(target, pos);
-};

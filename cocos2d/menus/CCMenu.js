@@ -584,25 +584,3 @@ var _p = cc.Menu.prototype;
 // Extended properties
 /** @expose */
 _p.enabled;
-
-/**
- * create a new menu
- * @deprecated  since v3.0, please use new cc.Menu(menuitem1, menuitem2, menuitem3) to create a new menu
- * @param {...cc.MenuItem|null} menuItems
- * todo: need to use new
- * @return {cc.Menu}
- */
-cc.Menu.create = function (menuItems) {
-    var argc = arguments.length;
-    if ((argc > 0) && (arguments[argc - 1] == null))
-        cc.log("parameters should not be ending with null in Javascript");
-
-    var ret;
-    if (argc === 0)
-        ret = new cc.Menu();
-    else if (argc === 1)
-        ret = new cc.Menu(menuItems);
-    else
-        ret = new cc.Menu(Array.prototype.slice.call(arguments, 0));
-    return ret;
-};

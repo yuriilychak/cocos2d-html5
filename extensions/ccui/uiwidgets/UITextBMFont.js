@@ -206,15 +206,6 @@ cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
 
 _p = null;
 
-/**
- * allocates and initializes a UILabelBMFont.
- * @deprecated since v3.0, please use new ccui.TextBMFont() instead.
- * @return {ccui.TextBMFont}
- */
-ccui.TextBMFont.create = function (text, filename) {
-    return new ccui.TextBMFont(text, filename);
-};
-
 // Constants
 /**
  * The zOrder value of TextBMFont's renderer.

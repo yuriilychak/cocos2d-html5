@@ -53,8 +53,3 @@ cc.BuilderValue = cc.Class.extend({
         return this._value;
     }
 });
-
-cc.BuilderValue.create = function (value) {
-    return new cc.BuilderValue();
-};
-

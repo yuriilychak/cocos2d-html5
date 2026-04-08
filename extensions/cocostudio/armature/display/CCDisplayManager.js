@@ -453,13 +453,3 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
         }
     }
 });
-
-/**
- * Allocates and initializes a display manager with ccs.Bone.
- * @param {ccs.Bone} bone
- * @returns {ccs.DisplayManager}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.DisplayManager.create = function (bone) {
-    return new ccs.DisplayManager(bone);
-};

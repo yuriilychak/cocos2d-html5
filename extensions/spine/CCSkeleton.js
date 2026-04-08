@@ -367,15 +367,3 @@ cc.defineGetterSetter(sp.Skeleton.prototype, "_blendFunc", sp.Skeleton.prototype
 cc.defineGetterSetter(sp.Skeleton.prototype, '_texture', function () {
     return this._renderCmd._currTexture;
 });
-
-/**
- * Creates a skeleton object.
- * @deprecated since v3.0, please use new sp.Skeleton(skeletonDataFile, atlasFile, scale) instead.
- * @param {spine.SkeletonData|String} skeletonDataFile
- * @param {String|spine.Atlas|spine.SkeletonData} atlasFile atlas filename or atlas data or owns SkeletonData
- * @param {Number} [scale] scale can be specified on the JSON or binary loader which will scale the bone positions, image sizes, and animation translations.
- * @returns {sp.Skeleton}
- */
-sp.Skeleton.create = function (skeletonDataFile, atlasFile/* or atlas*/, scale) {
-    return new sp.Skeleton(skeletonDataFile, atlasFile, scale);
-};

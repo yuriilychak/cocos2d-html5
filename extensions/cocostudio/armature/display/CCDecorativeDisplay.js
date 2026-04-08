@@ -107,12 +107,3 @@ ccs.DecorativeDisplay = ccs.Class.extend(/** @lends ccs.DecorativeDisplay# */{
         this._colliderDetector = null;
     }
 });
-
-/**
- * Allocates and initializes a decorative display.
- * @return {ccs.DecorativeDisplay}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.DecorativeDisplay.create = function () {
-    return new ccs.DecorativeDisplay();
-};

@@ -309,16 +309,6 @@ ccs.VisibleFrame = ccs.Frame.extend({
 });
 
 /**
- * Create the visible frame
- *
- * @deprecated v3.0, please use new ccs.VisibleFrame() instead.
- * @returns {ccs.VisibleFrame}
- */
-ccs.VisibleFrame.create = function () {
-    return new ccs.VisibleFrame();
-};
-
-/**
  * Texture frame
  * @class
  * @extend ccs.Frame
@@ -393,16 +383,6 @@ ccs.TextureFrame = ccs.Frame.extend({
 });
 
 /**
- * Create the Texture frame
- *
- * @deprecated v3.0, please use new ccs.TextureFrame() instead.
- * @returns {ccs.TextureFrame}
- */
-ccs.TextureFrame.create = function () {
-    return new ccs.TextureFrame();
-};
-
-/**
  * Rotation Frame
  * @class
  * @extend ccs.Frame
@@ -473,16 +453,6 @@ ccs.RotationFrame = ccs.Frame.extend({
     }
 
 });
-
-/**
- * Create the Rotation frame
- *
- * @deprecated v3.0, please use new ccs.RotationFrame() instead.
- * @returns {ccs.RotationFrame}
- */
-ccs.RotationFrame.create = function () {
-    return new ccs.RotationFrame();
-};
 
 /**
  * Skew frame
@@ -583,16 +553,6 @@ ccs.SkewFrame = ccs.Frame.extend({
 });
 
 /**
- * Create the Skew frame
- *
- * @deprecated v3.0, please use new ccs.SkewFrame() instead.
- * @returns {ccs.SkewFrame}
- */
-ccs.SkewFrame.create = function () {
-    return new ccs.SkewFrame();
-};
-
-/**
  * Rotation skew frame
  * @class
  * @extend ccs.SkewFrame
@@ -648,16 +608,6 @@ ccs.RotationSkewFrame = ccs.SkewFrame.extend({
     }
 
 });
-
-/**
- * Create the RotationSkew frame
- *
- * @deprecated v3.0, please use new ccs.RotationSkewFrame() instead.
- * @returns {ccs.RotationSkewFrame}
- */
-ccs.RotationSkewFrame.create = function () {
-    return new ccs.RotationSkewFrame();
-};
 
 /**
  * Position frame
@@ -770,16 +720,6 @@ ccs.PositionFrame = ccs.Frame.extend({
 });
 
 /**
- * Create the Position frame
- *
- * @deprecated v3.0, please use new ccs.PositionFrame() instead.
- * @returns {ccs.PositionFrame}
- */
-ccs.PositionFrame.create = function () {
-    return new ccs.PositionFrame();
-};
-
-/**
  * Scale frame
  * @class
  * @xtend ccs.Frame
@@ -888,16 +828,6 @@ ccs.ScaleFrame = ccs.Frame.extend({
 });
 
 /**
- * Create the Scale frame
- *
- * @deprecated v3.0, please use new ccs.ScaleFrame() instead.
- * @returns {ccs.ScaleFrame}
- */
-ccs.ScaleFrame.create = function () {
-    return new ccs.ScaleFrame();
-};
-
-/**
  * AnchorPoint frame
  * @class
  * @extend ccs.Frame
@@ -951,16 +881,6 @@ ccs.AnchorPointFrame = ccs.Frame.extend({
     }
 
 });
-
-/**
- * Create the AnchorPoint frame
- *
- * @deprecated v3.0, please use new ccs.AnchorPointFrame() instead.
- * @returns {ccs.AnchorPointFrame}
- */
-ccs.AnchorPointFrame.create = function () {
-    return new ccs.AnchorPointFrame();
-};
 
 /**
  * Static param
@@ -1110,16 +1030,6 @@ ccs.InnerActionFrame = ccs.Frame.extend({
 });
 
 /**
- * Create the InnerAction frame
- *
- * @deprecated v3.0, please use new ccs.InnerActionFrame() instead.
- * @returns {ccs.InnerActionFrame}
- */
-ccs.InnerActionFrame.create = function () {
-    return new ccs.InnerActionFrame();
-};
-
-/**
  * Color frame
  * @class
  * @extend ccs.Frame
@@ -1206,16 +1116,6 @@ ccs.ColorFrame = ccs.Frame.extend({
     }
 
 });
-
-/**
- * Create the Color frame
- *
- * @deprecated v3.0, please use new ccs.ColorFrame() instead.
- * @returns {ccs.ColorFrame}
- */
-ccs.ColorFrame.create = function () {
-    return new ccs.ColorFrame();
-};
 
 /**
  * Alpha frame
@@ -1328,16 +1228,6 @@ ccs.EventFrame = ccs.Frame.extend({
 });
 
 /**
- * Create the Event frame
- *
- * @deprecated v3.0, please use new ccs.EventFrame() instead.
- * @returns {ccs.EventFrame}
- */
-ccs.EventFrame.create = function () {
-    return new ccs.EventFrame();
-};
-
-/**
  * zOrder frame
  * @class
  * @extend ccs.Frame
@@ -1387,16 +1277,6 @@ ccs.ZOrderFrame = ccs.Frame.extend({
 
 });
 
-/**
- * Create the ZOrder frame
- *
- * @deprecated v3.0, please use new ccs.ZOrderFrame() instead.
- * @returns {ccs.ZOrderFrame}
- */
-ccs.ZOrderFrame.create = function () {
-    return new ccs.ZOrderFrame();
-};
-
 ccs.BlendFuncFrame = ccs.Frame.extend({
     ctor: function () {
         this._super();
@@ -1424,7 +1304,3 @@ ccs.BlendFuncFrame = ccs.Frame.extend({
         return this._blendFunc;
     }
 });
-
-ccs.BlendFuncFrame.create = function () {
-    return new ccs.BlendFuncFrame();
-};

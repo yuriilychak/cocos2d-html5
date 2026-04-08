@@ -271,15 +271,3 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
         return this._loop;
     }
 });
-
-/**
- * allocates and initializes a ComAudio.
- * @deprecated since v3.0, please use new construction instead.
- * @return {ccs.ComAudio}
- * @example
- * // example
- * var com = ccs.ComAudio.create();
- */
-ccs.ComAudio.create = function () {
-    return new ccs.ComAudio();
-};

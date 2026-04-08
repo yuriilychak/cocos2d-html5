@@ -664,14 +664,6 @@ cc.defineGetterSetter(_p, "colliderFilter", _p.getColliderFilter, _p.setCollider
 
 _p = null;
 
-/**
- * Allocates and initializes a bone.
- * @return {ccs.Bone}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.Bone.create = function (name) {
-    return new ccs.Bone(name);
-};
 
 ccs.Bone.RenderCmd = {
     _updateColor: function () {

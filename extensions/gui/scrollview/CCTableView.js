@@ -710,15 +710,3 @@ _p.verticalFillOrder;
 cc.defineGetterSetter(_p, "verticalFillOrder", _p.getVerticalFillOrder, _p.setVerticalFillOrder);
 
 _p = null;
-
-/**
- * An initialized table view object
- * @deprecated
- * @param {cc.TableViewDataSource} dataSource data source;
- * @param {cc.Size} size view size
- * @param {cc.Node} [container] parent object for cells
- * @return {cc.TableView} table view
- */
-cc.TableView.create = function (dataSource, size, container) {
-    return new cc.TableView(dataSource, size, container);
-};

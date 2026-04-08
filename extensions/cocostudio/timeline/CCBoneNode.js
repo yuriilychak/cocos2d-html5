@@ -516,13 +516,6 @@ ccs.BoneNode = (function () {
         }
     });
 
-    BoneNode.create = function (length, color) {
-        // null
-        // length
-        // length, color
-        return new ccui.BoneNode(length, color);
-    };
-
     var BoneNodeCanvasCmd = (function () {
 
         var BoneNodeCanvasCmd = function (node) {

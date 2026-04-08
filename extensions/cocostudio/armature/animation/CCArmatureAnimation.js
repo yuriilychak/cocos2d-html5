@@ -662,11 +662,3 @@ cc.defineGetterSetter(_p, "animationScale", _p.getAnimationScale, _p.setAnimatio
 
 _p = null;
 
-/**
- * Allocates and initializes a ArmatureAnimation.
- * @return {ccs.ArmatureAnimation}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.ArmatureAnimation.create = function (armature) {
-    return new ccs.ArmatureAnimation(armature);
-};

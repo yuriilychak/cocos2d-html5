@@ -184,24 +184,3 @@ _p.displayName;
 cc.defineGetterSetter(_p, "displayName", _p.getDisplayName);
 
 _p = null;
-
-/**
- * allocates and initializes a skin.
- * @param {String} [fileName] fileName or sprite frame name
- * @param {cc.Rect} [rect]
- * @returns {ccs.Skin}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.Skin.create = function (fileName, rect) {
-    return new ccs.Skin(fileName, rect);
-};
-
-/**
- * allocates and initializes a skin.
- * @param {String} spriteFrameName
- * @returns {ccs.Skin}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.Skin.createWithSpriteFrameName = function (spriteFrameName) {
-    return new ccs.Skin("#" + spriteFrameName);
-};

@@ -436,13 +436,3 @@ _p.animation;
 cc.defineGetterSetter(_p, "animation", _p.getAnimation, _p.setAnimation);
 
 _p = null;
-
-/**
- * Allocates and initializes a ArmatureAnimation.
- * @param {ccs.Bone} bone
- * @return {ccs.Tween}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.Tween.create = function (bone) {
-    return new ccs.Tween(bone);
-};

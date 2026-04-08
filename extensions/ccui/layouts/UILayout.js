@@ -1486,15 +1486,6 @@ cc.defineGetterSetter(_p, "layoutType", _p.getLayoutType, _p.setLayoutType);
 
 _p = null;
 
-/**
- * allocates and initializes a UILayout.
- * @deprecated since v3.0, please use new ccui.Layout() instead.
- * @return {ccui.Layout}
- */
-ccui.Layout.create = function () {
-    return new ccui.Layout();
-};
-
 // Constants
 
 //layoutBackGround color type

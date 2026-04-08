@@ -336,18 +336,6 @@ cc.TransitionProgressInOut = cc.TransitionProgress.extend(/** @lends cc.Transiti
 });
 
 /**
- * create a cc.TransitionProgressInOut object
- * @function
- * @deprecated
- * @param {Number} t time
- * @param {cc.Scene} scene
- * @return {cc.TransitionProgressInOut}
- */
-cc.TransitionProgressInOut.create = function (t, scene) {
-    return new cc.TransitionProgressInOut(t, scene);
-};
-
-/**
  * cc.TransitionProgressOutIn transition.
  * @class
  * @extends cc.TransitionProgress
@@ -381,15 +369,3 @@ cc.TransitionProgressOutIn = cc.TransitionProgress.extend(/** @lends cc.Transiti
         return pNode;
     }
 });
-
-/**
- * create a cc.TransitionProgressOutIn object
- * @function
- * @deprecated
- * @param {Number} t time
- * @param {cc.Scene} scene
- * @return {cc.TransitionProgressOutIn}
- */
-cc.TransitionProgressOutIn.create = function (t, scene) {
-    return new cc.TransitionProgressOutIn(t, scene);
-};

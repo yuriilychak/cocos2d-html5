@@ -51,7 +51,8 @@
  * var frame1 = new cc.SpriteFrame(texture, cc.rect(0,0,90,128));
  * var frame2 = new cc.SpriteFrame(texture, cc.rect(0,0,90,128),false,0,cc.size(90,128));
  */
-cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
+cc.SpriteFrame = cc.Class.extend(
+  /** @lends cc.SpriteFrame# */ {
     _offset: null,
     _originalSize: null,
     _rectInPixels: null,
@@ -64,21 +65,25 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
     _textureLoaded: false,
 
     ctor: function (filename, rect, rotated, offset, originalSize) {
-        this._offset = cc.p(0, 0);
-        this._offsetInPixels = cc.p(0, 0);
-        this._originalSize = cc.size(0, 0);
-        this._rotated = false;
-        this._originalSizeInPixels = cc.size(0, 0);
-        this._textureFilename = "";
-        this._texture = null;
-        this._textureLoaded = false;
+      this._offset = cc.p(0, 0);
+      this._offsetInPixels = cc.p(0, 0);
+      this._originalSize = cc.size(0, 0);
+      this._rotated = false;
+      this._originalSizeInPixels = cc.size(0, 0);
+      this._textureFilename = "";
+      this._texture = null;
+      this._textureLoaded = false;
 
-        if (filename !== undefined && rect !== undefined) {
-            if (rotated === undefined || offset === undefined || originalSize === undefined)
-                this.initWithTexture(filename, rect);
-            else
-                this.initWithTexture(filename, rect, rotated, offset, originalSize);
-        }
+      if (filename !== undefined && rect !== undefined) {
+        if (
+          rotated === undefined ||
+          offset === undefined ||
+          originalSize === undefined
+        )
+          this.initWithTexture(filename, rect);
+        else
+          this.initWithTexture(filename, rect, rotated, offset, originalSize);
+      }
     },
 
     /**
@@ -86,7 +91,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @returns {boolean}
      */
     textureLoaded: function () {
-        return this._textureLoaded;
+      return this._textureLoaded;
     },
 
     /**
@@ -96,7 +101,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @deprecated since 3.1, please use addEventListener instead
      */
     addLoadedEventListener: function (callback, target) {
-        this.addEventListener("load", callback, target);
+      this.addEventListener("load", callback, target);
     },
 
     /**
@@ -104,8 +109,13 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {cc.Rect}
      */
     getRectInPixels: function () {
-        var locRectInPixels = this._rectInPixels;
-        return cc.rect(locRectInPixels.x, locRectInPixels.y, locRectInPixels.width, locRectInPixels.height);
+      var locRectInPixels = this._rectInPixels;
+      return cc.rect(
+        locRectInPixels.x,
+        locRectInPixels.y,
+        locRectInPixels.width,
+        locRectInPixels.height
+      );
     },
 
     /**
@@ -113,14 +123,14 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @param {cc.Rect} rectInPixels
      */
     setRectInPixels: function (rectInPixels) {
-        if (!this._rectInPixels) {
-            this._rectInPixels = cc.rect(0, 0, 0, 0);
-        }
-        this._rectInPixels.x = rectInPixels.x;
-        this._rectInPixels.y = rectInPixels.y;
-        this._rectInPixels.width = rectInPixels.width;
-        this._rectInPixels.height = rectInPixels.height;
-        this._rect = cc.rectPixelsToPoints(rectInPixels);
+      if (!this._rectInPixels) {
+        this._rectInPixels = cc.rect(0, 0, 0, 0);
+      }
+      this._rectInPixels.x = rectInPixels.x;
+      this._rectInPixels.y = rectInPixels.y;
+      this._rectInPixels.width = rectInPixels.width;
+      this._rectInPixels.height = rectInPixels.height;
+      this._rect = cc.rectPixelsToPoints(rectInPixels);
     },
 
     /**
@@ -128,7 +138,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {Boolean}
      */
     isRotated: function () {
-        return this._rotated;
+      return this._rotated;
     },
 
     /**
@@ -136,7 +146,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @param {Boolean} bRotated
      */
     setRotated: function (bRotated) {
-        this._rotated = bRotated;
+      this._rotated = bRotated;
     },
 
     /**
@@ -144,8 +154,8 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {cc.Rect}
      */
     getRect: function () {
-        var locRect = this._rect;
-        return cc.rect(locRect.x, locRect.y, locRect.width, locRect.height);
+      var locRect = this._rect;
+      return cc.rect(locRect.x, locRect.y, locRect.width, locRect.height);
     },
 
     /**
@@ -153,14 +163,14 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @param {cc.Rect} rect
      */
     setRect: function (rect) {
-        if (!this._rect) {
-            this._rect = cc.rect(0, 0, 0, 0);
-        }
-        this._rect.x = rect.x;
-        this._rect.y = rect.y;
-        this._rect.width = rect.width;
-        this._rect.height = rect.height;
-        this._rectInPixels = cc.rectPointsToPixels(this._rect);
+      if (!this._rect) {
+        this._rect = cc.rect(0, 0, 0, 0);
+      }
+      this._rect.x = rect.x;
+      this._rect.y = rect.y;
+      this._rect.width = rect.width;
+      this._rect.height = rect.height;
+      this._rectInPixels = cc.rectPointsToPixels(this._rect);
     },
 
     /**
@@ -168,7 +178,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {cc.Point}
      */
     getOffsetInPixels: function () {
-        return cc.p(this._offsetInPixels);
+      return cc.p(this._offsetInPixels);
     },
 
     /**
@@ -176,9 +186,9 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @param {cc.Point} offsetInPixels
      */
     setOffsetInPixels: function (offsetInPixels) {
-        this._offsetInPixels.x = offsetInPixels.x;
-        this._offsetInPixels.y = offsetInPixels.y;
-        cc._pointPixelsToPointsOut(this._offsetInPixels, this._offset);
+      this._offsetInPixels.x = offsetInPixels.x;
+      this._offsetInPixels.y = offsetInPixels.y;
+      cc._pointPixelsToPointsOut(this._offsetInPixels, this._offset);
     },
 
     /**
@@ -186,7 +196,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {cc.Size}
      */
     getOriginalSizeInPixels: function () {
-        return cc.size(this._originalSizeInPixels);
+      return cc.size(this._originalSizeInPixels);
     },
 
     /**
@@ -194,8 +204,8 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @param {cc.Size} sizeInPixels
      */
     setOriginalSizeInPixels: function (sizeInPixels) {
-        this._originalSizeInPixels.width = sizeInPixels.width;
-        this._originalSizeInPixels.height = sizeInPixels.height;
+      this._originalSizeInPixels.width = sizeInPixels.width;
+      this._originalSizeInPixels.height = sizeInPixels.height;
     },
 
     /**
@@ -203,7 +213,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {cc.Size}
      */
     getOriginalSize: function () {
-        return cc.size(this._originalSize);
+      return cc.size(this._originalSize);
     },
 
     /**
@@ -211,8 +221,8 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @param {cc.Size} sizeInPixels
      */
     setOriginalSize: function (sizeInPixels) {
-        this._originalSize.width = sizeInPixels.width;
-        this._originalSize.height = sizeInPixels.height;
+      this._originalSize.width = sizeInPixels.width;
+      this._originalSize.height = sizeInPixels.height;
     },
 
     /**
@@ -220,15 +230,13 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {cc.Texture2D}
      */
     getTexture: function () {
-        if (this._texture)
-            return this._texture;
-        if (this._textureFilename !== "") {
-            var locTexture = cc.textureCache.addImage(this._textureFilename);
-            if (locTexture)
-                this._textureLoaded = locTexture.isLoaded();
-            return locTexture;
-        }
-        return null;
+      if (this._texture) return this._texture;
+      if (this._textureFilename !== "") {
+        var locTexture = cc.textureCache.addImage(this._textureFilename);
+        if (locTexture) this._textureLoaded = locTexture.isLoaded();
+        return locTexture;
+      }
+      return null;
     },
 
     /**
@@ -236,40 +244,51 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @param {cc.Texture2D} texture
      */
     setTexture: function (texture) {
-        if (this._texture !== texture) {
-            var locLoaded = texture.isLoaded();
-            this._textureLoaded = locLoaded;
-            this._texture = texture;
-            if (!locLoaded) {
-                texture.addEventListener("load", function (sender) {
-                    this._textureLoaded = true;
-                    if (this._rotated && cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
-                        var tempElement = sender.getHtmlElementObj();
-                        tempElement = cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas(tempElement, this.getRect());
-                        var tempTexture = new cc.Texture2D();
-                        tempTexture.initWithElement(tempElement);
-                        tempTexture.handleLoadedTexture();
-                        this.setTexture(tempTexture);
+      if (this._texture !== texture) {
+        var locLoaded = texture.isLoaded();
+        this._textureLoaded = locLoaded;
+        this._texture = texture;
+        if (!locLoaded) {
+          texture.addEventListener(
+            "load",
+            function (sender) {
+              this._textureLoaded = true;
+              if (
+                this._rotated &&
+                cc._renderType === cc.game.RENDER_TYPE_CANVAS
+              ) {
+                var tempElement = sender.getHtmlElementObj();
+                tempElement = cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas(
+                  tempElement,
+                  this.getRect()
+                );
+                var tempTexture = new cc.Texture2D();
+                tempTexture.initWithElement(tempElement);
+                tempTexture.handleLoadedTexture();
+                this.setTexture(tempTexture);
 
-                        var rect = this.getRect();
-                        this.setRect(cc.rect(0, 0, rect.width, rect.height));
-                    }
-                    var locRect = this._rect;
-                    if (locRect.width === 0 && locRect.height === 0) {
-                        var w = sender.width, h = sender.height;
-                        this._rect.width = w;
-                        this._rect.height = h;
-                        this._rectInPixels = cc.rectPointsToPixels(this._rect);
-                        this._originalSizeInPixels.width = this._rectInPixels.width;
-                        this._originalSizeInPixels.height = this._rectInPixels.height;
-                        this._originalSize.width = w;
-                        this._originalSize.height = h;
-                    }
-                    //dispatch 'load' event of cc.SpriteFrame
-                    this.dispatchEvent("load");
-                }, this);
-            }
+                var rect = this.getRect();
+                this.setRect(cc.rect(0, 0, rect.width, rect.height));
+              }
+              var locRect = this._rect;
+              if (locRect.width === 0 && locRect.height === 0) {
+                var w = sender.width,
+                  h = sender.height;
+                this._rect.width = w;
+                this._rect.height = h;
+                this._rectInPixels = cc.rectPointsToPixels(this._rect);
+                this._originalSizeInPixels.width = this._rectInPixels.width;
+                this._originalSizeInPixels.height = this._rectInPixels.height;
+                this._originalSize.width = w;
+                this._originalSize.height = h;
+              }
+              //dispatch 'load' event of cc.SpriteFrame
+              this.dispatchEvent("load");
+            },
+            this
+          );
         }
+      }
     },
 
     /**
@@ -277,7 +296,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {cc.Point}
      */
     getOffset: function () {
-        return cc.p(this._offset);
+      return cc.p(this._offset);
     },
 
     /**
@@ -285,8 +304,8 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @param {cc.Point} offsets
      */
     setOffset: function (offsets) {
-        this._offset.x = offsets.x;
-        this._offset.y = offsets.y;
+      this._offset.x = offsets.x;
+      this._offset.y = offsets.y;
     },
 
     /**
@@ -294,10 +313,16 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @returns {SpriteFrame}
      */
     clone: function () {
-        var frame = new cc.SpriteFrame();
-        frame.initWithTexture(this._textureFilename, this._rectInPixels, this._rotated, this._offsetInPixels, this._originalSizeInPixels);
-        frame.setTexture(this._texture);
-        return frame;
+      var frame = new cc.SpriteFrame();
+      frame.initWithTexture(
+        this._textureFilename,
+        this._rectInPixels,
+        this._rotated,
+        this._offsetInPixels,
+        this._originalSizeInPixels
+      );
+      frame.setTexture(this._texture);
+      return frame;
     },
 
     /**
@@ -305,10 +330,16 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {cc.SpriteFrame}
      */
     copyWithZone: function () {
-        var copy = new cc.SpriteFrame();
-        copy.initWithTexture(this._textureFilename, this._rectInPixels, this._rotated, this._offsetInPixels, this._originalSizeInPixels);
-        copy.setTexture(this._texture);
-        return copy;
+      var copy = new cc.SpriteFrame();
+      copy.initWithTexture(
+        this._textureFilename,
+        this._rectInPixels,
+        this._rotated,
+        this._offsetInPixels,
+        this._originalSizeInPixels
+      );
+      copy.setTexture(this._texture);
+      return copy;
     },
 
     /**
@@ -316,7 +347,7 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @returns {cc.SpriteFrame}
      */
     copy: function () {
-        return this.copyWithZone();
+      return this.copyWithZone();
     },
 
     /**
@@ -330,74 +361,75 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
      * @return {Boolean}
      */
     initWithTexture: function (texture, rect, rotated, offset, originalSize) {
-        if (arguments.length === 2)
-            rect = cc.rectPointsToPixels(rect);
+      if (arguments.length === 2) rect = cc.rectPointsToPixels(rect);
 
-        offset = offset || cc.p(0, 0);
-        originalSize = originalSize || rect;
-        rotated = rotated || false;
+      offset = offset || cc.p(0, 0);
+      originalSize = originalSize || rect;
+      rotated = rotated || false;
 
-        if (typeof texture === 'string') {
-            this._texture = null;
-            this._textureFilename = texture;
-        } else if (texture instanceof cc.Texture2D) {
-            this.setTexture(texture);
+      if (typeof texture === "string") {
+        this._texture = null;
+        this._textureFilename = texture;
+      } else if (texture instanceof cc.Texture2D) {
+        this.setTexture(texture);
+      }
+
+      texture = this.getTexture();
+
+      this._rectInPixels = rect;
+      this._rect = cc.rectPixelsToPoints(rect);
+
+      if (texture && texture.url && texture.isLoaded()) {
+        var _x, _y;
+        if (rotated) {
+          _x = rect.x + rect.height;
+          _y = rect.y + rect.width;
+        } else {
+          _x = rect.x + rect.width;
+          _y = rect.y + rect.height;
         }
-
-        texture = this.getTexture();
-
-        this._rectInPixels = rect;
-        this._rect = cc.rectPixelsToPoints(rect);
-
-        if (texture && texture.url && texture.isLoaded()) {
-            var _x, _y;
-            if (rotated) {
-                _x = rect.x + rect.height;
-                _y = rect.y + rect.width;
-            } else {
-                _x = rect.x + rect.width;
-                _y = rect.y + rect.height;
-            }
-            if (_x > texture.getPixelsWide()) {
-                cc.error(cc._LogInfos.RectWidth, texture.url);
-            }
-            if (_y > texture.getPixelsHigh()) {
-                cc.error(cc._LogInfos.RectHeight, texture.url);
-            }
+        if (_x > texture.getPixelsWide()) {
+          cc.error(cc._LogInfos.RectWidth, texture.url);
         }
+        if (_y > texture.getPixelsHigh()) {
+          cc.error(cc._LogInfos.RectHeight, texture.url);
+        }
+      }
 
-        this._offsetInPixels.x = offset.x;
-        this._offsetInPixels.y = offset.y;
-        cc._pointPixelsToPointsOut(offset, this._offset);
-        this._originalSizeInPixels.width = originalSize.width;
-        this._originalSizeInPixels.height = originalSize.height;
-        cc._sizePixelsToPointsOut(originalSize, this._originalSize);
-        this._rotated = rotated;
-        return true;
+      this._offsetInPixels.x = offset.x;
+      this._offsetInPixels.y = offset.y;
+      cc._pointPixelsToPointsOut(offset, this._offset);
+      this._originalSizeInPixels.width = originalSize.width;
+      this._originalSizeInPixels.height = originalSize.height;
+      cc._sizePixelsToPointsOut(originalSize, this._originalSize);
+      this._rotated = rotated;
+      return true;
     }
-});
+  }
+);
 
 cc.EventHelper.prototype.apply(cc.SpriteFrame.prototype);
 
-
-/**
- * @deprecated since v3.0, please use new construction instead
- * @see cc.SpriteFrame
- * @function
- */
-cc.SpriteFrame.createWithTexture = cc.SpriteFrame.create;
-
-cc.SpriteFrame._frameWithTextureForCanvas = function (texture, rect, rotated, offset, originalSize) {
-    var spriteFrame = new cc.SpriteFrame();
-    spriteFrame._texture = texture;
-    spriteFrame._rectInPixels = rect;
-    spriteFrame._rect = cc.rectPixelsToPoints(rect);
-    spriteFrame._offsetInPixels.x = offset.x;
-    spriteFrame._offsetInPixels.y = offset.y;
-    cc._pointPixelsToPointsOut(spriteFrame._offsetInPixels, spriteFrame._offset);
-    spriteFrame._originalSizeInPixels.width = originalSize.width;
-    spriteFrame._originalSizeInPixels.height = originalSize.height;
-    cc._sizePixelsToPointsOut(spriteFrame._originalSizeInPixels, spriteFrame._originalSize);
-    spriteFrame._rotated = rotated;
-    return spriteFrame;
+cc.SpriteFrame._frameWithTextureForCanvas = function (
+  texture,
+  rect,
+  rotated,
+  offset,
+  originalSize
+) {
+  var spriteFrame = new cc.SpriteFrame();
+  spriteFrame._texture = texture;
+  spriteFrame._rectInPixels = rect;
+  spriteFrame._rect = cc.rectPixelsToPoints(rect);
+  spriteFrame._offsetInPixels.x = offset.x;
+  spriteFrame._offsetInPixels.y = offset.y;
+  cc._pointPixelsToPointsOut(spriteFrame._offsetInPixels, spriteFrame._offset);
+  spriteFrame._originalSizeInPixels.width = originalSize.width;
+  spriteFrame._originalSizeInPixels.height = originalSize.height;
+  cc._sizePixelsToPointsOut(
+    spriteFrame._originalSizeInPixels,
+    spriteFrame._originalSize
+  );
+  spriteFrame._rotated = rotated;
+  return spriteFrame;
 };

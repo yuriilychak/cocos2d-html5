@@ -290,17 +290,6 @@ ccui.ImageView = ccui.Widget.extend(/** @lends ccui.ImageView# */{
 
 });
 
-/**
- * Allocates and initializes a UIImageView.
- * @deprecated since v3.0, please use new ccui.ImageView() instead.
- * @param {string} imageFileName
- * @param {Number} texType
- * @return {ccui.ImageView}
- */
-ccui.ImageView.create = function (imageFileName, texType) {
-    return new ccui.ImageView(imageFileName, texType);
-};
-
 // Constants
 /**
  * The zOrder value of ccui.ImageView's renderer.

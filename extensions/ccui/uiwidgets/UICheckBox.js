@@ -656,24 +656,6 @@ cc.defineGetterSetter(_p, "selected", _p.isSelected, _p.setSelected);
 
 _p = null;
 
-/**
- * allocates and initializes a UICheckBox.
- * @deprecated since v3.0, please use new ccui.CheckBox() instead.
- * @param {string} [backGround]     backGround texture.
- * @param {string} [backGroundSeleted]  backGround selected state texture.
- * @param {string} [cross]  cross texture.
- * @param {string} [backGroundDisabled]   cross dark state texture.
- * @param {string} [frontCrossDisabled]   cross dark state texture.
- * @param {Number} [texType]
- * @return {ccui.CheckBox}
- * @example
- * // example
- * var uiCheckBox = new ccui.CheckBox();
- */
-ccui.CheckBox.create = function (backGround, backGroundSeleted, cross, backGroundDisabled, frontCrossDisabled, texType) {
-    return new ccui.CheckBox(backGround, backGroundSeleted,cross,backGroundDisabled,frontCrossDisabled,texType);
-};
-
 // Constants
 //CheckBoxEvent type
 /**

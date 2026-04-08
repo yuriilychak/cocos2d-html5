@@ -96,25 +96,6 @@ ccs.ComExtensionData = ccs.Component.extend({
 
 });
 
-ccs.ComExtensionData.create = function(){
-    return new ccs.ComExtensionData();
-};
-
-/**
- * Create new ActionTimelineData.
- *
- * @deprecated v3.0, please use new ccs.ActionTimelineData() instead.
- *
- * @name ccs.ActionTimelineData.create
- * @function
- * @param actionTag
- * @returns {ccs.ActionTimelineData}
- */
-ccs.ActionTimelineData.create = function (actionTag) {
-    return new ccs.ActionTimelineData(actionTag);
-};
-
-
 /**
  * ActionTimeline
  * @class
@@ -522,16 +503,3 @@ ccs.ActionTimeline = cc.Action.extend({
         this._lastFrameListener = null;
     }
 });
-
-/**
- * create new ActionTimeline
- *
- * @deprecated v3.0, please use new ccs.ActionTimeline() instead.
- *
- * @name ccs.ActionTimeline.create
- * @function
- * @returns {ccs.ActionTimeline}
- */
-ccs.ActionTimeline.create = function () {
-    return new ccs.ActionTimeline();
-};

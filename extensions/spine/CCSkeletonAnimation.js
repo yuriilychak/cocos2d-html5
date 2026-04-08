@@ -337,15 +337,3 @@ sp.SkeletonAnimation = sp.Skeleton.extend(/** @lends sp.SkeletonAnimation# */{
         return this._state;
     }
 });
-
-/**
- * Creates a skeleton animation object.
- * @deprecated since v3.0, please use new sp.SkeletonAnimation(skeletonDataFile, atlasFile, scale) instead.
- * @param {spine.SkeletonData|String} skeletonDataFile
- * @param {String|spine.Atlas|spine.SkeletonData} atlasFile atlas filename or atlas data or owns SkeletonData
- * @param {Number} [scale] scale can be specified on the JSON or binary loader which will scale the bone positions, image sizes, and animation translations.
- * @returns {sp.Skeleton}
- */
-sp.SkeletonAnimation.createWithJsonFile = sp.SkeletonAnimation.create = function (skeletonDataFile, atlasFile/* or atlas*/, scale) {
-    return new sp.SkeletonAnimation(skeletonDataFile, atlasFile, scale);
-};

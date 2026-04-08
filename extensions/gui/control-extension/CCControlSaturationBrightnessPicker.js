@@ -245,13 +245,3 @@ _p.startPos;
 cc.defineGetterSetter(_p, "startPos", _p.getStartPos);
 
 _p = null;
-
-/**
- * Creates a cc.ControlSaturationBrightnessPicker
- * @param {cc.Node} target
- * @param {cc.Point} pos position
- * @returns {ControlSaturationBrightnessPicker}
- */
-cc.ControlSaturationBrightnessPicker.create = function (target, pos) {
-    return new cc.ControlSaturationBrightnessPicker(target, pos);
-};

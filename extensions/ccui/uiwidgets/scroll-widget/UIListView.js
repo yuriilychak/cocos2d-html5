@@ -970,14 +970,6 @@ ccui.ListView = ccui.ScrollView.extend(/** @lends ccui.ListView# */{
     }
 });
 
-/**
- * allocates and initializes a UIListView.
- * @deprecated since v3.0, please use new ccui.ListView() instead.
- */
-ccui.ListView.create = function () {
-    return new ccui.ListView();
-};
-
 // Constants
 //listView event type
 /**

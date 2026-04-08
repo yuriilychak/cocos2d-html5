@@ -804,19 +804,6 @@ cc.defineGetterSetter(_p, "titleColor", _p.getTitleColor, _p.setTitleColor);
 
 _p = null;
 
-/**
- * allocates and initializes a UIButton.
- * @deprecated since v3.0, please use new ccui.Button() instead.
- * @param {string} [normalImage]    normal state texture name
- * @param {string} [selectedImage]  selected state texture name
- * @param {string} [disableImage]   disabled state texture name
- * @param {string} [texType]
- * @return {ccui.Button}
- */
-ccui.Button.create = function (normalImage, selectedImage, disableImage, texType) {
-    return new ccui.Button(normalImage, selectedImage, disableImage, texType);
-};
-
 // Constants
 /**
  * The normal renderer's zOrder value of ccui.Button.

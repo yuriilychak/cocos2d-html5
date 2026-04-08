@@ -257,7 +257,3 @@ ccs.TriggerObj = ccs.Class.extend(/** @lends ccs.TriggerObj# */{
         return this._vInt;
     }
 });
-
-ccs.TriggerObj.create = function () {
-    return new ccs.TriggerObj();
-};

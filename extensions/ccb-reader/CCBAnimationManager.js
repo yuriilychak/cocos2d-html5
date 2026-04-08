@@ -737,21 +737,12 @@ cc.BuilderRotateXTo = cc.ActionInterval.extend({
     // TODO: rotationX is not implemented in HTML5
 });
 
-cc.BuilderRotateXTo.create = function (duration, angle) {
-    throw new Error("rotationX has not been implemented in cocos2d-html5");
-};
-
 //
 // cc.BuilderRotateYTo
 //
 cc.BuilderRotateYTo = cc.ActionInterval.extend({
     // TODO: rotationX is not implemented in HTML5
 });
-
-cc.BuilderRotateYTo.create = function (duration, angle) {
-    throw new Error("rotationY has not been implemented in cocos2d-html5");
-};
-
 //
 // cc.BuilderSoundEffect
 //

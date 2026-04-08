@@ -1813,14 +1813,6 @@ cc.defineGetterSetter(_p, "direction", _p.getDirection, _p.setDirection);
 _p.touchTotalTimeThreshold;
 cc.defineGetterSetter(_p, "touchTotalTimeThreshold", _p.getTouchTotalTimeThreshold, _p.setTouchTotalTimeThreshold);
 _p = null;
-/**
- * allocates and initializes a UIScrollView.
- * @deprecated since v3.0, please use new ccui.ScrollView() instead.
- * @return {ccui.ScrollView}
- */
-ccui.ScrollView.create = function () {
-    return new ccui.ScrollView();
-};
 
 // Constants
 //ScrollView direction

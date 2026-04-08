@@ -826,18 +826,6 @@ ccui.TextField = ccui.Widget.extend(/** @lends ccui.TextField# */{
     }
 });
 
-/**
- * Creates a ccui.TextField.
- * @deprecated since v3.0, please use new ccui.TextField() instead.
- * @param {String} placeholder
- * @param {String} fontName
- * @param {Number} fontSize
- * @returns {ccui.TextField}
- */
-ccui.TextField.create = function(placeholder, fontName, fontSize){
-    return new ccui.TextField(placeholder, fontName, fontSize);
-};
-
 var _p = ccui.TextField.prototype;
 
 // Extended properties

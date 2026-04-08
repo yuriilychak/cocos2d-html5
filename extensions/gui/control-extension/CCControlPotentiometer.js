@@ -287,14 +287,3 @@ _p.prevLocation;
 cc.defineGetterSetter(_p, "prevLocation", _p.getPreviousLocation, _p.setPreviousLocation);
 
 _p = null;
-
-/**
- * @deprecated
- * @param backgroundFile
- * @param progressFile
- * @param thumbFile
- * @returns {ControlPotentiometer}
- */
-cc.ControlPotentiometer.create = function (backgroundFile, progressFile, thumbFile) {
-    return new cc.ControlPotentiometer(backgroundFile, progressFile, thumbFile);
-};

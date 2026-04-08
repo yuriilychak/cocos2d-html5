@@ -173,14 +173,6 @@ cc.defineGetterSetter(_p, "background", _p.getBackground);
 
 _p = null;
 
-/**
- * @deprecated
- * @returns {ControlColourPicker}
- */
-cc.ControlColourPicker.create = function () {
-    return new cc.ControlColourPicker();
-};
-
 // compatible with NPM
 var res = res || {};
 res.CCControlColourPickerSpriteSheet_plist = res.CCControlColourPickerSpriteSheet_plist || "res/extensions/CCControlColourPickerSpriteSheet.plist";

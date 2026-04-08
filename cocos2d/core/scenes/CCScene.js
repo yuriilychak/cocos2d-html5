@@ -24,7 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
 /**
  * <p>cc.Scene is a subclass of cc.Node that is used only as an abstract concept.</p>
  *  <p>cc.Scene an cc.Node are almost identical with the difference that cc.Scene has it's
@@ -39,17 +38,17 @@
  * @example
  * var scene = new cc.Scene();
  */
-cc.Scene = cc.Node.extend(/** @lends cc.Scene# */{
+cc.Scene = cc.Node.extend(
+  /** @lends cc.Scene# */ {
     /**
      * Constructor of cc.Scene
      */
-    _className:"Scene",
-    ctor:function () {
-        cc.Node.prototype.ctor.call(this);
-        this._ignoreAnchorPointForPosition = true;
-        this.setAnchorPoint(0.5, 0.5);
-        this.setContentSize(cc.director.getWinSize());
+    _className: "Scene",
+    ctor: function () {
+      cc.Node.prototype.ctor.call(this);
+      this._ignoreAnchorPointForPosition = true;
+      this.setAnchorPoint(0.5, 0.5);
+      this.setContentSize(cc.director.getWinSize());
     }
-});
-
-
+  }
+);

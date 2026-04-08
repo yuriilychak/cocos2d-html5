@@ -173,15 +173,6 @@ ccui.LayoutParameter = ccui.Class.extend(/** @lends ccui.LayoutParameter# */{
     }
 });
 
-/**
- * allocates and initializes a LayoutParameter.
- * @constructs
- * @return {ccui.LayoutParameter}
- */
-ccui.LayoutParameter.create = function () {
-    return new ccui.LayoutParameter();
-};
-
 // Constants
 //layout parameter type
 /**
@@ -246,16 +237,6 @@ ccui.LinearLayoutParameter = ccui.LayoutParameter.extend(/** @lends ccui.LinearL
             this.setGravity(model._linearGravity);
     }
 });
-
-/**
- * allocates and initializes a LinearLayoutParameter.
- * @constructs
- * @return {ccui.LinearLayoutParameter}
- * @deprecated since v3.0, please use new construction instead
- */
-ccui.LinearLayoutParameter.create = function () {
-    return new ccui.LinearLayoutParameter();
-};
 
 // Constants
 //Linear layout parameter LinearGravity
@@ -387,16 +368,6 @@ ccui.RelativeLayoutParameter = ccui.LayoutParameter.extend(/** @lends ccui.Relat
         }
     }
 });
-
-/**
- * Allocates and initializes a RelativeLayoutParameter.
- * @function
- * @deprecated since v3.0, please use new ccui.RelativeLayoutParameter() instead.
- * @return {ccui.RelativeLayoutParameter}
- */
-ccui.RelativeLayoutParameter.create = function () {
-    return new ccui.RelativeLayoutParameter();
-};
 
 // Constants
 //Relative layout parameter RelativeAlign

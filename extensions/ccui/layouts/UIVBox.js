@@ -56,12 +56,3 @@ ccui.VBox = ccui.Layout.extend(/** @lends ccui.VBox# */{
         return false;
     }
 });
-
-/**
- * Creates a VBox
- * @param {cc.Size} size
- * @returns {ccui.VBox}
- */
-ccui.VBox.create = function(size){
-    return new ccui.VBox(size);
-};

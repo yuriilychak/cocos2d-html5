@@ -837,14 +837,3 @@ _p.clippingToBounds;
 cc.defineGetterSetter(_p, "clippingToBounds", _p.isClippingToBounds, _p.setClippingToBounds);
 
 _p = null;
-
-/**
- * Returns an autoreleased scroll view object.
- * @deprecated
- * @param {cc.Size} size view size
- * @param {cc.Node} container parent object
- * @return {cc.ScrollView} scroll view object
- */
-cc.ScrollView.create = function (size, container) {
-    return new cc.ScrollView(size, container);
-};

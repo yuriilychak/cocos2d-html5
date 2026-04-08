@@ -391,7 +391,3 @@ _p.body;
 cc.defineGetterSetter(_p, "body", _p.getBody, _p.setBody);
 
 _p = null;
-
-ccs.ColliderDetector.create = function (bone) {
-    return new ccs.ColliderDetector(bone);
-};

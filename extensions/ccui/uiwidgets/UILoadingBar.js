@@ -408,17 +408,6 @@ cc.defineGetterSetter(_p, "percent", _p.getPercent, _p.setPercent);
 
 _p = null;
 
-/**
- * Allocates and initializes a UILoadingBar.
- * @deprecated since v3.0, please use new ccui.LoadingBar() instead.
- * @param {string} textureName
- * @param {Number} percentage
- * @return {ccui.LoadingBar}
- */
-ccui.LoadingBar.create = function (textureName, percentage) {
-    return new ccui.LoadingBar(textureName, percentage);
-};
-
 // Constants
 //loadingBar Type
 

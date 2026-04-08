@@ -501,15 +501,6 @@ cc.defineGetterSetter(_p, "verticalAlign", _p.getTextVerticalAlignment, _p.setTe
 _p = null;
 
 /**
- * allocates and initializes a UILabel.
- * @deprecated since v3.0, please use new ccui.Text() instead.
- * @return {ccui.Text}
- */
-ccui.Label = ccui.Text.create = function (textContent, fontName, fontSize) {
-    return new ccui.Text(textContent, fontName, fontSize);
-};
-
-/**
  * The zOrder value of ccui.Text's renderer.
  * @constant
  * @type {number}

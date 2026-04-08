@@ -41,10 +41,8 @@
 //  cocos2d uses a another approach, but the results are almost identical.
 //
 
-
 // tCCPositionType
 // possible types of particle positions
-
 
 /**
  * Structure that contains the values of each particle
@@ -63,21 +61,34 @@
  * @param {cc.Particle.ModeA} [modeA=]
  * @param {cc.Particle.ModeA} [modeB=]
  */
-cc.Particle = function (pos, startPos, color, deltaColor, size, deltaSize, rotation, deltaRotation, timeToLive, atlasIndex, modeA, modeB) {
-    this.pos = pos ? pos : cc.p(0, 0);
-    this.startPos = startPos ? startPos : cc.p(0, 0);
-    this.color = color ? color : {r: 0, g: 0, b: 0, a: 255};
-    this.deltaColor = deltaColor ? deltaColor : {r: 0, g: 0, b: 0, a: 255};
-    this.size = size || 0;
-    this.deltaSize = deltaSize || 0;
-    this.rotation = rotation || 0;
-    this.deltaRotation = deltaRotation || 0;
-    this.timeToLive = timeToLive || 0;
-    this.atlasIndex = atlasIndex || 0;
-    this.modeA = modeA ? modeA : new cc.Particle.ModeA();
-    this.modeB = modeB ? modeB : new cc.Particle.ModeB();
-    this.isChangeColor = false;
-    this.drawPos = cc.p(0, 0);
+cc.Particle = function (
+  pos,
+  startPos,
+  color,
+  deltaColor,
+  size,
+  deltaSize,
+  rotation,
+  deltaRotation,
+  timeToLive,
+  atlasIndex,
+  modeA,
+  modeB
+) {
+  this.pos = pos ? pos : cc.p(0, 0);
+  this.startPos = startPos ? startPos : cc.p(0, 0);
+  this.color = color ? color : { r: 0, g: 0, b: 0, a: 255 };
+  this.deltaColor = deltaColor ? deltaColor : { r: 0, g: 0, b: 0, a: 255 };
+  this.size = size || 0;
+  this.deltaSize = deltaSize || 0;
+  this.rotation = rotation || 0;
+  this.deltaRotation = deltaRotation || 0;
+  this.timeToLive = timeToLive || 0;
+  this.atlasIndex = atlasIndex || 0;
+  this.modeA = modeA ? modeA : new cc.Particle.ModeA();
+  this.modeB = modeB ? modeB : new cc.Particle.ModeB();
+  this.isChangeColor = false;
+  this.drawPos = cc.p(0, 0);
 };
 
 /**
@@ -89,9 +100,9 @@ cc.Particle = function (pos, startPos, color, deltaColor, size, deltaSize, rotat
  * @param {Number} tangentialAccel
  */
 cc.Particle.ModeA = function (dir, radialAccel, tangentialAccel) {
-    this.dir = dir ? dir : cc.p(0, 0);
-    this.radialAccel = radialAccel || 0;
-    this.tangentialAccel = tangentialAccel || 0;
+  this.dir = dir ? dir : cc.p(0, 0);
+  this.radialAccel = radialAccel || 0;
+  this.tangentialAccel = tangentialAccel || 0;
 };
 
 /**
@@ -104,21 +115,16 @@ cc.Particle.ModeA = function (dir, radialAccel, tangentialAccel) {
  * @param {Number} deltaRadius
  */
 cc.Particle.ModeB = function (angle, degreesPerSecond, radius, deltaRadius) {
-    this.angle = angle || 0;
-    this.degreesPerSecond = degreesPerSecond || 0;
-    this.radius = radius || 0;
-    this.deltaRadius = deltaRadius || 0;
+  this.angle = angle || 0;
+  this.degreesPerSecond = degreesPerSecond || 0;
+  this.radius = radius || 0;
+  this.deltaRadius = deltaRadius || 0;
 };
 
 /**
  * Array of Point instances used to optimize particle updates
  */
-cc.Particle.TemporaryPoints = [
-    cc.p(),
-    cc.p(),
-    cc.p(),
-    cc.p()
-];
+cc.Particle.TemporaryPoints = [cc.p(), cc.p(), cc.p(), cc.p()];
 
 /**
  * <p>
@@ -210,7 +216,8 @@ cc.Particle.TemporaryPoints = [
  *  emitter.radialAccel = 15;
  *  emitter.startSpin = 0;
  */
-cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
+cc.ParticleSystem = cc.Node.extend(
+  /** @lends cc.ParticleSystem# */ {
     _className: "ParticleSystem",
     //***********variables*************
     _plistFile: "",
@@ -286,73 +293,72 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {String|Number} plistFile
      */
     ctor: function (plistFile) {
-        cc.Node.prototype.ctor.call(this);
-        this.emitterMode = cc.ParticleSystem.MODE_GRAVITY;
-        this.modeA = new cc.ParticleSystem.ModeA();
-        this.modeB = new cc.ParticleSystem.ModeB();
-        this._blendFunc = {src: cc.BLEND_SRC, dst: cc.BLEND_DST};
+      cc.Node.prototype.ctor.call(this);
+      this.emitterMode = cc.ParticleSystem.MODE_GRAVITY;
+      this.modeA = new cc.ParticleSystem.ModeA();
+      this.modeB = new cc.ParticleSystem.ModeB();
+      this._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
 
-        this._particles = [];
-        this._sourcePosition = cc.p(0, 0);
-        this._posVar = cc.p(0, 0);
+      this._particles = [];
+      this._sourcePosition = cc.p(0, 0);
+      this._posVar = cc.p(0, 0);
 
-        this._startColor = cc.color(255, 255, 255, 255);
-        this._startColorVar = cc.color(255, 255, 255, 255);
-        this._endColor = cc.color(255, 255, 255, 255);
-        this._endColorVar = cc.color(255, 255, 255, 255);
+      this._startColor = cc.color(255, 255, 255, 255);
+      this._startColorVar = cc.color(255, 255, 255, 255);
+      this._endColor = cc.color(255, 255, 255, 255);
+      this._endColorVar = cc.color(255, 255, 255, 255);
 
-        this._plistFile = "";
-        this._elapsed = 0;
-        this._dontTint = false;
-        this._pointZeroForParticle = cc.p(0, 0);
-        this._emitCounter = 0;
-        this._particleIdx = 0;
-        this._batchNode = null;
-        this.atlasIndex = 0;
+      this._plistFile = "";
+      this._elapsed = 0;
+      this._dontTint = false;
+      this._pointZeroForParticle = cc.p(0, 0);
+      this._emitCounter = 0;
+      this._particleIdx = 0;
+      this._batchNode = null;
+      this.atlasIndex = 0;
 
-        this._transformSystemDirty = false;
-        this._allocatedParticles = 0;
-        this._isActive = false;
-        this.particleCount = 0;
-        this.duration = 0;
-        this.life = 0;
-        this.lifeVar = 0;
-        this.angle = 0;
-        this.angleVar = 0;
-        this.startSize = 0;
-        this.startSizeVar = 0;
-        this.endSize = 0;
-        this.endSizeVar = 0;
+      this._transformSystemDirty = false;
+      this._allocatedParticles = 0;
+      this._isActive = false;
+      this.particleCount = 0;
+      this.duration = 0;
+      this.life = 0;
+      this.lifeVar = 0;
+      this.angle = 0;
+      this.angleVar = 0;
+      this.startSize = 0;
+      this.startSizeVar = 0;
+      this.endSize = 0;
+      this.endSizeVar = 0;
 
-        this.startSpin = 0;
-        this.startSpinVar = 0;
-        this.endSpin = 0;
-        this.endSpinVar = 0;
-        this.emissionRate = 0;
-        this._totalParticles = 0;
-        this._texture = null;
-        this._opacityModifyRGB = false;
-        this.positionType = cc.ParticleSystem.TYPE_FREE;
-        this.autoRemoveOnFinish = false;
+      this.startSpin = 0;
+      this.startSpinVar = 0;
+      this.endSpin = 0;
+      this.endSpinVar = 0;
+      this.emissionRate = 0;
+      this._totalParticles = 0;
+      this._texture = null;
+      this._opacityModifyRGB = false;
+      this.positionType = cc.ParticleSystem.TYPE_FREE;
+      this.autoRemoveOnFinish = false;
 
-        this._textureLoaded = true;
+      this._textureLoaded = true;
 
-        if (!plistFile || cc.isNumber(plistFile)) {
-            var ton = plistFile || 100;
-            this.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
-            this.initWithTotalParticles(ton);
-        } else if (cc.isString(plistFile)) {
-            this.initWithFile(plistFile);
-        } else if (cc.isObject(plistFile)) {
-            this.initWithDictionary(plistFile, "");
-        }
+      if (!plistFile || cc.isNumber(plistFile)) {
+        var ton = plistFile || 100;
+        this.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
+        this.initWithTotalParticles(ton);
+      } else if (cc.isString(plistFile)) {
+        this.initWithFile(plistFile);
+      } else if (cc.isObject(plistFile)) {
+        this.initWithDictionary(plistFile, "");
+      }
     },
 
     _createRenderCmd: function () {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
-            return new cc.ParticleSystem.CanvasRenderCmd(this);
-        else
-            return new cc.ParticleSystem.WebGLRenderCmd(this);
+      if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        return new cc.ParticleSystem.CanvasRenderCmd(this);
+      else return new cc.ParticleSystem.WebGLRenderCmd(this);
     },
 
     /**
@@ -361,7 +367,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {boolean} ignore
      */
     ignoreColor: function (ignore) {
-        this._dontTint = ignore;
+      this._dontTint = ignore;
     },
 
     /**
@@ -371,7 +377,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Rect} pointRect
      */
     initTexCoordsWithRect: function (pointRect) {
-        this._renderCmd.initTexCoordsWithRect(pointRect);
+      this._renderCmd.initTexCoordsWithRect(pointRect);
     },
 
     /**
@@ -379,7 +385,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.ParticleBatchNode}
      */
     getBatchNode: function () {
-        return this._batchNode;
+      return this._batchNode;
     },
 
     /**
@@ -387,7 +393,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.ParticleBatchNode} batchNode
      */
     setBatchNode: function (batchNode) {
-        this._renderCmd.setBatchNode(batchNode);
+      this._renderCmd.setBatchNode(batchNode);
     },
 
     /**
@@ -395,7 +401,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getAtlasIndex: function () {
-        return this.atlasIndex;
+      return this.atlasIndex;
     },
 
     /**
@@ -403,7 +409,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} atlasIndex
      */
     setAtlasIndex: function (atlasIndex) {
-        this.atlasIndex = atlasIndex;
+      this.atlasIndex = atlasIndex;
     },
 
     /**
@@ -411,7 +417,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getDrawMode: function () {
-        return this._renderCmd.getDrawMode();
+      return this._renderCmd.getDrawMode();
     },
 
     /**
@@ -419,7 +425,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} drawMode
      */
     setDrawMode: function (drawMode) {
-        this._renderCmd.setDrawMode(drawMode);
+      this._renderCmd.setDrawMode(drawMode);
     },
 
     /**
@@ -427,7 +433,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getShapeType: function () {
-        return this._renderCmd.getShapeType();
+      return this._renderCmd.getShapeType();
     },
 
     /**
@@ -435,7 +441,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} shapeType
      */
     setShapeType: function (shapeType) {
-        this._renderCmd.setShapeType(shapeType);
+      this._renderCmd.setShapeType(shapeType);
     },
 
     /**
@@ -443,7 +449,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Boolean}
      */
     isActive: function () {
-        return this._isActive;
+      return this._isActive;
     },
 
     /**
@@ -451,7 +457,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getParticleCount: function () {
-        return this.particleCount;
+      return this.particleCount;
     },
 
     /**
@@ -459,7 +465,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} particleCount
      */
     setParticleCount: function (particleCount) {
-        this.particleCount = particleCount;
+      this.particleCount = particleCount;
     },
 
     /**
@@ -467,7 +473,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getDuration: function () {
-        return this.duration;
+      return this.duration;
     },
 
     /**
@@ -475,7 +481,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} duration
      */
     setDuration: function (duration) {
-        this.duration = duration;
+      this.duration = duration;
     },
 
     /**
@@ -483,7 +489,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Point | Object}
      */
     getSourcePosition: function () {
-        return {x: this._sourcePosition.x, y: this._sourcePosition.y};
+      return { x: this._sourcePosition.x, y: this._sourcePosition.y };
     },
 
     /**
@@ -491,8 +497,8 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param sourcePosition
      */
     setSourcePosition: function (sourcePosition) {
-        this._sourcePosition.x = sourcePosition.x;
-        this._sourcePosition.y = sourcePosition.y;
+      this._sourcePosition.x = sourcePosition.x;
+      this._sourcePosition.y = sourcePosition.y;
     },
 
     /**
@@ -500,7 +506,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Point | Object}
      */
     getPosVar: function () {
-        return {x: this._posVar.x, y: this._posVar.y};
+      return { x: this._posVar.x, y: this._posVar.y };
     },
 
     /**
@@ -508,8 +514,8 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Point} posVar
      */
     setPosVar: function (posVar) {
-        this._posVar.x = posVar.x;
-        this._posVar.y = posVar.y;
+      this._posVar.x = posVar.x;
+      this._posVar.y = posVar.y;
     },
 
     /**
@@ -517,7 +523,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getLife: function () {
-        return this.life;
+      return this.life;
     },
 
     /**
@@ -525,7 +531,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} life
      */
     setLife: function (life) {
-        this.life = life;
+      this.life = life;
     },
 
     /**
@@ -533,7 +539,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getLifeVar: function () {
-        return this.lifeVar;
+      return this.lifeVar;
     },
 
     /**
@@ -541,7 +547,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} lifeVar
      */
     setLifeVar: function (lifeVar) {
-        this.lifeVar = lifeVar;
+      this.lifeVar = lifeVar;
     },
 
     /**
@@ -549,7 +555,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getAngle: function () {
-        return this.angle;
+      return this.angle;
     },
 
     /**
@@ -557,7 +563,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} angle
      */
     setAngle: function (angle) {
-        this.angle = angle;
+      this.angle = angle;
     },
 
     /**
@@ -565,7 +571,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getAngleVar: function () {
-        return this.angleVar;
+      return this.angleVar;
     },
 
     /**
@@ -573,7 +579,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param angleVar
      */
     setAngleVar: function (angleVar) {
-        this.angleVar = angleVar;
+      this.angleVar = angleVar;
     },
 
     // mode A
@@ -582,10 +588,12 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Point}
      */
     getGravity: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.getGravity() : Particle Mode should be Gravity");
-        var locGravity = this.modeA.gravity;
-        return cc.p(locGravity.x, locGravity.y);
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.getGravity() : Particle Mode should be Gravity"
+        );
+      var locGravity = this.modeA.gravity;
+      return cc.p(locGravity.x, locGravity.y);
     },
 
     /**
@@ -593,9 +601,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Point} gravity
      */
     setGravity: function (gravity) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.setGravity() : Particle Mode should be Gravity");
-        this.modeA.gravity = gravity;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.setGravity() : Particle Mode should be Gravity"
+        );
+      this.modeA.gravity = gravity;
     },
 
     /**
@@ -603,9 +613,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getSpeed: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.getSpeed() : Particle Mode should be Gravity");
-        return this.modeA.speed;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.getSpeed() : Particle Mode should be Gravity"
+        );
+      return this.modeA.speed;
     },
 
     /**
@@ -613,9 +625,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} speed
      */
     setSpeed: function (speed) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.setSpeed() : Particle Mode should be Gravity");
-        this.modeA.speed = speed;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.setSpeed() : Particle Mode should be Gravity"
+        );
+      this.modeA.speed = speed;
     },
 
     /**
@@ -623,9 +637,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getSpeedVar: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.getSpeedVar() : Particle Mode should be Gravity");
-        return this.modeA.speedVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.getSpeedVar() : Particle Mode should be Gravity"
+        );
+      return this.modeA.speedVar;
     },
 
     /**
@@ -633,9 +649,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} speedVar
      */
     setSpeedVar: function (speedVar) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.setSpeedVar() : Particle Mode should be Gravity");
-        this.modeA.speedVar = speedVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.setSpeedVar() : Particle Mode should be Gravity"
+        );
+      this.modeA.speedVar = speedVar;
     },
 
     /**
@@ -643,9 +661,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getTangentialAccel: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.getTangentialAccel() : Particle Mode should be Gravity");
-        return this.modeA.tangentialAccel;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.getTangentialAccel() : Particle Mode should be Gravity"
+        );
+      return this.modeA.tangentialAccel;
     },
 
     /**
@@ -653,9 +673,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} tangentialAccel
      */
     setTangentialAccel: function (tangentialAccel) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.setTangentialAccel() : Particle Mode should be Gravity");
-        this.modeA.tangentialAccel = tangentialAccel;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.setTangentialAccel() : Particle Mode should be Gravity"
+        );
+      this.modeA.tangentialAccel = tangentialAccel;
     },
 
     /**
@@ -663,9 +685,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getTangentialAccelVar: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.getTangentialAccelVar() : Particle Mode should be Gravity");
-        return this.modeA.tangentialAccelVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.getTangentialAccelVar() : Particle Mode should be Gravity"
+        );
+      return this.modeA.tangentialAccelVar;
     },
 
     /**
@@ -673,9 +697,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} tangentialAccelVar
      */
     setTangentialAccelVar: function (tangentialAccelVar) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.setTangentialAccelVar() : Particle Mode should be Gravity");
-        this.modeA.tangentialAccelVar = tangentialAccelVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.setTangentialAccelVar() : Particle Mode should be Gravity"
+        );
+      this.modeA.tangentialAccelVar = tangentialAccelVar;
     },
 
     /**
@@ -683,9 +709,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getRadialAccel: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.getRadialAccel() : Particle Mode should be Gravity");
-        return this.modeA.radialAccel;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.getRadialAccel() : Particle Mode should be Gravity"
+        );
+      return this.modeA.radialAccel;
     },
 
     /**
@@ -693,9 +721,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} radialAccel
      */
     setRadialAccel: function (radialAccel) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.setRadialAccel() : Particle Mode should be Gravity");
-        this.modeA.radialAccel = radialAccel;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.setRadialAccel() : Particle Mode should be Gravity"
+        );
+      this.modeA.radialAccel = radialAccel;
     },
 
     /**
@@ -703,9 +733,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getRadialAccelVar: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.getRadialAccelVar() : Particle Mode should be Gravity");
-        return this.modeA.radialAccelVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.getRadialAccelVar() : Particle Mode should be Gravity"
+        );
+      return this.modeA.radialAccelVar;
     },
 
     /**
@@ -713,9 +745,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} radialAccelVar
      */
     setRadialAccelVar: function (radialAccelVar) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.setRadialAccelVar() : Particle Mode should be Gravity");
-        this.modeA.radialAccelVar = radialAccelVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.setRadialAccelVar() : Particle Mode should be Gravity"
+        );
+      this.modeA.radialAccelVar = radialAccelVar;
     },
 
     /**
@@ -723,9 +757,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @returns {boolean}
      */
     getRotationIsDir: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.getRotationIsDir() : Particle Mode should be Gravity");
-        return this.modeA.rotationIsDir;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.getRotationIsDir() : Particle Mode should be Gravity"
+        );
+      return this.modeA.rotationIsDir;
     },
 
     /**
@@ -733,9 +769,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {boolean} t
      */
     setRotationIsDir: function (t) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
-            cc.log("cc.ParticleBatchNode.setRotationIsDir() : Particle Mode should be Gravity");
-        this.modeA.rotationIsDir = t;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_GRAVITY)
+        cc.log(
+          "cc.ParticleBatchNode.setRotationIsDir() : Particle Mode should be Gravity"
+        );
+      this.modeA.rotationIsDir = t;
     },
 
     // mode B
@@ -744,9 +782,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getStartRadius: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.getStartRadius() : Particle Mode should be Radius");
-        return this.modeB.startRadius;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.getStartRadius() : Particle Mode should be Radius"
+        );
+      return this.modeB.startRadius;
     },
 
     /**
@@ -754,9 +794,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} startRadius
      */
     setStartRadius: function (startRadius) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.setStartRadius() : Particle Mode should be Radius");
-        this.modeB.startRadius = startRadius;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.setStartRadius() : Particle Mode should be Radius"
+        );
+      this.modeB.startRadius = startRadius;
     },
 
     /**
@@ -764,9 +806,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getStartRadiusVar: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.getStartRadiusVar() : Particle Mode should be Radius");
-        return this.modeB.startRadiusVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.getStartRadiusVar() : Particle Mode should be Radius"
+        );
+      return this.modeB.startRadiusVar;
     },
 
     /**
@@ -774,9 +818,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} startRadiusVar
      */
     setStartRadiusVar: function (startRadiusVar) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.setStartRadiusVar() : Particle Mode should be Radius");
-        this.modeB.startRadiusVar = startRadiusVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.setStartRadiusVar() : Particle Mode should be Radius"
+        );
+      this.modeB.startRadiusVar = startRadiusVar;
     },
 
     /**
@@ -784,9 +830,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getEndRadius: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.getEndRadius() : Particle Mode should be Radius");
-        return this.modeB.endRadius;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.getEndRadius() : Particle Mode should be Radius"
+        );
+      return this.modeB.endRadius;
     },
 
     /**
@@ -794,9 +842,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} endRadius
      */
     setEndRadius: function (endRadius) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.setEndRadius() : Particle Mode should be Radius");
-        this.modeB.endRadius = endRadius;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.setEndRadius() : Particle Mode should be Radius"
+        );
+      this.modeB.endRadius = endRadius;
     },
 
     /**
@@ -804,9 +854,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getEndRadiusVar: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.getEndRadiusVar() : Particle Mode should be Radius");
-        return this.modeB.endRadiusVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.getEndRadiusVar() : Particle Mode should be Radius"
+        );
+      return this.modeB.endRadiusVar;
     },
 
     /**
@@ -814,9 +866,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param endRadiusVar
      */
     setEndRadiusVar: function (endRadiusVar) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.setEndRadiusVar() : Particle Mode should be Radius");
-        this.modeB.endRadiusVar = endRadiusVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.setEndRadiusVar() : Particle Mode should be Radius"
+        );
+      this.modeB.endRadiusVar = endRadiusVar;
     },
 
     /**
@@ -824,9 +878,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getRotatePerSecond: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.getRotatePerSecond() : Particle Mode should be Radius");
-        return this.modeB.rotatePerSecond;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.getRotatePerSecond() : Particle Mode should be Radius"
+        );
+      return this.modeB.rotatePerSecond;
     },
 
     /**
@@ -834,9 +890,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} degrees
      */
     setRotatePerSecond: function (degrees) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.setRotatePerSecond() : Particle Mode should be Radius");
-        this.modeB.rotatePerSecond = degrees;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.setRotatePerSecond() : Particle Mode should be Radius"
+        );
+      this.modeB.rotatePerSecond = degrees;
     },
 
     /**
@@ -844,9 +902,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getRotatePerSecondVar: function () {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.getRotatePerSecondVar() : Particle Mode should be Radius");
-        return this.modeB.rotatePerSecondVar;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.getRotatePerSecondVar() : Particle Mode should be Radius"
+        );
+      return this.modeB.rotatePerSecondVar;
     },
 
     /**
@@ -854,31 +914,33 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param degrees
      */
     setRotatePerSecondVar: function (degrees) {
-        if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
-            cc.log("cc.ParticleBatchNode.setRotatePerSecondVar() : Particle Mode should be Radius");
-        this.modeB.rotatePerSecondVar = degrees;
+      if (this.emitterMode !== cc.ParticleSystem.MODE_RADIUS)
+        cc.log(
+          "cc.ParticleBatchNode.setRotatePerSecondVar() : Particle Mode should be Radius"
+        );
+      this.modeB.rotatePerSecondVar = degrees;
     },
     //////////////////////////////////////////////////////////////////////////
 
     //don't use a transform matrix, this is faster
     setScale: function (scale, scaleY) {
-        this._transformSystemDirty = true;
-        cc.Node.prototype.setScale.call(this, scale, scaleY);
+      this._transformSystemDirty = true;
+      cc.Node.prototype.setScale.call(this, scale, scaleY);
     },
 
     setRotation: function (newRotation) {
-        this._transformSystemDirty = true;
-        cc.Node.prototype.setRotation.call(this, newRotation);
+      this._transformSystemDirty = true;
+      cc.Node.prototype.setRotation.call(this, newRotation);
     },
 
     setScaleX: function (newScaleX) {
-        this._transformSystemDirty = true;
-        cc.Node.prototype.setScaleX.call(this, newScaleX);
+      this._transformSystemDirty = true;
+      cc.Node.prototype.setScaleX.call(this, newScaleX);
     },
 
     setScaleY: function (newScaleY) {
-        this._transformSystemDirty = true;
-        cc.Node.prototype.setScaleY.call(this, newScaleY);
+      this._transformSystemDirty = true;
+      cc.Node.prototype.setScaleY.call(this, newScaleY);
     },
 
     /**
@@ -886,7 +948,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getStartSize: function () {
-        return this.startSize;
+      return this.startSize;
     },
 
     /**
@@ -894,7 +956,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} startSize
      */
     setStartSize: function (startSize) {
-        this.startSize = startSize;
+      this.startSize = startSize;
     },
 
     /**
@@ -902,7 +964,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getStartSizeVar: function () {
-        return this.startSizeVar;
+      return this.startSizeVar;
     },
 
     /**
@@ -910,7 +972,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} startSizeVar
      */
     setStartSizeVar: function (startSizeVar) {
-        this.startSizeVar = startSizeVar;
+      this.startSizeVar = startSizeVar;
     },
 
     /**
@@ -918,7 +980,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getEndSize: function () {
-        return this.endSize;
+      return this.endSize;
     },
 
     /**
@@ -926,7 +988,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param endSize
      */
     setEndSize: function (endSize) {
-        this.endSize = endSize;
+      this.endSize = endSize;
     },
 
     /**
@@ -934,7 +996,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getEndSizeVar: function () {
-        return this.endSizeVar;
+      return this.endSizeVar;
     },
 
     /**
@@ -942,7 +1004,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} endSizeVar
      */
     setEndSizeVar: function (endSizeVar) {
-        this.endSizeVar = endSizeVar;
+      this.endSizeVar = endSizeVar;
     },
 
     /**
@@ -950,7 +1012,12 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Color}
      */
     getStartColor: function () {
-        return cc.color(this._startColor.r, this._startColor.g, this._startColor.b, this._startColor.a);
+      return cc.color(
+        this._startColor.r,
+        this._startColor.g,
+        this._startColor.b,
+        this._startColor.a
+      );
     },
 
     /**
@@ -958,10 +1025,10 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Color} startColor
      */
     setStartColor: function (startColor) {
-        this._startColor.r = startColor.r;
-        this._startColor.g = startColor.g;
-        this._startColor.b = startColor.b;
-        this._startColor.a = startColor.a;
+      this._startColor.r = startColor.r;
+      this._startColor.g = startColor.g;
+      this._startColor.b = startColor.b;
+      this._startColor.a = startColor.a;
     },
 
     /**
@@ -969,7 +1036,12 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Color}
      */
     getStartColorVar: function () {
-        return cc.color(this._startColorVar.r, this._startColorVar.g, this._startColorVar.b, this._startColorVar.a);
+      return cc.color(
+        this._startColorVar.r,
+        this._startColorVar.g,
+        this._startColorVar.b,
+        this._startColorVar.a
+      );
     },
 
     /**
@@ -977,10 +1049,10 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Color} startColorVar
      */
     setStartColorVar: function (startColorVar) {
-        this._startColorVar.r = startColorVar.r;
-        this._startColorVar.g = startColorVar.g;
-        this._startColorVar.b = startColorVar.b;
-        this._startColorVar.a = startColorVar.a;
+      this._startColorVar.r = startColorVar.r;
+      this._startColorVar.g = startColorVar.g;
+      this._startColorVar.b = startColorVar.b;
+      this._startColorVar.a = startColorVar.a;
     },
 
     /**
@@ -988,7 +1060,12 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Color}
      */
     getEndColor: function () {
-        return cc.color(this._endColor.r, this._endColor.g, this._endColor.b, this._endColor.a);
+      return cc.color(
+        this._endColor.r,
+        this._endColor.g,
+        this._endColor.b,
+        this._endColor.a
+      );
     },
 
     /**
@@ -996,10 +1073,10 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Color} endColor
      */
     setEndColor: function (endColor) {
-        this._endColor.r = endColor.r;
-        this._endColor.g = endColor.g;
-        this._endColor.b = endColor.b;
-        this._endColor.a = endColor.a;
+      this._endColor.r = endColor.r;
+      this._endColor.g = endColor.g;
+      this._endColor.b = endColor.b;
+      this._endColor.a = endColor.a;
     },
 
     /**
@@ -1007,7 +1084,12 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Color}
      */
     getEndColorVar: function () {
-        return cc.color(this._endColorVar.r, this._endColorVar.g, this._endColorVar.b, this._endColorVar.a);
+      return cc.color(
+        this._endColorVar.r,
+        this._endColorVar.g,
+        this._endColorVar.b,
+        this._endColorVar.a
+      );
     },
 
     /**
@@ -1015,10 +1097,10 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Color} endColorVar
      */
     setEndColorVar: function (endColorVar) {
-        this._endColorVar.r = endColorVar.r;
-        this._endColorVar.g = endColorVar.g;
-        this._endColorVar.b = endColorVar.b;
-        this._endColorVar.a = endColorVar.a;
+      this._endColorVar.r = endColorVar.r;
+      this._endColorVar.g = endColorVar.g;
+      this._endColorVar.b = endColorVar.b;
+      this._endColorVar.a = endColorVar.a;
     },
 
     /**
@@ -1026,7 +1108,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getStartSpin: function () {
-        return this.startSpin;
+      return this.startSpin;
     },
 
     /**
@@ -1034,7 +1116,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} startSpin
      */
     setStartSpin: function (startSpin) {
-        this.startSpin = startSpin;
+      this.startSpin = startSpin;
     },
 
     /**
@@ -1042,7 +1124,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getStartSpinVar: function () {
-        return this.startSpinVar;
+      return this.startSpinVar;
     },
 
     /**
@@ -1050,7 +1132,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} startSpinVar
      */
     setStartSpinVar: function (startSpinVar) {
-        this.startSpinVar = startSpinVar;
+      this.startSpinVar = startSpinVar;
     },
 
     /**
@@ -1058,7 +1140,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getEndSpin: function () {
-        return this.endSpin;
+      return this.endSpin;
     },
 
     /**
@@ -1066,7 +1148,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} endSpin
      */
     setEndSpin: function (endSpin) {
-        this.endSpin = endSpin;
+      this.endSpin = endSpin;
     },
 
     /**
@@ -1074,7 +1156,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getEndSpinVar: function () {
-        return this.endSpinVar;
+      return this.endSpinVar;
     },
 
     /**
@@ -1082,7 +1164,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} endSpinVar
      */
     setEndSpinVar: function (endSpinVar) {
-        this.endSpinVar = endSpinVar;
+      this.endSpinVar = endSpinVar;
     },
 
     /**
@@ -1090,7 +1172,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getEmissionRate: function () {
-        return this.emissionRate;
+      return this.emissionRate;
     },
 
     /**
@@ -1098,7 +1180,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} emissionRate
      */
     setEmissionRate: function (emissionRate) {
-        this.emissionRate = emissionRate;
+      this.emissionRate = emissionRate;
     },
 
     /**
@@ -1106,7 +1188,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getTotalParticles: function () {
-        return this._totalParticles;
+      return this._totalParticles;
     },
 
     /**
@@ -1114,7 +1196,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} tp totalParticles
      */
     setTotalParticles: function (tp) {
-        this._renderCmd.setTotalParticles(tp);
+      this._renderCmd.setTotalParticles(tp);
     },
 
     /**
@@ -1122,7 +1204,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Texture2D}
      */
     getTexture: function () {
-        return this._texture;
+      return this._texture;
     },
 
     /**
@@ -1130,18 +1212,27 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Texture2D } texture
      */
     setTexture: function (texture) {
-        if (!texture)
-            return;
+      if (!texture) return;
 
-        if (texture.isLoaded()) {
-            this.setTextureWithRect(texture, cc.rect(0, 0, texture.width, texture.height));
-        } else {
-            this._textureLoaded = false;
-            texture.addEventListener("load", function (sender) {
-                this._textureLoaded = true;
-                this.setTextureWithRect(sender, cc.rect(0, 0, sender.width, sender.height));
-            }, this);
-        }
+      if (texture.isLoaded()) {
+        this.setTextureWithRect(
+          texture,
+          cc.rect(0, 0, texture.width, texture.height)
+        );
+      } else {
+        this._textureLoaded = false;
+        texture.addEventListener(
+          "load",
+          function (sender) {
+            this._textureLoaded = true;
+            this.setTextureWithRect(
+              sender,
+              cc.rect(0, 0, sender.width, sender.height)
+            );
+          },
+          this
+        );
+      }
     },
 
     /** conforms to CocosNodeTexture protocol */
@@ -1150,7 +1241,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.BlendFunc}
      */
     getBlendFunc: function () {
-        return this._blendFunc;
+      return this._blendFunc;
     },
 
     /**
@@ -1159,17 +1250,17 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} dst
      */
     setBlendFunc: function (src, dst) {
-        if (dst === undefined) {
-            if (this._blendFunc !== src) {
-                this._blendFunc = src;
-                this._updateBlendFunc();
-            }
-        } else {
-            if (this._blendFunc.src !== src || this._blendFunc.dst !== dst) {
-                this._blendFunc = {src: src, dst: dst};
-                this._updateBlendFunc();
-            }
+      if (dst === undefined) {
+        if (this._blendFunc !== src) {
+          this._blendFunc = src;
+          this._updateBlendFunc();
         }
+      } else {
+        if (this._blendFunc.src !== src || this._blendFunc.dst !== dst) {
+          this._blendFunc = { src: src, dst: dst };
+          this._updateBlendFunc();
+        }
+      }
     },
 
     /**
@@ -1177,7 +1268,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Boolean}
      */
     isOpacityModifyRGB: function () {
-        return this._opacityModifyRGB;
+      return this._opacityModifyRGB;
     },
 
     /**
@@ -1185,7 +1276,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param newValue
      */
     setOpacityModifyRGB: function (newValue) {
-        this._opacityModifyRGB = newValue;
+      this._opacityModifyRGB = newValue;
     },
 
     /**
@@ -1198,7 +1289,11 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      *    dest blend function = GL_ONE;
      */
     isBlendAdditive: function () {
-        return (( this._blendFunc.src === cc.SRC_ALPHA && this._blendFunc.dst === cc.ONE) || (this._blendFunc.src === cc.ONE && this._blendFunc.dst === cc.ONE));
+      return (
+        (this._blendFunc.src === cc.SRC_ALPHA &&
+          this._blendFunc.dst === cc.ONE) ||
+        (this._blendFunc.src === cc.ONE && this._blendFunc.dst === cc.ONE)
+      );
     },
 
     /**
@@ -1208,13 +1303,13 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Boolean} isBlendAdditive
      */
     setBlendAdditive: function (isBlendAdditive) {
-        var locBlendFunc = this._blendFunc;
-        if (isBlendAdditive) {
-            locBlendFunc.src = cc.SRC_ALPHA;
-            locBlendFunc.dst = cc.ONE;
-        } else {
-            this._renderCmd._setBlendAdditive();
-        }
+      var locBlendFunc = this._blendFunc;
+      if (isBlendAdditive) {
+        locBlendFunc.src = cc.SRC_ALPHA;
+        locBlendFunc.dst = cc.ONE;
+      } else {
+        this._renderCmd._setBlendAdditive();
+      }
     },
 
     /**
@@ -1222,7 +1317,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getPositionType: function () {
-        return this.positionType;
+      return this.positionType;
     },
 
     /**
@@ -1230,7 +1325,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} positionType
      */
     setPositionType: function (positionType) {
-        this.positionType = positionType;
+      this.positionType = positionType;
     },
 
     /**
@@ -1240,7 +1335,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Boolean}
      */
     isAutoRemoveOnFinish: function () {
-        return this.autoRemoveOnFinish;
+      return this.autoRemoveOnFinish;
     },
 
     /**
@@ -1250,7 +1345,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Boolean} isAutoRemoveOnFinish
      */
     setAutoRemoveOnFinish: function (isAutoRemoveOnFinish) {
-        this.autoRemoveOnFinish = isAutoRemoveOnFinish;
+      this.autoRemoveOnFinish = isAutoRemoveOnFinish;
     },
 
     /**
@@ -1258,7 +1353,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Number}
      */
     getEmitterMode: function () {
-        return this.emitterMode;
+      return this.emitterMode;
     },
 
     /**
@@ -1269,14 +1364,14 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {Number} emitterMode
      */
     setEmitterMode: function (emitterMode) {
-        this.emitterMode = emitterMode;
+      this.emitterMode = emitterMode;
     },
 
     /**
      * initializes a cc.ParticleSystem
      */
     init: function () {
-        return this.initWithTotalParticles(150);
+      return this.initWithTotalParticles(150);
     },
 
     /**
@@ -1289,15 +1384,15 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {boolean}
      */
     initWithFile: function (plistFile) {
-        this._plistFile = plistFile;
-        var dict = cc.loader.getRes(plistFile);
-        if (!dict) {
-            cc.log("cc.ParticleSystem.initWithFile(): Particles: file not found");
-            return false;
-        }
+      this._plistFile = plistFile;
+      var dict = cc.loader.getRes(plistFile);
+      if (!dict) {
+        cc.log("cc.ParticleSystem.initWithFile(): Particles: file not found");
+        return false;
+      }
 
-        // XXX compute path from a path, should define a function somewhere to do it
-        return this.initWithDictionary(dict, "");
+      // XXX compute path from a path, should define a function somewhere to do it
+      return this.initWithDictionary(dict, "");
     },
 
     /**
@@ -1305,7 +1400,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.Rect}
      */
     getBoundingBoxToWorld: function () {
-        return cc.rect(0, 0, cc._canvas.width, cc._canvas.height);
+      return cc.rect(0, 0, cc._canvas.width, cc._canvas.height);
     },
 
     /**
@@ -1315,181 +1410,251 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Boolean}
      */
     initWithDictionary: function (dictionary, dirname) {
-        var ret = false;
-        var buffer = null;
-        var image = null;
-        var locValueForKey = this._valueForKey;
+      var ret = false;
+      var buffer = null;
+      var image = null;
+      var locValueForKey = this._valueForKey;
 
-        var maxParticles = parseInt(locValueForKey("maxParticles", dictionary));
-        // self, not super
-        if (this.initWithTotalParticles(maxParticles)) {
-            // angle
-            this.angle = parseFloat(locValueForKey("angle", dictionary));
-            this.angleVar = parseFloat(locValueForKey("angleVariance", dictionary));
+      var maxParticles = parseInt(locValueForKey("maxParticles", dictionary));
+      // self, not super
+      if (this.initWithTotalParticles(maxParticles)) {
+        // angle
+        this.angle = parseFloat(locValueForKey("angle", dictionary));
+        this.angleVar = parseFloat(locValueForKey("angleVariance", dictionary));
 
-            // duration
-            this.duration = parseFloat(locValueForKey("duration", dictionary));
+        // duration
+        this.duration = parseFloat(locValueForKey("duration", dictionary));
 
-            // blend function
-            this._blendFunc.src = parseInt(locValueForKey("blendFuncSource", dictionary));
-            this._blendFunc.dst = parseInt(locValueForKey("blendFuncDestination", dictionary));
+        // blend function
+        this._blendFunc.src = parseInt(
+          locValueForKey("blendFuncSource", dictionary)
+        );
+        this._blendFunc.dst = parseInt(
+          locValueForKey("blendFuncDestination", dictionary)
+        );
 
-            // color
-            var locStartColor = this._startColor;
-            locStartColor.r = parseFloat(locValueForKey("startColorRed", dictionary)) * 255;
-            locStartColor.g = parseFloat(locValueForKey("startColorGreen", dictionary)) * 255;
-            locStartColor.b = parseFloat(locValueForKey("startColorBlue", dictionary)) * 255;
-            locStartColor.a = parseFloat(locValueForKey("startColorAlpha", dictionary)) * 255;
+        // color
+        var locStartColor = this._startColor;
+        locStartColor.r =
+          parseFloat(locValueForKey("startColorRed", dictionary)) * 255;
+        locStartColor.g =
+          parseFloat(locValueForKey("startColorGreen", dictionary)) * 255;
+        locStartColor.b =
+          parseFloat(locValueForKey("startColorBlue", dictionary)) * 255;
+        locStartColor.a =
+          parseFloat(locValueForKey("startColorAlpha", dictionary)) * 255;
 
-            var locStartColorVar = this._startColorVar;
-            locStartColorVar.r = parseFloat(locValueForKey("startColorVarianceRed", dictionary)) * 255;
-            locStartColorVar.g = parseFloat(locValueForKey("startColorVarianceGreen", dictionary)) * 255;
-            locStartColorVar.b = parseFloat(locValueForKey("startColorVarianceBlue", dictionary)) * 255;
-            locStartColorVar.a = parseFloat(locValueForKey("startColorVarianceAlpha", dictionary)) * 255;
+        var locStartColorVar = this._startColorVar;
+        locStartColorVar.r =
+          parseFloat(locValueForKey("startColorVarianceRed", dictionary)) * 255;
+        locStartColorVar.g =
+          parseFloat(locValueForKey("startColorVarianceGreen", dictionary)) *
+          255;
+        locStartColorVar.b =
+          parseFloat(locValueForKey("startColorVarianceBlue", dictionary)) *
+          255;
+        locStartColorVar.a =
+          parseFloat(locValueForKey("startColorVarianceAlpha", dictionary)) *
+          255;
 
-            var locEndColor = this._endColor;
-            locEndColor.r = parseFloat(locValueForKey("finishColorRed", dictionary)) * 255;
-            locEndColor.g = parseFloat(locValueForKey("finishColorGreen", dictionary)) * 255;
-            locEndColor.b = parseFloat(locValueForKey("finishColorBlue", dictionary)) * 255;
-            locEndColor.a = parseFloat(locValueForKey("finishColorAlpha", dictionary)) * 255;
+        var locEndColor = this._endColor;
+        locEndColor.r =
+          parseFloat(locValueForKey("finishColorRed", dictionary)) * 255;
+        locEndColor.g =
+          parseFloat(locValueForKey("finishColorGreen", dictionary)) * 255;
+        locEndColor.b =
+          parseFloat(locValueForKey("finishColorBlue", dictionary)) * 255;
+        locEndColor.a =
+          parseFloat(locValueForKey("finishColorAlpha", dictionary)) * 255;
 
-            var locEndColorVar = this._endColorVar;
-            locEndColorVar.r = parseFloat(locValueForKey("finishColorVarianceRed", dictionary)) * 255;
-            locEndColorVar.g = parseFloat(locValueForKey("finishColorVarianceGreen", dictionary)) * 255;
-            locEndColorVar.b = parseFloat(locValueForKey("finishColorVarianceBlue", dictionary)) * 255;
-            locEndColorVar.a = parseFloat(locValueForKey("finishColorVarianceAlpha", dictionary)) * 255;
+        var locEndColorVar = this._endColorVar;
+        locEndColorVar.r =
+          parseFloat(locValueForKey("finishColorVarianceRed", dictionary)) *
+          255;
+        locEndColorVar.g =
+          parseFloat(locValueForKey("finishColorVarianceGreen", dictionary)) *
+          255;
+        locEndColorVar.b =
+          parseFloat(locValueForKey("finishColorVarianceBlue", dictionary)) *
+          255;
+        locEndColorVar.a =
+          parseFloat(locValueForKey("finishColorVarianceAlpha", dictionary)) *
+          255;
 
-            // particle size
-            this.startSize = parseFloat(locValueForKey("startParticleSize", dictionary));
-            this.startSizeVar = parseFloat(locValueForKey("startParticleSizeVariance", dictionary));
-            this.endSize = parseFloat(locValueForKey("finishParticleSize", dictionary));
-            this.endSizeVar = parseFloat(locValueForKey("finishParticleSizeVariance", dictionary));
+        // particle size
+        this.startSize = parseFloat(
+          locValueForKey("startParticleSize", dictionary)
+        );
+        this.startSizeVar = parseFloat(
+          locValueForKey("startParticleSizeVariance", dictionary)
+        );
+        this.endSize = parseFloat(
+          locValueForKey("finishParticleSize", dictionary)
+        );
+        this.endSizeVar = parseFloat(
+          locValueForKey("finishParticleSizeVariance", dictionary)
+        );
 
-            // position
-            this.setPosition(parseFloat(locValueForKey("sourcePositionx", dictionary)),
-                parseFloat(locValueForKey("sourcePositiony", dictionary)));
-            this._posVar.x = parseFloat(locValueForKey("sourcePositionVariancex", dictionary));
-            this._posVar.y = parseFloat(locValueForKey("sourcePositionVariancey", dictionary));
+        // position
+        this.setPosition(
+          parseFloat(locValueForKey("sourcePositionx", dictionary)),
+          parseFloat(locValueForKey("sourcePositiony", dictionary))
+        );
+        this._posVar.x = parseFloat(
+          locValueForKey("sourcePositionVariancex", dictionary)
+        );
+        this._posVar.y = parseFloat(
+          locValueForKey("sourcePositionVariancey", dictionary)
+        );
 
-            // Spinning
-            this.startSpin = parseFloat(locValueForKey("rotationStart", dictionary));
-            this.startSpinVar = parseFloat(locValueForKey("rotationStartVariance", dictionary));
-            this.endSpin = parseFloat(locValueForKey("rotationEnd", dictionary));
-            this.endSpinVar = parseFloat(locValueForKey("rotationEndVariance", dictionary));
+        // Spinning
+        this.startSpin = parseFloat(
+          locValueForKey("rotationStart", dictionary)
+        );
+        this.startSpinVar = parseFloat(
+          locValueForKey("rotationStartVariance", dictionary)
+        );
+        this.endSpin = parseFloat(locValueForKey("rotationEnd", dictionary));
+        this.endSpinVar = parseFloat(
+          locValueForKey("rotationEndVariance", dictionary)
+        );
 
-            this.emitterMode = parseInt(locValueForKey("emitterType", dictionary));
+        this.emitterMode = parseInt(locValueForKey("emitterType", dictionary));
 
-            // Mode A: Gravity + tangential accel + radial accel
-            if (this.emitterMode === cc.ParticleSystem.MODE_GRAVITY) {
-                var locModeA = this.modeA;
-                // gravity
-                locModeA.gravity.x = parseFloat(locValueForKey("gravityx", dictionary));
-                locModeA.gravity.y = parseFloat(locValueForKey("gravityy", dictionary));
+        // Mode A: Gravity + tangential accel + radial accel
+        if (this.emitterMode === cc.ParticleSystem.MODE_GRAVITY) {
+          var locModeA = this.modeA;
+          // gravity
+          locModeA.gravity.x = parseFloat(
+            locValueForKey("gravityx", dictionary)
+          );
+          locModeA.gravity.y = parseFloat(
+            locValueForKey("gravityy", dictionary)
+          );
 
-                // speed
-                locModeA.speed = parseFloat(locValueForKey("speed", dictionary));
-                locModeA.speedVar = parseFloat(locValueForKey("speedVariance", dictionary));
+          // speed
+          locModeA.speed = parseFloat(locValueForKey("speed", dictionary));
+          locModeA.speedVar = parseFloat(
+            locValueForKey("speedVariance", dictionary)
+          );
 
-                // radial acceleration
-                var pszTmp = locValueForKey("radialAcceleration", dictionary);
-                locModeA.radialAccel = (pszTmp) ? parseFloat(pszTmp) : 0;
+          // radial acceleration
+          var pszTmp = locValueForKey("radialAcceleration", dictionary);
+          locModeA.radialAccel = pszTmp ? parseFloat(pszTmp) : 0;
 
-                pszTmp = locValueForKey("radialAccelVariance", dictionary);
-                locModeA.radialAccelVar = (pszTmp) ? parseFloat(pszTmp) : 0;
+          pszTmp = locValueForKey("radialAccelVariance", dictionary);
+          locModeA.radialAccelVar = pszTmp ? parseFloat(pszTmp) : 0;
 
-                // tangential acceleration
-                pszTmp = locValueForKey("tangentialAcceleration", dictionary);
-                locModeA.tangentialAccel = (pszTmp) ? parseFloat(pszTmp) : 0;
+          // tangential acceleration
+          pszTmp = locValueForKey("tangentialAcceleration", dictionary);
+          locModeA.tangentialAccel = pszTmp ? parseFloat(pszTmp) : 0;
 
-                pszTmp = locValueForKey("tangentialAccelVariance", dictionary);
-                locModeA.tangentialAccelVar = (pszTmp) ? parseFloat(pszTmp) : 0;
+          pszTmp = locValueForKey("tangentialAccelVariance", dictionary);
+          locModeA.tangentialAccelVar = pszTmp ? parseFloat(pszTmp) : 0;
 
-                // rotation is dir
-                var locRotationIsDir = locValueForKey("rotationIsDir", dictionary);
-                if (locRotationIsDir !== null) {
-                    locRotationIsDir = locRotationIsDir.toString().toLowerCase();
-                    locModeA.rotationIsDir = (locRotationIsDir === "true" || locRotationIsDir === "1");
-                }
-                else {
-                    locModeA.rotationIsDir = false;
-                }
-            } else if (this.emitterMode === cc.ParticleSystem.MODE_RADIUS) {
-                // or Mode B: radius movement
-                var locModeB = this.modeB;
-                locModeB.startRadius = parseFloat(locValueForKey("maxRadius", dictionary));
-                locModeB.startRadiusVar = parseFloat(locValueForKey("maxRadiusVariance", dictionary));
-                locModeB.endRadius = parseFloat(locValueForKey("minRadius", dictionary));
-                locModeB.endRadiusVar = 0;
-                locModeB.rotatePerSecond = parseFloat(locValueForKey("rotatePerSecond", dictionary));
-                locModeB.rotatePerSecondVar = parseFloat(locValueForKey("rotatePerSecondVariance", dictionary));
-            } else {
-                cc.log("cc.ParticleSystem.initWithDictionary(): Invalid emitterType in config file");
-                return false;
-            }
-
-            // life span
-            this.life = parseFloat(locValueForKey("particleLifespan", dictionary));
-            this.lifeVar = parseFloat(locValueForKey("particleLifespanVariance", dictionary));
-
-            // emission Rate
-            this.emissionRate = this._totalParticles / this.life;
-
-            //don't get the internal texture if a batchNode is used
-            if (!this._batchNode) {
-                // Set a compatible default for the alpha transfer
-                this._opacityModifyRGB = false;
-
-                // texture
-                // Try to get the texture from the cache
-                var textureName = locValueForKey("textureFileName", dictionary);
-                var imgPath = cc.path.changeBasename(this._plistFile, textureName);
-                var tex = cc.textureCache.getTextureForKey(imgPath);
-
-                if (tex) {
-                    this.setTexture(tex);
-                } else {
-                    var textureData = locValueForKey("textureImageData", dictionary);
-
-                    if (!textureData || textureData.length === 0) {
-                        tex = cc.textureCache.addImage(imgPath);
-                        if (!tex)
-                            return false;
-                        this.setTexture(tex);
-                    } else {
-                        buffer = cc.unzipBase64AsArray(textureData, 1);
-                        if (!buffer) {
-                            cc.log("cc.ParticleSystem: error decoding or ungzipping textureImageData");
-                            return false;
-                        }
-
-                        var imageFormat = cc.getImageFormatByData(buffer);
-
-                        if (imageFormat !== cc.FMT_TIFF && imageFormat !== cc.FMT_PNG) {
-                            cc.log("cc.ParticleSystem: unknown image format with Data");
-                            return false;
-                        }
-
-                        var canvasObj = document.createElement("canvas");
-                        if (imageFormat === cc.FMT_PNG) {
-                            var myPngObj = new cc.PNGReader(buffer);
-                            myPngObj.render(canvasObj);
-                        } else {
-                            var myTIFFObj = cc.tiffReader;
-                            myTIFFObj.parseTIFF(buffer, canvasObj);
-                        }
-
-                        cc.textureCache.cacheImage(imgPath, canvasObj);
-
-                        var addTexture = cc.textureCache.getTextureForKey(imgPath);
-                        if (!addTexture)
-                            cc.log("cc.ParticleSystem.initWithDictionary() : error loading the texture");
-                        this.setTexture(addTexture);
-                    }
-                }
-            }
-            ret = true;
+          // rotation is dir
+          var locRotationIsDir = locValueForKey("rotationIsDir", dictionary);
+          if (locRotationIsDir !== null) {
+            locRotationIsDir = locRotationIsDir.toString().toLowerCase();
+            locModeA.rotationIsDir =
+              locRotationIsDir === "true" || locRotationIsDir === "1";
+          } else {
+            locModeA.rotationIsDir = false;
+          }
+        } else if (this.emitterMode === cc.ParticleSystem.MODE_RADIUS) {
+          // or Mode B: radius movement
+          var locModeB = this.modeB;
+          locModeB.startRadius = parseFloat(
+            locValueForKey("maxRadius", dictionary)
+          );
+          locModeB.startRadiusVar = parseFloat(
+            locValueForKey("maxRadiusVariance", dictionary)
+          );
+          locModeB.endRadius = parseFloat(
+            locValueForKey("minRadius", dictionary)
+          );
+          locModeB.endRadiusVar = 0;
+          locModeB.rotatePerSecond = parseFloat(
+            locValueForKey("rotatePerSecond", dictionary)
+          );
+          locModeB.rotatePerSecondVar = parseFloat(
+            locValueForKey("rotatePerSecondVariance", dictionary)
+          );
+        } else {
+          cc.log(
+            "cc.ParticleSystem.initWithDictionary(): Invalid emitterType in config file"
+          );
+          return false;
         }
-        return ret;
+
+        // life span
+        this.life = parseFloat(locValueForKey("particleLifespan", dictionary));
+        this.lifeVar = parseFloat(
+          locValueForKey("particleLifespanVariance", dictionary)
+        );
+
+        // emission Rate
+        this.emissionRate = this._totalParticles / this.life;
+
+        //don't get the internal texture if a batchNode is used
+        if (!this._batchNode) {
+          // Set a compatible default for the alpha transfer
+          this._opacityModifyRGB = false;
+
+          // texture
+          // Try to get the texture from the cache
+          var textureName = locValueForKey("textureFileName", dictionary);
+          var imgPath = cc.path.changeBasename(this._plistFile, textureName);
+          var tex = cc.textureCache.getTextureForKey(imgPath);
+
+          if (tex) {
+            this.setTexture(tex);
+          } else {
+            var textureData = locValueForKey("textureImageData", dictionary);
+
+            if (!textureData || textureData.length === 0) {
+              tex = cc.textureCache.addImage(imgPath);
+              if (!tex) return false;
+              this.setTexture(tex);
+            } else {
+              buffer = cc.unzipBase64AsArray(textureData, 1);
+              if (!buffer) {
+                cc.log(
+                  "cc.ParticleSystem: error decoding or ungzipping textureImageData"
+                );
+                return false;
+              }
+
+              var imageFormat = cc.getImageFormatByData(buffer);
+
+              if (imageFormat !== cc.FMT_TIFF && imageFormat !== cc.FMT_PNG) {
+                cc.log("cc.ParticleSystem: unknown image format with Data");
+                return false;
+              }
+
+              var canvasObj = document.createElement("canvas");
+              if (imageFormat === cc.FMT_PNG) {
+                var myPngObj = new cc.PNGReader(buffer);
+                myPngObj.render(canvasObj);
+              } else {
+                var myTIFFObj = cc.tiffReader;
+                myTIFFObj.parseTIFF(buffer, canvasObj);
+              }
+
+              cc.textureCache.cacheImage(imgPath, canvasObj);
+
+              var addTexture = cc.textureCache.getTextureForKey(imgPath);
+              if (!addTexture)
+                cc.log(
+                  "cc.ParticleSystem.initWithDictionary() : error loading the texture"
+                );
+              this.setTexture(addTexture);
+            }
+          }
+        }
+        ret = true;
+      }
+      return ret;
     },
 
     /**
@@ -1498,49 +1663,50 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Boolean}
      */
     initWithTotalParticles: function (numberOfParticles) {
-        this._totalParticles = numberOfParticles;
+      this._totalParticles = numberOfParticles;
 
-        var i, locParticles = this._particles;
-        locParticles.length = 0;
-        for (i = 0; i < numberOfParticles; i++) {
-            locParticles[i] = new cc.Particle();
-        }
+      var i,
+        locParticles = this._particles;
+      locParticles.length = 0;
+      for (i = 0; i < numberOfParticles; i++) {
+        locParticles[i] = new cc.Particle();
+      }
 
-        if (!locParticles) {
-            cc.log("Particle system: not enough memory");
-            return false;
-        }
-        this._allocatedParticles = numberOfParticles;
+      if (!locParticles) {
+        cc.log("Particle system: not enough memory");
+        return false;
+      }
+      this._allocatedParticles = numberOfParticles;
 
-        if (this._batchNode)
-            for (i = 0; i < this._totalParticles; i++)
-                locParticles[i].atlasIndex = i;
+      if (this._batchNode)
+        for (i = 0; i < this._totalParticles; i++)
+          locParticles[i].atlasIndex = i;
 
-        // default, active
-        this._isActive = true;
+      // default, active
+      this._isActive = true;
 
-        // default blend function
-        this._blendFunc.src = cc.BLEND_SRC;
-        this._blendFunc.dst = cc.BLEND_DST;
+      // default blend function
+      this._blendFunc.src = cc.BLEND_SRC;
+      this._blendFunc.dst = cc.BLEND_DST;
 
-        // default movement type;
-        this.positionType = cc.ParticleSystem.TYPE_FREE;
+      // default movement type;
+      this.positionType = cc.ParticleSystem.TYPE_FREE;
 
-        // by default be in mode A:
-        this.emitterMode = cc.ParticleSystem.MODE_GRAVITY;
+      // by default be in mode A:
+      this.emitterMode = cc.ParticleSystem.MODE_GRAVITY;
 
-        // default: modulate
-        // XXX: not used
-        //  colorModulate = YES;
-        this.autoRemoveOnFinish = false;
+      // default: modulate
+      // XXX: not used
+      //  colorModulate = YES;
+      this.autoRemoveOnFinish = false;
 
-        //for batchNode
-        this._transformSystemDirty = false;
+      //for batchNode
+      this._transformSystemDirty = false;
 
-        // udpate after action in run!
-        this.scheduleUpdateWithPriority(1);
-        this._renderCmd._initWithTotalParticles(numberOfParticles);
-        return true;
+      // udpate after action in run!
+      this.scheduleUpdateWithPriority(1);
+      this._renderCmd._initWithTotalParticles(numberOfParticles);
+      return true;
     },
 
     /**
@@ -1549,7 +1715,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @see scheduleUpdate();
      */
     destroyParticleSystem: function () {
-        this.unscheduleUpdate();
+      this.unscheduleUpdate();
     },
 
     /**
@@ -1557,13 +1723,12 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Boolean}
      */
     addParticle: function () {
-        if (this.isFull())
-            return false;
+      if (this.isFull()) return false;
 
-        var particle = this._renderCmd.addParticle();
-        this.initParticle(particle);
-        ++this.particleCount;
-        return true;
+      var particle = this._renderCmd.addParticle();
+      this.initParticle(particle);
+      ++this.particleCount;
+      return true;
     },
 
     /**
@@ -1571,123 +1736,184 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Particle} particle
      */
     initParticle: function (particle) {
-        var locRandomMinus11 = cc.randomMinus1To1;
-        // timeToLive
-        // no negative life. prevent division by 0
-        particle.timeToLive = this.life + this.lifeVar * locRandomMinus11();
-        particle.timeToLive = Math.max(0, particle.timeToLive);
+      var locRandomMinus11 = cc.randomMinus1To1;
+      // timeToLive
+      // no negative life. prevent division by 0
+      particle.timeToLive = this.life + this.lifeVar * locRandomMinus11();
+      particle.timeToLive = Math.max(0, particle.timeToLive);
 
-        // position
-        particle.pos.x = this._sourcePosition.x + this._posVar.x * locRandomMinus11();
-        particle.pos.y = this._sourcePosition.y + this._posVar.y * locRandomMinus11();
+      // position
+      particle.pos.x =
+        this._sourcePosition.x + this._posVar.x * locRandomMinus11();
+      particle.pos.y =
+        this._sourcePosition.y + this._posVar.y * locRandomMinus11();
 
-        // Color
-        var start, end;
-        var locStartColor = this._startColor, locStartColorVar = this._startColorVar;
-        var locEndColor = this._endColor, locEndColorVar = this._endColorVar;
-        start = {
-            r: cc.clampf(locStartColor.r + locStartColorVar.r * locRandomMinus11(), 0, 255),
-            g: cc.clampf(locStartColor.g + locStartColorVar.g * locRandomMinus11(), 0, 255),
-            b: cc.clampf(locStartColor.b + locStartColorVar.b * locRandomMinus11(), 0, 255),
-            a: cc.clampf(locStartColor.a + locStartColorVar.a * locRandomMinus11(), 0, 255)
-        };
-        end = {
-            r: cc.clampf(locEndColor.r + locEndColorVar.r * locRandomMinus11(), 0, 255),
-            g: cc.clampf(locEndColor.g + locEndColorVar.g * locRandomMinus11(), 0, 255),
-            b: cc.clampf(locEndColor.b + locEndColorVar.b * locRandomMinus11(), 0, 255),
-            a: cc.clampf(locEndColor.a + locEndColorVar.a * locRandomMinus11(), 0, 255)
-        };
+      // Color
+      var start, end;
+      var locStartColor = this._startColor,
+        locStartColorVar = this._startColorVar;
+      var locEndColor = this._endColor,
+        locEndColorVar = this._endColorVar;
+      start = {
+        r: cc.clampf(
+          locStartColor.r + locStartColorVar.r * locRandomMinus11(),
+          0,
+          255
+        ),
+        g: cc.clampf(
+          locStartColor.g + locStartColorVar.g * locRandomMinus11(),
+          0,
+          255
+        ),
+        b: cc.clampf(
+          locStartColor.b + locStartColorVar.b * locRandomMinus11(),
+          0,
+          255
+        ),
+        a: cc.clampf(
+          locStartColor.a + locStartColorVar.a * locRandomMinus11(),
+          0,
+          255
+        )
+      };
+      end = {
+        r: cc.clampf(
+          locEndColor.r + locEndColorVar.r * locRandomMinus11(),
+          0,
+          255
+        ),
+        g: cc.clampf(
+          locEndColor.g + locEndColorVar.g * locRandomMinus11(),
+          0,
+          255
+        ),
+        b: cc.clampf(
+          locEndColor.b + locEndColorVar.b * locRandomMinus11(),
+          0,
+          255
+        ),
+        a: cc.clampf(
+          locEndColor.a + locEndColorVar.a * locRandomMinus11(),
+          0,
+          255
+        )
+      };
 
-        particle.color = start;
-        var locParticleDeltaColor = particle.deltaColor, locParticleTimeToLive = particle.timeToLive;
-        locParticleDeltaColor.r = (end.r - start.r) / locParticleTimeToLive;
-        locParticleDeltaColor.g = (end.g - start.g) / locParticleTimeToLive;
-        locParticleDeltaColor.b = (end.b - start.b) / locParticleTimeToLive;
-        locParticleDeltaColor.a = (end.a - start.a) / locParticleTimeToLive;
+      particle.color = start;
+      var locParticleDeltaColor = particle.deltaColor,
+        locParticleTimeToLive = particle.timeToLive;
+      locParticleDeltaColor.r = (end.r - start.r) / locParticleTimeToLive;
+      locParticleDeltaColor.g = (end.g - start.g) / locParticleTimeToLive;
+      locParticleDeltaColor.b = (end.b - start.b) / locParticleTimeToLive;
+      locParticleDeltaColor.a = (end.a - start.a) / locParticleTimeToLive;
 
-        // size
-        var startS = this.startSize + this.startSizeVar * locRandomMinus11();
-        startS = Math.max(0, startS); // No negative value
+      // size
+      var startS = this.startSize + this.startSizeVar * locRandomMinus11();
+      startS = Math.max(0, startS); // No negative value
 
-        particle.size = startS;
-        if (this.endSize === cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE) {
-            particle.deltaSize = 0;
-        } else {
-            var endS = this.endSize + this.endSizeVar * locRandomMinus11();
-            endS = Math.max(0, endS); // No negative values
-            particle.deltaSize = (endS - startS) / locParticleTimeToLive;
-        }
+      particle.size = startS;
+      if (this.endSize === cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE) {
+        particle.deltaSize = 0;
+      } else {
+        var endS = this.endSize + this.endSizeVar * locRandomMinus11();
+        endS = Math.max(0, endS); // No negative values
+        particle.deltaSize = (endS - startS) / locParticleTimeToLive;
+      }
 
-        // rotation
-        var startA = this.startSpin + this.startSpinVar * locRandomMinus11();
-        var endA = this.endSpin + this.endSpinVar * locRandomMinus11();
-        particle.rotation = startA;
-        particle.deltaRotation = (endA - startA) / locParticleTimeToLive;
+      // rotation
+      var startA = this.startSpin + this.startSpinVar * locRandomMinus11();
+      var endA = this.endSpin + this.endSpinVar * locRandomMinus11();
+      particle.rotation = startA;
+      particle.deltaRotation = (endA - startA) / locParticleTimeToLive;
 
-        // position
-        if (this.positionType === cc.ParticleSystem.TYPE_FREE)
-            particle.startPos = this.convertToWorldSpace(this._pointZeroForParticle);
-        else if (this.positionType === cc.ParticleSystem.TYPE_RELATIVE) {
-            particle.startPos.x = this._position.x;
-            particle.startPos.y = this._position.y;
-        }
+      // position
+      if (this.positionType === cc.ParticleSystem.TYPE_FREE)
+        particle.startPos = this.convertToWorldSpace(
+          this._pointZeroForParticle
+        );
+      else if (this.positionType === cc.ParticleSystem.TYPE_RELATIVE) {
+        particle.startPos.x = this._position.x;
+        particle.startPos.y = this._position.y;
+      }
+
+      // direction
+      var a = cc.degreesToRadians(
+        this.angle + this.angleVar * locRandomMinus11()
+      );
+
+      // Mode Gravity: A
+      if (this.emitterMode === cc.ParticleSystem.MODE_GRAVITY) {
+        var locModeA = this.modeA,
+          locParticleModeA = particle.modeA;
+        var s = locModeA.speed + locModeA.speedVar * locRandomMinus11();
 
         // direction
-        var a = cc.degreesToRadians(this.angle + this.angleVar * locRandomMinus11());
+        locParticleModeA.dir.x = Math.cos(a);
+        locParticleModeA.dir.y = Math.sin(a);
+        cc.pMultIn(locParticleModeA.dir, s);
 
-        // Mode Gravity: A
-        if (this.emitterMode === cc.ParticleSystem.MODE_GRAVITY) {
-            var locModeA = this.modeA, locParticleModeA = particle.modeA;
-            var s = locModeA.speed + locModeA.speedVar * locRandomMinus11();
+        // radial accel
+        locParticleModeA.radialAccel =
+          locModeA.radialAccel + locModeA.radialAccelVar * locRandomMinus11();
 
-            // direction
-            locParticleModeA.dir.x = Math.cos(a);
-            locParticleModeA.dir.y = Math.sin(a);
-            cc.pMultIn(locParticleModeA.dir, s);
+        // tangential accel
+        locParticleModeA.tangentialAccel =
+          locModeA.tangentialAccel +
+          locModeA.tangentialAccelVar * locRandomMinus11();
 
-            // radial accel
-            locParticleModeA.radialAccel = locModeA.radialAccel + locModeA.radialAccelVar * locRandomMinus11();
+        // rotation is dir
+        if (locModeA.rotationIsDir)
+          particle.rotation = -cc.radiansToDegrees(
+            cc.pToAngle(locParticleModeA.dir)
+          );
+      } else {
+        // Mode Radius: B
+        var locModeB = this.modeB,
+          locParitlceModeB = particle.modeB;
 
-            // tangential accel
-            locParticleModeA.tangentialAccel = locModeA.tangentialAccel + locModeA.tangentialAccelVar * locRandomMinus11();
+        // Set the default diameter of the particle from the source position
+        var startRadius =
+          locModeB.startRadius + locModeB.startRadiusVar * locRandomMinus11();
+        var endRadius =
+          locModeB.endRadius + locModeB.endRadiusVar * locRandomMinus11();
 
-            // rotation is dir
-            if (locModeA.rotationIsDir)
-                particle.rotation = -cc.radiansToDegrees(cc.pToAngle(locParticleModeA.dir));
-        } else {
-            // Mode Radius: B
-            var locModeB = this.modeB, locParitlceModeB = particle.modeB;
+        locParitlceModeB.radius = startRadius;
+        locParitlceModeB.deltaRadius =
+          locModeB.endRadius ===
+          cc.ParticleSystem.START_RADIUS_EQUAL_TO_END_RADIUS
+            ? 0
+            : (endRadius - startRadius) / locParticleTimeToLive;
 
-            // Set the default diameter of the particle from the source position
-            var startRadius = locModeB.startRadius + locModeB.startRadiusVar * locRandomMinus11();
-            var endRadius = locModeB.endRadius + locModeB.endRadiusVar * locRandomMinus11();
-
-            locParitlceModeB.radius = startRadius;
-            locParitlceModeB.deltaRadius = (locModeB.endRadius === cc.ParticleSystem.START_RADIUS_EQUAL_TO_END_RADIUS) ? 0 : (endRadius - startRadius) / locParticleTimeToLive;
-
-            locParitlceModeB.angle = a;
-            locParitlceModeB.degreesPerSecond = cc.degreesToRadians(locModeB.rotatePerSecond + locModeB.rotatePerSecondVar * locRandomMinus11());
-        }
+        locParitlceModeB.angle = a;
+        locParitlceModeB.degreesPerSecond = cc.degreesToRadians(
+          locModeB.rotatePerSecond +
+            locModeB.rotatePerSecondVar * locRandomMinus11()
+        );
+      }
     },
 
     /**
      * stop emitting particles. Running particles will continue to run until they die
      */
     stopSystem: function () {
-        this._isActive = false;
-        this._elapsed = this.duration;
-        this._emitCounter = 0;
+      this._isActive = false;
+      this._elapsed = this.duration;
+      this._emitCounter = 0;
     },
 
     /**
      * Kill all living particles.
      */
     resetSystem: function () {
-        this._isActive = true;
-        this._elapsed = 0;
-        var locParticles = this._particles;
-        for (this._particleIdx = 0; this._particleIdx < this.particleCount; ++this._particleIdx)
-            locParticles[this._particleIdx].timeToLive = 0;
+      this._isActive = true;
+      this._elapsed = 0;
+      var locParticles = this._particles;
+      for (
+        this._particleIdx = 0;
+        this._particleIdx < this.particleCount;
+        ++this._particleIdx
+      )
+        locParticles[this._particleIdx].timeToLive = 0;
     },
 
     /**
@@ -1695,7 +1921,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {Boolean}
      */
     isFull: function () {
-        return (this.particleCount >= this._totalParticles);
+      return this.particleCount >= this._totalParticles;
     },
 
     /**
@@ -1704,14 +1930,14 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Point} newPosition
      */
     updateQuadWithParticle: function (particle, newPosition) {
-        this._renderCmd.updateQuadWithParticle(particle, newPosition);
+      this._renderCmd.updateQuadWithParticle(particle, newPosition);
     },
 
     /**
      * should be overridden by subclasses
      */
     postStep: function () {
-        this._renderCmd.postStep();
+      this._renderCmd.postStep();
     },
 
     /**
@@ -1719,166 +1945,173 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @override
      * @param {Number} dt delta time
      */
-    update:function (dt) {
-        if (this._isActive && this.emissionRate) {
-            var rate = 1.0 / this.emissionRate;
-            //issue #1201, prevent bursts of particles, due to too high emitCounter
-            if (this.particleCount < this._totalParticles)
-                this._emitCounter += dt;
+    update: function (dt) {
+      if (this._isActive && this.emissionRate) {
+        var rate = 1.0 / this.emissionRate;
+        //issue #1201, prevent bursts of particles, due to too high emitCounter
+        if (this.particleCount < this._totalParticles) this._emitCounter += dt;
 
-            while ((this.particleCount < this._totalParticles) && (this._emitCounter > rate)) {
-                this.addParticle();
-                this._emitCounter -= rate;
+        while (
+          this.particleCount < this._totalParticles &&
+          this._emitCounter > rate
+        ) {
+          this.addParticle();
+          this._emitCounter -= rate;
+        }
+
+        this._elapsed += dt;
+        if (this.duration !== -1 && this.duration < this._elapsed)
+          this.stopSystem();
+      }
+      this._particleIdx = 0;
+
+      var currentPosition = cc.Particle.TemporaryPoints[0];
+      if (this.positionType === cc.ParticleSystem.TYPE_FREE) {
+        cc.pIn(
+          currentPosition,
+          this.convertToWorldSpace(this._pointZeroForParticle)
+        );
+      } else if (this.positionType === cc.ParticleSystem.TYPE_RELATIVE) {
+        currentPosition.x = this._position.x;
+        currentPosition.y = this._position.y;
+      }
+
+      if (this._visible) {
+        // Used to reduce memory allocation / creation within the loop
+        var tpa = cc.Particle.TemporaryPoints[1],
+          tpb = cc.Particle.TemporaryPoints[2],
+          tpc = cc.Particle.TemporaryPoints[3];
+
+        var locParticles = this._particles;
+        while (this._particleIdx < this.particleCount) {
+          // Reset the working particles
+          cc.pZeroIn(tpa);
+          cc.pZeroIn(tpb);
+          cc.pZeroIn(tpc);
+
+          var selParticle = locParticles[this._particleIdx];
+
+          // life
+          selParticle.timeToLive -= dt;
+
+          if (selParticle.timeToLive > 0) {
+            // Mode A: gravity, direction, tangential accel & radial accel
+            if (this.emitterMode === cc.ParticleSystem.MODE_GRAVITY) {
+              var tmp = tpc,
+                radial = tpa,
+                tangential = tpb;
+
+              // radial acceleration
+              if (selParticle.pos.x || selParticle.pos.y) {
+                cc.pIn(radial, selParticle.pos);
+                cc.pNormalizeIn(radial);
+              } else {
+                cc.pZeroIn(radial);
+              }
+
+              cc.pIn(tangential, radial);
+              cc.pMultIn(radial, selParticle.modeA.radialAccel);
+
+              // tangential acceleration
+              var newy = tangential.x;
+              tangential.x = -tangential.y;
+              tangential.y = newy;
+
+              cc.pMultIn(tangential, selParticle.modeA.tangentialAccel);
+
+              cc.pIn(tmp, radial);
+              cc.pAddIn(tmp, tangential);
+              cc.pAddIn(tmp, this.modeA.gravity);
+              cc.pMultIn(tmp, dt);
+              cc.pAddIn(selParticle.modeA.dir, tmp);
+
+              cc.pIn(tmp, selParticle.modeA.dir);
+              cc.pMultIn(tmp, dt);
+              cc.pAddIn(selParticle.pos, tmp);
+            } else {
+              // Mode B: radius movement
+              var selModeB = selParticle.modeB;
+              // Update the angle and radius of the particle.
+              selModeB.angle += selModeB.degreesPerSecond * dt;
+              selModeB.radius += selModeB.deltaRadius * dt;
+
+              selParticle.pos.x = -Math.cos(selModeB.angle) * selModeB.radius;
+              selParticle.pos.y = -Math.sin(selModeB.angle) * selModeB.radius;
             }
 
-            this._elapsed += dt;
-            if (this.duration !== -1 && this.duration < this._elapsed)
-                this.stopSystem();
-        }
-        this._particleIdx = 0;
+            // color
+            this._renderCmd._updateDeltaColor(selParticle, dt);
 
-        var currentPosition = cc.Particle.TemporaryPoints[0];
-        if (this.positionType === cc.ParticleSystem.TYPE_FREE) {
-            cc.pIn(currentPosition, this.convertToWorldSpace(this._pointZeroForParticle));
-        } else if (this.positionType === cc.ParticleSystem.TYPE_RELATIVE) {
-            currentPosition.x = this._position.x;
-            currentPosition.y = this._position.y;
-        }
+            // size
+            selParticle.size += selParticle.deltaSize * dt;
+            selParticle.size = Math.max(0, selParticle.size);
 
-        if (this._visible) {
-            // Used to reduce memory allocation / creation within the loop
-            var tpa = cc.Particle.TemporaryPoints[1],
-                tpb = cc.Particle.TemporaryPoints[2],
-                tpc = cc.Particle.TemporaryPoints[3];
+            // angle
+            selParticle.rotation += selParticle.deltaRotation * dt;
 
-            var locParticles = this._particles;
-            while (this._particleIdx < this.particleCount) {
+            //
+            // update values in quad
+            //
+            var newPos = tpa;
+            if (
+              this.positionType === cc.ParticleSystem.TYPE_FREE ||
+              this.positionType === cc.ParticleSystem.TYPE_RELATIVE
+            ) {
+              var diff = tpb;
+              cc.pIn(diff, currentPosition);
+              cc.pSubIn(diff, selParticle.startPos);
 
-                // Reset the working particles
-                cc.pZeroIn(tpa);
-                cc.pZeroIn(tpb);
-                cc.pZeroIn(tpc);
-
-                var selParticle = locParticles[this._particleIdx];
-
-                // life
-                selParticle.timeToLive -= dt;
-
-                if (selParticle.timeToLive > 0) {
-                    // Mode A: gravity, direction, tangential accel & radial accel
-                    if (this.emitterMode === cc.ParticleSystem.MODE_GRAVITY) {
-
-                        var tmp = tpc, radial = tpa, tangential = tpb;
-
-                        // radial acceleration
-                        if (selParticle.pos.x || selParticle.pos.y) {
-                            cc.pIn(radial, selParticle.pos);
-                            cc.pNormalizeIn(radial);
-                        } else {
-                            cc.pZeroIn(radial);
-                        }
-
-                        cc.pIn(tangential, radial);
-                        cc.pMultIn(radial, selParticle.modeA.radialAccel);
-
-                        // tangential acceleration
-                        var newy = tangential.x;
-                        tangential.x = -tangential.y;
-                        tangential.y = newy;
-
-                        cc.pMultIn(tangential, selParticle.modeA.tangentialAccel);
-
-                        cc.pIn(tmp, radial);
-                        cc.pAddIn(tmp, tangential);
-                        cc.pAddIn(tmp, this.modeA.gravity);
-                        cc.pMultIn(tmp, dt);
-                        cc.pAddIn(selParticle.modeA.dir, tmp);
-
-
-                        cc.pIn(tmp, selParticle.modeA.dir);
-                        cc.pMultIn(tmp, dt);
-                        cc.pAddIn(selParticle.pos, tmp);
-                    } else {
-                        // Mode B: radius movement
-                        var selModeB = selParticle.modeB;
-                        // Update the angle and radius of the particle.
-                        selModeB.angle += selModeB.degreesPerSecond * dt;
-                        selModeB.radius += selModeB.deltaRadius * dt;
-
-                        selParticle.pos.x = -Math.cos(selModeB.angle) * selModeB.radius;
-                        selParticle.pos.y = -Math.sin(selModeB.angle) * selModeB.radius;
-                    }
-
-                    // color
-                    this._renderCmd._updateDeltaColor(selParticle, dt);
-
-                    // size
-                    selParticle.size += (selParticle.deltaSize * dt);
-                    selParticle.size = Math.max(0, selParticle.size);
-
-                    // angle
-                    selParticle.rotation += (selParticle.deltaRotation * dt);
-
-                    //
-                    // update values in quad
-                    //
-                    var newPos = tpa;
-                    if (this.positionType === cc.ParticleSystem.TYPE_FREE || this.positionType === cc.ParticleSystem.TYPE_RELATIVE) {
-                        var diff = tpb;
-                        cc.pIn(diff, currentPosition);
-                        cc.pSubIn(diff, selParticle.startPos);
-
-                        cc.pIn(newPos, selParticle.pos);
-                        cc.pSubIn(newPos, diff);
-                    } else {
-                        cc.pIn(newPos, selParticle.pos);
-                    }
-
-                    // translate newPos to correct position, since matrix transform isn't performed in batchnode
-                    // don't update the particle with the new position information, it will interfere with the radius and tangential calculations
-                    if (this._batchNode) {
-                        newPos.x += this._position.x;
-                        newPos.y += this._position.y;
-                    }
-                    this._renderCmd.updateParticlePosition(selParticle, newPos);
-
-                    // update particle counter
-                    ++this._particleIdx;
-                } else {
-                    // life < 0
-                    var currentIndex = selParticle.atlasIndex;
-                    if (this._particleIdx !== this.particleCount - 1) {
-                        var deadParticle = locParticles[this._particleIdx];
-                        locParticles[this._particleIdx] = locParticles[this.particleCount - 1];
-                        locParticles[this.particleCount - 1] = deadParticle;
-                    }
-                    if (this._batchNode) {
-                        //disable the switched particle
-                        this._batchNode.disableParticle(this.atlasIndex + currentIndex);
-                        //switch indexes
-                        locParticles[this.particleCount - 1].atlasIndex = currentIndex;
-                    }
-
-                    --this.particleCount;
-                    if (this.particleCount === 0 && this.autoRemoveOnFinish) {
-                        this.unscheduleUpdate();
-                        this._parent.removeChild(this, true);
-                        return;
-                    }
-                }
+              cc.pIn(newPos, selParticle.pos);
+              cc.pSubIn(newPos, diff);
+            } else {
+              cc.pIn(newPos, selParticle.pos);
             }
-            this._transformSystemDirty = false;
-        }
 
-        if (!this._batchNode)
-            this.postStep();
+            // translate newPos to correct position, since matrix transform isn't performed in batchnode
+            // don't update the particle with the new position information, it will interfere with the radius and tangential calculations
+            if (this._batchNode) {
+              newPos.x += this._position.x;
+              newPos.y += this._position.y;
+            }
+            this._renderCmd.updateParticlePosition(selParticle, newPos);
+
+            // update particle counter
+            ++this._particleIdx;
+          } else {
+            // life < 0
+            var currentIndex = selParticle.atlasIndex;
+            if (this._particleIdx !== this.particleCount - 1) {
+              var deadParticle = locParticles[this._particleIdx];
+              locParticles[this._particleIdx] =
+                locParticles[this.particleCount - 1];
+              locParticles[this.particleCount - 1] = deadParticle;
+            }
+            if (this._batchNode) {
+              //disable the switched particle
+              this._batchNode.disableParticle(this.atlasIndex + currentIndex);
+              //switch indexes
+              locParticles[this.particleCount - 1].atlasIndex = currentIndex;
+            }
+
+            --this.particleCount;
+            if (this.particleCount === 0 && this.autoRemoveOnFinish) {
+              this.unscheduleUpdate();
+              this._parent.removeChild(this, true);
+              return;
+            }
+          }
+        }
+        this._transformSystemDirty = false;
+      }
+
+      if (!this._batchNode) this.postStep();
     },
 
     /**
      * update emitter's status (dt = 0)
      */
     updateWithNoTime: function () {
-        this.update(0);
+      this.update(0);
     },
 
     //
@@ -1889,32 +2122,37 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
     // @private
     //
     _valueForKey: function (key, dict) {
-        if (dict) {
-            var pString = dict[key];
-            return pString != null ? pString : "";
-        }
-        return "";
+      if (dict) {
+        var pString = dict[key];
+        return pString != null ? pString : "";
+      }
+      return "";
     },
 
     _updateBlendFunc: function () {
-        if (this._batchNode) {
-            cc.log("Can't change blending functions when the particle is being batched");
-            return;
-        }
+      if (this._batchNode) {
+        cc.log(
+          "Can't change blending functions when the particle is being batched"
+        );
+        return;
+      }
 
-        var locTexture = this._texture;
-        if (locTexture && locTexture instanceof cc.Texture2D) {
-            this._opacityModifyRGB = false;
-            var locBlendFunc = this._blendFunc;
-            if (locBlendFunc.src === cc.BLEND_SRC && locBlendFunc.dst === cc.BLEND_DST) {
-                if (locTexture.hasPremultipliedAlpha()) {
-                    this._opacityModifyRGB = true;
-                } else {
-                    locBlendFunc.src = cc.SRC_ALPHA;
-                    locBlendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
-                }
-            }
+      var locTexture = this._texture;
+      if (locTexture && locTexture instanceof cc.Texture2D) {
+        this._opacityModifyRGB = false;
+        var locBlendFunc = this._blendFunc;
+        if (
+          locBlendFunc.src === cc.BLEND_SRC &&
+          locBlendFunc.dst === cc.BLEND_DST
+        ) {
+          if (locTexture.hasPremultipliedAlpha()) {
+            this._opacityModifyRGB = true;
+          } else {
+            locBlendFunc.src = cc.SRC_ALPHA;
+            locBlendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
+          }
         }
+      }
     },
 
     /**
@@ -1924,99 +2162,101 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @return {cc.ParticleSystem}
      */
     clone: function () {
-        var retParticle = new cc.ParticleSystem();
+      var retParticle = new cc.ParticleSystem();
 
-        // self, not super
-        if (retParticle.initWithTotalParticles(this.getTotalParticles())) {
-            // angle
-            retParticle.setAngle(this.getAngle());
-            retParticle.setAngleVar(this.getAngleVar());
+      // self, not super
+      if (retParticle.initWithTotalParticles(this.getTotalParticles())) {
+        // angle
+        retParticle.setAngle(this.getAngle());
+        retParticle.setAngleVar(this.getAngleVar());
 
-            // duration
-            retParticle.setDuration(this.getDuration());
+        // duration
+        retParticle.setDuration(this.getDuration());
 
-            // blend function
-            var blend = this.getBlendFunc();
-            retParticle.setBlendFunc(blend.src, blend.dst);
+        // blend function
+        var blend = this.getBlendFunc();
+        retParticle.setBlendFunc(blend.src, blend.dst);
 
-            // color
-            retParticle.setStartColor(this.getStartColor());
+        // color
+        retParticle.setStartColor(this.getStartColor());
 
-            retParticle.setStartColorVar(this.getStartColorVar());
+        retParticle.setStartColorVar(this.getStartColorVar());
 
-            retParticle.setEndColor(this.getEndColor());
+        retParticle.setEndColor(this.getEndColor());
 
-            retParticle.setEndColorVar(this.getEndColorVar());
+        retParticle.setEndColorVar(this.getEndColorVar());
 
-            // this size
-            retParticle.setStartSize(this.getStartSize());
-            retParticle.setStartSizeVar(this.getStartSizeVar());
-            retParticle.setEndSize(this.getEndSize());
-            retParticle.setEndSizeVar(this.getEndSizeVar());
+        // this size
+        retParticle.setStartSize(this.getStartSize());
+        retParticle.setStartSizeVar(this.getStartSizeVar());
+        retParticle.setEndSize(this.getEndSize());
+        retParticle.setEndSizeVar(this.getEndSizeVar());
 
-            // position
-            retParticle.setPosition(cc.p(this.x, this.y));
-            retParticle.setPosVar(cc.p(this.getPosVar().x, this.getPosVar().y));
+        // position
+        retParticle.setPosition(cc.p(this.x, this.y));
+        retParticle.setPosVar(cc.p(this.getPosVar().x, this.getPosVar().y));
 
-            retParticle.setPositionType(this.getPositionType());
+        retParticle.setPositionType(this.getPositionType());
 
-            // Spinning
-            retParticle.setStartSpin(this.getStartSpin() || 0);
-            retParticle.setStartSpinVar(this.getStartSpinVar() || 0);
-            retParticle.setEndSpin(this.getEndSpin() || 0);
-            retParticle.setEndSpinVar(this.getEndSpinVar() || 0);
+        // Spinning
+        retParticle.setStartSpin(this.getStartSpin() || 0);
+        retParticle.setStartSpinVar(this.getStartSpinVar() || 0);
+        retParticle.setEndSpin(this.getEndSpin() || 0);
+        retParticle.setEndSpinVar(this.getEndSpinVar() || 0);
 
-            retParticle.setEmitterMode(this.getEmitterMode());
+        retParticle.setEmitterMode(this.getEmitterMode());
 
-            // Mode A: Gravity + tangential accel + radial accel
-            if (this.getEmitterMode() === cc.ParticleSystem.MODE_GRAVITY) {
-                // gravity
-                var gra = this.getGravity();
-                retParticle.setGravity(cc.p(gra.x, gra.y));
+        // Mode A: Gravity + tangential accel + radial accel
+        if (this.getEmitterMode() === cc.ParticleSystem.MODE_GRAVITY) {
+          // gravity
+          var gra = this.getGravity();
+          retParticle.setGravity(cc.p(gra.x, gra.y));
 
-                // speed
-                retParticle.setSpeed(this.getSpeed());
-                retParticle.setSpeedVar(this.getSpeedVar());
+          // speed
+          retParticle.setSpeed(this.getSpeed());
+          retParticle.setSpeedVar(this.getSpeedVar());
 
-                // radial acceleration
-                retParticle.setRadialAccel(this.getRadialAccel());
-                retParticle.setRadialAccelVar(this.getRadialAccelVar());
+          // radial acceleration
+          retParticle.setRadialAccel(this.getRadialAccel());
+          retParticle.setRadialAccelVar(this.getRadialAccelVar());
 
-                // tangential acceleration
-                retParticle.setTangentialAccel(this.getTangentialAccel());
-                retParticle.setTangentialAccelVar(this.getTangentialAccelVar());
+          // tangential acceleration
+          retParticle.setTangentialAccel(this.getTangentialAccel());
+          retParticle.setTangentialAccelVar(this.getTangentialAccelVar());
+        } else if (this.getEmitterMode() === cc.ParticleSystem.MODE_RADIUS) {
+          // or Mode B: radius movement
+          retParticle.setStartRadius(this.getStartRadius());
+          retParticle.setStartRadiusVar(this.getStartRadiusVar());
+          retParticle.setEndRadius(this.getEndRadius());
+          retParticle.setEndRadiusVar(this.getEndRadiusVar());
 
-            } else if (this.getEmitterMode() === cc.ParticleSystem.MODE_RADIUS) {
-                // or Mode B: radius movement
-                retParticle.setStartRadius(this.getStartRadius());
-                retParticle.setStartRadiusVar(this.getStartRadiusVar());
-                retParticle.setEndRadius(this.getEndRadius());
-                retParticle.setEndRadiusVar(this.getEndRadiusVar());
-
-                retParticle.setRotatePerSecond(this.getRotatePerSecond());
-                retParticle.setRotatePerSecondVar(this.getRotatePerSecondVar());
-            }
-
-            // life span
-            retParticle.setLife(this.getLife());
-            retParticle.setLifeVar(this.getLifeVar());
-
-            // emission Rate
-            retParticle.setEmissionRate(this.getEmissionRate());
-
-            //don't get the internal texture if a batchNode is used
-            if (!this.getBatchNode()) {
-                // Set a compatible default for the alpha transfer
-                retParticle.setOpacityModifyRGB(this.isOpacityModifyRGB());
-                // texture
-                var texture = this.getTexture();
-                if (texture) {
-                    var size = texture.getContentSize();
-                    retParticle.setTextureWithRect(texture, cc.rect(0, 0, size.width, size.height));
-                }
-            }
+          retParticle.setRotatePerSecond(this.getRotatePerSecond());
+          retParticle.setRotatePerSecondVar(this.getRotatePerSecondVar());
         }
-        return retParticle;
+
+        // life span
+        retParticle.setLife(this.getLife());
+        retParticle.setLifeVar(this.getLifeVar());
+
+        // emission Rate
+        retParticle.setEmissionRate(this.getEmissionRate());
+
+        //don't get the internal texture if a batchNode is used
+        if (!this.getBatchNode()) {
+          // Set a compatible default for the alpha transfer
+          retParticle.setOpacityModifyRGB(this.isOpacityModifyRGB());
+          // texture
+          var texture = this.getTexture();
+          if (texture) {
+            var size = texture.getContentSize();
+            retParticle.setTextureWithRect(
+              texture,
+              cc.rect(0, 0, size.width, size.height)
+            );
+          }
+        }
+      }
+      return retParticle;
     },
 
     /**
@@ -2026,17 +2266,18 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.SpriteFrame} spriteFrame
      */
     setDisplayFrame: function (spriteFrame) {
-        if (!spriteFrame)
-            return;
+      if (!spriteFrame) return;
 
-        var locOffset = spriteFrame.getOffsetInPixels();
-        if (locOffset.x !== 0 || locOffset.y !== 0)
-            cc.log("cc.ParticleSystem.setDisplayFrame(): QuadParticle only supports SpriteFrames with no offsets");
+      var locOffset = spriteFrame.getOffsetInPixels();
+      if (locOffset.x !== 0 || locOffset.y !== 0)
+        cc.log(
+          "cc.ParticleSystem.setDisplayFrame(): QuadParticle only supports SpriteFrames with no offsets"
+        );
 
-        // update texture before updating texture rect
-        var texture = spriteFrame.getTexture(), locTexture = this._texture;
-        if (locTexture !== texture)
-            this.setTexture(texture);
+      // update texture before updating texture rect
+      var texture = spriteFrame.getTexture(),
+        locTexture = this._texture;
+      if (locTexture !== texture) this.setTexture(texture);
     },
 
     /**
@@ -2045,12 +2286,12 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Rect} rect
      */
     setTextureWithRect: function (texture, rect) {
-        var locTexture = this._texture;
-        if (locTexture !== texture) {
-            this._texture = texture;
-            this._updateBlendFunc();
-        }
-        this.initTexCoordsWithRect(rect);
+      var locTexture = this._texture;
+      if (locTexture !== texture) {
+        this._texture = texture;
+        this._updateBlendFunc();
+      }
+      this.initTexCoordsWithRect(rect);
     },
 
     /**
@@ -2058,16 +2299,22 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      * @param {cc.Class} obj
      */
     listenBackToForeground: function (obj) {
-        //do nothing
+      //do nothing
     }
-});
+  }
+);
 
 var _p = cc.ParticleSystem.prototype;
 
 // Extended properties
 /** @expose */
 _p.opacityModifyRGB;
-cc.defineGetterSetter(_p, "opacityModifyRGB", _p.isOpacityModifyRGB, _p.setOpacityModifyRGB);
+cc.defineGetterSetter(
+  _p,
+  "opacityModifyRGB",
+  _p.isOpacityModifyRGB,
+  _p.setOpacityModifyRGB
+);
 /** @expose */
 _p.batchNode;
 cc.defineGetterSetter(_p, "batchNode", _p.getBatchNode, _p.setBatchNode);
@@ -2082,7 +2329,12 @@ _p.active;
 cc.defineGetterSetter(_p, "active", _p.isActive);
 /** @expose */
 _p.sourcePos;
-cc.defineGetterSetter(_p, "sourcePos", _p.getSourcePosition, _p.setSourcePosition);
+cc.defineGetterSetter(
+  _p,
+  "sourcePos",
+  _p.getSourcePosition,
+  _p.setSourcePosition
+);
 /** @expose */
 _p.posVar;
 cc.defineGetterSetter(_p, "posVar", _p.getPosVar, _p.setPosVar);
@@ -2097,43 +2349,88 @@ _p.speedVar;
 cc.defineGetterSetter(_p, "speedVar", _p.getSpeedVar, _p.setSpeedVar);
 /** @expose */
 _p.tangentialAccel;
-cc.defineGetterSetter(_p, "tangentialAccel", _p.getTangentialAccel, _p.setTangentialAccel);
+cc.defineGetterSetter(
+  _p,
+  "tangentialAccel",
+  _p.getTangentialAccel,
+  _p.setTangentialAccel
+);
 /** @expose */
 _p.tangentialAccelVar;
-cc.defineGetterSetter(_p, "tangentialAccelVar", _p.getTangentialAccelVar, _p.setTangentialAccelVar);
+cc.defineGetterSetter(
+  _p,
+  "tangentialAccelVar",
+  _p.getTangentialAccelVar,
+  _p.setTangentialAccelVar
+);
 /** @expose */
 _p.radialAccel;
 cc.defineGetterSetter(_p, "radialAccel", _p.getRadialAccel, _p.setRadialAccel);
 /** @expose */
 _p.radialAccelVar;
-cc.defineGetterSetter(_p, "radialAccelVar", _p.getRadialAccelVar, _p.setRadialAccelVar);
+cc.defineGetterSetter(
+  _p,
+  "radialAccelVar",
+  _p.getRadialAccelVar,
+  _p.setRadialAccelVar
+);
 /** @expose */
 _p.rotationIsDir;
-cc.defineGetterSetter(_p, "rotationIsDir", _p.getRotationIsDir, _p.setRotationIsDir);
+cc.defineGetterSetter(
+  _p,
+  "rotationIsDir",
+  _p.getRotationIsDir,
+  _p.setRotationIsDir
+);
 /** @expose */
 _p.startRadius;
 cc.defineGetterSetter(_p, "startRadius", _p.getStartRadius, _p.setStartRadius);
 /** @expose */
 _p.startRadiusVar;
-cc.defineGetterSetter(_p, "startRadiusVar", _p.getStartRadiusVar, _p.setStartRadiusVar);
+cc.defineGetterSetter(
+  _p,
+  "startRadiusVar",
+  _p.getStartRadiusVar,
+  _p.setStartRadiusVar
+);
 /** @expose */
 _p.endRadius;
 cc.defineGetterSetter(_p, "endRadius", _p.getEndRadius, _p.setEndRadius);
 /** @expose */
 _p.endRadiusVar;
-cc.defineGetterSetter(_p, "endRadiusVar", _p.getEndRadiusVar, _p.setEndRadiusVar);
+cc.defineGetterSetter(
+  _p,
+  "endRadiusVar",
+  _p.getEndRadiusVar,
+  _p.setEndRadiusVar
+);
 /** @expose */
 _p.rotatePerS;
-cc.defineGetterSetter(_p, "rotatePerS", _p.getRotatePerSecond, _p.setRotatePerSecond);
+cc.defineGetterSetter(
+  _p,
+  "rotatePerS",
+  _p.getRotatePerSecond,
+  _p.setRotatePerSecond
+);
 /** @expose */
 _p.rotatePerSVar;
-cc.defineGetterSetter(_p, "rotatePerSVar", _p.getRotatePerSecondVar, _p.setRotatePerSecondVar);
+cc.defineGetterSetter(
+  _p,
+  "rotatePerSVar",
+  _p.getRotatePerSecondVar,
+  _p.setRotatePerSecondVar
+);
 /** @expose */
 _p.startColor;
 cc.defineGetterSetter(_p, "startColor", _p.getStartColor, _p.setStartColor);
 /** @expose */
 _p.startColorVar;
-cc.defineGetterSetter(_p, "startColorVar", _p.getStartColorVar, _p.setStartColorVar);
+cc.defineGetterSetter(
+  _p,
+  "startColorVar",
+  _p.getStartColorVar,
+  _p.setStartColorVar
+);
 /** @expose */
 _p.endColor;
 cc.defineGetterSetter(_p, "endColor", _p.getEndColor, _p.setEndColor);
@@ -2142,24 +2439,15 @@ _p.endColorVar;
 cc.defineGetterSetter(_p, "endColorVar", _p.getEndColorVar, _p.setEndColorVar);
 /** @expose */
 _p.totalParticles;
-cc.defineGetterSetter(_p, "totalParticles", _p.getTotalParticles, _p.setTotalParticles);
+cc.defineGetterSetter(
+  _p,
+  "totalParticles",
+  _p.getTotalParticles,
+  _p.setTotalParticles
+);
 /** @expose */
 _p.texture;
 cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
-
-
-
-/**
- * <p> return the string found by key in dict. <br/>
- *    This plist files can be create manually or with Particle Designer:<br/>
- *    http://particledesigner.71squared.com/<br/>
- * </p>
- * @deprecated since v3.0 please use new cc.ParticleSysytem(plistFile) instead.
- * @function
- * @param {String|Number} plistFile
- * @return {cc.ParticleSystem}
- */
-cc.ParticleSystem.createWithTotalParticles = cc.ParticleSystem.create;
 
 // Different modes
 /**
@@ -2175,23 +2463,32 @@ cc.ParticleSystem.createWithTotalParticles = cc.ParticleSystem.create;
  * @param {Number} [radialAccelVar=0] radial acceleration variance of each particle.
  * @param {boolean} [rotationIsDir=false]
  */
-cc.ParticleSystem.ModeA = function (gravity, speed, speedVar, tangentialAccel, tangentialAccelVar, radialAccel, radialAccelVar, rotationIsDir) {
-    /** Gravity value. Only available in 'Gravity' mode. */
-    this.gravity = gravity ? gravity : cc.p(0, 0);
-    /** speed of each particle. Only available in 'Gravity' mode.  */
-    this.speed = speed || 0;
-    /** speed variance of each particle. Only available in 'Gravity' mode. */
-    this.speedVar = speedVar || 0;
-    /** tangential acceleration of each particle. Only available in 'Gravity' mode. */
-    this.tangentialAccel = tangentialAccel || 0;
-    /** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
-    this.tangentialAccelVar = tangentialAccelVar || 0;
-    /** radial acceleration of each particle. Only available in 'Gravity' mode. */
-    this.radialAccel = radialAccel || 0;
-    /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
-    this.radialAccelVar = radialAccelVar || 0;
-    /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
-    this.rotationIsDir = rotationIsDir || false;
+cc.ParticleSystem.ModeA = function (
+  gravity,
+  speed,
+  speedVar,
+  tangentialAccel,
+  tangentialAccelVar,
+  radialAccel,
+  radialAccelVar,
+  rotationIsDir
+) {
+  /** Gravity value. Only available in 'Gravity' mode. */
+  this.gravity = gravity ? gravity : cc.p(0, 0);
+  /** speed of each particle. Only available in 'Gravity' mode.  */
+  this.speed = speed || 0;
+  /** speed variance of each particle. Only available in 'Gravity' mode. */
+  this.speedVar = speedVar || 0;
+  /** tangential acceleration of each particle. Only available in 'Gravity' mode. */
+  this.tangentialAccel = tangentialAccel || 0;
+  /** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
+  this.tangentialAccelVar = tangentialAccelVar || 0;
+  /** radial acceleration of each particle. Only available in 'Gravity' mode. */
+  this.radialAccel = radialAccel || 0;
+  /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
+  this.radialAccelVar = radialAccelVar || 0;
+  /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
+  this.rotationIsDir = rotationIsDir || false;
 };
 
 /**
@@ -2205,19 +2502,26 @@ cc.ParticleSystem.ModeA = function (gravity, speed, speedVar, tangentialAccel, t
  * @param {Number} [rotatePerSecond=0] Number of degrees to rotate a particle around the source pos per second.
  * @param {Number} [rotatePerSecondVar=0] Variance in degrees for rotatePerSecond.
  */
-cc.ParticleSystem.ModeB = function (startRadius, startRadiusVar, endRadius, endRadiusVar, rotatePerSecond, rotatePerSecondVar) {
-    /** The starting radius of the particles. Only available in 'Radius' mode. */
-    this.startRadius = startRadius || 0;
-    /** The starting radius variance of the particles. Only available in 'Radius' mode. */
-    this.startRadiusVar = startRadiusVar || 0;
-    /** The ending radius of the particles. Only available in 'Radius' mode. */
-    this.endRadius = endRadius || 0;
-    /** The ending radius variance of the particles. Only available in 'Radius' mode. */
-    this.endRadiusVar = endRadiusVar || 0;
-    /** Number of degress to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
-    this.rotatePerSecond = rotatePerSecond || 0;
-    /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
-    this.rotatePerSecondVar = rotatePerSecondVar || 0;
+cc.ParticleSystem.ModeB = function (
+  startRadius,
+  startRadiusVar,
+  endRadius,
+  endRadiusVar,
+  rotatePerSecond,
+  rotatePerSecondVar
+) {
+  /** The starting radius of the particles. Only available in 'Radius' mode. */
+  this.startRadius = startRadius || 0;
+  /** The starting radius variance of the particles. Only available in 'Radius' mode. */
+  this.startRadiusVar = startRadiusVar || 0;
+  /** The ending radius of the particles. Only available in 'Radius' mode. */
+  this.endRadius = endRadius || 0;
+  /** The ending radius variance of the particles. Only available in 'Radius' mode. */
+  this.endRadiusVar = endRadiusVar || 0;
+  /** Number of degress to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
+  this.rotatePerSecond = rotatePerSecond || 0;
+  /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
+  this.rotatePerSecondVar = rotatePerSecondVar || 0;
 };
 
 /**

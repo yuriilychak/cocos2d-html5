@@ -317,13 +317,3 @@ ccs.Timeline = ccs.Class.extend({
     }
 
 });
-
-/**
- * Create the Timeline
- *
- * @deprecated v3.0, please use new ccs.Timeline() instead.
- * @returns {ccs.Timeline}
- */
-ccs.Timeline.create = function () {
-    return new ccs.Timeline();
-};

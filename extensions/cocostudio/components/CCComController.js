@@ -63,14 +63,3 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
         this._enabled = bool;
     }
 });
-/**
- * Allocates and initializes a ComController.
- * @deprecated since v3.0, please use new construction instead.
- * @return {ccs.ComController}
- * @example
- * // example
- * var com = ccs.ComController.create();
- */
-ccs.ComController.create = function () {
-    return new ccs.ComController();
-};

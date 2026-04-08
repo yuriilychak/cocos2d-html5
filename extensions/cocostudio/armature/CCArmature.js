@@ -578,14 +578,3 @@ _p.colliderFilter;
 cc.defineGetterSetter(_p, "colliderFilter", null, _p.setColliderFilter);
 
 _p = null;
-
-/**
- * Allocates an armature, and use the ArmatureData named name in ArmatureDataManager to initializes the armature.
- * @param {String} [name] Bone name
- * @param {ccs.Bone} [parentBone] the parent bone
- * @return {ccs.Armature}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.Armature.create = function (name, parentBone) {
-    return new ccs.Armature(name, parentBone);
-};

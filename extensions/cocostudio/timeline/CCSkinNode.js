@@ -6,9 +6,6 @@ ccs.SkinNode = (function () {
 
     var SkinNode = Node.extend(proto);
 
-    SkinNode.create = function () {
-    };
-
     return SkinNode;
 
 })();

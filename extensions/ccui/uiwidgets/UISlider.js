@@ -748,15 +748,6 @@ cc.defineGetterSetter(_p, "percent", _p.getPercent, _p.setPercent);
 
 _p = null;
 
-/**
- * allocates and initializes a UISlider.
- * @deprecated since v3.0, please use new ccui.Slider() instead.
- * @return {ccui.Slider}
- */
-ccui.Slider.create = function (barTextureName, normalBallTextureName, resType) {
-    return new ccui.Slider(barTextureName, normalBallTextureName, resType);
-};
-
 // Constant
 //Slider event type
 /**

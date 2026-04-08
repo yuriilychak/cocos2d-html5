@@ -197,14 +197,3 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
         this._jsonDict = cc.loader.getRes(filename);
     }
 });
-/**
- * allocates and initializes a ComAttribute.
- * @deprecated since v3.0, please use new construction instead.
- * @return {ccs.ComAttribute}
- * @example
- * // example
- * var com = ccs.ComAttribute.create();
- */
-ccs.ComAttribute.create = function () {
-    return new ccs.ComAttribute();
-};

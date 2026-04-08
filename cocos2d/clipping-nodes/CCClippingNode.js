@@ -46,7 +46,8 @@ cc.stencilBits = -1;
  * @property {Boolean}  inverted        - Indicate whether in inverted mode.
  * @property {cc.Node}  stencil         - he cc.Node to use as a stencil to do the clipping.
  */
-cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
+cc.ClippingNode = cc.Node.extend(
+  /** @lends cc.ClippingNode# */ {
     inverted: false,
     _alphaThreshold: 0,
 
@@ -60,15 +61,15 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @param {cc.Node} [stencil=null]
      */
     ctor: function (stencil) {
-        stencil = stencil || null;
-        cc.Node.prototype.ctor.call(this);
-        this._stencil = stencil;
-        if (stencil) {
-            this._originStencilProgram = stencil.getShaderProgram();
-        }
-        this.alphaThreshold = 1;
-        this.inverted = false;
-        this._renderCmd.initStencilBits();
+      stencil = stencil || null;
+      cc.Node.prototype.ctor.call(this);
+      this._stencil = stencil;
+      if (stencil) {
+        this._originStencilProgram = stencil.getShaderProgram();
+      }
+      this.alphaThreshold = 1;
+      this.inverted = false;
+      this._renderCmd.initStencilBits();
     },
 
     /**
@@ -81,9 +82,9 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @function
      */
     onEnter: function () {
-        cc.Node.prototype.onEnter.call(this);
-        if (this._stencil)
-            this._stencil._performRecursive(cc.Node._stateCallbackType.onEnter);
+      cc.Node.prototype.onEnter.call(this);
+      if (this._stencil)
+        this._stencil._performRecursive(cc.Node._stateCallbackType.onEnter);
     },
 
     /**
@@ -95,9 +96,11 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @function
      */
     onEnterTransitionDidFinish: function () {
-        cc.Node.prototype.onEnterTransitionDidFinish.call(this);
-        if (this._stencil)
-            this._stencil._performRecursive(cc.Node._stateCallbackType.onEnterTransitionDidFinish);
+      cc.Node.prototype.onEnterTransitionDidFinish.call(this);
+      if (this._stencil)
+        this._stencil._performRecursive(
+          cc.Node._stateCallbackType.onEnterTransitionDidFinish
+        );
     },
 
     /**
@@ -109,8 +112,10 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @function
      */
     onExitTransitionDidStart: function () {
-        this._stencil._performRecursive(cc.Node._stateCallbackType.onExitTransitionDidStart);
-        cc.Node.prototype.onExitTransitionDidStart.call(this);
+      this._stencil._performRecursive(
+        cc.Node._stateCallbackType.onExitTransitionDidStart
+      );
+      cc.Node.prototype.onExitTransitionDidStart.call(this);
     },
 
     /**
@@ -123,27 +128,28 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @function
      */
     onExit: function () {
-        this._stencil._performRecursive(cc.Node._stateCallbackType.onExit);
-        cc.Node.prototype.onExit.call(this);
+      this._stencil._performRecursive(cc.Node._stateCallbackType.onExit);
+      cc.Node.prototype.onExit.call(this);
     },
 
     visit: function (parent) {
-        this._renderCmd.clippingVisit(parent && parent._renderCmd);
+      this._renderCmd.clippingVisit(parent && parent._renderCmd);
     },
 
     _visitChildren: function () {
-        var renderer = cc.renderer;
-        if (this._reorderChildDirty) {
-            this.sortAllChildren();
+      var renderer = cc.renderer;
+      if (this._reorderChildDirty) {
+        this.sortAllChildren();
+      }
+      var children = this._children,
+        child;
+      for (var i = 0, len = children.length; i < len; i++) {
+        child = children[i];
+        if (child && child._visible) {
+          child.visit(this);
         }
-        var children = this._children, child;
-        for (var i = 0, len = children.length; i < len; i++) {
-            child = children[i];
-            if (child && child._visible) {
-                child.visit(this);
-            }
-        }
-        this._renderCmd._dirtyFlag = 0;
+      }
+      this._renderCmd._dirtyFlag = 0;
     },
 
     /**
@@ -156,7 +162,7 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @return {Number}
      */
     getAlphaThreshold: function () {
-        return this._alphaThreshold;
+      return this._alphaThreshold;
     },
 
     /**
@@ -164,11 +170,11 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @param {Number} alphaThreshold
      */
     setAlphaThreshold: function (alphaThreshold) {
-        if (alphaThreshold === 1 && alphaThreshold !== this._alphaThreshold) {
-            // should reset program used by _stencil
-            this._renderCmd.resetProgramByStencil();
-        }
-        this._alphaThreshold = alphaThreshold;
+      if (alphaThreshold === 1 && alphaThreshold !== this._alphaThreshold) {
+        // should reset program used by _stencil
+        this._renderCmd.resetProgramByStencil();
+      }
+      this._alphaThreshold = alphaThreshold;
     },
 
     /**
@@ -180,7 +186,7 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @return {Boolean}
      */
     isInverted: function () {
-        return this.inverted;
+      return this.inverted;
     },
 
     /**
@@ -188,7 +194,7 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @param {Boolean} inverted
      */
     setInverted: function (inverted) {
-        this.inverted = inverted;
+      this.inverted = inverted;
     },
 
     /**
@@ -197,7 +203,7 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @return {cc.Node}
      */
     getStencil: function () {
-        return this._stencil;
+      return this._stencil;
     },
 
     /**
@@ -206,20 +212,18 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
      * @param {cc.Node} stencil
      */
     setStencil: function (stencil) {
-        if (this._stencil === stencil)
-            return;
-        if (stencil)
-            this._originStencilProgram = stencil.getShaderProgram();
-        this._renderCmd.setStencil(stencil);
+      if (this._stencil === stencil) return;
+      if (stencil) this._originStencilProgram = stencil.getShaderProgram();
+      this._renderCmd.setStencil(stencil);
     },
 
     _createRenderCmd: function () {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
-            return new cc.ClippingNode.CanvasRenderCmd(this);
-        else
-            return new cc.ClippingNode.WebGLRenderCmd(this);
+      if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        return new cc.ClippingNode.CanvasRenderCmd(this);
+      else return new cc.ClippingNode.WebGLRenderCmd(this);
     }
-});
+  }
+);
 
 var _p = cc.ClippingNode.prototype;
 
@@ -229,5 +233,9 @@ _p.stencil;
 cc.defineGetterSetter(_p, "stencil", _p.getStencil, _p.setStencil);
 /** @expose */
 _p.alphaThreshold;
-cc.defineGetterSetter(_p, "alphaThreshold", _p.getAlphaThreshold, _p.setAlphaThreshold);
-
+cc.defineGetterSetter(
+  _p,
+  "alphaThreshold",
+  _p.getAlphaThreshold,
+  _p.setAlphaThreshold
+);

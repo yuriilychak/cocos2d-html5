@@ -875,19 +875,6 @@ cc.defineGetterSetter(_p, "insetBottom", _p.getInsetBottom, _p.setInsetBottom);
 _p = null;
 
 /**
- * Creates a 9-slice sprite with a texture file, a delimitation zone and
- * with the specified cap insets.
- * @deprecated since v3.0, please use new ccui.Scale9Sprite(file, rect, capInsets) instead.
- * @param {String|cc.SpriteFrame} file file name of texture or a cc.Sprite object
- * @param {cc.Rect} rect the rect of the texture
- * @param {cc.Rect} capInsets the cap insets of ccui.Scale9Sprite
- * @returns {ccui.Scale9Sprite}
- */
-ccui.Scale9Sprite.create = function (file, rect, capInsets) {
-    return new ccui.Scale9Sprite(file, rect, capInsets);
-};
-
-/**
  * create a ccui.Scale9Sprite with Sprite frame.
  * @deprecated since v3.0, please use "new ccui.Scale9Sprite(spriteFrame, capInsets)" instead.
  * @param {cc.SpriteFrame} spriteFrame

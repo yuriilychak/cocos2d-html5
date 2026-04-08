@@ -103,12 +103,3 @@ ccs.BatchNode = cc.Node.extend(/** @lends ccs.BatchNode# */{
         }
     }
 });
-
-/**
- *
- * @returns {ccs.BatchNode}
- * @deprecated since v3.1, please use new construction instead
- */
-ccs.BatchNode.create = function () {
-    return new ccs.BatchNode();
-};

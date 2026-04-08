@@ -103,21 +103,6 @@ ccui.RichElementText = ccui.RichElement.extend(/** @lends ccui.RichElementText# 
 });
 
 /**
- * Create a richElementText
- * @deprecated since v3.0, please use new ccui.RichElementText() instead.
- * @param {Number} tag
- * @param {cc.Color} color
- * @param {Number} opacity
- * @param {String} text
- * @param {String} fontName
- * @param {Number} fontSize
- * @returns {ccui.RichElementText}
- */
-ccui.RichElementText.create = function (tag, color, opacity, text, fontName, fontSize) {
-    return new ccui.RichElementText(tag, color, opacity, text, fontName, fontSize);
-};
-
-/**
  * The image element for RichText, it has filePath, textureRect, textureType attributes.
  * @class
  * @extends ccui.RichElement
@@ -144,19 +129,6 @@ ccui.RichElementImage = ccui.RichElement.extend(/** @lends ccui.RichElementImage
 });
 
 /**
- * Create a richElementImage
- * @deprecated since v3.0, please use new ccui.RichElementImage() instead.
- * @param {Number} tag
- * @param {cc.Color} color
- * @param {Number} opacity
- * @param {String} filePath
- * @returns {ccui.RichElementImage}
- */
-ccui.RichElementImage.create = function (tag, color, opacity, filePath) {
-    return new ccui.RichElementImage(tag, color, opacity, filePath);
-};
-
-/**
  * The custom node element for RichText.
  * @class
  * @extends ccui.RichElement
@@ -177,19 +149,6 @@ ccui.RichElementCustomNode = ccui.RichElement.extend(/** @lends ccui.RichElement
         this._customNode = customNode || null;
     }
 });
-
-/**
- * Create a richElementCustomNode
- * @deprecated since v3.0, please use new ccui.RichElementCustomNode() instead.
- * @param {Number} tag
- * @param {Number} color
- * @param {Number} opacity
- * @param {cc.Node} customNode
- * @returns {ccui.RichElementCustomNode}
- */
-ccui.RichElementCustomNode.create = function (tag, color, opacity, customNode) {
-    return new ccui.RichElementCustomNode(tag, color, opacity, customNode);
-};
 
 /**
  * The rich text control of Cocos UI. It receives text, image, and custom node as its children to display.
@@ -649,15 +608,6 @@ ccui.RichText = ccui.Widget.extend(/** @lends ccui.RichText# */{
         }
     }
 });
-
-/**
- * create a rich text
- * @deprecated since v3.0, please use new ccui.RichText() instead.
- * @returns {RichText}
- */
-ccui.RichText.create = function () {
-    return new ccui.RichText();
-};
 
 // Constants
 //Rich element type

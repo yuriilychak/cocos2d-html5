@@ -178,7 +178,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
     },
 
     /**
-     * initializes state of widget. please do not call this function by yourself, you should pass the parameters to constructor to initialize it .
+     * initializes state of widget. please do not call this function by yourself, you should pass the parameters to constructor to initialize it.
      * @returns {boolean}
      */
     init: function () {
@@ -1913,15 +1913,6 @@ _p.opacity;
 cc.defineGetterSetter(_p, "opacity", _p.getOpacity, _p.setOpacity);
 
 _p = null;
-
-/**
- * allocates and initializes a UIWidget.
- * @deprecated
- * @return {ccui.Widget}
- */
-ccui.Widget.create = function () {
-    return new ccui.Widget();
-};
 
 ccui.Widget._focusedWidget = null;                        //both layout & widget will be stored in this variable
 ccui.Widget._focusNavigationController = null;

@@ -43,13 +43,3 @@ ccui.HBox = ccui.Layout.extend(/** @lends ccui.HBox# */{
         }
     }
 });
-
-/**
- * Creates a HBox object
- * @deprecated since v3.0, please use new ccui.HBox(size) instead.
- * @param {cc.Size} size
- * @returns {ccui.HBox}
- */
-ccui.HBox.create = function(size){
-    return new ccui.HBox(size);
-};

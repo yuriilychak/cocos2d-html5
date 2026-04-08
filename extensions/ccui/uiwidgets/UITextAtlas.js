@@ -219,15 +219,6 @@ cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
 
 _p = null;
 
-/**
- * allocates and initializes a UILabelAtlas.
- * @deprecated since v3.0, please use new ccui.TextAtlas() instead.
- * @return {ccui.TextAtlas}
- */
-ccui.TextAtlas.create = function (stringValue, charMapFile, itemWidth, itemHeight, startCharMap) {
-    return new ccui.TextAtlas(stringValue, charMapFile, itemWidth, itemHeight, startCharMap);
-};
-
 // Constants
 /**
  * The zOrder value of ccui.TextAtlas's renderer.
