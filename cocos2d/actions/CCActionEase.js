@@ -1013,22 +1013,6 @@ cc.EaseElasticIn = cc.EaseElastic.extend(/** @lends cc.EaseElasticIn# */{
     }
 });
 
-/**
- * Creates the action with the inner action and the period in radians (default is 0.3). <br />
- * Reference easeInElastic: <br />
- * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @deprecated since v3.0 <br /> Please use action.easing(cc.easeElasticIn(period))
- *
- * @example
- * action.easing(cc.easeElasticIn(period));
- *
- * @param {cc.ActionInterval} action
- * @param {Number} [period=0.3]
- * @return {cc.EaseElasticIn}
- */
-cc.EaseElasticIn.create = function (action, period) {
-    return new cc.EaseElasticIn(action, period);
-};
 
 //default ease elastic in object (period = 0.3)
 cc._easeElasticInObj = {
@@ -1124,21 +1108,6 @@ cc.EaseElasticOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticOut# */{
     }
 });
 
-/**
- * Creates the action with the inner action and the period in radians (default is 0.3). <br />
- * Reference easeOutElastic: <br />
- * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @deprecated since v3.0 <br /> Please use action.easing(cc.easeElasticOut(period))
- * @param {cc.ActionInterval} action
- * @param {Number} [period=0.3]
- * @return {cc.EaseElasticOut}
- *
- * @example
- * action.easing(cc.easeElasticOut(period));
- */
-cc.EaseElasticOut.create = function (action, period) {
-    return new cc.EaseElasticOut(action, period);
-};
 
 //default ease elastic out object (period = 0.3)
 cc._easeElasticOutObj = {
@@ -1235,21 +1204,6 @@ cc.EaseElasticInOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticInOut# */{
     }
 });
 
-/**
- * Creates the action with the inner action and the period in radians (default is 0.3). <br />
- * Reference easeInOutElastic: <br />
- * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @deprecated since v3.0 <br /> Please use action.easing(cc.easeElasticInOut(period))
- * @param {cc.ActionInterval} action
- * @param {Number} [period=0.3]
- * @return {cc.EaseElasticInOut}
- *
- * @example
- * action.easing(cc.easeElasticInOut(period));
- */
-cc.EaseElasticInOut.create = function (action, period) {
-    return new cc.EaseElasticInOut(action, period);
-};
 
 /**
  * Creates the action easing object with the period in radians (default is 0.3). <br />
