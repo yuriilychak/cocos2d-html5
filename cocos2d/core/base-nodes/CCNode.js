@@ -127,9 +127,10 @@ cc.s_globalOrderOfArrival = 1;
  * @property {cc.GLProgram}         shaderProgram       - The shader program currently used for this node
  * @property {Number}               glServerState       - The state of OpenGL server side
  */
-cc.Node = cc.Class.extend(/** @lends cc.Node# */{
-    _localZOrder: 0,                                     ///< Local order (relative to its siblings) used to sort the node
-    _globalZOrder: 0,                                    ///< Global order used to sort the node
+cc.Node = cc.Class.extend(
+  /** @lends cc.Node# */ {
+    _localZOrder: 0, ///< Local order (relative to its siblings) used to sort the node
+    _globalZOrder: 0, ///< Global order used to sort the node
     _vertexZ: 0.0,
     _customZ: NaN,
 
@@ -139,7 +140,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
     _scaleY: 1.0,
     _position: null,
 
-    _normalizedPosition:null,
+    _normalizedPosition: null,
     _usingNormalizedPosition: false,
     _normalizedPositionDirty: false,
 
@@ -175,36 +176,36 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
 
     _className: "Node",
     _showNode: false,
-    _name: "",                     ///<a string label, an user defined string to identify this node
+    _name: "", ///<a string label, an user defined string to identify this node
 
     _realOpacity: 255,
     _realColor: null,
     _cascadeColorEnabled: false,
     _cascadeOpacityEnabled: false,
 
-    _renderCmd:null,
+    _renderCmd: null,
 
     /**
      * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
      * @function
      */
     ctor: function () {
-        var _t = this;
-        _t._anchorPoint = cc.p(0, 0);
-        _t._contentSize = cc.size(0, 0);
-        _t._position = cc.p(0, 0);
-        _t._normalizedPosition = cc.p(0, 0);
-        _t._children = [];
+      var _t = this;
+      _t._anchorPoint = cc.p(0, 0);
+      _t._contentSize = cc.size(0, 0);
+      _t._position = cc.p(0, 0);
+      _t._normalizedPosition = cc.p(0, 0);
+      _t._children = [];
 
-        var director = cc.director;
+      var director = cc.director;
 
-        _t._additionalTransform = cc.affineTransformMakeIdentity();
-        if (cc.ComponentContainer) {
-            _t._componentContainer = new cc.ComponentContainer(_t);
-        }
-        this._realColor = cc.color(255, 255, 255, 255);
+      _t._additionalTransform = cc.affineTransformMakeIdentity();
+      if (cc.ComponentContainer) {
+        _t._componentContainer = new cc.ComponentContainer(_t);
+      }
+      this._realColor = cc.color(255, 255, 255, 255);
 
-        this._renderCmd = this._createRenderCmd();
+      this._renderCmd = this._createRenderCmd();
     },
 
     /**
@@ -213,7 +214,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {boolean} Whether the initialization was successful.
      */
     init: function () {
-        return true;
+      return true;
     },
 
     /**
@@ -226,9 +227,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Object} attrs Properties to be set to node
      */
     attr: function (attrs) {
-        for (var key in attrs) {
-            this[key] = attrs[key];
-        }
+      for (var key in attrs) {
+        this[key] = attrs[key];
+      }
     },
 
     /**
@@ -242,7 +243,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The X skew angle of the node in degrees.
      */
     getSkewX: function () {
-        return this._skewX;
+      return this._skewX;
     },
 
     /**
@@ -257,8 +258,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} newSkewX The X skew angle of the node in degrees.
      */
     setSkewX: function (newSkewX) {
-        this._skewX = newSkewX;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._skewX = newSkewX;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -272,7 +273,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The Y skew angle of the node in degrees.
      */
     getSkewY: function () {
-        return this._skewY;
+      return this._skewY;
     },
 
     /**
@@ -287,8 +288,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} newSkewY  The Y skew angle of the node in degrees.
      */
     setSkewY: function (newSkewY) {
-        this._skewY = newSkewY;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._skewY = newSkewY;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -306,18 +307,15 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} localZOrder
      */
     setLocalZOrder: function (localZOrder) {
-        if (localZOrder === this._localZOrder)
-            return;
-        if (this._parent)
-            this._parent.reorderChild(this, localZOrder);
-        else
-            this._localZOrder = localZOrder;
-        cc.eventManager._setDirtyForNode(this);
+      if (localZOrder === this._localZOrder) return;
+      if (this._parent) this._parent.reorderChild(this, localZOrder);
+      else this._localZOrder = localZOrder;
+      cc.eventManager._setDirtyForNode(this);
     },
 
     //Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
     _setLocalZOrder: function (localZOrder) {
-        this._localZOrder = localZOrder;
+      this._localZOrder = localZOrder;
     },
 
     /**
@@ -326,7 +324,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {Number} The local (relative to its siblings) Z order.
      */
     getLocalZOrder: function () {
-        return this._localZOrder;
+      return this._localZOrder;
     },
 
     /**
@@ -336,8 +334,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since 3.0, please use getLocalZOrder instead
      */
     getZOrder: function () {
-        cc.log(cc._LogInfos.Node_getZOrder);
-        return this.getLocalZOrder();
+      cc.log(cc._LogInfos.Node_getZOrder);
+      return this.getLocalZOrder();
     },
 
     /**
@@ -354,8 +352,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since 3.0, please use setLocalZOrder instead
      */
     setZOrder: function (z) {
-        cc.log(cc._LogInfos.Node_setZOrder);
-        this.setLocalZOrder(z);
+      cc.log(cc._LogInfos.Node_setZOrder);
+      this.setLocalZOrder(z);
     },
 
     /**
@@ -375,10 +373,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} globalZOrder
      */
     setGlobalZOrder: function (globalZOrder) {
-        if (this._globalZOrder !== globalZOrder) {
-            this._globalZOrder = globalZOrder;
-            cc.eventManager._setDirtyForNode(this);
-        }
+      if (this._globalZOrder !== globalZOrder) {
+        this._globalZOrder = globalZOrder;
+        cc.eventManager._setDirtyForNode(this);
+      }
     },
 
     /**
@@ -387,7 +385,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {number} The node's global Z order
      */
     getGlobalZOrder: function () {
-        return this._globalZOrder;
+      return this._globalZOrder;
     },
 
     /**
@@ -396,7 +394,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} WebGL Z vertex of this node
      */
     getVertexZ: function () {
-        return this._vertexZ;
+      return this._vertexZ;
     },
 
     /**
@@ -414,7 +412,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} Var
      */
     setVertexZ: function (Var) {
-        this._customZ = this._vertexZ = Var;
+      this._customZ = this._vertexZ = Var;
     },
 
     /**
@@ -423,9 +421,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The rotation of the node in degrees.
      */
     getRotation: function () {
-        if (this._rotationX !== this._rotationY)
-            cc.log(cc._LogInfos.Node_getRotation);
-        return this._rotationX;
+      if (this._rotationX !== this._rotationY)
+        cc.log(cc._LogInfos.Node_getRotation);
+      return this._rotationX;
     },
 
     /**
@@ -439,8 +437,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} newRotation The rotation of the node in degrees.
      */
     setRotation: function (newRotation) {
-        this._rotationX = this._rotationY = newRotation;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._rotationX = this._rotationY = newRotation;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -451,7 +449,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The X rotation in degrees.
      */
     getRotationX: function () {
-        return this._rotationX;
+      return this._rotationX;
     },
 
     /**
@@ -464,8 +462,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} rotationX The X rotation in degrees which performs a horizontal rotational skew.
      */
     setRotationX: function (rotationX) {
-        this._rotationX = rotationX;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._rotationX = rotationX;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -476,7 +474,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The Y rotation in degrees.
      */
     getRotationY: function () {
-        return this._rotationY;
+      return this._rotationY;
     },
 
     /**
@@ -489,8 +487,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param rotationY The Y rotation in degrees.
      */
     setRotationY: function (rotationY) {
-        this._rotationY = rotationY;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._rotationY = rotationY;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -500,9 +498,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The scale factor
      */
     getScale: function () {
-        if (this._scaleX !== this._scaleY)
-            cc.log(cc._LogInfos.Node_getScale);
-        return this._scaleX;
+      if (this._scaleX !== this._scaleY) cc.log(cc._LogInfos.Node_getScale);
+      return this._scaleX;
     },
 
     /**
@@ -512,9 +509,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} [scaleY=]
      */
     setScale: function (scale, scaleY) {
-        this._scaleX = scale;
-        this._scaleY = (scaleY || scaleY === 0) ? scaleY : scale;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._scaleX = scale;
+      this._scaleY = scaleY || scaleY === 0 ? scaleY : scale;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -523,7 +520,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The scale factor on X axis.
      */
     getScaleX: function () {
-        return this._scaleX;
+      return this._scaleX;
     },
 
     /**
@@ -535,8 +532,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} newScaleX The scale factor on X axis.
      */
     setScaleX: function (newScaleX) {
-        this._scaleX = newScaleX;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._scaleX = newScaleX;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -545,7 +542,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The scale factor on Y axis.
      */
     getScaleY: function () {
-        return this._scaleY;
+      return this._scaleY;
     },
 
     /**
@@ -557,8 +554,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} newScaleY The scale factor on Y axis.
      */
     setScaleY: function (newScaleY) {
-        this._scaleY = newScaleY;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._scaleY = newScaleY;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -576,20 +573,23 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      *    node.setPosition(size.width/2, size.height/2);
      */
     setPosition: function (newPosOrxValue, yValue) {
-        var locPosition = this._position;
-        if (yValue === undefined) {
-            if (locPosition.x === newPosOrxValue.x && locPosition.y === newPosOrxValue.y)
-                return;
-            locPosition.x = newPosOrxValue.x;
-            locPosition.y = newPosOrxValue.y;
-        } else {
-            if (locPosition.x === newPosOrxValue && locPosition.y === yValue)
-                return;
-            locPosition.x = newPosOrxValue;
-            locPosition.y = yValue;
-        }
-        this._usingNormalizedPosition = false;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      var locPosition = this._position;
+      if (yValue === undefined) {
+        if (
+          locPosition.x === newPosOrxValue.x &&
+          locPosition.y === newPosOrxValue.y
+        )
+          return;
+        locPosition.x = newPosOrxValue.x;
+        locPosition.y = newPosOrxValue.y;
+      } else {
+        if (locPosition.x === newPosOrxValue && locPosition.y === yValue)
+          return;
+        locPosition.x = newPosOrxValue;
+        locPosition.y = yValue;
+      }
+      this._usingNormalizedPosition = false;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -601,17 +601,17 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {cc.Point|Number} posOrX
      * @param {Number} [y]
      */
-    setNormalizedPosition: function(posOrX, y){
-        var locPosition = this._normalizedPosition;
-        if (y === undefined) {
-            locPosition.x = posOrX.x;
-            locPosition.y = posOrX.y;
-        } else {
-            locPosition.x = posOrX;
-            locPosition.y = y;
-        }
-        this._normalizedPositionDirty = this._usingNormalizedPosition = true;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+    setNormalizedPosition: function (posOrX, y) {
+      var locPosition = this._normalizedPosition;
+      if (y === undefined) {
+        locPosition.x = posOrX.x;
+        locPosition.y = posOrX.y;
+      } else {
+        locPosition.x = posOrX;
+        locPosition.y = y;
+      }
+      this._normalizedPositionDirty = this._usingNormalizedPosition = true;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -620,15 +620,15 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point} The position (x,y) of the node in OpenGL coordinates
      */
     getPosition: function () {
-        return cc.p(this._position);
+      return cc.p(this._position);
     },
 
     /**
      * returns the normalized position
      * @returns {cc.Point}
      */
-    getNormalizedPosition: function(){
-        return cc.p(this._normalizedPosition);
+    getNormalizedPosition: function () {
+      return cc.p(this._normalizedPosition);
     },
 
     /**
@@ -637,7 +637,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number}
      */
     getPositionX: function () {
-        return this._position.x;
+      return this._position.x;
     },
 
     /**
@@ -646,8 +646,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} x The new position in x axis
      */
     setPositionX: function (x) {
-        this._position.x = x;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._position.x = x;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -656,7 +656,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number}
      */
     getPositionY: function () {
-        return this._position.y;
+      return this._position.y;
     },
 
     /**
@@ -665,8 +665,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} y The new position in y axis
      */
     setPositionY: function (y) {
-        this._position.y = y;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._position.y = y;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -675,7 +675,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The amount of children.
      */
     getChildrenCount: function () {
-        return this._children.length;
+      return this._children.length;
     },
 
     /**
@@ -691,7 +691,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      *  }
      */
     getChildren: function () {
-        return this._children;
+      return this._children;
     },
 
     /**
@@ -701,7 +701,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Boolean} true if the node is visible, false if the node is hidden.
      */
     isVisible: function () {
-        return this._visible;
+      return this._visible;
     },
 
     /**
@@ -711,12 +711,12 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Boolean} visible Pass true to make the node visible, false to hide the node.
      */
     setVisible: function (visible) {
-        if (this._visible !== visible) {
-            this._visible = visible;
-            //if(visible)
-            this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-            cc.renderer.childrenOrderDirty = true;
-        }
+      if (this._visible !== visible) {
+        this._visible = visible;
+        //if(visible)
+        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+        cc.renderer.childrenOrderDirty = true;
+      }
     },
 
     /**
@@ -730,7 +730,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point}  The anchor point of node.
      */
     getAnchorPoint: function () {
-        return cc.p(this._anchorPoint);
+      return cc.p(this._anchorPoint);
     },
 
     /**
@@ -748,36 +748,35 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} [y] The y axis anchor of node.
      */
     setAnchorPoint: function (point, y) {
-        var locAnchorPoint = this._anchorPoint;
-        if (y === undefined) {
-            if ((point.x === locAnchorPoint.x) && (point.y === locAnchorPoint.y))
-                return;
-            locAnchorPoint.x = point.x;
-            locAnchorPoint.y = point.y;
-        } else {
-            if ((point === locAnchorPoint.x) && (y === locAnchorPoint.y))
-                return;
-            locAnchorPoint.x = point;
-            locAnchorPoint.y = y;
-        }
-        this._renderCmd._updateAnchorPointInPoint();
+      var locAnchorPoint = this._anchorPoint;
+      if (y === undefined) {
+        if (point.x === locAnchorPoint.x && point.y === locAnchorPoint.y)
+          return;
+        locAnchorPoint.x = point.x;
+        locAnchorPoint.y = point.y;
+      } else {
+        if (point === locAnchorPoint.x && y === locAnchorPoint.y) return;
+        locAnchorPoint.x = point;
+        locAnchorPoint.y = y;
+      }
+      this._renderCmd._updateAnchorPointInPoint();
     },
 
     _getAnchorX: function () {
-        return this._anchorPoint.x;
+      return this._anchorPoint.x;
     },
     _setAnchorX: function (x) {
-        if (this._anchorPoint.x === x) return;
-        this._anchorPoint.x = x;
-        this._renderCmd._updateAnchorPointInPoint();
+      if (this._anchorPoint.x === x) return;
+      this._anchorPoint.x = x;
+      this._renderCmd._updateAnchorPointInPoint();
     },
     _getAnchorY: function () {
-        return this._anchorPoint.y;
+      return this._anchorPoint.y;
     },
     _setAnchorY: function (y) {
-        if (this._anchorPoint.y === y) return;
-        this._anchorPoint.y = y;
-        this._renderCmd._updateAnchorPointInPoint();
+      if (this._anchorPoint.y === y) return;
+      this._anchorPoint.y = y;
+      this._renderCmd._updateAnchorPointInPoint();
     },
 
     /**
@@ -788,22 +787,22 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point} The anchor point in absolute pixels.
      */
     getAnchorPointInPoints: function () {
-        return this._renderCmd.getAnchorPointInPoints();
+      return this._renderCmd.getAnchorPointInPoints();
     },
 
     _getWidth: function () {
-        return this._contentSize.width;
+      return this._contentSize.width;
     },
     _setWidth: function (width) {
-        this._contentSize.width = width;
-        this._renderCmd._updateAnchorPointInPoint();
+      this._contentSize.width = width;
+      this._renderCmd._updateAnchorPointInPoint();
     },
     _getHeight: function () {
-        return this._contentSize.height;
+      return this._contentSize.height;
     },
     _setHeight: function (height) {
-        this._contentSize.height = height;
-        this._renderCmd._updateAnchorPointInPoint();
+      this._contentSize.height = height;
+      this._renderCmd._updateAnchorPointInPoint();
     },
 
     /**
@@ -814,7 +813,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Size} The untransformed size of the node.
      */
     getContentSize: function () {
-        return cc.size(this._contentSize);
+      return cc.size(this._contentSize);
     },
 
     /**
@@ -829,19 +828,22 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} [height] The untransformed size's height of the node.
      */
     setContentSize: function (size, height) {
-        var locContentSize = this._contentSize;
-        if (height === undefined) {
-            if ((size.width === locContentSize.width) && (size.height === locContentSize.height))
-                return;
-            locContentSize.width = size.width;
-            locContentSize.height = size.height;
-        } else {
-            if ((size === locContentSize.width) && (height === locContentSize.height))
-                return;
-            locContentSize.width = size;
-            locContentSize.height = height;
-        }
-        this._renderCmd._updateAnchorPointInPoint();
+      var locContentSize = this._contentSize;
+      if (height === undefined) {
+        if (
+          size.width === locContentSize.width &&
+          size.height === locContentSize.height
+        )
+          return;
+        locContentSize.width = size.width;
+        locContentSize.height = size.height;
+      } else {
+        if (size === locContentSize.width && height === locContentSize.height)
+          return;
+        locContentSize.width = size;
+        locContentSize.height = height;
+      }
+      this._renderCmd._updateAnchorPointInPoint();
     },
 
     /**
@@ -853,7 +855,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Boolean} Whether or not the node is running.
      */
     isRunning: function () {
-        return this._running;
+      return this._running;
     },
 
     /**
@@ -862,7 +864,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Node} A reference to the parent node
      */
     getParent: function () {
-        return this._parent;
+      return this._parent;
     },
 
     /**
@@ -870,8 +872,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {cc.Node} parent A reference to the parent node
      */
     setParent: function (parent) {
-        this._parent = parent;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._parent = parent;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /**
@@ -882,7 +884,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Boolean} true if the anchor point will be ignored when you position this node.
      */
     isIgnoreAnchorPointForPosition: function () {
-        return this._ignoreAnchorPointForPosition;
+      return this._ignoreAnchorPointForPosition;
     },
 
     /**
@@ -896,10 +898,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Boolean} newValue true if anchor point will be ignored when you position this node
      */
     ignoreAnchorPointForPosition: function (newValue) {
-        if (newValue !== this._ignoreAnchorPointForPosition) {
-            this._ignoreAnchorPointForPosition = newValue;
-            this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-        }
+      if (newValue !== this._ignoreAnchorPointForPosition) {
+        this._ignoreAnchorPointForPosition = newValue;
+        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      }
     },
 
     /**
@@ -929,7 +931,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * }
      */
     getTag: function () {
-        return this.tag;
+      return this.tag;
     },
 
     /**
@@ -940,7 +942,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} tag A integer that identifies the node.
      */
     setTag: function (tag) {
-        this.tag = tag;
+      this.tag = tag;
     },
 
     /**
@@ -949,7 +951,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {String} name
      */
     setName: function (name) {
-        this._name = name;
+      this._name = name;
     },
 
     /**
@@ -958,7 +960,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {string} A string that identifies the node.
      */
     getName: function () {
-        return this._name;
+      return this._name;
     },
 
     /**
@@ -970,7 +972,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {object}  A custom user data pointer
      */
     getUserData: function () {
-        return this.userData;
+      return this.userData;
     },
 
     /**
@@ -983,7 +985,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {object} Var A custom user data
      */
     setUserData: function (Var) {
-        this.userData = Var;
+      this.userData = Var;
     },
 
     /**
@@ -993,7 +995,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {object} A user assigned CCObject
      */
     getUserObject: function () {
-        return this.userObject;
+      return this.userObject;
     },
 
     /**
@@ -1006,10 +1008,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {object} newValue A user cocos2d object
      */
     setUserObject: function (newValue) {
-        if (this.userObject !== newValue)
-            this.userObject = newValue;
+      if (this.userObject !== newValue) this.userObject = newValue;
     },
-
 
     /**
      * Returns the arrival order, indicates which children should be added previously.
@@ -1017,7 +1017,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The arrival order.
      */
     getOrderOfArrival: function () {
-        return this.arrivalOrder;
+      return this.arrivalOrder;
     },
 
     /**
@@ -1032,7 +1032,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} Var  The arrival order.
      */
     setOrderOfArrival: function (Var) {
-        this.arrivalOrder = Var;
+      this.arrivalOrder = Var;
     },
 
     /**
@@ -1043,7 +1043,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.ActionManager} A CCActionManager object.
      */
     getActionManager: function () {
-        return this._actionManager || cc.director.getActionManager();
+      return this._actionManager || cc.director.getActionManager();
     },
 
     /**
@@ -1053,10 +1053,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {cc.ActionManager} actionManager A CCActionManager object that is used by all actions.
      */
     setActionManager: function (actionManager) {
-        if (this._actionManager !== actionManager) {
-            this.stopAllActions();
-            this._actionManager = actionManager;
-        }
+      if (this._actionManager !== actionManager) {
+        this.stopAllActions();
+        this._actionManager = actionManager;
+      }
     },
 
     /**
@@ -1067,7 +1067,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Scheduler} A CCScheduler object.
      */
     getScheduler: function () {
-        return this._scheduler || cc.director.getScheduler();
+      return this._scheduler || cc.director.getScheduler();
     },
 
     /**
@@ -1080,10 +1080,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param scheduler A cc.Scheduler object that is used to schedule all "update" and timers.
      */
     setScheduler: function (scheduler) {
-        if (this._scheduler !== scheduler) {
-            this.unscheduleAllCallbacks();
-            this._scheduler = scheduler;
-        }
+      if (this._scheduler !== scheduler) {
+        this.unscheduleAllCallbacks();
+        this._scheduler = scheduler;
+      }
     },
 
     /**
@@ -1092,8 +1092,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Rect}
      */
     boundingBox: function () {
-        cc.log(cc._LogInfos.Node_boundingBox);
-        return this.getBoundingBox();
+      cc.log(cc._LogInfos.Node_boundingBox);
+      return this.getBoundingBox();
     },
 
     /**
@@ -1103,8 +1103,16 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Rect} The calculated bounding box of the node
      */
     getBoundingBox: function () {
-        var rect = cc.rect(0, 0, this._contentSize.width, this._contentSize.height);
-        return cc._rectApplyAffineTransformIn(rect, this.getNodeToParentTransform());
+      var rect = cc.rect(
+        0,
+        0,
+        this._contentSize.width,
+        this._contentSize.height
+      );
+      return cc._rectApplyAffineTransformIn(
+        rect,
+        this.getNodeToParentTransform()
+      );
     },
 
     /**
@@ -1112,12 +1120,12 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     cleanup: function () {
-        // actions
-        this.stopAllActions();
-        this.unscheduleAllCallbacks();
+      // actions
+      this.stopAllActions();
+      this.unscheduleAllCallbacks();
 
-        // event
-        cc.eventManager.removeListeners(this);
+      // event
+      cc.eventManager.removeListeners(this);
     },
 
     // composition: GET
@@ -1128,15 +1136,14 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Node} a CCNode object whose tag equals to the input parameter
      */
     getChildByTag: function (aTag) {
-        var __children = this._children;
-        if (__children !== null) {
-            for (var i = 0; i < __children.length; i++) {
-                var node = __children[i];
-                if (node && node.tag === aTag)
-                    return node;
-            }
+      var __children = this._children;
+      if (__children !== null) {
+        for (var i = 0; i < __children.length; i++) {
+          var node = __children[i];
+          if (node && node.tag === aTag) return node;
         }
-        return null;
+      }
+      return null;
     },
 
     /**
@@ -1146,17 +1153,16 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Node} a CCNode object whose name equals to the input parameter
      */
     getChildByName: function (name) {
-        if (!name) {
-            cc.log("Invalid name");
-            return null;
-        }
-
-        var locChildren = this._children;
-        for (var i = 0, len = locChildren.length; i < len; i++) {
-            if (locChildren[i]._name === name)
-                return locChildren[i];
-        }
+      if (!name) {
+        cc.log("Invalid name");
         return null;
+      }
+
+      var locChildren = this._children;
+      for (var i = 0, len = locChildren.length; i < len; i++) {
+        if (locChildren[i]._name === name) return locChildren[i];
+      }
+      return null;
     },
 
     // composition: ADD
@@ -1170,48 +1176,52 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
      */
     addChild: function (child, localZOrder, tag) {
-        localZOrder = localZOrder === undefined ? child._localZOrder : localZOrder;
-        var name, setTag = false;
-        if (tag === undefined) {
-            name = child._name;
-        } else if (typeof tag === 'string') {
-            name = tag;
-            tag = undefined;
-        } else if (typeof tag === 'number') {
-            setTag = true;
-            name = "";
-        }
+      localZOrder =
+        localZOrder === undefined ? child._localZOrder : localZOrder;
+      var name,
+        setTag = false;
+      if (tag === undefined) {
+        name = child._name;
+      } else if (typeof tag === "string") {
+        name = tag;
+        tag = undefined;
+      } else if (typeof tag === "number") {
+        setTag = true;
+        name = "";
+      }
 
-        cc.assert(child, cc._LogInfos.Node_addChild_3);
-        cc.assert(child._parent === null, "child already added. It can't be added again");
+      cc.assert(child, cc._LogInfos.Node_addChild_3);
+      cc.assert(
+        child._parent === null,
+        "child already added. It can't be added again"
+      );
 
-        this._addChildHelper(child, localZOrder, tag, name, setTag);
+      this._addChildHelper(child, localZOrder, tag, name, setTag);
     },
 
     _addChildHelper: function (child, localZOrder, tag, name, setTag) {
-        if (!this._children)
-            this._children = [];
+      if (!this._children) this._children = [];
 
-        this._insertChild(child, localZOrder);
-        if (setTag)
-            child.setTag(tag);
-        else
-            child.setName(name);
+      this._insertChild(child, localZOrder);
+      if (setTag) child.setTag(tag);
+      else child.setName(name);
 
-        child.setParent(this);
-        child.setOrderOfArrival(cc.s_globalOrderOfArrival++);
+      child.setParent(this);
+      child.setOrderOfArrival(cc.s_globalOrderOfArrival++);
 
-        if (this._running) {
-            child._performRecursive(cc.Node._stateCallbackType.onEnter);
-            // prevent onEnterTransitionDidFinish to be called twice when a node is added in onEnter
-            if (this._isTransitionFinished)
-                child._performRecursive(cc.Node._stateCallbackType.onEnterTransitionDidFinish);
-        }
-        child._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-        if (this._cascadeColorEnabled)
-            child._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
-        if (this._cascadeOpacityEnabled)
-            child._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
+      if (this._running) {
+        child._performRecursive(cc.Node._stateCallbackType.onEnter);
+        // prevent onEnterTransitionDidFinish to be called twice when a node is added in onEnter
+        if (this._isTransitionFinished)
+          child._performRecursive(
+            cc.Node._stateCallbackType.onEnterTransitionDidFinish
+          );
+      }
+      child._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      if (this._cascadeColorEnabled)
+        child._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
+      if (this._cascadeOpacityEnabled)
+        child._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
     },
 
     // composition: REMOVE
@@ -1224,11 +1234,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @see cc.Node#removeFromParentAndCleanup
      */
     removeFromParent: function (cleanup) {
-        if (this._parent) {
-            if (cleanup === undefined)
-                cleanup = true;
-            this._parent.removeChild(this, cleanup);
-        }
+      if (this._parent) {
+        if (cleanup === undefined) cleanup = true;
+        this._parent.removeChild(this, cleanup);
+      }
     },
 
     /**
@@ -1238,8 +1247,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Boolean} [cleanup=true] true if all actions and callbacks on this node should be removed, false otherwise.
      */
     removeFromParentAndCleanup: function (cleanup) {
-        cc.log(cc._LogInfos.Node_removeFromParentAndCleanup);
-        this.removeFromParent(cleanup);
+      cc.log(cc._LogInfos.Node_removeFromParentAndCleanup);
+      this.removeFromParent(cleanup);
     },
 
     /** <p>Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter. </p>
@@ -1252,17 +1261,14 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Boolean} [cleanup=true]  true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
     removeChild: function (child, cleanup) {
-        // explicit nil handling
-        if (this._children.length === 0)
-            return;
+      // explicit nil handling
+      if (this._children.length === 0) return;
 
-        if (cleanup === undefined)
-            cleanup = true;
-        if (this._children.indexOf(child) > -1)
-            this._detachChild(child, cleanup);
+      if (cleanup === undefined) cleanup = true;
+      if (this._children.indexOf(child) > -1) this._detachChild(child, cleanup);
 
-        //this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.visibleDirty);
-        cc.renderer.childrenOrderDirty = true;
+      //this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.visibleDirty);
+      cc.renderer.childrenOrderDirty = true;
     },
 
     /**
@@ -1274,14 +1280,12 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @see cc.Node#removeChildByTag
      */
     removeChildByTag: function (tag, cleanup) {
-        if (tag === cc.NODE_TAG_INVALID)
-            cc.log(cc._LogInfos.Node_removeChildByTag);
+      if (tag === cc.NODE_TAG_INVALID)
+        cc.log(cc._LogInfos.Node_removeChildByTag);
 
-        var child = this.getChildByTag(tag);
-        if (!child)
-            cc.log(cc._LogInfos.Node_removeChildByTag_2, tag);
-        else
-            this.removeChild(child, cleanup);
+      var child = this.getChildByTag(tag);
+      if (!child) cc.log(cc._LogInfos.Node_removeChildByTag_2, tag);
+      else this.removeChild(child, cleanup);
     },
 
     /**
@@ -1289,7 +1293,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Boolean} [cleanup=true]
      */
     removeAllChildrenWithCleanup: function (cleanup) {
-        this.removeAllChildren(cleanup);
+      this.removeAllChildren(cleanup);
     },
 
     /**
@@ -1299,60 +1303,63 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Boolean} [cleanup=true] true if all running actions on all children nodes should be cleanup, false otherwise.
      */
     removeAllChildren: function (cleanup) {
-        // not using detachChild improves speed here
-        var __children = this._children;
-        if (__children !== null) {
-            if (cleanup === undefined)
-                cleanup = true;
-            for (var i = 0; i < __children.length; i++) {
-                var node = __children[i];
-                if (node) {
-                    if (this._running) {
-                        node._performRecursive(cc.Node._stateCallbackType.onExitTransitionDidStart);
-                        node._performRecursive(cc.Node._stateCallbackType.onExit);
-                    }
-
-                    // If you don't do cleanup, the node's actions will not get removed and the
-                    if (cleanup)
-                        node._performRecursive(cc.Node._stateCallbackType.cleanup);
-
-                    // set parent nil at the end
-                    node.parent = null;
-                    node._renderCmd.detachFromParent();
-                }
+      // not using detachChild improves speed here
+      var __children = this._children;
+      if (__children !== null) {
+        if (cleanup === undefined) cleanup = true;
+        for (var i = 0; i < __children.length; i++) {
+          var node = __children[i];
+          if (node) {
+            if (this._running) {
+              node._performRecursive(
+                cc.Node._stateCallbackType.onExitTransitionDidStart
+              );
+              node._performRecursive(cc.Node._stateCallbackType.onExit);
             }
-            this._children.length = 0;
-            cc.renderer.childrenOrderDirty = true;
+
+            // If you don't do cleanup, the node's actions will not get removed and the
+            if (cleanup)
+              node._performRecursive(cc.Node._stateCallbackType.cleanup);
+
+            // set parent nil at the end
+            node.parent = null;
+            node._renderCmd.detachFromParent();
+          }
         }
+        this._children.length = 0;
+        cc.renderer.childrenOrderDirty = true;
+      }
     },
 
     _detachChild: function (child, doCleanup) {
-        // IMPORTANT:
-        //  -1st do onExit
-        //  -2nd cleanup
-        if (this._running) {
-            child._performRecursive(cc.Node._stateCallbackType.onExitTransitionDidStart);
-            child._performRecursive(cc.Node._stateCallbackType.onExit);
-        }
+      // IMPORTANT:
+      //  -1st do onExit
+      //  -2nd cleanup
+      if (this._running) {
+        child._performRecursive(
+          cc.Node._stateCallbackType.onExitTransitionDidStart
+        );
+        child._performRecursive(cc.Node._stateCallbackType.onExit);
+      }
 
-        // If you don't do cleanup, the child's actions will not get removed and the
-        if (doCleanup)
-            child._performRecursive(cc.Node._stateCallbackType.cleanup);
+      // If you don't do cleanup, the child's actions will not get removed and the
+      if (doCleanup)
+        child._performRecursive(cc.Node._stateCallbackType.cleanup);
 
-        // set parent nil at the end
-        child.parent = null;
-        child._renderCmd.detachFromParent();
-        cc.arrayRemoveObject(this._children, child);
+      // set parent nil at the end
+      child.parent = null;
+      child._renderCmd.detachFromParent();
+      cc.arrayRemoveObject(this._children, child);
     },
 
     _insertChild: function (child, z) {
-        cc.renderer.childrenOrderDirty = this._reorderChildDirty = true;
-        this._children.push(child);
-        child._setLocalZOrder(z);
+      cc.renderer.childrenOrderDirty = this._reorderChildDirty = true;
+      this._children.push(child);
+      child._setLocalZOrder(z);
     },
 
     setNodeDirty: function () {
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     },
 
     /** Reorders a child according to a new z value. <br/>
@@ -1362,16 +1369,16 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} zOrder Z order for drawing priority. Please refer to setZOrder(int)
      */
     reorderChild: function (child, zOrder) {
-        cc.assert(child, cc._LogInfos.Node_reorderChild);
-        if (this._children.indexOf(child) === -1) {
-            cc.log(cc._LogInfos.Node_reorderChild_2);
-            return;
-        }
-        cc.renderer.childrenOrderDirty = this._reorderChildDirty = true;
-        child.arrivalOrder = cc.s_globalOrderOfArrival;
-        cc.s_globalOrderOfArrival++;
-        child._setLocalZOrder(zOrder);
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.orderDirty);
+      cc.assert(child, cc._LogInfos.Node_reorderChild);
+      if (this._children.indexOf(child) === -1) {
+        cc.log(cc._LogInfos.Node_reorderChild_2);
+        return;
+      }
+      cc.renderer.childrenOrderDirty = this._reorderChildDirty = true;
+      child.arrivalOrder = cc.s_globalOrderOfArrival;
+      cc.s_globalOrderOfArrival++;
+      child._setLocalZOrder(zOrder);
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.orderDirty);
     },
 
     /**
@@ -1383,32 +1390,38 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @note Don't call this manually unless a child added needs to be removed in the same frame
      */
     sortAllChildren: function () {
-        if (this._reorderChildDirty) {
-            var _children = this._children;
+      if (this._reorderChildDirty) {
+        var _children = this._children;
 
-            // insertion sort
-            var len = _children.length, i, j, tmp;
-            for (i = 1; i < len; i++) {
-                tmp = _children[i];
-                j = i - 1;
+        // insertion sort
+        var len = _children.length,
+          i,
+          j,
+          tmp;
+        for (i = 1; i < len; i++) {
+          tmp = _children[i];
+          j = i - 1;
 
-                //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-                while (j >= 0) {
-                    if (tmp._localZOrder < _children[j]._localZOrder) {
-                        _children[j + 1] = _children[j];
-                    } else if (tmp._localZOrder === _children[j]._localZOrder && tmp.arrivalOrder < _children[j].arrivalOrder) {
-                        _children[j + 1] = _children[j];
-                    } else {
-                        break;
-                    }
-                    j--;
-                }
-                _children[j + 1] = tmp;
+          //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+          while (j >= 0) {
+            if (tmp._localZOrder < _children[j]._localZOrder) {
+              _children[j + 1] = _children[j];
+            } else if (
+              tmp._localZOrder === _children[j]._localZOrder &&
+              tmp.arrivalOrder < _children[j].arrivalOrder
+            ) {
+              _children[j + 1] = _children[j];
+            } else {
+              break;
             }
-
-            //don't need to check children recursively, that's done in visit of each child
-            this._reorderChildDirty = false;
+            j--;
+          }
+          _children[j + 1] = tmp;
         }
+
+        //don't need to check children recursively, that's done in visit of each child
+        this._reorderChildDirty = false;
+      }
     },
 
     /**
@@ -1417,17 +1430,17 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {CanvasRenderingContext2D | WebGLRenderingContext} ctx The render context
      */
     draw: function (ctx) {
-        // override me
-        // Only use- this function to draw your staff.
-        // DON'T draw your stuff outside this method
+      // override me
+      // Only use- this function to draw your staff.
+      // DON'T draw your stuff outside this method
     },
 
     // Internal use only, do not call it by yourself,
     transformAncestors: function () {
-        if (this._parent !== null) {
-            this._parent.transformAncestors();
-            this._parent.transform();
-        }
+      if (this._parent !== null) {
+        this._parent.transformAncestors();
+        this._parent.transform();
+      }
     },
 
     //scene management
@@ -1441,72 +1454,72 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     onEnter: function () {
-        this._isTransitionFinished = false;
-        this._running = true;//should be running before resumeSchedule
-        this.resume();
+      this._isTransitionFinished = false;
+      this._running = true; //should be running before resumeSchedule
+      this.resume();
     },
 
     _performRecursive: function (callbackType) {
-        var nodeCallbackType = cc.Node._stateCallbackType;
-        if (callbackType >= nodeCallbackType.max) {
-            return;
+      var nodeCallbackType = cc.Node._stateCallbackType;
+      if (callbackType >= nodeCallbackType.max) {
+        return;
+      }
+
+      var index = 0;
+      var children, child, curr, i, len;
+      var stack = cc.Node._performStacks[cc.Node._performing];
+      if (!stack) {
+        stack = [];
+        cc.Node._performStacks.push(stack);
+      }
+      stack.length = 0;
+      cc.Node._performing++;
+      curr = stack[0] = this;
+      while (curr) {
+        // Walk through children
+        children = curr._children;
+        if (children && children.length > 0) {
+          for (i = 0, len = children.length; i < len; ++i) {
+            child = children[i];
+            stack.push(child);
+          }
+        }
+        children = curr._protectedChildren;
+        if (children && children.length > 0) {
+          for (i = 0, len = children.length; i < len; ++i) {
+            child = children[i];
+            stack.push(child);
+          }
         }
 
-        var index = 0;
-        var children, child, curr, i, len;
-        var stack = cc.Node._performStacks[cc.Node._performing];
-        if (!stack) {
-            stack = [];
-            cc.Node._performStacks.push(stack);
-        }
-        stack.length = 0;
-        cc.Node._performing++;
-        curr = stack[0] = this;
-        while (curr) {
-            // Walk through children
-            children = curr._children;
-            if (children && children.length > 0) {
-                for (i = 0, len = children.length; i < len; ++i) {
-                    child = children[i];
-                    stack.push(child);
-                }
-            }
-            children = curr._protectedChildren;
-            if (children && children.length > 0) {
-                for (i = 0, len = children.length; i < len; ++i) {
-                    child = children[i];
-                    stack.push(child);
-                }
-            }
+        index++;
+        curr = stack[index];
+      }
+      for (i = stack.length - 1; i >= 0; --i) {
+        curr = stack[i];
+        stack[i] = null;
+        if (!curr) continue;
 
-            index++;
-            curr = stack[index];
+        // Perform actual action
+        switch (callbackType) {
+          case nodeCallbackType.onEnter:
+            curr.onEnter();
+            break;
+          case nodeCallbackType.onExit:
+            curr.onExit();
+            break;
+          case nodeCallbackType.onEnterTransitionDidFinish:
+            curr.onEnterTransitionDidFinish();
+            break;
+          case nodeCallbackType.cleanup:
+            curr.cleanup();
+            break;
+          case nodeCallbackType.onExitTransitionDidStart:
+            curr.onExitTransitionDidStart();
+            break;
         }
-        for (i = stack.length - 1; i >= 0; --i) {
-            curr = stack[i];
-            stack[i] = null;
-            if (!curr) continue;
-
-            // Perform actual action
-            switch (callbackType) {
-            case nodeCallbackType.onEnter:
-                curr.onEnter();
-                break;
-            case nodeCallbackType.onExit:
-                curr.onExit();
-                break;
-            case nodeCallbackType.onEnterTransitionDidFinish:
-                curr.onEnterTransitionDidFinish();
-                break;
-            case nodeCallbackType.cleanup:
-                curr.cleanup();
-                break;
-            case nodeCallbackType.onExitTransitionDidStart:
-                curr.onExitTransitionDidStart();
-                break;
-            }
-        }
-        cc.Node._performing--;
+      }
+      cc.Node._performing--;
     },
 
     /**
@@ -1518,7 +1531,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     onEnterTransitionDidFinish: function () {
-        this._isTransitionFinished = true;
+      this._isTransitionFinished = true;
     },
 
     /**
@@ -1527,8 +1540,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * If you override onExitTransitionDidStart, you shall call its parent's onExitTransitionDidStart with this._super()</p>
      * @function
      */
-    onExitTransitionDidStart: function () {
-    },
+    onExitTransitionDidStart: function () {},
 
     /**
      * <p>
@@ -1540,9 +1552,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     onExit: function () {
-        this._running = false;
-        this.pause();
-        this.removeAllComponents();
+      this._running = false;
+      this.pause();
+      this.removeAllComponents();
     },
 
     // actions
@@ -1555,10 +1567,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Action} An Action pointer
      */
     runAction: function (action) {
-        cc.assert(action, cc._LogInfos.Node_runAction);
+      cc.assert(action, cc._LogInfos.Node_runAction);
 
-        this.actionManager.addAction(action, this, !this._running);
-        return action;
+      this.actionManager.addAction(action, this, !this._running);
+      return action;
     },
 
     /**
@@ -1566,7 +1578,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     stopAllActions: function () {
-        this.actionManager && this.actionManager.removeAllActionsFromTarget(this);
+      this.actionManager && this.actionManager.removeAllActionsFromTarget(this);
     },
 
     /**
@@ -1575,7 +1587,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {cc.Action} action An action object to be removed.
      */
     stopAction: function (action) {
-        this.actionManager.removeAction(action);
+      this.actionManager.removeAction(action);
     },
 
     /**
@@ -1584,11 +1596,11 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} tag A tag that indicates the action to be removed.
      */
     stopActionByTag: function (tag) {
-        if (tag === cc.ACTION_TAG_INVALID) {
-            cc.log(cc._LogInfos.Node_stopActionByTag);
-            return;
-        }
-        this.actionManager.removeActionByTag(tag, this);
+      if (tag === cc.ACTION_TAG_INVALID) {
+        cc.log(cc._LogInfos.Node_stopActionByTag);
+        return;
+      }
+      this.actionManager.removeActionByTag(tag, this);
     },
 
     /**
@@ -1599,11 +1611,11 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Action} The action object with the given tag.
      */
     getActionByTag: function (tag) {
-        if (tag === cc.ACTION_TAG_INVALID) {
-            cc.log(cc._LogInfos.Node_getActionByTag);
-            return null;
-        }
-        return this.actionManager.getActionByTag(tag, this);
+      if (tag === cc.ACTION_TAG_INVALID) {
+        cc.log(cc._LogInfos.Node_getActionByTag);
+        return null;
+      }
+      return this.actionManager.getActionByTag(tag, this);
     },
 
     /** <p>Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).<br/>
@@ -1614,7 +1626,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Number} The number of actions that are running plus the ones that are schedule to run
      */
     getNumberOfRunningActions: function () {
-        return this.actionManager.numberOfRunningActionsInTarget(this);
+      return this.actionManager.numberOfRunningActionsInTarget(this);
     },
 
     // cc.Node - Callbacks
@@ -1627,7 +1639,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     scheduleUpdate: function () {
-        this.scheduleUpdateWithPriority(0);
+      this.scheduleUpdateWithPriority(0);
     },
 
     /**
@@ -1641,7 +1653,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} priority
      */
     scheduleUpdateWithPriority: function (priority) {
-        this.scheduler.scheduleUpdate(this, priority, !this._running);
+      this.scheduler.scheduleUpdate(this, priority, !this._running);
     },
 
     /**
@@ -1650,7 +1662,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @see cc.Node#scheduleUpdate
      */
     unscheduleUpdate: function () {
-        this.scheduler.unscheduleUpdate(this);
+      this.scheduler.unscheduleUpdate(this);
     },
 
     /**
@@ -1664,63 +1676,71 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {String} key The only string identifying the callback
      */
     schedule: function (callback, interval, repeat, delay, key) {
-        var len = arguments.length;
-        if (typeof callback === "function") {
-            //callback, interval, repeat, delay, key
-            if (len === 1) {
-                //callback
-                interval = 0;
-                repeat = cc.REPEAT_FOREVER;
-                delay = 0;
-                key = this.__instanceId;
-            } else if (len === 2) {
-                if (typeof interval === "number") {
-                    //callback, interval
-                    repeat = cc.REPEAT_FOREVER;
-                    delay = 0;
-                    key = this.__instanceId;
-                } else {
-                    //callback, key
-                    key = interval;
-                    interval = 0;
-                    repeat = cc.REPEAT_FOREVER;
-                    delay = 0;
-                }
-            } else if (len === 3) {
-                if (typeof repeat === "string") {
-                    //callback, interval, key
-                    key = repeat;
-                    repeat = cc.REPEAT_FOREVER;
-                } else {
-                    //callback, interval, repeat
-                    key = this.__instanceId;
-                }
-                delay = 0;
-            } else if (len === 4) {
-                key = this.__instanceId;
-            }
-        } else {
-            //selector
-            //selector, interval
-            //selector, interval, repeat, delay
-            if (len === 1) {
-                interval = 0;
-                repeat = cc.REPEAT_FOREVER;
-                delay = 0;
-            } else if (len === 2) {
-                repeat = cc.REPEAT_FOREVER;
-                delay = 0;
-            }
+      var len = arguments.length;
+      if (typeof callback === "function") {
+        //callback, interval, repeat, delay, key
+        if (len === 1) {
+          //callback
+          interval = 0;
+          repeat = cc.REPEAT_FOREVER;
+          delay = 0;
+          key = this.__instanceId;
+        } else if (len === 2) {
+          if (typeof interval === "number") {
+            //callback, interval
+            repeat = cc.REPEAT_FOREVER;
+            delay = 0;
+            key = this.__instanceId;
+          } else {
+            //callback, key
+            key = interval;
+            interval = 0;
+            repeat = cc.REPEAT_FOREVER;
+            delay = 0;
+          }
+        } else if (len === 3) {
+          if (typeof repeat === "string") {
+            //callback, interval, key
+            key = repeat;
+            repeat = cc.REPEAT_FOREVER;
+          } else {
+            //callback, interval, repeat
+            key = this.__instanceId;
+          }
+          delay = 0;
+        } else if (len === 4) {
+          key = this.__instanceId;
         }
+      } else {
+        //selector
+        //selector, interval
+        //selector, interval, repeat, delay
+        if (len === 1) {
+          interval = 0;
+          repeat = cc.REPEAT_FOREVER;
+          delay = 0;
+        } else if (len === 2) {
+          repeat = cc.REPEAT_FOREVER;
+          delay = 0;
+        }
+      }
 
-        cc.assert(callback, cc._LogInfos.Node_schedule);
-        cc.assert(interval >= 0, cc._LogInfos.Node_schedule_2);
+      cc.assert(callback, cc._LogInfos.Node_schedule);
+      cc.assert(interval >= 0, cc._LogInfos.Node_schedule_2);
 
-        interval = interval || 0;
-        repeat = isNaN(repeat) ? cc.REPEAT_FOREVER : repeat;
-        delay = delay || 0;
+      interval = interval || 0;
+      repeat = isNaN(repeat) ? cc.REPEAT_FOREVER : repeat;
+      delay = delay || 0;
 
-        this.scheduler.schedule(callback, this, interval, repeat, delay, !this._running, key);
+      this.scheduler.schedule(
+        callback,
+        this,
+        interval,
+        repeat,
+        delay,
+        !this._running,
+        key
+      );
     },
 
     /**
@@ -1732,11 +1752,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {String} key The only string identifying the callback
      */
     scheduleOnce: function (callback, delay, key) {
-        //selector, delay
-        //callback, delay, key
-        if (key === undefined)
-            key = this.__instanceId;
-        this.schedule(callback, 0, 0, delay, key);
+      //selector, delay
+      //callback, delay, key
+      if (key === undefined) key = this.__instanceId;
+      this.schedule(callback, 0, 0, delay, key);
     },
 
     /**
@@ -1746,12 +1765,11 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {function} callback_fn  A function wrapped as a selector
      */
     unschedule: function (callback_fn) {
-        //key
-        //selector
-        if (!callback_fn)
-            return;
+      //key
+      //selector
+      if (!callback_fn) return;
 
-        this.scheduler.unschedule(callback_fn, this);
+      this.scheduler.unschedule(callback_fn, this);
     },
 
     /**
@@ -1760,7 +1778,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     unscheduleAllCallbacks: function () {
-        this.scheduler.unscheduleAllForTarget(this);
+      this.scheduler.unscheduleAllForTarget(this);
     },
 
     /**
@@ -1770,8 +1788,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, please use resume() instead
      */
     resumeSchedulerAndActions: function () {
-        cc.log(cc._LogInfos.Node_resumeSchedulerAndActions);
-        this.resume();
+      cc.log(cc._LogInfos.Node_resumeSchedulerAndActions);
+      this.resume();
     },
 
     /**
@@ -1779,9 +1797,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * This method is called internally by onEnter</p>
      */
     resume: function () {
-        this.scheduler.resumeTarget(this);
-        this.actionManager && this.actionManager.resumeTarget(this);
-        cc.eventManager.resumeTarget(this);
+      this.scheduler.resumeTarget(this);
+      this.actionManager && this.actionManager.resumeTarget(this);
+      cc.eventManager.resumeTarget(this);
     },
 
     /**
@@ -1791,8 +1809,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     pauseSchedulerAndActions: function () {
-        cc.log(cc._LogInfos.Node_pauseSchedulerAndActions);
-        this.pause();
+      cc.log(cc._LogInfos.Node_pauseSchedulerAndActions);
+      this.pause();
     },
 
     /**
@@ -1801,9 +1819,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     pause: function () {
-        this.scheduler.pauseTarget(this);
-        this.actionManager && this.actionManager.pauseTarget(this);
-        cc.eventManager.pauseTarget(this);
+      this.scheduler.pauseTarget(this);
+      this.actionManager && this.actionManager.pauseTarget(this);
+      cc.eventManager.pauseTarget(this);
     },
 
     /**
@@ -1856,11 +1874,11 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * spriteB.setAdditionalTransform(t);
      */
     setAdditionalTransform: function (additionalTransform) {
-        if(additionalTransform === undefined)
-            return this._additionalTransformDirty = false;
-        this._additionalTransform = additionalTransform;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-        this._additionalTransformDirty = true;
+      if (additionalTransform === undefined)
+        return (this._additionalTransformDirty = false);
+      this._additionalTransform = additionalTransform;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._additionalTransformDirty = true;
     },
 
     /**
@@ -1870,7 +1888,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.AffineTransform}
      */
     getParentToNodeTransform: function () {
-        return this._renderCmd.getParentToNodeTransform();
+      return this._renderCmd.getParentToNodeTransform();
     },
 
     /**
@@ -1878,7 +1896,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, please use getParentToNodeTransform instead
      */
     parentToNodeTransform: function () {
-        return this.getParentToNodeTransform();
+      return this.getParentToNodeTransform();
     },
 
     /**
@@ -1887,10 +1905,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.AffineTransform}
      */
     getNodeToWorldTransform: function () {
-        var t = this.getNodeToParentTransform();
-        for (var p = this._parent; p !== null; p = p.parent)
-            t = cc.affineTransformConcat(t, p.getNodeToParentTransform());
-        return t;
+      var t = this.getNodeToParentTransform();
+      for (var p = this._parent; p !== null; p = p.parent)
+        t = cc.affineTransformConcat(t, p.getNodeToParentTransform());
+      return t;
     },
 
     /**
@@ -1898,7 +1916,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, please use getNodeToWorldTransform instead
      */
     nodeToWorldTransform: function () {
-        return this.getNodeToWorldTransform();
+      return this.getNodeToWorldTransform();
     },
 
     /**
@@ -1907,7 +1925,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.AffineTransform}
      */
     getWorldToNodeTransform: function () {
-        return cc.affineTransformInvert(this.getNodeToWorldTransform());
+      return cc.affineTransformInvert(this.getNodeToWorldTransform());
     },
 
     /**
@@ -1915,7 +1933,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, please use getWorldToNodeTransform instead
      */
     worldToNodeTransform: function () {
-        return this.getWorldToNodeTransform();
+      return this.getWorldToNodeTransform();
     },
 
     /**
@@ -1925,7 +1943,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point}
      */
     convertToNodeSpace: function (worldPoint) {
-        return cc.pointApplyAffineTransform(worldPoint, this.getWorldToNodeTransform());
+      return cc.pointApplyAffineTransform(
+        worldPoint,
+        this.getWorldToNodeTransform()
+      );
     },
 
     /**
@@ -1935,8 +1956,11 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point}
      */
     convertToWorldSpace: function (nodePoint) {
-        nodePoint = nodePoint || cc.p(0, 0);
-        return cc.pointApplyAffineTransform(nodePoint, this.getNodeToWorldTransform());
+      nodePoint = nodePoint || cc.p(0, 0);
+      return cc.pointApplyAffineTransform(
+        nodePoint,
+        this.getNodeToWorldTransform()
+      );
     },
 
     /**
@@ -1947,7 +1971,10 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point}
      */
     convertToNodeSpaceAR: function (worldPoint) {
-        return cc.pSub(this.convertToNodeSpace(worldPoint), this._renderCmd.getAnchorPointInPoints());
+      return cc.pSub(
+        this.convertToNodeSpace(worldPoint),
+        this._renderCmd.getAnchorPointInPoints()
+      );
     },
 
     /**
@@ -1958,14 +1985,14 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point}
      */
     convertToWorldSpaceAR: function (nodePoint) {
-        nodePoint = nodePoint || cc.p(0, 0);
-        var pt = cc.pAdd(nodePoint, this._renderCmd.getAnchorPointInPoints());
-        return this.convertToWorldSpace(pt);
+      nodePoint = nodePoint || cc.p(0, 0);
+      var pt = cc.pAdd(nodePoint, this._renderCmd.getAnchorPointInPoints());
+      return this.convertToWorldSpace(pt);
     },
 
     _convertToWindowSpace: function (nodePoint) {
-        var worldPoint = this.convertToWorldSpace(nodePoint);
-        return cc.director.convertToUI(worldPoint);
+      var worldPoint = this.convertToWorldSpace(nodePoint);
+      return cc.director.convertToUI(worldPoint);
     },
 
     /** convenience methods which take a cc.Touch instead of cc.Point
@@ -1974,8 +2001,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point}
      */
     convertTouchToNodeSpace: function (touch) {
-        var point = touch.getLocation();
-        return this.convertToNodeSpace(point);
+      var point = touch.getLocation();
+      return this.convertToNodeSpace(point);
     },
 
     /**
@@ -1985,8 +2012,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Point}
      */
     convertTouchToNodeSpaceAR: function (touch) {
-        var point = cc.director.convertToGL(touch.getLocation());
-        return this.convertToNodeSpaceAR(point);
+      var point = cc.director.convertToGL(touch.getLocation());
+      return this.convertToNodeSpaceAR(point);
     },
 
     /**
@@ -1997,8 +2024,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} dt Delta time since last update
      */
     update: function (dt) {
-        if (this._componentContainer && !this._componentContainer.isEmpty())
-            this._componentContainer.visit(dt);
+      if (this._componentContainer && !this._componentContainer.isEmpty())
+        this._componentContainer.visit(dt);
     },
 
     /**
@@ -2012,43 +2039,12 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     updateTransform: function () {
-        var children = this._children, node;
-        for (var i = 0; i < children.length; i++) {
-            node = children[i];
-            if (node)
-                node.updateTransform();
-        }
-    },
-
-    /**
-     * <p>Currently JavaScript Bindings (JSB), in some cases, needs to use retain and release. This is a bug in JSB,
-     * and the ugly workaround is to use retain/release. So, these 2 methods were added to be compatible with JSB.
-     * This is a hack, and should be removed once JSB fixes the retain/release bug<br/>
-     * You will need to retain an object if you created an engine object and haven't added it into the scene graph during the same frame.<br/>
-     * Otherwise, JSB's native autorelease pool will consider this object a useless one and release it directly,<br/>
-     * when you want to use it later, a "Invalid Native Object" error will be raised.<br/>
-     * The retain function can increase a reference count for the native object to avoid it being released,<br/>
-     * you need to manually invoke release function when you think this object is no longer needed, otherwise, there will be memory learks.<br/>
-     * retain and release function call should be paired in developer's game code.</p>
-     * @function
-     * @see cc.Node#release
-     */
-    retain: function () {
-    },
-    /**
-     * <p>Currently JavaScript Bindings (JSB), in some cases, needs to use retain and release. This is a bug in JSB,
-     * and the ugly workaround is to use retain/release. So, these 2 methods were added to be compatible with JSB.
-     * This is a hack, and should be removed once JSB fixes the retain/release bug<br/>
-     * You will need to retain an object if you created an engine object and haven't added it into the scene graph during the same frame.<br/>
-     * Otherwise, JSB's native autorelease pool will consider this object a useless one and release it directly,<br/>
-     * when you want to use it later, a "Invalid Native Object" error will be raised.<br/>
-     * The retain function can increase a reference count for the native object to avoid it being released,<br/>
-     * you need to manually invoke release function when you think this object is no longer needed, otherwise, there will be memory learks.<br/>
-     * retain and release function call should be paired in developer's game code.</p>
-     * @function
-     * @see cc.Node#retain
-     */
-    release: function () {
+      var children = this._children,
+        node;
+      for (var i = 0; i < children.length; i++) {
+        node = children[i];
+        if (node) node.updateTransform();
+      }
     },
 
     /**
@@ -2058,9 +2054,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Component} The component found
      */
     getComponent: function (name) {
-        if(this._componentContainer)
-            return this._componentContainer.getComponent(name);
-        return null;
+      if (this._componentContainer)
+        return this._componentContainer.getComponent(name);
+      return null;
     },
 
     /**
@@ -2069,8 +2065,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {cc.Component} component
      */
     addComponent: function (component) {
-        if(this._componentContainer)
-            this._componentContainer.add(component);
+      if (this._componentContainer) this._componentContainer.add(component);
     },
 
     /**
@@ -2079,9 +2074,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {String|cc.Component} component
      */
     removeComponent: function (component) {
-        if(this._componentContainer)
-            return this._componentContainer.remove(component);
-        return false;
+      if (this._componentContainer)
+        return this._componentContainer.remove(component);
+      return false;
     },
 
     /**
@@ -2089,8 +2084,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      */
     removeAllComponents: function () {
-        if(this._componentContainer)
-            this._componentContainer.removeAll();
+      if (this._componentContainer) this._componentContainer.removeAll();
     },
 
     grid: null,
@@ -2101,41 +2095,44 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {cc.Node} parent
      */
     visit: function (parent) {
-        var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
+      var cmd = this._renderCmd,
+        parentCmd = parent ? parent._renderCmd : null;
 
-        // quick return if not visible
-        if (!this._visible) {
-            cmd._propagateFlagsDown(parentCmd);
-            return;
+      // quick return if not visible
+      if (!this._visible) {
+        cmd._propagateFlagsDown(parentCmd);
+        return;
+      }
+
+      var renderer = cc.renderer;
+      cmd.visit(parentCmd);
+
+      var i,
+        children = this._children,
+        len = children.length,
+        child;
+      if (len > 0) {
+        if (this._reorderChildDirty) {
+          this.sortAllChildren();
+        }
+        // draw children zOrder < 0
+        for (i = 0; i < len; i++) {
+          child = children[i];
+          if (child._localZOrder < 0) {
+            child.visit(this);
+          } else {
+            break;
+          }
         }
 
-        var renderer = cc.renderer;
-        cmd.visit(parentCmd);
-
-        var i, children = this._children, len = children.length, child;
-        if (len > 0) {
-            if (this._reorderChildDirty) {
-                this.sortAllChildren();
-            }
-            // draw children zOrder < 0
-            for (i = 0; i < len; i++) {
-                child = children[i];
-                if (child._localZOrder < 0) {
-                    child.visit(this);
-                }
-                else {
-                    break;
-                }
-            }
-
-            renderer.pushRenderCommand(cmd);
-            for (; i < len; i++) {
-                children[i].visit(this);
-            }
-        } else {
-            renderer.pushRenderCommand(cmd);
+        renderer.pushRenderCommand(cmd);
+        for (; i < len; i++) {
+          children[i].visit(this);
         }
-        cmd._dirtyFlag = 0;
+      } else {
+        renderer.pushRenderCommand(cmd);
+      }
+      cmd._dirtyFlag = 0;
     },
 
     /**
@@ -2145,7 +2142,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {boolean} recursive whether call its children's transform
      */
     transform: function (parentCmd, recursive) {
-        this._renderCmd.transform(parentCmd, recursive);
+      this._renderCmd.transform(parentCmd, recursive);
     },
 
     /**
@@ -2156,7 +2153,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, please use getNodeToParentTransform instead
      */
     nodeToParentTransform: function () {
-        return this.getNodeToParentTransform();
+      return this.getNodeToParentTransform();
     },
 
     /**
@@ -2166,20 +2163,24 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.AffineTransform} The affine transform object
      */
     getNodeToParentTransform: function (ancestor) {
-        var t = this._renderCmd.getNodeToParentTransform();
-        if (ancestor) {
-            var T = {a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty};
-            for (var p = this._parent; p != null && p != ancestor; p = p.getParent()) {
-                cc.affineTransformConcatIn(T, p.getNodeToParentTransform());
-            }
-            return T;
-        } else {
-            return t;
+      var t = this._renderCmd.getNodeToParentTransform();
+      if (ancestor) {
+        var T = { a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty };
+        for (
+          var p = this._parent;
+          p != null && p != ancestor;
+          p = p.getParent()
+        ) {
+          cc.affineTransformConcatIn(T, p.getNodeToParentTransform());
         }
+        return T;
+      } else {
+        return t;
+      }
     },
 
     getNodeToParentAffineTransform: function (ancestor) {
-        return this.getNodeToParentTransform(ancestor);
+      return this.getNodeToParentTransform(ancestor);
     },
 
     /**
@@ -2189,7 +2190,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, no alternative function
      */
     getCamera: function () {
-        return null;
+      return null;
     },
 
     /**
@@ -2200,7 +2201,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, no alternative function
      */
     getGrid: function () {
-        return this.grid;
+      return this.grid;
     },
 
     /**
@@ -2211,7 +2212,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, no alternative function
      */
     setGrid: function (grid) {
-        this.grid = grid;
+      this.grid = grid;
     },
 
     /**
@@ -2220,7 +2221,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.GLProgram} The shader program currently used for this node
      */
     getShaderProgram: function () {
-        return this._renderCmd.getShaderProgram();
+      return this._renderCmd.getShaderProgram();
     },
 
     /**
@@ -2236,15 +2237,15 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * node.setGLProgram(cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLOR));
      */
     setShaderProgram: function (newShaderProgram) {
-        this._renderCmd.setShaderProgram(newShaderProgram);
+      this._renderCmd.setShaderProgram(newShaderProgram);
     },
 
     setGLProgramState: function (glProgramState) {
-        this._renderCmd.setGLProgramState(glProgramState);
+      this._renderCmd.setGLProgramState(glProgramState);
     },
 
     getGLProgramState: function () {
-        return this._renderCmd.getGLProgramState();
+      return this._renderCmd.getGLProgramState();
     },
 
     /**
@@ -2254,7 +2255,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @deprecated since v3.0, no need anymore
      */
     getGLServerState: function () {
-        return 0;
+      return 0;
     },
 
     /**
@@ -2263,8 +2264,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} state The state of OpenGL server side.
      * @deprecated since v3.0, no need anymore
      */
-    setGLServerState: function (state) {
-    },
+    setGLServerState: function (state) {},
 
     /**
      * Returns a "world" axis aligned bounding box of the node.
@@ -2272,45 +2272,57 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {cc.Rect}
      */
     getBoundingBoxToWorld: function () {
-        var rect = cc.rect(0, 0, this._contentSize.width, this._contentSize.height);
-        var trans = this.getNodeToWorldTransform();
-        rect = cc.rectApplyAffineTransform(rect, trans);
+      var rect = cc.rect(
+        0,
+        0,
+        this._contentSize.width,
+        this._contentSize.height
+      );
+      var trans = this.getNodeToWorldTransform();
+      rect = cc.rectApplyAffineTransform(rect, trans);
 
-        //query child's BoundingBox
-        if (!this._children)
-            return rect;
+      //query child's BoundingBox
+      if (!this._children) return rect;
 
-        var locChildren = this._children;
-        for (var i = 0; i < locChildren.length; i++) {
-            var child = locChildren[i];
-            if (child && child._visible) {
-                var childRect = child._getBoundingBoxToCurrentNode(trans);
-                if (childRect)
-                    rect = cc.rectUnion(rect, childRect);
-            }
+      var locChildren = this._children;
+      for (var i = 0; i < locChildren.length; i++) {
+        var child = locChildren[i];
+        if (child && child._visible) {
+          var childRect = child._getBoundingBoxToCurrentNode(trans);
+          if (childRect) rect = cc.rectUnion(rect, childRect);
         }
-        return rect;
+      }
+      return rect;
     },
 
     _getBoundingBoxToCurrentNode: function (parentTransform) {
-        var rect = cc.rect(0, 0, this._contentSize.width, this._contentSize.height);
-        var trans = (parentTransform === undefined) ? this.getNodeToParentTransform() : cc.affineTransformConcat(this.getNodeToParentTransform(), parentTransform);
-        rect = cc.rectApplyAffineTransform(rect, trans);
+      var rect = cc.rect(
+        0,
+        0,
+        this._contentSize.width,
+        this._contentSize.height
+      );
+      var trans =
+        parentTransform === undefined
+          ? this.getNodeToParentTransform()
+          : cc.affineTransformConcat(
+              this.getNodeToParentTransform(),
+              parentTransform
+            );
+      rect = cc.rectApplyAffineTransform(rect, trans);
 
-        //query child's BoundingBox
-        if (!this._children)
-            return rect;
+      //query child's BoundingBox
+      if (!this._children) return rect;
 
-        var locChildren = this._children;
-        for (var i = 0; i < locChildren.length; i++) {
-            var child = locChildren[i];
-            if (child && child._visible) {
-                var childRect = child._getBoundingBoxToCurrentNode(trans);
-                if (childRect)
-                    rect = cc.rectUnion(rect, childRect);
-            }
+      var locChildren = this._children;
+      for (var i = 0; i < locChildren.length; i++) {
+        var child = locChildren[i];
+        if (child && child._visible) {
+          var childRect = child._getBoundingBoxToCurrentNode(trans);
+          if (childRect) rect = cc.rectUnion(rect, childRect);
         }
-        return rect;
+      }
+      return rect;
     },
 
     /**
@@ -2319,7 +2331,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {number} opacity
      */
     getOpacity: function () {
-        return this._realOpacity;
+      return this._realOpacity;
     },
 
     /**
@@ -2329,7 +2341,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {number} displayed opacity
      */
     getDisplayedOpacity: function () {
-        return this._renderCmd.getDisplayedOpacity();
+      return this._renderCmd.getDisplayedOpacity();
     },
 
     /**
@@ -2338,8 +2350,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} opacity
      */
     setOpacity: function (opacity) {
-        this._realOpacity = opacity;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
+      this._realOpacity = opacity;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
     },
 
     /**
@@ -2348,8 +2360,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {Number} parentOpacity
      */
     updateDisplayedOpacity: function (parentOpacity) {
-        //TODO  this API shouldn't be public.
-        this._renderCmd._updateDisplayOpacity(parentOpacity);
+      //TODO  this API shouldn't be public.
+      this._renderCmd._updateDisplayOpacity(parentOpacity);
     },
 
     /**
@@ -2358,7 +2370,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {boolean}
      */
     isCascadeOpacityEnabled: function () {
-        return this._cascadeOpacityEnabled;
+      return this._cascadeOpacityEnabled;
     },
 
     /**
@@ -2367,10 +2379,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {boolean} cascadeOpacityEnabled
      */
     setCascadeOpacityEnabled: function (cascadeOpacityEnabled) {
-        if (this._cascadeOpacityEnabled === cascadeOpacityEnabled)
-            return;
-        this._cascadeOpacityEnabled = cascadeOpacityEnabled;
-        this._renderCmd.setCascadeOpacityEnabledDirty();
+      if (this._cascadeOpacityEnabled === cascadeOpacityEnabled) return;
+      this._cascadeOpacityEnabled = cascadeOpacityEnabled;
+      this._renderCmd.setCascadeOpacityEnabledDirty();
     },
 
     /**
@@ -2379,8 +2390,13 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {cc.Color}
      */
     getColor: function () {
-        var locRealColor = this._realColor;
-        return cc.color(locRealColor.r, locRealColor.g, locRealColor.b, locRealColor.a);
+      var locRealColor = this._realColor;
+      return cc.color(
+        locRealColor.r,
+        locRealColor.g,
+        locRealColor.b,
+        locRealColor.a
+      );
     },
 
     /**
@@ -2390,7 +2406,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {cc.Color}
      */
     getDisplayedColor: function () {
-        return this._renderCmd.getDisplayedColor();
+      return this._renderCmd.getDisplayedColor();
     },
 
     /**
@@ -2401,11 +2417,11 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {cc.Color} color The new color given
      */
     setColor: function (color) {
-        var locRealColor = this._realColor;
-        locRealColor.r = color.r;
-        locRealColor.g = color.g;
-        locRealColor.b = color.b;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
+      var locRealColor = this._realColor;
+      locRealColor.r = color.r;
+      locRealColor.g = color.g;
+      locRealColor.b = color.b;
+      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
     },
 
     /**
@@ -2414,8 +2430,8 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {cc.Color} parentColor
      */
     updateDisplayedColor: function (parentColor) {
-        //TODO  this API shouldn't be public.
-        this._renderCmd._updateDisplayColor(parentColor);
+      //TODO  this API shouldn't be public.
+      this._renderCmd._updateDisplayColor(parentColor);
     },
 
     /**
@@ -2424,7 +2440,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @returns {boolean}
      */
     isCascadeColorEnabled: function () {
-        return this._cascadeColorEnabled;
+      return this._cascadeColorEnabled;
     },
 
     /**
@@ -2432,10 +2448,9 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @param {boolean} cascadeColorEnabled
      */
     setCascadeColorEnabled: function (cascadeColorEnabled) {
-        if (this._cascadeColorEnabled === cascadeColorEnabled)
-            return;
-        this._cascadeColorEnabled = cascadeColorEnabled;
-        this._renderCmd.setCascadeColorEnabledDirty();
+      if (this._cascadeColorEnabled === cascadeColorEnabled) return;
+      this._cascadeColorEnabled = cascadeColorEnabled;
+      this._renderCmd.setCascadeColorEnabledDirty();
     },
 
     /**
@@ -2444,8 +2459,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @function
      * @param {Boolean} opacityValue
      */
-    setOpacityModifyRGB: function (opacityValue) {
-    },
+    setOpacityModifyRGB: function (opacityValue) {},
 
     /**
      * Get whether color should be changed with the opacity value
@@ -2453,14 +2467,13 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Boolean}
      */
     isOpacityModifyRGB: function () {
-        return false;
+      return false;
     },
 
     _createRenderCmd: function () {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
-            return new cc.Node.CanvasRenderCmd(this);
-        else
-            return new cc.Node.WebGLRenderCmd(this);
+      if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        return new cc.Node.CanvasRenderCmd(this);
+      else return new cc.Node.WebGLRenderCmd(this);
     },
 
     /** Search the children of the receiving node to perform processing for nodes which share a name.
@@ -2490,93 +2503,95 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      *
      */
     enumerateChildren: function (name, callback) {
-        cc.assert(name && name.length != 0, "Invalid name");
-        cc.assert(callback != null, "Invalid callback function");
+      cc.assert(name && name.length != 0, "Invalid name");
+      cc.assert(callback != null, "Invalid callback function");
 
-        var length = name.length;
-        var subStrStartPos = 0;
-        var subStrlength = length;
+      var length = name.length;
+      var subStrStartPos = 0;
+      var subStrlength = length;
 
-        // Starts with '//'?
-        var searchRecursively = false;
-        if (length > 2 && name[0] === "/" && name[1] === "/") {
-            searchRecursively = true;
-            subStrStartPos = 2;
-            subStrlength -= 2;
-        }
+      // Starts with '//'?
+      var searchRecursively = false;
+      if (length > 2 && name[0] === "/" && name[1] === "/") {
+        searchRecursively = true;
+        subStrStartPos = 2;
+        subStrlength -= 2;
+      }
 
-        var searchFromParent = false;
-        if (length > 3 && name[length - 3] === "/" && name[length - 2] === "." && name[length - 1] === ".") {
-            searchFromParent = true;
-            subStrlength -= 3;
-        }
+      var searchFromParent = false;
+      if (
+        length > 3 &&
+        name[length - 3] === "/" &&
+        name[length - 2] === "." &&
+        name[length - 1] === "."
+      ) {
+        searchFromParent = true;
+        subStrlength -= 3;
+      }
 
-        var newName = name.substr(subStrStartPos, subStrlength);
+      var newName = name.substr(subStrStartPos, subStrlength);
 
-        if (searchFromParent)
-            newName = "[[:alnum:]]+/" + newName;
+      if (searchFromParent) newName = "[[:alnum:]]+/" + newName;
 
-        if (searchRecursively)
-            this.doEnumerateRecursive(this, newName, callback);
-        else
-            this.doEnumerate(newName, callback);
+      if (searchRecursively) this.doEnumerateRecursive(this, newName, callback);
+      else this.doEnumerate(newName, callback);
     },
 
     doEnumerateRecursive: function (node, name, callback) {
-        var ret = false;
-        if (node.doEnumerate(name, callback)) {
+      var ret = false;
+      if (node.doEnumerate(name, callback)) {
+        ret = true;
+      } else {
+        var child,
+          children = node.getChildren(),
+          length = children.length;
+        // search its children
+        for (var i = 0; i < length; i++) {
+          child = children[i];
+          if (this.doEnumerateRecursive(child, name, callback)) {
             ret = true;
-        } else {
-            var child,
-                children = node.getChildren(),
-                length = children.length;
-            // search its children
-            for (var i = 0; i < length; i++) {
-                child = children[i];
-                if (this.doEnumerateRecursive(child, name, callback)) {
-                    ret = true;
-                    break;
-                }
-            }
+            break;
+          }
         }
-        return ret;
+      }
+      return ret;
     },
 
     doEnumerate: function (name, callback) {
-        // name may be xxx/yyy, should find its parent
-        var pos = name.indexOf('/');
-        var searchName = name;
-        var needRecursive = false;
-        if (pos !== -1) {
-            searchName = name.substr(0, pos);
-            //name.erase(0, pos+1);
-            needRecursive = true;
-        }
+      // name may be xxx/yyy, should find its parent
+      var pos = name.indexOf("/");
+      var searchName = name;
+      var needRecursive = false;
+      if (pos !== -1) {
+        searchName = name.substr(0, pos);
+        //name.erase(0, pos+1);
+        needRecursive = true;
+      }
 
-        var ret = false;
-        var child,
-            children = this._children,
-            length = children.length;
-        for (var i = 0; i < length; i++) {
-            child = children[i];
-            if (child._name.indexOf(searchName) !== -1) {
-                if (!needRecursive) {
-                    // terminate enumeration if callback return true
-                    if (callback(child)) {
-                        ret = true;
-                        break;
-                    }
-                } else {
-                    ret = child.doEnumerate(name, callback);
-                    if (ret)
-                        break;
-                }
+      var ret = false;
+      var child,
+        children = this._children,
+        length = children.length;
+      for (var i = 0; i < length; i++) {
+        child = children[i];
+        if (child._name.indexOf(searchName) !== -1) {
+          if (!needRecursive) {
+            // terminate enumeration if callback return true
+            if (callback(child)) {
+              ret = true;
+              break;
             }
+          } else {
+            ret = child.doEnumerate(name, callback);
+            if (ret) break;
+          }
         }
+      }
 
-        return ret;
+      return ret;
     }
-});
+  }
+);
 
 /**
  * Allocates and initializes a node.
@@ -2585,20 +2600,24 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
  * @return {cc.Node}
  */
 cc.Node.create = function () {
-    return new cc.Node();
+  return new cc.Node();
 };
 
 cc.Node._stateCallbackType = {
-    onEnter: 1,
-    onExit: 2,
-    cleanup: 3,
-    onEnterTransitionDidFinish: 4,
-    onExitTransitionDidStart: 5,
-    max: 6
+  onEnter: 1,
+  onExit: 2,
+  cleanup: 3,
+  onEnterTransitionDidFinish: 4,
+  onExitTransitionDidStart: 5,
+  max: 6
 };
 cc.Node._performStacks = [[]];
 cc.Node._performing = 0;
 
-cc.assert(cc.isFunction(cc._tmp.PrototypeCCNode), cc._LogInfos.MissingFile, "BaseNodesPropertyDefine.js");
+cc.assert(
+  cc.isFunction(cc._tmp.PrototypeCCNode),
+  cc._LogInfos.MissingFile,
+  "BaseNodesPropertyDefine.js"
+);
 cc._tmp.PrototypeCCNode();
 delete cc._tmp.PrototypeCCNode;
