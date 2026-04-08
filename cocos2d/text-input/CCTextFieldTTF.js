@@ -475,18 +475,4 @@ cc.defineGetterSetter(_p, "charCount", _p.getCharCount);
 _p.placeHolder;
 cc.defineGetterSetter(_p, "placeHolder", _p.getPlaceHolder, _p.setPlaceHolder);
 
-/**
- * Please use new TextFieldTTF instead. <br />
- * Creates a cc.TextFieldTTF from a fontName, alignment, dimension and font size.
- * @deprecated since v3.0 Please use new TextFieldTTF instead.
- * @param {String} placeholder
- * @param {cc.Size} dimensions
- * @param {Number} alignment
- * @param {String} fontName
- * @param {Number} fontSize
- * @return {cc.TextFieldTTF|Null}
- */
-cc.TextFieldTTF.create = function (placeholder, dimensions, alignment, fontName, fontSize) {
-    return new cc.TextFieldTTF(placeholder, dimensions, alignment, fontName, fontSize);
-};
 
