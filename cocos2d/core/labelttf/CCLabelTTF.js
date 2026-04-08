@@ -893,12 +893,6 @@ delete cc._tmp.PrototypeLabelTTF;
 cc.LabelTTF._fontStyleRE = /^(\d+)px\s+['"]?([\w\s\d]+)['"]?$/;
 
 
-/**
- * @deprecated since v3.0, please use the new construction instead
- * @function
- * @static
- */
-cc.LabelTTF.createWithFontDefinition = cc.LabelTTF.create;
 
 cc.LabelTTF.__labelHeightDiv = document.createElement("div");
 cc.LabelTTF.__labelHeightDiv.style.fontFamily = "Arial";
