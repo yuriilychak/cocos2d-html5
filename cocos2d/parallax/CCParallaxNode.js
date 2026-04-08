@@ -101,16 +101,6 @@ cc.PointObject = cc.Class.extend(/** @lends cc.PointObject# */{
     }
 });
 
-/**
- * Create a object to stored parallax data.
- * @param {cc.Point} ratio
- * @param {cc.Point} offset
- * @return {cc.PointObject}
- * @deprecated since v3.0 please use new cc.PointObject() instead.
- */
-cc.PointObject.create = function (ratio, offset) {
-    return new cc.PointObject(ratio, offset);
-};
 
 /**
  * <p>cc.ParallaxNode: A node that simulates a parallax scroller<br />
@@ -239,14 +229,3 @@ cc.ParallaxNode = cc.Node.extend(/** @lends cc.ParallaxNode# */{
     }
 });
 
-/**
- * Create new parallax node.
- * @deprecated since v3.0 please use new cc.ParallaxNode() instead.
- * @return {cc.ParallaxNode}
- * @example
- * //example
- * var voidNode = new cc.ParallaxNode();
- */
-cc.ParallaxNode.create = function () {
-    return new cc.ParallaxNode();
-};
