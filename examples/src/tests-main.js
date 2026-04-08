@@ -267,28 +267,12 @@ var testNames = [
         }
     },
     {
-        title:"BillBoard Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/BillBoardTest/BillBoardTest.js",
-        testScene:function () {
-            return new BillBoardTestScene();
-        }
-    },
-    {
         title:"Box2D Test",
         resource:g_box2d,
         platforms: PLATFORM_HTML5,
         linksrc:"src/Box2dTest/Box2dTest.js",
         testScene:function () {
             return new Box2DTestScene();
-        }
-    },
-    {
-        title:"Camera3D Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/Camera3DTest/Camera3DTest.js",
-        testScene:function () {
-            return new Camera3DTestScene();
         }
     },
     {
@@ -317,14 +301,6 @@ var testNames = [
         }
     },
     {
-        title:"Component Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/ComponentTest/ComponentTest.js",
-        testScene:function () {
-            return new ComponentTestScene();
-        }
-    },
-    {
         title:"CurrentLanguage Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/CurrentLanguageTest/CurrentLanguageTest.js",
@@ -332,7 +308,6 @@ var testNames = [
             return new CurrentLanguageTestScene();
         }
     },
-    //"CurlTest",
     {
         title:"DrawPrimitives Test",
         platforms: PLATFORM_ALL,
@@ -391,22 +366,6 @@ var testNames = [
             return new EffectAdvanceScene();
         }
     },
-    {
-        title:"Native Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/NativeTest/NativeTest.js",
-        testScene:function () {
-            return new NativeTestScene();
-        }
-    },
-    //{
-    //    title:"Facebook SDK Test",
-    //    platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
-    //    linksrc:"src/FacebookTest/FacebookTestsManager.js",
-    //    testScene:function () {
-    //        return new FacebookTestScene();
-    //    }
-    //},
     {
         title:"Font Test",
         resource:g_fonts,
@@ -528,13 +487,6 @@ var testNames = [
         }
     },
     {
-        title:"Particle3D Test",
-        platforms: PLATFORM_JSB,
-        testScene:function () {
-            return new Particle3DTestScene();
-        }
-    },
-    {
         title:"Particle Test",
         platforms: PLATFORM_ALL,
         linksrc:"",
@@ -560,35 +512,11 @@ var testNames = [
         }
     },
     {
-        title:"Physics3D Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/Physics3DTest/Physics3DTest.js",
-        testScene:function () {
-            return new Physics3DTestScene();
-        }
-    },
-    {
-        title:"NavMesh Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/NavMeshTest/NavMeshTest.js",
-        testScene:function () {
-            return new nextNavMeshTest();
-        }
-    },
-    {
         title:"ProgressActions Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/ProgressActionsTest/ProgressActionsTest.js",
         testScene:function () {
             return new ProgressActionsTestScene();
-        }
-    },
-    {
-        title:"Reflection Test",
-        platforms: PLATFROM_ANDROID | PLATFROM_APPLE,
-        linksrc:"src/ReflectionTest/ReflectionTest.js",
-        testScene:function () {
-            return new ReflectionTestScene();
         }
     },
     {
@@ -633,22 +561,6 @@ var testNames = [
         }
     },
     {
-        title:"Sprite3D Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/Sprite3DTest/Sprite3DTest.js",
-        testScene:function () {
-            return new Sprite3DTestScene();
-        }
-    },
-    {
-        title:"SpritePolygon Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/SpritePolygonTest/SpritePolygonTest.js",
-        testScene:function () {
-            return new SpritePolygonTestScene();
-        }
-    },
-    {
         title:"Sprite Test",
         resource:g_sprites,
         platforms: PLATFORM_ALL,
@@ -667,14 +579,6 @@ var testNames = [
         }
     },
     {
-        title:"Terrain Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/TerrainTest/TerrainTest.js",
-        testScene:function () {
-            return new TerrainTestScene();
-        }
-    },
-    {
         title:"TextInput Test",
         platforms: PLATFORM_HTML5,
         linksrc:"src/TextInputTest/TextInputTest.js",
@@ -682,7 +586,6 @@ var testNames = [
             return new TextInputTestScene();
         }
     },
-    //"Texture2DTest",
     {
         title:"TextureCache Test",
         platforms: PLATFORM_ALL,
@@ -735,22 +638,6 @@ var testNames = [
         }
     },
     {
-        title:"Vibrate Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/VibrateTest/VibrateTest.js",
-        testScene:function () {
-            return new VibrateTestScene();
-        }
-    },
-    {
-        title:"cocos2d JS Presentation",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/Presentation/Presentation.js",
-        testScene:function () {
-            return new PresentationScene();
-        }
-    },
-    {
         title:"XMLHttpRequest",
         platforms: PLATFORM_ALL,
         linksrc:"src/XHRTest/XHRTest.js",
@@ -766,7 +653,4 @@ var testNames = [
             return new XHRArrayBufferTestScene();
         }
     }
-
-    //"UserDefaultTest",
-    //"ZwoptexTest",
 ];

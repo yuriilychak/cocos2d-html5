@@ -149,7 +149,7 @@ CCPoolTest.create = function () {
 
 
 var runCCPoolTest = function () {
-    var pScene = cc.Scene.create();
+    var pScene = new cc.Scene();
     var pLayer = CCPoolTest.create();
     pScene.addChild(pLayer);
     cc.director.runScene(pScene);
