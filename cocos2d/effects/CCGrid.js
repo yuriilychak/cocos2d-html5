@@ -837,14 +837,3 @@ cc.TiledGrid3D = cc.GridBase.extend(/** @lends cc.TiledGrid3D# */{
     }
 });
 
-/**
- * create one TiledGrid3D object
- * @deprecated since v3.0, please use new cc.TiledGrid3D(gridSize, texture, flipped) instead
- * @param {cc.Size} gridSize
- * @param {cc.Texture2D} [texture=]
- * @param {Boolean} [flipped=]
- * @return {cc.TiledGrid3D}
- */
-cc.TiledGrid3D.create = function (gridSize, texture, flipped) {
-    return new cc.TiledGrid3D(gridSize, texture, flipped);
-};
