@@ -101,14 +101,6 @@ cc.DrawNode = cc.Node.extend(/** @lends cc.DrawNode# */{
     }
 });
 
-/**
- * Creates a DrawNode
- * @deprecated since v3.0 please use `new cc.DrawNode()` instead.
- * @return {cc.DrawNode}
- */
-cc.DrawNode.create = function () {
-    return new cc.DrawNode();
-};
 
 cc.DrawNode.TYPE_DOT = 0;
 cc.DrawNode.TYPE_SEGMENT = 1;
