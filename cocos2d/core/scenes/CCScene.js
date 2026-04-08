@@ -52,11 +52,4 @@ cc.Scene = cc.Node.extend(/** @lends cc.Scene# */{
     }
 });
 
-/**
- * creates a scene
- * @deprecated since v3.0,please use new cc.Scene() instead.
- * @return {cc.Scene}
- */
-cc.Scene.create = function () {
-    return new cc.Scene();
-};
+
