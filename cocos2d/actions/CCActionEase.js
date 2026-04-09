@@ -33,96 +33,97 @@
  * @example
  * var moveEase = new cc.ActionEase(action);
  */
-cc.ActionEase = cc.ActionInterval.extend(/** @lends cc.ActionEase# */{
-    _inner:null,
+cc.ActionEase = class ActionEase extends cc.ActionInterval {
+  /** @lends cc.ActionEase# */
+  _inner = null;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * creates the action of ActionEase.
-	 * @param {cc.ActionInterval} action
-	 */
-    ctor: function (action) {
-        cc.ActionInterval.prototype.ctor.call(this);
-        action && this.initWithAction(action);
-    },
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
+   * creates the action of ActionEase.
+   * @param {cc.ActionInterval} action
+   */
+  constructor(action) {
+    super();
+    action && this.initWithAction(action);
+  }
 
-    /**
-     * initializes the action
-     *
-     * @param {cc.ActionInterval} action
-     * @return {Boolean}
-     */
-    initWithAction:function (action) {
-        if(!action)
-            throw new Error("cc.ActionEase.initWithAction(): action must be non nil");
+  /**
+   * initializes the action
+   *
+   * @param {cc.ActionInterval} action
+   * @return {Boolean}
+   */
+  initWithAction(action) {
+    if (!action)
+      throw new Error("cc.ActionEase.initWithAction(): action must be non nil");
 
-        if (this.initWithDuration(action.getDuration())) {
-            this._inner = action;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.ActionEase}
-     */
-    clone:function(){
-       var action = new cc.ActionEase();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
-
-    /**
-     * called before the action start. It will also set the target.
-     *
-     * @param {cc.Node} target
-     */
-    startWithTarget:function (target) {
-        cc.ActionInterval.prototype.startWithTarget.call(this, target);
-        this._inner.startWithTarget(this.target);
-    },
-
-    /**
-     * Stop the action.
-     */
-    stop:function () {
-        this._inner.stop();
-        cc.ActionInterval.prototype.stop.call(this);
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        this._inner.update(dt);
-    },
-
-    /**
-     * Create new action to original operation effect opposite. <br />
-     * For example: <br />
-     * - The action will be x coordinates of 0 move to 100. <br />
-     * - The reversed action will be x of 100 move to 0.
-     * - Will be rewritten
-     * @return {cc.ActionEase}
-     */
-    reverse:function () {
-        return new cc.ActionEase(this._inner.reverse());
-    },
-
-    /**
-     * Get inner Action.
-     *
-     * @return {cc.ActionInterval}
-     */
-    getInnerAction:function(){
-       return this._inner;
+    if (this.initWithDuration(action.getDuration())) {
+      this._inner = action;
+      return true;
     }
-});
+    return false;
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.ActionEase}
+   */
+  clone() {
+    const action = new cc.ActionEase();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+
+  /**
+   * called before the action start. It will also set the target.
+   *
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+    this._inner.startWithTarget(this.target);
+  }
+
+  /**
+   * Stop the action.
+   */
+  stop() {
+    this._inner.stop();
+    super.stop();
+  }
+
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(dt);
+  }
+
+  /**
+   * Create new action to original operation effect opposite. <br />
+   * For example: <br />
+   * - The action will be x coordinates of 0 move to 100. <br />
+   * - The reversed action will be x of 100 move to 0.
+   * - Will be rewritten
+   * @return {cc.ActionEase}
+   */
+  reverse() {
+    return new cc.ActionEase(this._inner.reverse());
+  }
+
+  /**
+   * Get inner Action.
+   *
+   * @return {cc.ActionInterval}
+   */
+  getInnerAction() {
+    return this._inner;
+  }
+};
 
 /**
  * creates the action of ActionEase
@@ -133,10 +134,7 @@ cc.ActionEase = cc.ActionInterval.extend(/** @lends cc.ActionEase# */{
  * // example
  * var moveEase = cc.actionEase(action);
  */
-cc.actionEase = function (action) {
-    return new cc.ActionEase(action);
-};
-
+cc.actionEase = (action) => new cc.ActionEase(action);
 
 /**
  * Base class for Easing actions with rate parameters
@@ -149,74 +147,75 @@ cc.actionEase = function (action) {
  * @example
  * var moveEaseRateAction = cc.easeRateAction(action, 3.0);
  */
-cc.EaseRateAction = cc.ActionEase.extend(/** @lends cc.EaseRateAction# */{
-    _rate:0,
+cc.EaseRateAction = class EaseRateAction extends cc.ActionEase {
+  /** @lends cc.EaseRateAction# */
+  _rate = 0;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * Creates the action with the inner action and the rate parameter.
-	 * @param {cc.ActionInterval} action
-	 * @param {Number} rate
-	 */
-    ctor: function(action, rate){
-        cc.ActionEase.prototype.ctor.call(this);
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
+   * Creates the action with the inner action and the rate parameter.
+   * @param {cc.ActionInterval} action
+   * @param {Number} rate
+   */
+  constructor(action, rate) {
+    super();
 
-		rate !== undefined && this.initWithAction(action, rate);
-    },
+    rate !== undefined && this.initWithAction(action, rate);
+  }
 
-    /**
-     * set rate value for the actions
-     * @param {Number} rate
-     */
-    setRate:function (rate) {
-        this._rate = rate;
-    },
+  /**
+   * set rate value for the actions
+   * @param {Number} rate
+   */
+  setRate(rate) {
+    this._rate = rate;
+  }
 
-    /** get rate value for the actions
-     * @return {Number}
-     */
-    getRate:function () {
-        return this._rate;
-    },
+  /** get rate value for the actions
+   * @return {Number}
+   */
+  getRate() {
+    return this._rate;
+  }
 
-    /**
-     * Initializes the action with the inner action and the rate parameter
-     * @param {cc.ActionInterval} action
-     * @param {Number} rate
-     * @return {Boolean}
-     */
-    initWithAction:function (action, rate) {
-        if (cc.ActionEase.prototype.initWithAction.call(this, action)) {
-            this._rate = rate;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseRateAction}
-     */
-    clone:function(){
-        var action = new cc.EaseRateAction();
-        action.initWithAction(this._inner.clone(), this._rate);
-        return action;
-    },
-
-    /**
-     * Create new action to original operation effect opposite. <br />
-     * For example: <br />
-     * - The action will be x coordinates of 0 move to 100. <br />
-     * - The reversed action will be x of 100 move to 0.
-     * - Will be rewritten
-     * @return {cc.EaseRateAction}
-     */
-    reverse:function () {
-        return new cc.EaseRateAction(this._inner.reverse(), 1 / this._rate);
+  /**
+   * Initializes the action with the inner action and the rate parameter
+   * @param {cc.ActionInterval} action
+   * @param {Number} rate
+   * @return {Boolean}
+   */
+  initWithAction(action, rate) {
+    if (super.initWithAction(action)) {
+      this._rate = rate;
+      return true;
     }
-});
+    return false;
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseRateAction}
+   */
+  clone() {
+    const action = new cc.EaseRateAction();
+    action.initWithAction(this._inner.clone(), this._rate);
+    return action;
+  }
+
+  /**
+   * Create new action to original operation effect opposite. <br />
+   * For example: <br />
+   * - The action will be x coordinates of 0 move to 100. <br />
+   * - The reversed action will be x of 100 move to 0.
+   * - Will be rewritten
+   * @return {cc.EaseRateAction}
+   */
+  reverse() {
+    return new cc.EaseRateAction(this._inner.reverse(), 1 / this._rate);
+  }
+};
 
 /**
  * Creates the action with the inner action and the rate parameter.
@@ -228,10 +227,7 @@ cc.EaseRateAction = cc.ActionEase.extend(/** @lends cc.EaseRateAction# */{
  * // example
  * var moveEaseRateAction = cc.easeRateAction(action, 3.0);
  */
-cc.easeRateAction = function (action, rate) {
-    return new cc.EaseRateAction(action, rate);
-};
-
+cc.easeRateAction = (action, rate) => new cc.EaseRateAction(action, rate);
 
 /**
  * cc.EaseIn action with a rate. From slow to fast.
@@ -242,38 +238,38 @@ cc.easeRateAction = function (action, rate) {
  * @example
  * action.easing(cc.easeIn(3.0));
  */
-cc.EaseIn = cc.EaseRateAction.extend(/** @lends cc.EaseIn# */{
+cc.EaseIn = class EaseIn extends cc.EaseRateAction {
+  /** @lends cc.EaseIn# */
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        this._inner.update(Math.pow(dt, this._rate));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(Math.pow(dt, this._rate));
+  }
 
-    /**
-     * Create a cc.easeIn action. Opposite with the original motion trajectory.
-     * @return {cc.EaseIn}
-     */
-    reverse:function () {
-        return new cc.EaseIn(this._inner.reverse(), 1 / this._rate);
-    },
+  /**
+   * Create a cc.easeIn action. Opposite with the original motion trajectory.
+   * @return {cc.EaseIn}
+   */
+  reverse() {
+    return new cc.EaseIn(this._inner.reverse(), 1 / this._rate);
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseIn}
-     */
-    clone:function(){
-        var action = new cc.EaseIn();
-        action.initWithAction(this._inner.clone(), this._rate);
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseIn}
+   */
+  clone() {
+    var action = new cc.EaseIn();
+    action.initWithAction(this._inner.clone(), this._rate);
+    return action;
+  }
+};
 
 /**
  * Creates the action easing object with the rate parameter. <br />
@@ -287,15 +283,15 @@ cc.EaseIn = cc.EaseRateAction.extend(/** @lends cc.EaseIn# */{
  * action.easing(cc.easeIn(3.0));
  */
 cc.easeIn = function (rate) {
-    return {
-        _rate: rate,
-        easing: function (dt) {
-            return Math.pow(dt, this._rate);
-        },
-        reverse: function(){
-            return cc.easeIn(1 / this._rate);
-        }
-    };
+  return {
+    _rate: rate,
+    easing: function (dt) {
+      return Math.pow(dt, this._rate);
+    },
+    reverse: function () {
+      return cc.easeIn(1 / this._rate);
+    }
+  };
 };
 
 /**
@@ -307,37 +303,37 @@ cc.easeIn = function (rate) {
  * @example
  * action.easing(cc.easeOut(3.0));
  */
-cc.EaseOut = cc.EaseRateAction.extend(/** @lends cc.EaseOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        this._inner.update(Math.pow(dt, 1 / this._rate));
-    },
+cc.EaseOut = class EaseOut extends cc.EaseRateAction {
+  /** @lends cc.EaseOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(Math.pow(dt, 1 / this._rate));
+  }
 
-    /**
-     * Create a cc.easeIn action. Opposite with the original motion trajectory.
-     * @return {cc.EaseOut}
-     */
-    reverse:function () {
-        return new cc.EaseOut(this._inner.reverse(), 1 / this._rate);
-    },
+  /**
+   * Create a cc.easeIn action. Opposite with the original motion trajectory.
+   * @return {cc.EaseOut}
+   */
+  reverse() {
+    return new cc.EaseOut(this._inner.reverse(), 1 / this._rate);
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseOut}
-     */
-    clone:function(){
-        var action = new cc.EaseOut();
-        action.initWithAction(this._inner.clone(),this._rate);
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseOut}
+   */
+  clone() {
+    var action = new cc.EaseOut();
+    action.initWithAction(this._inner.clone(), this._rate);
+    return action;
+  }
+};
 
 /**
  * Creates the action easing object with the rate parameter. <br />
@@ -351,15 +347,15 @@ cc.EaseOut = cc.EaseRateAction.extend(/** @lends cc.EaseOut# */{
  * action.easing(cc.easeOut(3.0));
  */
 cc.easeOut = function (rate) {
-    return {
-        _rate: rate,
-        easing: function (dt) {
-            return Math.pow(dt, 1 / this._rate);
-        },
-        reverse: function(){
-            return cc.easeOut(1 / this._rate)
-        }
-    };
+  return {
+    _rate: rate,
+    easing: function (dt) {
+      return Math.pow(dt, 1 / this._rate);
+    },
+    reverse: function () {
+      return cc.easeOut(1 / this._rate);
+    }
+  };
 };
 
 /**
@@ -371,41 +367,39 @@ cc.easeOut = function (rate) {
  * @example
  * action.easing(cc.easeInOut(3.0));
  */
-cc.EaseInOut = cc.EaseRateAction.extend(/** @lends cc.EaseInOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        dt *= 2;
-        if (dt < 1)
-            this._inner.update(0.5 * Math.pow(dt, this._rate));
-        else
-            this._inner.update(1.0 - 0.5 * Math.pow(2 - dt, this._rate));
-    },
+cc.EaseInOut = class EaseInOut extends cc.EaseRateAction {
+  /** @lends cc.EaseInOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    dt *= 2;
+    if (dt < 1) this._inner.update(0.5 * Math.pow(dt, this._rate));
+    else this._inner.update(1.0 - 0.5 * Math.pow(2 - dt, this._rate));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseInOut}
-     */
-    clone:function(){
-        var action = new cc.EaseInOut();
-        action.initWithAction(this._inner.clone(), this._rate);
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseInOut}
+   */
+  clone() {
+    var action = new cc.EaseInOut();
+    action.initWithAction(this._inner.clone(), this._rate);
+    return action;
+  }
 
-    /**
-     * Create a cc.EaseInOut action. Opposite with the original motion trajectory.
-     * @return {cc.EaseInOut}
-     */
-    reverse:function () {
-        return new cc.EaseInOut(this._inner.reverse(), this._rate);
-    }
-});
-
+  /**
+   * Create a cc.EaseInOut action. Opposite with the original motion trajectory.
+   * @return {cc.EaseInOut}
+   */
+  reverse() {
+    return new cc.EaseInOut(this._inner.reverse(), this._rate);
+  }
+};
 
 /**
  * Creates the action easing object with the rate parameter. <br />
@@ -419,19 +413,17 @@ cc.EaseInOut = cc.EaseRateAction.extend(/** @lends cc.EaseInOut# */{
  * action.easing(cc.easeInOut(3.0));
  */
 cc.easeInOut = function (rate) {
-    return {
-        _rate: rate,
-        easing: function (dt) {
-            dt *= 2;
-            if (dt < 1)
-                return 0.5 * Math.pow(dt, this._rate);
-            else
-                return 1.0 - 0.5 * Math.pow(2 - dt, this._rate);
-        },
-        reverse: function(){
-            return cc.easeInOut(this._rate);
-        }
-    };
+  return {
+    _rate: rate,
+    easing: function (dt) {
+      dt *= 2;
+      if (dt < 1) return 0.5 * Math.pow(dt, this._rate);
+      else return 1.0 - 0.5 * Math.pow(2 - dt, this._rate);
+    },
+    reverse: function () {
+      return cc.easeInOut(this._rate);
+    }
+  };
 };
 
 /**
@@ -444,45 +436,45 @@ cc.easeInOut = function (rate) {
  * @example
  * action.easing(cc.easeExponentialIn());
  */
-cc.EaseExponentialIn = cc.ActionEase.extend(/** @lends cc.EaseExponentialIn# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        this._inner.update(dt === 0 ? 0 : Math.pow(2, 10 * (dt - 1)));
-    },
+cc.EaseExponentialIn = class EaseExponentialIn extends cc.ActionEase {
+  /** @lends cc.EaseExponentialIn# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(dt === 0 ? 0 : Math.pow(2, 10 * (dt - 1)));
+  }
 
-    /**
-     * Create a cc.EaseExponentialOut action. Opposite with the original motion trajectory.
-     * @return {cc.EaseExponentialOut}
-     */
-    reverse:function () {
-        return new cc.EaseExponentialOut(this._inner.reverse());
-    },
+  /**
+   * Create a cc.EaseExponentialOut action. Opposite with the original motion trajectory.
+   * @return {cc.EaseExponentialOut}
+   */
+  reverse() {
+    return new cc.EaseExponentialOut(this._inner.reverse());
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseExponentialIn}
-     */
-    clone:function(){
-        var action = new cc.EaseExponentialIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseExponentialIn}
+   */
+  clone() {
+    var action = new cc.EaseExponentialIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._easeExponentialInObj = {
-    easing: function(dt){
-        return dt === 0 ? 0 : Math.pow(2, 10 * (dt - 1));
-    },
-    reverse: function(){
-        return cc._easeExponentialOutObj;
-    }
+  easing: function (dt) {
+    return dt === 0 ? 0 : Math.pow(2, 10 * (dt - 1));
+  },
+  reverse: function () {
+    return cc._easeExponentialOutObj;
+  }
 };
 
 /**
@@ -495,8 +487,8 @@ cc._easeExponentialInObj = {
  * // example
  * action.easing(cc.easeExponentialIn());
  */
-cc.easeExponentialIn = function(){
-    return cc._easeExponentialInObj;
+cc.easeExponentialIn = function () {
+  return cc._easeExponentialInObj;
 };
 
 /**
@@ -509,45 +501,45 @@ cc.easeExponentialIn = function(){
  * @example
  * action.easing(cc.easeExponentialOut());
  */
-cc.EaseExponentialOut = cc.ActionEase.extend(/** @lends cc.EaseExponentialOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        this._inner.update(dt === 1 ? 1 : (-(Math.pow(2, -10 * dt)) + 1));
-    },
+cc.EaseExponentialOut = class EaseExponentialOut extends cc.ActionEase {
+  /** @lends cc.EaseExponentialOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(dt === 1 ? 1 : -Math.pow(2, -10 * dt) + 1);
+  }
 
-    /**
-     * Create a cc.EaseExponentialIn action. Opposite with the original motion trajectory.
-     * @return {cc.EaseExponentialIn}
-     */
-    reverse:function () {
-        return new cc.EaseExponentialIn(this._inner.reverse());
-    },
+  /**
+   * Create a cc.EaseExponentialIn action. Opposite with the original motion trajectory.
+   * @return {cc.EaseExponentialIn}
+   */
+  reverse() {
+    return new cc.EaseExponentialIn(this._inner.reverse());
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseExponentialOut}
-     */
-    clone:function(){
-        var action = new cc.EaseExponentialOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseExponentialOut}
+   */
+  clone() {
+    var action = new cc.EaseExponentialOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._easeExponentialOutObj = {
-    easing: function(dt){
-        return dt === 1 ? 1 : (-(Math.pow(2, -10 * dt)) + 1);
-    },
-    reverse: function(){
-        return cc._easeExponentialInObj;
-    }
+  easing: function (dt) {
+    return dt === 1 ? 1 : -Math.pow(2, -10 * dt) + 1;
+  },
+  reverse: function () {
+    return cc._easeExponentialInObj;
+  }
 };
 
 /**
@@ -560,8 +552,8 @@ cc._easeExponentialOutObj = {
  * // example
  * action.easing(cc.easeExponentialOut());
  */
-cc.easeExponentialOut = function(){
-    return cc._easeExponentialOutObj;
+cc.easeExponentialOut = function () {
+  return cc._easeExponentialOutObj;
 };
 
 /**
@@ -575,59 +567,55 @@ cc.easeExponentialOut = function(){
  * @example
  * action.easing(cc.easeExponentialInOut());
  */
-cc.EaseExponentialInOut = cc.ActionEase.extend(/** @lends cc.EaseExponentialInOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        if( dt !== 1 && dt !== 0) {
-            dt *= 2;
-            if (dt < 1)
-                dt = 0.5 * Math.pow(2, 10 * (dt - 1));
-            else
-                dt = 0.5 * (-Math.pow(2, -10 * (dt - 1)) + 2);
-        }
-        this._inner.update(dt);
-    },
-
-    /**
-     * Create a cc.EaseExponentialInOut action. Opposite with the original motion trajectory.
-     * @return {cc.EaseExponentialInOut}
-     */
-    reverse:function () {
-        return new cc.EaseExponentialInOut(this._inner.reverse());
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseExponentialInOut}
-     */
-    clone:function(){
-        var action = new cc.EaseExponentialInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
+cc.EaseExponentialInOut = class EaseExponentialInOut extends cc.ActionEase {
+  /** @lends cc.EaseExponentialInOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    if (dt !== 1 && dt !== 0) {
+      dt *= 2;
+      if (dt < 1) dt = 0.5 * Math.pow(2, 10 * (dt - 1));
+      else dt = 0.5 * (-Math.pow(2, -10 * (dt - 1)) + 2);
     }
-});
+    this._inner.update(dt);
+  }
 
+  /**
+   * Create a cc.EaseExponentialInOut action. Opposite with the original motion trajectory.
+   * @return {cc.EaseExponentialInOut}
+   */
+  reverse() {
+    return new cc.EaseExponentialInOut(this._inner.reverse());
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseExponentialInOut}
+   */
+  clone() {
+    var action = new cc.EaseExponentialInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._easeExponentialInOutObj = {
-    easing: function(dt){
-        if( dt !== 1 && dt !== 0) {
-            dt *= 2;
-            if (dt < 1)
-                return 0.5 * Math.pow(2, 10 * (dt - 1));
-            else
-                return 0.5 * (-Math.pow(2, -10 * (dt - 1)) + 2);
-        }
-        return dt;
-    },
-    reverse: function(){
-        return cc._easeExponentialInOutObj;
+  easing: function (dt) {
+    if (dt !== 1 && dt !== 0) {
+      dt *= 2;
+      if (dt < 1) return 0.5 * Math.pow(2, 10 * (dt - 1));
+      else return 0.5 * (-Math.pow(2, -10 * (dt - 1)) + 2);
     }
+    return dt;
+  },
+  reverse: function () {
+    return cc._easeExponentialInOutObj;
+  }
 };
 
 /**
@@ -640,8 +628,8 @@ cc._easeExponentialInOutObj = {
  * // example
  * action.easing(cc.easeExponentialInOut());
  */
-cc.easeExponentialInOut = function(){
-    return cc._easeExponentialInOutObj;
+cc.easeExponentialInOut = function () {
+  return cc._easeExponentialInOutObj;
 };
 
 /**
@@ -654,46 +642,46 @@ cc.easeExponentialInOut = function(){
  * @example
  * action.easing(cc.easeSineIn());
  */
-cc.EaseSineIn = cc.ActionEase.extend(/** @lends cc.EaseSineIn# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        dt = dt===0 || dt===1 ? dt : -1 * Math.cos(dt * Math.PI / 2) + 1;
-        this._inner.update(dt);
-    },
+cc.EaseSineIn = class EaseSineIn extends cc.ActionEase {
+  /** @lends cc.EaseSineIn# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    dt = dt === 0 || dt === 1 ? dt : -1 * Math.cos((dt * Math.PI) / 2) + 1;
+    this._inner.update(dt);
+  }
 
-    /**
-     * Create a cc.EaseSineOut action. Opposite with the original motion trajectory.
-     * @return {cc.EaseSineOut}
-     */
-    reverse:function () {
-        return new cc.EaseSineOut(this._inner.reverse());
-    },
+  /**
+   * Create a cc.EaseSineOut action. Opposite with the original motion trajectory.
+   * @return {cc.EaseSineOut}
+   */
+  reverse() {
+    return new cc.EaseSineOut(this._inner.reverse());
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseSineIn}
-     */
-    clone:function(){
-        var action = new cc.EaseSineIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseSineIn}
+   */
+  clone() {
+    var action = new cc.EaseSineIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._easeSineInObj = {
-    easing: function(dt){
-        return (dt===0 || dt===1) ? dt : -1 * Math.cos(dt * Math.PI / 2) + 1;
-    },
-    reverse: function(){
-        return cc._easeSineOutObj;
-    }
+  easing: function (dt) {
+    return dt === 0 || dt === 1 ? dt : -1 * Math.cos((dt * Math.PI) / 2) + 1;
+  },
+  reverse: function () {
+    return cc._easeSineOutObj;
+  }
 };
 /**
  * creates an EaseSineIn action. <br />
@@ -705,8 +693,8 @@ cc._easeSineInObj = {
  * // example
  * action.easing(cc.easeSineIn());
  */
-cc.easeSineIn = function(){
-    return cc._easeSineInObj;
+cc.easeSineIn = function () {
+  return cc._easeSineInObj;
 };
 
 /**
@@ -719,46 +707,46 @@ cc.easeSineIn = function(){
  * @example
  * action.easing(cc.easeSineOut());
  */
-cc.EaseSineOut = cc.ActionEase.extend(/** @lends cc.EaseSineOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        dt = dt===0 || dt===1 ? dt : Math.sin(dt * Math.PI / 2);
-        this._inner.update(dt);
-    },
+cc.EaseSineOut = class EaseSineOut extends cc.ActionEase {
+  /** @lends cc.EaseSineOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    dt = dt === 0 || dt === 1 ? dt : Math.sin((dt * Math.PI) / 2);
+    this._inner.update(dt);
+  }
 
-    /**
-     * Create a cc.EaseSineIn action. Opposite with the original motion trajectory.
-     * @return {cc.EaseSineIn}
-     */
-    reverse:function () {
-        return new cc.EaseSineIn(this._inner.reverse());
-    },
+  /**
+   * Create a cc.EaseSineIn action. Opposite with the original motion trajectory.
+   * @return {cc.EaseSineIn}
+   */
+  reverse() {
+    return new cc.EaseSineIn(this._inner.reverse());
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseSineOut}
-     */
-    clone:function(){
-        var action = new cc.EaseSineOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseSineOut}
+   */
+  clone() {
+    var action = new cc.EaseSineOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._easeSineOutObj = {
-    easing: function(dt){
-        return (dt===0 || dt===1) ? dt : Math.sin(dt * Math.PI / 2);
-    },
-    reverse: function(){
-        return cc._easeSineInObj;
-    }
+  easing: function (dt) {
+    return dt === 0 || dt === 1 ? dt : Math.sin((dt * Math.PI) / 2);
+  },
+  reverse: function () {
+    return cc._easeSineInObj;
+  }
 };
 
 /**
@@ -771,8 +759,8 @@ cc._easeSineOutObj = {
  * // example
  * action.easing(cc.easeSineOut());
  */
-cc.easeSineOut = function(){
-    return cc._easeSineOutObj;
+cc.easeSineOut = function () {
+  return cc._easeSineOutObj;
 };
 
 /**
@@ -785,46 +773,46 @@ cc.easeSineOut = function(){
  * @example
  * action.easing(cc.easeSineInOut());
  */
-cc.EaseSineInOut = cc.ActionEase.extend(/** @lends cc.EaseSineInOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        dt = dt===0 || dt===1 ? dt : -0.5 * (Math.cos(Math.PI * dt) - 1);
-        this._inner.update(dt);
-    },
+cc.EaseSineInOut = class EaseSineInOut extends cc.ActionEase {
+  /** @lends cc.EaseSineInOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    dt = dt === 0 || dt === 1 ? dt : -0.5 * (Math.cos(Math.PI * dt) - 1);
+    this._inner.update(dt);
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseSineInOut}
-     */
-    clone:function(){
-        var action = new cc.EaseSineInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseSineInOut}
+   */
+  clone() {
+    var action = new cc.EaseSineInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a cc.EaseSineInOut action. Opposite with the original motion trajectory.
-     * @return {cc.EaseSineInOut}
-     */
-    reverse:function () {
-        return new cc.EaseSineInOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a cc.EaseSineInOut action. Opposite with the original motion trajectory.
+   * @return {cc.EaseSineInOut}
+   */
+  reverse() {
+    return new cc.EaseSineInOut(this._inner.reverse());
+  }
+};
 
 cc._easeSineInOutObj = {
-    easing: function(dt){
-        return (dt === 0 || dt === 1) ? dt : -0.5 * (Math.cos(Math.PI * dt) - 1);
-    },
-    reverse: function(){
-        return cc._easeSineInOutObj;
-    }
+  easing: function (dt) {
+    return dt === 0 || dt === 1 ? dt : -0.5 * (Math.cos(Math.PI * dt) - 1);
+  },
+  reverse: function () {
+    return cc._easeSineInOutObj;
+  }
 };
 
 /**
@@ -836,8 +824,8 @@ cc._easeSineInOutObj = {
  * // example
  * action.easing(cc.easeSineInOut());
  */
-cc.easeSineInOut = function(){
-    return cc._easeSineInOutObj;
+cc.easeSineInOut = function () {
+  return cc._easeSineInOutObj;
 };
 
 /**
@@ -847,72 +835,72 @@ cc.easeSineInOut = function(){
  * @param {cc.ActionInterval} action
  * @param {Number} [period=0.3]
  */
-cc.EaseElastic = cc.ActionEase.extend(/** @lends cc.EaseElastic# */{
-    _period: 0.3,
+cc.EaseElastic = class EaseElastic extends cc.ActionEase {
+  /** @lends cc.EaseElastic# */
+  _period = 0.3;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-     * Creates the action with the inner action and the period in radians (default is 0.3).
-	 * @param {cc.ActionInterval} action
-	 * @param {Number} [period=0.3]
-	 */
-    ctor:function(action, period){
-        cc.ActionEase.prototype.ctor.call(this);
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
+   * Creates the action with the inner action and the period in radians (default is 0.3).
+   * @param {cc.ActionInterval} action
+   * @param {Number} [period=0.3]
+   */
+  constructor(action, period) {
+    super();
 
-		action && this.initWithAction(action, period);
-    },
+    action && this.initWithAction(action, period);
+  }
 
-    /**
-     * get period of the wave in radians. default is 0.3
-     * @return {Number}
-     */
-    getPeriod:function () {
-        return this._period;
-    },
+  /**
+   * get period of the wave in radians. default is 0.3
+   * @return {Number}
+   */
+  getPeriod() {
+    return this._period;
+  }
 
-    /**
-     * set period of the wave in radians.
-     * @param {Number} period
-     */
-    setPeriod:function (period) {
-        this._period = period;
-    },
+  /**
+   * set period of the wave in radians.
+   * @param {Number} period
+   */
+  setPeriod(period) {
+    this._period = period;
+  }
 
-    /**
-     * Initializes the action with the inner action and the period in radians (default is 0.3)
-     * @param {cc.ActionInterval} action
-     * @param {Number} [period=0.3]
-     * @return {Boolean}
-     */
-    initWithAction:function (action, period) {
-        cc.ActionEase.prototype.initWithAction.call(this, action);
-        this._period = (period == null) ? 0.3 : period;
-        return true;
-    },
+  /**
+   * Initializes the action with the inner action and the period in radians (default is 0.3)
+   * @param {cc.ActionInterval} action
+   * @param {Number} [period=0.3]
+   * @return {Boolean}
+   */
+  initWithAction(action, period) {
+    super.initWithAction(action);
+    this._period = period == null ? 0.3 : period;
+    return true;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory. <br />
-     * Will be overwrite.
-     * @return {?cc.Action}
-     */
-    reverse:function () {
-        cc.log("cc.EaseElastic.reverse(): it should be overridden in subclass.");
-        return null;
-    },
+  /**
+   * Create a action. Opposite with the original motion trajectory. <br />
+   * Will be overwrite.
+   * @return {?cc.Action}
+   */
+  reverse() {
+    cc.log("cc.EaseElastic.reverse(): it should be overridden in subclass.");
+    return null;
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseElastic}
-     */
-    clone:function(){
-        var action = new cc.EaseElastic();
-        action.initWithAction(this._inner.clone(), this._period);
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseElastic}
+   */
+  clone() {
+    const action = new cc.EaseElastic();
+    action.initWithAction(this._inner.clone(), this._period);
+    return action;
+  }
+};
 
 /**
  * Ease Elastic In action. <br />
@@ -925,57 +913,60 @@ cc.EaseElastic = cc.ActionEase.extend(/** @lends cc.EaseElastic# */{
  * @example
  * action.easing(cc.easeElasticIn(period));
  */
-cc.EaseElasticIn = cc.EaseElastic.extend(/** @lends cc.EaseElasticIn# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var newT = 0;
-        if (dt === 0 || dt === 1) {
-            newT = dt;
-        } else {
-            var s = this._period / 4;
-            dt = dt - 1;
-            newT = -Math.pow(2, 10 * dt) * Math.sin((dt - s) * Math.PI * 2 / this._period);
-        }
-        this._inner.update(newT);
-    },
-
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseElasticOut}
-     */
-    reverse:function () {
-        return new cc.EaseElasticOut(this._inner.reverse(), this._period);
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseElasticIn}
-     */
-    clone:function(){
-        var action = new cc.EaseElasticIn();
-        action.initWithAction(this._inner.clone(), this._period);
-        return action;
+cc.EaseElasticIn = class EaseElasticIn extends cc.EaseElastic {
+  /** @lends cc.EaseElasticIn# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    let newT = 0;
+    if (dt === 0 || dt === 1) {
+      newT = dt;
+    } else {
+      const s = this._period / 4;
+      dt = dt - 1;
+      newT =
+        -Math.pow(2, 10 * dt) *
+        Math.sin(((dt - s) * Math.PI * 2) / this._period);
     }
-});
+    this._inner.update(newT);
+  }
 
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseElasticOut}
+   */
+  reverse() {
+    return new cc.EaseElasticOut(this._inner.reverse(), this._period);
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseElasticIn}
+   */
+  clone() {
+    var action = new cc.EaseElasticIn();
+    action.initWithAction(this._inner.clone(), this._period);
+    return action;
+  }
+};
 
 //default ease elastic in object (period = 0.3)
 cc._easeElasticInObj = {
-   easing:function(dt){
-       if (dt === 0 || dt === 1)
-           return dt;
-       dt = dt - 1;
-       return -Math.pow(2, 10 * dt) * Math.sin((dt - (0.3 / 4)) * Math.PI * 2 / 0.3);
-   },
-    reverse:function(){
-        return cc._easeElasticOutObj;
-    }
+  easing: function (dt) {
+    if (dt === 0 || dt === 1) return dt;
+    dt = dt - 1;
+    return (
+      -Math.pow(2, 10 * dt) * Math.sin(((dt - 0.3 / 4) * Math.PI * 2) / 0.3)
+    );
+  },
+  reverse: function () {
+    return cc._easeElasticOutObj;
+  }
 };
 
 /**
@@ -990,21 +981,23 @@ cc._easeElasticInObj = {
  * action.easing(cc.easeElasticIn(3.0));
  */
 cc.easeElasticIn = function (period) {
-    if(period && period !== 0.3){
-        return {
-            _period: period,
-            easing: function (dt) {
-                if (dt === 0 || dt === 1)
-                    return dt;
-                dt = dt - 1;
-                return -Math.pow(2, 10 * dt) * Math.sin((dt - (this._period / 4)) * Math.PI * 2 / this._period);
-            },
-            reverse:function () {
-                return cc.easeElasticOut(this._period);
-            }
-        };
-    }
-    return cc._easeElasticInObj;
+  if (period && period !== 0.3) {
+    return {
+      _period: period,
+      easing: function (dt) {
+        if (dt === 0 || dt === 1) return dt;
+        dt = dt - 1;
+        return (
+          -Math.pow(2, 10 * dt) *
+          Math.sin(((dt - this._period / 4) * Math.PI * 2) / this._period)
+        );
+      },
+      reverse: function () {
+        return cc.easeElasticOut(this._period);
+      }
+    };
+  }
+  return cc._easeElasticInObj;
 };
 
 /**
@@ -1018,54 +1011,60 @@ cc.easeElasticIn = function (period) {
  * @example
  * action.easing(cc.easeElasticOut(period));
  */
-cc.EaseElasticOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var newT = 0;
-        if (dt === 0 || dt === 1) {
-            newT = dt;
-        } else {
-            var s = this._period / 4;
-            newT = Math.pow(2, -10 * dt) * Math.sin((dt - s) * Math.PI * 2 / this._period) + 1;
-        }
-
-        this._inner.update(newT);
-    },
-
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseElasticIn}
-     */
-    reverse:function () {
-        return new cc.EaseElasticIn(this._inner.reverse(), this._period);
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseElasticOut}
-     */
-    clone:function(){
-        var action = new cc.EaseElasticOut();
-        action.initWithAction(this._inner.clone(), this._period);
-        return action;
+cc.EaseElasticOut = class EaseElasticOut extends cc.EaseElastic {
+  /** @lends cc.EaseElasticOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    let newT = 0;
+    if (dt === 0 || dt === 1) {
+      newT = dt;
+    } else {
+      const s = this._period / 4;
+      newT =
+        Math.pow(2, -10 * dt) *
+          Math.sin(((dt - s) * Math.PI * 2) / this._period) +
+        1;
     }
-});
 
+    this._inner.update(newT);
+  }
+
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseElasticIn}
+   */
+  reverse() {
+    return new cc.EaseElasticIn(this._inner.reverse(), this._period);
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseElasticOut}
+   */
+  clone() {
+    var action = new cc.EaseElasticOut();
+    action.initWithAction(this._inner.clone(), this._period);
+    return action;
+  }
+};
 
 //default ease elastic out object (period = 0.3)
 cc._easeElasticOutObj = {
-    easing: function (dt) {
-        return (dt === 0 || dt === 1) ? dt : Math.pow(2, -10 * dt) * Math.sin((dt - (0.3 / 4)) * Math.PI * 2 / 0.3) + 1;
-    },
-    reverse:function(){
-        return cc._easeElasticInObj;
-    }
+  easing: function (dt) {
+    return dt === 0 || dt === 1
+      ? dt
+      : Math.pow(2, -10 * dt) * Math.sin(((dt - 0.3 / 4) * Math.PI * 2) / 0.3) +
+          1;
+  },
+  reverse: function () {
+    return cc._easeElasticInObj;
+  }
 };
 /**
  * Creates the action easing object with the period in radians (default is 0.3). <br />
@@ -1079,18 +1078,22 @@ cc._easeElasticOutObj = {
  * action.easing(cc.easeElasticOut(3.0));
  */
 cc.easeElasticOut = function (period) {
-    if(period && period !== 0.3){
-        return {
-            _period: period,
-            easing: function (dt) {
-                return (dt === 0 || dt === 1) ? dt : Math.pow(2, -10 * dt) * Math.sin((dt - (this._period / 4)) * Math.PI * 2 / this._period) + 1;
-            },
-            reverse:function(){
-                return cc.easeElasticIn(this._period);
-            }
-        };
-    }
-    return cc._easeElasticOutObj;
+  if (period && period !== 0.3) {
+    return {
+      _period: period,
+      easing: function (dt) {
+        return dt === 0 || dt === 1
+          ? dt
+          : Math.pow(2, -10 * dt) *
+              Math.sin(((dt - this._period / 4) * Math.PI * 2) / this._period) +
+              1;
+      },
+      reverse: function () {
+        return cc.easeElasticIn(this._period);
+      }
+    };
+  }
+  return cc._easeElasticOutObj;
 };
 
 /**
@@ -1104,53 +1107,59 @@ cc.easeElasticOut = function (period) {
  * @example
  * action.easing(cc.easeElasticInOut(period));
  */
-cc.EaseElasticInOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticInOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var newT = 0;
-        var locPeriod = this._period;
-        if (dt === 0 || dt === 1) {
-            newT = dt;
-        } else {
-            dt = dt * 2;
-            if (!locPeriod)
-                locPeriod = this._period = 0.3 * 1.5;
+cc.EaseElasticInOut = class EaseElasticInOut extends cc.EaseElastic {
+  /** @lends cc.EaseElasticInOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    let newT = 0;
+    let locPeriod = this._period;
+    if (dt === 0 || dt === 1) {
+      newT = dt;
+    } else {
+      dt = dt * 2;
+      if (!locPeriod) locPeriod = this._period = 0.3 * 1.5;
 
-            var s = locPeriod / 4;
-            dt = dt - 1;
-            if (dt < 0)
-                newT = -0.5 * Math.pow(2, 10 * dt) * Math.sin((dt - s) * Math.PI * 2 / locPeriod);
-            else
-                newT = Math.pow(2, -10 * dt) * Math.sin((dt - s) * Math.PI * 2 / locPeriod) * 0.5 + 1;
-        }
-        this._inner.update(newT);
-    },
-
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseElasticInOut}
-     */
-    reverse:function () {
-        return new cc.EaseElasticInOut(this._inner.reverse(), this._period);
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseElasticInOut}
-     */
-    clone:function(){
-        var action = new cc.EaseElasticInOut();
-        action.initWithAction(this._inner.clone(), this._period);
-        return action;
+      const s = locPeriod / 4;
+      dt = dt - 1;
+      if (dt < 0)
+        newT =
+          -0.5 *
+          Math.pow(2, 10 * dt) *
+          Math.sin(((dt - s) * Math.PI * 2) / locPeriod);
+      else
+        newT =
+          Math.pow(2, -10 * dt) *
+            Math.sin(((dt - s) * Math.PI * 2) / locPeriod) *
+            0.5 +
+          1;
     }
-});
+    this._inner.update(newT);
+  }
 
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseElasticInOut}
+   */
+  reverse() {
+    return new cc.EaseElasticInOut(this._inner.reverse(), this._period);
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseElasticInOut}
+   */
+  clone() {
+    var action = new cc.EaseElasticInOut();
+    action.initWithAction(this._inner.clone(), this._period);
+    return action;
+  }
+};
 
 /**
  * Creates the action easing object with the period in radians (default is 0.3). <br />
@@ -1164,31 +1173,37 @@ cc.EaseElasticInOut = cc.EaseElastic.extend(/** @lends cc.EaseElasticInOut# */{
  * action.easing(cc.easeElasticInOut(3.0));
  */
 cc.easeElasticInOut = function (period) {
-    period = period || 0.3;
-    return {
-        _period: period,
-        easing: function (dt) {
-            var newT = 0;
-            var locPeriod = this._period;
-            if (dt === 0 || dt === 1) {
-                newT = dt;
-            } else {
-                dt = dt * 2;
-                if (!locPeriod)
-                    locPeriod = this._period = 0.3 * 1.5;
-                var s = locPeriod / 4;
-                dt = dt - 1;
-                if (dt < 0)
-                    newT = -0.5 * Math.pow(2, 10 * dt) * Math.sin((dt - s) * Math.PI * 2 / locPeriod);
-                else
-                    newT = Math.pow(2, -10 * dt) * Math.sin((dt - s) * Math.PI * 2 / locPeriod) * 0.5 + 1;
-            }
-            return newT;
-        },
-        reverse: function(){
-            return cc.easeElasticInOut(this._period);
-        }
-    };
+  period = period || 0.3;
+  return {
+    _period: period,
+    easing: function (dt) {
+      let newT = 0;
+      let locPeriod = this._period;
+      if (dt === 0 || dt === 1) {
+        newT = dt;
+      } else {
+        dt = dt * 2;
+        if (!locPeriod) locPeriod = this._period = 0.3 * 1.5;
+        const s = locPeriod / 4;
+        dt = dt - 1;
+        if (dt < 0)
+          newT =
+            -0.5 *
+            Math.pow(2, 10 * dt) *
+            Math.sin(((dt - s) * Math.PI * 2) / locPeriod);
+        else
+          newT =
+            Math.pow(2, -10 * dt) *
+              Math.sin(((dt - s) * Math.PI * 2) / locPeriod) *
+              0.5 +
+            1;
+      }
+      return newT;
+    },
+    reverse: function () {
+      return cc.easeElasticInOut(this._period);
+    }
+  };
 };
 
 /**
@@ -1197,47 +1212,47 @@ cc.easeElasticInOut = function (period) {
  * @class
  * @extends cc.ActionEase
  */
-cc.EaseBounce = cc.ActionEase.extend(/** @lends cc.EaseBounce# */{
-    /**
-     * @param {Number} time1
-     * @return {Number}
-     */
-    bounceTime:function (time1) {
-        if (time1 < 1 / 2.75) {
-            return 7.5625 * time1 * time1;
-        } else if (time1 < 2 / 2.75) {
-            time1 -= 1.5 / 2.75;
-            return 7.5625 * time1 * time1 + 0.75;
-        } else if (time1 < 2.5 / 2.75) {
-            time1 -= 2.25 / 2.75;
-            return 7.5625 * time1 * time1 + 0.9375;
-        }
-
-        time1 -= 2.625 / 2.75;
-        return 7.5625 * time1 * time1 + 0.984375;
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseBounce}
-     */
-    clone:function(){
-        var action = new cc.EaseBounce();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
-
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseBounce}
-     */
-    reverse:function () {
-        return new cc.EaseBounce(this._inner.reverse());
+cc.EaseBounce = class EaseBounce extends cc.ActionEase {
+  /** @lends cc.EaseBounce# */
+  /**
+   * @param {Number} time1
+   * @return {Number}
+   */
+  bounceTime(time1) {
+    if (time1 < 1 / 2.75) {
+      return 7.5625 * time1 * time1;
+    } else if (time1 < 2 / 2.75) {
+      time1 -= 1.5 / 2.75;
+      return 7.5625 * time1 * time1 + 0.75;
+    } else if (time1 < 2.5 / 2.75) {
+      time1 -= 2.25 / 2.75;
+      return 7.5625 * time1 * time1 + 0.9375;
     }
-});
 
+    time1 -= 2.625 / 2.75;
+    return 7.5625 * time1 * time1 + 0.984375;
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseBounce}
+   */
+  clone() {
+    var action = new cc.EaseBounce();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseBounce}
+   */
+  reverse() {
+    return new cc.EaseBounce(this._inner.reverse());
+  }
+};
 
 /**
  * cc.EaseBounceIn action. <br />
@@ -1249,61 +1264,61 @@ cc.EaseBounce = cc.ActionEase.extend(/** @lends cc.EaseBounce# */{
  * @example
  * action.easing(cc.easeBounceIn());
  */
-cc.EaseBounceIn = cc.EaseBounce.extend(/** @lends cc.EaseBounceIn# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var newT = 1 - this.bounceTime(1 - dt);
-        this._inner.update(newT);
-    },
+cc.EaseBounceIn = class EaseBounceIn extends cc.EaseBounce {
+  /** @lends cc.EaseBounceIn# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    var newT = 1 - this.bounceTime(1 - dt);
+    this._inner.update(newT);
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseBounceOut}
-     */
-    reverse:function () {
-        return new cc.EaseBounceOut(this._inner.reverse());
-    },
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseBounceOut}
+   */
+  reverse() {
+    return new cc.EaseBounceOut(this._inner.reverse());
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseBounceIn}
-     */
-    clone:function(){
-        var action = new cc.EaseBounceIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseBounceIn}
+   */
+  clone() {
+    var action = new cc.EaseBounceIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._bounceTime = function (time1) {
-    if (time1 < 1 / 2.75) {
-        return 7.5625 * time1 * time1;
-    } else if (time1 < 2 / 2.75) {
-        time1 -= 1.5 / 2.75;
-        return 7.5625 * time1 * time1 + 0.75;
-    } else if (time1 < 2.5 / 2.75) {
-        time1 -= 2.25 / 2.75;
-        return 7.5625 * time1 * time1 + 0.9375;
-    }
+  if (time1 < 1 / 2.75) {
+    return 7.5625 * time1 * time1;
+  } else if (time1 < 2 / 2.75) {
+    time1 -= 1.5 / 2.75;
+    return 7.5625 * time1 * time1 + 0.75;
+  } else if (time1 < 2.5 / 2.75) {
+    time1 -= 2.25 / 2.75;
+    return 7.5625 * time1 * time1 + 0.9375;
+  }
 
-    time1 -= 2.625 / 2.75;
-    return 7.5625 * time1 * time1 + 0.984375;
+  time1 -= 2.625 / 2.75;
+  return 7.5625 * time1 * time1 + 0.984375;
 };
 
 cc._easeBounceInObj = {
-    easing: function(dt){
-        return 1 - cc._bounceTime(1 - dt);
-    },
-    reverse: function(){
-        return cc._easeBounceOutObj;
-    }
+  easing: function (dt) {
+    return 1 - cc._bounceTime(1 - dt);
+  },
+  reverse: function () {
+    return cc._easeBounceOutObj;
+  }
 };
 
 /**
@@ -1315,8 +1330,8 @@ cc._easeBounceInObj = {
  * // example
  * action.easing(cc.easeBounceIn());
  */
-cc.easeBounceIn = function(){
-    return cc._easeBounceInObj;
+cc.easeBounceIn = function () {
+  return cc._easeBounceInObj;
 };
 
 /**
@@ -1328,46 +1343,46 @@ cc.easeBounceIn = function(){
  * @example
  * action.easing(cc.easeBounceOut());
  */
-cc.EaseBounceOut = cc.EaseBounce.extend(/** @lends cc.EaseBounceOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var newT = this.bounceTime(dt);
-        this._inner.update(newT);
-    },
+cc.EaseBounceOut = class EaseBounceOut extends cc.EaseBounce {
+  /** @lends cc.EaseBounceOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    var newT = this.bounceTime(dt);
+    this._inner.update(newT);
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseBounceIn}
-     */
-    reverse:function () {
-        return new cc.EaseBounceIn(this._inner.reverse());
-    },
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseBounceIn}
+   */
+  reverse() {
+    return new cc.EaseBounceIn(this._inner.reverse());
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseBounceOut}
-     */
-    clone:function(){
-        var action = new cc.EaseBounceOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseBounceOut}
+   */
+  clone() {
+    var action = new cc.EaseBounceOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._easeBounceOutObj = {
-    easing: function(dt){
-        return cc._bounceTime(dt);
-    },
-    reverse:function () {
-        return cc._easeBounceInObj;
-    }
+  easing: function (dt) {
+    return cc._bounceTime(dt);
+  },
+  reverse: function () {
+    return cc._easeBounceInObj;
+  }
 };
 
 /**
@@ -1379,8 +1394,8 @@ cc._easeBounceOutObj = {
  * // example
  * action.easing(cc.easeBounceOut());
  */
-cc.easeBounceOut = function(){
-    return cc._easeBounceOutObj;
+cc.easeBounceOut = function () {
+  return cc._easeBounceOutObj;
 };
 
 /**
@@ -1392,59 +1407,59 @@ cc.easeBounceOut = function(){
  * @example
  * action.easing(cc.easeBounceInOut());
  */
-cc.EaseBounceInOut = cc.EaseBounce.extend(/** @lends cc.EaseBounceInOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var newT = 0;
-        if (dt < 0.5) {
-            dt = dt * 2;
-            newT = (1 - this.bounceTime(1 - dt)) * 0.5;
-        } else {
-            newT = this.bounceTime(dt * 2 - 1) * 0.5 + 0.5;
-        }
-        this._inner.update(newT);
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseBounceInOut}
-     */
-    clone:function(){
-        var action = new cc.EaseBounceInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
-
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseBounceInOut}
-     */
-    reverse:function () {
-        return new cc.EaseBounceInOut(this._inner.reverse());
+cc.EaseBounceInOut = class EaseBounceInOut extends cc.EaseBounce {
+  /** @lends cc.EaseBounceInOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    var newT = 0;
+    if (dt < 0.5) {
+      dt = dt * 2;
+      newT = (1 - this.bounceTime(1 - dt)) * 0.5;
+    } else {
+      newT = this.bounceTime(dt * 2 - 1) * 0.5 + 0.5;
     }
-});
+    this._inner.update(newT);
+  }
 
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseBounceInOut}
+   */
+  clone() {
+    var action = new cc.EaseBounceInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseBounceInOut}
+   */
+  reverse() {
+    return new cc.EaseBounceInOut(this._inner.reverse());
+  }
+};
 
 cc._easeBounceInOutObj = {
-    easing: function (time1) {
-        var newT;
-        if (time1 < 0.5) {
-            time1 = time1 * 2;
-            newT = (1 - cc._bounceTime(1 - time1)) * 0.5;
-        } else {
-            newT = cc._bounceTime(time1 * 2 - 1) * 0.5 + 0.5;
-        }
-        return newT;
-    },
-    reverse: function(){
-        return cc._easeBounceInOutObj;
+  easing: function (time1) {
+    var newT;
+    if (time1 < 0.5) {
+      time1 = time1 * 2;
+      newT = (1 - cc._bounceTime(1 - time1)) * 0.5;
+    } else {
+      newT = cc._bounceTime(time1 * 2 - 1) * 0.5 + 0.5;
     }
+    return newT;
+  },
+  reverse: function () {
+    return cc._easeBounceInOutObj;
+  }
 };
 
 /**
@@ -1456,8 +1471,8 @@ cc._easeBounceInOutObj = {
  * // example
  * action.easing(cc.easeBounceInOut());
  */
-cc.easeBounceInOut = function(){
-    return cc._easeBounceInOutObj;
+cc.easeBounceInOut = function () {
+  return cc._easeBounceInOutObj;
 };
 
 /**
@@ -1469,49 +1484,51 @@ cc.easeBounceInOut = function(){
  * @example
  * action.easing(cc.easeBackIn());
  */
-cc.EaseBackIn = cc.ActionEase.extend(/** @lends cc.EaseBackIn# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var overshoot = 1.70158;
-        dt = dt===0 || dt===1 ? dt : dt * dt * ((overshoot + 1) * dt - overshoot);
-        this._inner.update(dt);
-    },
+cc.EaseBackIn = class EaseBackIn extends cc.ActionEase {
+  /** @lends cc.EaseBackIn# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    var overshoot = 1.70158;
+    dt =
+      dt === 0 || dt === 1 ? dt : dt * dt * ((overshoot + 1) * dt - overshoot);
+    this._inner.update(dt);
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseBackOut}
-     */
-    reverse:function () {
-        return new cc.EaseBackOut(this._inner.reverse());
-    },
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseBackOut}
+   */
+  reverse() {
+    return new cc.EaseBackOut(this._inner.reverse());
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseBackIn}
-     */
-    clone:function(){
-        var action = new cc.EaseBackIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    }
-});
-
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseBackIn}
+   */
+  clone() {
+    var action = new cc.EaseBackIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._easeBackInObj = {
-    easing: function (time1) {
-        var overshoot = 1.70158;
-        return (time1===0 || time1===1) ? time1 : time1 * time1 * ((overshoot + 1) * time1 - overshoot);
-    },
-    reverse: function(){
-        return cc._easeBackOutObj;
-    }
+  easing: function (time1) {
+    var overshoot = 1.70158;
+    return time1 === 0 || time1 === 1
+      ? time1
+      : time1 * time1 * ((overshoot + 1) * time1 - overshoot);
+  },
+  reverse: function () {
+    return cc._easeBackOutObj;
+  }
 };
 
 /**
@@ -1523,8 +1540,8 @@ cc._easeBackInObj = {
  * // example
  * action.easing(cc.easeBackIn());
  */
-cc.easeBackIn = function(){
-    return cc._easeBackInObj;
+cc.easeBackIn = function () {
+  return cc._easeBackInObj;
 };
 
 /**
@@ -1536,49 +1553,49 @@ cc.easeBackIn = function(){
  * @example
  * action.easing(cc.easeBackOut());
  */
-cc.EaseBackOut = cc.ActionEase.extend(/** @lends cc.EaseBackOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var overshoot = 1.70158;
-        dt = dt - 1;
-        this._inner.update(dt * dt * ((overshoot + 1) * dt + overshoot) + 1);
-    },
+cc.EaseBackOut = class EaseBackOut extends cc.ActionEase {
+  /** @lends cc.EaseBackOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    var overshoot = 1.70158;
+    dt = dt - 1;
+    this._inner.update(dt * dt * ((overshoot + 1) * dt + overshoot) + 1);
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseBackIn}
-     */
-    reverse:function () {
-        return new cc.EaseBackIn(this._inner.reverse());
-    },
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseBackIn}
+   */
+  reverse() {
+    return new cc.EaseBackIn(this._inner.reverse());
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseBackOut}
-     */
-    clone:function(){
-        var action = new cc.EaseBackOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    }
-});
-
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseBackOut}
+   */
+  clone() {
+    var action = new cc.EaseBackOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+};
 
 cc._easeBackOutObj = {
-    easing: function (time1) {
-        var overshoot = 1.70158;
-        time1 = time1 - 1;
-        return time1 * time1 * ((overshoot + 1) * time1 + overshoot) + 1;
-    },
-    reverse: function(){
-        return cc._easeBackInObj;
-    }
+  easing: function (time1) {
+    var overshoot = 1.70158;
+    time1 = time1 - 1;
+    return time1 * time1 * ((overshoot + 1) * time1 + overshoot) + 1;
+  },
+  reverse: function () {
+    return cc._easeBackInObj;
+  }
 };
 
 /**
@@ -1590,8 +1607,8 @@ cc._easeBackOutObj = {
  * // example
  * action.easing(cc.easeBackOut());
  */
-cc.easeBackOut = function(){
-    return cc._easeBackOutObj;
+cc.easeBackOut = function () {
+  return cc._easeBackOutObj;
 };
 
 /**
@@ -1603,60 +1620,61 @@ cc.easeBackOut = function(){
  * @example
  * action.easing(cc.easeBackInOut());
  */
-cc.EaseBackInOut = cc.ActionEase.extend(/** @lends cc.EaseBackInOut# */{
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update:function (dt) {
-        var overshoot = 1.70158 * 1.525;
-        dt = dt * 2;
-        if (dt < 1) {
-            this._inner.update((dt * dt * ((overshoot + 1) * dt - overshoot)) / 2);
-        } else {
-            dt = dt - 2;
-            this._inner.update((dt * dt * ((overshoot + 1) * dt + overshoot)) / 2 + 1);
-        }
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseBackInOut}
-     */
-    clone:function(){
-        var action = new cc.EaseBackInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
-
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseBackInOut}
-     */
-    reverse:function () {
-        return new cc.EaseBackInOut(this._inner.reverse());
+cc.EaseBackInOut = class EaseBackInOut extends cc.ActionEase {
+  /** @lends cc.EaseBackInOut# */
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    var overshoot = 1.70158 * 1.525;
+    dt = dt * 2;
+    if (dt < 1) {
+      this._inner.update((dt * dt * ((overshoot + 1) * dt - overshoot)) / 2);
+    } else {
+      dt = dt - 2;
+      this._inner.update(
+        (dt * dt * ((overshoot + 1) * dt + overshoot)) / 2 + 1
+      );
     }
-});
+  }
 
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseBackInOut}
+   */
+  clone() {
+    var action = new cc.EaseBackInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseBackInOut}
+   */
+  reverse() {
+    return new cc.EaseBackInOut(this._inner.reverse());
+  }
+};
 
 cc._easeBackInOutObj = {
-    easing: function (time1) {
-        var overshoot = 1.70158 * 1.525;
-        time1 = time1 * 2;
-        if (time1 < 1) {
-            return (time1 * time1 * ((overshoot + 1) * time1 - overshoot)) / 2;
-        } else {
-            time1 = time1 - 2;
-            return (time1 * time1 * ((overshoot + 1) * time1 + overshoot)) / 2 + 1;
-        }
-    },
-    reverse: function(){
-        return cc._easeBackInOutObj;
+  easing: function (time1) {
+    var overshoot = 1.70158 * 1.525;
+    time1 = time1 * 2;
+    if (time1 < 1) {
+      return (time1 * time1 * ((overshoot + 1) * time1 - overshoot)) / 2;
+    } else {
+      time1 = time1 - 2;
+      return (time1 * time1 * ((overshoot + 1) * time1 + overshoot)) / 2 + 1;
     }
+  },
+  reverse: function () {
+    return cc._easeBackInOutObj;
+  }
 };
 
 /**
@@ -1668,8 +1686,8 @@ cc._easeBackInOutObj = {
  * // example
  * action.easing(cc.easeBackInOut());
  */
-cc.easeBackInOut = function(){
-    return cc._easeBackInOutObj;
+cc.easeBackInOut = function () {
+  return cc._easeBackInOutObj;
 };
 
 /**
@@ -1682,74 +1700,79 @@ cc.easeBackInOut = function(){
  * @example
  * action.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
  */
-cc.EaseBezierAction = cc.ActionEase.extend(/** @lends cc.EaseBezierAction# */{
+cc.EaseBezierAction = class EaseBezierAction extends cc.ActionEase {
+  /** @lends cc.EaseBezierAction# */
 
-    _p0: null,
-    _p1: null,
-    _p2: null,
-    _p3: null,
+  _p0 = null;
+  _p1 = null;
+  _p2 = null;
+  _p3 = null;
 
-    /**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-     * Initialization requires the application of Bessel curve of action.
-     * @param {cc.Action} action
-     */
-    ctor: function(action){
-        cc.ActionEase.prototype.ctor.call(this, action);
-    },
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
+   * Initialization requires the application of Bessel curve of action.
+   * @param {cc.Action} action
+   */
+  constructor(action) {
+    super(action);
+  }
 
-    _updateTime: function(a, b, c, d, t){
-        return (Math.pow(1-t,3) * a + 3*t*(Math.pow(1-t,2))*b + 3*Math.pow(t,2)*(1-t)*c + Math.pow(t,3)*d );
-    },
+  _updateTime(a, b, c, d, t) {
+    return (
+      Math.pow(1 - t, 3) * a +
+      3 * t * Math.pow(1 - t, 2) * b +
+      3 * Math.pow(t, 2) * (1 - t) * c +
+      Math.pow(t, 3) * d
+    );
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        var t = this._updateTime(this._p0, this._p1, this._p2, this._p3, dt);
-        this._inner.update(t);
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    var t = this._updateTime(this._p0, this._p1, this._p2, this._p3, dt);
+    this._inner.update(t);
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseBezierAction}
-     */
-    clone: function(){
-        var action = new cc.EaseBezierAction();
-        action.initWithAction(this._inner.clone());
-        action.setBezierParamer(this._p0, this._p1, this._p2, this._p3);
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseBezierAction}
+   */
+  clone() {
+    var action = new cc.EaseBezierAction();
+    action.initWithAction(this._inner.clone());
+    action.setBezierParamer(this._p0, this._p1, this._p2, this._p3);
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseBezierAction}
-     */
-    reverse: function(){
-        var action = new cc.EaseBezierAction(this._inner.reverse());
-        action.setBezierParamer(this._p3, this._p2, this._p1, this._p0);
-        return action;
-    },
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseBezierAction}
+   */
+  reverse() {
+    var action = new cc.EaseBezierAction(this._inner.reverse());
+    action.setBezierParamer(this._p3, this._p2, this._p1, this._p0);
+    return action;
+  }
 
-    /**
-     * Set of 4 reference point
-     * @param p0
-     * @param p1
-     * @param p2
-     * @param p3
-     */
-    setBezierParamer: function(p0, p1, p2, p3){
-        this._p0 = p0 || 0;
-        this._p1 = p1 || 0;
-        this._p2 = p2 || 0;
-        this._p3 = p3 || 0;
-    }
-});
-
+  /**
+   * Set of 4 reference point
+   * @param p0
+   * @param p1
+   * @param p2
+   * @param p3
+   */
+  setBezierParamer(p0, p1, p2, p3) {
+    this._p0 = p0 || 0;
+    this._p1 = p1 || 0;
+    this._p2 = p2 || 0;
+    this._p3 = p3 || 0;
+  }
+};
 
 /**
  * Creates the action easing object. <br />
@@ -1764,15 +1787,15 @@ cc.EaseBezierAction = cc.ActionEase.extend(/** @lends cc.EaseBezierAction# */{
  * // example
  * action.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
  */
-cc.easeBezierAction = function(p0, p1, p2, p3){
-    return {
-        easing: function(time){
-            return cc.EaseBezierAction.prototype._updateTime(p0, p1, p2, p3, time);
-        },
-        reverse: function(){
-            return cc.easeBezierAction(p3, p2, p1, p0);
-        }
-    };
+cc.easeBezierAction = function (p0, p1, p2, p3) {
+  return {
+    easing: function (time) {
+      return cc.EaseBezierAction.prototype._updateTime(p0, p1, p2, p3, time);
+    },
+    reverse: function () {
+      return cc.easeBezierAction(p3, p2, p1, p0);
+    }
+  };
 };
 
 /**
@@ -1784,49 +1807,48 @@ cc.easeBezierAction = function(p0, p1, p2, p3){
  * @example
  * action.easing(cc.easeQuadraticActionIn());
  */
-cc.EaseQuadraticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuadraticActionIn# */{
+cc.EaseQuadraticActionIn = class EaseQuadraticActionIn extends cc.ActionEase {
+  /** @lends cc.EaseQuadraticActionIn# */
 
-    _updateTime: function(time){
-        return Math.pow(time, 2);
-    },
+  _updateTime(time) {
+    return Math.pow(time, 2);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuadraticActionIn}
-     */
-    clone: function(){
-        var action = new cc.EaseQuadraticActionIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuadraticActionIn}
+   */
+  clone() {
+    var action = new cc.EaseQuadraticActionIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuadraticActionIn}
-     */
-    reverse: function(){
-        return new cc.EaseQuadraticActionIn(this._inner.reverse());
-    }
-
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuadraticActionIn}
+   */
+  reverse() {
+    return new cc.EaseQuadraticActionIn(this._inner.reverse());
+  }
+};
 
 cc._easeQuadraticActionIn = {
-    easing: cc.EaseQuadraticActionIn.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuadraticActionIn;
-    }
+  easing: cc.EaseQuadraticActionIn.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuadraticActionIn;
+  }
 };
 
 /**
@@ -1838,8 +1860,8 @@ cc._easeQuadraticActionIn = {
  * //example
  * action.easing(cc.easeQuadraticActionIn());
  */
-cc.easeQuadraticActionIn = function(){
-    return cc._easeQuadraticActionIn;
+cc.easeQuadraticActionIn = function () {
+  return cc._easeQuadraticActionIn;
 };
 
 /**
@@ -1851,48 +1873,48 @@ cc.easeQuadraticActionIn = function(){
  * @example
  * action.easing(cc.easeQuadraticActionOut());
  */
-cc.EaseQuadraticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuadraticActionOut# */{
+cc.EaseQuadraticActionOut = class EaseQuadraticActionOut extends cc.ActionEase {
+  /** @lends cc.EaseQuadraticActionOut# */
 
-    _updateTime: function(time){
-        return -time*(time-2);
-    },
+  _updateTime(time) {
+    return -time * (time - 2);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuadraticActionOut}
-     */
-    clone: function(){
-        var action = new cc.EaseQuadraticActionOut();
-        action.initWithAction();
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuadraticActionOut}
+   */
+  clone() {
+    var action = new cc.EaseQuadraticActionOut();
+    action.initWithAction();
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuadraticActionOut}
-     */
-    reverse: function(){
-        return new cc.EaseQuadraticActionOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuadraticActionOut}
+   */
+  reverse() {
+    return new cc.EaseQuadraticActionOut(this._inner.reverse());
+  }
+};
 
 cc._easeQuadraticActionOut = {
-    easing: cc.EaseQuadraticActionOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuadraticActionOut;
-    }
+  easing: cc.EaseQuadraticActionOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuadraticActionOut;
+  }
 };
 /**
  * Creates the action easing object. <br />
@@ -1904,8 +1926,8 @@ cc._easeQuadraticActionOut = {
  * //example
  * action.easing(cc.easeQuadraticActionOut());
  */
-cc.easeQuadraticActionOut = function(){
-    return cc._easeQuadraticActionOut;
+cc.easeQuadraticActionOut = function () {
+  return cc._easeQuadraticActionOut;
 };
 
 /**
@@ -1917,55 +1939,57 @@ cc.easeQuadraticActionOut = function(){
  * @example
  * action.easing(cc.easeQuadraticActionInOut());
  */
-cc.EaseQuadraticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuadraticActionInOut# */{
-    _updateTime: function(time){
-        var resultTime = time;
-        time *= 2;
-        if(time < 1){
-            resultTime = time * time * 0.5;
-        }else{
-            --time;
-            resultTime = -0.5 * ( time * ( time - 2 ) - 1)
-        }
-        return resultTime;
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuadraticActionInOut}
-     */
-    clone: function(){
-        var action = new cc.EaseQuadraticActionInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
-
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuadraticActionInOut}
-     */
-    reverse: function(){
-        return new cc.EaseQuadraticActionInOut(this._inner.reverse());
+cc.EaseQuadraticActionInOut = class EaseQuadraticActionInOut extends (
+  cc.ActionEase
+) {
+  /** @lends cc.EaseQuadraticActionInOut# */
+  _updateTime(time) {
+    var resultTime = time;
+    time *= 2;
+    if (time < 1) {
+      resultTime = time * time * 0.5;
+    } else {
+      --time;
+      resultTime = -0.5 * (time * (time - 2) - 1);
     }
-});
+    return resultTime;
+  }
 
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuadraticActionInOut}
+   */
+  clone() {
+    var action = new cc.EaseQuadraticActionInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
+
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuadraticActionInOut}
+   */
+  reverse() {
+    return new cc.EaseQuadraticActionInOut(this._inner.reverse());
+  }
+};
 
 cc._easeQuadraticActionInOut = {
-    easing: cc.EaseQuadraticActionInOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuadraticActionInOut;
-    }
+  easing: cc.EaseQuadraticActionInOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuadraticActionInOut;
+  }
 };
 
 /**
@@ -1978,8 +2002,8 @@ cc._easeQuadraticActionInOut = {
  * //example
  * action.easing(cc.easeQuadraticActionInOut());
  */
-cc.easeQuadraticActionInOut = function(){
-    return cc._easeQuadraticActionInOut;
+cc.easeQuadraticActionInOut = function () {
+  return cc._easeQuadraticActionInOut;
 };
 
 /**
@@ -1991,47 +2015,47 @@ cc.easeQuadraticActionInOut = function(){
  * @example
  * action.easing(cc.easeQuarticActionIn());
  */
-cc.EaseQuarticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuarticActionIn# */{
-    _updateTime: function(time){
-        return time * time * time * time;
-    },
+cc.EaseQuarticActionIn = class EaseQuarticActionIn extends cc.ActionEase {
+  /** @lends cc.EaseQuarticActionIn# */
+  _updateTime(time) {
+    return time * time * time * time;
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuarticActionIn}
-     */
-    clone: function(){
-        var action = new cc.EaseQuarticActionIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuarticActionIn}
+   */
+  clone() {
+    var action = new cc.EaseQuarticActionIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuarticActionIn}
-     */
-    reverse: function(){
-        return new cc.EaseQuarticActionIn(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuarticActionIn}
+   */
+  reverse() {
+    return new cc.EaseQuarticActionIn(this._inner.reverse());
+  }
+};
 
 cc._easeQuarticActionIn = {
-    easing: cc.EaseQuarticActionIn.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuarticActionIn;
-    }
+  easing: cc.EaseQuarticActionIn.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuarticActionIn;
+  }
 };
 /**
  * Creates the action easing object. <br />
@@ -2042,8 +2066,8 @@ cc._easeQuarticActionIn = {
  * @example
  * action.easing(cc.easeQuarticActionIn());
  */
-cc.easeQuarticActionIn = function(){
-    return cc._easeQuarticActionIn;
+cc.easeQuarticActionIn = function () {
+  return cc._easeQuarticActionIn;
 };
 
 /**
@@ -2055,48 +2079,48 @@ cc.easeQuarticActionIn = function(){
  * @example
  * action.easing(cc.EaseQuarticActionOut());
  */
-cc.EaseQuarticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuarticActionOut# */{
-    _updateTime: function(time){
-        time -= 1;
-        return -(time * time * time * time - 1);
-    },
+cc.EaseQuarticActionOut = class EaseQuarticActionOut extends cc.ActionEase {
+  /** @lends cc.EaseQuarticActionOut# */
+  _updateTime(time) {
+    time -= 1;
+    return -(time * time * time * time - 1);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuarticActionOut}
-     */
-    clone: function(){
-        var action = new cc.EaseQuarticActionOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuarticActionOut}
+   */
+  clone() {
+    var action = new cc.EaseQuarticActionOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuarticActionOut}
-     */
-    reverse: function(){
-        return new cc.EaseQuarticActionOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuarticActionOut}
+   */
+  reverse() {
+    return new cc.EaseQuarticActionOut(this._inner.reverse());
+  }
+};
 
 cc._easeQuarticActionOut = {
-    easing: cc.EaseQuarticActionOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuarticActionOut;
-    }
+  easing: cc.EaseQuarticActionOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuarticActionOut;
+  }
 };
 
 /**
@@ -2109,8 +2133,8 @@ cc._easeQuarticActionOut = {
  * //example
  * action.easing(cc.QuarticActionOut());
  */
-cc.easeQuarticActionOut = function(){
-    return cc._easeQuarticActionOut;
+cc.easeQuarticActionOut = function () {
+  return cc._easeQuarticActionOut;
 };
 
 /**
@@ -2122,51 +2146,50 @@ cc.easeQuarticActionOut = function(){
  * @example
  * action.easing(cc.easeQuarticActionInOut());
  */
-cc.EaseQuarticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuarticActionInOut# */{
-    _updateTime: function(time){
-        time = time*2;
-        if (time < 1)
-            return 0.5 * time * time * time * time;
-        time -= 2;
-        return -0.5 * (time * time * time * time - 2);
-    },
+cc.EaseQuarticActionInOut = class EaseQuarticActionInOut extends cc.ActionEase {
+  /** @lends cc.EaseQuarticActionInOut# */
+  _updateTime(time) {
+    time = time * 2;
+    if (time < 1) return 0.5 * time * time * time * time;
+    time -= 2;
+    return -0.5 * (time * time * time * time - 2);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuarticActionInOut}
-     */
-    clone: function(){
-        var action = new cc.EaseQuarticActionInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuarticActionInOut}
+   */
+  clone() {
+    var action = new cc.EaseQuarticActionInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuarticActionInOut}
-     */
-    reverse: function(){
-        return new cc.EaseQuarticActionInOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuarticActionInOut}
+   */
+  reverse() {
+    return new cc.EaseQuarticActionInOut(this._inner.reverse());
+  }
+};
 
 cc._easeQuarticActionInOut = {
-    easing: cc.EaseQuarticActionInOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuarticActionInOut;
-    }
+  easing: cc.EaseQuarticActionInOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuarticActionInOut;
+  }
 };
 /**
  * Creates the action easing object.  <br />
@@ -2175,8 +2198,8 @@ cc._easeQuarticActionInOut = {
  * @function
  * @returns {Object}
  */
-cc.easeQuarticActionInOut = function(){
-    return cc._easeQuarticActionInOut;
+cc.easeQuarticActionInOut = function () {
+  return cc._easeQuarticActionInOut;
 };
 
 /**
@@ -2189,47 +2212,47 @@ cc.easeQuarticActionInOut = function(){
  * @example
  * action.easing(cc.easeQuinticActionIn());
  */
-cc.EaseQuinticActionIn = cc.ActionEase.extend(/** @lends cc.EaseQuinticActionIn# */{
-    _updateTime: function(time){
-        return time * time * time * time * time;
-    },
+cc.EaseQuinticActionIn = class EaseQuinticActionIn extends cc.ActionEase {
+  /** @lends cc.EaseQuinticActionIn# */
+  _updateTime(time) {
+    return time * time * time * time * time;
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuinticActionIn}
-     */
-    clone: function(){
-        var action = new cc.EaseQuinticActionIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuinticActionIn}
+   */
+  clone() {
+    var action = new cc.EaseQuinticActionIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuinticActionIn}
-     */
-    reverse: function(){
-        return new cc.EaseQuinticActionIn(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuinticActionIn}
+   */
+  reverse() {
+    return new cc.EaseQuinticActionIn(this._inner.reverse());
+  }
+};
 
 cc._easeQuinticActionIn = {
-    easing: cc.EaseQuinticActionIn.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuinticActionIn;
-    }
+  easing: cc.EaseQuinticActionIn.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuinticActionIn;
+  }
 };
 
 /**
@@ -2242,8 +2265,8 @@ cc._easeQuinticActionIn = {
  * //example
  * action.easing(cc.easeQuinticActionIn());
  */
-cc.easeQuinticActionIn = function(){
-    return cc._easeQuinticActionIn;
+cc.easeQuinticActionIn = function () {
+  return cc._easeQuinticActionIn;
 };
 
 /**
@@ -2256,48 +2279,48 @@ cc.easeQuinticActionIn = function(){
  * @example
  * action.easing(cc.easeQuadraticActionOut());
  */
-cc.EaseQuinticActionOut = cc.ActionEase.extend(/** @lends cc.EaseQuinticActionOut# */{
-    _updateTime: function(time){
-        time -=1;
-        return (time * time * time * time * time + 1);
-    },
+cc.EaseQuinticActionOut = class EaseQuinticActionOut extends cc.ActionEase {
+  /** @lends cc.EaseQuinticActionOut# */
+  _updateTime(time) {
+    time -= 1;
+    return time * time * time * time * time + 1;
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuinticActionOut}
-     */
-    clone: function(){
-        var action = new cc.EaseQuinticActionOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuinticActionOut}
+   */
+  clone() {
+    var action = new cc.EaseQuinticActionOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuinticActionOut}
-     */
-    reverse: function(){
-        return new cc.EaseQuinticActionOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuinticActionOut}
+   */
+  reverse() {
+    return new cc.EaseQuinticActionOut(this._inner.reverse());
+  }
+};
 
 cc._easeQuinticActionOut = {
-    easing: cc.EaseQuinticActionOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuinticActionOut;
-    }
+  easing: cc.EaseQuinticActionOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuinticActionOut;
+  }
 };
 
 /**
@@ -2310,8 +2333,8 @@ cc._easeQuinticActionOut = {
  * //example
  * action.easing(cc.easeQuadraticActionOut());
  */
-cc.easeQuinticActionOut = function(){
-    return cc._easeQuinticActionOut;
+cc.easeQuinticActionOut = function () {
+  return cc._easeQuinticActionOut;
 };
 
 /**
@@ -2324,51 +2347,50 @@ cc.easeQuinticActionOut = function(){
  * @example
  * action.easing(cc.easeQuinticActionInOut());
  */
-cc.EaseQuinticActionInOut = cc.ActionEase.extend(/** @lends cc.EaseQuinticActionInOut# */{
-    _updateTime: function(time){
-        time = time*2;
-        if (time < 1)
-            return 0.5 * time * time * time * time * time;
-        time -= 2;
-        return 0.5 * (time * time * time * time * time + 2);
-    },
+cc.EaseQuinticActionInOut = class EaseQuinticActionInOut extends cc.ActionEase {
+  /** @lends cc.EaseQuinticActionInOut# */
+  _updateTime(time) {
+    time = time * 2;
+    if (time < 1) return 0.5 * time * time * time * time * time;
+    time -= 2;
+    return 0.5 * (time * time * time * time * time + 2);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseQuinticActionInOut}
-     */
-    clone: function(){
-        var action = new cc.EaseQuinticActionInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseQuinticActionInOut}
+   */
+  clone() {
+    var action = new cc.EaseQuinticActionInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseQuinticActionInOut}
-     */
-    reverse: function(){
-        return new cc.EaseQuinticActionInOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseQuinticActionInOut}
+   */
+  reverse() {
+    return new cc.EaseQuinticActionInOut(this._inner.reverse());
+  }
+};
 
 cc._easeQuinticActionInOut = {
-    easing: cc.EaseQuinticActionInOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeQuinticActionInOut;
-    }
+  easing: cc.EaseQuinticActionInOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeQuinticActionInOut;
+  }
 };
 
 /**
@@ -2381,8 +2403,8 @@ cc._easeQuinticActionInOut = {
  * //example
  * action.easing(cc.easeQuinticActionInOut());
  */
-cc.easeQuinticActionInOut = function(){
-    return cc._easeQuinticActionInOut;
+cc.easeQuinticActionInOut = function () {
+  return cc._easeQuinticActionInOut;
 };
 
 /**
@@ -2395,47 +2417,47 @@ cc.easeQuinticActionInOut = function(){
  * @example
  * action.easing(cc.easeCircleActionIn());
  */
-cc.EaseCircleActionIn = cc.ActionEase.extend(/** @lends cc.EaseCircleActionIn# */{
-    _updateTime: function(time){
-        return -1 * (Math.sqrt(1 - time * time) - 1);
-    },
+cc.EaseCircleActionIn = class EaseCircleActionIn extends cc.ActionEase {
+  /** @lends cc.EaseCircleActionIn# */
+  _updateTime(time) {
+    return -1 * (Math.sqrt(1 - time * time) - 1);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseCircleActionIn}
-     */
-    clone: function(){
-        var action = new cc.EaseCircleActionIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseCircleActionIn}
+   */
+  clone() {
+    var action = new cc.EaseCircleActionIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseCircleActionIn}
-     */
-    reverse: function(){
-        return new cc.EaseCircleActionIn(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseCircleActionIn}
+   */
+  reverse() {
+    return new cc.EaseCircleActionIn(this._inner.reverse());
+  }
+};
 
 cc._easeCircleActionIn = {
-    easing: cc.EaseCircleActionIn.prototype._updateTime,
-    reverse: function(){
-        return cc._easeCircleActionIn;
-    }
+  easing: cc.EaseCircleActionIn.prototype._updateTime,
+  reverse: function () {
+    return cc._easeCircleActionIn;
+  }
 };
 
 /**
@@ -2448,8 +2470,8 @@ cc._easeCircleActionIn = {
  * //example
  * action.easing(cc.easeCircleActionIn());
  */
-cc.easeCircleActionIn = function(){
-    return cc._easeCircleActionIn;
+cc.easeCircleActionIn = function () {
+  return cc._easeCircleActionIn;
 };
 
 /**
@@ -2462,48 +2484,48 @@ cc.easeCircleActionIn = function(){
  * @example
  * action.easing(cc.easeCircleActionOut());
  */
-cc.EaseCircleActionOut = cc.ActionEase.extend(/** @lends cc.EaseCircleActionOut# */{
-    _updateTime: function(time){
-        time = time - 1;
-        return Math.sqrt(1 - time * time);
-    },
+cc.EaseCircleActionOut = class EaseCircleActionOut extends cc.ActionEase {
+  /** @lends cc.EaseCircleActionOut# */
+  _updateTime(time) {
+    time = time - 1;
+    return Math.sqrt(1 - time * time);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseCircleActionOut}
-     */
-    clone: function(){
-        var action = new cc.EaseCircleActionOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseCircleActionOut}
+   */
+  clone() {
+    var action = new cc.EaseCircleActionOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseCircleActionOut}
-     */
-    reverse: function(){
-        return new cc.EaseCircleActionOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseCircleActionOut}
+   */
+  reverse() {
+    return new cc.EaseCircleActionOut(this._inner.reverse());
+  }
+};
 
 cc._easeCircleActionOut = {
-    easing: cc.EaseCircleActionOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeCircleActionOut;
-    }
+  easing: cc.EaseCircleActionOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeCircleActionOut;
+  }
 };
 
 /**
@@ -2516,8 +2538,8 @@ cc._easeCircleActionOut = {
  * //example
  * actioneasing(cc.easeCircleActionOut());
  */
-cc.easeCircleActionOut = function(){
-    return cc._easeCircleActionOut;
+cc.easeCircleActionOut = function () {
+  return cc._easeCircleActionOut;
 };
 
 /**
@@ -2530,51 +2552,50 @@ cc.easeCircleActionOut = function(){
  * @example
  * action.easing(cc.easeCircleActionInOut());
  */
-cc.EaseCircleActionInOut = cc.ActionEase.extend(/** @lends cc.EaseCircleActionInOut# */{
-    _updateTime: function(time){
-        time = time * 2;
-        if (time < 1)
-            return -0.5 * (Math.sqrt(1 - time * time) - 1);
-        time -= 2;
-        return 0.5 * (Math.sqrt(1 - time * time) + 1);
-    },
+cc.EaseCircleActionInOut = class EaseCircleActionInOut extends cc.ActionEase {
+  /** @lends cc.EaseCircleActionInOut# */
+  _updateTime(time) {
+    time = time * 2;
+    if (time < 1) return -0.5 * (Math.sqrt(1 - time * time) - 1);
+    time -= 2;
+    return 0.5 * (Math.sqrt(1 - time * time) + 1);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseCircleActionInOut}
-     */
-    clone: function(){
-        var action = new cc.EaseCircleActionInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseCircleActionInOut}
+   */
+  clone() {
+    var action = new cc.EaseCircleActionInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseCircleActionInOut}
-     */
-    reverse: function(){
-        return new cc.EaseCircleActionInOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseCircleActionInOut}
+   */
+  reverse() {
+    return new cc.EaseCircleActionInOut(this._inner.reverse());
+  }
+};
 
 cc._easeCircleActionInOut = {
-    easing: cc.EaseCircleActionInOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeCircleActionInOut;
-    }
+  easing: cc.EaseCircleActionInOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeCircleActionInOut;
+  }
 };
 
 /**
@@ -2587,8 +2608,8 @@ cc._easeCircleActionInOut = {
  * //example
  * action.easing(cc.easeCircleActionInOut());
  */
-cc.easeCircleActionInOut = function(){
-    return cc._easeCircleActionInOut;
+cc.easeCircleActionInOut = function () {
+  return cc._easeCircleActionInOut;
 };
 
 /**
@@ -2601,47 +2622,47 @@ cc.easeCircleActionInOut = function(){
  * @example
  * action.easing(cc.easeCubicActionIn());
  */
-cc.EaseCubicActionIn = cc.ActionEase.extend(/** @lends cc.EaseCubicActionIn# */{
-    _updateTime: function(time){
-        return time * time * time;
-    },
+cc.EaseCubicActionIn = class EaseCubicActionIn extends cc.ActionEase {
+  /** @lends cc.EaseCubicActionIn# */
+  _updateTime(time) {
+    return time * time * time;
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseCubicActionIn}
-     */
-    clone: function(){
-        var action = new cc.EaseCubicActionIn();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseCubicActionIn}
+   */
+  clone() {
+    var action = new cc.EaseCubicActionIn();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseCubicActionIn}
-     */
-    reverse: function(){
-        return new cc.EaseCubicActionIn(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseCubicActionIn}
+   */
+  reverse() {
+    return new cc.EaseCubicActionIn(this._inner.reverse());
+  }
+};
 
 cc._easeCubicActionIn = {
-    easing: cc.EaseCubicActionIn.prototype._updateTime,
-    reverse: function(){
-        return cc._easeCubicActionIn;
-    }
+  easing: cc.EaseCubicActionIn.prototype._updateTime,
+  reverse: function () {
+    return cc._easeCubicActionIn;
+  }
 };
 
 /**
@@ -2654,8 +2675,8 @@ cc._easeCubicActionIn = {
  * //example
  * action.easing(cc.easeCubicActionIn());
  */
-cc.easeCubicActionIn = function(){
-    return cc._easeCubicActionIn;
+cc.easeCubicActionIn = function () {
+  return cc._easeCubicActionIn;
 };
 
 /**
@@ -2668,48 +2689,48 @@ cc.easeCubicActionIn = function(){
  * @example
  * action.easing(cc.easeCubicActionOut());
  */
-cc.EaseCubicActionOut = cc.ActionEase.extend(/** @lends cc.EaseCubicActionOut# */{
-    _updateTime: function(time){
-        time -= 1;
-        return (time * time * time + 1);
-    },
+cc.EaseCubicActionOut = class EaseCubicActionOut extends cc.ActionEase {
+  /** @lends cc.EaseCubicActionOut# */
+  _updateTime(time) {
+    time -= 1;
+    return time * time * time + 1;
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseCubicActionOut}
-     */
-    clone: function(){
-        var action = new cc.EaseCubicActionOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseCubicActionOut}
+   */
+  clone() {
+    var action = new cc.EaseCubicActionOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseCubicActionOut}
-     */
-    reverse: function(){
-        return new cc.EaseCubicActionOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseCubicActionOut}
+   */
+  reverse() {
+    return new cc.EaseCubicActionOut(this._inner.reverse());
+  }
+};
 
 cc._easeCubicActionOut = {
-    easing: cc.EaseCubicActionOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeCubicActionOut;
-    }
+  easing: cc.EaseCubicActionOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeCubicActionOut;
+  }
 };
 
 /**
@@ -2722,8 +2743,8 @@ cc._easeCubicActionOut = {
  * //example
  * action.easing(cc.easeCubicActionOut());
  */
-cc.easeCubicActionOut = function(){
-    return cc._easeCubicActionOut;
+cc.easeCubicActionOut = function () {
+  return cc._easeCubicActionOut;
 };
 
 /**
@@ -2736,51 +2757,50 @@ cc.easeCubicActionOut = function(){
  * @example
  * action.easing(cc.easeCubicActionInOut());
  */
-cc.EaseCubicActionInOut = cc.ActionEase.extend(/** @lends cc.EaseCubicActionInOut# */{
-    _updateTime: function(time){
-        time = time*2;
-        if (time < 1)
-            return 0.5 * time * time * time;
-        time -= 2;
-        return 0.5 * (time * time * time + 2);
-    },
+cc.EaseCubicActionInOut = class EaseCubicActionInOut extends cc.ActionEase {
+  /** @lends cc.EaseCubicActionInOut# */
+  _updateTime(time) {
+    time = time * 2;
+    if (time < 1) return 0.5 * time * time * time;
+    time -= 2;
+    return 0.5 * (time * time * time + 2);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number} dt
-     */
-    update: function(dt){
-        this._inner.update(this._updateTime(dt));
-    },
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number} dt
+   */
+  update(dt) {
+    this._inner.update(this._updateTime(dt));
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.EaseCubicActionInOut}
-     */
-    clone: function(){
-        var action = new cc.EaseCubicActionInOut();
-        action.initWithAction(this._inner.clone());
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.EaseCubicActionInOut}
+   */
+  clone() {
+    var action = new cc.EaseCubicActionInOut();
+    action.initWithAction(this._inner.clone());
+    return action;
+  }
 
-    /**
-     * Create a action. Opposite with the original motion trajectory.
-     * @return {cc.EaseCubicActionInOut}
-     */
-    reverse: function(){
-        return new cc.EaseCubicActionInOut(this._inner.reverse());
-    }
-});
-
+  /**
+   * Create a action. Opposite with the original motion trajectory.
+   * @return {cc.EaseCubicActionInOut}
+   */
+  reverse() {
+    return new cc.EaseCubicActionInOut(this._inner.reverse());
+  }
+};
 
 cc._easeCubicActionInOut = {
-    easing: cc.EaseCubicActionInOut.prototype._updateTime,
-    reverse: function(){
-        return cc._easeCubicActionInOut;
-    }
+  easing: cc.EaseCubicActionInOut.prototype._updateTime,
+  reverse: function () {
+    return cc._easeCubicActionInOut;
+  }
 };
 
 /**
@@ -2790,6 +2810,6 @@ cc._easeCubicActionInOut = {
  * @function
  * @returns {Object}
  */
-cc.easeCubicActionInOut = function(){
-    return cc._easeCubicActionInOut;
+cc.easeCubicActionInOut = function () {
+  return cc._easeCubicActionInOut;
 };

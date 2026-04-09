@@ -41,139 +41,135 @@ cc.ACTION_TAG_INVALID = -1;
  * @property {cc.Node}  originalTarget  - The original target of the action.
  * @property {Number}   tag             - The tag of the action, can be used to find the action.
  */
-cc.Action = cc.Class.extend(
-  /** @lends cc.Action# */ {
-    //***********variables*************
-    originalTarget: null,
-    target: null,
-    tag: cc.ACTION_TAG_INVALID,
+cc.Action = class Action extends cc.NewClass {
+  /** @lends cc.Action# */
+  //***********variables*************
+  originalTarget = null;
+  target = null;
+  tag = cc.ACTION_TAG_INVALID;
 
-    //**************Public Functions***********
+  //**************Public Functions***********
 
-    /**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-     */
-    ctor: function () {
-      this.originalTarget = null;
-      this.target = null;
-      this.tag = cc.ACTION_TAG_INVALID;
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @return {cc.Action}
-     */
-    clone: function () {
-      var action = new cc.Action();
-      action.originalTarget = null;
-      action.target = null;
-      action.tag = this.tag;
-      return action;
-    },
-
-    /**
-     * return true if the action has finished.
-     *
-     * @return {Boolean}
-     */
-    isDone: function () {
-      return true;
-    },
-
-    /**
-     * called before the action start. It will also set the target.
-     *
-     * @param {cc.Node} target
-     */
-    startWithTarget: function (target) {
-      this.originalTarget = target;
-      this.target = target;
-    },
-
-    /**
-     * called after the action has finished. It will set the 'target' to nil. <br />
-     * IMPORTANT: You should never call "action stop" manually. Instead, use: "target.stopAction(action);"
-     */
-    stop: function () {
-      this.target = null;
-    },
-
-    /**
-     * called every frame with it's delta time. <br />
-     * DON'T override unless you know what you are doing.
-     *
-     * @param {Number} dt
-     */
-    step: function (dt) {
-      cc.log("[Action step]. override me");
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
-     * @param {Number}  dt
-     */
-    update: function (dt) {
-      cc.log("[Action update]. override me");
-    },
-
-    /**
-     * get the target.
-     *
-     * @return {cc.Node}
-     */
-    getTarget: function () {
-      return this.target;
-    },
-
-    /**
-     * The action will modify the target properties.
-     *
-     * @param {cc.Node} target
-     */
-    setTarget: function (target) {
-      this.target = target;
-    },
-
-    /**
-     * get the original target.
-     *
-     * @return {cc.Node}
-     */
-    getOriginalTarget: function () {
-      return this.originalTarget;
-    },
-
-    /**
-     * Set the original target, since target can be nil. <br/>
-     * Is the target that were used to run the action.  <br/>
-     * Unless you are doing something complex, like cc.ActionManager, you should NOT call this method. <br/>
-     * The target is 'assigned', it is not 'retained'. <br/>
-     * @param {cc.Node} originalTarget
-     */
-    setOriginalTarget: function (originalTarget) {
-      this.originalTarget = originalTarget;
-    },
-
-    /**
-     * get tag number.
-     * @return {Number}
-     */
-    getTag: function () {
-      return this.tag;
-    },
-
-    /**
-     * set tag number.
-     * @param {Number} tag
-     */
-    setTag: function (tag) {
-      this.tag = tag;
-    }
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   */
+  constructor() {
+    super();
+    this.originalTarget = null;
+    this.target = null;
+    this.tag = cc.ACTION_TAG_INVALID;
   }
-);
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @return {cc.Action}
+   */
+  clone() {
+    return new cc.Action();
+  }
+
+  /**
+   * return true if the action has finished.
+   *
+   * @return {Boolean}
+   */
+  isDone() {
+    return true;
+  }
+
+  /**
+   * called before the action start. It will also set the target.
+   *
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    this.originalTarget = target;
+    this.target = target;
+  }
+
+  /**
+   * called after the action has finished. It will set the 'target' to nil. <br />
+   * IMPORTANT: You should never call "action stop" manually. Instead, use: "target.stopAction(action);"
+   */
+  stop() {
+    this.target = null;
+  }
+
+  /**
+   * called every frame with it's delta time. <br />
+   * DON'T override unless you know what you are doing.
+   *
+   * @param {Number} dt
+   */
+  step(dt) {
+    cc.log("[Action step]. override me");
+  }
+
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   *
+   * @param {Number}  dt
+   */
+  update(dt) {
+    cc.log("[Action update]. override me");
+  }
+
+  /**
+   * get the target.
+   *
+   * @return {cc.Node}
+   */
+  getTarget() {
+    return this.target;
+  }
+
+  /**
+   * The action will modify the target properties.
+   *
+   * @param {cc.Node} target
+   */
+  setTarget(target) {
+    this.target = target;
+  }
+
+  /**
+   * get the original target.
+   *
+   * @return {cc.Node}
+   */
+  getOriginalTarget() {
+    return this.originalTarget;
+  }
+
+  /**
+   * Set the original target, since target can be nil. <br/>
+   * Is the target that were used to run the action.  <br/>
+   * Unless you are doing something complex, like cc.ActionManager, you should NOT call this method. <br/>
+   * The target is 'assigned', it is not 'retained'. <br/>
+   * @param {cc.Node} originalTarget
+   */
+  setOriginalTarget(originalTarget) {
+    this.originalTarget = originalTarget;
+  }
+
+  /**
+   * get tag number.
+   * @return {Number}
+   */
+  getTag() {
+    return this.tag;
+  }
+
+  /**
+   * set tag number.
+   * @param {Number} tag
+   */
+  setTag(tag) {
+    this.tag = tag;
+  }
+};
 
 /**
  * Allocates and initializes the action.
@@ -186,10 +182,7 @@ cc.Action = cc.Class.extend(
  * // return {cc.Action}
  * var action = cc.action();
  */
-cc.action = function () {
-  return new cc.Action();
-};
-
+cc.action = () => new cc.Action();
 
 /**
  * Base class actions that do have a finite time duration. <br/>
@@ -201,62 +194,61 @@ cc.action = function () {
  * @class
  * @extends cc.Action
  */
-cc.FiniteTimeAction = cc.Action.extend(
-  /** @lends cc.FiniteTimeAction# */ {
-    // duration in seconds
-    _duration: 0,
+cc.FiniteTimeAction = class FiniteTimeAction extends cc.Action {
+  /** @lends cc.FiniteTimeAction# */
+  // duration in seconds
+  _duration = 0;
 
-    /**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-     */
-    ctor: function () {
-      cc.Action.prototype.ctor.call(this);
-      this._duration = 0;
-    },
-
-    /**
-     * get duration of the action. (seconds)
-     *
-     * @return {Number}
-     */
-    getDuration: function () {
-      return this._duration * (this._timesForRepeat || 1);
-    },
-
-    /**
-     * set duration of the action. (seconds)
-     *
-     * @param {Number} duration
-     */
-    setDuration: function (duration) {
-      this._duration = duration;
-    },
-
-    /**
-     * Returns a reversed action. <br />
-     * For example: <br />
-     * - The action will be x coordinates of 0 move to 100. <br />
-     * - The reversed action will be x of 100 move to 0.
-     * - Will be rewritten
-     *
-     * @return {?cc.Action}
-     */
-    reverse: function () {
-      cc.log("cocos2d: FiniteTimeAction#reverse: Implement me");
-      return null;
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @return {cc.FiniteTimeAction}
-     */
-    clone: function () {
-      return new cc.FiniteTimeAction();
-    }
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   */
+  constructor() {
+    super();
+    this._duration = 0;
   }
-);
+
+  /**
+   * get duration of the action. (seconds)
+   *
+   * @return {Number}
+   */
+  getDuration() {
+    return this._duration * (this._timesForRepeat || 1);
+  }
+
+  /**
+   * set duration of the action. (seconds)
+   *
+   * @param {Number} duration
+   */
+  setDuration(duration) {
+    this._duration = duration;
+  }
+
+  /**
+   * Returns a reversed action. <br />
+   * For example: <br />
+   * - The action will be x coordinates of 0 move to 100. <br />
+   * - The reversed action will be x of 100 move to 0.
+   * - Will be rewritten
+   *
+   * @return {?cc.Action}
+   */
+  reverse() {
+    cc.log("cocos2d: FiniteTimeAction#reverse: Implement me");
+    return null;
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @return {cc.FiniteTimeAction}
+   */
+  clone() {
+    return new cc.FiniteTimeAction();
+  }
+};
 
 /**
  * Changes the speed of an action, making it take longer (speed > 1)
@@ -269,141 +261,140 @@ cc.FiniteTimeAction = cc.Action.extend(
  * @param {cc.ActionInterval} action
  * @param {Number} speed
  */
-cc.Speed = cc.Action.extend(
-  /** @lends cc.Speed# */ {
-    _speed: 0.0,
-    _innerAction: null,
+cc.Speed = class Speed extends cc.Action {
+  /** @lends cc.Speed# */
+  _speed = 0.0;
+  _innerAction = null;
 
-    /**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-     * @param {cc.ActionInterval} action
-     * @param {Number} speed
-     */
-    ctor: function (action, speed) {
-      cc.Action.prototype.ctor.call(this);
-      this._speed = 0;
-      this._innerAction = null;
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * @param {cc.ActionInterval} action
+   * @param {Number} speed
+   */
+  constructor(action, speed) {
+    super();
+    this._speed = 0;
+    this._innerAction = null;
 
-      action && this.initWithAction(action, speed);
-    },
+    action && this.initWithAction(action, speed);
+  }
 
-    /**
-     * Gets the current running speed. <br />
-     * Will get a percentage number, compared to the original speed.
-     *
-     * @return {Number}
-     */
-    getSpeed: function () {
-      return this._speed;
-    },
+  /**
+   * Gets the current running speed. <br />
+   * Will get a percentage number, compared to the original speed.
+   *
+   * @return {Number}
+   */
+  getSpeed() {
+    return this._speed;
+  }
 
-    /**
-     * alter the speed of the inner function in runtime.
-     *
-     * @param {Number} speed
-     */
-    setSpeed: function (speed) {
-      this._speed = speed;
-    },
+  /**
+   * alter the speed of the inner function in runtime.
+   *
+   * @param {Number} speed
+   */
+  setSpeed(speed) {
+    this._speed = speed;
+  }
 
-    /**
-     * initializes the action.
-     *
-     * @param {cc.ActionInterval} action
-     * @param {Number} speed
-     * @return {Boolean}
-     */
-    initWithAction: function (action, speed) {
-      if (!action)
-        throw new Error("cc.Speed.initWithAction(): action must be non nil");
+  /**
+   * initializes the action.
+   *
+   * @param {cc.ActionInterval} action
+   * @param {Number} speed
+   * @return {Boolean}
+   */
+  initWithAction(action, speed) {
+    if (!action)
+      throw new Error("cc.Speed.initWithAction(): action must be non nil");
 
+    this._innerAction = action;
+    this._speed = speed;
+    return true;
+  }
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @returns {cc.Speed}
+   */
+  clone() {
+    var action = new cc.Speed();
+    action.initWithAction(this._innerAction.clone(), this._speed);
+    return action;
+  }
+
+  /**
+   * called before the action start. It will also set the target.
+   *
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+    this._innerAction.startWithTarget(target);
+  }
+
+  /**
+   *  Stop the action.
+   */
+  stop() {
+    this._innerAction.stop();
+    super.stop();
+  }
+
+  /**
+   * called every frame with it's delta time. <br />
+   * DON'T override unless you know what you are doing.
+   *
+   * @param {Number} dt
+   */
+  step(dt) {
+    this._innerAction.step(dt * this._speed);
+  }
+
+  /**
+   * return true if the action has finished.
+   *
+   * @return {Boolean}
+   */
+  isDone() {
+    return this._innerAction.isDone();
+  }
+
+  /**
+   * returns a reversed action. <br />
+   * For example: <br />
+   * - The action will be x coordinates of 0 move to 100. <br />
+   * - The reversed action will be x of 100 move to 0.
+   * - Will be rewritten
+   *
+   * @return {cc.Speed}
+   */
+  reverse() {
+    return new cc.Speed(this._innerAction.reverse(), this._speed);
+  }
+
+  /**
+   * Set inner Action.
+   * @param {cc.ActionInterval} action
+   */
+  setInnerAction(action) {
+    if (this._innerAction !== action) {
       this._innerAction = action;
-      this._speed = speed;
-      return true;
-    },
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @returns {cc.Speed}
-     */
-    clone: function () {
-      var action = new cc.Speed();
-      action.initWithAction(this._innerAction.clone(), this._speed);
-      return action;
-    },
-
-    /**
-     * called before the action start. It will also set the target.
-     *
-     * @param {cc.Node} target
-     */
-    startWithTarget: function (target) {
-      cc.Action.prototype.startWithTarget.call(this, target);
-      this._innerAction.startWithTarget(target);
-    },
-
-    /**
-     *  Stop the action.
-     */
-    stop: function () {
-      this._innerAction.stop();
-      cc.Action.prototype.stop.call(this);
-    },
-
-    /**
-     * called every frame with it's delta time. <br />
-     * DON'T override unless you know what you are doing.
-     *
-     * @param {Number} dt
-     */
-    step: function (dt) {
-      this._innerAction.step(dt * this._speed);
-    },
-
-    /**
-     * return true if the action has finished.
-     *
-     * @return {Boolean}
-     */
-    isDone: function () {
-      return this._innerAction.isDone();
-    },
-
-    /**
-     * returns a reversed action. <br />
-     * For example: <br />
-     * - The action will be x coordinates of 0 move to 100. <br />
-     * - The reversed action will be x of 100 move to 0.
-     * - Will be rewritten
-     *
-     * @return {cc.Speed}
-     */
-    reverse: function () {
-      return new cc.Speed(this._innerAction.reverse(), this._speed);
-    },
-
-    /**
-     * Set inner Action.
-     * @param {cc.ActionInterval} action
-     */
-    setInnerAction: function (action) {
-      if (this._innerAction !== action) {
-        this._innerAction = action;
-      }
-    },
-
-    /**
-     * Get inner Action.
-     *
-     * @return {cc.ActionInterval}
-     */
-    getInnerAction: function () {
-      return this._innerAction;
     }
   }
-);
+
+  /**
+   * Get inner Action.
+   *
+   * @return {cc.ActionInterval}
+   */
+  getInnerAction() {
+    return this._innerAction;
+  }
+};
 
 /**
  * creates the speed action.
@@ -413,10 +404,7 @@ cc.Speed = cc.Action.extend(
  * @param {Number} speed
  * @return {cc.Speed}
  */
-cc.speed = function (action, speed) {
-  return new cc.Speed(action, speed);
-};
-
+cc.speed = (action, speed) => new cc.Speed(action, speed);
 
 /**
  * cc.Follow is an action that "follows" a node.
@@ -447,193 +435,187 @@ cc.speed = function (action, speed) {
  * @class
  * @extends cc.Action
  */
-cc.Follow = cc.Action.extend(
-  /** @lends cc.Follow# */ {
-    // node to follow
-    _followedNode: null,
-    // whether camera should be limited to certain area
-    _boundarySet: false,
-    // if screen size is bigger than the boundary - update not needed
-    _boundaryFullyCovered: false,
-    // fast access to the screen dimensions
-    _halfScreenSize: null,
-    _fullScreenSize: null,
-    _worldRect: null,
+cc.Follow = class Follow extends cc.Action {
+  /** @lends cc.Follow# */
+  // node to follow
+  _followedNode = null;
+  // whether camera should be limited to certain area
+  _boundarySet = false;
+  // if screen size is bigger than the boundary - update not needed
+  _boundaryFullyCovered = false;
+  // fast access to the screen dimensions
+  _halfScreenSize = null;
+  _fullScreenSize = null;
+  _worldRect = null;
 
-    leftBoundary: 0.0,
-    rightBoundary: 0.0,
-    topBoundary: 0.0,
-    bottomBoundary: 0.0,
+  leftBoundary = 0.0;
+  rightBoundary = 0.0;
+  topBoundary = 0.0;
+  bottomBoundary = 0.0;
 
-    /**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-     * creates the action with a set boundary. <br/>
-     * creates the action with no boundary set.
-     * @param {cc.Node} followedNode
-     * @param {cc.Rect} rect
-     */
-    ctor: function (followedNode, rect) {
-      cc.Action.prototype.ctor.call(this);
-      this._followedNode = null;
-      this._boundarySet = false;
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
+   * creates the action with a set boundary. <br/>
+   * creates the action with no boundary set.
+   * @param {cc.Node} followedNode
+   * @param {cc.Rect} rect
+   */
+  constructor(followedNode, rect) {
+    super();
+    this._followedNode = null;
+    this._boundarySet = false;
 
-      this._boundaryFullyCovered = false;
-      this._halfScreenSize = null;
-      this._fullScreenSize = null;
+    this._boundaryFullyCovered = false;
+    this._halfScreenSize = null;
+    this._fullScreenSize = null;
 
-      this.leftBoundary = 0.0;
-      this.rightBoundary = 0.0;
-      this.topBoundary = 0.0;
-      this.bottomBoundary = 0.0;
-      this._worldRect = cc.rect(0, 0, 0, 0);
+    this.leftBoundary = 0.0;
+    this.rightBoundary = 0.0;
+    this.topBoundary = 0.0;
+    this.bottomBoundary = 0.0;
+    this._worldRect = cc.rect(0, 0, 0, 0);
 
-      if (followedNode)
-        rect
-          ? this.initWithTarget(followedNode, rect)
-          : this.initWithTarget(followedNode);
-    },
+    if (followedNode)
+      rect
+        ? this.initWithTarget(followedNode, rect)
+        : this.initWithTarget(followedNode);
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @return {cc.Follow}
-     */
-    clone: function () {
-      var action = new cc.Follow();
-      var locRect = this._worldRect;
-      var rect = new cc.Rect(
-        locRect.x,
-        locRect.y,
-        locRect.width,
-        locRect.height
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @return {cc.Follow}
+   */
+  clone() {
+    const action = new cc.Follow();
+    const locRect = this._worldRect;
+    const rect = new cc.Rect(
+      locRect.x,
+      locRect.y,
+      locRect.width,
+      locRect.height
+    );
+    action.initWithTarget(this._followedNode, rect);
+    return action;
+  }
+
+  /**
+   * Get whether camera should be limited to certain area.
+   *
+   * @return {Boolean}
+   */
+  isBoundarySet() {
+    return this._boundarySet;
+  }
+
+  /**
+   * alter behavior - turn on/off boundary.
+   *
+   * @param {Boolean} value
+   */
+  setBoudarySet(value) {
+    this._boundarySet = value;
+  }
+
+  /**
+   * initializes the action with a set boundary.
+   *
+   * @param {cc.Node} followedNode
+   * @param {cc.Rect} [rect]
+   * @return {Boolean}
+   */
+  initWithTarget(followedNode, rect) {
+    if (!followedNode)
+      throw new Error(
+        "cc.Follow.initWithAction(): followedNode must be non nil"
       );
-      action.initWithTarget(this._followedNode, rect);
-      return action;
-    },
 
-    /**
-     * Get whether camera should be limited to certain area.
-     *
-     * @return {Boolean}
-     */
-    isBoundarySet: function () {
-      return this._boundarySet;
-    },
+    rect = rect || cc.rect(0, 0, 0, 0);
+    this._followedNode = followedNode;
+    this._worldRect = rect;
 
-    /**
-     * alter behavior - turn on/off boundary.
-     *
-     * @param {Boolean} value
-     */
-    setBoudarySet: function (value) {
-      this._boundarySet = value;
-    },
+    this._boundarySet = !cc._rectEqualToZero(rect);
 
-    /**
-     * initializes the action with a set boundary.
-     *
-     * @param {cc.Node} followedNode
-     * @param {cc.Rect} [rect=]
-     * @return {Boolean}
-     */
-    initWithTarget: function (followedNode, rect) {
-      if (!followedNode)
-        throw new Error(
-          "cc.Follow.initWithAction(): followedNode must be non nil"
-        );
+    this._boundaryFullyCovered = false;
 
-      var _this = this;
-      rect = rect || cc.rect(0, 0, 0, 0);
-      _this._followedNode = followedNode;
-      _this._worldRect = rect;
+    const winSize = cc.director.getWinSize();
+    this._fullScreenSize = cc.p(winSize.width, winSize.height);
+    this._halfScreenSize = cc.pMult(this._fullScreenSize, 0.5);
 
-      _this._boundarySet = !cc._rectEqualToZero(rect);
+    if (this._boundarySet) {
+      this.leftBoundary = -(rect.x + rect.width - this._fullScreenSize.x);
+      this.rightBoundary = -rect.x;
+      this.topBoundary = -rect.y;
+      this.bottomBoundary = -(rect.y + rect.height - this._fullScreenSize.y);
 
-      _this._boundaryFullyCovered = false;
-
-      var winSize = cc.director.getWinSize();
-      _this._fullScreenSize = cc.p(winSize.width, winSize.height);
-      _this._halfScreenSize = cc.pMult(_this._fullScreenSize, 0.5);
-
-      if (_this._boundarySet) {
-        _this.leftBoundary = -(rect.x + rect.width - _this._fullScreenSize.x);
-        _this.rightBoundary = -rect.x;
-        _this.topBoundary = -rect.y;
-        _this.bottomBoundary = -(
-          rect.y +
-          rect.height -
-          _this._fullScreenSize.y
-        );
-
-        if (_this.rightBoundary < _this.leftBoundary) {
-          // screen width is larger than world's boundary width
-          //set both in the middle of the world
-          _this.rightBoundary = _this.leftBoundary =
-            (_this.leftBoundary + _this.rightBoundary) / 2;
-        }
-        if (_this.topBoundary < _this.bottomBoundary) {
-          // screen width is larger than world's boundary width
-          //set both in the middle of the world
-          _this.topBoundary = _this.bottomBoundary =
-            (_this.topBoundary + _this.bottomBoundary) / 2;
-        }
-
-        if (
-          _this.topBoundary === _this.bottomBoundary &&
-          _this.leftBoundary === _this.rightBoundary
-        )
-          _this._boundaryFullyCovered = true;
+      if (this.rightBoundary < this.leftBoundary) {
+        // screen width is larger than world's boundary width
+        //set both in the middle of the world
+        this.rightBoundary = this.leftBoundary =
+          (this.leftBoundary + this.rightBoundary) / 2;
       }
-      return true;
-    },
-
-    /**
-     * called every frame with it's delta time. <br />
-     * DON'T override unless you know what you are doing.
-     *
-     * @param {Number} dt
-     */
-    step: function (dt) {
-      var tempPosX = this._followedNode.x;
-      var tempPosY = this._followedNode.y;
-      tempPosX = this._halfScreenSize.x - tempPosX;
-      tempPosY = this._halfScreenSize.y - tempPosY;
-
-      //TODO Temporary treatment - The dirtyFlag symbol error
-      this.target._renderCmd._dirtyFlag = 0;
-
-      if (this._boundarySet) {
-        // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
-        if (this._boundaryFullyCovered) return;
-
-        this.target.setPosition(
-          cc.clampf(tempPosX, this.leftBoundary, this.rightBoundary),
-          cc.clampf(tempPosY, this.bottomBoundary, this.topBoundary)
-        );
-      } else {
-        this.target.setPosition(tempPosX, tempPosY);
+      if (this.topBoundary < this.bottomBoundary) {
+        // screen width is larger than world's boundary width
+        //set both in the middle of the world
+        this.topBoundary = this.bottomBoundary =
+          (this.topBoundary + this.bottomBoundary) / 2;
       }
-    },
 
-    /**
-     * Return true if the action has finished.
-     *
-     * @return {Boolean}
-     */
-    isDone: function () {
-      return !this._followedNode.running;
-    },
+      if (
+        this.topBoundary === this.bottomBoundary &&
+        this.leftBoundary === this.rightBoundary
+      )
+        this._boundaryFullyCovered = true;
+    }
+    return true;
+  }
 
-    /**
-     * Stop the action.
-     */
-    stop: function () {
-      this.target = null;
-      cc.Action.prototype.stop.call(this);
+  /**
+   * called every frame with it's delta time. <br />
+   * DON'T override unless you know what you are doing.
+   *
+   * @param {Number} dt
+   */
+  step(dt) {
+    let tempPosX = this._followedNode.x;
+    let tempPosY = this._followedNode.y;
+    tempPosX = this._halfScreenSize.x - tempPosX;
+    tempPosY = this._halfScreenSize.y - tempPosY;
+
+    //TODO Temporary treatment - The dirtyFlag symbol error
+    this.target._renderCmd._dirtyFlag = 0;
+
+    if (this._boundarySet) {
+      // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
+      if (this._boundaryFullyCovered) return;
+
+      this.target.setPosition(
+        cc.clampf(tempPosX, this.leftBoundary, this.rightBoundary),
+        cc.clampf(tempPosY, this.bottomBoundary, this.topBoundary)
+      );
+    } else {
+      this.target.setPosition(tempPosX, tempPosY);
     }
   }
-);
+
+  /**
+   * Return true if the action has finished.
+   *
+   * @return {Boolean}
+   */
+  isDone() {
+    return !this._followedNode.running;
+  }
+
+  /**
+   * Stop the action.
+   */
+  stop() {
+    this.target = null;
+    super.stop();
+  }
+};
 
 /**
  * creates the action with a set boundary. <br/>
@@ -658,4 +640,3 @@ cc.Follow = cc.Action.extend(
 cc.follow = function (followedNode, rect) {
   return new cc.Follow(followedNode, rect);
 };
-
