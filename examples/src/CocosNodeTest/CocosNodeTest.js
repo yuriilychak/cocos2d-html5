@@ -250,10 +250,6 @@ var CCNodeTest5 = TestNodeDemo.extend({
 
         this.addChild(sp1, 0, TAG_SPRITE1);
         this.addChild(sp2, 0, TAG_SPRITE2);
-
-        // hack for JSB.
-        sp1.release();
-        sp2.release();
         //----end2----
     },
     title:function () {
@@ -331,11 +327,6 @@ var CCNodeTest6 = TestNodeDemo.extend({
 
         this.addChild(sp1, 0, TAG_SPRITE1);
         this.addChild(sp2, 0, TAG_SPRITE2);
-
-        // hack for JSB.
-        sp1.release();
-        sp2.release();
-        //----end3----
 
     },
     title:function () {

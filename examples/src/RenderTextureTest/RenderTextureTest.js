@@ -124,9 +124,6 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
     },
 
     onExit:function () {
-        for(var i in this._brushs){
-            this._brushs[i].release();
-        }
         this._super();
     },
 

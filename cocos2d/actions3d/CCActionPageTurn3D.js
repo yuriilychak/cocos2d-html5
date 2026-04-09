@@ -35,78 +35,83 @@
  * @class
  * @extends cc.Grid3DAction
  */
-cc.PageTurn3D = cc.Grid3DAction.extend(/** @lends cc.PageTurn3D# */{
-    getGrid: function(){
-        var result = new cc.Grid3D(this._gridSize, undefined, undefined, this._gridNodeTarget.getGridRect());
-        result.setNeedDepthTestForBlit(true);
-        return result;
-    },
+cc.PageTurn3D = class PageTurn3D extends cc.Grid3DAction {
+  getGrid() {
+    const result = new cc.Grid3D(
+      this._gridSize,
+      undefined,
+      undefined,
+      this._gridNodeTarget.getGridRect()
+    );
+    result.setNeedDepthTestForBlit(true);
+    return result;
+  }
 
-    clone: function(){
-       var ret = new cc.PageTurn3D();
-        ret.initWithDuration(this._duration, this._gridSize);
-        return ret;
-    },
+  clone() {
+    const ret = new cc.PageTurn3D();
+    ret.initWithDuration(this._duration, this._gridSize);
+    return ret;
+  }
 
-    /**
-     * Update each tick                                         <br/>
-     * Time is the percentage of the way through the duration
-     */
-    update:function (time) {
-        var tt = Math.max(0, time - 0.25);
-        var deltaAy = (tt * tt * 500);
-        var ay = -100 - deltaAy;
+  /**
+   * Update each tick                                         <br/>
+   * Time is the percentage of the way through the duration
+   */
+  update(time) {
+    const tt = Math.max(0, time - 0.25);
+    const deltaAy = tt * tt * 500;
+    const ay = -100 - deltaAy;
 
-        var deltaTheta = Math.sqrt(time);
-        var theta = deltaTheta>0.5?Math.PI/2 *deltaTheta : Math.PI/2*(1-deltaTheta);
-        var rotateByYAxis = (2-time)*Math.PI;
+    const deltaTheta = Math.sqrt(time);
+    const theta =
+      deltaTheta > 0.5
+        ? (Math.PI / 2) * deltaTheta
+        : (Math.PI / 2) * (1 - deltaTheta);
+    const rotateByYAxis = (2 - time) * Math.PI;
 
-        var sinTheta = Math.sin(theta);
-        var cosTheta = Math.cos(theta);
+    const sinTheta = Math.sin(theta);
+    const cosTheta = Math.cos(theta);
 
-        var locGridSize = this._gridSize;
-        var locVer = cc.p(0, 0);
-        for (var i = 0; i <= locGridSize.width; ++i) {
-            for (var j = 0; j <= locGridSize.height; ++j) {
-                locVer.x = i;
-                locVer.y = j;
-                // Get original vertex
-                var p = this.getOriginalVertex(locVer);
+    const locGridSize = this._gridSize;
+    const locVer = cc.p(0, 0);
+    for (let i = 0; i <= locGridSize.width; ++i) {
+      for (let j = 0; j <= locGridSize.height; ++j) {
+        locVer.x = i;
+        locVer.y = j;
+        // Get original vertex
+        const p = this.getOriginalVertex(locVer);
 
-                p.x -= this.getGridRect().x;
-                var R = Math.sqrt((p.x * p.x) + ((p.y - ay) * (p.y - ay)));
-                var r = R * sinTheta;
-                var alpha = Math.asin(p.x / R);
-                var beta = alpha / sinTheta;
-                var cosBeta = Math.cos(beta);
+        p.x -= this.getGridRect().x;
+        const R = Math.sqrt(p.x * p.x + (p.y - ay) * (p.y - ay));
+        const r = R * sinTheta;
+        const alpha = Math.asin(p.x / R);
+        const beta = alpha / sinTheta;
+        const cosBeta = Math.cos(beta);
 
-                // If beta > PI then we've wrapped around the cone
-                // Reduce the radius to stop these points interfering with others
-                if (beta <= Math.PI)
-                    p.x = ( r * Math.sin(beta));
-                else
-                    p.x = 0;     //Force X = 0 to stop wrapped points
+        // If beta > PI then we've wrapped around the cone
+        // Reduce the radius to stop these points interfering with others
+        if (beta <= Math.PI) p.x = r * Math.sin(beta);
+        else p.x = 0; // Force X = 0 to stop wrapped points
 
-                p.y = ( R + ay - ( r * (1 - cosBeta) * sinTheta));
+        p.y = R + ay - r * (1 - cosBeta) * sinTheta;
 
-                // We scale z here to avoid the animation being
-                // too much bigger than the screen due to perspectve transform
-                p.z = (r * ( 1 - cosBeta ) * cosTheta);// "100" didn't work for
-                p.x = p.z * Math.sin(rotateByYAxis) + p.x * Math.cos(rotateByYAxis);
-                p.z = p.z * Math.cos(rotateByYAxis) - p.x * Math.cos(rotateByYAxis);
-                p.z/= 7;
-                //	Stop z coord from dropping beneath underlying page in a transition
-                // issue #751
-                if (p.z < 0.5)
-                    p.z = 0.5;
+        // We scale z here to avoid the animation being
+        // too much bigger than the screen due to perspectve transform
+        p.z = r * (1 - cosBeta) * cosTheta; // "100" didn't work for
+        p.x = p.z * Math.sin(rotateByYAxis) + p.x * Math.cos(rotateByYAxis);
+        p.z = p.z * Math.cos(rotateByYAxis) - p.x * Math.cos(rotateByYAxis);
+        p.z /= 7;
+        //	Stop z coord from dropping beneath underlying page in a transition
+        // issue #751
+        if (p.z < 0.5) p.z = 0.5;
 
-                // Set new coords
-                p.x+= this.getGridRect().x;
-                this.setVertex(locVer, p);
-            }
-        }
+        // Set new coords
+        p.x += this.getGridRect().x;
+        this.setVertex(locVer, p);
+      }
     }
-});
+  }
+};
 
 /**
  * create PageTurn3D action
@@ -115,6 +120,4 @@ cc.PageTurn3D = cc.Grid3DAction.extend(/** @lends cc.PageTurn3D# */{
  * @param {cc.Size} gridSize
  * @return {cc.PageTurn3D}
  */
-cc.pageTurn3D = function (duration, gridSize) {
-    return new cc.PageTurn3D(duration, gridSize);
-};
+cc.pageTurn3D = (duration, gridSize) => new cc.PageTurn3D(duration, gridSize);

@@ -1988,7 +1988,7 @@ cc.BezierBy = class BezierBy extends cc.ActionInterval {
    * @param {Array} c Array of points
    * @return {Boolean}
    */
-  initWithDuration(t, c) {
+  initWithDuration(t, c = []) {
     if (super.initWithDuration(t)) {
       this._config = c;
       return true;
@@ -2111,7 +2111,7 @@ cc.bezierBy = (t, c) => new cc.BezierBy(t, c);
  */
 cc.BezierTo = class BezierTo extends cc.BezierBy {
   /** @lends cc.BezierTo# */
-  _toConfig = null;
+  _toConfig;
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
@@ -2156,13 +2156,9 @@ cc.BezierTo = class BezierTo extends cc.BezierBy {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    var locStartPos = this._startPosition;
-    var locToConfig = this._toConfig;
-    var locConfig = this._config;
-
-    locConfig[0] = cc.pSub(locToConfig[0], locStartPos);
-    locConfig[1] = cc.pSub(locToConfig[1], locStartPos);
-    locConfig[2] = cc.pSub(locToConfig[2], locStartPos);
+    this._config[0] = cc.pSub(this._toConfig[0], this._startPosition);
+    this._config[1] = cc.pSub(this._toConfig[1], this._startPosition);
+    this._config[2] = cc.pSub(this._toConfig[2], this._startPosition);
   }
 };
 /**

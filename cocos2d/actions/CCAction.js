@@ -473,7 +473,7 @@ cc.Follow = class Follow extends cc.Action {
     this.rightBoundary = 0.0;
     this.topBoundary = 0.0;
     this.bottomBoundary = 0.0;
-    this._worldRect = cc.rect(0, 0, 0, 0);
+    this._worldRect = new cc.Rect(0, 0, 0, 0);
 
     if (followedNode)
       rect
@@ -578,10 +578,8 @@ cc.Follow = class Follow extends cc.Action {
    * @param {Number} dt
    */
   step(dt) {
-    let tempPosX = this._followedNode.x;
-    let tempPosY = this._followedNode.y;
-    tempPosX = this._halfScreenSize.x - tempPosX;
-    tempPosY = this._halfScreenSize.y - tempPosY;
+    const tempPosX = this._halfScreenSize.x - this._followedNode.x;
+    const tempPosY = this._halfScreenSize.y - this._followedNode.y;
 
     //TODO Temporary treatment - The dirtyFlag symbol error
     this.target._renderCmd._dirtyFlag = 0;

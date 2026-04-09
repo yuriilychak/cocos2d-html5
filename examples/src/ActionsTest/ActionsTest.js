@@ -2331,7 +2331,6 @@ var Issue1305 = ActionsDemo.extend({
         this._super();
         if (this._spriteTmp)
         {
-            this._spriteTmp.release();
             this._spriteTmp = null;
         }
     },
@@ -2344,7 +2343,6 @@ var Issue1305 = ActionsDemo.extend({
         if (this._spriteTmp)
         {
             this.addChild(this._spriteTmp);
-            this._spriteTmp.release();
             this._spriteTmp = null;
         }
     },
@@ -2632,19 +2630,16 @@ var SequenceRepeatTest = ActionsDemo.extend({
 });
 
 // custom action sample code
-var customMoveBy = cc.MoveBy.extend({
-    ctor:function (duration, deltaPos, deltaY) {
-        this._super(duration, deltaPos, deltaY);
-    },
-    update:function (dt) {
-        this._super(dt);
+class CustomMoveBy extends cc.MoveBy {
+    update(dt) {
+        super.update(dt);
 
         if (this.getTarget()) { // rand color
             this.getTarget().setColor(cc.color(cc.rand()%255, cc.rand()%255, cc.rand()%255));
         }
 
     }
-});
+}
 
 // special code, just for reduce code redundancy
 var createCustomAction = function(actionObject) {
@@ -2734,7 +2729,7 @@ var ActionCustomTest = ActionsDemo.extend({
          * group 1
          */
         var spriteTemp = this.addandCreateSpriteTemp("cc.MoveBy");
-        var move = new customMoveBy(5, cc.p(50, 0));
+        var move = new CustomMoveBy(5, cc.p(50, 0));
         spriteTemp.runAction(move);
 
         spriteTemp = this.addandCreateSpriteTemp("cc.MoveTo");
@@ -2899,7 +2894,7 @@ var ActionIssue13605 = ActionsDemo.extend({
         this._super();
         this.centerSprites(2);
 
-        var move = new customMoveBy(2, cc.p(50, 0));
+        var move = new CustomMoveBy(2, cc.p(50, 0));
         var move_back = move.reverse();
         var move_seq = cc.sequence(move, cc.delayTime(1), move_back, cc.delayTime(1));
         this._kathia.runAction(move_seq.repeat(2));

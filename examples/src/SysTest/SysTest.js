@@ -189,7 +189,6 @@ var ScriptTestLayer = SysTestBase.extend({
         cc.log("Storage path for this test : " + storagePath);
 
         if (this._am){
-            this._am.release();
             this._am = null;
         }
 
@@ -253,7 +252,6 @@ var ScriptTestLayer = SysTestBase.extend({
     onExit : function () {
         if (this._am)
         {
-            this._am.release();
             this._am = null;
         }
 

@@ -236,6 +236,19 @@ When migrating:
 - Keep the **factory functions** as plain functions that `new` the ES6 class.
 - Do **not** change their signatures; user code expects the same parameters.
 
+Optionally, for one-line factories that only construct and return an instance, you can modernize the syntax with arrow helpers while keeping the API the same, for example:
+
+```js
+// Before
+cc.moveBy = function (duration, deltaPos, deltaY) {
+  return new cc.MoveBy(duration, deltaPos, deltaY);
+};
+
+// After (equivalent)
+cc.moveBy = (duration, deltaPos, deltaY) =>
+  new cc.MoveBy(duration, deltaPos, deltaY);
+```
+
 Statics from `statics: { ... }` blocks can be moved to `static` methods or attached after the class:
 
 ```js
@@ -320,7 +333,9 @@ For each file you migrate:
    - `cc.Parent.prototype.method.call(this, ...)` → `super.method(...)` (when Parent is the superclass).
 
 4. **Keep factories**
-   - Leave `cc.helperX(...) { return new cc.X(...); }` intact, updating only the constructor name if needed.
+
+- Leave `cc.helperX(...) { return new cc.X(...); }` intact, updating only the constructor name if needed.
+- Optionally rewrite trivial one-line helpers as arrow functions, e.g. `cc.helperX = (...args) => new cc.X(...args);`.
 
 5. **Handle statics**
    - Move `statics:` members to `static` methods or `cc.X.SOMETHING = ...`.

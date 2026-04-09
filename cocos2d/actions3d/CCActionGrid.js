@@ -31,97 +31,104 @@
  * @param {Number} duration
  * @param {cc.Size} gridSize
  */
-cc.GridAction = cc.ActionInterval.extend(/** @lends cc.GridAction# */{
-    _gridSize:null,
-    _gridNodeTarget:null,
+cc.GridAction = class GridAction extends cc.ActionInterval {
+  /** @lends cc.GridAction# */
+  _gridSize = null;
+  _gridNodeTarget = null;
 
-	/**
-	 * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-	 * @param {Number} duration
-	 * @param {cc.Size} gridSize
-	 */
-    ctor:function(duration, gridSize){
-        cc.sys._checkWebGLRenderMode();
-        cc.ActionInterval.prototype.ctor.call(this);
-        this._gridSize = cc.size(0,0);
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   */
+  constructor(duration, gridSize) {
+    cc.sys._checkWebGLRenderMode();
+    super();
+    this._gridSize = cc.size(0, 0);
 
-        gridSize && this.initWithDuration(duration, gridSize);
-    },
+    gridSize && this.initWithDuration(duration, gridSize);
+  }
 
-    _cacheTargetAsGridNode:function (target) {
-        this._gridNodeTarget = target;
-    },
+  _cacheTargetAsGridNode(target) {
+    this._gridNodeTarget = target;
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
-     * @return {cc.ActionInterval}
-     */
-    clone:function(){
-        var action = new cc.GridAction();
-        var locGridSize = this._gridSize;
-        action.initWithDuration(this._duration, cc.size(locGridSize.width, locGridSize.height));
-        return action;
-    },
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   *
+   * @return {cc.GridAction}
+   */
+  clone() {
+    const action = new cc.GridAction();
+    const locGridSize = this._gridSize;
+    action.initWithDuration(
+      this._duration,
+      cc.size(locGridSize.width, locGridSize.height)
+    );
+    return action;
+  }
 
-    /**
-     * called before the action start. It will also set the target.
-     *
-     * @param {cc.Node} target
-     */
-    startWithTarget:function (target) {
-        cc.ActionInterval.prototype.startWithTarget.call(this, target);
-        cc.renderer.childrenOrderDirty = true;
-        this._cacheTargetAsGridNode(target);
+  /**
+   * called before the action start. It will also set the target.
+   *
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+    cc.renderer.childrenOrderDirty = true;
+    this._cacheTargetAsGridNode(target);
 
-        var newGrid = this.getGrid();
+    const newGrid = this.getGrid();
 
-        var targetGrid = this._gridNodeTarget.getGrid();
-        if (targetGrid && targetGrid.getReuseGrid() > 0) {
-            var locGridSize = targetGrid.getGridSize();
-            if (targetGrid.isActive() && (locGridSize.width === this._gridSize.width) && (locGridSize.height === this._gridSize.height))
-                targetGrid.reuse();
-        } else {
-            if (targetGrid && targetGrid.isActive())
-                targetGrid.setActive(false);
-            this._gridNodeTarget.setGrid(newGrid);
-            this._gridNodeTarget.getGrid().setActive(true);
-        }
-    },
-
-    /**
-     * Create a cc.ReverseTime action. Opposite with the original motion trajectory.
-     * @return {cc.ReverseTime}
-     */
-    reverse:function () {
-        return new cc.ReverseTime(this);
-    },
-
-    /**
-     * Initializes the action with size and duration.
-     * @param {Number} duration
-     * @param {cc.Size} gridSize
-     * @return {Boolean}
-     */
-    initWithDuration:function (duration, gridSize) {
-        if (cc.ActionInterval.prototype.initWithDuration.call(this, duration)) {
-            this._gridSize.width = gridSize.width;
-            this._gridSize.height = gridSize.height;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * Returns the grid.
-     * @return {cc.GridBase}
-     */
-    getGrid:function () {
-        // Abstract class needs implementation
-        cc.log("cc.GridAction.getGrid(): it should be overridden in subclass.");
+    const targetGrid = this._gridNodeTarget.getGrid();
+    if (targetGrid && targetGrid.getReuseGrid() > 0) {
+      const locGridSize = targetGrid.getGridSize();
+      if (
+        targetGrid.isActive() &&
+        locGridSize.width === this._gridSize.width &&
+        locGridSize.height === this._gridSize.height
+      )
+        targetGrid.reuse();
+    } else {
+      if (targetGrid && targetGrid.isActive()) targetGrid.setActive(false);
+      this._gridNodeTarget.setGrid(newGrid);
+      this._gridNodeTarget.getGrid().setActive(true);
     }
-});
+  }
+
+  /**
+   * Create a cc.ReverseTime action. Opposite with the original motion trajectory.
+   * @return {cc.ReverseTime}
+   */
+  reverse() {
+    return new cc.ReverseTime(this);
+  }
+
+  /**
+   * Initializes the action with size and duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @return {Boolean}
+   */
+  initWithDuration(duration, gridSize) {
+    if (super.initWithDuration(duration)) {
+      this._gridSize.width = gridSize.width;
+      this._gridSize.height = gridSize.height;
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Returns the grid.
+   * @return {cc.GridBase}
+   */
+  getGrid() {
+    // Abstract class needs implementation
+    cc.log("cc.GridAction.getGrid(): it should be overridden in subclass.");
+  }
+};
 
 /**
  * creates the action with size and duration
@@ -130,10 +137,7 @@ cc.GridAction = cc.ActionInterval.extend(/** @lends cc.GridAction# */{
  * @param {cc.Size} gridSize
  * @return {cc.GridAction}
  */
-cc.gridAction = function (duration, gridSize) {
-    return new cc.GridAction(duration, gridSize);
-};
-
+cc.gridAction = (duration, gridSize) => new cc.GridAction(duration, gridSize);
 
 /**
  * Base class for cc.Grid3D actions. <br/>
@@ -141,51 +145,55 @@ cc.gridAction = function (duration, gridSize) {
  * @class
  * @extends cc.GridAction
  */
-cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.Grid3DAction# */{
+cc.Grid3DAction = class Grid3DAction extends cc.GridAction {
+  /**
+   * returns the grid
+   * @return {cc.Grid3D}
+   */
+  getGrid() {
+    return new cc.Grid3D(
+      this._gridSize,
+      undefined,
+      undefined,
+      this._gridNodeTarget.getGridRect()
+    );
+  }
 
-    /**
-     * returns the grid
-     * @return {cc.Grid3D}
-     */
-    getGrid:function () {
-        return new cc.Grid3D(this._gridSize, undefined, undefined, this._gridNodeTarget.getGridRect());
-    },
+  /**
+   * get rect of the grid
+   * @return {cc.Rect} rect
+   */
+  getGridRect() {
+    return this._gridNodeTarget.getGridRect();
+  }
 
-    /**
-     * get rect of the grid
-     * @return {cc.Rect} rect
-     */
-    getGridRect:function () {
-        return this._gridNodeTarget.getGridRect();
-    },
+  /**
+   * returns the vertex than belongs to certain position in the grid
+   * @param {cc.Point} position
+   * @return {cc.Vertex3F}
+   */
+  getVertex(position) {
+    return this.target.grid.getVertex(position);
+  }
 
-    /**
-     * returns the vertex than belongs to certain position in the grid
-     * @param {cc.Point} position
-     * @return {cc.Vertex3F}
-     */
-    getVertex: function(position){
-        return this.target.grid.getVertex(position);
-    },
+  /**
+   * returns the non-transformed vertex that belongs to certain position in the grid
+   * @param {cc.Point} position
+   * @return {cc.Vertex3F}
+   */
+  getOriginalVertex(position) {
+    return this.target.grid.originalVertex(position);
+  }
 
-    /**
-     * returns the non-transformed vertex that belongs to certain position in the grid
-     * @param {cc.Point} position
-     * @return {cc.Vertex3F}
-     */
-    getOriginalVertex:function (position) {
-        return this.target.grid.originalVertex(position);
-    },
-
-    /**
-     * sets a new vertex to a certain position of the grid
-     * @param {cc.Point} position
-     * @param {cc.Vertex3F} vertex
-     */
-    setVertex:function (position, vertex) {
-        this.target.grid.setVertex(position, vertex);
-    }
-});
+  /**
+   * sets a new vertex to a certain position of the grid
+   * @param {cc.Point} position
+   * @param {cc.Vertex3F} vertex
+   */
+  setVertex(position, vertex) {
+    this.target.grid.setVertex(position, vertex);
+  }
+};
 
 /**
  * creates the action with size and duration
@@ -194,52 +202,55 @@ cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.Grid3DAction# */{
  * @param {cc.Size} gridSize
  * @return {cc.Grid3DAction}
  */
-cc.grid3DAction = function (duration, gridSize) {
-    return new cc.Grid3DAction(duration, gridSize);
-};
+cc.grid3DAction = (duration, gridSize) =>
+  new cc.Grid3DAction(duration, gridSize);
 
 /**
  * Base class for cc.TiledGrid3D actions.
  * @class
  * @extends cc.GridAction
  */
-cc.TiledGrid3DAction = cc.GridAction.extend(/** @lends cc.TiledGrid3DAction# */{
+cc.TiledGrid3DAction = class TiledGrid3DAction extends cc.GridAction {
+  /**
+   * returns the tile that belongs to a certain position of the grid
+   * @param {cc.Point} position
+   * @return {cc.Quad3}
+   */
+  getTile(position) {
+    return this.target.grid.tile(position);
+  }
 
-    /**
-     * returns the tile that belongs to a certain position of the grid
-     * @param {cc.Point} position
-     * @return {cc.Quad3}
-     */
-    getTile:function (position) {
-        return this.target.grid.tile(position);
-    },
+  /**
+   * returns the non-transformed tile that belongs to a certain position of the grid
+   * @param {cc.Point} position
+   * @return {cc.Quad3}
+   */
+  getOriginalTile(position) {
+    return this.target.grid.originalTile(position);
+  }
 
-    /**
-     * returns the non-transformed tile that belongs to a certain position of the grid
-     * @param {cc.Point} position
-     * @return {cc.Quad3}
-     */
-    getOriginalTile:function (position) {
-        return this.target.grid.originalTile(position);
-    },
+  /**
+   * sets a new tile to a certain position of the grid
+   * @param {cc.Point} position
+   * @param {cc.Quad3} coords
+   */
+  setTile(position, coords) {
+    this.target.grid.setTile(position, coords);
+  }
 
-    /**
-     * sets a new tile to a certain position of the grid
-     * @param {cc.Point} position
-     * @param {cc.Quad3} coords
-     */
-    setTile:function (position, coords) {
-        this.target.grid.setTile(position, coords);
-    },
-
-    /**
-     * returns the grid
-     * @return {cc.TiledGrid3D}
-     */
-    getGrid:function () {
-        return new cc.TiledGrid3D(this._gridSize, undefined, undefined, this._gridNodeTarget.getGridRect());
-    }
-});
+  /**
+   * returns the grid
+   * @return {cc.TiledGrid3D}
+   */
+  getGrid() {
+    return new cc.TiledGrid3D(
+      this._gridSize,
+      undefined,
+      undefined,
+      this._gridNodeTarget.getGridRect()
+    );
+  }
+};
 
 /**
  * Creates the action with duration and grid size
@@ -248,10 +259,8 @@ cc.TiledGrid3DAction = cc.GridAction.extend(/** @lends cc.TiledGrid3DAction# */{
  * @param {cc.Size} gridSize
  * @return {cc.TiledGrid3DAction}
  */
-cc.tiledGrid3DAction = function (duration, gridSize) {
-    return new cc.TiledGrid3DAction(duration, gridSize);
-};
-
+cc.tiledGrid3DAction = (duration, gridSize) =>
+  new cc.TiledGrid3DAction(duration, gridSize);
 
 /**
  * <p>
@@ -263,30 +272,26 @@ cc.tiledGrid3DAction = function (duration, gridSize) {
  * @class
  * @extends cc.ActionInstant
  */
-cc.StopGrid = cc.ActionInstant.extend(/** @lends cc.StopGrid# */{
-
-    /**
-     * called before the action start. It will also set the target.
-     *
-     * @param {cc.Node} target
-     */
-    startWithTarget:function (target) {
-        cc.ActionInstant.prototype.startWithTarget.call(this, target);
-        cc.renderer.childrenOrderDirty = true;
-        var grid = this.target.grid;
-        if (grid && grid.isActive())
-            grid.setActive(false);
-    }
-});
+cc.StopGrid = class StopGrid extends cc.ActionInstant {
+  /**
+   * called before the action start. It will also set the target.
+   *
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+    cc.renderer.childrenOrderDirty = true;
+    const grid = this.target.grid;
+    if (grid && grid.isActive()) grid.setActive(false);
+  }
+};
 
 /**
  * Allocates and initializes the action
  * @function
  * @return {cc.StopGrid}
  */
-cc.stopGrid = function () {
-    return new cc.StopGrid();
-};
+cc.stopGrid = () => new cc.StopGrid();
 
 /**
  * cc.ReuseGrid action
@@ -294,40 +299,43 @@ cc.stopGrid = function () {
  * @extends cc.ActionInstant
  * @param {Number} times
  */
-cc.ReuseGrid = cc.ActionInstant.extend(/** @lends cc.ReuseGrid# */{
-    _times:null,
+cc.ReuseGrid = class ReuseGrid extends cc.ActionInstant {
+  /** @lends cc.ReuseGrid# */
+  _times = null;
 
-	/**
-	 * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-	 * @param {Number} times
-	 */
-	ctor: function(times) {
-		cc.ActionInstant.prototype.ctor.call(this);
-		times !== undefined && this.initWithTimes(times);
-	},
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * @param {Number} times
+   */
+  constructor(times) {
+    super();
+    times !== undefined && this.initWithTimes(times);
+  }
 
-    /**
-     * initializes an action with the number of times that the current grid will be reused
-     * @param {Number} times
-     * @return {Boolean}
-     */
-    initWithTimes:function (times) {
-        this._times = times;
-        return true;
-    },
+  /**
+   * initializes an action with the number of times that the current grid will be reused
+   * @param {Number} times
+   * @return {Boolean}
+   */
+  initWithTimes(times) {
+    this._times = times;
+    return true;
+  }
 
-    /**
-     * called before the action start. It will also set the target.
-     *
-     * @param {cc.Node} target
-     */
-    startWithTarget:function (target) {
-        cc.ActionInstant.prototype.startWithTarget.call(this, target);
-        cc.renderer.childrenOrderDirty = true;
-        if (this.target.grid && this.target.grid.isActive())
-            this.target.grid.setReuseGrid(this.target.grid.getReuseGrid() + this._times);
-    }
-});
+  /**
+   * called before the action start. It will also set the target.
+   *
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+    cc.renderer.childrenOrderDirty = true;
+    if (this.target.grid && this.target.grid.isActive())
+      this.target.grid.setReuseGrid(
+        this.target.grid.getReuseGrid() + this._times
+      );
+  }
+};
 
 /**
  * creates an action with the number of times that the current grid will be reused
@@ -335,6 +343,4 @@ cc.ReuseGrid = cc.ActionInstant.extend(/** @lends cc.ReuseGrid# */{
  * @param {Number} times
  * @return {cc.ReuseGrid}
  */
-cc.reuseGrid = function (times) {
-    return new cc.ReuseGrid(times);
-};
+cc.reuseGrid = (times) => new cc.ReuseGrid(times);

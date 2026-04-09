@@ -34,77 +34,78 @@
  * @param {Number} range
  * @param {Boolean} shakeZ
  */
-cc.ShakyTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.ShakyTiles3D# */{
-    _randRange:0,
-    _shakeZ:false,
+cc.ShakyTiles3D = class ShakyTiles3D extends cc.TiledGrid3DAction {
+  _randRange = 0;
+  _shakeZ = false;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * Creates the action with a range, whether or not to shake Z vertices, a grid size, and duration.
-	 * @param {Number} duration
-	 * @param {cc.Size} gridSize
-	 * @param {Number} range
-	 * @param {Boolean} shakeZ
-	 */
-    ctor:function (duration, gridSize, range, shakeZ) {
-        cc.GridAction.prototype.ctor.call(this);
-		shakeZ !== undefined && this.initWithDuration(duration, gridSize, range, shakeZ);
-    },
+  /**
+   * Creates the action with a range, whether or not to shake Z vertices, a grid size, and duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} range
+   * @param {Boolean} shakeZ
+   */
+  constructor(duration, gridSize, range, shakeZ) {
+    super();
+    shakeZ !== undefined &&
+      this.initWithDuration(duration, gridSize, range, shakeZ);
+  }
 
-    /**
-     * Initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration.
-     * @param {Number} duration
-     * @param {cc.Size} gridSize
-     * @param {Number} range
-     * @param {Boolean} shakeZ
-     * @return {Boolean}
-     */
-    initWithDuration:function (duration, gridSize, range, shakeZ) {
-        if (cc.TiledGrid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
-            this._randRange = range;
-            this._shakeZ = shakeZ;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.  <br />
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        var locGridSize = this._gridSize, locRandRange = this._randRange;
-        var locPos = cc.p(0, 0);
-        for (var i = 0; i < locGridSize.width; ++i) {
-            for (var j = 0; j < locGridSize.height; ++j) {
-                locPos.x = i;
-                locPos.y = j;
-                var coords = this.originalTile(locPos);
-
-                // X
-                coords.bl.x += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                coords.br.x += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                coords.tl.x += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                coords.tr.x += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-
-                // Y
-                coords.bl.y += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                coords.br.y += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                coords.tl.y += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                coords.tr.y += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-
-                if (this._shakeZ) {
-                    coords.bl.z += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.br.z += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.tl.z += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.tr.z += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                }
-
-                this.setTile(locPos, coords);
-            }
-        }
+  /**
+   * Initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} range
+   * @param {Boolean} shakeZ
+   * @return {Boolean}
+   */
+  initWithDuration(duration, gridSize, range, shakeZ) {
+    if (super.initWithDuration(duration, gridSize)) {
+      this._randRange = range;
+      this._shakeZ = shakeZ;
+      return true;
     }
-});
+    return false;
+  }
+
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.  <br />
+   * @param {Number}  dt
+   */
+  update(dt) {
+    const locGridSize = this._gridSize;
+    const locRandRange = this._randRange;
+    const locPos = cc.p(0, 0);
+    for (let i = 0; i < locGridSize.width; ++i) {
+      for (let j = 0; j < locGridSize.height; ++j) {
+        locPos.x = i;
+        locPos.y = j;
+        const coords = this.originalTile(locPos);
+
+        // X
+        coords.bl.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
+        coords.br.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
+        coords.tl.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
+        coords.tr.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
+
+        // Y
+        coords.bl.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
+        coords.br.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
+        coords.tl.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
+        coords.tr.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
+
+        if (this._shakeZ) {
+          coords.bl.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.br.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.tl.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.tr.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+        }
+
+        this.setTile(locPos, coords);
+      }
+    }
+  }
+};
 
 /**
  * Creates the action with a range, whether or not to shake Z vertices, a grid size, and duration. <br />
@@ -116,10 +117,8 @@ cc.ShakyTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.ShakyTiles3D# */{
  * @param {Boolean} shakeZ
  * @return {cc.ShakyTiles3D}
  */
-cc.shakyTiles3D = function (duration, gridSize, range, shakeZ) {
-    return new cc.ShakyTiles3D(duration, gridSize, range, shakeZ);
-};
-
+cc.shakyTiles3D = (duration, gridSize, range, shakeZ) =>
+  new cc.ShakyTiles3D(duration, gridSize, range, shakeZ);
 
 /**
  * cc.ShatteredTiles3D action. <br />
@@ -131,81 +130,83 @@ cc.shakyTiles3D = function (duration, gridSize, range, shakeZ) {
  * @param {Number} range
  * @param {Boolean} shatterZ
  */
-cc.ShatteredTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.ShatteredTiles3D# */{
-    _randRange:0,
-    _once:false,
-    _shatterZ:false,
+cc.ShatteredTiles3D = class ShatteredTiles3D extends cc.TiledGrid3DAction {
+  _randRange = 0;
+  _once = false;
+  _shatterZ = false;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * Creates the action with a range, whether of not to shatter Z vertices, a grid size and duration.
-	 * @param {Number} duration
-	 * @param {cc.Size} gridSize
-	 * @param {Number} range
-	 * @param {Boolean} shatterZ
-	 */
-    ctor:function (duration, gridSize, range, shatterZ) {
-        cc.GridAction.prototype.ctor.call(this);
-		shatterZ !== undefined && this.initWithDuration(duration, gridSize, range, shatterZ);
-    },
+  /**
+   * Creates the action with a range, whether of not to shatter Z vertices, a grid size and duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} range
+   * @param {Boolean} shatterZ
+   */
+  constructor(duration, gridSize, range, shatterZ) {
+    super();
+    shatterZ !== undefined &&
+      this.initWithDuration(duration, gridSize, range, shatterZ);
+  }
 
-    /**
-     * Initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration. <br />
-     * @param {Number} duration
-     * @param {cc.Size} gridSize
-     * @param {Number} range
-     * @param {Boolean} shatterZ
-     * @return {Boolean}
-     */
-    initWithDuration:function (duration, gridSize, range, shatterZ) {
-        if (cc.TiledGrid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
-            this._once = false;
-            this._randRange = range;
-            this._shatterZ = shatterZ;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval. <br />
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        if (this._once === false) {
-            var locGridSize = this._gridSize, locRandRange = this._randRange;
-            var coords, locPos = cc.p(0, 0);
-            for (var i = 0; i < locGridSize.width; ++i) {
-                for (var j = 0; j < locGridSize.height; ++j) {
-                    locPos.x = i;
-                    locPos.y = j;
-                    coords = this.originalTile(locPos);
-
-                    // X
-                    coords.bl.x += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.br.x += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.tl.x += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.tr.x += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-
-                    // Y
-                    coords.bl.y += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.br.y += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.tl.y += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    coords.tr.y += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-
-                    if (this._shatterZ) {
-                        coords.bl.z += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                        coords.br.z += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                        coords.tl.z += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                        coords.tr.z += ( cc.rand() % (locRandRange * 2) ) - locRandRange;
-                    }
-                    this.setTile(locPos, coords);
-                }
-            }
-            this._once = true;
-        }
+  /**
+   * Initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration. <br />
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} range
+   * @param {Boolean} shatterZ
+   * @return {Boolean}
+   */
+  initWithDuration(duration, gridSize, range, shatterZ) {
+    if (super.initWithDuration(duration, gridSize)) {
+      this._once = false;
+      this._randRange = range;
+      this._shatterZ = shatterZ;
+      return true;
     }
-});
+    return false;
+  }
+
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval. <br />
+   * @param {Number}  dt
+   */
+  update(dt) {
+    if (this._once === false) {
+      const locGridSize = this._gridSize;
+      const locRandRange = this._randRange;
+      let coords;
+      const locPos = cc.p(0, 0);
+      for (let i = 0; i < locGridSize.width; ++i) {
+        for (let j = 0; j < locGridSize.height; ++j) {
+          locPos.x = i;
+          locPos.y = j;
+          coords = this.originalTile(locPos);
+
+          // X
+          coords.bl.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.br.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.tl.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.tr.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
+
+          // Y
+          coords.bl.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.br.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.tl.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          coords.tr.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
+
+          if (this._shatterZ) {
+            coords.bl.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+            coords.br.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+            coords.tl.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+            coords.tr.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+          }
+          this.setTile(locPos, coords);
+        }
+      }
+      this._once = true;
+    }
+  }
+};
 
 /**
  * Creates the action with a range, whether of not to shatter Z vertices, a grid size and duration. <br />
@@ -217,10 +218,8 @@ cc.ShatteredTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.ShatteredTiles3D
  * @param {Boolean} shatterZ
  * @return {cc.ShatteredTiles3D}
  */
-cc.shatteredTiles3D = function (duration, gridSize, range, shatterZ) {
-    return new cc.ShatteredTiles3D(duration, gridSize, range, shatterZ);
-};
-
+cc.shatteredTiles3D = (duration, gridSize, range, shatterZ) =>
+  new cc.ShatteredTiles3D(duration, gridSize, range, shatterZ);
 
 /**
  * A Tile composed of position, startPosition and delta.
@@ -231,9 +230,9 @@ cc.shatteredTiles3D = function (duration, gridSize, range, shatterZ) {
  * @param {cc.Size} [delta=cc.p(0,0)]
  */
 cc.Tile = function (position, startPosition, delta) {
-    this.position = position || cc.p(0,0);
-    this.startPosition = startPosition || cc.p(0,0);
-    this.delta = delta || cc.p(0,0);
+  this.position = position || cc.p(0, 0);
+  this.startPosition = startPosition || cc.p(0, 0);
+  this.delta = delta || cc.p(0, 0);
 };
 
 /**
@@ -245,150 +244,154 @@ cc.Tile = function (position, startPosition, delta) {
  * @param {cc.Size} gridSize
  * @param {Number} seed
  */
-cc.ShuffleTiles = cc.TiledGrid3DAction.extend(/** @lends cc.ShuffleTiles# */{
-    _seed:0,
-    _tilesCount:0,
-    _tilesOrder:null,
-    _tiles:null,
+cc.ShuffleTiles = class ShuffleTiles extends cc.TiledGrid3DAction {
+  _seed = 0;
+  _tilesCount = 0;
+  _tilesOrder = null;
+  _tiles = null;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * Creates the action with a random seed, the grid size and the duration.
-	 * @param {Number} duration
-	 * @param {cc.Size} gridSize
-	 * @param {Number} seed
-	 */
-    ctor:function (duration, gridSize, seed) {
-        cc.GridAction.prototype.ctor.call(this);
-        this._tilesOrder = [];
-        this._tiles = [];
+  /**
+   * Creates the action with a random seed, the grid size and the duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} seed
+   */
+  constructor(duration, gridSize, seed) {
+    super();
+    this._tilesOrder = [];
+    this._tiles = [];
 
-		seed !== undefined && this.initWithDuration(duration, gridSize, seed);
-    },
+    seed !== undefined && this.initWithDuration(duration, gridSize, seed);
+  }
 
-    /**
-     * Initializes the action with a random seed, the grid size and the duration.
-     * @param {Number} duration
-     * @param {cc.Size} gridSize
-     * @param {Number} seed
-     * @return {Boolean}
-     */
-    initWithDuration:function (duration, gridSize, seed) {
-        if (cc.TiledGrid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
-            this._seed = seed;
-            this._tilesOrder.length = 0;
-            this._tiles.length = 0;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * Shuffle
-     * @param {Array} array
-     * @param {Number} len
-     */
-    shuffle:function (array, len) {
-        for (var i = len - 1; i >= 0; i--) {
-            var j = 0 | (cc.rand() % (i + 1));
-            var v = array[i];
-            array[i] = array[j];
-            array[j] = v;
-        }
-    },
-
-    /**
-     * Get Delta
-     * @param {cc.Size} pos
-     */
-    getDelta:function (pos) {
-        var locGridSize = this._gridSize;
-        var idx = pos.width * locGridSize.height + pos.height;
-        return cc.size(((this._tilesOrder[idx] / locGridSize.height) - pos.width),
-            ((this._tilesOrder[idx] % locGridSize.height) - pos.height));
-    },
-
-    /**
-     * Place Tile
-     * @param {cc.Point} pos
-     * @param {cc.Tile} tile
-     */
-    placeTile:function (pos, tile) {
-        var coords = this.originalTile(pos);
-
-        var step = this.target.grid.getStep();
-        var locPosition = tile.position;
-        coords.bl.x += (locPosition.x * step.x);
-        coords.bl.y += (locPosition.y * step.y);
-
-        coords.br.x += (locPosition.x * step.x);
-        coords.br.y += (locPosition.y * step.y);
-
-        coords.tl.x += (locPosition.x * step.x);
-        coords.tl.y += (locPosition.y * step.y);
-
-        coords.tr.x += (locPosition.x * step.x);
-        coords.tr.y += (locPosition.y * step.y);
-
-        this.setTile(pos, coords);
-    },
-
-    /**
-     * Start with target
-     * @param {cc.Node} target
-     */
-    startWithTarget:function (target) {
-        cc.TiledGrid3DAction.prototype.startWithTarget.call(this, target);
-        var locGridSize = this._gridSize;
-
-        this._tilesCount = locGridSize.width * locGridSize.height;
-        var locTilesOrder = this._tilesOrder;
-        locTilesOrder.length = 0;
-
-        /**
-         * Use k to loop. Because m_nTilesCount is unsigned int,
-         * and i is used later for int.
-         */
-        for (var k = 0; k < this._tilesCount; ++k)
-            locTilesOrder[k] = k;
-        this.shuffle(locTilesOrder, this._tilesCount);
-
-        var locTiles = this._tiles ;
-        locTiles.length = 0;
-        var tileIndex = 0, tempSize = cc.size(0,0);
-        for (var i = 0; i < locGridSize.width; ++i) {
-            for (var j = 0; j < locGridSize.height; ++j) {
-                locTiles[tileIndex] = new cc.Tile();
-                locTiles[tileIndex].position = cc.p(i, j);
-                locTiles[tileIndex].startPosition = cc.p(i, j);
-                tempSize.width = i;
-                tempSize.height = j;
-                locTiles[tileIndex].delta = this.getDelta(tempSize);
-                ++tileIndex;
-            }
-        }
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        var tileIndex = 0, locGridSize = this._gridSize, locTiles = this._tiles;
-        var selTile, locPos = cc.p(0, 0);
-        for (var i = 0; i < locGridSize.width; ++i) {
-            for (var j = 0; j < locGridSize.height; ++j) {
-                locPos.x = i;
-                locPos.y = j;
-                selTile = locTiles[tileIndex];
-                selTile.position.x = selTile.delta.width * dt;
-                selTile.position.y = selTile.delta.height * dt;
-                this.placeTile(locPos, selTile);
-                ++tileIndex;
-            }
-        }
+  /**
+   * Initializes the action with a random seed, the grid size and the duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} seed
+   * @return {Boolean}
+   */
+  initWithDuration(duration, gridSize, seed) {
+    if (super.initWithDuration(duration, gridSize)) {
+      this._seed = seed;
+      this._tilesOrder.length = 0;
+      this._tiles.length = 0;
+      return true;
     }
-});
+    return false;
+  }
+
+  /**
+   * Shuffle
+   * @param {Array} array
+   * @param {Number} len
+   */
+  shuffle(array, len) {
+    for (let i = len - 1; i >= 0; i--) {
+      const j = 0 | (cc.rand() % (i + 1));
+      const v = array[i];
+      array[i] = array[j];
+      array[j] = v;
+    }
+  }
+
+  /**
+   * Get Delta
+   * @param {cc.Size} pos
+   */
+  getDelta(pos) {
+    const locGridSize = this._gridSize;
+    const idx = pos.width * locGridSize.height + pos.height;
+    return cc.size(
+      this._tilesOrder[idx] / locGridSize.height - pos.width,
+      (this._tilesOrder[idx] % locGridSize.height) - pos.height
+    );
+  }
+
+  /**
+   * Place Tile
+   * @param {cc.Point} pos
+   * @param {cc.Tile} tile
+   */
+  placeTile(pos, tile) {
+    const coords = this.originalTile(pos);
+
+    const step = this.target.grid.getStep();
+    const locPosition = tile.position;
+    coords.bl.x += locPosition.x * step.x;
+    coords.bl.y += locPosition.y * step.y;
+
+    coords.br.x += locPosition.x * step.x;
+    coords.br.y += locPosition.y * step.y;
+
+    coords.tl.x += locPosition.x * step.x;
+    coords.tl.y += locPosition.y * step.y;
+
+    coords.tr.x += locPosition.x * step.x;
+    coords.tr.y += locPosition.y * step.y;
+
+    this.setTile(pos, coords);
+  }
+
+  /**
+   * Start with target
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+    const locGridSize = this._gridSize;
+
+    this._tilesCount = locGridSize.width * locGridSize.height;
+    const locTilesOrder = this._tilesOrder;
+    locTilesOrder.length = 0;
+
+    /**
+     * Use k to loop. Because m_nTilesCount is unsigned int,
+     * and i is used later for int.
+     */
+    for (let k = 0; k < this._tilesCount; ++k) locTilesOrder[k] = k;
+    this.shuffle(locTilesOrder, this._tilesCount);
+
+    const locTiles = this._tiles;
+    locTiles.length = 0;
+    let tileIndex = 0;
+    const tempSize = cc.size(0, 0);
+    for (let i = 0; i < locGridSize.width; ++i) {
+      for (let j = 0; j < locGridSize.height; ++j) {
+        locTiles[tileIndex] = new cc.Tile();
+        locTiles[tileIndex].position = cc.p(i, j);
+        locTiles[tileIndex].startPosition = cc.p(i, j);
+        tempSize.width = i;
+        tempSize.height = j;
+        locTiles[tileIndex].delta = this.getDelta(tempSize);
+        ++tileIndex;
+      }
+    }
+  }
+
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   * @param {Number}  dt
+   */
+  update(dt) {
+    let tileIndex = 0;
+    const locGridSize = this._gridSize;
+    const locTiles = this._tiles;
+    let selTile;
+    const locPos = cc.p(0, 0);
+    for (let i = 0; i < locGridSize.width; ++i) {
+      for (let j = 0; j < locGridSize.height; ++j) {
+        locPos.x = i;
+        locPos.y = j;
+        selTile = locTiles[tileIndex];
+        selTile.position.x = selTile.delta.width * dt;
+        selTile.position.y = selTile.delta.height * dt;
+        this.placeTile(locPos, selTile);
+        ++tileIndex;
+      }
+    }
+  }
+};
 
 /**
  * Creates the action with a random seed, the grid size and the duration. <br />
@@ -399,10 +402,8 @@ cc.ShuffleTiles = cc.TiledGrid3DAction.extend(/** @lends cc.ShuffleTiles# */{
  * @param {Number} seed
  * @return {cc.ShuffleTiles}
  */
-cc.shuffleTiles = function (duration, gridSize, seed) {
-    return new cc.ShuffleTiles(duration, gridSize, seed);
-};
-
+cc.shuffleTiles = (duration, gridSize, seed) =>
+  new cc.ShuffleTiles(duration, gridSize, seed);
 
 /**
  * cc.FadeOutTRTiles action. Fades out the tiles in a Top-Right direction. <br />
@@ -410,83 +411,81 @@ cc.shuffleTiles = function (duration, gridSize, seed) {
  * @class
  * @extends cc.TiledGrid3DAction
  */
-cc.FadeOutTRTiles = cc.TiledGrid3DAction.extend(/** @lends cc.FadeOutTRTiles# */{
-    /**
-     * Test function
-     * @param {cc.Point} pos
-     * @param {Number} time
-     */
-    testFunc:function (pos, time) {
-        var locX = this._gridSize.width * time;
-        var locY = this._gridSize.height * time;
-        if (locX === this._gridSize.width && locY === this._gridSize.height) return 0.0;
-        if ((locX + locY) === 0.0)
-            return 1.0;
-        return Math.pow((pos.x + pos.y) / (locX + locY), 6);
-    },
+cc.FadeOutTRTiles = class FadeOutTRTiles extends cc.TiledGrid3DAction {
+  /**
+   * Test function
+   * @param {cc.Point} pos
+   * @param {Number} time
+   */
+  testFunc(pos, time) {
+    const locX = this._gridSize.width * time;
+    const locY = this._gridSize.height * time;
+    if (locX === this._gridSize.width && locY === this._gridSize.height)
+      return 0.0;
+    if (locX + locY === 0.0) return 1.0;
+    return Math.pow((pos.x + pos.y) / (locX + locY), 6);
+  }
 
-    /**
-     * Turn on Tile
-     * @param {cc.Point} pos
-     */
-    turnOnTile:function (pos) {
-        this.setTile(pos, this.originalTile(pos));
-    },
+  /**
+   * Turn on Tile
+   * @param {cc.Point} pos
+   */
+  turnOnTile(pos) {
+    this.setTile(pos, this.originalTile(pos));
+  }
 
-    /**
-     * Turn Off Tile
-     * @param {cc.Point} pos
-     */
-    turnOffTile:function (pos) {
-        this.setTile(pos, new cc.Quad3());
-    },
+  /**
+   * Turn Off Tile
+   * @param {cc.Point} pos
+   */
+  turnOffTile(pos) {
+    this.setTile(pos, new cc.Quad3());
+  }
 
-    /**
-     * Transform tile
-     * @param {cc.Point} pos
-     * @param {Number} distance
-     */
-    transformTile:function (pos, distance) {
-        var coords = this.originalTile(pos);
-        var step = this.target.grid.getStep();
+  /**
+   * Transform tile
+   * @param {cc.Point} pos
+   * @param {Number} distance
+   */
+  transformTile(pos, distance) {
+    const coords = this.originalTile(pos);
+    const step = this.target.grid.getStep();
 
-        coords.bl.x += (step.x / 2) * (1.0 - distance);
-        coords.bl.y += (step.y / 2) * (1.0 - distance);
+    coords.bl.x += (step.x / 2) * (1.0 - distance);
+    coords.bl.y += (step.y / 2) * (1.0 - distance);
 
-        coords.br.x -= (step.x / 2) * (1.0 - distance);
-        coords.br.y += (step.y / 2) * (1.0 - distance);
+    coords.br.x -= (step.x / 2) * (1.0 - distance);
+    coords.br.y += (step.y / 2) * (1.0 - distance);
 
-        coords.tl.x += (step.x / 2) * (1.0 - distance);
-        coords.tl.y -= (step.y / 2) * (1.0 - distance);
+    coords.tl.x += (step.x / 2) * (1.0 - distance);
+    coords.tl.y -= (step.y / 2) * (1.0 - distance);
 
-        coords.tr.x -= (step.x / 2) * (1.0 - distance);
-        coords.tr.y -= (step.y / 2) * (1.0 - distance);
+    coords.tr.x -= (step.x / 2) * (1.0 - distance);
+    coords.tr.y -= (step.y / 2) * (1.0 - distance);
 
-        this.setTile(pos, coords);
-    },
+    this.setTile(pos, coords);
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        var locGridSize = this._gridSize;
-        var locPos = cc.p(0, 0),  distance;
-        for (var i = 0; i < locGridSize.width; ++i) {
-            for (var j = 0; j < locGridSize.height; ++j) {
-                locPos.x = i;
-                locPos.y = j;
-                distance = this.testFunc(locPos, dt);
-                if (distance === 0)
-                    this.turnOffTile(locPos);
-                else if (distance < 1)
-                    this.transformTile(locPos, distance);
-                else
-                    this.turnOnTile(locPos);
-            }
-        }
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   * @param {Number}  dt
+   */
+  update(dt) {
+    const locGridSize = this._gridSize;
+    const locPos = cc.p(0, 0);
+    let distance;
+    for (let i = 0; i < locGridSize.width; ++i) {
+      for (let j = 0; j < locGridSize.height; ++j) {
+        locPos.x = i;
+        locPos.y = j;
+        distance = this.testFunc(locPos, dt);
+        if (distance === 0) this.turnOffTile(locPos);
+        else if (distance < 1) this.transformTile(locPos, distance);
+        else this.turnOnTile(locPos);
+      }
     }
-});
+  }
+};
 
 /**
  * Creates the action with the grid size and the duration. <br />
@@ -496,10 +495,8 @@ cc.FadeOutTRTiles = cc.TiledGrid3DAction.extend(/** @lends cc.FadeOutTRTiles# */
  * @param gridSize
  * @return {cc.FadeOutTRTiles}
  */
-cc.fadeOutTRTiles = function (duration, gridSize) {
-    return new cc.FadeOutTRTiles(duration, gridSize);
-};
-
+cc.fadeOutTRTiles = (duration, gridSize) =>
+  new cc.FadeOutTRTiles(duration, gridSize);
 
 /**
  * cc.FadeOutBLTiles action. Fades out the tiles in a Bottom-Left direction. <br />
@@ -507,23 +504,21 @@ cc.fadeOutTRTiles = function (duration, gridSize) {
  * @class
  * @extends cc.FadeOutTRTiles
  */
-cc.FadeOutBLTiles = cc.FadeOutTRTiles.extend(/** @lends cc.FadeOutBLTiles# */{
-    /**
-     * Test function
-     * @param {cc.Point} pos
-     * @param {Number} time
-     */
-    testFunc:function (pos, time) {
-        var locX = this._gridSize.width * (1.0 - time);
-        var locY = this._gridSize.height * (1.0 - time);
-        if ((locX + locY) === 0)
-            return 0.0;
-        if ((pos.x + pos.y) === 0)
-            return 1.0;
+cc.FadeOutBLTiles = class FadeOutBLTiles extends cc.FadeOutTRTiles {
+  /**
+   * Test function
+   * @param {cc.Point} pos
+   * @param {Number} time
+   */
+  testFunc(pos, time) {
+    const locX = this._gridSize.width * (1.0 - time);
+    const locY = this._gridSize.height * (1.0 - time);
+    if (locX + locY === 0) return 0.0;
+    if (pos.x + pos.y === 0) return 1.0;
 
-        return Math.pow((locX + locY) / (pos.x + pos.y), 6);
-    }
-});
+    return Math.pow((locX + locY) / (pos.x + pos.y), 6);
+  }
+};
 
 /**
  * Creates the action with the grid size and the duration. <br />
@@ -533,10 +528,8 @@ cc.FadeOutBLTiles = cc.FadeOutTRTiles.extend(/** @lends cc.FadeOutBLTiles# */{
  * @param gridSize
  * @return {cc.FadeOutBLTiles}
  */
-cc.fadeOutBLTiles = function (duration, gridSize) {
-    return new cc.FadeOutBLTiles(duration, gridSize);
-};
-
+cc.fadeOutBLTiles = (duration, gridSize) =>
+  new cc.FadeOutBLTiles(duration, gridSize);
 
 /**
  * cc.FadeOutUpTiles action. Fades out the tiles in upwards direction. <br />
@@ -544,31 +537,31 @@ cc.fadeOutBLTiles = function (duration, gridSize) {
  * @class
  * @extends cc.FadeOutTRTiles
  */
-cc.FadeOutUpTiles = cc.FadeOutTRTiles.extend(/** @lends cc.FadeOutUpTiles# */{
-    /**
-     * Test function
-     * @param {cc.Point} pos
-     * @param {Number} time
-     */
-    testFunc:function (pos, time) {
-        var locY = this._gridSize.height * time;
-        if( locY === this._gridSize.height) return 0.0;
-        if (locY === 0.0) return 1.0;
-        return Math.pow(pos.y / locY, 6);
-    },
+cc.FadeOutUpTiles = class FadeOutUpTiles extends cc.FadeOutTRTiles {
+  /**
+   * Test function
+   * @param {cc.Point} pos
+   * @param {Number} time
+   */
+  testFunc(pos, time) {
+    const locY = this._gridSize.height * time;
+    if (locY === this._gridSize.height) return 0.0;
+    if (locY === 0.0) return 1.0;
+    return Math.pow(pos.y / locY, 6);
+  }
 
-    transformTile:function (pos, distance) {
-        var coords = this.originalTile(pos);
-        var step = this.target.grid.getStep();
+  transformTile(pos, distance) {
+    const coords = this.originalTile(pos);
+    const step = this.target.grid.getStep();
 
-        coords.bl.y += (step.y / 2) * (1.0 - distance);
-        coords.br.y += (step.y / 2) * (1.0 - distance);
-        coords.tl.y -= (step.y / 2) * (1.0 - distance);
-        coords.tr.y -= (step.y / 2) * (1.0 - distance);
+    coords.bl.y += (step.y / 2) * (1.0 - distance);
+    coords.br.y += (step.y / 2) * (1.0 - distance);
+    coords.tl.y -= (step.y / 2) * (1.0 - distance);
+    coords.tr.y -= (step.y / 2) * (1.0 - distance);
 
-        this.setTile(pos, coords);
-    }
-});
+    this.setTile(pos, coords);
+  }
+};
 
 /**
  * Creates the action with the grid size and the duration. <br />
@@ -578,10 +571,8 @@ cc.FadeOutUpTiles = cc.FadeOutTRTiles.extend(/** @lends cc.FadeOutUpTiles# */{
  * @param {cc.Size} gridSize
  * @return {cc.FadeOutUpTiles}
  */
-cc.fadeOutUpTiles = function (duration, gridSize) {
-    return new cc.FadeOutUpTiles(duration, gridSize);
-};
-
+cc.fadeOutUpTiles = (duration, gridSize) =>
+  new cc.FadeOutUpTiles(duration, gridSize);
 
 /**
  * cc.FadeOutDownTiles action. Fades out the tiles in downwards direction. <br />
@@ -589,19 +580,19 @@ cc.fadeOutUpTiles = function (duration, gridSize) {
  * @class
  * @extends cc.FadeOutUpTiles
  */
-cc.FadeOutDownTiles = cc.FadeOutUpTiles.extend(/** @lends cc.FadeOutDownTiles# */{
-    /**
-     * Test function
-     * @param {cc.Point} pos
-     * @param {Number} time
-     */
-    testFunc:function (pos, time) {
-        var locY = this._gridSize.height * (1.0 - time);
-        if( locY === 0.0 ) return 0.0;
-        if (pos.y === 0) return 1.0;
-        return Math.pow(locY / pos.y, 6);
-    }
-});
+cc.FadeOutDownTiles = class FadeOutDownTiles extends cc.FadeOutUpTiles {
+  /**
+   * Test function
+   * @param {cc.Point} pos
+   * @param {Number} time
+   */
+  testFunc(pos, time) {
+    const locY = this._gridSize.height * (1.0 - time);
+    if (locY === 0.0) return 0.0;
+    if (pos.y === 0) return 1.0;
+    return Math.pow(locY / pos.y, 6);
+  }
+};
 
 /**
  * Creates the action with the grid size and the duration. <br />
@@ -611,9 +602,8 @@ cc.FadeOutDownTiles = cc.FadeOutUpTiles.extend(/** @lends cc.FadeOutDownTiles# *
  * @param {cc.Size} gridSize
  * @return {cc.FadeOutDownTiles}
  */
-cc.fadeOutDownTiles = function (duration, gridSize) {
-    return new cc.FadeOutDownTiles(duration, gridSize);
-};
+cc.fadeOutDownTiles = (duration, gridSize) =>
+  new cc.FadeOutDownTiles(duration, gridSize);
 
 /**
  * cc.TurnOffTiles action.<br/>
@@ -631,104 +621,103 @@ cc.fadeOutDownTiles = function (duration, gridSize) {
  * // turnOffTiles with seed
  * var toff = new cc.TurnOffTiles(this._duration, cc.size(x, y), 0);
  */
-cc.TurnOffTiles = cc.TiledGrid3DAction.extend(/** @lends cc.TurnOffTiles# */{
-    _seed:null,
-    _tilesCount:0,
-    _tilesOrder:null,
+cc.TurnOffTiles = class TurnOffTiles extends cc.TiledGrid3DAction {
+  _seed = null;
+  _tilesCount = 0;
+  _tilesOrder = null;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * Creates the action with a random seed, the grid size and the duration.
-	 * @param {Number} duration
-	 * @param {cc.Size} gridSize
-	 * @param {Number|Null} [seed=0]
-	 */
-    ctor:function (duration, gridSize, seed) {
-        cc.GridAction.prototype.ctor.call(this);
-        this._tilesOrder = [];
+  /**
+   * Creates the action with a random seed, the grid size and the duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number|Null} [seed=0]
+   */
+  constructor(duration, gridSize, seed) {
+    super();
+    this._tilesOrder = [];
 
-		gridSize !== undefined && this.initWithDuration(duration, gridSize, seed);
-    },
+    gridSize !== undefined && this.initWithDuration(duration, gridSize, seed);
+  }
 
-    /**
-     * Initializes the action with a random seed, the grid size and the duration.
-     * @param {Number} duration
-     * @param {cc.Size} gridSize
-     * @param {Number|Null} [seed=0]
-     * @return {Boolean}
-     */
-    initWithDuration:function (duration, gridSize, seed) {
-        if (cc.TiledGrid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
-            this._seed = seed || 0;
-            this._tilesOrder.length = 0;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * Shuffle
-     * @param {Array} array
-     * @param {Number} len
-     */
-    shuffle:function (array, len) {
-        for (var i = len - 1; i >= 0; i--) {
-            var j = 0 | (cc.rand() % (i + 1));
-            var v = array[i];
-            array[i] = array[j];
-            array[j] = v;
-        }
-    },
-
-    /**
-     * Turn on tile.
-     * @param {cc.Point} pos
-     */
-    turnOnTile:function (pos) {
-        this.setTile(pos, this.originalTile(pos));
-    },
-
-    /**
-     * Turn off title.
-     * @param {cc.Point} pos
-     */
-    turnOffTile:function (pos) {
-        this.setTile(pos, new cc.Quad3());
-    },
-
-    /**
-     * called before the action start. It will also set the target.
-     * @param {cc.Node} target
-     */
-    startWithTarget:function (target) {
-        cc.TiledGrid3DAction.prototype.startWithTarget.call(this, target);
-
-        this._tilesCount = this._gridSize.width * this._gridSize.height;
-        var locTilesOrder = this._tilesOrder;
-        locTilesOrder.length = 0;
-        for (var i = 0; i < this._tilesCount; ++i)
-            locTilesOrder[i] = i;
-        this.shuffle(locTilesOrder, this._tilesCount);
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        var l = 0 | (dt * this._tilesCount), locGridSize = this._gridSize;
-        var t,tilePos = cc.p(0,0), locTilesOrder = this._tilesOrder;
-        for (var i = 0; i < this._tilesCount; i++) {
-            t = locTilesOrder[i];
-            tilePos.x = 0 | (t / locGridSize.height);
-            tilePos.y = t % (0 | locGridSize.height);
-            if (i < l)
-                this.turnOffTile(tilePos);
-            else
-                this.turnOnTile(tilePos);
-        }
+  /**
+   * Initializes the action with a random seed, the grid size and the duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number|Null} [seed=0]
+   * @return {Boolean}
+   */
+  initWithDuration(duration, gridSize, seed) {
+    if (super.initWithDuration(duration, gridSize)) {
+      this._seed = seed || 0;
+      this._tilesOrder.length = 0;
+      return true;
     }
-});
+    return false;
+  }
+
+  /**
+   * Shuffle
+   * @param {Array} array
+   * @param {Number} len
+   */
+  shuffle(array, len) {
+    for (let i = len - 1; i >= 0; i--) {
+      const j = 0 | (cc.rand() % (i + 1));
+      const v = array[i];
+      array[i] = array[j];
+      array[j] = v;
+    }
+  }
+
+  /**
+   * Turn on tile.
+   * @param {cc.Point} pos
+   */
+  turnOnTile(pos) {
+    this.setTile(pos, this.originalTile(pos));
+  }
+
+  /**
+   * Turn off title.
+   * @param {cc.Point} pos
+   */
+  turnOffTile(pos) {
+    this.setTile(pos, new cc.Quad3());
+  }
+
+  /**
+   * called before the action start. It will also set the target.
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+
+    this._tilesCount = this._gridSize.width * this._gridSize.height;
+    const locTilesOrder = this._tilesOrder;
+    locTilesOrder.length = 0;
+    for (let i = 0; i < this._tilesCount; ++i) locTilesOrder[i] = i;
+    this.shuffle(locTilesOrder, this._tilesCount);
+  }
+
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   * @param {Number}  dt
+   */
+  update(dt) {
+    const l = 0 | (dt * this._tilesCount);
+    const locGridSize = this._gridSize;
+    let t;
+    const tilePos = cc.p(0, 0);
+    const locTilesOrder = this._tilesOrder;
+    for (let i = 0; i < this._tilesCount; i++) {
+      t = locTilesOrder[i];
+      tilePos.x = 0 | (t / locGridSize.height);
+      tilePos.y = t % (0 | locGridSize.height);
+      if (i < l) this.turnOffTile(tilePos);
+      else this.turnOnTile(tilePos);
+    }
+  }
+};
 
 /**
  * Creates the action with a random seed, the grid size and the duration. <br />
@@ -746,9 +735,8 @@ cc.TurnOffTiles = cc.TiledGrid3DAction.extend(/** @lends cc.TurnOffTiles# */{
  * // turnOffTiles with seed
  * var toff = cc.turnOffTiles(this._duration, cc.size(x, y), 0);
  */
-cc.turnOffTiles = function (duration, gridSize, seed) {
-    return new cc.TurnOffTiles(duration, gridSize, seed);
-};
+cc.turnOffTiles = (duration, gridSize, seed) =>
+  new cc.TurnOffTiles(duration, gridSize, seed);
 
 /**
  * cc.WavesTiles3D action. <br />
@@ -760,96 +748,104 @@ cc.turnOffTiles = function (duration, gridSize, seed) {
  * @param {Number} waves
  * @param {Number} amplitude
  */
-cc.WavesTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.WavesTiles3D# */{
-    _waves:0,
-    _amplitude:0,
-    _amplitudeRate:0,
+cc.WavesTiles3D = class WavesTiles3D extends cc.TiledGrid3DAction {
+  _waves = 0;
+  _amplitude = 0;
+  _amplitudeRate = 0;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * creates the action with a number of waves, the waves amplitude, the grid size and the duration.
-	 * @param {Number} duration
-	 * @param {cc.Size} gridSize
-	 * @param {Number} waves
-	 * @param {Number} amplitude
-	 */
-    ctor:function (duration, gridSize, waves, amplitude) {
-        cc.GridAction.prototype.ctor.call(this);
-		amplitude !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude);
-    },
+  /**
+   * creates the action with a number of waves, the waves amplitude, the grid size and the duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} waves
+   * @param {Number} amplitude
+   */
+  constructor(duration, gridSize, waves, amplitude) {
+    super();
+    amplitude !== undefined &&
+      this.initWithDuration(duration, gridSize, waves, amplitude);
+  }
 
-    /**
-     * get amplitude of waves
-     * @return {Number}
-     */
-    getAmplitude:function () {
-        return this._amplitude;
-    },
+  /**
+   * get amplitude of waves
+   * @return {Number}
+   */
+  getAmplitude() {
+    return this._amplitude;
+  }
 
-    /**
-     * set amplitude of waves
-     * @param {Number} amplitude
-     */
-    setAmplitude:function (amplitude) {
-        this._amplitude = amplitude;
-    },
+  /**
+   * set amplitude of waves
+   * @param {Number} amplitude
+   */
+  setAmplitude(amplitude) {
+    this._amplitude = amplitude;
+  }
 
-    /**
-     * get amplitude rate of waves
-     * @return {Number}
-     */
-    getAmplitudeRate:function () {
-        return this._amplitudeRate;
-    },
+  /**
+   * get amplitude rate of waves
+   * @return {Number}
+   */
+  getAmplitudeRate() {
+    return this._amplitudeRate;
+  }
 
-    /**
-     * set amplitude rate of waves
-     * @param {Number} amplitudeRate
-     */
-    setAmplitudeRate:function (amplitudeRate) {
-        this._amplitudeRate = amplitudeRate;
-    },
+  /**
+   * set amplitude rate of waves
+   * @param {Number} amplitudeRate
+   */
+  setAmplitudeRate(amplitudeRate) {
+    this._amplitudeRate = amplitudeRate;
+  }
 
-    /**
-     * initializes the action with a number of waves, the waves amplitude, the grid size and the duration
-     * @param {Number} duration
-     * @param {cc.Size} gridSize
-     * @param {Number} waves
-     * @param {Number} amplitude
-     * @return {Boolean}
-     */
-    initWithDuration:function (duration, gridSize, waves, amplitude) {
-        if (cc.TiledGrid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
-            this._waves = waves;
-            this._amplitude = amplitude;
-            this._amplitudeRate = 1.0;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        var locGridSize = this._gridSize, locWaves = this._waves, locAmplitude = this._amplitude, locAmplitudeRate = this._amplitudeRate;
-        var locPos = cc.p(0, 0), coords;
-        for (var i = 0; i < locGridSize.width; i++) {
-            for (var j = 0; j < locGridSize.height; j++) {
-                locPos.x = i;
-                locPos.y = j;
-                coords = this.originalTile(locPos);
-                coords.bl.z = (Math.sin(dt * Math.PI * locWaves * 2 +
-                    (coords.bl.y + coords.bl.x) * 0.01) * locAmplitude * locAmplitudeRate);
-                coords.br.z = coords.bl.z;
-                coords.tl.z = coords.bl.z;
-                coords.tr.z = coords.bl.z;
-                this.setTile(locPos, coords);
-            }
-        }
+  /**
+   * initializes the action with a number of waves, the waves amplitude, the grid size and the duration
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} waves
+   * @param {Number} amplitude
+   * @return {Boolean}
+   */
+  initWithDuration(duration, gridSize, waves, amplitude) {
+    if (super.initWithDuration(duration, gridSize)) {
+      this._waves = waves;
+      this._amplitude = amplitude;
+      this._amplitudeRate = 1.0;
+      return true;
     }
-});
+    return false;
+  }
+
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   * @param {Number}  dt
+   */
+  update(dt) {
+    const locGridSize = this._gridSize;
+    const locWaves = this._waves;
+    const locAmplitude = this._amplitude;
+    const locAmplitudeRate = this._amplitudeRate;
+    const locPos = cc.p(0, 0);
+    let coords;
+    for (let i = 0; i < locGridSize.width; i++) {
+      for (let j = 0; j < locGridSize.height; j++) {
+        locPos.x = i;
+        locPos.y = j;
+        coords = this.originalTile(locPos);
+        coords.bl.z =
+          Math.sin(
+            dt * Math.PI * locWaves * 2 + (coords.bl.y + coords.bl.x) * 0.01
+          ) *
+          locAmplitude *
+          locAmplitudeRate;
+        coords.br.z = coords.bl.z;
+        coords.tl.z = coords.bl.z;
+        coords.tr.z = coords.bl.z;
+        this.setTile(locPos, coords);
+      }
+    }
+  }
+};
 
 /**
  * creates the action with a number of waves, the waves amplitude, the grid size and the duration. <br />
@@ -861,9 +857,8 @@ cc.WavesTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.WavesTiles3D# */{
  * @param {Number} amplitude
  * @return {cc.WavesTiles3D}
  */
-cc.wavesTiles3D = function (duration, gridSize, waves, amplitude) {
-    return new cc.WavesTiles3D(duration, gridSize, waves, amplitude);
-};
+cc.wavesTiles3D = (duration, gridSize, waves, amplitude) =>
+  new cc.WavesTiles3D(duration, gridSize, waves, amplitude);
 
 /**
  * cc.JumpTiles3D action.  A sin function is executed to move the tiles across the Z axis. <br />
@@ -875,110 +870,117 @@ cc.wavesTiles3D = function (duration, gridSize, waves, amplitude) {
  * @param {Number} numberOfJumps
  * @param {Number} amplitude
  */
-cc.JumpTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.JumpTiles3D# */{
-    _jumps:0,
-    _amplitude:0,
-    _amplitudeRate:0,
+cc.JumpTiles3D = class JumpTiles3D extends cc.TiledGrid3DAction {
+  _jumps = 0;
+  _amplitude = 0;
+  _amplitudeRate = 0;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * creates the action with the number of jumps, the sin amplitude, the grid size and the duration.
-	 * @param {Number} duration
-	 * @param {cc.Size} gridSize
-	 * @param {Number} numberOfJumps
-	 * @param {Number} amplitude
-	 */
-    ctor:function (duration, gridSize, numberOfJumps, amplitude) {
-        cc.GridAction.prototype.ctor.call(this);
-		amplitude !== undefined && this.initWithDuration(duration, gridSize, numberOfJumps, amplitude);
-    },
+  /**
+   * creates the action with the number of jumps, the sin amplitude, the grid size and the duration.
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} numberOfJumps
+   * @param {Number} amplitude
+   */
+  constructor(duration, gridSize, numberOfJumps, amplitude) {
+    super();
+    amplitude !== undefined &&
+      this.initWithDuration(duration, gridSize, numberOfJumps, amplitude);
+  }
 
-    /**
-     * get amplitude of the sin
-     * @return {Number}
-     */
-    getAmplitude:function () {
-        return this._amplitude;
-    },
+  /**
+   * get amplitude of the sin
+   * @return {Number}
+   */
+  getAmplitude() {
+    return this._amplitude;
+  }
 
-    /**
-     * set amplitude of the sin
-     * @param {Number} amplitude
-     */
-    setAmplitude:function (amplitude) {
-        this._amplitude = amplitude;
-    },
+  /**
+   * set amplitude of the sin
+   * @param {Number} amplitude
+   */
+  setAmplitude(amplitude) {
+    this._amplitude = amplitude;
+  }
 
-    /**
-     * get amplitude rate
-     * @return {Number}
-     */
-    getAmplitudeRate:function () {
-        return this._amplitudeRate;
-    },
+  /**
+   * get amplitude rate
+   * @return {Number}
+   */
+  getAmplitudeRate() {
+    return this._amplitudeRate;
+  }
 
-    /**
-     * set amplitude rate
-     * @param amplitudeRate
-     */
-    setAmplitudeRate:function (amplitudeRate) {
-        this._amplitudeRate = amplitudeRate;
-    },
+  /**
+   * set amplitude rate
+   * @param amplitudeRate
+   */
+  setAmplitudeRate(amplitudeRate) {
+    this._amplitudeRate = amplitudeRate;
+  }
 
-    /**
-     * initializes the action with the number of jumps, the sin amplitude, the grid size and the duration
-     * @param {Number} duration
-     * @param {cc.Size} gridSize
-     * @param {Number} numberOfJumps
-     * @param {Number} amplitude
-     */
-    initWithDuration:function (duration, gridSize, numberOfJumps, amplitude) {
-        if (cc.TiledGrid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
-            this._jumps = numberOfJumps;
-            this._amplitude = amplitude;
-            this._amplitudeRate = 1.0;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        var sinz = (Math.sin(Math.PI * dt * this._jumps * 2) * this._amplitude * this._amplitudeRate );
-        var sinz2 = (Math.sin(Math.PI * (dt * this._jumps * 2 + 1)) * this._amplitude * this._amplitudeRate );
-
-        var locGridSize = this._gridSize;
-        var locGrid = this.target.grid;
-        var coords, locPos = cc.p(0, 0);
-        for (var i = 0; i < locGridSize.width; i++) {
-            for (var j = 0; j < locGridSize.height; j++) {
-                locPos.x = i;
-                locPos.y = j;
-                //hack for html5
-                //var coords = this.originalTile(cc.p(i, j));
-                coords = locGrid.originalTile(locPos);
-
-                if (((i + j) % 2) === 0) {
-                    coords.bl.z += sinz;
-                    coords.br.z += sinz;
-                    coords.tl.z += sinz;
-                    coords.tr.z += sinz;
-                } else {
-                    coords.bl.z += sinz2;
-                    coords.br.z += sinz2;
-                    coords.tl.z += sinz2;
-                    coords.tr.z += sinz2;
-                }
-                //hack for html5
-                //this.setTile(cc.p(i, j), coords);
-                locGrid.setTile(locPos, coords);
-            }
-        }
+  /**
+   * initializes the action with the number of jumps, the sin amplitude, the grid size and the duration
+   * @param {Number} duration
+   * @param {cc.Size} gridSize
+   * @param {Number} numberOfJumps
+   * @param {Number} amplitude
+   */
+  initWithDuration(duration, gridSize, numberOfJumps, amplitude) {
+    if (super.initWithDuration(duration, gridSize)) {
+      this._jumps = numberOfJumps;
+      this._amplitude = amplitude;
+      this._amplitudeRate = 1.0;
+      return true;
     }
-});
+    return false;
+  }
+
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   * @param {Number}  dt
+   */
+  update(dt) {
+    const sinz =
+      Math.sin(Math.PI * dt * this._jumps * 2) *
+      this._amplitude *
+      this._amplitudeRate;
+    const sinz2 =
+      Math.sin(Math.PI * (dt * this._jumps * 2 + 1)) *
+      this._amplitude *
+      this._amplitudeRate;
+
+    const locGridSize = this._gridSize;
+    const locGrid = this.target.grid;
+    let coords;
+    const locPos = cc.p(0, 0);
+    for (let i = 0; i < locGridSize.width; i++) {
+      for (let j = 0; j < locGridSize.height; j++) {
+        locPos.x = i;
+        locPos.y = j;
+        // hack for html5
+        // var coords = this.originalTile(cc.p(i, j));
+        coords = locGrid.originalTile(locPos);
+
+        if ((i + j) % 2 === 0) {
+          coords.bl.z += sinz;
+          coords.br.z += sinz;
+          coords.tl.z += sinz;
+          coords.tr.z += sinz;
+        } else {
+          coords.bl.z += sinz2;
+          coords.br.z += sinz2;
+          coords.tl.z += sinz2;
+          coords.tr.z += sinz2;
+        }
+        // hack for html5
+        // this.setTile(cc.p(i, j), coords);
+        locGrid.setTile(locPos, coords);
+      }
+    }
+  }
+};
 
 /**
  * creates the action with the number of jumps, the sin amplitude, the grid size and the duration. <br />
@@ -990,10 +992,8 @@ cc.JumpTiles3D = cc.TiledGrid3DAction.extend(/** @lends cc.JumpTiles3D# */{
  * @param {Number} amplitude
  * @return {cc.JumpTiles3D}
  */
-cc.jumpTiles3D = function (duration, gridSize, numberOfJumps, amplitude) {
-    return new cc.JumpTiles3D(duration, gridSize, numberOfJumps, amplitude);
-};
-
+cc.jumpTiles3D = (duration, gridSize, numberOfJumps, amplitude) =>
+  new cc.JumpTiles3D(duration, gridSize, numberOfJumps, amplitude);
 
 /**
  * cc.SplitRows action. <br />
@@ -1003,65 +1003,66 @@ cc.jumpTiles3D = function (duration, gridSize, numberOfJumps, amplitude) {
  * @param {Number} duration
  * @param {Number} rows
  */
-cc.SplitRows = cc.TiledGrid3DAction.extend(/** @lends cc.SplitRows# */{
-    _rows:0,
-    _winSize:null,
+cc.SplitRows = class SplitRows extends cc.TiledGrid3DAction {
+  _rows = 0;
+  _winSize = null;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * creates the action with the number of rows to split and the duration.
-	 * @param {Number} duration
-	 * @param {Number} rows
-	 */
-    ctor:function (duration, rows) {
-        cc.GridAction.prototype.ctor.call(this);
-		rows !== undefined && this.initWithDuration(duration, rows);
-    },
+  /**
+   * creates the action with the number of rows to split and the duration.
+   * @param {Number} duration
+   * @param {Number} rows
+   */
+  constructor(duration, rows) {
+    super();
+    rows !== undefined && this.initWithDuration(duration, rows);
+  }
 
-    /**
-     * initializes the action with the number of rows to split and the duration
-     * @param {Number} duration
-     * @param {Number} rows
-     * @return {Boolean}
-     */
-    initWithDuration:function (duration, rows) {
-        this._rows = rows;
-        return cc.TiledGrid3DAction.prototype.initWithDuration.call(this, duration, cc.size(1, rows));
-    },
+  /**
+   * initializes the action with the number of rows to split and the duration
+   * @param {Number} duration
+   * @param {Number} rows
+   * @return {Boolean}
+   */
+  initWithDuration(duration, rows) {
+    this._rows = rows;
+    return super.initWithDuration(duration, cc.size(1, rows));
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        var locGridSize = this._gridSize, locWinSizeWidth = this._winSize.width;
-        var coords, direction, locPos = cc.p(0, 0);
-        for (var j = 0; j < locGridSize.height; ++j) {
-            locPos.y = j;
-            coords = this.originalTile(locPos);
-            direction = 1;
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   * @param {Number}  dt
+   */
+  update(dt) {
+    const locGridSize = this._gridSize;
+    const locWinSizeWidth = this._winSize.width;
+    let coords;
+    let direction;
+    const locPos = cc.p(0, 0);
+    for (let j = 0; j < locGridSize.height; ++j) {
+      locPos.y = j;
+      coords = this.originalTile(locPos);
+      direction = 1;
 
-            if ((j % 2 ) === 0)
-                direction = -1;
+      if (j % 2 === 0) direction = -1;
 
-            coords.bl.x += direction * locWinSizeWidth * dt;
-            coords.br.x += direction * locWinSizeWidth * dt;
-            coords.tl.x += direction * locWinSizeWidth * dt;
-            coords.tr.x += direction * locWinSizeWidth * dt;
+      coords.bl.x += direction * locWinSizeWidth * dt;
+      coords.br.x += direction * locWinSizeWidth * dt;
+      coords.tl.x += direction * locWinSizeWidth * dt;
+      coords.tr.x += direction * locWinSizeWidth * dt;
 
-            this.setTile(locPos, coords);
-        }
-    },
-
-    /**
-     * called before the action start. It will also set the target.
-     * @param {cc.Node} target
-     */
-    startWithTarget:function (target) {
-        cc.TiledGrid3DAction.prototype.startWithTarget.call(this, target);
-        this._winSize = cc.director.getWinSizeInPixels();
+      this.setTile(locPos, coords);
     }
-});
+  }
+
+  /**
+   * called before the action start. It will also set the target.
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+    this._winSize = cc.director.getWinSizeInPixels();
+  }
+};
 
 /**
  * creates the action with the number of rows to split and the duration. <br />
@@ -1071,10 +1072,7 @@ cc.SplitRows = cc.TiledGrid3DAction.extend(/** @lends cc.SplitRows# */{
  * @param {Number} rows
  * @return {cc.SplitRows}
  */
-cc.splitRows = function (duration, rows) {
-    return new cc.SplitRows(duration, rows);
-};
-
+cc.splitRows = (duration, rows) => new cc.SplitRows(duration, rows);
 
 /**
  * cc.SplitCols action. <br />
@@ -1084,65 +1082,66 @@ cc.splitRows = function (duration, rows) {
  * @param {Number} duration
  * @param {Number} cols
  */
-cc.SplitCols = cc.TiledGrid3DAction.extend(/** @lends cc.SplitCols# */{
-    _cols:0,
-    _winSize:null,
+cc.SplitCols = class SplitCols extends cc.TiledGrid3DAction {
+  _cols = 0;
+  _winSize = null;
 
-	/**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
-	 * Creates the action with the number of columns to split and the duration.
-	 * @param {Number} duration
-	 * @param {Number} cols
-	 */
-    ctor:function (duration, cols) {
-        cc.GridAction.prototype.ctor.call(this);
-		cols !== undefined && this.initWithDuration(duration, cols);
-    },
-    /**
-     * initializes the action with the number of columns to split and the duration
-     * @param {Number} duration
-     * @param {Number} cols
-     * @return {Boolean}
-     */
-    initWithDuration:function (duration, cols) {
-        this._cols = cols;
-        return cc.TiledGrid3DAction.prototype.initWithDuration.call(this, duration, cc.size(cols, 1));
-    },
+  /**
+   * Creates the action with the number of columns to split and the duration.
+   * @param {Number} duration
+   * @param {Number} cols
+   */
+  constructor(duration, cols) {
+    super();
+    cols !== undefined && this.initWithDuration(duration, cols);
+  }
+  /**
+   * initializes the action with the number of columns to split and the duration
+   * @param {Number} duration
+   * @param {Number} cols
+   * @return {Boolean}
+   */
+  initWithDuration(duration, cols) {
+    this._cols = cols;
+    return super.initWithDuration(duration, cc.size(cols, 1));
+  }
 
-    /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     * @param {Number}  dt
-     */
-    update:function (dt) {
-        var locGridSizeWidth = this._gridSize.width, locWinSizeHeight = this._winSize.height;
-        var coords, direction, locPos = cc.p(0, 0);
-        for (var i = 0; i < locGridSizeWidth; ++i) {
-            locPos.x = i;
-            coords = this.originalTile(locPos);
-            direction = 1;
+  /**
+   * Called once per frame. Time is the number of seconds of a frame interval.
+   * @param {Number}  dt
+   */
+  update(dt) {
+    const locGridSizeWidth = this._gridSize.width;
+    const locWinSizeHeight = this._winSize.height;
+    let coords;
+    let direction;
+    const locPos = cc.p(0, 0);
+    for (let i = 0; i < locGridSizeWidth; ++i) {
+      locPos.x = i;
+      coords = this.originalTile(locPos);
+      direction = 1;
 
-            if ((i % 2 ) === 0)
-                direction = -1;
+      if (i % 2 === 0) direction = -1;
 
-            coords.bl.y += direction * locWinSizeHeight * dt;
-            coords.br.y += direction * locWinSizeHeight * dt;
-            coords.tl.y += direction * locWinSizeHeight * dt;
-            coords.tr.y += direction * locWinSizeHeight * dt;
+      coords.bl.y += direction * locWinSizeHeight * dt;
+      coords.br.y += direction * locWinSizeHeight * dt;
+      coords.tl.y += direction * locWinSizeHeight * dt;
+      coords.tr.y += direction * locWinSizeHeight * dt;
 
-            this.setTile(locPos, coords);
-        }
-        cc.renderer.childrenOrderDirty = true;
-    },
-
-    /**
-     * called before the action start. It will also set the target.
-     * @param {cc.Node} target
-     */
-    startWithTarget:function (target) {
-        cc.TiledGrid3DAction.prototype.startWithTarget.call(this, target);
-        this._winSize = cc.director.getWinSizeInPixels();
+      this.setTile(locPos, coords);
     }
-});
+    cc.renderer.childrenOrderDirty = true;
+  }
+
+  /**
+   * called before the action start. It will also set the target.
+   * @param {cc.Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+    this._winSize = cc.director.getWinSizeInPixels();
+  }
+};
 
 /**
  * creates the action with the number of columns to split and the duration.  <br />
@@ -1152,6 +1151,4 @@ cc.SplitCols = cc.TiledGrid3DAction.extend(/** @lends cc.SplitCols# */{
  * @param {Number} cols
  * @return {cc.SplitCols}
  */
-cc.splitCols = function (duration, cols) {
-    return new cc.SplitCols(duration, cols);
-};
+cc.splitCols = (duration, cols) => new cc.SplitCols(duration, cols);

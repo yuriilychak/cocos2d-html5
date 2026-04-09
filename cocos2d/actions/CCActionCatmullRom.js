@@ -47,7 +47,7 @@
  * @param {cc.Point} [out]
  * @return {cc.Point}
  */
-cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t, out) {
+cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t, out = cc.p(0,0)) {
   const t2 = t * t;
   const t3 = t2 * t;
 
@@ -61,40 +61,36 @@ cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t, out) {
   const b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2); // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
   const b4 = s * (t3 - t2); // s(t3 - t2)P4
 
-  const x = p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4;
-  const y = p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4;
-  if (out !== undefined) {
-    out.x = x;
-    out.y = y;
-  } else {
-    return cc.p(x, y);
-  }
+  out.x = p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4;
+  out.y = p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4;
+
+  return out;
 };
 
 /**
  * returns a new copy of the array reversed.
  *
- * @return {Array}
+ * @return {cc.Point[]}
  */
 cc.reverseControlPoints = function (controlPoints) {
-  const newArray = [];
+  const result = [];
   for (let i = controlPoints.length - 1; i >= 0; i--) {
-    newArray.push(cc.p(controlPoints[i].x, controlPoints[i].y));
+    result.push(cc.p(controlPoints[i].x, controlPoints[i].y));
   }
-  return newArray;
+  return result;
 };
 
 /**
  * returns a new clone of the controlPoints
  *
  * @param controlPoints
- * @returns {Array}
+ * @returns {cc.Point[]}
  */
 cc.cloneControlPoints = function (controlPoints) {
-  const newArray = [];
+  const result = [];
   for (let i = 0; i < controlPoints.length; i++)
-    newArray.push(cc.p(controlPoints[i].x, controlPoints[i].y));
-  return newArray;
+    result.push(cc.p(controlPoints[i].x, controlPoints[i].y));
+  return result;
 };
 
 /**
@@ -102,7 +98,7 @@ cc.cloneControlPoints = function (controlPoints) {
  *
  * @param {Array} controlPoints
  * @param {Number} pos
- * @return {Array}
+ * @return {cc.Point[]}
  */
 cc.getControlPointAt = function (controlPoints, pos) {
   const p = Math.min(controlPoints.length - 1, Math.max(pos, 0));

@@ -211,6 +211,5 @@ var IAPTestLayer = PluginXTest.extend({
     },
     onExit: function () {
         this._super();
-        this.toastLayer.release();
     }
 });

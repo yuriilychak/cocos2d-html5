@@ -628,7 +628,6 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
                 this.addChild(this._sprite);
                 if(!cc.sys.isNative)
                     cc.eventManager.addListener(listener1, this._sprite);
-                this._sprite.release();
             }, this)
         ));
         //----end6----
@@ -637,8 +636,6 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
     onExit:function(){
         //----start6----onExit
         this._super();
-        if (this._spriteSaved)
-            this._sprite.release();
         //----end6----
     },
 
@@ -797,11 +794,6 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
         eventManager.removeListener(this._event2);
         eventManager.removeListener(this._event3);
         eventManager.removeListener(this._event4);
-
-        this._event1.release();
-        this._event2.release();
-        this._event3.release();
-        this._event4.release();
         //----end8----
     },
 
