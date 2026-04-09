@@ -117,7 +117,7 @@ cc.Waves3D = class Waves3D extends cc.Grid3DAction {
       for (let j = 0; j < locGridSize.height + 1; ++j) {
         locPos.x = i;
         locPos.y = j;
-        const v = this.originalVertex(locPos);
+        const v = this.getOriginalVertex(locPos);
         v.z +=
           Math.sin(Math.PI * dt * locWaves * 2 + (v.y + v.x) * 0.01) *
           locAmplitude *
@@ -195,9 +195,9 @@ cc.FlipX3D = class FlipX3D extends cc.Grid3DAction {
     const diff = new cc.Vertex3F();
     const tempVer = cc.p(0, 0);
     tempVer.x = tempVer.y = 1;
-    const v0 = this.originalVertex(tempVer);
+    const v0 = this.getOriginalVertex(tempVer);
     tempVer.x = tempVer.y = 0;
-    const v1 = this.originalVertex(tempVer);
+    const v1 = this.getOriginalVertex(tempVer);
 
     const x0 = v0.x;
     const x1 = v1.x;
@@ -227,25 +227,25 @@ cc.FlipX3D = class FlipX3D extends cc.Grid3DAction {
     diff.z = Math.abs(parseFloat((x * mz) / 4.0));
 
     // bottom-left
-    let v = this.originalVertex(a);
+    let v = this.getOriginalVertex(a);
     v.x = diff.x;
     v.z += diff.z;
     this.setVertex(a, v);
 
     // upper-left
-    v = this.originalVertex(b);
+    v = this.getOriginalVertex(b);
     v.x = diff.x;
     v.z += diff.z;
     this.setVertex(b, v);
 
     // bottom-right
-    v = this.originalVertex(c);
+    v = this.getOriginalVertex(c);
     v.x -= diff.x;
     v.z -= diff.z;
     this.setVertex(c, v);
 
     // upper-right
-    v = this.originalVertex(d);
+    v = this.getOriginalVertex(d);
     v.x -= diff.x;
     v.z -= diff.z;
     this.setVertex(d, v);
@@ -293,9 +293,9 @@ cc.FlipY3D = class FlipY3D extends cc.FlipX3D {
 
     const tempP = cc.p(0, 0);
     tempP.x = tempP.y = 1;
-    const v0 = this.originalVertex(tempP);
+    const v0 = this.getOriginalVertex(tempP);
     tempP.x = tempP.y = 0;
-    const v1 = this.originalVertex(tempP);
+    const v1 = this.getOriginalVertex(tempP);
 
     const y0 = v0.y;
     const y1 = v1.y;
@@ -325,25 +325,25 @@ cc.FlipY3D = class FlipY3D extends cc.FlipX3D {
     diff.z = Math.abs(parseFloat(y * mz) / 4.0);
 
     // bottom-left
-    let v = this.originalVertex(a);
+    let v = this.getOriginalVertex(a);
     v.y = diff.y;
     v.z += diff.z;
     this.setVertex(a, v);
 
     // upper-left
-    v = this.originalVertex(b);
+    v = this.getOriginalVertex(b);
     v.y -= diff.y;
     v.z -= diff.z;
     this.setVertex(b, v);
 
     // bottom-right
-    v = this.originalVertex(c);
+    v = this.getOriginalVertex(c);
     v.y = diff.y;
     v.z += diff.z;
     this.setVertex(c, v);
 
     // upper-right
-    v = this.originalVertex(d);
+    v = this.getOriginalVertex(d);
     v.y -= diff.y;
     v.z -= diff.z;
     this.setVertex(d, v);
@@ -479,7 +479,7 @@ cc.Lens3D = class Lens3D extends cc.Grid3DAction {
         for (let j = 0; j < locGridSizeHeight + 1; ++j) {
           locPos.x = i;
           locPos.y = j;
-          v = this.originalVertex(locPos);
+          v = this.getOriginalVertex(locPos);
           vect.x = this._position.x - v.x;
           vect.y = this._position.y - v.y;
           r = cc.pLength(vect);
@@ -657,7 +657,7 @@ cc.Ripple3D = class Ripple3D extends cc.Grid3DAction {
       for (let j = 0; j < locGridSizeHeight + 1; ++j) {
         locPos.x = i;
         locPos.y = j;
-        v = this.originalVertex(locPos);
+        v = this.getOriginalVertex(locPos);
 
         tempPos.x = this._position.x - v.x;
         tempPos.y = this._position.y - v.y;
@@ -752,7 +752,7 @@ cc.Shaky3D = class Shaky3D extends cc.Grid3DAction {
       for (let j = 0; j < locGridSizeHeight + 1; ++j) {
         locP.x = i;
         locP.y = j;
-        v = this.originalVertex(locP);
+        v = this.getOriginalVertex(locP);
         v.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
         v.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
         if (locShakeZ) v.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
@@ -869,7 +869,7 @@ cc.Liquid = class Liquid extends cc.Grid3DAction {
       for (let j = 1; j < locSizeHeight; ++j) {
         locPos.x = i;
         locPos.y = j;
-        v = this.originalVertex(locPos);
+        v = this.getOriginalVertex(locPos);
         v.x =
           v.x +
           Math.sin(dt * Math.PI * locWaves * 2 + v.x * 0.01) *
@@ -1012,7 +1012,7 @@ cc.Waves = class Waves extends cc.Grid3DAction {
       for (let j = 0; j < locSizeHeight + 1; ++j) {
         locPos.x = i;
         locPos.y = j;
-        v = this.originalVertex(locPos);
+        v = this.getOriginalVertex(locPos);
         if (locVertical)
           v.x =
             v.x +
@@ -1162,7 +1162,7 @@ cc.Twirl = class Twirl extends cc.Grid3DAction {
       for (let j = 0; j < locSizeHeight + 1; ++j) {
         locPos.x = i;
         locPos.y = j;
-        v = this.originalVertex(locPos);
+        v = this.getOriginalVertex(locPos);
 
         avg.x = i - locSizeWidth / 2.0;
         avg.y = j - locSizeHeight / 2.0;

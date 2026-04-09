@@ -182,7 +182,7 @@ cc.Grid3DAction = class Grid3DAction extends cc.GridAction {
    * @return {cc.Vertex3F}
    */
   getOriginalVertex(position) {
-    return this.target.grid.originalVertex(position);
+    return this.target.grid.getOriginalVertex(position);
   }
 
   /**
@@ -226,7 +226,7 @@ cc.TiledGrid3DAction = class TiledGrid3DAction extends cc.GridAction {
    * @return {cc.Quad3}
    */
   getOriginalTile(position) {
-    return this.target.grid.originalTile(position);
+    return this.target.grid.getOriginalTile(position);
   }
 
   /**
