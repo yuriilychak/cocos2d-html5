@@ -391,7 +391,7 @@ cc.Audio.WebAudio = class WebAudio {
         if (request._timeoutId >= 0) {
           clearTimeout(request._timeoutId);
         }
-        context["decodeAudioData"](
+        cc.Audio._context["decodeAudioData"](
           request.response,
           //success
           (buffer) => cb(null, buffer),

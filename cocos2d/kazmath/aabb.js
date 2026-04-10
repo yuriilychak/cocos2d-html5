@@ -30,49 +30,61 @@
  * A structure that represents an axis-aligned bounding box.
  * cc.kmAABB => cc.math.AABB
  */
-cc.math.AABB = function (min, max) {
+cc.math.AABB = class AABB {
+  constructor(min, max) {
     /** The max corner of the box */
     this.min = min || new cc.math.Vec3();
     /** The min corner of the box */
     this.max = max || new cc.math.Vec3();
-};
+  }
 
-/**
- * Returns true if point is in the specified AABB, returns false otherwise.
- * @param {cc.math.Vec3} point
- * @returns {boolean}
- */
-cc.math.AABB.prototype.containsPoint = function (point) {
-    return (point.x >= this.min.x && point.x <= this.max.x &&
-    point.y >= this.min.y && point.y <= this.max.y &&
-    point.z >= this.min.z && point.z <= this.max.z);
-};
+  /**
+   * Returns true if point is in the specified AABB, returns false otherwise.
+   * @param {cc.math.Vec3} point
+   * @returns {boolean}
+   */
+  containsPoint(point) {
+    return (
+      point.x >= this.min.x &&
+      point.x <= this.max.x &&
+      point.y >= this.min.y &&
+      point.y <= this.max.y &&
+      point.z >= this.min.z &&
+      point.z <= this.max.z
+    );
+  }
 
-/**
- * Returns true if point is in the specified AABB, returns
- * false otherwise.
- */
-cc.math.AABB.containsPoint = function (pPoint, pBox) {
-    return (pPoint.x >= pBox.min.x && pPoint.x <= pBox.max.x &&
-        pPoint.y >= pBox.min.y && pPoint.y <= pBox.max.y &&
-        pPoint.z >= pBox.min.z && pPoint.z <= pBox.max.z);
-};
-
-/**
- * Assigns aabb to current AABB object
- * @param {cc.math.AABB} aabb
- */
-cc.math.AABB.prototype.assignFrom = function(aabb){
+  /**
+   * Assigns aabb to current AABB object
+   * @param {cc.math.AABB} aabb
+   */
+  assignFrom(aabb) {
     this.min.assignFrom(aabb.min);
     this.max.assignFrom(aabb.max);
-};
+  }
 
-/**
- * Assigns pIn to pOut, returns pOut.
- */
-cc.math.AABB.assign = function (pOut, pIn) {              //cc.kmAABBAssign
+  /**
+   * Returns true if point is in the specified AABB, returns
+   * false otherwise.
+   */
+  static containsPoint(pPoint, pBox) {
+    return (
+      pPoint.x >= pBox.min.x &&
+      pPoint.x <= pBox.max.x &&
+      pPoint.y >= pBox.min.y &&
+      pPoint.y <= pBox.max.y &&
+      pPoint.z >= pBox.min.z &&
+      pPoint.z <= pBox.max.z
+    );
+  }
+
+  /**
+   * Assigns pIn to pOut, returns pOut.
+   */
+  static assign(pOut, pIn) {
+    //cc.kmAABBAssign
     pOut.min.assignFrom(pIn.min);
     pOut.max.assignFrom(pIn.max);
     return pOut;
+  }
 };
-
