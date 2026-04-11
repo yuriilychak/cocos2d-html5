@@ -26,181 +26,183 @@
  * ParticleSystem's canvas render command
  */
 (function () {
-    cc.ParticleSystem.CanvasRenderCmd = function (renderable) {
-        this._rootCtor(renderable);
-        this._needDraw = true;
+    cc.ParticleSystem.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = true;
 
-        this._drawMode = cc.ParticleSystem.TEXTURE_MODE;
-        this._shapeType = cc.ParticleSystem.BALL_SHAPE;
+            this._drawMode = cc.ParticleSystem.TEXTURE_MODE;
+            this._shapeType = cc.ParticleSystem.BALL_SHAPE;
 
-        this._pointRect = cc.rect(0, 0, 0, 0);
-        this._tintCache = null;
-    };
-    var proto = cc.ParticleSystem.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    proto.constructor = cc.ParticleSystem.CanvasRenderCmd;
-
-    proto.getDrawMode = function () {
-        return this._drawMode;
-    };
-
-    proto.setDrawMode = function (drawMode) {
-        this._drawMode = drawMode;
-    };
-
-    proto.getShapeType = function () {
-        return this._shapeType;
-    };
-
-    proto.setShapeType = function (shapeType) {
-        this._shapeType = shapeType;
-    };
-
-    proto.setBatchNode = function (batchNode) {
-        if (this._batchNode !== batchNode) {
-            this._node._batchNode = batchNode;
+            this._pointRect = cc.rect(0, 0, 0, 0);
+            this._tintCache = null;
         }
-    };
 
-    proto.updateQuadWithParticle = function (particle, newPosition) {
-        //do nothing
-    };
+        getDrawMode() {
+            return this._drawMode;
+        }
 
-    proto.updateParticlePosition = function (particle, position) {
-        cc.pIn(particle.drawPos, position);
-    };
+        setDrawMode(drawMode) {
+            this._drawMode = drawMode;
+        }
 
-    proto.rendering = function (ctx, scaleX, scaleY) {
-        //TODO: need refactor rendering for performance
-        var wrapper = ctx || cc._renderContext, context = wrapper.getContext(),
-            node = this._node, pointRect = this._pointRect;
+        getShapeType() {
+            return this._shapeType;
+        }
 
-        wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-        wrapper.save();
-        if (node.isBlendAdditive())
-            context.globalCompositeOperation = 'lighter';
-        else
-            context.globalCompositeOperation = 'source-over';
+        setShapeType(shapeType) {
+            this._shapeType = shapeType;
+        }
 
-        var i, particle, lpx, alpha;
-        var particleCount = this._node.particleCount, particles = this._node._particles;
-        if (node.drawMode !== cc.ParticleSystem.SHAPE_MODE && node._texture) {
-            // Delay drawing until the texture is fully loaded by the browser
-            if (!node._texture._textureLoaded) {
-                wrapper.restore();
-                return;
+        setBatchNode(batchNode) {
+            if (this._batchNode !== batchNode) {
+                this._node._batchNode = batchNode;
             }
-            var element = node._texture.getHtmlElementObj();
-            if (!element.width || !element.height) {
-                wrapper.restore();
-                return;
-            }
+        }
 
-            var drawElement = element;
-            for (i = 0; i < particleCount; i++) {
-                particle = particles[i];
-                lpx = (0 | (particle.size * 0.5));
+        updateQuadWithParticle(particle, newPosition) {
+            //do nothing
+        }
 
-                alpha = particle.color.a / 255;
-                if (alpha === 0) continue;
-                context.globalAlpha = alpha;
+        updateParticlePosition(particle, position) {
+            cc.pIn(particle.drawPos, position);
+        }
 
-                context.save();
-                context.translate((0 | particle.drawPos.x), -(0 | particle.drawPos.y));
+        rendering(ctx, scaleX, scaleY) {
+            //TODO: need refactor rendering for performance
+            const wrapper = ctx || cc._renderContext, context = wrapper.getContext(),
+                node = this._node, pointRect = this._pointRect;
 
-                var size = Math.floor(particle.size / 4) * 4;
-                var w = pointRect.width;
-                var h = pointRect.height;
+            wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+            wrapper.save();
+            if (node.isBlendAdditive())
+                context.globalCompositeOperation = 'lighter';
+            else
+                context.globalCompositeOperation = 'source-over';
 
-                context.scale(Math.max((1 / w) * size, 0.000001), Math.max((1 / h) * size, 0.000001));
-                if (particle.rotation)
-                    context.rotate(cc.degreesToRadians(particle.rotation));
+            let i, particle, lpx, alpha;
+            const particleCount = this._node.particleCount, particles = this._node._particles;
+            if (node.drawMode !== cc.ParticleSystem.SHAPE_MODE && node._texture) {
+                // Delay drawing until the texture is fully loaded by the browser
+                if (!node._texture._textureLoaded) {
+                    wrapper.restore();
+                    return;
+                }
+                const element = node._texture.getHtmlElementObj();
+                if (!element.width || !element.height) {
+                    wrapper.restore();
+                    return;
+                }
 
-                drawElement = particle.isChangeColor ? this._changeTextureColor(node._texture, particle.color, this._pointRect) : element;
-                context.drawImage(drawElement, -(0 | (w / 2)), -(0 | (h / 2)));
-                context.restore();
-            }
-        } else {
-            var drawTool = cc._drawingUtil;
-            for (i = 0; i < particleCount; i++) {
-                particle = particles[i];
-                lpx = (0 | (particle.size * 0.5));
-                alpha = particle.color.a / 255;
-                if (alpha === 0) continue;
-                context.globalAlpha = alpha;
+                let drawElement = element;
+                for (i = 0; i < particleCount; i++) {
+                    particle = particles[i];
+                    lpx = (0 | (particle.size * 0.5));
 
-                context.save();
-                context.translate(0 | particle.drawPos.x, -(0 | particle.drawPos.y));
-                if (node.shapeType === cc.ParticleSystem.STAR_SHAPE) {
+                    alpha = particle.color.a / 255;
+                    if (alpha === 0) continue;
+                    context.globalAlpha = alpha;
+
+                    context.save();
+                    context.translate((0 | particle.drawPos.x), -(0 | particle.drawPos.y));
+
+                    const size = Math.floor(particle.size / 4) * 4;
+                    const w = pointRect.width;
+                    const h = pointRect.height;
+
+                    context.scale(Math.max((1 / w) * size, 0.000001), Math.max((1 / h) * size, 0.000001));
                     if (particle.rotation)
                         context.rotate(cc.degreesToRadians(particle.rotation));
-                    drawTool.drawStar(wrapper, lpx, particle.color);
-                } else
-                    drawTool.drawColorBall(wrapper, lpx, particle.color);
-                context.restore();
+
+                    drawElement = particle.isChangeColor ? this._changeTextureColor(node._texture, particle.color, this._pointRect) : element;
+                    context.drawImage(drawElement, -(0 | (w / 2)), -(0 | (h / 2)));
+                    context.restore();
+                }
+            } else {
+                const drawTool = cc._drawingUtil;
+                for (i = 0; i < particleCount; i++) {
+                    particle = particles[i];
+                    lpx = (0 | (particle.size * 0.5));
+                    alpha = particle.color.a / 255;
+                    if (alpha === 0) continue;
+                    context.globalAlpha = alpha;
+
+                    context.save();
+                    context.translate(0 | particle.drawPos.x, -(0 | particle.drawPos.y));
+                    if (node.shapeType === cc.ParticleSystem.STAR_SHAPE) {
+                        if (particle.rotation)
+                            context.rotate(cc.degreesToRadians(particle.rotation));
+                        drawTool.drawStar(wrapper, lpx, particle.color);
+                    } else
+                        drawTool.drawColorBall(wrapper, lpx, particle.color);
+                    context.restore();
+                }
             }
+            wrapper.restore();
+            cc.g_NumberOfDraws++;
         }
-        wrapper.restore();
-        cc.g_NumberOfDraws++;
-    };
 
-    proto._changeTextureColor = function (texture, color, rect) {
-        if (!this._tintCache) {
-            this._tintCache = document.createElement("canvas");
+        _changeTextureColor(texture, color, rect) {
+            if (!this._tintCache) {
+                this._tintCache = document.createElement("canvas");
+            }
+            const tintCache = this._tintCache;
+            const textureContentSize = texture.getContentSize();
+            tintCache.width = textureContentSize.width;
+            tintCache.height = textureContentSize.height;
+            return texture._generateColorTexture(color.r, color.g, color.b, rect, tintCache);
         }
-        var tintCache = this._tintCache;
-        var textureContentSize = texture.getContentSize();
-        tintCache.width = textureContentSize.width;
-        tintCache.height = textureContentSize.height;
-        return texture._generateColorTexture(color.r, color.g, color.b, rect, tintCache);
-    };
 
-    proto.initTexCoordsWithRect = function (pointRect) {
-        this._pointRect = pointRect;
-    };
-
-    proto.setTotalParticles = function (tp) {
-        //cc.assert(tp <= this._allocatedParticles, "Particle: resizing particle array only supported for quads");
-        this._node._totalParticles = (tp < 200) ? tp : 200;
-    };
-
-    proto.addParticle = function () {
-        var node = this._node,
-            particles = node._particles,
-            particle;
-        if (node.particleCount < particles.length) {
-            particle = particles[node.particleCount];
-        } else {
-            particle = new cc.Particle();
-            particles.push(particle);
+        initTexCoordsWithRect(pointRect) {
+            this._pointRect = pointRect;
         }
-        return particle;
-    };
 
-    proto._setupVBO = function () {
-    };
-    proto._allocMemory = function () {
-        return true;
-    };
+        setTotalParticles(tp) {
+            //cc.assert(tp <= this._allocatedParticles, "Particle: resizing particle array only supported for quads");
+            this._node._totalParticles = (tp < 200) ? tp : 200;
+        }
 
-    proto.postStep = function () {
-    };
+        addParticle() {
+            const node = this._node,
+                particles = node._particles;
+            let particle;
+            if (node.particleCount < particles.length) {
+                particle = particles[node.particleCount];
+            } else {
+                particle = new cc.Particle();
+                particles.push(particle);
+            }
+            return particle;
+        }
 
-    proto._setBlendAdditive = function () {
-        var locBlendFunc = this._node._blendFunc;
-        locBlendFunc.src = cc.BLEND_SRC;
-        locBlendFunc.dst = cc.BLEND_DST;
-    };
+        _setupVBO() {
+        }
 
-    proto._initWithTotalParticles = function (totalParticles) {
-    };
-    proto._updateDeltaColor = function (selParticle, dt) {
-        if (!this._node._dontTint) {
-            var deltaColor = selParticle.deltaColor;
-            selParticle.color.r += deltaColor.r * dt;
-            selParticle.color.g += deltaColor.g * dt;
-            selParticle.color.b += deltaColor.b * dt;
-            selParticle.color.a += deltaColor.a * dt;
-            selParticle.isChangeColor = deltaColor.r !== 0 || deltaColor.g !== 0 || deltaColor.b !== 0;
+        _allocMemory() {
+            return true;
+        }
+
+        postStep() {
+        }
+
+        _setBlendAdditive() {
+            const locBlendFunc = this._node._blendFunc;
+            locBlendFunc.src = cc.BLEND_SRC;
+            locBlendFunc.dst = cc.BLEND_DST;
+        }
+
+        _initWithTotalParticles(totalParticles) {
+        }
+
+        _updateDeltaColor(selParticle, dt) {
+            if (!this._node._dontTint) {
+                const deltaColor = selParticle.deltaColor;
+                selParticle.color.r += deltaColor.r * dt;
+                selParticle.color.g += deltaColor.g * dt;
+                selParticle.color.b += deltaColor.b * dt;
+                selParticle.color.a += deltaColor.a * dt;
+                selParticle.isChangeColor = deltaColor.r !== 0 || deltaColor.g !== 0 || deltaColor.b !== 0;
+            }
         }
     };
 })();

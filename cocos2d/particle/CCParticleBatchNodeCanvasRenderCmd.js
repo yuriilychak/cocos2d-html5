@@ -26,14 +26,13 @@
     /**
      * cc.ParticleBatchNode's rendering objects of Canvas
      */
-    cc.ParticleBatchNode.CanvasRenderCmd = function (renderable) {
-        this._rootCtor(renderable);
-        this._needDraw = false;
-    };
+    cc.ParticleBatchNode.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = false;
+        }
 
-    var proto = cc.ParticleBatchNode.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    proto.constructor = cc.ParticleBatchNode.CanvasRenderCmd;
-
-    proto._initWithTexture = function () {
+        _initWithTexture() {
+        }
     };
 })();

@@ -25,22 +25,21 @@
 //TODO find a way to simple these code.
 
 (function () {
-    cc.ParallaxNode.CanvasRenderCmd = function (renderable) {
-        this._rootCtor(renderable);
-        this._needDraw = false;
-    };
+    cc.ParallaxNode.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = false;
+        }
 
-    var proto = cc.ParallaxNode.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    proto.constructor = cc.ParallaxNode.CanvasRenderCmd;
+        updateStatus() {
+            this._node._updateParallaxPosition();
+            this.originUpdateStatus();
+        }
 
-    proto.updateStatus = function () {
-        this._node._updateParallaxPosition();
-        this.originUpdateStatus();
-    };
-
-    proto._syncStatus = function (parentCmd) {
-        this._node._updateParallaxPosition();
-        this._originSyncStatus(parentCmd);
+        _syncStatus(parentCmd) {
+            this._node._updateParallaxPosition();
+            this._originSyncStatus(parentCmd);
+        }
     };
 })();
 
@@ -48,22 +47,20 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
     if (cc._renderType !== cc.game.RENDER_TYPE_WEBGL)
         return;
 
-    cc.ParallaxNode.WebGLRenderCmd = function (renderable) {
-        this._rootCtor(renderable);
-        this._needDraw = false;
-    };
+    cc.ParallaxNode.WebGLRenderCmd = class WebGLRenderCmd extends cc.Node.WebGLRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = false;
+        }
 
-    var proto = cc.ParallaxNode.WebGLRenderCmd.prototype = Object.create(cc.Node.WebGLRenderCmd.prototype);
-    proto.constructor = cc.ParallaxNode.WebGLRenderCmd;
+        updateStatus() {
+            this._node._updateParallaxPosition();
+            this.originUpdateStatus();
+        }
 
-    proto.updateStatus = function () {
-        this._node._updateParallaxPosition();
-        this.originUpdateStatus();
-    };
-
-    proto._syncStatus = function (parentCmd) {
-        this._node._updateParallaxPosition();
-        this._originSyncStatus(parentCmd);
+        _syncStatus(parentCmd) {
+            this._node._updateParallaxPosition();
+            this._originSyncStatus(parentCmd);
+        }
     };
 });
-
