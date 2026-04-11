@@ -26,25 +26,24 @@
  * cc.PhysicsSprite's rendering objects of Canvas
  */
 (function () {
-    cc.PhysicsSprite.CanvasRenderCmd = function (renderableObject) {
-        this._spriteCmdCtor(renderableObject);
-        this._needDraw = true;
-    };
+    cc.PhysicsSprite.CanvasRenderCmd = class CanvasRenderCmd extends cc.Sprite.CanvasRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+            this._needDraw = true;
+        }
 
-    var proto = cc.PhysicsSprite.CanvasRenderCmd.prototype = Object.create(cc.Sprite.CanvasRenderCmd.prototype);
-    proto.constructor = cc.PhysicsSprite.CanvasRenderCmd;
+        rendering(ctx, scaleX, scaleY) {
+            //  This is a special class
+            //  Sprite can not obtain sign
+            //  So here must to calculate of each frame
+            const node = this._node;
+            node._syncPosition();
+            if (!node._ignoreBodyRotation)
+                node._syncRotation();
+            this.transform(this.getParentRenderCmd());
 
-    proto.rendering = function (ctx, scaleX, scaleY) {
-        //  This is a special class
-        //  Sprite can not obtain sign
-        //  So here must to calculate of each frame
-        var node = this._node;
-        node._syncPosition();
-        if (!node._ignoreBodyRotation)
-            node._syncRotation();
-        this.transform(this.getParentRenderCmd());
-
-        cc.Sprite.CanvasRenderCmd.prototype.rendering.call(this, ctx, scaleX, scaleY);
+            super.rendering(ctx, scaleX, scaleY);
+        }
     };
 
 })();

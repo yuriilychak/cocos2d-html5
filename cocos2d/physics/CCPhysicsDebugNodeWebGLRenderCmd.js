@@ -26,37 +26,36 @@
  * cc.PhysicsDebugNode's rendering objects of WebGL
  */
 (function () {
-    cc.PhysicsDebugNode.WebGLRenderCmd = function (renderableObject) {
-        this._rootCtor(renderableObject);
-        this._needDraw = true;
-        this._matrix = new cc.math.Matrix4();
-        this._matrix.identity();
-    };
+    cc.PhysicsDebugNode.WebGLRenderCmd = class WebGLRenderCmd extends cc.Node.WebGLRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+            this._needDraw = true;
+            this._matrix = new cc.math.Matrix4();
+            this._matrix.identity();
+        }
 
-    cc.PhysicsDebugNode.WebGLRenderCmd.prototype = Object.create(cc.Node.WebGLRenderCmd.prototype);
-    cc.PhysicsDebugNode.WebGLRenderCmd.prototype.constructor = cc.PhysicsDebugNode.WebGLRenderCmd;
+        rendering(ctx) {
+            const node = this._node;
+            if (!node._space)
+                return;
 
-    cc.PhysicsDebugNode.WebGLRenderCmd.prototype.rendering = function (ctx) {
-        var node = this._node;
-        if (!node._space)
-            return;
+            node._space.eachShape(cc.DrawShape.bind(node));
+            node._space.eachConstraint(cc.DrawConstraint.bind(node));
 
-        node._space.eachShape(cc.DrawShape.bind(node));
-        node._space.eachConstraint(cc.DrawConstraint.bind(node));
+            const wt = this._worldTransform;
+            this._matrix.mat[0] = wt.a;
+            this._matrix.mat[4] = wt.c;
+            this._matrix.mat[12] = wt.tx;
+            this._matrix.mat[1] = wt.b;
+            this._matrix.mat[5] = wt.d;
+            this._matrix.mat[13] = wt.ty;
 
-        var wt = this._worldTransform;
-        this._matrix.mat[0] = wt.a;
-        this._matrix.mat[4] = wt.c;
-        this._matrix.mat[12] = wt.tx;
-        this._matrix.mat[1] = wt.b;
-        this._matrix.mat[5] = wt.d;
-        this._matrix.mat[13] = wt.ty;
+            //cc.DrawNode.prototype.draw.call(node);
+            cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+            this._glProgramState.apply(this._matrix);
+            node._render();
 
-        //cc.DrawNode.prototype.draw.call(node);
-        cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
-        this._glProgramState.apply(this._matrix);
-        node._render();
-
-        node.clear();
+            node.clear();
+        }
     };
 })();

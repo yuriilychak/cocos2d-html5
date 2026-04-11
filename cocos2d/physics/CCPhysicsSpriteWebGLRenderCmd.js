@@ -26,26 +26,23 @@
  * cc.PhysicsSprite's rendering objects of WebGL
  */
 (function () {
-    cc.PhysicsSprite.WebGLRenderCmd = function (renderableObject) {
-        this._spriteCmdCtor(renderableObject);
-        this._needDraw = true;
-    };
+    cc.PhysicsSprite.WebGLRenderCmd = class WebGLRenderCmd extends cc.Sprite.WebGLRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+            this._needDraw = true;
+        }
 
-    var proto = cc.PhysicsSprite.WebGLRenderCmd.prototype = Object.create(cc.Sprite.WebGLRenderCmd.prototype);
-    proto.constructor = cc.PhysicsSprite.WebGLRenderCmd;
+        uploadData(f32buffer, ui32buffer, vertexDataOffset) {
+            //  This is a special class
+            //  Sprite can not obtain sign
+            //  So here must to calculate of each frame
+            const node = this._node;
+            node._syncPosition();
+            if (!node._ignoreBodyRotation)
+                node._syncRotation();
+            this.transform(this.getParentRenderCmd(), true);
 
-    proto.spUploadData = cc.Sprite.WebGLRenderCmd.prototype.uploadData;
-
-    proto.uploadData = function (f32buffer, ui32buffer, vertexDataOffset) {
-        //  This is a special class
-        //  Sprite can not obtain sign
-        //  So here must to calculate of each frame
-        var node = this._node;
-        node._syncPosition();
-        if (!node._ignoreBodyRotation)
-            node._syncRotation();
-        this.transform(this.getParentRenderCmd(), true);
-
-        return this.spUploadData(f32buffer, ui32buffer, vertexDataOffset);
+            return super.uploadData(f32buffer, ui32buffer, vertexDataOffset);
+        }
     };
 })();

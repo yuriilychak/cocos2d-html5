@@ -26,261 +26,262 @@
  * cc.ProgressTimer's rendering objects of Canvas
  */
 (function () {
-    cc.ProgressTimer.CanvasRenderCmd = function (renderableObject) {
-        this._rootCtor(renderableObject);
-        this._needDraw = true;
+    cc.ProgressTimer.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+            this._needDraw = true;
 
-        this._PI180 = Math.PI / 180;
-        this._barRect = cc.rect(0, 0, 0, 0);
-        this._origin = cc.p(0, 0);
-        this._radius = 0;
-        this._startAngle = 270;
-        this._endAngle = 270;
-        this._counterClockWise = false;
-        this._canUseDirtyRegion = true;
-    };
-
-    var proto = cc.ProgressTimer.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    proto.constructor = cc.ProgressTimer.CanvasRenderCmd;
-
-    proto.rendering = function (ctx, scaleX, scaleY) {
-        var wrapper = ctx || cc._renderContext, context = wrapper.getContext(), node = this._node, locSprite = node._sprite;
-        var locTextureCoord = locSprite._renderCmd._textureCoord, alpha = locSprite._renderCmd._displayedOpacity / 255;
-
-        if (locTextureCoord.width === 0 || locTextureCoord.height === 0)
-            return;
-        if (!locSprite._texture || !locTextureCoord.validRect || alpha === 0)
-            return;
-
-        wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-        wrapper.setCompositeOperation(locSprite._blendFuncStr);
-        wrapper.setGlobalAlpha(alpha);
-
-        var locRect = locSprite._rect, locOffsetPosition = locSprite._offsetPosition;
-        var locX = locOffsetPosition.x,
-            locY = -locOffsetPosition.y - locRect.height,
-            locWidth = locRect.width,
-            locHeight = locRect.height;
-
-        wrapper.save();
-        if (locSprite._flippedX) {
-            locX = -locX - locWidth;
-            context.scale(-1, 1);
-        }
-        if (locSprite._flippedY) {
-            locY = locOffsetPosition.y;
-            context.scale(1, -1);
+            this._PI180 = Math.PI / 180;
+            this._barRect = cc.rect(0, 0, 0, 0);
+            this._origin = cc.p(0, 0);
+            this._radius = 0;
+            this._startAngle = 270;
+            this._endAngle = 270;
+            this._counterClockWise = false;
+            this._canUseDirtyRegion = true;
         }
 
-        //clip
-        if (node._type === cc.ProgressTimer.TYPE_BAR) {
-            var locBarRect = this._barRect;
-            context.beginPath();
-            context.rect(locBarRect.x, locBarRect.y, locBarRect.width, locBarRect.height);
-            context.clip();
-            context.closePath();
-        } else if (node._type === cc.ProgressTimer.TYPE_RADIAL) {
-            var locOriginX = this._origin.x;
-            var locOriginY = this._origin.y;
-            context.beginPath();
-            context.arc(locOriginX, locOriginY, this._radius, this._PI180 * this._startAngle, this._PI180 * this._endAngle, this._counterClockWise);
-            context.lineTo(locOriginX, locOriginY);
-            context.clip();
-            context.closePath();
-        }
+        rendering(ctx, scaleX, scaleY) {
+            const wrapper = ctx || cc._renderContext, context = wrapper.getContext(), node = this._node, locSprite = node._sprite;
+            const locTextureCoord = locSprite._renderCmd._textureCoord, alpha = locSprite._renderCmd._displayedOpacity / 255;
 
-        //draw sprite
-        var texture = locSprite._renderCmd._textureToRender || locSprite._texture;
-        var image = texture.getHtmlElementObj();
-        if (locSprite._renderCmd._colorized) {
-            context.drawImage(image,
-                0, 0, locTextureCoord.width, locTextureCoord.height,
-                locX, locY, locWidth, locHeight);
-        } else {
-            context.drawImage(image,
-                locTextureCoord.renderX, locTextureCoord.renderY, locTextureCoord.width, locTextureCoord.height,
-                locX, locY, locWidth, locHeight);
-        }
-        wrapper.restore();
-        cc.g_NumberOfDraws++;
-    };
+            if (locTextureCoord.width === 0 || locTextureCoord.height === 0)
+                return;
+            if (!locSprite._texture || !locTextureCoord.validRect || alpha === 0)
+                return;
 
-    proto.releaseData = function () {
-    };
+            wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+            wrapper.setCompositeOperation(locSprite._blendFuncStr);
+            wrapper.setGlobalAlpha(alpha);
 
-    proto.resetVertexData = function () {
-    };
+            const locRect = locSprite._rect, locOffsetPosition = locSprite._offsetPosition;
+            let locX = locOffsetPosition.x,
+                locY = -locOffsetPosition.y - locRect.height;
+            const locWidth = locRect.width,
+                locHeight = locRect.height;
 
-    proto._updateProgress = function () {
-        this.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-        var node = this._node;
-        var locSprite = node._sprite;
-        var sw = locSprite.width, sh = locSprite.height;
-        var locMidPoint = node._midPoint;
+            wrapper.save();
+            if (locSprite._flippedX) {
+                locX = -locX - locWidth;
+                context.scale(-1, 1);
+            }
+            if (locSprite._flippedY) {
+                locY = locOffsetPosition.y;
+                context.scale(1, -1);
+            }
 
-        if (node._type === cc.ProgressTimer.TYPE_RADIAL) {
-            this._radius = Math.round(Math.sqrt(sw * sw + sh * sh));
-            var locStartAngle, locEndAngle, locCounterClockWise = false, locOrigin = this._origin;
-            locOrigin.x = sw * locMidPoint.x;
-            locOrigin.y = -sh * locMidPoint.y;
+            //clip
+            if (node._type === cc.ProgressTimer.TYPE_BAR) {
+                const locBarRect = this._barRect;
+                context.beginPath();
+                context.rect(locBarRect.x, locBarRect.y, locBarRect.width, locBarRect.height);
+                context.clip();
+                context.closePath();
+            } else if (node._type === cc.ProgressTimer.TYPE_RADIAL) {
+                const locOriginX = this._origin.x;
+                const locOriginY = this._origin.y;
+                context.beginPath();
+                context.arc(locOriginX, locOriginY, this._radius, this._PI180 * this._startAngle, this._PI180 * this._endAngle, this._counterClockWise);
+                context.lineTo(locOriginX, locOriginY);
+                context.clip();
+                context.closePath();
+            }
 
-            if (node._reverseDirection) {
-                locEndAngle = 270;
-                locStartAngle = 270 - 3.6 * node._percentage;
+            //draw sprite
+            const texture = locSprite._renderCmd._textureToRender || locSprite._texture;
+            const image = texture.getHtmlElementObj();
+            if (locSprite._renderCmd._colorized) {
+                context.drawImage(image,
+                    0, 0, locTextureCoord.width, locTextureCoord.height,
+                    locX, locY, locWidth, locHeight);
             } else {
-                locStartAngle = -90;
-                locEndAngle = -90 + 3.6 * node._percentage;
+                context.drawImage(image,
+                    locTextureCoord.renderX, locTextureCoord.renderY, locTextureCoord.width, locTextureCoord.height,
+                    locX, locY, locWidth, locHeight);
+            }
+            wrapper.restore();
+            cc.g_NumberOfDraws++;
+        }
+
+        releaseData() {
+        }
+
+        resetVertexData() {
+        }
+
+        _updateProgress() {
+            this.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
+            const node = this._node;
+            const locSprite = node._sprite;
+            const sw = locSprite.width, sh = locSprite.height;
+            const locMidPoint = node._midPoint;
+
+            if (node._type === cc.ProgressTimer.TYPE_RADIAL) {
+                this._radius = Math.round(Math.sqrt(sw * sw + sh * sh));
+                let locStartAngle, locEndAngle, locCounterClockWise = false;
+                const locOrigin = this._origin;
+                locOrigin.x = sw * locMidPoint.x;
+                locOrigin.y = -sh * locMidPoint.y;
+
+                if (node._reverseDirection) {
+                    locEndAngle = 270;
+                    locStartAngle = 270 - 3.6 * node._percentage;
+                } else {
+                    locStartAngle = -90;
+                    locEndAngle = -90 + 3.6 * node._percentage;
+                }
+
+                if (locSprite._flippedX) {
+                    locOrigin.x -= sw * (node._midPoint.x * 2);
+                    locStartAngle = -locStartAngle;
+                    locEndAngle = -locEndAngle;
+                    locStartAngle -= 180;
+                    locEndAngle -= 180;
+                    locCounterClockWise = !locCounterClockWise;
+                }
+                if (locSprite._flippedY) {
+                    locOrigin.y += sh * (node._midPoint.y * 2);
+                    locCounterClockWise = !locCounterClockWise;
+                    locStartAngle = -locStartAngle;
+                    locEndAngle = -locEndAngle;
+                }
+
+                this._startAngle = locStartAngle;
+                this._endAngle = locEndAngle;
+                this._counterClockWise = locCounterClockWise;
+            } else {
+                const locBarChangeRate = node._barChangeRate;
+                const percentageF = node._percentage / 100;
+                const locBarRect = this._barRect;
+
+                const drewSize = cc.size((sw * (1 - locBarChangeRate.x)), (sh * (1 - locBarChangeRate.y)));
+                const drawingSize = cc.size((sw - drewSize.width) * percentageF, (sh - drewSize.height) * percentageF);
+                const currentDrawSize = cc.size(drewSize.width + drawingSize.width, drewSize.height + drawingSize.height);
+
+                const startPoint = cc.p(sw * locMidPoint.x, sh * locMidPoint.y);
+
+                let needToLeft = startPoint.x - currentDrawSize.width / 2;
+                if ((locMidPoint.x > 0.5) && (currentDrawSize.width / 2 >= sw - startPoint.x))
+                    needToLeft = sw - currentDrawSize.width;
+
+                let needToTop = startPoint.y - currentDrawSize.height / 2;
+                if ((locMidPoint.y > 0.5) && (currentDrawSize.height / 2 >= sh - startPoint.y))
+                    needToTop = sh - currentDrawSize.height;
+
+                //left pos
+                locBarRect.x = 0;
+                let flipXNeed = 1;
+                if (locSprite._flippedX) {
+                    locBarRect.x -= currentDrawSize.width;
+                    flipXNeed = -1;
+                }
+
+                if (needToLeft > 0)
+                    locBarRect.x += needToLeft * flipXNeed;
+
+                //right pos
+                locBarRect.y = 0;
+                let flipYNeed = 1;
+                if (locSprite._flippedY) {
+                    locBarRect.y += currentDrawSize.height;
+                    flipYNeed = -1;
+                }
+
+                if (needToTop > 0)
+                    locBarRect.y -= needToTop * flipYNeed;
+
+                //clip width and clip height
+                locBarRect.width = currentDrawSize.width;
+                locBarRect.height = -currentDrawSize.height;
+            }
+        }
+
+        _syncStatus(parentCmd) {
+            const node = this._node;
+            if (!node._sprite)
+                return;
+            const flags = cc.Node._dirtyFlags;
+            let locFlag = this._dirtyFlag;
+            const parentNode = parentCmd ? parentCmd._node : null;
+
+            if (parentNode && parentNode._cascadeColorEnabled && (parentCmd._dirtyFlag & flags.colorDirty))
+                locFlag |= flags.colorDirty;
+
+            if (parentNode && parentNode._cascadeOpacityEnabled && (parentCmd._dirtyFlag & flags.opacityDirty))
+                locFlag |= flags.opacityDirty;
+
+            if (parentCmd && (parentCmd._dirtyFlag & flags.transformDirty))
+                locFlag |= flags.transformDirty;
+
+            this._dirtyFlag = locFlag;
+
+            const spriteCmd = node._sprite._renderCmd;
+            const spriteFlag = spriteCmd._dirtyFlag;
+
+            const colorDirty = spriteFlag & flags.colorDirty,
+                opacityDirty = spriteFlag & flags.opacityDirty;
+
+            if (colorDirty) {
+                spriteCmd._syncDisplayColor();
+                spriteCmd._dirtyFlag &= ~flags.colorDirty;
+                this._dirtyFlag &= ~flags.colorDirty;
             }
 
-            if (locSprite._flippedX) {
-                locOrigin.x -= sw * (node._midPoint.x * 2);
-                locStartAngle = -locStartAngle;
-                locEndAngle = -locEndAngle;
-                locStartAngle -= 180;
-                locEndAngle -= 180;
-                locCounterClockWise = !locCounterClockWise;
-            }
-            if (locSprite._flippedY) {
-                locOrigin.y += sh * (node._midPoint.y * 2);
-                locCounterClockWise = !locCounterClockWise;
-                locStartAngle = -locStartAngle;
-                locEndAngle = -locEndAngle;
+            if (opacityDirty) {
+                spriteCmd._syncDisplayOpacity();
+                spriteCmd._dirtyFlag &= ~flags.opacityDirty;
+                this._dirtyFlag &= ~flags.opacityDirty;
             }
 
-            this._startAngle = locStartAngle;
-            this._endAngle = locEndAngle;
-            this._counterClockWise = locCounterClockWise;
-        } else {
-            var locBarChangeRate = node._barChangeRate;
-            var percentageF = node._percentage / 100;
-            var locBarRect = this._barRect;
-
-            var drewSize = cc.size((sw * (1 - locBarChangeRate.x)), (sh * (1 - locBarChangeRate.y)));
-            var drawingSize = cc.size((sw - drewSize.width) * percentageF, (sh - drewSize.height) * percentageF);
-            var currentDrawSize = cc.size(drewSize.width + drawingSize.width, drewSize.height + drawingSize.height);
-
-            var startPoint = cc.p(sw * locMidPoint.x, sh * locMidPoint.y);
-
-            var needToLeft = startPoint.x - currentDrawSize.width / 2;
-            if ((locMidPoint.x > 0.5) && (currentDrawSize.width / 2 >= sw - startPoint.x))
-                needToLeft = sw - currentDrawSize.width;
-
-            var needToTop = startPoint.y - currentDrawSize.height / 2;
-            if ((locMidPoint.y > 0.5) && (currentDrawSize.height / 2 >= sh - startPoint.y))
-                needToTop = sh - currentDrawSize.height;
-
-            //left pos
-            locBarRect.x = 0;
-            var flipXNeed = 1;
-            if (locSprite._flippedX) {
-                locBarRect.x -= currentDrawSize.width;
-                flipXNeed = -1;
+            if (colorDirty || opacityDirty) {
+                spriteCmd._updateColor();
             }
 
-            if (needToLeft > 0)
-                locBarRect.x += needToLeft * flipXNeed;
-
-            //right pos
-            locBarRect.y = 0;
-            var flipYNeed = 1;
-            if (locSprite._flippedY) {
-                locBarRect.y += currentDrawSize.height;
-                flipYNeed = -1;
+            if (locFlag & flags.transformDirty) {
+                //update the transform
+                this.transform(parentCmd);
             }
 
-            if (needToTop > 0)
-                locBarRect.y -= needToTop * flipYNeed;
-
-            //clip width and clip height
-            locBarRect.width = currentDrawSize.width;
-            locBarRect.height = -currentDrawSize.height;
-        }
-    };
-
-    proto._syncStatus = function (parentCmd) {
-        var node = this._node;
-        if (!node._sprite)
-            return;
-        var flags = cc.Node._dirtyFlags, locFlag = this._dirtyFlag;
-        var parentNode = parentCmd ? parentCmd._node : null;
-
-        if (parentNode && parentNode._cascadeColorEnabled && (parentCmd._dirtyFlag & flags.colorDirty))
-            locFlag |= flags.colorDirty;
-
-        if (parentNode && parentNode._cascadeOpacityEnabled && (parentCmd._dirtyFlag & flags.opacityDirty))
-            locFlag |= flags.opacityDirty;
-
-        if (parentCmd && (parentCmd._dirtyFlag & flags.transformDirty))
-            locFlag |= flags.transformDirty;
-
-        this._dirtyFlag = locFlag;
-
-        var spriteCmd = node._sprite._renderCmd;
-        var spriteFlag = spriteCmd._dirtyFlag;
-
-        var colorDirty = spriteFlag & flags.colorDirty,
-            opacityDirty = spriteFlag & flags.opacityDirty;
-
-        if (colorDirty) {
-            spriteCmd._syncDisplayColor();
-            spriteCmd._dirtyFlag &= ~flags.colorDirty;
-            this._dirtyFlag &= ~flags.colorDirty;
+            if (locFlag & flags.orderDirty) {
+                this._dirtyFlag &= ~flags.orderDirty;
+            }
         }
 
-        if (opacityDirty) {
-            spriteCmd._syncDisplayOpacity();
-            spriteCmd._dirtyFlag &= ~flags.opacityDirty;
-            this._dirtyFlag &= ~flags.opacityDirty;
-        }
+        updateStatus() {
+            const node = this._node;
+            if (!node._sprite)
+                return;
+            const flags = cc.Node._dirtyFlags, locFlag = this._dirtyFlag;
+            const spriteCmd = node._sprite._renderCmd;
+            const spriteFlag = spriteCmd._dirtyFlag;
 
-        if (colorDirty || opacityDirty) {
-            spriteCmd._updateColor();
-        }
+            const colorDirty = spriteFlag & flags.colorDirty,
+                opacityDirty = spriteFlag & flags.opacityDirty;
 
-        if (locFlag & flags.transformDirty) {
-            //update the transform
-            this.transform(parentCmd);
-        }
+            if (colorDirty) {
+                spriteCmd._updateDisplayColor();
+                spriteCmd._dirtyFlag = spriteCmd._dirtyFlag & flags.colorDirty ^ spriteCmd._dirtyFlag;
+                this._dirtyFlag = this._dirtyFlag & flags.colorDirty ^ this._dirtyFlag;
+            }
 
-        if (locFlag & flags.orderDirty) {
-            this._dirtyFlag &= ~flags.orderDirty;
-        }
-    };
+            if (opacityDirty) {
+                spriteCmd._updateDisplayOpacity();
+                spriteCmd._dirtyFlag = spriteCmd._dirtyFlag & flags.opacityDirty ^ spriteCmd._dirtyFlag;
+                this._dirtyFlag = this._dirtyFlag & flags.opacityDirty ^ this._dirtyFlag;
+            }
 
-    proto.updateStatus = function () {
-        var node = this._node;
-        if (!node._sprite)
-            return;
-        var flags = cc.Node._dirtyFlags, locFlag = this._dirtyFlag;
-        var spriteCmd = node._sprite._renderCmd;
-        var spriteFlag = spriteCmd._dirtyFlag;
+            if (colorDirty || opacityDirty) {
+                spriteCmd._updateColor();
+            }
 
-        var colorDirty = spriteFlag & flags.colorDirty,
-            opacityDirty = spriteFlag & flags.opacityDirty;
-
-        if (colorDirty) {
-            spriteCmd._updateDisplayColor();
-            spriteCmd._dirtyFlag = spriteCmd._dirtyFlag & flags.colorDirty ^ spriteCmd._dirtyFlag;
-            this._dirtyFlag = this._dirtyFlag & flags.colorDirty ^ this._dirtyFlag;
+            if (locFlag & flags.transformDirty) {
+                //update the transform
+                this.transform(this.getParentRenderCmd(), true);
+            }
+            if(locFlag & flags.contentDirty) {
+                this._notifyRegionStatus && this._notifyRegionStatus(cc.Node.CanvasRenderCmd.RegionStatus.Dirty);
+            }
+            this._dirtyFlag = 0;
         }
-
-        if (opacityDirty) {
-            spriteCmd._updateDisplayOpacity();
-            spriteCmd._dirtyFlag = spriteCmd._dirtyFlag & flags.opacityDirty ^ spriteCmd._dirtyFlag;
-            this._dirtyFlag = this._dirtyFlag & flags.opacityDirty ^ this._dirtyFlag;
-        }
-
-        if (colorDirty || opacityDirty) {
-            spriteCmd._updateColor();
-        }
-
-        if (locFlag & flags.transformDirty) {
-            //update the transform
-            this.transform(this.getParentRenderCmd(), true);
-        }
-        if(locFlag & flags.contentDirty) {
-            this._notifyRegionStatus && this._notifyRegionStatus(cc.Node.CanvasRenderCmd.RegionStatus.Dirty);
-        }
-        this._dirtyFlag = 0;
     };
 })();

@@ -24,27 +24,23 @@
 
 (function () {
 
-    cc.DrawNode.CanvasRenderCmd = function (renderableObject) {
-        this._rootCtor(renderableObject);
-        this._needDraw = true;
-        this._buffer = null;
-        this._drawColor = null;
-        this._blendFunc = null;
-    };
+    cc.DrawNode.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+            this._needDraw = true;
+            this._buffer = null;
+            this._drawColor = null;
+            this._blendFunc = null;
+        }
 
+        getLocalBB() {
+            const node = this._node;
+            return node._localBB;
+        }
 
-    cc.DrawNode.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    cc.DrawNode.CanvasRenderCmd.prototype.constructor = cc.DrawNode.CanvasRenderCmd;
-
-    cc.DrawNode.CanvasRenderCmd.prototype.getLocalBB = function () {
-        var node = this._node;
-        return node._localBB;
-    };
-
-    cc.extend(cc.DrawNode.CanvasRenderCmd.prototype, {
-        rendering: function (ctx, scaleX, scaleY) {
-            var wrapper = ctx || cc._renderContext, context = wrapper.getContext(), node = this._node;
-            var alpha = this._displayedOpacity / 255;
+        rendering(ctx, scaleX, scaleY) {
+            const wrapper = ctx || cc._renderContext, context = wrapper.getContext(), node = this._node;
+            const alpha = this._displayedOpacity / 255;
             if (alpha === 0)
                 return;
 
@@ -54,9 +50,9 @@
             wrapper.setGlobalAlpha(alpha);
             if ((this._blendFunc && (this._blendFunc.src === cc.SRC_ALPHA) && (this._blendFunc.dst === cc.ONE)))
                 wrapper.setCompositeOperation('lighter');               //todo: need refactor
-            var locBuffer = this._buffer;
-            for (var i = 0, len = locBuffer.length; i < len; i++) {
-                var element = locBuffer[i];
+            const locBuffer = this._buffer;
+            for (let i = 0, len = locBuffer.length; i < len; i++) {
+                const element = locBuffer[i];
                 switch (element.type) {
                     case cc.DrawNode.TYPE_DOT:
                         this._drawDot(wrapper, element, scaleX, scaleY);
@@ -70,26 +66,26 @@
                 }
             }
             //context.restore();            //todo It can be reserve
-        },
+        }
 
-        _drawDot: function (wrapper, element) {
-            var locColor = element.fillColor, locPos = element.verts[0], locRadius = element.lineWidth;
+        _drawDot(wrapper, element) {
+            const locColor = element.fillColor, locPos = element.verts[0], locRadius = element.lineWidth;
 
-            var ctx = wrapper.getContext();
+            const ctx = wrapper.getContext();
             wrapper.setFillStyle("rgba(" + (0 | locColor.r) + "," + (0 | locColor.g) + "," + (0 | locColor.b) + "," + locColor.a / 255 + ")");
 
             ctx.beginPath();
             ctx.arc(locPos.x, -locPos.y, locRadius, 0, Math.PI * 2, false);
             ctx.closePath();
             ctx.fill();
-        },
+        }
 
-        _drawSegment: function (wrapper, element, scaleX) {
-            var locColor = element.lineColor;
-            var locFrom = element.verts[0], locTo = element.verts[1];
-            var locLineWidth = element.lineWidth, locLineCap = element.lineCap;
+        _drawSegment(wrapper, element, scaleX) {
+            const locColor = element.lineColor;
+            const locFrom = element.verts[0], locTo = element.verts[1];
+            const locLineWidth = element.lineWidth, locLineCap = element.lineCap;
 
-            var ctx = wrapper.getContext();
+            const ctx = wrapper.getContext();
             wrapper.setStrokeStyle("rgba(" + (0 | locColor.r) + "," + (0 | locColor.g) + "," + (0 | locColor.b) + "," + locColor.a / 255 + ")");
 
             ctx.lineWidth = locLineWidth * scaleX;
@@ -98,19 +94,19 @@
             ctx.moveTo(locFrom.x, -locFrom.y);
             ctx.lineTo(locTo.x, -locTo.y);
             ctx.stroke();
-        },
+        }
 
-        _drawPoly: function (wrapper, element, scaleX) {
-            var locVertices = element.verts, locLineCap = element.lineCap;
+        _drawPoly(wrapper, element, scaleX) {
+            const locVertices = element.verts, locLineCap = element.lineCap;
             if (locVertices == null)
                 return;
 
-            var locFillColor = element.fillColor, locLineWidth = element.lineWidth;
-            var locLineColor = element.lineColor, locIsClosePolygon = element.isClosePolygon;
-            var locIsFill = element.isFill, locIsStroke = element.isStroke;
+            const locFillColor = element.fillColor, locLineWidth = element.lineWidth;
+            const locLineColor = element.lineColor, locIsClosePolygon = element.isClosePolygon;
+            const locIsFill = element.isFill, locIsStroke = element.isStroke;
 
-            var ctx = wrapper.getContext();
-            var firstPoint = locVertices[0];
+            const ctx = wrapper.getContext();
+            const firstPoint = locVertices[0];
             ctx.lineCap = locLineCap;
             if (locFillColor)
                 wrapper.setFillStyle("rgba(" + (0 | locFillColor.r) + "," + (0 | locFillColor.g) + ","
@@ -123,7 +119,7 @@
 
             ctx.beginPath();
             ctx.moveTo(firstPoint.x, -firstPoint.y);
-            for (var i = 1, len = locVertices.length; i < len; i++)
+            for (let i = 1, len = locVertices.length; i < len; i++)
                 ctx.lineTo(locVertices[i].x, -locVertices[i].y);
 
             if (locIsClosePolygon)
@@ -133,6 +129,6 @@
             if (locIsStroke)
                 ctx.stroke();
         }
-    });
+    };
     
 })();
