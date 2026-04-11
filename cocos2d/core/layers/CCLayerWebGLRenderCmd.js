@@ -94,7 +94,7 @@
             pos[FLOAT_PER_VERTEX * 2 + 1] = height; // tl.y
             pos[FLOAT_PER_VERTEX * 3] = width;      // tr.x
             pos[FLOAT_PER_VERTEX * 3 + 1] = height; // tr.y
-            pos[2].z = 
+            pos[2] = 
             pos[FLOAT_PER_VERTEX + 2] = 
             pos[FLOAT_PER_VERTEX * 2 + 2] = 
             pos[FLOAT_PER_VERTEX * 3 + 2] = node._vertexZ;
