@@ -41,6 +41,13 @@ cc.DrawNode = class DrawNode extends cc.Node {
     _lineWidth = 1;
     _drawColor = cc.color(255, 255, 255, 255);
 
+    constructor() {
+        super();
+        if (this.ctor) {
+            this.ctor.apply(this, arguments);
+        }
+    }
+
     /**
      * Gets the blend func
      * @returns {Object}
