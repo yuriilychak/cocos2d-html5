@@ -31,69 +31,63 @@
      * The stack of cc.math.Matrix4
      * @param {cc.math.Matrix4} [top]
      * @param {Array} [stack]
-     * @constructor
      */
-    cc.math.Matrix4Stack = function (top, stack) {
-        this.top = top;
-        this.stack = stack || [];
-        this.lastUpdated = 0;
-        //this._matrixPool = [];            // use pool in next version
+    cc.math.Matrix4Stack = class Matrix4Stack {
+        constructor(top, stack) {
+            this.top = top;
+            this.stack = stack || [];
+            this.lastUpdated = 0;
+            // this._matrixPool = []; // use pool in next version
+        }
+
+        initialize() {
+            this.stack.length = 0;
+            this.top = null;
+            return this;
+        }
+
+        push(item) {
+            item = item || this.top;
+            this.stack.push(this.top);
+            this.top = new cc.math.Matrix4(item);
+        }
+
+        pop() {
+            this.top = this.stack.pop();
+        }
+
+        release() {
+            this.stack = null;
+            this.top = null;
+            this._matrixPool = null;
+        }
+
+        _getFromPool(item) {
+            const pool = this._matrixPool || [];
+            if (pool.length === 0) return new cc.math.Matrix4(item);
+            const ret = pool.pop();
+            ret.assignFrom(item);
+            return ret;
+        }
+
+        _putInPool(matrix) {
+            this._matrixPool = this._matrixPool || [];
+            this._matrixPool.push(matrix);
+        }
     };
+
     cc.km_mat4_stack = cc.math.Matrix4Stack;
-    var proto = cc.math.Matrix4Stack.prototype;
 
-    proto.initialize = function () {    //cc.km_mat4_stack_initialize
-        this.stack.length = 0;
-        this.top = null;
-    };
-
-    //for compatibility
+    // Compatibility wrappers
     cc.km_mat4_stack_push = function (stack, item) {
-        stack.stack.push(stack.top);
-        stack.top = new cc.math.Matrix4(item);
+        stack.push(item);
     };
 
-    cc.km_mat4_stack_pop = function (stack, pOut) {
-        stack.top = stack.stack.pop();
+    cc.km_mat4_stack_pop = function (stack) {
+        stack.pop();
     };
 
     cc.km_mat4_stack_release = function (stack) {
-        stack.stack = null;
-        stack.top = null;
-    };
-
-    proto.push = function (item) {
-        item = item || this.top;
-        this.stack.push(this.top);
-        this.top = new cc.math.Matrix4(item);
-        //this.top = this._getFromPool(item);
-    };
-
-    proto.pop = function () {
-        //this._putInPool(this.top);
-        this.top = this.stack.pop();
-    };
-
-    proto.release = function () {
-        this.stack = null;
-        this.top = null;
-        this._matrixPool = null;
-    };
-
-    proto._getFromPool = function (item) {
-        var pool = this._matrixPool;
-        if (pool.length === 0)
-            return new cc.math.Matrix4(item);
-        var ret = pool.pop();
-        ret.assignFrom(item);
-        return ret;
-    };
-
-    proto._putInPool = function (matrix) {
-        this._matrixPool.push(matrix);
+        stack.release();
     };
 })(cc);
-
-
-
-
