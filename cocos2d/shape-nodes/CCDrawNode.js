@@ -39,7 +39,7 @@ cc.DrawNode = class DrawNode extends cc.Node {
     _buffer = null;
     _blendFunc = null;
     _lineWidth = 1;
-    _drawColor = null;
+    _drawColor = cc.color(255, 255, 255, 255);
 
     /**
      * Gets the blend func

@@ -251,8 +251,8 @@ var ActionMove = class ActionMove extends ActionsDemo {
         this.testDuration = 2.1;
     }
 
-      get _code() { return 
-        "a =cc.moveBy( time, cc.p(x,y) );\n" + "a = cc.moveTo( time, cc.p(x,y) );";
+      get _code() { 
+        return "a =cc.moveBy( time, cc.p(x,y) );\n" + "a = cc.moveTo( time, cc.p(x,y) );";
       }
 
   onEnter() {
@@ -310,9 +310,8 @@ var ActionScale = class ActionScale extends ActionsDemo {
         this.testDuration = 2.1;
     }
 
-      get _code() { return 
-        "a = cc.scaleBy( time, scale );\n" +
-        "a = cc.scaleTo( time, scaleX, scaleY );";
+      get _code() { 
+        return "a = cc.scaleBy( time, scale );\na = cc.scaleTo( time, scaleX, scaleY );";
       }
 
   onEnter() {
@@ -370,8 +369,8 @@ var ActionRotate = class ActionRotate extends ActionsDemo {
         this.testDuration = 2.1;
     }
 
-      get _code() { return 
-        "a = cc.rotateBy( time, degrees );\n" + "a = cc.rotateTo( time, degrees );";
+      get _code() { 
+        return "a = cc.rotateBy( time, degrees );\n" + "a = cc.rotateTo( time, degrees );";
       }
 
   onEnter() {
@@ -498,8 +497,8 @@ var ActionSkew = class ActionSkew extends ActionsDemo {
         this.testDuration = 2.1;
     }
 
-      get _code() { return 
-        "a = cc.skewBy( time, skew );\n" + "a = cc.skewTo( time, skewX, skewY );";
+      get _code() { 
+        return "a = cc.skewBy( time, skew );\n" + "a = cc.skewTo( time, skewX, skewY );";
       }
 
   onEnter() {
@@ -643,8 +642,8 @@ var ActionJump = class ActionJump extends ActionsDemo {
         this.testDuration = 2.1;
     }
 
-      get _code() { return 
-        "a = cc.jumpBy( time, point, height, #_of_jumps );\n" +
+      get _code() { 
+        return "a = cc.jumpBy( time, point, height, #_of_jumps );\n" +
         "a = cc.jumpTo( time, point, height, #_of_jumps );";
       }
 
@@ -1023,8 +1022,8 @@ var ActionTint = class ActionTint extends ActionsDemo {
         this.testDuration = 2.1;
     }
 
-      get _code() { return 
-        "a = cc.tintBy( time, red, green, blue );\n" +
+      get _code() { 
+        return "a = cc.tintBy( time, red, green, blue );\n" +
         "a = cc.tintTo( time, red, green, blue );";
       }
 
@@ -1256,8 +1255,8 @@ var ActionCallFunc1 = class ActionCallFunc1 extends ActionsDemo {
         this.testDuration = 5.05;
     }
 
-      get _code() { return 
-        "a = cc.callFunc( this.callback );\n" +
+      get _code() { 
+        return "a = cc.callFunc( this.callback );\n" +
         "a = cc.callFunc( this.callback, this, optional_arg );";
       }
 
@@ -1854,8 +1853,8 @@ var ActionFollow = class ActionFollow extends ActionsDemo {
 //------------------------------------------------------------------
 var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
 
-      get _code() { return 
-        " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
+      get _code() { 
+        return " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
         " a = cc.cadinalSplineTo( time, array_of_points, tension );";
       }
 
@@ -2003,8 +2002,8 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
 //------------------------------------------------------------------
 var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
 
-      get _code() { return 
-        "a = cc.catmullRomBy( time, array_of_points );\n" +
+      get _code() { 
+        return "a = cc.catmullRomBy( time, array_of_points );\n" +
         " a = cc.catmullRomTo( time, array_of_points );";
       }
 
