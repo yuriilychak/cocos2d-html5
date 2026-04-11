@@ -25,63 +25,68 @@
 
 var sceneRenderTextureIdx = -1;
 
-var RenderTextureBaseLayer = BaseTestLayer.extend({
-    ctor:function () {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
-    },
+var RenderTextureBaseLayer = class RenderTextureBaseLayer extends BaseTestLayer {
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
+    }
 
-    title:function () {
+    title() {
         return "Render Texture";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    code:function () {
+    code() {
         return "";
-    },
+    }
 
     // callbacks
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new RenderTextureTestScene();
         s.addChild(restartRenderTextureTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new RenderTextureTestScene();
         s.addChild(nextRenderTextureTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new RenderTextureTestScene();
         s.addChild(previousRenderTextureTest());
         director.runScene(s);
-    },
+    }
 
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfRenderTextureTest.length-1) - sceneRenderTextureIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return sceneRenderTextureIdx;
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Tests
 //
 //------------------------------------------------------------------
-var RenderTextureSave = RenderTextureBaseLayer.extend({
-    _brushs:null,
-    _target:null,
-    _lastLocation:null,
-    _counter:0,
+var RenderTextureSave = class RenderTextureSave extends RenderTextureBaseLayer {
+    constructor() {
+        super();
+        this._brushs = null;
+        this._target = null;
+        this._lastLocation = null;
+        this._counter = 0;
+    }
 
-    onEnter:function () {
-        this._super();
+
+    onEnter() {
+        super.onEnter();
 
         if ('touches' in cc.sys.capabilities){
             cc.eventManager.addListener({
@@ -121,13 +126,13 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         this._target = target;
 
         this._lastLocation = cc.p(winSize.width / 2, winSize.height / 2);
-    },
+    }
 
-    onExit:function () {
-        this._super();
-    },
+    onExit() {
+        super.onExit();
+    }
 
-    saveCB:function (sender) {
+    saveCB(sender) {
         if(!cc.sys.isNative){
             cc.log("RenderTexture's saveToFile doesn't support on HTML5");
             return;
@@ -141,13 +146,13 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
 
         cc.log("images saved!");
         this._counter++;
-    },
+    }
 
-    clearCB:function (sender) {
+    clearCB(sender) {
         this._target.clear(Math.random() * 255, Math.random() * 255, Math.random() * 255, 255);
-    },
+    }
 
-    drawInLocation:function (location) {
+    drawInLocation(location) {
         var distance = cc.pDistance(location, this._lastLocation);
 
         if (distance > 1) {
@@ -176,16 +181,17 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
             this._target.end();
         }
         this._lastLocation = location;
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Testing 'save'";
     }
-});
 
-var RenderTextureIssue937 = RenderTextureBaseLayer.extend({
-    ctor:function () {
-        this._super();
+};
+
+var RenderTextureIssue937 = class RenderTextureIssue937 extends RenderTextureBaseLayer {
+    constructor() {
+        super();
         var winSize = cc.director.getWinSize();
         /*
          *     1    2
@@ -235,31 +241,52 @@ var RenderTextureIssue937 = RenderTextureBaseLayer.extend({
         this.addChild(spr_nonpremulti);
         this.addChild(spr_premulti);
         this.addChild(rend);
-    },
+    }
 
-    title:function () {
+    title() {
         return "Testing issue #937";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "All images should be equal..";
     }
-});
 
-var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
-    mgr:null,
-    sp1:null,
-    sp2:null,
-    sp3:null,
-    sp4:null,
-    sp5:null,
-    sp6:null,
-    sp7:null,
-    sp8:null,
-    sp9:null,
+};
 
-    ctor:function () {
-        this._super();
+var RenderTextureZbuffer = class RenderTextureZbuffer extends RenderTextureBaseLayer {
+
+    constructor() {
+        super();
+
+
+        this.mgr = null;
+
+
+        this.sp1 = null;
+
+
+        this.sp2 = null;
+
+
+        this.sp3 = null;
+
+
+        this.sp4 = null;
+
+
+        this.sp5 = null;
+
+
+        this.sp6 = null;
+
+
+        this.sp7 = null;
+
+
+        this.sp8 = null;
+
+
+        this.sp9 = null;
 
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -323,9 +350,9 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
 
         this.sp9.scale = 2;
         this.sp9.color = cc.color.YELLOW;
-    },
+    }
 
-    onTouchesBegan:function (touches, event) {
+    onTouchesBegan(touches, event) {
         if (!touches || touches.length === 0)
             return;
 
@@ -351,9 +378,9 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
             this.sp9.x = location.x;
             this.sp9.y = location.y;
         }
-    },
+    }
 
-    onTouchesMoved:function (touches, event) {
+    onTouchesMoved(touches, event) {
         if (!touches || touches.length === 0)
             return;
 
@@ -379,21 +406,21 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
             this.sp9.x = location.x;
             this.sp9.y = location.y;
         }
-    },
+    }
 
-    onTouchesEnded:function (touches, event) {
+    onTouchesEnded(touches, event) {
         this.renderScreenShot();
-    },
+    }
 
-    title:function () {
+    title() {
         return "Testing Z Buffer in Render Texture";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Touch screen. It should be green";
-    },
+    }
 
-    renderScreenShot:function () {
+    renderScreenShot() {
         var winSize = cc.director.getWinSize();
         var texture = new cc.RenderTexture(winSize.width, winSize.width);
         if (!texture)
@@ -416,14 +443,19 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
 
         sprite.runAction(cc.sequence(cc.fadeTo(2, 0), cc.hide()));
     }
-});
 
-var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
-    _spriteDraw : null,
-    _rend : null,
+};
 
-    ctor:function () {
-        this._super();
+var RenderTextureTestDepthStencil = class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
+
+    constructor() {
+        super();
+
+
+        this._spriteDraw = null;
+
+
+        this._rend = null;
         var winSize = cc.director.getWinSize();
 
         this._spriteDraw = new cc.Sprite(s_fire);
@@ -445,17 +477,17 @@ var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
 
         this.addChild(menu);
         this.addChild(this._spriteDraw);
-    },
+    }
 
-    releaseMask: function () {
+    releaseMask() {
         var gl = cc._renderContext;
         gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
         gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
         gl.disable(gl.STENCIL_TEST);
         this.onRestartCallback();
-    },
+    }
 
-    maskTest: function (sender) {
+    maskTest(sender) {
         var gl = cc._renderContext;
 
         gl.clear(gl.STENCIL_BUFFER_BIT);
@@ -469,26 +501,42 @@ var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
 
         this._rend.end();
         this.schedule(this.releaseMask, 0.5);
-    },
+    }
 
-    title:function () {
+    title() {
         return "Testing depthStencil attachment";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Click to be masked and turn black\n Come back after 0.5s";
     }
-});
 
-var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
-    _sprite1:null,
-    _sprite2:null,
-    _time:0,
-    _winSize:null,
+};
 
-    _renderTexture:null,
+var RenderTextureTargetNode = class RenderTextureTargetNode extends RenderTextureBaseLayer {
 
-    ctor:function () {
-        this._super();
+
+    constructor() {
+        super();
+
+
+
+        this._sprite1 = null;
+
+
+
+        this._sprite2 = null;
+
+
+
+        this._time = 0;
+
+
+
+        this._winSize = null;
+
+
+
+        this._renderTexture = null;
         /*
          *     1    2
          * A: A1   A2
@@ -548,9 +596,9 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
 
         menu.x = winSize.width / 2;
         menu.y = winSize.height / 2;
-    },
+    }
 
-    update:function (dt) {
+    update(dt) {
         var r = 80;
         var locWinSize = this._winSize;
         var locTime = this._time;
@@ -560,17 +608,17 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
         this._sprite2.y = Math.cos(locTime * 2) * r + locWinSize.height /2;
 
         this._time += dt;
-    },
+    }
 
-    title:function () {
+    title() {
         return "Testing Render Target Node";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Sprites should be equal and move with each frame";
-    },
+    }
 
-    touched:function (sender) {
+    touched(sender) {
         if (this._renderTexture.clearFlags == 0)
             this._renderTexture.clearFlags = cc._renderContext.COLOR_BUFFER_BIT;
         else {
@@ -578,21 +626,33 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
             this._renderTexture.clearColorVal = cc.color(Math.random()*255, Math.random()*255, Math.random()*255, 255);
         }
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Issue1464
 //
 //------------------------------------------------------------------
-var Issue1464 = RenderTextureBaseLayer.extend({
-    _brush : null,
-    _target : null,
-    _lastLocation : null,
-    _counter :0,
+var Issue1464 = class Issue1464 extends RenderTextureBaseLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._brush = null;
+
+
+        this._target = null;
+
+
+        this._lastLocation = null;
+
+
+        this._counter = 0;
+
+
+        this.testDuration = 2.1;
 
         var sprite = new cc.Sprite(s_grossini);
 
@@ -622,43 +682,44 @@ var Issue1464 = RenderTextureBaseLayer.extend({
             label.y = winSize.height / 2 + 50;
             this.addChild(label, 100);
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "Issue 1464";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Sprites should fade in / out correctly";
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:2.1,
 
-    getExpectedResult:function() {
+    getExpectedResult() {
         // blue, red, blue
         var ret = {"0":0,"1":0,"2":0,"3":255,"4":0,"5":0,"6":0,"7":255,"8":0,"9":0,"10":0,"11":255,"12":0,"13":0,"14":0,"15":255,"16":0,"17":0,"18":0,"19":255,"20":0,"21":0,"22":0,"23":255,"24":0,"25":0,"26":0,"27":255,"28":0,"29":0,"30":0,"31":255,"32":0,"33":0,"34":0,"35":255,"36":0,"37":0,"38":0,"39":255,"40":0,"41":0,"42":0,"43":255,"44":0,"45":0,"46":0,"47":255,"48":0,"49":0,"50":0,"51":255,"52":0,"53":0,"54":0,"55":255,"56":0,"57":0,"58":0,"59":255,"60":0,"61":0,"62":0,"63":255};
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = this.readPixels(winSize.width/2-2, winSize.height/2-2,  4, 4);
         return JSON.stringify(ret);
     }
-});
+
+};
 
 
-var RenderTextureTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var RenderTextureTestScene = class RenderTextureTestScene extends TestScene {
+    runThisTest(num) {
         sceneRenderTextureIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextRenderTextureTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
+
+};
 
 //
 // Flow control

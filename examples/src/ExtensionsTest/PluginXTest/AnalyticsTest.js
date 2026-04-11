@@ -113,13 +113,17 @@ var s_EventMenuItem = [
     {id: "MakeMeCrash", tag: TAG_MAKE_ME_CRASH}
 ];
 
-var AnalyticsTestLayer = PluginXTest.extend({
+var AnalyticsTestLayer = class AnalyticsTestLayer extends PluginXTest {
+    constructor() {
+        super();
+        this._title = "Plugin-x Test";
+        this._subtitle = cc.LANGUAGE_CHINESE == cc.sys.language ? "umeng" : "flurry"; //cc.Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
+    }
 
-    _title:"Plugin-x Test",
-    _subtitle: cc.LANGUAGE_CHINESE == cc.sys.language ? "umeng" : "flurry",//cc.Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry",
 
-    onEnter: function() {
-        this._super();
+
+    onEnter() {
+        super.onEnter();
         var size = cc.director.getWinSize();
 
         loadAnalyticsPlugin();
@@ -149,16 +153,16 @@ var AnalyticsTestLayer = PluginXTest.extend({
         pMenuItem.setAnchorPoint(cc.p(0.5, 0));
         pMenu.addChild(pMenuItem, 0);
         pMenuItem.setPosition( cc.p(size.width / 2, 0));
-    },
+    }
 
-    reloadPluginMenuCallback: function(pSender) {
+    reloadPluginMenuCallback(pSender) {
         plugin.PluginManager.getInstance().unloadPlugin("AnalyticsFlurry");
         plugin.PluginManager.getInstance().unloadPlugin("AnalyticsUmeng");
 
         loadAnalyticsPlugin();
-    },
+    }
 
-    eventMenuCallback: function(pSender) {
+    eventMenuCallback(pSender) {
         switch (pSender.getTag())
         {
             case TAG_LOG_EVENT_ID:
@@ -241,17 +245,18 @@ var AnalyticsTestLayer = PluginXTest.extend({
             default:
                 break;
         }
-    },
+    }
 
-    onNextCallback:function (sender) {
+    onNextCallback(sender) {
         var s = new FacebookTest();
         s.addChild(new FacebookLayer);
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new FacebookTest();
         s.addChild(new FacebookLayer);
         director.runScene(s);
     }
 
-});
+
+};

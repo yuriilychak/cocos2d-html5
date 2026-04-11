@@ -47,187 +47,182 @@ cc._tmp.WebGLTexture2D = function () {
      * @property {Number}           maxS            - Texture max S
      * @property {Number}           maxT            - Texture max T
      */
-        //Original : Texture2DWebGL
-    cc.Texture2D = cc.Class.extend(/** @lends cc.Texture2D# */{
-        // By default PVR images are treated as if they don't have the alpha channel premultiplied
-        _pVRHaveAlphaPremultiplied: true,
-        _pixelFormat: null,
-        _pixelsWide: 0,
-        _pixelsHigh: 0,
-        _name: "",
-        _contentSize: null,
-        maxS: 0,
-        maxT: 0,
-        _hasPremultipliedAlpha: false,
-        _hasMipmaps: false,
-
-        shaderProgram: null,
-
-        _textureLoaded: false,
-        _htmlElementObj: null,
-        _webTextureObj: null,
-
-        url: null,
-
+    //Original : Texture2DWebGL
+    cc.Texture2D = class Texture2D extends cc.NewClass {
         /**
          * constructor of cc.Texture2D
          */
-        ctor: function () {
-            this._contentSize = cc.size(0, 0);
+        constructor() {
+            super();
+            // By default PVR images are treated as if they don't have the alpha channel premultiplied
+            this._pVRHaveAlphaPremultiplied = true;
             this._pixelFormat = cc.Texture2D.defaultPixelFormat;
-        },
+            this._pixelsWide = 0;
+            this._pixelsHigh = 0;
+            this._name = "";
+            this._contentSize = cc.size(0, 0);
+            this.maxS = 0;
+            this.maxT = 0;
+            this._hasPremultipliedAlpha = false;
+            this._hasMipmaps = false;
+            this.shaderProgram = null;
+            this._textureLoaded = false;
+            this._htmlElementObj = null;
+            this._webTextureObj = null;
+            this.url = null;
+        }
 
         /**
          * release texture
          */
-        releaseTexture: function () {
+        releaseTexture() {
             if (this._webTextureObj)
                 cc._renderContext.deleteTexture(this._webTextureObj);
             this._htmlElementObj = null;
             cc.loader.release(this.url);
-        },
+        }
 
         /**
          * pixel format of the texture
          * @return {Number}
          */
-        getPixelFormat: function () {
+        getPixelFormat() {
             return this._pixelFormat;
-        },
+        }
 
         /**
          * width in pixels
          * @return {Number}
          */
-        getPixelsWide: function () {
+        getPixelsWide() {
             return this._pixelsWide;
-        },
+        }
 
         /**
          * height in pixels
          * @return {Number}
          */
-        getPixelsHigh: function () {
+        getPixelsHigh() {
             return this._pixelsHigh;
-        },
+        }
 
         /**
          * get WebGLTexture Object
          * @return {WebGLTexture}
          */
-        getName: function () {
+        getName() {
             return this._webTextureObj;
-        },
+        }
 
         /**
          * content size
          * @return {cc.Size}
          */
-        getContentSize: function () {
+        getContentSize() {
             return cc.size(this._contentSize.width / cc.contentScaleFactor(), this._contentSize.height / cc.contentScaleFactor());
-        },
+        }
 
-        _getWidth: function () {
+        _getWidth() {
             return this._contentSize.width / cc.contentScaleFactor();
-        },
-        _getHeight: function () {
+        }
+        _getHeight() {
             return this._contentSize.height / cc.contentScaleFactor();
-        },
+        }
 
         /**
          * get content size in pixels
          * @return {cc.Size}
          */
-        getContentSizeInPixels: function () {
+        getContentSizeInPixels() {
             return this._contentSize;
-        },
+        }
 
         /**
          * texture max S
          * @return {Number}
          */
-        getMaxS: function () {
+        getMaxS() {
             return this.maxS;
-        },
+        }
 
         /**
          * set texture max S
          * @param {Number} maxS
          */
-        setMaxS: function (maxS) {
+        setMaxS(maxS) {
             this.maxS = maxS;
-        },
+        }
 
         /**
          * get texture max T
          * @return {Number}
          */
-        getMaxT: function () {
+        getMaxT() {
             return this.maxT;
-        },
+        }
 
         /**
          * set texture max T
          * @param {Number} maxT
          */
-        setMaxT: function (maxT) {
+        setMaxT(maxT) {
             this.maxT = maxT;
-        },
+        }
 
         /**
          * return shader program used by drawAtPoint and drawInRect
          * @return {cc.GLProgram}
          */
-        getShaderProgram: function () {
+        getShaderProgram() {
             return this.shaderProgram;
-        },
+        }
 
         /**
          * set shader program used by drawAtPoint and drawInRect
          * @param {cc.GLProgram} shaderProgram
          */
-        setShaderProgram: function (shaderProgram) {
+        setShaderProgram(shaderProgram) {
             this.shaderProgram = shaderProgram;
-        },
+        }
 
         /**
          * whether or not the texture has their Alpha premultiplied
          * @return {Boolean}
          */
-        hasPremultipliedAlpha: function () {
+        hasPremultipliedAlpha() {
             return this._hasPremultipliedAlpha;
-        },
+        }
 
         /**
          * whether or not use mipmap
          * @return {Boolean}
          */
-        hasMipmaps: function () {
+        hasMipmaps() {
             return this._hasMipmaps;
-        },
+        }
 
         /**
          * description
          * @return {string}
          */
-        description: function () {
+        description() {
             var _t = this;
             return "<cc.Texture2D | Name = " + _t._name + " | Dimensions = " + _t._pixelsWide + " x " + _t._pixelsHigh
                 + " | Coordinates = (" + _t.maxS + ", " + _t.maxT + ")>";
-        },
+        }
 
         /**
          * These functions are needed to create mutable textures
          * @param {Array} data
          */
-        releaseData: function (data) {
+        releaseData(data) {
             data = null;
-        },
+        }
 
-        keepData: function (data, length) {
+        keepData(data, length) {
             //The texture data mustn't be saved because it isn't a mutable texture.
             return data;
-        },
+        }
 
         /**
          * Intializes with a texture2d with data
@@ -238,7 +233,7 @@ cc._tmp.WebGLTexture2D = function () {
          * @param {cc.Size} contentSize
          * @return {Boolean}
          */
-        initWithData: function (data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
+        initWithData(data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
             var self = this, tex2d = cc.Texture2D;
             var gl = cc._renderContext;
             var format = gl.RGBA, type = gl.UNSIGNED_BYTE;
@@ -311,7 +306,7 @@ cc._tmp.WebGLTexture2D = function () {
             self._textureLoaded = true;
 
             return true;
-        },
+        }
 
         /**
          Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
@@ -322,7 +317,7 @@ cc._tmp.WebGLTexture2D = function () {
          * draws a texture at a given point
          * @param {cc.Point} point
          */
-        drawAtPoint: function (point) {
+        drawAtPoint(point) {
             var self = this;
             var coordinates = [
                     0.0, self.maxT,
@@ -351,13 +346,13 @@ cc._tmp.WebGLTexture2D = function () {
             gl.vertexAttribPointer(cc.VERTEX_ATTRIB_TEX_COORDS, 2, gl.FLOAT, false, 0, coordinates);
 
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        },
+        }
 
         /**
          * draws a texture inside a rect
          * @param {cc.Rect} rect
          */
-        drawInRect: function (rect) {
+        drawInRect(rect) {
             var self = this;
             var coordinates = [
                 0.0, self.maxT,
@@ -382,7 +377,7 @@ cc._tmp.WebGLTexture2D = function () {
             gl.vertexAttribPointer(cc.VERTEX_ATTRIB_TEX_COORDS, 2, gl.FLOAT, false, 0, coordinates);
 
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        },
+        }
 
         /**
          Extensions to make it easy to create a CCTexture2D object from an image file.
@@ -394,7 +389,7 @@ cc._tmp.WebGLTexture2D = function () {
          * @param uiImage
          * @return {Boolean}
          */
-        initWithImage: function (uiImage) {
+        initWithImage(uiImage) {
             if (uiImage == null) {
                 cc.log(cc._LogInfos.Texture2D_initWithImage);
                 return false;
@@ -412,13 +407,13 @@ cc._tmp.WebGLTexture2D = function () {
 
             // always load premultiplied images
             return this._initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
-        },
+        }
 
         /**
          * init with HTML element
          * @param {HTMLImageElement|HTMLCanvasElement} element
          */
-        initWithElement: function (element) {
+        initWithElement(element) {
             if (!element)
                 return;
             this._webTextureObj = cc._renderContext.createTexture();
@@ -427,29 +422,29 @@ cc._tmp.WebGLTexture2D = function () {
             // Textures should be loaded with premultiplied alpha in order to avoid gray bleeding
             // when semitransparent textures are interpolated (e.g. when scaled).
             this._hasPremultipliedAlpha = true;
-        },
+        }
 
         /**
          * HTMLElement Object getter
          * @return {HTMLElement}
          */
-        getHtmlElementObj: function () {
+        getHtmlElementObj() {
             return this._htmlElementObj;
-        },
+        }
 
         /**
          * whether texture is loaded
          * @return {Boolean}
          */
-        isLoaded: function () {
+        isLoaded() {
             return this._textureLoaded;
-        },
+        }
 
         /**
          * handler of texture loaded event
          * @param {Boolean} [premultiplied=false]
          */
-        handleLoadedTexture: function (premultiplied) {
+        handleLoadedTexture(premultiplied) {
             var self = this;
             premultiplied =
                 (premultiplied !== undefined)
@@ -502,7 +497,7 @@ cc._tmp.WebGLTexture2D = function () {
 
             //dispatch load event to listener.
             self.dispatchEvent("load");
-        },
+        }
 
         /**
          Extensions to make it easy to create a cc.Texture2D object from a string of text.
@@ -518,10 +513,10 @@ cc._tmp.WebGLTexture2D = function () {
          * @param {Number} vAlignment
          * @return {Boolean}
          */
-        initWithString: function (text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
+        initWithString(text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
             cc.log(cc._LogInfos.Texture2D_initWithString);
             return null;
-        },
+        }
 
         /**
          * Initializes a texture from a ETC file  (note: initWithETCFile does not support on HTML5)
@@ -529,20 +524,20 @@ cc._tmp.WebGLTexture2D = function () {
          * @param {String} file
          * @return {Boolean}
          */
-        initWithETCFile: function (file) {
+        initWithETCFile(file) {
             cc.log(cc._LogInfos.Texture2D_initWithETCFile_2);
             return false;
-        },
+        }
 
         /**
          * Initializes a texture from a PVR file
          * @param {String} file
          * @return {Boolean}
          */
-        initWithPVRFile: function (file) {
+        initWithPVRFile(file) {
             cc.log(cc._LogInfos.Texture2D_initWithPVRFile_2);
             return false;
-        },
+        }
 
         /**
          Extensions to make it easy to create a cc.Texture2D object from a PVRTC file
@@ -559,10 +554,10 @@ cc._tmp.WebGLTexture2D = function () {
          * @param {Number} pixelFormat
          * @return {Boolean}
          */
-        initWithPVRTCData: function (data, level, bpp, hasAlpha, length, pixelFormat) {
+        initWithPVRTCData(data, level, bpp, hasAlpha, length, pixelFormat) {
             cc.log(cc._LogInfos.Texture2D_initWithPVRTCData_2);
             return false;
-        },
+        }
 
         /**
          * sets the min filter, mag filter, wrap s and wrap t texture parameters. <br/>
@@ -572,7 +567,7 @@ cc._tmp.WebGLTexture2D = function () {
          * @param {Number} [wrapS]
          * @param {Number} [wrapT]
          */
-        setTexParameters: function (texParams, magFilter, wrapS, wrapT) {
+        setTexParameters(texParams, magFilter, wrapS, wrapT) {
             var _t = this;
             var gl = cc._renderContext;
 
@@ -588,14 +583,14 @@ cc._tmp.WebGLTexture2D = function () {
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, texParams.magFilter);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, texParams.wrapS);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, texParams.wrapT);
-        },
+        }
 
         /**
          * sets antialias texture parameters:              <br/>
          *  - GL_TEXTURE_MIN_FILTER = GL_NEAREST           <br/>
          *  - GL_TEXTURE_MAG_FILTER = GL_NEAREST
          */
-        setAntiAliasTexParameters: function () {
+        setAntiAliasTexParameters() {
             var gl = cc._renderContext;
 
             cc.glBindTexture2D(this);
@@ -604,14 +599,14 @@ cc._tmp.WebGLTexture2D = function () {
             else
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        },
+        }
 
         /**
          *  sets alias texture parameters:
          *   GL_TEXTURE_MIN_FILTER = GL_NEAREST
          *   GL_TEXTURE_MAG_FILTER = GL_NEAREST
          */
-        setAliasTexParameters: function () {
+        setAliasTexParameters() {
             var gl = cc._renderContext;
 
             cc.glBindTexture2D(this);
@@ -620,42 +615,42 @@ cc._tmp.WebGLTexture2D = function () {
             else
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST_MIPMAP_NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-        },
+        }
 
         /**
          *  Generates mipmap images for the texture.<br/>
          *  It only works if the texture size is POT (power of 2).
          */
-        generateMipmap: function () {
+        generateMipmap() {
             var _t = this;
             cc.assert(_t._pixelsWide === cc.NextPOT(_t._pixelsWide) && _t._pixelsHigh === cc.NextPOT(_t._pixelsHigh), "Mimpap texture only works in POT textures");
 
             cc.glBindTexture2D(_t);
             cc._renderContext.generateMipmap(cc._renderContext.TEXTURE_2D);
             _t._hasMipmaps = true;
-        },
+        }
 
         /**
          * returns the pixel format.
          * @return {String}
          */
-        stringForFormat: function () {
+        stringForFormat() {
             return cc.Texture2D._M[this._pixelFormat];
-        },
+        }
 
         /**
          * returns the bits-per-pixel of the in-memory OpenGL texture
          * @return {Number}
          */
-        bitsPerPixelForFormat: function (format) {//TODO I want to delete the format argument, use this._pixelFormat
+        bitsPerPixelForFormat(format) {//TODO I want to delete the format argument, use this._pixelFormat
             format = format || this._pixelFormat;
             var value = cc.Texture2D._B[format];
             if (value != null) return value;
             cc.log(cc._LogInfos.Texture2D_bitsPerPixelForFormat, format);
             return -1;
-        },
+        }
 
-        _initPremultipliedATextureWithImage: function (uiImage, width, height) {
+        _initPremultipliedATextureWithImage(uiImage, width, height) {
             var tex2d = cc.Texture2D;
             var tempData = uiImage.getData();
             var inPixel32 = null;
@@ -756,16 +751,16 @@ cc._tmp.WebGLTexture2D = function () {
 
             this._hasPremultipliedAlpha = uiImage.isPremultipliedAlpha();
             return true;
-        },
+        }
 
         /**
          * remove listener from listeners by target
          * @param {cc.Node} target
          */
-        removeLoadedEventListener: function (target) {
+        removeLoadedEventListener(target) {
             this.removeEventTarget("load", target);
         }
-    });
+    };
 };
 
 cc._tmp.WebGLTextureAtlas = function () {

@@ -30,8 +30,9 @@
  * A png file reader
  * @name cc.tiffReader
  */
-cc.PNGReader = cc.Class.extend({
-    ctor:function(data){
+cc.PNGReader = class PNGReader extends cc.NewClass {
+    constructor(data) {
+        super();
         var chunkSize, colors, delayDen, delayNum, frame, i, index, key, section, ccshort, text, _i, _j, _ref;
         this.data = data;
         this.pos = 8;
@@ -162,30 +163,34 @@ cc.PNGReader = cc.Class.extend({
                 throw new Error("Incomplete or corrupt PNG file");
             }
         }
-    },
-    read:function(bytes){
+    }
+
+    read(bytes) {
         var i, _i, _results;
         _results = [];
         for (i = _i = 0; 0 <= bytes ? _i < bytes : _i > bytes; i = 0 <= bytes ? ++_i : --_i) {
             _results.push(this.data[this.pos++]);
         }
         return _results;
-    },
-    readUInt32:function(){
+    }
+
+    readUInt32() {
         var b1, b2, b3, b4;
         b1 = this.data[this.pos++] << 24;
         b2 = this.data[this.pos++] << 16;
         b3 = this.data[this.pos++] << 8;
         b4 = this.data[this.pos++];
         return b1 | b2 | b3 | b4;
-    },
-    readUInt16:function(){
+    }
+
+    readUInt16() {
         var b1, b2;
         b1 = this.data[this.pos++] << 8;
         b2 = this.data[this.pos++];
         return b1 | b2;
-    },
-    decodePixels:function(data){
+    }
+
+    decodePixels(data) {
         var ccbyte, c, col, i, left, length, p, pa, paeth, pb, pc, pixelBytes, pixels, pos, row, scanlineLength, upper, upperLeft, _i, _j, _k, _l, _m;
         if (data == null) {
             data = this.imgData;
@@ -265,8 +270,9 @@ cc.PNGReader = cc.Class.extend({
             row++;
         }
         return pixels;
-    },
-    copyToImageData:function(imageData,pixels){
+    }
+
+    copyToImageData(imageData, pixels) {
         var alpha, colors, data, i, input, j, k, length, palette, v, _ref;
         colors = this.colors;
         palette = null;
@@ -300,8 +306,9 @@ cc.PNGReader = cc.Class.extend({
                 j = k;
             }
         }
-    },
-    decodePalette:function(){
+    }
+
+    decodePalette() {
         var c, i, palette, pos, ret, transparency, _i, _ref, _ref1;
         palette = this.palette;
         transparency = this.transparency.indexed || [];
@@ -315,8 +322,9 @@ cc.PNGReader = cc.Class.extend({
             ret[pos++] = (_ref1 = transparency[c++]) != null ? _ref1 : 255;
         }
         return ret;
-    },
-    render: function (canvas) {
+    }
+
+    render(canvas) {
         var ctx, data;
         canvas.width = this.width;
         canvas.height = this.height;
@@ -326,5 +334,5 @@ cc.PNGReader = cc.Class.extend({
         return ctx.putImageData(data, 0, 0);
 
     }
-});
+};
 

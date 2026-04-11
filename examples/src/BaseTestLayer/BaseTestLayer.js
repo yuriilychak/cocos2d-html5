@@ -35,9 +35,11 @@ var BASE_TEST_SUBTITLE_TAG = 12;
 var autoTestEnabled = autoTestEnabled || false;
 var autoTestCurrentTestName = autoTestCurrentTestName || "N/A";
 
-var BaseTestLayerProps = {
 
-    ctor:function(colorA, colorB ) {
+
+var BaseTestLayer = class BaseTestLayer extends cc.LayerGradient {
+
+    constructor(colorA, colorB ) {
 
         // default gradient colors
         var a = cc.color(98,99,117,255);
@@ -54,7 +56,10 @@ var BaseTestLayerProps = {
             b = cc.color(0,0,0,255);
         }
 
-        this._super( a, b );
+        super( a, b );
+
+
+        this.testDuration = 0.25;
 
         // Update winsize in case it was resized
         winSize = director.getWinSize();
@@ -65,14 +70,14 @@ var BaseTestLayerProps = {
 
             this.setupAutomation();
         }
-    },
+    }
 
-    setupAutomation:function() {
+    setupAutomation() {
         // override me
         // Will be called only if automation is activated
-    },
+    }
 
-    getTitle:function() {
+    getTitle() {
         var t = "";
 
         // some tests use "this.title()" and others use "this._title";
@@ -81,8 +86,8 @@ var BaseTestLayerProps = {
         else if('_title' in this || this._title)
             t = this._title;
         return t;
-    },
-    getSubtitle:function() {
+    }
+    getSubtitle() {
         var st = "";
         // some tests use "this.subtitle()" and others use "this._subtitle";
         if(this.subtitle)
@@ -91,16 +96,16 @@ var BaseTestLayerProps = {
             st = this._subtitle;
 
         return st;
-    },
-    log:function(str) {
+    }
+    log(str) {
         if( !autoTestEnabled )
             cc.log(str);
-    },
+    }
     //
     // Menu
     //
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         cc.sys.garbageCollect();
 
@@ -139,16 +144,16 @@ var BaseTestLayerProps = {
         item3.y = height/2 ;
 
         this.addChild(menu, 102, BASE_TEST_MENU_TAG);
-    },
-    onRestartCallback:function (sender) {
+    }
+    onRestartCallback(sender) {
         // override me
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         // override me
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         // override me
-    },
+    }
     //------------------------------------------
     //
     // Automation Test code
@@ -156,25 +161,24 @@ var BaseTestLayerProps = {
     //------------------------------------------
 
     // How many seconds should this test run
-    testDuration:0.25,
 
     // Automated test
-    getExpectedResult:function() {
+    getExpectedResult() {
         // Override me
         throw "Not Implemented";
-    },
+    }
 
     // Automated test
-    getCurrentResult:function() {
+    getCurrentResult() {
         // Override me
         throw "Not Implemented";
-    },
+    }
 
-    compareResults:function(current, expected) {
+    compareResults(current, expected) {
         return (current == expected);
-    },
+    }
 
-    tearDown:function(dt) {
+    tearDown(dt) {
 
         // Override to have a different behavior
         var current = this.getCurrentResult();
@@ -185,9 +189,9 @@ var BaseTestLayerProps = {
             this.errorDescription = "Expected value: '" + expected + "'. Current value'" + current +  "'.";
 
         return ret;
-    },
+    }
 
-    endTest:function(dt) {
+    endTest(dt) {
 
         this.errorDescription = "";
         var title = this.getTitle();
@@ -205,18 +209,18 @@ var BaseTestLayerProps = {
         }
 
         this.runNextTest();
-    },
+    }
 
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         // override me. Should return true if the last test was executed
         throw "Override me: numberOfPendingTests";
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         throw "Override me: getTestNumber";
-    },
+    }
 
-    runNextTest:function() {
+    runNextTest() {
         if( this.numberOfPendingTests() <= 0 ) {
             var scene = new cc.Scene();
             var layer = new TestController();
@@ -229,10 +233,10 @@ var BaseTestLayerProps = {
                 cc.log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + this.getTitle() + "':'" + err);
                 this.runNextTest();
             }
-    },
+    }
 
 
-    containsPixel: function(arr, pix, approx, range) {
+    containsPixel(arr, pix, approx, range) {
 
     range = range || 50.0;
     approx = approx || false;
@@ -255,9 +259,9 @@ var BaseTestLayerProps = {
             }
         }
         return false;
-    },
+    }
 
-    readPixels:function(x,y,w,h) {
+    readPixels(x,y,w,h) {
         if( 'opengl' in cc.sys.capabilities) {
             var size = 4 * w * h;
             var array = new Uint8Array(size);
@@ -267,13 +271,13 @@ var BaseTestLayerProps = {
             // implement a canvas-html5 readpixels
             return cc._renderContext.getImageData(x, winSize.height-y-h, w, h).data;
         }
-    },
+    }
 
     //
     // Useful for comparing results
     // From: http://stackoverflow.com/a/1359808
     //
-    sortObject:function(o) {
+    sortObject(o) {
         var sorted = {},
         key, a = [];
 
@@ -290,9 +294,8 @@ var BaseTestLayerProps = {
         }
         return sorted;
     }
-};
 
-var BaseTestLayer = cc.LayerGradient.extend(BaseTestLayerProps);
+};
 
 var FlowControl = function (testArray) {
 

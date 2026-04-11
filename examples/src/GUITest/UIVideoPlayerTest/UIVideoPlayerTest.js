@@ -22,10 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIVideoPlayerTest = UIMainLayer.extend({
+var UIVideoPlayerTest = class UIVideoPlayerTest extends UIMainLayer {
 
-    onEnter: function(){
-        UIMainLayer.prototype.onEnter.call(this);
+    onEnter(){
+        super.onEnter();
 
         var video = new ccui.VideoPlayer("cocosvideo.mp4");
         video.setContentSize(320, 240);
@@ -99,4 +99,5 @@ var UIVideoPlayerTest = UIMainLayer.extend({
 
     }
 
-});
+
+};

@@ -33,34 +33,38 @@ var backgroundPaths = ["Images/assetMgrBackground1.jpg", "Images/assetMgrBackgro
 
 var currentScene = 0;
 
-var AssetsManagerTestLayer = BaseTestLayer.extend({
-    _background : null,
-    _spritePath : "",
+var AssetsManagerTestLayer = class AssetsManagerTestLayer extends BaseTestLayer {
 
-    ctor : function (spritePath) {
-        this._super();
+    constructor(spritePath) {
+        super();
+
+
+        this._background = null;
+
+
+        this._spritePath = "";
         this._spritePath = spritePath;
         cc.loader.resPath = "../cpp-tests/Resources/";
-    },
+    }
 
-    getTitle : function() {
+    getTitle() {
         return "AssetsManagerTest";
-    },
+    }
 
-    onEnter : function() {
-        this._super();
+    onEnter() {
+        super.onEnter();
         this._background = new cc.Sprite(this._spritePath);
         this.addChild(this._background, 1);
         this._background.x = cc.winSize.width/2;
         this._background.y = cc.winSize.height/2;
-    },
+    }
 
-    onExit : function(){
+    onExit(){
         cc.loader.resPath = "";
-        this._super();
-    },
+        super.onExit();
+    }
 
-    onNextCallback : function () {
+    onNextCallback() {
         if (currentScene < sceneManifests.length - 1)
         {
             currentScene++;
@@ -68,9 +72,9 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
         else currentScene = 0;
         var scene = new AssetsManagerLoaderScene();
         scene.runThisTest();
-    },
+    }
 
-    onBackCallback : function () {
+    onBackCallback() {
         if (currentScene > 0)
         {
             currentScene--;
@@ -79,32 +83,40 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
         var scene = new AssetsManagerLoaderScene();
         scene.runThisTest();
     }
-});
+
+};
 
 
 
-var AssetsManagerTestScene = TestScene.extend({
-    _background : "",
+var AssetsManagerTestScene = class AssetsManagerTestScene extends TestScene {
 
-    ctor : function (background) {
-        this._super();
+    constructor(background) {
+        super();
+
+
+        this._background = "";
         var layer = new AssetsManagerTestLayer(background);
         this.addChild(layer);
     }
-});
+
+};
 
 var __failCount = 0;
 
-var AssetsManagerLoaderScene = TestScene.extend({
-    _am : null,
-    _progress : null,
-    _percent : 0,
-    _percentByFile : 0,
-    _loadingBar : null,
-    _fileLoadingBar : null,
-    _callback : null,
+var AssetsManagerLoaderScene = class AssetsManagerLoaderScene extends TestScene {
+    constructor() {
+        super();
+        this._am = null;
+        this._progress = null;
+        this._percent = 0;
+        this._percentByFile = 0;
+        this._loadingBar = null;
+        this._fileLoadingBar = null;
+        this._callback = null;
+    }
 
-    cb: function(event) {
+
+    cb(event) {
         var scene;
         switch (event.getEventCode())
         {
@@ -174,9 +186,9 @@ var AssetsManagerLoaderScene = TestScene.extend({
             default:
                 break;
         }
-    },
+    }
 
-    runThisTest : function () {
+    runThisTest() {
         var manifestPath = sceneManifests[currentScene];
         var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + storagePaths[currentScene]);
         cc.log("Storage path for this test : " + storagePath);
@@ -220,10 +232,11 @@ var AssetsManagerLoaderScene = TestScene.extend({
         }
 
         this.schedule(this.updateProgress, 0.5);
-    },
+    }
 
-    updateProgress : function () {
+    updateProgress() {
         this._loadingBar.setPercent(this._percent);
         this._fileLoadingBar.setPercent(this._percentByFile);
     }
-});
+
+};

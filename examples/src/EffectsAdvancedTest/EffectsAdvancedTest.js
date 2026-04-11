@@ -45,18 +45,24 @@ EffectsAdvancedTest.IDC_RESTART = 102;
 
 var sceneIndex = -1;
 
-var EffectAdvanceTextLayer = cc.Layer.extend({
-    _atlas:null,
-    _title:null,
-	rootNode: null,
+var EffectAdvanceTextLayer = class EffectAdvanceTextLayer extends cc.Layer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._atlas = null;
+
+
+        this._title = null;
+
+
+        this.rootNode = null;
         this.init();
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         // back gradient
         this.rootNode = new cc.LayerGradient(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
@@ -121,42 +127,43 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
         item3.y = bottomy + item2.height / 2;
 
         this.addChild(menu, 1);
-    },
+    }
 
-    title:function () {
+    title() {
         return "No title";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    restartCallback:function (sender) {
+    restartCallback(sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(restartEffectAdvanceAction());
         cc.director.runScene(scene);
-    },
+    }
 
-    nextCallback:function (sender) {
+    nextCallback(sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(nextEffectAdvanceAction());
         cc.director.runScene(scene);
-    },
+    }
 
-    backCallback:function (sender) {
+    backCallback(sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(backEffectAdvanceAction());
         cc.director.runScene(scene);
     }
-});
 
-var Effect1 = EffectAdvanceTextLayer.extend({
-    title:function () {
+};
+
+var Effect1 = class Effect1 extends EffectAdvanceTextLayer {
+    title() {
         return "Lens + Waves3d";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var target = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
 
@@ -173,15 +180,16 @@ var Effect1 = EffectAdvanceTextLayer.extend({
 
         target.runAction(cc.sequence(lens, delay, reuse, waves));
     }
-});
 
-var Effect2 = EffectAdvanceTextLayer.extend({
-    title:function () {
+};
+
+var Effect2 = class Effect2 extends EffectAdvanceTextLayer {
+    title() {
         return "ShakyTiles + ShuffleTiles + TurnOffTiles";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
         var target = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
 
         // To reuse a grid the grid size and the grid type must be the same.
@@ -203,15 +211,16 @@ var Effect2 = EffectAdvanceTextLayer.extend({
 
         target.runAction(cc.sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon));
     }
-});
 
-var Effect3 = EffectAdvanceTextLayer.extend({
-    title:function () {
+};
+
+var Effect3 = class Effect3 extends EffectAdvanceTextLayer {
+    title() {
         return "Effects on 2 sprites";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
         var target1 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE1);
@@ -227,30 +236,34 @@ var Effect3 = EffectAdvanceTextLayer.extend({
         var move = cc.moveBy(3, cc.p(200, 0));
         bg.runAction(cc.sequence(move, move.reverse()).repeatForever());
     }
-});
 
-var Lens3DTarget = cc.Node.extend({
-    _lens3D:null,
+};
 
-    ctor:function() {
-        this._super();
+var Lens3DTarget = class Lens3DTarget extends cc.Node {
+
+    constructor() {
+        super();
+
+
+        this._lens3D = null;
         this.init();
-    },
+    }
 
-    update: function(dt) {
+    update(dt) {
         this._lens3D.setPosition(this._position);
-    },
-    onEnter: function() {
-        cc.Node.prototype.onEnter.call(this);
+    }
+    onEnter() {
+        super.onEnter();
         this.scheduleUpdate();
-    },
+    }
 
-    onExit: function() {
-        cc.Node.prototype.onExit.call(this);
+    onExit() {
+        super.onExit();
         this.unscheduleUpdate();
     }
 
-});
+
+};
 
 Lens3DTarget.create = function (action) {
     var target = new Lens3DTarget();
@@ -258,13 +271,13 @@ Lens3DTarget.create = function (action) {
     return target;
 };
 
-var Effect4 = EffectAdvanceTextLayer.extend({
-    title:function () {
+var Effect4 = class Effect4 extends EffectAdvanceTextLayer {
+    title() {
         return "Jumpy Lens3D";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var bgNodeGrid = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
         var lens = cc.lens3D(10, cc.size(32, 24), cc.p(100, 180), 150);
@@ -289,15 +302,16 @@ var Effect4 = EffectAdvanceTextLayer.extend({
             }
         )));
     }
-});
 
-var Effect5 = EffectAdvanceTextLayer.extend({
-    title:function () {
+};
+
+var Effect5 = class Effect5 extends EffectAdvanceTextLayer {
+    title() {
         return "Test Stop-Copy-Restar";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var effect = cc.liquid(2, cc.size(32, 24), 1, 20);
         var stopEffect = cc.sequence(effect, cc.delayTime(2), cc.stopGrid());
@@ -305,19 +319,20 @@ var Effect5 = EffectAdvanceTextLayer.extend({
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
         bg.runAction(stopEffect);
     }
-});
 
-var Issue631 = EffectAdvanceTextLayer.extend({
-    title:function () {
+};
+
+var Issue631 = class Issue631 extends EffectAdvanceTextLayer {
+    title() {
         return "Testing Opacity";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Effect image should be 100% opaque. Testing issue #631";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var effect = cc.sequence(cc.delayTime(2.0), cc.shaky3D(5.0, cc.size(5, 5), 16, false));
 
@@ -345,7 +360,8 @@ var Issue631 = EffectAdvanceTextLayer.extend({
 
 	    nodeGrid.runAction(effect.repeatForever());
     }
-});
+
+};
 
 var arrayOfEffectsAdvancedTest = [
     Effect3,
@@ -385,14 +401,15 @@ var restartEffectAdvanceAction = function () {
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 
-var EffectAdvanceScene = TestScene.extend({
-    runThisTest:function () {
+var EffectAdvanceScene = class EffectAdvanceScene extends TestScene {
+    runThisTest() {
         sceneIndex = -1;
         var pLayer = nextEffectAdvanceAction();
         this.addChild(pLayer);
         cc.director.runScene(this);
     }
-});
+
+};
 
 
 

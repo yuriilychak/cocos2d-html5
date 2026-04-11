@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 //2015-01-14
-var UITextTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+var UITextTest = class UITextTest extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("Text");
@@ -40,12 +40,13 @@ var UITextTest = UIMainLayer.extend({
             return true;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UITextTest_LineWrap = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+var UITextTest_LineWrap = class UITextTest_LineWrap extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("Text line wrap");
@@ -72,12 +73,13 @@ var UITextTest_LineWrap = UIMainLayer.extend({
             return true;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UILabelTest_Effect = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+var UILabelTest_Effect = class UILabelTest_Effect extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("");
@@ -118,12 +120,13 @@ var UILabelTest_Effect = UIMainLayer.extend({
             return true;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UITextTest_TTF = UIMainLayer.extend({
-    init: function(){
-        if(this._super()){
+var UITextTest_TTF = class UITextTest_TTF extends UIMainLayer {
+    init(){
+        if(super.init()){
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("Text set TTF font");
@@ -136,13 +139,14 @@ var UITextTest_TTF = UIMainLayer.extend({
             return true;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UITextTest_IgnoreContentSize = UIMainLayer.extend({
+var UITextTest_IgnoreContentSize = class UITextTest_IgnoreContentSize extends UIMainLayer {
 
-    init: function(){
-        if(this._super()){
+    init(){
+        if(super.init()){
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("");
@@ -180,4 +184,5 @@ var UITextTest_IgnoreContentSize = UIMainLayer.extend({
         }
     }
 
-});
+
+};

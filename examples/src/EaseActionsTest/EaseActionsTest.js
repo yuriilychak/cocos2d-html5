@@ -34,30 +34,42 @@ var easeActionsTestIdx = -1;
 // the class inherit from TestScene
 // every .Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-var EaseActionsTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var EaseActionsTestScene = class EaseActionsTestScene extends TestScene {
+    runThisTest(num) {
         easeActionsTestIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextEaseActionsTest());
         director.runScene(this);
     }
-});
+
+};
 
 
-var EaseSpriteDemo = BaseTestLayer.extend({
-    _grossini:null,
-    _tamara:null,
-    _kathia:null,
-    _title:null,
+var EaseSpriteDemo = class EaseSpriteDemo extends BaseTestLayer {
 
-    ctor:function () {
-        this._super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
-    },
+    constructor() {
+        super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
 
-    title:function () {
+
+        this._grossini = null;
+
+
+        this._tamara = null;
+
+
+        this._kathia = null;
+
+
+        this._title = null;
+
+
+        this.testDuration = 2.05;
+    }
+
+    title() {
         return "No title";
-    },
-    onEnter:function () {
-        this._super();
+    }
+    onEnter() {
+        super.onEnter();
 
         // Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
         this._grossini = new cc.Sprite(s_pathGrossini);
@@ -77,46 +89,45 @@ var EaseSpriteDemo = BaseTestLayer.extend({
         this._tamara.y = winSize.height * 4 / 5;
 
         this.twoSprites = false;
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new EaseActionsTestScene();
         s.addChild(restartEaseActionsTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new EaseActionsTestScene();
         s.addChild(nextEaseActionsTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new EaseActionsTestScene();
         s.addChild(previousEaseActionsTest());
         director.runScene(s);
-    },
-    positionForTwo:function () {
+    }
+    positionForTwo() {
         this.twoSprites = true;
         this._grossini.x = 60;
 	    this._grossini.y = winSize.height / 5;
         this._tamara.x = 60;
 	    this._tamara.y = winSize.height * 4 / 5;
         this._kathia.visible = false;
-    },
+    }
 
     //
     // Automation
     //
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfEaseActionsTest.length-1) - easeActionsTestIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return easeActionsTestIdx;
-    },
+    }
 
     // default values for automation
-    testDuration:2.05,
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret;
         var w = 60 + winSize.width - 80;
         if( this.twoSprites )
@@ -124,9 +135,9 @@ var EaseSpriteDemo = BaseTestLayer.extend({
         else
             ret = [w, w, w];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret;
         if( this.twoSprites)
             ret = [ this._grossini.x, this._tamara.x];
@@ -135,18 +146,24 @@ var EaseSpriteDemo = BaseTestLayer.extend({
         return JSON.stringify(ret);
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEase
 //
 //------------------------------------------------------------------
-var SpriteEase = EaseSpriteDemo.extend({
+var SpriteEase = class SpriteEase extends EaseSpriteDemo {
+    constructor() {
+        super();
+        this.testDuration = 4.2;
+    }
 
-    onEnter:function () {
+
+    onEnter() {
         //----start0----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -177,43 +194,43 @@ var SpriteEase = EaseSpriteDemo.extend({
 
         this.scheduleOnce(this.testStopAction, 4.1);
         //----end0----
-    },
-    title:function () {
+    }
+    title() {
         return "EaseIn - EaseOut - Stop";
-    },
+    }
 
-    testStopAction:function (dt) {
+    testStopAction(dt) {
         this._tamara.stopActionByTag(1);
         this._kathia.stopActionByTag(1);
         this._grossini.stopActionByTag(1);
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:4.2,
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret = [60,60,60];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = [ this._grossini.x, this._tamara.x, this._kathia.x ];
         return JSON.stringify(ret);
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseInOut = EaseSpriteDemo.extend({
+var SpriteEaseInOut = class SpriteEaseInOut extends EaseSpriteDemo {
 
-    onEnter:function () {
+    onEnter() {
         //----start1----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
 
@@ -236,22 +253,23 @@ var SpriteEaseInOut = EaseSpriteDemo.extend({
         this._kathia.runAction(seq2.repeatForever());
         this._grossini.runAction(seq3.repeatForever());
         //----end1----
-    },
-    title:function () {
+    }
+    title() {
         return "EaseInOut and rates";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseExponential
 //
 //------------------------------------------------------------------
-var SpriteEaseExponential = EaseSpriteDemo.extend({
+var SpriteEaseExponential = class SpriteEaseExponential extends EaseSpriteDemo {
 
-    onEnter:function () {
+    onEnter() {
         //----start2----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -273,21 +291,22 @@ var SpriteEaseExponential = EaseSpriteDemo.extend({
         this._tamara.runAction(seq2.repeatForever());
         this._kathia.runAction(seq3.repeatForever());
         //----end2-----
-    },
-    title:function () {
+    }
+    title() {
         return "ExpIn - ExpOut actions";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseExponentialInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseExponentialInOut = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseExponentialInOut = class SpriteEaseExponentialInOut extends EaseSpriteDemo {
+    onEnter() {
         //----start3----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -305,21 +324,22 @@ var SpriteEaseExponentialInOut = EaseSpriteDemo.extend({
         this._grossini.runAction(seq1.repeatForever());
         this._tamara.runAction(seq2.repeatForever());
         //----end3----
-    },
-    title:function () {
+    }
+    title() {
         return "EaseExponentialInOut action";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseSine
 //
 //------------------------------------------------------------------
-var SpriteEaseSine = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseSine = class SpriteEaseSine extends EaseSpriteDemo {
+    onEnter() {
         //----start4----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -341,21 +361,22 @@ var SpriteEaseSine = EaseSpriteDemo.extend({
         this._tamara.runAction(seq2.repeatForever());
         this._kathia.runAction(seq3.repeatForever());
         //----end4----
-    },
-    title:function () {
+    }
+    title() {
         return "EaseSineIn - EaseSineOut";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseSineInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseSineInOut = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseSineInOut = class SpriteEaseSineInOut extends EaseSpriteDemo {
+    onEnter() {
         //----start5----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -376,21 +397,22 @@ var SpriteEaseSineInOut = EaseSpriteDemo.extend({
         this._grossini.runAction(seq1.repeatForever());
         this._tamara.runAction(seq2.repeatForever());
         //----end5----
-    },
-    title:function () {
+    }
+    title() {
         return "EaseSineInOut action";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseElastic
 //
 //------------------------------------------------------------------
-var SpriteEaseElastic = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseElastic = class SpriteEaseElastic extends EaseSpriteDemo {
+    onEnter() {
         //----start6----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -411,21 +433,22 @@ var SpriteEaseElastic = EaseSpriteDemo.extend({
         this._tamara.runAction(seq2.repeatForever());
         this._kathia.runAction(seq3.repeatForever());
         //----end6----
-    },
-    title:function () {
+    }
+    title() {
         return "Elastic In - Out actions";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseElasticInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseElasticInOut = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseElasticInOut = class SpriteEaseElasticInOut extends EaseSpriteDemo {
+    onEnter() {
         //----start7----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
 
@@ -448,21 +471,22 @@ var SpriteEaseElasticInOut = EaseSpriteDemo.extend({
         this._kathia.runAction(seq2.repeatForever());
         this._grossini.runAction(seq3.repeatForever());
         //----end7----
-    },
-    title:function () {
+    }
+    title() {
         return "EaseElasticInOut action";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseBounce
 //
 //------------------------------------------------------------------
-var SpriteEaseBounce = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseBounce = class SpriteEaseBounce extends EaseSpriteDemo {
+    onEnter() {
         //----start8----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -483,21 +507,22 @@ var SpriteEaseBounce = EaseSpriteDemo.extend({
         this._tamara.runAction(seq2.repeatForever());
         this._kathia.runAction(seq3.repeatForever());
         //----end8----
-    },
-    title:function () {
+    }
+    title() {
         return "Bounce In - Out actions";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseBounceInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseBounceInOut = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseBounceInOut = class SpriteEaseBounceInOut extends EaseSpriteDemo {
+    onEnter() {
         //----start9----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -515,21 +540,22 @@ var SpriteEaseBounceInOut = EaseSpriteDemo.extend({
         this._grossini.runAction(seq1.repeatForever());
         this._tamara.runAction(seq2.repeatForever());
         //----end9----
-    },
-    title:function () {
+    }
+    title() {
         return "EaseBounceInOut action";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseBack
 //
 //------------------------------------------------------------------
-var SpriteEaseBack = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseBack = class SpriteEaseBack extends EaseSpriteDemo {
+    onEnter() {
         //----start10----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -550,21 +576,22 @@ var SpriteEaseBack = EaseSpriteDemo.extend({
         this._tamara.runAction(seq2.repeatForever());
         this._kathia.runAction(seq3.repeatForever());
         //----end10----
-    },
-    title:function () {
+    }
+    title() {
         return "Back In - Out actions";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteEaseBackInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseBackInOut = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SpriteEaseBackInOut = class SpriteEaseBackInOut extends EaseSpriteDemo {
+    onEnter() {
         //----start11----onEnter
-        this._super();
+        super.onEnter();
 
         var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
         var move_back = move.reverse();
@@ -582,16 +609,22 @@ var SpriteEaseBackInOut = EaseSpriteDemo.extend({
         this._grossini.runAction(seq1.repeatForever());
         this._tamara.runAction(seq2.repeatForever());
         //----end11----
-    },
-    title:function () {
+    }
+    title() {
         return "EaseBackInOut action";
     }
-});
 
-var SpeedTest = EaseSpriteDemo.extend({
-    onEnter:function () {
+};
+
+var SpeedTest = class SpeedTest extends EaseSpriteDemo {
+    constructor() {
+        super();
+        this.testDuration = 0.1;
+    }
+
+    onEnter() {
         //----start12----onEnter
-        this._super();
+        super.onEnter();
 
         // rotate and jump
         var jump1 = cc.jumpBy(4, cc.p(-winSize.width + 80, 0), 100, 4);
@@ -618,12 +651,12 @@ var SpeedTest = EaseSpriteDemo.extend({
 
         this.schedule(this.altertime, 1.0);
         //----end12----
-    },
-    title:function () {
+    }
+    title() {
         return "Speed action";
-    },
+    }
 
-    altertime:function (dt) {
+    altertime(dt) {
         //----start12----altertime
         var action1 = this._grossini.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
         var action2 = this._tamara.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
@@ -633,26 +666,31 @@ var SpeedTest = EaseSpriteDemo.extend({
         action2.setSpeed(Math.random() * 2);
         action3.setSpeed(Math.random() * 2);
         //----end12----
-    },
+    }
     // automation
-    testDuration:0.1,
-    getExpectedResult:function() {
-        throw "Not Implemented";
-    },
-    getCurrentResult:function() {
+    getExpectedResult() {
         throw "Not Implemented";
     }
-});
+    getCurrentResult() {
+        throw "Not Implemented";
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // SchedulerTest
 //
 //------------------------------------------------------------------
-var SchedulerTest = EaseSpriteDemo.extend({
-    onEnter:function () {
+var SchedulerTest = class SchedulerTest extends EaseSpriteDemo {
+    constructor() {
+        super();
+        this.testDuration = 0.1;
+    }
+
+    onEnter() {
         //----start13----onEnter
-        this._super();
+        super.onEnter();
 
         // rotate and jump
         var jump1 = cc.jumpBy(4, cc.p(-winSize.width + 80, 0), 100, 4);
@@ -682,28 +720,28 @@ var SchedulerTest = EaseSpriteDemo.extend({
         emitter.texture = cc.textureCache.addImage("Images/fire.png");
         this.addChild(emitter);
         //----end13----
-    },
-    title:function () {
+    }
+    title() {
         return "Scheduler scaleTime Test";
-    },
+    }
 
     // automation
-    testDuration:0.1,
-    getExpectedResult:function() {
-        throw "Not Implemented";
-    },
-    getCurrentResult:function() {
+    getExpectedResult() {
         throw "Not Implemented";
     }
-});
+    getCurrentResult() {
+        throw "Not Implemented";
+    }
+
+};
 
 //
 // SpriteEaseBezier action
 //
-var SpriteEaseBezierTest = EaseSpriteDemo.extend({
+var SpriteEaseBezierTest = class SpriteEaseBezierTest extends EaseSpriteDemo {
 
-    onEnter: function(){
-        this._super();
+    onEnter(){
+        super.onEnter();
         //----start14----onEnter
 
         var size = director.getWinSize();
@@ -750,20 +788,21 @@ var SpriteEaseBezierTest = EaseSpriteDemo.extend({
         this._kathia.runAction(bezierEaseTo2);
 
         //----end14----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseBezier action";
     }
-});
+
+};
 
 
 //
 // SpriteEaseQuadratic
 //
-var SpriteEaseQuadraticTest = EaseSpriteDemo.extend({
+var SpriteEaseQuadraticTest = class SpriteEaseQuadraticTest extends EaseSpriteDemo {
 
-    onEnter: function(){
-        this._super();
+    onEnter(){
+        super.onEnter();
         //----start15----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -786,19 +825,20 @@ var SpriteEaseQuadraticTest = EaseSpriteDemo.extend({
         this._kathia.runAction( seq3.repeatForever() );
 
         //----end15----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseQuadratic action";
     }
-});
+
+};
 
 //
 // SpriteEaseQuadraticInOut
 //
-var SpriteEaseQuadraticInOutTest = EaseSpriteDemo.extend({
+var SpriteEaseQuadraticInOutTest = class SpriteEaseQuadraticInOutTest extends EaseSpriteDemo {
 
-    onEnter: function(){
-        this._super();
+    onEnter(){
+        super.onEnter();
         //----start16----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -817,19 +857,20 @@ var SpriteEaseQuadraticInOutTest = EaseSpriteDemo.extend({
         this._grossini.runAction( seq1 );
         this._tamara.runAction( seq2 );
         //----end16----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseQuadraticInOut action";
     }
-});
+
+};
 
 //
 // SpriteEaseQuartic
 //
-var SpriteEaseQuarticTest = EaseSpriteDemo.extend({
+var SpriteEaseQuarticTest = class SpriteEaseQuarticTest extends EaseSpriteDemo {
 
-    onEnter: function(){
-        this._super();
+    onEnter(){
+        super.onEnter();
         //----start17----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -851,18 +892,19 @@ var SpriteEaseQuarticTest = EaseSpriteDemo.extend({
         this._tamara.runAction( seq2.repeatForever() );
         this._kathia.runAction( seq3.repeatForever() );
         //----end17----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseQuartic action";
     }
-});
+
+};
 
 //
 // SpriteEaseQuarticInOut
 //
-var SpriteEaseQuarticInOutTest = EaseSpriteDemo.extend({
-    onEnter: function(){
-        this._super();
+var SpriteEaseQuarticInOutTest = class SpriteEaseQuarticInOutTest extends EaseSpriteDemo {
+    onEnter(){
+        super.onEnter();
         //----start18----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -882,18 +924,19 @@ var SpriteEaseQuarticInOutTest = EaseSpriteDemo.extend({
         this._tamara.runAction( seq2.repeatForever() );
 
         //----end18----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseQuarticInOut action";
     }
-});
+
+};
 
 //
 // SpriteEaseQuintic
 //
-var SpriteEaseQuinticTest = EaseSpriteDemo.extend({
-    onEnter: function(){
-        this._super();
+var SpriteEaseQuinticTest = class SpriteEaseQuinticTest extends EaseSpriteDemo {
+    onEnter(){
+        super.onEnter();
         //----start19----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -917,18 +960,19 @@ var SpriteEaseQuinticTest = EaseSpriteDemo.extend({
 
 
         //----end19----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseQuintic action";
     }
-});
+
+};
 
 //
 // SpriteEaseQuinticInOut
 //
-var SpriteEaseQuinticInOutTest = EaseSpriteDemo.extend({
-    onEnter: function(){
-        this._super();
+var SpriteEaseQuinticInOutTest = class SpriteEaseQuinticInOutTest extends EaseSpriteDemo {
+    onEnter(){
+        super.onEnter();
         //----start20----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -948,18 +992,19 @@ var SpriteEaseQuinticInOutTest = EaseSpriteDemo.extend({
         this._tamara.runAction( seq2.repeatForever() );
 
         //----end20----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseQuinticInOut action";
     }
-});
+
+};
 
 //
 // SpriteEaseCircle
 //
-var SpriteEaseCircleTest = EaseSpriteDemo.extend({
-    onEnter: function(){
-        this._super();
+var SpriteEaseCircleTest = class SpriteEaseCircleTest extends EaseSpriteDemo {
+    onEnter(){
+        super.onEnter();
         //----start21----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -982,18 +1027,19 @@ var SpriteEaseCircleTest = EaseSpriteDemo.extend({
         this._kathia.runAction( seq3.repeatForever() );
 
         //----end21----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseCircle action";
     }
-});
+
+};
 
 //
 // SpriteEaseCircleInOut
 //
-var SpriteEaseCircleInOutTest = EaseSpriteDemo.extend({
-    onEnter: function(){
-        this._super();
+var SpriteEaseCircleInOutTest = class SpriteEaseCircleInOutTest extends EaseSpriteDemo {
+    onEnter(){
+        super.onEnter();
         //----start22----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -1013,18 +1059,19 @@ var SpriteEaseCircleInOutTest = EaseSpriteDemo.extend({
         this._tamara.runAction( seq2.repeatForever() );
 
         //----end22----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseCircleInOut action";
     }
-});
+
+};
 
 //
 // SpriteEaseCubic
 //
-var SpriteEaseCubicTest = EaseSpriteDemo.extend({
-    onEnter: function(){
-        this._super();
+var SpriteEaseCubicTest = class SpriteEaseCubicTest extends EaseSpriteDemo {
+    onEnter(){
+        super.onEnter();
         //----start23----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -1048,18 +1095,19 @@ var SpriteEaseCubicTest = EaseSpriteDemo.extend({
 
 
         //----end23----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseCubic action";
     }
-});
+
+};
 
 //
 // SpriteEaseCubicInOut
 //
-var SpriteEaseCubicInOutTest = EaseSpriteDemo.extend({
-    onEnter: function(){
-        this._super();
+var SpriteEaseCubicInOutTest = class SpriteEaseCubicInOutTest extends EaseSpriteDemo {
+    onEnter(){
+        super.onEnter();
         //----start24----onEnter
 
         var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
@@ -1080,11 +1128,12 @@ var SpriteEaseCubicInOutTest = EaseSpriteDemo.extend({
 
 
         //----end24----
-    },
-    title: function(){
+    }
+    title(){
         return "SpriteEaseCubicInOut action";
     }
-});
+
+};
 
 //
 // Flow control

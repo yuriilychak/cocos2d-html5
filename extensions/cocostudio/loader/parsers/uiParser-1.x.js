@@ -26,20 +26,20 @@
 
     var _stack = new Array(50);
 
-    var Parser = baseParser.extend({
+    var Parser = class Parser extends baseParser {
 
-        addSpriteFrame: function (textures, resourcePath) {
+        addSpriteFrame(textures, resourcePath) {
             if (!textures) return;
             for (var i = 0; i < textures.length; i++) {
                 cc.spriteFrameCache.addSpriteFrames(resourcePath + textures[i]);
             }
-        },
+        }
 
-        pretreatment: function (json, resourcePath) {
+        pretreatment(json, resourcePath) {
             this.addSpriteFrame(json["textures"], resourcePath);
-        },
+        }
 
-        parseRecursive: function (json, resourcePath) {
+        parseRecursive(json, resourcePath) {
             var index = 1;
             var rootNode = null;
             var parser, curr, className, options, position, anchor, anchorPP,
@@ -105,9 +105,9 @@
                 }
             }
             return rootNode;
-        },
+        }
 
-        parse: function (file, json, resourcePath) {
+        parse(file, json, resourcePath) {
             resourcePath = resourcePath || this._dirname(file);
             this.pretreatment(json, resourcePath);
 
@@ -115,16 +115,17 @@
 
             node && this.deferred(json, resourcePath, node, file);
             return node;
-        },
+        }
 
-        deferred: function (json, resourcePath, node, file) {
+        deferred(json, resourcePath, node, file) {
             if (node) {
                 ccs.actionManager.initWithDictionary(file, json["animation"], node);
                 node.setContentSize(json["designWidth"], json["designHeight"]);
             }
         }
 
-    });
+    
+    }
     var parser = new Parser();
 
     parser.generalAttributes = function (widget, options) {

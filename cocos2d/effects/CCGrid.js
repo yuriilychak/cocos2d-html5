@@ -808,6 +808,4 @@ cc.TiledGrid3D = class TiledGrid3D extends cc.GridBase {
   }
 };
 
-cc.GridBase.extend = cc.Class.extend;
-cc.Grid3D.extend = cc.Class.extend;
-cc.TiledGrid3D.extend = cc.Class.extend;
+

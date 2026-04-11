@@ -27,22 +27,62 @@
 
 
 
-var IntervalLayer = cc.LayerGradient.extend({
+var IntervalLayer = class IntervalLayer extends cc.LayerGradient {
 
-    label0:null,
-    label1:null,
-    label2:null,
-    label3:null,
-    label4:null,
 
-    time0:null,
-    time1:null,
-    time2:null,
-    time3:null,
-    time4:null,
 
-    ctor:function () {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+
+
+
+
+        this.label0 = null;
+
+
+
+
+        this.label1 = null;
+
+
+
+
+        this.label2 = null;
+
+
+
+
+        this.label3 = null;
+
+
+
+
+        this.label4 = null;
+
+
+
+
+        this.time0 = null;
+
+
+
+
+        this.time1 = null;
+
+
+
+
+        this.time2 = null;
+
+
+
+
+        this.time3 = null;
+
+
+
+
+        this.time4 = null;
 
         this.time0 = this.time1 = this.time2 = this.time3 = this.time4 = 0.0;
 
@@ -105,53 +145,55 @@ var IntervalLayer = cc.LayerGradient.extend({
 
         this.addChild(menu);
 
-    },
+    }
 
-    onPause:function (sender) {
+    onPause(sender) {
         if (director.isPaused()) {
             director.resume();
         } else {
             director.pause();
         }
-    },
+    }
 
-    onExit:function () {
+    onExit() {
         if (director.isPaused()) {
             director.resume();
         }
-        this._super();
-    },
+        super.onExit();
+    }
 
-    step1:function (dt) {
+    step1(dt) {
         this.time1 += dt;
         this.label1.setString(this.time1.toFixed(1));
-    },
-    step2:function (dt) {
+    }
+    step2(dt) {
         this.time2 += dt;
         this.label2.setString(this.time2.toFixed(1));
-    },
-    step3:function (dt) {
+    }
+    step3(dt) {
         this.time3 += dt;
         this.label3.setString(this.time3.toFixed(1));
-    },
-    step4:function (dt) {
+    }
+    step4(dt) {
         this.time4 += dt;
         this.label4.setString(this.time4.toFixed(1));
-    },
-    update:function (dt) {
+    }
+    update(dt) {
         this.time0 += dt;
 
         this.label0.setString(this.time0.toFixed(1));
     }
 
     //CREATE_NODE(IntervalLayer);
-});
 
-var IntervalTestScene = TestScene.extend({
+};
 
-    runThisTest:function () {
+var IntervalTestScene = class IntervalTestScene extends TestScene {
+
+    runThisTest() {
         var layer = new IntervalLayer();
         this.addChild(layer);
         director.runScene(this);
     }
-});
+
+};

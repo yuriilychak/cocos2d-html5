@@ -25,23 +25,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var RotateWorldTestScene = TestScene.extend({
-    runThisTest:function () {
+var RotateWorldTestScene = class RotateWorldTestScene extends TestScene {
+    runThisTest() {
         var layer = new RotateWorldMainLayer();
         this.addChild(layer);
         this.runAction(cc.rotateBy(4, -360));
         director.runScene(this);
     }
-});
 
-var SpriteLayer = cc.Layer.extend({
-    ctor:function () {
-        this._super();
+};
+
+var SpriteLayer = class SpriteLayer extends cc.Layer {
+    constructor() {
+        super();
         this.init();
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var x, y;
 
@@ -84,16 +85,17 @@ var SpriteLayer = cc.Layer.extend({
         spriteSister1.runAction(cc.sequence(rot1, rot2).repeat(5));
         spriteSister2.runAction(cc.sequence(rot2.clone(), rot1.clone()).repeat(5));
     }
-});
 
-var TestLayer = cc.Layer.extend({
-    ctor:function () {
-        this._super();
+};
+
+var TestLayer = class TestLayer extends cc.Layer {
+    constructor() {
+        super();
         this.init();
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var x, y;
 
@@ -111,16 +113,17 @@ var TestLayer = cc.Layer.extend({
 
         this.addChild(label);
     }
-});
 
-var RotateWorldMainLayer = cc.Layer.extend({
-    ctor:function () {
-        this._super();
+};
+
+var RotateWorldMainLayer = class RotateWorldMainLayer extends cc.Layer {
+    constructor() {
+        super();
         this.init();
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
         var x, y;
 
         var size = director.getWinSize();
@@ -162,4 +165,5 @@ var RotateWorldMainLayer = cc.Layer.extend({
         green.runAction(rot.clone());
         white.runAction(rot.clone());
     }
-});
+
+};

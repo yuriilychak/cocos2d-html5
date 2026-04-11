@@ -100,95 +100,115 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
 
     if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
 
-        var proto = {
-            _contentSize: null,
-            _textureLoaded: false,
-            _htmlElementObj: null,
-            url: null,
-            _pattern: null,
-
-            ctor: function () {
+        /**
+         * <p>
+         * This class allows to easily create OpenGL or Canvas 2D textures from images, text or raw data.                                    <br/>
+         * The created cc.Texture2D object will always have power-of-two dimensions.                                                <br/>
+         * Depending on how you create the cc.Texture2D object, the actual image area of the texture might be smaller than the texture dimensions <br/>
+         *  i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).                                           <br/>
+         * Be aware that the content of the generated textures will be upside-down! </p>
+         * @name cc.Texture2D
+         * @class
+         * @extends cc.Class
+         *
+         * @property {WebGLTexture}     name            - <@readonly> WebGLTexture Object
+         * @property {Number}           pixelFormat     - <@readonly> Pixel format of the texture
+         * @property {Number}           pixelsWidth     - <@readonly> Width in pixels
+         * @property {Number}           pixelsHeight    - <@readonly> Height in pixels
+         * @property {Number}           width           - Content width in points
+         * @property {Number}           height          - Content height in points
+         * @property {cc.GLProgram}     shaderProgram   - The shader program used by drawAtPoint and drawInRect
+         * @property {Number}           maxS            - Texture max S
+         * @property {Number}           maxT            - Texture max T
+         */
+        cc.Texture2D = class Texture2D extends cc.NewClass {
+            constructor() {
+                super();
                 this._contentSize = cc.size(0, 0);
                 this._textureLoaded = false;
                 this._htmlElementObj = null;
+                this.url = null;
                 this._pattern = "";
                 this._pixelsWide = 0;
                 this._pixelsHigh = 0;
-            },
+                this._grayElementObj = null;
+                this._backupElement = null;
+                this._isGray = false;
+            }
 
             /**
              * get width in pixels
              * @return {Number}
              */
-            getPixelsWide: function () {
+            getPixelsWide() {
                 return this._pixelsWide;
-            },
+            }
 
             /**
              * get height of in pixels
              * @return {Number}
              */
-            getPixelsHigh: function () {
+            getPixelsHigh() {
                 return this._pixelsHigh;
-            },
+            }
 
             /**
              * get content size
              * @returns {cc.Size}
              */
-            getContentSize: function () {
+            getContentSize() {
                 var locScaleFactor = cc.contentScaleFactor();
                 return cc.size(this._contentSize.width / locScaleFactor, this._contentSize.height / locScaleFactor);
-            },
+            }
 
-            _getWidth: function () {
+            _getWidth() {
                 return this._contentSize.width / cc.contentScaleFactor();
-            },
-            _getHeight: function () {
+            }
+            _getHeight() {
                 return this._contentSize.height / cc.contentScaleFactor();
-            },
+            }
 
             /**
              * get content size in pixels
              * @returns {cc.Size}
              */
-            getContentSizeInPixels: function () {
+            getContentSizeInPixels() {
                 return this._contentSize;
-            },
+            }
 
             /**
              * init with HTML element
              * @param {HTMLImageElement|HTMLCanvasElement} element
              */
-            initWithElement: function (element) {
+            initWithElement(element) {
                 if (!element)
                     return;
                 this._htmlElementObj = element;
                 this._pixelsWide = this._contentSize.width = element.width;
                 this._pixelsHigh = this._contentSize.height = element.height;
                 this._textureLoaded = true;
-            },
+            }
 
             /**
              * HTMLElement Object getter
              * @return {HTMLImageElement|HTMLCanvasElement}
              */
-            getHtmlElementObj: function () {
+            getHtmlElementObj() {
                 return this._htmlElementObj;
-            },
+            }
 
             /**
              * check whether texture is loaded
              * @returns {boolean}
              */
-            isLoaded: function () {
+            isLoaded() {
                 return this._textureLoaded;
-            },
+            }
 
             /**
              * handle loaded texture
              */
-            handleLoadedTexture: function () {
+            handleLoadedTexture() {
                 var self = this;
                 if (!self._htmlElementObj) {
                     return;
@@ -200,128 +220,128 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
 
                 //dispatch load event to listener.
                 self.dispatchEvent("load");
-            },
+            }
 
             /**
              * description of cc.Texture2D
              * @returns {string}
              */
-            description: function () {
+            description() {
                 return "<cc.Texture2D | width = " + this._contentSize.width + " height " + this._contentSize.height + ">";
-            },
+            }
 
-            initWithData: function (data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
+            initWithData(data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
                 //support only in WebGl rendering mode
                 return false;
-            },
+            }
 
-            initWithImage: function (uiImage) {
+            initWithImage(uiImage) {
                 //support only in WebGl rendering mode
                 return false;
-            },
+            }
 
-            initWithString: function (text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
+            initWithString(text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
                 //support only in WebGl rendering mode
                 return false;
-            },
+            }
 
-            releaseTexture: function () {
+            releaseTexture() {
                 this._htmlElementObj = null;
                 cc.loader.release(this.url);
-            },
+            }
 
-            getName: function () {
+            getName() {
                 //support only in WebGl rendering mode
                 return null;
-            },
+            }
 
-            getMaxS: function () {
+            getMaxS() {
                 //support only in WebGl rendering mode
                 return 1;
-            },
+            }
 
-            setMaxS: function (maxS) {
+            setMaxS(maxS) {
                 //support only in WebGl rendering mode
-            },
+            }
 
-            getMaxT: function () {
+            getMaxT() {
                 return 1;
-            },
+            }
 
-            setMaxT: function (maxT) {
+            setMaxT(maxT) {
                 //support only in WebGl rendering mode
-            },
+            }
 
-            getPixelFormat: function () {
-                //support only in WebGl rendering mode
-                return null;
-            },
-
-            getShaderProgram: function () {
+            getPixelFormat() {
                 //support only in WebGl rendering mode
                 return null;
-            },
+            }
 
-            setShaderProgram: function (shaderProgram) {
+            getShaderProgram() {
                 //support only in WebGl rendering mode
-            },
+                return null;
+            }
 
-            hasPremultipliedAlpha: function () {
+            setShaderProgram(shaderProgram) {
+                //support only in WebGl rendering mode
+            }
+
+            hasPremultipliedAlpha() {
                 //support only in WebGl rendering mode
                 return false;
-            },
+            }
 
-            hasMipmaps: function () {
+            hasMipmaps() {
                 //support only in WebGl rendering mode
                 return false;
-            },
+            }
 
-            releaseData: function (data) {
+            releaseData(data) {
                 //support only in WebGl rendering mode
                 data = null;
-            },
+            }
 
-            keepData: function (data, length) {
+            keepData(data, length) {
                 //support only in WebGl rendering mode
                 return data;
-            },
+            }
 
-            drawAtPoint: function (point) {
+            drawAtPoint(point) {
                 //support only in WebGl rendering mode
-            },
+            }
 
-            drawInRect: function (rect) {
+            drawInRect(rect) {
                 //support only in WebGl rendering mode
-            },
+            }
 
             /**
              * init with ETC file
              * @warning does not support on HTML5
              */
-            initWithETCFile: function (file) {
+            initWithETCFile(file) {
                 cc.log(cc._LogInfos.Texture2D_initWithETCFile);
                 return false;
-            },
+            }
 
             /**
              * init with PVR file
              * @warning does not support on HTML5
              */
-            initWithPVRFile: function (file) {
+            initWithPVRFile(file) {
                 cc.log(cc._LogInfos.Texture2D_initWithPVRFile);
                 return false;
-            },
+            }
 
             /**
              * init with PVRTC data
              * @warning does not support on HTML5
              */
-            initWithPVRTCData: function (data, level, bpp, hasAlpha, length, pixelFormat) {
+            initWithPVRTCData(data, level, bpp, hasAlpha, length, pixelFormat) {
                 cc.log(cc._LogInfos.Texture2D_initWithPVRTCData);
                 return false;
-            },
+            }
 
-            setTexParameters: function (texParams, magFilter, wrapS, wrapT) {
+            setTexParameters(texParams, magFilter, wrapS, wrapT) {
                 if (magFilter !== undefined)
                     texParams = {minFilter: texParams, magFilter: magFilter, wrapS: wrapS, wrapT: wrapT};
 
@@ -341,41 +361,41 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 }
 
                 this._pattern = "";
-            },
+            }
 
-            setAntiAliasTexParameters: function () {
+            setAntiAliasTexParameters() {
                 //support only in WebGl rendering mode
-            },
+            }
 
-            setAliasTexParameters: function () {
+            setAliasTexParameters() {
                 //support only in WebGl rendering mode
-            },
+            }
 
-            generateMipmap: function () {
+            generateMipmap() {
                 //support only in WebGl rendering mode
-            },
+            }
 
-            stringForFormat: function () {
+            stringForFormat() {
                 //support only in WebGl rendering mode
                 return "";
-            },
+            }
 
-            bitsPerPixelForFormat: function (format) {
+            bitsPerPixelForFormat(format) {
                 //support only in WebGl rendering mode
                 return -1;
-            },
+            }
 
             /**
              * remove listener from listeners by target
              * @param {cc.Node} target
              */
-            removeLoadedEventListener: function (target) {
+            removeLoadedEventListener(target) {
                 this.removeEventTarget("load", target);
-            },
+            }
 
-            _generateColorTexture: function () {/*overide*/
-            },
-            _generateTextureCacheForColor: function () {
+            _generateColorTexture() {/*overide*/
+            }
+            _generateTextureCacheForColor() {
                 if (this.channelCache)
                     return this.channelCache;
 
@@ -388,13 +408,10 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 //todo texture onload
                 renderToCache(this._htmlElementObj, textureCache);
                 return this.channelCache = textureCache;
-            },
+            }
 
             //hack for gray effect
-            _grayElementObj: null,
-            _backupElement: null,
-            _isGray: false,
-            _switchToGray: function (toGray) {
+            _switchToGray(toGray) {
                 if (!this._textureLoaded || this._isGray === toGray)
                     return;
                 this._isGray = toGray;
@@ -407,9 +424,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     if (this._backupElement !== null)
                         this._htmlElementObj = this._backupElement;
                 }
-            },
+            }
 
-            _generateGrayTexture: function() {
+            _generateGrayTexture() {
                 if(!this._textureLoaded)
                     return null;
                 var grayElement = cc.Texture2D._generateGrayTexture(this._htmlElementObj);
@@ -417,7 +434,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 newTexture.initWithElement(grayElement);
                 newTexture.handleLoadedTexture();
                 return newTexture;
-            },
+            }
         };
 
         var renderToCache = function (image, cache) {
@@ -458,7 +475,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
         if (cc.sys._supportCanvasNewBlendModes) {
             //multiply mode
             //Primary afferent, Draw a new texture based on rect
-            proto._generateColorTexture = function (r, g, b, rect, canvas) {
+            cc.Texture2D.prototype._generateColorTexture = function (r, g, b, rect, canvas) {
                 var onlyCanvas = false;
                 if (canvas)
                     onlyCanvas = true;
@@ -496,7 +513,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             };
         } else {
             //Four color map overlay
-            proto._generateColorTexture = function (r, g, b, rect, canvas) {
+            cc.Texture2D.prototype._generateColorTexture = function (r, g, b, rect, canvas) {
                 var onlyCanvas = false;
                 if (canvas)
                     onlyCanvas = true;
@@ -555,29 +572,6 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 return newTexture;
             };
         }
-
-        /**
-         * <p>
-         * This class allows to easily create OpenGL or Canvas 2D textures from images, text or raw data.                                    <br/>
-         * The created cc.Texture2D object will always have power-of-two dimensions.                                                <br/>
-         * Depending on how you create the cc.Texture2D object, the actual image area of the texture might be smaller than the texture dimensions <br/>
-         *  i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).                                           <br/>
-         * Be aware that the content of the generated textures will be upside-down! </p>
-         * @name cc.Texture2D
-         * @class
-         * @extends cc.Class
-         *
-         * @property {WebGLTexture}     name            - <@readonly> WebGLTexture Object
-         * @property {Number}           pixelFormat     - <@readonly> Pixel format of the texture
-         * @property {Number}           pixelsWidth     - <@readonly> Width in pixels
-         * @property {Number}           pixelsHeight    - <@readonly> Height in pixels
-         * @property {Number}           width           - Content width in points
-         * @property {Number}           height          - Content height in points
-         * @property {cc.GLProgram}     shaderProgram   - The shader program used by drawAtPoint and drawInRect
-         * @property {Number}           maxS            - Texture max S
-         * @property {Number}           maxT            - Texture max T
-         */
-        cc.Texture2D = cc.Class.extend(/** @lends cc.Texture2D# */proto);
 
         cc.Texture2D._generateGrayTexture = function (texture, rect, renderCanvas) {
             if (texture === null)

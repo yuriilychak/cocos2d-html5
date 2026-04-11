@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ScriptTestTempLayer = cc.Layer.extend({
-    ctor : function () {
-        this._super();
+var ScriptTestTempLayer = class ScriptTestTempLayer extends cc.Layer {
+    constructor() {
+        super();
 
         var labelTest = new cc.LabelTTF("this is the ScriptTestTempLayer old file", "Verdana", 32, cc.size(winSize.width, 50), cc.TEXT_ALIGNMENT_CENTER);
         var size = cc.winSize;
@@ -36,4 +36,5 @@ var ScriptTestTempLayer = cc.Layer.extend({
 
     }
 
-});
+
+};

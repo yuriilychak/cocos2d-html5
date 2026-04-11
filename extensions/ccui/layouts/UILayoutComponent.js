@@ -42,76 +42,77 @@ ccui.LayoutComponent_SizeType = {
 };
 
 //refactor since v3.3
-ccui.LayoutComponent = cc.Component.extend({
-    _horizontalEdge: 0,
-    _verticalEdge: 0,
+ccui.LayoutComponent = class LayoutComponent extends cc.Component {
+    constructor() {
+        super();
+        this._horizontalEdge = 0;
+        this._verticalEdge = 0;
 
-    _leftMargin: 0,
-    _rightMargin: 0,
-    _bottomMargin: 0,
-    _topMargin: 0,
+        this._leftMargin = 0;
+        this._rightMargin = 0;
+        this._bottomMargin = 0;
+        this._topMargin = 0;
 
-    _usingPositionPercentX: false,
-    _positionPercentX: 0,
-    _usingPositionPercentY: false,
-    _positionPercentY: 0,
+        this._usingPositionPercentX = false;
+        this._positionPercentX = 0;
+        this._usingPositionPercentY = false;
+        this._positionPercentY = 0;
 
-    _usingStretchWidth: false,
-    _usingStretchHeight: false,
+        this._usingStretchWidth = false;
+        this._usingStretchHeight = false;
 
-    _percentWidth: 0,
-    _usingPercentWidth: false,
+        this._percentWidth = 0;
+        this._usingPercentWidth = false;
 
-    _percentHeight: 0,
-    _usingPercentHeight: false,
+        this._percentHeight = 0;
+        this._usingPercentHeight = false;
 
-    _actived: true,
-    _isPercentOnly: false,
+        this._actived = true;
+        this._isPercentOnly = false;
 
-    ctor: function () {
         this._name = ccui.LayoutComponent.NAME;
-    },
+    }
 
-    init: function () {
+    init() {
         var ret = true;
 
-        if (!cc.Component.prototype.init.call(this)) {
+        if (!super.init()) {
             return false;
         }
 
         //put layout component initalized code here
 
         return ret;
-    },
+    }
 
-    getPercentContentSize: function () {
+    getPercentContentSize() {
         return cc.p(this._percentWidth, this._percentHeight);
-    },
-    setPercentContentSize: function (percent) {
+    }
+    setPercentContentSize(percent) {
         this.setPercentWidth(percent.x);
         this.setPercentHeight(percent.y);
-    },
+    }
 
-    setUsingPercentContentSize: function (isUsed) {
+    setUsingPercentContentSize(isUsed) {
         this._usingPercentWidth = this._usingPercentHeight = isUsed;
-    },
+    }
 
     //old
-    SetActiveEnable: function (enable) {
+    SetActiveEnable(enable) {
         this._actived = enable;
-    },
+    }
 
     //v3.3
-    getUsingPercentContentSize: function () {
+    getUsingPercentContentSize() {
         return this._usingPercentWidth && this._usingPercentHeight;
-    },
+    }
 
     //position & margin
-    getAnchorPosition: function () {
+    getAnchorPosition() {
         return this._owner.getAnchorPoint();
-    },
+    }
 
-    setAnchorPosition: function (point, y) {
+    setAnchorPosition(point, y) {
         var oldRect = this._owner.getBoundingBox();
         this._owner.setAnchorPoint(point, y);
         var newRect = this._owner.getBoundingBox();
@@ -121,13 +122,13 @@ ccui.LayoutComponent = cc.Component.extend({
         ownerPosition.x += offSetX;
         ownerPosition.y += offSetY;
         this.setPosition(ownerPosition);
-    },
+    }
 
-    getPosition: function () {
+    getPosition() {
         return this._owner.getPosition();
-    },
+    }
 
-    setPosition: function (position, y) {
+    setPosition(position, y) {
         var parent = this._getOwnerParent(), x;
         if (parent != null) {
             if (y === undefined) {
@@ -158,21 +159,21 @@ ccui.LayoutComponent = cc.Component.extend({
             this._refreshVerticalMargin();
         } else
             this._owner.setPosition(position, y);
-    },
+    }
 
-    isPositionPercentXEnabled: function () {
+    isPositionPercentXEnabled() {
         return this._usingPositionPercentX;
-    },
-    setPositionPercentXEnabled: function (isUsed) {
+    }
+    setPositionPercentXEnabled(isUsed) {
         this._usingPositionPercentX = isUsed;
         if (this._usingPositionPercentX)
             this._horizontalEdge = ccui.LayoutComponent.horizontalEdge.NONE;
-    },
+    }
 
-    getPositionPercentX: function () {
+    getPositionPercentX() {
         return this._positionPercentX;
-    },
-    setPositionPercentX: function (percentMargin) {
+    }
+    setPositionPercentX(percentMargin) {
         this._positionPercentX = percentMargin;
 
         var parent = this._getOwnerParent();
@@ -180,21 +181,21 @@ ccui.LayoutComponent = cc.Component.extend({
             this._owner.setPositionX(parent.width * this._positionPercentX);
             this._refreshHorizontalMargin();
         }
-    },
+    }
 
-    isPositionPercentYEnabled: function () {
+    isPositionPercentYEnabled() {
         return this._usingPositionPercentY;
-    },
-    setPositionPercentYEnabled: function (isUsed) {
+    }
+    setPositionPercentYEnabled(isUsed) {
         this._usingPositionPercentY = isUsed;
         if (this._usingPositionPercentY)
             this._verticalEdge = ccui.LayoutComponent.verticalEdge.NONE;
-    },
+    }
 
-    getPositionPercentY: function () {
+    getPositionPercentY() {
         return this._positionPercentY;
-    },
-    setPositionPercentY: function (percentMargin) {
+    }
+    setPositionPercentY(percentMargin) {
         this._positionPercentY = percentMargin;
 
         var parent = this._getOwnerParent();
@@ -202,12 +203,12 @@ ccui.LayoutComponent = cc.Component.extend({
             this._owner.setPositionY(parent.height * this._positionPercentY);
             this._refreshVerticalMargin();
         }
-    },
+    }
 
-    getHorizontalEdge: function () {
+    getHorizontalEdge() {
         return this._horizontalEdge;
-    },
-    setHorizontalEdge: function (hEdge) {
+    }
+    setHorizontalEdge(hEdge) {
         this._horizontalEdge = hEdge;
         if (this._horizontalEdge !== ccui.LayoutComponent.horizontalEdge.NONE)
             this._usingPositionPercentX = false;
@@ -226,12 +227,12 @@ ccui.LayoutComponent = cc.Component.extend({
             }
             this._refreshHorizontalMargin();
         }
-    },
+    }
 
-    getVerticalEdge: function () {
+    getVerticalEdge() {
         return this._verticalEdge;
-    },
-    setVerticalEdge: function (vEdge) {
+    }
+    setVerticalEdge(vEdge) {
         this._verticalEdge = vEdge;
         if (this._verticalEdge !== ccui.LayoutComponent.verticalEdge.NONE)
             this._usingPositionPercentY = false;
@@ -250,41 +251,41 @@ ccui.LayoutComponent = cc.Component.extend({
             }
             this._refreshVerticalMargin();
         }
-    },
+    }
 
-    getLeftMargin: function () {
+    getLeftMargin() {
         return this._leftMargin;
-    },
-    setLeftMargin: function (margin) {
+    }
+    setLeftMargin(margin) {
         this._leftMargin = margin;
-    },
+    }
 
-    getRightMargin: function () {
+    getRightMargin() {
         return this._rightMargin;
-    },
-    setRightMargin: function (margin) {
+    }
+    setRightMargin(margin) {
         this._rightMargin = margin;
-    },
+    }
 
-    getTopMargin: function () {
+    getTopMargin() {
         return this._topMargin;
-    },
-    setTopMargin: function (margin) {
+    }
+    setTopMargin(margin) {
         this._topMargin = margin;
-    },
+    }
 
-    getBottomMargin: function () {
+    getBottomMargin() {
         return this._bottomMargin;
-    },
-    setBottomMargin: function (margin) {
+    }
+    setBottomMargin(margin) {
         this._bottomMargin = margin;
-    },
+    }
 
     //size &
-    getSize: function () {
+    getSize() {
         return this.getOwner().getContentSize();
-    },
-    setSize: function (size) {
+    }
+    setSize(size) {
         var parent = this._getOwnerParent();
         if (parent !== null) {
             var ownerSize = size, parentSize = parent.getContentSize();
@@ -312,21 +313,21 @@ ccui.LayoutComponent = cc.Component.extend({
         }
         else
             this._owner.setContentSize(size);
-    },
+    }
 
-    isPercentWidthEnabled: function () {
+    isPercentWidthEnabled() {
         return this._usingPercentWidth;
-    },
-    setPercentWidthEnabled: function (isUsed) {
+    }
+    setPercentWidthEnabled(isUsed) {
         this._usingPercentWidth = isUsed;
         if (this._usingPercentWidth)
             this._usingStretchWidth = false;
-    },
+    }
 
-    getSizeWidth: function () {
+    getSizeWidth() {
         return this._owner.width;
-    },
-    setSizeWidth: function (width) {
+    }
+    setSizeWidth(width) {
         var ownerSize = this._owner.getContentSize();
         ownerSize.width = width;
 
@@ -344,12 +345,12 @@ ccui.LayoutComponent = cc.Component.extend({
             this._refreshHorizontalMargin();
         } else
             this._owner.setContentSize(ownerSize);
-    },
+    }
 
-    getPercentWidth: function () {
+    getPercentWidth() {
         return this._percentWidth;
-    },
-    setPercentWidth: function (percentWidth) {
+    }
+    setPercentWidth(percentWidth) {
         this._percentWidth = percentWidth;
 
         var parent = this._getOwnerParent();
@@ -359,21 +360,21 @@ ccui.LayoutComponent = cc.Component.extend({
             this._owner.setContentSize(ownerSize);
             this._refreshHorizontalMargin();
         }
-    },
+    }
 
-    isPercentHeightEnabled: function () {
+    isPercentHeightEnabled() {
         return this._usingPercentHeight;
-    },
-    setPercentHeightEnabled: function (isUsed) {
+    }
+    setPercentHeightEnabled(isUsed) {
         this._usingPercentHeight = isUsed;
         if (this._usingPercentHeight)
             this._usingStretchHeight = false;
-    },
+    }
 
-    getSizeHeight: function () {
+    getSizeHeight() {
         return this._owner.height;
-    },
-    setSizeHeight: function (height) {
+    }
+    setSizeHeight(height) {
         var ownerSize = this._owner.getContentSize();
         ownerSize.height = height;
 
@@ -392,12 +393,12 @@ ccui.LayoutComponent = cc.Component.extend({
         }
         else
             this._owner.setContentSize(ownerSize);
-    },
+    }
 
-    getPercentHeight: function () {
+    getPercentHeight() {
         return this._percentHeight;
-    },
-    setPercentHeight: function (percentHeight) {
+    }
+    setPercentHeight(percentHeight) {
         this._percentHeight = percentHeight;
 
         var parent = this._getOwnerParent();
@@ -407,34 +408,34 @@ ccui.LayoutComponent = cc.Component.extend({
             this._owner.setContentSize(ownerSize);
             this._refreshVerticalMargin();
         }
-    },
+    }
 
-    isStretchWidthEnabled: function () {
+    isStretchWidthEnabled() {
         return this._usingStretchWidth;
-    },
-    setStretchWidthEnabled: function (isUsed) {
+    }
+    setStretchWidthEnabled(isUsed) {
         this._usingStretchWidth = isUsed;
         if (this._usingStretchWidth)
             this._usingPercentWidth = false;
-    },
+    }
 
-    isStretchHeightEnabled: function () {
+    isStretchHeightEnabled() {
         return this._usingStretchHeight;
-    },
-    setStretchHeightEnabled: function (isUsed) {
+    }
+    setStretchHeightEnabled(isUsed) {
         this._usingStretchHeight = isUsed;
         if (this._usingStretchHeight)
             this._usingPercentHeight = false;
-    },
+    }
 
-    setPercentOnlyEnabled: function(enable){
+    setPercentOnlyEnabled(enable){
         this._isPercentOnly = enable;
-    },
+    }
 
-    setActiveEnabled: function (enable) {
+    setActiveEnabled(enable) {
         this._actived = enable;
-    },
-    refreshLayout: function () {
+    }
+    refreshLayout() {
         if(!this._actived)
             return;
 
@@ -547,12 +548,12 @@ ccui.LayoutComponent = cc.Component.extend({
         }else{
             ccui.helper.doLayout(locOwner);
         }
-    },
+    }
 
-    _getOwnerParent: function () {
+    _getOwnerParent() {
         return this._owner ? this._owner.getParent() : null;
-    },
-    _refreshHorizontalMargin: function () {
+    }
+    _refreshHorizontalMargin() {
         var parent = this._getOwnerParent();
         if (parent === null)
             return;
@@ -562,8 +563,8 @@ ccui.LayoutComponent = cc.Component.extend({
 
         this._leftMargin = ownerPoint.x - ownerAnchor.x * ownerSize.width;
         this._rightMargin = parentSize.width - (ownerPoint.x + (1 - ownerAnchor.x) * ownerSize.width);
-    },
-    _refreshVerticalMargin: function () {
+    }
+    _refreshVerticalMargin() {
         var parent = this._getOwnerParent();
         if (parent === null)
             return;
@@ -574,7 +575,7 @@ ccui.LayoutComponent = cc.Component.extend({
         this._bottomMargin = ownerPoint.y - ownerAnchor.y * ownerSize.height;
         this._topMargin = parentSize.height - (ownerPoint.y + (1 - ownerAnchor.y) * ownerSize.height);
     }
-});
+};
 
 ccui.LayoutComponent.horizontalEdge = {NONE: 0, LEFT: 1, RIGHT: 2, CENTER: 3};
 ccui.LayoutComponent.verticalEdge = {NONE: 0, BOTTOM: 1, TOP: 2, CENTER: 3};

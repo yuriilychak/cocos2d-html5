@@ -38,55 +38,60 @@ var NOT_CRASHED_CONST = "NOT_CRASHED";
 // ActionManagerTest
 //
 //------------------------------------------------------------------
-var ActionManagerTest = BaseTestLayer.extend({
-    _atlas:null,
-    _title:"",
+var ActionManagerTest = class ActionManagerTest extends BaseTestLayer {
+    constructor() {
+        super();
+        this._atlas = null;
+        this._title = "";
+    }
 
-    title:function () {
+
+    title() {
         return "No title";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         var s = new ActionManagerTestScene();
         s.addChild(previousActionMgrTest());
         director.runScene(s);
-    },
-    onRestartCallback:function (sender) {
+    }
+    onRestartCallback(sender) {
         var s = new ActionManagerTestScene();
         s.addChild(restartActionMgrTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new ActionManagerTestScene();
         s.addChild(nextActionMgrTest());
         director.runScene(s);
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfActionMgrTest.length-1) - ActionMgrTestIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return ActionMgrTestIdx;
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Test1
 //
 //------------------------------------------------------------------
-var CrashTest = ActionManagerTest.extend({
-    title:function () {
+var CrashTest = class CrashTest extends ActionManagerTest {
+    title() {
         return "Test 1. Should not crash";
-    },
-    onEnter:function () {
+    }
+    onEnter() {
         //----start0----onEnter
-        this._super();
+        super.onEnter();
 
         var child = new cc.Sprite(s_pathGrossini);
         child.x = 200;
@@ -106,43 +111,49 @@ var CrashTest = ActionManagerTest.extend({
            cc.callFunc(this.onRemoveThis, this))
         );
         //----end0----
-    },
+    }
 
-    onExitTransitionDidStart: function () {
+    onExitTransitionDidStart() {
         this.stopAllActions();
-        this._super();
-    },
+        super.onExitTransitionDidStart();
+    }
 
-    onRemoveThis:function () {
+    onRemoveThis() {
         //----start0----onRemoveThis
         this.parent.removeChild(this);
         this.onNextCallback(this);
         //----end0----
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
-        return NOT_CRASHED_CONST;
-    },
-    getCurrentResult:function() {
+    getExpectedResult() {
         return NOT_CRASHED_CONST;
     }
-});
+    getCurrentResult() {
+        return NOT_CRASHED_CONST;
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // Test2
 //
 //------------------------------------------------------------------
-var LogicTest = ActionManagerTest.extend({
-    title:function () {
+var LogicTest = class LogicTest extends ActionManagerTest {
+    constructor() {
+        super();
+        this.testDuration = 4.0;
+    }
+
+    title() {
         return "Logic test";
-    },
-    onEnter:function () {
+    }
+    onEnter() {
         //----start1----onEnter
-        this._super();
+        super.onEnter();
 
         var grossini = new cc.Sprite(s_pathGrossini);
         this.addChild(grossini, 0, 2);
@@ -162,44 +173,49 @@ var LogicTest = ActionManagerTest.extend({
             this._grossini = grossini;
         }
         //----end1----
-    },
-    onBugMe:function (node) {
+    }
+    onBugMe(node) {
         //----start1----onBugMe
         node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
         node.runAction(cc.scaleTo(2, 2));
         //----end1----
-    },
+    }
 
     //
     // Automation
     //
-    testDuration: 4.0,
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret = [ {"scaleX":2, "scaleY":2} ];
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function() {
+    }
+    getCurrentResult() {
         var ret = [ {"scaleX":this._grossini.scaleX, "scaleY":this._grossini.scaleY} ];
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // PauseTest
 //
 //------------------------------------------------------------------
-var PauseTest = ActionManagerTest.extend({
-    title:function () {
+var PauseTest = class PauseTest extends ActionManagerTest {
+    constructor() {
+        super();
+        this.testDuration = 5.5;
+    }
+
+    title() {
         return "Pause Test";
-    },
-    onEnter:function () {
+    }
+    onEnter() {
         //----start2----onEnter
         //
         // This test MUST be done in 'onEnter' and not on 'init'
         // otherwise the paused action will be resumed at 'onEnter' time
         //
-        this._super();
+        super.onEnter();
 
         var s = director.getWinSize();
         var l = new cc.LabelTTF("After 3 seconds grossini should move", "Thonburi", 16);
@@ -231,48 +247,53 @@ var PauseTest = ActionManagerTest.extend({
             this._grossini = grossini;
         }
         //----end2----
-    },
+    }
 
-    onUnpause:function (dt) {
+    onUnpause(dt) {
         //----start2----onUnpause
         this.unschedule(this.onUnpause);
         var node = this.getChildByTag(TAG_GROSSINI);
         director.getActionManager().resumeTarget(node);
         //----end2----
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:5.5,
-    checkControl1:function(dt) {
+    checkControl1(dt) {
         this.control1 = cc.p(this._grossini.x, this._grossini.y);
-    },
-    checkControl2:function(dt) {
+    }
+    checkControl2(dt) {
         this.control2 = cc.p(this._grossini.x, this._grossini.y);
-    },
-    getExpectedResult:function() {
+    }
+    getExpectedResult() {
         var ret = [ {"x":200, "y":200}, {"x":350, "y":200} ];
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function() {
+    }
+    getCurrentResult() {
         var ret = [ {"x":this.control1.x, "y":this.control1.y}, {"x":this.control2.x, "y":this.control2.y} ];
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // RemoveTest
 //
 //------------------------------------------------------------------
-var RemoveTest = ActionManagerTest.extend({
-    title:function () {
+var RemoveTest = class RemoveTest extends ActionManagerTest {
+    constructor() {
+        super();
+        this.testDuration = 3.5;
+    }
+
+    title() {
         return "Stop Action Test";
-    },
-    onEnter:function () {
+    }
+    onEnter() {
         //----start3----onEnter
-        this._super();
+        super.onEnter();
 
         var s = director.getWinSize();
         var l = new cc.LabelTTF("Should not crash", "Thonburi", 16);
@@ -292,39 +313,44 @@ var RemoveTest = ActionManagerTest.extend({
         this.addChild(child, 1, TAG_GROSSINI);
         child.runAction(sequence);
         //----end3----
-    },
+    }
 
-    stopAction:function () {
+    stopAction() {
         //----start3----onEnter
         var sprite = this.getChildByTag(TAG_GROSSINI);
         sprite.stopActionByTag(TAG_SEQUENCE);
         //----end3----
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:3.5,
-    getExpectedResult:function() {
-        return NOT_CRASHED_CONST;
-    },
-    getCurrentResult:function() {
+    getExpectedResult() {
         return NOT_CRASHED_CONST;
     }
-});
+    getCurrentResult() {
+        return NOT_CRASHED_CONST;
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // ResumeTest
 //
 //------------------------------------------------------------------
-var ResumeTest = ActionManagerTest.extend({
-    title:function () {
+var ResumeTest = class ResumeTest extends ActionManagerTest {
+    constructor() {
+        super();
+        this.testDuration = 6.0;
+    }
+
+    title() {
         return "Resume Test";
-    },
-    onEnter:function () {
+    }
+    onEnter() {
         //----start4----onEnter
-        this._super();
+        super.onEnter();
 
         var s = director.getWinSize();
         var l = new cc.LabelTTF("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
@@ -346,51 +372,52 @@ var ResumeTest = ActionManagerTest.extend({
         this.schedule(this.resumeGrossini, 3.0);
         //----end4----
 
-    },
-    resumeGrossini:function (time) {
+    }
+    resumeGrossini(time) {
         //----start4----resumeGrossini
         this.unschedule(this.resumeGrossini);
 
         var grossini = this.getChildByTag(TAG_GROSSINI);
         director.getActionManager().resumeTarget(grossini);
         //----end4----
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:6.0,
-    setupAutomation:function() {
+    setupAutomation() {
         this.scheduleOnce(this.checkControl1, 1.0);
         this.scheduleOnce(this.checkControl2, 5.5);
-    },
-    checkControl1:function(dt) {
+    }
+    checkControl1(dt) {
         this.control1ScaleX    = this._grossini.scaleX;
         this.control1ScaleY    = this._grossini.scaleY;
         this.control1Rotation  = this._grossini.rotation;
-    },
-    checkControl2:function(dt) {
+    }
+    checkControl2(dt) {
         this.control2ScaleX    = this._grossini.scaleX;
         this.control2ScaleY    = this._grossini.scaleY;
         this.control2Rotation  = this._grossini.rotation;
-    },
-    getExpectedResult:function() {
+    }
+    getExpectedResult() {
         var ret = [ {"Rot":0 }, {"sX":1, "sY":1}, {"Rot":360 }, {"sX":2, "sY":2} ];
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function() {
+    }
+    getCurrentResult() {
         var ret = [ {"Rot": this.control1Rotation }, {"sX": this.control1ScaleX, "sY": this.control1ScaleY}, {"Rot": this.control2Rotation }, {"sX": this.control2ScaleX, "sY": this.control2ScaleY} ];
         return JSON.stringify(ret);
     }
-});
 
-var ActionManagerTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var ActionManagerTestScene = class ActionManagerTestScene extends TestScene {
+    runThisTest(num) {
         ActionMgrTestIdx = (num || 0) - 1;
         this.addChild(nextActionMgrTest());
         director.runScene(this);
     }
-});
+
+};
 
 
 //-

@@ -38,17 +38,15 @@
  * @example
  * var scene = new cc.Scene();
  */
-cc.Scene = cc.Node.extend(
-  /** @lends cc.Scene# */ {
+cc.Scene = class Scene extends cc.Node {
     /**
      * Constructor of cc.Scene
      */
-    _className: "Scene",
-    ctor: function () {
-      cc.Node.prototype.ctor.call(this);
+    constructor() {
+      super();
+      this._className = "Scene";
       this._ignoreAnchorPointForPosition = true;
       this.setAnchorPoint(0.5, 0.5);
       this.setContentSize(cc.director.getWinSize());
     }
-  }
-);
+};

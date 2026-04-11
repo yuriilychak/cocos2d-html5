@@ -32,18 +32,22 @@ var TAG_SPRITE2 = 3;
 
 var sceneIdx = -1;
 
-var MotionStreakTest = cc.Layer.extend({
-    _streak:null,
+var MotionStreakTest = class MotionStreakTest extends cc.Layer {
+    constructor() {
+        super();
+        this._streak = null;
+    }
 
-    title:function () {
+
+    title() {
         return "No title";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var winSize = cc.director.getWinSize();
 
@@ -85,38 +89,43 @@ var MotionStreakTest = cc.Layer.extend({
 
         menuMode.x = winSize.width / 2;
         menuMode.y = winSize.height / 4;
-    },
+    }
 
-    restartCallback:function (sender) {
+    restartCallback(sender) {
         var scene = new MotionStreakTestScene();
         scene.addChild(restartMotionAction());
         cc.director.runScene(scene);
-    },
+    }
 
-    nextCallback:function (sender) {
+    nextCallback(sender) {
         var scene = new MotionStreakTestScene();
         scene.addChild(nextMotionAction());
         cc.director.runScene(scene);
-    },
+    }
 
-    backCallback:function (sender) {
+    backCallback(sender) {
         var scene = new MotionStreakTestScene;
         scene.addChild(backMotionAction());
         cc.director.runScene(scene);
-    },
+    }
 
-    modeCallback:function (sender) {
+    modeCallback(sender) {
         var fastMode = this._streak.fastMode;
         this._streak.fastMode = !fastMode;
     }
-});
 
-var MotionStreakTest1 = MotionStreakTest.extend({
-    _root:null,
-    _target:null,
+};
 
-    onEnter:function () {
-        this._super();
+var MotionStreakTest1 = class MotionStreakTest1 extends MotionStreakTest {
+    constructor() {
+        super();
+        this._root = null;
+        this._target = null;
+    }
+
+
+    onEnter() {
+        super.onEnter();
 
         var winSize = cc.director.getWinSize();
         // the root object just rotates around
@@ -155,25 +164,30 @@ var MotionStreakTest1 = MotionStreakTest.extend({
         ).repeatForever();
 
         this._streak.runAction(colorAction);
-    },
+    }
 
-    onUpdate:function (delta) {
+    onUpdate(delta) {
 	    var pos = this._target.convertToWorldSpace(cc.p(this._target.width/2, 0));
         this._streak.x = pos.x;
         this._streak.y = pos.y;
-    },
+    }
 
-    title:function () {
+    title() {
         return "MotionStreak test 1";
     }
-});
 
-var MotionStreakTest2 = MotionStreakTest.extend({
-    _root:null,
-    _target:null,
+};
 
-    onEnter:function () {
-        this._super();
+var MotionStreakTest2 = class MotionStreakTest2 extends MotionStreakTest {
+    constructor() {
+        super();
+        this._root = null;
+        this._target = null;
+    }
+
+
+    onEnter() {
+        super.onEnter();
 
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -194,27 +208,32 @@ var MotionStreakTest2 = MotionStreakTest.extend({
         this.addChild(this._streak);
         this._streak.x = winSize.width / 2;
         this._streak.y = winSize.height / 2;
-    },
+    }
 
-    title:function () {
+    title() {
         return "MotionStreak test";
     }
-});
 
-var Issue1358 = MotionStreakTest.extend({
-    _center:null,
-    _radius:0,
-    _angle:0,
-    title:function () {
+};
+
+var Issue1358 = class Issue1358 extends MotionStreakTest {
+    constructor() {
+        super();
+        this._center = null;
+        this._radius = 0;
+        this._angle = 0;
+    }
+
+    title() {
         return "Issue 1358";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "The tail should use the texture";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         // ask director the the window size
         var size = cc.director.getWinSize();
@@ -225,14 +244,15 @@ var Issue1358 = MotionStreakTest.extend({
         this._radius = size.width / 3;
         this._angle = 0.0;
         this.schedule(this.update, 0);
-    },
+    }
 
-    update:function (dt) {
+    update(dt) {
         this._angle += 1.0;
         this._streak.x = this._center.x + Math.cos(this._angle / 180 * Math.PI) * this._radius;
         this._streak.y = this._center.y + Math.sin(this._angle / 180 * Math.PI) * this._radius;
     }
-});
+
+};
 
 var arrayOfMotionStreakTest = [
     MotionStreakTest1,
@@ -257,14 +277,15 @@ var restartMotionAction = function () {
     return new arrayOfMotionStreakTest[sceneIdx]();
 };
 
-var MotionStreakTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var MotionStreakTestScene = class MotionStreakTestScene extends TestScene {
+    runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var pLayer = nextMotionAction();
         this.addChild(pLayer);
         cc.director.runScene(this);
     }
-});
+
+};
 
 
 

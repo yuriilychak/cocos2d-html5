@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 
-var UILabelTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UILabelTest = class UILabelTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("Label");
@@ -46,11 +46,12 @@ var UILabelTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UILabelTest_LineWrap = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UILabelTest_LineWrap = class UILabelTest_LineWrap extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.string = "";
@@ -73,12 +74,13 @@ var UILabelTest_LineWrap = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};
 
 
-var UILabelTest_TTF = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UILabelTest_TTF = class UILabelTest_TTF extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("Label set TTF font");
@@ -100,4 +102,5 @@ var UILabelTest_TTF = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};

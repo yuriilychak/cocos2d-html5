@@ -28,31 +28,31 @@
  * @class
  * @extends ccui.Layout
  */
-ccui.VBox = ccui.Layout.extend(/** @lends ccui.VBox# */{
+ccui.VBox = class VBox extends ccui.Layout {
     /**
      * The constructor of ccui.VBox
      * @function
      * @param {cc.Size} size
      */
-    ctor: function(size){
-        ccui.Layout.prototype.ctor.call(this);
+    constructor(size) {
+        super();
         this.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
 
         if (size) {
             this.setContentSize(size);
         }
-    },
+    }
 
     /**
      * Initializes a VBox with size.
      * @param {cc.Size} size
      * @returns {boolean}
      */
-    initWithSize: function(size){
+    initWithSize(size) {
         if(this.init()){
             
             return true;
         }
         return false;
     }
-});
+};

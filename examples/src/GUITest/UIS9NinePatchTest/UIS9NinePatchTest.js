@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIS9NinePatchTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UIS9NinePatchTest = class UIS9NinePatchTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("");
@@ -71,4 +71,5 @@ var UIS9NinePatchTest = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};

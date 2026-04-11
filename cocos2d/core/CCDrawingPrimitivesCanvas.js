@@ -35,16 +35,17 @@ cc.PI2 = Math.PI * 2;
  * @extends cc.Class
  * @param {CanvasRenderingContext2D} renderContext
  */
-cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas# */{
-    _cacheArray:[],
-    _renderContext:null,
+cc.DrawingPrimitiveCanvas = class DrawingPrimitiveCanvas extends cc.NewClass {
     /**
      * Constructor of cc.DrawingPrimitiveCanvas
      * @param {cc.CanvasContextWrapper} renderContext
      */
-    ctor:function (renderContext) {
+    constructor(renderContext) {
+        super();
+        this._cacheArray = [];
+        this._renderContext = null;
         this._renderContext = renderContext;
-    },
+    }
 
     /**
      * draws a point given x and y coordinate measured in points
@@ -52,7 +53,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {cc.Point} point
      * @param {Number} size
      */
-    drawPoint:function (point, size) {
+    drawPoint(point, size) {
         if (!size) {
             size = 1;
         }
@@ -61,7 +62,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
         ctx.arc(point.x, -point.y, size, 0, Math.PI * 2, false);
         ctx.closePath();
         ctx.fill();
-    },
+    }
 
     /**
      * draws an array of points.
@@ -70,7 +71,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Number} numberOfPoints
      * @param {Number} size
      */
-    drawPoints:function (points, numberOfPoints, size) {
+    drawPoints(points, numberOfPoints, size) {
         if (points == null)
             return;
 
@@ -84,7 +85,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
             locContext.arc(points[i].x, -points[i].y, size, 0, Math.PI * 2, false);
         locContext.closePath();
         locContext.fill();
-    },
+    }
 
     /**
      * draws a line given the origin and destination point measured in points
@@ -92,27 +93,27 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {cc.Point} origin
      * @param {cc.Point} destination
      */
-    drawLine:function (origin, destination) {
+    drawLine(origin, destination) {
         var locContext = this._renderContext.getContext();
         locContext.beginPath();
         locContext.moveTo(origin.x , -origin.y );
         locContext.lineTo(destination.x, -destination.y );
         locContext.closePath();
         locContext.stroke();
-    },
+    }
 
     /**
      * draws a rectangle given the origin and destination point measured in points.
      * @param {cc.Point} origin
      * @param {cc.Point} destination
      */
-    drawRect:function (origin, destination) {
+    drawRect(origin, destination) {
         //todo need optimize for performance
         this.drawLine(cc.p(origin.x, origin.y), cc.p(destination.x, origin.y));
         this.drawLine(cc.p(destination.x, origin.y), cc.p(destination.x, destination.y));
         this.drawLine(cc.p(destination.x, destination.y), cc.p(origin.x, destination.y));
         this.drawLine(cc.p(origin.x, destination.y), cc.p(origin.x, origin.y));
-    },
+    }
 
     /**
      * draws a solid rectangle given the origin and destination point measured in points.
@@ -120,7 +121,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {cc.Point} destination
      * @param {cc.Color} color
      */
-    drawSolidRect:function (origin, destination, color) {
+    drawSolidRect(origin, destination, color) {
         var vertices = [
             origin,
             cc.p(destination.x, origin.y),
@@ -129,7 +130,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
         ];
 
         this.drawSolidPoly(vertices, 4, color);
-    },
+    }
 
     /**
      * draws a polygon given a pointer to cc.Point coordinates and the number of vertices measured in points.
@@ -139,7 +140,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Boolean} closePolygon The polygon can be closed or open
      * @param {Boolean} [fill=] The polygon can be closed or open and optionally filled with current color
      */
-    drawPoly:function (vertices, numOfVertices, closePolygon, fill) {
+    drawPoly(vertices, numOfVertices, closePolygon, fill) {
         fill = fill || false;
 
         if (vertices == null)
@@ -161,7 +162,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
             locContext.fill();
         else
             locContext.stroke();
-    },
+    }
 
     /**
      * draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
@@ -169,10 +170,10 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Number} numberOfPoints
      * @param {cc.Color} color
      */
-    drawSolidPoly:function (polygons, numberOfPoints, color) {
+    drawSolidPoly(polygons, numberOfPoints, color) {
         this.setDrawColor(color.r, color.g, color.b, color.a);
         this.drawPoly(polygons, numberOfPoints, true, true);
-    },
+    }
 
     /**
      * draws a circle given the center, radius and number of segments.
@@ -183,7 +184,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Number} segments
      * @param {Boolean} [drawLineToCenter=]
      */
-    drawCircle: function (center, radius, angle, segments, drawLineToCenter) {
+    drawCircle(center, radius, angle, segments, drawLineToCenter) {
         drawLineToCenter = drawLineToCenter || false;
         var locContext = this._renderContext.getContext();
         locContext.beginPath();
@@ -193,7 +194,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
             locContext.lineTo(0 | (center.x ), 0 | -(center.y ));
         }
         locContext.stroke();
-    },
+    }
 
     /**
      * draws a quad bezier path
@@ -203,7 +204,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {cc.Point} destination
      * @param {Number} segments
      */
-    drawQuadBezier:function (origin, control, destination, segments) {
+    drawQuadBezier(origin, control, destination, segments) {
         //this is OpenGL Algorithm
         var vertices = this._cacheArray;
         vertices.length =0;
@@ -218,7 +219,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
         vertices.push(cc.p(destination.x, destination.y));
 
         this.drawPoly(vertices, segments + 1, false, false);
-    },
+    }
 
     /**
      * draws a cubic bezier path
@@ -229,7 +230,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {cc.Point} destination
      * @param {Number} segments
      */
-    drawCubicBezier:function (origin, control1, control2, destination, segments) {
+    drawCubicBezier(origin, control1, control2, destination, segments) {
         //this is OpenGL Algorithm
         var vertices = this._cacheArray;
         vertices.length =0;
@@ -244,7 +245,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
         vertices.push(cc.p(destination.x , destination.y));
 
         this.drawPoly(vertices, segments + 1, false, false);
-    },
+    }
 
     /**
      * draw a CatmullRom curve
@@ -252,9 +253,9 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Array} points
      * @param {Number} segments
      */
-    drawCatmullRom:function (points, segments) {
+    drawCatmullRom(points, segments) {
         this.drawCardinalSpline(points, 0.5, segments);
-    },
+    }
 
     /**
      * draw a cardinal spline path
@@ -263,7 +264,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Number} tension
      * @param {Number} segments
      */
-    drawCardinalSpline:function (config, tension, segments) {
+    drawCardinalSpline(config, tension, segments) {
         //lazy_init();
         cc._renderContext.setStrokeStyle("rgba(255,255,255,1)");
         var points = this._cacheArray;
@@ -293,7 +294,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
             points.push(newPos);
         }
         this.drawPoly(points, segments + 1, false, false);
-    },
+    }
 
     /**
      * draw an image
@@ -304,7 +305,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {cc.Point} destPoint
      * @param {cc.Size} destSize
      */
-    drawImage:function (image, sourcePoint, sourceSize, destPoint, destSize) {
+    drawImage(image, sourcePoint, sourceSize, destPoint, destSize) {
         var len = arguments.length;
         var ctx = this._renderContext.getContext();
         switch (len) {
@@ -323,7 +324,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
                 throw new Error("Argument must be non-nil");
                 break;
         }
-    },
+    }
 
     /**
      * draw a star
@@ -331,7 +332,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Number} radius
      * @param {cc.Color} color
      */
-    drawStar:function (ctx, radius, color) {
+    drawStar(ctx, radius, color) {
         var wrapper = ctx || this._renderContext;
         var context = wrapper.getContext();
         var colorStr = "rgba(" + (0 | color.r) + "," + (0 | color.g) + "," + (0 | color.b);
@@ -364,7 +365,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
         context.arc(0, 0, radius - subRadius, startAngle_1, endAngle_1, false);
         context.closePath();
         context.fill();
-    },
+    }
 
     /**
      * draw a color ball
@@ -372,7 +373,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Number} radius
      * @param {cc.Color} color
      */
-    drawColorBall:function (ctx, radius, color) {
+    drawColorBall(ctx, radius, color) {
         var wrapper = ctx || this._renderContext;
         var context = wrapper.getContext();
         var colorStr = "rgba(" +(0|color.r) + "," + (0|color.g) + "," + (0|color.b);
@@ -391,7 +392,7 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
         context.arc(0, 0, radius, startAngle_1, endAngle_1, false);
         context.closePath();
         context.fill();
-    },
+    }
 
     /**
      * fill text
@@ -399,9 +400,9 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Number} x
      * @param {Number} y
      */
-    fillText:function (strText, x, y) {
+    fillText(strText, x, y) {
         this._renderContext.getContext().fillText(strText, x, -y);
-    },
+    }
 
     /**
      * set the drawing color with 4 unsigned bytes
@@ -410,23 +411,23 @@ cc.DrawingPrimitiveCanvas = cc.Class.extend(/** @lends cc.DrawingPrimitiveCanvas
      * @param {Number} b blue value (0 to 255)
      * @param {Number} a Alpha value (0 to 255)
      */
-    setDrawColor:function (r, g, b, a) {
+    setDrawColor(r, g, b, a) {
         this._renderContext.setFillStyle("rgba(" + r + "," + g + "," + b + "," + a / 255 + ")");
         this._renderContext.setStrokeStyle("rgba(" + r + "," + g + "," + b + "," + a / 255 + ")");
-    },
+    }
 
     /**
      * set the point size in points. Default 1.
      * @param {Number} pointSize
      */
-    setPointSize:function (pointSize) {
-    },
+    setPointSize(pointSize) {
+    }
 
     /**
      * set the line width. Default 1.
      * @param {Number} width
      */
-    setLineWidth:function (width) {
+    setLineWidth(width) {
         this._renderContext.getContext().lineWidth = width;
     }
-});
+};

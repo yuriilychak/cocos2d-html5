@@ -143,26 +143,28 @@ var transitionsIdx = 0;
 // the class inherit from TestScene
 // every .Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-var TransitionsTestScene = TestScene.extend({
-    onEnter: function () {
-        this._super();
+var TransitionsTestScene = class TransitionsTestScene extends TestScene {
+    onEnter() {
+        super.onEnter();
         director.setDepthTest(false);
-    },
-    runThisTest:function () {
+    }
+    runThisTest() {
         var layer = new TestLayer1();
         this.addChild(layer);
         director.runScene(this);
     }
-});
 
-var TransitionBase = BaseTestLayer.extend({
+};
 
-    testDuration:TRANSITION_DURATION + 0.1,
-    title:function() {
+var TransitionBase = class TransitionBase extends BaseTestLayer {
+
+    title() {
         return arrayOfTransitionsTest[transitionsIdx].title;
-    },
-    ctor:function () {
-        this._super(this.colorA, this.colorB);
+    }
+    constructor() {
+        super(this.colorA, this.colorB);
+
+        this.testDuration = TRANSITION_DURATION + 0.1;
 
         var x, y;
         var size = director.getWinSize();
@@ -188,8 +190,8 @@ var TransitionBase = BaseTestLayer.extend({
         this.addChild(label);
 
         // this.schedule(this.step, 1.0);
-    },
-    onRestartCallback:function (sender) {
+    }
+    onRestartCallback(sender) {
         var s = new TransitionsTestScene();
 
         var layer = this.createNextScene();
@@ -198,8 +200,8 @@ var TransitionBase = BaseTestLayer.extend({
 
         if (scene)
             director.runScene(scene);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         transitionsIdx++;
         transitionsIdx = transitionsIdx % arrayOfTransitionsTest.length;
 
@@ -211,8 +213,8 @@ var TransitionBase = BaseTestLayer.extend({
         var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(TRANSITION_DURATION, s);
         if (scene)
             director.runScene(scene);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         transitionsIdx--;
         if (transitionsIdx < 0)
             transitionsIdx += arrayOfTransitionsTest.length;
@@ -224,58 +226,69 @@ var TransitionBase = BaseTestLayer.extend({
         var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(TRANSITION_DURATION, s);
         if (scene)
             director.runScene(scene);
-    },
+    }
 
-    step:function (dt) {
-    },
+    step(dt) {
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
         this.log("" + this.sceneName + " onEnter");
-    },
-    onEnterTransitionDidFinish:function () {
-        this._super();
+    }
+    onEnterTransitionDidFinish() {
+        super.onEnterTransitionDidFinish();
         this.log("" + this.sceneName + " onEnterTransitionDidFinish");
-    },
+    }
 
-    onExitTransitionDidStart:function () {
-        this._super();
+    onExitTransitionDidStart() {
+        super.onExitTransitionDidStart();
         this.log("" + this.sceneName + " onExitTransitionDidStart");
-    },
+    }
 
-    onExit:function () {
-        this._super();
+    onExit() {
+        super.onExit();
         this.log("" + this.sceneName + " onExit");
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfTransitionsTest.length-1) - transitionsIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return transitionsIdx;
     }
 
-});
-var TestLayer1 = TransitionBase.extend({
-    backgroundImage:s_back1,
-    colorA:cc.color(0,0,0,255),
-    colorB:cc.color(160,99,117,255),
-    sceneName:"Scene 1",
-    createNextScene:function() {
+
+};
+var TestLayer1 = class TestLayer1 extends TransitionBase {
+    constructor() {
+        super();
+        this.backgroundImage = s_back1;
+        this.colorA = cc.color(0,0,0,255);
+        this.colorB = cc.color(160,99,117,255);
+        this.sceneName = "Scene 1";
+    }
+
+    createNextScene() {
         return new TestLayer2();
     }
-});
 
-var TestLayer2 = TransitionBase.extend({
-    backgroundImage:s_back2,
-    colorA:cc.color(0,0,0,255),
-    colorB:cc.color(99,160,117,255),
-    sceneName:"Scene 2",
-    createNextScene:function() {
+};
+
+var TestLayer2 = class TestLayer2 extends TransitionBase {
+    constructor() {
+        super();
+        this.backgroundImage = s_back2;
+        this.colorA = cc.color(0,0,0,255);
+        this.colorB = cc.color(99,160,117,255);
+        this.sceneName = "Scene 2";
+    }
+
+    createNextScene() {
         return new TestLayer1();
     }
-});
+
+};
 
 var JumpZoomTransition = function (t, s) {
     return new cc.TransitionJumpZoom(t, s);

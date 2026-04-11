@@ -24,10 +24,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIButtonTest = UIMainLayer.extend({
-    _button:null,
-    init: function () {
-        if (this._super()) {
+var UIButtonTest = class UIButtonTest extends UIMainLayer {
+    constructor() {
+        super();
+        this._button = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("Button");
@@ -53,13 +57,13 @@ var UIButtonTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    setOpacityTest:function(){
+    }
+    setOpacityTest(){
         var button = this._button;
         var opacity = (button._realOpacity===255? 100:255);
         button.setOpacity(opacity);
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setString("Touch Down");
@@ -81,10 +85,11 @@ var UIButtonTest = UIMainLayer.extend({
                 break;
         }
     }
-});
-var UIButtonTest_Scale9 = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+
+};
+var UIButtonTest_Scale9 = class UIButtonTest_Scale9 extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("Button scale9 render");
@@ -103,9 +108,9 @@ var UIButtonTest_Scale9 = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    touchEvent: function (sender, type) {
+    touchEvent(sender, type) {
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setString("Touch Down");
@@ -124,11 +129,12 @@ var UIButtonTest_Scale9 = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIButtonTest_PressedAction = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIButtonTest_PressedAction = class UIButtonTest_PressedAction extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("Button Pressed Action");
@@ -146,9 +152,9 @@ var UIButtonTest_PressedAction = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    touchEvent: function (sender, type) {
+    touchEvent(sender, type) {
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setString("Touch Down");
@@ -166,11 +172,12 @@ var UIButtonTest_PressedAction = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIButtonTest_Title = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIButtonTest_Title = class UIButtonTest_Title extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
@@ -189,9 +196,9 @@ var UIButtonTest_Title = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    touchEvent: function (sender, type) {
+    touchEvent(sender, type) {
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setString("Touch Down");
@@ -209,11 +216,12 @@ var UIButtonTest_Title = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIButtonTestRemoveSelf = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIButtonTestRemoveSelf = class UIButtonTestRemoveSelf extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("Remove Self in the Button's Callback shouldn't cause crash!");
@@ -240,9 +248,9 @@ var UIButtonTestRemoveSelf = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    touchEvent: function(sender, type){
+    touchEvent(sender, type){
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setString("Touch Down");
@@ -266,11 +274,12 @@ var UIButtonTestRemoveSelf = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIButtonTestSwitchScale9 = UIMainLayer.extend({
-    init: function(){
-        if (this._super()){
+};
+
+var UIButtonTestSwitchScale9 = class UIButtonTestSwitchScale9 extends UIMainLayer {
+    init(){
+        if (super.init()){
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
@@ -289,9 +298,9 @@ var UIButtonTestSwitchScale9 = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    touchEvent: function(sender, type){
+    touchEvent(sender, type){
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setString("Touch Down");
@@ -315,11 +324,12 @@ var UIButtonTestSwitchScale9 = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIButtonTestZoomScale = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UIButtonTestZoomScale = class UIButtonTestZoomScale extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
@@ -348,9 +358,9 @@ var UIButtonTestZoomScale = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    sliderEvent: function(slider, type){
+    sliderEvent(slider, type){
         if (type == ccui.Slider.EVENT_PERCENT_CHANGED){
             var percent = slider.getPercent();
             var btn = this._mainNode.getChildByName("button");
@@ -359,11 +369,12 @@ var UIButtonTestZoomScale = UIMainLayer.extend({
             this._topDisplayLabel.setString("Zoom Scale: "+ zoomScale.toFixed(2));
         }
     }
-});
 
-var UIButtonTextOnly = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UIButtonTextOnly = class UIButtonTextOnly extends UIMainLayer {
+    init(){
+        if (super.init()) {
             // Add a label in which the button events will be displayed
             this._topDisplayLabel.setString("Text Only Button");
             this._bottomDisplayLabel.setString("");
@@ -384,11 +395,12 @@ var UIButtonTextOnly = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIButtonIgnoreContentSizeTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UIButtonIgnoreContentSizeTest = class UIButtonIgnoreContentSizeTest extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
@@ -427,11 +439,12 @@ var UIButtonIgnoreContentSizeTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIButtonTitleEffectTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UIButtonTitleEffectTest = class UIButtonTitleEffectTest extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
@@ -462,11 +475,12 @@ var UIButtonTitleEffectTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIButtonFlipTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UIButtonFlipTest = class UIButtonFlipTest extends UIMainLayer {
+    init(){
+        if (super.init()) {
 
             // Add a label in which the button events will be displayed
             this._topDisplayLabel.setString("");
@@ -501,11 +515,12 @@ var UIButtonFlipTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIButtonNormalDefaultTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UIButtonNormalDefaultTest = class UIButtonNormalDefaultTest extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
@@ -538,11 +553,12 @@ var UIButtonNormalDefaultTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIButtonDisableDefaultTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UIButtonDisableDefaultTest = class UIButtonDisableDefaultTest extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             this._topDisplayLabel.setString("");
@@ -579,4 +595,5 @@ var UIButtonDisableDefaultTest = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};

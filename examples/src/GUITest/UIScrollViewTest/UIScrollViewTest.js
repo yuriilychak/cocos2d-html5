@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIScrollViewTest_Vertical = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UIScrollViewTest_Vertical = class UIScrollViewTest_Vertical extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move by vertical direction");
@@ -89,11 +89,12 @@ var UIScrollViewTest_Vertical = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIScrollViewTest_Horizontal = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIScrollViewTest_Horizontal = class UIScrollViewTest_Horizontal extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move by horizontal direction");
@@ -158,11 +159,12 @@ var UIScrollViewTest_Horizontal = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIScrollViewTest_Both = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIScrollViewTest_Both = class UIScrollViewTest_Both extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move by any direction");
@@ -200,11 +202,12 @@ var UIScrollViewTest_Both = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIScrollViewTest_ScrollToPercentBothDirection = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIScrollViewTest_ScrollToPercentBothDirection = class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
@@ -240,11 +243,12 @@ var UIScrollViewTest_ScrollToPercentBothDirection = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = class UIScrollViewTest_ScrollToPercentBothDirection_Bounce extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
@@ -281,12 +285,13 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};
 
 //2015-01-14
-var UIScrollViewNestTest = UIMainLayer.extend({
-    init: function(){
-        if(this._super()){
+var UIScrollViewNestTest = class UIScrollViewNestTest extends UIMainLayer {
+    init(){
+        if(super.init()){
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the scrollview alert will be displayed
@@ -356,12 +361,13 @@ var UIScrollViewNestTest = UIMainLayer.extend({
         }
     }
 
-});
+
+};
 
 //2015-01-14
-var UIScrollViewRotated = UIMainLayer.extend({
-    init: function(){
-        if(this._super()){
+var UIScrollViewRotated = class UIScrollViewRotated extends UIMainLayer {
+    init(){
+        if(super.init()){
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the scrollview alert will be displayed
@@ -413,11 +419,12 @@ var UIScrollViewRotated = UIMainLayer.extend({
             return true;
         }
     }
-});
 
-var UIScrollViewDisableTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()){
+};
+
+var UIScrollViewDisableTest = class UIScrollViewDisableTest extends UIMainLayer {
+    init() {
+        if (super.init()){
             var widgetSize = this._widget.getContentSize();
 
             this._topDisplayLabel.setString("ScrollView Disable Test");
@@ -479,13 +486,18 @@ var UIScrollViewDisableTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIScrollViewTest_Vertical_Multiple = UIMainLayer.extend({
-    _scrollView:null,
-    _itemNumber:1000,
-    init: function () {
-        if (this._super()) {
+};
+
+var UIScrollViewTest_Vertical_Multiple = class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
+    constructor() {
+        super();
+        this._scrollView = null;
+        this._itemNumber = 1000;
+    }
+
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move by vertical direction");
@@ -527,8 +539,8 @@ var UIScrollViewTest_Vertical_Multiple = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    drawTexts:function() {
+    }
+    drawTexts() {
         var scrollView = this._scrollView;
         var n = this._itemNumber/2;
         if(scrollView.getChildren())
@@ -551,8 +563,8 @@ var UIScrollViewTest_Vertical_Multiple = UIMainLayer.extend({
             Texts[i] = text;
             scrollView.addChild(Texts[i]);
         }
-    },
-    drawButtons:function() {
+    }
+    drawButtons() {
         var scrollView = this._scrollView;
         var n = this._itemNumber/2;
         if(scrollView.getChildren())
@@ -576,8 +588,8 @@ var UIScrollViewTest_Vertical_Multiple = UIMainLayer.extend({
             scrollView.addChild(button);
         }
 
-    },
-    drawS9Buttons: function() {
+    }
+    drawS9Buttons() {
         var scrollView = this._scrollView;
         var n = this._itemNumber;
         if(scrollView.getChildren())
@@ -604,11 +616,12 @@ var UIScrollViewTest_Vertical_Multiple = UIMainLayer.extend({
             scrollView.addChild(button_scale9);
         }
     }
-});
 
-var UIScrollViewTest_ScrollBar = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIScrollViewTest_ScrollBar = class UIScrollViewTest_ScrollBar extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Scroll bar is red, 65% opacity, auto hide time: 5 sec");
@@ -647,5 +660,6 @@ var UIScrollViewTest_ScrollBar = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};
 

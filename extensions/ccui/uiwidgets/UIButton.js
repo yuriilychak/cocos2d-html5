@@ -36,43 +36,17 @@
  * @property {cc.Color} titleColor          - The content string font color of the button title
  * @property {Boolean}  pressedActionEnabled    - Indicate whether button has zoom effect when clicked
  */
-ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
-    _buttonScale9Renderer: null,
-    _buttonNormalSpriteFrame: null,
-    _buttonClickedSpriteFrame: null,
-    _buttonDisableSpriteFrame: null,
-    _titleRenderer: null,
+ccui.Button = class Button extends ccui.Widget {
 
-    _normalFileName: "",
-    _clickedFileName: "",
-    _disabledFileName: "",
 
-    _prevIgnoreSize: true,
-    _scale9Enabled: false,
 
-    _capInsetsNormal: null,
 
-    _normalTexType: ccui.Widget.LOCAL_TEXTURE,
-    _pressedTexType: ccui.Widget.LOCAL_TEXTURE,
-    _disabledTexType: ccui.Widget.LOCAL_TEXTURE,
 
-    _normalTextureSize: null,
 
-    pressedActionEnabled: false,
-    _titleColor: null,
 
-    _zoomScale: 0.1,
 
-    _normalTextureLoaded: false,
-    _pressedTextureLoaded: false,
-    _disabledTextureLoaded: false,
 
-    _className: "Button",
-    _normalTextureAdaptDirty: true,
 
-    _fontName: "Thonburi",
-    _fontSize: 12,
-    _type: 0,
 
     /**
      * Allocates and initializes a UIButton.
@@ -85,10 +59,36 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
      * // example
      * var uiButton = new ccui.Button();
      */
-    ctor: function (normalImage, selectedImage, disableImage, texType) {
+    constructor(normalImage, selectedImage, disableImage, texType) {
+        super();
         this._capInsetsNormal = cc.rect(0, 0, 0, 0);
         this._normalTextureSize = cc.size(0, 0);
-        ccui.Widget.prototype.ctor.call(this);
+        this._buttonScale9Renderer = null;
+        this._buttonNormalSpriteFrame = null;
+        this._buttonClickedSpriteFrame = null;
+        this._buttonDisableSpriteFrame = null;
+        this._titleRenderer = null;
+        this._normalFileName = "";
+        this._clickedFileName = "";
+        this._disabledFileName = "";
+        this._prevIgnoreSize = true;
+        this._scale9Enabled = false;
+        this._capInsetsNormal = null;
+        this._normalTexType = ccui.Widget.LOCAL_TEXTURE;
+        this._pressedTexType = ccui.Widget.LOCAL_TEXTURE;
+        this._disabledTexType = ccui.Widget.LOCAL_TEXTURE;
+        this._normalTextureSize = null;
+        this.pressedActionEnabled = false;
+        this._titleColor = null;
+        this._zoomScale = 0.1;
+        this._normalTextureLoaded = false;
+        this._pressedTextureLoaded = false;
+        this._disabledTextureLoaded = false;
+        this._className = "Button";
+        this._normalTextureAdaptDirty = true;
+        this._fontName = "Thonburi";
+        this._fontSize = 12;
+        this._type = 0;
         this.setTouchEnabled(true);
 
         this._normalLoader = new cc.Sprite.LoadManager();
@@ -98,9 +98,9 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
         if (normalImage) {
             this.loadTextures(normalImage, selectedImage,disableImage, texType);
         }
-    },
+    }
 
-    _createTitleRendererIfNeeded: function ( ) {
+    _createTitleRendererIfNeeded( ) {
         if(!this._titleRenderer) {
             this._titleRenderer = new cc.LabelTTF("");
             this._titleRenderer.setAnchorPoint(0.5, 0.5);
@@ -108,21 +108,21 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
             this._titleRenderer.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
             this.addProtectedChild(this._titleRenderer, ccui.Button.TITLE_RENDERER_ZORDER, -1);
         }
-    },
+    }
 
-    _initRenderer: function () {
+    _initRenderer() {
         this._buttonScale9Renderer = new ccui.Scale9Sprite();
 
         this._buttonScale9Renderer.setRenderingType(ccui.Scale9Sprite.RenderingType.SIMPLE);
 
         this.addProtectedChild(this._buttonScale9Renderer, ccui.Button.DISABLED_RENDERER_ZORDER, -1);
-    },
+    }
 
     /**
      * Sets if button is using scale9 renderer.
      * @param {Boolean} able true that using scale9 renderer, false otherwise.
      */
-    setScale9Enabled: function (able) {
+    setScale9Enabled(able) {
         if (this._scale9Enabled === able)
             return;
 
@@ -147,37 +147,37 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
         this.setBright(this._bright);
 
         this._normalTextureAdaptDirty = true;
-    },
+    }
 
     /**
      *  Returns button is using scale9 renderer or not.
      * @returns {Boolean}
      */
-    isScale9Enabled: function () {
+    isScale9Enabled() {
         return this._scale9Enabled;
-    },
+    }
 
     /**
      * Sets whether ignore the widget size
      * @param {Boolean} ignore true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
      * @override
      */
-    ignoreContentAdaptWithSize: function (ignore) {
+    ignoreContentAdaptWithSize(ignore) {
         if(this._unifySize){
             this._updateContentSize();
             return;
         }
         if (!this._scale9Enabled || (this._scale9Enabled && !ignore)) {
-            ccui.Widget.prototype.ignoreContentAdaptWithSize.call(this, ignore);
+            super.ignoreContentAdaptWithSize(ignore);
             this._prevIgnoreSize = ignore;
         }
-    },
+    }
 
     /**
      * Returns the renderer size.
      * @returns {cc.Size}
      */
-    getVirtualRendererSize: function(){
+    getVirtualRendererSize(){
         if (this._unifySize)
             return this._getNormalSize();
 
@@ -187,7 +187,7 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
             }
         }
         return cc.size(this._normalTextureSize);
-    },
+    }
 
     /**
      * Load textures for button.
@@ -196,13 +196,13 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
      * @param {String} disabled  disabled state of texture's filename.
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextures: function (normal, selected, disabled, texType) {
+    loadTextures(normal, selected, disabled, texType) {
         this.loadTextureNormal(normal, texType);
         this.loadTexturePressed(selected, texType);
         this.loadTextureDisabled(disabled, texType);
-    },
+    }
 
-    _createSpriteFrameWithFile: function (file) {
+    _createSpriteFrameWithFile(file) {
         var texture = cc.textureCache.getTextureForKey(file);
         if (!texture) {
             texture = cc.textureCache.addImage(file);
@@ -214,9 +214,9 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
         var textureSize = texture.getContentSize();
         var rect = cc.rect(0, 0, textureSize.width, textureSize.height);
         return new cc.SpriteFrame(texture, rect);
-    },
+    }
 
-    _createSpriteFrameWithName: function (name) {
+    _createSpriteFrameWithName(name) {
         var frame = cc.spriteFrameCache.getSpriteFrame(name);
         if (frame == null) {
             cc.log("ccui.Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName");
@@ -224,14 +224,14 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
         }
 
         return frame;
-    },
+    }
 
     /**
      * Load normal state texture for button.
      * @param {String} normal normal state of texture's filename.
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextureNormal: function (normal, texType) {
+    loadTextureNormal(normal, texType) {
         if (!normal) return;
 
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
@@ -290,14 +290,14 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
 
         this._normalTextureAdaptDirty = true;
         this._findLayout();
-    },
+    }
 
     /**
      * Load selected state texture for button.
      * @param {String} selected selected state of texture's filename.
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTexturePressed: function (selected, texType) {
+    loadTexturePressed(selected, texType) {
         if (!selected)
             return;
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
@@ -333,14 +333,14 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
         this._updateChildrenDisplayedRGBA();
 
         this._pressedTextureLoaded = true;
-    },
+    }
 
     /**
      * Load dark state texture for button.
      * @param {String} disabled disabled state of texture's filename.
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextureDisabled: function (disabled, texType) {
+    loadTextureDisabled(disabled, texType) {
         if (!disabled)
             return;
 
@@ -378,21 +378,21 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
 
         this._disabledTextureLoaded = true;
         this._findLayout();
-    },
+    }
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsets: function (capInsets) {
+    setCapInsets(capInsets) {
         this.setCapInsetsNormalRenderer(capInsets);
-    },
+    }
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsetsNormalRenderer: function (capInsets) {
+    setCapInsetsNormalRenderer(capInsets) {
         if(!capInsets || !this._scale9Enabled)
             return;
 
@@ -415,49 +415,49 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
 
         this._capInsetsNormal = locInsets;
         this._buttonScale9Renderer.setCapInsets(locInsets);
-    },
+    }
 
     /**
      *  Returns normal renderer cap insets.
      * @returns {cc.Rect}
      */
-    getCapInsetsNormalRenderer:function(){
+    getCapInsetsNormalRenderer(){
         return cc.rect(this._capInsetsNormal);
-    },
+    }
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsetsPressedRenderer: function (capInsets) {
+    setCapInsetsPressedRenderer(capInsets) {
         this.setCapInsetsNormalRenderer(capInsets);
-    },
+    }
 
     /**
      *  Returns pressed renderer cap insets.
      * @returns {cc.Rect}
      */
-    getCapInsetsPressedRenderer: function () {
+    getCapInsetsPressedRenderer() {
         return cc.rect(this._capInsetsNormal);
-    },
+    }
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsetsDisabledRenderer: function (capInsets) {
+    setCapInsetsDisabledRenderer(capInsets) {
         this.setCapInsetsNormalRenderer(capInsets);
-    },
+    }
 
     /**
      * Returns disable renderer cap insets.
      * @returns {cc.Rect}
      */
-    getCapInsetsDisabledRenderer: function () {
+    getCapInsetsDisabledRenderer() {
         return cc.rect(this._capInsetsNormal);
-    },
+    }
 
-    _onPressStateChangedToNormal: function () {
+    _onPressStateChangedToNormal() {
         this._buttonScale9Renderer.setSpriteFrame(this._buttonNormalSpriteFrame);
 
         this._buttonScale9Renderer.setState( ccui.Scale9Sprite.state.NORMAL);
@@ -495,9 +495,9 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
                 this._titleRenderer.setScaleY(1);
             }
         }
-    },
+    }
 
-    _onPressStateChangedToPressed: function () {
+    _onPressStateChangedToPressed() {
         this._buttonScale9Renderer.setState(ccui.Scale9Sprite.state.NORMAL);
 
         if (this._pressedTextureLoaded) {
@@ -530,9 +530,9 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
                 this._titleRenderer.setScaleY(1 + this._zoomScale);
             }
         }
-    },
+    }
 
-    _onPressStateChangedToDisabled: function () {
+    _onPressStateChangedToDisabled() {
         //if disable resource is null
         if (!this._disabledTextureLoaded){
             if (this._normalTextureLoaded) {
@@ -543,9 +543,9 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
         }
 
         this._buttonScale9Renderer.setScale(1.0);
-    },
+    }
 
-    _updateContentSize: function(){
+    _updateContentSize(){
         if (this._unifySize){
             if (this._scale9Enabled)
                 ccui.ProtectedNode.setContentSize(this._customSize);
@@ -559,53 +559,53 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
 
         if (this._ignoreSize)
             this.setContentSize(this.getVirtualRendererSize());
-    },
+    }
 
-    _onSizeChanged: function () {
-        ccui.Widget.prototype._onSizeChanged.call(this);
+    _onSizeChanged() {
+        super._onSizeChanged();
         if(this._titleRenderer) {
             this._updateTitleLocation();
         }
         this._normalTextureAdaptDirty = true;
-    },
+    }
 
     /**
      * Gets the Virtual Renderer of widget.
      * @returns {cc.Node}
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer() {
         return this._buttonScale9Renderer;
-    },
+    }
 
-    _normalTextureScaleChangedWithSize: function () {
+    _normalTextureScaleChangedWithSize() {
         this._buttonScale9Renderer.setContentSize(this._contentSize);
         this._buttonScale9Renderer.setPosition(this._contentSize.width / 2, this._contentSize.height / 2);
-    },
+    }
 
-    _adaptRenderers: function(){
+    _adaptRenderers(){
         if (this._normalTextureAdaptDirty) {
             this._normalTextureScaleChangedWithSize();
             this._normalTextureAdaptDirty = false;
         }
-    },
+    }
 
-    _updateTitleLocation: function(){
+    _updateTitleLocation(){
         this._titleRenderer.setPosition(this._contentSize.width * 0.5, this._contentSize.height * 0.5);
-    },
+    }
 
     /**
      * Changes if button can be clicked zoom effect.
      * @param {Boolean} enabled
      */
-    setPressedActionEnabled: function (enabled) {
+    setPressedActionEnabled(enabled) {
         this.pressedActionEnabled = enabled;
-    },
+    }
 
     /**
      * Sets title text to ccui.Button
      * @param {String} text
      */
-    setTitleText: function (text) {
+    setTitleText(text) {
         if(text === this.getTitleText()) return;
 
         this._createTitleRendererIfNeeded();
@@ -617,60 +617,60 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
         }else{
             this._titleRenderer._renderCmd._updateTTF();
         }
-    },
+    }
 
     /**
      * Returns title text of ccui.Button
      * @returns {String} text
      */
-    getTitleText: function () {
+    getTitleText() {
         if(this._titleRenderer) {
             return this._titleRenderer.getString();
         }
         return "";
-    },
+    }
 
     /**
      * Sets title color to ccui.Button.
      * @param {cc.Color} color
      */
-    setTitleColor: function (color) {
+    setTitleColor(color) {
         this._createTitleRendererIfNeeded();
         this._titleRenderer.setFontFillColor(color);
-    },
+    }
 
     /**
      * Returns title color of ccui.Button
      * @returns {cc.Color}
      */
-    getTitleColor: function () {
+    getTitleColor() {
         if (this._titleRenderer) {
             return this._titleRenderer._getFillStyle();
         }
         return cc.color.WHITE;
-    },
+    }
 
     /**
      * Sets title fontSize to ccui.Button
      * @param {cc.Size} size
      */
-    setTitleFontSize: function (size) {
+    setTitleFontSize(size) {
         this._createTitleRendererIfNeeded();
 
         this._titleRenderer.setFontSize(size);
         this._fontSize = size;
-    },
+    }
 
     /**
      * Returns title fontSize of ccui.Button.
      * @returns {Number}
      */
-    getTitleFontSize: function () {
+    getTitleFontSize() {
         if (this._titleRenderer) {
             return this._titleRenderer.getFontSize();
         }
         return this._fontSize;
-    },
+    }
 
     /**
      * When user pressed the button, the button will zoom to a scale.
@@ -678,80 +678,80 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
      * @since v3.2
      * @param scale
      */
-    setZoomScale: function(scale){
+    setZoomScale(scale){
         this._zoomScale = scale;
-    },
+    }
 
     /**
      * Returns a zoom scale
      * @since v3.2
      * @returns {number}
      */
-    getZoomScale: function(){
+    getZoomScale(){
         return this._zoomScale;
-    },
+    }
 
     /**
      * Returns the normalize of texture size
      * @since v3.3
      * @returns {cc.Size}
      */
-    getNormalTextureSize: function(){
+    getNormalTextureSize(){
         return this._normalTextureSize;
-    },
+    }
 
     /**
      * Sets title fontName to ccui.Button.
      * @param {String} fontName
      */
-    setTitleFontName: function (fontName) {
+    setTitleFontName(fontName) {
         this._createTitleRendererIfNeeded();
 
         this._titleRenderer.setFontName(fontName);
         this._fontName = fontName;
-    },
+    }
 
     /**
      * Get the title renderer.
      * title ttf object.
      * @returns {cc.LabelTTF}
      */
-    getTitleRenderer: function(){
+    getTitleRenderer(){
         return this._titleRenderer;
-    },
+    }
 
     /**
      * Gets title fontName of ccui.Button.
      * @returns {String}
      */
-    getTitleFontName: function () {
+    getTitleFontName() {
         if(this._titleRenderer) {
             return this._titleRenderer.getFontName();
         }
         return this._fontName;
-    },
+    }
 
-    _setTitleFont: function (font) {
+    _setTitleFont(font) {
         this._titleRenderer.font = font;
-    },
-    _getTitleFont: function () {
+    }
+    _getTitleFont() {
         return this._titleRenderer.font;
-    },
+    }
 
     /**
      * Returns the "class name" of widget.
      * @override
      * @returns {string}
      */
-    getDescription: function () {
+    getDescription() {
         return "Button";
-    },
+    }
 
-    _createCloneInstance: function () {
+    _createCloneInstance() {
         return new ccui.Button();
-    },
+    }
 
-    _copySpecialProperties: function (uiButton) {
+    _copySpecialProperties(uiButton) {
         this._prevIgnoreSize = uiButton._prevIgnoreSize;
         this._capInsetsNormal = uiButton._capInsetsNormal;
         this.setScale9Enabled(uiButton._scale9Enabled);
@@ -768,9 +768,9 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
         }
         this.setPressedActionEnabled(uiButton.pressedActionEnabled);
         this.setZoomScale(uiButton._zoomScale);
-    },
+    }
 
-    _getNormalSize: function(){
+    _getNormalSize(){
         var titleSize;
         if (this._titleRenderer !== null)
             titleSize = this._titleRenderer.getContentSize();
@@ -781,7 +781,8 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
 
         return cc.size(width,height);
     }
-});
+
+};
 
 var _p = ccui.Button.prototype;
 

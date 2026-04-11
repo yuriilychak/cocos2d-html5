@@ -32,24 +32,23 @@
  *
  * @property {String}   path - The video path
  */
-ccui.VideoPlayer = ccui.Widget.extend(/** @lends ccui.VideoPlayer# */{
+ccui.VideoPlayer = class VideoPlayer extends ccui.Widget {
 
-    _played: false,
-    _playing: false,
-    _stopped: true,
-
-    ctor: function (path) {
-        ccui.Widget.prototype.ctor.call(this);
+    constructor(path) {
+        super();
+        this._played = false;
+        this._playing = false;
+        this._stopped = true;
         this._EventList = {};
         if (path)
             this.setURL(path);
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         return new ccui.VideoPlayer.RenderCmd(this);
-    },
+    }
 
-    visit: function () {
+    visit() {
         var cmd = this._renderCmd,
             div = cmd._div,
             container = cc.container,
@@ -74,7 +73,7 @@ ccui.VideoPlayer = ccui.Widget.extend(/** @lends ccui.VideoPlayer# */{
         }
         cmd.updateStatus();
         cmd.resize();
-    },
+    }
 
     /**
      * Set the video address
@@ -82,22 +81,22 @@ ccui.VideoPlayer = ccui.Widget.extend(/** @lends ccui.VideoPlayer# */{
      * All supported video formats will be added to the video
      * @param {String} address
      */
-    setURL: function (address) {
+    setURL(address) {
         this._renderCmd.updateURL(address);
-    },
+    }
 
     /**
      * Get the video path
      * @returns {String}
      */
-    getURL: function () {
+    getURL() {
         return this._renderCmd._url;
-    },
+    }
 
     /**
      * Play the video
      */
-    play: function () {
+    play() {
         var self = this,
             video = this._renderCmd._video;
         if (video) {
@@ -117,32 +116,32 @@ ccui.VideoPlayer = ccui.Widget.extend(/** @lends ccui.VideoPlayer# */{
                 this._stopped = false;
             }
         }
-    },
+    }
 
     /**
      * Pause the video
      */
-    pause: function () {
+    pause() {
         var video = this._renderCmd._video;
         if (video && this._playing === true && this._stopped === false) {
             video.pause();
             this._playing = false;
         }
-    },
+    }
 
     /**
      * Resume the video
      */
-    resume: function () {
+    resume() {
         if (this._stopped === false && this._playing === false && this._played === true) {
             this.play();
         }
-    },
+    }
 
     /**
      * Stop the video
      */
-    stop: function () {
+    stop() {
         var self = this,
             video = this._renderCmd._video;
         if (video) {
@@ -155,12 +154,12 @@ ccui.VideoPlayer = ccui.Widget.extend(/** @lends ccui.VideoPlayer# */{
         setTimeout(function () {
             self._dispatchEvent(ccui.VideoPlayer.EventType.STOPPED);
         }, 0);
-    },
+    }
     /**
      * Jump to the specified point in time
      * @param {Number} sec
      */
-    seekTo: function (sec) {
+    seekTo(sec) {
         var video = this._renderCmd._video;
         if (video) {
             video.currentTime = sec;
@@ -170,37 +169,37 @@ ccui.VideoPlayer = ccui.Widget.extend(/** @lends ccui.VideoPlayer# */{
                 }, 20);
             }
         }
-    },
+    }
 
     /**
      * Whether the video is playing
      * @returns {boolean}
      */
-    isPlaying: function () {
+    isPlaying() {
         if (ccui.VideoPlayer._polyfill.autoplayAfterOperation && this._playing) {
             setTimeout(function () {
                 video.play();
             }, 20);
         }
         return this._playing;
-    },
+    }
 
     /**
      * Whether to keep the aspect ratio
      */
-    setKeepAspectRatioEnabled: function (enable) {
+    setKeepAspectRatioEnabled(enable) {
         cc.log("On the web is always keep the aspect ratio");
-    },
-    isKeepAspectRatioEnabled: function () {
+    }
+    isKeepAspectRatioEnabled() {
         return false;
-    },
+    }
 
     /**
      * Set whether the full screen
      * May appear inconsistent in different browsers
      * @param {boolean} enable
      */
-    setFullScreenEnabled: function (enable) {
+    setFullScreenEnabled(enable) {
         var video = this._renderCmd._video;
         if (video) {
             if (enable)
@@ -208,79 +207,79 @@ ccui.VideoPlayer = ccui.Widget.extend(/** @lends ccui.VideoPlayer# */{
             else
                 cc.screen.exitFullScreen(video);
         }
-    },
+    }
 
     /**
      * Determine whether already full screen
      */
-    isFullScreenEnabled: function () {
+    isFullScreenEnabled() {
         cc.log("Can't know status");
-    },
+    }
 
     /**
      * The binding event
      * @param {ccui.VideoPlayer.EventType} event
      * @param {Function} callback
      */
-    setEventListener: function (event, callback) {
+    setEventListener(event, callback) {
         this._EventList[event] = callback;
-    },
+    }
 
     /**
      * Delete events
      * @param {ccui.VideoPlayer.EventType} event
      */
-    removeEventListener: function (event) {
+    removeEventListener(event) {
         this._EventList[event] = null;
-    },
+    }
 
-    _dispatchEvent: function (event) {
+    _dispatchEvent(event) {
         var callback = this._EventList[event];
         if (callback)
             callback.call(this, this, this._renderCmd._video.src);
-    },
+    }
 
     /**
      * Trigger playing events
      */
-    onPlayEvent: function () {
+    onPlayEvent() {
         var list = this._EventList[ccui.VideoPlayer.EventType.PLAYING];
         if (list)
             for (var i = 0; i < list.length; i++)
                 list[i].call(this, this, this._renderCmd._video.src);
-    },
+    }
 
-    setContentSize: function (w, h) {
-        ccui.Widget.prototype.setContentSize.call(this, w, h);
+    setContentSize(w, h) {
+        super.setContentSize(w, h);
         if (h === undefined) {
             h = w.height;
             w = w.width;
         }
         this._renderCmd.changeSize(w, h);
-    },
+    }
 
-    cleanup: function () {
+    cleanup() {
         this._renderCmd.removeDom();
         this.stopAllActions();
         this.unscheduleAllCallbacks();
-    },
+    }
 
-    onEnter: function () {
-        ccui.Widget.prototype.onEnter.call(this);
+    onEnter() {
+        super.onEnter();
         var list = ccui.VideoPlayer.elements;
         if (list.indexOf(this) === -1)
             list.push(this);
-    },
+    }
 
-    onExit: function () {
-        ccui.Widget.prototype.onExit.call(this);
+    onExit() {
+        super.onExit();
         var list = ccui.VideoPlayer.elements;
         var index = list.indexOf(this);
         if (index !== -1)
             list.splice(index, 1);
     }
 
-});
+};
 
 // VideoHTMLElement list
 ccui.VideoPlayer.elements = [];

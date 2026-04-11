@@ -44,25 +44,25 @@ ccs.BoneNode = (function () {
         assert: cc.assert
     };
 
-    var BoneNode = Node.extend(/** @lends ccs.BoneNode# */{
-        _customCommand: null,
-        _blendFunc: null,
+    var BoneNode = class BoneNode extends cc.Node {
 
-        _rackColor: null,
 
-        _rackLength: null,
-        _rackWidth: null,
 
-        _childBones: null,
-        _boneSkins: null,
-        _rootSkeleton: null,
 
-        _squareVertices: null,
-        _squareColors: null,
-        _noMVPVertices: null,
 
-        ctor: function (length) {
-            Node.prototype.ctor.call(this);
+        constructor(length) {
+            super();
+            this._customCommand = null;
+            this._blendFunc = null;
+            this._rackColor = null;
+            this._rackLength = null;
+            this._rackWidth = null;
+            this._childBones = null;
+            this._boneSkins = null;
+            this._rootSkeleton = null;
+            this._squareVertices = null;
+            this._squareColors = null;
+            this._noMVPVertices = null;
             // null
             // length
             // _isRackShow -> _renderCmd._debug
@@ -81,13 +81,13 @@ ccs.BoneNode = (function () {
             this._rackWidth = 20;
             this._updateVertices();
             //this._updateColor();
-        },
+        }
 
-        visit: function (parent) {
+        visit(parent) {
             this._visit && this._visit(parent && parent._renderCmd);
-        },
+        }
 
-        addSkin: function (skin, display, hideOthers/*false*/) {
+        addSkin(skin, display, hideOthers/*false*/) {
             // skin, display
             // skin, display, hideOthers
             var boneSkins = this._boneSkins;
@@ -97,20 +97,20 @@ ccs.BoneNode = (function () {
                     boneSkins[i].setVisible(false);
                 }
             }
-            Node.prototype.addChild.call(this, skin);
+            super.addChild(skin);
             this._boneSkins.push(skin);
             skin.setVisible(display);
-        },
+        }
 
-        getChildBones: function () {
+        getChildBones() {
             return this._childBones;
-        },
+        }
 
-        getSkins: function () {
+        getSkins() {
             return this._boneSkins;
-        },
+        }
 
-        displaySkin: function (skin, hideOthers) {
+        displaySkin(skin, hideOthers) {
             var boneSkins = this._boneSkins;
             var boneSkin, i;
             if (typeof skin === "string") {
@@ -132,9 +132,9 @@ ccs.BoneNode = (function () {
                     }
                 }
             }
-        },
+        }
 
-        getVisibleSkins: function () {
+        getVisibleSkins() {
             var displayingSkins = [];
             var boneSkins = this._boneSkins;
             for (var boneSkin, i = 0; i < boneSkins.length; i++) {
@@ -144,13 +144,13 @@ ccs.BoneNode = (function () {
                 }
             }
             return displayingSkins;
-        },
+        }
 
-        getRootSkeletonNode: function () {
+        getRootSkeletonNode() {
             return this._rootSkeleton;
-        },
+        }
 
-        getAllSubBones: function () {
+        getAllSubBones() {
             var allBones = [];
             var boneStack = []; // for avoid recursive
             var childBones = this._childBones;
@@ -167,9 +167,9 @@ ccs.BoneNode = (function () {
                 }
             }
             return allBones;
-        },
+        }
 
-        getAllSubSkins: function () {
+        getAllSubSkins() {
             var allBones = this.getAllSubBones();
             var allSkins = [];
             for (var i = 0; i < allBones.length; i++) {
@@ -179,23 +179,23 @@ ccs.BoneNode = (function () {
                 }
             }
             return allSkins;
-        },
+        }
 
-        addChild: function (child, localZOrder, tag) {
+        addChild(child, localZOrder, tag) {
             //child, localZOrder, tag
             //child, localZOrder, name
-            Node.prototype.addChild.call(this, child, localZOrder, tag);
+            super.addChild(child, localZOrder, tag);
             this._addToChildrenListHelper(child);
-        },
+        }
 
-        removeChild: function (child, cleanup) {
+        removeChild(child, cleanup) {
             if (this._children.indexOf(child) !== -1) {
-                Node.prototype.removeChild.call(this, child, cleanup);
+                super.removeChild(child, cleanup);
                 this._removeFromChildrenListHelper(child);
             }
-        },
+        }
 
-        setBlendFunc: function (blendFunc) {
+        setBlendFunc(blendFunc) {
             var ob = this._blendFunc;
             if (blendFunc && ob.src !== blendFunc.src && ob.dst !== blendFunc.dst) {
                 this._blendFunc = blendFunc;
@@ -205,31 +205,31 @@ ccs.BoneNode = (function () {
                     boneSkin.setBlendFunc(blendFunc);
                 }
             }
-        },
+        }
 
-        getBlendFunc: function () {
+        getBlendFunc() {
             return this._blendFunc;
-        },
+        }
 
-        setDebugDrawLength: function (length) {
+        setDebugDrawLength(length) {
             this._rackLength = length;
             this._updateVertices();
-        },
+        }
 
-        getDebugDrawLength: function () {
+        getDebugDrawLength() {
             return this._rackLength;
-        },
+        }
 
-        setDebugDrawWidth: function (width) {
+        setDebugDrawWidth(width) {
             this._rackWidth = width;
             this._updateVertices();
-        },
+        }
 
-        getDebugDrawWidth: function () {
+        getDebugDrawWidth() {
             return this._rackWidth;
-        },
+        }
 
-        setDebugDrawEnabled: function (isDebugDraw) {
+        setDebugDrawEnabled(isDebugDraw) {
             var renderCmd = this._renderCmd;
             if (renderCmd._debug === isDebugDraw)
                 return;
@@ -241,21 +241,21 @@ ccs.BoneNode = (function () {
                 this._rootSkeleton._subBonesDirty = true;
                 this._rootSkeleton._subBonesOrderDirty = true;
             }
-        },
+        }
 
-        isDebugDrawEnabled: function () {
+        isDebugDrawEnabled() {
             return this._renderCmd._debug;
-        },
+        }
 
-        setDebugDrawColor: function (color) {
+        setDebugDrawColor(color) {
             this._rackColor = color;
-        },
+        }
 
-        getDebugDrawColor: function () {
+        getDebugDrawColor() {
             return this._rackColor;
-        },
+        }
 
-        getVisibleSkinsRect: function () {
+        getVisibleSkinsRect() {
             var minx, miny, maxx, maxy = 0;
             minx = miny = maxx = maxy;
             var first = true;
@@ -290,26 +290,26 @@ ccs.BoneNode = (function () {
                 displayRect.setRect(minx, miny, maxx - minx, maxy - miny);
             }
             return displayRect;
-        },
+        }
 
-        getBoundingBox: function () {
+        getBoundingBox() {
             var boundingBox = this.getVisibleSkinsRect();
             return cc.rectApplyAffineTransform(boundingBox, this.getNodeToParentAffineTransform());
-        },
+        }
 
-        batchBoneDrawToSkeleton: function (bone) {
-        },
+        batchBoneDrawToSkeleton(bone) {
+        }
 
-        setLocalZOrder: function (localZOrder) {
-            Node.prototype.setLocalZOrder.call(this, localZOrder);
+        setLocalZOrder(localZOrder) {
+            super.setLocalZOrder(localZOrder);
             if (this._rootSkeleton != null)
                 this._rootSkeleton._subBonesOrderDirty = true;
-        },
+        }
 
-        setName: function (name) {
+        setName(name) {
             var rootSkeleton = this._rootSkeleton;
             var oldName = this.getName();
-            Node.prototype.setName.call(this, name);
+            super.setName(name);
             if (rootSkeleton != null) {
                 var oIter = rootSkeleton._subBonesMap[oldName];
                 var nIter = rootSkeleton._subBonesMap[name];
@@ -318,29 +318,29 @@ ccs.BoneNode = (function () {
                     rootSkeleton._subBonesMap[name] = oIter;
                 }
             }
-        },
+        }
 
-        setContentSize: function (contentSize) {
-            Node.prototype.setContentSize.call(this, contentSize);
+        setContentSize(contentSize) {
+            super.setContentSize(contentSize);
             this._updateVertices();
-        },
+        }
 
-        setAnchorPoint: function (anchorPoint) {
-            Node.prototype.setAnchorPoint.call(this, anchorPoint);
+        setAnchorPoint(anchorPoint) {
+            super.setAnchorPoint(anchorPoint);
             this._updateVertices();
-        },
+        }
 
-        setVisible: function (visible) {
+        setVisible(visible) {
             if (this._visible == visible)
                 return;
-            Node.prototype.setVisible.call(this, visible);
+            super.setVisible(visible);
             if (this._rootSkeleton != null) {
                 this._rootSkeleton._subBonesDirty = true;
                 this._rootSkeleton._subBonesOrderDirty = true;
             }
-        },
+        }
 
-        _addToChildrenListHelper: function (child) {
+        _addToChildrenListHelper(child) {
             if (child instanceof BoneNode) {
                 this._addToBoneList(child);
             } else {
@@ -348,18 +348,18 @@ ccs.BoneNode = (function () {
                 this._addToSkinList(child);
                 //}
             }
-        },
+        }
 
-        _removeFromChildrenListHelper: function (child) {
+        _removeFromChildrenListHelper(child) {
             if (child instanceof BoneNode) {
                 this._removeFromBoneList(child);
             } else {
                 if (child instanceof SkinNode)
                     this._removeFromSkinList(skin);
             }
-        },
+        }
 
-        _removeFromBoneList: function (bone) {
+        _removeFromBoneList(bone) {
             if (
                 this._rootSkeleton != null &&
                 bone instanceof ccs.SkeletonNode &&
@@ -380,17 +380,17 @@ ccs.BoneNode = (function () {
                 this._rootSkeleton._subBonesOrderDirty = true;
             }
             cc.arrayRemoveObject(this._childBones, bone);
-        },
+        }
 
-        _setRootSkeleton: function (rootSkeleton) {
+        _setRootSkeleton(rootSkeleton) {
             this._rootSkeleton = rootSkeleton;
             var subBones = this.getAllSubBones();
             for (var i = 0; i < subBones.length; i++) {
                 this._addToBoneList(subBones[i]);
             }
-        },
+        }
 
-        _addToBoneList: function (bone) {
+        _addToBoneList(bone) {
             if (this._childBones.indexOf(bone) === -1)
                 this._childBones.push(bone);
             if (this._rootSkeleton != null) {
@@ -414,9 +414,9 @@ ccs.BoneNode = (function () {
                     }
                 }
             }
-        },
+        }
 
-        _visitSkins: function () {
+        _visitSkins() {
             var cmd = this._renderCmd;
             // quick return if not visible
             if (!this._visible)
@@ -445,28 +445,28 @@ ccs.BoneNode = (function () {
                     children[i].visit(this);
             }
             cmd._dirtyFlag = 0;
-        },
+        }
 
-        _addToSkinList: function (skin) {
+        _addToSkinList(skin) {
             this._boneSkins.push(skin);
             if (skin.getBlendFunc) {
                 var blendFunc = skin.getBlendFunc();
                 if (this._blendFunc.src !== blendFunc.src && this._blendFunc.dst !== blendFunc.dst)
                     skin.setBlendFunc(this._blendFunc);
             }
-        },
+        }
 
-        _removeFromSkinList: function (skin) {
+        _removeFromSkinList(skin) {
             cc.arrayRemoveObject(this._boneSkins, skin);
-        },
+        }
 
-        sortAllChildren: function () {
+        sortAllChildren() {
             this._sortArray(this._childBones);
             this._sortArray(this._boneSkins);
-            Node.prototype.sortAllChildren.call(this);
-        },
+            super.sortAllChildren();
+        }
 
-        _sortArray: function (array) {
+        _sortArray(array) {
             if (!array)
                 return;
             var len = array.length, i, j, tmp;
@@ -485,9 +485,9 @@ ccs.BoneNode = (function () {
                 }
                 array[j + 1] = tmp;
             }
-        },
+        }
 
-        _updateVertices: function () {
+        _updateVertices() {
             var squareVertices = this._squareVertices,
                 anchorPointInPoints = this._renderCmd._anchorPointInPoints;
             if (this._rackLength != squareVertices[2].x - anchorPointInPoints.x ||
@@ -506,15 +506,16 @@ ccs.BoneNode = (function () {
 
                 this._renderCmd.updateDebugPoint(squareVertices);
             }
-        },
+        }
 
-        _createRenderCmd: function () {
+        _createRenderCmd() {
             if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
                 return new BoneNodeCanvasCmd(this);
             else
                 return new BoneNodeWebGLCmd(this);
         }
-    });
+    
+    }
 
     var BoneNodeCanvasCmd = (function () {
 

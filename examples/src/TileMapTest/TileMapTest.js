@@ -31,9 +31,10 @@ var tileTestSceneIdx = -1;
 // TileDemo
 //
 //------------------------------------------------------------------
-var TileDemoProps = {
-    ctor:function () {
-        this._super();
+
+var TileDemo = class TileDemo extends BaseTestLayer {
+    constructor() {
+        super();
 
         if ('touches' in cc.sys.capabilities){
             cc.eventManager.addListener({
@@ -58,47 +59,61 @@ var TileDemoProps = {
                     }
                 }
             }, this);
-    },
-    title:function () {
+    }
+    title() {
         return "No title";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "drag the screen";
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new TileMapTestScene();
         s.addChild(restartTileMapTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new TileMapTestScene();
         s.addChild(nextTileMapTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new TileMapTestScene();
         s.addChild(previousTileMapTest());
         director.runScene(s);
-    },
+    }
     // automation
-    numberOfPendingTests:function () {
+    numberOfPendingTests() {
         return ( (arrayOfTileMapTest.length - 1) - tileTestSceneIdx );
-    },
-    getTestNumber:function () {
+    }
+    getTestNumber() {
         return tileTestSceneIdx;
     }
+
 };
-var TileDemo = BaseTestLayer.extend(TileDemoProps);
 
 /******************for vertexz bug**************/
-var FixBugBaseTest = cc.Layer.extend(BaseTestLayerProps);
-var TMXFixBugLayer = FixBugBaseTest.extend(TileDemoProps);
+// FixBugBaseTest: cc.Layer with BaseTestLayer methods mixed in
+var FixBugBaseTest = class FixBugBaseTest extends cc.Layer {};
+// Copy BaseTestLayer prototype methods (mixin pattern, originally cc.Layer.extend(BaseTestLayerProps))
+Object.getOwnPropertyNames(BaseTestLayer.prototype).forEach(function(name) {
+    if (name !== 'constructor' && typeof BaseTestLayer.prototype[name] === 'function') {
+        FixBugBaseTest.prototype[name] = BaseTestLayer.prototype[name];
+    }
+});
+
+// TMXFixBugLayer: FixBugBaseTest with TileDemo methods mixed in
+var TMXFixBugLayer = class TMXFixBugLayer extends FixBugBaseTest {};
+Object.getOwnPropertyNames(TileDemo.prototype).forEach(function(name) {
+    if (name !== 'constructor' && typeof TileDemo.prototype[name] === 'function') {
+        TMXFixBugLayer.prototype[name] = TileDemo.prototype[name];
+    }
+});
 /***********************************************************/
 
-var TileMapTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TileMapTest = class TileMapTest extends TileDemo {
+    constructor() {
+        super();
         var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
         if ("opengl" in cc.sys.capabilities)
             map.texture.setAntiAliasTexParameters();
@@ -118,15 +133,16 @@ var TileMapTest = TileDemo.extend({
         var seq = cc.sequence(scale, scaleBack);
 
         map.runAction(seq.repeatForever());
-    },
-    title:function () {
+    }
+    title() {
         return "TileMapAtlas";
     }
-});
 
-var TileMapEditTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+};
+
+var TileMapEditTest = class TileMapEditTest extends TileDemo {
+    constructor() {
+        super();
         var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
         // Create an Aliased Atlas
         map.texture.setAliasTexParameters();
@@ -145,11 +161,11 @@ var TileMapEditTest = TileDemo.extend({
         map.x = -20;
         map.y = -200;
 
-    },
-    title:function () {
+    }
+    title() {
         return "Editable TileMapAtlas";
-    },
-    updateMap:function (dt) {
+    }
+    updateMap(dt) {
         // IMPORTANT
         //   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
         //   The value 0 not rendered so don't assign or change a tile with value 0
@@ -166,35 +182,40 @@ var TileMapEditTest = TileDemo.extend({
         // NEW since v0.7
         tilemap.setTile(c, cc.p(13, 21));
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoTest
 //
 //------------------------------------------------------------------
-var TMXOrthoTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoTest = class TMXOrthoTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 2.1;
+
+        this.pixel1 = {"0":218, "1":218, "2":208, "3":255};
+
+        this.pixel2 = {"0":193, "1":143, "2":72, "3":255};
+
+        this.pixel3 = {"0":200, "1":15, "2":160, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test1.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         map.runAction(new cc.ScaleBy(2, 0.5));
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Ortho test";
-    },
+    }
 
     // Automation
-    testDuration:2.1,
-    pixel1:{"0":218, "1":218, "2":208, "3":255},
-    pixel2:{"0":193, "1":143, "2":72, "3":255},
-    pixel3:{"0":200, "1":15, "2":160, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(82, 114, 10, 10);
         var ret2 = this.readPixels(475, 100, 10, 10);
         var ret3 = this.readPixels(312, 196, 10, 10);
@@ -203,16 +224,23 @@ var TMXOrthoTest = TileDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel3, true,5) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoTest2
 //
 //------------------------------------------------------------------
-var TMXOrthoTest2 = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoTest2 = class TMXOrthoTest2 extends TileDemo {
+    constructor() {
+        super();
+
+        this.pixel1 = {"0":192, "1":144, "2":16, "3":255};
+
+        this.pixel2 = {"0":255, "1":255, "2":255, "3":255};
+
+        this.pixel3 = {"0":40, "1":0, "2":0, "3":255};
         //
         // Test orthogonal with 3d camera and anti-alias textures
         //
@@ -220,20 +248,17 @@ var TMXOrthoTest2 = TileDemo.extend({
         //
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Orthogonal test 2";
-    },
+    }
 
     // Automation
-    pixel1:{"0":192, "1":144, "2":16, "3":255},
-    pixel2:{"0":255, "1":255, "2":255, "3":255},
-    pixel3:{"0":40, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(99, 142, 5, 5);
         var ret2 = this.readPixels(238, 270, 5, 5);
         var ret3 = this.readPixels(419, 239, 5, 5);
@@ -242,7 +267,8 @@ var TMXOrthoTest2 = TileDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel3, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 
 //------------------------------------------------------------------
@@ -250,29 +276,32 @@ var TMXOrthoTest2 = TileDemo.extend({
 // TMXOrthoTest3
 //
 //------------------------------------------------------------------
-var TMXOrthoTest3 = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoTest3 = class TMXOrthoTest3 extends TileDemo {
+    constructor() {
+        super();
+
+        this.pixel1 = {"0":247, "1":196, "2":131, "3":255};
+
+        this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
+
+        this.pixel3 = {"0":0, "1":0, "2":0, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test3.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         map.scale = 0.2;
         map.anchorX = 0.5;
         map.anchorY = 0.5;
-    },
-    title:function () {
+    }
+    title() {
         return "TMX anchorPoint test";
-    },
+    }
 
     // Automation
-    pixel1:{"0":247, "1":196, "2":131, "3":255},
-    pixel2:{"0":0, "1":0, "2":0, "3":255},
-    pixel3:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(0, 0, 10, 10);
         var ret2 = this.readPixels(107, 58, 10, 10);
         var ret3 = this.readPixels(58, 107, 10, 10);
@@ -281,16 +310,23 @@ var TMXOrthoTest3 = TileDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel3, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoTest4
 //
 //------------------------------------------------------------------
-var TMXOrthoTest4 = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoTest4 = class TMXOrthoTest4 extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 3;
+
+        this.testLayerSize = null;
+
+        this.pixel = {"0":0, "1":0, "2":0, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test4.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -317,8 +353,8 @@ var TMXOrthoTest4 = TileDemo.extend({
         sprite.scale = 2;
 
         this.scheduleOnce(this.onRemoveSprite, 0.2);
-    },
-    onRemoveSprite:function (dt) {
+    }
+    onRemoveSprite(dt) {
         var map = this.getChildByTag(TAG_TILE_MAP);
 
         var layer = map.getLayer("Layer 0");
@@ -328,27 +364,25 @@ var TMXOrthoTest4 = TileDemo.extend({
         layer.removeChild(sprite, true);
 
         this.testLayerSize = layerSize;
-    },
-    title:function () {
+    }
+    title() {
         return "TMX width/height test";
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:3,
-    testLayerSize:null,
-    pixel:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"width":14, "height":8, "pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(433, 240, 10, 10);
         var ret = {"width":this.testLayerSize.width, "height":this.testLayerSize.height, "pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 
 //------------------------------------------------------------------
@@ -356,10 +390,17 @@ var TMXOrthoTest4 = TileDemo.extend({
 // TMXReadWriteTest
 //
 //------------------------------------------------------------------
-var TMXReadWriteTest = TileDemo.extend({
-    gid:0,
-    ctor:function () {
-        this._super();
+var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.gid = 0;
+
+        this.testDuration = 2.2;
+
+        this.pixel1 = {"0":0, "1":144, "2":0, "3":255};
+
+        this.pixel2 = {"0":192, "1":144, "2":16, "3":255};
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
@@ -406,14 +447,14 @@ var TMXReadWriteTest = TileDemo.extend({
         this.schedule(this.removeTiles, 1.0);
 
         this.gid2 = 0;
-    },
-    onRemoveSprite:function (sender) {
+    }
+    onRemoveSprite(sender) {
         var p = sender.parent;
         if (p) {
             p.removeChild(sender, true);
         }
-    },
-    updateCol:function (dt) {
+    }
+    updateCol(dt) {
         var map = this.getChildByTag(TAG_TILE_MAP);
         var layer = map.getChildByTag(0);
 
@@ -424,8 +465,8 @@ var TMXReadWriteTest = TileDemo.extend({
         }
 
         this.gid2 = (this.gid2 + 1) % 80;
-    },
-    repaintWithGID:function (dt) {
+    }
+    repaintWithGID(dt) {
 
         var map = this.getChildByTag(TAG_TILE_MAP);
         var layer = map.getChildByTag(0);
@@ -436,8 +477,8 @@ var TMXReadWriteTest = TileDemo.extend({
             var tmpgid = layer.getTileGIDAt(cc.p(x, y));
             layer.setTileGID(tmpgid + 1, cc.p(x, y));
         }
-    },
-    removeTiles:function (dt) {
+    }
+    removeTiles(dt) {
         this.unschedule(this.removeTiles);
 
         var map = this.getChildByTag(TAG_TILE_MAP);
@@ -448,74 +489,77 @@ var TMXReadWriteTest = TileDemo.extend({
         for (var y = 0; y < s.height; y++) {
             layer.removeTileAt(cc.p(5.0, y));
         }
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Read/Write test";
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:2.2,
-    pixel1:{"0":0, "1":144, "2":0, "3":255},
-    pixel2:{"0":192, "1":144, "2":16, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(168, 203, 5, 5);
         var ret2 = this.readPixels(239, 239, 5, 5);
         var ret = {"pixel1":!this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXHexTest
 //
 //------------------------------------------------------------------
-var TMXHexTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXHexTest = class TMXHexTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.pixel1 = {"0":250, "1":202, "2":73, "3":255};
+
+        this.pixel2 = {"0":150, "1":219, "2":10, "3":255};
         var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/hexa-test.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Hex test";
-    },
+    }
 
     //
     // Automation
     //
-    pixel1:{"0":250, "1":202, "2":73, "3":255},
-    pixel2:{"0":150, "1":219, "2":10, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(438, 226, 10, 10);
         var ret2 = this.readPixels(195, 0, 10, 10);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXIsoTest
 //
 //------------------------------------------------------------------
-var TMXIsoTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXIsoTest = class TMXIsoTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.pixel = {"0":0, "1":0, "2":0, "3":255};
         var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
         this.addChild(color, -1);
 
@@ -527,20 +571,19 @@ var TMXIsoTest = TileDemo.extend({
         var ts = map.getTileSize();
         // map.setPosition(-ms.width * ts.width / 2, -ms.height * ts.height / 2);
         map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Isometric test 0";
-    },
+    }
 
     //
     // Automation
     //
-    pixel:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = true;
         for (var i = 0; i < 6; i++) {
             var item = this.readPixels(438, 226, 3, 3);
@@ -551,16 +594,19 @@ var TMXIsoTest = TileDemo.extend({
         var ret = { "pixel":ret1 == true ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXIsoTest1
 //
 //------------------------------------------------------------------
-var TMXIsoTest1 = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXIsoTest1 = class TMXIsoTest1 extends TileDemo {
+    constructor() {
+        super();
+
+        this.pixel = {"0":0, "1":0, "2":0, "3":255};
         var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
         this.addChild(color, -1);
 
@@ -569,20 +615,19 @@ var TMXIsoTest1 = TileDemo.extend({
 
         map.anchorX = 0.5;
         map.anchorY = 0.5;
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Isometric test + anchorPoint";
-    },
+    }
 
     //
     // Automation
     //
-    pixel:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = true;
         for (var i = 0; i < 6; i++) {
             var item = this.readPixels(438, 226, 3, 3);
@@ -593,16 +638,21 @@ var TMXIsoTest1 = TileDemo.extend({
         var ret = { "pixel":ret1 == true ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXIsoTest2
 //
 //------------------------------------------------------------------
-var TMXIsoTest2 = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXIsoTest2 = class TMXIsoTest2 extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 1.2;
+
+        this.pixel = {"0":0, "1":0, "2":0, "3":255};
         var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
         this.addChild(color, -1);
 
@@ -613,21 +663,19 @@ var TMXIsoTest2 = TileDemo.extend({
         var ms = map.getMapSize();
         var ts = map.getTileSize();
         map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Isometric test 2";
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:1.2,
-    pixel:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = true;
         for (var i = 1; i < 6; i++) {
             var item = this.readPixels(62 * i, 191, 5, 5);
@@ -638,16 +686,21 @@ var TMXIsoTest2 = TileDemo.extend({
         var ret = { "pixel":ret1 == true ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXUncompressedTest
 //
 //------------------------------------------------------------------
-var TMXUncompressedTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXUncompressedTest = class TMXUncompressedTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 1.2;
+
+        this.pixel = {"0":0, "1":0, "2":0, "3":255};
         var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
         this.addChild(color, -1);
 
@@ -669,21 +722,19 @@ var TMXUncompressedTest = TileDemo.extend({
 
             layer.releaseMap();
         }
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Uncompressed test";
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:1.2,
-    pixel:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = true;
         for (var i = 1; i < 6; i++) {
             var item = this.readPixels(62 * i, 191, 5, 5);
@@ -694,16 +745,25 @@ var TMXUncompressedTest = TileDemo.extend({
         var ret = { "pixel":ret1 == true ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXTilesetTest
 //
 //------------------------------------------------------------------
-var TMXTilesetTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXTilesetTest = class TMXTilesetTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 1;
+
+        this.pixel1 = {"0":255, "1":0, "2":0, "3":255};
+
+        this.pixel2 = {"0":213, "1":202, "2":190, "3":255};
+
+        this.pixel3 = {"0":61, "1":118, "2":71, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -718,20 +778,16 @@ var TMXTilesetTest = TileDemo.extend({
             layer = map.getLayer("Layer 2");
             layer.texture.setAntiAliasTexParameters();
         }
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Tileset test";
-    },
+    }
     // Automation
-    testDuration:1,
-    pixel1:{"0":255, "1":0, "2":0, "3":255},
-    pixel2:{"0":213, "1":202, "2":190, "3":255},
-    pixel3:{"0":61, "1":118, "2":71, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(53, 80, 5, 5);
         var ret2 = this.readPixels(38, 151, 5, 5);
         var ret3 = this.readPixels(345, 202, 5, 5);
@@ -740,16 +796,19 @@ var TMXTilesetTest = TileDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel3, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoObjectsTest
 //
 //------------------------------------------------------------------
-var TMXOrthoObjectsTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoObjectsTest = class TMXOrthoObjectsTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testObjects = null;
         var drawNode = new cc.DrawNode();
         drawNode.setLineWidth(3);
         drawNode.setDrawColor(cc.color(255,255,255,255));
@@ -780,31 +839,30 @@ var TMXOrthoObjectsTest = TileDemo.extend({
         map.addChild(drawNode);
         //Automation parameters
         this.testObjects = array;
-    },
-    onEnter:function () {
-        this._super();
+    }
+    onEnter() {
+        super.onEnter();
         this.anchorX = 0;
         this.anchorY = 0;
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Ortho object test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You should see a white box around the 3 platforms";
-    },
+    }
 
     //
     // Automation
     //
-    testObjects:null,
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = [];
         ret.push({"name":"Object", "type":"", "x":0, "y":0, "width":352, "height":32});
         ret.push({"name":"Object", "type":"", "x":224, "y":64, "width":160, "height":32 });
         ret.push({"name":"platform", "type":"platform", "x":2, "y":131, "width":125, "height":60});
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret = [];
         var obj = null;
         for (var i = 0; i < this.testObjects.length; i++) {
@@ -813,16 +871,19 @@ var TMXOrthoObjectsTest = TileDemo.extend({
         }
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXIsoObjectsTest
 //
 //------------------------------------------------------------------
-var TMXIsoObjectsTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXIsoObjectsTest = class TMXIsoObjectsTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testObjects = null;
 
         var drawNode = new cc.DrawNode();
         drawNode.setLineWidth(3);
@@ -854,34 +915,33 @@ var TMXIsoObjectsTest = TileDemo.extend({
 
         //Automation parameters
         this.testObjects = array;
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
         this.anchorX = 0;
         this.anchorY = 0;
-    },
+    }
 
-    title:function () {
+    title() {
         return "TMX Iso object test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You need to parse them manually. See bug #810";
-    },
+    }
 
     //
     // Automation
     //
-    testObjects:null,
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = [];
         ret.push({"name":"platform 1", "type":"", "x":0, "y":0, "width":32, "height":30});
         ret.push({"name":"", "type":"", "x":0, "y":285, "width":31, "height":32});
         ret.push({"name":"", "type":"", "x":130, "y":129, "width":29, "height":29});
         ret.push({"name":"", "type":"", "x":290, "y":1, "width":28, "height":29});
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret = [];
         var obj = null;
         for (var i = 0; i < this.testObjects.length; i++) {
@@ -890,16 +950,21 @@ var TMXIsoObjectsTest = TileDemo.extend({
         }
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXResizeTest
 //
 //------------------------------------------------------------------
-var TMXResizeTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXResizeTest = class TMXResizeTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 0.25;
+
+        this.pixel = {"0":169, "1":120, "2":76, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -912,38 +977,42 @@ var TMXResizeTest = TileDemo.extend({
                 layer.setTileGID(1, cc.p(x, y));
             }
         }
-    },
-    title:function () {
+    }
+    title() {
         return "TMX resize test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Should not crash. Testing issue #740";
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.25,
-    pixel:{"0":169, "1":120, "2":76, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(156, 156, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXIsoZorder
 //
 //------------------------------------------------------------------
-var TMXIsoZorder = TileDemo.extend({
-    tamara:null,
-    ctor:function () {
-        this._super();
+var TMXIsoZorder = class TMXIsoZorder extends TileDemo {
+    constructor() {
+        super();
+
+        this.tamara = null;
+
+        this.testDuration = 5.2;
+
+        this.pixel = {"0":255, "1":255, "2":255, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-zorder.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -965,18 +1034,18 @@ var TMXIsoZorder = TileDemo.extend({
         this.tamara.runAction(seq.repeatForever());
 
         this.schedule(this.repositionSprite);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Iso Zorder";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Sprite should hide behind the trees";
-    },
-    onExit:function () {
+    }
+    onExit() {
         this.unschedule(this.repositionSprite);
-        this._super();
-    },
-    repositionSprite:function (dt) {
+        super.onExit();
+    }
+    repositionSprite(dt) {
         var map = this.getChildByTag(TAG_TILE_MAP);
 
         // there are only 4 layers. (grass and 3 trees layers)
@@ -987,32 +1056,38 @@ var TMXIsoZorder = TileDemo.extend({
         var newZ = 4 - Math.floor((this.tamara.y / 48));
         newZ = parseInt(Math.max(newZ, 0), 10);
         map.reorderChild(this.tamara, newZ);
-    },
+    }
     //
     // Automation
     //
-    testDuration:5.2,
-    pixel:{"0":255, "1":255, "2":255, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(223, 247, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoZorder
 //
 //------------------------------------------------------------------
-var TMXOrthoZorder = TileDemo.extend({
-    tamara:null,
-    ctor:function () {
-        this._super();
+var TMXOrthoZorder = class TMXOrthoZorder extends TileDemo {
+    constructor() {
+        super();
+
+        this.tamara = null;
+
+        this.testDuration = 2;
+
+        this.pixel1 = {"0":117, "1":185, "2":63, "3":255};
+
+        this.pixel2 = {"0":91, "1":55, "2":20, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-zorder.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -1027,14 +1102,14 @@ var TMXOrthoZorder = TileDemo.extend({
         this.tamara.runAction(seq.repeatForever());
 
         this.schedule(this.repositionSprite);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Ortho Zorder";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Sprite should hide behind the trees";
-    },
-    repositionSprite:function (dt) {
+    }
+    repositionSprite(dt) {
         var map = this.getChildByTag(TAG_TILE_MAP);
 
         // there are only 4 layers. (grass and 3 trees layers)
@@ -1047,35 +1122,38 @@ var TMXOrthoZorder = TileDemo.extend({
         newZ = Math.max(newZ, 0);
 
         map.reorderChild(this.tamara, newZ);
-    },
+    }
     //
     // Automation
     //
-    testDuration:2,
-    pixel1:{"0":117, "1":185, "2":63, "3":255},
-    pixel2:{"0":91, "1":55, "2":20, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(86, 131, 5, 5);
         var ret2 = this.readPixels(84, 200, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, true, 5) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXIsoVertexZ
 //
 //------------------------------------------------------------------
-var TMXIsoVertexZ = TMXFixBugLayer.extend({
-    tamara:null,
-    ctor:function () {
-        this._super();
+var TMXIsoVertexZ = class TMXIsoVertexZ extends TMXFixBugLayer {
+    constructor() {
+        super();
+
+        this.tamara = null;
+
+        this.testDuration = 5.2;
+
+        this.pixel = {"0":255, "1":255, "2":255, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-vertexz.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -1101,24 +1179,24 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
         }
 
         this.schedule(this.repositionSprite);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Iso VertexZ";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Sprite should hide behind the trees";
-    },
-    onEnter:function () {
-        this._super();
+    }
+    onEnter() {
+        super.onEnter();
         director.setProjection(cc.Director.PROJECTION_2D);
         director.setDepthTest(true);
-    },
-    onExit:function () {
+    }
+    onExit() {
         director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
-        this._super();
-    },
-    repositionSprite:function (dt) {
+        super.onExit();
+    }
+    repositionSprite(dt) {
         if (cc.sys.isNative) {
             this.tamara.vertexZ = -(this.tamara.y + 32) / 16;
         }
@@ -1126,32 +1204,36 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
             var layer = this.tamara.parent;
             this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(30 - this.tamara.y / 32) / 30;
         }
-    },
+    }
     //
     // Automation
     //
-    testDuration:5.2,
-    pixel:{"0":255, "1":255, "2":255, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(224, 246, 4, 4);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoVertexZ
 //
 //------------------------------------------------------------------
-var TMXOrthoVertexZ = TMXFixBugLayer.extend({
-    tamara:null,
-    ctor:function () {
-        this._super();
+var TMXOrthoVertexZ = class TMXOrthoVertexZ extends TMXFixBugLayer {
+    constructor() {
+        super();
+
+        this.tamara = null;
+
+        this.testDuration = 5.2;
+
+        this.pixel = {"0":119, "1":205, "2":73, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-vertexz.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -1177,24 +1259,24 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
         this.schedule(this.repositionSprite);
 
         this.log("DEPTH BUFFER MUST EXIST IN ORDER");
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Ortho vertexZ";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Sprite should hide behind the trees";
-    },
-    onEnter:function () {
-        this._super();
+    }
+    onEnter() {
+        super.onEnter();
         director.setProjection(cc.Director.PROJECTION_2D);
         director.setDepthTest(true);
-    },
-    onExit:function () {
+    }
+    onExit() {
         director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
-        this._super();
-    },
-    repositionSprite:function (dt) {
+        super.onExit();
+    }
+    repositionSprite(dt) {
         if (cc.sys.isNative) {
             this.tamara.vertexZ = -(this.tamara.y + 81) / 81;
         }
@@ -1204,71 +1286,76 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
             var layer = this.tamara.parent;
             this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
         }
-    },
+    }
     //
     // Automation
     //
-    testDuration:5.2,
-    pixel:{"0":119, "1":205, "2":73, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(266, 331, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXIsoMoveLayer
 //
 //------------------------------------------------------------------
-var TMXIsoMoveLayer = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXIsoMoveLayer = class TMXIsoMoveLayer extends TileDemo {
+    constructor() {
+        super();
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-movelayer.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
         map.x = -700;
         map.y = -50;
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Iso Move Layer";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Trees should be horizontally aligned";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoMoveLayer
 //
 //------------------------------------------------------------------
-var TMXOrthoMoveLayer = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoMoveLayer = class TMXOrthoMoveLayer extends TileDemo {
+    constructor() {
+        super();
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-movelayer.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Ortho Move Layer";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Trees should be horizontally aligned";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXTilePropertyTest
 //
 //------------------------------------------------------------------
-var TMXTilePropertyTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXTilePropertyTest = class TMXTilePropertyTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 0.25;
+
+        this.propertiesList = [];
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-tile-property.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -1277,19 +1364,17 @@ var TMXTilePropertyTest = TileDemo.extend({
             this.log("GID:" + i + ", Properties:" + JSON.stringify(properties));
             this.propertiesList.push(properties)
         }
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Tile Property Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "In the console you should see tile properties";
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.25,
-    propertiesList:[],
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = [];
         ret.push({"test":"sss", "type":"object"});
         ret.push({"type":"object"});
@@ -1298,56 +1383,66 @@ var TMXTilePropertyTest = TileDemo.extend({
         ret.push({"type":"platform"});
         ret.push({"type":"platform"});
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         return JSON.stringify(this.propertiesList);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoFlipTest
 //
 //------------------------------------------------------------------
-var TMXOrthoFlipTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoFlipTest = class TMXOrthoFlipTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 2.2;
+
+        this.pixel = {"0":41, "1":42, "2":54, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-rotation-test.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
         this.log("ContentSize:" + map.width + "," + map.height);
 
         var action = new cc.ScaleBy(2, 0.5);
         map.runAction(action);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX tile flip test";
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.2,
-    pixel:{"0":41, "1":42, "2":54, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(93, 153, 5, 5);
         var ret2 = this.readPixels(105, 153, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoFlipRunTimeTest
 //
 //------------------------------------------------------------------
-var TMXOrthoFlipRunTimeTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoFlipRunTimeTest = class TMXOrthoFlipRunTimeTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 3.2;
+
+        this.pixel = {"0":41, "1":42, "2":54, "3":255};
+
+        this.pixel1 = null;
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-rotation-test.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -1357,14 +1452,14 @@ var TMXOrthoFlipRunTimeTest = TileDemo.extend({
         map.runAction(action);
 
         this.schedule(this.onFlipIt, 1);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX tile flip run time test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "in 2 sec bottom left tiles will flip";
-    },
-    onFlipIt:function () {
+    }
+    onFlipIt() {
         var map = this.getChildByTag(TAG_TILE_MAP);
         var layer = map.getLayer("Layer 0");
 
@@ -1399,39 +1494,43 @@ var TMXOrthoFlipRunTimeTest = TileDemo.extend({
         else
             flags = (flags | cc.TMX_TILE_HORIZONTAL_FLAG) >>> 0;
         layer.setTileGID(GID, tileCoord, flags);
-    },
+    }
     //
     // Automation
     //
-    testDuration:3.2,
-    pixel:{"0":41, "1":42, "2":54, "3":255},
-    pixel1:null,
-    setupAutomation:function () {
+    setupAutomation() {
         var fun = function () {
             this.pixel1 = this.readPixels(104, 154, 5, 5);
         }
         this.scheduleOnce(fun, 2.2);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         this.pixel2 = this.readPixels(145, 154, 5, 5);
         var ret = {"pixel1":this.containsPixel(this.pixel1, this.pixel, false) ? "yes" : "no",
             "pixel2":this.containsPixel(this.pixel2, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXOrthoFromXMLTest
 //
 //------------------------------------------------------------------
-var TMXOrthoFromXMLTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXOrthoFromXMLTest = class TMXOrthoFromXMLTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 2.2;
+
+        this.pixel1 = {"0":210, "1":210, "2":200, "3":255};
+
+        this.pixel2 = {"0":243, "1":202, "2":86, "3":255};
 
         var resources = s_resprefix + "TileMaps";
         var filePath = s_resprefix + "TileMaps/orthogonal-test1.tmx";
@@ -1452,37 +1551,43 @@ var TMXOrthoFromXMLTest = TileDemo.extend({
 
         var action = new cc.ScaleBy(2, 0.5);
         map.runAction(action);
-    },
-    title:function () {
+    }
+    title() {
         return "TMX created from XML test";
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.2,
-    pixel1:{"0":210, "1":210, "2":200, "3":255},
-    pixel2:{"0":243, "1":202, "2":86, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(326, 120, 5, 5);
         var ret2 = this.readPixels(124, 246, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXBug987
 //
 //------------------------------------------------------------------
-var TMXBug987 = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXBug987 = class TMXBug987 extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 0.25;
+
+        this.pixel1 = {"0":162, "1":152, "2":98, "3":255};
+
+        this.pixel2 = {"0":255, "1":208, "2":148, "3":255};
+
+        this.pixel3 = {"0":182, "1":182, "2":146, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test6.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -1501,25 +1606,21 @@ var TMXBug987 = TileDemo.extend({
         map.anchorY = 0;
         var layer = map.getLayer("Tile Layer 1");
         layer.setTileGID(3, cc.p(2, 2));
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Bug 987";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You should see an square";
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.25,
-    pixel1:{"0":162, "1":152, "2":98, "3":255},
-    pixel2:{"0":255, "1":208, "2":148, "3":255},
-    pixel3:{"0":182, "1":182, "2":146, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(64, 224, 5, 5);
         var ret2 = this.readPixels(4, 165, 5, 5);
         var ret3 = this.readPixels(144, 140, 5, 5);
@@ -1528,46 +1629,52 @@ var TMXBug987 = TileDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel3, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TMXBug787
 //
 //------------------------------------------------------------------
-var TMXBug787 = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXBug787 = class TMXBug787 extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 0.25;
+
+        this.pixel = {"0":255, "1":255, "2":255, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-bug787.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         map.scale = 0.25;
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Bug 787";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You should see a map";
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.25,
-    pixel:{"0":255, "1":255, "2":255, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(364, 243, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var TMXGIDObjectsTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+};
+
+var TMXGIDObjectsTest = class TMXGIDObjectsTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testObjects = [];
 
         var drawNode = new cc.DrawNode();
         drawNode.setLineWidth(3);
@@ -1602,18 +1709,17 @@ var TMXGIDObjectsTest = TileDemo.extend({
             }
         }
         this.testObjects = array;
-    },
-    title:function () {
+    }
+    title() {
         return "TMX GID objects";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Tiles are created from an object group";
-    },
+    }
     //
     // Automation
     //
-    testObjects:[],
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = [];
         ret.push({"name":"sandro", "type":"", "x":97, "y":6, "width":0, "height":0});
         ret.push({"name":"", "type":"", "x":119, "y":19, "width":0, "height":0});
@@ -1621,8 +1727,8 @@ var TMXGIDObjectsTest = TileDemo.extend({
         ret.push({"name":"", "type":"", "x":160, "y":57, "width":0, "height":0});
         ret.push({"name":"", "type":"", "x":180, "y":71, "width":0, "height":0});
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret = [];
         var obj = null;
         for (var i = 0; i < this.testObjects.length; i++) {
@@ -1631,47 +1737,52 @@ var TMXGIDObjectsTest = TileDemo.extend({
         }
         return JSON.stringify(ret);
     }
-});
+
+};
 
 
-var TMXIsoOffsetTest = TileDemo.extend({
-    ctor:function () {
-        this._super();
+var TMXIsoOffsetTest = class TMXIsoOffsetTest extends TileDemo {
+    constructor() {
+        super();
+
+        this.testDuration = 0.25;
+
+        this.pixel = {"0":168, "1":168, "2":168, "3":255};
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/tile_iso_offset.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
-    },
-    title:function () {
+    }
+    title() {
         return "TMX Tile Offset";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Testing offset of tiles";
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.25,
-    pixel:{"0":168, "1":168, "2":168, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(150, 260, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var TileMapTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var TileMapTestScene = class TileMapTestScene extends TestScene {
+    runThisTest(num) {
         tileTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTileMapTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
+
+};
 
 //
 // Flow control

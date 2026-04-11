@@ -28,14 +28,15 @@ var TAG_LABEL_ATLAS = 1;
 
 var particleSceneIdx = -1;
 
-var ParticleTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var ParticleTestScene = class ParticleTestScene extends TestScene {
+    runThisTest(num) {
         particleSceneIdx = (num || num == 0) ? (num - 1) : -1;
 
         this.addChild(nextParticleAction());
         director.runScene(this);
     }
-});
+
+};
 
 var particleSceneArr = [
     function () {
@@ -170,18 +171,28 @@ var restartParticleAction = function () {
     return particleSceneArr[particleSceneIdx]();
 };
 
-var ParticleDemo = BaseTestLayer.extend({
-    _emitter:null,
-    _background:null,
-    _shapeModeButton:null,
-    _textureModeButton:null,
-    _isPressed:false,
+var ParticleDemo = class ParticleDemo extends BaseTestLayer {
 
-    setColor:function () {
-    },
+    setColor() {
+    }
 
-    ctor:function () {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+
+
+        this._emitter = null;
+
+
+        this._background = null;
+
+
+        this._shapeModeButton = null;
+
+
+        this._textureModeButton = null;
+
+
+        this._isPressed = false;
         this._emitter = null;
 
         if ('touches' in cc.sys.capabilities){
@@ -316,78 +327,79 @@ var ParticleDemo = BaseTestLayer.extend({
         var seq = cc.sequence(move, move_back);
         this._background.runAction(seq.repeatForever());
         this.scheduleUpdate();
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var pLabel = this.getChildByTag(BASE_TEST_TITLE_TAG);
         pLabel.setString(this.title());
-    },
-    title:function () {
+    }
+    title() {
         return "No title";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "(Tap the Screen)";
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         this._emitter.resetSystem();
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new ParticleTestScene();
         s.addChild(nextParticleAction());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new ParticleTestScene();
         s.addChild(backParticleAction());
         director.runScene(s);
-    },
-    toggleCallback:function (sender) {
+    }
+    toggleCallback(sender) {
         if (this._emitter.getPositionType() == cc.ParticleSystem.TYPE_GROUPED)
             this._emitter.setPositionType(cc.ParticleSystem.TYPE_FREE);
         else if (this._emitter.getPositionType() == cc.ParticleSystem.TYPE_FREE)
             this._emitter.setPositionType(cc.ParticleSystem.TYPE_RELATIVE);
         else if (this._emitter.getPositionType() == cc.ParticleSystem.TYPE_RELATIVE)
             this._emitter.setPositionType(cc.ParticleSystem.TYPE_GROUPED);
-    },
+    }
 
-    _moveToTouchPoint: function (location) {
+    _moveToTouchPoint(location) {
         var pos = cc.p(0, 0);
         if (this._background) {
             pos = this._background.convertToWorldSpace(cc.p(0, 0));
         }
         this._emitter.x = location.x - pos.x;
         this._emitter.y = location.y - pos.y;
-    },
+    }
 
-    update:function (dt) {
+    update(dt) {
         if (this._emitter) {
             var atlas = this.getChildByTag(TAG_LABEL_ATLAS);
             atlas.setString(this._emitter.getParticleCount().toFixed(0));
         }
-    },
-    setEmitterPosition:function () {
+    }
+    setEmitterPosition() {
         var sourcePos = this._emitter.getSourcePosition();
         if (sourcePos.x === 0 && sourcePos.y === 0)
             this._emitter.x = 200;
             this._emitter.y = 70;
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (particleSceneArr.length-1) - particleSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return particleSceneIdx;
     }
-});
 
-var DemoFirework = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoFirework = class DemoFirework extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleFireworks();
         this._background.addChild(this._emitter, 10);
@@ -395,15 +407,16 @@ var DemoFirework = ParticleDemo.extend({
         if (this._emitter.setShapeType)
             this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleFireworks";
     }
-});
 
-var DemoFire = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoFire = class DemoFire extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleFire();
         this._background.addChild(this._emitter, 10);
@@ -413,15 +426,16 @@ var DemoFire = ParticleDemo.extend({
             this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleFire";
     }
-});
 
-var DemoSun = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoSun = class DemoSun extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleSun();
         this._background.addChild(this._emitter, 10);
@@ -430,15 +444,16 @@ var DemoSun = ParticleDemo.extend({
             this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleSun";
     }
-});
 
-var DemoPause = ParticleDemo.extend({
-    onEnter:function () {
-    this._super();
+};
+
+var DemoPause = class DemoPause extends ParticleDemo {
+    onEnter() {
+    super.onEnter();
 
     this._emitter = new cc.ParticleSmoke();
     this._background.addChild(this._emitter, 10);
@@ -447,15 +462,16 @@ var DemoPause = ParticleDemo.extend({
     this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
 
     this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
     return "Pause Particle";
     }
-    });
+    
+};
 
-var DemoGalaxy = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+var DemoGalaxy = class DemoGalaxy extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleGalaxy();
         this._background.addChild(this._emitter, 10);
@@ -464,17 +480,22 @@ var DemoGalaxy = ParticleDemo.extend({
             this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleGalaxy";
     }
-});
 
-var DemoFlower = ParticleDemo.extend({
-    _title:"ParticleFlower",
+};
 
-    onEnter:function () {
-        this._super();
+var DemoFlower = class DemoFlower extends ParticleDemo {
+    constructor() {
+        super();
+        this._title = "ParticleFlower";
+    }
+
+
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleFlower();
         this._background.addChild(this._emitter, 10);
@@ -484,15 +505,16 @@ var DemoFlower = ParticleDemo.extend({
             this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return this._title;
     }
-});
 
-var DemoBigFlower = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoBigFlower = class DemoBigFlower extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleSystem(50);
 
@@ -554,15 +576,16 @@ var DemoBigFlower = ParticleDemo.extend({
         this._emitter.setBlendAdditive(true);
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleBigFlower";
     }
-});
 
-var DemoRotFlower = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoRotFlower = class DemoRotFlower extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleSystem(("opengl" in cc.sys.capabilities) ? 300 : 150);
 
@@ -625,15 +648,16 @@ var DemoRotFlower = ParticleDemo.extend({
         this._emitter.setBlendAdditive(false);
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleRotFlower";
     }
-});
 
-var DemoMeteor = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoMeteor = class DemoMeteor extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleMeteor();
         this._background.addChild(this._emitter, 10);
@@ -642,15 +666,16 @@ var DemoMeteor = ParticleDemo.extend({
         this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleMeteor";
     }
-});
 
-var DemoSpiral = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoSpiral = class DemoSpiral extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleSpiral();
         this._background.addChild(this._emitter, 10);
@@ -659,15 +684,16 @@ var DemoSpiral = ParticleDemo.extend({
         this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleSpiral";
     }
-});
 
-var DemoExplosion = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoExplosion = class DemoExplosion extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleExplosion();
         this._background.addChild(this._emitter, 10);
@@ -678,33 +704,35 @@ var DemoExplosion = ParticleDemo.extend({
         this._emitter.setAutoRemoveOnFinish(true);
 
         this.setEmitterPosition();
-    },
-    onExit: function() {
-        this._super();
-    },
-    title:function () {
+    }
+    onExit() {
+        super.onExit();
+    }
+    title() {
         return "ParticleExplosion";
     }
-});
 
-var DemoSmoke = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoSmoke = class DemoSmoke extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleSmoke();
         this._background.addChild(this._emitter, 10);
         this._emitter.texture = cc.textureCache.addImage(s_fire);
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleSmoke";
     }
-});
 
-var DemoSnow = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoSnow = class DemoSnow extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleSnow();
         this._background.addChild(this._emitter, 10);
@@ -736,15 +764,16 @@ var DemoSnow = ParticleDemo.extend({
         this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleSnow";
     }
-});
 
-var DemoRain = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoRain = class DemoRain extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleRain();
         this._background.addChild(this._emitter, 10);
@@ -755,15 +784,16 @@ var DemoRain = ParticleDemo.extend({
         this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "ParticleRain";
     }
-});
 
-var DemoModernArt = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoModernArt = class DemoModernArt extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleSystem(("opengl" in cc.sys.capabilities) ? 1000 : 200);
 
@@ -820,15 +850,16 @@ var DemoModernArt = ParticleDemo.extend({
         this._emitter.setBlendAdditive(false);
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "Varying size";
     }
-});
 
-var DemoRing = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var DemoRing = class DemoRing extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._emitter = new cc.ParticleFlower();
 
@@ -844,15 +875,16 @@ var DemoRing = ParticleDemo.extend({
         this._emitter.emissionRate = 10000;
 
         this.setEmitterPosition();
-    },
-    title:function () {
+    }
+    title() {
         return "Ring Demo";
     }
-});
 
-var ParallaxParticle = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var ParallaxParticle = class ParallaxParticle extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this._background.getParent().removeChild(this._background, true);
         this._background = null;
@@ -882,20 +914,22 @@ var ParallaxParticle = ParticleDemo.extend({
         var move_back = move.reverse();
         var seq = cc.sequence(move, move_back);
         p.runAction(seq.repeatForever());
-    },
-    title:function () {
+    }
+    title() {
         return "Parallax + Particles";
     }
-});
 
-var DemoParticleFromFile = ParticleDemo.extend({
-    _title:"",
-    ctor:function (filename) {
-        this._super();
+};
+
+var DemoParticleFromFile = class DemoParticleFromFile extends ParticleDemo {
+    constructor(filename) {
+        super();
+
+        this._title = "";
         this._title = filename;
-    },
-    onEnter:function () {
-        this._super();
+    }
+    onEnter() {
+        super.onEnter();
         this.setColor(cc.color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
@@ -914,23 +948,24 @@ var DemoParticleFromFile = ParticleDemo.extend({
         //}
 
         this.setEmitterPosition();
-    },
+    }
 
-    setEmitterPosition:function () {
+    setEmitterPosition() {
         var sourcePos = this._emitter.getSourcePosition();
         if (sourcePos.x === 0 && sourcePos.y === 0)
             this._emitter.x = director.getWinSize().width / 2;
             this._emitter.y = director.getWinSize().height / 2 - 50;
-    },
+    }
 
-    title:function () {
+    title() {
         return this._title;
     }
-});
 
-var RadiusMode1 = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var RadiusMode1 = class RadiusMode1 extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this.setColor(cc.color(0, 0, 0));
         this.removeChild(this._background, true);
@@ -993,15 +1028,16 @@ var RadiusMode1 = ParticleDemo.extend({
 
         // additive
         this._emitter.setBlendAdditive(false);
-    },
-    title:function () {
+    }
+    title() {
         return "Radius Mode: Spiral";
     }
-});
 
-var RadiusMode2 = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var RadiusMode2 = class RadiusMode2 extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this.color = cc.color(0, 0, 0);
         this.removeChild(this._background, true);
@@ -1063,15 +1099,16 @@ var RadiusMode2 = ParticleDemo.extend({
 
         // additive
         this._emitter.setBlendAdditive(false);
-    },
-    title:function () {
+    }
+    title() {
         return "Radius Mode: Semi Circle";
     }
-});
 
-var Issue704 = ParticleDemo.extend({
-    onEnter:function () {
-        this._super();
+};
+
+var Issue704 = class Issue704 extends ParticleDemo {
+    onEnter() {
+        super.onEnter();
 
         this.color = cc.color(0, 0, 0);
         this.removeChild(this._background, true);
@@ -1137,19 +1174,24 @@ var Issue704 = ParticleDemo.extend({
 
         var rot = cc.rotateBy(16, 360);
         this._emitter.runAction(rot.repeatForever());
-    },
-    title:function () {
+    }
+    title() {
         return "Issue 704. Free + Rot";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Emitted particles should not rotate";
     }
-});
 
-var Issue870 = ParticleDemo.extend({
-    _index:0,
-    onEnter:function () {
-        this._super();
+};
+
+var Issue870 = class Issue870 extends ParticleDemo {
+    constructor() {
+        super();
+        this._index = 0;
+    }
+
+    onEnter() {
+        super.onEnter();
 
         this.setColor(cc.color(0, 0, 0));
         this.removeChild(this._background, true);
@@ -1164,24 +1206,29 @@ var Issue870 = ParticleDemo.extend({
         this._emitter.y = director.getWinSize().height / 2 - 50;
         this._index = 0;
         this.schedule(this.updateQuads, 2.0);
-    },
-    title:function () {
+    }
+    title() {
         return "Issue 870. SubRect";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Every 2 seconds the particle should change";
-    },
-    updateQuads:function (dt) {
+    }
+    updateQuads(dt) {
         this._index = (this._index + 1) % 4;
         var rect = cc.rect(this._index * 32, 0, 32, 32);
         this._emitter.setTextureWithRect(this._emitter.texture, rect);
     }
-});
 
-var ParticleBatchTest = ParticleDemo.extend({
-    _index:0,
-    onEnter:function () {
-        this._super();
+};
+
+var ParticleBatchTest = class ParticleBatchTest extends ParticleDemo {
+    constructor() {
+        super();
+        this._index = 0;
+    }
+
+    onEnter() {
+        super.onEnter();
 
         var emitter1 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
         emitter1.startColor = cc.color(255, 0, 0, 255);
@@ -1210,19 +1257,24 @@ var ParticleBatchTest = ParticleDemo.extend({
         this.removeChild(this._background, true);
         this._background = null;
         this._emitter = emitter1;
-    },
-    title:function () {
+    }
+    title() {
         return "Particle Batch Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You should 3 particles. They are batched";
     }
-});
 
-var ParticleResizeTest = ParticleDemo.extend({
-    _index:0,
-    onEnter:function () {
-        this._super();
+};
+
+var ParticleResizeTest = class ParticleResizeTest extends ParticleDemo {
+    constructor() {
+        super();
+        this._index = 0;
+    }
+
+    onEnter() {
+        super.onEnter();
 
         var emitter1 = new cc.ParticleSystem( s_resprefix + 'Particles/LavaFlow.plist');
         emitter1.x = winSize.width/2;
@@ -1235,19 +1287,20 @@ var ParticleResizeTest = ParticleDemo.extend({
         this.removeChild(this._background, true);
         this._background = null;
         this._emitter = emitter1;
-    },
-    onResizeParticle50:function(dt) {
+    }
+    onResizeParticle50(dt) {
         this._emitter.totalParticles = 50;
         this.scheduleOnce( this.onResizeParticle400, 1);
-    },
-    onResizeParticle400:function(dt) {
+    }
+    onResizeParticle400(dt) {
         this._emitter.totalParticles = 400;
-    },
+    }
 
-    title:function () {
+    title() {
         return "Particle Resize Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "In 2 seconds, the emitter should have only 15 particles. Shall not crash.";
     }
-});
+
+};

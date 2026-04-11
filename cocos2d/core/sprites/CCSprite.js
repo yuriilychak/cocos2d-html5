@@ -83,47 +83,47 @@
  * @property {cc.SpriteBatchNode}   batchNode           - The batch node object if this sprite is rendered by cc.SpriteBatchNode.
  * @property {cc.V3F_C4B_T2F_Quad}  quad                - <@readonly> The quad (tex coords, vertex coords and color) information.
  */
-cc.Sprite = cc.Node.extend(
-  /** @lends cc.Sprite# */ {
-    dirty: false,
-    atlasIndex: 0,
-    textureAtlas: null,
-
-    _batchNode: null,
-    _recursiveDirty: null, //Whether all of the sprite's children needs to be updated
-    _hasChildren: null, //Whether the sprite contains children
-    _shouldBeHidden: false, //should not be drawn because one of the ancestors is not visible
-    _transformToBatch: null,
-
-    //
-    // Data used when the sprite is self-rendered
-    //
-    _blendFunc: null, //It's required for CCTextureProtocol inheritance
-    _texture: null, //cc.Texture2D object that is used to render the sprite
-
-    //
-    // Shared data
-    //
-    // texture
-    _rect: null, //Rectangle of cc.Texture2D
-    _rectRotated: false, //Whether the texture is rotated
-
-    // Offset Position (used by Zwoptex)
-    _offsetPosition: null, // absolute
-    _unflippedOffsetPositionFromCenter: null,
-
-    _opacityModifyRGB: false,
-
-    // image is flipped
-    _flippedX: false, //Whether the sprite is flipped horizontally or not.
-    _flippedY: false, //Whether the sprite is flipped vertically or not.
-
-    _textureLoaded: false,
-    _className: "Sprite",
-
-    ctor: function (fileName, rect, rotated) {
+cc.Sprite = class Sprite extends cc.Node {
+    constructor(fileName, rect, rotated) {
+      super();
       var self = this;
-      cc.Node.prototype.ctor.call(self);
+
+      this.dirty = false;
+      this.atlasIndex = 0;
+      this.textureAtlas = null;
+
+      this._batchNode = null;
+      this._recursiveDirty = null; //Whether all of the sprite's children needs to be updated
+      this._hasChildren = null; //Whether the sprite contains children
+      this._shouldBeHidden = false; //should not be drawn because one of the ancestors is not visible
+      this._transformToBatch = null;
+
+      //
+      // Data used when the sprite is self-rendered
+      //
+      this._blendFunc = null; //It's required for CCTextureProtocol inheritance
+      this._texture = null; //cc.Texture2D object that is used to render the sprite
+
+      //
+      // Shared data
+      //
+      // texture
+      this._rect = null; //Rectangle of cc.Texture2D
+      this._rectRotated = false; //Whether the texture is rotated
+
+      // Offset Position (used by Zwoptex)
+      this._offsetPosition = null; // absolute
+      this._unflippedOffsetPositionFromCenter = null;
+
+      this._opacityModifyRGB = false;
+
+      // image is flipped
+      this._flippedX = false; //Whether the sprite is flipped horizontally or not.
+      this._flippedY = false; //Whether the sprite is flipped vertically or not.
+
+      this._textureLoaded = false;
+      this._className = "Sprite";
+
       // default transform anchor: center
       this.setAnchorPoint(0.5, 0.5);
 
@@ -135,103 +135,103 @@ cc.Sprite = cc.Node.extend(
       self._rect = cc.rect(0, 0, 0, 0);
 
       self._softInit(fileName, rect, rotated);
-    },
+    }
 
     /**
      * Returns whether the texture have been loaded
      * @returns {boolean}
      */
-    textureLoaded: function () {
+    textureLoaded() {
       return this._textureLoaded;
-    },
+    }
 
     /**
      * Returns whether or not the Sprite needs to be updated in the Atlas
      * @return {Boolean} True if the sprite needs to be updated in the Atlas, false otherwise.
      */
-    isDirty: function () {
+    isDirty() {
       return this.dirty;
-    },
+    }
 
     /**
      * Makes the sprite to be updated in the Atlas.
      * @param {Boolean} bDirty
      */
-    setDirty: function (bDirty) {
+    setDirty(bDirty) {
       this.dirty = bDirty;
-    },
+    }
 
     /**
      * Returns whether or not the texture rectangle is rotated.
      * @return {Boolean}
      */
-    isTextureRectRotated: function () {
+    isTextureRectRotated() {
       return this._rectRotated;
-    },
+    }
 
     /**
      * Returns the index used on the TextureAtlas.
      * @return {Number}
      */
-    getAtlasIndex: function () {
+    getAtlasIndex() {
       return this.atlasIndex;
-    },
+    }
 
     /**
      * Sets the index used on the TextureAtlas.
      * @warning Don't modify this value unless you know what you are doing
      * @param {Number} atlasIndex
      */
-    setAtlasIndex: function (atlasIndex) {
+    setAtlasIndex(atlasIndex) {
       this.atlasIndex = atlasIndex;
-    },
+    }
 
     /**
      * Returns the rect of the cc.Sprite in points
      * @return {cc.Rect}
      */
-    getTextureRect: function () {
+    getTextureRect() {
       return cc.rect(this._rect);
-    },
+    }
 
     /**
      * Returns the weak reference of the cc.TextureAtlas when the sprite is rendered using via cc.SpriteBatchNode
      * @return {cc.TextureAtlas}
      */
-    getTextureAtlas: function () {
+    getTextureAtlas() {
       return this.textureAtlas;
-    },
+    }
 
     /**
      * Sets the weak reference of the cc.TextureAtlas when the sprite is rendered using via cc.SpriteBatchNode
      * @param {cc.TextureAtlas} textureAtlas
      */
-    setTextureAtlas: function (textureAtlas) {
+    setTextureAtlas(textureAtlas) {
       this.textureAtlas = textureAtlas;
-    },
+    }
 
     /**
      * Returns the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      * @return {cc.Point}
      */
-    getOffsetPosition: function () {
+    getOffsetPosition() {
       return cc.p(this._offsetPosition);
-    },
+    }
 
-    _getOffsetX: function () {
+    _getOffsetX() {
       return this._offsetPosition.x;
-    },
-    _getOffsetY: function () {
+    }
+    _getOffsetY() {
       return this._offsetPosition.y;
-    },
+    }
 
     /**
      * Returns the blend function
      * @return {cc.BlendFunc}
      */
-    getBlendFunc: function () {
+    getBlendFunc() {
       return this._blendFunc;
-    },
+    }
 
     /**
      * Initializes a sprite with a SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.<br/>
@@ -239,10 +239,10 @@ cc.Sprite = cc.Node.extend(
      * @param {cc.SpriteFrame} spriteFrame A CCSpriteFrame object. It should includes a valid texture and a rect
      * @return {Boolean}  true if the sprite is initialized properly, false otherwise.
      */
-    initWithSpriteFrame: function (spriteFrame) {
+    initWithSpriteFrame(spriteFrame) {
       cc.assert(spriteFrame, cc._LogInfos.Sprite_initWithSpriteFrame);
       return this.setSpriteFrame(spriteFrame);
-    },
+    }
 
     /**
      * Initializes a sprite with a sprite frame name. <br/>
@@ -255,7 +255,7 @@ cc.Sprite = cc.Node.extend(
      * var sprite = new cc.Sprite();
      * sprite.initWithSpriteFrameName("grossini_dance_01.png");
      */
-    initWithSpriteFrameName: function (spriteFrameName) {
+    initWithSpriteFrameName(spriteFrameName) {
       cc.assert(spriteFrameName, cc._LogInfos.Sprite_initWithSpriteFrameName);
       var frame = cc.spriteFrameCache.getSpriteFrame(spriteFrameName);
       cc.assert(
@@ -263,13 +263,13 @@ cc.Sprite = cc.Node.extend(
         spriteFrameName + cc._LogInfos.Sprite_initWithSpriteFrameName1
       );
       return this.initWithSpriteFrame(frame);
-    },
+    }
 
     /**
      * Tell the sprite to use batch node render.
      * @param {cc.SpriteBatchNode} batchNode
      */
-    useBatchNode: function (batchNode) {},
+    useBatchNode(batchNode) {}
 
     /**
      * <p>
@@ -281,14 +281,14 @@ cc.Sprite = cc.Node.extend(
      * </p>
      * @param {cc.Rect} rect
      */
-    setVertexRect: function (rect) {
+    setVertexRect(rect) {
       var locRect = this._rect;
       locRect.x = rect.x;
       locRect.y = rect.y;
       locRect.width = rect.width;
       locRect.height = rect.height;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     //
     // cc.Node property overloads
@@ -298,25 +298,25 @@ cc.Sprite = cc.Node.extend(
      * Sets whether the sprite should be flipped horizontally or not.
      * @param {Boolean} flippedX true if the sprite should be flipped horizontally, false otherwise.
      */
-    setFlippedX: function (flippedX) {
+    setFlippedX(flippedX) {
       if (this._flippedX !== flippedX) {
         this._flippedX = flippedX;
         this.setTextureRect(this._rect, this._rectRotated, this._contentSize);
         this.setNodeDirty(true);
       }
-    },
+    }
 
     /**
      * Sets whether the sprite should be flipped vertically or not.
      * @param {Boolean} flippedY true if the sprite should be flipped vertically, false otherwise.
      */
-    setFlippedY: function (flippedY) {
+    setFlippedY(flippedY) {
       if (this._flippedY !== flippedY) {
         this._flippedY = flippedY;
         this.setTextureRect(this._rect, this._rectRotated, this._contentSize);
         this.setNodeDirty(true);
       }
-    },
+    }
 
     /**
      * <p>
@@ -328,9 +328,9 @@ cc.Sprite = cc.Node.extend(
      *      sprite.setScaleX(sprite.getScaleX() * -1);  <p/>
      * @return {Boolean} true if the sprite is flipped horizontally, false otherwise.
      */
-    isFlippedX: function () {
+    isFlippedX() {
       return this._flippedX;
-    },
+    }
 
     /**
      * <p>
@@ -342,9 +342,9 @@ cc.Sprite = cc.Node.extend(
      *         sprite.setScaleY(sprite.getScaleY() * -1); <p/>
      * @return {Boolean} true if the sprite is flipped vertically, false otherwise.
      */
-    isFlippedY: function () {
+    isFlippedY() {
       return this._flippedY;
-    },
+    }
 
     //
     // RGBA protocol
@@ -354,20 +354,20 @@ cc.Sprite = cc.Node.extend(
      * @function
      * @param {Boolean} modify
      */
-    setOpacityModifyRGB: function (modify) {
+    setOpacityModifyRGB(modify) {
       if (this._opacityModifyRGB !== modify) {
         this._opacityModifyRGB = modify;
         this._renderCmd._setColorDirty();
       }
-    },
+    }
 
     /**
      * Returns whether opacity modify color or not.
      * @return {Boolean}
      */
-    isOpacityModifyRGB: function () {
+    isOpacityModifyRGB() {
       return this._opacityModifyRGB;
-    },
+    }
 
     // Animation
 
@@ -377,7 +377,7 @@ cc.Sprite = cc.Node.extend(
      * @param {String} animationName
      * @param {Number} frameIndex
      */
-    setDisplayFrameWithAnimationName: function (animationName, frameIndex) {
+    setDisplayFrameWithAnimationName(animationName, frameIndex) {
       cc.assert(
         animationName,
         cc._LogInfos.Sprite_setDisplayFrameWithAnimationName_3
@@ -394,26 +394,26 @@ cc.Sprite = cc.Node.extend(
         return;
       }
       this.setSpriteFrame(animFrame.getSpriteFrame());
-    },
+    }
 
     /**
      * Returns the batch node object if this sprite is rendered by cc.SpriteBatchNode
      * @returns {cc.SpriteBatchNode|null} The cc.SpriteBatchNode object if this sprite is rendered by cc.SpriteBatchNode, null if the sprite isn't used batch node.
      */
-    getBatchNode: function () {
+    getBatchNode() {
       return this._batchNode;
-    },
+    }
 
     // CCTextureProtocol
     /**
      * Returns the texture of the sprite node
      * @returns {cc.Texture2D}
      */
-    getTexture: function () {
+    getTexture() {
       return this._texture;
-    },
+    }
 
-    _softInit: function (fileName, rect, rotated) {
+    _softInit(fileName, rect, rotated) {
       if (fileName === undefined) cc.Sprite.prototype.init.call(this);
       else if (typeof fileName === "string") {
         if (fileName[0] === "#") {
@@ -444,15 +444,15 @@ cc.Sprite = cc.Node.extend(
           this.initWithTexture(texture2d);
         }
       }
-    },
+    }
 
     /**
      * Returns the quad (tex coords, vertex coords and color) information.
      * @return {cc.V3F_C4B_T2F_Quad|null} Returns a cc.V3F_C4B_T2F_Quad object when render mode is WebGL, returns null when render mode is Canvas.
      */
-    getQuad: function () {
+    getQuad() {
       return null;
-    },
+    }
 
     /**
      * conforms to cc.TextureProtocol protocol
@@ -460,7 +460,7 @@ cc.Sprite = cc.Node.extend(
      * @param {Number|cc.BlendFunc} src
      * @param {Number} dst
      */
-    setBlendFunc: function (src, dst) {
+    setBlendFunc(src, dst) {
       var locBlendFunc = this._blendFunc;
       if (dst === undefined) {
         locBlendFunc.src = src.src;
@@ -470,7 +470,7 @@ cc.Sprite = cc.Node.extend(
         locBlendFunc.dst = dst;
       }
       this._renderCmd.updateBlendFunc(locBlendFunc);
-    },
+    }
 
     /**
      * Initializes an empty sprite with nothing init.<br/>
@@ -478,12 +478,12 @@ cc.Sprite = cc.Node.extend(
      * @function
      * @return {Boolean}
      */
-    init: function () {
+    init() {
       var _t = this;
       if (arguments.length > 0)
         return _t.initWithFile(arguments[0], arguments[1]);
 
-      cc.Node.prototype.init.call(_t);
+      super.init();
       _t.dirty = _t._recursiveDirty = false;
 
       _t._blendFunc.src = cc.BLEND_SRC;
@@ -505,7 +505,7 @@ cc.Sprite = cc.Node.extend(
       // Atlas: TexCoords
       _t.setTextureRect(cc.rect(0, 0, 0, 0), false, cc.size(0, 0));
       return true;
-    },
+    }
 
     /**
      * <p>
@@ -520,7 +520,7 @@ cc.Sprite = cc.Node.extend(
      * @param {cc.Rect} rect The rectangle assigned the content area from texture.
      * @return {Boolean} true if the sprite is initialized properly, false otherwise.
      */
-    initWithFile: function (filename, rect) {
+    initWithFile(filename, rect) {
       cc.assert(filename, cc._LogInfos.Sprite_initWithFile);
 
       var tex = cc.textureCache.getTextureForKey(filename);
@@ -546,7 +546,7 @@ cc.Sprite = cc.Node.extend(
         rect = cc.rect(0, 0, size.width, size.height);
       }
       return this.initWithTexture(tex, rect);
-    },
+    }
 
     /**
      * Initializes a sprite with a texture and a rect in points, optionally rotated.  <br/>
@@ -559,7 +559,7 @@ cc.Sprite = cc.Node.extend(
      * @param {Boolean} [counterclockwise=true] Whether or not the texture rectangle rotation is counterclockwise (texture package is counterclockwise, spine is clockwise).
      * @return {Boolean} true if the sprite is initialized properly, false otherwise.
      */
-    initWithTexture: function (texture, rect, rotated, counterclockwise) {
+    initWithTexture(texture, rect, rotated, counterclockwise) {
       var _t = this;
       cc.assert(
         arguments.length !== 0,
@@ -588,7 +588,7 @@ cc.Sprite = cc.Node.extend(
         counterclockwise
       );
 
-      if (!cc.Node.prototype.init.call(_t)) return false;
+      if (!super.init()) return false;
 
       _t._batchNode = null;
       _t._recursiveDirty = false;
@@ -624,7 +624,7 @@ cc.Sprite = cc.Node.extend(
       // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
       _t.setBatchNode(null);
       return true;
-    },
+    }
 
     /**
      * Updates the texture rect of the CCSprite in points.
@@ -634,7 +634,7 @@ cc.Sprite = cc.Node.extend(
      * @param {cc.Size} [untrimmedSize] The original pixels size of the texture
      * @param {Boolean} [needConvert] contentScaleFactor switch
      */
-    setTextureRect: function (rect, rotated, untrimmedSize, needConvert) {
+    setTextureRect(rect, rotated, untrimmedSize, needConvert) {
       var _t = this;
       _t._rectRotated = rotated || false;
       _t.setContentSize(untrimmedSize || rect);
@@ -651,7 +651,7 @@ cc.Sprite = cc.Node.extend(
         relativeOffsetX + (_t._contentSize.width - locRect.width) / 2;
       _t._offsetPosition.y =
         relativeOffsetY + (_t._contentSize.height - locRect.height) / 2;
-    },
+    }
 
     // BatchNode methods
 
@@ -663,7 +663,7 @@ cc.Sprite = cc.Node.extend(
      * @param {number|String} [tag] child's tag
      * @override
      */
-    addChild: function (child, localZOrder, tag) {
+    addChild(child, localZOrder, tag) {
       cc.assert(child, cc._LogInfos.CCSpriteBatchNode_addChild_2);
 
       if (localZOrder == null) localZOrder = child._localZOrder;
@@ -671,10 +671,10 @@ cc.Sprite = cc.Node.extend(
 
       if (this._renderCmd._setBatchNodeForAddChild(child)) {
         //cc.Node already sets isReorderChildDirty_ so this needs to be after batchNode check
-        cc.Node.prototype.addChild.call(this, child, localZOrder, tag);
+        super.addChild(child, localZOrder, tag);
         this._hasChildren = true;
       }
-    },
+    }
 
     // Frames
     /**
@@ -682,7 +682,7 @@ cc.Sprite = cc.Node.extend(
      * @function
      * @param {cc.SpriteFrame|String} newFrame
      */
-    setSpriteFrame: function (newFrame) {
+    setSpriteFrame(newFrame) {
       var _t = this;
       if (typeof newFrame === "string") {
         newFrame = cc.spriteFrameCache.getSpriteFrame(newFrame);
@@ -721,7 +721,7 @@ cc.Sprite = cc.Node.extend(
         newFrame.isRotated(),
         newFrame.getOriginalSize()
       );
-    },
+    }
 
     /**
      * Returns whether or not a cc.SpriteFrame is being displayed
@@ -729,15 +729,15 @@ cc.Sprite = cc.Node.extend(
      * @param {cc.SpriteFrame} frame
      * @return {Boolean}
      */
-    isFrameDisplayed: function (frame) {
+    isFrameDisplayed(frame) {
       return this._renderCmd.isFrameDisplayed(frame);
-    },
+    }
 
     /**
      * Returns the current displayed frame.
      * @return {cc.SpriteFrame}
      */
-    getSpriteFrame: function () {
+    getSpriteFrame() {
       return new cc.SpriteFrame(
         this._texture,
         cc.rectPointsToPixels(this._rect),
@@ -745,7 +745,7 @@ cc.Sprite = cc.Node.extend(
         cc.pointPointsToPixels(this._unflippedOffsetPositionFromCenter),
         cc.sizePointsToPixels(this._contentSize)
       );
-    },
+    }
 
     /**
      * Sets the batch node to sprite
@@ -757,7 +757,7 @@ cc.Sprite = cc.Node.extend(
      *  batch.addChild(sprite);
      *  layer.addChild(batch);
      */
-    setBatchNode: function (spriteBatchNode) {},
+    setBatchNode(spriteBatchNode) {}
 
     // CCTextureProtocol
     /**
@@ -765,7 +765,7 @@ cc.Sprite = cc.Node.extend(
      * @function
      * @param {cc.Texture2D|String} texture
      */
-    setTexture: function (texture) {
+    setTexture(texture) {
       if (!texture) return this._renderCmd._setTexture(null);
 
       //CCSprite.cpp 327 and 338
@@ -791,21 +791,20 @@ cc.Sprite = cc.Node.extend(
       if (isFileName) this._changeRectWithTexture(texture);
       this.setColor(this._realColor);
       this._textureLoaded = true;
-    },
+    }
 
-    _changeRectWithTexture: function (texture) {
+    _changeRectWithTexture(texture) {
       var contentSize = texture._contentSize;
       var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
       this.setTextureRect(rect);
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
       if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
         return new cc.Sprite.CanvasRenderCmd(this);
       else return new cc.Sprite.WebGLRenderCmd(this);
     }
-  }
-);
+};
 
 /**
  * cc.Sprite invalid index on the cc.SpriteBatchNode

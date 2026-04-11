@@ -30,52 +30,62 @@ var unitTestSceneIdx = -1;
 // UnitTestBase
 //
 //------------------------------------------------------------------
-var UnitTestBase = BaseTestLayer.extend({
-    _title:"",
-    _subtitle:"",
+var UnitTestBase = class UnitTestBase extends BaseTestLayer {
+    constructor() {
+        super();
+        this._title = "";
+        this._subtitle = "";
+    }
 
-    onRestartCallback:function (sender) {
+
+    onRestartCallback(sender) {
         var s = new UnitTestScene();
         s.addChild(restartUnitTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new UnitTestScene();
         s.addChild(nextUnitTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new UnitTestScene();
         s.addChild(previousUnitTest());
         director.runScene(s);
-    },
+    }
 
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfUnitTest.length-1) - unitTestSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return unitTestSceneIdx;
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // RectUnitTest
 //
 //------------------------------------------------------------------
-var RectUnitTest = UnitTestBase.extend({
-    _title:"Rect Unit Test",
-    _subtitle:"See console for possible errors",
+var RectUnitTest = class RectUnitTest extends UnitTestBase {
+    constructor() {
+        super();
+        this._title = "Rect Unit Test";
+        this._subtitle = "See console for possible errors";
+        this.testDuration = 0.1;
+    }
 
-    onEnter:function () {
-        this._super();
+
+    onEnter() {
+        super.onEnter();
         this.runTest();
-    },
+    }
 
-    runTest:function () {
+    runTest() {
 
         var ret = [];
         var rectA;
@@ -168,41 +178,48 @@ var RectUnitTest = UnitTestBase.extend({
         ret.push( bb.height );
         ret.push( bb.width );
         return ret;
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:0.1,
 
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret = [true,false,true,true,true,false,1,2,3,4,101,99];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = this.runTest();
         return JSON.stringify(ret);
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // DictionaryToFromTest
 //
 //------------------------------------------------------------------
-var DictionaryToFromTest = UnitTestBase.extend({
-    _title:"Dictionary To/From Test",
-    _subtitle:"Sends and receives a dictionary to JSB",
+var DictionaryToFromTest = class DictionaryToFromTest extends UnitTestBase {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._title = "Dictionary To/From Test";
+
+
+        this._subtitle = "Sends and receives a dictionary to JSB";
+
+
+        this.testDuration = 0.1;
 
         this.runTest();
-    },
+    }
 
-    runTest:function() {
+    runTest() {
         var frameCache = cc.spriteFrameCache;
         frameCache.addSpriteFrames(s_grossiniPlist);
 
@@ -226,34 +243,35 @@ var DictionaryToFromTest = UnitTestBase.extend({
         dict = frame.getUserInfo();
         this.log(JSON.stringify(dict));
         return dict;
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:0.1,
 
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret = this.sortObject( {"array":[1,2,3,"hello world"],"bool0":0,"bool1":1,"dict":{"key1":"value1","key2":2},"number":42,"string":"hello!"} );
 
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = this.sortObject( this.runTest() );
         return JSON.stringify(ret);
     }
-});
 
-var UnitTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var UnitTestScene = class UnitTestScene extends TestScene {
+    runThisTest(num) {
         unitTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextUnitTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
+
+};
 
 //
 // Flow control

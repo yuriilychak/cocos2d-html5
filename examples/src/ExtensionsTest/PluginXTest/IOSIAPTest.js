@@ -42,20 +42,24 @@ var s_IAPResultItem = [
     {name: "[ ]", tag: TAG_GETPRODUCTLIST_RESULT},
     {name: "didn't call payFunction yet", tag: TAG_PAYMENT_RESULT}
 ];
-var IAPTestLayer = PluginXTest.extend({
-    _serverMode: false,
-    onEnter: function () {
-        this._super();
+var IAPTestLayer = class IAPTestLayer extends PluginXTest {
+    constructor() {
+        super();
+        this._serverMode = false;
+    }
+
+    onEnter() {
+        super.onEnter();
         this.initPlugin();
         this.addMenuItem();
         this.initToast();
-    },
-    initPlugin: function () {
+    }
+    initPlugin() {
         var pluginManager = plugin.PluginManager.getInstance();
         this.PluginIAP = pluginManager.loadPlugin("IOSIAP");
         this.PluginIAP.setListener(this);
-    },
-    addMenuItem: function () {
+    }
+    addMenuItem() {
         var payMenu = new cc.Menu();
         for (var i = 0; i < s_IAPFunctionItem.length; i++) {
             var text = new cc.LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
@@ -76,13 +80,13 @@ var IAPTestLayer = PluginXTest.extend({
         payMenu.x = 0;
         payMenu.y = 0;
         this.addChild(payMenu);
-    },
-    closeFunction: function (sender) {
+    }
+    closeFunction(sender) {
         var scene = new ExtensionsTestScene();
         scene.runThisTest();
         cc.director.runScene(scene);
-    },
-    initToast: function () {
+    }
+    initToast() {
         this.toastLayer = new cc.LayerColor();
         var label = new cc.LabelTTF("loading", "Arial", 16);
         this.toastLayer.addChild(label);
@@ -90,8 +94,8 @@ var IAPTestLayer = PluginXTest.extend({
         label.x = cc.winSize.width / 2;
         label.y = cc.winSize.height / 2;
         this.toastLayer.setColor(cc.color(100, 100, 100, 100));
-    },
-    addTouch: function (bool) {
+    }
+    addTouch(bool) {
         if (bool) {
             var self = this.toastLayer;
             this.listener = cc.EventListener.create({
@@ -111,8 +115,8 @@ var IAPTestLayer = PluginXTest.extend({
         } else {
             cc.eventManager.removeListener(this.listener);
         }
-    },
-    toggleToast: function (show) {
+    }
+    toggleToast(show) {
         if (show) {
             if (!this.getChildByTag(TAG_TOAST)) {
                 this.addChild(this.toastLayer);
@@ -122,8 +126,8 @@ var IAPTestLayer = PluginXTest.extend({
             this.toastLayer.removeFromParent(true);
             this.addTouch(false);
         }
-    },
-    menuCallBack: function (sender) {
+    }
+    menuCallBack(sender) {
         this.toggleToast(true);
         if (sender.tag === TAG_SETSERVERMODE) {
             this.PluginIAP.callFuncWithParam("setServerMode");
@@ -148,9 +152,9 @@ var IAPTestLayer = PluginXTest.extend({
             }
             this.PluginIAP.payForProduct(this.product[0]);
         }
-    },
+    }
 
-    onPayResult: function (ret, msg, productInfo) {
+    onPayResult(ret, msg, productInfo) {
         this.toggleToast(false);
         cc.log("onPayResult ret is " + ret);
         var str = "";
@@ -169,8 +173,8 @@ var IAPTestLayer = PluginXTest.extend({
         if (label) {
             label.setString(str);
         }
-    },
-    onRequestProductResult: function (ret, productInfo) {
+    }
+    onRequestProductResult(ret, productInfo) {
         var msgStr = "";
         if (ret == plugin.ProtocolIAP.RequestProductCode.RequestFail) {
             msgStr = "request error";
@@ -190,8 +194,8 @@ var IAPTestLayer = PluginXTest.extend({
         if (label) {
             label.setString(msgStr);
         }
-    },
-    postServerData: function (data) {
+    }
+    postServerData(data) {
         var that = this;
         var xhr = cc.loader.getXMLHttpRequest();
 
@@ -208,8 +212,9 @@ var IAPTestLayer = PluginXTest.extend({
         // you can add your data and post them to your server;
         var result = {userid: 100, receipt: data};
         xhr.send(JSON.stringify(result));
-    },
-    onExit: function () {
-        this._super();
     }
-});
+    onExit() {
+        super.onExit();
+    }
+
+};

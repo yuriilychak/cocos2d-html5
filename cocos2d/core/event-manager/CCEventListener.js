@@ -31,30 +31,31 @@
  *      EventListenerTouchOneByOne, EventListenerCustom.
  * </p>
  * @class
- * @extends cc.Class
+ * @extends cc.NewClass
  */
-cc.EventListener = cc.Class.extend(/** @lends cc.EventListener# */{
-    _onEvent: null,                          // Event callback function
-    _type: 0,                                 // Event listener type
-    _listenerID: null,                       // Event listener ID
-    _registered: false,                     // Whether the listener has been added to dispatcher.
-
-    _fixedPriority: 0,                      // The higher the number, the higher the priority, 0 is for scene graph base priority.
-    _node: null,                           // scene graph based priority
-    _paused: true,                        // Whether the listener is paused
-    _isEnabled: true,                      // Whether the listener is enabled
-
+cc.EventListener = class EventListener extends cc.NewClass {
     /**
      * Initializes event with type and callback function
      * @param {number} type
      * @param {string} listenerID
      * @param {function} callback
      */
-    ctor: function (type, listenerID, callback) {
+    constructor(type, listenerID, callback) {
+        super();
+        this._onEvent = null;
+        this._type = 0;
+        this._listenerID = null;
+        this._registered = false;
+
+        this._fixedPriority = 0;
+        this._node = null;
+        this._paused = true;
+        this._isEnabled = true;
+
         this._onEvent = callback;
         this._type = type || 0;
         this._listenerID = listenerID || "";
-    },
+    }
 
     /**
      * <p>
@@ -69,36 +70,36 @@ cc.EventListener = cc.Class.extend(/** @lends cc.EventListener# */{
      * @param {boolean} paused
      * @private
      */
-    _setPaused: function (paused) {
+    _setPaused(paused) {
         this._paused = paused;
-    },
+    }
 
     /**
      * Checks whether the listener is paused
      * @returns {boolean}
      * @private
      */
-    _isPaused: function () {
+    _isPaused() {
         return this._paused;
-    },
+    }
 
     /**
      * Marks the listener was registered by EventDispatcher
      * @param {boolean} registered
      * @private
      */
-    _setRegistered: function (registered) {
+    _setRegistered(registered) {
         this._registered = registered;
-    },
+    }
 
     /**
      * Checks whether the listener was registered by EventDispatcher
      * @returns {boolean}
      * @private
      */
-    _isRegistered: function () {
+    _isRegistered() {
         return this._registered;
-    },
+    }
 
     /**
      * Gets the type of this listener
@@ -106,9 +107,9 @@ cc.EventListener = cc.Class.extend(/** @lends cc.EventListener# */{
      * @returns {number}
      * @private
      */
-    _getType: function () {
+    _getType() {
         return this._type;
-    },
+    }
 
     /**
      *  Gets the listener ID of this listener
@@ -116,9 +117,9 @@ cc.EventListener = cc.Class.extend(/** @lends cc.EventListener# */{
      * @returns {string}
      * @private
      */
-    _getListenerID: function () {
+    _getListenerID() {
         return this._listenerID;
-    },
+    }
 
     /**
      * Sets the fixed priority for this listener
@@ -126,52 +127,52 @@ cc.EventListener = cc.Class.extend(/** @lends cc.EventListener# */{
      * @param {number} fixedPriority
      * @private
      */
-    _setFixedPriority: function (fixedPriority) {
+    _setFixedPriority(fixedPriority) {
         this._fixedPriority = fixedPriority;
-    },
+    }
 
     /**
      * Gets the fixed priority of this listener
      * @returns {number} 0 if it's a scene graph priority listener, non-zero for fixed priority listener
      * @private
      */
-    _getFixedPriority: function () {
+    _getFixedPriority() {
         return this._fixedPriority;
-    },
+    }
 
     /**
      * Sets scene graph priority for this listener
      * @param {cc.Node} node
      * @private
      */
-    _setSceneGraphPriority: function (node) {
+    _setSceneGraphPriority(node) {
         this._node = node;
-    },
+    }
 
     /**
      * Gets scene graph priority of this listener
      * @returns {cc.Node} if it's a fixed priority listener, non-null for scene graph priority listener
      * @private
      */
-    _getSceneGraphPriority: function () {
+    _getSceneGraphPriority() {
         return this._node;
-    },
+    }
 
     /**
      * Checks whether the listener is available.
      * @returns {boolean}
      */
-    checkAvailable: function () {
+    checkAvailable() {
         return this._onEvent !== null;
-    },
+    }
 
     /**
      * Clones the listener, its subclasses have to override this method.
      * @returns {cc.EventListener}
      */
-    clone: function () {
+    clone() {
         return null;
-    },
+    }
 
     /**
      *  Enables or disables the listener
@@ -181,18 +182,18 @@ cc.EventListener = cc.Class.extend(/** @lends cc.EventListener# */{
      *          paused state is always false when it is a fixed priority listener.
      * @param {boolean} enabled
      */
-    setEnabled: function(enabled){
+    setEnabled(enabled) {
         this._isEnabled = enabled;
-    },
+    }
 
     /**
      * Checks whether the listener is enabled
      * @returns {boolean}
      */
-    isEnabled: function(){
+    isEnabled() {
         return this._isEnabled;
     }
-});
+};
 
 // event listener type
 /**
@@ -244,44 +245,47 @@ cc.EventListener.FOCUS = 7;
  */
 cc.EventListener.CUSTOM = 8;
 
-cc._EventListenerCustom = cc.EventListener.extend({
-    _onCustomEvent: null,
-    ctor: function (listenerId, callback, target) {
+cc._EventListenerCustom = class _EventListenerCustom extends cc.EventListener {
+    constructor(listenerId, callback, target) {
+        super(cc.EventListener.CUSTOM, listenerId, null);
+        this._onCustomEvent = null;
+        this._target = undefined;
+
         this._onCustomEvent = callback;
         this._target = target;
+        this._onEvent = this._callback;
+    }
 
-        cc.EventListener.prototype.ctor.call(this, cc.EventListener.CUSTOM, listenerId, this._callback);
-    },
-
-    _callback: function (event) {
+    _callback(event) {
         if (this._onCustomEvent !== null)
             this._onCustomEvent.call(this._target, event);
-    },
+    }
 
-    checkAvailable: function () {
-        return (cc.EventListener.prototype.checkAvailable.call(this) && this._onCustomEvent !== null);
-    },
+    checkAvailable() {
+        return (super.checkAvailable() && this._onCustomEvent !== null);
+    }
 
-    clone: function () {
+    clone() {
         return new cc._EventListenerCustom(this._listenerID, this._onCustomEvent);
     }
-});
+};
 
 cc._EventListenerCustom.create = function (eventName, callback) {
     return new cc._EventListenerCustom(eventName, callback);
 };
 
-cc._EventListenerMouse = cc.EventListener.extend({
-    onMouseDown: null,
-    onMouseUp: null,
-    onMouseMove: null,
-    onMouseScroll: null,
+cc._EventListenerMouse = class _EventListenerMouse extends cc.EventListener {
+    constructor() {
+        super(cc.EventListener.MOUSE, cc._EventListenerMouse.LISTENER_ID, null);
+        this.onMouseDown = null;
+        this.onMouseUp = null;
+        this.onMouseMove = null;
+        this.onMouseScroll = null;
 
-    ctor: function () {
-        cc.EventListener.prototype.ctor.call(this, cc.EventListener.MOUSE, cc._EventListenerMouse.LISTENER_ID, this._callback);
-    },
+        this._onEvent = this._callback;
+    }
 
-    _callback: function (event) {
+    _callback(event) {
         var eventType = cc.EventMouse;
         switch (event._eventType) {
             case eventType.DOWN:
@@ -303,21 +307,21 @@ cc._EventListenerMouse = cc.EventListener.extend({
             default:
                 break;
         }
-    },
+    }
 
-    clone: function () {
+    clone() {
         var eventListener = new cc._EventListenerMouse();
         eventListener.onMouseDown = this.onMouseDown;
         eventListener.onMouseUp = this.onMouseUp;
         eventListener.onMouseMove = this.onMouseMove;
         eventListener.onMouseScroll = this.onMouseScroll;
         return eventListener;
-    },
+    }
 
-    checkAvailable: function () {
+    checkAvailable() {
         return true;
     }
-});
+};
 
 cc._EventListenerMouse.LISTENER_ID = "__cc_mouse";
 
@@ -325,28 +329,28 @@ cc._EventListenerMouse.create = function () {
     return new cc._EventListenerMouse();
 };
 
-cc._EventListenerTouchOneByOne = cc.EventListener.extend({
-    _claimedTouches: null,
-    swallowTouches: false,
-    onTouchBegan: null,
-    onTouchMoved: null,
-    onTouchEnded: null,
-    onTouchCancelled: null,
+cc._EventListenerTouchOneByOne = class _EventListenerTouchOneByOne extends cc.EventListener {
+    constructor() {
+        super(cc.EventListener.TOUCH_ONE_BY_ONE, cc._EventListenerTouchOneByOne.LISTENER_ID, null);
+        this._claimedTouches = null;
+        this.swallowTouches = false;
+        this.onTouchBegan = null;
+        this.onTouchMoved = null;
+        this.onTouchEnded = null;
+        this.onTouchCancelled = null;
 
-    ctor: function () {
-        cc.EventListener.prototype.ctor.call(this, cc.EventListener.TOUCH_ONE_BY_ONE, cc._EventListenerTouchOneByOne.LISTENER_ID, null);
         this._claimedTouches = [];
-    },
+    }
 
-    setSwallowTouches: function (needSwallow) {
+    setSwallowTouches(needSwallow) {
         this.swallowTouches = needSwallow;
-    },
+    }
 
-    isSwallowTouches: function(){
+    isSwallowTouches() {
         return this.swallowTouches;
-    },
+    }
 
-    clone: function () {
+    clone() {
         var eventListener = new cc._EventListenerTouchOneByOne();
         eventListener.onTouchBegan = this.onTouchBegan;
         eventListener.onTouchMoved = this.onTouchMoved;
@@ -354,16 +358,16 @@ cc._EventListenerTouchOneByOne = cc.EventListener.extend({
         eventListener.onTouchCancelled = this.onTouchCancelled;
         eventListener.swallowTouches = this.swallowTouches;
         return eventListener;
-    },
+    }
 
-    checkAvailable: function () {
+    checkAvailable() {
         if(!this.onTouchBegan){
             cc.log(cc._LogInfos._EventListenerTouchOneByOne_checkAvailable);
             return false;
         }
         return true;
     }
-});
+};
 
 cc._EventListenerTouchOneByOne.LISTENER_ID = "__cc_touch_one_by_one";
 
@@ -371,26 +375,25 @@ cc._EventListenerTouchOneByOne.create = function () {
     return new cc._EventListenerTouchOneByOne();
 };
 
-cc._EventListenerTouchAllAtOnce = cc.EventListener.extend({
-    onTouchesBegan: null,
-    onTouchesMoved: null,
-    onTouchesEnded: null,
-    onTouchesCancelled: null,
+cc._EventListenerTouchAllAtOnce = class _EventListenerTouchAllAtOnce extends cc.EventListener {
+    constructor() {
+        super(cc.EventListener.TOUCH_ALL_AT_ONCE, cc._EventListenerTouchAllAtOnce.LISTENER_ID, null);
+        this.onTouchesBegan = null;
+        this.onTouchesMoved = null;
+        this.onTouchesEnded = null;
+        this.onTouchesCancelled = null;
+    }
 
-    ctor: function(){
-       cc.EventListener.prototype.ctor.call(this, cc.EventListener.TOUCH_ALL_AT_ONCE, cc._EventListenerTouchAllAtOnce.LISTENER_ID, null);
-    },
-
-    clone: function(){
+    clone() {
         var eventListener = new cc._EventListenerTouchAllAtOnce();
         eventListener.onTouchesBegan = this.onTouchesBegan;
         eventListener.onTouchesMoved = this.onTouchesMoved;
         eventListener.onTouchesEnded = this.onTouchesEnded;
         eventListener.onTouchesCancelled = this.onTouchesCancelled;
         return eventListener;
-    },
+    }
 
-    checkAvailable: function(){
+    checkAvailable() {
         if (this.onTouchesBegan === null && this.onTouchesMoved === null
             && this.onTouchesEnded === null && this.onTouchesCancelled === null) {
             cc.log(cc._LogInfos._EventListenerTouchAllAtOnce_checkAvailable);
@@ -398,7 +401,7 @@ cc._EventListenerTouchAllAtOnce = cc.EventListener.extend({
         }
         return true;
     }
-});
+};
 
 cc._EventListenerTouchAllAtOnce.LISTENER_ID = "__cc_touch_all_at_once";
 
@@ -456,28 +459,33 @@ cc.EventListener.create = function(argObj){
     return listener;
 };
 
-cc._EventListenerFocus = cc.EventListener.extend({
-    clone: function(){
+cc._EventListenerFocus = class _EventListenerFocus extends cc.EventListener {
+    constructor() {
+        super(cc.EventListener.FOCUS, cc._EventListenerFocus.LISTENER_ID, null);
+        this.onFocusChanged = null;
+
+        this._onEvent = this._callback;
+    }
+
+    clone() {
         var listener = new cc._EventListenerFocus();
         listener.onFocusChanged = this.onFocusChanged;
         return listener;
-    },
-    checkAvailable: function(){
+    }
+
+    checkAvailable() {
         if(!this.onFocusChanged){
             cc.log("Invalid EventListenerFocus!");
             return false;
         }
         return true;
-    },
-    onFocusChanged: null,
-    ctor: function(){
-        cc.EventListener.prototype.ctor.call(this, cc.EventListener.FOCUS, cc._EventListenerFocus.LISTENER_ID, this._callback);
-    },
-    _callback: function (event) {
+    }
+
+    _callback(event) {
         if (this.onFocusChanged) {
             this.onFocusChanged(event._widgetLoseFocus, event._widgetGetFocus);
         }
     }
-});
+};
 
 cc._EventListenerFocus.LISTENER_ID = "__cc_focus_event";

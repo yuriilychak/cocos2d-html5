@@ -28,20 +28,21 @@ var OpenGLTestIdx = -1;
 // the class inherit from TestScene
 // every Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-var OpenGLTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var OpenGLTestScene = class OpenGLTestScene extends TestScene {
+    runThisTest(num) {
         OpenGLTestIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextOpenGLTest());
         director.runScene(this);
     }
-});
 
-cc.GLNode = cc.GLNode || cc.Node.extend({
-    ctor:function(){
-        this._super();
+};
+
+cc.GLNode = cc.GLNode || class GLNode extends cc.Node {
+    constructor() {
+        super();
         this.init();
-    },
-    init:function(){
+    }
+    init() {
         this._renderCmd._needDraw = true;
         this._renderCmd._matrix = new cc.math.Matrix4();
         this._renderCmd._matrix.identity();
@@ -62,63 +63,72 @@ cc.GLNode = cc.GLNode || cc.Node.extend({
 
             cc.kmGLPopMatrix();
         };
-    },
-    draw:function(ctx){
-        this._super(ctx);
     }
-});
+    draw(ctx) {
+        super.draw(ctx);
+    }
+};
 
-var OpenGLTestLayer = BaseTestLayer.extend({
-    _grossini:null,
-    _tamara:null,
-    _kathia:null,
-    _code:null,
+var OpenGLTestLayer = class OpenGLTestLayer extends BaseTestLayer {
 
-    ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
-    },
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
 
-    title:function () {
+
+        this._grossini = null;
+
+
+        this._tamara = null;
+
+
+        this._kathia = null;
+
+
+        this._code = null;
+    }
+
+    title() {
         return "OpenGLTest";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "";
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new OpenGLTestScene();
         s.addChild(previousOpenGLTest());
         director.runScene(s);
-    },
-    onRestartCallback:function (sender) {
+    }
+    onRestartCallback(sender) {
         var s = new OpenGLTestScene();
         s.addChild(restartOpenGLTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new OpenGLTestScene();
         s.addChild(nextOpenGLTest());
         director.runScene(s);
-    },
+    }
 
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfOpenGLTest.length-1) - OpenGLTestIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return OpenGLTestIdx;
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ReadPixelsTest
 //
 //------------------------------------------------------------------
-var GLReadPixelsTest = OpenGLTestLayer.extend({
+var GLReadPixelsTest = class GLReadPixelsTest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             var x = winSize.width;
@@ -150,25 +160,25 @@ var GLReadPixelsTest = OpenGLTestLayer.extend({
             this.addChild(green,12);
             this.addChild(red,13);
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "gl.ReadPixels()";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Tests ReadPixels. See console";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // red, green, blue, white
         var ret = [{"0":255,"1":0,"2":0,"3":255},{"0":0,"1":255,"2":0,"3":255},{"0":0,"1":0,"2":255,"3":255},{"0":255,"1":255,"2":255,"3":255}];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var x = winSize.width;
         var y = winSize.height;
 
@@ -193,7 +203,8 @@ var GLReadPixelsTest = OpenGLTestLayer.extend({
         return JSON.stringify(ret);
     }
 
-});
+
+};
 
 
 //------------------------------------------------------------------
@@ -201,10 +212,10 @@ var GLReadPixelsTest = OpenGLTestLayer.extend({
 // GLClearTest
 //
 //------------------------------------------------------------------
-var GLClearTest = OpenGLTestLayer.extend({
+var GLClearTest = class GLClearTest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
 
@@ -221,39 +232,40 @@ var GLClearTest = OpenGLTestLayer.extend({
             node.x = winSize.width/2;
             node.y = winSize.height/2 ;
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "gl.clear(gl.COLOR_BUFFER_BIT)";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Testing gl.clear() with cc.GLNode\n The layer should be in black";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // black pixel, not a blue pixel
         var ret = {"0":0,"1":0,"2":0,"3":255};
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = this.readPixels(winSize.width/2,  winSize.height/2,  1, 1);
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // GLNodeWebGLAPITest
 //
 //------------------------------------------------------------------
-var GLNodeWebGLAPITest = OpenGLTestLayer.extend({
+var GLNodeWebGLAPITest = class GLNodeWebGLAPITest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
 
@@ -347,14 +359,14 @@ var GLNodeWebGLAPITest = OpenGLTestLayer.extend({
             }.bind(this);
 
         }
-    },
+    }
 
-    setMatrixUniforms:function() {
+    setMatrixUniforms() {
         gl.uniformMatrix4fv(this.shader.pMatrixUniform, false, this.pMatrix);
         gl.uniformMatrix4fv(this.shader.mvMatrixUniform, false, this.mvMatrix);
-    },
+    }
 
-    initBuffers:function() {
+    initBuffers() {
         var triangleVertexPositionBuffer = this.triangleVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
         var vertices = [
@@ -403,9 +415,9 @@ var GLNodeWebGLAPITest = OpenGLTestLayer.extend({
         squareVertexColorBuffer.numItems = 4;
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    },
+    }
 
-    compileShader:function(source, type) {
+    compileShader(source, type) {
         var shader;
         if( type == 'fragment' )
             shader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -418,42 +430,43 @@ var GLNodeWebGLAPITest = OpenGLTestLayer.extend({
             throw("Could not compile " + type + " shader");
         }
         return shader;
-    },
+    }
 
-    title:function () {
+    title() {
         return "GLNode + WebGL API";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "blue background with a red triangle in the middle";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // blue, red, blue
         var ret = [{"0":0,"1":0,"2":255,"3":255},{"0":0,"1":0,"2":255,"3":255},{"0":255,"1":0,"2":0,"3":255}];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret1 = this.readPixels(10, winSize.height-1,  1, 1);
         var ret2 = this.readPixels(winSize.width-10, winSize.height-1,  1, 1);
         var ret3 = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
 
         return JSON.stringify([ret1,ret2,ret3]);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // GLNodeCCAPITest
 //
 //------------------------------------------------------------------
-var GLNodeCCAPITest = OpenGLTestLayer.extend({
+var GLNodeCCAPITest = class GLNodeCCAPITest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
 
@@ -495,9 +508,9 @@ var GLNodeCCAPITest = OpenGLTestLayer.extend({
             }.bind(this);
 
         }
-    },
+    }
 
-    initBuffers:function() {
+    initBuffers() {
         //
         // Triangle
         //
@@ -542,40 +555,41 @@ var GLNodeCCAPITest = OpenGLTestLayer.extend({
         ];
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    },
-    title:function () {
+    }
+    title() {
         return "GLNode + cocos2d API";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "blue background with a red triangle in the middle";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // blue, red, blue
         var ret = [{"0":0,"1":0,"2":255,"3":255},{"0":0,"1":0,"2":255,"3":255},{"0":255,"1":0,"2":0,"3":255}];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret1 = this.readPixels(10, winSize.height-1,  1, 1);
         var ret2 = this.readPixels(winSize.width-10, winSize.height-1,  1, 1);
         var ret3 = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
 
         return JSON.stringify([ret1,ret2,ret3]);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ShaderNode
 //
 //------------------------------------------------------------------
-var ShaderNode = cc.GLNode.extend({
-    ctor:function(vertexShader, framentShader) {
-        this._super();
+var ShaderNode = class ShaderNode extends cc.GLNode {
+    constructor(vertexShader, framentShader) {
+        super();
         this.init();
 
         if( 'opengl' in cc.sys.capabilities ) {
@@ -597,8 +611,8 @@ var ShaderNode = cc.GLNode.extend({
             this.scheduleUpdate();
             this._time = 0;
         }
-    },
-    draw:function() {
+    }
+    draw() {
         this.shader.use();
         this.shader.setUniformsForBuiltins();
 
@@ -623,12 +637,12 @@ var ShaderNode = cc.GLNode.extend({
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    },
+    }
 
-    update:function(dt) {
+    update(dt) {
         this._time += dt;
-    },
-    initBuffers:function() {
+    }
+    initBuffers() {
 
         //
         // Square
@@ -644,15 +658,16 @@ var ShaderNode = cc.GLNode.extend({
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
     }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ShaderHeartTest
 //
 //------------------------------------------------------------------
-var ShaderHeartTest = OpenGLTestLayer.extend({
-    ctor:function() {
-        this._super();
+var ShaderHeartTest = class ShaderHeartTest extends OpenGLTestLayer {
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Heart.vsh", ccbjs + "Shaders/example_Heart.fsh");
@@ -660,39 +675,40 @@ var ShaderHeartTest = OpenGLTestLayer.extend({
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "Shader Heart Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You should see a heart in the center";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // redish pixel
         var ret = {"0":255,"1":0,"2":0,"3":255};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function() {
+    }
+    getCurrentResult() {
         var ret = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
         ret[0] = ret[0] > 240 ? 255 : 0;
         ret[3] = ret[3] > 240 ? 255 : 0;
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ShaderMandelbrotTest
 //
 //------------------------------------------------------------------
-var ShaderMandelbrotTest = OpenGLTestLayer.extend({
-    ctor:function() {
-        this._super();
+var ShaderMandelbrotTest = class ShaderMandelbrotTest extends OpenGLTestLayer {
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Mandelbrot.vsh", ccbjs + "Shaders/example_Mandelbrot.fsh");
@@ -700,34 +716,35 @@ var ShaderMandelbrotTest = OpenGLTestLayer.extend({
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "Shader Mandelbrot Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Mandelbrot shader with Zoom";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
-        throw "Automation Test Not implemented yet";
-    },
-    getCurrentResult:function() {
+    getExpectedResult() {
         throw "Automation Test Not implemented yet";
     }
-});
+    getCurrentResult() {
+        throw "Automation Test Not implemented yet";
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // ShaderMonjoriTest
 //
 //------------------------------------------------------------------
-var ShaderMonjoriTest = OpenGLTestLayer.extend({
-    ctor:function() {
-        this._super();
+var ShaderMonjoriTest = class ShaderMonjoriTest extends OpenGLTestLayer {
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Monjori.vsh", ccbjs + "Shaders/example_Monjori.fsh");
@@ -735,34 +752,35 @@ var ShaderMonjoriTest = OpenGLTestLayer.extend({
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "Shader Monjori Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Monjori plane deformations";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
-        throw "Automation Test Not implemented yet";
-    },
-    getCurrentResult:function() {
+    getExpectedResult() {
         throw "Automation Test Not implemented yet";
     }
-});
+    getCurrentResult() {
+        throw "Automation Test Not implemented yet";
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // ShaderPlasmaTest
 //
 //------------------------------------------------------------------
-var ShaderPlasmaTest = OpenGLTestLayer.extend({
-    ctor:function() {
-        this._super();
+var ShaderPlasmaTest = class ShaderPlasmaTest extends OpenGLTestLayer {
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Plasma.vsh", ccbjs + "Shaders/example_Plasma.fsh");
@@ -770,37 +788,38 @@ var ShaderPlasmaTest = OpenGLTestLayer.extend({
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
         }
-    },
-    title:function () {
+    }
+    title() {
         return "Shader Plasma Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You should see a plasma in the center";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // redish pixel
         return JSON.stringify(true);
-    },
-    getCurrentResult:function() {
+    }
+    getCurrentResult() {
         var ret = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
         var sum = ret[0] + ret[1] + ret[2];
         return JSON.stringify(sum>300);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ShaderFlowerTest
 //
 //------------------------------------------------------------------
-var ShaderFlowerTest = OpenGLTestLayer.extend({
+var ShaderFlowerTest = class ShaderFlowerTest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
 
@@ -809,37 +828,38 @@ var ShaderFlowerTest = OpenGLTestLayer.extend({
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
         }
-    },
-    title:function () {
+    }
+    title() {
         return "Shader Flower Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You should see a moving Flower in the center";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // redish pixel
         return JSON.stringify(true);
-    },
-    getCurrentResult:function() {
+    }
+    getCurrentResult() {
         var ret = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
         var sum = ret[0] + ret[1] + ret[2];
         return JSON.stringify(sum<30);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ShaderJuliaTest
 //
 //------------------------------------------------------------------
-var ShaderJuliaTest = OpenGLTestLayer.extend({
+var ShaderJuliaTest = class ShaderJuliaTest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
 
@@ -848,27 +868,28 @@ var ShaderJuliaTest = OpenGLTestLayer.extend({
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
         }
-    },
-    title:function () {
+    }
+    title() {
         return "Shader Julia Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "You should see Julia effect";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // redish pixel
         return JSON.stringify(true);
-    },
-    getCurrentResult:function() {
+    }
+    getCurrentResult() {
         var ret = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
         var sum = ret[0] + ret[1] + ret[2];
         return JSON.stringify(sum>300);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
@@ -878,9 +899,9 @@ var ShaderJuliaTest = OpenGLTestLayer.extend({
 //FIX ME:
 //The renderers of webgl and opengl is quite different now, so we have to use different shader and different js code
 //This is a bug, need to be fixed in the future
-var ShaderOutlineEffect = OpenGLTestLayer.extend({
-    ctor:function() {
-        this._super();
+var ShaderOutlineEffect = class ShaderOutlineEffect extends OpenGLTestLayer {
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             if(cc.sys.isNative){
@@ -921,8 +942,8 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
 
             this.scheduleUpdate();
         }
-    },
-    update:function(dt) {
+    }
+    update(dt) {
         if( 'opengl' in cc.sys.capabilities ) {
             if(cc.sys.isNative){
                 this.sprite.getGLProgramState().setUniformFloat("u_radius", Math.abs(this.sprite.getRotation() / 500));
@@ -932,18 +953,19 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
                 this.shader.updateUniforms();
             }
         }
-    },
-    title:function () {
+    }
+    title() {
         return "Shader Outline Effect";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Should see rotated image with animated outline effect";
     }
 
     //
     // Automation
     //
-});
+
+};
 
 //------------------------------------------------------------------
 //
@@ -955,9 +977,9 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
 // The implemetation of LabelBMFont is quite defferent between html5 and native
 // That is why we use 'if (cc.sys.isNative){...}else{...}' in this test case
 // It should be fixed in the future.
-var ShaderRetroEffect = OpenGLTestLayer.extend({
-    ctor:function() {
-        this._super();
+var ShaderRetroEffect = class ShaderRetroEffect extends OpenGLTestLayer {
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             var program = new cc.GLProgram(ccbjs + "Shaders/example_ColorBars.vsh", ccbjs + "Shaders/example_ColorBars.fsh");
@@ -983,8 +1005,8 @@ var ShaderRetroEffect = OpenGLTestLayer.extend({
             this.label = label;
             this.accum = 0;
         }
-    },
-    update:function(dt) {
+    }
+    update(dt) {
         this.accum += dt;
 
         if(cc.sys.isNative){
@@ -1007,27 +1029,28 @@ var ShaderRetroEffect = OpenGLTestLayer.extend({
                 sprite.scaleY = scaleY;
             }
         }
-    },
-    title:function () {
+    }
+    title() {
         return "Shader Retro Effect";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Should see moving colors, and a sin effect on the letters";
     }
 
     //
     // Automation
     //
-});
+
+};
 //------------------------------------------------------------------
 //
 // GLGetActiveTest
 //
 //------------------------------------------------------------------
-var GLGetActiveTest = OpenGLTestLayer.extend({
+var GLGetActiveTest = class GLGetActiveTest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             var sprite = this.sprite = new cc.Sprite("Images/grossini.png");
@@ -1038,46 +1061,47 @@ var GLGetActiveTest = OpenGLTestLayer.extend({
             // after auto test
             this.scheduleOnce( this.onTest, 0.5 );
         }
-    },
+    }
 
-    onTest:function(dt) {
+    onTest(dt) {
         cc.log( this.getCurrentResult() );
-    },
+    }
 
-    title:function () {
+    title() {
         return "gl.getActiveXXX Function Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Tests gl.getActiveUniform / getActiveAttrib. See console";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // redish pixel
         var ret = [{"size":1,"type":35666,"name":"a_position"},{"size":1,"type":35678,"name":"CC_Texture"},[2,3]];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = [];
         var p = this.sprite.shaderProgram.getProgram();
         ret.push( gl.getActiveAttrib( p, 0 ) );
         ret.push( gl.getActiveUniform( p, 0 ) );
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // TexImage2DTest
 //
 //------------------------------------------------------------------
-var TexImage2DTest = OpenGLTestLayer.extend({
+var TexImage2DTest = class TexImage2DTest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             var glnode = new cc.GLNode();
@@ -1116,9 +1140,9 @@ var TexImage2DTest = OpenGLTestLayer.extend({
             }.bind(this);
 
         }
-    },
+    }
 
-    initGL:function() {
+    initGL() {
         var texture = this.my_texture = gl.createTexture();
         gl.bindTexture( gl.TEXTURE_2D, texture );
 
@@ -1158,36 +1182,37 @@ var TexImage2DTest = OpenGLTestLayer.extend({
         ];
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texcoords), gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    },
-    title:function () {
+    }
+    title() {
         return "TexImage2DTest";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Testing Texture creation";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         // blue, red, blue
         var ret = {"0":239,"1":123,"2":247,"3":255,"4":239,"5":123,"6":247,"7":255,"8":240,"9":124,"10":248,"11":255,"12":240,"13":124,"14":248,"15":255,"16":239,"17":123,"18":247,"19":255,"20":239,"21":123,"22":247,"23":255,"24":240,"25":124,"26":248,"27":255,"28":240,"29":124,"30":248,"31":255,"32":15,"33":131,"34":7,"35":255,"36":15,"37":131,"38":7,"39":255,"40":16,"41":132,"42":8,"43":255,"44":16,"45":132,"46":8,"47":255,"48":15,"49":131,"50":7,"51":255,"52":15,"53":131,"54":7,"55":255,"56":16,"57":132,"58":8,"59":255,"60":16,"61":132,"62":8,"63":255};
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = this.readPixels(winSize.width/2-2, winSize.height/2-2,  4, 4);
         return JSON.stringify(ret);
     }
-});
+
+};
 //------------------------------------------------------------------
 //
 // GetSupportedExtensionsTest
 //
 //------------------------------------------------------------------
-var GetSupportedExtensionsTest = OpenGLTestLayer.extend({
-    ctor:function() {
-        this._super();
+var GetSupportedExtensionsTest = class GetSupportedExtensionsTest extends OpenGLTestLayer {
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             if( ! autoTestEnabled ) {
@@ -1197,41 +1222,42 @@ var GetSupportedExtensionsTest = OpenGLTestLayer.extend({
                     cc.log( gl.getExtension( array[0] ) );
             }
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "GetSupportedExtensionsTest";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "See console for the supported GL extensions";
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret = ["[object Array]",null];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         // Extensions varies from machine to machine. Just check for typeof Array
         var ext = gl.getSupportedExtensions();
         var type = Object.prototype.toString.call( ext );
         var n = gl.getExtension('do_no_exist');
         return JSON.stringify([type,n]);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // GLTexParamterTest
 //
 //------------------------------------------------------------------
-var GLTexParamterTest = OpenGLTestLayer.extend({
+var GLTexParamterTest = class GLTexParamterTest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
             if( ! autoTestEnabled ) {
@@ -1239,15 +1265,15 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
                 cc.log( this.getTexValues() );
             }
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "GLTexParamterTest";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "tests texParameter()\n See the Console";
-    },
-    getTexValues:function() {
+    }
+    getTexValues() {
         if(!cc.sys.isNative){
             var texture2d = cc.textureCache.getTextureForKey(s_pathGrossini);
             gl.bindTexture(gl.TEXTURE_2D, texture2d.getName());
@@ -1266,31 +1292,32 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
 
         var a = [mag, min, w_s, w_t];
         return a;
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret = [9728,9728,33071,33071];
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = this.getTexValues();
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // GLGetUniformTest
 //
 //------------------------------------------------------------------
-var GLGetUniformTest = OpenGLTestLayer.extend({
+var GLGetUniformTest = class GLGetUniformTest extends OpenGLTestLayer {
 
-    ctor:function() {
-        this._super();
+    constructor() {
+        super();
 
         if( 'opengl' in cc.sys.capabilities ) {
 
@@ -1299,15 +1326,15 @@ var GLGetUniformTest = OpenGLTestLayer.extend({
             }
 
         }
-    },
+    }
 
-    title:function () {
+    title() {
         return "GLGetUniformTest";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "tests texParameter()\n See the Console";
-    },
-    runTest:function() {
+    }
+    runTest() {
 
         var shader = cc.shaderCache.getProgram("ShaderPositionTextureColor");
         var program = shader.getProgram();
@@ -1321,21 +1348,22 @@ var GLGetUniformTest = OpenGLTestLayer.extend({
         gl.uniformMatrix4fv(loc, false, this.pMatrix);
 
         return gl.getUniform( program, loc );
-    },
+    }
 
     //
     // Automation
     //
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret = {"0":1,"1":2,"2":3,"3":4,"4":4,"5":3,"6":2,"7":1,"8":1,"9":2,"10":4,"11":8,"12":1.100000023841858,"13":1.2000000476837158,"14":1.2999999523162842,"15":1.399999976158142};
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = this.runTest();
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //-
 //

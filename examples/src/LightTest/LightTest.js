@@ -26,19 +26,23 @@
  ****************************************************************************/
 var LightTestIdx = -1;
 
-var LightTestDemo = cc.Layer.extend({
-    _title:"",
-    _subtitle:"",
+var LightTestDemo = class LightTestDemo extends cc.Layer {
 
-    ctor:function () {
-        this._super();
-    },
+    constructor() {
+        super();
+
+
+        this._title = "";
+
+
+        this._subtitle = "";
+    }
 
     //
     // Menu
     //
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var label = new cc.LabelTTF(this._title, "Arial", 28);
         this.addChild(label, 100, BASE_TEST_TITLE_TAG);
@@ -71,30 +75,31 @@ var LightTestDemo = cc.Layer.extend({
         item3.y = height/2 ;
 
         this.addChild(menu, 102, BASE_TEST_MENU_TAG);
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new LightTestScene();
         s.addChild(restartLightTest());
         director.runScene(s);
-    },
+    }
 
-    onNextCallback:function (sender) {
+    onNextCallback(sender) {
         var s = new LightTestScene();
         s.addChild(nextLightTest());
         director.runScene(s);
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         var s = new LightTestScene();
         s.addChild(previousLightTest());
         director.runScene(s);
-    },
-});
+    }
 
-var LightTestScene = cc.Scene.extend({
-    ctor:function () {
-        this._super();
+};
+
+var LightTestScene = class LightTestScene extends cc.Scene {
+    constructor() {
+        super();
 
         var label = new cc.LabelTTF("Main Menu", "Arial", 20);
         var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
@@ -105,37 +110,60 @@ var LightTestScene = cc.Scene.extend({
         menuItem.x = winSize.width - 50;
         menuItem.y = 25;
         this.addChild(menu);
-    },
-    onMainMenuCallback:function () {
+    }
+    onMainMenuCallback() {
         var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
         director.runScene(scene);
-    },
-    runThisTest:function (num) {
+    }
+    runThisTest(num) {
         LightTestIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextLightTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
 
-var LightTest = LightTestDemo.extend({
-    _title:"Light Test",
-    _subtitle:"",
-    _ambientLight:null,
-    _directionalLight:null,
-    _pointLight:null,
-    _spotLight:null,
-    _ambientLightLabel:null,
-    _directionalLightLabel:null,
-    _pointLightLabel:null,
-    _spotLightLabel:null,
-    _angle:0,
+};
 
-    ctor:function(){
-        this._super();
+var LightTest = class LightTest extends LightTestDemo {
+
+    constructor(){
+        super();
+
+
+        this._title = "Light Test";
+
+
+        this._subtitle = "";
+
+
+        this._ambientLight = null;
+
+
+        this._directionalLight = null;
+
+
+        this._pointLight = null;
+
+
+        this._spotLight = null;
+
+
+        this._ambientLightLabel = null;
+
+
+        this._directionalLightLabel = null;
+
+
+        this._pointLightLabel = null;
+
+
+        this._spotLightLabel = null;
+
+
+        this._angle = 0;
 
         this.addSprite();
         this.addLights();
@@ -172,9 +200,9 @@ var LightTest = LightTestDemo.extend({
         this.addChild(menu);
         menu.setPosition(cc.p(0, 0));
 
-    },
+    }
 
-    addSprite:function(){
+    addSprite(){
         var s = cc.winSize;
 
         var orc = new jsb.Sprite3D("Sprite3DTest/orc.c3b");
@@ -207,9 +235,9 @@ var LightTest = LightTestDemo.extend({
         sphere3.setScale(0.5);
         this.addChild(sphere3);
         sphere3.setCameraMask(2);
-    },
+    }
 
-    addLights:function(){
+    addLights(){
         this._ambientLight = new jsb.AmbientLight(cc.color(200, 200, 200));
         this._ambientLight.setEnabled(true);
         this.addChild(this._ambientLight);
@@ -241,9 +269,9 @@ var LightTest = LightTestDemo.extend({
 
         var seq4 = cc.sequence(cc.tintTo(4, 255, 0, 0), cc.tintTo(4, 0, 255, 0), cc.tintTo(4, 0, 0, 255), cc.tintTo(4, 255, 255, 255));
         this._spotLight.runAction(seq4.repeatForever());
-    },
+    }
 
-    update:function(dt){
+    update(dt){
         if(this._directionalLight)
             this._directionalLight.setRotation3D(cc.math.vec3(-45, -cc.radiansToDegrees(this._angle), 0));
 
@@ -254,9 +282,9 @@ var LightTest = LightTestDemo.extend({
             this._spotLight.setPosition3D(cc.math.vec3(100*Math.cos(this._angle+4*dt), 100, 100*Math.sin(this._angle+4*dt)));
             this._spotLight.setDirection(cc.math.vec3(-Math.cos(this._angle + 4 * dt), -1, -Math.sin(this._angle + 4*dt)));
         }
-    },
+    }
 
-    switchLight:function(sender){
+    switchLight(sender){
         var lightType = sender.getUserData();
         switch(lightType){
             case cc.LightType.AMBIENT:
@@ -287,7 +315,8 @@ var LightTest = LightTestDemo.extend({
                 break;
         }
     }
-});
+
+};
 
 //
 // Flow control

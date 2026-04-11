@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIPageViewTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UIPageViewTest = class UIPageViewTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move by horizontal direction");
@@ -80,9 +80,9 @@ var UIPageViewTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    pageViewEvent: function (sender, type) {
+    pageViewEvent(sender, type) {
         switch (type) {
             case ccui.PageView.EVENT_TURNING:
                 var pageView = sender;
@@ -92,12 +92,13 @@ var UIPageViewTest = UIMainLayer.extend({
                 break;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UIPageViewButtonTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()){
+var UIPageViewButtonTest = class UIPageViewButtonTest extends UIMainLayer {
+    init(){
+        if (super.init()){
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
@@ -153,13 +154,13 @@ var UIPageViewButtonTest = UIMainLayer.extend({
 
             return true;
         }
-    },
+    }
 
-    onButtonClicked: function(sender, type){
+    onButtonClicked(sender, type){
         cc.log("button %s clicked", sender.getName());
-    },
+    }
 
-    pageViewEvent: function(pageView, type){
+    pageViewEvent(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
                 this._topDisplayLabel.setString("page = " + pageView.getCurPageIndex() + 1);
@@ -168,12 +169,13 @@ var UIPageViewButtonTest = UIMainLayer.extend({
                 break;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UIPageViewCustomScrollThreshold = UIMainLayer.extend({
-    init: function(){
-        if (this._super()){
+var UIPageViewCustomScrollThreshold = class UIPageViewCustomScrollThreshold extends UIMainLayer {
+    init(){
+        if (super.init()){
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
@@ -230,9 +232,9 @@ var UIPageViewCustomScrollThreshold = UIMainLayer.extend({
 
             return true;
         }
-    },
+    }
 
-    sliderEvent: function(slider, type){
+    sliderEvent(slider, type){
         if (type == ccui.Slider.EVENT_PERCENT_CHANGED){
             var percent = slider.getPercent();
             var pageView = this._mainNode.getChildByName("pageView");
@@ -243,12 +245,13 @@ var UIPageViewCustomScrollThreshold = UIMainLayer.extend({
             this._topDisplayLabel.setString("Scroll Threshold: " + pageView.getCustomScrollThreshold().toFixed(2));
         }
     }
-});
+
+};
 
 //2015-01-14
-var UIPageViewTouchPropagationTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()){
+var UIPageViewTouchPropagationTest = class UIPageViewTouchPropagationTest extends UIMainLayer {
+    init(){
+        if (super.init()){
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
@@ -362,9 +365,9 @@ var UIPageViewTouchPropagationTest = UIMainLayer.extend({
 
             return true;
         }
-    },
+    }
 
-    onButtonClicked: function(btn, type){
+    onButtonClicked(btn, type){
         var ck1 = this._mainNode.getChildByName("propagation");
         var ck2 = this._mainNode.getChildByName("swallow");
         var pageView = this._mainNode.getChildByName("pageView");
@@ -388,9 +391,9 @@ var UIPageViewTouchPropagationTest = UIMainLayer.extend({
         }
         if (type == ccui.Widget.TOUCH_ENDED)
             cc.log("button clicked");
-    },
+    }
 
-    pageViewEvent: function(pageView, type){
+    pageViewEvent(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
                 this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex()-0 + 1));
@@ -399,13 +402,14 @@ var UIPageViewTouchPropagationTest = UIMainLayer.extend({
                 break;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UIPageViewDynamicAddAndRemoveTest = UIMainLayer.extend({
-    init: function(){
+var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
+    init(){
         var self = this;
-        if (this._super()){
+        if (super.init()){
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
@@ -525,9 +529,9 @@ var UIPageViewDynamicAddAndRemoveTest = UIMainLayer.extend({
 
             return true;
         }
-    },
+    }
 
-    pageViewEvent: function(pageView, type){
+    pageViewEvent(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
                 this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex() + 1));
@@ -536,11 +540,12 @@ var UIPageViewDynamicAddAndRemoveTest = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIPageViewDisableTouchTest = UIMainLayer.extend({
-    init: function () {
-        if(this._super()){
+};
+
+var UIPageViewDisableTouchTest = class UIPageViewDisableTouchTest extends UIMainLayer {
+    init() {
+        if(super.init()){
             var widgetSize = this._widget.getContentSize();
 
             this._topDisplayLabel.setString("PageView disable touch");
@@ -586,11 +591,12 @@ var UIPageViewDisableTouchTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIPageViewJumpToPageTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIPageViewJumpToPageTest = class UIPageViewJumpToPageTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("setCurrentPageIndex API Test");
@@ -673,11 +679,12 @@ var UIPageViewJumpToPageTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIPageViewChildSizeTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIPageViewChildSizeTest = class UIPageViewChildSizeTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move by horizontal direction");
@@ -720,9 +727,9 @@ var UIPageViewChildSizeTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    pageViewEvent: function (sender, type) {
+    pageViewEvent(sender, type) {
         switch (type) {
             case ccui.PageView.EVENT_TURNING:
                 var pageView = sender;
@@ -732,11 +739,12 @@ var UIPageViewChildSizeTest = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIPageViewIndicatorTest = UIMainLayer.extend({
-    init: function () {
-        if(this._super()){
+};
+
+var UIPageViewIndicatorTest = class UIPageViewIndicatorTest extends UIMainLayer {
+    init() {
+        if(super.init()){
             var widgetSize = this._widget.getContentSize();
 
             this._topDisplayLabel.setString("PageView indicator custom texture\nscale : 0.5, index color: RED");
@@ -788,4 +796,5 @@ var UIPageViewIndicatorTest = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};

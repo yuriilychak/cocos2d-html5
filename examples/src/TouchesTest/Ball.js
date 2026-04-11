@@ -24,16 +24,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-var Ball = cc.Sprite.extend({
-    _velocity:cc.p(0,0),
-    _radius:0,
-    radius:function () {
+var Ball = class Ball extends cc.Sprite {
+    constructor() {
+        super();
+        this._velocity = cc.p(0,0);
+        this._radius = 0;
+    }
+
+    radius() {
         return this._radius;
-    },
-    setRadius:function (rad) {
+    }
+    setRadius(rad) {
         this._radius = rad;
-    },
-    move:function (delta) {
+    }
+    move(delta) {
 	    this.x += this._velocity.x * delta;
 	    this.y += this._velocity.y * delta;
         var winSize = cc.director.getWinSize();
@@ -44,8 +48,8 @@ var Ball = cc.Sprite.extend({
             this.x = this.radius();
             this._velocity.x *= -1;
         }
-    },
-    collideWithPaddle:function (paddle) {
+    }
+    collideWithPaddle(paddle) {
         var paddleRect = paddle.rect();
 
         paddleRect.x += paddle.x;
@@ -80,14 +84,15 @@ var Ball = cc.Sprite.extend({
                 this._velocity = cc.pMult(cc.pForAngle(velocityAngle), scalarVelocity);
             }
         }
-    },
-    setVelocity:function (velocity) {
+    }
+    setVelocity(velocity) {
         this._velocity = velocity;
-    },
-    getVelocity:function () {
+    }
+    getVelocity() {
         return this._velocity;
     }
-});
+
+};
 Ball.ballWithTexture = function (texture) {
     var ball = new Ball();
     ball.initWithTexture(texture);

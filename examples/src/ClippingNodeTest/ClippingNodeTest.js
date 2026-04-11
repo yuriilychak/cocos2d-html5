@@ -33,53 +33,58 @@ var TAG_CONTENTNODE = 102;
 
 var clippingNodeTestSceneIdx = -1;
 
-var BaseClippingNodeTest = BaseTestLayer.extend({
-    _title:"",
-    _subtitle:"",
+var BaseClippingNodeTest = class BaseClippingNodeTest extends BaseTestLayer {
 
-    ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+
+
+        this._title = "";
+
+
+        this._subtitle = "";
         this.setup();
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new ClippingNodeTestScene();
         s.addChild(restartClippingNodeTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new ClippingNodeTestScene();
         s.addChild(nextClippingNodeTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new ClippingNodeTestScene();
         s.addChild(previousClippingNodeTest());
         director.runScene(s);
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfClippingNodeTest.length-1) - clippingNodeTestSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return clippingNodeTestSceneIdx;
     }
 
-});
+
+};
 
 
 
-var BasicTest = BaseClippingNodeTest.extend({
-    title:function () {
+var BasicTest = class BasicTest extends BaseClippingNodeTest {
+    title() {
         return "Basic Test";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    setup:function () {
+    setup() {
         var winSize = cc.director.getWinSize();
 
         var stencil = this.stencil();
@@ -103,153 +108,159 @@ var BasicTest = BaseClippingNodeTest.extend({
         //content.x = 400;
         //content.y = 225;
         //this.addChild(content);
-    },
+    }
 
-    actionRotate:function () {
+    actionRotate() {
         return cc.rotateBy(1.0, 90.0).repeatForever();
-    },
+    }
 
-    actionScale:function () {
+    actionScale() {
         var scale = cc.scaleBy(1.33, 1.5);
         return cc.sequence(scale, scale.reverse()).repeatForever();
-    },
+    }
 
-    shape:function () {
+    shape() {
         var shape = new cc.DrawNode();
         var triangle = [cc.p(-100, -100),cc.p(100, -100), cc.p(0, 100)];
 
         var green = cc.color(0, 255, 0, 255);
         shape.drawPoly(triangle, green, 3, green);
         return shape;
-    },
+    }
 
-    grossini:function () {
+    grossini() {
         var grossini = new cc.Sprite(s_pathGrossini);
         grossini.scale = 1.5;
         return grossini;
-    },
+    }
 
-    stencil:function () {
-        return null;
-    },
-
-    clipper:function () {
-        return new cc.ClippingNode();
-    },
-
-    content:function () {
+    stencil() {
         return null;
     }
-});
 
-var ShapeTest = BasicTest.extend({
-    title:function () {
+    clipper() {
+        return new cc.ClippingNode();
+    }
+
+    content() {
+        return null;
+    }
+
+};
+
+var ShapeTest = class ShapeTest extends BasicTest {
+    title() {
         return "Shape Basic Test";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "A DrawNode as stencil and Sprite as content";
-    },
+    }
 
-    stencil:function () {
+    stencil() {
         var node = this.shape();
         node.runAction(this.actionRotate());
         return node;
-    },
+    }
 
-    content:function () {
+    content() {
         var node = this.grossini();
         node.runAction(this.actionScale());
         return node;
     }
-});
 
-var ShapeInvertedTest = ShapeTest.extend({
-    title:function () {
+};
+
+var ShapeInvertedTest = class ShapeInvertedTest extends ShapeTest {
+    title() {
         return "Shape Inverted Basic Test";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "A DrawNode as stencil and Sprite as content, inverted";
-    },
+    }
 
-    clipper:function () {
-        var clipper = this._super();
+    clipper() {
+        var clipper = super.clipper();
         clipper.setInverted(true);
         return clipper;
     }
-});
 
-var SpriteTest = BasicTest.extend({
-    title:function () {
+};
+
+var SpriteTest = class SpriteTest extends BasicTest {
+    title() {
         return "Sprite Basic Test";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "A Sprite as stencil and DrawNode as content";
-    },
+    }
 
-    stencil:function () {
+    stencil() {
         var node = this.grossini();
         node.runAction(this.actionRotate());
         return node;
-    },
+    }
 
-    clipper:function () {
-        var clipper = this._super();
+    clipper() {
+        var clipper = super.clipper();
         clipper.alphaThreshold = 0.05;
         return clipper;
-    },
+    }
 
-    content:function () {
+    content() {
         var node = this.shape();
         node.runAction(this.actionScale());
         return node;
     }
-});
 
-var SpriteNoAlphaTest = SpriteTest.extend({
-    title:function () {
+};
+
+var SpriteNoAlphaTest = class SpriteNoAlphaTest extends SpriteTest {
+    title() {
         return "Sprite No Alpha Basic Test";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "A Sprite as stencil and DrawNode as content, no alpha";
-    },
+    }
 
-    clipper:function () {
-        var clipper = this._super();
+    clipper() {
+        var clipper = super.clipper();
         clipper.alphaThreshold = 1;
         return clipper;
     }
-});
 
-var SpriteInvertedTest = SpriteTest.extend({
-    title:function () {
+};
+
+var SpriteInvertedTest = class SpriteInvertedTest extends SpriteTest {
+    title() {
         return "Sprite Inverted Basic Test";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "A Sprite as stencil and DrawNode as content, inverted";
-    },
+    }
 
-    clipper:function () {
-        var clipper = this._super();
+    clipper() {
+        var clipper = super.clipper();
         clipper.alphaThreshold = 0.05;
         clipper.inverted = true;
         return clipper;
     }
-});
 
-var NestedTest = BaseClippingNodeTest.extend({
-    title:function () {
+};
+
+var NestedTest = class NestedTest extends BaseClippingNodeTest {
+    title() {
         return "Nested Test";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Nest 9 Clipping Nodes, max is usually 8";
-    },
+    }
 
-    setup:function () {
+    setup() {
         var depth = 9;
 
         var parent = this;
@@ -286,14 +297,19 @@ var NestedTest = BaseClippingNodeTest.extend({
             parent = clipper;
         }
     }
-});
 
-var HoleDemo = BaseClippingNodeTest.extend({
-    _outerClipper:null,
-    _holes:null,
-    _holesStencil:null,
+};
 
-    setup:function () {
+var HoleDemo = class HoleDemo extends BaseClippingNodeTest {
+    constructor() {
+        super();
+        this._outerClipper = null;
+        this._holes = null;
+        this._holesStencil = null;
+    }
+
+
+    setup() {
         var target = new cc.Sprite(s_pathBlock);
         target.anchorX = 0;
         target.anchorY = 0;
@@ -350,17 +366,17 @@ var HoleDemo = BaseClippingNodeTest.extend({
                 target.pokeHoleAtPoint(point);
             }
         }), this);
-    },
+    }
 
-    title:function () {
+    title() {
         return "Hole Demo";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Touch/click to poke holes";
-    },
+    }
 
-    pokeHoleAtPoint:function (point) {
+    pokeHoleAtPoint(point) {
         var scale = Math.random() * 0.2 + 0.9;
         var rotation = Math.random() * 360;
 
@@ -385,21 +401,26 @@ var HoleDemo = BaseClippingNodeTest.extend({
         this._holesStencil.addChild(holeStencil);
         this._outerClipper.runAction(cc.sequence(cc.scaleBy(0.05, 0.95), cc.scaleTo(0.125, 1)));
     }
-});
 
-var ScrollViewDemo = BaseClippingNodeTest.extend({
-    _scrolling:false,
-    _lastPoint:null,
+};
 
-    title:function () {
+var ScrollViewDemo = class ScrollViewDemo extends BaseClippingNodeTest {
+    constructor() {
+        super();
+        this._scrolling = false;
+        this._lastPoint = null;
+    }
+
+
+    title() {
         return "Scroll View Demo";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Move/drag to scroll the content";
-    },
+    }
 
-    setup:function () {
+    setup() {
         var clipper = new cc.ClippingNode();
         clipper.tag = TAG_CLIPPERNODE;
         clipper.width = 200;
@@ -467,7 +488,8 @@ var ScrollViewDemo = BaseClippingNodeTest.extend({
             }
         }), this);
     }
-});
+
+};
 
 var _stencilBits = -1;
 var _alphaThreshold = 0.05;
@@ -484,22 +506,26 @@ var _planeColor = [
     cc.color(179, 179, 179, 77)
 ];
 
-var RawStencilBufferTest = BaseClippingNodeTest.extend({
-    _sprite:null,
+var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTest {
+    constructor() {
+        super();
+        this._sprite = null;
+    }
 
-    _initRendererCmd: function(){
+
+    _initRendererCmd(){
         this._rendererCmd = new cc.CustomRenderCmdWebGL(this, this.draw);
-    },
+    }
 
-    title:function () {
+    title() {
         return "Raw Stencil Tests";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "1:Default";
-    },
+    }
 
-    setup:function () {
+    setup() {
         _stencilBits = cc._renderContext.getParameter(cc._renderContext.STENCIL_BITS);
         if (_stencilBits < 3)
             cc.log("Stencil must be enabled for the current CCGLView.");
@@ -509,9 +535,9 @@ var RawStencilBufferTest = BaseClippingNodeTest.extend({
         this._sprite.anchorY = 0;
         this._sprite.scale = 2.5;
         cc.director.setAlphaBlending(true);
-    },
+    }
 
-    draw:function (ctx) {
+    draw(ctx) {
         var gl = ctx || cc._renderContext;
         var winPoint = cc.pFromSize(cc.director.getWinSize());
         var planeSize = cc.pMult(winPoint, 1.0 / _PLANE_COUNT);
@@ -550,9 +576,9 @@ var RawStencilBufferTest = BaseClippingNodeTest.extend({
 
         gl.disable(gl.STENCIL_TEST);
         //cc.checkGLErrorDebug();
-    },
+    }
 
-    setupStencilForClippingOnPlane:function (plane) {
+    setupStencilForClippingOnPlane(plane) {
         var gl = cc._renderContext;
         var planeMask = 0x1 << plane;
         gl.stencilMask(planeMask);
@@ -561,61 +587,64 @@ var RawStencilBufferTest = BaseClippingNodeTest.extend({
         gl.flush();
         gl.stencilFunc(gl.NEVER, planeMask, planeMask);
         gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
-    },
+    }
 
-    setupStencilForDrawingOnPlane:function (plane) {
+    setupStencilForDrawingOnPlane(plane) {
         var gl = cc._renderContext;
         var planeMask = 0x1 << plane;
         var equalOrLessPlanesMask = planeMask | (planeMask - 1);
         gl.stencilFunc(gl.EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);
         gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
     }
-});
 
-var RawStencilBufferTest2 = RawStencilBufferTest.extend({
-    subtitle:function () {
+};
+
+var RawStencilBufferTest2 = class RawStencilBufferTest2 extends RawStencilBufferTest {
+    subtitle() {
         return "2:DepthMask:FALSE";
-    },
-
-    setupStencilForClippingOnPlane:function (plane) {
-        this._super(plane);
-        cc._renderContext.depthMask(false);
-    },
-
-    setupStencilForDrawingOnPlane:function (plane) {
-        cc._renderContext.depthMask(true);
-        this._super(plane);
     }
-});
 
-var RawStencilBufferTest3 = RawStencilBufferTest.extend({
-    subtitle:function () {
+    setupStencilForClippingOnPlane(plane) {
+        super.setupStencilForClippingOnPlane(plane);
+        cc._renderContext.depthMask(false);
+    }
+
+    setupStencilForDrawingOnPlane(plane) {
+        cc._renderContext.depthMask(true);
+        super.setupStencilForDrawingOnPlane(plane);
+    }
+
+};
+
+var RawStencilBufferTest3 = class RawStencilBufferTest3 extends RawStencilBufferTest {
+    subtitle() {
         return "3:DepthTest:DISABLE,DepthMask:FALSE";
-    },
+    }
 
-    setupStencilForClippingOnPlane:function (plane) {
+    setupStencilForClippingOnPlane(plane) {
         var gl = cc._renderContext;
-        this._super(plane);
+        super.setupStencilForClippingOnPlane(plane);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
-    },
+    }
 
-    setupStencilForDrawingOnPlane:function (plane) {
+    setupStencilForDrawingOnPlane(plane) {
         var gl = cc._renderContext;
         gl.depthMask(true);
         //gl.enable(gl.DEPTH_TEST);
-        this._super(plane);
+        super.setupStencilForDrawingOnPlane(plane);
     }
-});
 
-var RawStencilBufferTest4 = RawStencilBufferTest.extend({
-    subtitle:function () {
+};
+
+var RawStencilBufferTest4 = class RawStencilBufferTest4 extends RawStencilBufferTest {
+    subtitle() {
         return "4:DepthMask:FALSE,AlphaTest:ENABLE";
-    },
+    }
 
-    setupStencilForClippingOnPlane:function (plane) {
+    setupStencilForClippingOnPlane(plane) {
         var gl = cc._renderContext;
-        this._super(plane);
+        super.setupStencilForClippingOnPlane(plane);
         gl.depthMask(false);
 
         var program = cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
@@ -623,22 +652,23 @@ var RawStencilBufferTest4 = RawStencilBufferTest.extend({
         cc.glUseProgram(program.getProgram());
         program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         this._sprite.shaderProgram = program;
-    },
-
-    setupStencilForDrawingOnPlane:function (plane) {
-        cc._renderContext.depthMask(true);
-        this._super(plane);
     }
-});
 
-var RawStencilBufferTest5 = RawStencilBufferTest.extend({
-    subtitle:function () {
+    setupStencilForDrawingOnPlane(plane) {
+        cc._renderContext.depthMask(true);
+        super.setupStencilForDrawingOnPlane(plane);
+    }
+
+};
+
+var RawStencilBufferTest5 = class RawStencilBufferTest5 extends RawStencilBufferTest {
+    subtitle() {
         return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
-    },
+    }
 
-    setupStencilForClippingOnPlane:function (plane) {
+    setupStencilForClippingOnPlane(plane) {
         var gl = cc._renderContext;
-        this._super(plane);
+        super.setupStencilForClippingOnPlane(plane);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
 
@@ -647,26 +677,27 @@ var RawStencilBufferTest5 = RawStencilBufferTest.extend({
         cc.glUseProgram(program.getProgram());
         program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         this._sprite.shaderProgram = program;
-    },
+    }
 
-    setupStencilForDrawingOnPlane:function (plane) {
+    setupStencilForDrawingOnPlane(plane) {
         cc._renderContext.depthMask(true);
         //cc._renderContext.enable(cc._renderContext.DEPTH_TEST);
-        this._super(plane);
+        super.setupStencilForDrawingOnPlane(plane);
     }
-});
 
-var RawStencilBufferTest6 = RawStencilBufferTest.extend({
-    subtitle:function () {
+};
+
+var RawStencilBufferTest6 = class RawStencilBufferTest6 extends RawStencilBufferTest {
+    subtitle() {
         return "6:ManualClear,AlphaTest:ENABLE";
-    },
+    }
 
-    setup:function () {
+    setup() {
         cc._renderContext.stencilMask(~0);
-        this._super();
-    },
+        super.setup();
+    }
 
-    setupStencilForClippingOnPlane:function (plane) {
+    setupStencilForClippingOnPlane(plane) {
         var gl = cc._renderContext;
         var planeMask = 0x1 << plane;
         gl.stencilMask(planeMask);
@@ -685,16 +716,17 @@ var RawStencilBufferTest6 = RawStencilBufferTest.extend({
         this._sprite.shaderProgram = program;
 
         gl.flush();
-    },
+    }
 
-    setupStencilForDrawingOnPlane:function (plane) {
+    setupStencilForDrawingOnPlane(plane) {
         var gl = cc._renderContext;
         gl.depthMask(true);
         //gl.enable(gl.DEPTH_TEST);
-        this._super(plane);
+        super.setupStencilForDrawingOnPlane(plane);
         gl.flush();
     }
-});
+
+};
 
 var arrayOfClippingNodeTest = [
     ScrollViewDemo,
@@ -756,11 +788,12 @@ var restartClippingNodeTest = function () {
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 
-var ClippingNodeTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var ClippingNodeTestScene = class ClippingNodeTestScene extends TestScene {
+    runThisTest(num) {
         clippingNodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         cc.director.runScene(this);
 	    var layer = nextClippingNodeTest();
 	    this.addChild(layer);
     }
-});
+
+};

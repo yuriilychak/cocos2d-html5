@@ -28,54 +28,57 @@
  * @class
  * @extends cc.Event
  */
-cc.EventAcceleration = cc.Event.extend(/** @lends cc.EventAcceleration# */{
-    _acc: null,
-    ctor: function (acc) {
-        cc.Event.prototype.ctor.call(this, cc.Event.ACCELERATION);
+cc.EventAcceleration = class EventAcceleration extends cc.Event {
+    constructor(acc) {
+        super(cc.Event.ACCELERATION);
+        this._acc = null;
+
         this._acc = acc;
     }
-});
+};
 
 /**
  * The keyboard event
  * @class
  * @extends cc.Event
  */
-cc.EventKeyboard = cc.Event.extend(/** @lends cc.EventKeyboard# */{
-    _keyCode: 0,
-    _isPressed: false,
-    ctor: function (keyCode, isPressed) {
-        cc.Event.prototype.ctor.call(this, cc.Event.KEYBOARD);
+cc.EventKeyboard = class EventKeyboard extends cc.Event {
+    constructor(keyCode, isPressed) {
+        super(cc.Event.KEYBOARD);
+        this._keyCode = 0;
+        this._isPressed = false;
+
         this._keyCode = keyCode;
         this._isPressed = isPressed;
     }
-});
+};
 
 
 //Acceleration
-cc._EventListenerAcceleration = cc.EventListener.extend({
-    _onAccelerationEvent: null,
-
-    ctor: function (callback) {
-        this._onAccelerationEvent = callback;
-        var selfPointer = this;
+cc._EventListenerAcceleration = class _EventListenerAcceleration extends cc.EventListener {
+    constructor(callback) {
+        var selfPointer;
         var listener = function (event) {
             selfPointer._onAccelerationEvent(event._acc, event);
         };
-        cc.EventListener.prototype.ctor.call(this, cc.EventListener.ACCELERATION, cc._EventListenerAcceleration.LISTENER_ID, listener);
-    },
+        super(cc.EventListener.ACCELERATION, cc._EventListenerAcceleration.LISTENER_ID, listener);
+        this._onAccelerationEvent = null;
 
-    checkAvailable: function () {
+        this._onAccelerationEvent = callback;
+        selfPointer = this;
+    }
+
+    checkAvailable() {
 
         cc.assert(this._onAccelerationEvent, cc._LogInfos._EventListenerAcceleration_checkAvailable);
 
         return true;
-    },
+    }
 
-    clone: function () {
+    clone() {
         return new cc._EventListenerAcceleration(this._onAccelerationEvent);
     }
-});
+};
 
 cc._EventListenerAcceleration.LISTENER_ID = "__cc_acceleration";
 
@@ -85,12 +88,9 @@ cc._EventListenerAcceleration.create = function (callback) {
 
 
 //Keyboard
-cc._EventListenerKeyboard = cc.EventListener.extend({
-    onKeyPressed: null,
-    onKeyReleased: null,
-
-    ctor: function () {
-        var selfPointer = this;
+cc._EventListenerKeyboard = class _EventListenerKeyboard extends cc.EventListener {
+    constructor() {
+        var selfPointer;
         var listener = function (event) {
             if (event._isPressed) {
                 if (selfPointer.onKeyPressed)
@@ -100,24 +100,28 @@ cc._EventListenerKeyboard = cc.EventListener.extend({
                     selfPointer.onKeyReleased(event._keyCode, event);
             }
         };
-        cc.EventListener.prototype.ctor.call(this, cc.EventListener.KEYBOARD, cc._EventListenerKeyboard.LISTENER_ID, listener);
-    },
+        super(cc.EventListener.KEYBOARD, cc._EventListenerKeyboard.LISTENER_ID, listener);
+        this.onKeyPressed = null;
+        this.onKeyReleased = null;
 
-    clone: function () {
+        selfPointer = this;
+    }
+
+    clone() {
         var eventListener = new cc._EventListenerKeyboard();
         eventListener.onKeyPressed = this.onKeyPressed;
         eventListener.onKeyReleased = this.onKeyReleased;
         return eventListener;
-    },
+    }
 
-    checkAvailable: function () {
+    checkAvailable() {
         if (this.onKeyPressed === null && this.onKeyReleased === null) {
             cc.log(cc._LogInfos._EventListenerKeyboard_checkAvailable);
             return false;
         }
         return true;
     }
-});
+};
 
 cc._EventListenerKeyboard.LISTENER_ID = "__cc_keyboard";
 

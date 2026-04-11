@@ -24,17 +24,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIListViewTest_Vertical = UIMainLayer.extend({
-    _spawnCount: 8,
-    _totalCount: 100,
-    _bufferZone: 50,
-    _updateInterval: 0.01,
-    _updateTimer: 0,
-    _lastContentPosY: 0,
-    _reuseItemOffset: 0,
-    _initializeListSize: false,
-    init: function () {
-        if (this._super()) {
+var UIListViewTest_Vertical = class UIListViewTest_Vertical extends UIMainLayer {
+    constructor() {
+        super();
+        this._spawnCount = 8;
+        this._totalCount = 100;
+        this._bufferZone = 50;
+        this._updateInterval = 0.01;
+        this._updateTimer = 0;
+        this._lastContentPosY = 0;
+        this._reuseItemOffset = 0;
+        this._initializeListSize = false;
+    }
+
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             var background = this._widget.getChildByName("background_Panel");
             var backgroundSize = background.getContentSize();
@@ -100,31 +104,31 @@ var UIListViewTest_Vertical = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    onEnter: function() {
+    onEnter() {
         cc.Node.prototype.onEnter.call(this);
         //we must call foreceDoLayout in onEnter method in h5.
         this.listView.forceDoLayout();
         var totalHeight = this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
         this.listView.getInnerContainer().setContentSize(cc.size(this.listView.getInnerContainerSize().width, totalHeight));
         this.listView.jumpToTop();
-    },
+    }
 
-    getItemPositionYInView: function(item) {
+    getItemPositionYInView(item) {
         var worldPos = item.getParent().convertToWorldSpaceAR(item.getPosition());
         var viewPos = this.listView.convertToNodeSpaceAR(worldPos);
         return viewPos.y;
-    },
+    }
 
-    updateItem: function(itemID, templateID) {
+    updateItem(itemID, templateID) {
         var itemTemplate = this.listView.getItems()[templateID];
         var btn = itemTemplate.getChildByName('TextButton');
         itemTemplate.setTag(itemID);
         btn.setTitleText(this._array[itemID]);
-    },
+    }
 
-    update: function(dt){
+    update(dt){
         this._updateTimer += dt;
         if (this._updateTimer < this._updateInterval) {
             return;
@@ -156,9 +160,9 @@ var UIListViewTest_Vertical = UIMainLayer.extend({
         }
 
         this._lastContentPosY = this.listView.getInnerContainer().getPosition().y;
-    },
+    }
 
-    selectedItemEvent: function (sender, type) {
+    selectedItemEvent(sender, type) {
         switch (type) {
             case ccui.ListView.EVENT_SELECTED_ITEM:
                 var listViewEx = sender;
@@ -170,12 +174,17 @@ var UIListViewTest_Vertical = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIListViewTest_Horizontal = UIMainLayer.extend({
-    _array: null,
-    init: function () {
-        if (this._super()) {
+};
+
+var UIListViewTest_Horizontal = class UIListViewTest_Horizontal extends UIMainLayer {
+    constructor() {
+        super();
+        this._array = null;
+    }
+
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             var background = this._widget.getChildByName("background_Panel");
             var backgroundSize = background.getContentSize();
@@ -287,9 +296,9 @@ var UIListViewTest_Horizontal = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    selectedItemEvent: function (sender, type) {
+    selectedItemEvent(sender, type) {
         switch (type) {
             case ccui.ListView.EVENT_SELECTED_ITEM:
                 cc.log("select child index = " + sender.getCurSelectedIndex());
@@ -298,11 +307,12 @@ var UIListViewTest_Horizontal = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UIListViewTest_TouchIntercept = UIMainLayer.extend({
-    init: function () {
-        if(this._super()) {
+};
+
+var UIListViewTest_TouchIntercept = class UIListViewTest_TouchIntercept extends UIMainLayer {
+    init() {
+        if(super.init()) {
             var widgetSize = this._widget.getContentSize();
             var background = this._widget.getChildByName("background_Panel");
             var backgroundSize = background.getContentSize();
@@ -350,12 +360,17 @@ var UIListViewTest_TouchIntercept = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIListViewTest_ScrollToItem = UIMainLayer.extend({
-    _nextIndex: 0,
-    init: function () {
-        if(this._super()) {
+};
+
+var UIListViewTest_ScrollToItem = class UIListViewTest_ScrollToItem extends UIMainLayer {
+    constructor() {
+        super();
+        this._nextIndex = 0;
+    }
+
+    init() {
+        if(super.init()) {
             var widgetSize = this._widget.getContentSize();
             var background = this._widget.getChildByName("background_Panel");
             var backgroundSize = background.getContentSize();
@@ -441,31 +456,38 @@ var UIListViewTest_ScrollToItem = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    _getListViewDirection: function()
+    }
+    _getListViewDirection()
     {
 
     }
-});
 
-var UIListViewTest_ScrollToItemVertical = UIListViewTest_ScrollToItem.extend({
-    _getListViewDirection: function()
+};
+
+var UIListViewTest_ScrollToItemVertical = class UIListViewTest_ScrollToItemVertical extends UIListViewTest_ScrollToItem {
+    _getListViewDirection()
     {
         return ccui.ScrollView.DIR_VERTICAL;
     }
-});
 
-var UIListViewTest_ScrollToItemHorizontal = UIListViewTest_ScrollToItem.extend({
-    _getListViewDirection: function()
+};
+
+var UIListViewTest_ScrollToItemHorizontal = class UIListViewTest_ScrollToItemHorizontal extends UIListViewTest_ScrollToItem {
+    _getListViewDirection()
     {
         return ccui.ScrollView.DIR_HORIZONTAL;
     }
-});
 
-var UIListViewTest_Magnetic = UIMainLayer.extend({
-    _listView: null,
-    init: function () {
-        if(this._super()) {
+};
+
+var UIListViewTest_Magnetic = class UIListViewTest_Magnetic extends UIMainLayer {
+    constructor() {
+        super();
+        this._listView = null;
+    }
+
+    init() {
+        if(super.init()) {
             var widgetSize = this._widget.getContentSize();
             var background = this._widget.getChildByName("background_Panel");
             var backgroundSize = background.getContentSize();
@@ -593,24 +615,27 @@ var UIListViewTest_Magnetic = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    _getListViewDirection: function()
+    _getListViewDirection()
     {
 
     }
-});
 
-var UIListViewTest_MagneticVertical = UIListViewTest_Magnetic.extend({
-    _getListViewDirection: function()
+};
+
+var UIListViewTest_MagneticVertical = class UIListViewTest_MagneticVertical extends UIListViewTest_Magnetic {
+    _getListViewDirection()
     {
         return ccui.ScrollView.DIR_VERTICAL;
     }
-});
 
-var UIListViewTest_MagneticHorizontal = UIListViewTest_Magnetic.extend({
-    _getListViewDirection: function()
+};
+
+var UIListViewTest_MagneticHorizontal = class UIListViewTest_MagneticHorizontal extends UIListViewTest_Magnetic {
+    _getListViewDirection()
     {
         return ccui.ScrollView.DIR_HORIZONTAL;
     }
-});
+
+};

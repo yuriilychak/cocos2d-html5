@@ -39,29 +39,29 @@ ccs.SkeletonNode = (function () {
         rect: cc.rect
     };
 
-    var SkeletonNode = BoneNode.extend(/** @lends ccs.SkeletonNode# */{
-        _subBonesMap: null,
+    var SkeletonNode = class SkeletonNode extends ccs.BoneNode {
 
-        _squareVertices: null,
-        _squareColors: null,
-        _noMVPVertices: null,
-        _skinGroupMap: null,
 
-        _sortedAllBonesDirty: false,
-        _sortedAllBones: null,
-        _batchedBoneVetices: null,
-        _batchedBoneColors: null,
-        _batchedVeticesCount: null,
-        _batchBoneCommand: null,
-        _subOrderedAllBones: null,
 
-        ctor: function () {
+        constructor() {
+            super();
+            this._subBonesMap = null;
+            this._squareVertices = null;
+            this._squareColors = null;
+            this._noMVPVertices = null;
+            this._skinGroupMap = null;
+            this._sortedAllBonesDirty = false;
+            this._sortedAllBones = null;
+            this._batchedBoneVetices = null;
+            this._batchedBoneColors = null;
+            this._batchedVeticesCount = null;
+            this._batchBoneCommand = null;
+            this._subOrderedAllBones = null;
             this._squareVertices = [
                 {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
                 {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}
             ];
             this._rootSkeleton = this;
-            BoneNode.prototype.ctor.call(this);
             this._subBonesMap = {};
             this._subOrderedAllBones = [];
 
@@ -69,20 +69,20 @@ ccs.SkeletonNode = (function () {
 
             this._rackLength = this._rackWidth = 20;
             this._updateVertices();
-        },
+        }
 
-        getBoneNode: function (boneName) {
+        getBoneNode(boneName) {
             var item = this._subBonesMap[boneName];
             if (item)
                 return item;
             return null;
-        },
+        }
 
-        getAllSubBonesMap: function () {
+        getAllSubBonesMap() {
             return this._subBonesMap;
-        },
+        }
 
-        changeSkins: function (boneSkinNameMap) {
+        changeSkins(boneSkinNameMap) {
             //boneSkinNameMap
             //suitName
             if (typeof boneSkinNameMap === "object") {
@@ -98,13 +98,13 @@ ccs.SkeletonNode = (function () {
                 if (suit)
                     this.changeSkins(suit, true);
             }
-        },
+        }
 
-        addSkinGroup: function (groupName, boneSkinNameMap) {
+        addSkinGroup(groupName, boneSkinNameMap) {
             this._skinGroupMap[groupName] = boneSkinNameMap;
-        },
+        }
 
-        getBoundingBox: function () {
+        getBoundingBox() {
             var minx, miny, maxx, maxy = 0;
             minx = miny = maxx = maxy;
             var boundingBox = this.getVisibleSkinsRect();
@@ -142,9 +142,9 @@ ccs.SkeletonNode = (function () {
             boundingBox.width = maxx - minx;
             boundingBox.height = maxy - miny;
             return cc.rectApplyAffineTransform(boundingBox, this.getNodeToParentTransform());
-        },
+        }
 
-        _visit: function (parentCmd) {
+        _visit(parentCmd) {
             var cmd = this._renderCmd;
             parentCmd = parentCmd || cmd.getParentRenderCmd();
 
@@ -177,9 +177,9 @@ ccs.SkeletonNode = (function () {
                     cc.renderer.pushRenderCommand(subOrderedBoneCmd._drawNode._renderCmd);
                 }
             cmd._dirtyFlag = 0;
-        },
+        }
 
-        _checkSubBonesDirty: function () {
+        _checkSubBonesDirty() {
             if (this._subBonesDirty) {
                 this._updateOrderedAllbones();
                 this._subBonesDirty = false;
@@ -188,9 +188,9 @@ ccs.SkeletonNode = (function () {
                 this._sortOrderedAllBones();
                 this._subBonesOrderDirty = false;
             }
-        },
+        }
 
-        _updateOrderedAllbones: function () {
+        _updateOrderedAllbones() {
             this._subOrderedAllBones.length = 0;
             // update sub bones, get All Visible SubBones
             // get all sub bones as visit with visible
@@ -215,14 +215,14 @@ ccs.SkeletonNode = (function () {
                         boneStack.push(childbone);
                 }
             }
-        },
+        }
 
-        _sortOrderedAllBones: function () {
+        _sortOrderedAllBones() {
             this._sortArray(this._subOrderedAllBones);
-        },
+        }
 
         // protected
-        _updateVertices: function () {
+        _updateVertices() {
             var squareVertices = this._squareVertices,
                 anchorPointInPoints = this._renderCmd._anchorPointInPoints;
             if (this._rackLength != squareVertices[6].x - anchorPointInPoints.x ||
@@ -242,9 +242,9 @@ ccs.SkeletonNode = (function () {
                     squareVertices[i].y += anchorPointInPoints.y;
                 }
             }
-        },
+        }
 
-        _updateAllDrawBones: function () {
+        _updateAllDrawBones() {
             this._subDrawBones = {}; //.clear()
             for (var name in this._subBonesMap) {
                 var bone = this._subBonesMap[name];
@@ -255,7 +255,8 @@ ccs.SkeletonNode = (function () {
             this._subDrawBones = false;
         }
 
-    });
+    
+    }
 
     SkeletonNode.create = function () {
         return new SkeletonNode;

@@ -53,15 +53,13 @@
  * @property {cc.TextureAtlas}  textureAtlas    - The texture atlas
  * @property {Array}            descendants     - <@readonly> Descendants of sprite batch node
  */
-cc.SpriteBatchNode = cc.Node.extend(
-  /** @lends cc.SpriteBatchNode# */ {
-    _blendFunc: null,
-    // all descendants: chlidren, gran children, etc...
-    _texture: null,
-    _className: "SpriteBatchNode",
-
-    ctor: function (fileImage) {
-      cc.Node.prototype.ctor.call(this);
+cc.SpriteBatchNode = class SpriteBatchNode extends cc.Node {
+    constructor(fileImage) {
+      super();
+      this._blendFunc = null;
+      // all descendants: chlidren, gran children, etc...
+      this._texture = null;
+      this._className = "SpriteBatchNode";
       this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
 
       var texture2D;
@@ -71,7 +69,7 @@ cc.SpriteBatchNode = cc.Node.extend(
       } else if (fileImage instanceof cc.Texture2D) texture2D = fileImage;
 
       texture2D && this.initWithTexture(texture2D);
-    },
+    }
 
     /**
      * <p>
@@ -84,11 +82,11 @@ cc.SpriteBatchNode = cc.Node.extend(
      * @param {Number} capacity
      * @return {Boolean}
      */
-    initWithFile: function (fileImage, capacity) {
+    initWithFile(fileImage, capacity) {
       var texture2D = cc.textureCache.getTextureForKey(fileImage);
       if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
       return this.initWithTexture(texture2D, capacity);
-    },
+    }
 
     /**
      * <p>
@@ -101,11 +99,11 @@ cc.SpriteBatchNode = cc.Node.extend(
      * @param {Number} capacity
      * @return {Boolean}
      */
-    init: function (fileImage, capacity) {
+    init(fileImage, capacity) {
       var texture2D = cc.textureCache.getTextureForKey(fileImage);
       if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
       return this.initWithTexture(texture2D, capacity);
-    },
+    }
 
     /**
      * Removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
@@ -113,27 +111,27 @@ cc.SpriteBatchNode = cc.Node.extend(
      * @param {Number} index
      * @param {Boolean} doCleanup
      */
-    removeChildAtIndex: function (index, doCleanup) {
+    removeChildAtIndex(index, doCleanup) {
       this.removeChild(this._children[index], doCleanup);
-    },
+    }
 
     /**
      * Sets the source and destination blending function for the texture
      * @param {Number | cc.BlendFunc} src
      * @param {Number} dst
      */
-    setBlendFunc: function (src, dst) {
+    setBlendFunc(src, dst) {
       if (dst === undefined) this._blendFunc = src;
       else this._blendFunc = { src: src, dst: dst };
-    },
+    }
 
     /**
      * Returns the blending function used for the texture
      * @return {cc.BlendFunc}
      */
-    getBlendFunc: function () {
+    getBlendFunc() {
       return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
-    },
+    }
 
     /**
      * <p>
@@ -145,7 +143,7 @@ cc.SpriteBatchNode = cc.Node.extend(
      * @param {cc.Sprite} sprite
      * @param {Number} index
      */
-    updateQuadFromSprite: function (sprite, index) {
+    updateQuadFromSprite(sprite, index) {
       cc.assert(sprite, cc._LogInfos.CCSpriteBatchNode_updateQuadFromSprite_2);
       if (!(sprite instanceof cc.Sprite)) {
         cc.log(cc._LogInfos.CCSpriteBatchNode_updateQuadFromSprite);
@@ -158,7 +156,7 @@ cc.SpriteBatchNode = cc.Node.extend(
       sprite.dirty = true;
       // UpdateTransform updates the textureAtlas quad
       sprite._renderCmd.transform(this._renderCmd, true);
-    },
+    }
 
 
     /**
@@ -166,12 +164,12 @@ cc.SpriteBatchNode = cc.Node.extend(
      * @function
      * @param {cc.Sprite} sprite
      */
-    appendChild: function (sprite) {
+    appendChild(sprite) {
       this.sortAllChildren();
       var lastLocalZOrder =
         this._children[this._children.length - 1]._localZOrder;
       this.addChild(sprite.lastLocalZOrder + 1);
-    },
+    }
 
     /**
      * Set the texture property
@@ -179,10 +177,10 @@ cc.SpriteBatchNode = cc.Node.extend(
      * @param {cc.Texture2D} tex
      * @return {Boolean}
      */
-    initWithTexture: function (tex) {
+    initWithTexture(tex) {
       this.setTexture(tex);
       return true;
-    },
+    }
 
     // CCTextureProtocol
     /**
@@ -190,16 +188,16 @@ cc.SpriteBatchNode = cc.Node.extend(
      * @function
      * @return {cc.Texture2D}
      */
-    getTexture: function () {
+    getTexture() {
       return this._texture;
-    },
+    }
 
     /**
      * Sets the texture of the sprite batch node.
      * @function
      * @param {cc.Texture2D} texture
      */
-    setTexture: function (texture) {
+    setTexture(texture) {
       this._texture = texture;
 
       if (texture._textureLoaded) {
@@ -223,9 +221,9 @@ cc.SpriteBatchNode = cc.Node.extend(
           this
         );
       }
-    },
+    }
 
-    setShaderProgram: function (newShaderProgram) {
+    setShaderProgram(newShaderProgram) {
       this._renderCmd.setShaderProgram(newShaderProgram);
       var i,
         children = this._children,
@@ -233,7 +231,7 @@ cc.SpriteBatchNode = cc.Node.extend(
       for (i = 0; i < len; ++i) {
         children[i].setShaderProgram(newShaderProgram);
       }
-    },
+    }
 
     /**
      * Add child to the sprite batch node (override addChild of cc.Node)
@@ -243,22 +241,22 @@ cc.SpriteBatchNode = cc.Node.extend(
      * @param {Number} [zOrder]
      * @param {Number} [tag]
      */
-    addChild: function (child, zOrder, tag) {
+    addChild(child, zOrder, tag) {
       cc.assert(child !== undefined, cc._LogInfos.CCSpriteBatchNode_addChild_3);
 
       if (!this._isValidChild(child)) return;
 
       zOrder = zOrder === undefined ? child.zIndex : zOrder;
       tag = tag === undefined ? child.tag : tag;
-      cc.Node.prototype.addChild.call(this, child, zOrder, tag);
+      super.addChild(child, zOrder, tag);
 
       // Apply shader
       if (this._renderCmd._shaderProgram) {
         child.shaderProgram = this._renderCmd._shaderProgram;
       }
-    },
+    }
 
-    _isValidChild: function (child) {
+    _isValidChild(child) {
       if (!(child instanceof cc.Sprite)) {
         cc.log(cc._LogInfos.Sprite_addChild_4);
         return false;
@@ -269,8 +267,7 @@ cc.SpriteBatchNode = cc.Node.extend(
       }
       return true;
     }
-  }
-);
+};
 
 var _p = cc.SpriteBatchNode.prototype;
 

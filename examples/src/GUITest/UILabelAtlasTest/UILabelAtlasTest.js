@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 
-var UILabelAtlasTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UILabelAtlasTest = class UILabelAtlasTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("LabelAtlas");
@@ -43,4 +43,5 @@ var UILabelAtlasTest = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};

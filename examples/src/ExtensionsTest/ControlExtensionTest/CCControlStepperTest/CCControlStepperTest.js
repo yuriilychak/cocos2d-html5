@@ -24,10 +24,14 @@
 
  */
 
-var ControlStepperTest = ControlScene.extend({
-    _displayValueLabel:null,
-    init:function () {
-        if (this._super()) {
+var ControlStepperTest = class ControlStepperTest extends ControlScene {
+    constructor() {
+        super();
+        this._displayValueLabel = null;
+    }
+
+    init() {
+        if (super.init()) {
             var screenSize = cc.director.getWinSize();
 
             var layer = new cc.Node();
@@ -71,19 +75,20 @@ var ControlStepperTest = ControlScene.extend({
             return true;
         }
         return false;
-    },
-    makeControlStepper:function () {
+    }
+    makeControlStepper() {
         var minusSprite = new cc.Sprite("extensions/stepper-minus.png");
         var plusSprite = new cc.Sprite("extensions/stepper-plus.png");
 
         return new cc.ControlStepper(minusSprite, plusSprite);
-    },
+    }
 
-    valueChanged:function (sender, controlEvent) {
+    valueChanged(sender, controlEvent) {
         // Change value of label.
         this._displayValueLabel.setString(sender.getValue().toString());
     }
-});
+
+};
 
 ControlStepperTest.create = function (sceneTitle) {
     var scene = new cc.Scene();

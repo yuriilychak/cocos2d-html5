@@ -27,17 +27,19 @@
 var TAG_SPRITE_MANAGER = 1;
 var PTM_RATIO = 32;
 
-var Box2DTestLayer = cc.LayerColor.extend({
-    world:null,
+var Box2DTestLayer = class Box2DTestLayer extends cc.LayerColor {
     //GLESDebugDraw *m_debugDraw;
 
-    ctor:function () {
+    constructor() {
 
         if(window.sideIndexBar){
             window.sideIndexBar.changeTest(0, 2);
         }
         //----start0----ctor
-        this._super(cc.color(0, 0, 0, 255));
+        super(cc.color(0, 0, 0, 255));
+
+
+        this.world = null;
 
         cc.eventManager.addListener(cc.EventListener.create({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -113,9 +115,9 @@ var Box2DTestLayer = cc.LayerColor.extend({
 
         this.scheduleUpdate();
         //----end0----
-    },
+    }
 
-    addNewSpriteWithCoords:function (p) {
+    addNewSpriteWithCoords(p) {
         //----start0----addNewSpriteWithCoords
         //UXLog(L"Add sprite %0.2f x %02.f",p.x,p.y);
         var batch = this.getChildByTag(TAG_SPRITE_MANAGER);
@@ -154,8 +156,8 @@ var Box2DTestLayer = cc.LayerColor.extend({
         fixtureDef.friction = 0.3;
         body.CreateFixture(fixtureDef);
         //----end0----
-    },
-    update:function (dt) {
+    }
+    update(dt) {
         //----start0----update
         //It is recommended that a fixed time step is used with Box2D for stability
         //of the simulation, however, we are using a variable time step here.
@@ -182,16 +184,18 @@ var Box2DTestLayer = cc.LayerColor.extend({
         //----end0----
     }
     //CREATE_NODE(Box2DTestLayer);
-});
 
-var Box2DTestScene = TestScene.extend({
-    runThisTest:function () {
+};
+
+var Box2DTestScene = class Box2DTestScene extends TestScene {
+    runThisTest() {
         var layer = new Box2DTestLayer();
         this.addChild(layer);
 
         cc.director.runScene(this);
     }
-});
+
+};
 
 var arrayOfBox2DTest = [
     Box2DTestLayer

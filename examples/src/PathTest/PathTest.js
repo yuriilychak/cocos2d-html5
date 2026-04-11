@@ -28,12 +28,16 @@
 // PathTestLayer
 //
 //------------------------------------------------------------------
-var PathTestLayer = BaseTestLayer.extend({
-    _title:"cc.path",
-    _subtitle:"See the console please!",
+var PathTestLayer = class PathTestLayer extends BaseTestLayer {
 
-    ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+
+
+        this._title = "cc.path";
+
+
+        this._subtitle = "See the console please!";
 
         this._join([
             ["a", "b.png"],
@@ -67,54 +71,54 @@ var PathTestLayer = BaseTestLayer.extend({
             ["a/b/c.plist", "b"],
             ["a/b/c.plist", "b", true]
         ]);
-    },
+    }
 
-    _join : function(args){
+    _join(args){
         cc.log("-----------cc.path.join begin----------")
         for(var i = 0, li = args.length; i < li; i++){
             var obj = args[i];
             cc.log("cc.path.join('" + obj.join("','") + "') ---> " + cc.path.join.apply(cc.path, obj));
         }
         cc.log("-----------cc.path.join end------------")
-    },
+    }
 
-    _extname : function(args){
+    _extname(args){
         cc.log("-----------cc.path.extname begin----------")
         for(var i = 0, li = args.length; i < li; i++){
             var obj = args[i];
             cc.log("cc.path.extname('" + obj + "') ---> " + cc.path.extname(obj));
         }
         cc.log("-----------cc.path.extname end------------")
-    },
+    }
 
-    _basename : function(args){
+    _basename(args){
         cc.log("-----------cc.path.basename begin----------")
         for(var i = 0, li = args.length; i < li; i++){
             var obj = args[i];
             cc.log("cc.path.basename('" + obj.join("','") + "') ---> " + cc.path.basename.apply(cc.path, obj));
         }
         cc.log("-----------cc.path.basename end------------")
-    },
+    }
 
-    _dirname : function(args){
+    _dirname(args){
         cc.log("-----------cc.path.dirname begin----------")
         for(var i = 0, li = args.length; i < li; i++){
             var obj = args[i];
             cc.log("cc.path.dirname('" + obj + "') ---> " + cc.path.dirname(obj));
         }
         cc.log("-----------cc.path.dirname end------------")
-    },
+    }
 
-    _changeExtname : function(args){
+    _changeExtname(args){
         cc.log("-----------cc.path.changeExtname begin----------")
         for(var i = 0, li = args.length; i < li; i++){
             var obj = args[i];
             cc.log("cc.path.changeExtname('" + obj.join("','") + "') ---> " + cc.path.changeExtname.apply(cc.path, obj));
         }
         cc.log("-----------cc.path.changeExtname end------------")
-    },
+    }
 
-    _changeBasename : function(args){
+    _changeBasename(args){
         cc.log("-----------cc.path.changeBasename begin----------")
         for(var i = 0, li = args.length; i < li; i++){
             var obj = args[i];
@@ -123,11 +127,13 @@ var PathTestLayer = BaseTestLayer.extend({
         }
         cc.log("-----------cc.path.changeBasename end------------")
     }
-});
 
-var PathTestScene = TestScene.extend({
-    runThisTest:function () {
+};
+
+var PathTestScene = class PathTestScene extends TestScene {
+    runThisTest() {
         this.addChild(new PathTestLayer());
         director.runScene(this);
     }
-});
+
+};

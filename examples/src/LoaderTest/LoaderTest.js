@@ -28,13 +28,17 @@
 // LoaderTestLayer
 //
 //------------------------------------------------------------------
-var LoaderTestLayer = BaseTestLayer.extend({
-    _title:"Loader Test",
-    _subtitle:"",
+var LoaderTestLayer = class LoaderTestLayer extends BaseTestLayer {
 
-    ctor:function() {
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
         var self = this;
-        self._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+
+
+        this._title = "Loader Test";
+
+
+        this._subtitle = "";
 
         var winSize = cc.winSize;
         cc.loader.load(s_helloWorld, function(err, results){
@@ -83,21 +87,26 @@ var LoaderTestLayer = BaseTestLayer.extend({
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
         });
-    },
+    }
 
-    onNextCallback: function(){
+    onNextCallback(){
         var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderCycleLayer());
     }
-});
 
-var LoaderCycleLayer = BaseTestLayer.extend({
-    _title:"Failed to load Test",
-    _subtitle:"",
+};
 
-    ctor: function(){
-        BaseTestLayer.prototype.ctor.call(this);
+var LoaderCycleLayer = class LoaderCycleLayer extends BaseTestLayer {
+
+    constructor(){
+        super();
+
+
+        this._title = "Failed to load Test";
+
+
+        this._subtitle = "";
 
         var winSize = cc.director.getWinSize();
 
@@ -118,9 +127,9 @@ var LoaderCycleLayer = BaseTestLayer.extend({
         this.createInfo();
         this.regLoad();
         this.test(cb);
-    },
+    }
 
-    regLoad: function(){
+    regLoad(){
         cc.loader.register(["_test1"], {
             load: function(realUrl, url, res, cb){
                 cc.loader.cache[url] = {};
@@ -137,17 +146,19 @@ var LoaderCycleLayer = BaseTestLayer.extend({
                 return null;
             }
         });
-    },
+    }
 
-    list: [
-        "1._test2",
-        "1._test1",
-        "2._test1",
-        "3._test1",
-        "4._test1"
-    ],
+    get list() {
+        return [
+            "1._test2",
+            "1._test1",
+            "2._test1",
+            "3._test1",
+            "4._test1"
+        ];
+    }
 
-    createInfo: function(){
+    createInfo(){
         var winSize = cc.director.getWinSize();
         var info1 = new cc.LabelTTF("Load 5 files");
         info1.x = winSize.width / 2;
@@ -162,9 +173,9 @@ var LoaderCycleLayer = BaseTestLayer.extend({
         this.addChild(info1);
         this.addChild(info2);
         this.addChild(info3);
-    },
+    }
 
-    test: function(cb){
+    test(cb){
         this.clearRes();
         var layer = this;
         cc.loader.load(layer.list, function(){
@@ -176,30 +187,32 @@ var LoaderCycleLayer = BaseTestLayer.extend({
             });
             cb(num);
         });
-    },
+    }
 
-    clearRes: function(){
+    clearRes(){
         this.list.forEach(function(item){
             cc.loader.release(item);
         });
-    },
+    }
 
-    onRestartCallback: function(){
+    onRestartCallback(){
         var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderCycleLayer());
-    },
+    }
 
-    onBackCallback: function(){
+    onBackCallback(){
         var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderTestLayer());
     }
-});
 
-var LoaderTestScene = TestScene.extend({
-    runThisTest:function () {
+};
+
+var LoaderTestScene = class LoaderTestScene extends TestScene {
+    runThisTest() {
         this.addChild(new LoaderTestLayer());
         director.runScene(this);
     }
-});
+
+};

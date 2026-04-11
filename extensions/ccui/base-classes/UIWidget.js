@@ -23,13 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-ccui._FocusNavigationController = cc.Class.extend({
-    _keyboardListener: null,
-    _firstFocusedWidget: null,
-    _enableFocusNavigation: false,
-    _keyboardEventPriority: 1,
+ccui._FocusNavigationController = class _FocusNavigationController extends cc.NewClass {
+    constructor() {
+        super();
+        this._keyboardListener = null;
+        this._firstFocusedWidget = null;
+        this._enableFocusNavigation = false;
+        this._keyboardEventPriority = 1;
+    }
 
-    enableFocusNavigation: function (flag) {
+    enableFocusNavigation(flag) {
         if (this._enableFocusNavigation === flag)
             return;
 
@@ -38,13 +41,11 @@ ccui._FocusNavigationController = cc.Class.extend({
             this._addKeyboardEventListener();
         else
             this._removeKeyboardEventListener();
-    },
-
-    _setFirstFocsuedWidget: function (widget) {
+    }
+    _setFirstFocsuedWidget(widget) {
         this._firstFocusedWidget = widget;
-    },
-
-    _onKeyPressed: function (keyCode, event) {
+    }
+    _onKeyPressed(keyCode, event) {
         if (this._enableFocusNavigation && this._firstFocusedWidget) {
             if (keyCode === cc.KEY.dpadDown) {
                 this._firstFocusedWidget = this._firstFocusedWidget.findNextFocusedWidget(ccui.Widget.DOWN, this._firstFocusedWidget);
@@ -59,9 +60,8 @@ ccui._FocusNavigationController = cc.Class.extend({
                 this._firstFocusedWidget = this._firstFocusedWidget.findNextFocusedWidget(ccui.Widget.RIGHT, this._firstFocusedWidget);
             }
         }
-    },
-
-    _addKeyboardEventListener: function () {
+    }
+    _addKeyboardEventListener() {
         if (!this._keyboardListener) {
             this._keyboardListener = cc.EventListener.create({
                 event: cc.EventListener.KEYBOARD,
@@ -69,15 +69,14 @@ ccui._FocusNavigationController = cc.Class.extend({
             });
             cc.eventManager.addListener(this._keyboardListener, this._keyboardEventPriority);
         }
-    },
-
-    _removeKeyboardEventListener: function () {
+    }
+    _removeKeyboardEventListener() {
         if (this._keyboardListener) {
             cc.eventManager.removeEventListener(this._keyboardListener);
             this._keyboardListener = null;
         }
     }
-});
+};
 
 ccui.__LAYOUT_COMPONENT_NAME = "__ui_layout";
 
@@ -104,63 +103,55 @@ ccui.__LAYOUT_COMPONENT_NAME = "__ui_layout";
  * @property {String}           name            - The name of the widget
  * @property {Number}           actionTag       - The action tag of the widget
  */
-ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
-    _enabled: true,            ///< Highest control of widget
-    _bright: true,             ///< is this widget bright
-    _touchEnabled: false,       ///< is this widget touch endabled
-
-    _brightStyle: null, ///< bright style
-
-    _touchBeganPosition: null,    ///< touch began point
-    _touchMovePosition: null,     ///< touch moved point
-    _touchEndPosition: null,      ///< touch ended point
-
-    _touchEventListener: null,
-    _touchEventSelector: null,
-
-    _name: "default",
-    _widgetType: null,
-    _actionTag: 0,
-    _customSize: null,
-    _layoutParameterDictionary: null,
-    _layoutParameterType: 0,
-
-    _focused: false,
-    _focusEnabled: true,
-
-    _ignoreSize: false,
-    _affectByClipping: false,
-
-    _sizeType: null,
-    _sizePercent: null,
-    _positionType: null,
-    _positionPercent: null,
-    _hit: false,
-    _nodes: null,
-    _touchListener: null,
-    _className: "Widget",
-    _flippedX: false,
-    _flippedY: false,
-    _opacity: 255,
-    _highlight: false,
-
-    _touchEventCallback: null,
-    _clickEventListener: null,
-
-    _propagateTouchEvents: true,
-    _unifySize: false,
-
-    _callbackName: null,
-    _callbackType: null,
-    _usingLayoutComponent: false,
-    _inViewRect: true,
-
+ccui.Widget = class Widget extends ccui.ProtectedNode {
     /**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+     * Constructor function, override it to extend the construction behavior, remember to call "super()" in the extended "constructor" function.
      * @function
      */
-    ctor: function () {
-        cc.ProtectedNode.prototype.ctor.call(this);
+    constructor() {
+        super();
+        this._enabled = true;
+        this._bright = true;
+        this._touchEnabled = false;
+        this._brightStyle = null;
+        this._touchBeganPosition = null;
+        this._touchMovePosition = null;
+        this._touchEndPosition = null;
+        this._touchEventListener = null;
+        this._touchEventSelector = null;
+        this._name = "default";
+        this._widgetType = null;
+        this._actionTag = 0;
+        this._customSize = null;
+        this._layoutParameterDictionary = null;
+        this._layoutParameterType = 0;
+        this._focused = false;
+        this._focusEnabled = true;
+        this._ignoreSize = false;
+        this._affectByClipping = false;
+        this._sizeType = null;
+        this._sizePercent = null;
+        this._positionType = null;
+        this._positionPercent = null;
+        this._hit = false;
+        this._nodes = null;
+        this._touchListener = null;
+        this._className = "Widget";
+        this._flippedX = false;
+        this._flippedY = false;
+        this._opacity = 255;
+        this._highlight = false;
+        this._touchEventCallback = null;
+        this._clickEventListener = null;
+        this._propagateTouchEvents = true;
+        this._unifySize = false;
+        this._callbackName = null;
+        this._callbackType = null;
+        this._usingLayoutComponent = false;
+        this._inViewRect = true;
+        this._ccEventCallback = null;
+        this.onFocusChanged = null;
+        this.onNextFocusedWidget = null;
         this._brightStyle = ccui.Widget.BRIGHT_STYLE_NONE;
         this._touchBeganPosition = cc.p(0, 0);
         this._touchMovePosition = cc.p(0, 0);
@@ -174,14 +165,14 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         this._positionPercent = cc.p(0, 0);
         this._nodes = [];
         this._layoutParameterType = ccui.LayoutParameter.NONE;
-        ccui.Widget.prototype.init.call(this);
-    },
+        this.init();
+    }
 
     /**
      * initializes state of widget. please do not call this function by yourself, you should pass the parameters to constructor to initialize it.
      * @returns {boolean}
      */
-    init: function () {
+    init() {
         this._layoutParameterDictionary = {};
         this._initRenderer();
         this.setBright(true);
@@ -192,13 +183,12 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
 
         this.ignoreContentAdaptWithSize(true);
         return true;
-    },
-
+    }
     /**
      * Calls updateSizeAndPosition and its parent's onEnter
      * @override
      */
-    onEnter: function () {
+    onEnter() {
         var locListener = this._touchListener;
         if (locListener && !locListener._isRegistered() && this._touchEnabled)
             cc.eventManager.addListener(locListener, this);
@@ -206,47 +196,42 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             this.updateSizeAndPosition();
         if (this._sizeDirty)
             this._onSizeChanged();
-        cc.ProtectedNode.prototype.onEnter.call(this);
-    },
-
+        super.onEnter();
+    }
     /**
      * Calls unscheduleUpdate and its parent's onExit
      * @override
      */
-    onExit: function () {
+    onExit() {
         this.unscheduleUpdate();
-        cc.ProtectedNode.prototype.onExit.call(this);
-    },
-
-    _getOrCreateLayoutComponent: function(){
+        super.onExit();
+    }
+    _getOrCreateLayoutComponent(){
         var layoutComponent = this.getComponent(ccui.__LAYOUT_COMPONENT_NAME);
         if (null == layoutComponent){
             layoutComponent = new ccui.LayoutComponent();
             this.addComponent(layoutComponent);
         }
         return layoutComponent;
-    },
-
+    }
     /**
      * The direct parent when it's a widget also, otherwise equals null
      * @returns {ccui.Widget|null}
      */
-    getWidgetParent: function () {
+    getWidgetParent() {
         var widget = this.getParent();
         if (widget instanceof ccui.Widget)
             return widget;
         return null;
-    },
-
-    _updateContentSizeWithTextureSize: function (size) {
+    }
+    _updateContentSizeWithTextureSize(size) {
         if(this._unifySize){
             this.setContentSize(size);
             return;
         }
         this.setContentSize(this._ignoreSize ? size : this._customSize);
-    },
-
-    _isAncestorsEnabled: function () {
+    }
+    _isAncestorsEnabled() {
         var parentWidget = this._getAncensterWidget(this);
         if (parentWidget == null)
             return true;
@@ -254,50 +239,45 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             return false;
 
         return parentWidget._isAncestorsEnabled();
-    },
-
+    }
     /**
      * Allow widget touch events to propagate to its parents. Set false will disable propagation
      * @since v3.2
      * @param {Boolean} isPropagate
      */
-    setPropagateTouchEvents: function (isPropagate) {
+    setPropagateTouchEvents(isPropagate) {
         this._propagateTouchEvents = isPropagate;
-    },
-
+    }
     /**
      * Return whether the widget is propagate touch events to its parents or not
      * @since v3.2
      * @returns {boolean}
      */
-    isPropagateTouchEvents: function () {
+    isPropagateTouchEvents() {
         return this._propagateTouchEvents;
-    },
-
+    }
     /**
      * Specify widget to swallow touches or not
      * @since v3.2
      * @param {Boolean} swallow
      */
-    setSwallowTouches: function (swallow) {
+    setSwallowTouches(swallow) {
         if (this._touchListener)
             this._touchListener.setSwallowTouches(swallow);
-    },
-
+    }
     /**
      * Return whether the widget is swallowing touch or not
      * @since v3.2
      * @returns {boolean}
      */
-    isSwallowTouches: function () {
+    isSwallowTouches() {
         if (this._touchListener) {
             //return true;                           //todo need test
             return this._touchListener.isSwallowTouches();
         }
         return false;
-    },
-
-    _getAncensterWidget: function (node) {
+    }
+    _getAncensterWidget(node) {
         if (null == node)
             return null;
 
@@ -309,9 +289,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             return parent;
         else
             return this._getAncensterWidget(parent.getParent());
-    },
-
-    _isAncestorsVisible: function (node) {
+    }
+    _isAncestorsVisible(node) {
         if (null == node)
             return true;
 
@@ -320,8 +299,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         if (parent && !parent.isVisible())
             return false;
         return this._isAncestorsVisible(parent);
-    },
-
+    }
     /**
      * <p>
      *     Sets whether the widget is enabled                                                                                    <br/>
@@ -330,17 +308,15 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * </p>
      * @param {Boolean} enabled
      */
-    setEnabled: function (enabled) {
+    setEnabled(enabled) {
         this._enabled = enabled;
         this.setBright(enabled);
-    },
-
+    }
     /**
      * initializes renderer of widget.
      */
-    _initRenderer: function () {
-    },
-
+    _initRenderer() {
+    }
     /**
      * Sets _customSize of ccui.Widget, if ignoreSize is true, the content size is its renderer's contentSize, otherwise the content size is parameter.
      * and updates size percent by parent content size. At last, updates its children's size and position.
@@ -348,7 +324,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * @param {Number} [height]
      * @override
      */
-    setContentSize: function(contentSize, height){
+    setContentSize(contentSize, height){
         cc.Node.prototype.setContentSize.call(this, contentSize, height);
 
         var locWidth = this._contentSize.width;
@@ -373,9 +349,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         } else {
             this._sizeDirty = true;
         }
-    },
-
-    _setWidth: function (w) {
+    }
+    _setWidth(w) {
         if (w === this._contentSize.width) {
             return;
         }
@@ -398,8 +373,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         } else {
             this._sizeDirty = true;
         }
-    },
-    _setHeight: function (h) {
+    }
+    _setHeight(h) {
         if (h === this._contentSize.height) {
             return;
         }
@@ -423,13 +398,12 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         } else {
             this._sizeDirty = true;
         }
-    },
-
+    }
     /**
      * Changes the percent that is widget's percent size
      * @param {cc.Point} percent that is widget's percent size, width and height value from 0 to 1.
      */
-    setSizePercent: function (percent) {
+    setSizePercent(percent) {
         if(this._usingLayoutComponent){
             var component = this._getOrCreateLayoutComponent();
             component.setUsingPercentContentSize(true);
@@ -458,9 +432,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
 
         this._customSize.width = width;
         this._customSize.height = height;
-    },
-
-    _setWidthPercent: function (percent) {
+    }
+    _setWidthPercent(percent) {
         this._sizePercent.x = percent;
         var width = this._customSize.width;
         if (this._running) {
@@ -472,8 +445,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         else
             this._setWidth(width);
         this._customSize.width = width;
-    },
-    _setHeightPercent: function (percent) {
+    }
+    _setHeightPercent(percent) {
         this._sizePercent.y = percent;
         var height = this._customSize.height;
         if (this._running) {
@@ -485,13 +458,12 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         else
             this._setHeight(height);
         this._customSize.height = height;
-    },
-
+    }
     /**
      * updates its size by size type and its position by position type.
      * @param {cc.Size} [parentSize] parent size
      */
-    updateSizeAndPosition: function (parentSize) {
+    updateSizeAndPosition(parentSize) {
         if (!parentSize) {
             var widgetParent = this.getWidgetParent();
             if (widgetParent)
@@ -544,33 +516,30 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
                 return;
         }
         this.setPosition(absPos);
-    },
-
+    }
     /**TEXTURE_RES_TYPE
      * Changes the size type of widget.
      * @param {ccui.Widget.SIZE_ABSOLUTE|ccui.Widget.SIZE_PERCENT} type that is widget's size type
      */
-    setSizeType: function (type) {
+    setSizeType(type) {
         this._sizeType = type;
         if (this._usingLayoutComponent) {
             var component = this._getOrCreateLayoutComponent();
             component.setUsingPercentContentSize(this._sizeType === ccui.SIZE_PERCENT);
         }
-    },
-
+    }
     /**
      * Gets the size type of widget.
      * @returns {ccui.Widget.SIZE_ABSOLUTE|ccui.Widget.SIZE_PERCENT} that is widget's size type
      */
-    getSizeType: function () {
+    getSizeType() {
         return this._sizeType;
-    },
-
+    }
     /**
      * Ignore the widget size
      * @param {Boolean} ignore true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
      */
-    ignoreContentAdaptWithSize: function (ignore) {
+    ignoreContentAdaptWithSize(ignore) {
         if(this._unifySize){
             this.setContentSize(this._customSize);
             return;
@@ -582,77 +551,69 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         this._ignoreSize = ignore;
         this.setContentSize(ignore ? this.getVirtualRendererSize() : this._customSize);
         //this._onSizeChanged();
-    },
-
+    }
     /**
      * Gets whether ignore the content size (custom size)
      * @returns {boolean}  true that widget will ignore it's size, use texture size, false otherwise.
      */
-    isIgnoreContentAdaptWithSize: function () {
+    isIgnoreContentAdaptWithSize() {
         return this._ignoreSize;
-    },
-
+    }
     /**
      * Get custom size of ccui.Widget
      * @returns {cc.Size}
      */
-    getCustomSize: function () {
+    getCustomSize() {
         return cc.size(this._customSize);
-    },
-
+    }
     /**
      * Gets layout size of ccui.Widget.
      * @returns {cc.Size}
      */
-    getLayoutSize: function () {
+    getLayoutSize() {
         return cc.size(this._contentSize);
-    },
-
+    }
     /**
      * Returns size percent of ccui.Widget
      * @returns {cc.Point}
      */
-    getSizePercent: function () {
+    getSizePercent() {
         if(this._usingLayoutComponent){
             var component = this._getOrCreateLayoutComponent();
             this._sizePercent = component.getPercentContentSize();
         }
         return this._sizePercent;
-    },
-    _getWidthPercent: function () {
+    }
+    _getWidthPercent() {
         return this._sizePercent.x;
-    },
-    _getHeightPercent: function () {
+    }
+    _getHeightPercent() {
         return this._sizePercent.y;
-    },
-
+    }
     /**
      *  Gets world position of ccui.Widget.
      * @returns {cc.Point} world position of ccui.Widget.
      */
-    getWorldPosition: function () {
+    getWorldPosition() {
         return this.convertToWorldSpace(cc.p(this._anchorPoint.x * this._contentSize.width, this._anchorPoint.y * this._contentSize.height));
-    },
-
+    }
     /**
      * Gets the Virtual Renderer of widget.
      * @returns {ccui.Widget}
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer() {
         return this;
-    },
-
+    }
     /**
      * Gets the content size of widget.  Content size is widget's texture size.
      */
-    getVirtualRendererSize: function () {
+    getVirtualRendererSize() {
         return cc.size(this._contentSize);
-    },
-
+    }
     /**
      * call back function called when size changed.
      */
-    _onSizeChanged: function () {
+    _onSizeChanged() {
         if(!this._usingLayoutComponent){
             var locChildren = this.getChildren();
             for (var i = 0, len = locChildren.length; i < len; i++) {
@@ -662,13 +623,12 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             }
             this._sizeDirty = false;
         }
-    },
-
+    }
     /**
      * Sets whether the widget is touch enabled. The default value is false, a widget is default to touch disabled
      * @param {Boolean} enable  true if the widget is touch enabled, false if the widget is touch disabled.
      */
-    setTouchEnabled: function (enable) {
+    setTouchEnabled(enable) {
         if (this._touchEnabled === enable)
             return;
 
@@ -686,29 +646,26 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         } else {
             cc.eventManager.removeListener(this._touchListener);
         }
-    },
-
+    }
     /**
      * Returns whether or not touch is enabled.
      * @returns {boolean} true if the widget is touch enabled, false if the widget is touch disabled.
      */
-    isTouchEnabled: function () {
+    isTouchEnabled() {
         return this._touchEnabled;
-    },
-
+    }
     /**
      * Determines if the widget is highlighted
      * @returns {boolean} true if the widget is highlighted, false if the widget is not highlighted .
      */
-    isHighlighted: function () {
+    isHighlighted() {
         return this._highlight;
-    },
-
+    }
     /**
      * Sets whether the widget is highlighted. The default value is false, a widget is default to not highlighted
      * @param highlight true if the widget is highlighted, false if the widget is not highlighted.
      */
-    setHighlighted: function (highlight) {
+    setHighlighted(highlight) {
         if (highlight === this._highlight)
             return;
         this._highlight = highlight;
@@ -719,22 +676,20 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
                 this.setBrightStyle(ccui.Widget.BRIGHT_STYLE_NORMAL);
         } else
             this._onPressStateChangedToDisabled();
-    },
-
+    }
     /**
      * Determines if the widget is on focused
      * @returns {boolean} whether the widget is focused or not
      */
-    isFocused: function () {
+    isFocused() {
         return this._focused;
-    },
-
+    }
     /**
      * Sets whether the widget is on focused
      * The default value is false, a widget is default to not on focused
      * @param {boolean} focus  pass true to let the widget get focus or pass false to let the widget lose focus
      */
-    setFocused: function (focus) {
+    setFocused(focus) {
         this._focused = focus;
         //make sure there is only one focusedWidget
         if (focus) {
@@ -742,24 +697,21 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             if (ccui.Widget._focusNavigationController)
                 ccui.Widget._focusNavigationController._setFirstFocsuedWidget(this);
         }
-    },
-
+    }
     /**
      * returns whether the widget could accept focus.
      * @returns {boolean} true represent the widget could accept focus, false represent the widget couldn't accept focus
      */
-    isFocusEnabled: function () {
+    isFocusEnabled() {
         return this._focusEnabled;
-    },
-
+    }
     /**
      * sets whether the widget could accept focus.
      * @param {Boolean} enable true represent the widget could accept focus, false represent the widget couldn't accept focus
      */
-    setFocusEnabled: function (enable) {
+    setFocusEnabled(enable) {
         this._focusEnabled = enable;
-    },
-
+    }
     /**
      * <p>
      *     When a widget is in a layout, you could call this method to get the next focused widget within a specified direction. <br/>
@@ -769,7 +721,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * @param current  the current focused widget
      * @return  the next focused widget in a layout
      */
-    findNextFocusedWidget: function (direction, current) {
+    findNextFocusedWidget(direction, current) {
         if (null === this.onNextFocusedWidget || null == this.onNextFocusedWidget(direction)) {
             var isLayout = current instanceof ccui.Layout;
             if (this.isFocused() || isLayout) {
@@ -788,36 +740,31 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             this.dispatchFocusEvent(this, getFocusWidget);
             return getFocusWidget;
         }
-    },
-
+    }
     /**
      * when a widget calls this method, it will get focus immediately.
      */
-    requestFocus: function () {
+    requestFocus() {
         if (this === ccui.Widget._focusedWidget)
             return;
         this.dispatchFocusEvent(ccui.Widget._focusedWidget, this);
-    },
-
+    }
     /**
      * no matter what widget object you call this method on , it will return you the exact one focused widget
      */
-    getCurrentFocusedWidget: function () {
+    getCurrentFocusedWidget() {
         return ccui.Widget._focusedWidget;
-    },
-
+    }
     /**
      * <p>
      *    When a widget lose/get focus, this method will be called. Be Caution when you provide your own version,       <br/>
      *    you must call widget.setFocused(true/false) to change the focus state of the current focused widget;
      * </p>
      */
-    onFocusChanged: null,
 
     /**
      * use this function to manually specify the next focused widget regards to each direction
      */
-    onNextFocusedWidget: null,
 
     /**
      * Sends the touch event to widget's parent, its subclass will override it, e.g. ccui.ScrollView, ccui.PageView
@@ -825,31 +772,29 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * @param {ccui.Widget} sender
      * @param {cc.Touch} touch
      */
-    interceptTouchEvent: function (eventType, sender, touch) {
+    interceptTouchEvent(eventType, sender, touch) {
         var widgetParent = this.getWidgetParent();
         if (widgetParent)
             widgetParent.interceptTouchEvent(eventType, sender, touch);
-    },
-
+    }
     /**
      * This method is called when a focus change event happens
      * @param {ccui.Widget} widgetLostFocus
      * @param {ccui.Widget} widgetGetFocus
      */
-    onFocusChange: function (widgetLostFocus, widgetGetFocus) {
+    onFocusChange(widgetLostFocus, widgetGetFocus) {
         //only change focus when there is indeed a get&lose happens
         if (widgetLostFocus)
             widgetLostFocus.setFocused(false);
         if (widgetGetFocus)
             widgetGetFocus.setFocused(true);
-    },
-
+    }
     /**
      * Dispatch a EventFocus through a EventDispatcher
      * @param {ccui.Widget} widgetLostFocus
      * @param {ccui.Widget} widgetGetFocus
      */
-    dispatchFocusEvent: function (widgetLostFocus, widgetGetFocus) {
+    dispatchFocusEvent(widgetLostFocus, widgetGetFocus) {
         //if the widgetLoseFocus doesn't get focus, it will use the previous focused widget instead
         if (widgetLostFocus && !widgetLostFocus.isFocused())
             widgetLostFocus = ccui.Widget._focusedWidget;
@@ -861,26 +806,24 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
                 widgetLostFocus.onFocusChanged(widgetLostFocus, widgetGetFocus);
             cc.eventManager.dispatchEvent(new cc.EventFocus(widgetLostFocus, widgetGetFocus));
         }
-    },
-
+    }
     /**
      *  Sets whether the widget is bright. The default value is true, a widget is default to bright
      * @param {Boolean} bright true if the widget is bright, false if the widget is dark.
      */
-    setBright: function (bright) {
+    setBright(bright) {
         this._bright = bright;
         if (this._bright) {
             this._brightStyle = ccui.Widget.BRIGHT_STYLE_NONE;
             this.setBrightStyle(ccui.Widget.BRIGHT_STYLE_NORMAL);
         } else
             this._onPressStateChangedToDisabled();
-    },
-
+    }
     /**
      * To set the bright style of ccui.Widget.
      * @param {Number} style BRIGHT_NORMAL the widget is normal state, BRIGHT_HIGHLIGHT the widget is height light state.
      */
-    setBrightStyle: function (style) {
+    setBrightStyle(style) {
         if (this._brightStyle === style)
             return;
 
@@ -896,28 +839,22 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             default:
                 break;
         }
-    },
-
-    _onPressStateChangedToNormal: function () {
-    },
-
-    _onPressStateChangedToPressed: function () {
-    },
-
-    _onPressStateChangedToDisabled: function () {
-    },
-
-    _updateChildrenDisplayedRGBA: function () {
+    }
+    _onPressStateChangedToNormal() {
+    }
+    _onPressStateChangedToPressed() {
+    }
+    _onPressStateChangedToDisabled() {
+    }
+    _updateChildrenDisplayedRGBA() {
         this.setColor(this.getColor());
         this.setOpacity(this.getOpacity());
-    },
-
+    }
     /**
      * A call back function when widget lost of focus.
      */
-    didNotSelectSelf: function () {
-    },
-
+    didNotSelectSelf() {
+    }
     /**
      * <p>
      *    The callback of touch began event.                                                               <br/>
@@ -933,7 +870,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * @param {cc.Event} event
      * @returns {boolean}
      */
-    onTouchBegan: function (touch, event) {
+    onTouchBegan(touch, event) {
         this._hit = false;
         if (this.isVisible() && this.isEnabled() && this._isAncestorsEnabled() && this._isAncestorsVisible(this)) {
             var touchPoint = touch.getLocation();
@@ -956,15 +893,13 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
 
         this._pushDownEvent();
         return true;
-    },
-
-    propagateTouchEvent: function (event, sender, touch) {
+    }
+    propagateTouchEvent(event, sender, touch) {
         var widgetParent = this.getWidgetParent();
         if (widgetParent) {
             widgetParent.interceptTouchEvent(event, sender, touch);
         }
-    },
-
+    }
     /**
      * <p>
      *    The callback of touch moved event.                                                                                                <br/>
@@ -973,7 +908,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * @param {cc.Touch} touch
      * @param {cc.Event} event
      */
-    onTouchMoved: function (touch, event) {
+    onTouchMoved(touch, event) {
         var touchPoint = touch.getLocation();
         this._touchMovePosition.x = touchPoint.x;
         this._touchMovePosition.y = touchPoint.y;
@@ -984,8 +919,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         if (this._propagateTouchEvents)
             this.propagateTouchEvent(ccui.Widget.TOUCH_MOVED, this, touch);
         this._moveEvent();
-    },
-
+    }
     /**
      * <p>
      *      The callback of touch end event
@@ -996,7 +930,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * @param touch
      * @param event
      */
-    onTouchEnded: function (touch, event) {
+    onTouchEnded(touch, event) {
         var touchPoint = touch.getLocation();
         this._touchEndPosition.x = touchPoint.x;
         this._touchEndPosition.y = touchPoint.y;
@@ -1012,94 +946,83 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             this._releaseUpEvent();
         else
             this._cancelUpEvent();
-    },
-
+    }
     /**
      * A call back function called when widget is selected, and on touch canceled.
      * @param {cc.Point} touchPoint
      */
-    onTouchCancelled: function (touchPoint) {
+    onTouchCancelled(touchPoint) {
         this.setHighlighted(false);
         this._cancelUpEvent();
-    },
-
+    }
     /**
      * A call back function called when widget is selected, and on touch long clicked.
      * @param {cc.Point} touchPoint
      */
-    onTouchLongClicked: function (touchPoint) {
+    onTouchLongClicked(touchPoint) {
         this.longClickEvent();
-    },
-
+    }
     //call back function called widget's state changed to dark.
-    _pushDownEvent: function () {
+    _pushDownEvent() {
         if (this._touchEventCallback)
             this._touchEventCallback(this, ccui.Widget.TOUCH_BEGAN);
         if (this._touchEventListener && this._touchEventSelector)
             this._touchEventSelector.call(this._touchEventListener, this, ccui.Widget.TOUCH_BEGAN);
-    },
-
-    _moveEvent: function () {
+    }
+    _moveEvent() {
         if (this._touchEventCallback)
             this._touchEventCallback(this, ccui.Widget.TOUCH_MOVED);
         if (this._touchEventListener && this._touchEventSelector)
             this._touchEventSelector.call(this._touchEventListener, this, ccui.Widget.TOUCH_MOVED);
-    },
-
-    _releaseUpEvent: function () {
+    }
+    _releaseUpEvent() {
         if (this._touchEventCallback)
             this._touchEventCallback(this, ccui.Widget.TOUCH_ENDED);
         if (this._touchEventListener && this._touchEventSelector)
             this._touchEventSelector.call(this._touchEventListener, this, ccui.Widget.TOUCH_ENDED);
         if (this._clickEventListener)
             this._clickEventListener(this);
-    },
-
-    _cancelUpEvent: function () {
+    }
+    _cancelUpEvent() {
         if (this._touchEventCallback)
             this._touchEventCallback(this, ccui.Widget.TOUCH_CANCELED);
         if (this._touchEventListener && this._touchEventSelector)
             this._touchEventSelector.call(this._touchEventListener, this, ccui.Widget.TOUCH_CANCELED);
-    },
-
-    longClickEvent: function () {
+    }
+    longClickEvent() {
         //TODO it will implement in v3.1
-    },
-
+    }
     /**
      * Sets the touch event target/selector of the ccui.Widget
      * @param {Function} selector
      * @param {Object} target
      */
-    addTouchEventListener: function (selector, target) {
+    addTouchEventListener(selector, target) {
         if (target === undefined)
             this._touchEventCallback = selector;
         else {
             this._touchEventSelector = selector;
             this._touchEventListener = target;
         }
-    },
-
-    addClickEventListener: function (callback) {
+    }
+    addClickEventListener(callback) {
         this._clickEventListener = callback;
-    },
-
+    }
     /**
      * Checks a point if is in widget's space
      * @param {cc.Point} pt
      * @returns {boolean} true if the point is in widget's space, false otherwise.
      */
-    hitTest: function (pt) {
+    hitTest(pt) {
         var bb = cc.rect(0, 0, this._contentSize.width, this._contentSize.height);
         return cc.rectContainsPoint(bb, this.convertToNodeSpace(pt));
-    },
-
+    }
     /**
      * returns whether clipping parent widget contains point.
      * @param {cc.Point} pt location point
      * @returns {Boolean}
      */
-    isClippingParentContainsPoint: function (pt) {
+    isClippingParentContainsPoint(pt) {
         this._affectByClipping = false;
         var parent = this.getParent();
         var clippingParent = null;
@@ -1123,20 +1046,18 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             return false;
         }
         return true;
-    },
-
+    }
     /**
      * Calls the checkChildInfo of widget's parent, its subclass will override it.
      * @param {number} handleState
      * @param {ccui.Widget} sender
      * @param {cc.Point} touchPoint
      */
-    checkChildInfo: function (handleState, sender, touchPoint) {
+    checkChildInfo(handleState, sender, touchPoint) {
         var widgetParent = this.getWidgetParent();
         if (widgetParent)
             widgetParent.checkChildInfo(handleState, sender, touchPoint);
-    },
-
+    }
     /**
      * Changes the position (x,y) of the widget .
      * The original point (0,0) is at the left-bottom corner of screen.
@@ -1144,7 +1065,7 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * @param {cc.Point|Number} pos
      * @param {Number} [posY]
      */
-    setPosition: function (pos, posY) {
+    setPosition(pos, posY) {
         if (!this._usingLayoutComponent && this._running) {
             var widgetParent = this.getWidgetParent();
             if (widgetParent) {
@@ -1166,9 +1087,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
 
         cc.Node.prototype.setPosition.call(this, pos, posY);
         //this._positionType = ccui.Widget.POSITION_ABSOLUTE;
-    },
-
-    setPositionX: function (x) {
+    }
+    setPositionX(x) {
         if (this._running) {
             var widgetParent = this.getWidgetParent();
             if (widgetParent) {
@@ -1181,8 +1101,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         }
 
         cc.Node.prototype.setPositionX.call(this, x);
-    },
-    setPositionY: function (y) {
+    }
+    setPositionY(y) {
         if (this._running) {
             var widgetParent = this.getWidgetParent();
             if (widgetParent) {
@@ -1195,13 +1115,12 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         }
 
         cc.Node.prototype.setPositionY.call(this, y);
-    },
-
+    }
     /**
      * Changes the position (x,y) of the widget
      * @param {cc.Point} percent
      */
-    setPositionPercent: function (percent) {
+    setPositionPercent(percent) {
         if (this._usingLayoutComponent){
             var component = this._getOrCreateLayoutComponent();
             component.setPositionPercentX(percent.x);
@@ -1213,8 +1132,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             this._setYPercent(percent.y);
         }
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
-    _setXPercent: function (percent) {
+    }
+    _setXPercent(percent) {
         if (this._usingLayoutComponent){
             var component = this._getOrCreateLayoutComponent();
             component.setPositionPercentX(percent.x);
@@ -1223,8 +1142,8 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         }
         this._positionPercent.x = percent;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
-    _setYPercent: function (percent) {
+    }
+    _setYPercent(percent) {
         if (this._usingLayoutComponent){
             var component = this._getOrCreateLayoutComponent();
             component.setPositionPercentY(percent.x);
@@ -1233,43 +1152,40 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
         }
         this._positionPercent.y = percent;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
-
+    }
     /**
      * Gets the percent (x,y) of the widget
      * @returns {cc.Point} The percent (x,y) of the widget in OpenGL coordinates
      */
-    getPositionPercent: function () {
+    getPositionPercent() {
         if (this._usingLayoutComponent) {
             var component = this._getOrCreateLayoutComponent();
             this._positionPercent.x = component.getPositionPercentX();
             this._positionPercent.y = component.getPositionPercentY();
         }
         return cc.p(this._positionPercent);
-    },
-
-    _getXPercent: function () {
+    }
+    _getXPercent() {
         if (this._usingLayoutComponent) {
             var component = this._getOrCreateLayoutComponent();
             this._positionPercent.x = component.getPositionPercentX();
             this._positionPercent.y = component.getPositionPercentY();
         }
         return this._positionPercent.x;
-    },
-    _getYPercent: function () {
+    }
+    _getYPercent() {
         if (this._usingLayoutComponent) {
             var component = this._getOrCreateLayoutComponent();
             this._positionPercent.x = component.getPositionPercentX();
             this._positionPercent.y = component.getPositionPercentY();
         }
         return this._positionPercent.y;
-    },
-
+    }
     /**
      * Changes the position type of the widget
      * @param {Number} type  the position type of widget
      */
-    setPositionType: function (type) {
+    setPositionType(type) {
         this._positionType = type;
         if(this._usingLayoutComponent){
             var component = this._getOrCreateLayoutComponent();
@@ -1282,26 +1198,23 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             }
         }
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
-
+    }
     /**
      * Gets the position type of the widget
      * @returns {Number} the position type of widget
      */
-    getPositionType: function () {
+    getPositionType() {
         return this._positionType;
-    },
-
+    }
     /**
      * Sets whether the widget should be flipped horizontally or not.
      * @param {Boolean} flipX true if the widget should be flipped horizontally, false otherwise.
      */
-    setFlippedX: function (flipX) {
+    setFlippedX(flipX) {
         var realScale = this.getScaleX();
         this._flippedX = flipX;
         this.setScaleX(realScale);
-    },
-
+    }
     /**
      * <p>
      *   Returns the flag which indicates whether the widget is flipped horizontally or not.             <br/>
@@ -1312,20 +1225,18 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * </p>
      * @returns {Boolean} true if the widget is flipped horizontally, false otherwise.
      */
-    isFlippedX: function () {
+    isFlippedX() {
         return this._flippedX;
-    },
-
+    }
     /**
      * Sets whether the widget should be flipped vertically or not.
      * @param {Boolean} flipY  true if the widget should be flipped vertically, false otherwise.
      */
-    setFlippedY: function (flipY) {
+    setFlippedY(flipY) {
         var realScale = this.getScaleY();
         this._flippedY = flipY;
         this.setScaleY(realScale);
-    },
-
+    }
     /**
      * <p>
      *     Return the flag which indicates whether the widget is flipped vertically or not.                <br/>
@@ -1336,150 +1247,131 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * </p>
      * @returns {Boolean} true if the widget is flipped vertically, false otherwise.
      */
-    isFlippedY: function () {
+    isFlippedY() {
         return this._flippedY;
-    },
-
-    _adaptRenderers: function () {
-    },
-
+    }
+    _adaptRenderers() {
+    }
     /**
      * Determines if the widget is bright
      * @returns {boolean} true if the widget is bright, false if the widget is dark.
      */
-    isBright: function () {
+    isBright() {
         return this._bright;
-    },
-
+    }
     /**
      * Determines if the widget is enabled
      * @returns {boolean}
      */
-    isEnabled: function () {
+    isEnabled() {
         return this._enabled;
-    },
-
+    }
     /**
      * Gets the left boundary position of this widget.
      * @returns {number}
      */
-    getLeftBoundary: function () {
+    getLeftBoundary() {
         return this.getPositionX() - this._getAnchorX() * this._contentSize.width;
-    },
-
+    }
     /**
      * Gets the bottom boundary position of this widget.
      * @returns {number}
      */
-    getBottomBoundary: function () {
+    getBottomBoundary() {
         return this.getPositionY() - this._getAnchorY() * this._contentSize.height;
-    },
-
+    }
     /**
      * Gets the right boundary position of this widget.
      * @returns {number}
      */
-    getRightBoundary: function () {
+    getRightBoundary() {
         return this.getLeftBoundary() + this._contentSize.width;
-    },
-
+    }
     /**
      * Gets the top boundary position of this widget.
      * @returns {number}
      */
-    getTopBoundary: function () {
+    getTopBoundary() {
         return this.getBottomBoundary() + this._contentSize.height;
-    },
-
+    }
     /**
      * Gets the position of touch began event.
      * @returns {cc.Point}
      */
-    getTouchBeganPosition: function () {
+    getTouchBeganPosition() {
         return cc.p(this._touchBeganPosition);
-    },
-
+    }
     /**
      * Gets the position of touch moved event
      * @returns {cc.Point}
      */
-    getTouchMovePosition: function () {
+    getTouchMovePosition() {
         return cc.p(this._touchMovePosition);
-    },
-
+    }
     /**
      * Gets the position of touch end event
      * @returns {cc.Point}
      */
-    getTouchEndPosition: function () {
+    getTouchEndPosition() {
         return cc.p(this._touchEndPosition);
-    },
-
+    }
     /**
      * get widget type
      * @returns {ccui.Widget.TYPE_WIDGET|ccui.Widget.TYPE_CONTAINER}
      */
-    getWidgetType: function () {
+    getWidgetType() {
         return this._widgetType;
-    },
-
+    }
     /**
      * Gets LayoutParameter of widget.
      * @param {ccui.LayoutParameter} parameter
      */
-    setLayoutParameter: function (parameter) {
+    setLayoutParameter(parameter) {
         if (!parameter)
             return;
         this._layoutParameterDictionary[parameter.getLayoutType()] = parameter;
         this._layoutParameterType = parameter.getLayoutType();
-    },
-
+    }
     /**
      * Gets layout parameter
      * @param {ccui.LayoutParameter.NONE|ccui.LayoutParameter.LINEAR|ccui.LayoutParameter.RELATIVE} type
      * @returns {ccui.LayoutParameter}
      */
-    getLayoutParameter: function (type) {
+    getLayoutParameter(type) {
         type = type || this._layoutParameterType;
         return this._layoutParameterDictionary[type];
-    },
-
+    }
     /**
      * Returns the "class name" of widget.
      * @returns {string}
      */
-    getDescription: function () {
+    getDescription() {
         return "Widget";
-    },
-
+    }
     /**
      * Clones a new widget.
      * @returns {ccui.Widget}
      */
-    clone: function () {
+    clone() {
         var clonedWidget = this._createCloneInstance();
         clonedWidget._copyProperties(this);
         clonedWidget._copyClonedWidgetChildren(this);
         return clonedWidget;
-    },
-
-    _createCloneInstance: function () {
+    }
+    _createCloneInstance() {
         return new ccui.Widget();
-    },
-
-    _copyClonedWidgetChildren: function (model) {
+    }
+    _copyClonedWidgetChildren(model) {
         var widgetChildren = model.getChildren();
         for (var i = 0; i < widgetChildren.length; i++) {
             var locChild = widgetChildren[i];
             if (locChild instanceof ccui.Widget)
                 this.addChild(locChild.clone());
         }
-    },
-
-    _copySpecialProperties: function (model) {
-    },
-
-    _copyProperties: function (widget) {
+    }
+    _copySpecialProperties(model) {
+    }
+    _copyProperties(widget) {
         this.setEnabled(widget.isEnabled());
         this.setVisible(widget.isVisible());
         this.setBright(widget.isBright());
@@ -1529,116 +1421,103 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             if (parameter)
                 this.setLayoutParameter(parameter.clone());
         }
-    },
-
+    }
     /*temp action*/
-    setActionTag: function (tag) {
+    setActionTag(tag) {
         this._actionTag = tag;
-    },
-
-    getActionTag: function () {
+    }
+    getActionTag() {
         return this._actionTag;
-    },
-
+    }
     /**
      * Gets the left boundary position of this widget.
      * @deprecated since v3.0, please use getLeftBoundary instead.
      * @returns {number}
      */
-    getLeftInParent: function () {
+    getLeftInParent() {
         cc.log("getLeftInParent is deprecated. Please use getLeftBoundary instead.");
         return this.getLeftBoundary();
-    },
-
+    }
     /**
      * Gets the bottom boundary position of this widget.
      * @deprecated since v3.0, please use getBottomBoundary instead.
      * @returns {number}
      */
-    getBottomInParent: function () {
+    getBottomInParent() {
         cc.log("getBottomInParent is deprecated. Please use getBottomBoundary instead.");
         return this.getBottomBoundary();
-    },
-
+    }
     /**
      * Gets the right boundary position of this widget.
      * @deprecated since v3.0, please use getRightBoundary instead.
      * @returns {number}
      */
-    getRightInParent: function () {
+    getRightInParent() {
         cc.log("getRightInParent is deprecated. Please use getRightBoundary instead.");
         return this.getRightBoundary();
-    },
-
+    }
     /**
      * Gets the top boundary position of this widget.
      * @deprecated since v3.0, please use getTopBoundary instead.
      * @returns {number}
      */
-    getTopInParent: function () {
+    getTopInParent() {
         cc.log("getTopInParent is deprecated. Please use getTopBoundary instead.");
         return this.getTopBoundary();
-    },
-
+    }
     /**
      * Gets the touch end point of widget when widget is selected.
      * @deprecated since v3.0, please use getTouchEndPosition instead.
      * @returns {cc.Point} the touch end point.
      */
-    getTouchEndPos: function () {
+    getTouchEndPos() {
         cc.log("getTouchEndPos is deprecated. Please use getTouchEndPosition instead.");
         return this.getTouchEndPosition();
-    },
-
+    }
     /**
      *Gets the touch move point of widget when widget is selected.
      * @deprecated since v3.0, please use getTouchMovePosition instead.
      * @returns {cc.Point} the touch move point.
      */
-    getTouchMovePos: function () {
+    getTouchMovePos() {
         cc.log("getTouchMovePos is deprecated. Please use getTouchMovePosition instead.");
         return this.getTouchMovePosition();
-    },
-
+    }
     /**
      * Checks a point if in parent's area.
      * @deprecated since v3.0, please use isClippingParentContainsPoint instead.
      * @param {cc.Point} pt
      * @returns {Boolean}
      */
-    clippingParentAreaContainPoint: function (pt) {
+    clippingParentAreaContainPoint(pt) {
         cc.log("clippingParentAreaContainPoint is deprecated. Please use isClippingParentContainsPoint instead.");
         this.isClippingParentContainsPoint(pt);
-    },
-
+    }
     /**
      * Gets the touch began point of widget when widget is selected.
      * @deprecated since v3.0, please use getTouchBeganPosition instead.
      * @returns {cc.Point} the touch began point.
      */
-    getTouchStartPos: function () {
+    getTouchStartPos() {
         cc.log("getTouchStartPos is deprecated. Please use getTouchBeganPosition instead.");
         return this.getTouchBeganPosition();
-    },
-
+    }
     /**
      * Changes the size that is widget's size
      * @deprecated since v3.0, please use setContentSize instead.
      * @param {cc.Size} size  that is widget's size
      */
-    setSize: function (size) {
+    setSize(size) {
         this.setContentSize(size);
-    },
-
+    }
     /**
      * Returns size of widget
      * @deprecated since v3.0, please use getContentSize instead.
      * @returns {cc.Size}
      */
-    getSize: function () {
+    getSize() {
         return this.getContentSize();
-    },
-
+    }
     /**
      * Adds a node for widget (this function is deleted in -x)
      * @param {cc.Node} node
@@ -1646,22 +1525,21 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
      * @param {Number} tag
      * @deprecated since v3.0, please use addChild instead.
      */
-    addNode: function (node, zOrder, tag) {
+    addNode(node, zOrder, tag) {
         if (node instanceof ccui.Widget) {
             cc.log("Please use addChild to add a Widget.");
             return;
         }
         cc.Node.prototype.addChild.call(this, node, zOrder, tag);
         this._nodes.push(node);
-    },
-
+    }
     /**
      * Gets node by tag
      * @deprecated since v3.0, please use getChildByTag instead.
      * @param {Number} tag
      * @returns {cc.Node}
      */
-    getNodeByTag: function (tag) {
+    getNodeByTag(tag) {
         var _nodes = this._nodes;
         for (var i = 0; i < _nodes.length; i++) {
             var node = _nodes[i];
@@ -1670,63 +1548,56 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             }
         }
         return null;
-    },
-
+    }
     /**
      * Returns all children.
      * @deprecated since v3.0, please use getChildren instead.
      * @returns {Array}
      */
-    getNodes: function () {
+    getNodes() {
         return this._nodes;
-    },
-
+    }
     /**
      * Removes a node from ccui.Widget
      * @deprecated since v3.0, please use removeChild instead.
      * @param {cc.Node} node
      * @param {Boolean} cleanup
      */
-    removeNode: function (node, cleanup) {
+    removeNode(node, cleanup) {
         cc.Node.prototype.removeChild.call(this, node, cleanup);
         cc.arrayRemoveObject(this._nodes, node);
-    },
-
-    _getNormalGLProgram: function () {
+    }
+    _getNormalGLProgram() {
         return cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR);
-    },
-
-    _getGrayGLProgram: function () {
+    }
+    _getGrayGLProgram() {
         return cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
-    },
-
+    }
     /**
      * Removes node by tag
      * @deprecated since v3.0, please use removeChildByTag instead.
      * @param {Number} tag
      * @param {Boolean} [cleanup]
      */
-    removeNodeByTag: function (tag, cleanup) {
+    removeNodeByTag(tag, cleanup) {
         var node = this.getChildByTag(tag);
         if (!node)
             cc.log("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
         else
             this.removeChild(node, cleanup);
-    },
-
+    }
     /**
      * Removes all node
      * @deprecated since v3.0, please use removeAllChildren instead.
      */
-    removeAllNodes: function () {
+    removeAllNodes() {
         for (var i = 0; i < this._nodes.length; i++) {
             var node = this._nodes[i];
             cc.Node.prototype.removeChild.call(this, node);
         }
         this._nodes.length = 0;
-    },
-
-    _findLayout: function () {
+    }
+    _findLayout() {
         cc.renderer.childrenOrderDirty = true;
         var layout = this._parent;
         while (layout) {
@@ -1736,132 +1607,118 @@ ccui.Widget = ccui.ProtectedNode.extend(/** @lends ccui.Widget# */{
             } else
                 layout = layout._parent;
         }
-    },
-
+    }
     /**
      * @since v3.2
      * @returns {boolean} true represent the widget use Unify Size, false represent the widget couldn't use Unify Size
      */
-    isUnifySizeEnabled: function(){
+    isUnifySizeEnabled(){
         return this._unifySize;
-    },
-
+    }
     /**
      * @since v3.2
      * @param {Boolean} enable enable Unify Size of a widget
      */
-    setUnifySizeEnabled: function(enable){
+    setUnifySizeEnabled(enable){
         this._unifySize = enable;
-    },
-
+    }
     //v3.3
-    _ccEventCallback: null,
     /**
      * Set a event handler to the widget in order to use cocostudio editor and framework
      * @since v3.3
      * @param {function} callback
      */
-    addCCSEventListener: function (callback) {
+    addCCSEventListener(callback) {
         this._ccEventCallback = callback;
-    },
-
+    }
     //override the scale functions.
-    setScaleX: function (scaleX) {
+    setScaleX(scaleX) {
         if (this._flippedX)
             scaleX = scaleX * -1;
         cc.Node.prototype.setScaleX.call(this, scaleX);
-    },
-    setScaleY: function (scaleY) {
+    }
+    setScaleY(scaleY) {
         if (this._flippedY)
             scaleY = scaleY * -1;
         cc.Node.prototype.setScaleY.call(this, scaleY);
-    },
-    setScale: function (scaleX, scaleY) {
+    }
+    setScale(scaleX, scaleY) {
         if (scaleY === undefined)
             scaleY = scaleX;
         this.setScaleX(scaleX);
         this.setScaleY(scaleY);
-    },
-
-    getScaleX: function () {
+    }
+    getScaleX() {
         var originalScale = cc.Node.prototype.getScaleX.call(this);
         if (this._flippedX)
             originalScale = originalScale * -1.0;
         return originalScale;
-    },
-    getScaleY: function () {
+    }
+    getScaleY() {
         var originalScale = cc.Node.prototype.getScaleY.call(this);
         if (this._flippedY)
             originalScale = originalScale * -1.0;
         return originalScale;
-    },
-    getScale: function () {
+    }
+    getScale() {
         if (this.getScaleX() !== this.getScaleY())
             cc.log("Widget#scale. ScaleX != ScaleY. Don't know which one to return");
         return this.getScaleX();
-    },
-
+    }
     /**
      * Sets callback name to widget.
      * @since v3.3
      * @param {String} callbackName
      */
-    setCallbackName: function (callbackName) {
+    setCallbackName(callbackName) {
         this._callbackName = callbackName;
-    },
-
+    }
     /**
      * Gets callback name of widget
      * @since v3.3
      * @returns {String|Null}
      */
-    getCallbackName: function () {
+    getCallbackName() {
         return this._callbackName;
-    },
-
+    }
     /**
      * Sets callback type to widget
      * @since v3.3
      * @param {String} callbackType
      */
-    setCallbackType: function (callbackType) {
+    setCallbackType(callbackType) {
         this._callbackType = callbackType;
-    },
-
+    }
     /**
      * Gets callback type of widget
      * @since v3.3
      * @returns {String|null}
      */
-    getCallbackType: function () {
+    getCallbackType() {
         return this._callbackType;
-    },
-
+    }
     /**
      * Whether enable layout component of a widget
      * @since v3.3
      * @param {Boolean} enable enable layout Component of a widget
      */
-    setLayoutComponentEnabled: function(enable){
+    setLayoutComponentEnabled(enable){
         this._usingLayoutComponent = enable;
-    },
-
+    }
     /**
      * Returns whether enable layout component of a widget
      * @return {Boolean} true represent the widget use Layout Component, false represent the widget couldn't use Layout Component.
      */
-    isLayoutComponentEnabled: function(){
+    isLayoutComponentEnabled(){
         return this._usingLayoutComponent;
-    },
-
-
-    _createRenderCmd: function () {
+    }
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
             return new ccui.Widget.WebGLRenderCmd(this);
         else
             return new ccui.Widget.CanvasRenderCmd(this);
     }
-});
+};
 
 var _p = ccui.Widget.prototype;
 

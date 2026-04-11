@@ -29,19 +29,22 @@
  * @class
  * @extends cc.Class
  */
-cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# */{
-    _renderContext:null,
-    _initialized:false,
-    _shader: null,
-    _colorLocation: "u_color",
-    _colorArray: null,
-    _pointSizeLocation: "u_pointSize",
-    _pointSize:-1,
+cc.DrawingPrimitiveWebGL = class DrawingPrimitiveWebGL extends cc.NewClass {
     /**
      * contructor of cc.DrawingPrimitiveWebGL
      * @param ctx rendercontext
      */
-    ctor:function (ctx) {
+    constructor(ctx) {
+        super();
+
+        this._renderContext = null;
+        this._initialized = false;
+        this._shader = null;
+        this._colorLocation = "u_color";
+        this._colorArray = null;
+        this._pointSizeLocation = "u_pointSize";
+        this._pointSize = -1;
+
         if (ctx == null)
             ctx = cc._renderContext;
 
@@ -50,9 +53,9 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
 
         this._renderContext = ctx;
         this._colorArray = new Float32Array([1.0, 1.0, 1.0, 1.0]);
-    },
+    }
 
-    lazy_init:function () {
+    lazy_init() {
         var _t = this;
         if (!_t._initialized) {
             //
@@ -65,20 +68,20 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
 
             _t._initialized = true;
         }
-    },
+    }
 
     /**
      * initlialize context
      */
-    drawInit:function () {
+    drawInit() {
         this._initialized = false;
-    },
+    }
 
     /**
      * draws a point given x and y coordinate measured in points
      * @param {cc.Point} point
      */
-    drawPoint:function (point) {
+    drawPoint(point) {
         this.lazy_init();
 
         var glContext = this._renderContext;
@@ -97,14 +100,14 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
     /**
      * draws an array of points.
      * @param {Array} points point of array
      * @param {Number} numberOfPoints
      */
-    drawPoints:function (points, numberOfPoints) {
+    drawPoints(points, numberOfPoints) {
         if (!points || points.length === 0)
             return;
 
@@ -126,23 +129,23 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
-    _pointsToTypeArray:function (points) {
+    _pointsToTypeArray(points) {
         var typeArr = new Float32Array(points.length * 2);
         for (var i = 0; i < points.length; i++) {
             typeArr[i * 2] = points[i].x;
             typeArr[i * 2 + 1] = points[i].y;
         }
         return typeArr;
-    },
+    }
 
     /**
      * draws a line given the origin and destination point measured in points
      * @param {cc.Point} origin
      * @param {cc.Point} destination
      */
-    drawLine:function (origin, destination) {
+    drawLine(origin, destination) {
         this.lazy_init();
 
         var glContext = this._renderContext;
@@ -160,19 +163,19 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
     /**
      * draws a rectangle given the origin and destination point measured in points.
      * @param {cc.Point} origin
      * @param {cc.Point} destination
      */
-    drawRect:function (origin, destination) {
+    drawRect(origin, destination) {
         this.drawLine(cc.p(origin.x, origin.y), cc.p(destination.x, origin.y));
         this.drawLine(cc.p(destination.x, origin.y), cc.p(destination.x, destination.y));
         this.drawLine(cc.p(destination.x, destination.y), cc.p(origin.x, destination.y));
         this.drawLine(cc.p(origin.x, destination.y), cc.p(origin.x, origin.y));
-    },
+    }
 
     /**
      * draws a solid rectangle given the origin and destination point measured in points.
@@ -180,7 +183,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
      * @param {cc.Point} destination
      * @param {cc.Color} color
      */
-    drawSolidRect:function (origin, destination, color) {
+    drawSolidRect(origin, destination, color) {
         var vertices = [
             origin,
             cc.p(destination.x, origin.y),
@@ -189,7 +192,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         ];
 
         this.drawSolidPoly(vertices, 4, color);
-    },
+    }
 
     /**
      * draws a polygon given a pointer to cc.Point coordiantes and the number of vertices measured in points.
@@ -197,7 +200,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
      * @param {Number} numOfVertices the number of vertices measured in points
      * @param {Boolean} closePolygon The polygon can be closed or open
      */
-    drawPoly:function (vertices, numOfVertices, closePolygon) {
+    drawPoly(vertices, numOfVertices, closePolygon) {
         this.lazy_init();
 
         var glContext = this._renderContext;
@@ -218,7 +221,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
     /**
      * draws a solid polygon given a pointer to CGPoint coordiantes, the number of vertices measured in points, and a color.
@@ -226,7 +229,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
      * @param {Number} numberOfPoints
      * @param {cc.Color} color
      */
-    drawSolidPoly:function (poli, numberOfPoints, color) {
+    drawSolidPoly(poli, numberOfPoints, color) {
         this.lazy_init();
         if (color)
             this.setDrawColor(color.r, color.g, color.b, color.a);
@@ -245,7 +248,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
     /**
      * draws a circle given the center, radius and number of segments.
@@ -255,7 +258,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
      * @param {Number} segments
      * @param {Boolean} drawLineToCenter
      */
-    drawCircle:function (center, radius, angle, segments, drawLineToCenter) {
+    drawCircle(center, radius, angle, segments, drawLineToCenter) {
         this.lazy_init();
 
         var additionalSegment = 1;
@@ -294,7 +297,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
     /**
      * draws a quad bezier path
@@ -303,7 +306,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
      * @param {cc.Point} destination
      * @param {Number} segments
      */
-    drawQuadBezier:function (origin, control, destination, segments) {
+    drawQuadBezier(origin, control, destination, segments) {
         this.lazy_init();
 
         var vertices = new Float32Array((segments + 1) * 2);
@@ -332,7 +335,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
     /**
      * draws a cubic bezier path
@@ -342,7 +345,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
      * @param {cc.Point} destination
      * @param {Number} segments
      */
-    drawCubicBezier:function (origin, control1, control2, destination, segments) {
+    drawCubicBezier(origin, control1, control2, destination, segments) {
         this.lazy_init();
 
         var vertices = new Float32Array((segments + 1) * 2);
@@ -370,16 +373,16 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
     /**
      * draw a catmull rom line
      * @param {Array} points
      * @param {Number} segments
      */
-    drawCatmullRom:function (points, segments) {
+    drawCatmullRom(points, segments) {
         this.drawCardinalSpline(points, 0.5, segments);
-    },
+    }
 
     /**
      * draw a cardinal spline path
@@ -387,7 +390,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
      * @param {Number} tension
      * @param {Number} segments
      */
-    drawCardinalSpline:function (config, tension, segments) {
+    drawCardinalSpline(config, tension, segments) {
         this.lazy_init();
 
         var vertices = new Float32Array((segments + 1) * 2);
@@ -430,7 +433,7 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
         glContext.deleteBuffer(pointBuffer);
 
         cc.incrementGLDraws(1);
-    },
+    }
 
     /**
      * set the drawing color with 4 unsigned bytes
@@ -439,27 +442,27 @@ cc.DrawingPrimitiveWebGL = cc.Class.extend(/** @lends cc.DrawingPrimitiveWebGL# 
      * @param {Number} b blue value (0 to 255)
      * @param {Number} a Alpha value (0 to 255)
      */
-    setDrawColor:function (r, g, b, a) {
+    setDrawColor(r, g, b, a) {
         this._colorArray[0] = r / 255.0;
         this._colorArray[1] = g / 255.0;
         this._colorArray[2] = b / 255.0;
         this._colorArray[3] = a / 255.0;
-    },
+    }
 
     /**
      * set the point size in points. Default 1.
      * @param {Number} pointSize
      */
-    setPointSize:function (pointSize) {
+    setPointSize(pointSize) {
         this._pointSize = pointSize * cc.contentScaleFactor();
-    },
+    }
 
     /**
      * set the line width. Default 1.
      * @param {Number} width
      */
-    setLineWidth:function (width) {
+    setLineWidth(width) {
         if(this._renderContext.lineWidth)
             this._renderContext.lineWidth(width);
     }
-});
+};

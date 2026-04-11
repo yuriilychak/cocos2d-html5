@@ -26,19 +26,23 @@
  ****************************************************************************/
 var MaterialSystemTestIdx = -1;
 
-var MaterialSystemTestDemo = cc.Layer.extend({
-    _title:"Material System",
-    _subtitle:"",
+var MaterialSystemTestDemo = class MaterialSystemTestDemo extends cc.Layer {
 
-    ctor:function () {
-        this._super();
-    },
+    constructor() {
+        super();
+
+
+        this._title = "Material System";
+
+
+        this._subtitle = "";
+    }
 
     //
     // Menu
     //
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var label = new cc.LabelTTF(this._title, "Arial", 28);
         this.addChild(label, 100, BASE_TEST_TITLE_TAG);
@@ -71,30 +75,31 @@ var MaterialSystemTestDemo = cc.Layer.extend({
         item3.y = height/2 ;
 
         this.addChild(menu, 102, BASE_TEST_MENU_TAG);
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new MaterialSystemTestScene();
         s.addChild(restartMaterialSystemTest());
         director.runScene(s);
-    },
+    }
 
-    onNextCallback:function (sender) {
+    onNextCallback(sender) {
         var s = new MaterialSystemTestScene();
         s.addChild(nextMaterialSystemTest());
         director.runScene(s);
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         var s = new MaterialSystemTestScene();
         s.addChild(previousMaterialSystemTest());
         director.runScene(s);
     }
-});
 
-var MaterialSystemTestScene = cc.Scene.extend({
-    ctor:function () {
-        this._super();
+};
+
+var MaterialSystemTestScene = class MaterialSystemTestScene extends cc.Scene {
+    constructor() {
+        super();
 
         var label = new cc.LabelTTF("Main Menu", "Arial", 20);
         var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
@@ -105,27 +110,30 @@ var MaterialSystemTestScene = cc.Scene.extend({
         menuItem.x = winSize.width - 50;
         menuItem.y = 25;
         this.addChild(menu, 99);
-    },
-    onMainMenuCallback:function () {
+    }
+    onMainMenuCallback() {
         var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
         director.runScene(scene);
-    },
-    runThisTest:function (num) {
+    }
+    runThisTest(num) {
         MaterialSystemTestIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextMaterialSystemTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
 
-var Material_2DEffects = MaterialSystemTestDemo.extend({
-    _subtitle:"Testing effects on Sprite",
+};
 
-    ctor:function(){
-        this._super();
+var Material_2DEffects = class Material_2DEffects extends MaterialSystemTestDemo {
+
+    constructor(){
+        super();
+
+
+        this._subtitle = "Testing effects on Sprite";
         var properties = cc.Properties.createNonRefCounted("Materials/2d_effects.material#sample");
 
         var mat1 = cc.Material.createWithProperties(properties);
@@ -150,13 +158,16 @@ var Material_2DEffects = MaterialSystemTestDemo.extend({
         this.addChild(spriteEdgeDetect);
         spriteEdgeDetect.setGLProgramState(mat1.getTechniqueByName("edge_detect").getPassByIndex(0).getGLProgramState());
     }
-});
 
-var Material_UniformCallback = MaterialSystemTestDemo.extend({
-    _subtitle:"Testing uniforms call back",
+};
 
-    ctor:function(){
-        this._super();
+var Material_UniformCallback = class Material_UniformCallback extends MaterialSystemTestDemo {
+
+    constructor(){
+        super();
+
+
+        this._subtitle = "Testing uniforms call back";
         var properties = cc.Properties.createNonRefCounted("Materials/auto_binding_test.material#sample");
 
         var mat1 = cc.Material.createWithProperties(properties);
@@ -193,16 +204,23 @@ var Material_UniformCallback = MaterialSystemTestDemo.extend({
         this.addChild(spriteEdgeDetect);
         spriteEdgeDetect.setGLProgramState(mat1.getTechniqueByName("edge_detect").getPassByIndex(0).getGLProgramState());
     }
-});
+
+};
 
 
-var Material_setTechnique = MaterialSystemTestDemo.extend({
-    _subtitle:"Testing setTechnique()",
-    _techniqueState:0,
-    _sprite:null,
+var Material_setTechnique = class Material_setTechnique extends MaterialSystemTestDemo {
 
-    ctor:function(){
-        this._super();
+    constructor(){
+        super();
+
+
+        this._subtitle = "Testing setTechnique()";
+
+
+        this._techniqueState = 0;
+
+
+        this._sprite = null;
 
         var sprite = new jsb.Sprite3D("Sprite3DTest/boss1.obj");
         sprite.setScale(6);
@@ -223,9 +241,9 @@ var Material_setTechnique = MaterialSystemTestDemo.extend({
         sprite.runAction(cc.rotateBy(5, cc.math.vec3(30, 60, 270)).repeatForever());
 
         this.schedule(this.changeMaterial, 1);
-    },
+    }
 
-    changeMaterial:function(dt){
+    changeMaterial(dt){
         switch(this._techniqueState){
         case 0:
             this._sprite.getMaterial(0).setTechnique("lit");
@@ -244,13 +262,16 @@ var Material_setTechnique = MaterialSystemTestDemo.extend({
         if(this._techniqueState > 2)
             this._techniqueState = 0;
     }
-});
 
-var Material_clone = MaterialSystemTestDemo.extend({
-    _subtitle:"Testing material->clone()",
+};
 
-    ctor:function(){
-        this._super();
+var Material_clone = class Material_clone extends MaterialSystemTestDemo {
+
+    constructor(){
+        super();
+
+
+        this._subtitle = "Testing material->clone()";
 
         var sprite = new jsb.Sprite3D("Sprite3DTest/boss1.obj");
         sprite.setScale(3);
@@ -282,13 +303,16 @@ var Material_clone = MaterialSystemTestDemo.extend({
 
         mat.setTechnique("outline");
     }
-});
 
-var Material_MultipleSprite3D = MaterialSystemTestDemo.extend({
-    _subtitle:"Sprites with multiple meshes",
+};
 
-    ctor:function(){
-        this._super();
+var Material_MultipleSprite3D = class Material_MultipleSprite3D extends MaterialSystemTestDemo {
+
+    constructor(){
+        super();
+
+
+        this._subtitle = "Sprites with multiple meshes";
 
         var names = [
             "Sprite3DTest/ReskinGirl.c3b",
@@ -312,13 +336,16 @@ var Material_MultipleSprite3D = MaterialSystemTestDemo.extend({
             sprite.setScale(3);
         }
     }
-});
 
-var Material_Sprite3DTest = MaterialSystemTestDemo.extend({
-    _subtitle:"Material System on Sprite3D",
+};
 
-    ctor:function(){
-        this._super();
+var Material_Sprite3DTest = class Material_Sprite3DTest extends MaterialSystemTestDemo {
+
+    constructor(){
+        super();
+
+
+        this._subtitle = "Material System on Sprite3D";
 
         var sprite = new jsb.Sprite3D("Sprite3DTest/boss1.obj");
         sprite.setScale(8.0);
@@ -326,13 +353,16 @@ var Material_Sprite3DTest = MaterialSystemTestDemo.extend({
         this.addChild(sprite);
         sprite.setNormalizedPosition(cc.p(0.5, 0.5));
     }
-});
 
-var Material_parsePerformance = MaterialSystemTestDemo.extend({
-    _subtitle:"Testing parsing performance",
+};
 
-    ctor:function(){
-        this._super();
+var Material_parsePerformance = class Material_parsePerformance extends MaterialSystemTestDemo {
+
+    constructor(){
+        super();
+
+
+        this._subtitle = "Testing parsing performance";
 
         var begin = new Date().getTime();
 
@@ -345,7 +375,8 @@ var Material_parsePerformance = MaterialSystemTestDemo.extend({
         var elapsed_secs = (end - begin) / 1000;
         cc.log("Parsing took: "+elapsed_secs +" seconds");
     }
-});
+
+};
 
 //
 // Flow control

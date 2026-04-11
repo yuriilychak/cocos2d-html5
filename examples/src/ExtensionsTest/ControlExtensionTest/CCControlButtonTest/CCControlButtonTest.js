@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlButtonTest_HelloVariableSize = ControlScene.extend({
-    init:function () {
-        if (this._super()) {
+var ControlButtonTest_HelloVariableSize = class ControlButtonTest_HelloVariableSize extends ControlScene {
+    init() {
+        if (super.init()) {
             var screenSize = cc.director.getWinSize();
 
             // Defines an array of title to create buttons dynamically
@@ -84,9 +84,9 @@ var ControlButtonTest_HelloVariableSize = ControlScene.extend({
             return true;
         }
         return false;
-    },
+    }
     // Creates and return a button with a default background and title color.
-    standardButtonWithTitle:function (title) {
+    standardButtonWithTitle(title) {
         // Creates and return a button with a default background and title color.
         var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
         var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
@@ -101,7 +101,8 @@ var ControlButtonTest_HelloVariableSize = ControlScene.extend({
 
         return button;
     }
-});
+
+};
 
 ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
     var scene = new cc.Scene();
@@ -113,11 +114,15 @@ ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
     return scene;
 };
 
-var ControlButtonTest_Event = ControlScene.extend({
-    _displayValueLabel:null,
+var ControlButtonTest_Event = class ControlButtonTest_Event extends ControlScene {
+    constructor() {
+        super();
+        this._displayValueLabel = null;
+    }
 
-    init:function () {
-        if (this._super()) {
+
+    init() {
+        if (super.init()) {
             var screenSize = cc.director.getWinSize();
 
             // Add the button
@@ -165,40 +170,41 @@ var ControlButtonTest_Event = ControlScene.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    getDisplayValueLabel:function () {
+    getDisplayValueLabel() {
         return this._displayValueLabel;
-    },
-    setDisplayValueLabel:function (displayValueLabel) {
+    }
+    setDisplayValueLabel(displayValueLabel) {
         this._displayValueLabel = displayValueLabel;
-    },
+    }
 
-    touchDownAction:function (sender, controlEvent) {
+    touchDownAction(sender, controlEvent) {
         this._displayValueLabel.setString("Touch Down");
-    },
-    touchDragInsideAction:function (sender, controlEvent) {
+    }
+    touchDragInsideAction(sender, controlEvent) {
         this._displayValueLabel.setString("Drag Inside");
-    },
-    touchDragOutsideAction:function (sender, controlEvent) {
+    }
+    touchDragOutsideAction(sender, controlEvent) {
         this._displayValueLabel.setString("Drag Outside");
-    },
-    touchDragEnterAction:function (sender, controlEvent) {
+    }
+    touchDragEnterAction(sender, controlEvent) {
         this._displayValueLabel.setString("Drag Enter");
-    },
-    touchDragExitAction:function (sender, controlEvent) {
+    }
+    touchDragExitAction(sender, controlEvent) {
         this._displayValueLabel.setString("Drag Exit");
-    },
-    touchUpInsideAction:function (sender, controlEvent) {
+    }
+    touchUpInsideAction(sender, controlEvent) {
         this._displayValueLabel.setString("Touch Up Inside.");
-    },
-    touchUpOutsideAction:function (sender, controlEvent) {
+    }
+    touchUpOutsideAction(sender, controlEvent) {
         this._displayValueLabel.setString("Touch Up Outside.");
-    },
-    touchCancelAction:function (sender, controlEvent) {
+    }
+    touchCancelAction(sender, controlEvent) {
         this._displayValueLabel.setString("Touch Cancel");
     }
-});
+
+};
 
 ControlButtonTest_Event.create = function (sceneTitle) {
     var scene = new cc.Scene();
@@ -210,9 +216,9 @@ ControlButtonTest_Event.create = function (sceneTitle) {
     return scene;
 };
 
-var ControlButtonTest_Styling = ControlScene.extend({
-    init:function () {
-        if (this._super()) {
+var ControlButtonTest_Styling = class ControlButtonTest_Styling extends ControlScene {
+    init() {
+        if (super.init()) {
             var screenSize = cc.director.getWinSize();
 
             var layer = new cc.Node();
@@ -253,8 +259,8 @@ var ControlButtonTest_Styling = ControlScene.extend({
             return true;
         }
         return false;
-    },
-    standardButtonWithTitle:function (title) {
+    }
+    standardButtonWithTitle(title) {
         /** Creates and return a button with a default background and title color. */
         var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
         backgroundButton.setPreferredSize(cc.size(45, 45));  // Set the prefered size
@@ -271,7 +277,8 @@ var ControlButtonTest_Styling = ControlScene.extend({
 
         return button;
     }
-});
+
+};
 
 ControlButtonTest_Styling.create = function (sceneTitle) {
     var scene = new cc.Scene();

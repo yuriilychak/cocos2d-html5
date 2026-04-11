@@ -53,58 +53,72 @@ var spriteFrameCache = cc.spriteFrameCache;
 // SpriteTestDemo
 //
 //------------------------------------------------------------------
-var SpriteTestDemo = BaseTestLayer.extend({
-    _title:"",
-    _subtitle:"",
+var SpriteTestDemo = class SpriteTestDemo extends BaseTestLayer {
 
-    ctor:function () {
+    constructor() {
         if (arguments.length === 0) {
-            this._super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
+            super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
         } else {
-            this._super.apply(this, arguments);
+            super(...arguments);
         }
-    },
+        this._title = "";
+        this._subtitle = "";
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new SpriteTestScene();
         s.addChild(restartSpriteTest());
         director.runScene(s);
-    },
+    }
 
-    onNextCallback:function (sender) {
+    onNextCallback(sender) {
         var s = new SpriteTestScene();
         s.addChild(nextSpriteTest());
         director.runScene(s);
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         var s = new SpriteTestScene();
         s.addChild(previousSpriteTest());
         director.runScene(s);
-    },
+    }
 
     // automation
-    numberOfPendingTests:function () {
+    numberOfPendingTests() {
         return ( (arrayOfSpriteTest.length - 1) - spriteTestIdx );
-    },
+    }
 
-    getTestNumber:function () {
+    getTestNumber() {
         return spriteTestIdx;
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Sprite1
 //
 //------------------------------------------------------------------
-var Sprite1 = SpriteTestDemo.extend({
-    _title:"Non Batched Sprite ",
-    _subtitle:"Tap screen to add more sprites",
+var Sprite1 = class Sprite1 extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start0----ctor
-        this._super();
+        super();
+
+
+        this._title = "Non Batched Sprite ";
+
+
+        this._subtitle = "Tap screen to add more sprites";
+
+
+        this.testDuration = 1;
+
+
+        this.pixel = {"0":51, "1":0, "2":51, "3":255};
+
+
+        this.testSprite = null;
 
         this.addNewSpriteWithCoords(cc.p(winSize.width / 2, winSize.height / 2));
 
@@ -130,9 +144,9 @@ var Sprite1 = SpriteTestDemo.extend({
                 }
             }, this);
         //----end0----
-    },
+    }
 
-    addNewSpriteWithCoords:function (p) {
+    addNewSpriteWithCoords(p) {
         //----start0----addNewSpriteWithCoords
         var idx = 0 | (Math.random() * 14);
         var x = (idx % 5) * 85;
@@ -162,14 +176,11 @@ var Sprite1 = SpriteTestDemo.extend({
         sprite.runAction(seq.repeatForever());
         this.testSprite = sprite;
         //----end0----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1,
-    pixel:{"0":51, "1":0, "2":51, "3":255},
-    testSprite:null,
-    setupAutomation:function () {
+    setupAutomation() {
         var fun = function () {
             var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
             this.addChild(sprite, 999);
@@ -177,31 +188,50 @@ var Sprite1 = SpriteTestDemo.extend({
             sprite.y = winSize.height / 2;
         };
         this.scheduleOnce(fun, 0.5);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"useBatch":false, "pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
         var ret = {"useBatch":this.testSprite.getBatchNode() != null, "pixel":this.containsPixel(ret1, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNode1
 //
 //------------------------------------------------------------------
-var SpriteBatchNode1 = SpriteTestDemo.extend({
+var SpriteBatchNode1 = class SpriteBatchNode1 extends SpriteTestDemo {
 
-    _title:"Batched Sprite ",
-    _subtitle:"Tap screen to add more sprites",
 
-    ctor:function () {
+    constructor() {
         //----start1----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Batched Sprite ";
+
+
+
+        this._subtitle = "Tap screen to add more sprites";
+
+
+
+        this.testDuration = 1;
+
+
+
+        this.pixel = {"0":51, "1":0, "2":51, "3":255};
+
+
+
+        this.testSprite = null;
         if ('touches' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -228,9 +258,9 @@ var SpriteBatchNode1 = SpriteTestDemo.extend({
         this.addChild(batchNode, 0, TAG_SPRITE_BATCH_NODE);
         this.addNewSpriteWithCoords(cc.p(winSize.width / 2, winSize.height / 2));
         //----end1----
-    },
+    }
 
-    addNewSpriteWithCoords:function (p) {
+    addNewSpriteWithCoords(p) {
         //----start1----addNewSpriteWithCoords
         var batchNode = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
 
@@ -265,15 +295,12 @@ var SpriteBatchNode1 = SpriteTestDemo.extend({
         sprite.runAction(seq.repeatForever());
         this.testSprite = sprite;
         //----end1----
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:1,
-    pixel:{"0":51, "1":0, "2":51, "3":255},
-    testSprite:null,
-    setupAutomation:function () {
+    setupAutomation() {
         var fun = function () {
             var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
             this.addChild(sprite, 999);
@@ -281,30 +308,54 @@ var SpriteBatchNode1 = SpriteTestDemo.extend({
             sprite.y = winSize.height / 2;
         }
         this.scheduleOnce(fun, 0.5);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"useBatch":true, "pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
         var ret = {"useBatch":this.testSprite.getBatchNode() != null, "pixel":this.containsPixel(ret1, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteColorOpacity
 //
 //------------------------------------------------------------------
-var SpriteColorOpacity = SpriteTestDemo.extend({
+var SpriteColorOpacity = class SpriteColorOpacity extends SpriteTestDemo {
 
-    _title:"Sprite: Color & Opacity",
 
-    ctor:function () {
+    constructor() {
         //----start11----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite: Color & Opacity";
+
+
+
+        this.testDuration = 2.1;
+
+
+
+        this.pixel1 = {"0":255, "1":0, "2":0, "3":255};
+
+
+
+        this.pixel2 = {"0":0, "1":204, "2":0, "3":255};
+
+
+
+        this.pixel3 = {"0":0, "1":0, "2":153, "3":255};
+
+
+
+        this.pixel4 = {"0":255, "1":204, "2":153, "3":255};
         var sprite1 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 121, 85, 121));
         var sprite2 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
         var sprite3 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * 2, 121, 85, 121));
@@ -367,30 +418,25 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
 
         this.schedule(this.removeAndAddSprite, 2);
         //----end11----
-    },
+    }
     // this function test if remove and add works as expected:
 //   color array and vertex array should be reindexed
-    removeAndAddSprite:function (dt) {
+    removeAndAddSprite(dt) {
         //----start11----removeAndAddSprite
         var sprite = this.getChildByTag(TAG_SPRITE5);
 
         this.removeChild(sprite, false);
         this.addChild(sprite, 0, TAG_SPRITE5);
         //----end11----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.1,
-    pixel1:{"0":255, "1":0, "2":0, "3":255},
-    pixel2:{"0":0, "1":204, "2":0, "3":255},
-    pixel3:{"0":0, "1":0, "2":153, "3":255},
-    pixel4:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes", "pixel4":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels((winSize.width / 5) * 1, (winSize.height / 3) * 2 + 40, 5, 5);
         var ret2 = this.readPixels((winSize.width / 5) * 2, (winSize.height / 3) * 2 + 40, 5, 5);
         var ret3 = this.readPixels((winSize.width / 5) * 3, (winSize.height / 3) * 2 + 40, 5, 5);
@@ -401,20 +447,44 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
             "pixel4":this.containsPixel(ret4, this.pixel4) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeColorOpacity
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
+var SpriteBatchNodeColorOpacity = class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode: Color & Opacity",
 
-    ctor:function () {
+    constructor() {
         //----start12----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "SpriteBatchNode: Color & Opacity";
+
+
+
+        this.testDuration = 2.1;
+
+
+
+        this.pixel1 = {"0":255, "1":0, "2":0, "3":255};
+
+
+
+        this.pixel2 = {"0":0, "1":204, "2":0, "3":255};
+
+
+
+        this.pixel3 = {"0":0, "1":0, "2":153, "3":255};
+
+
+
+        this.pixel4 = {"0":255, "1":204, "2":153, "3":255};
         // small capacity. Testing resizing.
         // Don't use capacity=1 in your real game. It is expensive to resize the capacity
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
@@ -481,10 +551,10 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
 
         this.schedule(this.removeAndAddSprite, 2);
         //----end12----
-    },
+    }
     // this function test if remove and add works as expected:
     //   color array and vertex array should be reindexed
-    removeAndAddSprite:function (dt) {
+    removeAndAddSprite(dt) {
         //----start12----removeAndAddSprite
         var batch = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
         var sprite = batch.getChildByTag(TAG_SPRITE5);
@@ -492,20 +562,15 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
         batch.removeChild(sprite, false);
         batch.addChild(sprite, 0, TAG_SPRITE5);
         //----end12----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.1,
-    pixel1:{"0":255, "1":0, "2":0, "3":255},
-    pixel2:{"0":0, "1":204, "2":0, "3":255},
-    pixel3:{"0":0, "1":0, "2":153, "3":255},
-    pixel4:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes", "pixel4":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels((winSize.width / 5) * 1, (winSize.height / 3) * 2 + 40, 5, 5);
         var ret2 = this.readPixels((winSize.width / 5) * 2, (winSize.height / 3) * 2 + 40, 5, 5);
         var ret3 = this.readPixels((winSize.width / 5) * 3, (winSize.height / 3) * 2 + 40, 5, 5);
@@ -517,19 +582,26 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
         return JSON.stringify(ret);
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteZOrder
 //
 //------------------------------------------------------------------
-var SpriteZOrder = SpriteTestDemo.extend({
-    _dir:0,
-    _title:"Sprite: Z order",
-    ctor:function () {
+var SpriteZOrder = class SpriteZOrder extends SpriteTestDemo {
+    constructor() {
         //----start13----ctor
-        this._super();
+        super();
+
+        this._dir = 0;
+
+        this._title = "Sprite: Z order";
+
+        this.testDuration = 4.2;
+
+        this.pixel = {"0":255, "1":0, "2":0, "3":255};
         this._dir = 1;
 
         var sprite;
@@ -557,8 +629,8 @@ var SpriteZOrder = SpriteTestDemo.extend({
 
         this.schedule(this.reorderSprite, 1);
         //----end13----
-    },
-    reorderSprite:function (dt) {
+    }
+    reorderSprite(dt) {
         //----start13----reorderSprite
         var sprite = this.getChildByTag(TAG_SPRITE1);
         var z = sprite.zIndex;
@@ -569,35 +641,40 @@ var SpriteZOrder = SpriteTestDemo.extend({
         z += this._dir * 3;
         this.reorderChild(sprite, z);
         //----end13----
-    },
+    }
     //
     // Automation
     //
-    testDuration:4.2,
-    pixel:{"0":255, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var step = winSize.width / 11;
         var ret1 = this.readPixels((6 + 1) * step, winSize.height / 2 + 10, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeZOrder
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeZOrder = SpriteTestDemo.extend({
-    _dir:0,
-    _title:"SpriteBatch: Z order",
-    ctor:function () {
+var SpriteBatchNodeZOrder = class SpriteBatchNodeZOrder extends SpriteTestDemo {
+    constructor() {
         //----start14----ctor
-        this._super();
+        super();
+
+        this._dir = 0;
+
+        this._title = "SpriteBatch: Z order";
+
+        this.testDuration = 4.2;
+
+        this.pixel = {"0":255, "1":0, "2":0, "3":255};
         this._dir = 1;
 
         // small capacity. Testing resizing.
@@ -629,8 +706,8 @@ var SpriteBatchNodeZOrder = SpriteTestDemo.extend({
         sprite.color = cc.color.RED;
         this.schedule(this.reorderSprite, 1);
         //----end14----
-    },
-    reorderSprite:function (dt) {
+    }
+    reorderSprite(dt) {
         //----start14----reorderSprite
         var batch = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
         var sprite = batch.getChildByTag(TAG_SPRITE1);
@@ -642,36 +719,45 @@ var SpriteBatchNodeZOrder = SpriteTestDemo.extend({
         z += this._dir * 3;
         batch.reorderChild(sprite, z);
         //----end14----
-    },
+    }
     //
     // Automation
     //
-    testDuration:4.2,
-    pixel:{"0":255, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var step = winSize.width / 11;
         var ret1 = this.readPixels((6 + 1) * step, winSize.height / 2 + 10, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeReorderIssue744
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeReorderIssue744 = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode: reorder issue #744",
-    _subtitle:"Should not crash",
+var SpriteBatchNodeReorderIssue744 = class SpriteBatchNodeReorderIssue744 extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start16----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode: reorder issue #744";
+
+
+        this._subtitle = "Should not crash";
+
+
+        this.testDuration = 1.2;
+
+
+        this.pixel = {"0":51, "1":0, "2":51, "3":255};
 
         // Testing issue #744
         // http://code.google.com/p/cocos2d-iphone/issues/detail?id=744
@@ -684,40 +770,69 @@ var SpriteBatchNodeReorderIssue744 = SpriteTestDemo.extend({
         batch.addChild(sprite, 3);
         batch.reorderChild(sprite, 1);
         //----end16----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1.2,
-    pixel:{"0":51, "1":0, "2":51, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeReorderIssue766
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeReorderIssue766 = SpriteTestDemo.extend({
-    _batchNode:null,
-    _sprite1:null,
-    _sprite2:null,
-    _sprite3:null,
+var SpriteBatchNodeReorderIssue766 = class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode: reorder issue #766",
-    _subtitle:"In 2 seconds 1 sprite will be reordered",
 
-    ctor:function () {
+    constructor() {
         //----start17----ctor
-        this._super();
+        super();
+
+
+
+        this._batchNode = null;
+
+
+
+        this._sprite1 = null;
+
+
+
+        this._sprite2 = null;
+
+
+
+        this._sprite3 = null;
+
+
+
+        this._title = "SpriteBatchNode: reorder issue #766";
+
+
+
+        this._subtitle = "In 2 seconds 1 sprite will be reordered";
+
+
+
+        this.testDuration = 2.2;
+
+
+
+        this.pixel1 = {"0":0, "1":0, "2":0, "3":255};
+
+
+
+        this.pixel2 = {"0":255, "1":255, "2":255, "3":255};
         this._batchNode = new cc.SpriteBatchNode(s_piece, 15);
         this.addChild(this._batchNode, 1, 0);
 
@@ -735,15 +850,15 @@ var SpriteBatchNodeReorderIssue766 = SpriteTestDemo.extend({
 
         this.schedule(this.reorderSprite, 2);
         //----end17----
-    },
-    reorderSprite:function (dt) {
+    }
+    reorderSprite(dt) {
         //----start17----reorderSprite
         this.unschedule(this.reorderSprite);
 
         this._batchNode.reorderChild(this._sprite1, 4);
         //----end17----
-    },
-    makeSpriteZ:function (aZ) {
+    }
+    makeSpriteZ(aZ) {
         //----start17----makeSpriteZ
         var sprite = new cc.Sprite(this._batchNode.texture, cc.rect(128, 0, 64, 64));
         this._batchNode.addChild(sprite, aZ + 1, 0);
@@ -758,38 +873,55 @@ var SpriteBatchNodeReorderIssue766 = SpriteTestDemo.extend({
 
         return sprite;
         //----end17----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.2,
-    pixel1:{"0":0, "1":0, "2":0, "3":255},
-    pixel2:{"0":255, "1":255, "2":255, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(213, 159, 5, 5);
         var ret2 = this.readPixels(211, 108, 5, 5);
         var ret = {"pixel1":!this.containsPixel(ret1, this.pixel1) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeReorderIssue767
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeReorderIssue767 = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode: reorder issue #767",
-    _subtitle:"Should not crash",
+var SpriteBatchNodeReorderIssue767 = class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start18----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode: reorder issue #767";
+
+
+        this._subtitle = "Should not crash";
+
+
+        this.testDuration = 1.5;
+
+
+        this.pixel1 = {"0":255, "1":204, "2":153, "3":255};
+
+
+        this.pixel2 = {"0":255, "1":255, "2":255, "3":255};
+
+
+        this.curPixel1 = null;
+
+
+        this.curPixel2 = null;
 
         spriteFrameCache.addSpriteFrames(s_ghostsPlist, s_ghosts);
         //
@@ -851,8 +983,8 @@ var SpriteBatchNodeReorderIssue767 = SpriteTestDemo.extend({
 
         this.schedule(this.reorderSprites, 1);
         //----end18----
-    },
-    reorderSprites:function (dt) {
+    }
+    reorderSprites(dt) {
         //----start18----reorderSprites
         var spritebatch = this.getChildByTag(TAG_SPRITE1);
         var father = spritebatch.getChildByTag(TAG_SPRITE2);
@@ -867,44 +999,48 @@ var SpriteBatchNodeReorderIssue767 = SpriteTestDemo.extend({
         father.reorderChild(left, newZLeft);
         father.reorderChild(right, -newZLeft);
         //----end18----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1.5,
-    pixel1:{"0":255, "1":204, "2":153, "3":255},
-    pixel2:{"0":255, "1":255, "2":255, "3":255},
-    curPixel1:null,
-    curPixel2:null,
-    setupAutomation:function () {
+    setupAutomation() {
         var fun = function(){
             this.curPixel1 = this.readPixels(winSize.width / 2 + 11, winSize.height / 2 - 11, 2, 2);
         }
         this.scheduleOnce(fun, 0.5);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         this.curPixel2 = this.readPixels(winSize.width / 2 + 11, winSize.height / 2 - 11, 2, 2);
         var ret = {"pixel1":this.containsPixel(this.curPixel1, this.pixel1) ? "yes" : "no",
             "pixel2":this.containsPixel(this.curPixel2, this.pixel2) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteAnchorPoint = SpriteTestDemo.extend({
-    _title:"Sprite: anchor point",
+var SpriteAnchorPoint = class SpriteAnchorPoint extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start4----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite: anchor point";
+
+
+        this.testDuration = 0.15;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
         for (var i = 0; i < 3; i++) {
             var rotate = cc.rotateBy(10, 360);
@@ -943,36 +1079,43 @@ var SpriteAnchorPoint = SpriteTestDemo.extend({
             this.addChild(sprite, i);
         }
         //----end4----
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.15,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 45, winSize.height / 2 + 104, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2 - 3, winSize.height / 2 + 44, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 * 3 - 44, winSize.height / 2 - 16, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeAnchorPoint = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode: anchor point",
+var SpriteBatchNodeAnchorPoint = class SpriteBatchNodeAnchorPoint extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start5----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode: anchor point";
+
+
+        this.testDuration = 0.15;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         // small capacity. Testing resizing.
         // Don't use capacity=1 in your real game. It is expensive to resize the capacity
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
@@ -1013,36 +1156,43 @@ var SpriteBatchNodeAnchorPoint = SpriteTestDemo.extend({
             batch.addChild(sprite, i);
         }
         //----end5----
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.15,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 45, winSize.height / 2 + 104, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2 - 3, winSize.height / 2 + 44, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 * 3 - 44, winSize.height / 2 - 16, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Sprite6
 //
 //------------------------------------------------------------------
-var Sprite6 = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode transformation",
+var Sprite6 = class Sprite6 extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start21----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode transformation";
+
+
+        this.testDuration = 2;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         // small capacity. Testing resizing
         // Don't use capacity=1 in your real game. It is expensive to resize the capacity
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
@@ -1091,34 +1241,53 @@ var Sprite6 = SpriteTestDemo.extend({
         batch.runAction(scale_forever);
         batch.runAction(rotate_forever);
         //----end21----
-    },
+    }
     // Automation
-    testDuration:2,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2 + 111, winSize.height / 2 + 82, 5, 5);
         var ret2 = this.readPixels(winSize.width / 2 - 148, winSize.height / 2 - 58, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteFlip
 //
 //------------------------------------------------------------------
-var SpriteFlip = SpriteTestDemo.extend({
-    _title:"Sprite Flip X & Y",
+var SpriteFlip = class SpriteFlip extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start22----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite Flip X & Y";
+
+
+        this.testDuration = 1.5;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
+
+
+        this.pixel1 = null;
+
+
+        this.pixel2 = null;
+
+
+        this.pixel3 = null;
+
+
+        this.pixel4 = null;
         var sprite1 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
@@ -1131,8 +1300,8 @@ var SpriteFlip = SpriteTestDemo.extend({
 
         this.schedule(this.onFlipSprites, 1);
         //----end22----
-    },
-    onFlipSprites:function (dt) {
+    }
+    onFlipSprites(dt) {
         //----start22----onFlipSprites
         var sprite1 = this.getChildByTag(TAG_SPRITE1);
         var sprite2 = this.getChildByTag(TAG_SPRITE2);
@@ -1140,28 +1309,22 @@ var SpriteFlip = SpriteTestDemo.extend({
         sprite1.flippedX = !sprite1.flippedX;
         sprite2.flippedY = !sprite2.flippedY;
         //----end22----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1.5,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    pixel1:null,
-    pixel2:null,
-    pixel3:null,
-    pixel4:null,
-    setupAutomation:function () {
+    setupAutomation() {
         this.scheduleOnce(this.getBeforePixel, 0.5);
-    },
-    getBeforePixel:function () {
+    }
+    getBeforePixel() {
         this.pixel1 = this.readPixels(winSize.width / 2 - 131, winSize.height / 2 - 11, 5, 5);
         this.pixel2 = this.readPixels(winSize.width / 2 + 100, winSize.height / 2 + 44, 5, 5);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes", "pixel4":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         this.pixel3 = this.readPixels(winSize.width / 2 - 69, winSize.height / 2 - 11, 5, 5);
         this.pixel4 = this.readPixels(winSize.width / 2 + 100, winSize.height / 2 - 44, 5, 5);
         var ret = {"pixel1":this.containsPixel(this.pixel1, this.pixel) ? "yes" : "no",
@@ -1170,19 +1333,40 @@ var SpriteFlip = SpriteTestDemo.extend({
             "pixel4":this.containsPixel(this.pixel4, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeFlip
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeFlip = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode Flip X & Y",
+var SpriteBatchNodeFlip = class SpriteBatchNodeFlip extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start23----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode Flip X & Y";
+
+
+        this.testDuration = 1.5;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
+
+
+        this.pixel1 = null;
+
+
+        this.pixel2 = null;
+
+
+        this.pixel3 = null;
+
+
+        this.pixel4 = null;
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 10);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
@@ -1198,8 +1382,8 @@ var SpriteBatchNodeFlip = SpriteTestDemo.extend({
 
         this.schedule(this.onFlipSprites, 1);
         //----end23----
-    },
-    onFlipSprites:function (dt) {
+    }
+    onFlipSprites(dt) {
         //----start23----onFlipSprites
         var batch = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
         var sprite1 = batch.getChildByTag(TAG_SPRITE1);
@@ -1208,28 +1392,22 @@ var SpriteBatchNodeFlip = SpriteTestDemo.extend({
         sprite1.flippedX = !sprite1.flippedX;
         sprite2.flippedY = !sprite2.flippedY;
         //----end23----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1.5,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    pixel1:null,
-    pixel2:null,
-    pixel3:null,
-    pixel4:null,
-    setupAutomation:function () {
+    setupAutomation() {
         this.scheduleOnce(this.getBeforePixel, 0.5);
-    },
-    getBeforePixel:function () {
+    }
+    getBeforePixel() {
         this.pixel1 = this.readPixels(winSize.width / 2 - 131, winSize.height / 2 - 11, 5, 5);
         this.pixel2 = this.readPixels(winSize.width / 2 + 100, winSize.height / 2 + 44, 5, 5);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes", "pixel4":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         this.pixel3 = this.readPixels(winSize.width / 2 - 69, winSize.height / 2 - 11, 5, 5);
         this.pixel4 = this.readPixels(winSize.width / 2 + 100, winSize.height / 2 - 44, 5, 5);
         var ret = {"pixel1":this.containsPixel(this.pixel1, this.pixel) ? "yes" : "no",
@@ -1238,20 +1416,25 @@ var SpriteBatchNodeFlip = SpriteTestDemo.extend({
             "pixel4":this.containsPixel(this.pixel4, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteAliased
 //
 //------------------------------------------------------------------
-var SpriteAliased = SpriteTestDemo.extend({
-    _title:"Sprite Aliased",
-    _subtitle:"You should see pixelated sprites",
+var SpriteAliased = class SpriteAliased extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start24----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite Aliased";
+
+
+        this._subtitle = "You should see pixelated sprites";
         var sprite1 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
@@ -1275,10 +1458,10 @@ var SpriteAliased = SpriteTestDemo.extend({
         sprite1.runAction(repeat);
         sprite2.runAction(repeat2);
         //----end24----
-    },
-    onEnter:function () {
+    }
+    onEnter() {
         //----start24----onEnter
-        this._super();
+        super.onEnter();
         //
         // IMPORTANT:
         // This change will affect every sprite that uses the same texture
@@ -1295,30 +1478,35 @@ var SpriteAliased = SpriteTestDemo.extend({
         }
 
         //----end24----
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start24----onExit
         if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE1);
             sprite.texture.setAntiAliasTexParameters();
         }
-        this._super();
+        super.onExit();
         //----end24----
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeAliased
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeAliased = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode Aliased",
-    _subtitle:"You should see pixelated sprites",
+var SpriteBatchNodeAliased = class SpriteBatchNodeAliased extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start25----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode Aliased";
+
+
+        this._subtitle = "You should see pixelated sprites";
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 10);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
@@ -1345,10 +1533,10 @@ var SpriteBatchNodeAliased = SpriteTestDemo.extend({
         sprite1.runAction(repeat);
         sprite2.runAction(repeat2);
         //----end25----
-    },
-    onEnter:function () {
+    }
+    onEnter() {
         //----start25----onEnter
-        this._super();
+        super.onEnter();
         //
         // IMPORTANT:
         // This change will affect every sprite that uses the same texture
@@ -1365,32 +1553,47 @@ var SpriteBatchNodeAliased = SpriteTestDemo.extend({
         }
         //----end25----
 
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start25----onExit
         if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
             sprite.texture.setAntiAliasTexParameters();
         }
-        this._super();
+        super.onExit();
         //----end25----
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteNewTexture
 //
 //------------------------------------------------------------------
-var SpriteNewTexture = SpriteTestDemo.extend({
-    _usingTexture1:false,
-    _texture1:null,
-    _texture2:null,
-    _title:"Sprite New texture (tap)",
+var SpriteNewTexture = class SpriteNewTexture extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start26----ctor
-        this._super();
+        super();
+
+
+        this._usingTexture1 = false;
+
+
+        this._texture1 = null;
+
+
+        this._texture2 = null;
+
+
+        this._title = "Sprite New texture (tap)";
+
+
+        this.testDuration = 1;
+
+
+        this.pixel = {"0":51, "1":0, "2":51, "3":255};
 
         if ('touches' in cc.sys.capabilities){
             cc.eventManager.addListener({
@@ -1419,9 +1622,9 @@ var SpriteNewTexture = SpriteTestDemo.extend({
             this.addNewSprite();
         }
         //----end26----
-    },
+    }
 
-    addNewSprite:function () {
+    addNewSprite() {
         //----start26----addNewSprite
         var p = cc.p(Math.random() * winSize.width, Math.random() * winSize.height);
 
@@ -1457,9 +1660,9 @@ var SpriteNewTexture = SpriteTestDemo.extend({
 
         sprite.runAction(seq.repeatForever());
         //----end26----
-    },
+    }
 
-    onChangeTexture:function () {
+    onChangeTexture() {
         //----start26----onChangeTexture
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
         var children = node.children, sprite, i;
@@ -1482,47 +1685,58 @@ var SpriteNewTexture = SpriteTestDemo.extend({
             this._usingTexture1 = true;
         }
         //----end26----
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:1,
-    pixel:{"0":51, "1":0, "2":51, "3":255},
-    setupAutomation:function () {
+    setupAutomation() {
         this.scheduleOnce(this.addTestSprite, 0.5);
-    },
-    addTestSprite:function () {
+    }
+    addTestSprite() {
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
         var sprite = new cc.Sprite(this._texture1, cc.rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         node.addChild(sprite);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeNewTexture
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeNewTexture = SpriteTestDemo.extend({
-    _texture1:null,
-    _texture2:null,
-    _title:"SpriteBatchNode new texture (tap)",
+var SpriteBatchNodeNewTexture = class SpriteBatchNodeNewTexture extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start27----ctor
-        this._super();
+        super();
+
+
+        this._texture1 = null;
+
+
+        this._texture2 = null;
+
+
+        this._title = "SpriteBatchNode new texture (tap)";
+
+
+        this.testDuration = 1;
+
+
+        this.pixel = {"0":51, "1":0, "2":51, "3":255};
         if ('touches' in cc.sys.capabilities){
             cc.eventManager.addListener({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -1548,8 +1762,8 @@ var SpriteBatchNodeNewTexture = SpriteTestDemo.extend({
             this.addNewSprite();
         }
         //----end27----
-    },
-    addNewSprite:function () {
+    }
+    addNewSprite() {
         //----start27----addNewSprite
         var s = winSize;
 
@@ -1586,8 +1800,8 @@ var SpriteBatchNodeNewTexture = SpriteTestDemo.extend({
 
         sprite.runAction(seq.repeatForever());
         //----end27----
-    },
-    onChangeTexture:function () {
+    }
+    onChangeTexture() {
         //----start27----onChangeTexture
         var batch = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
 
@@ -1596,49 +1810,55 @@ var SpriteBatchNodeNewTexture = SpriteTestDemo.extend({
         else
             batch.texture = this._texture1;
         //----end27----
-    },
+    }
 
     //
     // Automation
     //
-    testDuration:1,
-    pixel:{"0":51, "1":0, "2":51, "3":255},
-    setupAutomation:function () {
+    setupAutomation() {
         this.scheduleOnce(this.addTestSprite, 0.5);
-    },
-    addTestSprite:function () {
+    }
+    addTestSprite() {
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
         var sprite = new cc.Sprite(this._texture1, cc.rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         node.addChild(sprite);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteFrameTest
 //
 //------------------------------------------------------------------
-var SpriteFrameTest = SpriteTestDemo.extend({
-    _sprite1:null,
-    _sprite2:null,
-    _counter:0,
-    _title:"Sprite vs. SpriteBatchNode animation",
-    _subtitle:"Testing issue #792",
+var SpriteFrameTest = class SpriteFrameTest extends SpriteTestDemo {
+    constructor() {
+        super();
+        this._sprite1 = null;
+        this._sprite2 = null;
+        this._counter = 0;
+        this._title = "Sprite vs. SpriteBatchNode animation";
+        this._subtitle = "Testing issue #792";
+        this.testDuration = 3.1;
+        this.pixel1 = {"0":255, "1":204, "2":153, "3":255};
+        this.pixel2 = {"0":255, "1":204, "2":153, "3":255};
+    }
 
-    onEnter:function () {
+
+    onEnter() {
         //----start2----onEnter
-        this._super();
+        super.onEnter();
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
         //     cc.spriteFrameCache.removeUnusedSpriteFrames);
@@ -1707,22 +1927,22 @@ var SpriteFrameTest = SpriteTestDemo.extend({
         this.schedule(this.onStartIn05Secs, 0.5);
         this._counter = 0;
         //----end2----
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start2----onExit
-        this._super();
+        super.onExit();
         spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         spriteFrameCache.removeSpriteFramesFromFile(s_grossini_bluePlist);
         //----end2----
-    },
-    onStartIn05Secs:function () {
+    }
+    onStartIn05Secs() {
         //----start2----onStartIn05Secs
         this.unschedule(this.onStartIn05Secs);
         this.schedule(this.onFlipSprites, 1.0);
         //----end2----
-    },
-    onFlipSprites:function (dt) {
+    }
+    onFlipSprites(dt) {
         //----start2----onFlipSprites
         this._counter++;
 
@@ -1754,37 +1974,41 @@ var SpriteFrameTest = SpriteTestDemo.extend({
         this._sprite2.flippedX = fx;
         this._sprite2.flippedY = fy;
         //----end2----
-    },
+    }
     //
     // Automation
     //
-    testDuration:3.1,
-    pixel1:{"0":255, "1":204, "2":153, "3":255},
-    pixel2:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2 - 50, winSize.height / 2 + 8, 5, 5);
         var ret2 = this.readPixels(winSize.width / 2 - 80, winSize.height / 2 - 42, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteFrameAliasNameTest
 //
 //------------------------------------------------------------------
-var SpriteFrameAliasNameTest = SpriteTestDemo.extend({
-    _title:"SpriteFrame Alias Name",
-    _subtitle:"SpriteFrames are obtained using the alias name",
-    onEnter:function (){
+var SpriteFrameAliasNameTest = class SpriteFrameAliasNameTest extends SpriteTestDemo {
+    constructor() {
+        super();
+        this._title = "SpriteFrame Alias Name";
+        this._subtitle = "SpriteFrames are obtained using the alias name";
+        this.testDuration = 0.5;
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
+    }
+
+    onEnter(){
         //----start3----onEnter
-        this._super();
+        super.onEnter();
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
         //
@@ -1827,38 +2051,45 @@ var SpriteFrameAliasNameTest = SpriteTestDemo.extend({
         sprite.runAction(cc.animate(animation).repeatForever());
         this.testSprite = sprite;
         //----end3----
-    },
-    onExit:function () {
-        this._super();
+    }
+    onExit() {
+        super.onExit();
         spriteFrameCache.removeSpriteFramesFromFile(s_grossini_aliasesPlist);
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.5,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2 - 32, winSize.height / 2 - 10, 5, 5);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteOffsetAnchorRotation
 //
 //------------------------------------------------------------------
-var SpriteOffsetAnchorRotation = SpriteTestDemo.extend({
+var SpriteOffsetAnchorRotation = class SpriteOffsetAnchorRotation extends SpriteTestDemo {
 
-    _title:"Sprite offset + anchor + rot",
-    ctor:function () {
+    constructor() {
         //----start6----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite offset + anchor + rot";
+
+
+        this.testDuration = 5;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -1910,43 +2141,50 @@ var SpriteOffsetAnchorRotation = SpriteTestDemo.extend({
             this.addChild(sprite, 0);
         }
         //----end6----
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start6----onExit
-        this._super();
+        super.onExit();
         spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end6----
-    },
+    }
     //
     // Automation
     //
-    testDuration:5,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 - 13, winSize.height / 2 - 50, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2 + 29, winSize.height / 2 + 11, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 * 3 + 71, winSize.height / 2 + 71, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeOffsetAnchorRotation
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeOffsetAnchorRotation = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode offset + anchor + rot",
+var SpriteBatchNodeOffsetAnchorRotation = class SpriteBatchNodeOffsetAnchorRotation extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start7----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode offset + anchor + rot";
+
+
+        this.testDuration = 5;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
@@ -2000,42 +2238,52 @@ var SpriteBatchNodeOffsetAnchorRotation = SpriteTestDemo.extend({
             spritebatch.addChild(sprite, i);
         }
         //----end7----
-    },
-    onExit:function () {
-        this._super();
+    }
+    onExit() {
+        super.onExit();
         spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
-    },
+    }
     //
     // Automation
     //
-    testDuration:5,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 - 13, winSize.height / 2 - 50, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2 + 29, winSize.height / 2 + 11, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 * 3 + 71, winSize.height / 2 + 71, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteOffsetAnchorScale
 //
 //------------------------------------------------------------------
-var SpriteOffsetAnchorScale = SpriteTestDemo.extend({
+var SpriteOffsetAnchorScale = class SpriteOffsetAnchorScale extends SpriteTestDemo {
 
-    _title:"Sprite offset + anchor + scale",
 
-    ctor:function () {
+    constructor() {
         //----start8----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite offset + anchor + scale";
+
+
+
+        this.testDuration = 2.1;
+
+
+
+        this.pixel = {"0":153, "1":0, "2":153, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -2092,31 +2340,30 @@ var SpriteOffsetAnchorScale = SpriteTestDemo.extend({
             this.addChild(sprite, 0);
         }
         //----end8----
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start8----onExit
-        this._super();
+        super.onExit();
         spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end8----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.1,
-    pixel:{"0":153, "1":0, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 * 3 - 85, winSize.height / 2 - 106, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2, winSize.height / 2 + 13, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 + 82, winSize.height / 2 + 133, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 
 //------------------------------------------------------------------
@@ -2124,12 +2371,23 @@ var SpriteOffsetAnchorScale = SpriteTestDemo.extend({
 // SpriteBatchNodeOffsetAnchorScale
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeOffsetAnchorScale = SpriteTestDemo.extend({
+var SpriteBatchNodeOffsetAnchorScale = class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode offset + anchor + scale",
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+
+        this._title = "SpriteBatchNode offset + anchor + scale";
+
+
+
+        this.testDuration = 2.1;
+
+
+
+        this.pixel = {"0":153, "1":0, "2":153, "3":255};
         //----start9----ctor
         var batch = new cc.SpriteBatchNode(s_grossini);
         this.addChild(batch);
@@ -2188,42 +2446,52 @@ var SpriteBatchNodeOffsetAnchorScale = SpriteTestDemo.extend({
             batch.addChild(sprite, i);
         }
         //----end9----
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start9----onExit
-        this._super();
+        super.onExit();
         spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end9----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.1,
-    pixel:{"0":153, "1":0, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 * 3 - 85, winSize.height / 2 - 106, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2, winSize.height / 2 + 13, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 + 82, winSize.height / 2 + 133, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //
 // SpriteOffsetAnchorSkew
 //
-var SpriteOffsetAnchorSkew = SpriteTestDemo.extend({
+var SpriteOffsetAnchorSkew = class SpriteOffsetAnchorSkew extends SpriteTestDemo {
 
-    _title:"Sprite offset + anchor + skew",
 
-    ctor:function () {
+    constructor() {
         //----start41----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite offset + anchor + skew";
+
+
+
+        this.testDuration = 2;
+
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -2281,35 +2549,45 @@ var SpriteOffsetAnchorSkew = SpriteTestDemo.extend({
             this.addChild(sprite, 0);
         }
         //----end41----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 142, winSize.height / 2 + 98, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2 + 50, winSize.height / 2 + 43, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //
 // SpriteBatchNodeOffsetAnchorSkew
 //
-var SpriteBatchNodeOffsetAnchorSkew = SpriteTestDemo.extend({
+var SpriteBatchNodeOffsetAnchorSkew = class SpriteBatchNodeOffsetAnchorSkew extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode offset + anchor + skew",
 
-    ctor:function () {
+    constructor() {
         //----start42----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "SpriteBatchNode offset + anchor + skew";
+
+
+
+        this.testDuration = 2;
+
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -2372,34 +2650,41 @@ var SpriteBatchNodeOffsetAnchorSkew = SpriteTestDemo.extend({
             spritebatch.addChild(sprite, i);
         }
         //----end42----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 142, winSize.height / 2 + 98, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2 + 50, winSize.height / 2 + 43, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //
 // SpriteOffsetAnchorSkewScale
 //
-var SpriteOffsetAnchorSkewScale = SpriteTestDemo.extend({
+var SpriteOffsetAnchorSkewScale = class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
 
-    _title:"Sprite anchor + skew + scale",
-    ctor:function () {
+    constructor() {
         //----start43----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite anchor + skew + scale";
+
+
+        this.testDuration = 2;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -2466,17 +2751,15 @@ var SpriteOffsetAnchorSkewScale = SpriteTestDemo.extend({
             this.addChild(sprite, 0);
         }
         //----end43----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 121, winSize.height / 2 + 99, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2 - 83, winSize.height / 2 - 21, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 * 3 - 286, winSize.height / 2 - 140, 5, 5);
@@ -2485,18 +2768,30 @@ var SpriteOffsetAnchorSkewScale = SpriteTestDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //
 // SpriteBatchNodeOffsetAnchorSkewScale
 //
-var SpriteBatchNodeOffsetAnchorSkewScale = SpriteTestDemo.extend({
+var SpriteBatchNodeOffsetAnchorSkewScale = class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode anchor + skew + scale",
 
-    ctor:function () {
+    constructor() {
         //----start44----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "SpriteBatchNode anchor + skew + scale";
+
+
+
+        this.testDuration = 2;
+
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
@@ -2567,17 +2862,15 @@ var SpriteBatchNodeOffsetAnchorSkewScale = SpriteTestDemo.extend({
             spritebatch.addChild(sprite, i);
         }
         //----end44----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 121, winSize.height / 2 + 99, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2 - 83, winSize.height / 2 - 21, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 * 3 - 286, winSize.height / 2 - 140, 5, 5);
@@ -2586,19 +2879,34 @@ var SpriteBatchNodeOffsetAnchorSkewScale = SpriteTestDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //
 // SpriteOffsetAnchorFlip
 //
-var SpriteOffsetAnchorFlip = SpriteTestDemo.extend({
+var SpriteOffsetAnchorFlip = class SpriteOffsetAnchorFlip extends SpriteTestDemo {
 
-    _title:"Sprite offset + anchor + flip",
-    _subtitle:"issue #1078",
 
-    ctor:function () {
+    constructor() {
         //----start45----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite offset + anchor + flip";
+
+
+
+        this._subtitle = "issue #1078";
+
+
+
+        this.testDuration = 1.5;
+
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -2657,36 +2965,49 @@ var SpriteOffsetAnchorFlip = SpriteTestDemo.extend({
             this.addChild(sprite, 0);
         }
         //----end45----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1.5,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 40, winSize.height / 2 + 18, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2, winSize.height / 2 - 44, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 * 3 - 45, winSize.height / 2 - 105, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //
 // SpriteBatchNodeOffsetAnchorFlip
 //
-var SpriteBatchNodeOffsetAnchorFlip = SpriteTestDemo.extend({
+var SpriteBatchNodeOffsetAnchorFlip = class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode offset + anchor + flip",
-    _subtitle:"issue #1078",
 
-    ctor:function () {
+    constructor() {
         //----start46----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "SpriteBatchNode offset + anchor + flip";
+
+
+
+        this._subtitle = "issue #1078";
+
+
+
+        this.testDuration = 1.5;
+
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -2747,36 +3068,46 @@ var SpriteBatchNodeOffsetAnchorFlip = SpriteTestDemo.extend({
             spritebatch.addChild(sprite, i);
         }
         //----end46----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1.5,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 40, winSize.height / 2 + 18, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 2, winSize.height / 2 - 44, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 * 3 - 45, winSize.height / 2 - 105, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteAnimationSplit
 //
 //------------------------------------------------------------------
-var SpriteAnimationSplit = SpriteTestDemo.extend({
+var SpriteAnimationSplit = class SpriteAnimationSplit extends SpriteTestDemo {
 
-    _title:"Sprite: Animation + flip",
-    ctor:function () {
+    constructor() {
         //----start10----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite: Animation + flip";
+
+
+        this.testDuration = 2.8;
+
+
+        this.pixel1 = {"0":208, "1":208, "2":208, "3":255};
+
+
+        this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
         var texture = cc.textureCache.addImage(s_dragon_animation);
 
         // manually add frames to the frame cache
@@ -2814,41 +3145,55 @@ var SpriteAnimationSplit = SpriteTestDemo.extend({
 
         sprite.runAction(seq.repeatForever());
         //----end10----
-    },
-    onExit:function () {
-        this._super();
-    },
+    }
+    onExit() {
+        super.onExit();
+    }
     //
     // Automation
     //
-    testDuration:2.8,
-    pixel1:{"0":208, "1":208, "2":208, "3":255},
-    pixel2:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2 + 52, winSize.height / 2 - 29, 5, 5);
         var ret2 = this.readPixels(winSize.width / 2, winSize.height / 2 - 22, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, true, 3) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteHybrid
 //
 //------------------------------------------------------------------
-var SpriteHybrid = SpriteTestDemo.extend({
-    _usingSpriteBatchNode:false,
-    _title:"Hybrid.Sprite* sprite Test",
+var SpriteHybrid = class SpriteHybrid extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start28----ctor
-        this._super();
+        super();
+
+
+        this._usingSpriteBatchNode = false;
+
+
+        this._title = "Hybrid.Sprite* sprite Test";
+
+
+        this.testDuration = 2.5;
+
+
+        this.pixel = {"0":51, "1":0, "2":51, "3":255};
+
+
+        this.firstPixel1 = false;
+
+
+        this.firstPixel2 = false;
         // parents
         var parent1 = new cc.Node();
         var parent2 = new cc.SpriteBatchNode(s_grossini, 50);
@@ -2889,14 +3234,14 @@ var SpriteHybrid = SpriteTestDemo.extend({
 
         this.schedule(this.reparentSprite, 2);
         //----end28----
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start28----onExit
-        this._super();
+        super.onExit();
         spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         //----end28----
-    },
-    reparentSprite:function () {
+    }
+    reparentSprite() {
         //----start28----reparentSprite
         var p1 = this.getChildByTag(TAG_NODE);
         var p2 = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
@@ -2931,19 +3276,15 @@ var SpriteHybrid = SpriteTestDemo.extend({
 
         this._usingSpriteBatchNode = !this._usingSpriteBatchNode;
         //----end28----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.5,
-    pixel:{"0":51, "1":0, "2":51, "3":255},
-    firstPixel1:false,
-    firstPixel2:false,
-    setupAutomation:function () {
+    setupAutomation() {
         this.scheduleOnce(this.addTestSprite, 1);
         this.scheduleOnce(this.checkFirstPixel, 1.5);
-    },
-    addTestSprite:function () {
+    }
+    addTestSprite() {
         var p = this.getChildByTag(TAG_NODE);
         var frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
         var sprite1 = new cc.Sprite(frame);
@@ -2954,18 +3295,18 @@ var SpriteHybrid = SpriteTestDemo.extend({
         p.addChild(sprite2, 1000);
         sprite2.x = winSize.width / 2;
         sprite2.y = winSize.height / 2;
-    },
-    checkFirstPixel:function () {
+    }
+    checkFirstPixel() {
         var ret1 = this.readPixels(winSize.width / 4, winSize.height / 2, 5, 5);
         var ret2 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
         this.firstPixel1 = this.containsPixel(ret1, this.pixel);
         this.firstPixel2 = this.containsPixel(ret2, this.pixel);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"firstPixel1":true, "firstPixel2":true, "secondPixel1":true, "pixel2":true};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var pixel1 = this.readPixels(winSize.width / 4, winSize.height / 2, 5, 5);
         var pixel2 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
         var secondPixel1 = this.containsPixel(pixel1, this.pixel);
@@ -2973,19 +3314,28 @@ var SpriteHybrid = SpriteTestDemo.extend({
         var ret = {"firstPixel1":this.firstPixel1, "firstPixel2":this.firstPixel2, "secondPixel1":secondPixel1, "pixel2":secondPixel2};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeChildren
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildren = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode Grand Children",
+var SpriteBatchNodeChildren = class SpriteBatchNodeChildren extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start29----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode Grand Children";
+
+
+        this.testDuration = 0.5;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         // parents
         var batch = new cc.SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
@@ -3034,36 +3384,54 @@ var SpriteBatchNodeChildren = SpriteTestDemo.extend({
         sprite1.runAction(cc.sequence(action, action_back).repeatForever());
         sprite1.runAction(cc.sequence(action_s, action_s_back).repeatForever());
         //----end29----
-    },
+    }
     //
     // Automation
     //
-    testDuration:0.5,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 3 - 47, winSize.height / 2 + 107, 5, 5);
         var ret2 = this.readPixels(winSize.width / 3 + 95, winSize.height / 2 - 5, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeChildrenZ
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildrenZ = SpriteTestDemo.extend({
+var SpriteBatchNodeChildrenZ = class SpriteBatchNodeChildrenZ extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode Children Z",
 
-    ctor:function () {
+    constructor() {
         //----start30----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "SpriteBatchNode Children Z";
+
+
+
+        this.testDuration = 1;
+
+
+
+        this.pixel1 = {"0":51, "1":0, "2":51, "3":255};
+
+
+
+        this.pixel2 = {"0":51, "1":0, "2":51, "3":255};
+
+
+
+        this.pixel3 = {"0":255, "1":204, "2":153, "3":255};
         // parents
         var batch;
         var sprite1, sprite2, sprite3;
@@ -3149,19 +3517,15 @@ var SpriteBatchNodeChildrenZ = SpriteTestDemo.extend({
         batch.addChild(sprite2, -5);
         batch.addChild(sprite3, -2);
         //----end30----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1,
-    pixel1:{"0":51, "1":0, "2":51, "3":255},
-    pixel2:{"0":51, "1":0, "2":51, "3":255},
-    pixel3:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(2 * winSize.width / 3 - 20, winSize.height / 2, 5, 5);
         var ret2 = this.readPixels(winSize.width / 3 - 20, winSize.height / 2 + 115, 5, 5);
         var ret3 = this.readPixels(winSize.width / 2 + 30, winSize.height / 4 - 10, 5, 5);
@@ -3170,19 +3534,37 @@ var SpriteBatchNodeChildrenZ = SpriteTestDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel3) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteChildrenVisibility
 //
 //------------------------------------------------------------------
-var SpriteChildrenVisibility = SpriteTestDemo.extend({
-    _title:"Sprite & SpriteBatchNode Visibility",
+var SpriteChildrenVisibility = class SpriteChildrenVisibility extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start31----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite & SpriteBatchNode Visibility";
+
+
+        this.testDuration = 1.7;
+
+
+        this.pixel1 = {"0":0, "1":0, "2":0, "3":255};
+
+
+        this.pixel2 = {"0":255, "1":204, "2":153, "3":255};
+
+
+        this.visible1 = null;
+
+
+        this.visible2 = null;
 
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         //
@@ -3238,29 +3620,24 @@ var SpriteChildrenVisibility = SpriteTestDemo.extend({
 
         sprite1.runAction(cc.blink(5, 10));
         //----end31----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1.7,
-    pixel1:{"0":0, "1":0, "2":0, "3":255},
-    pixel2:{"0":255, "1":204, "2":153, "3":255},
-    visible1:null,
-    visible2:null,
-    setupAutomation:function () {
+    setupAutomation() {
         this.scheduleOnce(this.getSpriteVisible, 1.2);
-    },
-    getSpriteVisible:function () {
+    }
+    getSpriteVisible() {
         var ret1 = this.readPixels(winSize.width / 3, winSize.height / 2 + 38, 5, 5);
         var ret2 = this.readPixels(2 * winSize.width / 3, winSize.height / 2 + 38, 5, 5);
         this.visible1 = this.containsPixel(ret1, this.pixel1) ? "true" : "false";
         this.visible2 = this.containsPixel(ret2, this.pixel1) ? "true" : "false";
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"visible1":"true", "visible2":"true", "visible3":"false", "visible4":"false"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 3, winSize.height / 2 + 38, 5, 5);
         var ret2 = this.readPixels(2 * winSize.width / 3, winSize.height / 2 + 38, 5, 5);
         this.visible3 = this.containsPixel(ret1, this.pixel2) ? "true" : "false";
@@ -3268,21 +3645,36 @@ var SpriteChildrenVisibility = SpriteTestDemo.extend({
         var ret = {"visible1":this.visible1, "visible2":this.visible2, "visible3":this.visible3, "visible4":this.visible4};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteChildrenVisibilityIssue665
 //
 //------------------------------------------------------------------
-var SpriteChildrenVisibilityIssue665 = SpriteTestDemo.extend({
+var SpriteChildrenVisibilityIssue665 = class SpriteChildrenVisibilityIssue665 extends SpriteTestDemo {
 
-    _title:"Sprite & SpriteBatchNode Visibility",
-    _subtitle:"No sprites should be visible",
 
-    ctor:function () {
+    constructor() {
         //----start32----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite & SpriteBatchNode Visibility";
+
+
+
+        this._subtitle = "No sprites should be visible";
+
+
+
+        this.testDuration = 1;
+
+
+
+        this.pixel = {"0":0, "1":0, "2":0, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         //
         // SpriteBatchNode
@@ -3339,36 +3731,46 @@ var SpriteChildrenVisibilityIssue665 = SpriteTestDemo.extend({
         sprite1.addChild(sprite2, -2);
         sprite1.addChild(sprite3, 2);
         //----end32----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1,
-    pixel:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"visible1":"false", "visible2":"false"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 3, winSize.height / 2 + 38, 5, 5);
         var ret2 = this.readPixels(2 * winSize.width / 3, winSize.height / 2 + 38, 5, 5);
         var ret = {"visible1":this.containsPixel(ret1, this.pixel) ? "false" : "true", "visible2":this.containsPixel(ret2, this.pixel) ? "false" : "true"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteChildrenAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteChildrenAnchorPoint = SpriteTestDemo.extend({
+var SpriteChildrenAnchorPoint = class SpriteChildrenAnchorPoint extends SpriteTestDemo {
 
-    _title:"Sprite: children + anchor",
 
-    ctor:function () {
+    constructor() {
         //----start33----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite: children + anchor";
+
+
+
+        this.testDuration = 1;
+
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
         var aParent = new cc.Node();
@@ -3467,37 +3869,47 @@ var SpriteChildrenAnchorPoint = SpriteTestDemo.extend({
 	    point.y = sprite1.y;
         this.addChild(point, 10);
         //----end33----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(3 * winSize.width / 4 - 87, winSize.height / 2 - 99, 5, 5);
         var ret2 = this.readPixels(2 * winSize.width / 4 - 59, winSize.height / 2 - 66, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 - 15, winSize.height / 2 - 6, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeChildrenAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildrenAnchorPoint = SpriteTestDemo.extend({
+var SpriteBatchNodeChildrenAnchorPoint = class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode: children + anchor",
 
-    ctor:function () {
+    constructor() {
         //----start34----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "SpriteBatchNode: children + anchor";
+
+
+
+        this.testDuration = 1;
+
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         //
@@ -3601,37 +4013,51 @@ var SpriteBatchNodeChildrenAnchorPoint = SpriteTestDemo.extend({
 	    point.y = sprite1.y;
         this.addChild(point, 10);
         //----end34----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1,
-    pixel:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(3 * winSize.width / 4 - 87, winSize.height / 2 - 99, 5, 5);
         var ret2 = this.readPixels(2 * winSize.width / 4 - 59, winSize.height / 2 - 66, 5, 5);
         var ret3 = this.readPixels(winSize.width / 4 - 15, winSize.height / 2 - 6, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeChildrenScale
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildrenScale = SpriteTestDemo.extend({
+var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
 
-    _title:"Sprite/BatchNode + child + scale + rot",
 
-    ctor:function () {
+    constructor() {
         //----start35----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite/BatchNode + child + scale + rot";
+
+
+
+        this.testDuration = 2.5;
+
+
+
+        this.pixel1 = {"0":56, "1":116, "2":142, "3":255};
+
+
+
+        this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
         spriteFrameCache.addSpriteFrames(s_grossini_familyPlist);
 
         var rot = cc.rotateBy(10, 360);
@@ -3724,18 +4150,15 @@ var SpriteBatchNodeChildrenScale = SpriteTestDemo.extend({
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
         //----end35----
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.5,
-    pixel1:{"0":56, "1":116, "2":142, "3":255},
-    pixel2:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes", "pixel4":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 - 31, 2 * winSize.height / 3 + 16, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 - 38, 2 * winSize.height / 3 + 16, 3, 3);
         var ret3 = this.readPixels(3 * winSize.width / 4 - 31, 2 * winSize.height / 3 + 16, 5, 5);
@@ -3746,19 +4169,28 @@ var SpriteBatchNodeChildrenScale = SpriteTestDemo.extend({
             "pixel4":this.containsPixel(ret4, this.pixel2) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteChildrenChildren
 //
 //------------------------------------------------------------------
-var SpriteChildrenChildren = SpriteTestDemo.extend({
-    _title:"Sprite multiple levels of children",
+var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo {
 
-    ctor:function () {
+    constructor() {
         //----start36----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite multiple levels of children";
+
+
+        this.testDuration = 4;
+
+
+        this.pixel = {"0":153, "1":204, "2":153, "3":255};
 
         spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 
@@ -3830,17 +4262,15 @@ var SpriteChildrenChildren = SpriteTestDemo.extend({
         l3b2.y = +100 + l2bH / 2;
         l2b.addChild(l3b2);
         //----end36----
-    },
+    }
     //
     // Automation
     //
-    testDuration:4,
-    pixel:{"0":153, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes", "pixel4":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2 + 42, winSize.height / 2 + 145, 5, 5);
         var ret2 = this.readPixels(winSize.width / 2 - 39, winSize.height / 2 + 55, 5, 5);
         var ret3 = this.readPixels(winSize.width / 2 - 39, winSize.height / 2 - 146, 5, 5);
@@ -3851,20 +4281,32 @@ var SpriteChildrenChildren = SpriteTestDemo.extend({
             "pixel4":this.containsPixel(ret4, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteBatchNodeChildrenChildren
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildrenChildren = SpriteTestDemo.extend({
+var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
-    _title:"SpriteBatchNode multiple levels of children",
 
-    ctor:function () {
+    constructor() {
         //----start37----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "SpriteBatchNode multiple levels of children";
+
+
+
+        this.testDuration = 4;
+
+
+
+        this.pixel = {"0":153, "1":204, "2":153, "3":255};
 
         spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 
@@ -3938,17 +4380,15 @@ var SpriteBatchNodeChildrenChildren = SpriteTestDemo.extend({
         l3b2.y = +100 + l2bH / 2;
         l2b.addChild(l3b2);
         //----end37----
-    },
+    }
     //
     // Automation
     //
-    testDuration:4,
-    pixel:{"0":153, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes", "pixel4":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2 + 42, winSize.height / 2 + 145, 5, 5);
         var ret2 = this.readPixels(winSize.width / 2 - 39, winSize.height / 2 + 55, 5, 5);
         var ret3 = this.readPixels(winSize.width / 2 - 39, winSize.height / 2 - 146, 5, 5);
@@ -3959,34 +4399,52 @@ var SpriteBatchNodeChildrenChildren = SpriteTestDemo.extend({
             "pixel4":this.containsPixel(ret4, this.pixel) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // SpriteSubclass
 //
 //------------------------------------------------------------------
-var MySprite1 = cc.Sprite.extend({
-    _ivar:0,
-	ctor: function(spriteFrameName) {
-		this._super(spriteFrameName);
+var MySprite1 = class MySprite1 extends cc.Sprite {
+	constructor(spriteFrameName) {
+		super(spriteFrameName);
+
+	    this._ivar = 0;
 	}
-});
 
-var MySprite2 = cc.Sprite.extend({
-    _ivar:0,
-	ctor: function(name) {
-		this._super(name);
+};
+
+var MySprite2 = class MySprite2 extends cc.Sprite {
+	constructor(name) {
+		super(name);
+
+	    this._ivar = 0;
 	}
-});
 
-var SpriteSubclass = SpriteTestDemo.extend({
-    _title:"Sprite subclass",
-    _subtitle:"Testing initWithTexture:rect method",
+};
 
-    ctor:function () {
+var SpriteSubclass = class SpriteSubclass extends SpriteTestDemo {
+
+    constructor() {
         //----start39----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite subclass";
+
+
+        this._subtitle = "Testing initWithTexture:rect method";
+
+
+        this.testDuration = 1;
+
+
+        this.pixel1 = {"0":249, "1":30, "2":20, "3":255};
+
+
+        this.pixel2 = {"0":255, "1":204, "2":153, "3":255};
 
         spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 		var aParent = new cc.SpriteBatchNode(s_ghosts);
@@ -4004,38 +4462,70 @@ var SpriteSubclass = SpriteTestDemo.extend({
         sprite2.x = winSize.width / 4 * 3;
         sprite2.y = winSize.height / 2;
         //----end39----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1,
-    pixel1:{"0":249, "1":30, "2":20, "3":255},
-    pixel2:{"0":255, "1":204, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4, winSize.height / 2 - 15, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 * 3, winSize.height / 2 + 44, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel2) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // AnimationCache
 //
 //------------------------------------------------------------------
-var AnimationCacheTest = SpriteTestDemo.extend({
+var AnimationCacheTest = class AnimationCacheTest extends SpriteTestDemo {
 
-    _title:"AnimationCache",
-    _subtitle:"Sprite should be animated",
 
-    ctor:function () {
+    constructor() {
         //----start40----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "AnimationCache";
+
+
+
+        this._subtitle = "Sprite should be animated";
+
+
+
+        this.testDuration = 6.5;
+
+
+
+        this.ePixel1 = {"0":51, "1":0, "2":51, "3":255};
+
+
+
+        this.ePixel2 = {"0":15, "1":15, "2":15, "3":255};
+
+
+
+        this.ePixel3 = {"0":0, "1":38, "2":0, "3":255};
+
+
+
+        this.cPixel1 = null;
+
+
+
+        this.cPixel2 = null;
+
+
+
+        this.cPixel3 = null;
         spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_grayPlist);
         spriteFrameCache.addSpriteFrames(s_grossini_bluePlist);
@@ -4114,18 +4604,11 @@ var AnimationCacheTest = SpriteTestDemo.extend({
         // run the animation
         grossini.runAction(seq);
         //----end40----
-    },
+    }
     //
     // Automation
     //
-    testDuration:6.5,
-    ePixel1:{"0":51, "1":0, "2":51, "3":255},
-    ePixel2:{"0":15, "1":15, "2":15, "3":255},
-    ePixel3:{"0":0, "1":38, "2":0, "3":255},
-    cPixel1:null,
-    cPixel2:null,
-    cPixel3:null,
-    setupAutomation:function () {
+    setupAutomation() {
         //----start40----setupAutomation
         var fun1 = function () {
             this.cPixel1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
@@ -4142,31 +4625,64 @@ var AnimationCacheTest = SpriteTestDemo.extend({
         }
         this.scheduleOnce(fun3, 6);
         //----end40----
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret = {"pixel1":this.containsPixel(this.cPixel1, this.ePixel1) ? "yes" : "no", "pixel2":this.containsPixel(this.cPixel2, this.ePixel2) ? "yes" : "no", "pixel3":this.containsPixel(this.cPixel3, this.ePixel3, true, 5) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var NodeSort = SpriteTestDemo.extend({
-    _node:null,
-    _sprite1:null,
-    _sprite2:null,
-    _sprite3:null,
-    _sprite4:null,
-    _sprite5:null,
+};
 
-    _title:"node sort same index",
-    _subtitle:"tag order in console should be 2,1,3,4,5",
+var NodeSort = class NodeSort extends SpriteTestDemo {
 
-    ctor:function () {
+
+    constructor() {
         //----start49----ctor
-        this._super();
+        super();
+
+
+
+        this._node = null;
+
+
+
+        this._sprite1 = null;
+
+
+
+        this._sprite2 = null;
+
+
+
+        this._sprite3 = null;
+
+
+
+        this._sprite4 = null;
+
+
+
+        this._sprite5 = null;
+
+
+
+        this._title = "node sort same index";
+
+
+
+        this._subtitle = "tag order in console should be 2,1,3,4,5";
+
+
+
+        this.testDuration = 1;
+
+
+
+        this.testOrders = [];
         this._node = new cc.Node();
         this.addChild(this._node, 0, 0);
 
@@ -4197,9 +4713,9 @@ var NodeSort = SpriteTestDemo.extend({
 
         this.schedule(this.reorderSprite);
         //----end49----
-    },
+    }
 
-    reorderSprite:function (dt) {
+    reorderSprite(dt) {
         //----start49----reorderSprite
         this.unschedule(this.reorderSprite);
 
@@ -4226,28 +4742,39 @@ var NodeSort = SpriteTestDemo.extend({
             this.testOrders.push(child.tag);
         }
         //----end49----
-    },
+    }
     //
     // Automation
     //
-    testDuration:1,
-    testOrders:[],
-    getExpectedResult:function () {
+    getExpectedResult() {
         return JSON.stringify([2, 1, 3, 4, 5]);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         return JSON.stringify(this.testOrders);
     }
-});
 
-var SpriteBatchNodeReorderOneChild = SpriteTestDemo.extend({
-    _batchNode:null,
-    _reoderSprite:null,
+};
 
-    _title:"SpriteBatchNode reorder 1 child",
-    ctor:function () {
+var SpriteBatchNodeReorderOneChild = class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
+
+    constructor() {
         //----start48----ctor
-        this._super();
+        super();
+
+
+        this._batchNode = null;
+
+
+        this._reoderSprite = null;
+
+
+        this._title = "SpriteBatchNode reorder 1 child";
+
+
+        this.testDuration = 2.5;
+
+
+        this.pixel = {"0":0, "1":102, "2":255, "3":255};
 
         spriteFrameCache.addSpriteFrames(s_ghostsPlist);
         //
@@ -4319,37 +4846,49 @@ var SpriteBatchNodeReorderOneChild = SpriteTestDemo.extend({
 
         this.scheduleOnce(this.reorderSprite, 2.0);
         //----end48----
-    },
+    }
 
-    reorderSprite:function (dt) {
+    reorderSprite(dt) {
         this._reoderSprite.parent.reorderChild(this._reoderSprite, -1);
         this._batchNode.sortAllChildren();
         //cc.Sprite* child;
         //CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
-    },
+    }
     //
     // Automation
     //
-    testDuration:2.5,
-    pixel:{"0":0, "1":102, "2":255, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2 - 11, winSize.height / 2 + 33, 3, 3);
         var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var SpriteBatchNodeSkewNegativeScaleChildren = SpriteTestDemo.extend({
-    _title:"SpriteBatchNode + children + skew",
-    _subtitle:"SpriteBatchNode skew + negative scale with children",
+};
 
-    ctor:function () {
+var SpriteBatchNodeSkewNegativeScaleChildren = class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
+
+    constructor() {
         //----start51----ctor
-        this._super();
+        super();
+
+
+        this._title = "SpriteBatchNode + children + skew";
+
+
+        this._subtitle = "SpriteBatchNode skew + negative scale with children";
+
+
+        this.testDuration = 6;
+
+
+        this.pixel1 = {"0":51, "1":0, "2":51, "3":255};
+
+
+        this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
 
         var cache = spriteFrameCache;
         cache.addSpriteFrames(s_grossiniPlist);
@@ -4384,33 +4923,44 @@ var SpriteBatchNodeSkewNegativeScaleChildren = SpriteTestDemo.extend({
             spritebatch.addChild(sprite, i);
         }
         //----end51----
-    },
+    }
     //
     // Automation
     //
-    testDuration:6,
-    pixel1:{"0":51, "1":0, "2":51, "3":255},
-    pixel2:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 21, winSize.height / 2 + 22, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 + 11, winSize.height / 2 + 14, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1) ? "yes" : "no",
             "pixel2":!this.containsPixel(ret2, this.pixel2) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var SpriteSkewNegativeScaleChildren = SpriteTestDemo.extend({
-    _title:"Sprite + children + skew",
-    _subtitle:"Sprite skew + negative scale with children",
+};
 
-    ctor:function () {
+var SpriteSkewNegativeScaleChildren = class SpriteSkewNegativeScaleChildren extends SpriteTestDemo {
+
+    constructor() {
         //----start50----ctor
-        this._super();
+        super();
+
+
+        this._title = "Sprite + children + skew";
+
+
+        this._subtitle = "Sprite skew + negative scale with children";
+
+
+        this.testDuration = 6;
+
+
+        this.pixel1 = {"0":51, "1":0, "2":51, "3":255};
+
+
+        this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
 
         var cache = spriteFrameCache;
         cache.addSpriteFrames(s_grossiniPlist);
@@ -4445,80 +4995,87 @@ var SpriteSkewNegativeScaleChildren = SpriteTestDemo.extend({
             parent.addChild(sprite, i);
         }
         //----end50----
-    },
+    }
     //
     // Automation
     //
-    testDuration:6,
-    pixel1:{"0":51, "1":0, "2":51, "3":255},
-    pixel2:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 4 + 21, winSize.height / 2 + 22, 5, 5);
         var ret2 = this.readPixels(winSize.width / 4 + 11, winSize.height / 2 + 14, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
             "pixel2":!this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var DoubleSprite = cc.Sprite.extend({
-    HD:false,
+};
 
-    ctor:function (fileName) {
-	    this._super(fileName);
+var DoubleSprite = class DoubleSprite extends cc.Sprite {
+
+    constructor(fileName) {
+	    super(fileName);
+
+
+        this.HD = false;
         //var resolutionType = texture.getResolutionType();
         //this.HD = ( resolutionType == cc.kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
-    },
+    }
 
-    setContentSize:function (size) {
+    setContentSize(size) {
         var newSize = cc.size(size.width, size.height);
         // If Retina Display and Texture is in HD then scale the vertex rect
         if (cc.contentScaleFactor() == 2 && !this.HD) {
             newSize.width *= 2;
             newSize.height *= 2;
         }
-        this._super(newSize);
-    },
-	_setWidth:function (value) {
+        super.setContentSize(newSize);
+    }
+	_setWidth(value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
 		if (cc.contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
-		this._super(value);
-	},
-	_setHeight:function (value) {
+		super._setWidth(value);
+	}
+	_setHeight(value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
 		if (cc.contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
-		this._super(value);
-	},
+		super._setHeight(value);
+	}
 
-    setVertexRect:function (rect) {
+    setVertexRect(rect) {
         // If Retina Display and Texture is in HD then scale the vertex rect
         if (cc.contentScaleFactor() == 2 && !this.HD) {
             rect.width *= 2;
             rect.height *= 2;
         }
-        this._super(rect);
+        super.setVertexRect(rect);
     }
-});
+
+};
 
 cc.defineGetterSetter(DoubleSprite.prototype, "width", DoubleSprite.prototype._getWidth, DoubleSprite.prototype._setWidth);
 cc.defineGetterSetter(DoubleSprite.prototype, "height", DoubleSprite.prototype._getHeight, DoubleSprite.prototype._setHeight);
 
-var SpriteDoubleResolution = SpriteTestDemo.extend({
+var SpriteDoubleResolution = class SpriteDoubleResolution extends SpriteTestDemo {
 
-    _title:"Sprite Double resolution",
-    _subtitle:"Retina Display. SD (left) should be equal to HD (right)",
 
-    ctor:function () {
+    constructor() {
         //----start52----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite Double resolution";
+
+
+
+        this._subtitle = "Retina Display. SD (left) should be equal to HD (right)";
 
         //
         // LEFT: SD sprite
@@ -4570,16 +5127,51 @@ var SpriteDoubleResolution = SpriteTestDemo.extend({
         spriteHD.runAction(seq_copy);
         //----end52----
     }
-});
 
-var AnimationCacheFile = SpriteTestDemo.extend({
+};
 
-    _title:"AnimationCache - Load file",
-    _subtitle:"Sprite should be animated",
+var AnimationCacheFile = class AnimationCacheFile extends SpriteTestDemo {
 
-    ctor:function () {
+
+    constructor() {
         //----start54----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "AnimationCache - Load file";
+
+
+
+        this._subtitle = "Sprite should be animated";
+
+
+
+        this.testDuration = 6.5;
+
+
+
+        this.ePixel1 = {"0":51, "1":0, "2":51, "3":255};
+
+
+
+        this.ePixel2 = {"0":15, "1":15, "2":15, "3":255};
+
+
+
+        this.ePixel3 = {"0":0, "1":38, "2":0, "3":255};
+
+
+
+        this.cPixel1 = null;
+
+
+
+        this.cPixel2 = null;
+
+
+
+        this.cPixel3 = null;
         var frameCache = spriteFrameCache;
         frameCache.addSpriteFrames(s_grossiniPlist);
         frameCache.addSpriteFrames(s_grossini_grayPlist);
@@ -4620,49 +5212,65 @@ var AnimationCacheFile = SpriteTestDemo.extend({
         // run the animation
         grossini.runAction(seq);
         //----end54----
-    },
+    }
     //
     // Automation
     //
-    testDuration:6.5,
-    ePixel1:{"0":51, "1":0, "2":51, "3":255},
-    ePixel2:{"0":15, "1":15, "2":15, "3":255},
-    ePixel3:{"0":0, "1":38, "2":0, "3":255},
-    cPixel1:null,
-    cPixel2:null,
-    cPixel3:null,
-    setupAutomation:function () {
+    setupAutomation() {
         this.scheduleOnce(this.getPixel1, 0.4);
         this.scheduleOnce(this.getPixel2, 3.2);
         this.scheduleOnce(this.getPixel3, 6);
-    },
-    getPixel1:function () {
+    }
+    getPixel1() {
         this.cPixel1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
-    },
-    getPixel2:function () {
+    }
+    getPixel2() {
         this.cPixel2 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
-    },
-    getPixel3:function () {
+    }
+    getPixel3() {
         this.cPixel3 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
-    },
-    getExpectedResult:function () {
+    }
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret = {"pixel1":this.containsPixel(this.cPixel1, this.ePixel1) ? "yes" : "no", "pixel2":this.containsPixel(this.cPixel2, this.ePixel2) ? "yes" : "no", "pixel3":this.containsPixel(this.cPixel3, this.ePixel3, true, 5) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var SpriteBatchBug1217 = SpriteTestDemo.extend({
+};
 
-    _title:"SpriteBatch - Bug 1217",
-    _subtitle:"Adding big family to spritebatch. You shall see 3 heads",
+var SpriteBatchBug1217 = class SpriteBatchBug1217 extends SpriteTestDemo {
 
-    ctor:function () {
+
+    constructor() {
         //----start53----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "SpriteBatch - Bug 1217";
+
+
+
+        this._subtitle = "Adding big family to spritebatch. You shall see 3 heads";
+
+
+
+        this.testDuration = 2.1;
+
+
+
+        this.pixel1 = {"0":51, "1":0, "2":0, "3":255};
+
+
+
+        this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
+
+
+
+        this.pixel3 = {"0":0, "1":0, "2":51, "3":255};
         var bn = new cc.SpriteBatchNode(s_grossini_dance_atlas, 15);
 
         var s1 = new cc.Sprite(bn.texture, cc.rect(0, 0, 57, 57));
@@ -4692,17 +5300,13 @@ var SpriteBatchBug1217 = SpriteTestDemo.extend({
 
         this.addChild(bn);
         //----end53----
-    },
+    }
     // Automation
-    testDuration:2.1,
-    pixel1:{"0":51, "1":0, "2":0, "3":255},
-    pixel2:{"0":0, "1":0, "2":0, "3":255},
-    pixel3:{"0":0, "1":0, "2":51, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(20, 174, 3, 3);
         var ret2 = this.readPixels(90, 145, 3, 3);
         var ret3 = this.readPixels(163, 116, 3, 3);
@@ -4711,16 +5315,31 @@ var SpriteBatchBug1217 = SpriteTestDemo.extend({
             "pixel3":this.containsPixel(ret3, this.pixel3, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var TextureColorCacheIssue = SpriteTestDemo.extend({
+};
 
-    _title:"Texture Color Cache Issue Test",
-    _subtitle:"You should see two different sprites colored green and blue",
+var TextureColorCacheIssue = class TextureColorCacheIssue extends SpriteTestDemo {
 
-    ctor:function () {
+
+    constructor() {
         //----start55----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Texture Color Cache Issue Test";
+
+
+
+        this._subtitle = "You should see two different sprites colored green and blue";
+
+
+
+        this.pixel1 = {"0":0, "1":204, "2":0, "3":255};
+
+
+
+        this.pixel2 = {"0":0, "1":0, "2":153, "3":255};
 
         var spriteFrameCache = cc.spriteFrameCache;
         spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
@@ -4740,38 +5359,51 @@ var TextureColorCacheIssue = SpriteTestDemo.extend({
         grossini.color = cc.color(1, 255, 1);
         sister.color = cc.color(1, 1, 255);
         //----end55----
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start55----onExit
         spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
         spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
-        this._super();
+        super.onExit();
         //----end55----
-    },
+    }
     // Automation
-    pixel1:{"0":0, "1":204, "2":0, "3":255},
-    pixel2:{"0":0, "1":0, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 3, winSize.height / 2 + 43, 5, 5);
         var ret2 = this.readPixels(winSize.width / 3 * 2, winSize.height / 2 - 6, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, true, 3) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, true, 3) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var TextureColorCacheIssue2 = SpriteTestDemo.extend({
+};
 
-    _title:"Texture Color Cache Issue Test #2",
-    _subtitle:"You should see two different sprites magenta and yellow",
+var TextureColorCacheIssue2 = class TextureColorCacheIssue2 extends SpriteTestDemo {
 
-    ctor:function () {
+
+    constructor() {
         //----start56----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Texture Color Cache Issue Test #2";
+
+
+
+        this._subtitle = "You should see two different sprites magenta and yellow";
+
+
+
+        this.pixel1 = {"0":255, "1":204, "2":0, "3":255};
+
+
+
+        this.pixel2 = {"0":255, "1":0, "2":153, "3":255};
 
         var spriteFrameCache = cc.spriteFrameCache;
         spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
@@ -4791,38 +5423,51 @@ var TextureColorCacheIssue2 = SpriteTestDemo.extend({
         grossini.color = cc.color(255, 255, 0);
         sister.color = cc.color(255, 0, 255);
         //----end56----
-    },
-    onExit:function () {
+    }
+    onExit() {
         //----start56----onExit
         spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
         spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
-        this._super();
+        super.onExit();
         //----end56----
-    },
+    }
     // Automation
-    pixel1:{"0":255, "1":204, "2":0, "3":255},
-    pixel2:{"0":255, "1":0, "2":153, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 3, winSize.height / 2 + 43, 5, 5);
         var ret2 = this.readPixels(winSize.width / 3 * 2, winSize.height / 2 - 3, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, true, 5) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, true, 5) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var TextureRotatedSpriteFrame = SpriteTestDemo.extend({
+};
 
-    _title:"Sub Sprite (rotated source)",
-    _subtitle:"createWithSpriteFrameName(); sub sprite",
+var TextureRotatedSpriteFrame = class TextureRotatedSpriteFrame extends SpriteTestDemo {
 
-    ctor:function () {
+
+    constructor() {
         //----start57----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sub Sprite (rotated source)";
+
+
+
+        this._subtitle = "createWithSpriteFrameName(); sub sprite";
+
+
+
+        this.pixel1 = {"0":255, "1":204, "2":153, "3":255};
+
+
+
+        this.pixel2 = {"0":51, "1":0, "2":51, "3":255};
 
         cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
 
@@ -4838,31 +5483,36 @@ var TextureRotatedSpriteFrame = SpriteTestDemo.extend({
         block.y = y;
         this.addChild(block);
         //----end57----
-    },
+    }
     // Automation
-    pixel1:{"0":255, "1":204, "2":153, "3":255},
-    pixel2:{"0":51, "1":0, "2":51, "3":255},
-    getExpectedResult:function () {
+    getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};
         return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
+    }
+    getCurrentResult() {
         var ret1 = this.readPixels(winSize.width / 2 - 14, winSize.height / 2 - 8, 5, 5);
         var ret2 = this.readPixels(winSize.width / 2 + 12, winSize.height / 2, 5, 5);
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, true, 5) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, true, 5) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
-});
 
-var SpriteWithRepeatingTexture = SpriteTestDemo.extend({
+};
 
-    _title:"Sprite with Repeating texture",
-    _subtitle:"aTexture.setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);",
+var SpriteWithRepeatingTexture = class SpriteWithRepeatingTexture extends SpriteTestDemo {
 
-    ctor:function () {
+
+    constructor() {
         //----start58----ctor
-        this._super();
+        super();
+
+
+
+        this._title = "Sprite with Repeating texture";
+
+
+
+        this._subtitle = "aTexture.setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);";
         var block = new cc.Sprite(s_pathBlock);
 
         var x = winSize.width / 2;
@@ -4874,16 +5524,21 @@ var SpriteWithRepeatingTexture = SpriteTestDemo.extend({
         this.addChild(block);
         //----end58----
     }
-});
 
-var SpriteBlendFuncTest = SpriteTestDemo.extend({
+};
+
+var SpriteBlendFuncTest = class SpriteBlendFuncTest extends SpriteTestDemo {
     //webgl only
-    _title: "",          //Sprite BlendFunc test
-    _subtitle: "",
 
-    ctor: function(){
+    constructor(){
         //----start59----ctor
-        this._super();
+        super();
+
+
+        this._title = "",          //Sprite BlendFunc test;
+
+
+        this._subtitle = "";
 
         var destFactors = [cc.ZERO, cc.ONE, cc.DST_COLOR, cc.ONE_MINUS_DST_COLOR, cc.DST_ALPHA, cc.ONE_MINUS_DST_ALPHA],
            srcFactors = [cc.ZERO, cc.ONE, cc.SRC_COLOR, cc.ONE_MINUS_SRC_COLOR, cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA];
@@ -4949,17 +5604,19 @@ var SpriteBlendFuncTest = SpriteTestDemo.extend({
         }
         //----end59----
     }
-});
 
-var SpriteTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var SpriteTestScene = class SpriteTestScene extends TestScene {
+    runThisTest(num) {
         spriteTestIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextSpriteTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
+
+};
 
 //
 // Flow control

@@ -26,46 +26,47 @@
 /**
  * Base class of all kinds of events.
  * @class
- * @extends cc.Class
+ * @extends cc.NewClass
  */
-cc.Event = cc.Class.extend(/** @lends cc.Event# */{
-    _type: 0,                                   //  Event type
-    _isStopped: false,                         //< whether the event has been stopped.
-    _currentTarget: null,                       //< Current target
+cc.Event = class Event extends cc.NewClass {
+    constructor(type) {
+        super();
+        this._type = 0;
+        this._isStopped = false;
+        this._currentTarget = null;
 
-    _setCurrentTarget: function (target) {
-        this._currentTarget = target;
-    },
-
-    ctor: function (type) {
         this._type = type;
-    },
+    }
+
+    _setCurrentTarget(target) {
+        this._currentTarget = target;
+    }
 
     /**
      * Gets the event type
      * @function
      * @returns {Number}
      */
-    getType: function () {
+    getType() {
         return this._type;
-    },
+    }
 
     /**
      * Stops propagation for current event
      * @function
      */
-    stopPropagation: function () {
+    stopPropagation() {
         this._isStopped = true;
-    },
+    }
 
     /**
      * Checks whether the event has been stopped
      * @function
      * @returns {boolean}
      */
-    isStopped: function () {
+    isStopped() {
         return this._isStopped;
-    },
+    }
 
     /**
      * <p>
@@ -76,10 +77,10 @@ cc.Event = cc.Class.extend(/** @lends cc.Event# */{
      * @function
      * @returns {cc.Node}  The target with which the event associates.
      */
-    getCurrentTarget: function () {
+    getCurrentTarget() {
         return this._currentTarget;
     }
-});
+};
 
 //event type
 /**
@@ -124,173 +125,173 @@ cc.Event.CUSTOM = 6;
  * @class
  * @extends cc.Event
  */
-cc.EventCustom = cc.Event.extend(/** @lends cc.EventCustom# */{
-    _eventName: null,
-    _userData: null,                                 // User data
+cc.EventCustom = class EventCustom extends cc.Event {
+    constructor(eventName) {
+        super(cc.Event.CUSTOM);
+        this._eventName = null;
+        this._userData = null;
 
-    ctor: function (eventName) {
-        cc.Event.prototype.ctor.call(this, cc.Event.CUSTOM);
         this._eventName = eventName;
-    },
+    }
 
     /**
      * Sets user data
      * @param {*} data
      */
-    setUserData: function (data) {
+    setUserData(data) {
         this._userData = data;
-    },
+    }
 
     /**
      * Gets user data
      * @returns {*}
      */
-    getUserData: function () {
+    getUserData() {
         return this._userData;
-    },
+    }
 
     /**
      * Gets event name
      * @returns {String}
      */
-    getEventName: function () {
+    getEventName() {
         return this._eventName;
     }
-});
+};
 
 /**
  * The mouse event
  * @class
  * @extends cc.Event
  */
-cc.EventMouse = cc.Event.extend(/** @lends cc.EventMouse# */{
-    _eventType: 0,
-    _button: 0,
-    _x: 0,
-    _y: 0,
-    _prevX: 0,
-    _prevY: 0,
-    _scrollX: 0,
-    _scrollY: 0,
+cc.EventMouse = class EventMouse extends cc.Event {
+    constructor(eventType) {
+        super(cc.Event.MOUSE);
+        this._eventType = 0;
+        this._button = 0;
+        this._x = 0;
+        this._y = 0;
+        this._prevX = 0;
+        this._prevY = 0;
+        this._scrollX = 0;
+        this._scrollY = 0;
 
-    ctor: function (eventType) {
-        cc.Event.prototype.ctor.call(this, cc.Event.MOUSE);
         this._eventType = eventType;
-    },
+    }
 
     /**
      * Sets scroll data
      * @param {number} scrollX
      * @param {number} scrollY
      */
-    setScrollData: function (scrollX, scrollY) {
+    setScrollData(scrollX, scrollY) {
         this._scrollX = scrollX;
         this._scrollY = scrollY;
-    },
+    }
 
     /**
      * Returns the x axis scroll value
      * @returns {number}
      */
-    getScrollX: function () {
+    getScrollX() {
         return this._scrollX;
-    },
+    }
 
     /**
      * Returns the y axis scroll value
      * @returns {number}
      */
-    getScrollY: function () {
+    getScrollY() {
         return this._scrollY;
-    },
+    }
 
     /**
      * Sets cursor location
      * @param {number} x
      * @param {number} y
      */
-    setLocation: function (x, y) {
+    setLocation(x, y) {
         this._x = x;
         this._y = y;
-    },
+    }
 
-	/**
-	 * Returns cursor location
-	 * @return {cc.Point} location
-	 */
-    getLocation: function () {
+    /**
+     * Returns cursor location
+     * @return {cc.Point} location
+     */
+    getLocation() {
         return {x: this._x, y: this._y};
-    },
+    }
 
-	/**
-	 * Returns the current cursor location in screen coordinates
-	 * @return {cc.Point}
-	 */
-	getLocationInView: function() {
-		return {x: this._x, y: cc.view._designResolutionSize.height - this._y};
-	},
+    /**
+     * Returns the current cursor location in screen coordinates
+     * @return {cc.Point}
+     */
+    getLocationInView() {
+        return {x: this._x, y: cc.view._designResolutionSize.height - this._y};
+    }
 
-    _setPrevCursor: function (x, y) {
+    _setPrevCursor(x, y) {
         this._prevX = x;
         this._prevY = y;
-    },
+    }
 
     /**
      * Returns the delta distance from the previous location to current location
      * @return {cc.Point}
      */
-    getDelta: function () {
+    getDelta() {
         return {x: this._x - this._prevX, y: this._y - this._prevY};
-    },
+    }
 
     /**
      * Returns the X axis delta distance from the previous location to current location
      * @return {Number}
      */
-    getDeltaX: function () {
+    getDeltaX() {
         return this._x - this._prevX;
-    },
+    }
 
     /**
      * Returns the Y axis delta distance from the previous location to current location
      * @return {Number}
      */
-    getDeltaY: function () {
+    getDeltaY() {
         return this._y - this._prevY;
-    },
+    }
 
     /**
      * Sets mouse button
      * @param {number} button
      */
-    setButton: function (button) {
+    setButton(button) {
         this._button = button;
-    },
+    }
 
     /**
      * Returns mouse button
      * @returns {number}
      */
-    getButton: function () {
+    getButton() {
         return this._button;
-    },
+    }
 
     /**
      * Returns location X axis data
      * @returns {number}
      */
-    getLocationX: function () {
+    getLocationX() {
         return this._x;
-    },
+    }
 
     /**
      * Returns location Y axis data
      * @returns {number}
      */
-    getLocationY: function () {
+    getLocationY() {
         return this._y;
     }
-});
+};
 
 //Different types of MouseEvent
 /**
@@ -385,39 +386,39 @@ cc.EventMouse.BUTTON_8 = 7;
  * @class
  * @extends cc.Event
  */
-cc.EventTouch = cc.Event.extend(/** @lends cc.EventTouch# */{
-    _eventCode: 0,
-    _touches: null,
+cc.EventTouch = class EventTouch extends cc.Event {
+    constructor(arr) {
+        super(cc.Event.TOUCH);
+        this._eventCode = 0;
+        this._touches = null;
 
-    ctor: function (arr) {
-        cc.Event.prototype.ctor.call(this, cc.Event.TOUCH);
         this._touches = arr || [];
-    },
+    }
 
     /**
      * Returns event code
      * @returns {number}
      */
-    getEventCode: function () {
+    getEventCode() {
         return this._eventCode;
-    },
+    }
 
     /**
      * Returns touches of event
      * @returns {Array}
      */
-    getTouches: function () {
+    getTouches() {
         return this._touches;
-    },
+    }
 
-    _setEventCode: function (eventCode) {
+    _setEventCode(eventCode) {
         this._eventCode = eventCode;
-    },
+    }
 
-    _setTouches: function (touches) {
+    _setTouches(touches) {
         this._touches = touches;
     }
-});
+};
 
 /**
  * The maximum touch numbers
@@ -433,17 +434,18 @@ cc.EventTouch.EventCode = {BEGAN: 0, MOVED: 1, ENDED: 2, CANCELLED: 3};
  * @class
  * @extends cc.Event
  */
-cc.EventFocus = cc.Event.extend(/** @lends cc.EventTouch# */{
-    _widgetGetFocus: null,
-    _widgetLoseFocus: null,
+cc.EventFocus = class EventFocus extends cc.Event {
     /**
      * Constructor function.
      * @param {ccui.Widget} widgetLoseFocus
      * @param {ccui.Widget} widgetGetFocus
      */
-    ctor: function(widgetLoseFocus, widgetGetFocus){
-        cc.Event.prototype.ctor.call(this, cc.Event.FOCUS);
+    constructor(widgetLoseFocus, widgetGetFocus) {
+        super(cc.Event.FOCUS);
+        this._widgetGetFocus = null;
+        this._widgetLoseFocus = null;
+
         this._widgetGetFocus = widgetGetFocus;
         this._widgetLoseFocus = widgetLoseFocus;
     }
-});
+};

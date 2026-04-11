@@ -26,109 +26,110 @@
 /**
  * The touch event class
  * @class
- * @extends cc.Class
+ * @extends cc.NewClass
  *
  * @param {Number} x
  * @param {Number} y
  * @param {Number} id
  */
-cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
-    _lastModified: 0,
-    _point:null,
-    _prevPoint:null,
-    _id:0,
-    _startPointCaptured: false,
-    _startPoint:null,
+cc.Touch = class Touch extends cc.NewClass {
+    constructor(x, y, id) {
+        super();
+        this._lastModified = 0;
+        this._point = null;
+        this._prevPoint = null;
+        this._id = 0;
+        this._startPointCaptured = false;
+        this._startPoint = null;
 
-    ctor:function (x, y, id) {
         this.setTouchInfo(id, x, y);
-    },
+    }
 
     /**
      * Returns the current touch location in OpenGL coordinates
      * @return {cc.Point}
      */
-    getLocation:function () {
+    getLocation() {
         //TODO
         //return cc.director.convertToGL(this._point);
         return {x: this._point.x, y: this._point.y};
-    },
+    }
 
-	/**
-	 * Returns X axis location value
-	 * @returns {number}
-	 */
-	getLocationX: function () {
-		return this._point.x;
-	},
+    /**
+     * Returns X axis location value
+     * @returns {number}
+     */
+    getLocationX() {
+        return this._point.x;
+    }
 
-	/**
+    /**
      * Returns Y axis location value
-	 * @returns {number}
-	 */
-	getLocationY: function () {
-		return this._point.y;
-	},
+     * @returns {number}
+     */
+    getLocationY() {
+        return this._point.y;
+    }
 
     /**
      * Returns the previous touch location in OpenGL coordinates
      * @return {cc.Point}
      */
-    getPreviousLocation:function () {
+    getPreviousLocation() {
         //TODO
         //return cc.director.convertToGL(this._prevPoint);
         return {x: this._prevPoint.x, y: this._prevPoint.y};
-    },
+    }
 
     /**
      * Returns the start touch location in OpenGL coordinates
      * @returns {cc.Point}
      */
-    getStartLocation: function() {
+    getStartLocation() {
         //TODO
         //return cc.director.convertToGL(this._startPoint);
         return {x: this._startPoint.x, y: this._startPoint.y};
-    },
+    }
 
     /**
      * Returns the delta distance from the previous touche to the current one in screen coordinates
      * @return {cc.Point}
      */
-    getDelta:function () {
+    getDelta() {
         return cc.pSub(this._point, this._prevPoint);
-    },
+    }
 
     /**
      * Returns the current touch location in screen coordinates
      * @return {cc.Point}
      */
-    getLocationInView: function() {
+    getLocationInView() {
         return {x: this._point.x, y: this._point.y};
-    },
+    }
 
     /**
      * Returns the previous touch location in screen coordinates
      * @return {cc.Point}
      */
-    getPreviousLocationInView: function(){
+    getPreviousLocationInView() {
         return {x: this._prevPoint.x, y: this._prevPoint.y};
-    },
+    }
 
     /**
      * Returns the start touch location in screen coordinates
      * @return {cc.Point}
      */
-    getStartLocationInView: function(){
+    getStartLocationInView() {
         return {x: this._startPoint.x, y: this._startPoint.y};
-    },
+    }
 
     /**
      * Returns the id of cc.Touch
      * @return {Number}
      */
-    getID:function () {
+    getID() {
         return this._id;
-    },
+    }
 
     /**
      * Sets information to touch
@@ -136,7 +137,7 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
      * @param  {Number} x
      * @param  {Number} y
      */
-    setTouchInfo:function (id, x, y) {
+    setTouchInfo(id, x, y) {
         this._prevPoint = this._point;
         this._point = cc.p(x || 0, y || 0);
         this._id = id;
@@ -145,9 +146,9 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
             cc.view._convertPointWithScale(this._startPoint);
             this._startPointCaptured = true;
         }
-    },
+    }
 
-    _setPoint: function(x, y){
+    _setPoint(x, y) {
         if(y === undefined){
             this._point.x = x.x;
             this._point.y = x.y;
@@ -155,12 +156,12 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
             this._point.x = x;
             this._point.y = y;
         }
-    },
+    }
 
-    _setPrevPoint:function (x, y) {
+    _setPrevPoint(x, y) {
         if(y === undefined)
             this._prevPoint = cc.p(x.x, x.y);
         else
             this._prevPoint = cc.p(x || 0, y || 0);
     }
-});
+};

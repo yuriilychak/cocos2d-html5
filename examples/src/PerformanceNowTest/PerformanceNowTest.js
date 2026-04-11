@@ -24,58 +24,59 @@
 
 var scenePerformanceNowTestIdx = -1;
 
-var PerformanceNowBaseLayer = BaseTestLayer.extend({
-    ctor:function () {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
-    },
+var PerformanceNowBaseLayer = class PerformanceNowBaseLayer extends BaseTestLayer {
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
+    }
 
-    title:function () {
+    title() {
         return "performance.now";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    code:function () {
+    code() {
         return "";
-    },
+    }
 
     // callbacks
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new PerformanceNowTestScene();
         s.addChild(restartPerformanceNowTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new PerformanceNowTestScene();
         s.addChild(nextPerformanceNowTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new PerformanceNowTestScene();
         s.addChild(previousPerformanceNowTest());
         director.runScene(s);
-    },
+    }
 
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfPerformanceNowTest.length-1) - scenePerformanceNowTestIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return scenePerformanceNowTestIdx;
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Tests
 //
 //------------------------------------------------------------------
-var BasicPerformanceNowTest = PerformanceNowBaseLayer.extend({
-    onEnter:function () {
-        this._super();
+var BasicPerformanceNowTest = class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
+    onEnter() {
+        super.onEnter();
         if (performance && typeof performance.now === 'function') {
             var currentPerformanceNow = new cc.LabelTTF("Current time since start : " + performance.now());
             this.addChild(currentPerformanceNow);   
@@ -92,20 +93,21 @@ var BasicPerformanceNowTest = PerformanceNowBaseLayer.extend({
             });            
 
         }
-    },
+    }
 
-    title: function() {
+    title() {
         return "Basic performance.now functionality";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Should display number, or say not supported";
     }
-});
 
-var MonotonicIncreaseTest = PerformanceNowBaseLayer.extend({
-    ctor:function () {
-        this._super();
+};
+
+var MonotonicIncreaseTest = class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
+    constructor() {
+        super();
         if (performance && typeof performance.now !== 'function') {
              var errLabel = new cc.LabelTTF("On browser that does not support performance.now");
             this.addChild(errLabel);   
@@ -142,26 +144,28 @@ var MonotonicIncreaseTest = PerformanceNowBaseLayer.extend({
         values.setDimensions(cc.winSize.width/2, 100);
         this.addChild(values);
 
-    },
+    }
 
-    title:function () {
+    title() {
         return "Testing monotonic increase of performance.now";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Listed values should all be increasing";
     }
-});
 
-var PerformanceNowTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var PerformanceNowTestScene = class PerformanceNowTestScene extends TestScene {
+    runThisTest(num) {
         scenePerformanceNowTestIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextPerformanceNowTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
+
+};
 
 //
 // Flow control

@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 
-var UILabelBMFontTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UILabelBMFontTest = class UILabelBMFontTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("LabelBMFont");
@@ -44,4 +44,5 @@ var UILabelBMFontTest = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};

@@ -149,32 +149,36 @@ cc.EDITBOX_INPUT_FLAG_INITIAL_CAPS_ALL_CHARACTERS = 4;
  * @class
  * @extends cc.Class
  */
-cc.EditBoxDelegate = cc.Class.extend({
+cc.EditBoxDelegate = class EditBoxDelegate extends cc.NewClass {
+  constructor() {
+    super();
+  }
+
   /**
    * This method is called when an edit box gains focus after keyboard is shown.
    * @param {cc.EditBox} sender
    */
-  editBoxEditingDidBegin: function (sender) {},
+  editBoxEditingDidBegin(sender) {}
 
   /**
    * This method is called when an edit box loses focus after keyboard is hidden.
    * @param {cc.EditBox} sender
    */
-  editBoxEditingDidEnd: function (sender) {},
+  editBoxEditingDidEnd(sender) {}
 
   /**
    * This method is called when the edit box text was changed.
    * @param {cc.EditBox} sender
    * @param {String} text
    */
-  editBoxTextChanged: function (sender, text) {},
+  editBoxTextChanged(sender, text) {}
 
   /**
    * This method is called when the return button was pressed.
    * @param {cc.EditBox} sender
    */
-  editBoxReturn: function (sender) {}
-});
+  editBoxReturn(sender) {}
+};
 
 /**
  * <p>cc.EditBox is a brief Class for edit box.<br/>
@@ -200,23 +204,7 @@ cc.EditBoxDelegate = cc.Class.extend({
  * @property {Number}   returnType              - <@writeonly> Return type of edit box, value should be one of the KeyboardReturnType constants.
  *
  */
-cc.EditBox = cc.Node.extend({
-  _backgroundSprite: null,
-  _delegate: null,
-  _editBoxInputMode: cc.EDITBOX_INPUT_MODE_ANY,
-  _editBoxInputFlag: cc.EDITBOX_INPUT_FLAG_SENSITIVE,
-  _keyboardReturnType: cc.KEYBOARD_RETURNTYPE_DEFAULT,
-  _maxLength: 50,
-  _text: "",
-  _textColor: null,
-  _placeholderText: "",
-  _placeholderFontName: "",
-  _placeholderFontSize: 14,
-  _placeholderColor: null,
-  _className: "EditBox",
-  _touchListener: null,
-  _touchEnabled: true,
-
+cc.EditBox = class EditBox extends cc.Node {
   /**
    * constructor of cc.EditBox
    * @param {cc.Size} size
@@ -224,8 +212,24 @@ cc.EditBox = cc.Node.extend({
    * @param {cc.Scale9Sprite} press9SpriteBg
    * @param {cc.Scale9Sprite} disabled9SpriteBg
    */
-  ctor: function (size, normal9SpriteBg) {
-    cc.Node.prototype.ctor.call(this);
+  constructor(size, normal9SpriteBg) {
+    super();
+
+    this._backgroundSprite = null;
+    this._delegate = null;
+    this._editBoxInputMode = cc.EDITBOX_INPUT_MODE_ANY;
+    this._editBoxInputFlag = cc.EDITBOX_INPUT_FLAG_SENSITIVE;
+    this._keyboardReturnType = cc.KEYBOARD_RETURNTYPE_DEFAULT;
+    this._maxLength = 50;
+    this._text = "";
+    this._textColor = null;
+    this._placeholderText = "";
+    this._placeholderFontName = "";
+    this._placeholderFontSize = 14;
+    this._placeholderColor = null;
+    this._className = "EditBox";
+    this._touchListener = null;
+    this._touchEnabled = true;
 
     this._anchorPoint = cc.p(0.5, 0.5);
     this._textColor = cc.color.WHITE;
@@ -244,9 +248,9 @@ cc.EditBox = cc.Node.extend({
     cc.eventManager.addListener(this._touchListener, this);
 
     this.setInputFlag(this._editBoxInputFlag);
-  },
+  }
 
-  setTouchEnabled: function (enable) {
+  setTouchEnabled(enable) {
     if (this._touchEnabled === enable) {
       return;
     }
@@ -256,87 +260,87 @@ cc.EditBox = cc.Node.extend({
     } else {
       cc.eventManager.removeListener(this._touchListener);
     }
-  },
+  }
 
-  _createRenderCmd: function () {
+  _createRenderCmd() {
     if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
       return new cc.EditBox.CanvasRenderCmd(this);
     } else {
       return new cc.EditBox.WebGLRenderCmd(this);
     }
-  },
+  }
 
-  setContentSize: function (width, height) {
+  setContentSize(width, height) {
     if (width.width !== undefined && width.height !== undefined) {
       height = width.height;
       width = width.width;
     }
-    cc.Node.prototype.setContentSize.call(this, width, height);
+    super.setContentSize(width, height);
     this._updateEditBoxSize(width, height);
-  },
+  }
 
-  setVisible: function (visible) {
-    cc.Node.prototype.setVisible.call(this, visible);
+  setVisible(visible) {
+    super.setVisible(visible);
     this._renderCmd.updateVisibility();
-  },
+  }
 
-  createDomElementIfNeeded: function () {
+  createDomElementIfNeeded() {
     if (!this._renderCmd._edTxt) {
       this._renderCmd._createDomTextArea();
     }
-  },
+  }
 
-  setTabIndex: function (index) {
+  setTabIndex(index) {
     if (this._renderCmd._edTxt) {
       this._renderCmd._edTxt.tabIndex = index;
     }
-  },
+  }
 
-  getTabIndex: function () {
+  getTabIndex() {
     if (this._renderCmd._edTxt) {
       return this._renderCmd._edTxt.tabIndex;
     }
     cc.warn("The dom control is not created!");
     return -1;
-  },
+  }
 
-  setFocus: function () {
+  setFocus() {
     if (this._renderCmd._edTxt) {
       this._renderCmd._edTxt.focus();
     }
-  },
+  }
 
-  isFocused: function () {
+  isFocused() {
     if (this._renderCmd._edTxt) {
       return document.activeElement === this._renderCmd._edTxt;
     }
     cc.warn("The dom control is not created!");
     return false;
-  },
+  }
 
-  stayOnTop: function (flag) {
+  stayOnTop(flag) {
     if (this._alwaysOnTop === flag) return;
 
     this._alwaysOnTop = flag;
     this._renderCmd.stayOnTop(this._alwaysOnTop);
-  },
+  }
 
-  cleanup: function () {
-    this._super();
+  cleanup() {
+    super.cleanup();
 
     this._renderCmd._removeDomFromGameContainer();
-  },
+  }
 
-  _isAncestorsVisible: function (node) {
+  _isAncestorsVisible(node) {
     if (null == node) return true;
 
     var parent = node.getParent();
 
     if (parent && !parent.isVisible()) return false;
     return this._isAncestorsVisible(parent);
-  },
+  }
 
-  _onTouchBegan: function (touch) {
+  _onTouchBegan(touch) {
     if (!this.isVisible() || !this._isAncestorsVisible(this)) {
       return;
     }
@@ -349,93 +353,93 @@ cc.EditBox = cc.Node.extend({
       this._renderCmd._endEditing();
       return false;
     }
-  },
+  }
 
-  _onTouchEnded: function () {
+  _onTouchEnded() {
     if (!this.isVisible() || !this._isAncestorsVisible(this)) {
       return;
     }
     this._renderCmd._beginEditing();
-  },
+  }
 
-  _updateBackgroundSpriteSize: function (width, height) {
+  _updateBackgroundSpriteSize(width, height) {
     if (this._backgroundSprite) {
       this._backgroundSprite.setContentSize(width, height);
     }
-  },
+  }
 
-  _updateEditBoxSize: function (size, height) {
+  _updateEditBoxSize(size, height) {
     var newWidth = typeof size.width === "number" ? size.width : size;
     var newHeight = typeof size.height === "number" ? size.height : height;
 
     this._updateBackgroundSpriteSize(newWidth, newHeight);
     this._renderCmd.updateSize(newWidth, newHeight);
-  },
+  }
 
-  setLineHeight: function (lineHeight) {
+  setLineHeight(lineHeight) {
     this._renderCmd.setLineHeight(lineHeight);
-  },
+  }
 
   /**
    * Sets the font.
    * @param {String} fontName  The font name.
    * @param {Number} fontSize  The font size.
    */
-  setFont: function (fontName, fontSize) {
+  setFont(fontName, fontSize) {
     this._renderCmd.setFont(fontName, fontSize);
-  },
+  }
 
-  _setFont: function (fontStyle) {
+  _setFont(fontStyle) {
     this._renderCmd._setFont(fontStyle);
-  },
+  }
 
-  getBackgroundSprite: function () {
+  getBackgroundSprite() {
     return this._backgroundSprite;
-  },
+  }
 
   /**
    * Sets fontName
    * @param {String} fontName
    */
-  setFontName: function (fontName) {
+  setFontName(fontName) {
     this._renderCmd.setFontName(fontName);
-  },
+  }
 
   /**
    * Sets fontSize
    * @param {Number} fontSize
    */
-  setFontSize: function (fontSize) {
+  setFontSize(fontSize) {
     this._renderCmd.setFontSize(fontSize);
-  },
+  }
 
   /**
    * Sets the text entered in the edit box.
    * @param {string} text The given text.
    */
-  setString: function (text) {
+  setString(text) {
     if (text.length >= this._maxLength) {
       text = text.slice(0, this._maxLength);
     }
     this._text = text;
     this._renderCmd.setString(text);
-  },
+  }
 
   /**
    * Sets the font color of the widget's text.
    * @param {cc.Color} color
    */
-  setFontColor: function (color) {
+  setFontColor(color) {
     this._textColor = color;
     this._renderCmd.setFontColor(color);
-  },
+  }
 
   /**
    * Sets the maximum input length of the edit box. <br/>
    * Setting this value enables multiline input mode by default.
    * @param {Number} maxLength The maximum length.
    */
-  setMaxLength: function (maxLength) {
+  setMaxLength(maxLength) {
     if (!isNaN(maxLength)) {
       if (maxLength < 0) {
         //we can't set Number.MAX_VALUE to input's maxLength property
@@ -445,98 +449,98 @@ cc.EditBox = cc.Node.extend({
       this._maxLength = maxLength;
       this._renderCmd.setMaxLength(maxLength);
     }
-  },
+  }
 
   /**
    * Gets the maximum input length of the edit box.
    * @return {Number} Maximum input length.
    */
-  getMaxLength: function () {
+  getMaxLength() {
     return this._maxLength;
-  },
+  }
 
   /**
    * Sets a text in the edit box that acts as a placeholder when an edit box is empty.
    * @param {string} text The given text.
    */
-  setPlaceHolder: function (text) {
+  setPlaceHolder(text) {
     if (text !== null) {
       this._renderCmd.setPlaceHolder(text);
       this._placeholderText = text;
     }
-  },
+  }
 
   /**
    * Sets the placeholder's font.
    * @param {String} fontName
    * @param {Number} fontSize
    */
-  setPlaceholderFont: function (fontName, fontSize) {
+  setPlaceholderFont(fontName, fontSize) {
     this._placeholderFontName = fontName;
     this._placeholderFontSize = fontSize;
     this._renderCmd._updateDOMPlaceholderFontStyle();
-  },
+  }
 
-  _setPlaceholderFont: function (fontStyle) {
+  _setPlaceholderFont(fontStyle) {
     var res = cc.LabelTTF._fontStyleRE.exec(fontStyle);
     if (res) {
       this._placeholderFontName = res[2];
       this._placeholderFontSize = parseInt(res[1]);
       this._renderCmd._updateDOMPlaceholderFontStyle();
     }
-  },
+  }
 
   /**
    * Sets the placeholder's fontName.
    * @param {String} fontName
    */
-  setPlaceholderFontName: function (fontName) {
+  setPlaceholderFontName(fontName) {
     this._placeholderFontName = fontName;
     this._renderCmd._updateDOMPlaceholderFontStyle();
-  },
+  }
 
   /**
    * Sets the placeholder's fontSize.
    * @param {Number} fontSize
    */
-  setPlaceholderFontSize: function (fontSize) {
+  setPlaceholderFontSize(fontSize) {
     this._placeholderFontSize = fontSize;
     this._renderCmd._updateDOMPlaceholderFontStyle();
-  },
+  }
 
   /**
    * Sets the font color of the placeholder text when the edit box is empty.
    * @param {cc.Color} color
    */
-  setPlaceholderFontColor: function (color) {
+  setPlaceholderFontColor(color) {
     this._placeholderColor = color;
     this._renderCmd.setPlaceholderFontColor(color);
-  },
+  }
 
   /**
    * Sets the input flags that are to be applied to the edit box.
    * @param {Number} inputFlag One of the EditBoxInputFlag constants.
    * e.g.cc.EDITBOX_INPUT_FLAG_PASSWORD
    */
-  setInputFlag: function (inputFlag) {
+  setInputFlag(inputFlag) {
     this._editBoxInputFlag = inputFlag;
     this._renderCmd.setInputFlag(inputFlag);
-  },
+  }
 
   /**
    * Gets the input string of the edit box.
    * @return {string}
    */
-  getString: function () {
+  getString() {
     return this._text;
-  },
+  }
 
   /**
    * Init edit box with specified size.
    * @param {cc.Size} size
    * @param {cc.Color | cc.Scale9Sprite} normal9SpriteBg
    */
-  initWithSizeAndBackgroundSprite: function (size, normal9SpriteBg) {
+  initWithSizeAndBackgroundSprite(size, normal9SpriteBg) {
     if (this._backgroundSprite) {
       this._backgroundSprite.removeFromParent();
     }
@@ -553,30 +557,30 @@ cc.EditBox = cc.Node.extend({
     this.x = 0;
     this.y = 0;
     return true;
-  },
+  }
 
   /**
    * Sets the delegate for edit box.
    * @param {cc.EditBoxDelegate} delegate
    */
-  setDelegate: function (delegate) {
+  setDelegate(delegate) {
     this._delegate = delegate;
-  },
+  }
 
   /**
    * Gets the text in the edit box that acts as a placeholder when an
    * edit box is empty.
    * @return {String}
    */
-  getPlaceHolder: function () {
+  getPlaceHolder() {
     return this._placeholderText;
-  },
+  }
 
   /**
    * Sets the input mode of the edit box.
    * @param {Number} inputMode One of the EditBoxInputMode constants.
    */
-  setInputMode: function (inputMode) {
+  setInputMode(inputMode) {
     if (this._editBoxInputMode === inputMode) return;
 
     var oldText = this.getString();
@@ -587,30 +591,30 @@ cc.EditBox = cc.Node.extend({
 
     this.setString(oldText);
     this._renderCmd._updateLabelPosition(this.getContentSize());
-  },
+  }
 
   /**
    * Sets the return type that are to be applied to the edit box.
    * @param {Number} returnType One of the CCKeyboardReturnType constants.
    */
-  setReturnType: function (returnType) {
+  setReturnType(returnType) {
     this._keyboardReturnType = returnType;
     this._renderCmd._updateDomInputType();
-  },
+  }
 
   /**
    * @warning HTML5 Only
    * @param {cc.Size} size
    * @param {cc.color} bgColor
    */
-  initWithBackgroundColor: function (size, bgColor) {
+  initWithBackgroundColor(size, bgColor) {
     this._edWidth = size.width;
     this.dom.style.width = this._edWidth.toString() + "px";
     this._edHeight = size.height;
     this.dom.style.height = this._edHeight.toString() + "px";
     this.dom.style.backgroundColor = cc.colorToHex(bgColor);
   }
-});
+};
 
 var _p = cc.EditBox.prototype;
 

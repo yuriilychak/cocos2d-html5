@@ -76,38 +76,44 @@ var controTestItemNames = [
     }
 ];
 
-var ControlSceneManager = cc.Class.extend({
-    _currentControlSceneId:0,
+var ControlSceneManager = class ControlSceneManager extends cc.NewClass {
 
-    ctor:function () {
+    constructor() {
+
+
+        super();
+
+
         this._currentControlSceneId = 0;
-    },
+        this._currentControlSceneId = 0;
+    }
 
-    getCurrentControlSceneId:function () {
+    getCurrentControlSceneId() {
         return this._currentControlSceneId;
-    },
-    setCurrentControlSceneId:function (currentControlSceneId) {
+    }
+    setCurrentControlSceneId(currentControlSceneId) {
         this._currentControlSceneId = currentControlSceneId
-    },
+    }
 
-    nextControlScene:function () {
+    nextControlScene() {
         this._currentControlSceneId = (this._currentControlSceneId + 1) % controTestItemNames.length;
         return this.currentControlScene();
-    },
+    }
 
-    previousControlScene:function () {
+    previousControlScene() {
         this._currentControlSceneId = this._currentControlSceneId - 1;
         if (this._currentControlSceneId < 0) {
             this._currentControlSceneId = controTestItemNames.length - 1;
         }
 
         return this.currentControlScene();
-    },
+    }
 
-    currentControlScene:function () {
+    currentControlScene() {
         return controTestItemNames[this._currentControlSceneId].testScene();
     }
-});
+
+};
 
 ControlSceneManager.sharedInstance = null;
 /**

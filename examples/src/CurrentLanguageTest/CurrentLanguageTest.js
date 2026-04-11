@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var CurrentLanguageTest = cc.Layer.extend({
-    ctor:function () {
-        this._super();
+var CurrentLanguageTest = class CurrentLanguageTest extends cc.Layer {
+    constructor() {
+        super();
 
         var s = cc.director.getWinSize();
         var label = new cc.LabelTTF("Current language Test", "Arial", 28);
@@ -66,10 +66,11 @@ var CurrentLanguageTest = cc.Layer.extend({
 
         this.addChild(labelLanguage);
     }
-});
 
-var CurrentLanguageTestScene = TestScene.extend({
-    runThisTest:function () {
+};
+
+var CurrentLanguageTestScene = class CurrentLanguageTestScene extends TestScene {
+    runThisTest() {
         if(window.sideIndexBar){
             window.sideIndexBar.changeTest(0, 8);
         }
@@ -79,7 +80,8 @@ var CurrentLanguageTestScene = TestScene.extend({
 
         cc.director.runScene(this);
     }
-});
+
+};
 
 var arrayOfCurrentLanguageTest = [
     CurrentLanguageTest

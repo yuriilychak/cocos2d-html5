@@ -31,34 +31,34 @@ var sceneIdx = -1;
 /**
  @brief EventTest for retain prev, reset, next, main menu buttons.
  */
-var EventTest = cc.Layer.extend({
-    ctor:function() {
-        this._super();
+var EventTest = class EventTest extends cc.Layer {
+    constructor() {
+        super();
         this.init();
-    },
+    }
 
-    restartCallback:function (sender) {
+    restartCallback(sender) {
         var s = new EventTestScene();
         s.addChild(restartEventsTest());
         director.runScene(s);
-    },
-    nextCallback:function (sender) {
+    }
+    nextCallback(sender) {
         var s = new EventTestScene();
         s.addChild(nextEventsTest());
         director.runScene(s);
-    },
-    backCallback:function (sender) {
+    }
+    backCallback(sender) {
         var s = new EventTestScene();
         s.addChild(previousEventsTest());
         director.runScene(s);
-    },
+    }
 
-    title:function () {
+    title() {
         return "Event Test";
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var s = director.getWinSize();
 
@@ -91,16 +91,17 @@ var EventTest = cc.Layer.extend({
 
         this.addChild(menu, 1);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // OneByOne Touches
 //
 //------------------------------------------------------------------
-var TouchOneByOneTest = EventTest.extend({
-    init:function () {
-        this._super();
+var TouchOneByOneTest = class TouchOneByOneTest extends EventTest {
+    init() {
+        super.init();
         this.ids = {};
         this.unused_sprites = [];
 
@@ -126,31 +127,31 @@ var TouchOneByOneTest = EventTest.extend({
             sprite.color = cc.color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
             this.unused_sprites.push(sprite);
         }
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Touches One by One. Touch the left / right and see console";
-    },
+    }
 
-    new_id:function( id, pos) {
+    new_id( id, pos) {
         var s = this.unused_sprites.pop();
         this.ids[ id ] = s;
         s.x = pos.x;
         s.y = pos.y;
-    },
-    update_id:function(id, pos) {
+    }
+    update_id(id, pos) {
         var s = this.ids[ id ];
         s.x = pos.x;
         s.y = pos.y;
-    },
-    release_id:function(id, pos) {
+    }
+    release_id(id, pos) {
         var s = this.ids[ id ];
         this.ids[ id ] = null;
         this.unused_sprites.push( s );
         s.x = 0;
         s.y = 0;
-    },
+    }
 
-    onTouchBegan:function(touch, event) {
+    onTouchBegan(touch, event) {
         var pos = touch.getLocation();
         var id = touch.getID();
         cc.log("onTouchBegan at: " + pos.x + " " + pos.y + " Id:" + id );
@@ -159,35 +160,36 @@ var TouchOneByOneTest = EventTest.extend({
             return true;
         }
         return false;
-    },
-    onTouchMoved:function(touch, event) {
+    }
+    onTouchMoved(touch, event) {
         var pos = touch.getLocation();
         var id = touch.getID();
         cc.log("onTouchMoved at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().update_id(id,pos);
-    },
-    onTouchEnded:function(touch, event) {
+    }
+    onTouchEnded(touch, event) {
         var pos = touch.getLocation();
         var id = touch.getID();
         cc.log("onTouchEnded at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().release_id(id,pos);
-    },
-    onTouchCancelled:function(touch, event) {
+    }
+    onTouchCancelled(touch, event) {
         var pos = touch.getLocation();
         var id = touch.getID();
         cc.log("onTouchCancelled at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().update_id(id,pos);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // All At Once Touches
 //
 //------------------------------------------------------------------
-var TouchAllAtOnce = EventTest.extend({
-    init:function () {
-        this._super();
+var TouchAllAtOnce = class TouchAllAtOnce extends EventTest {
+    init() {
+        super.init();
 
         this.ids = {};
         this.unused_sprites = [];
@@ -214,31 +216,31 @@ var TouchAllAtOnce = EventTest.extend({
             sprite.color = cc.color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
             this.unused_sprites.push(sprite);
         }
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Touches All At Once. Touch and see console";
-    },
+    }
 
-    new_id:function( id, pos) {
+    new_id( id, pos) {
         var s = this.unused_sprites.pop();
         this.ids[ id ] = s;
         s.x = pos.x;
         s.y = pos.y;
-    },
-    update_id:function(id, pos) {
+    }
+    update_id(id, pos) {
         var s = this.ids[ id ];
         s.x = pos.x;
         s.y = pos.y;
-    },
-    release_id:function(id, pos) {
+    }
+    release_id(id, pos) {
         var s = this.ids[ id ];
         this.ids[ id ] = null;
         this.unused_sprites.push( s );
         s.x = 0;
         s.y = 0;
-    },
+    }
 
-    onTouchesBegan:function(touches, event) {
+    onTouchesBegan(touches, event) {
         var target = event.getCurrentTarget();
         for (var i=0; i < touches.length;i++ ) {
             var touch = touches[i];
@@ -247,8 +249,8 @@ var TouchAllAtOnce = EventTest.extend({
             cc.log("Touch #" + i + ". onTouchesBegan at: " + pos.x + " " + pos.y + " Id:" + id);
             target.new_id(id,pos);
         }
-    },
-    onTouchesMoved:function(touches, event) {
+    }
+    onTouchesMoved(touches, event) {
         var target = event.getCurrentTarget();
         for (var i=0; i < touches.length;i++ ) {
             var touch = touches[i];
@@ -262,8 +264,8 @@ var TouchAllAtOnce = EventTest.extend({
             cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id + " current force:" + force + " maximum postible force:" + maxForce);
             target.update_id(id, pos);
         }
-    },
-    onTouchesEnded:function(touches, event) {
+    }
+    onTouchesEnded(touches, event) {
         var target = event.getCurrentTarget();
         for (var i=0; i < touches.length;i++ ) {
             var touch = touches[i];
@@ -272,8 +274,8 @@ var TouchAllAtOnce = EventTest.extend({
             cc.log("Touch #" + i + ". onTouchesEnded at: " + pos.x + " " + pos.y + " Id:" + id);
             target.release_id(id);
         }
-    },
-    onTouchesCancelled:function(touches, event) {
+    }
+    onTouchesCancelled(touches, event) {
         var target = event.getCurrentTarget();
         for (var i=0; i < touches.length;i++ ) {
             var touch = touches[i];
@@ -283,17 +285,22 @@ var TouchAllAtOnce = EventTest.extend({
             target.release_id(id);
         }
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Accelerometer test
 //
 //------------------------------------------------------------------
-var AccelerometerTest = EventTest.extend({
-    _logIndex:0,
-    init:function () {
-        this._super();
+var AccelerometerTest = class AccelerometerTest extends EventTest {
+    constructor() {
+        super();
+        this._logIndex = 0;
+    }
+
+    init() {
+        super.init();
 
         if( 'accelerometer' in cc.sys.capabilities ) {
             var self = this;
@@ -340,27 +347,28 @@ var AccelerometerTest = EventTest.extend({
         } else {
             cc.log("ACCELEROMETER not supported");
         }
-    },
+    }
 
-    onExit: function(){
-        this._super();
+    onExit(){
+        super.onExit();
         if( 'accelerometer' in cc.sys.capabilities )
             cc.inputManager.setAccelerometerEnabled(false);
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "Accelerometer test. Move device and see console";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Mouse test
 //
 //------------------------------------------------------------------
-var MouseTest = EventTest.extend({
-    init:function () {
-        this._super();
+var MouseTest = class MouseTest extends EventTest {
+    init() {
+        super.init();
         var sprite = this.sprite = new cc.Sprite(s_pathR2);
         this.addChild(sprite);
         sprite.x = 0;
@@ -396,20 +404,21 @@ var MouseTest = EventTest.extend({
         } else {
             cc.log("MOUSE Not supported");
         }
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Mouse test. Move mouse and see console";
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Keyboard test
 //
 //------------------------------------------------------------------
-var KeyboardTest = EventTest.extend({
-    init: function () {
-        this._super();
+var KeyboardTest = class KeyboardTest extends EventTest {
+    init() {
+        super.init();
         var self = this;
         var label = new cc.LabelTTF("show key Code");
         var size = cc.director.getWinSize();
@@ -440,8 +449,8 @@ var KeyboardTest = EventTest.extend({
         } else {
             cc.log("KEYBOARD Not supported");
         }
-    },
-    getKeyStr: function (keycode)
+    }
+    getKeyStr(keycode)
     {
         if (keycode == cc.KEY.none)
         {
@@ -456,21 +465,22 @@ var KeyboardTest = EventTest.extend({
             }
         }
         return "";
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Keyboard test. Press keyboard and see console";
-    },
+    }
 
     // this callback is only available on JSB + OS X
     // Not supported on cocos2d-html5
-    onKeyFlagsChanged:function(key) {
+    onKeyFlagsChanged(key) {
         cc.log("Key flags changed:" + key);
     }
-});
+
+};
 
 
-var EventTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var EventTestScene = class EventTestScene extends TestScene {
+    runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextEventsTest();
         // var menu = new EventTest();
@@ -479,7 +489,8 @@ var EventTestScene = TestScene.extend({
         this.addChild(layer);
         director.runScene(this);
     }
-});
+
+};
 
 //
 // Flow control

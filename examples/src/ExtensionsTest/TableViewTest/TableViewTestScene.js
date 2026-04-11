@@ -25,20 +25,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var CustomTableViewCell = cc.TableViewCell.extend({
-    draw:function (ctx) {
-        this._super(ctx);
+var CustomTableViewCell = class CustomTableViewCell extends cc.TableViewCell {
+    draw(ctx) {
+        super.draw(ctx);
     }
-});
 
-var TableViewTestLayer = cc.Layer.extend({
+};
 
-    ctor:function () {
-        this._super();
+var TableViewTestLayer = class TableViewTestLayer extends cc.Layer {
+
+    constructor() {
+        super();
         this.init();
-    },
+    }
 
-    init:function () {
+    init() {
         var winSize = cc.director.getWinSize();
 
         var tableView = new cc.TableView(this, cc.size(600, 60));
@@ -68,33 +69,33 @@ var TableViewTestLayer = cc.Layer.extend({
         this.addChild(menuBack);
 
         return true;
-    },
+    }
 
-    toExtensionsMainLayer:function (sender) {
+    toExtensionsMainLayer(sender) {
         var scene = new ExtensionsTestScene();
         scene.runThisTest();
-    },
+    }
 
-    scrollViewDidScroll:function (view) {
-    },
-    scrollViewDidZoom:function (view) {
-    },
+    scrollViewDidScroll(view) {
+    }
+    scrollViewDidZoom(view) {
+    }
 
-    tableCellTouched:function (table, cell) {
+    tableCellTouched(table, cell) {
         cc.log("cell touched at index: " + cell.getIdx());
-    },
-    tableCellTouched2:function () {
+    }
+    tableCellTouched2() {
         cc.log("cell touched at index: ");
-    },
+    }
 
-    tableCellSizeForIndex:function (table, idx) {
+    tableCellSizeForIndex(table, idx) {
         if (idx == 2) {
             return cc.size(100, 100);
         }
         return cc.size(60, 60);
-    },
+    }
 
-    tableCellAtIndex:function (table, idx) {
+    tableCellAtIndex(table, idx) {
         var strValue = idx.toFixed(0);
         var cell = table.dequeueCell();
         var label;
@@ -123,12 +124,13 @@ var TableViewTestLayer = cc.Layer.extend({
         }
 
         return cell;
-    },
+    }
 
-    numberOfCellsInTableView:function (table) {
+    numberOfCellsInTableView(table) {
         return 25;
     }
-});
+
+};
 
 var runTableViewTest = function () {
     var pScene = new cc.Scene();

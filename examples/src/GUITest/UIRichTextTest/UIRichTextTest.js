@@ -24,10 +24,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIRichTextTest = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextTest = class UIRichTextTest extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -78,8 +82,8 @@ var UIRichTextTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -89,15 +93,20 @@ var UIRichTextTest = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLBasic
 //
-var UIRichTextXMLBasic = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLBasic = class UIRichTextXMLBasic extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -127,8 +136,8 @@ var UIRichTextXMLBasic = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -138,15 +147,20 @@ var UIRichTextXMLBasic = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLSmallBig
 //
-var UIRichTextXMLSmallBig = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLSmallBig = class UIRichTextXMLSmallBig extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -176,8 +190,8 @@ var UIRichTextXMLSmallBig = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -187,15 +201,20 @@ var UIRichTextXMLSmallBig = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLColor
 //
-var UIRichTextXMLColor = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLColor = class UIRichTextXMLColor extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -225,8 +244,8 @@ var UIRichTextXMLColor = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -236,15 +255,20 @@ var UIRichTextXMLColor = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLSUIB
 //
-var UIRichTextXMLSUIB = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLSUIB = class UIRichTextXMLSUIB extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -274,8 +298,8 @@ var UIRichTextXMLSUIB = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -285,15 +309,20 @@ var UIRichTextXMLSUIB = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLSUIB2
 //
-var UIRichTextXMLSUIB2 = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLSUIB2 = class UIRichTextXMLSUIB2 extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -323,8 +352,8 @@ var UIRichTextXMLSUIB2 = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -334,15 +363,20 @@ var UIRichTextXMLSUIB2 = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLSUIB3
 //
-var UIRichTextXMLSUIB3 = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLSUIB3 = class UIRichTextXMLSUIB3 extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -372,8 +406,8 @@ var UIRichTextXMLSUIB3 = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -383,15 +417,20 @@ var UIRichTextXMLSUIB3 = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLImg
 //
-var UIRichTextXMLImg = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLImg = class UIRichTextXMLImg extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -421,8 +460,8 @@ var UIRichTextXMLImg = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -432,15 +471,20 @@ var UIRichTextXMLImg = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLUrl
 //
-var UIRichTextXMLUrl = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLUrl = class UIRichTextXMLUrl extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -470,8 +514,8 @@ var UIRichTextXMLUrl = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -481,15 +525,20 @@ var UIRichTextXMLUrl = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLFace
 //
-var UIRichTextXMLFace = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLFace = class UIRichTextXMLFace extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -519,8 +568,8 @@ var UIRichTextXMLFace = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -530,15 +579,20 @@ var UIRichTextXMLFace = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLBR
 //
-var UIRichTextXMLBR = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLBR = class UIRichTextXMLBR extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -568,8 +622,8 @@ var UIRichTextXMLBR = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -579,15 +633,20 @@ var UIRichTextXMLBR = UIMainLayer.extend({
             }
         }
     }
-});
+
+};
 
 //
 // UIRichTextXMLInvalid
 //
-var UIRichTextXMLInvalid = UIMainLayer.extend({
-    _richText:null,
-    init: function () {
-        if (this._super()) {
+var UIRichTextXMLInvalid = class UIRichTextXMLInvalid extends UIMainLayer {
+    constructor() {
+        super();
+        this._richText = null;
+    }
+
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
@@ -617,8 +676,8 @@ var UIRichTextXMLInvalid = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function (sender, type) {
+    }
+    touchEvent(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
@@ -628,4 +687,5 @@ var UIRichTextXMLInvalid = UIMainLayer.extend({
             }
         }
     }
-});
+
+};

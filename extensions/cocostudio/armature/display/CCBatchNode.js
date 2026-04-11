@@ -28,36 +28,37 @@
  * @class ccs.BatchNode
  * @extends cc.Node
  */
-ccs.BatchNode = cc.Node.extend(/** @lends ccs.BatchNode# */{
-    _atlas:null,
-    _className:"BatchNode",
+ccs.BatchNode = class extends cc.Node {
+    _atlas = null;
+    _className = "BatchNode";
 
-    ctor:function () {
+    constructor() {
+        super();
         this._atlas = null;
 
-        ccs.BatchNode.prototype.init.call(this);
-    },
+        this.init();
+    }
 
-    init:function () {
-        var ret = cc.Node.prototype.init.call(this);
+    init() {
+        var ret = super.init();
         this.setShaderProgram(cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURE_UCOLOR));
         return ret;
-    },
+    }
 
-    addChild:function (child, zOrder, tag) {
-        cc.Node.prototype.addChild.call(this, child, zOrder, tag);
+    addChild(child, zOrder, tag) {
+        super.addChild(child, zOrder, tag);
         if (child instanceof cc.Armature){
             child.setBatchNode(this);
         }
-    },
+    }
 
-    removeChild: function(child, cleanup){
+    removeChild(child, cleanup) {
         if (child instanceof cc.Armature)
             child.setBatchNode(null);
-        cc.Node.prototype.removeChild.call(this, child, cleanup);
-    },
+        super.removeChild(child, cleanup);
+    }
 
-    visit:function (renderer, parentTransform, parentTransformUpdated) {
+    visit(renderer, parentTransform, parentTransformUpdated) {
         // quick return if not visible. children won't be drawn.
         if (!this._visible)
             return;
@@ -82,9 +83,9 @@ ccs.BatchNode = cc.Node.extend(/** @lends ccs.BatchNode# */{
             this.grid.afterDraw(this);
 
         cc.kmGLPopMatrix();
-    },
+    }
 
-    draw:function (renderer, transform, transformUpdated) {
+    draw(renderer, transform, transformUpdated) {
         var locChildren = this._children;
         if(locChildren.length === 0)
             return;
@@ -102,4 +103,4 @@ ccs.BatchNode = cc.Node.extend(/** @lends ccs.BatchNode# */{
             this._atlas.removeAllQuads();
         }
     }
-});
+};

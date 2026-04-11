@@ -36,13 +36,13 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
      * @class
      * @extends cc.Class
      */
-    cc.DirectorDelegate = cc.Class.extend(/** @lends cc.DirectorDelegate# */{
+    cc.DirectorDelegate = class DirectorDelegate extends cc.NewClass {
         /**
          * Called by CCDirector when the projection is updated, and "custom" projection is used
          */
-        updateProjection: function () {
+        updateProjection() {
         }
-    });
+    };
 
     var _p = cc.Director.prototype;
 

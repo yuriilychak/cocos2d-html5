@@ -29,28 +29,37 @@ var LOW_PLAYER = 1;
 var STATUS_BAR_HEIGHT = 20.0;
 var SPRITE_TAG = 0;
 
-var TouchesTestScene = TestScene.extend({
-    ctor:function () {
-        this._super(true);
+var TouchesTestScene = class TouchesTestScene extends TestScene {
+    constructor() {
+        super(true);
         var pongLayer = new PongLayer();
         this.addChild(pongLayer);
-    },
-    runThisTest:function () {
-        cc.director.runScene(this);
-    },
-    MainMenuCallback:function (sender) {
-        this._super(sender);
     }
-});
+    runThisTest() {
+        cc.director.runScene(this);
+    }
+    MainMenuCallback(sender) {
+        super.MainMenuCallback(sender);
+    }
 
-var PongLayer = cc.Layer.extend({
-    _ball:null,
-    _paddles:[],
-    _ballStartingVelocity:null,
-    _winSize:null,
+};
 
-    ctor:function () {
-        this._super();
+var PongLayer = class PongLayer extends cc.Layer {
+
+    constructor() {
+        super();
+
+
+        this._ball = null;
+
+
+        this._paddles = [];
+
+
+        this._ballStartingVelocity = null;
+
+
+        this._winSize = null;
         this._ballStartingVelocity = cc.p(20.0, -100.0);
         this._winSize = cc.director.getWinSize();
 
@@ -92,8 +101,8 @@ var PongLayer = cc.Layer.extend({
         }
 
         this.schedule(this.doStep);
-    },
-    resetAndScoreBallForPlayer:function (player) {
+    }
+    resetAndScoreBallForPlayer(player) {
         if (Math.abs(this._ball.getVelocity().y) < 300) {
             this._ballStartingVelocity = cc.pMult(this._ballStartingVelocity, -1.1);
         } else {
@@ -104,8 +113,8 @@ var PongLayer = cc.Layer.extend({
         this._ball.y = this._winSize.height / 2;
 
         // TODO -- scoring
-    },
-    doStep:function (delta) {
+    }
+    doStep(delta) {
         this._ball.move(delta);
 
         for (var i = 0; i < this._paddles.length; i++) {
@@ -121,4 +130,5 @@ var PongLayer = cc.Layer.extend({
             this.resetAndScoreBallForPlayer(HIGH_PLAYER);
         this._ball.draw();
     }
-});
+
+};

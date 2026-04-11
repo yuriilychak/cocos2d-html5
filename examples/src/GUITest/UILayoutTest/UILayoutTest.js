@@ -24,13 +24,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UILayoutTestBase = UIMainLayer.extend({
-    layout: null,
-    button: null,
-    textButton: null,
-    button_scale9: null,
-    init: function () {
-        if (this._super()) {
+var UILayoutTestBase = class UILayoutTestBase extends UIMainLayer {
+    constructor() {
+        super();
+        this.layout = null;
+        this.button = null;
+        this.textButton = null;
+        this.button_scale9 = null;
+    }
+
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
@@ -79,89 +83,95 @@ var UILayoutTestBase = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    getText: function () {
+    }
+    getText() {
         return "";
-    },
-    createLayout: function () {
+    }
+    createLayout() {
         var layout = new ccui.Layout();
         layout.setContentSize(cc.size(280, 150));
         return layout;
-    },
-    setLayoutParameter: function () {
+    }
+    setLayoutParameter() {
 
     }
-});
-var UILayoutTest = UILayoutTestBase.extend({
-    createLayout: function () {
+
+};
+var UILayoutTest = class UILayoutTest extends UILayoutTestBase {
+    createLayout() {
         var layout = new ccui.Layout();
         layout.setContentSize(cc.size(280, 150));
         return layout;
-    },
-    getText: function () {
+    }
+    getText() {
         return "Layout";
     }
-});
-var UILayoutTest_Color = UILayoutTestBase.extend({
-    createLayout: function () {
+
+};
+var UILayoutTest_Color = class UILayoutTest_Color extends UILayoutTestBase {
+    createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color(128, 128, 128));
         layout.setContentSize(cc.size(280, 150));
         return layout;
-    },
-    getText: function () {
+    }
+    getText() {
         return "Layout color render";
     }
-});
-var UILayoutTest_Gradient = UILayoutTestBase.extend({
-    createLayout: function () {
+
+};
+var UILayoutTest_Gradient = class UILayoutTest_Gradient extends UILayoutTestBase {
+    createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
         layout.setBackGroundColor(cc.color(64, 64, 64), cc.color(192, 192, 192));
         layout.setContentSize(cc.size(280, 150));
         return layout;
-    },
-    getText: function () {
+    }
+    getText() {
         return "Layout gradient render";
     }
-});
-var UILayoutTest_BackGroundImage = UILayoutTestBase.extend({
-    createLayout: function () {
+
+};
+var UILayoutTest_BackGroundImage = class UILayoutTest_BackGroundImage extends UILayoutTestBase {
+    createLayout() {
         var layout = new ccui.Layout();
         layout.setClippingEnabled(true);
         layout.setBackGroundImage("ccs-res/cocosui/Hello.png");
         layout.setContentSize(cc.size(280, 150));
         return layout;
-    },
-    getText: function () {
+    }
+    getText() {
         return "Layout background image";
     }
-});
 
-var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
-    createLayout: function () {
+};
+
+var UILayoutTest_BackGroundImage_Scale9 = class UILayoutTest_BackGroundImage_Scale9 extends UILayoutTestBase {
+    createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundImageScale9Enabled(true);
         layout.setBackGroundImage("ccs-res/cocosui/green_edit.png");
         layout.setContentSize(cc.size(280, 150));
         return layout;
-    },
-    getText: function () {
+    }
+    getText() {
         return "Layout background image scale9";
     }
-});
-var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
-    createLayout: function () {
+
+};
+var UILayoutTest_Layout_Linear_Vertical = class UILayoutTest_Layout_Linear_Vertical extends UILayoutTestBase {
+    createLayout() {
         var layout = new ccui.Layout();
         layout.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
         layout.setContentSize(cc.size(280, 150));
         return layout;
-    },
-    getText: function () {
+    }
+    getText() {
         return "Layout Layout Linear Vertical";
-    },
-    setLayoutParameter: function () {
+    }
+    setLayoutParameter() {
         var lp1 = new ccui.LinearLayoutParameter();
         this.button.setLayoutParameter(lp1);
         lp1.setGravity(ccui.LinearLayoutParameter.CENTER_HORIZONTAL);
@@ -177,19 +187,20 @@ var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
         lp3.setGravity(ccui.LinearLayoutParameter.CENTER_HORIZONTAL);
         lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
     }
-});
-var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
-    createLayout: function () {
+
+};
+var UILayoutTest_Layout_Linear_Horizontal = class UILayoutTest_Layout_Linear_Horizontal extends UILayoutTestBase {
+    createLayout() {
         var layout = new ccui.Layout();
         layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
         layout.setClippingEnabled(true);
         layout.setContentSize(cc.size(280, 150));
         return layout;
-    },
-    getText: function () {
+    }
+    getText() {
         return "Layout Layout Linear Horizontal";
-    },
-    setLayoutParameter: function () {
+    }
+    setLayoutParameter() {
         var lp1 = new ccui.LinearLayoutParameter();
         this.button.setLayoutParameter(lp1);
         lp1.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
@@ -205,10 +216,11 @@ var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
         lp3.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
         lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
     }
-});
 
-var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
-    createLayout: function () {
+};
+
+var UILayoutTest_Layout_Relative = class UILayoutTest_Layout_Relative extends UILayoutTestBase {
+    createLayout() {
         var layout = new ccui.Layout();
         layout.ignoreContentAdaptWithSize(false);
         layout.setLayoutType(ccui.Layout.RELATIVE);
@@ -221,11 +233,11 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color.GREEN);
         return layout;
-    },
-    getText: function () {
+    }
+    getText() {
         return "Layout Layout Relative";
-    },
-    setLayoutParameter: function () {
+    }
+    setLayoutParameter() {
         var lp1 = new ccui.RelativeLayoutParameter();
         this.button.setLayoutParameter(lp1);
         lp1.setAlign(ccui.RelativeLayoutParameter.PARENT_TOP_LEFT);
@@ -238,11 +250,12 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
         this.button_scale9.setLayoutParameter(lp3);
         lp3.setAlign(ccui.RelativeLayoutParameter.PARENT_RIGHT_BOTTOM);
     }
-});
 
-var UILayoutTest_Layout_Relative_Align_Parent = UIMainLayer.extend({
-     init: function(){
-         if (this._super()) {
+};
+
+var UILayoutTest_Layout_Relative_Align_Parent = class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
+     init(){
+         if (super.init()) {
              var widgetSize = this._widget.getContentSize();
 
              // Add the alert
@@ -336,11 +349,12 @@ var UILayoutTest_Layout_Relative_Align_Parent = UIMainLayer.extend({
          }
          return false;
      }
-});
 
-var UILayoutTest_Layout_Relative_Location = UIMainLayer.extend({
-     init: function(){
-         if (this._super()) {
+};
+
+var UILayoutTest_Layout_Relative_Location = class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
+     init(){
+         if (super.init()) {
              var widgetSize = this._widget.getContentSize();
 
              // Add the alert
@@ -405,11 +419,12 @@ var UILayoutTest_Layout_Relative_Location = UIMainLayer.extend({
          }
          return false;
      }
-});
 
-var UILayoutTest_Layout_Scaled_Widget = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UILayoutTest_Layout_Scaled_Widget = class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             // Add the alert
@@ -447,12 +462,17 @@ var UILayoutTest_Layout_Scaled_Widget = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UILayoutComponentTest = UIMainLayer.extend({
-    _baseLayer: null,
-    init: function(){
-        if (this._super()) {
+};
+
+var UILayoutComponentTest = class UILayoutComponentTest extends UIMainLayer {
+    constructor() {
+        super();
+        this._baseLayer = null;
+    }
+
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             this._baseLayer = new cc.LayerColor();
@@ -472,8 +492,8 @@ var UILayoutComponentTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    touchEvent: function(sender, type){
+    }
+    touchEvent(sender, type){
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 break;
@@ -494,11 +514,12 @@ var UILayoutComponentTest = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UILayoutComponent_Berth_Test = UILayoutComponentTest.extend({
-     init: function(){
-         if (this._super()){
+};
+
+var UILayoutComponent_Berth_Test = class UILayoutComponent_Berth_Test extends UILayoutComponentTest {
+     init(){
+         if (super.init()){
              var leftTopSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var leftTop = ccui.LayoutComponent.bindLayoutComponent(leftTopSprite);
              leftTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
@@ -528,11 +549,12 @@ var UILayoutComponent_Berth_Test = UILayoutComponentTest.extend({
          }
          return false;
      }
-});
 
-var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
-    init: function(){
-        if (this._super()) {
+};
+
+var UILayoutComponent_Berth_Stretch_Test = class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest {
+    init(){
+        if (super.init()) {
             var leftTopSprite = new ccui.ImageView("ccs-res/cocosui/CloseSelected.png");
             leftTopSprite.ignoreContentAdaptWithSize(false);
             var leftTop = ccui.LayoutComponent.bindLayoutComponent(leftTopSprite);
@@ -586,4 +608,5 @@ var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
         }
         return false;
     }
-});
+
+};

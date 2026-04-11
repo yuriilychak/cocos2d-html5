@@ -26,13 +26,13 @@
 
     var loadedPlist = {};
 
-    var Parser = baseParser.extend({
+    var Parser = class Parser extends baseParser {
 
-        getNodeJson: function (json) {
+        getNodeJson(json) {
             return json["nodeTree"];
-        },
+        }
 
-        addSpriteFrame: function (plists, pngs, resourcePath) {
+        addSpriteFrame(plists, pngs, resourcePath) {
             if (!plists || !pngs || plists.length !== pngs.length)
                 return;
             for (var i = 0; i < plists.length; i++) {
@@ -46,13 +46,14 @@
                     resourcePath + pngs[i]
                 );
             }
-        },
+        }
 
-        pretreatment: function (json, resourcePath, file) {
+        pretreatment(json, resourcePath, file) {
             this.addSpriteFrame(json["textures"], json["texturesPng"], resourcePath);
         }
 
-    });
+    
+    }
     var parser = new Parser();
 
     parser.generalAttributes = function (node, options) {

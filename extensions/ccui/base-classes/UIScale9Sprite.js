@@ -342,40 +342,7 @@ var scale9QuadGenerator = {
  * @property {Number}   insetBottom     - The bottom inset of the 9-slice sprite
  */
 
-ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprite# */{
-    //resource data, could be async loaded.
-    _spriteFrame: null,
-    _scale9Image: null,
-
-    //scale 9 data
-    _insetLeft: 0,
-    _insetRight: 0,
-    _insetTop: 0,
-    _insetBottom: 0,
-    //blend function
-    _blendFunc: null,
-    //sliced or simple
-    _renderingType: 1,
-    //bright or not
-    _brightState: 0,
-    _opacityModifyRGB: false,
-    //rendering quads shared by canvas and webgl
-    _rawVerts: null,
-    _rawUvs: null,
-    _vertices: null,
-    _uvs: null,
-    _vertCount: 0,
-    _quadsDirty: true,
-    _uvsDirty: true,
-    _isTriangle: false,
-    _isTrimmedContentSize: false,
-    _textureLoaded: false,
-
-    //v3.3
-    _flippedX: false,
-    _flippedY: false,
-    _className: "Scale9Sprite",
-
+cc.Scale9Sprite = class Scale9Sprite extends cc.Node {
     /**
      * Constructor function.
      * @function
@@ -384,8 +351,41 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
      * @param {cc.Rect} capInsets
      * @returns {Scale9Sprite}
      */
-    ctor: function (file, rectOrCapInsets, capInsets) {
-        cc.Node.prototype.ctor.call(this);
+    constructor(file, rectOrCapInsets, capInsets) {
+        super();
+
+        //resource data, could be async loaded.
+        this._spriteFrame = null;
+        this._scale9Image = null;
+
+        //scale 9 data
+        this._insetLeft = 0;
+        this._insetRight = 0;
+        this._insetTop = 0;
+        this._insetBottom = 0;
+        //blend function
+        this._blendFunc = null;
+        //sliced or simple
+        this._renderingType = 1;
+        //bright or not
+        this._brightState = 0;
+        this._opacityModifyRGB = false;
+        //rendering quads shared by canvas and webgl
+        this._rawVerts = null;
+        this._rawUvs = null;
+        this._vertices = null;
+        this._uvs = null;
+        this._vertCount = 0;
+        this._quadsDirty = true;
+        this._uvsDirty = true;
+        this._isTriangle = false;
+        this._isTrimmedContentSize = false;
+        this._textureLoaded = false;
+
+        //v3.3
+        this._flippedX = false;
+        this._flippedY = false;
+        this._className = "Scale9Sprite";
 
         //for async texture load
         this._loader = new cc.Sprite.LoadManager();
@@ -415,23 +415,23 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
         if (webgl === undefined) {
             webgl = cc._renderType === cc.game.RENDER_TYPE_WEBGL;
         }
-    },
+    }
 
-    textureLoaded: function () {
+    textureLoaded() {
         return this._textureLoaded;
-    },
+    }
 
-    getCapInsets: function () {
+    getCapInsets() {
         return cc.rect(this._capInsetsInternal);
-    },
+    }
 
-    _asyncSetCapInsets: function () {
+    _asyncSetCapInsets() {
         this.removeEventListener('load', this._asyncSetCapInsets, this);
         this.setCapInsets(this._cacheCapInsets);
         this._cacheCapInsets = null;
-    },
+    }
 
-    setCapInsets: function (capInsets) {
+    setCapInsets(capInsets) {
         // Asynchronous loading texture requires this data
         // This data does not take effect immediately, so it does not affect the existing texture.
         if (!this.loaded()) {
@@ -443,9 +443,9 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
 
         this._capInsetsInternal = capInsets;
         this._updateCapInsets(this._spriteFrame._rect, this._capInsetsInternal);
-    },
+    }
 
-    _updateCapInsets: function (rect, capInsets) {
+    _updateCapInsets(rect, capInsets) {
         if(!capInsets || !rect || cc._rectEqualToZero(capInsets)) {
             rect = rect || {x:0, y:0, width: this._contentSize.width, height: this._contentSize.height};
             this._capInsetsInternal = cc.rect(rect.width /3,
@@ -462,10 +462,10 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
             this._insetRight = rect.width - this._insetLeft - this._capInsetsInternal.width;
             this._insetBottom = rect.height - this._insetTop - this._capInsetsInternal.height;
         }
-    },
+    }
 
 
-    initWithFile: function (file, rect, capInsets) {
+    initWithFile(file, rect, capInsets) {
         if (file instanceof cc.Rect) {
             file = arguments[1];
             capInsets = arguments[0];
@@ -503,9 +503,9 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
         this._updateCapInsets(rect, capInsets);
 
         return true;
-    },
+    }
 
-    updateWithBatchNode: function (batchNode, originalRect, rotated, capInsets) {
+    updateWithBatchNode(batchNode, originalRect, rotated, capInsets) {
         if (!batchNode) {
             return false;
         }
@@ -524,22 +524,22 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
         this._updateCapInsets(originalRect, capInsets);
 
         return true;
-    },
+    }
 
 
     /**
      * Initializes a 9-slice sprite with an sprite frame
      * @param spriteFrameOrSFName The sprite frame object.
      */
-    initWithSpriteFrame: function (spriteFrame, capInsets) {
+    initWithSpriteFrame(spriteFrame, capInsets) {
         this.setSpriteFrame(spriteFrame);
 
         capInsets = capInsets || cc.rect(0, 0, 0, 0);
 
         this._updateCapInsets(spriteFrame._rect, capInsets);
-    },
+    }
 
-    initWithSpriteFrameName: function (spriteFrameName, capInsets) {
+    initWithSpriteFrameName(spriteFrameName, capInsets) {
         if(!spriteFrameName)
             throw new Error("ccui.Scale9Sprite.initWithSpriteFrameName(): spriteFrameName should be non-null");
         capInsets = capInsets || cc.rect(0, 0, 0, 0);
@@ -554,27 +554,27 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
         capInsets = capInsets || cc.rect(0, 0, 0, 0);
 
         this._updateCapInsets(frame._rect, capInsets);
-    },
+    }
 
-    loaded: function () {
+    loaded() {
         if (this._spriteFrame === null) {
             return false;
         } else {
             return this._spriteFrame.textureLoaded();
         }
-    },
+    }
 
     /**
      * Change the texture file of 9 slice sprite
      *
      * @param textureOrTextureFile The name of the texture file.
      */
-    setTexture: function (texture, rect) {
+    setTexture(texture, rect) {
         var spriteFrame = new cc.SpriteFrame(texture, rect);
         this.setSpriteFrame(spriteFrame);
-    },
+    }
 
-    _updateBlendFunc: function () {
+    _updateBlendFunc() {
         // it's possible to have an untextured sprite
         var blendFunc = this._blendFunc;
         if (!this._spriteFrame || !this._spriteFrame._texture.hasPremultipliedAlpha()) {
@@ -588,25 +588,25 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
             }
             this._opacityModifyRGB = true;
         }
-    },
+    }
 
-    setOpacityModifyRGB: function (value) {
+    setOpacityModifyRGB(value) {
         if (this._opacityModifyRGB !== value) {
             this._opacityModifyRGB = value;
             this._renderCmd._setColorDirty();
         }
-    },
+    }
 
-    isOpacityModifyRGB: function () {
+    isOpacityModifyRGB() {
         return this._opacityModifyRGB;
-    },
+    }
 
     /**
      * Change the sprite frame of 9 slice sprite
      *
      * @param spriteFrameOrSFFileName The name of the texture file.
      */
-    setSpriteFrame: function (spriteFrame) {
+    setSpriteFrame(spriteFrame) {
         if (spriteFrame) {
             this._spriteFrame = spriteFrame;
             this._quadsDirty = true;
@@ -631,14 +631,14 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
                 }, this);
             }
         }
-    },
+    }
 
     /**
      * Sets the source blending function.
      *
      * @param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
      */
-    setBlendFunc: function (blendFunc, dst) {
+    setBlendFunc(blendFunc, dst) {
         if (dst === undefined) {
             this._blendFunc.src = blendFunc.src || cc.BLEND_SRC;
             this._blendFunc.dst = blendFunc.dst || cc.BLEND_DST;
@@ -648,28 +648,28 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
             this._blendFunc.dst = dst || cc.BLEND_DST;
         }
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-    },
+    }
 
     /**
      * Returns the blending function that is currently being used.
      *
      * @return A BlendFunc structure with source and destination factor which specified pixel arithmetic.
      */
-    getBlendFunc: function () {
+    getBlendFunc() {
         return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
-    },
+    }
 
-    setPreferredSize: function (preferredSize) {
+    setPreferredSize(preferredSize) {
         if (!preferredSize || cc.sizeEqualToSize(this._contentSize, preferredSize)) return;
         this.setContentSize(preferredSize);
-    },
+    }
 
-    getPreferredSize: function () {
+    getPreferredSize() {
         return this.getContentSize();
-    },
+    }
 
     // overrides
-    setContentSize: function (width, height) {
+    setContentSize(width, height) {
         if (height === undefined) {
             height = width.height;
             width = width.width;
@@ -678,11 +678,11 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
             return;
         }
 
-        cc.Node.prototype.setContentSize.call(this, width, height);
+        super.setContentSize(width, height);
         this._quadsDirty = true;
-    },
+    }
 
-    getContentSize: function () {
+    getContentSize() {
         if(this._renderingType === ccui.Scale9Sprite.RenderingType.SIMPLE) {
             if(this._spriteFrame) {
                 return this._spriteFrame._originalSize;
@@ -691,130 +691,130 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
         } else {
             return cc.size(this._contentSize);
         }
-    },
+    }
 
-    _setWidth: function (value) {
-        cc.Node.prototype._setWidth.call(this, value);
+    _setWidth(value) {
+        super._setWidth(value);
         this._quadsDirty = true;
-    },
+    }
 
-    _setHeight: function (value) {
-        cc.Node.prototype._setHeight.call(this, value);
+    _setHeight(value) {
+        super._setHeight(value);
         this._quadsDirty = true;
-    },
+    }
 
     /**
      * Change the state of 9-slice sprite.
      * @see `State`
      * @param state A enum value in State.
      */
-    setState: function (state) {
+    setState(state) {
         this._brightState = state;
         this._renderCmd.setState(state);
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-    },
+    }
 
     /**
      * Query the current bright state.
      * @return @see `State`
      */
-    getState: function () {
+    getState() {
         return this._brightState;
-    },
+    }
 
     /**
      * change the rendering type, could be simple or slice
      * @return @see `RenderingType`
      */
-    setRenderingType: function (type) {
+    setRenderingType(type) {
         if (this._renderingType === type) return;
 
         this._renderingType = type;
         this._quadsDirty = true;
         this._uvsDirty = true;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-    },
+    }
     /**
      * get the rendering type, could be simple or slice
      * @return @see `RenderingType`
      */
-    getRenderingType: function () {
+    getRenderingType() {
         return this._renderingType;
-    },
+    }
     /**
      * change the left border of 9 slice sprite, it should be specified before trimmed.
      * @param insetLeft left border.
      */
-    setInsetLeft: function (insetLeft) {
+    setInsetLeft(insetLeft) {
         this._insetLeft = insetLeft;
         this._quadsDirty = true;
         this._uvsDirty = true;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-    },
+    }
     /**
      * get the left border of 9 slice sprite, the result is specified before trimmed.
      * @return left border.
      */
-    getInsetLeft: function () {
+    getInsetLeft() {
         return this._insetLeft;
-    },
+    }
     /**
      * change the top border of 9 slice sprite, it should be specified before trimmed.
      * @param insetTop top border.
      */
-    setInsetTop: function (insetTop) {
+    setInsetTop(insetTop) {
         this._insetTop = insetTop;
         this._quadsDirty = true;
         this._uvsDirty = true;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-    },
+    }
 
     /**
      * get the top border of 9 slice sprite, the result is specified before trimmed.
      * @return top border.
      */
-    getInsetTop: function () {
+    getInsetTop() {
         return this._insetTop;
-    },
+    }
 
     /**
      * change the right border of 9 slice sprite, it should be specified before trimmed.
      * @param insetRight right border.
      */
-    setInsetRight: function (insetRight) {
+    setInsetRight(insetRight) {
         this._insetRight = insetRight;
         this._quadsDirty = true;
         this._uvsDirty = true;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-    },
+    }
 
     /**
      * get the right border of 9 slice sprite, the result is specified before trimmed.
      * @return right border.
      */
-    getInsetRight: function () {
+    getInsetRight() {
         return this._insetRight;
-    },
+    }
 
     /**
      * change the bottom border of 9 slice sprite, it should be specified before trimmed.
      * @param insetBottom bottom border.
      */
-    setInsetBottom: function (insetBottom) {
+    setInsetBottom(insetBottom) {
         this._insetBottom = insetBottom;
         this._quadsDirty = true;
         this._uvsDirty = true;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-    },
+    }
     /**
      * get the bottom border of 9 slice sprite, the result is specified before trimmed.
      * @return bottom border.
      */
-    getInsetBottom: function () {
+    getInsetBottom() {
         return this._insetBottom;
-    },
+    }
 
-    _rebuildQuads: function () {
+    _rebuildQuads() {
         if (!this._spriteFrame || !this._spriteFrame._textureLoaded) {
             return;
         }
@@ -839,15 +839,16 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
 
         this._quadsDirty = false;
         this._uvsDirty = false;
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new ccui.Scale9Sprite.CanvasRenderCmd(this);
         else
             return new ccui.Scale9Sprite.WebGLRenderCmd(this);
     }
-});
+};
+ccui.Scale9Sprite = cc.Scale9Sprite;
 
 var _p = ccui.Scale9Sprite.prototype;
 cc.EventHelper.prototype.apply(_p);

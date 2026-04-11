@@ -25,10 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlPotentiometerTest = ControlScene.extend({
-    _displayValueLabel:null,
-    init:function () {
-        if (this._super()) {
+var ControlPotentiometerTest = class ControlPotentiometerTest extends ControlScene {
+    constructor() {
+        super();
+        this._displayValueLabel = null;
+    }
+
+    init() {
+        if (super.init()) {
             var screenSize = cc.director.getWinSize();
 
             var layer = new cc.Node();
@@ -80,12 +84,13 @@ var ControlPotentiometerTest = ControlScene.extend({
             return true;
         }
         return false;
-    },
-    valueChanged:function (sender, controlEvent) {
+    }
+    valueChanged(sender, controlEvent) {
         // Change value of label.
         this._displayValueLabel.setString(sender.getValue().toFixed(2));
     }
-});
+
+};
 ControlPotentiometerTest.create = function (sceneTitle) {
     var scene = new cc.Scene();
     var controlLayer = new ControlPotentiometerTest();

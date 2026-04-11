@@ -28,18 +28,27 @@ window.io;
 
 var SocketIO = SocketIO || window.io;
 
-var SocketIOTestLayer = cc.Layer.extend({
+var SocketIOTestLayer = class SocketIOTestLayer extends cc.Layer {
 
-    _sioClient: null,
-    _sioEndpoint: null,
-    _sioClientStatus: null,
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+
+        this._sioClient = null;
+
+
+
+        this._sioEndpoint = null;
+
+
+
+        this._sioClientStatus = null;
         this.init();
-    },
+    }
 
-    init: function () {
+    init() {
 
         var winSize = cc.director.getWinSize();
         
@@ -123,9 +132,9 @@ var SocketIOTestLayer = cc.Layer.extend({
         this.addChild(menuBack);
 
         return true;
-    },
+    }
 
-    onExit: function() {
+    onExit() {
         if(this._sioEndpoint) {
             this._sioEndpoint.disconnect();
             this._sioEndpoint = null;
@@ -135,29 +144,29 @@ var SocketIOTestLayer = cc.Layer.extend({
             this._sioClient = null;
         }
 
-        this._super();
-    },
+        super.onExit();
+    }
 
     //socket callback for testing
-    testevent: function(data) {
+    testevent(data) {
         var msg = this.tag + " says 'testevent' with data: " + data;
         this.statusLabel.setString(msg);
         cc.log(msg);
-    },
+    }
 
-    message: function(data) {
+    message(data) {
         var msg = this.tag + " received message: " + data;
         this.statusLabel.setString(msg);
         cc.log(msg);
-    },
+    }
 
-    disconnection: function() {
+    disconnection() {
         var msg = this.tag + " disconnected!";
         this.statusLabel.setString(msg);
         cc.log(msg);
-    },
+    }
     // Menu Callbacks
-    onMenuSIOClientClicked: function(sender) {
+    onMenuSIOClientClicked(sender) {
 
         //create a client by using this static method, url does not need to contain the protocol
         var sioclient = SocketIO.connect("ws://tools.itharbors.com:4000", {"force new connection" : true});
@@ -195,9 +204,9 @@ var SocketIOTestLayer = cc.Layer.extend({
 
         this._sioClient = sioclient;
 
-    },
+    }
 
-    onMenuSIOEndpointClicked: function(sender) {
+    onMenuSIOEndpointClicked(sender) {
 
         //repeat the same connection steps for the namespace "testpoint"
         var sioendpoint = SocketIO.connect("ws://tools.itharbors.com:4000/testpoint", {"force new connection" : true});
@@ -231,55 +240,56 @@ var SocketIOTestLayer = cc.Layer.extend({
 
         this._sioEndpoint = sioendpoint;
 
-    },
+    }
 
-    onMenuTestMessageClicked: function(sender) {
+    onMenuTestMessageClicked(sender) {
 
         //check that the socket is != NULL before sending or emitting events
         //the client should be NULL either before initialization and connection or after disconnect
         if(this._sioClient != null) this._sioClient.send("Hello Socket.IO!");
 
-    },
+    }
 
-    onMenuTestMessageEndpointClicked: function(sender) {
+    onMenuTestMessageEndpointClicked(sender) {
 
         if(this._sioEndpoint != null) this._sioEndpoint.send("Hello Socket.IO!");
 
-    },
+    }
 
-    onMenuTestEventClicked: function(sender) {
+    onMenuTestEventClicked(sender) {
 
         if(this._sioClient != null) this._sioClient.emit("echotest","[{\"name\":\"myname\",\"type\":\"mytype\"}]");
 
-    },
+    }
 
-    onMenuTestEventEndpointClicked: function(sender) {
+    onMenuTestEventEndpointClicked(sender) {
 
         if(this._sioEndpoint != null) this._sioEndpoint.emit("echotest","[{\"name\":\"myname\",\"type\":\"mytype\"}]");
 
-    },
+    }
 
-    onMenuTestClientDisconnectClicked: function(sender) {
+    onMenuTestClientDisconnectClicked(sender) {
 
         if(this._sioClient != null) {
             this._sioClient.disconnect();
             this._sioClient = null;
         }
-    },
+    }
 
-    onMenuTestEndpointDisconnectClicked: function(sender) {
+    onMenuTestEndpointDisconnectClicked(sender) {
 
         if(this._sioEndpoint != null) {
             this._sioEndpoint.disconnect();
             this._sioEndpoint = null;
         }
-    },
+    }
 
-    toExtensionsMainLayer: function (sender) {
+    toExtensionsMainLayer(sender) {
         var scene = new ExtensionsTestScene();
         scene.runThisTest();
     }
-});
+
+};
 
 var runSocketIOTest = function () {
     var pScene = new cc.Scene();

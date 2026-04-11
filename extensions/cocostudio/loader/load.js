@@ -120,41 +120,43 @@ ccs._load = (function () {
 
 })();
 
-ccs._parser = cc.Class.extend({
+ccs._parser = class extends cc.NewClass {
 
-    ctor: function () {
+    _dirnameReg = /\S*\//;
+
+    constructor() {
+        super();
         this.parsers = {};
-    },
+    }
 
-    _dirnameReg: /\S*\//,
-    _dirname: function (path) {
+    _dirname(path) {
         var arr = path.match(this._dirnameReg);
         return (arr && arr[0]) ? arr[0] : "";
-    },
+    }
 
-    getClass: function (json) {
+    getClass(json) {
         return json["classname"];
-    },
+    }
 
-    getNodeJson: function (json) {
+    getNodeJson(json) {
         return json["widgetTree"];
-    },
+    }
 
-    parse: function (file, json, resourcePath) {
+    parse(file, json, resourcePath) {
         resourcePath = resourcePath || this._dirname(file);
         this.pretreatment(json, resourcePath);
         var node = this.parseNode(this.getNodeJson(json), resourcePath, file);
         node && this.deferred(json, resourcePath, node, file);
         return node;
-    },
+    }
 
-    pretreatment: function (json, resourcePath, file) {
-    },
+    pretreatment(json, resourcePath, file) {
+    }
 
-    deferred: function (json, resourcePath, node, file) {
-    },
+    deferred(json, resourcePath, node, file) {
+    }
 
-    parseNode: function (json, resourcePath) {
+    parseNode(json, resourcePath) {
         var parser = this.parsers[this.getClass(json)];
         var widget = null;
         if (parser)
@@ -163,12 +165,12 @@ ccs._parser = cc.Class.extend({
             cc.log("Can't find the parser : %s", this.getClass(json));
 
         return widget;
-    },
+    }
 
-    registerParser: function (widget, parse) {
+    registerParser(widget, parse) {
         this.parsers[widget] = parse;
     }
-});
+};
 
 /**
  * Analysis of studio JSON file

@@ -24,15 +24,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UILoadingBarTest = UIMainLayer.extend({
-    _count: 0,
-    _loadingBar:null,
-    ctor: function () {
-        this._super();
+var UILoadingBarTest = class UILoadingBarTest extends UIMainLayer {
+    constructor() {
+        super();
+
         this._count = 0;
-    },
-    init: function () {
-        if (this._super()) {
+
+        this._loadingBar = null;
+        this._count = 0;
+    }
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
@@ -44,37 +46,38 @@ var UILoadingBarTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
-    createLoadingBar: function () {
+    }
+    createLoadingBar() {
         // override me
-    },
-    update: function (dt) {
+    }
+    update(dt) {
         this._count++;
         if (this._count > 100) {
             this._count = 0;
         }
 
         this._loadingBar && this._loadingBar.setPercent(this._count);
-    },
-
-    previousCallback: function (sender, type) {
-        this.unscheduleUpdate();
-        this._super(sender, type)
-    },
-
-    restartCallback: function (sender, type) {
-        this.unscheduleUpdate();
-        this._super(sender, type)
-    },
-
-    nextCallback: function (sender, type) {
-        this.unscheduleUpdate();
-        this._super(sender, type)
     }
-});
 
-var UILoadingBarTest_Left = UILoadingBarTest.extend({
-    createLoadingBar: function () {
+    previousCallback(sender, type) {
+        this.unscheduleUpdate();
+        super.previousCallback(sender, type)
+    }
+
+    restartCallback(sender, type) {
+        this.unscheduleUpdate();
+        super.restartCallback(sender, type)
+    }
+
+    nextCallback(sender, type) {
+        this.unscheduleUpdate();
+        super.nextCallback(sender, type)
+    }
+
+};
+
+var UILoadingBarTest_Left = class UILoadingBarTest_Left extends UILoadingBarTest {
+    createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
@@ -85,10 +88,11 @@ var UILoadingBarTest_Left = UILoadingBarTest.extend({
         this._mainNode.addChild(loadingBar);
         this._loadingBar = loadingBar;
     }
-});
 
-var UILoadingBarTest_Right = UILoadingBarTest.extend({
-    createLoadingBar: function () {
+};
+
+var UILoadingBarTest_Right = class UILoadingBarTest_Right extends UILoadingBarTest {
+    createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
@@ -100,10 +104,11 @@ var UILoadingBarTest_Right = UILoadingBarTest.extend({
         this._mainNode.addChild(loadingBar);
         this._loadingBar = loadingBar;
     }
-});
 
-var UILoadingBarTest_Fix = UILoadingBarTest.extend({
-    createLoadingBar: function () {
+};
+
+var UILoadingBarTest_Fix = class UILoadingBarTest_Fix extends UILoadingBarTest {
+    createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
@@ -115,10 +120,11 @@ var UILoadingBarTest_Fix = UILoadingBarTest.extend({
         this._mainNode.addChild(loadingBar);
         this._loadingBar = null;
     }
-});
 
-var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
-    createLoadingBar: function () {
+};
+
+var UILoadingBarTest_Left_Scale9 = class UILoadingBarTest_Left_Scale9 extends UILoadingBarTest {
+    createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
@@ -132,10 +138,11 @@ var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
         this._mainNode.addChild(loadingBar);
         this._loadingBar = loadingBar;
     }
-});
 
-var UILoadingBarTest_Right_Scale9 = UILoadingBarTest.extend({
-    createLoadingBar: function () {
+};
+
+var UILoadingBarTest_Right_Scale9 = class UILoadingBarTest_Right_Scale9 extends UILoadingBarTest {
+    createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
@@ -150,10 +157,11 @@ var UILoadingBarTest_Right_Scale9 = UILoadingBarTest.extend({
         this._mainNode.addChild(loadingBar);
         this._loadingBar = loadingBar;
     }
-});
 
-var UILoadingBarTest_Fix_Scale9 = UILoadingBarTest.extend({
-    createLoadingBar: function () {
+};
+
+var UILoadingBarTest_Fix_Scale9 = class UILoadingBarTest_Fix_Scale9 extends UILoadingBarTest {
+    createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
@@ -168,4 +176,5 @@ var UILoadingBarTest_Fix_Scale9 = UILoadingBarTest.extend({
         this._mainNode.addChild(loadingBar);
         this._loadingBar = null;
     }
-});
+
+};

@@ -25,43 +25,44 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var XHRArrayBufferTestScene = TestScene.extend({
-    ctor:function () {
-        this._super(true);
+var XHRArrayBufferTestScene = class XHRArrayBufferTestScene extends TestScene {
+    constructor() {
+        super(true);
         var xhrLayer = new XHRArrayBufferTestLayer();
         this.addChild(xhrLayer);
-    },
-    runThisTest:function () {
-        cc.director.runScene(this);
-    },
-    MainMenuCallback:function (sender) {
-        this._super(sender);
     }
-});
+    runThisTest() {
+        cc.director.runScene(this);
+    }
+    MainMenuCallback(sender) {
+        super.MainMenuCallback(sender);
+    }
 
-var XHRArrayBufferTestLayer = cc.Layer.extend({
-    ctor:function () {
-        this._super();
-    },
+};
 
-    onEnter: function() {
-        this._super();
+var XHRArrayBufferTestLayer = class XHRArrayBufferTestLayer extends cc.Layer {
+    constructor() {
+        super();
+    }
+
+    onEnter() {
+        super.onEnter();
         var l = new cc.LabelTTF("Get infos via XHR", "Thonburi", 16);
         this.addChild(l, 1);
         l.x = winSize.width / 2;
         l.y = winSize.height - 60;
 
         this.sendPostArrayBuffer();
-    },
+    }
 
     //some utils functions
-    ensureLeftAligned: function(label) {
+    ensureLeftAligned(label) {
         label.anchorX = 0;
         label.anchorY = 1;
         label.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-    },
+    }
 
-    streamXHREventsToLabel: function( xhr, label, textbox, method, title ) {
+    streamXHREventsToLabel( xhr, label, textbox, method, title ) {
         // Simple events
         ['loadstart', 'abort', 'error', 'load', 'loadend', 'timeout'].forEach(function (eventname) {
             xhr["on" + eventname] = function () {
@@ -80,9 +81,9 @@ var XHRArrayBufferTestLayer = cc.Layer.extend({
                 label.string += "\nStatus: Got " + method + " response! " + httpStatus;
             }
         };
-    },
+    }
                                               
-    sendPostArrayBuffer: function() {
+    sendPostArrayBuffer() {
         var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
@@ -106,13 +107,14 @@ var XHRArrayBufferTestLayer = cc.Layer.extend({
         xhr.setRequestHeader("Content-Type","text/plain");
         // Uint8Array is an ArrayBufferView
         xhr.send(new Uint8Array([1,2,3,4,5]));
-    },
-
-    scrollViewDidScroll:function (view) {
-    },
-    scrollViewDidZoom:function (view) {
     }
-});
+
+    scrollViewDidScroll(view) {
+    }
+    scrollViewDidZoom(view) {
+    }
+
+};
 
 var runXHRArrayBufferTest = function () {
     var pScene = new cc.Scene();

@@ -28,52 +28,50 @@
 /**
  * @ignore
  */
-cc._EventListenerVector = cc.Class.extend({
-    _fixedListeners: null,
-    _sceneGraphListeners: null,
-    gt0Index: 0,
-
-    ctor: function () {
+cc._EventListenerVector = class _EventListenerVector extends cc.NewClass {
+    constructor() {
+        super();
         this._fixedListeners = [];
         this._sceneGraphListeners = [];
-    },
+        this.gt0Index = 0;
+    }
 
-    size: function () {
+    size() {
         return this._fixedListeners.length + this._sceneGraphListeners.length;
-    },
+    }
 
-    empty: function () {
+    empty() {
         return (this._fixedListeners.length === 0) && (this._sceneGraphListeners.length === 0);
-    },
+    }
 
-    push: function (listener) {
+    push(listener) {
         if (listener._getFixedPriority() === 0)
             this._sceneGraphListeners.push(listener);
         else
             this._fixedListeners.push(listener);
-    },
+    }
 
-    clearSceneGraphListeners: function () {
+    clearSceneGraphListeners() {
         this._sceneGraphListeners.length = 0;
-    },
+    }
 
-    clearFixedListeners: function () {
+    clearFixedListeners() {
         this._fixedListeners.length = 0;
-    },
+    }
 
-    clear: function () {
+    clear() {
         this._sceneGraphListeners.length = 0;
         this._fixedListeners.length = 0;
-    },
+    }
 
-    getFixedPriorityListeners: function () {
+    getFixedPriorityListeners() {
         return this._fixedListeners;
-    },
+    }
 
-    getSceneGraphPriorityListeners: function () {
+    getSceneGraphPriorityListeners() {
         return this._sceneGraphListeners;
     }
-});
+};
 
 function __getListenerID (event) {
     var eventType = cc.Event, getType = event._type;

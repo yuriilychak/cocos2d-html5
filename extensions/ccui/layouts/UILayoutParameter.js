@@ -26,18 +26,14 @@
 /**
  * Base class for ccui.Margin
  * @class
- * @extends ccui.Class
+ * @extends cc.NewClass
  *
  * @property {Number}           left       - Left of margin
  * @property {Number}           top        - Top of margin
  * @property {Number}           right      - right of margin
  * @property {Number}           bottom     - bottom of margin
  */
-ccui.Margin = ccui.Class.extend(/** @lends ccui.Margin# */{
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
+ccui.Margin = class Margin extends cc.NewClass {
     /**
      * Constructor of ccui.Margin.
      * @param {Number|ccui.Margin} margin a margin or left
@@ -45,7 +41,12 @@ ccui.Margin = ccui.Class.extend(/** @lends ccui.Margin# */{
      * @param {Number} [right]
      * @param {Number} [bottom]
      */
-    ctor: function (margin, top, right, bottom) {
+    constructor(margin, top, right, bottom) {
+        super();
+        this.left = 0;
+        this.top = 0;
+        this.right = 0;
+        this.bottom = 0;
         if (margin !== undefined && top === undefined) {
             this.left = margin.left;
             this.top = margin.top;
@@ -58,7 +59,8 @@ ccui.Margin = ccui.Class.extend(/** @lends ccui.Margin# */{
             this.right = right;
             this.bottom = bottom;
         }
-    },
+    }
+
     /**
      * Sets boundary of margin
      * @param {Number} l left
@@ -66,21 +68,22 @@ ccui.Margin = ccui.Class.extend(/** @lends ccui.Margin# */{
      * @param {Number} r right
      * @param {Number} b bottom
      */
-    setMargin: function (l, t, r, b) {
+    setMargin(l, t, r, b) {
         this.left = l;
         this.top = t;
         this.right = r;
         this.bottom = b;
-    },
+    }
+
     /**
      * Checks target whether equals itself.
      * @param {ccui.Margin} target
      * @returns {boolean}
      */
-    equals: function (target) {
+    equals(target) {
         return (this.left === target.left && this.top === target.top && this.right === target.right && this.bottom === target.bottom);
     }
-});
+};
 
 /**
  * Gets a zero margin object
@@ -94,26 +97,24 @@ ccui.MarginZero = function(){
 /**
  * Layout parameter contains a margin and layout parameter type. It uses for ccui.LayoutManager.
  * @class
- * @extends ccui.Class
+ * @extends cc.NewClass
  */
-ccui.LayoutParameter = ccui.Class.extend(/** @lends ccui.LayoutParameter# */{
-    _margin: null,
-    _layoutParameterType: null,
-
+ccui.LayoutParameter = class LayoutParameter extends cc.NewClass {
     /**
      * The constructor of ccui.LayoutParameter.
      * @function
      */
-    ctor: function () {
+    constructor() {
+        super();
         this._margin = new ccui.Margin();
         this._layoutParameterType = ccui.LayoutParameter.NONE;
-    },
+    }
 
     /**
      * Sets Margin to LayoutParameter.
      * @param {ccui.Margin} margin
      */
-    setMargin: function (margin) {
+    setMargin(margin) {
         if(cc.isObject(margin)){
             this._margin.left = margin.left;
             this._margin.top = margin.top;
@@ -125,53 +126,53 @@ ccui.LayoutParameter = ccui.Class.extend(/** @lends ccui.LayoutParameter# */{
             this._margin.right = arguments[2];
             this._margin.bottom = arguments[3];
         }
-    },
+    }
 
     /**
      * Gets Margin of LayoutParameter.
      * @returns {ccui.Margin}
      */
-    getMargin: function () {
+    getMargin() {
         return this._margin;
-    },
+    }
 
     /**
      * Gets LayoutParameterType of LayoutParameter.
      * @returns {Number}
      */
-    getLayoutType: function () {
+    getLayoutType() {
         return this._layoutParameterType;
-    },
+    }
 
     /**
      * Clones a ccui.LayoutParameter object from itself.
      * @returns {ccui.LayoutParameter}
      */
-    clone:function(){
+    clone() {
         var parameter = this._createCloneInstance();
         parameter._copyProperties(this);
         return parameter;
-    },
+    }
 
     /**
      * create clone instance.
      * @returns {ccui.LayoutParameter}
      */
-    _createCloneInstance:function(){
+    _createCloneInstance() {
         return new ccui.LayoutParameter();
-    },
+    }
 
     /**
      * copy properties from model.
      * @param {ccui.LayoutParameter} model
      */
-    _copyProperties:function(model){
+    _copyProperties(model) {
         this._margin.bottom = model._margin.bottom;
         this._margin.left = model._margin.left;
         this._margin.right = model._margin.right;
         this._margin.top = model._margin.top;
     }
-});
+};
 
 // Constants
 //layout parameter type
@@ -199,44 +200,43 @@ ccui.LayoutParameter.RELATIVE = 2;
  * @class
  * @extends ccui.LayoutParameter
  */
-ccui.LinearLayoutParameter = ccui.LayoutParameter.extend(/** @lends ccui.LinearLayoutParameter# */{
-    _linearGravity: null,
+ccui.LinearLayoutParameter = class LinearLayoutParameter extends ccui.LayoutParameter {
     /**
      * The constructor of ccui.LinearLayoutParameter.
      * @function
      */
-    ctor: function () {
-        ccui.LayoutParameter.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._linearGravity = ccui.LinearLayoutParameter.NONE;
         this._layoutParameterType = ccui.LayoutParameter.LINEAR;
-    },
+    }
 
     /**
      * Sets LinearGravity to LayoutParameter.
      * @param {Number} gravity
      */
-    setGravity: function (gravity) {
+    setGravity(gravity) {
         this._linearGravity = gravity;
-    },
+    }
 
     /**
      * Gets LinearGravity of LayoutParameter.
      * @returns {Number}
      */
-    getGravity: function () {
+    getGravity() {
         return this._linearGravity;
-    },
+    }
 
-    _createCloneInstance: function () {
+    _createCloneInstance() {
         return new ccui.LinearLayoutParameter();
-    },
+    }
 
-    _copyProperties: function (model) {
-        ccui.LayoutParameter.prototype._copyProperties.call(this, model);
+    _copyProperties(model) {
+        super._copyProperties(model);
         if (model instanceof ccui.LinearLayoutParameter)
             this.setGravity(model._linearGravity);
     }
-});
+};
 
 // Constants
 //Linear layout parameter LinearGravity
@@ -289,85 +289,81 @@ ccui.LinearLayoutParameter.CENTER_HORIZONTAL = 6;
  * @class
  * @extends ccui.LayoutParameter
  */
-ccui.RelativeLayoutParameter = ccui.LayoutParameter.extend(/** @lends ccui.RelativeLayoutParameter# */{
-    _relativeAlign: null,
-    _relativeWidgetName: "",
-    _relativeLayoutName: "",
-    _put:false,
+ccui.RelativeLayoutParameter = class RelativeLayoutParameter extends ccui.LayoutParameter {
     /**
      * The constructor of ccui.RelativeLayoutParameter
      * @function
      */
-    ctor: function () {
-        ccui.LayoutParameter.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._relativeAlign = ccui.RelativeLayoutParameter.NONE;
         this._relativeWidgetName = "";
         this._relativeLayoutName = "";
         this._put = false;
         this._layoutParameterType = ccui.LayoutParameter.RELATIVE;
-    },
+    }
 
     /**
      * Sets RelativeAlign parameter for LayoutParameter.
      * @param {Number} align
      */
-    setAlign: function (align) {
+    setAlign(align) {
         this._relativeAlign = align;
-    },
+    }
 
     /**
      * Gets RelativeAlign parameter for LayoutParameter.
      * @returns {Number}
      */
-    getAlign: function () {
+    getAlign() {
         return this._relativeAlign;
-    },
+    }
 
     /**
      * Sets a key for LayoutParameter. Witch widget named this is relative to.
      * @param {String} name
      */
-    setRelativeToWidgetName: function (name) {
+    setRelativeToWidgetName(name) {
         this._relativeWidgetName = name;
-    },
+    }
 
     /**
      * Gets the key of LayoutParameter. Witch widget named this is relative to.
      * @returns {string}
      */
-    getRelativeToWidgetName: function () {
+    getRelativeToWidgetName() {
         return this._relativeWidgetName;
-    },
+    }
 
     /**
      * Sets a name in Relative Layout for LayoutParameter.
      * @param {String} name
      */
-    setRelativeName: function (name) {
+    setRelativeName(name) {
         this._relativeLayoutName = name;
-    },
+    }
 
     /**
      * Gets a name in Relative Layout of LayoutParameter.
      * @returns {string}
      */
-    getRelativeName: function () {
+    getRelativeName() {
         return this._relativeLayoutName;
-    },
+    }
 
-    _createCloneInstance:function(){
+    _createCloneInstance() {
         return new ccui.RelativeLayoutParameter();
-    },
+    }
 
-    _copyProperties:function(model){
-        ccui.LayoutParameter.prototype._copyProperties.call(this, model);
+    _copyProperties(model) {
+        super._copyProperties(model);
         if (model instanceof ccui.RelativeLayoutParameter) {
             this.setAlign(model._relativeAlign);
             this.setRelativeToWidgetName(model._relativeWidgetName);
             this.setRelativeName(model._relativeLayoutName);
         }
     }
-});
+};
 
 // Constants
 //Relative layout parameter RelativeAlign

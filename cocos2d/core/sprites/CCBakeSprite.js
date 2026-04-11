@@ -27,12 +27,11 @@
  * @class
  * @extend cc.Sprite
  */
-cc.BakeSprite = cc.Sprite.extend(/** @lends cc.BakeSprite# */{
-    _cacheCanvas: null,
-    _cacheContext: null,
-
-    ctor: function(){
-        cc.Sprite.prototype.ctor.call(this);
+cc.BakeSprite = class BakeSprite extends cc.Sprite {
+    constructor(){
+        super();
+        this._cacheCanvas = null;
+        this._cacheContext = null;
         var canvasElement = document.createElement("canvas");
         canvasElement.width = canvasElement.height = 10;
         this._cacheCanvas = canvasElement;
@@ -42,22 +41,22 @@ cc.BakeSprite = cc.Sprite.extend(/** @lends cc.BakeSprite# */{
         texture.initWithElement(canvasElement);
         texture.handleLoadedTexture();
         this.setTexture(texture);
-    },
+    }
 
-    getCacheContext: function(){
+    getCacheContext(){
         return this._cacheContext;
-    },
+    }
 
-    getCacheCanvas: function(){
+    getCacheCanvas(){
         return this._cacheCanvas;
-    },
+    }
 
     /**
      * reset the cache canvas size
      * @param {cc.Size|Number} sizeOrWidth  size or width
      * @param {Number} [height]
      */
-    resetCanvasSize: function(sizeOrWidth, height){
+    resetCanvasSize(sizeOrWidth, height){
         var locCanvas = this._cacheCanvas,
             locContext = this._cacheContext,
             strokeStyle = locContext._context.strokeStyle,
@@ -75,4 +74,4 @@ cc.BakeSprite = cc.Sprite.extend(/** @lends cc.BakeSprite# */{
         this.getTexture().handleLoadedTexture();
         this.setTextureRect(cc.rect(0,0, sizeOrWidth, height), false, null, false);
     }
-});
+};

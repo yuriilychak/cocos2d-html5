@@ -28,20 +28,24 @@
 
 var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket; 
 
-var WebSocketTestLayer = cc.Layer.extend({
+var WebSocketTestLayer = class WebSocketTestLayer extends cc.Layer {
+    constructor() {
+        super();
+        this._wsiSendText = null;
+        this._wsiSendBinary = null;
+        this._wsiError = null;
+        this._sendTextStatus = null;
+        this._sendBinaryStatus = null;
+        this._errorStatus = null;
+        this._sendTextTimes = 0;
+        this._sendBinaryTimes = 0;
+    }
 
-    _wsiSendText: null,
-    _wsiSendBinary: null,
-    _wsiError: null,
-    
-    _sendTextStatus: null,
-    _sendBinaryStatus: null,
-    _errorStatus: null,
-    
-    _sendTextTimes: 0,
-    _sendBinaryTimes: 0,
 
-    init: function () {
+    
+    
+
+    init() {
 
         var winSize = cc.director.getWinSize();
         
@@ -196,9 +200,9 @@ var WebSocketTestLayer = cc.Layer.extend({
        };
 
         return true;
-    },
+    }
 
-    onExit: function() {
+    onExit() {
         if (this._wsiSendText)
             this._wsiSendText.close();
 
@@ -207,11 +211,11 @@ var WebSocketTestLayer = cc.Layer.extend({
 
         if (this._wsiError)
             this._wsiError.close();
-        this._super();
-    },
+        super.onExit();
+    }
 
     // Menu Callbacks
-    onMenuSendTextClicked: function(sender) {
+    onMenuSendTextClicked(sender) {
 
         if (this._wsiSendText.readyState == WebSocket.OPEN)
         {
@@ -224,9 +228,9 @@ var WebSocketTestLayer = cc.Layer.extend({
             cc.log(warningStr);
             this._sendTextStatus.setString(warningStr);
         }
-    },
+    }
 
-    _stringConvertToArray:function (strData) {
+    _stringConvertToArray(strData) {
         if (!strData)
             return null;
 
@@ -235,9 +239,9 @@ var WebSocketTestLayer = cc.Layer.extend({
             arrData[i] = strData.charCodeAt(i);
         }
         return arrData;
-    },
+    }
 
-    onMenuSendBinaryClicked: function(sender)
+    onMenuSendBinaryClicked(sender)
     {
 
         if (this._wsiSendBinary.readyState == WebSocket.OPEN)
@@ -254,13 +258,14 @@ var WebSocketTestLayer = cc.Layer.extend({
             cc.log(warningStr);
             this._sendBinaryStatus.setString(warningStr);
         }
-    },
+    }
 
-    toExtensionsMainLayer: function (sender) {
+    toExtensionsMainLayer(sender) {
         var scene = new ExtensionsTestScene();
         scene.runThisTest();
     }
-});
+
+};
 
 WebSocketTestLayer.create = function () {
     var retObj = new WebSocketTestLayer();

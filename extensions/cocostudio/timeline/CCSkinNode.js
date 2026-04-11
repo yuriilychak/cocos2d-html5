@@ -4,7 +4,7 @@ ccs.SkinNode = (function () {
 
     var proto = {};
 
-    var SkinNode = Node.extend(proto);
+    var SkinNode = class SkinNode extends cc.Node {};
 
     return SkinNode;
 

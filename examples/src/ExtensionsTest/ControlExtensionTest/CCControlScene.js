@@ -25,14 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlScene = cc.Layer.extend({
-    _sceneTitleLabel:null,
+var ControlScene = class ControlScene extends cc.Layer {
+    constructor() {
+        super();
+        this._sceneTitleLabel = null;
+    }
 
-    getSceneTitleLabel:function(){return this._sceneTitleLabel;},
-    setSceneTitleLabel:function(sceneTitleLabel){this._sceneTitleLabel = sceneTitleLabel;},
 
-    init:function(){
-        if (this._super()) {
+    getSceneTitleLabel(){return this._sceneTitleLabel;}
+    setSceneTitleLabel(sceneTitleLabel){this._sceneTitleLabel = sceneTitleLabel;}
+
+    init(){
+        if (super.init()) {
             // Get the sceensize
             var screensize = cc.director.getWinSize();
 
@@ -87,23 +91,24 @@ var ControlScene = cc.Layer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    toExtensionsMainLayer:function(sender){
+    toExtensionsMainLayer(sender){
         var pScene = new ExtensionsTestScene();
         pScene.runThisTest();
-    },
+    }
 
-    previousCallback:function(sender){
+    previousCallback(sender){
         cc.director.runScene(ControlSceneManager.getInstance().previousControlScene());
-    },
-    restartCallback:function(sender){
+    }
+    restartCallback(sender){
         cc.director.runScene(ControlSceneManager.getInstance().currentControlScene());
-    },
-    nextCallback:function(sender){
+    }
+    nextCallback(sender){
         cc.director.runScene(ControlSceneManager.getInstance().nextControlScene());
     }
-});
+
+};
 
 ControlScene.create = function(title){
    var scene = new cc.Scene();

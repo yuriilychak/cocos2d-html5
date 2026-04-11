@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIImageViewTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UIImageViewTest = class UIImageViewTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("ImageView");
@@ -42,11 +42,12 @@ var UIImageViewTest = UIMainLayer.extend({
         }
         return false;
     }
-});
 
-var UIImageViewTest_Scale9 = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UIImageViewTest_Scale9 = class UIImageViewTest_Scale9 extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
@@ -65,12 +66,13 @@ var UIImageViewTest_Scale9 = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};
 
 //2015-01-14
-var UIImageViewTest_ContentSize = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+var UIImageViewTest_ContentSize = class UIImageViewTest_ContentSize extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("");
@@ -125,12 +127,13 @@ var UIImageViewTest_ContentSize = UIMainLayer.extend({
             return true;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UIImageViewFlipTest = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+var UIImageViewFlipTest = class UIImageViewFlipTest extends UIMainLayer {
+    init(){
+        if (super.init()) {
             cc.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
             var widgetSize = this._widget.getContentSize();
 
@@ -169,4 +172,5 @@ var UIImageViewFlipTest = UIMainLayer.extend({
             return true;
         }
     }
-});
+
+};

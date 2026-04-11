@@ -25,10 +25,10 @@
  ****************************************************************************/
 
 
-var UIWebViewTest = UIMainLayer.extend({
+var UIWebViewTest = class UIWebViewTest extends UIMainLayer {
 
-    onEnter: function(){
-        UIMainLayer.prototype.onEnter.call(this);
+    onEnter(){
+        super.onEnter();
 
         var webView = new ccui.WebView("http://www.baidu.com");
         webView.setContentSize(320, 240);
@@ -105,4 +105,5 @@ var UIWebViewTest = UIMainLayer.extend({
 
     }
 
-});
+
+};

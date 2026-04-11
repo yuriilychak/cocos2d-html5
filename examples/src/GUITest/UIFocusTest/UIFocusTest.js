@@ -23,14 +23,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIFocusTestBase = UIMainLayer.extend({
-    _dpadMenu: null,
-    _firstFocusedWidget: null,
-    _eventListener:null,
-    _btn:null,
+var UIFocusTestBase = class UIFocusTestBase extends UIMainLayer {
+    constructor() {
+        super();
+        this._dpadMenu = null;
+        this._firstFocusedWidget = null;
+        this._eventListener = null;
+        this._btn = null;
+    }
 
-    init: function(){
-        if (this._super()) {
+
+    init(){
+        if (super.init()) {
             var root = this._mainNode.getChildByTag(81);
             var background = root.getChildByName("background_Panel");
             background.removeFromParent(true);
@@ -77,25 +81,25 @@ var UIFocusTestBase = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    onLeftKeyPressed: function(){
+    onLeftKeyPressed(){
         var event = new cc.EventKeyboard(cc.KEY.dpadLeft, false);
         cc.eventManager.dispatchEvent(event);
-    },
-    onRightKeyPressed: function(){
+    }
+    onRightKeyPressed(){
         var event = new cc.EventKeyboard(cc.KEY.dpadRight, false);
         cc.eventManager.dispatchEvent(event);
-    },
-    onUpKeyPressed: function(){
+    }
+    onUpKeyPressed(){
         var event = new cc.EventKeyboard(cc.KEY.dpadUp, false);
         cc.eventManager.dispatchEvent(event);
-    },
-    onDownKeyPressed: function(){
+    }
+    onDownKeyPressed(){
         var event = new cc.EventKeyboard(cc.KEY.dpadDown, false);
         cc.eventManager.dispatchEvent(event);
-    },
-    onFocusChanged: function(widgetLostFocus, widgetGetFocus){
+    }
+    onFocusChanged(widgetLostFocus, widgetGetFocus){
         if (widgetGetFocus && widgetGetFocus.isFocusEnabled())
             widgetGetFocus.setColor(cc.color.RED);
 
@@ -104,9 +108,9 @@ var UIFocusTestBase = UIMainLayer.extend({
 
         if (widgetLostFocus && widgetGetFocus)
             cc.log("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus.getTag(),  widgetLostFocus.getTag());
-    },
+    }
 
-    onImageViewClicked: function(widget, touchType){
+    onImageViewClicked(widget, touchType){
         if (touchType == ccui.Widget.TOUCH_ENDED) {
             if (widget.isFocusEnabled()) {
                 widget.setFocusEnabled(false);
@@ -116,19 +120,24 @@ var UIFocusTestBase = UIMainLayer.extend({
                 widget.setColor(cc.color.WHITE);
             }
         }
-    },
-    onExit:function () {
-        cc.eventManager.removeListener(this._eventListener);
-        this._super();
     }
-});
+    onExit() {
+        cc.eventManager.removeListener(this._eventListener);
+        super.onExit();
+    }
 
-var UIFocusTestHorizontal = UIFocusTestBase.extend({
-    _horizontalLayout: null,
-    _loopText: null,
+};
 
-    init: function(){
-        if (this._super()) {
+var UIFocusTestHorizontal = class UIFocusTestHorizontal extends UIFocusTestBase {
+    constructor() {
+        super();
+        this._horizontalLayout = null;
+        this._loopText = null;
+    }
+
+
+    init(){
+        if (super.init()) {
             var winSize = cc.director.getVisibleSize();
 
             this._horizontalLayout = new ccui.HBox();
@@ -158,9 +167,9 @@ var UIFocusTestHorizontal = UIFocusTestBase.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    toggleFocusLoop: function( ref, touchType){
+    toggleFocusLoop( ref, touchType){
         if (touchType == ccui.Widget.TOUCH_ENDED) {
             this._horizontalLayout.setLoopFocus(!this._horizontalLayout.isLoopFocus());
             if (this._horizontalLayout.isLoopFocus()) {
@@ -170,14 +179,19 @@ var UIFocusTestHorizontal = UIFocusTestBase.extend({
             }
         }
     }
-});
 
-var UIFocusTestVertical = UIFocusTestBase.extend({
-    _verticalLayout: null,
-    _loopText: null,
+};
 
-    init: function(){
-        if (this._super()) {
+var UIFocusTestVertical = class UIFocusTestVertical extends UIFocusTestBase {
+    constructor() {
+        super();
+        this._verticalLayout = null;
+        this._loopText = null;
+    }
+
+
+    init(){
+        if (super.init()) {
             var winSize = cc.director.getVisibleSize();
 
             this._verticalLayout = new ccui.VBox();
@@ -208,9 +222,9 @@ var UIFocusTestVertical = UIFocusTestBase.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    toggleFocusLoop: function(ref, touchType){
+    toggleFocusLoop(ref, touchType){
         if (touchType == ccui.Widget.TOUCH_ENDED) {
             this._verticalLayout.setLoopFocus(!this._verticalLayout.isLoopFocus());
             if (this._verticalLayout.isLoopFocus()) {
@@ -220,14 +234,19 @@ var UIFocusTestVertical = UIFocusTestBase.extend({
             }
         }
     }
-});
 
-var UIFocusTestNestedLayout1 = UIFocusTestBase.extend({
-    _verticalLayout: null,
-    _loopText: null,
+};
 
-    init: function(){
-        if (this._super()) {
+var UIFocusTestNestedLayout1 = class UIFocusTestNestedLayout1 extends UIFocusTestBase {
+    constructor() {
+        super();
+        this._verticalLayout = null;
+        this._loopText = null;
+    }
+
+
+    init(){
+        if (super.init()) {
             var winSize = cc.director.getVisibleSize();
 
             this._verticalLayout = new ccui.VBox();
@@ -289,9 +308,9 @@ var UIFocusTestNestedLayout1 = UIFocusTestBase.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    toggleFocusLoop: function(ref, touchType){
+    toggleFocusLoop(ref, touchType){
         if (touchType == ccui.Widget.TOUCH_ENDED) {
             this._verticalLayout.setLoopFocus(!this._verticalLayout.isLoopFocus());
             if (this._verticalLayout.isLoopFocus()) {
@@ -301,14 +320,19 @@ var UIFocusTestNestedLayout1 = UIFocusTestBase.extend({
             }
         }
     }
-});
 
-var UIFocusTestNestedLayout2 = UIFocusTestBase.extend({
-    _horizontalLayout: null,
-    _loopText: null,
+};
 
-    init: function(){
-        if (this._super()) {
+var UIFocusTestNestedLayout2 = class UIFocusTestNestedLayout2 extends UIFocusTestBase {
+    constructor() {
+        super();
+        this._horizontalLayout = null;
+        this._loopText = null;
+    }
+
+
+    init(){
+        if (super.init()) {
             var winSize = cc.director.getVisibleSize();
 
             this._horizontalLayout = new ccui.HBox();
@@ -371,9 +395,9 @@ var UIFocusTestNestedLayout2 = UIFocusTestBase.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    toggleFocusLoop: function (ref, touchType) {
+    toggleFocusLoop(ref, touchType) {
         if (touchType == ccui.Widget.TOUCH_ENDED) {
             this._horizontalLayout.setLoopFocus(!this._horizontalLayout.isLoopFocus());
             if (this._horizontalLayout.isLoopFocus()) {
@@ -383,14 +407,19 @@ var UIFocusTestNestedLayout2 = UIFocusTestBase.extend({
             }
         }
     }
-});
 
-var UIFocusTestNestedLayout3 = UIFocusTestBase.extend({
-    _horizontalLayout: null,
-    _loopText: null,
+};
 
-    init: function(){
-        if (this._super()) {
+var UIFocusTestNestedLayout3 = class UIFocusTestNestedLayout3 extends UIFocusTestBase {
+    constructor() {
+        super();
+        this._horizontalLayout = null;
+        this._loopText = null;
+    }
+
+
+    init(){
+        if (super.init()) {
             var winSize = cc.director.getVisibleSize();
 
             this._verticalLayout = new ccui.VBox();
@@ -458,9 +487,9 @@ var UIFocusTestNestedLayout3 = UIFocusTestBase.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    toggleFocusLoop: function(ref, touchType){
+    toggleFocusLoop(ref, touchType){
         if (touchType == ccui.Widget.TOUCH_ENDED) {
             this._verticalLayout.setLoopFocus(!this._verticalLayout.isLoopFocus());
             if (this._verticalLayout.isLoopFocus()) {
@@ -470,14 +499,19 @@ var UIFocusTestNestedLayout3 = UIFocusTestBase.extend({
             }
         }
     }
-});
 
-var UIFocusTestListView = UIFocusTestBase.extend({
-    _listView: null,
-    _loopText: null,
+};
 
-    init: function(){
-        if (this._super()) {
+var UIFocusTestListView = class UIFocusTestListView extends UIFocusTestBase {
+    constructor() {
+        super();
+        this._listView = null;
+        this._loopText = null;
+    }
+
+
+    init(){
+        if (super.init()) {
             var winSize = cc.director.getVisibleSize();
 
             this._listView = new ccui.ListView();
@@ -521,9 +555,9 @@ var UIFocusTestListView = UIFocusTestBase.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    toggleFocusLoop: function(ref, touchType){
+    toggleFocusLoop(ref, touchType){
         if (touchType == ccui.Widget.TOUCH_ENDED) {
             this._listView.setLoopFocus(!this._listView.isLoopFocus());
             if (this._listView.isLoopFocus()) {
@@ -533,4 +567,5 @@ var UIFocusTestListView = UIFocusTestBase.extend({
             }
         }
     }
-});
+
+};

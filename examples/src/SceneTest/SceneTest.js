@@ -32,10 +32,10 @@ var MID_runScene = 103;
 var MID_runSceneTRAN = 104;
 var MID_GOBACK = 105;
 
-var SceneTestLayer1 = cc.Layer.extend({
-    ctor:function () {
+var SceneTestLayer1 = class SceneTestLayer1 extends cc.Layer {
+    constructor() {
         //----start0----Scene1-ctor
-        this._super();
+        super();
         this.init();
 
         var s = director.getWinSize();
@@ -73,52 +73,56 @@ var SceneTestLayer1 = cc.Layer.extend({
         //----end0----
 
         //cc.schedule(this.testDealloc);
-    },
+    }
 
 
-    onEnter:function () {
+    onEnter() {
         cc.log("SceneTestLayer1#onEnter");
-        this._super();
-    },
+        super.onEnter();
+    }
 
-    onEnterTransitionDidFinish:function () {
+    onEnterTransitionDidFinish() {
         cc.log("SceneTestLayer1#onEnterTransitionDidFinish");
-        this._super();
-    },
+        super.onEnterTransitionDidFinish();
+    }
 
-    testDealloc:function (dt) {
+    testDealloc(dt) {
         //cc.log("SceneTestLayer1:testDealloc");
-    },
+    }
 
-    onPushScene:function (sender) {
+    onPushScene(sender) {
         var scene = new SceneTestScene();
         var layer = new SceneTestLayer2();
         scene.addChild(layer, 0);
         director.pushScene(scene);
-    },
+    }
 
-    onPushSceneTran:function (sender) {
+    onPushSceneTran(sender) {
         var scene = new SceneTestScene();
         var layer = new SceneTestLayer2();
         scene.addChild(layer, 0);
 
         director.pushScene(new cc.TransitionSlideInT(1, scene));
-    },
-    onExit:function (sender) {
+    }
+    onExit(sender) {
         cc.director.setNotificationNode(null);
-        this._super();
+        super.onExit();
     }
 
     //CREATE_NODE(SceneTestLayer1);
-});
 
-var SceneTestLayer2 = cc.Layer.extend({
+};
 
-    timeCounter:0,
+var SceneTestLayer2 = class SceneTestLayer2 extends cc.Layer {
 
-    ctor:function () {
+
+    constructor() {
         //----start0----Scene2-ctor
-        this._super();
+        super();
+
+
+
+        this.timeCounter = 0;
         this.init();
 
         this.timeCounter = 0;
@@ -144,25 +148,25 @@ var SceneTestLayer2 = cc.Layer.extend({
         //----end0----
 
         //cc.schedule(this.testDealloc);
-    },
+    }
 
-    testDealloc:function (dt) {
+    testDealloc(dt) {
 
-    },
+    }
 
-    onGoBack:function (sender) {
+    onGoBack(sender) {
         director.popScene();
-    },
+    }
 
-    runScene:function (sender) {
+    runScene(sender) {
         var scene = new SceneTestScene();
         var layer = new SceneTestLayer3();
         scene.addChild(layer, 0);
         director.runScene(scene);
 
-    },
+    }
 
-    runSceneTran:function (sender) {
+    runSceneTran(sender) {
         var scene = new SceneTestScene();
         var layer = new SceneTestLayer3();
         scene.addChild(layer, 0);
@@ -170,14 +174,15 @@ var SceneTestLayer2 = cc.Layer.extend({
     }
 
     //CREATE_NODE(SceneTestLayer2);
-});
 
-var SceneTestLayer3 = cc.LayerColor.extend({
+};
+
+var SceneTestLayer3 = class SceneTestLayer3 extends cc.LayerColor {
     
-    ctor:function () {
+    constructor() {
 
         //----start0----Scene3-ctor
-        this._super();
+        super();
         this.init( cc.color(0,128,255,255) );
 
         var label = new cc.LabelTTF("Touch to popScene", "Arial", 28);
@@ -196,9 +201,9 @@ var SceneTestLayer3 = cc.LayerColor.extend({
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
-    },
+    }
     
-    onEnterTransitionDidFinish: function () {
+    onEnterTransitionDidFinish() {
         if ('touches' in cc.sys.capabilities){
             cc.eventManager.addListener({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -213,25 +218,27 @@ var SceneTestLayer3 = cc.LayerColor.extend({
                     director.popScene();
                 }
             }, this);
-    },
+    }
 
-    testDealloc:function (dt) {
+    testDealloc(dt) {
 
     }
 
     //CREATE_NODE(SceneTestLayer3);
-});
 
-SceneTestScene = TestScene.extend({
+};
 
-    runThisTest:function () {
+SceneTestScene = class SceneTestScene extends TestScene {
+
+    runThisTest() {
         var layer = new SceneTestLayer1();
         this.addChild(layer);
 
         director.runScene(this);
 
     }
-});
+
+};
 
 var arrayOfSceneTest = [
     SceneTestLayer1

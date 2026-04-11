@@ -40,40 +40,41 @@ var textInputGetRect = function (node) {
 /**
  @brief    TextInputTest for retain prev, reset, next, main menu buttons.
  */
-var TextInputTest = cc.Layer.extend({
-    notificationLayer:null,
-    ctor:function() {
-        this._super();
-        this.init();
-    },
+var TextInputTest = class TextInputTest extends cc.Layer {
+    constructor() {
+        super();
 
-    restartCallback:function (sender) {
+        this.notificationLayer = null;
+        this.init();
+    }
+
+    restartCallback(sender) {
         var scene = new TextInputTestScene();
         scene.addChild(restartTextInputTest());
         cc.director.runScene(scene);
-    },
-    nextCallback:function (sender) {
+    }
+    nextCallback(sender) {
         var scene = new TextInputTestScene();
         scene.addChild(nextTextInputTest());
         cc.director.runScene(scene);
-    },
-    backCallback:function (sender) {
+    }
+    backCallback(sender) {
         var scene = new TextInputTestScene();
         scene.addChild(previousTextInputTest());
         cc.director.runScene(scene);
-    },
+    }
 
-    title:function () {
+    title() {
         return "text input test";
-    },
+    }
 
-    addKeyboardNotificationLayer:function (layer) {
+    addKeyboardNotificationLayer(layer) {
         this.notificationLayer = layer;
         this.addChild(layer);
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         var winSize = cc.director.getWinSize();
 
@@ -106,17 +107,22 @@ var TextInputTest = cc.Layer.extend({
 
         this.addChild(menu, 1);
     }
-});
+
+};
 
 //////////////////////////////////////////////////////////////////////////
 // KeyboardNotificationLayer for test IME keyboard notification.
 //////////////////////////////////////////////////////////////////////////
-var KeyboardNotificationLayer = TextInputTest.extend({
-    _trackNode:null,
-    _beginPos:null,
+var KeyboardNotificationLayer = class KeyboardNotificationLayer extends TextInputTest {
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._trackNode = null;
+
+
+        this._beginPos = null;
 
         if( 'touches' in cc.sys.capabilities ){
             cc.eventManager.addListener({
@@ -128,16 +134,16 @@ var KeyboardNotificationLayer = TextInputTest.extend({
                 event: cc.EventListener.MOUSE,
                 onMouseUp: this.onMouseUp
             }, this);
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    onClickTrackNode:function (clicked) {
-    },
+    onClickTrackNode(clicked) {
+    }
 
-    keyboardWillShow:function (info) {
+    keyboardWillShow(info) {
         cc.log("TextInputTest:keyboardWillShowAt(origin:" + info.end.x + "," + info.end.y
             + ", size:" + info.end.width + "," + info.end.height + ")");
 
@@ -162,9 +168,9 @@ var KeyboardNotificationLayer = TextInputTest.extend({
             var node = children[i];
             node.y += adjustVert;
         }
-    },
+    }
 
-    onTouchesEnded:function (touches, event) {
+    onTouchesEnded(touches, event) {
         var target = event.getCurrentTarget();
         if (!target._trackNode)
             return;
@@ -185,9 +191,9 @@ var KeyboardNotificationLayer = TextInputTest.extend({
 
         target.onClickTrackNode(cc.rectContainsPoint(rect, point));
         cc.log("----------------------------------");
-    },
+    }
 
-    onMouseUp:function (event) {
+    onMouseUp(event) {
         var target = event.getCurrentTarget();
         if (!target._trackNode)
             return;
@@ -204,16 +210,17 @@ var KeyboardNotificationLayer = TextInputTest.extend({
         target.onClickTrackNode(cc.rectContainsPoint(rect, point));
         cc.log("----------------------------------");
     }
-});
+
+};
 
 //////////////////////////////////////////////////////////////////////////
 // TextFieldTTFDefaultTest for test TextFieldTTF default behavior.
 //////////////////////////////////////////////////////////////////////////
-var TextFieldTTFDefaultTest = KeyboardNotificationLayer.extend({
-    subtitle:function () {
+var TextFieldTTFDefaultTest = class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
+    subtitle() {
         return "TextFieldTTF with default behavior test";
-    },
-    onClickTrackNode:function (clicked) {
+    }
+    onClickTrackNode(clicked) {
         var textField = this._trackNode;
         if (clicked) {
             // TextFieldTTFTest be clicked
@@ -224,10 +231,10 @@ var TextFieldTTFDefaultTest = KeyboardNotificationLayer.extend({
             cc.log("TextFieldTTFDefaultTest:CCTextFieldTTF detachWithIME");
             textField.detachWithIME();
         }
-    },
+    }
 
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         // add CCTextFieldTTF
         var winSize = cc.director.getWinSize();
@@ -241,30 +248,39 @@ var TextFieldTTFDefaultTest = KeyboardNotificationLayer.extend({
 
         this._trackNode = textField;
     }
-});
+
+};
 
 //////////////////////////////////////////////////////////////////////////
 // TextFieldTTFActionTest
 //////////////////////////////////////////////////////////////////////////
-var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
-    _textField:null,
-    _textFieldAction:null,
-    _action:false,
-    _charLimit:0, // the textfield max char limit
+var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
-    ctor:function () {
-        this._super();
-    },
+    constructor() {
+        super();
 
-    callbackRemoveNodeWhenDidAction:function (node) {
+
+        this._textField = null;
+
+
+        this._textFieldAction = null;
+
+
+        this._action = false;
+
+
+        this._charLimit = 0; // the textfield max char limit
+    }
+
+    callbackRemoveNodeWhenDidAction(node) {
         this.removeChild(node, true);
-    },
+    }
 
     // KeyboardNotificationLayer
-    subtitle:function () {
+    subtitle() {
         return "CCTextFieldTTF with action and char limit test";
-    },
-    onClickTrackNode:function (clicked) {
+    }
+    onClickTrackNode(clicked) {
         var textField = this._trackNode;
         if (clicked) {
             // TextFieldTTFTest be clicked
@@ -275,11 +291,11 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
             cc.log("TextFieldTTFActionTest:CCTextFieldTTF detachWithIME");
             textField.detachWithIME();
         }
-    },
+    }
 
     //CCLayer
-    onEnter:function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
 
         this._charLimit = 20;
         this._textFieldAction = cc.sequence(
@@ -300,25 +316,25 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
         this._textField.x = winSize.width / 2;
         this._textField.y = winSize.height / 2;
         this._trackNode = this._textField;
-    },
+    }
 
     //CCTextFieldDelegate
-    onTextFieldAttachWithIME:function (sender) {
+    onTextFieldAttachWithIME(sender) {
         if (!this._action) {
             this._textField.runAction(this._textFieldAction);
             this._action = true;
         }
         return false;
-    },
-    onTextFieldDetachWithIME:function (sender) {
+    }
+    onTextFieldDetachWithIME(sender) {
         if (this._action) {
             this._textField.stopAction(this._textFieldAction);
             this._textField.opacity = 255;
             this._action = false;
         }
         return false;
-    },
-    onTextFieldInsertText:function (sender, text, len) {
+    }
+    onTextFieldInsertText(sender, text, len) {
         // if insert enter, treat as default to detach with ime
         if ('\n' == text) {
             return false;
@@ -354,9 +370,9 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
             cc.callFunc(this.callbackRemoveNodeWhenDidAction, this));
         label.runAction(seq);
         return false;
-    },
+    }
 
-    onTextFieldDeleteBackward:function (sender, delText, len) {
+    onTextFieldDeleteBackward(sender, delText, len) {
         // create a delete text sprite and do some action
         var label = new cc.LabelTTF(delText, TEXT_INPUT_FONT_NAME, TEXT_INPUT_FONT_SIZE);
         this.addChild(label);
@@ -382,21 +398,23 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
             cc.callFunc(this.callbackRemoveNodeWhenDidAction, this));
         label.runAction(seq);
         return false;
-    },
-    onDraw:function (sender) {
+    }
+    onDraw(sender) {
         return false;
     }
-});
 
-var TextInputTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var TextInputTestScene = class TextInputTestScene extends TestScene {
+    runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTextInputTest();
 
         this.addChild(layer);
         cc.director.runScene(this);
     }
-});
+
+};
 
 //
 // Flow control

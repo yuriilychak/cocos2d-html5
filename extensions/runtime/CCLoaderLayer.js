@@ -26,37 +26,36 @@
 var INT_MAX = Number.MAX_VALUE;
 var GROUP_JSON_PATH = "group.json";
 
-cc.LoaderLayer = cc.Layer.extend({
-    _backgroundSprite: null,
-    _progressBackgroundSprite: null,
-    _progressBarSprite: null,
-    _logoSprite: null,
-    _titleSprite: null,
-    _groupname: null,
-    _callback: null,
-    _selector: null,
-    _preloadCount: 0,
-    _isPreloadFromFailed: false,
-    _progressOriginalWidth: 0,
-    _isLandScape: false,
-    _scaleFactor: null,
-
-    ctor: function (config) {
-        this._super();
+cc.LoaderLayer = class LoaderLayer extends cc.Layer {
+    constructor(config) {
+        super();
+        this._backgroundSprite = null;
+        this._progressBackgroundSprite = null;
+        this._progressBarSprite = null;
+        this._logoSprite = null;
+        this._titleSprite = null;
+        this._groupname = null;
+        this._callback = null;
+        this._selector = null;
+        this._preloadCount = 0;
+        this._isPreloadFromFailed = false;
+        this._progressOriginalWidth = 0;
+        this._isLandScape = false;
+        this._scaleFactor = null;
         if (config) {
             cc.LoaderLayer.setConfig(config);
         }
-    },
-    onEnter: function () {
-        this._super();
+    }
+    onEnter() {
+        super.onEnter();
         this.initView();
         var config = cc.LoaderLayer._finalConfig;
         if (config.onEnter) {
             config.onEnter(this);
         }
-    },
-    onExit: function () {
-        this._super();
+    }
+    onExit() {
+        super.onExit();
         var config = cc.LoaderLayer._finalConfig;
         if (config.logo.action) {
             config.logo.action.release();
@@ -67,8 +66,8 @@ cc.LoaderLayer = cc.Layer.extend({
         if (config.onExit) {
             config.onExit(this);
         }
-    },
-    initView: function () {
+    }
+    initView() {
         var config = cc.LoaderLayer._finalConfig;
         this._contentLayer = new cc.Layer();
         this._isLandScape = cc.winSize.width > cc.winSize.height;
@@ -145,8 +144,8 @@ cc.LoaderLayer = cc.Layer.extend({
             this._contentLayer.setPosition(cc.pAdd(this._contentLayer.getPosition(), cc.p(0, -50)));
         }
 
-    },
-    _setProgress: function (percent) {
+    }
+    _setProgress(percent) {
         if (this.progressBarSprite) {
             percent < 1 ? percent : 1;
             var width = percent * this._progressOriginalWidth;
@@ -155,34 +154,34 @@ cc.LoaderLayer = cc.Layer.extend({
                 this._barPoint.setPosition(cc.p(this.progressBarSprite.width, this.progressBarSprite.height / 2));
             }
         }
-    },
-    setTipsString: function (str) {
+    }
+    setTipsString(str) {
         if (this.tipsLabel != null) {
             this.tipsLabel.setString(str);
         }
-    },
-    getProgressBar: function () {
+    }
+    getProgressBar() {
         return this.progressBarSprite;
-    },
-    getTipsLabel: function () {
+    }
+    getTipsLabel() {
         return this.tipsLabel;
-    },
-    getLogoSprite: function () {
+    }
+    getLogoSprite() {
         return this.logoSprite;
-    },
-    getTitleSprite: function () {
+    }
+    getTitleSprite() {
         return this.titleSprite;
-    },
-    updateGroup: function (groupname, callback, target) {
+    }
+    updateGroup(groupname, callback, target) {
         this._groupname = groupname;
         this._callback = callback;
         this._selector = target;
-    },
-    _resetLoadingLabel: function () {
+    }
+    _resetLoadingLabel() {
         this.setTipsString("");
         this._setProgress(0);
-    },
-    _preloadSource: function () {
+    }
+    _preloadSource() {
         cc.log("cc.LoaderLayer is preloading resource group: " + this._groupname);
         this._resetLoadingLabel();
         if (cc.sys.isNative) {
@@ -190,8 +189,8 @@ cc.LoaderLayer = cc.Layer.extend({
         } else {
             this._preload_html5();
         }
-    },
-    _preload_html5: function () {
+    }
+    _preload_html5() {
         var res = "";
         var groupIndex = [];
         var config = cc.LoaderLayer._finalConfig;
@@ -245,8 +244,8 @@ cc.LoaderLayer = cc.Layer.extend({
                 }
             }
         });
-    },
-    _preload_native: function (status) {
+    }
+    _preload_native(status) {
         cc.log(JSON.stringify(status));
         var config = cc.LoaderLayer._finalConfig;
         if (status.percent) {
@@ -279,8 +278,8 @@ cc.LoaderLayer = cc.Layer.extend({
             // Callback must be invoked after removeFromParent.
             this._callback.call(this._target, status);
         }
-    },
-    _addToScene: function () {
+    }
+    _addToScene() {
         if (this._preloadCount == 0 && !this._isPreloadFromFailed) {
             if (cc.sys.isNative && cc.LoaderLayer._useDefaultSource) {
                 var config = cc.runtime.config.design_resolution;
@@ -303,7 +302,7 @@ cc.LoaderLayer = cc.Layer.extend({
         }
         this._preloadCount++;
     }
-});
+};
 cc.LoaderLayer._config = {//default setting for loaderlayer
     background: {
         res: "res_engine/preload_bg.jpg"
@@ -561,26 +560,25 @@ cc.LoaderLayer._initData = function (uConfig) {
     }
 };
 
-cc.Dialog = cc.Layer.extend({
-    _defaultConfig: null,
-    backgroundSprite: null,
-    _menuItemConfirm: null,
-    _menuItemCancel: null,
-    _messageLabel: null,
-    _eventListener: null,
-    _scaleFactor: null,
-
-    ctor: function (config) {
-        this._super();
+cc.Dialog = class Dialog extends cc.Layer {
+    constructor(config) {
+        super();
+        this._defaultConfig = null;
+        this.backgroundSprite = null;
+        this._menuItemConfirm = null;
+        this._menuItemCancel = null;
+        this._messageLabel = null;
+        this._eventListener = null;
+        this._scaleFactor = null;
         this.setConfig(config);
-    },
-    setConfig: function (config) {
+    }
+    setConfig(config) {
         this.removeAllChildren();
         if (config) {
             cc.Dialog.setConfig(config);
         }
-    },
-    initView: function () {
+    }
+    initView() {
         var useDefaultSource = cc.Dialog._useDefaultSource;
         var winSize = cc.director.getWinSize();
         this._scaleFactor = !useDefaultSource ? 1 : winSize.width > winSize.height ? winSize.width / 720 : winSize.width / 480;
@@ -618,8 +616,8 @@ cc.Dialog = cc.Layer.extend({
         }
         this.addChild(this.backgroundSprite);
 
-    },
-    _createMenuItemSprite: function (res, callback) {
+    }
+    _createMenuItemSprite(res, callback) {
         var spriteNormal = new cc.Scale9Sprite(res.normalRes);
         var spritePress = new cc.Scale9Sprite(res.pressRes);
         this._setScale(spriteNormal);
@@ -631,13 +629,13 @@ cc.Dialog = cc.Layer.extend({
         menuLabel.setPosition(cc.p(menuItem.width / 2, menuItem.height / 2));
         menuItem.addChild(menuLabel);
         return menuItem;
-    },
-    _setScale: function (s9Sprite) {
+    }
+    _setScale(s9Sprite) {
         if (this._scaleFactor > 1) {
             s9Sprite.setContentSize(cc.size(this._scaleFactor * s9Sprite.width, this._scaleFactor * s9Sprite.height));
         }
-    },
-    _confirmCallback: function () {
+    }
+    _confirmCallback() {
         var config = cc.Dialog._finalConfig;
         if (config.confirmBtn.callback) {
             if (config.target) {
@@ -647,8 +645,8 @@ cc.Dialog = cc.Layer.extend({
             }
         }
         this.removeFromParent();
-    },
-    _cancelCallback: function () {
+    }
+    _cancelCallback() {
         var config = cc.Dialog._finalConfig;
         if (config.cancelBtn.callback) {
             if (config.target) {
@@ -658,9 +656,9 @@ cc.Dialog = cc.Layer.extend({
             }
         }
         this.removeFromParent();
-    },
-    onEnter: function () {
-        this._super();
+    }
+    onEnter() {
+        super.onEnter();
         var config = cc.Dialog._finalConfig;
         this.initView();
         config.onEnter(this);
@@ -673,16 +671,16 @@ cc.Dialog = cc.Layer.extend({
             }
         });
         cc.eventManager.addListener(self._eventListener, self);
-    },
-    onExit: function () {
-        this._super();
+    }
+    onExit() {
+        super.onExit();
         var config = cc.Dialog._finalConfig;
         config.onExit(this);
         this.removeAllChildren();
         cc.Dialog._dialog = null;
         cc.eventManager.removeListener(this._eventListener);
     }
-});
+};
 
 cc.Dialog._dialog = null;
 cc.Dialog._clearDialog = function () {

@@ -28,52 +28,65 @@ var TAG_NODE = 9960;
 
 var parallaxTestSceneIdx = -1;
 
-ParallaxDemo = BaseTestLayer.extend({
-    _atlas:null,
-    ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(160,32,32,255));
-    },
+ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(160,32,32,255));
 
-    title:function () {
+        this._atlas = null;
+    }
+
+    title() {
         return "No title";
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         var s = new ParallaxTestScene();
         s.addChild(previousParallaxTest());
         director.runScene(s);
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new ParallaxTestScene();
         s.addChild(restartParallaxTest());
         director.runScene(s);
-    },
+    }
 
-    onNextCallback:function (sender) {
+    onNextCallback(sender) {
         var s = new ParallaxTestScene();
         s.addChild(nextParallaxTest());
         director.runScene(s);
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfParallaxTest.length-1) - parallaxTestSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return parallaxTestSceneIdx;
     }
 
-});
 
-var Parallax1 = ParallaxDemo.extend({
-    _parentNode:null,
-    _background:null,
-    _tilemap:null,
-    _cocosimage:null,
+};
 
-    ctor:function () {
-        this._super();
+var Parallax1 = class Parallax1 extends ParallaxDemo {
+
+    constructor() {
+        super();
+
+
+        this._parentNode = null;
+
+
+        this._background = null;
+
+
+        this._tilemap = null;
+
+
+        this._cocosimage = null;
+
+
+        this.testDuration = 5;
 
         // Top Layer, a simple image
         this._cocosimage = new cc.Sprite(s_power);
@@ -128,15 +141,14 @@ var Parallax1 = ParallaxDemo.extend({
         this._parentNode.runAction(seq.repeatForever());
 
         this.addChild(this._parentNode);
-    },
+    }
 
-    title:function () {
+    title() {
         return "Parallax: parent and 3 children";
-    },
+    }
 
     // default values for automation
-    testDuration:5,
-    getExpectedResult:function() {
+    getExpectedResult() {
         var ret = {};
         ret.pos_parent = cc.p(200,100);
         ret.pos_child1 = cc.p(-120, -50);
@@ -144,9 +156,9 @@ var Parallax1 = ParallaxDemo.extend({
         ret.pos_child3 = cc.p(400, 150);
 
         return JSON.stringify(ret);
-    },
+    }
 
-    getCurrentResult:function() {
+    getCurrentResult() {
         var ret = {};
         ret.pos_parent = cc.p(Math.round(this._parentNode.x), Math.round(this._parentNode.y));
         ret.pos_child1 = cc.p(Math.round(this._background.x), Math.round(this._background.y));
@@ -155,14 +167,18 @@ var Parallax1 = ParallaxDemo.extend({
 
         return JSON.stringify(ret);
     }
-});
 
-var Parallax2 = ParallaxDemo.extend({
-    _root:null,
-    _target:null,
-    _streak:null,
-    ctor:function () {
-        this._super();
+};
+
+var Parallax2 = class Parallax2 extends ParallaxDemo {
+    constructor() {
+        super();
+
+        this._root = null;
+
+        this._target = null;
+
+        this._streak = null;
 
         if( 'touches' in cc.sys.capabilities ){
             cc.eventManager.addListener({
@@ -228,20 +244,22 @@ var Parallax2 = ParallaxDemo.extend({
         // top image is moved at a ratio of 3.0x, 2.5y
         voidNode.addChild(cocosImage, 2, cc.p(3.0, 2.5), cc.p(0, 0));
         this.addChild(voidNode, 0, TAG_NODE);
-    },
+    }
 
-    title:function () {
+    title() {
         return "Parallax: drag screen";
     }
-});
 
-ParallaxTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+ParallaxTestScene = class ParallaxTestScene extends TestScene {
+    runThisTest(num) {
         parallaxTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextParallaxTest());
         director.runScene(this);
     }
-});
+
+};
 
 var arrayOfParallaxTest = [
     Parallax1,

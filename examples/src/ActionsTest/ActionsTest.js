@@ -34,22 +34,31 @@ var SPRITE_KATHIA_TAG = 3;
 // the class inherit from TestScene
 // every Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-var ActionsTestScene = TestScene.extend({
-  runThisTest: function (num) {
+var ActionsTestScene = class ActionsTestScene extends TestScene {
+  runThisTest(num) {
     actionsTestIdx = num || num == 0 ? num - 1 : -1;
     this.addChild(nextActionsTest());
     director.runScene(this);
   }
-});
 
-var ActionsDemo = BaseTestLayer.extend({
-  _grossini: null,
-  _tamara: null,
-  _kathia: null,
-  _code: null,
+};
 
-  ctor: function () {
-    this._super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
+var ActionsDemo = class ActionsDemo extends BaseTestLayer {
+
+  constructor() {
+    super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
+
+
+      this._grossini = null;
+
+
+      this._tamara = null;
+
+
+      this._kathia = null;
+
+
+      this._code = null;
 
     this._grossini = new cc.Sprite(s_pathGrossini);
     this._tamara = new cc.Sprite(s_pathSister1);
@@ -64,9 +73,9 @@ var ActionsDemo = BaseTestLayer.extend({
     this._tamara.y = (2 * s.height) / 3;
     this._kathia.x = s.width / 2;
     this._kathia.y = s.height / 2;
-  },
+  }
 
-  centerSprites: function (numberOfSprites) {
+  centerSprites(numberOfSprites) {
     var winSize = director.getWinSize();
 
     if (numberOfSprites === 0) {
@@ -92,8 +101,8 @@ var ActionsDemo = BaseTestLayer.extend({
       this._kathia.x = (3 * winSize.width) / 4;
       this._kathia.y = winSize.height / 2;
     }
-  },
-  alignSpritesLeft: function (numberOfSprites) {
+  }
+  alignSpritesLeft(numberOfSprites) {
     //----start47----onEnter
     var s = director.getWinSize();
 
@@ -117,51 +126,56 @@ var ActionsDemo = BaseTestLayer.extend({
       this._kathia.y = s.height / 3;
     }
     //----end47----
-  },
-  title: function () {
+  }
+  title() {
     return "ActionsTest";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "";
-  },
-  onBackCallback: function (sender) {
+  }
+  onBackCallback(sender) {
     var s = new ActionsTestScene();
     s.addChild(previousActionsTest());
     director.runScene(s);
-  },
-  onRestartCallback: function (sender) {
+  }
+  onRestartCallback(sender) {
     var s = new ActionsTestScene();
     s.addChild(restartActionsTest());
     director.runScene(s);
-  },
-  onNextCallback: function (sender) {
+  }
+  onNextCallback(sender) {
     var s = new ActionsTestScene();
     s.addChild(nextActionsTest());
     director.runScene(s);
-  },
-  numberOfPendingTests: function () {
+  }
+  numberOfPendingTests() {
     return arrayOfActionsTest.length - 1 - actionsTestIdx;
-  },
+  }
 
-  getTestNumber: function () {
+  getTestNumber() {
     return actionsTestIdx;
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionManual
 //
 //------------------------------------------------------------------
-var ActionManual = ActionsDemo.extend({
-  _code:
-    "sprite.x = 10; sprite.y = 20;\n" +
-    "sprite.rotation = 90;\n" +
-    "sprite.scale = 2;",
+var ActionManual = class ActionManual extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 0.1;
+        this._code =
+            "sprite.x = 10; sprite.y = 20;\n" +
+            "sprite.rotation = 90;\n" +
+            "sprite.scale = 2;";
+    }
 
-  onEnter: function () {
+  onEnter() {
     //----start0----onEnter
-    this._super();
+    super.onEnter();
 
     this._tamara.attr({
       x: 100,
@@ -182,20 +196,19 @@ var ActionManual = ActionsDemo.extend({
     this._kathia.y = winSize.height / 2;
     this._kathia.color = cc.color(0, 0, 255);
     //----end0----
-  },
+  }
 
-  title: function () {
+  title() {
     return "Sprite properties";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Manual Transformation";
-  },
+  }
 
   //
   // Automation
   //
-  testDuration: 0.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [
       2.5,
       { x: 100, y: 70 },
@@ -207,9 +220,9 @@ var ActionManual = ActionsDemo.extend({
       { r: 0, g: 0, b: 255 }
     ];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.scaleX);
     ret.push(cc.p(this._tamara.x, this._tamara.y));
@@ -224,20 +237,27 @@ var ActionManual = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 //	ActionMove
 //
 //------------------------------------------------------------------
-var ActionMove = ActionsDemo.extend({
-  _code:
-    "a =cc.moveBy( time, cc.p(x,y) );\n" + "a = cc.moveTo( time, cc.p(x,y) );",
+var ActionMove = class ActionMove extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
 
-  onEnter: function () {
+      get _code() { return 
+        "a =cc.moveBy( time, cc.p(x,y) );\n" + "a = cc.moveTo( time, cc.p(x,y) );";
+      }
+
+  onEnter() {
     //----start1----onEnter
-    this._super();
+    super.onEnter();
 
     this.centerSprites(3);
     var s = director.getWinSize();
@@ -251,25 +271,24 @@ var ActionMove = ActionsDemo.extend({
     this._grossini.runAction(cc.sequence(actionBy, actionByBack));
     this._kathia.runAction(cc.moveTo(1, cc.p(40, 40)));
     //----end1----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.moveTo / cc.moveBy";
-  },
+  }
 
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [
       { x: winSize.width - 40, y: winSize.height - 40 },
       { x: winSize.width / 2, y: winSize.height / 2 },
       { x: 40, y: 40 }
     ];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(cc.p(this._tamara.x, this._tamara.y));
     ret.push(cc.p(this._grossini.x, this._grossini.y));
@@ -277,21 +296,28 @@ var ActionMove = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionScale
 //
 //------------------------------------------------------------------
-var ActionScale = ActionsDemo.extend({
-  _code:
-    "a = cc.scaleBy( time, scale );\n" +
-    "a = cc.scaleTo( time, scaleX, scaleY );",
+var ActionScale = class ActionScale extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
 
-  onEnter: function () {
+      get _code() { return 
+        "a = cc.scaleBy( time, scale );\n" +
+        "a = cc.scaleTo( time, scaleX, scaleY );";
+      }
+
+  onEnter() {
     //----start2----onEnter
-    this._super();
+    super.onEnter();
 
     this.centerSprites(3);
 
@@ -308,21 +334,20 @@ var ActionScale = ActionsDemo.extend({
     );
 
     //----end2----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.scaleTo / cc.scaleBy";
-  },
+  }
 
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [0.5, 2, 0.25, 4.5];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.scale);
     ret.push(this._grossini.scale);
@@ -331,20 +356,27 @@ var ActionScale = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 //  ActionRotate
 //
 //------------------------------------------------------------------
-var ActionRotate = ActionsDemo.extend({
-  _code:
-    "a = cc.rotateBy( time, degrees );\n" + "a = cc.rotateTo( time, degrees );",
+var ActionRotate = class ActionRotate extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
 
-  onEnter: function () {
+      get _code() { return 
+        "a = cc.rotateBy( time, degrees );\n" + "a = cc.rotateTo( time, degrees );";
+      }
+
+  onEnter() {
     //----start3----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(3);
     var actionTo = cc.rotateTo(2, 45);
     var actionTo2 = cc.rotateTo(2, -45);
@@ -364,20 +396,19 @@ var ActionRotate = ActionsDemo.extend({
     );
 
     //----end3----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.rotateTo / cc.rotateBy";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [45, 360, -45];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.rotation);
     ret.push(this._grossini.rotation);
@@ -385,17 +416,23 @@ var ActionRotate = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 //  ActionRotateXY
 //
 //------------------------------------------------------------------
-var ActionRotateXY = ActionsDemo.extend({
-  onEnter: function () {
+var ActionRotateXY = class ActionRotateXY extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
+
+  onEnter() {
     //----start4----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(3);
     var actionTo = cc.rotateTo(2, 37.2, -37.2);
     var actionToBack = cc.rotateTo(2, 0, 0);
@@ -423,20 +460,19 @@ var ActionRotateXY = ActionsDemo.extend({
       this.addChild(label, 100);
     }
     //----end4----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.RotateBy(x,y) / cc.RotateTo(x,y)";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = ["37.20", "-37.20", 0, -90, 45, 45];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.rotationX.toFixed(2));
     ret.push(this._tamara.rotationY.toFixed(2));
@@ -449,19 +485,26 @@ var ActionRotateXY = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 //	ActionSkew
 //
 //------------------------------------------------------------------
-var ActionSkew = ActionsDemo.extend({
-  _code:
-    "a = cc.skewBy( time, skew );\n" + "a = cc.skewTo( time, skewX, skewY );",
+var ActionSkew = class ActionSkew extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
 
-  onEnter: function () {
+      get _code() { return 
+        "a = cc.skewBy( time, skew );\n" + "a = cc.skewTo( time, skewX, skewY );";
+      }
+
+  onEnter() {
     //----start5----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(3);
     var actionTo = cc.skewTo(2, 37.2, -37.2);
     var actionToBack = cc.skewTo(2, 0, 0);
@@ -478,20 +521,19 @@ var ActionSkew = ActionsDemo.extend({
       cc.sequence(actionBy2, delay.clone(), actionBy2.reverse())
     );
     //----end5----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.skewTo / cc.skewBy";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = ["37.20", "-37.20", 0, 0, 45, 45];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.skewX.toFixed(2));
     ret.push(this._tamara.skewY.toFixed(2));
@@ -504,12 +546,18 @@ var ActionSkew = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
 
-var ActionSkewRotateScale = ActionsDemo.extend({
-  onEnter: function () {
+};
+
+var ActionSkewRotateScale = class ActionSkewRotateScale extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
+
+  onEnter() {
     //----start6----onEnter
-    this._super();
+    super.onEnter();
 
     this.centerSprites(0);
 
@@ -559,20 +607,19 @@ var ActionSkewRotateScale = ActionsDemo.extend({
 
     this.box = box;
     //----end6----
-  },
-  title: function () {
+  }
+  title() {
     return "Skew + Rotate + Scale";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [0, 2, 61, "-0.44", "0.47"];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this.box.skewX);
     ret.push(this.box.skewY);
@@ -582,21 +629,28 @@ var ActionSkewRotateScale = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionJump
 //
 //------------------------------------------------------------------
-var ActionJump = ActionsDemo.extend({
-  _code:
-    "a = cc.jumpBy( time, point, height, #_of_jumps );\n" +
-    "a = cc.jumpTo( time, point, height, #_of_jumps );",
+var ActionJump = class ActionJump extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
 
-  onEnter: function () {
+      get _code() { return 
+        "a = cc.jumpBy( time, point, height, #_of_jumps );\n" +
+        "a = cc.jumpTo( time, point, height, #_of_jumps );";
+      }
+
+  onEnter() {
     //----start7----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(3);
 
     var actionTo = cc.jumpTo(2, cc.p(300, 300), 50, 4);
@@ -612,28 +666,27 @@ var ActionJump = ActionsDemo.extend({
     var action = cc.sequence(actionUp, delay.clone()).repeatForever();
     this._kathia.runAction(action);
     //----end7----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.jumpTo / cc.jumpBy";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Actions will stop for 0.25s after 2 seconds";
-  },
+  }
 
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [
       { x: 300, y: 300 },
       { x: winSize.width / 2 + 300, y: winSize.height / 2 },
       { x: (3 * winSize.width) / 4, y: winSize.height / 2 }
     ];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(cc.p(this._tamara.x, this._tamara.y));
     ret.push(cc.p(this._grossini.x, this._grossini.y));
@@ -641,17 +694,23 @@ var ActionJump = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionBezier
 //
 //------------------------------------------------------------------
-var ActionBezier = ActionsDemo.extend({
-  onEnter: function () {
+var ActionBezier = class ActionBezier extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
+
+  onEnter() {
     //----start8----onEnter
 
-    this._super();
+    super.onEnter();
     var s = director.getWinSize();
 
     //
@@ -695,47 +754,46 @@ var ActionBezier = ActionsDemo.extend({
     this._tamara.runAction(bezierTo1);
     this._kathia.runAction(bezierTo2);
     //----end8----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.bezierBy / cc.bezierTo";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  setupAutomation: function () {
+  setupAutomation() {
     this.scheduleOnce(this.checkControl1, 0.66667);
     this.scheduleOnce(this.checkControl2, 1.33333);
-  },
-  checkControl1: function (dt) {
+  }
+  checkControl1(dt) {
     this.control1 = cc.p(this._grossini.x, this._grossini.y);
-  },
-  verifyControl1: function (dt) {
+  }
+  verifyControl1(dt) {
     var x = Math.abs(this.control1.x - 77 - winSize.width / 2);
     var y = Math.abs(this.control1.y - 87 - winSize.height / 2);
     //  -/+ 5 pixels of error
     return x < 5 && y < 5;
-  },
-  checkControl2: function (dt) {
+  }
+  checkControl2(dt) {
     this.control2 = cc.p(this._grossini.x, this._grossini.y);
-  },
-  verifyControl2: function (dt) {
+  }
+  verifyControl2(dt) {
     var x = Math.abs(this.control2.x - 222 - winSize.width / 2);
     var y = Math.abs(this.control2.y + 53 - winSize.height / 2);
     //  -/+ 5 pixels of error
     return x < 5 && y < 5;
-  },
+  }
 
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [
       true,
       true,
       { x: winSize.width / 2 + 300, y: winSize.height / 2 + 100 }
     ];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
@@ -743,17 +801,18 @@ var ActionBezier = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionBezierToCopy
 //
 //------------------------------------------------------------------
-var ActionBezierToCopy = ActionsDemo.extend({
-  onEnter: function () {
+var ActionBezierToCopy = class ActionBezierToCopy extends ActionsDemo {
+  onEnter() {
     //----start9----onEnter
-    this._super();
+    super.onEnter();
 
     //
     // startPosition can be any coordinate, but since the movement
@@ -782,23 +841,29 @@ var ActionBezierToCopy = ActionsDemo.extend({
     this._tamara.runAction(bezierTo1);
     this._kathia.runAction(bezierTo2);
     //----end9----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.bezierTo copy test";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Both sprites should move across the same path";
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // Issue1008
 //
 //------------------------------------------------------------------
-var Issue1008 = ActionsDemo.extend({
-  onEnter: function () {
+var Issue1008 = class Issue1008 extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 3.1;
+    }
+
+  onEnter() {
     //----start10----onEnter
-    this._super();
+    super.onEnter();
 
     this.centerSprites(1);
 
@@ -822,45 +887,50 @@ var Issue1008 = ActionsDemo.extend({
     //----end10----
 
     //this._grossini.runAction(cc.sequence(bz1, bz2, trace,delay));
-  },
-  onTrace: function (sender) {
+  }
+  onTrace(sender) {
     var pos = cc.p(sender.x, sender.y);
     cc.log("Position x: " + pos.x + " y:" + pos.y);
     if (Math.round(pos.x) != 428 || Math.round(pos.y) != 279)
       this.log("Error: Issue 1008 is still open");
 
     this.tracePos = pos;
-  },
-  title: function () {
+  }
+  title() {
     return "Issue 1008";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "cc.bezierTo + Repeat. See console";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 3.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = { x: 428, y: 279 };
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     return JSON.stringify(this.tracePos);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionBlink
 //
 //------------------------------------------------------------------
-var ActionBlink = ActionsDemo.extend({
-  _code: "a = cc.blink( time, #_of_blinks );",
+var ActionBlink = class ActionBlink extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = cc.blink( time, #_of_blinks );";
+        this.testDuration = 2.1;
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start13----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     var action1 = cc.blink(2, 10);
@@ -869,43 +939,48 @@ var ActionBlink = ActionsDemo.extend({
     this._tamara.runAction(action1);
     this._kathia.runAction(action2);
     //----end13----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.blink";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  setupAutomation: function () {
+  setupAutomation() {
     this.scheduleOnce(this.checkControl1, 0.1);
-  },
-  checkControl1: function (dt) {
+  }
+  checkControl1(dt) {
     this.control1 = this._kathia.visible;
-  },
-  getExpectedResult: function () {
+  }
+  getExpectedResult() {
     var ret = [false, true, true];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this.control1);
     ret.push(this._tamara.visible);
     ret.push(this._kathia.visible);
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionFade
 //
 //------------------------------------------------------------------
-var ActionFade = ActionsDemo.extend({
-  _code: "a = cc.fadeIn( time );\n" + "a = cc.fadeOut( time );",
+var ActionFade = class ActionFade extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = cc.fadeIn( time );\n" + "a = cc.fadeOut( time );";
+        this.testDuration = 1.1;
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start14----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
     var delay = cc.delayTime(0.25);
     this._tamara.opacity = 0;
@@ -918,38 +993,44 @@ var ActionFade = ActionsDemo.extend({
     this._tamara.runAction(cc.sequence(action1, delay, action1Back));
     this._kathia.runAction(cc.sequence(action2, delay.clone(), action2Back));
     //----end14----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.fadeIn / cc.fadeOut";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 1.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [255, 0];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.opacity);
     ret.push(this._kathia.opacity);
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionTint
 //
 //------------------------------------------------------------------
-var ActionTint = ActionsDemo.extend({
-  _code:
-    "a = cc.tintBy( time, red, green, blue );\n" +
-    "a = cc.tintTo( time, red, green, blue );",
+var ActionTint = class ActionTint extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
 
-  onEnter: function () {
+      get _code() { return 
+        "a = cc.tintBy( time, red, green, blue );\n" +
+        "a = cc.tintTo( time, red, green, blue );";
+      }
+
+  onEnter() {
     //----start15----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     var action1 = cc.tintTo(2, 255, 0, 255);
@@ -961,38 +1042,38 @@ var ActionTint = ActionsDemo.extend({
       cc.sequence(action2, cc.delayTime(0.25), action2Back)
     );
     //----end15----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.tintTo / cc.tintBy";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [
       { r: 255, g: 0, b: 255 },
       { r: 128, g: 0, b: 128 }
     ];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.color);
     ret.push(this._kathia.color);
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionAnimate
 //
 //------------------------------------------------------------------
-var ActionAnimate = ActionsDemo.extend({
-  onEnter: function () {
+var ActionAnimate = class ActionAnimate extends ActionsDemo {
+  onEnter() {
     //----start44----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(3);
 
     //
@@ -1032,27 +1113,33 @@ var ActionAnimate = ActionsDemo.extend({
     var action3 = cc.animate(animation3);
     this._kathia.runAction(action3);
     //----end44----
-  },
+  }
 
-  title: function () {
+  title() {
     return "Animation";
-  },
+  }
 
-  subtitle: function () {
+  subtitle() {
     return "Center: Manual animation. Border: using file format animation";
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 //	ActionSequence
 //
 //------------------------------------------------------------------
-var ActionSequence = ActionsDemo.extend({
-  _code: "a = cc.sequence( a1, a2, a3,..., aN);",
+var ActionSequence = class ActionSequence extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = cc.sequence( a1, a2, a3,..., aN);";
+        this.testDuration = 3.1;
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start16----onEnter
-    this._super();
+    super.onEnter();
     this.alignSpritesLeft(1);
 
     var action = cc.sequence(
@@ -1062,34 +1149,39 @@ var ActionSequence = ActionsDemo.extend({
 
     this._grossini.runAction(action);
     //----end16----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.sequence: Move + Rotate";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 3.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [{ x: 60 + 240, y: winSize.height / 2 }, 540];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(cc.p(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 //	ActionSequence2
 //
 //------------------------------------------------------------------
-var ActionSequence2 = ActionsDemo.extend({
-  onEnter: function () {
+var ActionSequence2 = class ActionSequence2 extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 1.1;
+    }
+
+  onEnter() {
     //----start17----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
     this._grossini.visible = false;
     var action = cc.sequence(
@@ -1104,8 +1196,8 @@ var ActionSequence2 = ActionsDemo.extend({
 
     this.called1 = this.called2 = this.called3 = false;
     //----end17----
-  },
-  onCallback1: function () {
+  }
+  onCallback1() {
     var s = director.getWinSize();
     var label = new cc.LabelTTF("callback 1 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 1;
@@ -1113,8 +1205,8 @@ var ActionSequence2 = ActionsDemo.extend({
 
     this.addChild(label);
     this.called1 = true;
-  },
-  onCallback2: function () {
+  }
+  onCallback2() {
     var s = director.getWinSize();
     var label = new cc.LabelTTF("callback 2 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 2;
@@ -1122,8 +1214,8 @@ var ActionSequence2 = ActionsDemo.extend({
 
     this.addChild(label);
     this.called2 = true;
-  },
-  onCallback3: function () {
+  }
+  onCallback3() {
     var s = director.getWinSize();
     var label = new cc.LabelTTF("callback 3 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 3;
@@ -1131,19 +1223,18 @@ var ActionSequence2 = ActionsDemo.extend({
 
     this.addChild(label);
     this.called3 = true;
-  },
-  title: function () {
+  }
+  title() {
     return "Sequence of InstantActions";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 1.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [true, true, true, true, { x: 300, y: 200 }];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this.called1);
     ret.push(this.called2);
@@ -1152,20 +1243,27 @@ var ActionSequence2 = ActionsDemo.extend({
     ret.push(cc.p(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 //	ActionCallFunc1
 //
 //------------------------------------------------------------------
-var ActionCallFunc1 = ActionsDemo.extend({
-  _code:
-    "a = cc.callFunc( this.callback );\n" +
-    "a = cc.callFunc( this.callback, this, optional_arg );",
+var ActionCallFunc1 = class ActionCallFunc1 extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 5.05;
+    }
 
-  onEnter: function () {
+      get _code() { return 
+        "a = cc.callFunc( this.callback );\n" +
+        "a = cc.callFunc( this.callback, this, optional_arg );";
+      }
+
+  onEnter() {
     //----start25----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(3);
 
     // Testing different ways to pass "this"
@@ -1190,16 +1288,16 @@ var ActionCallFunc1 = ActionsDemo.extend({
     this._tamara.runAction(action2);
     this._kathia.runAction(action3);
     //----end25----
-  },
-  onCallback1: function (nodeExecutingAction, value) {
+  }
+  onCallback1(nodeExecutingAction, value) {
     var s = director.getWinSize();
     var label = new cc.LabelTTF("callback 1 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 1;
     label.y = s.height / 2;
     this.addChild(label);
     this.control1 = true;
-  },
-  onCallback2: function (nodeExecutingAction, value) {
+  }
+  onCallback2(nodeExecutingAction, value) {
     var s = director.getWinSize();
     var label = new cc.LabelTTF("callback 2 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 2;
@@ -1207,8 +1305,8 @@ var ActionCallFunc1 = ActionsDemo.extend({
 
     this.addChild(label);
     this.control2 = true;
-  },
-  onCallback3: function (nodeExecutingAction, value) {
+  }
+  onCallback3(nodeExecutingAction, value) {
     var s = director.getWinSize();
     var label = new cc.LabelTTF(
       "callback 3 called:" + value,
@@ -1219,38 +1317,43 @@ var ActionCallFunc1 = ActionsDemo.extend({
     label.y = s.height / 2;
     this.addChild(label);
     this.control3 = true;
-  },
-  title: function () {
+  }
+  title() {
     return "Callbacks: CallFunc and friends";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 5.05,
-  setupAutomation: function () {
+  setupAutomation() {
     this.control1 = this.control2 = this.control3 = false;
-  },
-  getExpectedResult: function () {
+  }
+  getExpectedResult() {
     var ret = [true, true, true];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this.control1);
     ret.push(this.control2);
     ret.push(this.control3);
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionCallFunc2
 //
 //------------------------------------------------------------------
-var ActionCallFunc2 = ActionsDemo.extend({
-  onEnter: function () {
+var ActionCallFunc2 = class ActionCallFunc2 extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 2.1;
+    }
+
+  onEnter() {
     //----start26----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
 
     var action = cc.sequence(
@@ -1260,43 +1363,48 @@ var ActionCallFunc2 = ActionsDemo.extend({
 
     this._grossini.runAction(action);
     //----end26----
-  },
+  }
 
-  removeFromParentAndCleanup: function (nodeExecutingAction, data) {
+  removeFromParentAndCleanup(nodeExecutingAction, data) {
     nodeExecutingAction.removeFromParent(data);
-  },
+  }
 
-  title: function () {
+  title() {
     return "cc.CallFunc + auto remove";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "cc.CallFunc + removeFromParentAndCleanup. Grossini dissapears in 2s";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  setupAutomation: function () {},
-  getExpectedResult: function () {
+  setupAutomation() {}
+  getExpectedResult() {
     var ret = [null];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this.getChildByTag(SPRITE_GROSSINI_TAG));
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionCallFunc3
 //
 //------------------------------------------------------------------
-var ActionCallFunc3 = ActionsDemo.extend({
-  onEnter: function () {
+var ActionCallFunc3 = class ActionCallFunc3 extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 0.1;
+    }
+
+  onEnter() {
     //----start27----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
 
     var action = cc.callFunc(
@@ -1310,41 +1418,46 @@ var ActionCallFunc3 = ActionsDemo.extend({
 
     this.runAction(action);
     //----end27----
-  },
+  }
 
-  title: function () {
+  title() {
     return "cc.CallFunc + parameters";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "cc.CallFunc + parameters. Take a look at the console";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 0.1,
-  setupAutomation: function () {},
-  getExpectedResult: function () {
+  setupAutomation() {}
+  getExpectedResult() {
     var ret = ["Value is: Hello world"];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this.control1);
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionSpawn
 //
 //------------------------------------------------------------------
-var ActionSpawn = ActionsDemo.extend({
-  _code: "a = cc.spawn( a1, a2, ..., aN );",
+var ActionSpawn = class ActionSpawn extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = cc.spawn( a1, a2, ..., aN );";
+        this.testDuration = 2.1;
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start18----onEnter
-    this._super();
+    super.onEnter();
     this.alignSpritesLeft(1);
 
     var action = cc.spawn(
@@ -1354,43 +1467,48 @@ var ActionSpawn = ActionsDemo.extend({
 
     this._grossini.runAction(action);
     //----end18----
-  },
-  title: function () {
+  }
+  title() {
     return "cc.spawn: Jump + Rotate";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [{ x: 300 + 60, y: winSize.height / 2 }, 720];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(cc.p(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionRepeatForever
 //
 //------------------------------------------------------------------
-var ActionRepeatForever = ActionsDemo.extend({
-  _code: "a = action.repeatForever();",
+var ActionRepeatForever = class ActionRepeatForever extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = action.repeatForever();";
+        this.testDuration = 3.5;
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start22----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
     var action = cc.sequence(cc.delayTime(1), cc.callFunc(this.repeatForever)); // not passing 'this' since it is not used by the callback func
 
     this._grossini.runAction(action);
     //----end22----
-  },
-  repeatForever: function (sender) {
+  }
+  repeatForever(sender) {
     sender.runAction(
       cc
         .sequence(
@@ -1400,19 +1518,18 @@ var ActionRepeatForever = ActionsDemo.extend({
         .repeatForever()
     );
     cc.sys.garbageCollect();
-  },
-  title: function () {
+  }
+  title() {
     return "cc.CallFunc + cc.RepeatForever";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 3.5,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [true];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     var r = this._grossini.rotation;
     var expected = 900;
@@ -1420,18 +1537,24 @@ var ActionRepeatForever = ActionsDemo.extend({
     ret.push(r < expected + error && r > expected - error);
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionRotateToRepeat
 //
 //------------------------------------------------------------------
-var ActionRotateToRepeat = ActionsDemo.extend({
-  _code: "a = action_to_repeat.repeat(#_of_times);",
+var ActionRotateToRepeat = class ActionRotateToRepeat extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = action_to_repeat.repeat(#_of_times);";
+        this.testDuration = 4.5;
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start23----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     var act1 = cc.rotateTo(0.5, 90);
@@ -1442,19 +1565,18 @@ var ActionRotateToRepeat = ActionsDemo.extend({
     this._tamara.runAction(seq.repeatForever());
     this._kathia.runAction(seq2.repeat(4));
     //----end23----
-  },
-  title: function () {
+  }
+  title() {
     return "Repeat/RepeatForever + RotateTo";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 4.5,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [0, true];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this._kathia.rotation);
     var r = this._tamara.rotation;
@@ -1463,16 +1585,17 @@ var ActionRotateToRepeat = ActionsDemo.extend({
     ret.push(r < expected + error && r > expected - error);
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionRotateJerk
 //
 //------------------------------------------------------------------
-var ActionRotateJerk = ActionsDemo.extend({
-  onEnter: function () {
+var ActionRotateJerk = class ActionRotateJerk extends ActionsDemo {
+  onEnter() {
     //----start24----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
     var seq = cc.sequence(cc.rotateTo(0.5, -20), cc.rotateTo(0.5, 20));
 
@@ -1481,22 +1604,28 @@ var ActionRotateJerk = ActionsDemo.extend({
     this._tamara.runAction(rep1);
     this._kathia.runAction(rep2);
     //----end24----
-  },
-  title: function () {
+  }
+  title() {
     return "RepeatForever / Repeat + Rotate";
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionReverse
 //
 //------------------------------------------------------------------
-var ActionReverse = ActionsDemo.extend({
-  _code: "a = action.reverse();",
+var ActionReverse = class ActionReverse extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = action.reverse();";
+        this.testDuration = 4.4;
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start19----onEnter
-    this._super();
+    super.onEnter();
     this.alignSpritesLeft(1);
 
     var jump = cc.jumpBy(2, cc.p(300, 0), 50, 4);
@@ -1505,46 +1634,51 @@ var ActionReverse = ActionsDemo.extend({
 
     this._grossini.runAction(action);
     //----end19----
-  },
-  title: function () {
+  }
+  title() {
     return "Reverse Jump action";
-  },
+  }
 
   //
   // Automation
   //
-  testDuration: 4.4,
-  setupAutomation: function () {
+  setupAutomation() {
     this.scheduleOnce(this.checkControl1, 2.1);
-  },
-  checkControl1: function (dt) {
+  }
+  checkControl1(dt) {
     this.control1 = cc.p(this._grossini.x, this._grossini.y);
-  },
-  getExpectedResult: function () {
+  }
+  getExpectedResult() {
     var ret = [
       { x: 360, y: winSize.height / 2 },
       { x: 60, y: winSize.height / 2 }
     ];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(this.control1);
     ret.push(cc.p(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionDelayTime
 //
 //------------------------------------------------------------------
-var ActionDelayTime = ActionsDemo.extend({
-  _code: "a = cc.delayTime( time );",
+var ActionDelayTime = class ActionDelayTime extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = cc.delayTime( time );";
+        this.testDuration = 2.9;
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start20----onEnter
-    this._super();
+    super.onEnter();
     this.alignSpritesLeft(1);
 
     var move = cc.moveBy(1, cc.p(150, 0));
@@ -1552,33 +1686,33 @@ var ActionDelayTime = ActionsDemo.extend({
 
     this._grossini.runAction(action);
     //----end20----
-  },
-  title: function () {
+  }
+  title() {
     return "DelayTime: m + delay + m";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.9,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [{ x: 210, y: winSize.height / 2 }];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(cc.p(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionReverseSequence
 //
 //------------------------------------------------------------------
-var ActionReverseSequence = ActionsDemo.extend({
-  onEnter: function () {
+var ActionReverseSequence = class ActionReverseSequence extends ActionsDemo {
+  onEnter() {
     //----start28----onEnter
-    this._super();
+    super.onEnter();
     this.alignSpritesLeft(1);
 
     var move1 = cc.moveBy(1, cc.p(250, 0));
@@ -1588,20 +1722,21 @@ var ActionReverseSequence = ActionsDemo.extend({
 
     this._grossini.runAction(action);
     //----end28----
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Reverse a sequence";
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionReverseSequence2
 //
 //------------------------------------------------------------------
-var ActionReverseSequence2 = ActionsDemo.extend({
-  onEnter: function () {
+var ActionReverseSequence2 = class ActionReverseSequence2 extends ActionsDemo {
+  onEnter() {
     //----start29----onEnter
-    this._super();
+    super.onEnter();
     this.alignSpritesLeft(2);
 
     // Test:
@@ -1625,20 +1760,26 @@ var ActionReverseSequence2 = ActionsDemo.extend({
     var seq_back = seq_tamara.reverse();
     this._tamara.runAction(cc.sequence(seq_tamara, seq_back));
     //----end29----
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Reverse sequence 2";
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionRepeat
 //
 //------------------------------------------------------------------
-var ActionRepeat = ActionsDemo.extend({
-  onEnter: function () {
+var ActionRepeat = class ActionRepeat extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 4.3;
+    }
+
+  onEnter() {
     //----start21----onEnter
-    this._super();
+    super.onEnter();
     this.alignSpritesLeft(2);
 
     var a1 = cc.moveBy(1, cc.p(150, 0));
@@ -1651,37 +1792,37 @@ var ActionRepeat = ActionsDemo.extend({
     this._kathia.runAction(action1);
     this._tamara.runAction(action2);
     //----end21----
-  },
-  title: function () {
+  }
+  title() {
     return "Repeat / RepeatForever actions";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 4.3,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [
       { x: 210, y: 60 },
       { x: 60, y: (2 * winSize.height) / 3 }
     ];
     return JSON.stringify(ret);
-  },
-  getCurrentResult: function () {
+  }
+  getCurrentResult() {
     var ret = [];
     ret.push(cc.p(this._kathia.x, this._kathia.y));
     ret.push(cc.p(this._tamara.x, this._tamara.y));
     return JSON.stringify(ret);
   }
-});
+
+};
 //------------------------------------------------------------------
 //
 // ActionFollow
 //
 //------------------------------------------------------------------
-var ActionFollow = ActionsDemo.extend({
-  onEnter: function () {
+var ActionFollow = class ActionFollow extends ActionsDemo {
+  onEnter() {
     //----start30----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
     var s = director.getWinSize();
 
@@ -1699,28 +1840,39 @@ var ActionFollow = ActionsDemo.extend({
       cc.follow(this._grossini, cc.rect(0, 0, s.width * 2 - 100, s.height))
     );
     //----end30----
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Follow action";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionCardinalSpline
 //
 //------------------------------------------------------------------
-var ActionCardinalSpline = ActionsDemo.extend({
-  _array: null,
-  _drawNode1: null,
-  _drawNode2: null,
+var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
 
-  _code:
-    " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
-    " a = cc.cadinalSplineTo( time, array_of_points, tension );",
+      get _code() { return 
+        " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
+        " a = cc.cadinalSplineTo( time, array_of_points, tension );";
+      }
 
-  ctor: function () {
-    this._super();
+  constructor() {
+    super();
+
+
+      this._array = null;
+
+
+      this._drawNode1 = null;
+
+
+      this._drawNode2 = null;
+
+
+      this.testDuration = 2.1;
     this._array = [];
 
     //add draw node
@@ -1736,11 +1888,11 @@ var ActionCardinalSpline = ActionsDemo.extend({
     this._drawNode2.x = winSize.width * 0.5;
     this._drawNode2.y = 50;
     this._drawNode2.setDrawColor(cc.color(255, 255, 255, 255));
-  },
+  }
 
-  onEnter: function () {
+  onEnter() {
     //----start11----onEnter
-    this._super();
+    super.onEnter();
     var winSize = cc.director.getWinSize();
     this.centerSprites(2);
 
@@ -1783,57 +1935,56 @@ var ActionCardinalSpline = ActionsDemo.extend({
     this._drawNode1.drawCardinalSpline(array, 0, 100, 1);
     this._drawNode2.drawCardinalSpline(array, 1, 100, 1);
     //----end11----
-  },
+  }
 
-  subtitle: function () {
+  subtitle() {
     return "Cardinal Spline paths. Testing different tensions for one array";
-  },
-  title: function () {
+  }
+  title() {
     return "CardinalSplineBy / CardinalSplineAt";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 2.1,
-  setupAutomation: function () {
+  setupAutomation() {
     this.scheduleOnce(this.checkControl1, 0.5);
     this.scheduleOnce(this.checkControl2, 1.0);
     this.scheduleOnce(this.checkControl3, 1.5);
-  },
-  checkControl1: function (dt) {
+  }
+  checkControl1(dt) {
     this.control1 = cc.p(this._tamara.x, this._tamara.y);
-  },
-  verifyControl1: function (dt) {
+  }
+  verifyControl1(dt) {
     var x = Math.abs(50 + winSize.width / 2 - 30 - this.control1.x);
     var y = Math.abs(50 - this.control1.y);
     //  -/+ 5 pixels of error
     return x < 5 && y < 5;
-  },
-  checkControl2: function (dt) {
+  }
+  checkControl2(dt) {
     this.control2 = cc.p(this._tamara.x, this._tamara.y);
-  },
-  verifyControl2: function (dt) {
+  }
+  verifyControl2(dt) {
     var x = Math.abs(50 + winSize.width / 2 - 30 - this.control2.x);
     var y = Math.abs(50 + winSize.height - 80 - this.control2.y);
     //  -/+ 5 pixels of error
     return x < 5 && y < 5;
-  },
-  checkControl3: function (dt) {
+  }
+  checkControl3(dt) {
     this.control3 = cc.p(this._tamara.x, this._tamara.y);
-  },
-  verifyControl3: function (dt) {
+  }
+  verifyControl3(dt) {
     var x = Math.abs(50 - this.control3.x);
     var y = Math.abs(50 + winSize.height - 80 - this.control3.y);
     //  -/+ 5 pixels of error
     return x < 5 && y < 5;
-  },
+  }
 
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [true, true, true, { x: 50, y: 50 }];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
@@ -1842,23 +1993,32 @@ var ActionCardinalSpline = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionCatmullRom
 //
 //------------------------------------------------------------------
-var ActionCatmullRom = ActionsDemo.extend({
-  _drawNode1: null,
-  _drawNode2: null,
+var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
 
-  _code:
-    "a = cc.catmullRomBy( time, array_of_points );\n" +
-    " a = cc.catmullRomTo( time, array_of_points );",
+      get _code() { return 
+        "a = cc.catmullRomBy( time, array_of_points );\n" +
+        " a = cc.catmullRomTo( time, array_of_points );";
+      }
 
-  ctor: function () {
-    this._super();
+  constructor() {
+    super();
+
+
+      this._drawNode1 = null;
+
+
+      this._drawNode2 = null;
+
+
+      this.testDuration = 3.1;
 
     this._drawNode1 = new cc.DrawNode();
     this._drawNode1.x = 50;
@@ -1869,11 +2029,11 @@ var ActionCatmullRom = ActionsDemo.extend({
     this._drawNode2 = new cc.DrawNode();
     this._drawNode2.setDrawColor(cc.color(255, 255, 255, 255));
     this.addChild(this._drawNode2);
-  },
+  }
 
-  onEnter: function () {
+  onEnter() {
     //----start12----onEnter
-    this._super();
+    super.onEnter();
 
     this.centerSprites(2);
 
@@ -1928,56 +2088,55 @@ var ActionCatmullRom = ActionsDemo.extend({
     this._drawNode1.drawCatmullRom(array, 50, 1);
     this._drawNode2.drawCatmullRom(array2, 50, 1);
     //----end12----
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Catmull Rom spline paths. Testing reverse too";
-  },
-  title: function () {
+  }
+  title() {
     return "CatmullRomBy / CatmullRomTo";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 3.1,
-  setupAutomation: function () {
+  setupAutomation() {
     this.scheduleOnce(this.checkControl1, (3 / 4) * 0);
     this.scheduleOnce(this.checkControl2, (3 / 4) * 1);
     this.scheduleOnce(this.checkControl3, (3 / 4) * 2);
-  },
-  checkControl1: function (dt) {
+  }
+  checkControl1(dt) {
     this.control1 = cc.p(this._kathia.x, this._kathia.y);
-  },
-  verifyControl1: function (dt) {
+  }
+  verifyControl1(dt) {
     var x = Math.abs(winSize.width / 2 - this.control1.x);
     var y = Math.abs(30 - this.control1.y);
     //  -/+ 5 pixels of error
     return x < 5 && y < 5;
-  },
-  checkControl2: function (dt) {
+  }
+  checkControl2(dt) {
     this.control2 = cc.p(this._kathia.x, this._kathia.y);
-  },
-  verifyControl2: function (dt) {
+  }
+  verifyControl2(dt) {
     var x = Math.abs(winSize.width - 80 - this.control2.x);
     var y = Math.abs(30 - this.control2.y);
     //  -/+ 5 pixels of error
     return x < 5 && y < 5;
-  },
-  checkControl3: function (dt) {
+  }
+  checkControl3(dt) {
     this.control3 = cc.p(this._kathia.x, this._kathia.y);
-  },
-  verifyControl3: function (dt) {
+  }
+  verifyControl3(dt) {
     var x = Math.abs(winSize.width - 80 - this.control3.x);
     var y = Math.abs(winSize.height - 80 - this.control3.y);
     //  -/+ 5 pixels of error
     return x < 5 && y < 5;
-  },
+  }
 
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [true, true, true, { x: winSize.width / 2, y: 30 }];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
@@ -1986,19 +2145,24 @@ var ActionCatmullRom = ActionsDemo.extend({
 
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionTargeted
 //
 //------------------------------------------------------------------
-var ActionTargeted = ActionsDemo.extend({
-  _code: "a = cc.targetedAction( target, action );",
+var ActionTargeted = class ActionTargeted extends ActionsDemo {
+    constructor() {
+        super();
+        this._code = "a = cc.targetedAction( target, action );";
+    }
 
-  onEnter: function () {
+
+  onEnter() {
     //----start31----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     var jump1 = cc.jumpBy(2, cc.p(0, 0), 100, 3);
@@ -2015,24 +2179,25 @@ var ActionTargeted = ActionsDemo.extend({
 
     this._tamara.runAction(always);
     //----end31----
-  },
-  title: function () {
+  }
+  title() {
     return "Action that runs on another target. Useful for sequences";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "ActionTargeted";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionTargetedCopy
 //
 //------------------------------------------------------------------
-var ActionTargetedCopy = ActionsDemo.extend({
-  onEnter: function () {
+var ActionTargetedCopy = class ActionTargetedCopy extends ActionsDemo {
+  onEnter() {
     //----start32----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     var jump1 = cc.jumpBy(2, cc.p(0, 0), 100, 3);
@@ -2045,24 +2210,30 @@ var ActionTargetedCopy = ActionsDemo.extend({
 
     this._tamara.runAction(seq);
     //----end32----
-  },
-  title: function () {
+  }
+  title() {
     return "Action that runs on another target. Useful for sequences";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Testing copy on TargetedAction";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionStackableMove
 //
 //------------------------------------------------------------------
-var ActionStackableMove = ActionsDemo.extend({
-  onEnter: function () {
+var ActionStackableMove = class ActionStackableMove extends ActionsDemo {
+    constructor() {
+        super();
+        this.testDuration = 0.2;
+    }
+
+  onEnter() {
     //----start33----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
 
     this._grossini.x = 40;
@@ -2083,23 +2254,22 @@ var ActionStackableMove = ActionsDemo.extend({
     var repeat = seq.repeatForever();
     this._grossini.runAction(repeat);
     //----end33----
-  },
-  title: function () {
+  }
+  title() {
     return "Stackable actions: MoveBy + MoveBy";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Grossini shall move up and down while moving horizontally";
-  },
+  }
   //
   // Automation
   //
-  testDuration: 0.2,
-  getExpectedResult: function () {
+  getExpectedResult() {
     var ret = [true, true];
     return JSON.stringify(ret);
-  },
+  }
 
-  getCurrentResult: function () {
+  getCurrentResult() {
     var ret = [];
     var x = this._grossini.x,
       y = this._grossini.y;
@@ -2112,17 +2282,18 @@ var ActionStackableMove = ActionsDemo.extend({
     ret.push(ret_y);
     return JSON.stringify(ret);
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionStackableJump
 //
 //------------------------------------------------------------------
-var ActionStackableJump = ActionsDemo.extend({
-  onEnter: function () {
+var ActionStackableJump = class ActionStackableJump extends ActionsDemo {
+  onEnter() {
     //----start34----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
 
     this._grossini.x = 40;
@@ -2142,24 +2313,25 @@ var ActionStackableJump = ActionsDemo.extend({
     var repeat = seq.repeatForever();
     this._grossini.runAction(repeat);
     //----end34----
-  },
-  title: function () {
+  }
+  title() {
     return "Stackable actions: MoveBy + JumpBy";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Grossini shall shake while he is jumping";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionStackableBezier
 //
 //------------------------------------------------------------------
-var ActionStackableBezier = ActionsDemo.extend({
-  onEnter: function () {
+var ActionStackableBezier = class ActionStackableBezier extends ActionsDemo {
+  onEnter() {
     //----start35----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
 
     this._grossini.x = 40;
@@ -2185,24 +2357,25 @@ var ActionStackableBezier = ActionsDemo.extend({
       .repeatForever();
     this._grossini.runAction(repeat);
     //----end35----
-  },
-  title: function () {
+  }
+  title() {
     return "Stackable actions: MoveBy + BezierBy";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Grossini shall shake while he moves along a bezier path";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionStackableCatmullRom
 //
 //------------------------------------------------------------------
-var ActionStackableCatmullRom = ActionsDemo.extend({
-  onEnter: function () {
+var ActionStackableCatmullRom = class ActionStackableCatmullRom extends ActionsDemo {
+  onEnter() {
     //----start36----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
 
     this._grossini.x = 40;
@@ -2232,24 +2405,25 @@ var ActionStackableCatmullRom = ActionsDemo.extend({
     var repeat = seq1.repeatForever();
     this._grossini.runAction(repeat);
     //----end36----
-  },
-  title: function () {
+  }
+  title() {
     return "Stackable actions: MoveBy + CatmullRomBy";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Grossini shall shake while he moves along a CatmullRom path";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // ActionStackableCardinalSpline
 //
 //------------------------------------------------------------------
-var ActionStackableCardinalSpline = ActionsDemo.extend({
-  onEnter: function () {
+var ActionStackableCardinalSpline = class ActionStackableCardinalSpline extends ActionsDemo {
+  onEnter() {
     //----start37----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(1);
 
     this._grossini.x = 40;
@@ -2279,25 +2453,30 @@ var ActionStackableCardinalSpline = ActionsDemo.extend({
     var repeat = seq1.repeatForever();
     this._grossini.runAction(repeat);
     //----end37----
-  },
-  title: function () {
+  }
+  title() {
     return "Stackable actions: MoveBy + CardinalSplineBy";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Grossini shall shake while he moves along a CardinalSpline path";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // PauseResumeActions
 //
 //------------------------------------------------------------------
-var PauseResumeActions = ActionsDemo.extend({
-  _pausedTargets: [],
-  onEnter: function () {
+var PauseResumeActions = class PauseResumeActions extends ActionsDemo {
+    constructor() {
+        super();
+        this._pausedTargets = [];
+    }
+
+  onEnter() {
     //----start38----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     this._tamara.runAction(cc.rotateBy(3, 360).repeatForever());
@@ -2307,35 +2486,40 @@ var PauseResumeActions = ActionsDemo.extend({
     this.schedule(this.pause, 3, false, 0);
     this.schedule(this.resume, 5, false, 0);
     //----end38----
-  },
+  }
 
-  pause: function () {
+  pause() {
     cc.log("Pausing");
     this._pausedTargets = director.getActionManager().pauseAllRunningActions();
-  },
-  resume: function () {
+  }
+  resume() {
     cc.log("Resuming");
     director.getActionManager().resumeTargets(this._pausedTargets);
-  },
+  }
 
-  title: function () {
+  title() {
     return "PauseResumeActions";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "All actions pause at 3s and resume at 5s";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Issue1305
 //
 //------------------------------------------------------------------
-var Issue1305 = ActionsDemo.extend({
-  _spriteTemp: null,
-  onEnter: function () {
+var Issue1305 = class Issue1305 extends ActionsDemo {
+    constructor() {
+        super();
+        this._spriteTemp = null;
+    }
+
+  onEnter() {
     //----start39----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(0);
 
     this._spriteTmp = new cc.Sprite(s_pathGrossini);
@@ -2348,43 +2532,44 @@ var Issue1305 = ActionsDemo.extend({
     this._spriteTmp.runAction(cc.callFunc(this.onLog, this));
     this.scheduleOnce(this.onAddSprite, 2);
     //----end39----
-  },
-  onExit: function () {
-    this._super();
+  }
+  onExit() {
+    super.onExit();
     if (this._spriteTmp) {
       this._spriteTmp = null;
     }
-  },
-  onLog: function (pSender) {
+  }
+  onLog(pSender) {
     cc.log(
       "This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE"
     );
-  },
-  onAddSprite: function (dt) {
+  }
+  onAddSprite(dt) {
     this._spriteTmp.x = 250;
     this._spriteTmp.y = 250;
     if (this._spriteTmp) {
       this.addChild(this._spriteTmp);
       this._spriteTmp = null;
     }
-  },
-  title: function () {
+  }
+  title() {
     return "Issue 1305";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "In two seconds you should see a message on the console. NOT BEFORE.";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Issue1305_2
 //
 //------------------------------------------------------------------
-var Issue1305_2 = ActionsDemo.extend({
-  onEnter: function () {
+var Issue1305_2 = class Issue1305_2 extends ActionsDemo {
+  onEnter() {
     //----start40----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(0);
 
     var spr = new cc.Sprite(s_pathGrossini);
@@ -2407,36 +2592,37 @@ var Issue1305_2 = ActionsDemo.extend({
     //    [spr runAction:actF];
     director.getActionManager().addAction(actF, spr, false);
     //----end40----
-  },
-  onLog1: function () {
+  }
+  onLog1() {
     cc.log("1st block");
-  },
-  onLog2: function () {
+  }
+  onLog2() {
     cc.log("2nd block");
-  },
-  onLog3: function () {
+  }
+  onLog3() {
     cc.log("3rd block");
-  },
-  onLog4: function () {
+  }
+  onLog4() {
     cc.log("4th block");
-  },
-  title: function () {
+  }
+  title() {
     return "Issue 1305 #2";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "See console. You should only see one message for each block";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Issue1288
 //
 //------------------------------------------------------------------
-var Issue1288 = ActionsDemo.extend({
-  onEnter: function () {
+var Issue1288 = class Issue1288 extends ActionsDemo {
+  onEnter() {
     //----start41----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(0);
 
     var spr = new cc.Sprite(s_pathGrossini);
@@ -2451,24 +2637,25 @@ var Issue1288 = ActionsDemo.extend({
 
     spr.runAction(act4);
     //----end41----
-  },
-  title: function () {
+  }
+  title() {
     return "Issue 1288";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Sprite should end at the position where it started.";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Issue1288_2
 //
 //------------------------------------------------------------------
-var Issue1288_2 = ActionsDemo.extend({
-  onEnter: function () {
+var Issue1288_2 = class Issue1288_2 extends ActionsDemo {
+  onEnter() {
     //----start42----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(0);
 
     var spr = new cc.Sprite(s_pathGrossini);
@@ -2479,24 +2666,25 @@ var Issue1288_2 = ActionsDemo.extend({
     var act1 = cc.moveBy(0.5, cc.p(100, 0));
     spr.runAction(act1.repeat(1));
     //----end42----
-  },
-  title: function () {
+  }
+  title() {
     return "Issue 1288 #2";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "Sprite should move 100 pixels, and stay there";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Issue1327
 //
 //------------------------------------------------------------------
-var Issue1327 = ActionsDemo.extend({
-  onEnter: function () {
+var Issue1327 = class Issue1327 extends ActionsDemo {
+  onEnter() {
     //----start43----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(0);
 
     var spr = new cc.Sprite(s_pathGrossini);
@@ -2527,27 +2715,28 @@ var Issue1327 = ActionsDemo.extend({
     );
     spr.runAction(actF);
     //----end43----
-  },
-  onLogSprRotation: function (pSender) {
+  }
+  onLogSprRotation(pSender) {
     cc.log(pSender.rotation);
-  },
-  title: function () {
+  }
+  title() {
     return "Issue 1327";
-  },
-  subtitle: function () {
+  }
+  subtitle() {
     return "See console: You should see: 0, 45, 90, 135, 180";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Issue1438
 //
 //------------------------------------------------------------------
-var Issue1438 = ActionsDemo.extend({
-  onEnter: function () {
+var Issue1438 = class Issue1438 extends ActionsDemo {
+  onEnter() {
     //----start45----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     //
@@ -2581,34 +2770,35 @@ var Issue1438 = ActionsDemo.extend({
     var action2 = cc.animate(animation2);
     this._tamara.runAction(cc.sequence(action2, action2.reverse()));
     //----end45----
-  },
+  }
 
-  title: function () {
+  title() {
     return "Animation";
-  },
+  }
 
-  subtitle: function () {
+  subtitle() {
     return "Issue 1438. Set FPS to 30 to test this bug.";
   }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Issue1438
 //
 //------------------------------------------------------------------
-var Issue1446 = ActionsDemo.extend({
-  title: function () {
+var Issue1446 = class Issue1446 extends ActionsDemo {
+  title() {
     return "Sequence + Speed in 'reverse mode'";
-  },
+  }
 
-  subtitle: function () {
+  subtitle() {
     return "Issue #1446. 'Hello World' should be visible for only 0.1 seconds";
-  },
+  }
 
-  onEnter: function () {
+  onEnter() {
     //----start46----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(0);
     var label = (this.label = new cc.LabelTTF("Hello World", "Arial", 64));
 
@@ -2628,20 +2818,21 @@ var Issue1446 = ActionsDemo.extend({
     // Leave it uncommented to see that 0.0 is never called when going in reverse
     this.scheduleOnce(this.stepForwardGoBackward, 0.1);
     //----end46----
-  },
+  }
 
-  stepForwardGoBackward: function () {
+  stepForwardGoBackward() {
     var action = this.backwardsFade.getInnerAction();
     action.step(2.5);
     // Try with -10.0f and you can see the opacity not fully faded out. Try with lower values to see it 'almost' fade out
     this.backwardsFade.setSpeed(-10);
   }
-});
 
-var SequenceRepeatTest = ActionsDemo.extend({
-  onEnter: function () {
+};
+
+var SequenceRepeatTest = class SequenceRepeatTest extends ActionsDemo {
+  onEnter() {
     //----start47----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     this._kathia.runAction(
@@ -2658,16 +2849,17 @@ var SequenceRepeatTest = ActionsDemo.extend({
     );
     this._tamara.runAction(move_seq.repeat(3));
     //----end47----
-  },
+  }
 
-  title: function () {
+  title() {
     return "Sequence.repeat()";
-  },
+  }
 
-  subtitle: function () {
+  subtitle() {
     return "Tests sequence.repeat function.";
   }
-});
+
+};
 
 // custom action sample code
 class CustomMoveBy extends cc.MoveBy {
@@ -2700,12 +2892,16 @@ var createCustomAction = function (ActionObject) {
   return CustomAction;
 };
 
-var ActionCustomTest = ActionsDemo.extend({
-  _spritePos: null,
-  _layer: null,
-  onEnter: function () {
+var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
+    constructor() {
+        super();
+        this._spritePos = null;
+        this._layer = null;
+    }
+
+  onEnter() {
     //----start47----onEnter
-    this._super();
+    super.onEnter();
 
     this.centerSprites(0);
 
@@ -2728,12 +2924,12 @@ var ActionCustomTest = ActionsDemo.extend({
     this.addChild(buttonTemp);
 
     this.createActionInterval();
-  },
-  initActionProperty: function () {
+  }
+  initActionProperty() {
     this._spritePos = cc.p(25, 50);
     this._layer.removeAllChildren();
-  },
-  createActionInstant: function () {
+  }
+  createActionInstant() {
     this.initActionProperty();
 
     /**
@@ -2772,8 +2968,8 @@ var ActionCustomTest = ActionsDemo.extend({
       cc.log("callfunc");
     }, this);
     spriteTemp.runAction(callFunc);
-  },
-  createActionInterval: function () {
+  }
+  createActionInterval() {
     this.initActionProperty();
 
     /**
@@ -2938,8 +3134,8 @@ var ActionCustomTest = ActionsDemo.extend({
     animation.setRestoreOriginalFrame(true);
     var animate = new (createCustomAction(cc.Animate))(animation);
     spriteTemp.runAction(animate);
-  },
-  addandCreateSpriteTemp: function (actionTypeName, addLabelInLayerFlag) {
+  }
+  addandCreateSpriteTemp(actionTypeName, addLabelInLayerFlag) {
     var spriteTemp = new cc.Sprite(s_pathGrossini);
     this._layer.addChild(spriteTemp);
     spriteTemp.setPosition(this._spritePos);
@@ -2965,20 +3161,21 @@ var ActionCustomTest = ActionsDemo.extend({
     }
 
     return spriteTemp;
-  },
-  title: function () {
+  }
+  title() {
     return "ActionCustomTest";
-  },
+  }
 
-  subtitle: function () {
+  subtitle() {
     return "Tests custom action, every sprite changing rand color when they run actions";
   }
-});
 
-var ActionIssue13605 = ActionsDemo.extend({
-  onEnter: function () {
+};
+
+var ActionIssue13605 = class ActionIssue13605 extends ActionsDemo {
+  onEnter() {
     //----start47----onEnter
-    this._super();
+    super.onEnter();
     this.centerSprites(2);
 
     var move = new CustomMoveBy(2, cc.p(50, 0));
@@ -3001,16 +3198,17 @@ var ActionIssue13605 = ActionsDemo.extend({
     );
     this._tamara.runAction(moveCloneSeq.repeat(2));
     //----end47----
-  },
+  }
 
-  title: function () {
+  title() {
     return "action reverse and clone issue";
-  },
+  }
 
-  subtitle: function () {
+  subtitle() {
     return "action move and back will change rand color";
   }
-});
+
+};
 
 //-
 //

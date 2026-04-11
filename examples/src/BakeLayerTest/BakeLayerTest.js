@@ -32,52 +32,59 @@ var _bakeLayerTestIdx = -1;
 // ActionManagerTest
 //
 //------------------------------------------------------------------
-var BakeLayerBaseTest = BaseTestLayer.extend({
-    _atlas:null,
-    _title:"",
+var BakeLayerBaseTest = class BakeLayerBaseTest extends BaseTestLayer {
+    constructor() {
+        super();
+        this._atlas = null;
+        this._title = "";
+    }
 
-    title:function () {
+
+    title() {
         return "No title";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         var s = new BakeLayerTestScene();
         s.addChild(previousBakeLayerTest());
         director.runScene(s);
-    },
-    onRestartCallback:function (sender) {
+    }
+    onRestartCallback(sender) {
         var s = new BakeLayerTestScene();
         s.addChild(restartBakeLayerTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new BakeLayerTestScene();
         s.addChild(nextBakeLayerTest());
         director.runScene(s);
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfBakeLayerTest.length-1) - _bakeLayerTestIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return _bakeLayerTestIdx;
     }
-});
 
-var BakeLayerTest1 = BakeLayerBaseTest.extend({
-    _bakeLayer: null,
+};
 
-    title:function () {
+var BakeLayerTest1 = class BakeLayerTest1 extends BakeLayerBaseTest {
+
+    title() {
         return "Test 1. Bake Layer (Canvas only)";
-    },
+    }
 
-    ctor: function(){
-        this._super();
+    constructor(){
+        super();
+
+
+        this._bakeLayer = null;
 
         var winSize = cc.winSize;
         var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
@@ -113,34 +120,37 @@ var BakeLayerTest1 = BakeLayerBaseTest.extend({
         }
         this._bakeLayer = bakeLayer;
         bakeLayer.runAction(cc.sequence(cc.moveBy(2, cc.p(100,100)), cc.moveBy(2, cc.p(-100,-100))));
-    },
+    }
 
-    onBake: function(){
+    onBake(){
         this._bakeLayer.bake();
-    },
+    }
 
-    onUnbake: function(){
+    onUnbake(){
         this._bakeLayer.unbake();
-    },
+    }
 
-    onRunAction: function(){
+    onRunAction(){
         this._actionSprite.runAction(cc.rotateBy(1, 180));
     }
-});
 
-var BakeLayerTest2 = BakeLayerBaseTest.extend({
-    _bakeLayer: null,
+};
 
-    title:function () {
+var BakeLayerTest2 = class BakeLayerTest2 extends BakeLayerBaseTest {
+
+    title() {
         return "Test 2. Bake Layer with other layer (Canvas only)";
-    },
+    }
 
-    subtitle: function () {
+    subtitle() {
         return "Changing top layer shouldn't increase draw call number";
-    },
+    }
 
-    ctor: function(){
-        this._super();
+    constructor(){
+        super();
+
+
+        this._bakeLayer = null;
 
         var winSize = cc.winSize;
         var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
@@ -195,40 +205,45 @@ var BakeLayerTest2 = BakeLayerBaseTest.extend({
         this._normalLayer = normalLayer;
 
         this.zOrder = 0;
-    },
+    }
 
-    onBake: function(){
+    onBake(){
         this._bakeLayer.bake();
-    },
+    }
 
-    onUnbake: function(){
+    onUnbake(){
         this._bakeLayer.unbake();
-    },
+    }
 
-    onChangeZOrder: function(){
+    onChangeZOrder(){
         this.zOrder++;
         var childId = Math.floor(Math.random() * 9);
         this._normalLayer.children[childId].setLocalZOrder(this.zOrder);
         this._normalLayer.children[childId].rotation = 360 * Math.random();
-    },
+    }
 
-    onChangeBakeZOrder: function(){
+    onChangeBakeZOrder(){
         this.zOrder++;
         var childId = Math.floor(Math.random() * 9);
         this._bakeLayer.children[childId].setLocalZOrder(this.zOrder);
     }
-});
 
-var BakeLayerColorTest = BakeLayerBaseTest.extend({
-    _bakeLayer: null,
-    _actionSprite: null,
+};
 
-    title:function () {
+var BakeLayerColorTest = class BakeLayerColorTest extends BakeLayerBaseTest {
+
+    title() {
         return "Test 3. Bake Layer Gradient (Canvas only)";
-    },
+    }
 
-    ctor: function(){
-        this._super();
+    constructor(){
+        super();
+
+
+        this._bakeLayer = null;
+
+
+        this._actionSprite = null;
 
         var winSize = cc.winSize;
         var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
@@ -269,28 +284,30 @@ var BakeLayerColorTest = BakeLayerBaseTest.extend({
         this._bakeLayer = bakeLayer;
         bakeLayer.bake();
         bakeLayer.runAction(cc.sequence(cc.moveBy(2, cc.p(100,100)), cc.moveBy(2, cc.p(-100,-100))));
-    },
+    }
 
-    onBake: function(){
+    onBake(){
         this._bakeLayer.bake();
-    },
+    }
 
-    onUnbake: function(){
+    onUnbake(){
         this._bakeLayer.unbake();
-    },
+    }
 
-    onRunAction: function(){
+    onRunAction(){
         this._actionSprite.runAction(cc.rotateBy(2, 180));
     }
-});
 
-var BakeLayerTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var BakeLayerTestScene = class BakeLayerTestScene extends TestScene {
+    runThisTest(num) {
         _bakeLayerTestIdx = (num || 0) - 1;
         this.addChild(nextBakeLayerTest());
         director.runScene(this);
     }
-});
+
+};
 
 //-
 //

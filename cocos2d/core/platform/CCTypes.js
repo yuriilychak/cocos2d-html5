@@ -851,32 +851,29 @@ cc.VERTICAL_TEXT_ALIGNMENT_CENTER = 1;
  */
 cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM = 2;
 
-cc._Dictionary = cc.Class.extend({
-    _keyMapTb: null,
-    _valueMapTb: null,
-    __currId: 0,
-
-    ctor: function () {
+cc._Dictionary = class _Dictionary extends cc.NewClass {
+    constructor() {
+        super();
         this._keyMapTb = {};
         this._valueMapTb = {};
         this.__currId = 2 << (0 | (Math.random() * 10));
-    },
+    }
 
-    __getKey: function () {
+    __getKey() {
         this.__currId++;
         return "key_" + this.__currId;
-    },
+    }
 
-    setObject: function (value, key) {
+    setObject(value, key) {
         if (key == null)
             return;
 
         var keyId = this.__getKey();
         this._keyMapTb[keyId] = key;
         this._valueMapTb[keyId] = value;
-    },
+    }
 
-    objectForKey: function (key) {
+    objectForKey(key) {
         if (key == null)
             return null;
 
@@ -886,13 +883,13 @@ cc._Dictionary = cc.Class.extend({
                 return this._valueMapTb[keyId];
         }
         return null;
-    },
+    }
 
-    valueForKey: function (key) {
+    valueForKey(key) {
         return this.objectForKey(key);
-    },
+    }
 
-    removeObjectForKey: function (key) {
+    removeObjectForKey(key) {
         if (key == null)
             return;
 
@@ -904,32 +901,32 @@ cc._Dictionary = cc.Class.extend({
                 return;
             }
         }
-    },
+    }
 
-    removeObjectsForKeys: function (keys) {
+    removeObjectsForKeys(keys) {
         if (keys == null)
             return;
 
         for (var i = 0; i < keys.length; i++)
             this.removeObjectForKey(keys[i]);
-    },
+    }
 
-    allKeys: function () {
+    allKeys() {
         var keyArr = [], locKeyMapTb = this._keyMapTb;
         for (var key in locKeyMapTb)
             keyArr.push(locKeyMapTb[key]);
         return keyArr;
-    },
+    }
 
-    removeAllObjects: function () {
+    removeAllObjects() {
         this._keyMapTb = {};
         this._valueMapTb = {};
-    },
+    }
 
-    count: function () {
+    count() {
         return this.allKeys().length;
     }
-});
+};
 
 /**
  * Common usage:

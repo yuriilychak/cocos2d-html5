@@ -30,25 +30,25 @@
  * @extends ccui.ProtectedNode
  * @property {Number}               spaceBetweenIndexNodes             - Space between index nodes in PageViewIndicator
  */
-ccui.PageViewIndicator = ccui.ProtectedNode.extend(/** @lends ccui.PageViewIndicator# */{
-    _direction: null,
-    _indexNodes: null,
-    _currentIndexNode: null,
-    _spaceBetweenIndexNodes: 0,
-    _indexNodesScale: 1.0,
-    _indexNodesColor: null,
-    _useDefaultTexture: true,
-    _indexNodesTextureFile: "",
-    _indexNodesTexType: ccui.Widget.LOCAL_TEXTURE,
+ccui.PageViewIndicator = class PageViewIndicator extends ccui.ProtectedNode {
+    _direction = null;
+    _indexNodes = null;
+    _currentIndexNode = null;
+    _spaceBetweenIndexNodes = 0;
+    _indexNodesScale = 1.0;
+    _indexNodesColor = null;
+    _useDefaultTexture = true;
+    _indexNodesTextureFile = "";
+    _indexNodesTexType = ccui.Widget.LOCAL_TEXTURE;
 
-    _className: "PageViewIndicator",
+    _className = "PageViewIndicator";
 
     /**
      * Allocates and initializes a PageViewIndicator.
      * Constructor of ccui.PageViewIndicator. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
      */
-    ctor: function () {
-        cc.ProtectedNode.prototype.ctor.call(this);
+    constructor() {
+        super();
 
         this._direction = ccui.ScrollView.DIR_HORIZONTAL;
         this._indexNodes = [];
@@ -61,22 +61,22 @@ ccui.PageViewIndicator = ccui.ProtectedNode.extend(/** @lends ccui.PageViewIndic
 
         // this.setCascadeColorEnabled(true);
         // this.setCascadeOpacityEnabled(true);
-    },
+    }
 
     /**
      * Sets direction of indicator
      * @param {ccui.ScrollView.DIR_NONE | ccui.ScrollView.DIR_VERTICAL | ccui.ScrollView.DIR_HORIZONTAL | ccui.ScrollView.DIR_BOTH} direction
      */
-    setDirection: function (direction) {
+    setDirection(direction) {
         this._direction = direction;
         this._rearrange();
-    },
+    }
 
     /**
      * resets indicator with new page count.
      * @param {number} numberOfTotalPages
      */
-    reset: function (numberOfTotalPages) {
+    reset(numberOfTotalPages) {
         while (this._indexNodes.length < numberOfTotalPages) {
             this._increaseNumberOfPages();
         }
@@ -85,20 +85,20 @@ ccui.PageViewIndicator = ccui.ProtectedNode.extend(/** @lends ccui.PageViewIndic
         }
         this._rearrange();
         this._currentIndexNode.setVisible(this._indexNodes.length > 0);
-    },
+    }
 
     /**
      * Indicates node by index
      * @param {number} index
      */
-    indicate: function (index) {
+    indicate(index) {
         if (index < 0 || index >= this._indexNodes.length) {
             return;
         }
         this._currentIndexNode.setPosition(this._indexNodes[index].getPosition());
-    },
+    }
 
-    _rearrange: function () {
+    _rearrange() {
         if (this._indexNodes.length === 0) {
             return;
         }
@@ -124,70 +124,70 @@ ccui.PageViewIndicator = ccui.ProtectedNode.extend(/** @lends ccui.PageViewIndic
             this._indexNodes[i].setPosition(position);
             posValue += sizeValue + this._spaceBetweenIndexNodes;
         }
-    },
+    }
 
     /**
      * Sets space between index nodes.
      * @param {number} spaceBetweenIndexNodes
      */
-    setSpaceBetweenIndexNodes: function (spaceBetweenIndexNodes) {
+    setSpaceBetweenIndexNodes(spaceBetweenIndexNodes) {
         if (this._spaceBetweenIndexNodes === spaceBetweenIndexNodes) {
             return;
         }
         this._spaceBetweenIndexNodes = spaceBetweenIndexNodes;
         this._rearrange();
-    },
+    }
 
     /**
      * Gets space between index nodes.
      * @returns {number}
      */
-    getSpaceBetweenIndexNodes: function () {
+    getSpaceBetweenIndexNodes() {
         return this._spaceBetweenIndexNodes;
-    },
+    }
 
     /**
      * Sets color of selected index node
      * @param {cc.Color} color
      */
-    setSelectedIndexColor: function (color) {
+    setSelectedIndexColor(color) {
         this._currentIndexNode.setColor(color);
-    },
+    }
 
     /**
      * Gets color of selected index node
      * @returns {cc.Color}
      */
-    getSelectedIndexColor: function () {
+    getSelectedIndexColor() {
         return this._currentIndexNode.getColor();
-    },
+    }
 
     /**
      * Sets color of index nodes
      * @param {cc.Color} indexNodesColor
      */
-    setIndexNodesColor: function (indexNodesColor) {
+    setIndexNodesColor(indexNodesColor) {
         this._indexNodesColor = indexNodesColor;
 
         for (var i = 0; i < this._indexNodes.length; ++i) {
             this._indexNodes[i].setColor(indexNodesColor);
         }
-    },
+    }
 
     /**
      * Gets color of index nodes
      * @returns {cc.Color}
      */
-    getIndexNodesColor: function () {
+    getIndexNodesColor() {
         var locRealColor = this._indexNodesColor;
         return cc.color(locRealColor.r, locRealColor.g, locRealColor.b, locRealColor.a);
-    },
+    }
 
     /**
      * Sets scale of index nodes
      * @param {Number} indexNodesScale
      */
-    setIndexNodesScale: function (indexNodesScale) {
+    setIndexNodesScale(indexNodesScale) {
         if (this._indexNodesScale === indexNodesScale) {
             return;
         }
@@ -200,22 +200,22 @@ ccui.PageViewIndicator = ccui.ProtectedNode.extend(/** @lends ccui.PageViewIndic
         }
 
         this._rearrange();
-    },
+    }
 
     /**
      * Gets scale of index nodes
      * @returns {Number}
      */
-    getIndexNodesScale: function () {
+    getIndexNodesScale() {
         return this._indexNodesScale;
-    },
+    }
 
     /**
      * Sets texture of index nodes
      * @param {String} texName
      * @param {ccui.Widget.LOCAL_TEXTURE | ccui.Widget.PLIST_TEXTURE} [texType = ccui.Widget.LOCAL_TEXTURE]
      */
-    setIndexNodesTexture: function (texName, texType) {
+    setIndexNodesTexture(texName, texType) {
         if (texType === undefined)
             texType = ccui.Widget.LOCAL_TEXTURE;
         
@@ -241,9 +241,9 @@ ccui.PageViewIndicator = ccui.ProtectedNode.extend(/** @lends ccui.PageViewIndic
         }
 
         this._rearrange();
-    },
+    }
 
-    _increaseNumberOfPages: function () {
+    _increaseNumberOfPages() {
         var indexNode;
 
         if (this._useDefaultTexture) {
@@ -268,20 +268,20 @@ ccui.PageViewIndicator = ccui.ProtectedNode.extend(/** @lends ccui.PageViewIndic
 
         this.addProtectedChild(indexNode);
         this._indexNodes.push(indexNode);
-    },
+    }
 
-    _decreaseNumberOfPages: function () {
+    _decreaseNumberOfPages() {
         if (this._indexNodes.length === 0) {
             return;
         }
         this.removeProtectedChild(this._indexNodes[0]);
         this._indexNodes.splice(0, 1);
-    },
+    }
 
     /**
      * Removes all index nodes.
      */
-    clear: function () {
+    clear() {
         for (var i = 0; i < this._indexNodes.length; ++i) {
             this.removeProtectedChild(this._indexNodes[i]);
         }
@@ -289,8 +289,7 @@ ccui.PageViewIndicator = ccui.ProtectedNode.extend(/** @lends ccui.PageViewIndic
         this._currentIndexNode.setVisible(false);
     }
 
-});
-
+};
 var _p = ccui.PageViewIndicator.prototype;
 
 // Extended properties

@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UISliderTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UISliderTest = class UISliderTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move the slider thumb");
@@ -46,9 +46,9 @@ var UISliderTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    sliderEvent: function (sender, type) {
+    sliderEvent(sender, type) {
         switch (type) {
             case ccui.Slider.EVENT_PERCENT_CHANGED:
                 var slider = sender;
@@ -59,11 +59,12 @@ var UISliderTest = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UISliderTest_Scale9 = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UISliderTest_Scale9 = class UISliderTest_Scale9 extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move the slider thumb");
@@ -86,9 +87,9 @@ var UISliderTest_Scale9 = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    sliderEvent: function (sender, type) {
+    sliderEvent(sender, type) {
         switch (type) {
             case ccui.Slider.EVENT_PERCENT_CHANGED:
                 var slider = sender;
@@ -99,12 +100,13 @@ var UISliderTest_Scale9 = UIMainLayer.extend({
                 break;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UISliderNormalDefaultTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UISliderNormalDefaultTest = class UISliderNormalDefaultTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("");
@@ -135,12 +137,13 @@ var UISliderNormalDefaultTest = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};
 
 //2015-01-14
-var UISliderDisabledDefaultTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UISliderDisabledDefaultTest = class UISliderDisabledDefaultTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("");
@@ -173,4 +176,5 @@ var UISliderDisabledDefaultTest = UIMainLayer.extend({
         }
         return false;
     }
-});
+
+};

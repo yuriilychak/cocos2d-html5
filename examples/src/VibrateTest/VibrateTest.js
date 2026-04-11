@@ -24,11 +24,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var VibrateTest = BaseTestLayer.extend({
-    _duration:0.1,
-    _durationLabel:null,
-    ctor:function () {
-        this._super();
+var VibrateTest = class VibrateTest extends BaseTestLayer {
+    constructor() {
+        super();
+
+        this._duration = 0.1;
+
+        this._durationLabel = null;
         var s = cc.director.getWinSize();
         var label = new cc.LabelTTF("vibrate control test", "Arial", 28);
         this.addChild(label, 0);
@@ -66,11 +68,11 @@ var VibrateTest = BaseTestLayer.extend({
         durationSlider.y = s.height * 0.35;
         durationSlider.addEventListener(this.durationSliderEvent, this);
         this.addChild(durationSlider);
-    },
-    startVibrate:function (sender) {
+    }
+    startVibrate(sender) {
         cc.Device.vibrate(this._duration);
-    },
-    durationSliderEvent:function (sender, type) {
+    }
+    durationSliderEvent(sender, type) {
         switch (type) {
             case ccui.Slider.EVENT_PERCENT_CHANGED:
                 var slider = sender;
@@ -81,20 +83,22 @@ var VibrateTest = BaseTestLayer.extend({
             default:
                 break;
         }
-    },
-    onExit:function () {
-        this._super();
     }
-});
+    onExit() {
+        super.onExit();
+    }
 
-var VibrateTestScene = TestScene.extend({
-    runThisTest:function () {
+};
+
+var VibrateTestScene = class VibrateTestScene extends TestScene {
+    runThisTest() {
         var layer = new VibrateTest();
         this.addChild(layer);
 
         cc.director.runScene(this);
     }
-});
+
+};
 
 var arrayOfVibrateTest = [
     VibrateTest

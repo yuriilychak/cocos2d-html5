@@ -28,13 +28,14 @@
 var sp = sp || {};
 
 var spineSceneIdx = -1;
-var SpineTestScene = TestScene.extend({
-    runThisTest:function () {
+var SpineTestScene = class SpineTestScene extends TestScene {
+    runThisTest() {
         var layer = SpineTestScene.nextSpineTestLayer();
         this.addChild(layer);
         director.runScene(this);
     }
-});
+
+};
 
 SpineTestScene.nextSpineTestLayer = function() {
     spineSceneIdx++;
@@ -55,39 +56,45 @@ SpineTestScene.restartSpineTestLayer = function(){
     return new SpineTestScene.testLayers[spineSceneIdx](spineSceneIdx);
 };
 
-var SpineTestLayer = BaseTestLayer.extend({
-    onRestartCallback: function(sender){
+var SpineTestLayer = class SpineTestLayer extends BaseTestLayer {
+    onRestartCallback(sender){
         var s = new SpineTestScene();
         s.addChild(SpineTestScene.restartSpineTestLayer());
         cc.director.runScene(s);
-    },
+    }
 
-    onNextCallback: function(sender){
+    onNextCallback(sender){
         var s = new SpineTestScene();
         s.addChild(SpineTestScene.nextSpineTestLayer());
         cc.director.runScene(s);
-    },
+    }
 
-    onBackCallback: function(sender){
+    onBackCallback(sender){
         var s = new SpineTestScene();
         s.addChild(SpineTestScene.backSpineTestLayer());
         cc.director.runScene(s);
     }
-});
 
-var customSkeletonAnimation = sp.SkeletonAnimation.extend({
-    ctor:function () {
-        this._super.apply(this, arguments);
+};
+
+var customSkeletonAnimation = class customSkeletonAnimation extends sp.SkeletonAnimation {
+    constructor() {
+        super(...arguments);
     }
-});
 
-var SpineTestLayerNormal = SpineTestLayer.extend({
-    _spineboy:null,
-    _debugMode: 0,
-    _flipped: false,
-    _idx:0,
-    ctor:function (idx) {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+};
+
+var SpineTestLayerNormal = class SpineTestLayerNormal extends SpineTestLayer {
+    constructor(idx) {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+
+        this._spineboy = null;
+
+        this._debugMode = 0;
+
+        this._flipped = false;
+
+        this._idx = 0;
         this._idx = idx;
 
         var size = director.getWinSize();
@@ -153,17 +160,17 @@ var SpineTestLayerNormal = SpineTestLayer.extend({
         menu.addChild(bonesToggle);
         menu.addChild(slotsToggle);
         this.addChild(menu, 5);
-    },
+    }
 
-    onDebugBones: function(sender){
+    onDebugBones(sender){
         this._spineboy.setDebugBonesEnabled(!this._spineboy.getDebugBonesEnabled());
-    },
+    }
 
-    onDebugSlots: function(sender){
+    onDebugSlots(sender){
         this._spineboy.setDebugSlotsEnabled(!this._spineboy.getDebugSlotsEnabled());
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         if (this._idx % 2 == 0) {
             return "custom spine test";
         }
@@ -171,12 +178,12 @@ var SpineTestLayerNormal = SpineTestLayer.extend({
             return "Spine test";
         }
         
-    },
-    title:function () {
+    }
+    title() {
         return "Spine test";
-    },
+    }
 
-    animationStateEvent: function(obj, trackIndex, type, event, loopCount) {
+    animationStateEvent(obj, trackIndex, type, event, loopCount) {
         var entry = this._spineboy.getCurrent();
         var animationName = (entry && entry.animation) ? entry.animation.name : 0;
         switch(type) {
@@ -202,20 +209,21 @@ var SpineTestLayerNormal = SpineTestLayer.extend({
             default :
                 break;
         }
-    },
+    }
     
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return 1;
-    },
-    getTestNumber:function() {
+    }
+    getTestNumber() {
         return 0;
     }
-});
 
-var SpineTestLayerFFD = SpineTestLayer.extend({
-    ctor: function(){
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+};
+
+var SpineTestLayerFFD = class SpineTestLayerFFD extends SpineTestLayer {
+    constructor(){
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
         var skeletonNode = new sp.SkeletonAnimation("spine/goblins-pro.json", "spine/goblins.atlas", 1.5);
         skeletonNode.setAnimation(0, "walk", true);
@@ -241,20 +249,21 @@ var SpineTestLayerFFD = SpineTestLayer.extend({
             }
         });
         cc.eventManager.addListener(listener, this);
-    },
+    }
 
-    title: function(){
+    title(){
        return "Spine Test";
-    },
+    }
 
-    subtitle: function(){
+    subtitle(){
         return "FFD Spine";
     }
-});
 
-var SpineTestPerformanceLayer = SpineTestLayer.extend({
-    ctor: function(){
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+};
+
+var SpineTestPerformanceLayer = class SpineTestPerformanceLayer extends SpineTestLayer {
+    constructor(){
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
         var self = this;
         var listener = cc.EventListener.create({
@@ -272,14 +281,15 @@ var SpineTestPerformanceLayer = SpineTestLayer.extend({
             }
         });
         cc.eventManager.addListener(listener, this);
-    },
-    title: function(){
+    }
+    title(){
         return "Spine Test";
-    },
-    subtitle: function() {
+    }
+    subtitle() {
         return "Performance Test for Spine";
     }
-});
+
+};
 
 SpineTestScene.testLayers = [
     SpineTestLayerNormal,

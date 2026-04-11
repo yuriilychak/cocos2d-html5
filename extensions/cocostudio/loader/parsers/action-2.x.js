@@ -24,13 +24,13 @@
 
 (function(load, baseParser){
 
-    var Parser = baseParser.extend({
+    var Parser = class Parser extends baseParser {
 
-        getNodeJson: function(json){
+        getNodeJson(json){
             return json["Content"]["Content"]["Animation"];
-        },
+        }
 
-        parseNode: function(json, resourcePath, file){
+        parseNode(json, resourcePath, file){
             if(!json)
                 return null;
 
@@ -54,9 +54,9 @@
             });
 
             return action;
-        },
+        }
 
-        deferred: function(json, resourcePath, action, file){
+        deferred(json, resourcePath, action, file){
             var animationlist = json["Content"]["Content"]["AnimationList"];
             var length = animationlist ? animationlist.length : 0;
             for (var i = 0; i < length; i++){
@@ -69,7 +69,8 @@
             }
         }
 
-    });
+    
+    }
     var parser = new Parser();
 
     var frameList = [

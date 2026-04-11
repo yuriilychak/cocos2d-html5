@@ -27,12 +27,16 @@
 var PADDLE_STATE_GRABBED = 0;
 var PADDLE_STATE_UNGRABBED = 1;
 
-var Paddle = cc.Sprite.extend({
-    _state:PADDLE_STATE_UNGRABBED,
-    _rect:null,
+var Paddle = class Paddle extends cc.Sprite {
 
-    ctor: function(){
-        this._super();
+    constructor(){
+        super();
+
+
+        this._state = PADDLE_STATE_UNGRABBED;
+
+
+        this._rect = null;
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
@@ -40,13 +44,13 @@ var Paddle = cc.Sprite.extend({
             onTouchMoved: this.onTouchMoved,
             onTouchEnded: this.onTouchEnded
         }, this);
-    },
+    }
 
-    rect:function () {
+    rect() {
         return cc.rect(-this._rect.width / 2, -this._rect.height / 2, this._rect.width, this._rect.height);
-    },
-    initWithTexture:function (aTexture) {
-        if (this._super(aTexture)) {
+    }
+    initWithTexture(aTexture) {
+        if (super.initWithTexture(aTexture)) {
             this._state = PADDLE_STATE_UNGRABBED;
         }
         if (aTexture instanceof cc.Texture2D) {
@@ -55,26 +59,26 @@ var Paddle = cc.Sprite.extend({
             this._rect = cc.rect(0, 0, aTexture.width, aTexture.height);
         }
         return true;
-    },
+    }
 
-    containsTouchLocation:function (touch) {
+    containsTouchLocation(touch) {
         var getPoint = touch.getLocation();
         var myRect = this.rect();
 
         myRect.x += this.x;
         myRect.y += this.y;
         return cc.rectContainsPoint(myRect, getPoint);//this.convertTouchToNodeSpaceAR(touch));
-    },
+    }
 
-    onTouchBegan:function (touch, event) {
+    onTouchBegan(touch, event) {
         var target = event.getCurrentTarget();
         if (target._state != PADDLE_STATE_UNGRABBED) return false;
         if (!target.containsTouchLocation(touch)) return false;
 
         target._state = PADDLE_STATE_GRABBED;
         return true;
-    },
-    onTouchMoved:function (touch, event) {
+    }
+    onTouchMoved(touch, event) {
         var target = event.getCurrentTarget();
         // If it weren't for the TouchDispatcher, you would need to keep a reference
         // to the touch from touchBegan and check that the current touch is the same
@@ -88,17 +92,18 @@ var Paddle = cc.Sprite.extend({
         //touchPoint = cc.director.convertToGL( touchPoint );
 
         target.x = touchPoint.x;
-    },
-    onTouchEnded:function (touch, event) {
+    }
+    onTouchEnded(touch, event) {
         var target = event.getCurrentTarget();
         cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
         target._state = PADDLE_STATE_UNGRABBED;
-    },
-    touchDelegateRetain:function () {
-    },
-    touchDelegateRelease:function () {
     }
-});
+    touchDelegateRetain() {
+    }
+    touchDelegateRelease() {
+    }
+
+};
 Paddle.paddleWithTexture = function (aTexture) {
     var paddle = new Paddle();
     paddle.initWithTexture(aTexture);

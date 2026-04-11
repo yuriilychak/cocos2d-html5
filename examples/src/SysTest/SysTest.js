@@ -30,79 +30,90 @@ var sysTestSceneIdx = -1;
 // SysTestBase
 //
 //------------------------------------------------------------------
-var SysTestBase = BaseTestLayer.extend({
-    _title:"",
-    _subtitle:"",
+var SysTestBase = class SysTestBase extends BaseTestLayer {
 
-    ctor:function() {
-        this._super(cc.color(0,0,0,0), cc.color(98,99,117,0));
-    },
-    onRestartCallback:function (sender) {
+    constructor() {
+        super(cc.color(0,0,0,0), cc.color(98,99,117,0));
+
+
+        this._title = "";
+
+
+        this._subtitle = "";
+    }
+    onRestartCallback(sender) {
         var s = new SysTestScene();
         s.addChild(restartSysTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new SysTestScene();
         s.addChild(nextSysTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new SysTestScene();
         s.addChild(previousSysTest());
         director.runScene(s);
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfSysTest.length-1) - sysTestSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return sysTestSceneIdx;
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // setClearColorTest
 //
 //------------------------------------------------------------------
-var setClearColorTest = SysTestBase.extend({
-    _title:"Set clearColor to red with alpha = 0 ",
-    ctor:function()
+var setClearColorTest = class setClearColorTest extends SysTestBase {
+    constructor()
     {
-        this._super();
+        super();
+
+        this._title = "Set clearColor to red with alpha = 0 ";
         var bg = new cc.Sprite(s_back,cc.rect(0,0, 200, 200));
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         this.addChild(bg);
         return true;
-    },
-    onEnter:function()
+    }
+    onEnter()
     {
-        this._super();
+        super.onEnter();
         var clearColor = cc.color(255, 0, 0, 0);
         director.setClearColor(clearColor);
-    },
-    onExit:function()
+    }
+    onExit()
     {
         director.setClearColor(cc.color(0, 0, 0, 255));
-        this._super();
+        super.onExit();
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // LocalStorageTest
 //
 //------------------------------------------------------------------
-var LocalStorageTest = SysTestBase.extend({
-    _title:"LocalStorage Test ",
-    _subtitle:"See the console",
+var LocalStorageTest = class LocalStorageTest extends SysTestBase {
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._title = "LocalStorage Test ";
+
+
+        this._subtitle = "See the console";
 
         var key = 'key_' + Math.random();
         var ls = cc.sys.localStorage;
@@ -139,35 +150,42 @@ var LocalStorageTest = SysTestBase.extend({
         cc.log( ls.getItem(key3) );
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // CapabilitiesTest
 //
 //------------------------------------------------------------------
-var CapabilitiesTest = SysTestBase.extend({
-    _title:"Capabilities Test ",
-    _subtitle:"See the console",
+var CapabilitiesTest = class CapabilitiesTest extends SysTestBase {
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._title = "Capabilities Test ";
+
+
+        this._subtitle = "See the console";
 
         var c = cc.sys.capabilities;
         for( var i in c )
             cc.log( i + " = " + c[i] );
     }
 
-});
 
-var SysTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var SysTestScene = class SysTestScene extends TestScene {
+    runThisTest(num) {
         sysTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextSysTest();
         this.addChild(layer);
         director.runScene(this);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
@@ -175,10 +193,8 @@ var SysTestScene = TestScene.extend({
 //
 //------------------------------------------------------------------
 var tempJSFileName = "ScriptTestTempFile.js";
-var ScriptTestLayer = SysTestBase.extend({
-    _tempLayer:null,
-    _am : null,
-    startDownload:function () {
+var ScriptTestLayer = class ScriptTestLayer extends SysTestBase {
+    startDownload() {
         if (!cc.sys.isNative)
         {
             return;
@@ -234,13 +250,13 @@ var ScriptTestLayer = SysTestBase.extend({
             cc.eventManager.addListener(listener, 1);
             this._am.update();
         }
-    },
-    clickMeShowTempLayer:function () {
+    }
+    clickMeShowTempLayer() {
         this.removeChildByTag(233, true);
         this._tempLayer = new ScriptTestTempLayer();
         this.addChild(this._tempLayer, 0, 233);
-    },
-    clickMeReloadTempLayer:function(){
+    }
+    clickMeReloadTempLayer(){
         cc.sys.cleanScript(tempJSFileName);
         if (!cc.sys.isNative){
             this.clickMeShowTempLayer();
@@ -248,17 +264,21 @@ var ScriptTestLayer = SysTestBase.extend({
             this.startDownload();
         }
 
-    },
-    onExit : function () {
+    }
+    onExit() {
         if (this._am)
         {
             this._am = null;
         }
 
-        this._super();
-    },
-    ctor : function () {
-        this._super();
+        super.onExit();
+    }
+    constructor() {
+        super();
+
+        this._tempLayer = null;
+
+        this._am = null;
 
         var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
@@ -273,29 +293,30 @@ var ScriptTestLayer = SysTestBase.extend({
 
         menu.alignItemsVerticallyWithPadding(8);
         menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
-    },
+    }
 
-    getTitle : function() {
+    getTitle() {
         return "ScriptTest only used in native";
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Restart game test
 //
 //------------------------------------------------------------------
-var RestartGameLayerTest = SysTestBase.extend({
-    getTitle : function() {
+var RestartGameLayerTest = class RestartGameLayerTest extends SysTestBase {
+    getTitle() {
         return "RestartGameTest only used in native";
-    },
-    restartGame:function()
+    }
+    restartGame()
     {
         cc.game.restart();
-    },
-    ctor : function () {
-        this._super();
+    }
+    constructor() {
+        super();
         var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
         menu.width = winSize.width;
@@ -305,15 +326,16 @@ var RestartGameLayerTest = SysTestBase.extend({
         menu.addChild(item1);
         menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
     }
-});
 
-var OpenURLTest = SysTestBase.extend({
-    getTitle:function(){
+};
+
+var OpenURLTest = class OpenURLTest extends SysTestBase {
+    getTitle(){
         return "Open URL Test";
-    },
+    }
 
-    ctor:function(){
-        this._super();
+    constructor(){
+        super();
         
         var label = new cc.LabelTTF("Touch the screen to open\nthe cocos2d-x home page", "Arial", 22);
         this.addChild(label);
@@ -331,7 +353,8 @@ var OpenURLTest = SysTestBase.extend({
         }, this);
 
     }
-});
+
+};
 
 //
 // Flow control

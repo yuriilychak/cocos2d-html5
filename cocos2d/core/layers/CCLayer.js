@@ -29,20 +29,20 @@
  * @class
  * @extends cc.Node
  */
-cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
-    _className: "Layer",
-
+cc.Layer = class Layer extends cc.Node {
     /**
      * <p>Constructor of cc.Layer, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor: function () {
-        cc.Node.prototype.ctor.call(this);
+    constructor() {
+        super();
+        this._className = "Layer";
+
         this._ignoreAnchorPointForPosition = true;
         this.setAnchorPoint(0.5, 0.5);
         this.setContentSize(cc.winSize);
         this._cascadeColorEnabled = false;
         this._cascadeOpacityEnabled = false;
-    },
+    }
 
     /**
      * Sets the layer to cache all of children to a bake sprite, and draw itself by bake sprite. recommend using it in UI.<br/>
@@ -50,9 +50,9 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
      * @function
      * @see cc.Layer#unbake
      */
-    bake: function () {
+    bake() {
         this._renderCmd.bake();
-    },
+    }
 
     /**
      * Cancel the layer to cache all of children to a bake sprite.<br/>
@@ -60,9 +60,9 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
      * @function
      * @see cc.Layer#bake
      */
-    unbake: function () {
+    unbake() {
         this._renderCmd.unbake();
-    },
+    }
 
     /**
      * Determines if the layer is baked.
@@ -70,11 +70,11 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
      * @returns {boolean}
      * @see cc.Layer#bake and cc.Layer#unbake
      */
-    isBaked: function () {
+    isBaked() {
         return this._renderCmd._isBaked;
-    },
+    }
 
-    visit: function (parent) {
+    visit(parent) {
         var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
 
         // quick return if not visible
@@ -116,20 +116,20 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
             }
         }
         cmd._dirtyFlag = 0;
-    },
+    }
 
-    addChild: function (child, localZOrder, tag) {
-        cc.Node.prototype.addChild.call(this, child, localZOrder, tag);
+    addChild(child, localZOrder, tag) {
+        super.addChild(child, localZOrder, tag);
         this._renderCmd._bakeForAddChild(child);
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.Layer.CanvasRenderCmd(this);
         else
             return new cc.Layer.WebGLRenderCmd(this);
     }
-});
+};
 
 
 /**
@@ -154,24 +154,21 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
  * //create a yellow box, 200 by 200 in size
  * var yellowBox = new cc.LayerColor(cc.color(255,255,0,255), 200, 200);
  */
-cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
-    _blendFunc: null,
-    _className: "LayerColor",
-
+cc.LayerColor = class LayerColor extends cc.Layer {
     /**
      * Returns the blend function
      * @return {cc.BlendFunc}
      */
-    getBlendFunc: function () {
+    getBlendFunc() {
         return this._blendFunc;
-    },
+    }
 
-    setOpacityModifyRGB: function (value) {
-    },
+    setOpacityModifyRGB(value) {
+    }
 
-    isOpacityModifyRGB: function () {
+    isOpacityModifyRGB() {
         return false;
-    },
+    }
 
     /**
      * Constructor of cc.LayerColor
@@ -180,11 +177,14 @@ cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
      * @param {Number} [width=]
      * @param {Number} [height=]
      */
-    ctor: function (color, width, height) {
-        cc.Layer.prototype.ctor.call(this);
+    constructor(color, width, height) {
+        super();
+        this._blendFunc = null;
+        this._className = "LayerColor";
+
         this._blendFunc = cc.BlendFunc._alphaNonPremultiplied();
         cc.LayerColor.prototype.init.call(this, color, width, height);
-    },
+    }
 
     /**
      * Initialization of the layer, please do not call this function by yourself, you should pass the parameters to constructor to initialize a layer
@@ -193,7 +193,7 @@ cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
      * @param {Number} [height=]
      * @return {Boolean}
      */
-    init: function (color, width, height) {
+    init(color, width, height) {
         var winSize = cc.director.getWinSize();
         color = color || cc.color(0, 0, 0, 255);
         width = width === undefined ? winSize.width : width;
@@ -208,9 +208,9 @@ cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
 
         cc.LayerColor.prototype.setContentSize.call(this, width, height);
         return true;
-    },
+    }
 
-    visit: function (parent) {
+    visit(parent) {
         var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
 
         // quick return if not visible
@@ -255,14 +255,14 @@ cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
         }
 
         cmd._dirtyFlag = 0;
-    },
+    }
 
     /**
      * Sets the blend func, you can pass either a cc.BlendFunc object or source and destination value separately
      * @param {Number|cc.BlendFunc} src
      * @param {Number} [dst]
      */
-    setBlendFunc: function (src, dst) {
+    setBlendFunc(src, dst) {
         var locBlendFunc = this._blendFunc;
         if (dst === undefined) {
             locBlendFunc.src = src.src;
@@ -272,15 +272,15 @@ cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
             locBlendFunc.dst = dst;
         }
         this._renderCmd.updateBlendFunc(locBlendFunc);
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.LayerColor.CanvasRenderCmd(this);
         else
             return new cc.LayerColor.WebGLRenderCmd(this);
     }
-});
+};
 
 
 //LayerColor - Getter Setter
@@ -323,15 +323,7 @@ cc.LayerColor = cc.Layer.extend(/** @lends cc.LayerColor# */{
  * @property {Number}   vector                  - Direction vector of the color gradient
  * @property {Number}   compressedInterpolation  - Indicate whether or not the interpolation will be compressed
  */
-cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
-    _endColor: null,
-    _startOpacity: 255,
-    _endOpacity: 255,
-    _alongVector: null,
-    _compressedInterpolation: false,
-    _className: "LayerGradient",
-    _colorStops: [],
-
+cc.LayerGradient = class LayerGradient extends cc.LayerColor {
     /**
      * Constructor of cc.LayerGradient
      * @param {cc.Color} start
@@ -348,8 +340,16 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
      * //where p = A value between 0.0 and 1.0 that represents the position between start and end in a gradient
      *
      */
-    ctor: function (start, end, v, stops) {
-        cc.LayerColor.prototype.ctor.call(this);
+    constructor(start, end, v, stops) {
+        super();
+        this._endColor = null;
+        this._startOpacity = 255;
+        this._endOpacity = 255;
+        this._alongVector = null;
+        this._compressedInterpolation = false;
+        this._className = "LayerGradient";
+        this._colorStops = [];
+
         this._endColor = cc.color(0, 0, 0, 255);
         this._alongVector = cc.p(0, -1);
         this._startOpacity = 255;
@@ -363,7 +363,7 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
             this._colorStops = [{p: 0, color: start || cc.color.BLACK}, {p: 1, color: end || cc.color.BLACK}];
 
         cc.LayerGradient.prototype.init.call(this, start, end, v, stops);
-    },
+    }
 
     /**
      * Initialization of the layer, please do not call this function by yourself, you should pass the parameters to constructor to initialize a layer
@@ -373,7 +373,7 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
      * @param {Array|Null} stops
      * @return {Boolean}
      */
-    init: function (start, end, v, stops) {
+    init(start, end, v, stops) {
         start = start || cc.color(0, 0, 0, 255);
         end = end || cc.color(0, 0, 0, 255);
         v = v || cc.p(0, -1);
@@ -391,37 +391,38 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
         _t._alongVector = v;
         _t._compressedInterpolation = true;
 
-        cc.LayerColor.prototype.init.call(_t, cc.color(start.r, start.g, start.b, 255));
+        super.init(cc.color(start.r, start.g, start.b, 255));
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty | cc.Node._dirtyFlags.opacityDirty | cc.Node._dirtyFlags.gradientDirty);
         return true;
-    },
+    }
 
     /**
      * Sets the untransformed size of the LayerGradient.
      * @param {cc.Size|Number} size The untransformed size of the LayerGradient or The untransformed size's width of the LayerGradient.
      * @param {Number} [height] The untransformed size's height of the LayerGradient.
      */
-    setContentSize: function (size, height) {
-        cc.LayerColor.prototype.setContentSize.call(this, size, height);
+    setContentSize(size, height) {
+        super.setContentSize(size, height);
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.gradientDirty);
-    },
+    }
 
-    _setWidth: function (width) {
-        cc.LayerColor.prototype._setWidth.call(this, width);
+    _setWidth(width) {
+        super._setWidth(width);
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.gradientDirty);
-    },
-    _setHeight: function (height) {
-        cc.LayerColor.prototype._setHeight.call(this, height);
+    }
+
+    _setHeight(height) {
+        super._setHeight(height);
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.gradientDirty);
-    },
+    }
 
     /**
      * Returns the starting color
      * @return {cc.Color}
      */
-    getStartColor: function () {
+    getStartColor() {
         return cc.color(this._realColor);
-    },
+    }
 
     /**
      * Sets the starting color
@@ -431,7 +432,7 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
      * myGradientLayer.setStartColor(cc.color(255,0,0));
      * //set the starting gradient to red
      */
-    setStartColor: function (color) {
+    setStartColor(color) {
         this.color = color;
         //update the color stops
         var stops = this._colorStops;
@@ -441,7 +442,7 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
             selColor.g = color.g;
             selColor.b = color.b;
         }
-    },
+    }
 
     /**
      * Sets the end gradient color
@@ -451,7 +452,7 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
      * myGradientLayer.setEndColor(cc.color(255,0,0));
      * //set the ending gradient to red
      */
-    setEndColor: function (color) {
+    setEndColor(color) {
         var locColor = this._endColor;
         locColor.r = color.r;
         locColor.g = color.g;
@@ -465,91 +466,91 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
             selColor.b = color.b;
         }
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
-    },
+    }
 
     /**
      * Returns the end color
      * @return {cc.Color}
      */
-    getEndColor: function () {
+    getEndColor() {
         return cc.color(this._endColor);
-    },
+    }
 
     /**
      * Sets starting gradient opacity
      * @param {Number} o from 0 to 255, 0 is transparent
      */
-    setStartOpacity: function (o) {
+    setStartOpacity(o) {
         this._startOpacity = o;
         //update the color stops
         var stops = this._colorStops;
         if (stops && stops.length > 0)
             stops[0].color.a = o;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
-    },
+    }
 
     /**
      * Returns the starting gradient opacity
      * @return {Number}
      */
-    getStartOpacity: function () {
+    getStartOpacity() {
         return this._startOpacity;
-    },
+    }
 
     /**
      * Sets the end gradient opacity
      * @param {Number} o
      */
-    setEndOpacity: function (o) {
+    setEndOpacity(o) {
         this._endOpacity = o;
         var stops = this._colorStops;
         if (stops && stops.length > 0)
             stops[stops.length - 1].color.a = o;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
-    },
+    }
 
     /**
      * Returns the end gradient opacity
      * @return {Number}
      */
-    getEndOpacity: function () {
+    getEndOpacity() {
         return this._endOpacity;
-    },
+    }
 
     /**
      * Sets the direction vector of the gradient
      * @param {cc.Point} Var
      */
-    setVector: function (Var) {
+    setVector(Var) {
         this._alongVector.x = Var.x;
         this._alongVector.y = Var.y;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.gradientDirty);
-    },
+    }
 
     /**
      * Returns the direction vector of the gradient
      * @return {cc.Point}
      */
-    getVector: function () {
+    getVector() {
         return cc.p(this._alongVector.x, this._alongVector.y);
-    },
+    }
 
     /**
      * Returns whether compressed interpolation is enabled
      * @return {Boolean}
      */
-    isCompressedInterpolation: function () {
+    isCompressedInterpolation() {
         return this._compressedInterpolation;
-    },
+    }
 
     /**
      * Sets whether compressed interpolation is enabled
      * @param {Boolean} compress
      */
-    setCompressedInterpolation: function (compress) {
+    setCompressedInterpolation(compress) {
         this._compressedInterpolation = compress;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.gradientDirty);
-    },
+    }
 
     /**
      * Return an array of Object representing a colorStop for the gradient, if no stops was specified
@@ -558,9 +559,10 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
      * [{p: 0, color: cc.color.RED},{p: 1, color: cc.color.RED},...]
      * @returns {Array}
      */
-    getColorStops: function () {
+    getColorStops() {
         return this._colorStops;
-    },
+    }
+
     /**
      * Set the colorStops to create the gradient using multiple point & color
      *
@@ -575,19 +577,19 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
      * //where p = A value between 0.0 and 1.0 that represents the position between start and end in a gradient
      *
      */
-    setColorStops: function (colorStops) {
+    setColorStops(colorStops) {
         this._colorStops = colorStops;
         //todo need update  the start color and end color
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty | cc.Node._dirtyFlags.opacityDirty | cc.Node._dirtyFlags.gradientDirty);
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.LayerGradient.CanvasRenderCmd(this);
         else
             return new cc.LayerGradient.WebGLRenderCmd(this);
     }
-});
+};
 
 //LayerGradient - Getter Setter
 (function () {
@@ -625,29 +627,29 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
  * // Example
  * var multiLayer = new cc.LayerMultiple(layer1, layer2, layer3);//any number of layers
  */
-cc.LayerMultiplex = cc.Layer.extend(/** @lends cc.LayerMultiplex# */{
-    _enabledLayer: 0,
-    _layers: null,
-    _className: "LayerMultiplex",
-
+cc.LayerMultiplex = class LayerMultiplex extends cc.Layer {
     /**
      * Constructor of cc.LayerMultiplex
      * @param {Array} layers an array of cc.Layer
      */
-    ctor: function (layers) {
-        cc.Layer.prototype.ctor.call(this);
+    constructor(layers) {
+        super();
+        this._enabledLayer = 0;
+        this._layers = null;
+        this._className = "LayerMultiplex";
+
         if (layers instanceof Array)
             cc.LayerMultiplex.prototype.initWithLayers.call(this, layers);
         else
             cc.LayerMultiplex.prototype.initWithLayers.call(this, Array.prototype.slice.call(arguments));
-    },
+    }
 
     /**
      * Initialization of the layer multiplex, please do not call this function by yourself, you should pass the parameters to constructor to initialize a layer multiplex
      * @param {Array} layers an array of cc.Layer
      * @return {Boolean}
      */
-    initWithLayers: function (layers) {
+    initWithLayers(layers) {
         if ((layers.length > 0) && (layers[layers.length - 1] == null))
             cc.log(cc._LogInfos.LayerMultiplex_initWithLayers);
 
@@ -655,14 +657,14 @@ cc.LayerMultiplex = cc.Layer.extend(/** @lends cc.LayerMultiplex# */{
         this._enabledLayer = 0;
         this.addChild(this._layers[this._enabledLayer]);
         return true;
-    },
+    }
 
     /**
      * Switches to a certain layer indexed by n.<br/>
      * The current (old) layer will be removed from it's parent with 'cleanup:YES'.
      * @param {Number} n the layer index to switch to
      */
-    switchTo: function (n) {
+    switchTo(n) {
         if (n >= this._layers.length) {
             cc.log(cc._LogInfos.LayerMultiplex_switchTo);
             return;
@@ -671,14 +673,14 @@ cc.LayerMultiplex = cc.Layer.extend(/** @lends cc.LayerMultiplex# */{
         this.removeChild(this._layers[this._enabledLayer], true);
         this._enabledLayer = n;
         this.addChild(this._layers[n]);
-    },
+    }
 
     /**
      * Release the current layer and switches to another layer indexed by n.<br/>
      * The current (old) layer will be removed from it's parent with 'cleanup:YES'.
      * @param {Number} n the layer index to switch to
      */
-    switchToAndReleaseMe: function (n) {
+    switchToAndReleaseMe(n) {
         if (n >= this._layers.length) {
             cc.log(cc._LogInfos.LayerMultiplex_switchToAndReleaseMe);
             return;
@@ -690,18 +692,18 @@ cc.LayerMultiplex = cc.Layer.extend(/** @lends cc.LayerMultiplex# */{
         this._layers[this._enabledLayer] = null;
         this._enabledLayer = n;
         this.addChild(this._layers[n]);
-    },
+    }
 
     /**
      * Add a layer to the multiplex layers list
      * @param {cc.Layer} layer
      */
-    addLayer: function (layer) {
+    addLayer(layer) {
         if (!layer) {
             cc.log(cc._LogInfos.LayerMultiplex_addLayer);
             return;
         }
         this._layers.push(layer);
     }
-});
+};
 

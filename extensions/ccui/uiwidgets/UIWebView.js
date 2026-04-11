@@ -32,16 +32,16 @@
  *
  * @property {String}   path - The url to be shown in the web view
  */
-ccui.WebView = ccui.Widget.extend(/** @lends ccui.WebView# */{
+ccui.WebView = class WebView extends ccui.Widget {
 
-    ctor: function (path) {
-        ccui.Widget.prototype.ctor.call(this);
+    constructor(path) {
+        super();
         this._EventList = {};
         if (path)
             this.loadURL(path);
-    },
+    }
 
-    visit: function () {
+    visit() {
         var cmd = this._renderCmd,
             div = cmd._div,
             container = cc.container,
@@ -67,64 +67,64 @@ ccui.WebView = ccui.Widget.extend(/** @lends ccui.WebView# */{
         }
         cmd.updateStatus();
         cmd.resize(cc.view);
-    },
+    }
 
-    setJavascriptInterfaceScheme: function (scheme) {
-    },
-    loadData: function (data, MIMEType, encoding, baseURL) {
-    },
-    loadHTMLString: function (string, baseURL) {
-    },
+    setJavascriptInterfaceScheme(scheme) {
+    }
+    loadData(data, MIMEType, encoding, baseURL) {
+    }
+    loadHTMLString(string, baseURL) {
+    }
 
 
     /**
      * Load an URL
      * @param {String} url
      */
-    loadURL: function (url) {
+    loadURL(url) {
         this._renderCmd.updateURL(url);
         this._dispatchEvent(ccui.WebView.EventType.LOADING);
-    },
+    }
 
     /**
      * Stop loading
      */
-    stopLoading: function () {
+    stopLoading() {
         cc.log("Web does not support loading");
-    },
+    }
 
     /**
      * Reload the WebView
      */
-    reload: function () {
+    reload() {
         var iframe = this._renderCmd._iframe;
         if (iframe) {
             var win = iframe.contentWindow;
             if (win && win.location)
                 win.location.reload();
         }
-    },
+    }
 
     /**
      * Determine whether to go back
      */
-    canGoBack: function () {
+    canGoBack() {
         cc.log("Web does not support query history");
         return true;
-    },
+    }
 
     /**
      * Determine whether to go forward
      */
-    canGoForward: function () {
+    canGoForward() {
         cc.log("Web does not support query history");
         return true;
-    },
+    }
 
     /**
      * go back
      */
-    goBack: function () {
+    goBack() {
         try {
             if (ccui.WebView._polyfill.closeHistory)
                 return cc.log("The current browser does not support the GoBack");
@@ -141,12 +141,12 @@ ccui.WebView = ccui.Widget.extend(/** @lends ccui.WebView# */{
         } catch (err) {
             cc.log(err);
         }
-    },
+    }
 
     /**
      * go forward
      */
-    goForward: function () {
+    goForward() {
         try {
             if (ccui.WebView._polyfill.closeHistory)
                 return cc.log("The current browser does not support the GoForward");
@@ -163,13 +163,13 @@ ccui.WebView = ccui.Widget.extend(/** @lends ccui.WebView# */{
         } catch (err) {
             cc.log(err);
         }
-    },
+    }
 
     /**
      * In the webview execution within a period of js string
      * @param {String} str
      */
-    evaluateJS: function (str) {
+    evaluateJS(str) {
         var iframe = this._renderCmd._iframe;
         if (iframe) {
             var win = iframe.contentWindow;
@@ -180,65 +180,65 @@ ccui.WebView = ccui.Widget.extend(/** @lends ccui.WebView# */{
                 console.error(err);
             }
         }
-    },
+    }
 
     /**
      * Limited scale
      */
-    setScalesPageToFit: function () {
+    setScalesPageToFit() {
         cc.log("Web does not support zoom");
-    },
+    }
 
     /**
      * The binding event
      * @param {ccui.WebView.EventType} event
      * @param {Function} callback
      */
-    setEventListener: function (event, callback) {
+    setEventListener(event, callback) {
         this._EventList[event] = callback;
-    },
+    }
 
     /**
      * Delete events
      * @param {ccui.WebView.EventType} event
      */
-    removeEventListener: function (event) {
+    removeEventListener(event) {
         this._EventList[event] = null;
-    },
+    }
 
-    _dispatchEvent: function (event) {
+    _dispatchEvent(event) {
         var callback = this._EventList[event];
         if (callback)
             callback.call(this, this, this._renderCmd._iframe.src);
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         return new ccui.WebView.RenderCmd(this);
-    },
+    }
 
     /**
      * Set the contentSize
      * @param {Number} w
      * @param {Number} h
      */
-    setContentSize: function (w, h) {
-        ccui.Widget.prototype.setContentSize.call(this, w, h);
+    setContentSize(w, h) {
+        super.setContentSize(w, h);
         if (h === undefined) {
             h = w.height;
             w = w.width;
         }
         this._renderCmd.changeSize(w, h);
-    },
+    }
 
     /**
      * remove node
      */
-    cleanup: function () {
+    cleanup() {
         this._renderCmd.removeDom();
         this.stopAllActions();
         this.unscheduleAllCallbacks();
     }
-});
+};
 
 /**
  * The WebView support list of events

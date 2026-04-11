@@ -86,9 +86,9 @@ function backFontTestAction() {
 function restartFontTestAction() {
     return fontList[fontIdx];
 }
-FontTestScene = TestScene.extend({
+FontTestScene = class FontTestScene extends TestScene {
 
-    runThisTest:function (num) {
+    runThisTest(num) {
 
         fontIdx = num || fontIdx;
 
@@ -97,16 +97,17 @@ FontTestScene = TestScene.extend({
 
         director.runScene(this);
     }
-});
 
-var FontTest = BaseTestLayer.extend({
-    ctor:function () {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+};
+
+var FontTest = class FontTest extends BaseTestLayer {
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
         this.showFont(restartFontTestAction());
 
-    },
-    showFont:function (pFont) {
+    }
+    showFont(pFont) {
         this.removeChildByTag(TAG_LABEL1, true);
         this.removeChildByTag(TAG_LABEL2, true);
         this.removeChildByTag(TAG_LABEL3, true);
@@ -133,30 +134,31 @@ var FontTest = BaseTestLayer.extend({
         this.addChild(center, 0, TAG_LABEL3);
         this.addChild(top, 0, TAG_LABEL4);
 
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         this.showFont(backFontTestAction());
-    },
-    onRestartCallback:function (sender) {
+    }
+    onRestartCallback(sender) {
         this.showFont(restartFontTestAction());
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         this.showFont(nextFontTestAction());
-    },
-    subtitle:function () {
+    }
+    subtitle() {
         return "Font test";
-    },
-    title:function () {
+    }
+    title() {
         return "" + fontList[fontIdx];
-    },
+    }
 
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (fontList.length-1) - fontIdx );
-    },
-    getTestNumber:function() {
+    }
+    getTestNumber() {
         return fontIdx;
     }
 
-});
+
+};

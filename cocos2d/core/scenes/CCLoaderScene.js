@@ -30,18 +30,22 @@
  * @example
  * var lc = new cc.LoaderScene();
  */
-cc.LoaderScene = cc.Scene.extend({
-    _interval : null,
-    _label : null,
-    _logo : null,
-    _className:"LoaderScene",
-    cb: null,
-    target: null,
+cc.LoaderScene = class LoaderScene extends cc.Scene {
+    constructor() {
+        super();
+        this._interval = null;
+        this._label = null;
+        this._logo = null;
+        this._className = "LoaderScene";
+        this.cb = null;
+        this.target = null;
+    }
+
     /**
      * Contructor of cc.LoaderScene
      * @returns {boolean}
      */
-    init : function(){
+    init() {
         var self = this;
 
         //logo
@@ -70,9 +74,9 @@ cc.LoaderScene = cc.Scene.extend({
         label.setColor(cc.color(180, 180, 180));
         bgLayer.addChild(this._label, 10);
         return true;
-    },
+    }
 
-    _initStage: function (img, centerPos) {
+    _initStage(img, centerPos) {
         var self = this;
         var texture2d = self._texture2d = new cc.Texture2D();
         texture2d.initWithElement(img);
@@ -82,23 +86,25 @@ cc.LoaderScene = cc.Scene.extend({
         logo.x = centerPos.x;
         logo.y = centerPos.y;
         self._bgLayer.addChild(logo, 10);
-    },
+    }
+
     /**
      * custom onEnter
      */
-    onEnter: function () {
+    onEnter() {
         var self = this;
         cc.Node.prototype.onEnter.call(self);
         self.schedule(self._startLoading, 0.3);
-    },
+    }
+
     /**
      * custom onExit
      */
-    onExit: function () {
+    onExit() {
         cc.Node.prototype.onExit.call(this);
         var tmpStr = "Loading... 0%";
         this._label.setString(tmpStr);
-    },
+    }
 
     /**
      * init with resources
@@ -106,15 +112,15 @@ cc.LoaderScene = cc.Scene.extend({
      * @param {Function|String} cb
      * @param {Object} target
      */
-    initWithResources: function (resources, cb, target) {
+    initWithResources(resources, cb, target) {
         if(cc.isString(resources))
             resources = [resources];
         this.resources = resources || [];
         this.cb = cb;
         this.target = target;
-    },
+    }
 
-    _startLoading: function () {
+    _startLoading() {
         var self = this;
         self.unschedule(self._startLoading);
         var res = self.resources;
@@ -127,15 +133,15 @@ cc.LoaderScene = cc.Scene.extend({
                 if (self.cb)
                     self.cb.call(self.target);
             });
-    },
+    }
 
-    _updateTransform: function(){
+    _updateTransform() {
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
         this._bgLayer._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
         this._label._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
         this._logo && this._logo._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
     }
-});
+};
 /**
  * <p>cc.LoaderScene.preload can present a loaderScene with download progress.</p>
  * <p>when all the resource are downloaded it will invoke call function</p>

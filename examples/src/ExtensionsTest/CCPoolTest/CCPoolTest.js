@@ -28,9 +28,13 @@
  ****************************************************************************/
 
 
-var CCPoolTest = cc.Layer.extend({
-    timeList: null,
-    init: function () {
+var CCPoolTest = class CCPoolTest extends cc.Layer {
+    constructor() {
+        super();
+        this.timeList = null;
+    }
+
+    init() {
         this.timeList = {};
         var winSize = cc.director.getWinSize();
 
@@ -43,8 +47,8 @@ var CCPoolTest = cc.Layer.extend({
         menuRequest.setPosition(cc.p(0, 0));
         this.initUI();
         return true;
-    },
-    initUI: function () {
+    }
+    initUI() {
         var createLabel = new cc.LabelTTF("click me to create\n 150 sprites directly", "Arial", 23);
         var reCreateLabel = new cc.LabelTTF("click me to create\n 150 sprites use pool", "Arial", 23);
         reCreateLabel.color = cc.color(255, 255, 255, 255);
@@ -69,21 +73,21 @@ var CCPoolTest = cc.Layer.extend({
         var menuBack = new cc.Menu(itemBack);
         menuBack.setPosition(cc.p(0, 0));
         this.addChild(menuBack);
-    },
-    setDirectLabel: function (time) {
+    }
+    setDirectLabel(time) {
         if (time == 0) {
             time = "<1";
         }
         this.directLabel.string = "create directly cost:" + time + "ms";
-    },
-    setPoolLabel: function (time) {
+    }
+    setPoolLabel(time) {
         if (time == 0) {
             time = "<1";
         }
         this.poolLabel.string = "use pool cost:" + time + "ms";
 
-    },
-    addSpriteByCreate: function () {
+    }
+    addSpriteByCreate() {
         this.datalist1 = [];
         this.timeStart("directly");
         for (var i = 0; i < 150; i++) {
@@ -99,8 +103,8 @@ var CCPoolTest = cc.Layer.extend({
             }
             this.datalist1 = [];
         }, 0, 1, 0.1);
-    },
-    addSpriteByPool: function () {
+    }
+    addSpriteByPool() {
         this.datalist2 = [];
         for (var i = 0; i < 150; i++) {
             var sp = MySprite.create(1, 2, 3);
@@ -123,21 +127,22 @@ var CCPoolTest = cc.Layer.extend({
             this.datalist2 = [];
             cc.pool.drainAllPools();
         }, 0, 1, 0.1);
-    },
-    timeStart: function (name) {
+    }
+    timeStart(name) {
         this.timeList[name] = {startTime: Date.now(), EndTime: 0, DeltaTime: 0};
-    },
-    timeEnd: function (name) {
+    }
+    timeEnd(name) {
         var obj = this.timeList[name];
         obj.EndTime = Date.now();
         obj.DeltaTime = obj.EndTime - obj.startTime;
         return obj.DeltaTime;
-    },
-    toExtensionsMainLayer: function (sender) {
+    }
+    toExtensionsMainLayer(sender) {
         var scene = new ExtensionsTestScene();
         scene.runThisTest();
     }
-});
+
+};
 
 CCPoolTest.create = function () {
     var retObj = new CCPoolTest();
@@ -154,31 +159,35 @@ var runCCPoolTest = function () {
     pScene.addChild(pLayer);
     cc.director.runScene(pScene);
 };
-var MySprite = cc.Sprite.extend({
-    _hp: 0,
-    _sp: 0,
-    _mp: 0,
-    ctor: function (f1, f2, f3) {
-        this._super(s_grossini);
+var MySprite = class MySprite extends cc.Sprite {
+    constructor(f1, f2, f3) {
+        super(s_grossini);
+
+        this._hp = 0;
+
+        this._sp = 0;
+
+        this._mp = 0;
         this.initData(f1, f2, f3);
-    },
-    initData: function (f1, f2, f3) {
+    }
+    initData(f1, f2, f3) {
         this._hp = f1;
         this._mp = f2;
         this._sp = f3;
-    },
-    unuse: function () {
+    }
+    unuse() {
         this._hp = 0;
         this._mp = 0;
         this._sp = 0;
         this.setVisible(false);
         this.removeFromParent(true);
-    },
-    reuse: function (f1, f2, f3) {
+    }
+    reuse(f1, f2, f3) {
         this.initData(f1, f2, f3);
         this.setVisible(true);
     }
-});
+
+};
 
 MySprite.create = function (f1, f2, f3) {
     return new MySprite(f1, f2, f3)

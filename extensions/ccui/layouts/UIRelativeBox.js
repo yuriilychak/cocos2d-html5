@@ -28,18 +28,18 @@
  * @class
  * @extends ccui.Layout
  */
-ccui.RelativeBox = ccui.Layout.extend(/** @lends ccui.RelativeBox# */{
+ccui.RelativeBox = class RelativeBox extends ccui.Layout {
     /**
      * The constructor of ccui.RelativeBox
      * @function
      * @param {cc.Size} [size]
      */
-    ctor: function(size){
-        ccui.Layout.prototype.ctor.call(this);
+    constructor(size) {
+        super();
         this.setLayoutType(ccui.Layout.RELATIVE);
 
         if(size) {
             this.setContentSize(size);
         }
     }
-});
+};

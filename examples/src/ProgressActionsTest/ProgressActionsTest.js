@@ -26,48 +26,49 @@
  ****************************************************************************/
 var ProgressTestSceneIdx = -1;
 
-var SpriteDemo = BaseTestLayer.extend({
+var SpriteDemo = class SpriteDemo extends BaseTestLayer {
 
-    title:function () {
+    title() {
         return "ProgressActionsTest";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         var scene = new ProgressActionsTestScene();
         scene.addChild(previousProgressTest());
         director.runScene(scene);
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var scene = new ProgressActionsTestScene();
         scene.addChild(restartProgressTest());
         director.runScene(scene);
-    },
+    }
 
-    onNextCallback:function (sender) {
+    onNextCallback(sender) {
         var scene = new ProgressActionsTestScene();
         scene.addChild(nextProgressTest());
         director.runScene(scene);
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfProgressTest.length-1) - ProgressTestSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return ProgressTestSceneIdx;
     }
 
-});
 
-var SpriteProgressToRadial = SpriteDemo.extend({
-    onEnter:function () {
+};
+
+var SpriteProgressToRadial = class SpriteProgressToRadial extends SpriteDemo {
+    onEnter() {
         //----start0----onEnter
-        this._super();
+        super.onEnter();
 
         var to1 = cc.progressFromTo(2, 0, 100);
         var to2 = cc.progressFromTo(2, 0, 100);
@@ -87,17 +88,18 @@ var SpriteProgressToRadial = SpriteDemo.extend({
         right.y = winSize.height / 2;
         right.runAction(to2.repeatForever());
         //----end0----
-    },
+    }
 
-    title:function () {
+    title() {
         return "ProgressFromTo Radial";
     }
-});
 
-var SpriteProgressToHorizontal = SpriteDemo.extend({
-    onEnter:function () {
+};
+
+var SpriteProgressToHorizontal = class SpriteProgressToHorizontal extends SpriteDemo {
+    onEnter() {
         //----start1----onEnter
-        this._super();
+        super.onEnter();
 
         var to1 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
         var to2 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
@@ -124,16 +126,17 @@ var SpriteProgressToHorizontal = SpriteDemo.extend({
         right.y = winSize.height / 2;
         right.runAction(to2.repeatForever());
         //----end1----
-    },
-    title:function () {
+    }
+    title() {
         return "ProgressTo Horizontal";
     }
-});
 
-var SpriteProgressToVertical = SpriteDemo.extend({
-    onEnter:function () {
+};
+
+var SpriteProgressToVertical = class SpriteProgressToVertical extends SpriteDemo {
+    onEnter() {
         //----start2----onEnter
-        this._super();
+        super.onEnter();
 
         var to1 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
         var to2 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
@@ -160,16 +163,17 @@ var SpriteProgressToVertical = SpriteDemo.extend({
         right.y = winSize.height / 2;
         right.runAction(to2.repeatForever());
         //----end2----
-    },
-    title:function () {
+    }
+    title() {
         return "ProgressTo Vertical";
     }
-});
 
-var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
-    onEnter:function () {
+};
+
+var SpriteProgressToRadialMidpointChanged = class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
+    onEnter() {
         //----start3----onEnter
-        this._super();
+        super.onEnter();
 
         var action = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
 
@@ -199,17 +203,18 @@ var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
         right.y = winSize.height / 2;
         right.runAction(action.clone().repeatForever());
         //----end3----
-    },
+    }
 
-    title:function () {
+    title() {
         return "Radial w/ Different Midpoints";
     }
-});
 
-var SpriteProgressBarVarious = SpriteDemo.extend({
-    onEnter:function () {
+};
+
+var SpriteProgressBarVarious = class SpriteProgressBarVarious extends SpriteDemo {
+    onEnter() {
         //----start4----onEnter
-        this._super();
+        super.onEnter();
 
         var to = cc.progressFromTo(2, 0, 100);
 
@@ -247,17 +252,18 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
         right.y = winSize.height / 2;
         right.runAction(to.clone().repeatForever());
         //----end4----
-    },
+    }
 
-    title:function () {
+    title() {
         return "ProgressFromTo Bar Mid";
     }
-});
 
-var SpriteProgressBarTintAndFade = SpriteDemo.extend({
-    onEnter:function () {
+};
+
+var SpriteProgressBarTintAndFade = class SpriteProgressBarTintAndFade extends SpriteDemo {
+    onEnter() {
         //----start5----onEnter
-        this._super();
+        super.onEnter();
 
         var to = cc.progressFromTo(6, 0, 100);
         var tint = cc.sequence(
@@ -312,17 +318,18 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
 
         right.addChild(new cc.LabelTTF("Tint and Fade", "Marker Felt", 20.0));
         //----end5----
-    },
+    }
 
-    title:function () {
+    title() {
         return "ProgressFromTo Bar Mid";
     }
-});
 
-var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
-    onEnter:function () {
+};
+
+var SpriteProgressWithSpriteFrame = class SpriteProgressWithSpriteFrame extends SpriteDemo {
+    onEnter() {
         //----start6----onEnter
-        this._super();
+        super.onEnter();
 
         var to = cc.progressFromTo(6, 0, 100);
 
@@ -361,21 +368,23 @@ var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
         right.y = winSize.height / 2;
         right.runAction(to.clone().repeatForever());
         //----end6----
-    },
+    }
 
-    title:function () {
+    title() {
         return "Progress With Sprite Frame";
     }
-});
 
-var ProgressActionsTestScene = TestScene.extend({
+};
 
-    runThisTest:function (num) {
+var ProgressActionsTestScene = class ProgressActionsTestScene extends TestScene {
+
+    runThisTest(num) {
         ProgressTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextProgressTest());
         director.runScene(this);
     }
-});
+
+};
 
 
 var arrayOfProgressTest = [

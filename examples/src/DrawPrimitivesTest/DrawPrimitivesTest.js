@@ -32,51 +32,60 @@ var drawTestSceneIdx = -1;
 // DrawTestDemo
 //
 //------------------------------------------------------------------
-var DrawTestDemo = BaseTestLayer.extend({
-    _title:"",
-    _subtitle:"",
+var DrawTestDemo = class DrawTestDemo extends BaseTestLayer {
 
-    ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
-    },
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
-    onRestartCallback:function (sender) {
+
+        this._title = "";
+
+
+        this._subtitle = "";
+    }
+
+    onRestartCallback(sender) {
         var s = new DrawPrimitivesTestScene();
         s.addChild(restartDrawTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new DrawPrimitivesTestScene();
         s.addChild(nextDrawTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new DrawPrimitivesTestScene();
         s.addChild(previousDrawTest());
         director.runScene(s);
-    },
+    }
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfDrawTest.length-1) - drawTestSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return drawTestSceneIdx;
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Testing cc.DrawNode API 2
 //
 //------------------------------------------------------------------
-var DrawNewAPITest2 = DrawTestDemo.extend({
-    _title: "cc.DrawNode",
-    _subtitle: "Testing cc.DrawNode API 2",
-    onEnter: function () {
+var DrawNewAPITest2 = class DrawNewAPITest2 extends DrawTestDemo {
+    constructor() {
+        super();
+        this._title = "cc.DrawNode";
+        this._subtitle = "Testing cc.DrawNode API 2";
+    }
+
+    onEnter() {
         //----start0----ctor
-        this._super();
+        super.onEnter();
         var draw = new cc.DrawNode();
         this.addChild(draw, 10);
         var winSize = cc.director.getWinSize();
@@ -129,7 +138,8 @@ var DrawNewAPITest2 = DrawTestDemo.extend({
         draw.drawCardinalSpline(vertices4, 0.5, 100, 2, cc.color(255, 255, 255, 255));
         //----end0----
     }
-});
+
+};
 DrawNewAPITest2.prototype.title = function(){
     return 'cc.DrawNode 2';
 };
@@ -139,13 +149,17 @@ DrawNewAPITest2.prototype.title = function(){
 // Draw New API Test
 //
 //------------------------------------------------------------------
-var DrawNewAPITest = DrawTestDemo.extend({
-    _title : "cc.DrawNode",
-    _subtitle : "Testing cc.DrawNode API",
+var DrawNewAPITest = class DrawNewAPITest extends DrawTestDemo {
+    constructor() {
+        super();
+        this._title = "cc.DrawNode";
+        this._subtitle = "Testing cc.DrawNode API";
+    }
 
-    onEnter:function() {
+
+    onEnter() {
         //----start1----ctor
-        this._super();
+        super.onEnter();
 
         var draw = new cc.DrawNode();
         this.addChild(draw, 10);
@@ -193,7 +207,8 @@ var DrawNewAPITest = DrawTestDemo.extend({
         draw.drawSegment( cc.p(10,winSize.height/2), cc.p(winSize.width/2, winSize.height/2), 40, cc.color(255, 0, 255, 128) );
         //----end1----
     }
-});
+
+};
 
 DrawNewAPITest.prototype.title = function(){
     return 'cc.DrawNode 1';
@@ -201,15 +216,16 @@ DrawNewAPITest.prototype.title = function(){
 
 //
 //
-var DrawPrimitivesTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var DrawPrimitivesTestScene = class DrawPrimitivesTestScene extends TestScene {
+    runThisTest(num) {
         drawTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextDrawTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
+
+};
 
 //
 // Flow control

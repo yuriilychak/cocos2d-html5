@@ -28,18 +28,18 @@
  * @class
  * @extends ccui.Layout
  */
-ccui.HBox = ccui.Layout.extend(/** @lends ccui.HBox# */{
+ccui.HBox = class HBox extends ccui.Layout {
     /**
      * The constructor of ccui.HBox
      * @function
      * @param {cc.Size} [size]
      */
-    ctor: function(size){
-        ccui.Layout.prototype.ctor.call(this);
+    constructor(size) {
+        super();
         this.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
 
         if(size) {
             this.setContentSize(size);
         }
     }
-});
+};

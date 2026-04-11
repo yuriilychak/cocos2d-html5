@@ -25,10 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlSliderTest = ControlScene.extend({
-    _displayValueLabel:null,
-    init:function () {
-        if (this._super()) {
+var ControlSliderTest = class ControlSliderTest extends ControlScene {
+    constructor() {
+        super();
+        this._displayValueLabel = null;
+    }
+
+    init() {
+        if (super.init()) {
             var screenSize = cc.director.getWinSize();
 
             // Add a label in which the slider value will be displayed
@@ -72,16 +76,17 @@ var ControlSliderTest = ControlScene.extend({
             return true;
         }
         return false;
-    },
-    upperValueChanged:function (sender, controlEvent) {
+    }
+    upperValueChanged(sender, controlEvent) {
         // Change value of label.
         this._displayValueLabel.setString("Upper slider value = " + sender.getValue().toFixed(2));
-    },
-    lowerValueChanged: function (sender, controlEvent) {
+    }
+    lowerValueChanged(sender, controlEvent) {
         // Change value of label.
         this._displayValueLabel.setString("Lower slider value = " + sender.getValue().toFixed(2));
     }
-});
+
+};
 
 ControlSliderTest.create = function (sceneTitle) {
     var scene = new cc.Scene();

@@ -25,10 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlColourPickerTest = ControlScene.extend({
-    _colorLabel:null,
-    init:function () {
-        if (this._super()) {
+var ControlColourPickerTest = class ControlColourPickerTest extends ControlScene {
+    constructor() {
+        super();
+        this._colorLabel = null;
+    }
+
+    init() {
+        if (super.init()) {
             var screenSize = cc.director.getWinSize();
 
             var layer  = new cc.Node();
@@ -81,12 +85,13 @@ var ControlColourPickerTest = ControlScene.extend({
             return true;
         }
         return false;
-    },
-    colourValueChanged:function (sender, controlEvent) {
+    }
+    colourValueChanged(sender, controlEvent) {
         // Change value of label.
         this._colorLabel.setString(cc.colorToHex(sender.color).toUpperCase());
     }
-});
+
+};
 ControlColourPickerTest.create = function (sceneTitle) {
     var scene = new cc.Scene();
     var controlLayer = new ControlColourPickerTest();

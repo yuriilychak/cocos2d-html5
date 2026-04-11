@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UICheckBoxTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UICheckBoxTest = class UICheckBoxTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             //init text
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("CheckBox");
@@ -48,9 +48,9 @@ var UICheckBoxTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    selectedStateEvent: function (sender, type) {
+    selectedStateEvent(sender, type) {
         switch (type) {
             case  ccui.CheckBox.EVENT_UNSELECTED:
                 this._topDisplayLabel.setString("Unselected");
@@ -63,13 +63,14 @@ var UICheckBoxTest = UIMainLayer.extend({
                 break;
         }
     }
-});
+
+};
 
 //2015-01-14
-var UICheckBoxDefaultBehaviorTest = UIMainLayer.extend({
+var UICheckBoxDefaultBehaviorTest = class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
 
-    init: function(){
-        if(this._super()){
+    init(){
+        if(super.init()){
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the checkbox events will be displayed
@@ -119,4 +120,5 @@ var UICheckBoxDefaultBehaviorTest = UIMainLayer.extend({
         }
     }
 
-});
+
+};

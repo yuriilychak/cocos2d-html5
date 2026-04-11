@@ -30,49 +30,58 @@ var memoryModelTestSceneIdx = -1;
 // MemoryModelTestBase
 //
 //------------------------------------------------------------------
-var MemoryModelTestBase = BaseTestLayer.extend({
-    _title:"",
-    _subtitle:"",
+var MemoryModelTestBase = class MemoryModelTestBase extends BaseTestLayer {
+    constructor() {
+        super();
+        this._title = "";
+        this._subtitle = "";
+    }
 
-    onRestartCallback:function (sender) {
+
+    onRestartCallback(sender) {
         var s = new MemoryModelTestScene();
         s.addChild(restartMemoryModelTest());
         director.runScene(s);
-    },
-    onNextCallback:function (sender) {
+    }
+    onNextCallback(sender) {
         var s = new MemoryModelTestScene();
         s.addChild(nextMemoryModelTest());
         director.runScene(s);
-    },
-    onBackCallback:function (sender) {
+    }
+    onBackCallback(sender) {
         var s = new MemoryModelTestScene();
         s.addChild(previousMemoryModelTest());
         director.runScene(s);
-    },
+    }
 
     // automation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfMemoryModelTest.length-1) - memoryModelTestSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return memoryModelTestSceneIdx;
     }
 
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Set property on sprite
 //
 //------------------------------------------------------------------
-var SetPropertyMemoryModelTest = MemoryModelTestBase.extend({
-    _title:"Set Property Test",
-    _subtitle:"See console for possible errors",
+var SetPropertyMemoryModelTest = class SetPropertyMemoryModelTest extends MemoryModelTestBase {
 
-    ctor:function () {
+    constructor() {
         cc.sys.garbageCollect();
-        this._super();
+        super();
+
+
+        this._title = "Set Property Test";
+
+
+        this._subtitle = "See console for possible errors";
         var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         var tag = 10;
         this.addChild(sprite, 0, tag);
@@ -87,74 +96,90 @@ var SetPropertyMemoryModelTest = MemoryModelTestBase.extend({
         
         // should print "hello world"
         this.log(sprite.randomProperty);
-    },
-});
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // Using Ivar 1: from ctor to onEnter
 //
 //------------------------------------------------------------------
-var Ivar1MemoryModelTest = MemoryModelTestBase.extend({
-    _title:"Using ivars to hold C++ objects",
-    _subtitle:"From ctor to onEnter",
+var Ivar1MemoryModelTest = class Ivar1MemoryModelTest extends MemoryModelTestBase {
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._title = "Using ivars to hold C++ objects";
+
+
+        this._subtitle = "From ctor to onEnter";
         this.sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
-    },
-    onEnter:function() {
-        this._super();
+    }
+    onEnter() {
+        super.onEnter();
         this.addChild(this.sprite);
         var x = winSize.width / 2;
         var y = winSize.height / 2;
         this.sprite.setPosition(x, y);
-    },
-});
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // Using Ivar 2: from ctor to update 
 //
 //------------------------------------------------------------------
-var Ivar2MemoryModelTest = MemoryModelTestBase.extend({
-    _title:"Using ivars to hold C++ objects",
-    _subtitle:"From ctor to update",
+var Ivar2MemoryModelTest = class Ivar2MemoryModelTest extends MemoryModelTestBase {
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._title = "Using ivars to hold C++ objects";
+
+
+        this._subtitle = "From ctor to update";
         this.sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         this.scheduleOnce(this.showSprite, 0.5);
-    },
-    showSprite:function() {
+    }
+    showSprite() {
         this.addChild(this.sprite);
         var x = winSize.width / 2;
         var y = winSize.height / 2;
         this.sprite.setPosition(x, y);
-    },
-});
+    }
 
-var MemoryModelTestScene = TestScene.extend({
-    runThisTest:function (num) {
+};
+
+var MemoryModelTestScene = class MemoryModelTestScene extends TestScene {
+    runThisTest(num) {
         memoryModelTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextMemoryModelTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
+
+};
 
 //------------------------------------------------------------------
 //
 // Using Local vars
 //
 //------------------------------------------------------------------
-var LocalVarMemoryModelTest = MemoryModelTestBase.extend({
-    _title:"Using local vars + GC",
-    _subtitle:"native objects should get destroyed",
+var LocalVarMemoryModelTest = class LocalVarMemoryModelTest extends MemoryModelTestBase {
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._title = "Using local vars + GC";
+
+
+        this._subtitle = "native objects should get destroyed";
         var sprite1 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         var sprite2 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         var sprite3 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
@@ -171,20 +196,25 @@ var LocalVarMemoryModelTest = MemoryModelTestBase.extend({
         cc.log(sprite2);
         cc.log(sprite3);
         cc.log(a);
-    },
-});
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // Using Local vars
 //
 //------------------------------------------------------------------
-var RetainRootsMemoryModelTest = MemoryModelTestBase.extend({
-    _title:"retain must root",
-    _subtitle:"native objects should not get destroyed",
+var RetainRootsMemoryModelTest = class RetainRootsMemoryModelTest extends MemoryModelTestBase {
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._title = "retain must root";
+
+
+        this._subtitle = "native objects should not get destroyed";
         var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         // addChild should root the sprite
         this.addChild(sprite);
@@ -193,20 +223,25 @@ var RetainRootsMemoryModelTest = MemoryModelTestBase.extend({
         var x = winSize.width / 2;
         var y = winSize.height / 2;
         sprite.setPosition(x, y);
-    },
-});
+    }
+
+};
 
 //------------------------------------------------------------------
 //
 // Testing Root/Unroot
 //
 //------------------------------------------------------------------
-var RootUnrootMemoryModelTest = MemoryModelTestBase.extend({
-    _title:"root/unroot",
-    _subtitle:"rooting/unrooting with GC memory model",
+var RootUnrootMemoryModelTest = class RootUnrootMemoryModelTest extends MemoryModelTestBase {
 
-    ctor:function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._title = "root/unroot";
+
+
+        this._subtitle = "rooting/unrooting with GC memory model";
         var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         // addChild should root the sprite
         this.addChild(sprite);
@@ -214,22 +249,24 @@ var RootUnrootMemoryModelTest = MemoryModelTestBase.extend({
         // should unroot the sprite
         this.removeChild(sprite)
         cc.sys.garbageCollect();
-    },
-});
+    }
+
+};
 
 
 //
 // Entry point
 //
-var MemoryModelTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var MemoryModelTestScene = class MemoryModelTestScene extends TestScene {
+    runThisTest(num) {
         memoryModelTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextMemoryModelTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
-});
+
+};
 
 
 //

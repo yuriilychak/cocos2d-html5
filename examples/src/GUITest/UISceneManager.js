@@ -719,19 +719,20 @@
     }
 
     var guiTestScene = null;
-    global.GUITestScene = cc.Class.extend({
+    global.GUITestScene = class GUITestScene extends cc.NewClass {
 
-        runThisTest: function(){
+        runThisTest(){
             var guiTestScene = new listScene();
             cc.director.runScene(guiTestScene);
         }
 
-    });
+    
+};
 
-    var listScene = TestScene.extend({
+    var listScene = class listScene extends TestScene {
 
-        ctor: function(){
-            TestScene.prototype.ctor.call(this);
+        constructor(){
+            super();
 
             global.UISceneManager.getInstance().ctor();
             var menu = new cc.Menu();
@@ -761,10 +762,10 @@
             for(var p in testingItems){
                 this._length++;
             }
-        },
+        }
 
-        onEnter: function(){
-            TestScene.prototype.onEnter.call(this);
+        onEnter(){
+            super.onEnter();
             if ('touches' in cc.sys.capabilities)
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -789,9 +790,9 @@
                     }
                 }, this);
             }
-        },
+        }
 
-        moveMenu: function(delta){
+        moveMenu(delta){
             var newY = this._menu.y + delta.y;
             if (newY < 0 )
                 newY = 0;
@@ -801,7 +802,8 @@
 
             this._menu.y = newY;
         }
-    });
+    
+};
 
     global.UISceneManager = {
 

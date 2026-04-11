@@ -479,16 +479,19 @@ cc.MenuItemFont = class MenuItemFont extends cc.MenuItemLabel {
     constructor(value, callback, target) {
         var label;
         if (value && value.length > 0) {
+            label = new cc.LabelTTF(value, cc._globalFontName, cc._globalFontSize);
+        }
+
+        super(label, callback, target);
+
+        if (value && value.length > 0) {
             this._fontName = cc._globalFontName;
             this._fontSize = cc._globalFontSize;
-            label = new cc.LabelTTF(value, this._fontName, this._fontSize);
         }
         else {
             this._fontSize = 0;
             this._fontName = "";
         }
-
-        super(label, callback, target);
     }
 
     /**

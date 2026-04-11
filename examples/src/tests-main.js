@@ -44,10 +44,11 @@ var PLATFROM_APPLE = PLATFROM_IOS | PLATFORM_MAC;
 var autoTestEnabled = autoTestEnabled || false;
 var autoTestCurrentTestName = autoTestCurrentTestName || "N/A";
 
-var TestScene = cc.Scene.extend({
-    _mainMenu :null, 
-    ctor:function (bPortrait) {
-        this._super();
+var TestScene = class TestScene extends cc.Scene {
+    constructor(bPortrait) {
+        super();
+
+        this._mainMenu = null;
         this.init();
 
         var label = new cc.LabelTTF("Main Menu", "Arial", 20);
@@ -63,8 +64,8 @@ var TestScene = cc.Scene.extend({
         if(!window.sideIndexBar){
             this.addChild(menu, 1);
         }
-    },
-    onMainMenuCallback:function () {
+    }
+    onMainMenuCallback() {
         if (director.isPaused()) {
             director.resume();
         } 
@@ -74,25 +75,32 @@ var TestScene = cc.Scene.extend({
         scene.addChild(layer);
         var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
         director.runScene(transition);
-    },
+    }
 
-    runThisTest:function () {
+    runThisTest() {
         // override me
     }
 
-});
+
+};
 
 //Controller stuff
 var LINE_SPACE = 40;
 var curPos = cc.p(0,0);
 
-var TestController = cc.LayerGradient.extend({
-    _itemMenu:null,
-    _beginPos:0,
-    isMouseDown:false,
+var TestController = class TestController extends cc.LayerGradient {
 
-    ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(0x46,0x82,0xB4,255));
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(0x46,0x82,0xB4,255));
+
+
+        this._itemMenu = null;
+
+
+        this._beginPos = 0;
+
+
+        this.isMouseDown = false;
 
         // globals
         director = cc.director;
@@ -194,12 +202,12 @@ var TestController = cc.LayerGradient.extend({
                 }
             }, this);
         }
-    },
-    onEnter:function(){
-        this._super();
+    }
+    onEnter(){
+        super.onEnter();
 	    this._itemMenu.y = TestController.YOffset;
-    },
-    onMenuCallback:function (sender) {
+    }
+    onMenuCallback(sender) {
         TestController.YOffset = this._itemMenu.y;
         var idx = sender.getLocalZOrder() - 10000;
         // get the userdata, it's the index of the menu item clicked
@@ -215,8 +223,8 @@ var TestController = cc.LayerGradient.extend({
                 scene.runThisTest();
             }
         }, this);
-    },
-    onCloseCallback:function () {
+    }
+    onCloseCallback() {
         if (cc.sys.isNative)
         {
             cc.game.end();
@@ -224,12 +232,12 @@ var TestController = cc.LayerGradient.extend({
         else {
             window.history && window.history.go(-1);
         }
-    },
-    onToggleAutoTest:function() {
+    }
+    onToggleAutoTest() {
         autoTestEnabled = !autoTestEnabled;
-    },
+    }
 
-    moveMenu:function(delta) {
+    moveMenu(delta) {
         var newY = this._itemMenu.y + delta.y;
         if (newY < 0 )
             newY = 0;
@@ -239,7 +247,8 @@ var TestController = cc.LayerGradient.extend({
 
         this._itemMenu.y = newY;
     }
-});
+
+};
 TestController.YOffset = 0;
 var testNames = [
     {

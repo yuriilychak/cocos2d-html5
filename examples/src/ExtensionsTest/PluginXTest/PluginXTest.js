@@ -23,14 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var PluginXTest = cc.Layer.extend({
-    _sceneTitleLabel:null,
+var PluginXTest = class PluginXTest extends cc.Layer {
 
-    getSceneTitleLabel:function(){return this._sceneTitleLabel;},
-    setSceneTitleLabel:function(sceneTitleLabel){this._sceneTitleLabel = sceneTitleLabel;},
+    getSceneTitleLabel(){return this._sceneTitleLabel;}
+    setSceneTitleLabel(sceneTitleLabel){this._sceneTitleLabel = sceneTitleLabel;}
 
-    ctor:function(title){
-        this._super()
+    constructor(title){
+        super()
+
+
+        this._sceneTitleLabel = null;
         // Get the sceensize
         var screensize = cc.winSize;
 
@@ -81,20 +83,21 @@ var PluginXTest = cc.Layer.extend({
         item3.y = 37;
 
         this.addChild(menu ,1);
-    },
+    }
 
-    toExtensionsMainLayer:function(sender){
+    toExtensionsMainLayer(sender){
         var pScene = new ExtensionsTestScene();
         pScene.runThisTest();
-    },
+    }
 
-    previousCallback:function(sender){
+    previousCallback(sender){
         cc.director.runScene(pluginXSceneManager.previousPluginXScene());
-    },
-    restartCallback:function(sender){
+    }
+    restartCallback(sender){
         cc.director.runScene(pluginXSceneManager.currentPluginXScene());
-    },
-    nextCallback:function(sender){
+    }
+    nextCallback(sender){
         cc.director.runScene(pluginXSceneManager.nextPluginXScene());
     }
-});
+
+};

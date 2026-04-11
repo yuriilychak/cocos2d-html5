@@ -24,13 +24,13 @@
 
 (function(load, baseParser){
 
-    var Parser = baseParser.extend({
+    var Parser = class Parser extends baseParser {
 
-        getNodeJson: function(json){
+        getNodeJson(json){
             return json["action"];
-        },
+        }
 
-        parseNode: function(json, resourcePath, file){
+        parseNode(json, resourcePath, file){
             if(!json)
                 return null;
 
@@ -61,7 +61,8 @@
             return action;
         }
 
-    });
+    
+    }
 
     var parser = new Parser();
 

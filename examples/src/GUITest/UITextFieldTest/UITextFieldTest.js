@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UITextFieldTest = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+var UITextFieldTest = class UITextFieldTest extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
@@ -47,9 +47,9 @@ var UITextFieldTest = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    textFieldEvent: function (textField, type) {
+    textFieldEvent(textField, type) {
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 var widgetSize = this._widget.getContentSize();
@@ -72,11 +72,12 @@ var UITextFieldTest = UIMainLayer.extend({
                 break;
         }
     }
-});
 
-var UITextFieldTest_MaxLength = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UITextFieldTest_MaxLength = class UITextFieldTest_MaxLength extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
@@ -98,9 +99,9 @@ var UITextFieldTest_MaxLength = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    textFieldEvent: function (sender, type) {
+    textFieldEvent(sender, type) {
         var textField = sender;
         var widgetSize = this._widget.getContentSize();
         switch (type) {
@@ -124,11 +125,12 @@ var UITextFieldTest_MaxLength = UIMainLayer.extend({
         }
         this._bottomDisplayLabel.setString(textField.getString());
     }
-});
 
-var UITextFieldTest_Password = UIMainLayer.extend({
-    init: function () {
-        if (this._super()) {
+};
+
+var UITextFieldTest_Password = class UITextFieldTest_Password extends UIMainLayer {
+    init() {
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
@@ -150,9 +152,9 @@ var UITextFieldTest_Password = UIMainLayer.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    textFieldEvent: function (textField, type) {
+    textFieldEvent(textField, type) {
         var widgetSize = this._widget.getContentSize();
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
@@ -175,13 +177,14 @@ var UITextFieldTest_Password = UIMainLayer.extend({
         }
         this._bottomDisplayLabel.setString(textField.getString());
     }
-});
+
+};
 
 //2015-01-14
-var UITextFieldTest_LineWrap = UIMainLayer.extend({
+var UITextFieldTest_LineWrap = class UITextFieldTest_LineWrap extends UIMainLayer {
 
-    init: function(){
-        if (this._super()) {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the textfield events will be displayed
@@ -208,9 +211,9 @@ var UITextFieldTest_LineWrap = UIMainLayer.extend({
             this._mainNode.addChild(textField);
             return true;
         }
-    },
+    }
 
-    textFieldEvent: function(textField, type){
+    textFieldEvent(textField, type){
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
@@ -236,12 +239,13 @@ var UITextFieldTest_LineWrap = UIMainLayer.extend({
         }
         this._bottomDisplayLabel.setString(textField.getString());
     }
-});
+
+};
 
 //2015-01-14
-var UITextFieldTest_TrueTypeFont = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+var UITextFieldTest_TrueTypeFont = class UITextFieldTest_TrueTypeFont extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the textfield events will be displayed
@@ -259,9 +263,9 @@ var UITextFieldTest_TrueTypeFont = UIMainLayer.extend({
             this._mainNode.addChild(textField);
             return true;
         }
-    },
+    }
 
-    textFieldEvent: function(textField, type){
+    textFieldEvent(textField, type){
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
@@ -287,12 +291,13 @@ var UITextFieldTest_TrueTypeFont = UIMainLayer.extend({
         }
         this._bottomDisplayLabel.setString(textField.getString());
     }
-});
+
+};
 
 //2015-01-14
-var UITextFieldTest_PlaceHolderColor = UIMainLayer.extend({
-    init: function(){
-        if (this._super()) {
+var UITextFieldTest_PlaceHolderColor = class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
+    init(){
+        if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the textfield events will be displayed
@@ -313,9 +318,9 @@ var UITextFieldTest_PlaceHolderColor = UIMainLayer.extend({
             this._mainNode.addChild(textField);
             return true;
         }
-    },
+    }
 
-    textFieldEvent: function(textField, type){
+    textFieldEvent(textField, type){
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
@@ -337,4 +342,5 @@ var UITextFieldTest_PlaceHolderColor = UIMainLayer.extend({
         }
         this._bottomDisplayLabel.setString(textField.getString());
     }
-});
+
+};

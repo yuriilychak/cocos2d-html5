@@ -30,40 +30,13 @@
  *
  * @property {Boolean}  selected    - Indicate whether the check box has been selected
  */
-ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
-    _backGroundBoxRenderer: null,
-    _backGroundSelectedBoxRenderer: null,
-    _frontCrossRenderer: null,
-    _backGroundBoxDisabledRenderer: null,
-    _frontCrossDisabledRenderer: null,
+ccui.CheckBox = class CheckBox extends ccui.Widget {
 
-    _isSelected: true,
 
-    _checkBoxEventListener: null,
-    _checkBoxEventSelector:null,
 
-    _backGroundTexType: ccui.Widget.LOCAL_TEXTURE,
-    _backGroundSelectedTexType: ccui.Widget.LOCAL_TEXTURE,
-    _frontCrossTexType: ccui.Widget.LOCAL_TEXTURE,
-    _backGroundDisabledTexType: ccui.Widget.LOCAL_TEXTURE,
-    _frontCrossDisabledTexType: ccui.Widget.LOCAL_TEXTURE,
 
-    _backGroundFileName: "",
-    _backGroundSelectedFileName: "",
-    _frontCrossFileName: "",
-    _backGroundDisabledFileName: "",
-    _frontCrossDisabledFileName: "",
-    _className: "CheckBox",
 
-    _zoomScale: 0.1,
-    _backgroundTextureScaleX: 0.1,
-    _backgroundTextureScaleY: 0.1,
 
-    _backGroundBoxRendererAdaptDirty:true,
-    _backGroundSelectedBoxRendererAdaptDirty:true,
-    _frontCrossRendererAdaptDirty: true,
-    _backGroundBoxDisabledRendererAdaptDirty: true,
-    _frontCrossDisabledRendererAdaptDirty: true,
 
     /**
      * allocates and initializes a UICheckBox.
@@ -78,8 +51,35 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
      * // example
      * var uiCheckBox = new ccui.CheckBox();
      */
-    ctor: function (backGround, backGroundSelected,cross,backGroundDisabled,frontCrossDisabled,texType) {
-        ccui.Widget.prototype.ctor.call(this);
+    constructor(backGround, backGroundSelected,cross,backGroundDisabled,frontCrossDisabled,texType) {
+        super();
+        this._backGroundBoxRenderer = null;
+        this._backGroundSelectedBoxRenderer = null;
+        this._frontCrossRenderer = null;
+        this._backGroundBoxDisabledRenderer = null;
+        this._frontCrossDisabledRenderer = null;
+        this._isSelected = true;
+        this._checkBoxEventListener = null;
+        this._checkBoxEventSelector = null;
+        this._backGroundTexType = ccui.Widget.LOCAL_TEXTURE;
+        this._backGroundSelectedTexType = ccui.Widget.LOCAL_TEXTURE;
+        this._frontCrossTexType = ccui.Widget.LOCAL_TEXTURE;
+        this._backGroundDisabledTexType = ccui.Widget.LOCAL_TEXTURE;
+        this._frontCrossDisabledTexType = ccui.Widget.LOCAL_TEXTURE;
+        this._backGroundFileName = "";
+        this._backGroundSelectedFileName = "";
+        this._frontCrossFileName = "";
+        this._backGroundDisabledFileName = "";
+        this._frontCrossDisabledFileName = "";
+        this._className = "CheckBox";
+        this._zoomScale = 0.1;
+        this._backgroundTextureScaleX = 0.1;
+        this._backgroundTextureScaleY = 0.1;
+        this._backGroundBoxRendererAdaptDirty = true;
+        this._backGroundSelectedBoxRendererAdaptDirty = true;
+        this._frontCrossRendererAdaptDirty = true;
+        this._backGroundBoxDisabledRendererAdaptDirty = true;
+        this._frontCrossDisabledRendererAdaptDirty = true;
         this.setTouchEnabled(true);
         var strNum = 0;
         for(var i=0; i<arguments.length; i++){
@@ -106,9 +106,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
         this._isSelected = true;
         this.setSelected(false);
         this.loadTextures(backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
-    },
+    }
 
-    _initRenderer: function () {
+    _initRenderer() {
         this._backGroundBoxRenderer = new cc.Sprite();
         this._backGroundSelectedBoxRenderer = new cc.Sprite();
         this._frontCrossRenderer = new cc.Sprite();
@@ -120,7 +120,7 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
         this.addProtectedChild(this._frontCrossRenderer, ccui.CheckBox.FRONT_CROSS_RENDERER_ZORDER, -1);
         this.addProtectedChild(this._backGroundBoxDisabledRenderer, ccui.CheckBox.BOX_DISABLED_RENDERER_ZORDER, -1);
         this.addProtectedChild(this._frontCrossDisabledRenderer, ccui.CheckBox.FRONT_CROSS_DISABLED_RENDERER_ZORDER, -1);
-    },
+    }
 
     /**
      * Loads textures for checkbox.
@@ -131,20 +131,20 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
      * @param {String} frontCrossDisabled
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextures: function (backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType) {
+    loadTextures(backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType) {
         backGround && this.loadTextureBackGround(backGround, texType);
         backGroundSelected && this.loadTextureBackGroundSelected(backGroundSelected, texType);
         cross && this.loadTextureFrontCross(cross, texType);
         backGroundDisabled && this.loadTextureBackGroundDisabled(backGroundDisabled, texType);
         frontCrossDisabled && this.loadTextureFrontCrossDisabled(frontCrossDisabled, texType);
-    },
+    }
 
     /**
      * Loads background texture for checkbox.
      * @param {String} backGround background filename
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextureBackGround: function (backGround, texType) {
+    loadTextureBackGround(backGround, texType) {
         if (!backGround)
             return;
 
@@ -180,14 +180,14 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
         this._updateContentSizeWithTextureSize(this._backGroundBoxRenderer.getContentSize());
         this._backGroundBoxRendererAdaptDirty = true;
         this._findLayout();
-    },
+    }
 
     /**
      * Loads selected state of background texture for checkbox.
      * @param {String} backGroundSelected
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextureBackGroundSelected: function (backGroundSelected, texType) {
+    loadTextureBackGroundSelected(backGroundSelected, texType) {
         if (!backGroundSelected)
             return;
 
@@ -220,14 +220,14 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
 
         this._backGroundSelectedBoxRendererAdaptDirty = true;
         this._findLayout();
-    },
+    }
 
     /**
      * Loads cross texture for checkbox.
      * @param {String} cross
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextureFrontCross: function (cross, texType) {
+    loadTextureFrontCross(cross, texType) {
         if (!cross)
             return;
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
@@ -259,14 +259,14 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
 
         this._frontCrossRendererAdaptDirty = true;
         this._findLayout();
-    },
+    }
 
     /**
      * Loads disabled state of backGround texture for checkbox.
      * @param {String} backGroundDisabled
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextureBackGroundDisabled: function (backGroundDisabled, texType) {
+    loadTextureBackGroundDisabled(backGroundDisabled, texType) {
         if (!backGroundDisabled)
             return;
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
@@ -298,14 +298,14 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
 
         this._backGroundBoxDisabledRendererAdaptDirty = true;
         this._findLayout();
-    },
+    }
 
     /**
      * Loads frontCrossDisabled texture for checkbox.
      * @param {String} frontCrossDisabled
      * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
      */
-    loadTextureFrontCrossDisabled: function (frontCrossDisabled, texType) {
+    loadTextureFrontCrossDisabled(frontCrossDisabled, texType) {
         if (!frontCrossDisabled)
             return;
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
@@ -337,9 +337,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
 
         this._frontCrossDisabledRendererAdaptDirty = true;
         this._findLayout();
-    },
+    }
 
-    _onPressStateChangedToNormal: function () {
+    _onPressStateChangedToNormal() {
         this._backGroundBoxRenderer.setVisible(true);
         this._backGroundSelectedBoxRenderer.setVisible(false);
         this._backGroundBoxDisabledRenderer.setVisible(false);
@@ -352,9 +352,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             this._frontCrossRenderer.setVisible(true);
             this._frontCrossRendererAdaptDirty = true;
         }
-    },
+    }
 
-    _onPressStateChangedToPressed: function () {
+    _onPressStateChangedToPressed() {
         if (!this._backGroundSelectedFileName){
             this._backGroundBoxRenderer.setScale(this._backgroundTextureScaleX + this._zoomScale, this._backgroundTextureScaleY + this._zoomScale);
             this._frontCrossRenderer.setScale(this._backgroundTextureScaleX + this._zoomScale, this._backgroundTextureScaleY + this._zoomScale);
@@ -364,9 +364,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             this._backGroundBoxDisabledRenderer.setVisible(false);
             this._frontCrossDisabledRenderer.setVisible(false);
         }
-    },
+    }
 
-    _onPressStateChangedToDisabled: function () {
+    _onPressStateChangedToDisabled() {
         if (this._backGroundDisabledFileName && this._frontCrossDisabledFileName){
             this._backGroundBoxRenderer.setVisible(false);
             this._backGroundBoxDisabledRenderer.setVisible(true);
@@ -381,69 +381,69 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             this._frontCrossDisabledRenderer.setVisible(true);
             this._frontCrossDisabledRendererAdaptDirty = true;
         }
-    },
+    }
 
-    setZoomScale: function(scale){
+    setZoomScale(scale){
         this._zoomScale = scale;
-    },
+    }
 
-    getZoomScale: function(){
+    getZoomScale(){
         return this._zoomScale;
-    },
+    }
 
     /**
      * @deprecated since v3.1, please use setSelected.
      */
-    setSelectedState: function(selected){
+    setSelectedState(selected){
         this.setSelected(selected);
-    },
+    }
 
     /**
      * Sets the selected state to ccui.CheckBox
      * @param {Boolean} selected
      */
-    setSelected: function (selected) {
+    setSelected(selected) {
         if (selected === this._isSelected)
             return;
         this._isSelected = selected;
         this._frontCrossRenderer.setVisible(this._isSelected);
-    },
+    }
 
     /**
      * @deprecated since v3.1, please use isSelected.
      */
-    getSelectedState: function(){
+    getSelectedState(){
         return this.isSelected();
-    },
+    }
 
     /**
      * Returns the selected state of ccui.CheckBox.
      * @returns {boolean}
      */
-    isSelected: function () {
+    isSelected() {
         return this._isSelected;
-    },
+    }
 
-    _selectedEvent: function () {
+    _selectedEvent() {
         if(this._checkBoxEventSelector){
             if (this._checkBoxEventListener)
                 this._checkBoxEventSelector.call(this._checkBoxEventListener, this, ccui.CheckBox.EVENT_SELECTED);
             else
                 this._checkBoxEventSelector(this, ccui.CheckBox.EVENT_SELECTED);
         }
-    },
+    }
 
-    _unSelectedEvent: function () {
+    _unSelectedEvent() {
         if(this._checkBoxEventSelector){
             if (this._checkBoxEventListener)
                 this._checkBoxEventSelector.call(this._checkBoxEventListener, this, ccui.CheckBox.EVENT_UNSELECTED);
             else
                 this._checkBoxEventSelector(this, ccui.CheckBox.EVENT_UNSELECTED);
         }
-    },
+    }
 
-    _releaseUpEvent: function(){
-        ccui.Widget.prototype._releaseUpEvent.call(this);
+    _releaseUpEvent(){
+        super._releaseUpEvent();
         if (this._isSelected){
             this.setSelected(false);
             this._unSelectedEvent();
@@ -451,7 +451,7 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             this.setSelected(true);
             this._selectedEvent();
         }
-    },
+    }
 
     /**
      * add event listener to ccui.CheckBox. it would called when checkbox is selected or unselected.
@@ -459,47 +459,47 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
      * @param {Object} [target=]
      * @deprecated since v3.0, please use addEventListener instead.
      */
-    addEventListenerCheckBox: function (selector, target) {
+    addEventListenerCheckBox(selector, target) {
         this.addEventListener(selector, target);
-    },
+    }
 
     /**
      * add a call back function would called when checkbox is selected or unselected.
      * @param {Function} selector
      * @param {Object} [target=]
      */
-    addEventListener: function(selector, target){
+    addEventListener(selector, target){
         this._checkBoxEventSelector = selector;
         this._checkBoxEventListener = target;
-    },
+    }
 
     /**
      * Returns the content size of Renderer.
      * @returns {cc.Size}
      */
-    getVirtualRendererSize: function(){
+    getVirtualRendererSize(){
         return this._backGroundBoxRenderer.getContentSize();
-    },
+    }
 
-    _onSizeChanged: function () {
-        ccui.Widget.prototype._onSizeChanged.call(this);
+    _onSizeChanged() {
+        super._onSizeChanged();
         this._backGroundBoxRendererAdaptDirty = true;
         this._backGroundSelectedBoxRendererAdaptDirty = true;
         this._frontCrossRendererAdaptDirty = true;
         this._backGroundBoxDisabledRendererAdaptDirty = true;
         this._frontCrossDisabledRendererAdaptDirty = true;
-    },
+    }
 
     /**
      * override "getVirtualRenderer" method of widget.
      * @override
      * @returns {cc.Node} the renderer of ccui.CheckBox.
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer() {
         return this._backGroundBoxRenderer;
-    },
+    }
 
-    _backGroundTextureScaleChangedWithSize: function () {
+    _backGroundTextureScaleChangedWithSize() {
         var locRenderer = this._backGroundBoxRenderer, locContentSize = this._contentSize;
         if (this._ignoreSize){
             locRenderer.setScale(1.0);
@@ -519,9 +519,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             locRenderer.setScaleY(scaleY);
         }
         locRenderer.setPosition(locContentSize.width * 0.5, locContentSize.height * 0.5);
-    },
+    }
 
-    _backGroundSelectedTextureScaleChangedWithSize: function () {
+    _backGroundSelectedTextureScaleChangedWithSize() {
         var locRenderer = this._backGroundSelectedBoxRenderer, locContentSize = this._contentSize;
         if (this._ignoreSize)
             locRenderer.setScale(1.0);
@@ -537,9 +537,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             locRenderer.setScaleY(scaleY);
         }
         locRenderer.setPosition(locContentSize.width * 0.5, locContentSize.height * 0.5);
-    },
+    }
 
-    _frontCrossTextureScaleChangedWithSize: function () {
+    _frontCrossTextureScaleChangedWithSize() {
         var locRenderer = this._frontCrossRenderer, locContentSize = this._contentSize;
         if (this._ignoreSize)
             locRenderer.setScale(1.0);
@@ -555,9 +555,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             locRenderer.setScaleY(scaleY);
         }
         locRenderer.setPosition(locContentSize.width * 0.5, locContentSize.height * 0.5);
-    },
+    }
 
-    _backGroundDisabledTextureScaleChangedWithSize: function () {
+    _backGroundDisabledTextureScaleChangedWithSize() {
         var locRenderer = this._backGroundBoxDisabledRenderer, locContentSize = this._contentSize;
         if (this._ignoreSize)
             locRenderer.setScale(1.0);
@@ -573,9 +573,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             locRenderer.setScaleY(scaleY);
         }
         locRenderer.setPosition(locContentSize.width * 0.5, locContentSize.height * 0.5);
-    },
+    }
 
-    _frontCrossDisabledTextureScaleChangedWithSize: function () {
+    _frontCrossDisabledTextureScaleChangedWithSize() {
         var locRenderer = this._frontCrossDisabledRenderer, locContentSize = this._contentSize;
         if (this._ignoreSize) {
             locRenderer.setScale(1.0);
@@ -591,22 +591,22 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             locRenderer.setScaleY(scaleY);
         }
         locRenderer.setPosition(locContentSize.width * 0.5, locContentSize.height * 0.5);
-    },
+    }
 
     /**
      * Returns the "class name" of widget.
      * @override
      * @returns {string}
      */
-    getDescription: function () {
+    getDescription() {
         return "CheckBox";
-    },
+    }
 
-    _createCloneInstance: function () {
+    _createCloneInstance() {
         return new ccui.CheckBox();
-    },
+    }
 
-    _copySpecialProperties: function (uiCheckBox) {
+    _copySpecialProperties(uiCheckBox) {
         if (uiCheckBox instanceof ccui.CheckBox) {
             this.loadTextureBackGround(uiCheckBox._backGroundFileName, uiCheckBox._backGroundTexType);
             this.loadTextureBackGroundSelected(uiCheckBox._backGroundSelectedFileName, uiCheckBox._backGroundSelectedTexType);
@@ -621,9 +621,9 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             this._backgroundTextureScaleX = uiCheckBox._backgroundTextureScaleX;
             this._backgroundTextureScaleY = uiCheckBox._backgroundTextureScaleY;
         }
-    },
+    }
 
-    _adaptRenderers: function(){
+    _adaptRenderers(){
         if (this._backGroundBoxRendererAdaptDirty){
             this._backGroundTextureScaleChangedWithSize();
             this._backGroundBoxRendererAdaptDirty = false;
@@ -645,7 +645,8 @@ ccui.CheckBox = ccui.Widget.extend(/** @lends ccui.CheckBox# */{
             this._frontCrossDisabledRendererAdaptDirty = false;
         }
     }
-});
+
+};
 
 var _p = ccui.CheckBox.prototype;
 

@@ -150,12 +150,15 @@ var DenshionTests = [
     }
 ];
 
-var CocosDenshionTest = cc.LayerGradient.extend({
-    _itemMenu:null,
-    _beginPos:cc.p(0, 0),
-    _testCount:0,
-    ctor:function () {
-        this._super(cc.color(0, 0, 0, 255), cc.color(148, 80, 120, 255));
+var CocosDenshionTest = class CocosDenshionTest extends cc.LayerGradient {
+    constructor() {
+        super(cc.color(0, 0, 0, 255), cc.color(148, 80, 120, 255));
+
+        this._itemMenu = null;
+
+        this._beginPos = cc.p(0, 0);
+
+        this._testCount = 0;
 
         this._itemMenu = new cc.Menu();
         var winSize = director.getWinSize();
@@ -192,20 +195,20 @@ var CocosDenshionTest = cc.LayerGradient.extend({
         // set default volume
         audioEngine.setEffectsVolume(0.5);
         audioEngine.setMusicVolume(0.5);
-    },
-    onExit:function () {
-        this._super();
+    }
+    onExit() {
+        super.onExit();
         audioEngine.stopMusic();
         audioEngine.stopAllEffects();
-    },
+    }
 
-    onMenuCallback:function (sender) {
+    onMenuCallback(sender) {
         var idx = sender.zIndex - 10000;
         // create the test scene and run it
         var scene = DenshionTests[idx].playFunc();
-    },
+    }
 
-    moveMenu:function (delta) {
+    moveMenu(delta) {
         var newY = this._itemMenu.y + delta.y;
 
         if (newY < 0)
@@ -216,17 +219,19 @@ var CocosDenshionTest = cc.LayerGradient.extend({
 
         this._itemMenu.y = newY;
     }
-});
 
-var CocosDenshionTestScene = TestScene.extend({
-    runThisTest:function () {
+};
+
+var CocosDenshionTestScene = class CocosDenshionTestScene extends TestScene {
+    runThisTest() {
 
         audioEngine = cc.audioEngine;
         var layer = new CocosDenshionTest();
         this.addChild(layer);
         director.runScene(this);
     }
-});
+
+};
 
 var soundId = null;
 

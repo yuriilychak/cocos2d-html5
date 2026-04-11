@@ -26,9 +26,9 @@
 
     var DEBUG = false;
 
-    var Parser = baseParser.extend({
+    var Parser = class Parser extends baseParser {
 
-        parse: function (file, json, path) {
+        parse(file, json, path) {
             var resourcePath;
             if (path !== undefined)
                 resourcePath = path;
@@ -38,21 +38,22 @@
             var node = this.parseNode(this.getNodeJson(json), resourcePath);
             this.deferred(json, resourcePath, node, file);
             return node;
-        },
+        }
 
-        getNodeJson: function (json) {
+        getNodeJson(json) {
             var content = json["Content"];
             if (content["ObjectData"])
                 return content["ObjectData"];
 
             return content["Content"]["ObjectData"];
-        },
+        }
 
-        getClass: function (json) {
+        getClass(json) {
             return json["ctype"];
         }
 
-    });
+    
+    }
     var parser = new Parser();
 
 

@@ -24,13 +24,13 @@
 
 (function (load, baseParser) {
 
-    var Parser = baseParser.extend({
+    var Parser = class Parser extends baseParser {
 
-        getNodeJson: function (json) {
+        getNodeJson(json) {
             return json;
-        },
+        }
 
-        parseNode: function (json, resourcePath) {
+        parseNode(json, resourcePath) {
             var parser = this.parsers[this.getClass(json)];
             var node = null;
             if (parser)
@@ -39,15 +39,15 @@
                 cc.log("Can't find the parser : %s", this.getClass(json));
 
             return node;
-        },
+        }
 
-        deferred: function (json, resourcePath, node, file) {
+        deferred(json, resourcePath, node, file) {
             ccs.triggerManager.parse(json["Triggers"] || []);
             if (ccs.sceneReader)
                 ccs.sceneReader._node = node;
-        },
+        }
 
-        setPropertyFromJsonDict: function (node, json) {
+        setPropertyFromJsonDict(node, json) {
             var x = (cc.isUndefined(json["x"])) ? 0 : json["x"];
             var y = (cc.isUndefined(json["y"])) ? 0 : json["y"];
             node.setPosition(x, y);
@@ -73,7 +73,8 @@
             node.setName(sName);
         }
 
-    });
+    
+    }
 
     var parser = new Parser();
 

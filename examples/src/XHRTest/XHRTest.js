@@ -25,27 +25,28 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var XHRTestScene = TestScene.extend({
-    ctor:function () {
-        this._super(true);
+var XHRTestScene = class XHRTestScene extends TestScene {
+    constructor() {
+        super(true);
         var xhrLayer = new XHRTestLayer();
         this.addChild(xhrLayer);
-    },
-    runThisTest:function () {
-        cc.director.runScene(this);
-    },
-    MainMenuCallback:function (sender) {
-        this._super(sender);
     }
-});
+    runThisTest() {
+        cc.director.runScene(this);
+    }
+    MainMenuCallback(sender) {
+        super.MainMenuCallback(sender);
+    }
 
-var XHRTestLayer = cc.Layer.extend({
-    ctor:function () {
-        this._super();
-    },
+};
 
-    onEnter: function() {
-        this._super();
+var XHRTestLayer = class XHRTestLayer extends cc.Layer {
+    constructor() {
+        super();
+    }
+
+    onEnter() {
+        super.onEnter();
         var l = new cc.LabelTTF("Get infos via XHR", "Thonburi", 16);
         this.addChild(l, 1);
         l.x = winSize.width / 2;
@@ -54,15 +55,15 @@ var XHRTestLayer = cc.Layer.extend({
         this.sendGetRequest();
         this.sendPostPlainText();
         this.sendPostForms();
-    },
+    }
 
-    ensureLeftAligned: function(label) {
+    ensureLeftAligned(label) {
         label.anchorX = 0;
         label.anchorY = 1;
         label.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-    },
+    }
 
-    streamXHREventsToLabel: function( xhr, label, textbox, method, title ) {
+    streamXHREventsToLabel( xhr, label, textbox, method, title ) {
         // Simple events
         ['loadstart', 'abort', 'error', 'load', 'loadend', 'timeout'].forEach(function (eventname) {
             xhr["on" + eventname] = function () {
@@ -81,9 +82,9 @@ var XHRTestLayer = cc.Layer.extend({
                 label.string += "\nStatus: Got " + method + " response! " + httpStatus;
             }
         };
-    },
+    }
 
-    sendGetRequest: function() {
+    sendGetRequest() {
         var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusGetLabel, 1);
 
@@ -109,9 +110,9 @@ var XHRTestLayer = cc.Layer.extend({
         xhr.setRequestHeader("Accept-Encoding","gzip,deflate");
 
         xhr.send();
-    },
+    }
 
-    sendPostPlainText: function() {
+    sendPostPlainText() {
         var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
@@ -135,9 +136,9 @@ var XHRTestLayer = cc.Layer.extend({
         //set Content-type "text/plain;charset=UTF-8" to post plain text
         xhr.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
         xhr.send("plain text message");
-    },
+    }
 
-    sendPostForms: function() {
+    sendPostForms() {
         var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
@@ -168,13 +169,14 @@ var XHRTestLayer = cc.Layer.extend({
         **/
         var args = "a=hello&b=world";
         xhr.send(args);
-    },
-
-    scrollViewDidScroll:function (view) {
-    },
-    scrollViewDidZoom:function (view) {
     }
-});
+
+    scrollViewDidScroll(view) {
+    }
+    scrollViewDidZoom(view) {
+    }
+
+};
 
 var runXHRTest = function () {
     var pScene = new cc.Scene();

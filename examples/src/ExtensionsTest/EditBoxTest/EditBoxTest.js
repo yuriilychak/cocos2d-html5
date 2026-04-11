@@ -25,19 +25,27 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var EditBoxTestLayer = cc.Layer.extend({
-    _box1: null,
-    _box2: null,
-    _box3: null,
-    _box4: null,
+var EditBoxTestLayer = class EditBoxTestLayer extends cc.Layer {
 
-    ctor: function () {
-        this._super();
+    constructor() {
+        super();
+
+
+        this._box1 = null;
+
+
+        this._box2 = null;
+
+
+        this._box3 = null;
+
+
+        this._box4 = null;
         cc.associateWithNative(this, cc.Layer);
         this.init();
-    },
+    }
 
-    init: function () {
+    init() {
         this._box1 = new cc.EditBox(cc.size(170, 50), new cc.Scale9Sprite("extensions/green_edit.png"), new cc.Scale9Sprite("extensions/orange_edit.png"));
         this._box1.setString("EditBoxs");
         this._box1.x = 220;
@@ -87,30 +95,30 @@ var EditBoxTestLayer = cc.Layer.extend({
         this.addChild(menuBack);
 
         return true;
-    },
+    }
 
-    toExtensionsMainLayer: function (sender) {
+    toExtensionsMainLayer(sender) {
         var scene = new ExtensionsTestScene();
         scene.runThisTest();
-    },
+    }
 
-    editBoxEditingDidBegin: function (editBox) {
+    editBoxEditingDidBegin(editBox) {
         cc.log("editBox " + this._getEditBoxName(editBox) + " DidBegin !");
-    },
+    }
 
-    editBoxEditingDidEnd: function (editBox) {
+    editBoxEditingDidEnd(editBox) {
         cc.log("editBox " + this._getEditBoxName(editBox) + " DidEnd !");
-    },
+    }
 
-    editBoxTextChanged: function (editBox, text) {
+    editBoxTextChanged(editBox, text) {
         cc.log("editBox " + this._getEditBoxName(editBox) + ", TextChanged, text: " + text);
-    },
+    }
 
-    editBoxReturn: function (editBox) {
+    editBoxReturn(editBox) {
         cc.log("editBox " + this._getEditBoxName(editBox) + " was returned !");
-    },
+    }
 
-    _getEditBoxName :function(editBox){
+    _getEditBoxName(editBox){
         if (this._box1 == editBox) {
             return "box1";
         } else if (this._box2 == editBox) {
@@ -122,7 +130,8 @@ var EditBoxTestLayer = cc.Layer.extend({
         }
         return "Unknown EditBox";
     }
-});
+
+};
 
 var runEditBoxTest = function () {
     var pScene = new cc.Scene();

@@ -77,9 +77,9 @@ if (!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os){
     });
 }
 
-var ExtensionsMainLayer = cc.Layer.extend({
-    onEnter:function () {
-        this._super();
+var ExtensionsMainLayer = class ExtensionsMainLayer extends cc.Layer {
+    onEnter() {
+        super.onEnter();
 
         var winSize = cc.director.getWinSize();
 
@@ -96,18 +96,20 @@ var ExtensionsMainLayer = cc.Layer.extend({
             pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
         }
         this.addChild(pMenu);
-    },
+    }
 
-    menuCallback:function (sender) {
+    menuCallback(sender) {
         var nIndex = sender.zIndex - ITEM_TAG_BASIC;
         extensionsTestItemNames[nIndex].testScene();
     }
-});
 
-var ExtensionsTestScene = TestScene.extend({
-    runThisTest:function () {
+};
+
+var ExtensionsTestScene = class ExtensionsTestScene extends TestScene {
+    runThisTest() {
         var pLayer = new ExtensionsMainLayer();
         this.addChild(pLayer);
 	    cc.director.runScene(this);
     }
-});
+
+};

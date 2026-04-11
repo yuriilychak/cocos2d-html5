@@ -27,50 +27,51 @@
 
 var eventDispatcherSceneIdx = -1;
 
-var EventDispatcherTestDemo = BaseTestLayer.extend({
-    ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(160,32,32,255));
-    },
+var EventDispatcherTestDemo = class EventDispatcherTestDemo extends BaseTestLayer {
+    constructor() {
+        super(cc.color(0,0,0,255), cc.color(160,32,32,255));
+    }
 
-    title:function () {
+    title() {
         return "No title";
-    },
+    }
 
-    subtitle:function () {
+    subtitle() {
         return "";
-    },
+    }
 
-    onBackCallback:function (sender) {
+    onBackCallback(sender) {
         var s = new EventDispatcherTestScene();
         s.addChild(previousDispatcherTest());
         director.runScene(s);
-    },
+    }
 
-    onRestartCallback:function (sender) {
+    onRestartCallback(sender) {
         var s = new EventDispatcherTestScene();
         s.addChild(restartDispatcherTest());
         director.runScene(s);
-    },
+    }
 
-    onNextCallback:function (sender) {
+    onNextCallback(sender) {
         var s = new EventDispatcherTestScene();
         s.addChild(nextDispatcherTest());
         director.runScene(s);
-    },
+    }
     // varmation
-    numberOfPendingTests:function() {
+    numberOfPendingTests() {
         return ( (arrayOfEventDispatcherTest.length-1) - eventDispatcherSceneIdx );
-    },
+    }
 
-    getTestNumber:function() {
+    getTestNumber() {
         return eventDispatcherSceneIdx;
     }
-});
 
-var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
-    onEnter:function(){
+};
+
+var TouchableSpriteTest = class TouchableSpriteTest extends EventDispatcherTestDemo {
+    onEnter(){
         //----start0----onEnter
-        this._super();
+        super.onEnter();
 
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
@@ -158,16 +159,17 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         menu.setAnchorPoint(0, 0);
         this.addChild(menu);
         //----end0----
-    },
+    }
 
-    title:function(){
+    title(){
         return "Touchable Sprite Test";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "Please drag the blocks";
     }
-});
+
+};
 
 TouchableSpriteTest.create = function(){
     var test = new TouchableSpriteTest();
@@ -175,22 +177,28 @@ TouchableSpriteTest.create = function(){
     return test;
 };
 
-var TouchableSprite = cc.Sprite.extend({
-    _listener:null,
-    _fixedPriority:0,
-    _removeListenerOnTouchEnded: false,
+var TouchableSprite = class TouchableSprite extends cc.Sprite {
 
-    ctor: function(priority){
-        this._super();
+    constructor(priority){
+        super();
+
+
+        this._listener = null;
+
+
+        this._fixedPriority = 0;
+
+
+        this._removeListenerOnTouchEnded = false;
         this._fixedPriority = priority || 0;
-    },
+    }
 
-    setPriority:function(fixedPriority){
+    setPriority(fixedPriority){
         this._fixedPriority = fixedPriority;
-    },
+    }
 
-    onEnter:function(){
-        this._super();
+    onEnter(){
+        super.onEnter();
 
         var selfPointer = this;
         var listener = cc.EventListener.create({
@@ -224,21 +232,22 @@ var TouchableSprite = cc.Sprite.extend({
         else
             cc.eventManager.addListener(listener, this);
         this._listener = listener;
-    },
+    }
 
-    onExit: function(){
+    onExit(){
         this._listener && cc.eventManager.removeListener(this._listener);
-        this._super();
-    },
+        super.onExit();
+    }
 
-    removeListenerOnTouchEnded: function(toRemove){
+    removeListenerOnTouchEnded(toRemove){
         this._removeListenerOnTouchEnded = toRemove;
-    },
+    }
 
-    getListener: function() {
+    getListener() {
         return this._listener;
     }
-});
+
+};
 
 TouchableSprite.create = function(priority){
     var test = new TouchableSprite(priority);
@@ -246,10 +255,10 @@ TouchableSprite.create = function(priority){
     return test;
 };
 
-var FixedPriorityTest =  EventDispatcherTestDemo.extend({
-    onEnter:function(){
+var FixedPriorityTest = class FixedPriorityTest extends EventDispatcherTestDemo {
+    onEnter(){
         //----start1----onEnter
-        this._super();
+        super.onEnter();
 
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
@@ -272,16 +281,17 @@ var FixedPriorityTest =  EventDispatcherTestDemo.extend({
         sprite3.y = 0;
         sprite2.addChild(sprite3, 1);
         //----end1----
-    },
+    }
 
-    title:function(){
+    title(){
         return "Fixed priority test";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "Fixed Priority, Blue: 30, Red: 20, Yellow: 10\n The lower value the higher priority will be.";
     }
-});
+
+};
 
 FixedPriorityTest.create = function(){
     var test = new FixedPriorityTest();
@@ -289,10 +299,10 @@ FixedPriorityTest.create = function(){
     return test;
 };
 
-var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
-    onEnter:function(){
+var RemoveListenerWhenDispatching = class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
+    onEnter(){
         //----start2----onEnter
-        this._super();
+        super.onEnter();
 
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
@@ -350,16 +360,17 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
         menu.setAnchorPoint(0, 0);
         this.addChild(menu, 1);
         //----end2----
-    },
+    }
 
-    title:function(){
+    title(){
         return "Add and remove listener\n when dispatching event";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "";
     }
-});
+
+};
 
 RemoveListenerWhenDispatching.create = function(){
     var test = new RemoveListenerWhenDispatching();
@@ -367,15 +378,19 @@ RemoveListenerWhenDispatching.create = function(){
     return test;
 };
 
-var CustomEventTest =  EventDispatcherTestDemo.extend({
-    _listener1: null,
-    _listener2: null,
-    _item1Count: 0,
-    _item2Count: 0,
+var CustomEventTest = class CustomEventTest extends EventDispatcherTestDemo {
+    constructor() {
+        super();
+        this._listener1 = null;
+        this._listener2 = null;
+        this._item1Count = 0;
+        this._item2Count = 0;
+    }
 
-    onEnter:function(){
+
+    onEnter(){
         //----start3----onEnter
-        this._super();
+        super.onEnter();
 
         var origin = director.getVisibleOrigin(), size = director.getVisibleSize(), selfPointer = this;
 
@@ -428,24 +443,25 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         menu.setAnchorPoint(0, 0);
         this.addChild(menu, 1);
         //----end3----
-    },
+    }
 
-    onExit:function(){
+    onExit(){
         //----start3----onExit
         cc.eventManager.removeListener(this._listener1);
         cc.eventManager.removeListener(this._listener2);
-        this._super();
+        super.onExit();
         //----end3----
-    },
+    }
 
-    title:function(){
+    title(){
         return "Send custom event";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "";
     }
-});
+
+};
 
 CustomEventTest.create = function(){
     var test = new CustomEventTest();
@@ -453,10 +469,10 @@ CustomEventTest.create = function(){
     return test;
 };
 
-var LabelKeyboardEventTest =  EventDispatcherTestDemo.extend({
-    onEnter:function(){
+var LabelKeyboardEventTest = class LabelKeyboardEventTest extends EventDispatcherTestDemo {
+    onEnter(){
         //----start4----onEnter
-        this._super();
+        super.onEnter();
 
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
@@ -478,9 +494,9 @@ var LabelKeyboardEventTest =  EventDispatcherTestDemo.extend({
             }
         }, statusLabel);
         //----end4----
-    },
+    }
 
-    getNativeKeyName:function(keyCode) {
+    getNativeKeyName(keyCode) {
         var allCode = Object.getOwnPropertyNames(cc.KEY);
         var keyName = "";
         for(var x in allCode){
@@ -490,16 +506,17 @@ var LabelKeyboardEventTest =  EventDispatcherTestDemo.extend({
             }
         }
         return keyName;
-    },
+    }
 
-    title:function(){
+    title(){
         return "Label Receives Keyboard Event";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "Please click keyboard\n(Only available on Desktop and Android)";
     }
-});
+
+};
 
 LabelKeyboardEventTest.create = function(){
     var test = new LabelKeyboardEventTest();
@@ -507,10 +524,10 @@ LabelKeyboardEventTest.create = function(){
     return test;
 };
 
-var SpriteAccelerationEventTest =  EventDispatcherTestDemo.extend({
-    onEnter:function(){
+var SpriteAccelerationEventTest = class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
+    onEnter(){
         //----start5----onEnter
-        this._super();
+        super.onEnter();
 
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
@@ -537,23 +554,24 @@ var SpriteAccelerationEventTest =  EventDispatcherTestDemo.extend({
             }
         }, sprite);
         //----end5----
-    },
+    }
 
-    onExit:function(){
+    onExit(){
         //----start5----onEnter
         cc.inputManager.setAccelerometerEnabled(false);
-        this._super();
+        super.onExit();
         //----end----
-    },
+    }
 
-    title:function(){
+    title(){
         return "Sprite Receives Acceleration Event";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "Please move your device\n(Only available on mobile)";
     }
-});
+
+};
 
 SpriteAccelerationEventTest._fix_pos = function(pos, min, max){
     var ret = pos;
@@ -570,13 +588,17 @@ SpriteAccelerationEventTest.create = function(){
     return test;
 };
 
-var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
-    _sprite:null,
-    _spriteSaved:false,
+var RemoveAndRetainNodeTest = class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
+    constructor() {
+        super();
+        this._sprite = null;
+        this._spriteSaved = false;
+    }
 
-    onEnter:function(){
+
+    onEnter(){
         //----start6----onEnter
-        this._super();
+        super.onEnter();
 
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
@@ -631,22 +653,23 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
             }, this)
         ));
         //----end6----
-    },
+    }
 
-    onExit:function(){
+    onExit(){
         //----start6----onExit
-        this._super();
+        super.onExit();
         //----end6----
-    },
+    }
 
-    title:function(){
+    title(){
         return "RemoveAndRetainNodeTest";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "Sprite should be removed after 5s, add to scene again after 5s";
     }
-});
+
+};
 
 RemoveAndRetainNodeTest.create = function(){
     var test = new RemoveAndRetainNodeTest();
@@ -654,10 +677,10 @@ RemoveAndRetainNodeTest.create = function(){
     return test;
 };
 
-var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
-    onEnter:function(){
+var RemoveListenerAfterAddingTest = class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
+    onEnter(){
         //----start7----onEnter
-        this._super();
+        super.onEnter();
         var selfPointer = this;
         var item1 = new cc.MenuItemFont("Click Me 1", function(sender){
             var listener = cc.EventListener.create({
@@ -718,16 +741,17 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         menu.setAnchorPoint(0, 0);
         this.addChild(menu);
         //----end7----
-    },
+    }
 
-    title:function(){
+    title(){
         return "RemoveListenerAfterAddingTest";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "Should not crash!";
     }
-});
+
+};
 
 RemoveListenerAfterAddingTest.create = function(){
     var test = new RemoveListenerAfterAddingTest();
@@ -735,24 +759,28 @@ RemoveListenerAfterAddingTest.create = function(){
     return test;
 };
 
-var DirectorEventTest =  EventDispatcherTestDemo.extend({
-    _count1:0,
-    _count2:0,
-    _count3:0,
-    _count4:0,
-    _label1:null,
-    _label2:null,
-    _label3:null,
-    _label4:null,
-    _event1:null,
-    _event2:null,
-    _event3:null,
-    _event4:null,
-    _time:0,
+var DirectorEventTest = class DirectorEventTest extends EventDispatcherTestDemo {
+    constructor() {
+        super();
+        this._count1 = 0;
+        this._count2 = 0;
+        this._count3 = 0;
+        this._count4 = 0;
+        this._label1 = null;
+        this._label2 = null;
+        this._label3 = null;
+        this._label4 = null;
+        this._event1 = null;
+        this._event2 = null;
+        this._event3 = null;
+        this._event4 = null;
+        this._time = 0;
+    }
 
-    onEnter:function(){
+
+    onEnter(){
         //----start8----onEnter
-        this._super();
+        super.onEnter();
         var s = director.getWinSize(), selfPointer = this;
 
         this._label1 = new cc.LabelTTF("Update: 0", "Arial", 20);
@@ -783,11 +811,11 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
         });
 
         this.scheduleUpdate();
-    },
+    }
 
-    onExit:function(){
+    onExit(){
         //----start8----onExit
-        this._super();
+        super.onExit();
 
         var eventManager = cc.eventManager;
         eventManager.removeListener(this._event1);
@@ -795,9 +823,9 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
         eventManager.removeListener(this._event3);
         eventManager.removeListener(this._event4);
         //----end8----
-    },
+    }
 
-    update:function(dt){
+    update(dt){
         //----start8----update
         this._time += dt;
         if(this._time > 0.5) {
@@ -805,28 +833,29 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
             this._time = 0;
         }
         //----end8----
-    },
+    }
 
-    onEvent1:function(event){
+    onEvent1(event){
         //----start8----onExit
         this._label1.setString("Update: " + this._count1++);
         //----end8----
-    },
+    }
 
-    onEvent2:function(event){
+    onEvent2(event){
         //----start8----onExit
         this._label2.setString("Visit: " + this._count2++);
         //----end8----
-    },
+    }
 
-    title:function(){
+    title(){
         return "Testing Director Events";
-    },
+    }
 
-    subtitle:function(){
+    subtitle(){
         return "after visit, after draw, after update, projection changed";
     }
-});
+
+};
 
 DirectorEventTest.create = function(){
     var test = new DirectorEventTest();
@@ -834,12 +863,16 @@ DirectorEventTest.create = function(){
     return test;
 };
 
-var GlobalZTouchTest = EventDispatcherTestDemo.extend({
-    _sprite:null,
-    _accum:null,
+var GlobalZTouchTest = class GlobalZTouchTest extends EventDispatcherTestDemo {
 
-    ctor: function(){
-        this._super();
+    constructor(){
+        super();
+
+
+        this._sprite = null;
+
+
+        this._accum = null;
 
         var listener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -887,25 +920,26 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
         }
 
         this.scheduleUpdate();
-    },
+    }
 
-    update: function(dt){
+    update(dt){
         this._accum += dt;
         if( this._accum > 2.0) {
             var z = this._sprite.getGlobalZOrder();
             this._sprite.setGlobalZOrder(-z);
             this._accum = 0;
         }
-    },
+    }
 
-    title: function(){
+    title(){
         return "Global Z Value, Try touch blue sprite";
-    },
+    }
 
-    subtitle: function() {
+    subtitle() {
         return "Blue Sprite should change go from foreground to background";
     }
-});
+
+};
 
 GlobalZTouchTest.create = function(){
     var test = new GlobalZTouchTest();
@@ -913,10 +947,10 @@ GlobalZTouchTest.create = function(){
     return test;
 };
 
-var StopPropagationTest = EventDispatcherTestDemo.extend({
-    ctor:function(){
+var StopPropagationTest = class StopPropagationTest extends EventDispatcherTestDemo {
+    constructor(){
         //----start9----ctor
-        this._super();
+        super();
 
         var touchOneByOneListener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -1021,30 +1055,31 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
             sprite2.y = cc.visibleRect.center.y - sprite2.getContentSize().height / 2 - 10;
         }
         //----end9----
-    },
+    }
 
-    _isPointInNode: function (pt, node) {
+    _isPointInNode(pt, node) {
         //----start9----_isPointInNode
         var s = node.getContentSize();
         return cc.rectContainsPoint(cc.rect(0, 0, s.width, s.height), node.convertToNodeSpace(pt));
         //----end9----
-    },
+    }
 
-    _isPointInTopHalfAreaOfScreen: function(pt){
+    _isPointInTopHalfAreaOfScreen(pt){
         //----start9----_isPointInTopHalfAreaOfScreen
         var winSize = cc.director.getWinSize();
         return (pt.y >= winSize.height/2);
         //----end9----
-    },
+    }
 
-    title: function(){
+    title(){
         return "Stop Propagation Test";
-    },
+    }
 
-    subtitle: function() {
+    subtitle() {
         return "Shouldn't crash and only blue block could be clicked";
     }
-});
+
+};
 StopPropagationTest._TAG_BLUE_SPRITE = 101;
 StopPropagationTest._TAG_BLUE_SPRITE2 = 102;
 
@@ -1054,10 +1089,10 @@ StopPropagationTest.create = function(){
     return test;
 };
 
-var Issue4160 = EventDispatcherTestDemo.extend({
-    ctor: function(){
+var Issue4160 = class Issue4160 extends EventDispatcherTestDemo {
+    constructor(){
         //----start10----ctor
-        this._super();
+        super();
         var origin = cc.director.getVisibleOrigin();
         var size = cc.director.getVisibleSize();
 
@@ -1080,16 +1115,17 @@ var Issue4160 = EventDispatcherTestDemo.extend({
         sprite3.y = 0;
         sprite2.addChild(sprite3, 21);
         //----end10----
-    },
+    }
 
-    title: function(){
+    title(){
         return "Issue 4160: Out of range exception";
-    },
+    }
 
-    subtitle: function() {
+    subtitle() {
         return "Touch the red block twice \n should not crash and the red one couldn't be touched";
     }
-});
+
+};
 
 Issue4160.create = function(){
     var test = new Issue4160();
@@ -1097,10 +1133,10 @@ Issue4160.create = function(){
     return test;
 };
 
-var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
-    ctor: function () {
+var PauseResumeTargetTest = class PauseResumeTargetTest extends EventDispatcherTestDemo {
+    constructor() {
         //----start11----ctor
-        this._super();
+        super();
 
         var origin = cc.director.getVisibleOrigin();
         var size = cc.director.getVisibleSize();
@@ -1170,16 +1206,17 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
 
         this.addChild(menu);
         //----end11----
-    },
+    }
 
-    title: function(){
+    title(){
         return "PauseResumeTargetTest";
-    },
+    }
 
-    subtitle: function() {
+    subtitle() {
         return "Yellow block uses fixed priority";
     }
-});
+
+};
 
 PauseResumeTargetTest.create = function(){
     var test = new Issue4160();
@@ -1187,18 +1224,18 @@ PauseResumeTargetTest.create = function(){
     return test;
 };
 
-var Issue9898 = EventDispatcherTestDemo.extend({
+var Issue9898 = class Issue9898 extends EventDispatcherTestDemo {
 
-    title: function(){
+    title(){
         return "Issue9898";
-    },
+    }
 
-    subtitle: function(){
+    subtitle(){
         return "Should not crash if dispatch event after remove\n event listener in callback";
-    },
+    }
 
-    ctor: function(){
-        this._super();
+    constructor(){
+        super();
         //----start12----ctor
 
         var origin = cc.director.getVisibleOrigin();
@@ -1229,7 +1266,8 @@ var Issue9898 = EventDispatcherTestDemo.extend({
         //----end12----
     }
 
-});
+
+};
 
 Issue9898.create = function(){
     var test = new Issue9898();
@@ -1237,13 +1275,14 @@ Issue9898.create = function(){
     return test;
 };
 
-var EventDispatcherTestScene = TestScene.extend({
-    runThisTest:function (num) {
+var EventDispatcherTestScene = class EventDispatcherTestScene extends TestScene {
+    runThisTest(num) {
         eventDispatcherSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextDispatcherTest());
         director.runScene(this);
     }
-});
+
+};
 
 var arrayOfEventDispatcherTest = [
     TouchableSpriteTest,

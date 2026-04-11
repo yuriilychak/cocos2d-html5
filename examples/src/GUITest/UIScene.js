@@ -23,27 +23,38 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-var UIScene  = TestScene.extend({
-    runThisTest: function(){
+var UIScene = class UIScene extends TestScene {
+    runThisTest(){
         var layer = new UIMainLayer();
         this.addChild(layer);
         cc.director.runScene(this);
     }
-});
-var UIMainLayer = cc.Layer.extend({
-    _widget: null,
-    _sceneTitle: null,
-    _topDisplayLabel:null,
-    _bottomDisplayLabel:null,
-    _mainNode:null,
 
-    ctor: function() {
-        this._super();
+};
+var UIMainLayer = class UIMainLayer extends cc.Layer {
+
+    constructor() {
+        super();
+
+
+        this._widget = null;
+
+
+        this._sceneTitle = null;
+
+
+        this._topDisplayLabel = null;
+
+
+        this._bottomDisplayLabel = null;
+
+
+        this._mainNode = null;
         this._widget = null;
         //this.init();
-    },
-    init: function() {
-        this._super();
+    }
+    init() {
+        super.init();
 
         var winSize = cc.winSize;
         var mainNode = new cc.Node();
@@ -112,30 +123,31 @@ var UIMainLayer = cc.Layer.extend({
         this._mainNode = mainNode;
         this._widget = widget;
         return true;
-    },
-    setSceneTitle: function (title) {
+    }
+    setSceneTitle(title) {
         this._sceneTitle.setString(title);
-    },
-    toExtensionsMainLayer: function (sender) {
+    }
+    toExtensionsMainLayer(sender) {
         UISceneManager.purge();
         GUITestScene.prototype.runThisTest();
-    },
+    }
 
-    previousCallback: function (sender, type) {
+    previousCallback(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().previousUIScene());
         }
-    },
+    }
 
-    restartCallback: function (sender, type) {
+    restartCallback(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().currentUIScene());
         }
-    },
+    }
 
-    nextCallback: function (sender, type) {
+    nextCallback(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().nextUIScene());
         }
     }
-});
+
+};

@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlSwitchTest = ControlScene.extend({
-    init:function () {
-        if (this._super()) {
+var ControlSwitchTest = class ControlSwitchTest extends ControlScene {
+    init() {
+        if (super.init()) {
             var screenSize = cc.director.getWinSize();
 
             var layer = new cc.Node();
@@ -80,8 +80,8 @@ var ControlSwitchTest = ControlScene.extend({
             return true;
         }
         return false;
-    },
-    valueChanged:function (sender, controlEvent) {
+    }
+    valueChanged(sender, controlEvent) {
         if (sender.isOn()) {
             this._displayValueLabel.setString("On");
         }
@@ -89,7 +89,8 @@ var ControlSwitchTest = ControlScene.extend({
             this._displayValueLabel.setString("Off");
         }
     }
-});
+
+};
 
 ControlSwitchTest.create = function (sceneTitle) {
     var scene = new cc.Scene();
