@@ -30,17 +30,10 @@
  *
  * @param {ccs.Bone} bone The bone for the display manager
  */
-ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
-    _decoDisplayList: null,
-    _currentDecoDisplay: null,
-    _displayRenderNode: null,
-    _displayIndex: null,
-    _forceChangeDisplay: false,
-    _bone: null,
-    _visible: true,
-    _displayType: null,
+ccs.DisplayManager = class DisplayManager extends cc.NewClass {
 
-    ctor: function (bone) {
+    constructor(bone) {
+        super();
         this._decoDisplayList = [];
         this._currentDecoDisplay = null;
         this._displayRenderNode = null;
@@ -50,19 +43,19 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
         this._visible = true;
         this._displayType = ccs.DISPLAY_TYPE_MAX;
 
-        bone && ccs.DisplayManager.prototype.init.call(this, bone);
-    },
+        bone && this.init(bone);
+    }
 
     /**
      * Initializes a ccs.DisplayManager.
      * @param bone
      * @returns {boolean}
      */
-    init: function (bone) {
+    init(bone) {
         this._bone = bone;
         this.initDisplayList(bone.getBoneData());
         return true;
-    },
+    }
 
     /**
      * <p>
@@ -73,7 +66,7 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
      * @param {ccs.DisplayData|cc.Node} display it include the display information, like DisplayType. If you want to create a sprite display, then create a SpriteDisplayData param
      * @param {Number} index  the index of the display you want to replace or add to. -1 : append display from back
      */
-    addDisplay: function (display, index) {
+    addDisplay(display, index) {
         var decoDisplay, locDisplayList = this._decoDisplayList;
         if ((index >= 0) && (index < locDisplayList.length))
             decoDisplay = locDisplayList[index];
@@ -138,9 +131,9 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
             this._displayIndex = -1;
             this.changeDisplayWithIndex(index, false);
         }
-    },
+    }
 
-    _addDisplayOther: function (decoDisplay, display) {
+    _addDisplayOther(decoDisplay, display) {
         var displayData = null;
         if (display instanceof ccs.Skin) {
             var skin = display;
@@ -184,27 +177,27 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
         }
         decoDisplay.setDisplay(display);
         decoDisplay.setDisplayData(displayData);
-    },
+    }
 
     /**
      * Removes display node from list.
      * @param {Number} index
      */
-    removeDisplay: function (index) {
+    removeDisplay(index) {
         this._decoDisplayList.splice(index, 1);
         if (index === this._displayIndex) {
             this.setCurrentDecorativeDisplay(null);
             this._displayIndex = -1;
         }
-    },
+    }
 
     /**
      * Returns the display node list.
      * @returns {Array}
      */
-    getDecorativeDisplayList: function () {
+    getDecorativeDisplayList() {
         return this._decoDisplayList;
-    },
+    }
 
     /**
      * <p>
@@ -215,7 +208,7 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
      * @param {Number} index  The index of the display you want to change
      * @param {Boolean} force  If true, then force change display to specified display, or current display will set to  display index edit in the flash every key frame.
      */
-    changeDisplayWithIndex: function (index, force) {
+    changeDisplayWithIndex(index, force) {
         if (index >= this._decoDisplayList.length) {
             cc.log("the index value is out of range");
             return;
@@ -237,14 +230,14 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
             return;
         }
         this.setCurrentDecorativeDisplay(this._decoDisplayList[index]);
-    },
+    }
 
     /**
      * Change display by name. @see changeDisplayWithIndex.
      * @param {String} name
      * @param {Boolean} force
      */
-    changeDisplayWithName: function (name, force) {
+    changeDisplayWithName(name, force) {
         var locDisplayList = this._decoDisplayList;
         for (var i = 0; i < locDisplayList.length; i++) {
             if (locDisplayList[i].getDisplayData().displayName === name) {
@@ -252,13 +245,13 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
                 break;
             }
         }
-    },
+    }
 
     /**
      * Sets current decorative display.
      * @param {ccs.DecorativeDisplay} decoDisplay
      */
-    setCurrentDecorativeDisplay: function (decoDisplay) {
+    setCurrentDecorativeDisplay(decoDisplay) {
         var locCurrentDecoDisplay = this._currentDecoDisplay;
         if (ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT || ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             if (locCurrentDecoDisplay && locCurrentDecoDisplay.getColliderDetector())
@@ -302,50 +295,49 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
         } else
             this._displayType = ccs.DISPLAY_TYPE_MAX;
 
-
         cc.renderer.childrenOrderDirty = true;
-    },
+    }
 
     /**
      *  Returns the current display render node.
      * @returns {cc.Node}
      */
-    getDisplayRenderNode: function () {
+    getDisplayRenderNode() {
         return this._displayRenderNode;
-    },
+    }
 
     /**
      * Returns the type of display render node.
      * @returns {Number}
      */
-    getDisplayRenderNodeType: function () {
+    getDisplayRenderNodeType() {
         return this._displayType;
-    },
+    }
 
     /**
      * Returns the index of display render node.
      * @returns {Number}
      */
-    getCurrentDisplayIndex: function () {
+    getCurrentDisplayIndex() {
         return this._displayIndex;
-    },
+    }
 
     /**
      * Returns the current decorative display
      * @returns {ccs.DecorativeDisplay}
      */
-    getCurrentDecorativeDisplay: function () {
+    getCurrentDecorativeDisplay() {
         return this._currentDecoDisplay;
-    },
+    }
 
     /**
      * Gets a decorative display by index.
      * @param index
      * @returns {ccs.DecorativeDisplay}
      */
-    getDecorativeDisplayByIndex: function (index) {
+    getDecorativeDisplayByIndex(index) {
         return this._decoDisplayList[index];
-    },
+    }
 
     /**
      * <p>
@@ -355,7 +347,7 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
      * </p>
      * @param {ccs.BoneData} boneData
      */
-    initDisplayList: function (boneData) {
+    initDisplayList(boneData) {
         this._decoDisplayList.length = 0;
         if (!boneData)
             return;
@@ -367,7 +359,7 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
             ccs.displayFactory.createDisplay(locBone, decoDisplay);
             decoList.push(decoDisplay);
         }
-    },
+    }
 
     /**
      * Check if the position is inside the bone.
@@ -375,7 +367,7 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
      * @param {Number} [y]
      * @returns {boolean}
      */
-    containPoint: function (point, y) {
+    containPoint(point, y) {
         if (!this._visible || this._displayIndex < 0)
             return false;
 
@@ -393,7 +385,7 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
             return ccs.SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point);
         }
         return false;
-    },
+    }
 
     /**
      * <p>
@@ -402,54 +394,55 @@ ccs.DisplayManager = ccs.Class.extend(/** @lends ccs.DisplayManager */{
      * </p>
      * @param {boolean} visible
      */
-    setVisible: function (visible) {
+    setVisible(visible) {
         if (!this._displayRenderNode)
             return;
         this._visible = visible;
         this._displayRenderNode.setVisible(visible);
-    },
+    }
 
     /**
      * Determines if the display is visible
      * @returns {boolean} true if the node is visible, false if the node is hidden.
      */
-    isVisible: function () {
+    isVisible() {
         return this._visible;
-    },
+    }
 
-    getContentSize: function () {
+    getContentSize() {
         if (!this._displayRenderNode)
             return cc.size(0, 0);
         return this._displayRenderNode.getContentSize();
-    },
+    }
 
-    getBoundingBox: function () {
+    getBoundingBox() {
         if (!this._displayRenderNode)
             return cc.rect(0, 0, 0, 0);
         return this._displayRenderNode.getBoundingBox();
-    },
+    }
 
-    getAnchorPoint: function () {
+    getAnchorPoint() {
         if (!this._displayRenderNode)
             return cc.p(0, 0);
         return this._displayRenderNode.getAnchorPoint();
-    },
+    }
 
-    getAnchorPointInPoints: function () {
+    getAnchorPointInPoints() {
         if (!this._displayRenderNode)
             return cc.p(0, 0);
         return this._displayRenderNode.getAnchorPointInPoints();
-    },
+    }
 
-    getForceChangeDisplay: function () {
+    getForceChangeDisplay() {
         return this._forceChangeDisplay;
-    },
+    }
 
-    release: function () {
+    release() {
         this._decoDisplayList = null;
         if (this._displayRenderNode) {
             this._displayRenderNode.removeFromParent(true);
             this._displayRenderNode = null;
         }
     }
-});
+
+};

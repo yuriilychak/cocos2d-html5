@@ -28,21 +28,13 @@
  * @class
  * @extends ccs.Class
  */
-ccs.ActionNode = ccs.Class.extend(/** @lends ccs.ActionNode# */{
-    _currentFrameIndex: 0,
-    _destFrameIndex: 0,
-    _unitTime: 0,
-    _actionTag: 0,
-    _object: null,
-    _actionSpawn: null,
-    _action: null,
-    _frameArray: null,
-    _frameArrayNum: 0,
+ccs.ActionNode = class ActionNode extends cc.NewClass {
 
     /**
      * Construction of ccs.ActionNode
      */
-    ctor: function () {
+    constructor() {
+        super();
         this._currentFrameIndex = 0;
         this._destFrameIndex = 0;
         this._unitTime = 0.1;
@@ -54,14 +46,14 @@ ccs.ActionNode = ccs.Class.extend(/** @lends ccs.ActionNode# */{
         this._frameArrayNum = ccs.FRAME_TYPE_MAX;
         for (var i = 0; i < this._frameArrayNum; i++)
             this._frameArray.push([]);
-    },
+    }
 
     /**
      *  Init properties with a json dictionary
      * @param {Object} dic
      * @param {Object} root
      */
-    initWithDictionary: function (dic, root) {
+    initWithDictionary(dic, root) {
         this.setActionTag(dic["ActionTag"]);
         var actionFrameList = dic["actionframelist"];
 
@@ -150,121 +142,121 @@ ccs.ActionNode = ccs.Class.extend(/** @lends ccs.ActionNode# */{
             actionFrameDic = null;
         }
         this._initActionNodeFromRoot(root);
-    },
+    }
 
-    _initActionNodeFromRoot: function (root) {
+    _initActionNodeFromRoot(root) {
         if (root instanceof ccui.Widget) {
             var widget = ccui.helper.seekActionWidgetByActionTag(root, this.getActionTag());
             if (widget)
                 this.setObject(widget);
         }
-    },
+    }
 
     /**
      * Sets the time interval of frame.
      * @param {number} time
      */
-    setUnitTime: function (time) {
+    setUnitTime(time) {
         this._unitTime = time;
         this._refreshActionProperty();
-    },
+    }
 
     /**
      * Returns the time interval of frame.
      * @returns {number}
      */
-    getUnitTime: function () {
+    getUnitTime() {
         return this._unitTime;
-    },
+    }
 
     /**
      * Sets tag to ccs.ActionNode
      * @param {Number} tag
      */
-    setActionTag: function (tag) {
+    setActionTag(tag) {
         this._actionTag = tag;
-    },
+    }
 
     /**
      * Returns the tag of ccs.ActionNode
      * @returns {number}
      */
-    getActionTag: function () {
+    getActionTag() {
         return this._actionTag;
-    },
+    }
 
     /**
      * Sets node which will run a action.
      * @param {Object} node
      */
-    setObject: function (node) {
+    setObject(node) {
         this._object = node;
-    },
+    }
 
     /**
      * Returns node which will run a action.
      * @returns {*}
      */
-    getObject: function () {
+    getObject() {
         return this._object;
-    },
+    }
 
     /**
      * Returns the target node of ccs.ActionNode
      * @returns {cc.Node}
      */
-    getActionNode: function () {
+    getActionNode() {
         if (this._object instanceof cc.Node)
             return this._object;
         return null;
-    },
+    }
 
     /**
      * Inserts an ActionFrame to ccs.ActionNode.
      * @param {number} index
      * @param {ccs.ActionFrame} frame
      */
-    insertFrame: function (index, frame) {
+    insertFrame(index, frame) {
         if (frame == null)
             return;
         var frameType = frame.frameType;
         var array = this._frameArray[frameType];
         array.splice(index, 0, frame);
-    },
+    }
 
     /**
      * Pushes back an ActionFrame to ccs.ActionNode.
      * @param {ccs.ActionFrame} frame
      */
-    addFrame: function (frame) {
+    addFrame(frame) {
         if (!frame)
             return;
         var frameType = frame.frameType;
         var array = this._frameArray[frameType];
         array.push(frame);
-    },
+    }
 
     /**
      * Removes an ActionFrame from ccs.ActionNode.
      * @param {ccs.ActionFrame} frame
      */
-    deleteFrame: function (frame) {
+    deleteFrame(frame) {
         if (frame === undefined)
             return;
         var frameType = frame.frameType;
         var array = this._frameArray[frameType];
         cc.arrayRemoveObject(array, frame);
-    },
+    }
 
     /**
      * Removes all ActionFrames from ccs.ActionNode.
      */
-    clearAllFrame: function () {
+    clearAllFrame() {
         for (var i = 0; i < this._frameArrayNum; i++)
             this._frameArray[i].length = 0;
-    },
+    }
 
-    _refreshActionProperty: function () {
+    _refreshActionProperty() {
         if (!this._object)
             return null;
         var locSpawnArray = [];
@@ -297,13 +289,13 @@ ccs.ActionNode = ccs.Class.extend(/** @lends ccs.ActionNode# */{
         this._action = null;
         this._actionSpawn = cc.spawn(locSpawnArray);
         return this._actionSpawn;
-    },
+    }
 
     /**
      * Plays ccs.ActionNode's action.
      * @param {cc.CallFunc} fun
      */
-    playAction: function (fun) {
+    playAction(fun) {
         if (!this._object || !this._actionSpawn)
             return;
         if (fun)
@@ -311,30 +303,30 @@ ccs.ActionNode = ccs.Class.extend(/** @lends ccs.ActionNode# */{
         else
             this._action = cc.sequence(this._actionSpawn);
         this._runAction();
-    },
+    }
 
-    _runAction: function () {
+    _runAction() {
         var node = this.getActionNode();
         if (node !== null && this._action !== null)
             node.runAction(this._action);
-    },
+    }
 
     /**
      * Stops action.
      */
-    stopAction: function () {
+    stopAction() {
         var node = this.getActionNode();
         if (node !== null && this._action !== null) {
             if (!this._action.isDone())
                 node.stopAction(this._action);
         }
-    },
+    }
 
     /**
      * Returns index of first ActionFrame.
      * @returns {number}
      */
-    getFirstFrameIndex: function () {
+    getFirstFrameIndex() {
         var locFrameindex = 99999;
         var bFindFrame = false, locFrameArray = this._frameArray;
         for (var i = 0, len = this._frameArrayNum; i < len; i++) {
@@ -348,13 +340,13 @@ ccs.ActionNode = ccs.Class.extend(/** @lends ccs.ActionNode# */{
         if (!bFindFrame)
             locFrameindex = 0;
         return locFrameindex;
-    },
+    }
 
     /**
      * Returns the index of last ccs.ActionFrame.
      * @returns {number}
      */
-    getLastFrameIndex: function () {
+    getLastFrameIndex() {
         var locFrameindex = -1;
         var locIsFindFrame = false, locFrameArray = this._frameArray;
         for (var i = 0, len = this._frameArrayNum; i < len; i++) {
@@ -369,14 +361,14 @@ ccs.ActionNode = ccs.Class.extend(/** @lends ccs.ActionNode# */{
         if (!locIsFindFrame)
             locFrameindex = 0;
         return locFrameindex;
-    },
+    }
 
     /**
      * Updates action states to some time.
      * @param {Number} time
      * @returns {boolean}
      */
-    updateActionToTimeLine: function (time) {
+    updateActionToTimeLine(time) {
         var locIsFindFrame = false;
         var locUnitTime = this.getUnitTime();
         for (var i = 0; i < this._frameArrayNum; i++) {
@@ -407,24 +399,25 @@ ccs.ActionNode = ccs.Class.extend(/** @lends ccs.ActionNode# */{
             }
         }
         return locIsFindFrame;
-    },
+    }
 
-    _easingToFrame: function (duration, delayTime, destFrame) {
+    _easingToFrame(duration, delayTime, destFrame) {
         var action = destFrame.getAction(duration);
         var node = this.getActionNode();
         if (action == null || node == null)
             return;
         action.startWithTarget(node);
         action.update(delayTime);
-    },
+    }
 
     /**
      * Returns if the action is done once time.
      * @returns {Boolean} that if the action is done once time
      */
-    isActionDoneOnce: function () {
+    isActionDoneOnce() {
         if (!this._action)
             return true;
         return this._action.isDone();
     }
-});
+
+};

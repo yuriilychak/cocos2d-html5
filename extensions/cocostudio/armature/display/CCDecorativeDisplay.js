@@ -28,82 +28,81 @@
  * @class
  * @extends ccs.Class
  */
-ccs.DecorativeDisplay = ccs.Class.extend(/** @lends ccs.DecorativeDisplay# */{
-    _display: null,
-    _colliderDetector: null,
-    _displayData: null,
+ccs.DecorativeDisplay = class DecorativeDisplay extends cc.NewClass {
 
-    ctor:function () {
+    constructor() {
+        super();
         this._display = null;
         this._colliderDetector = null;
         this._displayData = null;
 
-        //ccs.DecorativeDisplay.prototype.init.call(this);
-    },
+        //this.init();
+    }
 
     /**
      * Initializes a ccs.DecorativeDisplay
      * @returns {boolean}
      */
-    init:function () {
+    init() {
         return true;
-    },
+    }
 
     /**
      * Sets display node to decorative
      * @param {cc.Node} display
      */
-    setDisplay:function (display) {
+    setDisplay(display) {
         if(display._parent){
             display._parent.removeChild(display);
             delete display._parent;
         }
         this._display = display;
-    },
+    }
 
     /**
      * Returns the display node
      * @returns {cc.Node}
      */
-    getDisplay:function () {
+    getDisplay() {
         return this._display;
-    },
+    }
 
     /**
      * Sets collide detector
      * @param {ccs.ColliderDetector} colliderDetector
      */
-    setColliderDetector:function (colliderDetector) {
+    setColliderDetector(colliderDetector) {
         this._colliderDetector = colliderDetector;
-    },
+    }
 
     /**
      * Returns collide detector
      * @returns {ccs.ColliderDetector}
      */
-    getColliderDetector:function () {
+    getColliderDetector() {
         return this._colliderDetector;
-    },
+    }
 
     /**
      * Sets display data
      * @param {ccs.DisplayData} displayData
      */
-    setDisplayData:function (displayData) {
+    setDisplayData(displayData) {
         this._displayData = displayData;
-    },
+    }
 
     /**
      * Returns display data
      * @returns {ccs.DisplayData}
      */
-    getDisplayData:function () {
+    getDisplayData() {
         return this._displayData;
-    },
+    }
 
-    release:function () {
+    release() {
         this._display = null;
         this._displayData = null;
         this._colliderDetector = null;
     }
-});
+
+};

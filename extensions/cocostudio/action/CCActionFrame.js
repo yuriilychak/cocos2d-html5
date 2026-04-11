@@ -125,22 +125,18 @@ ccs.FrameEaseType = {
  * @property {Number}               frameIndex              - frame index of ccs.ActionFrame
  * @property {Number}               time                    - time of ccs.ActionFrame
  */
-ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
-    frameType: 0,
-    easingType: 0,
-    frameIndex: 0,
-    _Parameter: null,
-    time: 0,
+ccs.ActionFrame = class ActionFrame extends cc.NewClass {
 
     /**
      * The constructor of cc.ActionFrame.
      */
-    ctor: function () {
+    constructor() {
+        super();
         this.frameType = 0;
         this.easingType = ccs.FrameEaseType.LINEAR;
         this.frameIndex = 0;
         this.time = 0;
-    },
+    }
 
     /**
      * Returns the action of ActionFrame. its subClass need override it.
@@ -148,12 +144,12 @@ ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
      * @param {ccs.ActionFrame} srcFrame source frame.
      * @returns {null}
      */
-    getAction: function (duration, srcFrame) {
+    getAction(duration, srcFrame) {
         cc.log("Need a definition of <getAction> for ActionFrame");
         return null;
-    },
+    }
 
-    _getEasingAction : function (action) {
+    _getEasingAction(action) {
         if (action === null) {
             console.error("Action cannot be null!");
             return null;
@@ -259,49 +255,49 @@ ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
         }
 
         return resultAction;
-    },
+    }
 
     /**
      * Sets the easing parameter to action frame.
      * @param {Array} parameter
      */
-    setEasingParameter: function(parameter){
+    setEasingParameter(parameter){
         this._Parameter = [];
         for(var i=0;i<parameter.length;i++)
             this._Parameter.push(parameter[i]);
-    },
+    }
 
     /**
      * Sets the easing type to ccs.ActionFrame
      * @param {Number} easingType
      */
-    setEasingType: function(easingType){
+    setEasingType(easingType){
         this.easingType = easingType;
     }
-});
+
+};
 
 /**
  * The Cocostudio's move action frame.
  * @class
  * @extends ccs.ActionFrame
  */
-ccs.ActionMoveFrame = ccs.ActionFrame.extend(/** @lends ccs.ActionMoveFrame# */{
-    _position: null,
+ccs.ActionMoveFrame = class ActionMoveFrame extends ccs.ActionFrame {
     /**
      * Construction of ccs.ActionMoveFrame
      */
-    ctor: function () {
-        ccs.ActionFrame.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._position = cc.p(0, 0);
         this.frameType = ccs.FRAME_TYPE_MOVE;
-    },
+    }
 
     /**
      * Changes the move action position.
      * @param {cc.Point|Number} pos
      * @param {Number} y
      */
-    setPosition: function (pos, y) {
+    setPosition(pos, y) {
         if (y === undefined) {
             this._position.x = pos.x;
             this._position.y = pos.y;
@@ -309,117 +305,116 @@ ccs.ActionMoveFrame = ccs.ActionFrame.extend(/** @lends ccs.ActionMoveFrame# */{
             this._position.x = pos;
             this._position.y = y;
         }
-    },
+    }
 
     /**
      * Returns the move action position.
      * @returns {cc.Point}
      */
-    getPosition: function () {
+    getPosition() {
         return this._position;
-    },
+    }
 
     /**
      * Returns the CCAction of ActionFrame.
      * @param {number} duration
      * @returns {cc.MoveTo}
      */
-    getAction: function (duration) {
+    getAction(duration) {
         return this._getEasingAction(cc.moveTo(duration, this._position));
     }
-});
+
+};
 
 /**
  * The Cocostudio's scale action frame
  * @class
  * @extends ccs.ActionFrame
  */
-ccs.ActionScaleFrame = ccs.ActionFrame.extend(/** @lends ccs.ActionScaleFrame# */{
-    _scaleX: 1,
-    _scaleY: 1,
+ccs.ActionScaleFrame = class ActionScaleFrame extends ccs.ActionFrame {
     /**
      * Construction of ccs.ActionScaleFrame
      */
-    ctor: function () {
-        ccs.ActionFrame.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._scaleX = 1;
         this._scaleY = 1;
         this.frameType = ccs.FRAME_TYPE_SCALE;
-    },
+    }
 
     /**
      * Changes the scale action scaleX.
      * @param {number} scaleX
      */
-    setScaleX: function (scaleX) {
+    setScaleX(scaleX) {
         this._scaleX = scaleX;
-    },
+    }
 
     /**
      * Returns the scale action scaleX.
      * @returns {number}
      */
-    getScaleX: function () {
+    getScaleX() {
         return this._scaleX;
-    },
+    }
 
     /**
      * Changes the scale action scaleY.
      * @param {number} scaleY
      */
-    setScaleY: function (scaleY) {
+    setScaleY(scaleY) {
         this._scaleY = scaleY;
-    },
+    }
 
     /**
      * Returns the scale action scaleY.
      * @returns {number}
      */
-    getScaleY: function () {
+    getScaleY() {
         return this._scaleY;
-    },
+    }
 
     /**
      * Returns the action of ActionFrame.
      * @param {number} duration
      * @returns {cc.ScaleTo}
      */
-    getAction: function (duration) {
+    getAction(duration) {
         return this._getEasingAction(cc.scaleTo(duration, this._scaleX, this._scaleY));
     }
-});
+
+};
 
 /**
  * The Cocostudio's rotation action frame.
  * @class
  * @extends ccs.ActionFrame
  */
-ccs.ActionRotationFrame = ccs.ActionFrame.extend(/** @lends ccs.ActionRotationFrame# */{
-    _rotation: 0,
+ccs.ActionRotationFrame = class ActionRotationFrame extends ccs.ActionFrame {
     /**
      * Construction of ccs.ActionRotationFrame
      */
-    ctor: function () {
-        ccs.ActionFrame.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._rotation = 0;
         this.frameType = ccs.FRAME_TYPE_ROTATE;
-    },
+    }
 
     /**
      * Changes rotate action rotation.
      * @param {number} rotation
      */
-    setRotation: function (rotation) {
+    setRotation(rotation) {
         this._rotation = rotation;
-    },
+    }
 
     /**
      * Returns the rotate action rotation.
      * @returns {number}
      */
-    getRotation: function () {
+    getRotation() {
         return this._rotation;
-    },
+    }
 
     /**
      * Returns the CCAction of ActionFrame.
@@ -427,7 +422,7 @@ ccs.ActionRotationFrame = ccs.ActionFrame.extend(/** @lends ccs.ActionRotationFr
      * @param {cc.ActionFrame} [srcFrame]
      * @returns {cc.RotateTo}
      */
-    getAction: function (duration, srcFrame) {
+    getAction(duration, srcFrame) {
         if(srcFrame === undefined)
             return this._getEasingAction(cc.rotateTo(duration, this._rotation));
         else {
@@ -439,92 +434,93 @@ ccs.ActionRotationFrame = ccs.ActionFrame.extend(/** @lends ccs.ActionRotationFr
             }
         }
     }
-});
+
+};
 
 /**
  * The Cocostudio's fade action frame.
  * @class
  * @extends ccs.ActionFrame
  */
-ccs.ActionFadeFrame = ccs.ActionFrame.extend(/** @lends ccs.ActionFadeFrame# */{
-    _opacity: 255,
+ccs.ActionFadeFrame = class ActionFadeFrame extends ccs.ActionFrame {
     /**
      * Construction of ccs.ActionFadeFrame
      */
-    ctor: function () {
-        ccs.ActionFrame.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._opacity = 255;
         this.frameType = ccs.FRAME_TYPE_FADE;
-    },
+    }
 
     /**
      * Changes the fade action opacity.
      * @param {number} opacity
      */
-    setOpacity: function (opacity) {
+    setOpacity(opacity) {
         this._opacity = opacity;
-    },
+    }
 
     /**
      * Returns the fade action opacity.
      * @returns {number}
      */
-    getOpacity: function () {
+    getOpacity() {
         return this._opacity;
-    },
+    }
 
     /**
      * Returns a fade action with easing.
      * @param {Number} duration
      * @returns {cc.FadeTo}
      */
-    getAction: function (duration) {
+    getAction(duration) {
         return this._getEasingAction(cc.fadeTo(duration, this._opacity));
     }
-});
+
+};
 
 /**
  * The Cocostudio's tint action frame.
  * @class
  * @extends ccs.ActionFrame
  */
-ccs.ActionTintFrame = ccs.ActionFrame.extend(/** @lends ccs.ActionTintFrame# */{
-    _color: null,
+ccs.ActionTintFrame = class ActionTintFrame extends ccs.ActionFrame {
     /**
      * Construction of ccs.ActionTintFrame
      */
-    ctor: function () {
-        ccs.ActionFrame.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._color = cc.color(255, 255, 255, 255);
         this.frameType = ccs.FRAME_TYPE_TINT;
-    },
+    }
 
     /**
      * Changes the tint action color.
      * @param {cc.Color} color
      */
-    setColor: function (color) {
+    setColor(color) {
         var locColor = this._color;
         locColor.r = color.r;
         locColor.g = color.g;
         locColor.b = color.b;
-    },
+    }
 
     /**
      * Returns the color of tint action.
      * @returns {cc.Color}
      */
-    getColor: function () {
+    getColor() {
         var locColor = this._color;
         return cc.color(locColor.r, locColor.g, locColor.b, locColor.a);
-    },
+    }
 
     /**
      * Returns a tint action with easing.
      * @param duration
      * @returns {cc.TintTo}
      */
-    getAction: function (duration) {
+    getAction(duration) {
         return this._getEasingAction(cc.tintTo(duration, this._color.r, this._color.g, this._color.b));
     }
-});
+
+};

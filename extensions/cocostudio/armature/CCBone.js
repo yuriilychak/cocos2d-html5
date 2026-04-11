@@ -47,26 +47,10 @@
  * @property {Boolean}              blendDirty              - Indicate whether the blend is dirty
  *
  */
-ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
-    _boneData: null,
-    _armature: null,
-    _childArmature: null,
-    _displayManager: null,
-    ignoreMovementBoneData: false,
-    _tween: null,
-    _tweenData: null,
-    _parentBone: null,
-    _boneTransformDirty: false,
-    _worldTransform: null,
-    _blendFunc: null,
-    blendDirty: false,
-    _worldInfo: null,
-    _armatureParentBone: null,
-    _dataVersion: 0,
-    _className: "Bone",
+ccs.Bone = class Bone extends ccs.Node {
 
-    ctor: function (name) {
-        cc.Node.prototype.ctor.call(this);
+    constructor(name) {
+        super();
         this._tweenData = null;
         this._parentBone = null;
         this._armature = null;
@@ -85,16 +69,16 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
         this._armatureParentBone = null;
         this._dataVersion = 0;
 
-        ccs.Bone.prototype.init.call(this, name);
-    },
+        this.init(name);
+    }
 
     /**
      * Initializes a ccs.Bone with the specified name
      * @param {String} name bone name
      * @return {Boolean}
      */
-    init: function (name) {
-//        cc.Node.prototype.init.call(this);
+    init(name) {
+//        super.init();
         if (name)
             this._name = name;
         this._tweenData = new ccs.FrameData();
@@ -107,13 +91,13 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
         this._boneData = new ccs.BaseData();
 
         return true;
-    },
+    }
 
     /**
      * Sets the boneData to ccs.Bone.
      * @param {ccs.BoneData} boneData
      */
-    setBoneData: function (boneData) {
+    setBoneData(boneData) {
         cc.assert(boneData, "_boneData must not be null");
 
         if (this._boneData !== boneData)
@@ -122,21 +106,21 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
         this.setName(this._boneData.name);
         this._localZOrder = this._boneData.zOrder;
         this._displayManager.initDisplayList(boneData);
-    },
+    }
 
     /**
      * Returns boneData of ccs.Bone.
      * @return {ccs.BoneData}
      */
-    getBoneData: function () {
+    getBoneData() {
         return this._boneData;
-    },
+    }
 
     /**
      * Sets the armature reference to ccs.Bone.
      * @param {ccs.Armature} armature
      */
-    setArmature: function (armature) {
+    setArmature(armature) {
         this._armature = armature;
         if (armature) {
             this._tween.setAnimation(this._armature.getAnimation());
@@ -144,21 +128,21 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
             this._armatureParentBone = this._armature.getParentBone();
         } else
             this._armatureParentBone = null;
-    },
+    }
 
     /**
      * Returns the armature reference of ccs.Bone.
      * @return {ccs.Armature}
      */
-    getArmature: function () {
+    getArmature() {
         return this._armature;
-    },
+    }
 
     /**
      * Updates worldTransform by tween data and updates display state
      * @param {Number} delta
      */
-    update: function (delta) {
+    update(delta) {
         if (this._parentBone)
             this._boneTransformDirty = this._boneTransformDirty || this._parentBone.isTransformDirty();
 
@@ -200,9 +184,9 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
             childBone.update(delta);
         }
         this._boneTransformDirty = false;
-    },
+    }
 
-    _applyParentTransform: function (parent) {
+    _applyParentTransform(parent) {
         var locWorldInfo = this._worldInfo;
         var locParentWorldTransform = parent._worldTransform;
         var locParentWorldInfo = parent._worldInfo;
@@ -214,14 +198,14 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
         locWorldInfo.scaleY = locWorldInfo.scaleY * locParentWorldInfo.scaleY;
         locWorldInfo.skewX = locWorldInfo.skewX + locParentWorldInfo.skewX;
         locWorldInfo.skewY = locWorldInfo.skewY + locParentWorldInfo.skewY;
-    },
+    }
 
     /**
      * Sets BlendFunc to ccs.Bone.
      * @param {cc.BlendFunc|Number} blendFunc blendFunc or src of blendFunc
      * @param {Number} [dst] dst of blendFunc
      */
-    setBlendFunc: function (blendFunc, dst) {
+    setBlendFunc(blendFunc, dst) {
         var locBlendFunc = this._blendFunc, srcValue, dstValue;
         if (dst === undefined) {
             srcValue = blendFunc.src;
@@ -235,12 +219,12 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
             locBlendFunc.dst = dstValue;
             this.blendDirty = true;
         }
-    },
+    }
 
     /**
      * Updates display color
      */
-    updateColor: function () {
+    updateColor() {
         var display = this._displayManager.getDisplayRenderNode();
         if (display !== null) {
             var cmd = this._renderCmd;
@@ -251,24 +235,24 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
                     cmd._displayedColor.b * this._tweenData.b / 255));
             display.setOpacity(cmd._displayedOpacity * this._tweenData.a / 255);
         }
-    },
+    }
 
     /**
      * Updates display zOrder
      */
-    updateZOrder: function () {
+    updateZOrder() {
         if (this._armature.getArmatureData().dataVersion >= ccs.CONST_VERSION_COMBINED) {
             this.setLocalZOrder(this._tweenData.zOrder + this._boneData.zOrder);
         } else {
             this.setLocalZOrder(this._tweenData.zOrder);
         }
-    },
+    }
 
     /**
      * Adds a child to this bone, and it will let this child call setParent(ccs.Bone) function to set self to it's parent
      * @param {ccs.Bone} child
      */
-    addChildBone: function (child) {
+    addChildBone(child) {
         cc.assert(child, "Argument must be non-nil");
         cc.assert(!child.parentBone, "child already added. It can't be added again");
 
@@ -276,14 +260,14 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
             this._children.push(child);
             child.setParentBone(this);
         }
-    },
+    }
 
     /**
      * Removes a child bone
      * @param {ccs.Bone} bone
      * @param {Boolean} recursion
      */
-    removeChildBone: function (bone, recursion) {
+    removeChildBone(bone, recursion) {
         if (this._children.length > 0 && this._children.getIndex(bone) !== -1) {
             if (recursion) {
                 var ccbones = bone._children;
@@ -297,16 +281,16 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
             bone.getDisplayManager().setCurrentDecorativeDisplay(null);
             cc.arrayRemoveObject(this._children, bone);
         }
-    },
+    }
 
     /**
      * Removes itself from its parent ccs.Bone.
      * @param {Boolean} recursion
      */
-    removeFromParent: function (recursion) {
+    removeFromParent(recursion) {
         if (this._parentBone)
             this._parentBone.removeChildBone(this, recursion);
-    },
+    }
 
     /**
      * Sets parent bone to ccs.Bone.
@@ -314,87 +298,87 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
      * It will not set the ccs.Armature, if you want to add the bone to a ccs.Armature, you should use ccs.Armature.addBone(bone, parentName).
      * @param {ccs.Bone}  parent  the parent bone.
      */
-    setParentBone: function (parent) {
+    setParentBone(parent) {
         this._parentBone = parent;
-    },
+    }
 
     /**
      * Returns the parent bone of ccs.Bone.
      * @returns {ccs.Bone}
      */
-    getParentBone: function () {
+    getParentBone() {
         return this._parentBone;
-    },
+    }
 
     /**
      * Sets ccs.Bone's child armature
      * @param {ccs.Armature} armature
      */
-    setChildArmature: function (armature) {
+    setChildArmature(armature) {
         if (this._childArmature !== armature) {
             if (armature == null && this._childArmature)
                 this._childArmature.setParentBone(null);
             this._childArmature = armature;
         }
-    },
+    }
 
     /**
      * Returns ccs.Bone's child armature.
      * @return {ccs.Armature}
      */
-    getChildArmature: function () {
+    getChildArmature() {
         return this._childArmature;
-    },
+    }
 
     /**
      * Return the tween of ccs.Bone
      * @return {ccs.Tween}
      */
-    getTween: function () {
+    getTween() {
         return this._tween;
-    },
+    }
 
     /**
      * Sets the local zOrder to ccs.Bone.
      * @param {Number} zOrder
      */
-    setLocalZOrder: function (zOrder) {
+    setLocalZOrder(zOrder) {
         if (this._localZOrder !== zOrder)
-            cc.Node.prototype.setLocalZOrder.call(this, zOrder);
-    },
+            super.setLocalZOrder(zOrder);
+    }
 
     /**
      * Return the worldTransform of ccs.Bone.
      * @returns {cc.AffineTransform}
      */
-    getNodeToArmatureTransform: function () {
+    getNodeToArmatureTransform() {
         return this._worldTransform;
-    },
+    }
 
     /**
      * Returns the world transform of ccs.Bone.
      * @override
      * @returns {cc.AffineTransform}
      */
-    getNodeToWorldTransform: function () {
+    getNodeToWorldTransform() {
         return cc.affineTransformConcat(this._worldTransform, this._armature.getNodeToWorldTransform());
-    },
+    }
 
     /**
      * Returns the display render node.
      * @returns {cc.Node}
      */
-    getDisplayRenderNode: function () {
+    getDisplayRenderNode() {
         return this._displayManager.getDisplayRenderNode();
-    },
+    }
 
     /**
      * Returns the type of display render node
      * @returns {Number}
      */
-    getDisplayRenderNodeType: function () {
+    getDisplayRenderNodeType() {
         return this._displayManager.getDisplayRenderNodeType();
-    },
+    }
 
     /**
      * Add display and use  _displayData init the display.
@@ -405,18 +389,18 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
      *@param {Number}    index the index of the display you want to replace or add to
      *          -1 : append display from back
      */
-    addDisplay: function (displayData, index) {
+    addDisplay(displayData, index) {
         index = index || 0;
         return this._displayManager.addDisplay(displayData, index);
-    },
+    }
 
     /**
      * Removes display by index.
      * @param {Number} index display renderer's index
      */
-    removeDisplay: function (index) {
+    removeDisplay(index) {
         this._displayManager.removeDisplay(index);
-    },
+    }
 
     /**
      * Changes display by index
@@ -424,10 +408,10 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
      * @param {Number} index
      * @param {Boolean} force
      */
-    changeDisplayByIndex: function (index, force) {
+    changeDisplayByIndex(index, force) {
         cc.log("changeDisplayByIndex is deprecated. Use changeDisplayWithIndex instead.");
         this.changeDisplayWithIndex(index, force);
-    },
+    }
 
     /**
      * Changes display by name
@@ -435,34 +419,34 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
      * @param {String} name
      * @param {Boolean} force
      */
-    changeDisplayByName: function (name, force) {
+    changeDisplayByName(name, force) {
         cc.log("changeDisplayByName is deprecated. Use changeDisplayWithName instead.");
         this.changeDisplayWithName(name, force);
-    },
+    }
 
     /**
      * Changes display with index
      * @param {Number} index
      * @param {Boolean} force
      */
-    changeDisplayWithIndex: function (index, force) {
+    changeDisplayWithIndex(index, force) {
         this._displayManager.changeDisplayWithIndex(index, force);
-    },
+    }
 
     /**
      * Changes display with name
      * @param {String} name
      * @param {Boolean} force
      */
-    changeDisplayWithName: function (name, force) {
+    changeDisplayWithName(name, force) {
         this._displayManager.changeDisplayWithName(name, force);
-    },
+    }
 
     /**
      * Returns the collide detector of ccs.Bone.
      * @returns {*}
      */
-    getColliderDetector: function () {
+    getColliderDetector() {
         var decoDisplay = this._displayManager.getCurrentDecorativeDisplay();
         if (decoDisplay) {
             var detector = decoDisplay.getColliderDetector();
@@ -470,13 +454,13 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
                 return detector;
         }
         return null;
-    },
+    }
 
     /**
      * Sets collider filter to ccs.Bone.
      * @param {ccs.ColliderFilter} filter
      */
-    setColliderFilter: function (filter) {
+    setColliderFilter(filter) {
         var displayList = this._displayManager.getDecorativeDisplayList();
         for (var i = 0; i < displayList.length; i++) {
             var locDecoDisplay = displayList[i];
@@ -484,13 +468,13 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
             if (locDetector)
                 locDetector.setColliderFilter(filter);
         }
-    },
+    }
 
     /**
      * Returns collider filter of ccs.Bone.
      * @returns {cc.ColliderFilter}
      */
-    getColliderFilter: function () {
+    getColliderFilter() {
         var decoDisplay = this.displayManager.getCurrentDecorativeDisplay();
         if (decoDisplay) {
             var detector = decoDisplay.getColliderDetector();
@@ -498,144 +482,145 @@ ccs.Bone = ccs.Node.extend(/** @lends ccs.Bone# */{
                 return detector.getColliderFilter();
         }
         return null;
-    },
+    }
 
     /**
      * Sets ccs.Bone's transform dirty flag.
      * @param {Boolean} dirty
      */
-    setTransformDirty: function (dirty) {
+    setTransformDirty(dirty) {
         this._boneTransformDirty = dirty;
-    },
+    }
 
     /**
      * Returns ccs.Bone's transform dirty flag whether is dirty.
      * @return {Boolean}
      */
-    isTransformDirty: function () {
+    isTransformDirty() {
         return this._boneTransformDirty;
-    },
+    }
 
     /**
      * displayManager dirty getter
      * @return {ccs.DisplayManager}
      */
-    getDisplayManager: function () {
+    getDisplayManager() {
         return this._displayManager;
-    },
+    }
 
     /**
      *    When CCArmature play a animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will hide.   <br/>
      *    Set IgnoreMovementBoneData to true, then this bone will also show.
      * @param {Boolean} bool
      */
-    setIgnoreMovementBoneData: function (bool) {
+    setIgnoreMovementBoneData(bool) {
         this._ignoreMovementBoneData = bool;
-    },
+    }
 
     /**
      * Returns whether is ignore movement bone data.
      * @returns {Boolean}
      */
-    isIgnoreMovementBoneData: function () {
+    isIgnoreMovementBoneData() {
         return this._ignoreMovementBoneData;
-    },
+    }
 
     /**
      * Returns the blendFunc of ccs.Bone.
      * @return {cc.BlendFunc}
      */
-    getBlendFunc: function () {
+    getBlendFunc() {
         return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
-    },
+    }
 
     /**
      * Sets blend dirty flag
      * @param {Boolean} dirty
      */
-    setBlendDirty: function (dirty) {
+    setBlendDirty(dirty) {
         this._blendDirty = dirty;
-    },
+    }
 
     /**
      * Returns the blend dirty flag whether is dirty.
      * @returns {Boolean|*|ccs.Bone._blendDirty}
      */
-    isBlendDirty: function () {
+    isBlendDirty() {
         return this._blendDirty;
-    },
+    }
 
     /**
      * Returns the tweenData of ccs.Bone.
      * @return {ccs.FrameData}
      */
-    getTweenData: function () {
+    getTweenData() {
         return this._tweenData;
-    },
+    }
 
     /**
      * Returns the world information of ccs.Bone.
      * @returns {ccs.BaseData}
      */
-    getWorldInfo: function () {
+    getWorldInfo() {
         return this._worldInfo;
-    },
+    }
 
     /**
      * Returns the children of ccs.Bone
      * @return {Array}
      * @deprecated since v3.0, please use getChildren instead.
      */
-    getChildrenBone: function () {
+    getChildrenBone() {
         return this._children;
-    },
+    }
 
     /**
      * Returns the worldTransform of ccs.Bone.
      * @return {cc.AffineTransform}
      * @deprecated since v3.0, please use getNodeToArmatureTransform instead.
      */
-    nodeToArmatureTransform: function () {
+    nodeToArmatureTransform() {
         return this.getNodeToArmatureTransform();
-    },
+    }
 
     /**
      * @deprecated
      * Returns the world affine transform matrix. The matrix is in Pixels.
      * @returns {cc.AffineTransform}
      */
-    nodeToWorldTransform: function () {
+    nodeToWorldTransform() {
         return this.getNodeToWorldTransform();
-    },
+    }
 
     /**
      * Returns the collider body list in this bone.
      * @returns {Array|null}
      * @deprecated since v3.0, please use getColliderDetector to get a delector, and calls its getColliderBodyList instead.
      */
-    getColliderBodyList: function () {
+    getColliderBodyList() {
         var detector = this.getColliderDetector();
         if (detector)
             return detector.getColliderBodyList();
         return null;
-    },
+    }
 
     /**
      * Returns whether is ignore movement bone data.
      * @return {Boolean}
      * @deprecated since v3.0, please isIgnoreMovementBoneData instead.
      */
-    getIgnoreMovementBoneData: function () {
+    getIgnoreMovementBoneData() {
         return this.isIgnoreMovementBoneData();
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new ccs.Bone.CanvasRenderCmd(this);
         else
             return new ccs.Bone.WebGLRenderCmd(this);
     }
-});
+
+};
 
 var _p = ccs.Bone.prototype;
 

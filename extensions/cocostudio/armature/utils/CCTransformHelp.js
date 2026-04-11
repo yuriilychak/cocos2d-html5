@@ -28,7 +28,7 @@
  * @class ccs.TransformHelp
  * @extend ccs.Class
  */
-ccs.TransformHelp = ccs.TransformHelp || ccs.Class.extend({});
+ccs.TransformHelp = class TransformHelp extends cc.NewClass {};
 
 ccs.TransformHelp.helpMatrix1 = cc.affineTransformMake(1, 0, 0, 1, 0, 0);
 ccs.TransformHelp.helpMatrix2 = cc.affineTransformMake(1, 0, 0, 1, 0, 0);

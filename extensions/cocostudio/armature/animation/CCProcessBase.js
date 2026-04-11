@@ -83,26 +83,13 @@ ccs.ANIMATION_TYPE_MAX = 2;
  * @property {Number}   processScale        - The process scale
  * @property {Boolean}  playing             - <@readonly> Indicate whether the process is playing
  */
-ccs.ProcessBase = ccs.Class.extend(/** @lends ccs.ProcessBase# */{
-    _processScale: 1,
-    _isComplete: true,
-    _isPause: true,
-    _isPlaying: false,
-    _currentPercent: 0.0,
-    _rawDuration: 0,
-    _loopType: 0,
-    _tweenEasing: 0,
-    animationInternal: null,
-    _currentFrame: 0,
-    _durationTween: 0,
-    _nextFrameIndex: 0,
-    _curFrameIndex: null,
-    _isLoopBack: false,
+ccs.ProcessBase = class ProcessBase extends cc.NewClass {
 
     /**
      * Constructor of ccs.ProcessBase
      */
-    ctor: function () {
+    constructor() {
+        super();
         this._processScale = 1;
         this._isComplete = true;
         this._isPause = true;
@@ -117,31 +104,31 @@ ccs.ProcessBase = ccs.Class.extend(/** @lends ccs.ProcessBase# */{
         this._curFrameIndex = 0;
         this._durationTween = 0;
         this._isLoopBack = false;
-    },
+    }
 
     /**
      * Pauses the Process
      */
-    pause: function () {
+    pause() {
         this._isPause = true;
         this._isPlaying = false;
-    },
+    }
 
     /**
      * Resumes the Process
      */
-    resume: function () {
+    resume() {
         this._isPause = false;
         this._isPlaying = true;
-    },
+    }
 
     /**
      * Stops the Process
      */
-    stop: function () {
+    stop() {
         this._isComplete = true;
         this._isPlaying = false;
-    },
+    }
 
     /**
      * Plays animation by animation name.
@@ -162,7 +149,7 @@ ccs.ProcessBase = ccs.Class.extend(/** @lends ccs.ProcessBase# */{
      *          1  : fade in
      *          2  : fade in and out
      */
-    play: function (durationTo, durationTween, loop, tweenEasing) {
+    play(durationTo, durationTween, loop, tweenEasing) {
         this._isComplete = false;
         this._isPause = false;
         this._isPlaying = true;
@@ -173,13 +160,13 @@ ccs.ProcessBase = ccs.Class.extend(/** @lends ccs.ProcessBase# */{
          */
         this._nextFrameIndex = durationTo;
         this._tweenEasing = tweenEasing;
-    },
+    }
 
     /**
      * Update process' state.
      * @param {Number} dt
      */
-    update: function (dt) {
+    update(dt) {
         if (this._isComplete || this._isPause)
             return;
 
@@ -212,13 +199,13 @@ ccs.ProcessBase = ccs.Class.extend(/** @lends ccs.ProcessBase# */{
         }
         this._currentFrame = locCurrentFrame;
         this.updateHandler();
-    },
+    }
 
     /**
      * Goes to specified frame by frameIndex.
      * @param {Number} frameIndex
      */
-    gotoFrame: function (frameIndex) {
+    gotoFrame(frameIndex) {
         var locLoopType = this._loopType;
         if (locLoopType === ccs.ANIMATION_TYPE_NO_LOOP)
             locLoopType = ccs.ANIMATION_TYPE_MAX;
@@ -227,112 +214,113 @@ ccs.ProcessBase = ccs.Class.extend(/** @lends ccs.ProcessBase# */{
         this._loopType = locLoopType;
         this._curFrameIndex = frameIndex;
         this._nextFrameIndex = this._durationTween;
-    },
+    }
 
     /**
      * Returns the index of current frame.
      * @return {Number}
      */
-    getCurrentFrameIndex: function () {
+    getCurrentFrameIndex() {
         this._curFrameIndex = (this._rawDuration - 1) * this._currentPercent;
         return this._curFrameIndex;
-    },
+    }
 
     /**
      * Updates will call this handler, you can handle your logic here
      */
-    updateHandler: function () {
+    updateHandler() {
         //override
-    },
+    }
 
     /**
      * Returns whether the animation is pause
      * @returns {boolean}
      */
-    isPause: function () {
+    isPause() {
         return this._isPause;
-    },
+    }
 
     /**
      * Returns whether the animation is complete
      * @returns {boolean}
      */
-    isComplete: function () {
+    isComplete() {
         return this._isComplete;
-    },
+    }
 
     /**
      * Returns current percent of ccs.ProcessBase
      * @returns {number}
      */
-    getCurrentPercent: function () {
+    getCurrentPercent() {
         return this._currentPercent;
-    },
+    }
 
     /**
      * Returns the raw duration of ccs.ProcessBase
      * @returns {number}
      */
-    getRawDuration: function () {
+    getRawDuration() {
         return this._rawDuration;
-    },
+    }
 
     /**
      * Returns loop type of ccs.ProcessBase
      * @returns {number}
      */
-    getLoop: function () {
+    getLoop() {
         return this._loopType;
-    },
+    }
 
     /**
      * Returns tween easing of ccs.ProcessBase
      * @returns {number}
      */
-    getTweenEasing: function () {
+    getTweenEasing() {
         return this._tweenEasing;
-    },
+    }
 
     /**
      * Returns animation interval of ccs.ProcessBase
      * @returns {number}
      */
-    getAnimationInternal: function () {            //TODO rename getAnimationInternal to getAnimationInterval in v3.1
+    getAnimationInternal() {            //TODO rename getAnimationInternal to getAnimationInterval in v3.1
         return this.animationInternal;
-    },
+    }
 
     /**
      * Sets animation interval to ccs.ProcessBase.
      * @param animationInternal
      */
-    setAnimationInternal: function (animationInternal) {
+    setAnimationInternal(animationInternal) {
         this.animationInternal = animationInternal;
-    },
+    }
 
     /**
      * Returns process scale
      * @returns {number}
      */
-    getProcessScale: function () {
+    getProcessScale() {
         return this._processScale;
-    },
+    }
 
     /**
      * Sets process scale
      * @param processScale
      */
-    setProcessScale: function (processScale) {
+    setProcessScale(processScale) {
         this._processScale = processScale;
-    },
+    }
 
     /**
      * Returns whether the animation is playing
      * @returns {boolean}
      */
-    isPlaying: function () {
+    isPlaying() {
         return this._isPlaying;
     }
-});
+
+};
 
 var _p = ccs.ProcessBase.prototype;
 

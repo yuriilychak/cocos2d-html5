@@ -37,20 +37,7 @@
  * @property {Object}                   body            - The body of the armature
  * @property {ccs.ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
  */
-ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
-    animation: null,
-    armatureData: null,
-    batchNode: null,
-    _parentBone: null,
-    _boneDic: null,
-    _topBoneList: null,
-    _armatureIndexDic: null,
-    _offsetPoint: null,
-    version: 0,
-    _armatureTransformDirty: true,
-    _body: null,
-    _blendFunc: null,
-    _className: "Armature",
+ccs.Armature = class Armature extends ccs.Node {
 
     /**
      * Create a armature node.
@@ -60,18 +47,18 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
      * @example
      * var armature = new ccs.Armature();
      */
-    ctor: function (name, parentBone) {
-        cc.Node.prototype.ctor.call(this);
+    constructor(name, parentBone) {
+        super();
         this._name = "";
         this._topBoneList = [];
         this._armatureIndexDic = {};
         this._offsetPoint = cc.p(0, 0);
         this._armatureTransformDirty = true;
         this._blendFunc = {src: cc.BLEND_SRC, dst: cc.BLEND_DST};
-        name && ccs.Armature.prototype.init.call(this, name, parentBone);
+        name && this.init(name, parentBone);
         // Hack way to avoid RendererWebGL from skipping Armature
         this._texture = {};
-    },
+    }
 
     /**
      * Initializes a CCArmature with the specified name and CCBone
@@ -79,7 +66,7 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
      * @param {ccs.Bone} [parentBone]
      * @return {Boolean}
      */
-    init: function (name, parentBone) {
+    init(name, parentBone) {
         if (parentBone)
             this._parentBone = parentBone;
         this.removeAllChildren();
@@ -148,9 +135,9 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
         this.setCascadeOpacityEnabled(true);
         this.setCascadeColorEnabled(true);
         return true;
-    },
+    }
 
-    visit: function (parent) {
+    visit(parent) {
         var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
 
         // quick return if not visible
@@ -161,22 +148,22 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
 
         cmd.visit(parentCmd);
         cmd._dirtyFlag = 0;
-    },
+    }
 
-    addChild: function (child, localZOrder, tag) {
+    addChild(child, localZOrder, tag) {
         if (child instanceof ccui.Widget) {
             cc.log("Armature doesn't support to add Widget as its child, it will be fix soon.");
             return;
         }
-        cc.Node.prototype.addChild.call(this, child, localZOrder, tag);
-    },
+        super.addChild(child, localZOrder, tag);
+    }
 
     /**
      * create a bone with name
      * @param {String} boneName
      * @return {ccs.Bone}
      */
-    createBone: function (boneName) {
+    createBone(boneName) {
         var existedBone = this.getBone(boneName);
         if (existedBone)
             return existedBone;
@@ -197,14 +184,14 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
         bone.setBoneData(boneData);
         bone.getDisplayManager().changeDisplayWithIndex(-1, false);
         return bone;
-    },
+    }
 
     /**
      * Add a Bone to this Armature
      * @param {ccs.Bone} bone  The Bone you want to add to Armature
      * @param {String} parentName The parent Bone's name you want to add to. If it's  null, then set Armature to its parent
      */
-    addBone: function (bone, parentName) {
+    addBone(bone, parentName) {
         cc.assert(bone, "Argument must be non-nil");
         var locBoneDic = this._boneDic;
         if (bone.getName())
@@ -222,14 +209,14 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
 
         locBoneDic[bone.getName()] = bone;
         this.addChild(bone);
-    },
+    }
 
     /**
      * Remove a bone with the specified name. If recursion it will also remove child Bone recursively.
      * @param {ccs.Bone} bone The bone you want to remove
      * @param {Boolean} recursion Determine whether remove the bone's child  recursion.
      */
-    removeBone: function (bone, recursion) {
+    removeBone(bone, recursion) {
         cc.assert(bone, "bone must be added to the bone dictionary!");
 
         bone.setArmature(null);
@@ -238,23 +225,23 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
 
         delete  this._boneDic[bone.getName()];
         this.removeChild(bone, true);
-    },
+    }
 
     /**
      * Gets a bone with the specified name
      * @param {String} name The bone's name you want to get
      * @return {ccs.Bone}
      */
-    getBone: function (name) {
+    getBone(name) {
         return this._boneDic[name];
-    },
+    }
 
     /**
      * Change a bone's parent with the specified parent name.
      * @param {ccs.Bone} bone The bone you want to change parent
      * @param {String} parentName The new parent's name
      */
-    changeBoneParent: function (bone, parentName) {
+    changeBoneParent(bone, parentName) {
         cc.assert(bone, "bone must be added to the bone dictionary!");
 
         var parentBone = bone.getParentBone();
@@ -271,20 +258,20 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
             } else
                 this._topBoneList.push(bone);
         }
-    },
+    }
 
     /**
      * Get CCArmature's bone dictionary
      * @return {Object} Armature's bone dictionary
      */
-    getBoneDic: function () {
+    getBoneDic() {
         return this._boneDic;
-    },
+    }
 
     /**
      * Set contentSize and Calculate anchor point.
      */
-    updateOffsetPoint: function () {
+    updateOffsetPoint() {
         // Set contentsize and Calculate anchor point.
         var rect = this.getBoundingBox();
         this.setContentSize(rect);
@@ -293,72 +280,72 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
         locOffsetPoint.y = -rect.y;
         if (rect.width !== 0 && rect.height !== 0)
             this.setAnchorPoint(locOffsetPoint.x / rect.width, locOffsetPoint.y / rect.height);
-    },
+    }
 
-    getOffsetPoints: function () {
+    getOffsetPoints() {
         return {x: this._offsetPoint.x, y: this._offsetPoint.y};
-    },
+    }
 
     /**
      * Sets animation to this Armature
      * @param {ccs.ArmatureAnimation} animation
      */
-    setAnimation: function (animation) {
+    setAnimation(animation) {
         this.animation = animation;
-    },
+    }
 
     /**
      * Gets the animation of this Armature.
      * @return {ccs.ArmatureAnimation}
      */
-    getAnimation: function () {
+    getAnimation() {
         return this.animation;
-    },
+    }
 
     /**
      * armatureTransformDirty getter
      * @returns {Boolean}
      */
-    getArmatureTransformDirty: function () {
+    getArmatureTransformDirty() {
         return this._armatureTransformDirty;
-    },
+    }
 
     /**
      * The update callback of ccs.Armature, it updates animation's state and updates bone's state.
      * @override
      * @param {Number} dt
      */
-    update: function (dt) {
+    update(dt) {
         this.animation.update(dt);
         var locTopBoneList = this._topBoneList;
         for (var i = 0; i < locTopBoneList.length; i++)
             locTopBoneList[i].update(dt);
         this._armatureTransformDirty = false;
-    },
+    }
 
     /**
      * The callback when ccs.Armature enter stage.
      * @override
      */
-    onEnter: function () {
-        cc.Node.prototype.onEnter.call(this);
+    onEnter() {
+        super.onEnter();
         this.scheduleUpdate();
-    },
+    }
 
     /**
      * The callback when ccs.Armature exit stage.
      * @override
      */
-    onExit: function () {
-        cc.Node.prototype.onExit.call(this);
+    onExit() {
+        super.onExit();
         this.unscheduleUpdate();
-    },
+    }
 
     /**
      * This boundingBox will calculate all bones' boundingBox every time
      * @returns {cc.Rect}
      */
-    getBoundingBox: function () {
+    getBoundingBox() {
         var minX, minY, maxX, maxY = 0;
         var first = true;
 
@@ -394,7 +381,7 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
             }
         }
         return cc.rectApplyAffineTransform(boundingBox, this.getNodeToParentTransform());
-    },
+    }
 
     /**
      * when bone  contain the point ,then return it.
@@ -402,7 +389,7 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
      * @param {Number} y
      * @returns {ccs.Bone}
      */
-    getBoneAtPoint: function (x, y) {
+    getBoneAtPoint(x, y) {
         var locChildren = this._children;
         for (var i = locChildren.length - 1; i >= 0; i--) {
             var child = locChildren[i];
@@ -410,32 +397,32 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
                 return child;
         }
         return null;
-    },
+    }
 
     /**
      * Sets parent bone of this Armature
      * @param {ccs.Bone} parentBone
      */
-    setParentBone: function (parentBone) {
+    setParentBone(parentBone) {
         this._parentBone = parentBone;
         var locBoneDic = this._boneDic;
         for (var key in locBoneDic) {
             locBoneDic[key].setArmature(this);
         }
-    },
+    }
 
     /**
      * Return parent bone of ccs.Armature.
      * @returns {ccs.Bone}
      */
-    getParentBone: function () {
+    getParentBone() {
         return this._parentBone;
-    },
+    }
 
     /**
      * draw contour
      */
-    drawContour: function () {
+    drawContour() {
         cc._drawingUtil.setDrawColor(255, 255, 255, 255);
         cc._drawingUtil.setLineWidth(1);
         var locBoneDic = this._boneDic;
@@ -451,9 +438,9 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
                 cc._drawingUtil.drawPoly(vertexList, vertexList.length, true);
             }
         }
-    },
+    }
 
-    setBody: function (body) {
+    setBody(body) {
         if (this._body === body)
             return;
 
@@ -472,24 +459,24 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
                 }
             }
         }
-    },
+    }
 
-    getShapeList: function () {
+    getShapeList() {
         if (this._body)
             return this._body.shapeList;
         return null;
-    },
+    }
 
-    getBody: function () {
+    getBody() {
         return this._body;
-    },
+    }
 
     /**
      * Sets the blendFunc to ccs.Armature
      * @param {cc.BlendFunc|Number} blendFunc
      * @param {Number} [dst]
      */
-    setBlendFunc: function (blendFunc, dst) {
+    setBlendFunc(blendFunc, dst) {
         if (dst === undefined) {
             this._blendFunc.src = blendFunc.src;
             this._blendFunc.dst = blendFunc.dst;
@@ -497,73 +484,74 @@ ccs.Armature = ccs.Node.extend(/** @lends ccs.Armature# */{
             this._blendFunc.src = blendFunc;
             this._blendFunc.dst = dst;
         }
-    },
+    }
 
     /**
      * Returns the blendFunc of ccs.Armature
      * @returns {cc.BlendFunc}
      */
-    getBlendFunc: function () {
+    getBlendFunc() {
         return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
-    },
+    }
 
     /**
      * set collider filter
      * @param {ccs.ColliderFilter} filter
      */
-    setColliderFilter: function (filter) {
+    setColliderFilter(filter) {
         var locBoneDic = this._boneDic;
         for (var key in locBoneDic)
             locBoneDic[key].setColliderFilter(filter);
-    },
+    }
 
     /**
      * Returns the armatureData of ccs.Armature
      * @return {ccs.ArmatureData}
      */
-    getArmatureData: function () {
+    getArmatureData() {
         return this.armatureData;
-    },
+    }
 
     /**
      * Sets armatureData to this Armature
      * @param {ccs.ArmatureData} armatureData
      */
-    setArmatureData: function (armatureData) {
+    setArmatureData(armatureData) {
         this.armatureData = armatureData;
-    },
+    }
 
-    getBatchNode: function () {
+    getBatchNode() {
         return this.batchNode;
-    },
+    }
 
-    setBatchNode: function (batchNode) {
+    setBatchNode(batchNode) {
         this.batchNode = batchNode;
-    },
+    }
 
     /**
      * version getter
      * @returns {Number}
      */
-    getVersion: function () {
+    getVersion() {
         return this.version;
-    },
+    }
 
     /**
      * version setter
      * @param {Number} version
      */
-    setVersion: function (version) {
+    setVersion(version) {
         this.version = version;
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new ccs.Armature.CanvasRenderCmd(this);
         else
             return new ccs.Armature.WebGLRenderCmd(this);
     }
-});
+
+};
 
 var _p = ccs.Armature.prototype;
 
