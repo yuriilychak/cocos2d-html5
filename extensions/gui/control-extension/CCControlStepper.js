@@ -56,24 +56,24 @@ cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
  * @property {cc.LabelTTF}  minusLabel  - The label for minus button of the stepper control
  * @property {cc.LabelTTF}  plusSLabel  - The label for plus button of the stepper control
  */
-cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
-    _minusSprite:null,
-    _plusSprite:null,
-    _minusLabel:null,
-    _plusLabel:null,
-    _value:0,
-    _continuous:false,
-    _autorepeat:false,
-    _wraps:false,
-    _minimumValue:0,
-    _maximumValue:0,
-    _stepValue:0,
-    _touchInsideFlag:false,
-    _touchedPart:cc.CONTROL_STEPPER_PARTNONE,
-    _autorepeatCount:0,
-    _className:"ControlStepper",
-    ctor:function (minusSprite, plusSprite) {
-        cc.Control.prototype.ctor.call(this);
+cc.ControlStepper = class ControlStepper extends cc.Control {
+    _minusSprite = null;
+    _plusSprite = null;
+    _minusLabel = null;
+    _plusLabel = null;
+    _value = 0;
+    _continuous = false;
+    _autorepeat = false;
+    _wraps = false;
+    _minimumValue = 0;
+    _maximumValue = 0;
+    _stepValue = 0;
+    _touchInsideFlag = false;
+    _touchedPart = cc.CONTROL_STEPPER_PARTNONE;
+    _autorepeatCount = 0;
+    _className = "ControlStepper";
+    constructor(minusSprite, plusSprite) {
+        super();
         this._minusSprite = null;
         this._plusSprite = null;
         this._minusLabel = null;
@@ -91,9 +91,9 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
 
         plusSprite && this.initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite);
 
-    },
+    }
 
-    initWithMinusSpriteAndPlusSprite:function (minusSprite, plusSprite) {
+    initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite) {
         if(!minusSprite)
             throw new Error("cc.ControlStepper.initWithMinusSpriteAndPlusSprite(): Minus sprite should be non-null.");
         if(!plusSprite)
@@ -137,11 +137,11 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
             return true;
         }
         return false;
-    },
+    }
 
 //#pragma mark Properties
 
-    setWraps: function (wraps) {
+    setWraps(wraps) {
         this._wraps = wraps;
 
         if (this._wraps) {
@@ -150,57 +150,57 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
         }
 
         this.setValue(this._value);
-    },
+    }
 
-	getWraps: function () {
+	getWraps() {
 		return this._wraps;
-	},
+	}
 
-    setMinimumValue:function (minimumValue) {
+    setMinimumValue(minimumValue) {
         if (minimumValue >= this._maximumValue)
             throw new Error("cc.ControlStepper.setMinimumValue(): minimumValue should be numerically less than maximumValue.");
 
         this._minimumValue = minimumValue;
         this.setValue(this._value);
-    },
-	getMinimumValue: function () {
+    }
+	getMinimumValue() {
 		return this._minimumValue;
-	},
+	}
 
-    setMaximumValue:function (maximumValue) {
+    setMaximumValue(maximumValue) {
         if (maximumValue <= this._minimumValue)
             throw new Error("cc.ControlStepper.setMaximumValue(): maximumValue should be numerically less than maximumValue.");
 
         this._maximumValue = maximumValue;
         this.setValue(this._value);
-    },
-	getMaximumValue: function () {
+    }
+	getMaximumValue() {
 		return this._maximumValue;
-	},
+	}
 
-    setValue:function (value) {
+    setValue(value) {
         this.setValueWithSendingEvent(value, true);
-    },
+    }
 
-    getValue:function () {
+    getValue() {
         return this._value;
-    },
+    }
 
-    setStepValue:function (stepValue) {
+    setStepValue(stepValue) {
         if (stepValue <= 0)
             throw new Error("cc.ControlStepper.setMaximumValue(): stepValue should be numerically greater than 0.");
         this._stepValue = stepValue;
-    },
+    }
 
-	getStepValue:function () {
+	getStepValue() {
 		return this._stepValue;
-	},
+	}
 
-    isContinuous:function () {
+    isContinuous() {
         return this._continuous;
-    },
+    }
 
-    setValueWithSendingEvent:function (value, send) {
+    setValueWithSendingEvent(value, send) {
         if (value < this._minimumValue) {
             value = this._wraps ? this._maximumValue : this._minimumValue;
         } else if (value > this._maximumValue) {
@@ -217,19 +217,19 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
         if (send) {
             this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
         }
-    },
+    }
 
-    startAutorepeat:function () {
+    startAutorepeat() {
         this._autorepeatCount = -1;
         this.schedule(this.update, cc.AUTOREPEAT_DELTATIME, cc.REPEAT_FOREVER, cc.AUTOREPEAT_DELTATIME * 3);
-    },
+    }
 
     /** Stop the autorepeat. */
-    stopAutorepeat:function () {
+    stopAutorepeat() {
         this.unschedule(this.update);
-    },
+    }
 
-    update:function (dt) {
+    update(dt) {
         this._autorepeatCount++;
 
         if ((this._autorepeatCount < cc.AUTOREPEAT_INCREASETIME_INCREMENT) && (this._autorepeatCount % 3) !== 0)
@@ -240,11 +240,11 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
         } else if (this._touchedPart === cc.CONTROL_STEPPER_PARTPLUS) {
             this.setValueWithSendingEvent(this._value + this._stepValue, this._continuous);
         }
-    },
+    }
 
 //#pragma mark CCControlStepper Private Methods
 
-    updateLayoutUsingTouchLocation:function (location) {
+    updateLayoutUsingTouchLocation(location) {
         if (location.x < this._minusSprite.getContentSize().width
             && this._value > this._minimumValue) {
             this._touchedPart = cc.CONTROL_STEPPER_PARTMINUS;
@@ -262,10 +262,10 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
             this._minusSprite.setColor(cc.color.WHITE);
             this._plusSprite.setColor(cc.color.WHITE);
         }
-    },
+    }
 
 
-    onTouchBegan:function (touch, event) {
+    onTouchBegan(touch, event) {
         if (!this.isTouchInside(touch) || !this.isEnabled() || !this.isVisible()) {
             return false;
         }
@@ -279,9 +279,9 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
         }
 
         return true;
-    },
+    }
 
-    onTouchMoved:function (touch, event) {
+    onTouchMoved(touch, event) {
         if (this.isTouchInside(touch)) {
             var location = this.getTouchLocation(touch);
             this.updateLayoutUsingTouchLocation(location);
@@ -302,9 +302,9 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
                 this.stopAutorepeat();
             }
         }
-    },
+    }
 
-    onTouchEnded:function (touch, event) {
+    onTouchEnded(touch, event) {
         this._minusSprite.setColor(cc.color.WHITE);
         this._plusSprite.setColor(cc.color.WHITE);
 
@@ -316,32 +316,32 @@ cc.ControlStepper = cc.Control.extend(/** @lends cc.ControlStepper# */{
             var location = this.getTouchLocation(touch);
             this.setValue(this._value + ((location.x < this._minusSprite.getContentSize().width) ? (0.0 - this._stepValue) : this._stepValue));
         }
-    },
-    setMinusSprite:function (sprite) {
+    }
+    setMinusSprite(sprite) {
         this._minusSprite = sprite;
-    },
-    getMinusSprite:function () {
+    }
+    getMinusSprite() {
         return this._minusSprite;
-    },
-    setPlusSprite:function (sprite) {
+    }
+    setPlusSprite(sprite) {
         this._plusSprite = sprite;
-    },
-    getPlusSprite:function () {
+    }
+    getPlusSprite() {
         return this._plusSprite;
-    },
-    setMinusLabel:function (sprite) {
+    }
+    setMinusLabel(sprite) {
         this._minusLabel = sprite;
-    },
-    getMinusLabel:function () {
+    }
+    getMinusLabel() {
         return this._minusLabel;
-    },
-    setPlusLabel:function (sprite) {
+    }
+    setPlusLabel(sprite) {
         this._plusLabel = sprite;
-    },
-    getPlusLabel:function () {
+    }
+    getPlusLabel() {
         return this._plusLabel;
     }
-});
+};
 
 var _p = cc.ControlStepper.prototype;
 

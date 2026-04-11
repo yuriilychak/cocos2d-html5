@@ -62,16 +62,16 @@ cc.CONTROL_STATE_INITIAL = 1 << 3;
  * @property {Boolean}  selected    - Indicate whether the control node is selected
  * @property {Boolean}  highlighted - Indicate whether the control node is highlighted
  */
-cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
-    _isOpacityModifyRGB: false,
-    _hasVisibleParents: false,
-    _touchListener: null,
-    _className: "Control",
+cc.Control = class Control extends cc.Layer {
+    _isOpacityModifyRGB = false;
+    _hasVisibleParents = false;
+    _touchListener = null;
+    _className = "Control";
 
-    isOpacityModifyRGB: function () {
+    isOpacityModifyRGB() {
         return this._isOpacityModifyRGB;
-    },
-    setOpacityModifyRGB: function (opacityModifyRGB) {
+    }
+    setOpacityModifyRGB(opacityModifyRGB) {
         this._isOpacityModifyRGB = opacityModifyRGB;
 
         var children = this.getChildren();
@@ -80,74 +80,74 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
             if (selNode)
                 selNode.setOpacityModifyRGB(opacityModifyRGB);
         }
-    },
+    }
 
     /** The current control state constant. */
-    _state: cc.CONTROL_STATE_NORMAL,
-    getState: function () {
+    _state = cc.CONTROL_STATE_NORMAL;
+    getState() {
         return this._state;
-    },
+    }
 
-    _enabled: false,
-    _selected: false,
-    _highlighted: false,
+    _enabled = false;
+    _selected = false;
+    _highlighted = false;
 
-    _dispatchTable: null,
+    _dispatchTable = null;
 
     /**
      * Tells whether the control is enabled
      * @param {Boolean} enabled
      */
-    setEnabled: function (enabled) {
+    setEnabled(enabled) {
         this._enabled = enabled;
         this._state = enabled ? cc.CONTROL_STATE_NORMAL : cc.CONTROL_STATE_DISABLED;
 
         this.needsLayout();
-    },
-    isEnabled: function () {
+    }
+    isEnabled() {
         return this._enabled;
-    },
+    }
 
     /**
      * A Boolean value that determines the control selected state.
      * @param {Boolean} selected
      */
-    setSelected: function (selected) {
+    setSelected(selected) {
         this._selected = selected;
         this.needsLayout();
-    },
-    isSelected: function () {
+    }
+    isSelected() {
         return this._selected;
-    },
+    }
 
     /**
      *  A Boolean value that determines whether the control is highlighted.
      * @param {Boolean} highlighted
      */
-    setHighlighted: function (highlighted) {
+    setHighlighted(highlighted) {
         this._highlighted = highlighted;
         this.needsLayout();
-    },
-    isHighlighted: function () {
+    }
+    isHighlighted() {
         return this._highlighted;
-    },
+    }
 
-    hasVisibleParents: function () {
+    hasVisibleParents() {
         var parent = this.getParent();
         for (var c = parent; c != null; c = c.getParent()) {
             if (!c.isVisible())
                 return false;
         }
         return true;
-    },
+    }
 
-    ctor: function () {
-        cc.Layer.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._dispatchTable = {};
         this._color = cc.color.WHITE;
-    },
+    }
 
-    init: function () {
+    init() {
         // Initialise instance variables
         this._state = cc.CONTROL_STATE_NORMAL;
         this._enabled = true;
@@ -168,21 +168,21 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
             listener.onTouchCancelled = this.onTouchCancelled.bind(this);
         this._touchListener = listener;
         return true;
-    },
+    }
 
-    onEnter: function () {
+    onEnter() {
         var locListener = this._touchListener;
         if (!locListener._isRegistered())
             cc.eventManager.addListener(locListener, this);
         cc.Node.prototype.onEnter.call(this);
-    },
+    }
 
     /**
      * Sends action messages for the given control events.
      * which action messages are sent. See "CCControlEvent" for bitmask constants.
      * @param {Number} controlEvents A bitmask whose set flags specify the control events for
      */
-    sendActionsForControlEvents: function (controlEvents) {
+    sendActionsForControlEvents(controlEvents) {
         // For each control events
         for (var i = 0, len = cc.CONTROL_EVENT_TOTAL_NUMBER; i < len; i++) {
             // If the given controlEvents bitmask contains the curent event
@@ -195,7 +195,7 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
                 }
             }
         }
-    },
+    }
 
     /**
      * <p>
@@ -209,14 +209,14 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
      * @param {function} action A selector identifying an action message. It cannot be NULL.
      * @param {Number} controlEvents A bitmask specifying the control events for which the action message is sent. See "CCControlEvent" for bitmask constants.
      */
-    addTargetWithActionForControlEvents: function (target, action, controlEvents) {
+    addTargetWithActionForControlEvents(target, action, controlEvents) {
         // For each control events
         for (var i = 0, len = cc.CONTROL_EVENT_TOTAL_NUMBER; i < len; i++) {
             // If the given controlEvents bit mask contains the current event
             if ((controlEvents & (1 << i)))
                 this._addTargetWithActionForControlEvent(target, action, 1 << i);
         }
-    },
+    }
 
     /**
      * Removes a target and action for a particular event (or events) from an internal dispatch table.
@@ -225,24 +225,24 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
      * @param {function} action A selector identifying an action message. Pass NULL to remove all action messages paired with target.
      * @param {Number} controlEvents A bitmask specifying the control events associated with target and action. See "CCControlEvent" for bitmask constants.
      */
-    removeTargetWithActionForControlEvents: function (target, action, controlEvents) {
+    removeTargetWithActionForControlEvents(target, action, controlEvents) {
         // For each control events
         for (var i = 0, len = cc.CONTROL_EVENT_TOTAL_NUMBER; i < len; i++) {
             // If the given controlEvents bitmask contains the current event
             if ((controlEvents & (1 << i)))
                 this._removeTargetWithActionForControlEvent(target, action, 1 << i);
         }
-    },
+    }
 
     /**
      * Returns a point corresponding to the touh location converted into the
      * control space coordinates.
      * @param {cc.Touch} touch A CCTouch object that represents a touch.
      */
-    getTouchLocation: function (touch) {
+    getTouchLocation(touch) {
         var touchLocation = touch.getLocation();                      // Get the touch position
         return this.convertToNodeSpace(touchLocation);  // Convert to the node space of this class
-    },
+    }
 
     /**
      * Returns a boolean value that indicates whether a touch is inside the bounds of the receiver. The given touch must be relative to the world.
@@ -250,11 +250,11 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
      * @param {cc.Touch} touch A cc.Touch object that represents a touch.
      * @return {Boolean} YES whether a touch is inside the receiver's rect.
      */
-    isTouchInside: function (touch) {
+    isTouchInside(touch) {
         var touchLocation = touch.getLocation(); // Get the touch position
         touchLocation = this.getParent().convertToNodeSpace(touchLocation);
         return cc.rectContainsPoint(this.getBoundingBox(), touchLocation);
-    },
+    }
 
     /**
      * <p>
@@ -268,9 +268,9 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
      *
      * @return {cc.Invocation} an CCInvocation object able to construct messages using a given target-action pair.
      */
-    _invocationWithTargetAndActionForControlEvent: function (target, action, controlEvent) {
+    _invocationWithTargetAndActionForControlEvent(target, action, controlEvent) {
         return null;
-    },
+    }
 
     /**
      * Returns the cc.Invocation list for the given control event. If the list does not exist, it'll create an empty array before returning it.
@@ -278,13 +278,13 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
      * @param {Number} controlEvent A control events for which the action message is sent. See "CCControlEvent" for constants.
      * @return {cc.Invocation} the cc.Invocation list for the given control event.
      */
-    _dispatchListforControlEvent: function (controlEvent) {
+    _dispatchListforControlEvent(controlEvent) {
         controlEvent = controlEvent.toString();
         // If the invocation list does not exist for the  dispatch table, we create it
         if (!this._dispatchTable[controlEvent])
             this._dispatchTable[controlEvent] = [];
         return this._dispatchTable[controlEvent];
-    },
+    }
 
     /**
      * Adds a target and action for a particular event to an internal dispatch
@@ -299,14 +299,14 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
      * @param controlEvent A control event for which the action message is sent.
      * See "CCControlEvent" for constants.
      */
-    _addTargetWithActionForControlEvent: function (target, action, controlEvent) {
+    _addTargetWithActionForControlEvent(target, action, controlEvent) {
         // Create the invocation object
         var invocation = new cc.Invocation(target, action, controlEvent);
 
         // Add the invocation into the dispatch list for the given control event
         var eventInvocationList = this._dispatchListforControlEvent(controlEvent);
         eventInvocationList.push(invocation);
-    },
+    }
 
     /**
      * Removes a target and action for a particular event from an internal dispatch table.
@@ -315,7 +315,7 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
      * @param {function} action A selector identifying an action message. Pass NULL to remove all action messages paired with target.
      * @param {Number} controlEvent A control event for which the action message is sent. See "CCControlEvent" for constants.
      */
-    _removeTargetWithActionForControlEvent: function (target, action, controlEvent) {
+    _removeTargetWithActionForControlEvent(target, action, controlEvent) {
         // Retrieve all invocations for the given control event
         //<CCInvocation*>
         var eventInvocationList = this._dispatchListforControlEvent(controlEvent);
@@ -342,14 +342,14 @@ cc.Control = cc.Layer.extend(/** @lends cc.Control# */{
                     i++;
             }
         }
-    },
+    }
 
     /**
      * Updates the control layout using its current internal state.
      */
-    needsLayout: function () {
+    needsLayout() {
     }
-});
+};
 
 var _p = cc.Control.prototype;
 

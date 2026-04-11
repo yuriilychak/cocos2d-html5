@@ -29,30 +29,31 @@
  * @class
  * @extends cc.Class
  */
-cc.Invocation = cc.Class.extend(/** @lends cc.Invocation# */{
-    _action:null,
-    _target:null,
-    _controlEvent:null,
+cc.Invocation = class Invocation extends cc.NewClass {
+    _action = null;
+    _target = null;
+    _controlEvent = null;
 
-    ctor:function(target,action,controlEvent){
+    constructor(target,action,controlEvent){
+        super();
         this._target=target;
         this._action=action;
         this._controlEvent=controlEvent;
-    },
+    }
 
-    getAction:function(){
+    getAction(){
        return this._action;
-    },
+    }
 
-    getTarget:function(){
+    getTarget(){
        return this._target ;
-    },
+    }
 
-    getControlEvent:function(){
+    getControlEvent(){
        return this._controlEvent;
-    },
+    }
 
-    invoke:function(sender){
+    invoke(sender){
         if (this._target && this._action) {
             if (cc.isString(this._action)) {
                 this._target[this._action](sender, this._controlEvent);
@@ -61,5 +62,5 @@ cc.Invocation = cc.Class.extend(/** @lends cc.Invocation# */{
             }
         }
     }
-});
+};
 

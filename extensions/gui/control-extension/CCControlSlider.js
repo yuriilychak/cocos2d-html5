@@ -49,20 +49,20 @@ cc.SLIDER_MARGIN_V = 8;
  * @property {cc.Sprite}    progressSprite      - <@readonly> The background sprite
  * @property {cc.Sprite}    backgroundSprite    - <@readonly> The overlay sprite
  */
-cc.ControlSlider = cc.Control.extend(/** @lends cc.ControlSlider# */{
-    _value:0,
-    _minimumValue:0,
-    _maximumValue:0,
-    _minimumAllowedValue:0,
-    _maximumAllowedValue:0,
+cc.ControlSlider = class ControlSlider extends cc.Control {
+    _value = 0;
+    _minimumValue = 0;
+    _maximumValue = 0;
+    _minimumAllowedValue = 0;
+    _maximumAllowedValue = 0;
 
-    _thumbSprite:null,
-    _progressSprite:null,
-    _backgroundSprite:null,
-    _className:"ControlSlider",
+    _thumbSprite = null;
+    _progressSprite = null;
+    _backgroundSprite = null;
+    _className = "ControlSlider";
 
-    ctor:function (bgFile, progressFile, thumbFile) {
-        cc.Control.prototype.ctor.call(this);
+    constructor(bgFile, progressFile, thumbFile) {
+        super();
         if (thumbFile != undefined) {
             // Prepare background for slider
             var bgSprite = new cc.Sprite(bgFile);
@@ -75,42 +75,42 @@ cc.ControlSlider = cc.Control.extend(/** @lends cc.ControlSlider# */{
 
             this.initWithSprites(bgSprite, progressSprite, thumbSprite);
         }
-    },
+    }
 
-    getValue:function () {
+    getValue() {
         return this._value;
-    },
-    setValue:function (value) {
+    }
+    setValue(value) {
         //clamp between the two bounds
         value = Math.max(value, this._minimumValue);
         value = Math.min(value, this._maximumValue);
         this._value = value;
         this.needsLayout();
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
-    },
+    }
 
-    getMinimumValue:function () {
+    getMinimumValue() {
         return this._minimumValue;
-    },
-    setMinimumValue:function (minimumValue) {
+    }
+    setMinimumValue(minimumValue) {
         this._minimumValue = minimumValue;
         this._minimumAllowedValue = minimumValue;
         if (this._minimumValue >= this._maximumValue)
             this._maximumValue = this._minimumValue + 1.0;
         this.setValue(this._value);
-    },
+    }
 
-    getMaximumValue:function () {
+    getMaximumValue() {
         return this._maximumValue;
-    },
-    setMaximumValue:function (maximumValue) {
+    }
+    setMaximumValue(maximumValue) {
         this._maximumValue = maximumValue;
         this._maximumAllowedValue = maximumValue;
         if (this._maximumValue <= this._minimumValue)
             this._minimumValue = this._maximumValue - 1.0;
         this.setValue(this._value);
-    },
-    isTouchInside:function (touch) {
+    }
+    isTouchInside(touch) {
         var touchLocation = touch.getLocation();
         touchLocation = this.getParent().convertToNodeSpace(touchLocation);
 
@@ -119,8 +119,8 @@ cc.ControlSlider = cc.Control.extend(/** @lends cc.ControlSlider# */{
         rect.x -= this._thumbSprite.getContentSize().width / 2;
 
         return cc.rectContainsPoint(rect, touchLocation);
-    },
-    locationFromTouch:function (touch) {
+    }
+    locationFromTouch(touch) {
         var touchLocation = touch.getLocation();                      // Get the touch position
         touchLocation = this.convertToNodeSpace(touchLocation);                  // Convert to the node space of this class
 
@@ -131,31 +131,31 @@ cc.ControlSlider = cc.Control.extend(/** @lends cc.ControlSlider# */{
         }
 
         return touchLocation;
-    },
-    getMinimumAllowedValue:function () {
+    }
+    getMinimumAllowedValue() {
         return this._minimumAllowedValue;
-    },
-    setMinimumAllowedValue:function (val) {
+    }
+    setMinimumAllowedValue(val) {
         this._minimumAllowedValue = val;
-    },
+    }
 
-    getMaximumAllowedValue:function () {
+    getMaximumAllowedValue() {
         return this._maximumAllowedValue;
-    },
+    }
 
-    setMaximumAllowedValue:function (val) {
+    setMaximumAllowedValue(val) {
         this._maximumAllowedValue = val;
-    },
+    }
 
-    getThumbSprite:function () {
+    getThumbSprite() {
         return this._thumbSprite;
-    },
-    getProgressSprite:function () {
+    }
+    getProgressSprite() {
         return this._progressSprite;
-    },
-    getBackgroundSprite:function () {
+    }
+    getBackgroundSprite() {
         return this._backgroundSprite;
-    },
+    }
 
     /**
      * Initializes a slider with a background sprite, a progress bar and a thumb
@@ -165,8 +165,8 @@ cc.ControlSlider = cc.Control.extend(/** @lends cc.ControlSlider# */{
      * @param {cc.Sprite} progressSprite    CCSprite, that is used as a progress bar.
      * @param {cc.Sprite} thumbSprite         CCMenuItem, that is used as a thumb.
      */
-    initWithSprites:function (backgroundSprite, progressSprite, thumbSprite) {
-        if (cc.Control.prototype.init.call(this)) {
+    initWithSprites(backgroundSprite, progressSprite, thumbSprite) {
+        if (super.init()) {
             this.ignoreAnchorPointForPosition(false);
 
             this._backgroundSprite = backgroundSprite;
@@ -198,32 +198,32 @@ cc.ControlSlider = cc.Control.extend(/** @lends cc.ControlSlider# */{
             return true;
         } else
             return false;
-    },
+    }
 
-    setEnabled:function (enabled) {
-        cc.Control.prototype.setEnabled.call(this, enabled);
+    setEnabled(enabled) {
+        super.setEnabled(enabled);
         if (this._thumbSprite) {
             this._thumbSprite.setOpacity(enabled ? 255 : 128);
         }
-    },
+    }
 
-    sliderBegan:function (location) {
+    sliderBegan(location) {
         this.setSelected(true);
         this._thumbSprite.setColor(cc.color.GRAY);
         this.setValue(this.valueForLocation(location));
-    },
-    sliderMoved:function (location) {
+    }
+    sliderMoved(location) {
         this.setValue(this.valueForLocation(location));
-    },
-    sliderEnded:function (location) {
+    }
+    sliderEnded(location) {
         if (this.isSelected()) {
             this.setValue(this.valueForLocation(this._thumbSprite.getPosition()));
         }
         this._thumbSprite.setColor(cc.color.WHITE);
         this.setSelected(false);
-    },
+    }
 
-    getTouchLocationInControl:function (touch) {
+    getTouchLocationInControl(touch) {
         var touchLocation = touch.getLocation();                      // Get the touch position
         touchLocation = this.convertToNodeSpace(touchLocation);         // Convert to the node space of this class
 
@@ -233,24 +233,24 @@ cc.ControlSlider = cc.Control.extend(/** @lends cc.ControlSlider# */{
             touchLocation.x = this._backgroundSprite.getContentSize().width + cc.SLIDER_MARGIN_H;
         }
         return touchLocation;
-    },
+    }
 
-    onTouchBegan:function (touch, event) {
+    onTouchBegan(touch, event) {
         if (!this.isTouchInside(touch)|| !this.isEnabled() || !this.isVisible())
             return false;
 
         var location = this.locationFromTouch(touch);
         this.sliderBegan(location);
         return true;
-    },
-    onTouchMoved:function (touch, event) {
+    }
+    onTouchMoved(touch, event) {
         var location = this.locationFromTouch(touch);
         this.sliderMoved(location);
-    },
-    onTouchEnded:function (touch, event) {
+    }
+    onTouchEnded(touch, event) {
         this.sliderEnded(cc.p(0,0));
-    },
-    needsLayout:function(){
+    }
+    needsLayout(){
         var percent = (this._value - this._minimumValue) / (this._maximumValue - this._minimumValue);
         this._thumbSprite.setPositionX(percent * this._backgroundSprite.getContentSize().width);
 
@@ -259,13 +259,13 @@ cc.ControlSlider = cc.Control.extend(/** @lends cc.ControlSlider# */{
         textureRect = cc.rect(textureRect.x, textureRect.y, this._thumbSprite.getPositionX(), textureRect.height);
         this._progressSprite.setTextureRect(textureRect, this._progressSprite.isTextureRectRotated());
         this._thumbSprite._renderCmd.transform(this._renderCmd);
-    },
+    }
     /** Returns the value for the given location. */
-    valueForLocation:function (location) {
+    valueForLocation(location) {
         var percent = location.x / this._backgroundSprite.getContentSize().width;
         return Math.max(Math.min(this._minimumValue + percent * (this._maximumValue - this._minimumValue), this._maximumAllowedValue), this._minimumAllowedValue);
     }
-});
+};
 
 var _p = cc.ControlSlider.prototype;
 

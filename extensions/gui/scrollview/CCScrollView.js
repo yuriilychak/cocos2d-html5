@@ -49,12 +49,12 @@ cc.convertDistanceFromPointToInch = function (pointDis) {
     return (pointDis * factor) / 160;               // CCDevice::getDPI() default value
 };
 
-cc.ScrollViewDelegate = cc.Class.extend({
-    scrollViewDidScroll: function (view) {
-    },
-    scrollViewDidZoom: function (view) {
+cc.ScrollViewDelegate = class ScrollViewDelegate extends cc.NewClass {
+    scrollViewDidScroll(view) {
     }
-});
+    scrollViewDidZoom(view) {
+    }
+};
 
 /**
  * ScrollView support for cocos2d -x.
@@ -71,36 +71,36 @@ cc.ScrollViewDelegate = cc.Class.extend({
  * @property {cc.ScrollViewDelegate}    delegate    - The inside container of the scroll view
  * @property {Boolean}           clippingToBounds   - Indicate whether the scroll view clips its children
  */
-cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
-    _zoomScale: 0,
-    _minZoomScale: 0,
-    _maxZoomScale: 0,
-    _delegate: null,
-    _direction: cc.SCROLLVIEW_DIRECTION_BOTH,
-    _dragging: false,
-    _contentOffset: null,
-    _container: null,
-    _touchMoved: false,
-    _maxInset: null,
-    _minInset: null,
-    _bounceable: false,
-    _clippingToBounds: false,
-    _scrollDistance: null,
-    _touchPoint: null,
-    _touchLength: 0,
-    _touches: null,
-    _viewSize: null,
-    _minScale: 0,
-    _maxScale: 0,
+cc.ScrollView = class ScrollView extends cc.Layer {
+    _zoomScale = 0;
+    _minZoomScale = 0;
+    _maxZoomScale = 0;
+    _delegate = null;
+    _direction = cc.SCROLLVIEW_DIRECTION_BOTH;
+    _dragging = false;
+    _contentOffset = null;
+    _container = null;
+    _touchMoved = false;
+    _maxInset = null;
+    _minInset = null;
+    _bounceable = false;
+    _clippingToBounds = false;
+    _scrollDistance = null;
+    _touchPoint = null;
+    _touchLength = 0;
+    _touches = null;
+    _viewSize = null;
+    _minScale = 0;
+    _maxScale = 0;
 
     //scissor rect for parent, just for restoring GL_SCISSOR_BOX
-    _parentScissorRect: null,
-    _scissorRestored: false,
+    _parentScissorRect = null;
+    _scissorRestored = false;
 
     // cache object
-    _tmpViewRect: null,
-    _touchListener: null,
-    _className: "ScrollView",
+    _tmpViewRect = null;
+    _touchListener = null;
+    _className = "ScrollView";
 
     /**
      * @contructor
@@ -108,8 +108,8 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
      * @param container
      * @returns {ScrollView}
      */
-    ctor: function (size, container) {
-        cc.Layer.prototype.ctor.call(this);
+    constructor(size, container) {
+        super();
         this._contentOffset = cc.p(0, 0);
         this._maxInset = cc.p(0, 0);
         this._minInset = cc.p(0, 0);
@@ -125,11 +125,11 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
         else
             this.initWithViewSize(cc.size(200, 200), null);
 
-    },
+    }
 
-    init: function () {
+    init() {
         return this.initWithViewSize(cc.size(200, 200), null);
-    },
+    }
 
     /**
      * initialized whether success or fail
@@ -137,9 +137,9 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
      * @param {cc.Node} container
      * @return {Boolean}
      */
-    initWithViewSize: function (size, container) {
+    initWithViewSize(size, container) {
         var pZero = cc.p(0, 0);
-        if (cc.Layer.prototype.init.call(this)) {
+        if (super.init()) {
             if (!container && !this._container) {
                 container = new cc.Layer();
             }
@@ -163,9 +163,9 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
             return true;
         }
         return false;
-    },
+    }
 
-    visit: function (parent) {
+    visit(parent) {
         var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
 
         // quick return if not visible
@@ -195,7 +195,7 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
             renderer.pushRenderCommand(cmd.endCmd);
         }
         cmd._dirtyFlag = 0;
-    },
+    }
 
     /**
      * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
@@ -203,7 +203,7 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
      * @param {cc.Point} offset new offset
      * @param {Number} [animated=] If true, the view will scroll to the new offset
      */
-    setContentOffset: function (offset, animated) {
+    setContentOffset(offset, animated) {
         if (animated) { //animate scrolling
             this.setContentOffsetInDuration(offset, BOUNCE_DURATION);
             return;
@@ -222,12 +222,12 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
             locDelegate.scrollViewDidScroll(this);
         }
 
-    },
+    }
 
-    getContentOffset: function () {
+    getContentOffset() {
         var locPos = this._container.getPosition();
         return cc.p(locPos.x, locPos.y);
-    },
+    }
 
     /**
      * <p>Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView) <br/>
@@ -236,12 +236,12 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
      * @param {cc.Point} offset new offset
      * @param {Number} dt animation duration
      */
-    setContentOffsetInDuration: function (offset, dt) {
+    setContentOffsetInDuration(offset, dt) {
         var scroll = cc.moveTo(dt, offset);
         var expire = cc.callFunc(this._stoppedAnimatedScroll, this);
         this._container.runAction(cc.sequence(scroll, expire));
         this.schedule(this._performedAnimatedScroll);
-    },
+    }
 
     /**
      * Sets a new scale and does that for a predefined duration.
@@ -249,7 +249,7 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
      * @param {Number} scale a new scale vale
      * @param {Boolean} [animated=null] if YES, scaling is animated
      */
-    setZoomScale: function (scale, animated) {
+    setZoomScale(scale, animated) {
         if (animated) {
             this.setZoomScaleInDuration(scale, BOUNCE_DURATION);
             return;
@@ -276,11 +276,11 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
                 this._delegate.scrollViewDidZoom(this);
             this.setContentOffset(cc.pAdd(locContainer.getPosition(), offset));
         }
-    },
+    }
 
-    getZoomScale: function () {
+    getZoomScale() {
         return this._container.getScale();
-    },
+    }
 
     /**
      * Sets a new scale for container in a given duration.
@@ -288,7 +288,7 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
      * @param {Number} s a new scale value
      * @param {Number} dt animation duration
      */
-    setZoomScaleInDuration: function (s, dt) {
+    setZoomScaleInDuration(s, dt) {
         if (dt > 0) {
             var locScale = this._container.getScale();
             if (locScale !== s) {
@@ -298,33 +298,33 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
         } else {
             this.setZoomScale(s);
         }
-    },
+    }
 
     /**
      * Returns the current container's minimum offset. You may want this while you animate scrolling by yourself
      * @return {cc.Point} Returns the current container's minimum offset.
      */
-    minContainerOffset: function () {
+    minContainerOffset() {
         var locContainer = this._container;
         var locContentSize = locContainer.getContentSize(), locViewSize = this._viewSize;
         return cc.p(locViewSize.width - locContentSize.width * locContainer.getScaleX(),
             locViewSize.height - locContentSize.height * locContainer.getScaleY());
-    },
+    }
 
     /**
      * Returns the current container's maximum offset. You may want this while you animate scrolling by yourself
      * @return {cc.Point} Returns the current container's maximum offset.
      */
-    maxContainerOffset: function () {
+    maxContainerOffset() {
         return cc.p(0.0, 0.0);
-    },
+    }
 
     /**
      * Determines if a given node's bounding box is in visible bounds
      * @param {cc.Node} node
      * @return {Boolean} YES if it is in visible bounds
      */
-    isNodeVisible: function (node) {
+    isNodeVisible(node) {
         var offset = this.getContentOffset();
         var size = this.getViewSize();
         var scale = this.getZoomScale();
@@ -332,44 +332,44 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
         var viewRect = cc.rect(-offset.x / scale, -offset.y / scale, size.width / scale, size.height / scale);
 
         return cc.rectIntersectsRect(viewRect, node.getBoundingBox());
-    },
+    }
 
     /**
      * Provided to make scroll view compatible with SWLayer's pause method
      */
-    pause: function (sender) {
+    pause(sender) {
         this._container.pause();
         var selChildren = this._container.getChildren();
         for (var i = 0; i < selChildren.length; i++) {
             selChildren[i].pause();
         }
-        this._super();
-    },
+        super.pause();
+    }
 
     /**
      * Provided to make scroll view compatible with SWLayer's resume method
      */
-    resume: function (sender) {
+    resume(sender) {
         var selChildren = this._container.getChildren();
         for (var i = 0, len = selChildren.length; i < len; i++) {
             selChildren[i].resume();
         }
         this._container.resume();
-        this._super();
-    },
+        super.resume();
+    }
 
-    isDragging: function () {
+    isDragging() {
         return this._dragging;
-    },
-    isTouchMoved: function () {
+    }
+    isTouchMoved() {
         return this._touchMoved;
-    },
-    isBounceable: function () {
+    }
+    isBounceable() {
         return this._bounceable;
-    },
-    setBounceable: function (bounceable) {
+    }
+    setBounceable(bounceable) {
         this._bounceable = bounceable;
-    },
+    }
 
     /**
      * <p>
@@ -378,20 +378,20 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
      * Hence, this scroll view will use a separate size property.
      * </p>
      */
-    getViewSize: function () {
+    getViewSize() {
         return this._viewSize;
-    },
+    }
 
-    setViewSize: function (size) {
+    setViewSize(size) {
         this._viewSize = size;
         cc.Node.prototype.setContentSize.call(this, size);
-    },
+    }
 
-    getContainer: function () {
+    getContainer() {
         return this._container;
-    },
+    }
 
-    setContainer: function (container) {
+    setContainer(container) {
         // Make sure that 'm_pContainer' has a non-NULL value since there are
         // lots of logic that use 'm_pContainer'.
         if (!container)
@@ -405,28 +405,28 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
 
         this.addChild(container);
         this.setViewSize(this._viewSize);
-    },
+    }
 
     /**
      * direction allowed to scroll. CCScrollViewDirectionBoth by default.
      */
-    getDirection: function () {
+    getDirection() {
         return this._direction;
-    },
-    setDirection: function (direction) {
+    }
+    setDirection(direction) {
         this._direction = direction;
-    },
+    }
 
-    getDelegate: function () {
+    getDelegate() {
         return this._delegate;
-    },
-    setDelegate: function (delegate) {
+    }
+    setDelegate(delegate) {
         this._delegate = delegate;
-    },
+    }
 
     /** override functions */
     // optional
-    onTouchBegan: function (touch, event) {
+    onTouchBegan(touch, event) {
         for (var c = this; c != null; c = c.parent) {
             if (!c.isVisible())
                 return false;
@@ -460,9 +460,9 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
             this._dragging = false;
         }
         return true;
-    },
+    }
 
-    onTouchMoved: function (touch, event) {
+    onTouchMoved(touch, event) {
         if (!this.isVisible())
             return;
 
@@ -539,9 +539,9 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
                 this._container.convertTouchToNodeSpace(this._touches[1]));
             this.setZoomScale(this.getZoomScale() * len / this._touchLength);
         }
-    },
+    }
 
-    onTouchEnded: function (touch, event) {
+    onTouchEnded(touch, event) {
         if (!this.isVisible())
             return;
 
@@ -551,18 +551,18 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
         this._touches.length = 0;
         this._dragging = false;
         this._touchMoved = false;
-    },
+    }
 
-    onTouchCancelled: function (touch, event) {
+    onTouchCancelled(touch, event) {
         if (!this.isVisible())
             return;
 
         this._touches.length = 0;
         this._dragging = false;
         this._touchMoved = false;
-    },
+    }
 
-    setContentSize: function (size, height) {
+    setContentSize(size, height) {
         if (this.getContainer() !== null) {
             if (height === undefined)
                 this.getContainer().setContentSize(size);
@@ -570,27 +570,27 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
                 this.getContainer().setContentSize(size, height);
             this.updateInset();
         }
-    },
-    _setWidth: function (value) {
+    }
+    _setWidth(value) {
         var container = this.getContainer();
         if (container !== null) {
             container._setWidth(value);
             this.updateInset();
         }
-    },
-    _setHeight: function (value) {
+    }
+    _setHeight(value) {
         var container = this.getContainer();
         if (container !== null) {
             container._setHeight(value);
             this.updateInset();
         }
-    },
+    }
 
-    getContentSize: function () {
+    getContentSize() {
         return this._container.getContentSize();
-    },
+    }
 
-    updateInset: function () {
+    updateInset() {
         if (this.getContainer() !== null) {
             var locViewSize = this._viewSize;
             var tempOffset = this.maxContainerOffset();
@@ -600,20 +600,20 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
             this._minInset.x = tempOffset.x - locViewSize.width * INSET_RATIO;
             this._minInset.y = tempOffset.y - locViewSize.height * INSET_RATIO;
         }
-    },
+    }
 
     /**
      * Determines whether it clips its children or not.
      */
-    isClippingToBounds: function () {
+    isClippingToBounds() {
         return this._clippingToBounds;
-    },
+    }
 
-    setClippingToBounds: function (clippingToBounds) {
+    setClippingToBounds(clippingToBounds) {
         this._clippingToBounds = clippingToBounds;
-    },
+    }
 
-    addChild: function (child, zOrder, tag) {
+    addChild(child, zOrder, tag) {
         if (!child)
             throw new Error("child must not nil!");
 
@@ -625,15 +625,15 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
         if (this._container !== child) {
             this._container.addChild(child, zOrder, tag);
         } else {
-            cc.Layer.prototype.addChild.call(this, child, zOrder, tag);
+            super.addChild(child, zOrder, tag);
         }
-    },
+    }
 
-    isTouchEnabled: function () {
+    isTouchEnabled() {
         return this._touchListener !== null;
-    },
+    }
 
-    setTouchEnabled: function (e) {
+    setTouchEnabled(e) {
         if (this._touchListener)
             cc.eventManager.removeListener(this._touchListener);
         this._touchListener = null;
@@ -656,7 +656,7 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
             this._touchListener = listener;
             cc.eventManager.addListener(listener, this);
         }
-    },
+    }
 
     /**
      * Init this object with a given size to clip its content.
@@ -664,16 +664,16 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
      * @param size view size
      * @return initialized scroll view object
      */
-    _initWithViewSize: function (size) {
+    _initWithViewSize(size) {
         return null;
-    },
+    }
 
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
      *
      * @param animated If YES, relocation is animated
      */
-    _relocateContainer: function (animated) {
+    _relocateContainer(animated) {
         var min = this.minContainerOffset();
         var max = this.maxContainerOffset();
         var locDirection = this._direction;
@@ -694,14 +694,14 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
         if (newY !== oldPoint.y || newX !== oldPoint.x) {
             this.setContentOffset(cc.p(newX, newY), animated);
         }
-    },
+    }
     /**
      * implements auto-scrolling behavior. change SCROLL_DEACCEL_RATE as needed to choose    <br/>
      * deacceleration speed. it must be less than 1.0.
      *
      * @param {Number} dt delta
      */
-    _deaccelerateScrolling: function (dt) {
+    _deaccelerateScrolling(dt) {
         if (this._dragging) {
             this.unschedule(this._deaccelerateScrolling);
             return;
@@ -737,11 +737,11 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
             this.unschedule(this._deaccelerateScrolling);
             this._relocateContainer(true);
         }
-    },
+    }
     /**
      * This method makes sure auto scrolling causes delegate to invoke its method
      */
-    _performedAnimatedScroll: function (dt) {
+    _performedAnimatedScroll(dt) {
         if (this._dragging) {
             this.unschedule(this._performedAnimatedScroll);
             return;
@@ -749,25 +749,25 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
 
         if (this._delegate && this._delegate.scrollViewDidScroll)
             this._delegate.scrollViewDidScroll(this);
-    },
+    }
     /**
      * Expire animated scroll delegate calls
      */
-    _stoppedAnimatedScroll: function (node) {
+    _stoppedAnimatedScroll(node) {
         this.unschedule(this._performedAnimatedScroll);
         // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
         if (this._delegate && this._delegate.scrollViewDidScroll) {
             this._delegate.scrollViewDidScroll(this);
         }
-    },
+    }
 
     /**
      * Zoom handling
      */
-    _handleZoom: function () {
-    },
+    _handleZoom() {
+    }
 
-    _getViewRect: function () {
+    _getViewRect() {
         var screenPos = this.convertToWorldSpace(cc.p(0, 0));
         var locViewSize = this._viewSize;
 
@@ -797,16 +797,16 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
         locViewRect.width = locViewSize.width * scaleX;
         locViewRect.height = locViewSize.height * scaleY;
         return locViewRect;
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
             return new cc.ScrollView.CanvasRenderCmd(this);
         } else {
             return new cc.ScrollView.WebGLRenderCmd(this);
         }
     }
-});
+};
 
 var _p = cc.ScrollView.prototype;
 

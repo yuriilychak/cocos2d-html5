@@ -31,23 +31,23 @@
  * @class
  * @extends cc.Control
  */
-cc.ControlSwitch = cc.Control.extend(/** @lends cc.ControlSwitch# */{
+cc.ControlSwitch = class ControlSwitch extends cc.Control {
     /** Sprite which represents the view. */
-    _switchSprite:null,
-    _initialTouchXPosition:0,
+    _switchSprite = null;
+    _initialTouchXPosition = 0;
 
-    _moved:false,
+    _moved = false;
     /** A Boolean value that determines the off/on state of the switch. */
-    _on:false,
-    _className:"ControlSwitch",
-    ctor:function (maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
-        cc.Control.prototype.ctor.call(this);
+    _on = false;
+    _className = "ControlSwitch";
+    constructor(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
+        super();
 
         offLabel && this.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
-    },
+    }
 
     /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
-    initWithMaskSprite:function (maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
+    initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
         if(!maskSprite)
             throw new Error("cc.ControlSwitch.initWithMaskSprite(): maskSprite should be non-null.");
         if(!onSprite)
@@ -70,9 +70,9 @@ cc.ControlSwitch = cc.Control.extend(/** @lends cc.ControlSwitch# */{
             return true;
         }
         return false;
-    },
+    }
 
-    setOn:function (isOn, animated) {
+    setOn(isOn, animated) {
         animated = animated || false;
         this._on = isOn;
         var xPosition = (this._on) ? this._switchSprite.getOnPosition() : this._switchSprite.getOffPosition();
@@ -82,30 +82,30 @@ cc.ControlSwitch = cc.Control.extend(/** @lends cc.ControlSwitch# */{
             this._switchSprite.setSliderXPosition(xPosition);
         }
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
-    },
+    }
 
-    isOn:function () {
+    isOn() {
         return this._on;
-    },
+    }
 
-    hasMoved:function () {
+    hasMoved() {
         return this._moved;
-    },
+    }
 
-    setEnabled:function (enabled) {
+    setEnabled(enabled) {
         this._enabled = enabled;
 
         this._switchSprite.setOpacity((enabled) ? 255 : 128);
-    },
+    }
 
-    locationFromTouch:function (touch) {
+    locationFromTouch(touch) {
         var touchLocation = touch.getLocation();                      // Get the touch position
         touchLocation = this.convertToNodeSpace(touchLocation);                  // Convert to the node space of this class
 
         return touchLocation;
-    },
+    }
 
-    onTouchBegan:function (touch, event) {
+    onTouchBegan(touch, event) {
         if (!this.isTouchInside(touch)  || !this.isEnabled()|| !this.isVisible()) {
             return false;
         }
@@ -120,30 +120,18 @@ cc.ControlSwitch = cc.Control.extend(/** @lends cc.ControlSwitch# */{
         this._switchSprite.needsLayout();
 
         return true;
-    },
+    }
 
-    onTouchMoved:function (touch, event) {
+    onTouchMoved(touch, event) {
         var location = this.locationFromTouch(touch);
         location = cc.p(location.x - this._initialTouchXPosition, 0);
 
         this._moved = true;
 
         this._switchSprite.setSliderXPosition(location.x);
-    },
+    }
 
-    onTouchEnded:function (touch, event) {
-        var location = this.locationFromTouch(touch);
-
-        this._switchSprite.getThumbSprite().setColor(cc.color.WHITE);
-
-        if (this.hasMoved()) {
-            this.setOn(!(location.x < this._switchSprite.getContentSize().width / 2), true);
-        } else {
-            this.setOn(!this._on, true);
-        }
-    },
-
-    onTouchCancelled:function (touch, event) {
+    onTouchEnded(touch, event) {
         var location = this.locationFromTouch(touch);
 
         this._switchSprite.getThumbSprite().setColor(cc.color.WHITE);
@@ -154,7 +142,19 @@ cc.ControlSwitch = cc.Control.extend(/** @lends cc.ControlSwitch# */{
             this.setOn(!this._on, true);
         }
     }
-});
+
+    onTouchCancelled(touch, event) {
+        var location = this.locationFromTouch(touch);
+
+        this._switchSprite.getThumbSprite().setColor(cc.color.WHITE);
+
+        if (this.hasMoved()) {
+            this.setOn(!(location.x < this._switchSprite.getContentSize().width / 2), true);
+        } else {
+            this.setOn(!this._on, true);
+        }
+    }
+};
 
 /**
  * ControlSwitchSprite: Sprite switch control ui component
@@ -175,26 +175,26 @@ cc.ControlSwitch = cc.Control.extend(/** @lends cc.ControlSwitch# */{
  * @property {Number}           onSideWidth     - <@readonly> The width of the on side of the switch control
  * @property {Number}           offSideWidth    - <@readonly> The width of the off side of the switch control
  */
-cc.ControlSwitchSprite = cc.Sprite.extend({
-    _sliderXPosition:0,
-    _onPosition:0,
-    _offPosition:0,
+cc.ControlSwitchSprite = class ControlSwitchSprite extends cc.Sprite {
+    _sliderXPosition = 0;
+    _onPosition = 0;
+    _offPosition = 0;
 
-    _textureLocation:0,
-    _maskLocation:0,
-    _maskSize:null,
+    _textureLocation = 0;
+    _maskLocation = 0;
+    _maskSize = null;
 
-    _onSprite:null,
-    _offSprite:null,
-    _thumbSprite:null,
-    _onLabel:null,
-    _offLabel:null,
-    _clipper:null,
-    _stencil:null,
-    _backRT:null,
+    _onSprite = null;
+    _offSprite = null;
+    _thumbSprite = null;
+    _onLabel = null;
+    _offLabel = null;
+    _clipper = null;
+    _stencil = null;
+    _backRT = null;
 
-    ctor:function () {
-        cc.Sprite.prototype.ctor.call(this);
+    constructor() {
+        super();
         this._sliderXPosition = 0;
         this._onPosition = 0;
         this._offPosition = 0;
@@ -205,10 +205,10 @@ cc.ControlSwitchSprite = cc.Sprite.extend({
         this._thumbSprite = null;
         this._onLabel = null;
         this._offLabel = null;
-    },
+    }
 
-    initWithMaskSprite:function (maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
-        if (cc.Sprite.prototype.init.call(this)) {
+    initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
+        if (super.init()) {
             this.setSpriteFrame(maskSprite.displayFrame());
             // Sets the default values
             this._onPosition = 0;
@@ -244,9 +244,9 @@ cc.ControlSwitchSprite = cc.Sprite.extend({
             return true;
         }
         return false;
-    },
+    }
 
-    needsLayout:function () {
+    needsLayout() {
         var maskSize = this._maskSize;
         this._onSprite.setPosition(
             this._onSprite.getContentSize().width / 2 + this._sliderXPosition - maskSize.width / 2,
@@ -273,9 +273,9 @@ cc.ControlSwitchSprite = cc.Sprite.extend({
             this._onSprite.getContentSize().width + this._sliderXPosition,
             this._maskSize.height / 2
         );
-    },
+    }
 
-    setSliderXPosition:function (sliderXPosition) {
+    setSliderXPosition(sliderXPosition) {
         if (sliderXPosition <= this._offPosition) {
             // Off
             sliderXPosition = this._offPosition;
@@ -287,94 +287,94 @@ cc.ControlSwitchSprite = cc.Sprite.extend({
         this._sliderXPosition = sliderXPosition;
 
         this.needsLayout();
-    },
-    getSliderXPosition:function () {
+    }
+    getSliderXPosition() {
         return this._sliderXPosition;
-    },
+    }
 
-    _getOnSideWidth:function () {
+    _getOnSideWidth() {
         return this._onSprite.getContentSize().width;
-    },
+    }
 
-    _getOffSideWidth:function () {
+    _getOffSideWidth() {
         return this._offSprite.getContentSize().height;
-    },
+    }
 
-    updateTweenAction:function (value, key) {
+    updateTweenAction(value, key) {
         if (key === "sliderXPosition")
             this.setSliderXPosition(value);
-    },
+    }
 
-    setOnPosition:function (onPosition) {
+    setOnPosition(onPosition) {
         this._onPosition = onPosition;
-    },
-    getOnPosition:function () {
+    }
+    getOnPosition() {
         return this._onPosition;
-    },
+    }
 
-    setOffPosition:function (offPosition) {
+    setOffPosition(offPosition) {
         this._offPosition = offPosition;
-    },
-    getOffPosition:function () {
+    }
+    getOffPosition() {
         return this._offPosition;
-    },
+    }
 
-    setMaskTexture:function (maskTexture) {
+    setMaskTexture(maskTexture) {
         this._stencil.setTexture(maskTexture);
-    },
-    getMaskTexture:function () {
+    }
+    getMaskTexture() {
         return this._stencil.getTexture();
-    },
+    }
 
-    setTextureLocation:function (textureLocation) {
+    setTextureLocation(textureLocation) {
         this._textureLocation = textureLocation;
-    },
-    getTextureLocation:function () {
+    }
+    getTextureLocation() {
         return this._textureLocation;
-    },
+    }
 
-    setMaskLocation:function (maskLocation) {
+    setMaskLocation(maskLocation) {
         this._maskLocation = maskLocation;
-    },
-    getMaskLocation:function () {
+    }
+    getMaskLocation() {
         return this._maskLocation;
-    },
+    }
 
-    setOnSprite:function (onSprite) {
+    setOnSprite(onSprite) {
         this._onSprite = onSprite;
-    },
-    getOnSprite:function () {
+    }
+    getOnSprite() {
         return this._onSprite;
-    },
+    }
 
-    setOffSprite:function (offSprite) {
+    setOffSprite(offSprite) {
         this._offSprite = offSprite;
-    },
-    getOffSprite:function () {
+    }
+    getOffSprite() {
         return this._offSprite;
-    },
+    }
 
-    setThumbSprite:function (thumbSprite) {
+    setThumbSprite(thumbSprite) {
         this._thumbSprite = thumbSprite;
-    },
-    getThumbSprite:function () {
+    }
+    getThumbSprite() {
         return this._thumbSprite;
-    },
+    }
 
-    setOnLabel:function (onLabel) {
+    setOnLabel(onLabel) {
         this._onLabel = onLabel;
-    },
-    getOnLabel:function () {
+    }
+    getOnLabel() {
         return this._onLabel;
-    },
+    }
 
-    setOffLabel:function (offLabel) {
+    setOffLabel(offLabel) {
         this._offLabel = offLabel;
-    },
-    getOffLabel:function () {
+    }
+    getOffLabel() {
         return this._offLabel;
     }
-});
+};
 
 var _p = cc.ControlSwitchSprite.prototype;
 

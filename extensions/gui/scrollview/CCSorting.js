@@ -30,34 +30,35 @@
  * @class
  * @extends cc.Class
  */
-cc.SortableObject = cc.Class.extend(/** @lends cc.SortableObject */{
-    setObjectID:function (objectId) {
-    },
-    getObjectID:function () {
+cc.SortableObject = class SortableObject extends cc.NewClass {
+    setObjectID(objectId) {
+    }
+    getObjectID() {
         return 0;
     }
-});
+};
 
 /**
  * The SortedObject class
  * @class
  * @extends cc.SortableObject
  */
-cc.SortedObject = cc.SortableObject.extend(/** @lends cc.SortedObject */{
-    _objectID:0,
+cc.SortedObject = class SortedObject extends cc.SortableObject {
+    _objectID = 0;
 
-    ctor:function () {
+    constructor() {
+        super();
         this._objectID = 0;
-    },
+    }
 
-    setObjectID:function (objectID) {
+    setObjectID(objectID) {
         this._objectID = objectID;
-    },
+    }
 
-    getObjectID:function () {
+    getObjectID() {
         return this._objectID;
     }
-});
+};
 
 var _compareObject = function (val1, val2) {
     return (val1.getObjectID() - val2.getObjectID());
@@ -68,12 +69,13 @@ var _compareObject = function (val1, val2) {
  * @class
  * @extend cc.Class
  */
-cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# */{
-    _saveObjectArr:null,
+cc.ArrayForObjectSorting = class ArrayForObjectSorting extends cc.NewClass {
+    _saveObjectArr = null;
 
-    ctor:function () {
+    constructor() {
+        super();
         this._saveObjectArr = [];
-    },
+    }
     /**
      * Inserts a given object into array.
      *
@@ -86,12 +88,12 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
      * @function
      * @param {Object} addObject    Object to insert
      */
-    insertSortedObject:function (addObject) {
+    insertSortedObject(addObject) {
         if(!addObject)
             throw new Error("cc.ArrayForObjectSorting.insertSortedObject(): addObject should be non-null.");
         var idx = this.indexOfSortedObject(addObject);
         this.insertObject(addObject, idx);
-    },
+    }
 
     /*!
      * Removes an object in array.
@@ -102,7 +104,7 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
      * @function
      * @param {Object} delObject    Object to remove
      */
-    removeSortedObject:function (delObject) {
+    removeSortedObject(delObject) {
         if (this.count() === 0) {
             return;
         }
@@ -114,7 +116,7 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
                 this.removeObjectAtIndex(idx);
             }
         }
-    },
+    }
 
     /*!
      * Sets a new value of the key for the given object.
@@ -127,7 +129,7 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
      * @param {Number} tag          Tag to set
      * @param {Object} setObject    The object which would be set
      */
-    setObjectID_ofSortedObject:function (tag, setObject) {
+    setObjectID_ofSortedObject(tag, setObject) {
         var idx = this.indexOfSortedObject(setObject);
         if (idx < this.count() && idx !== cc.INVALID_INDEX) {
             var foundObj = this.objectAtIndex(idx);
@@ -137,9 +139,9 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
                 this.insertSortedObject(foundObj);
             }
         }
-    },
+    }
 
-    objectWithObjectID:function (tag) {
+    objectWithObjectID(tag) {
         if (this.count() === 0) {
             return null;
         }
@@ -153,7 +155,7 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
                 foundObj = null;
         }
         return foundObj;
-    },
+    }
 
     /*!
      * Returns an object with given key and value.
@@ -165,9 +167,9 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
      * @param {Number} tag  Tag to locate object
      * @return {Object|null}
      */
-    getObjectWithObjectID:function (tag) {
+    getObjectWithObjectID(tag) {
         return null;
-    },
+    }
 
     /*!
      * Returns an index of the object with given key and value.
@@ -181,7 +183,7 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
      * @param {Number} idxObj   Id to locate object
      * @return {Number} index of an object found
      */
-    indexOfSortedObject:function (idxObj) {
+    indexOfSortedObject(idxObj) {
         var idx = 0;
         if (idxObj) {
             //       CCObject* pObj = (CCObject*)bsearch((CCObject*)&object, data.arr, data.num, sizeof(CCObject*), _compareObject);
@@ -204,36 +206,36 @@ cc.ArrayForObjectSorting = cc.Class.extend(/** @lends cc.ArrayForObjectSorting# 
             idx = cc.INVALID_INDEX;
         }
         return idx;
-    },
+    }
 
     //implement array method
-    count:function () {
+    count() {
         return this._saveObjectArr.length;
-    },
+    }
 
-    lastObject:function () {
+    lastObject() {
         var locObjectArr = this._saveObjectArr;
         if (locObjectArr.length === 0)
             return null;
         return locObjectArr[locObjectArr.length - 1];
-    },
+    }
 
-    objectAtIndex:function (idx) {
+    objectAtIndex(idx) {
         return this._saveObjectArr[idx];
-    },
+    }
 
-    addObject:function (addObj) {
+    addObject(addObj) {
         this._saveObjectArr.push(addObj);
         this._saveObjectArr.sort(_compareObject);
-    },
+    }
 
-    removeObjectAtIndex:function (idx) {
+    removeObjectAtIndex(idx) {
         this._saveObjectArr.splice(idx, 1);
         this._saveObjectArr.sort(_compareObject);
-    },
+    }
 
-    insertObject:function (addObj, idx) {
+    insertObject(addObj, idx) {
         this._saveObjectArr.splice(idx, 0, addObj);
         this._saveObjectArr.sort(_compareObject);
     }
-});
+};

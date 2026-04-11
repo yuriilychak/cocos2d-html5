@@ -47,34 +47,34 @@ cc.TABLEVIEW_FILL_BOTTOMUP = 1;
  *
  * @property {Number}   objectId    - The index used internally by SWTableView and its subclasses
  */
-cc.TableViewCell = cc.Node.extend(/** @lends cc.TableViewCell# */{
-    _idx: 0,
-    _className: "TableViewCell",
+cc.TableViewCell = class TableViewCell extends cc.Node {
+    _idx = 0;
+    _className = "TableViewCell";
 
     /**
      * The index used internally by SWTableView and its subclasses
      */
-    getIdx: function () {
+    getIdx() {
         return this._idx;
-    },
-    setIdx: function (idx) {
+    }
+    setIdx(idx) {
         this._idx = idx;
-    },
+    }
 
     /**
      * Cleans up any resources linked to this cell and resets <code>idx</code> property.
      */
-    reset: function () {
+    reset() {
         this._idx = cc.INVALID_INDEX;
-    },
+    }
 
-    setObjectID: function (idx) {
+    setObjectID(idx) {
         this._idx = idx;
-    },
-    getObjectID: function () {
+    }
+    getObjectID() {
         return this._idx;
     }
-});
+};
 
 var _p = cc.TableViewCell.prototype;
 
@@ -87,15 +87,15 @@ _p = null;
 /**
  * Sole purpose of this delegate is to single touch event in this version.
  */
-cc.TableViewDelegate = cc.ScrollViewDelegate.extend(/** @lends cc.TableViewDelegate# */{
+cc.TableViewDelegate = class TableViewDelegate extends cc.ScrollViewDelegate {
     /**
      * Delegate to respond touch event
      *
      * @param {cc.TableView} table table contains the given cell
      * @param {cc.TableViewCell} cell  cell that is touched
      */
-    tableCellTouched: function (table, cell) {
-    },
+    tableCellTouched(table, cell) {
+    }
 
     /**
      * Delegate to respond a table cell press event.
@@ -103,8 +103,8 @@ cc.TableViewDelegate = cc.ScrollViewDelegate.extend(/** @lends cc.TableViewDeleg
      * @param {cc.TableView} table table contains the given cell
      * @param {cc.TableViewCell} cell  cell that is pressed
      */
-    tableCellHighlight: function (table, cell) {
-    },
+    tableCellHighlight(table, cell) {
+    }
 
     /**
      * Delegate to respond a table cell release event
@@ -112,9 +112,9 @@ cc.TableViewDelegate = cc.ScrollViewDelegate.extend(/** @lends cc.TableViewDeleg
      * @param {cc.TableView} table table contains the given cell
      * @param {cc.TableViewCell} cell  cell that is pressed
      */
-    tableCellUnhighlight: function (table, cell) {
+    tableCellUnhighlight(table, cell) {
 
-    },
+    }
 
     /**
      * <p>
@@ -125,33 +125,33 @@ cc.TableViewDelegate = cc.ScrollViewDelegate.extend(/** @lends cc.TableViewDeleg
      * @param table table contains the given cell
      * @param cell  cell that is pressed
      */
-    tableCellWillRecycle: function (table, cell) {
+    tableCellWillRecycle(table, cell) {
 
     }
-});
+};
 
 /**
  * Data source that governs table backend data.
  */
-cc.TableViewDataSource = cc.Class.extend(/** @lends cc.TableViewDataSource# */{
+cc.TableViewDataSource = class TableViewDataSource extends cc.NewClass {
     /**
      * cell size for a given index
      * @param {cc.TableView} table table to hold the instances of Class
      * @param {Number} idx the index of a cell to get a size
      * @return {cc.Size} size of a cell at given index
      */
-    tableCellSizeForIndex: function (table, idx) {
+    tableCellSizeForIndex(table, idx) {
         return this.cellSizeForTable(table);
-    },
+    }
     /**
      * cell height for a given table.
      *
      * @param {cc.TableView} table table to hold the instances of Class
      * @return {cc.Size} cell size
      */
-    cellSizeForTable: function (table) {
+    cellSizeForTable(table) {
         return cc.size(0, 0);
-    },
+    }
 
     /**
      * a cell instance at a given index
@@ -159,19 +159,19 @@ cc.TableViewDataSource = cc.Class.extend(/** @lends cc.TableViewDataSource# */{
      * @param idx index to search for a cell
      * @return {cc.TableView} cell found at idx
      */
-    tableCellAtIndex: function (table, idx) {
+    tableCellAtIndex(table, idx) {
         return null;
-    },
+    }
 
     /**
      * Returns number of cells in a given table view.
      * @param {cc.TableView} table table to hold the instances of Class
      * @return {Number} number of cells
      */
-    numberOfCellsInTableView: function (table) {
+    numberOfCellsInTableView(table) {
         return 0;
     }
-});
+};
 
 /**
  * UITableView counterpart for cocos2d for iphone.
@@ -185,15 +185,15 @@ cc.TableViewDataSource = cc.Class.extend(/** @lends cc.TableViewDataSource# */{
  * @property {Number}                   verticalFillOrder   - The index to determine how cell is ordered and filled in the view
  *
  */
-cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
-    _vOrdering: null,
-    _indices: null,
-    _cellsFreed: null,
-    _dataSource: null,
-    _tableViewDelegate: null,
-    _oldDirection: null,
-    _cellsPositions: null,                       //vector with all cell positions
-    _touchedCell: null,
+cc.TableView = class TableView extends cc.ScrollView {
+    _vOrdering = null;
+    _indices = null;
+    _cellsFreed = null;
+    _dataSource = null;
+    _tableViewDelegate = null;
+    _oldDirection = null;
+    _cellsPositions = null; //vector with all cell positions
+    _touchedCell = null;
 
     /**
      * The
@@ -201,8 +201,8 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
      * @param size
      * @param container
      */
-    ctor: function (dataSource, size, container) {
-        cc.ScrollView.prototype.ctor.call(this);
+    constructor(dataSource, size, container) {
+        super();
         this._oldDirection = cc.SCROLLVIEW_DIRECTION_NONE;
         this._cellsPositions = [];
 
@@ -210,9 +210,9 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
         this.setDataSource(dataSource);
         this._updateCellPositions();
         this._updateContentSize();
-    },
+    }
 
-    __indexFromOffset: function (offset) {
+    __indexFromOffset(offset) {
         var low = 0;
         var high = this._dataSource.numberOfCellsInTableView(this) - 1;
         var search;
@@ -243,9 +243,9 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
         if (low <= 0)
             return 0;
         return -1;
-    },
+    }
 
-    _indexFromOffset: function (offset) {
+    _indexFromOffset(offset) {
         var locOffset = {x: offset.x, y: offset.y};
         var locDataSource = this._dataSource;
         var maxIdx = locDataSource.numberOfCellsInTableView(this) - 1;
@@ -260,9 +260,9 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
                 index = cc.INVALID_INDEX;
         }
         return index;
-    },
+    }
 
-    __offsetFromIndex: function (index) {
+    __offsetFromIndex(index) {
         var offset;
         switch (this.getDirection()) {
             case cc.SCROLLVIEW_DIRECTION_HORIZONTAL:
@@ -274,9 +274,9 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
         }
 
         return offset;
-    },
+    }
 
-    _offsetFromIndex: function (index) {
+    _offsetFromIndex(index) {
         var offset = this.__offsetFromIndex(index);
 
         var cellSize = this._dataSource.tableCellSizeForIndex(this, index);
@@ -284,9 +284,9 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             offset.y = this.getContainer().getContentSize().height - offset.y - cellSize.height;
 
         return offset;
-    },
+    }
 
-    _updateCellPositions: function () {
+    _updateCellPositions() {
         var cellsCount = this._dataSource.numberOfCellsInTableView(this);
         var locCellsPositions = this._cellsPositions;
 
@@ -307,9 +307,9 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             }
             this._cellsPositions[cellsCount] = currentPos;//1 extra value allows us to get right/bottom of the last cell
         }
-    },
+    }
 
-    _updateContentSize: function () {
+    _updateContentSize() {
         var size = cc.size(0, 0);
 
         var cellsCount = this._dataSource.numberOfCellsInTableView(this);
@@ -336,9 +336,9 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             }
             this._oldDirection = this._direction;
         }
-    },
+    }
 
-    _moveCellOutOfSight: function (cell) {
+    _moveCellOutOfSight(cell) {
         if (this._tableViewDelegate && this._tableViewDelegate.tableCellWillRecycle)
             this._tableViewDelegate.tableCellWillRecycle(this, cell);
 
@@ -350,15 +350,15 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
         if (cell.getParent() === this.getContainer()) {
             this.getContainer().removeChild(cell, true);
         }
-    },
+    }
 
-    _setIndexForCell: function (index, cell) {
+    _setIndexForCell(index, cell) {
         cell.setAnchorPoint(0, 0);
         cell.setPosition(this._offsetFromIndex(index));
         cell.setIdx(index);
-    },
+    }
 
-    _addCellIfNecessary: function (cell) {
+    _addCellIfNecessary(cell) {
         if (cell.getParent() !== this.getContainer()) {
             this.getContainer().addChild(cell);
         }
@@ -371,46 +371,46 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
                 return a - b;
             });
         }
-    },
+    }
 
     /**
      * data source
      */
-    getDataSource: function () {
+    getDataSource() {
         return this._dataSource;
-    },
-    setDataSource: function (source) {
+    }
+    setDataSource(source) {
         this._dataSource = source;
-    },
+    }
 
     /**
      * delegate
      */
-    getDelegate: function () {
+    getDelegate() {
         return this._tableViewDelegate;
-    },
+    }
 
-    setDelegate: function (delegate) {
+    setDelegate(delegate) {
         this._tableViewDelegate = delegate;
-    },
+    }
 
     /**
      * determines how cell is ordered and filled in the view.
      */
-    setVerticalFillOrder: function (fillOrder) {
+    setVerticalFillOrder(fillOrder) {
         if (this._vOrdering !== fillOrder) {
             this._vOrdering = fillOrder;
             if (this._cellsUsed.count() > 0) {
                 this.reloadData();
             }
         }
-    },
-    getVerticalFillOrder: function () {
+    }
+    getVerticalFillOrder() {
         return this._vOrdering;
-    },
+    }
 
-    initWithViewSize: function (size, container) {
-        if (cc.ScrollView.prototype.initWithViewSize.call(this, size, container)) {
+    initWithViewSize(size, container) {
+        if (super.initWithViewSize(size, container)) {
             this._cellsUsed = new cc.ArrayForObjectSorting();
             this._cellsFreed = new cc.ArrayForObjectSorting();
             this._indices = [];
@@ -418,18 +418,18 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             this._vOrdering = cc.TABLEVIEW_FILL_BOTTOMUP;
             this.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL);
 
-            cc.ScrollView.prototype.setDelegate.call(this, this);
+            super.setDelegate(this);
             return true;
         }
         return false;
-    },
+    }
 
     /**
      * Updates the content of the cell at a given index.
      *
      * @param idx index to find a cell
      */
-    updateCellAtIndex: function (idx) {
+    updateCellAtIndex(idx) {
         if (idx === cc.INVALID_INDEX || idx > this._dataSource.numberOfCellsInTableView(this) - 1)
             return;
 
@@ -440,14 +440,14 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
         cell = this._dataSource.tableCellAtIndex(this, idx);
         this._setIndexForCell(idx, cell);
         this._addCellIfNecessary(cell);
-    },
+    }
 
     /**
      * Inserts a new cell at a given index
      *
      * @param idx location to insert
      */
-    insertCellAtIndex: function (idx) {
+    insertCellAtIndex(idx) {
         if (idx === cc.INVALID_INDEX || idx > this._dataSource.numberOfCellsInTableView(this) - 1)
             return;
 
@@ -468,14 +468,14 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
 
         this._updateCellPositions();
         this._updateContentSize();
-    },
+    }
 
     /**
      * Removes a cell at a given index
      *
      * @param idx index to find a cell
      */
-    removeCellAtIndex: function (idx) {
+    removeCellAtIndex(idx) {
         if (idx === cc.INVALID_INDEX || idx > this._dataSource.numberOfCellsInTableView(this) - 1)
             return;
 
@@ -495,12 +495,12 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             cell = locCellsUsed.objectAtIndex(i);
             this._setIndexForCell(cell.getIdx() - 1, cell);
         }
-    },
+    }
 
     /**
      * reloads data from data source.  the view will be refreshed.
      */
-    reloadData: function () {
+    reloadData() {
         this._oldDirection = cc.SCROLLVIEW_DIRECTION_NONE;
         var locCellsUsed = this._cellsUsed, locCellsFreed = this._cellsFreed, locContainer = this.getContainer();
         for (var i = 0, len = locCellsUsed.count(); i < len; i++) {
@@ -524,14 +524,14 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             this.scrollViewDidScroll(this);
 
         this.setNodeDirty();
-    },
+    }
 
     /**
      * Dequeues a free cell if available. nil if not.
      *
      * @return {TableViewCell} free cell
      */
-    dequeueCell: function () {
+    dequeueCell() {
         if (this._cellsFreed.count() === 0) {
             return null;
         } else {
@@ -539,7 +539,7 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             this._cellsFreed.removeObjectAtIndex(0);
             return cell;
         }
-    },
+    }
 
     /**
      * Returns an existing cell at a given index. Returns nil if a cell is nonexistent at the moment of query.
@@ -547,14 +547,14 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
      * @param idx index
      * @return {cc.TableViewCell} a cell at a given index
      */
-    cellAtIndex: function (idx) {
+    cellAtIndex(idx) {
         var i = this._indices.indexOf(idx);
         if (i === -1)
             return null;
         return this._cellsUsed.objectWithObjectID(idx);
-    },
+    }
 
-    scrollViewDidScroll: function (view) {
+    scrollViewDidScroll(view) {
         var locDataSource = this._dataSource;
         var countOfItems = locDataSource.numberOfCellsInTableView(this);
         if (0 === countOfItems)
@@ -619,12 +619,12 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
                 continue;
             this.updateCellAtIndex(i);
         }
-    },
+    }
 
-    scrollViewDidZoom: function (view) {
-    },
+    scrollViewDidZoom(view) {
+    }
 
-    onTouchEnded: function (touch, event) {
+    onTouchEnded(touch, event) {
         if (!this.isVisible())
             return;
 
@@ -643,16 +643,16 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             }
             this._touchedCell = null;
         }
-        cc.ScrollView.prototype.onTouchEnded.call(this, touch, event);
-    },
+        super.onTouchEnded(touch, event);
+    }
 
-    onTouchBegan: function (touch, event) {
+    onTouchBegan(touch, event) {
         for (var c = this; c != null; c = c.parent) {
             if (!c.isVisible())
                 return false;
         }
 
-        var touchResult = cc.ScrollView.prototype.onTouchBegan.call(this, touch, event);
+        var touchResult = super.onTouchBegan(touch, event);
 
         if (this._touches.length === 1) {
             var index, point;
@@ -674,20 +674,20 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
         }
 
         return touchResult;
-    },
+    }
 
-    onTouchMoved: function (touch, event) {
-        cc.ScrollView.prototype.onTouchMoved.call(this, touch, event);
+    onTouchMoved(touch, event) {
+        super.onTouchMoved(touch, event);
 
         if (this._touchedCell && this.isTouchMoved()) {
             if (this._tableViewDelegate !== null && this._tableViewDelegate.tableCellUnhighlight)
                 this._tableViewDelegate.tableCellUnhighlight(this, this._touchedCell);
             this._touchedCell = null;
         }
-    },
+    }
 
-    onTouchCancelled: function (touch, event) {
-        cc.ScrollView.prototype.onTouchCancelled.call(this, touch, event);
+    onTouchCancelled(touch, event) {
+        super.onTouchCancelled(touch, event);
 
         if (this._touchedCell) {
             if (this._tableViewDelegate !== null && this._tableViewDelegate.tableCellUnhighlight)
@@ -695,7 +695,7 @@ cc.TableView = cc.ScrollView.extend(/** @lends cc.TableView# */{
             this._touchedCell = null;
         }
     }
-});
+};
 
 var _p = cc.TableView.prototype;
 

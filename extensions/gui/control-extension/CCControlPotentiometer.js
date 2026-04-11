@@ -40,22 +40,22 @@
  * @property {cc.Sprite}        thumbSprite     - The thumb sprite of the potentionmeter
  * @property {cc.Point}         prevLocation    - The previous location of the potentionmeter
  */
-cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# */{
-    _thumbSprite:null,
-    _progressTimer:null,
-    _previousLocation:null,
+cc.ControlPotentiometer = class ControlPotentiometer extends cc.Control {
+    _thumbSprite = null;
+    _progressTimer = null;
+    _previousLocation = null;
     /** Contains the receiver’s current value. */
-    _value:0,
+    _value = 0;
     /** Contains the minimum value of the receiver.
      * The default value of this property is 0.0. */
-    _minimumValue:0,
+    _minimumValue = 0;
     /** Contains the maximum value of the receiver.
      * The default value of this property is 1.0. */
-    _maximumValue:1,
-    _className:"ControlPotentiometer",
+    _maximumValue = 1;
+    _className = "ControlPotentiometer";
 
-    ctor:function (backgroundFile, progressFile, thumbFile) {
-        cc.Control.prototype.ctor.call(this);
+    constructor(backgroundFile, progressFile, thumbFile) {
+        super();
         if (thumbFile != undefined) {
             // Prepare track for potentiometer
             var backgroundSprite = new cc.Sprite(backgroundFile);
@@ -67,7 +67,7 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
             var progressTimer = new cc.ProgressTimer(new cc.Sprite(progressFile));
             this.initWithTrackSprite_ProgressTimer_ThumbSprite(backgroundSprite, progressTimer, thumbSprite);
         }
-    },
+    }
 
     /**
      *
@@ -76,7 +76,7 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
      * @param {cc.Sprite}  thumbSprite
      * @return {Boolean}
      */
-    initWithTrackSprite_ProgressTimer_ThumbSprite:function (trackSprite, progressTimer, thumbSprite) {
+    initWithTrackSprite_ProgressTimer_ThumbSprite(trackSprite, progressTimer, thumbSprite) {
         if (this.init()) {
             this.setProgressTimer(progressTimer);
             this.setThumbSprite(thumbSprite);
@@ -95,16 +95,16 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
             return true;
         }
         return false;
-    },
+    }
 
-    setEnabled:function (enabled) {
+    setEnabled(enabled) {
         this.setEnabled(enabled);
         if (this._thumbSprite !== null) {
             this._thumbSprite.setOpacity((enabled) ? 255 : 128);
         }
-    },
+    }
 
-    setValue:function (value) {
+    setValue(value) {
         // set new value with sentinel
         if (value < this._minimumValue) {
             value = this._minimumValue;
@@ -122,13 +122,13 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
         this._thumbSprite.setRotation(percent * 360.0);
 
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
-    },
+    }
 
-    getValue:function () {
+    getValue() {
         return this._value;
-    },
+    }
 
-    setMinimumValue:function (minimumValue) {
+    setMinimumValue(minimumValue) {
         this._minimumValue = minimumValue;
 
         if (this._minimumValue >= this._maximumValue) {
@@ -136,13 +136,13 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
         }
 
         this.setValue(this._maximumValue);
-    },
+    }
 
-    getMinimumValue:function () {
+    getMinimumValue() {
         return this._minimumValue;
-    },
+    }
 
-    setMaximumValue:function (maximumValue) {
+    setMaximumValue(maximumValue) {
         this._maximumValue = maximumValue;
 
         if (this._maximumValue <= this._minimumValue) {
@@ -150,21 +150,21 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
         }
 
         this.setValue(this._minimumValue);
-    },
+    }
 
-    getMaximumValue:function () {
+    getMaximumValue() {
         return this._maximumValue;
-    },
+    }
 
-    isTouchInside:function (touch) {
+    isTouchInside(touch) {
         var touchLocation = this.getTouchLocation(touch);
 
         var distance = this.distanceBetweenPointAndPoint(this._progressTimer.getPosition(), touchLocation);
 
         return distance < Math.min(this.getContentSize().width / 2, this.getContentSize().height / 2);
-    },
+    }
 
-    onTouchBegan:function (touch, event) {
+    onTouchBegan(touch, event) {
         if (!this.isTouchInside(touch) || !this.isEnabled() || !this.isVisible()) {
             return false;
         }
@@ -174,17 +174,17 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
         this.potentiometerBegan(this._previousLocation);
 
         return true;
-    },
+    }
 
-    onTouchMoved:function (touch, event) {
+    onTouchMoved(touch, event) {
         var location = this.getTouchLocation(touch);
 
         this.potentiometerMoved(location);
-    },
+    }
 
-    onTouchEnded:function (touch, event) {
+    onTouchEnded(touch, event) {
         this.potentiometerEnded(cc.p(0, 0));
-    },
+    }
 
     /**
      * the distance between the point1 and point2
@@ -192,11 +192,11 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
      * @param {cc.Point}  point2
      * @return {Number}
      */
-    distanceBetweenPointAndPoint:function (point1, point2) {
+    distanceBetweenPointAndPoint(point1, point2) {
         var dx = point1.x - point2.x;
         var dy = point1.y - point2.y;
         return Math.sqrt(dx * dx + dy * dy);
-    },
+    }
 
     /**
      * the angle in degree between line1 and line2.
@@ -206,7 +206,7 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
      * @param {cc.Point}  endLineB
      * @return {Number}
      */
-    angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint:function (beginLineA, endLineA, beginLineB, endLineB) {
+    angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(beginLineA, endLineA, beginLineB, endLineB) {
         var a = endLineA.x - beginLineA.x;
         var b = endLineA.y - beginLineA.y;
         var c = endLineB.x - beginLineB.x;
@@ -217,14 +217,14 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
 
         // convert radiants to degrees
         return (atanA - atanB) * 180 / Math.PI;
-    },
+    }
 
-    potentiometerBegan:function (location) {
+    potentiometerBegan(location) {
         this.setSelected(true);
         this.getThumbSprite().setColor(cc.color.GRAY);
-    },
+    }
 
-    potentiometerMoved:function (location) {
+    potentiometerMoved(location) {
         var angle = this.angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(this._progressTimer.getPosition(), location, this._progressTimer.getPosition(), this._previousLocation);
 
         // fix value, if the 12 o'clock position is between location and previousLocation
@@ -238,31 +238,31 @@ cc.ControlPotentiometer = cc.Control.extend(/** @lends cc.ControlPotentiometer# 
         this.setValue(this._value + angle / 360.0 * (this._maximumValue - this._minimumValue));
 
         this._previousLocation = location;
-    },
+    }
 
-    potentiometerEnded:function (location) {
+    potentiometerEnded(location) {
         this.getThumbSprite().setColor(cc.color.WHITE);
         this.setSelected(false);
-    },
-    setThumbSprite:function (sprite) {
+    }
+    setThumbSprite(sprite) {
         this._thumbSprite = sprite;
-    },
-    getThumbSprite:function () {
+    }
+    getThumbSprite() {
         return this._thumbSprite;
-    },
-    setProgressTimer:function (sprite) {
+    }
+    setProgressTimer(sprite) {
         this._progressTimer = sprite;
-    },
-    getProgressTimer:function () {
+    }
+    getProgressTimer() {
         return this._progressTimer;
-    },
-    setPreviousLocation:function (point) {
+    }
+    setPreviousLocation(point) {
         this._previousLocation = point;
-    },
-    getPreviousLocation:function () {
+    }
+    getPreviousLocation() {
         return this._previousLocation;
     }
-});
+};
 
 var _p = cc.ControlPotentiometer.prototype;
 

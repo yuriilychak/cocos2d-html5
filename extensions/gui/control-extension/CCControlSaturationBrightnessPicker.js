@@ -45,55 +45,55 @@
  * @property {cc.Sprite}    slider      - <@readonly> The slider sprite
  * @property {cc.Point}     startPos    - <@readonly> The start position of the picker
  */
-cc.ControlSaturationBrightnessPicker = cc.Control.extend(/** @lends cc.ControlSaturationBrightnessPicker# */{
-    _saturation:0,
-    _brightness:0,
+cc.ControlSaturationBrightnessPicker = class ControlSaturationBrightnessPicker extends cc.Control {
+    _saturation = 0;
+    _brightness = 0;
 
-    _background:null,
-    _overlay:null,
-    _shadow:null,
-    _slider:null,
-    _startPos:null,
+    _background = null;
+    _overlay = null;
+    _shadow = null;
+    _slider = null;
+    _startPos = null;
 
-    _boxPos:0,
-    _boxSize:0,
-    _className:"ControlSaturationBrightnessPicker",
+    _boxPos = 0;
+    _boxSize = 0;
+    _className = "ControlSaturationBrightnessPicker";
 
     /**
      * The constructor of cc.ControlSaturationBrightnessPicker
      * @param {cc.Node} target
      * @param {cc.Point} pos position
      */
-    ctor:function (target, pos) {
-        cc.Control.prototype.ctor.call(this);
+    constructor(target, pos) {
+        super();
         pos && this.initWithTargetAndPos(target, pos);
-    },
-    getSaturation:function () {
+    }
+    getSaturation() {
         return this._saturation;
-    },
-    getBrightness:function () {
+    }
+    getBrightness() {
         return this._brightness;
-    },
+    }
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    getBackground:function () {
+    getBackground() {
         return this._background;
-    },
-    getOverlay:function () {
+    }
+    getOverlay() {
         return this._brightness;
-    },
-    getShadow:function () {
+    }
+    getShadow() {
         return this._shadow;
-    },
-    getSlider:function () {
+    }
+    getSlider() {
         return this._slider;
-    },
-    getStartPos:function () {
+    }
+    getStartPos() {
         return this._startPos;
-    },
+    }
 
-    initWithTargetAndPos:function (target, pos) {
-        if (cc.Control.prototype.init.call(this)) {
+    initWithTargetAndPos(target, pos) {
+        if (super.init()) {
             // Add background and slider sprites
             this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, cc.p(0.0, 0.0));
             this._overlay = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, cc.p(0.0, 0.0));
@@ -106,16 +106,16 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend(/** @lends cc.ControlSa
             return true;
         } else
             return false;
-    },
+    }
 
-    setEnabled:function (enabled) {
-        cc.Control.prototype.setEnabled.call(this, enabled);
+    setEnabled(enabled) {
+        super.setEnabled(enabled);
         if (this._slider) {
             this._slider.setOpacity(enabled ? 255 : 128);
         }
-    },
+    }
 
-    updateWithHSV:function (hsv) {
+    updateWithHSV(hsv) {
         var hsvTemp = new cc.HSV();
         hsvTemp.s = 1;
         hsvTemp.h = hsv.h;
@@ -123,17 +123,17 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend(/** @lends cc.ControlSa
 
         var rgb = cc.ControlUtils.RGBfromHSV(hsvTemp);
         this._background.setColor(cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
-    },
-    updateDraggerWithHSV:function (hsv) {
+    }
+    updateDraggerWithHSV(hsv) {
         // Set the position of the slider to the correct saturation and brightness
         var pos = cc.p(this._startPos.x + this._boxPos + (this._boxSize * (1 - hsv.s)),
             this._startPos.y + this._boxPos + (this._boxSize * hsv.v));
 
         // update
         this._updateSliderPosition(pos);
-    },
+    }
 
-    _updateSliderPosition:function (sliderPosition) {
+    _updateSliderPosition(sliderPosition) {
         // Clamp the position of the icon within the circle
 
         // Get the center point of the bkgd image
@@ -174,9 +174,9 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend(/** @lends cc.ControlSa
         // Use the position / slider width to determin the percentage the dragger is at
         this._saturation = 1.0 - Math.abs((this._startPos.x + this._boxPos - sliderPosition.x) / this._boxSize);
         this._brightness = Math.abs((this._startPos.y + this._boxPos - sliderPosition.y) / this._boxSize);
-    },
+    }
 
-    _checkSliderPosition:function (location) {
+    _checkSliderPosition(location) {
         // Clamp the position of the icon within the circle
         // get the center point of the bkgd image
         var centerX = this._startPos.x + this._background.getBoundingBox().width * 0.5;
@@ -194,9 +194,9 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend(/** @lends cc.ControlSa
             return true;
         }
         return false;
-    },
+    }
 
-    onTouchBegan:function (touch, event) {
+    onTouchBegan(touch, event) {
         if (!this.isEnabled() || !this.isVisible())        {
             return false;
         }
@@ -205,9 +205,9 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend(/** @lends cc.ControlSa
 
         // Check the touch position on the slider
         return this._checkSliderPosition(touchLocation);
-    },
+    }
 
-    onTouchMoved:function (touch, event) {
+    onTouchMoved(touch, event) {
         // Get the touch location
         var touchLocation = this.getTouchLocation(touch);
 
@@ -217,7 +217,7 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend(/** @lends cc.ControlSa
         // Check the touch position on the slider
         this._checkSliderPosition(touchLocation);
     }
-});
+};
 
 var _p = cc.ControlSaturationBrightnessPicker.prototype;
 

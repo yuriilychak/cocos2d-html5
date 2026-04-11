@@ -37,44 +37,44 @@
  *
  * @property {cc.Sprite}  background   - <@readonly> The background sprite
  */
-cc.ControlColourPicker = cc.Control.extend(/** @lends cc.ControlColourPicker# */{
-    _hsv:null,
-    _colourPicker:null,
-    _huePicker:null,
+cc.ControlColourPicker = class ControlColourPicker extends cc.Control {
+    _hsv = null;
+    _colourPicker = null;
+    _huePicker = null;
 
-    _background:null,
-    _className:"ControlColourPicker",
-    ctor:function () {
-        cc.Control.prototype.ctor.call(this);
+    _background = null;
+    _className = "ControlColourPicker";
+    constructor() {
+        super();
         this.init();
-    },
-    hueSliderValueChanged:function (sender, controlEvent) {
+    }
+    hueSliderValueChanged(sender, controlEvent) {
         this._hsv.h = sender.getHue();
 
         // Update the value
         var rgb = cc.ControlUtils.RGBfromHSV(this._hsv);
-        cc.Control.prototype.setColor.call(this,cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
+        super.setColor(cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
 
         // Send CCControl callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
         this._updateControlPicker();
-    },
+    }
 
-    colourSliderValueChanged:function (sender, controlEvent) {
+    colourSliderValueChanged(sender, controlEvent) {
         this._hsv.s = sender.getSaturation();
         this._hsv.v = sender.getBrightness();
 
 
         // Update the value
         var rgb = cc.ControlUtils.RGBfromHSV(this._hsv);
-        cc.Control.prototype.setColor.call(this,cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
+        super.setColor(cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
 
         // Send CCControl callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
-    },
+    }
 
-    setColor:function (color) {
-        cc.Control.prototype.setColor.call(this,color);
+    setColor(color) {
+        super.setColor(color);
         //this._colorValue = color;
         var rgba = new cc.RGBA();
         rgba.r = color.r / 255.0;
@@ -84,14 +84,14 @@ cc.ControlColourPicker = cc.Control.extend(/** @lends cc.ControlColourPicker# */
 
         this._hsv = cc.ControlUtils.HSVfromRGB(rgba);
         this._updateHueAndControlPicker();
-    },
+    }
 
-    getBackground:function () {
+    getBackground() {
         return this._background;
-    },
+    }
 
-    init:function () {
-        if (cc.Control.prototype.init.call(this)) {
+    init() {
+        if (super.init()) {
             // Cache the sprites
             cc.spriteFrameCache.addSpriteFrames(res.CCControlColourPickerSpriteSheet_plist);
 
@@ -137,32 +137,32 @@ cc.ControlColourPicker = cc.Control.extend(/** @lends cc.ControlColourPicker# */
         }
         else
             return false;
-    },
+    }
 
-    _updateControlPicker:function () {
+    _updateControlPicker() {
         this._huePicker.setHue(this._hsv.h);
         this._colourPicker.updateWithHSV(this._hsv);
-    },
+    }
 
-    _updateHueAndControlPicker:function () {
+    _updateHueAndControlPicker() {
         this._huePicker.setHue(this._hsv.h);
         this._colourPicker.updateWithHSV(this._hsv);
         this._colourPicker.updateDraggerWithHSV(this._hsv);
-    },
-    setEnabled:function (enabled) {
-        cc.Control.prototype.setEnabled.call(this, enabled);
+    }
+    setEnabled(enabled) {
+        super.setEnabled(enabled);
         if (this._huePicker !== null) {
             this._huePicker.setEnabled(enabled);
         }
         if (this._colourPicker) {
             this._colourPicker.setEnabled(enabled);
         }
-    },
-    onTouchBegan:function () {
+    }
+    onTouchBegan() {
         //ignore all touches, handled by children
         return false;
     }
-});
+};
 
 var _p = cc.ControlColourPicker.prototype;
 

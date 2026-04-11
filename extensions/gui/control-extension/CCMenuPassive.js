@@ -29,7 +29,7 @@
  * @class
  * @extends cc.Layer
  */
-cc.Spacer = cc.Layer.extend(/** @lends cc.Spacer */{});
+cc.Spacer = class Spacer extends cc.Layer {};
 
 cc.Spacer.verticalSpacer = function (space) {
     var pRet = new cc.Spacer();
@@ -50,21 +50,22 @@ cc.Spacer.horizontalSpacer = function (space) {
  * @class
  * @extends cc.Layer
  */
-cc.MenuPassive = cc.Layer.extend(/** @lends cc.MenuPassive# */{
+cc.MenuPassive = class MenuPassive extends cc.Layer {
 
-    _color:null,
-    _opacity:0,
-    _className:"MenuPassive",
+    _color = null;
+    _opacity = 0;
+    _className = "MenuPassive";
 
-    ctor:function () {
-    },
+    constructor() {
+        super();
+    }
 
     /** Color: conforms with CCRGBAProtocol protocol */
-    getColor:function () {
+    getColor() {
         var locColor = this._color;
         return cc.color(locColor.r, locColor.g, locColor.b, locColor.a);
-    },
-    setColor:function (color) {
+    }
+    setColor(color) {
         var locColor = this._color;
         locColor.r = color.r;
         locColor.g = color.g;
@@ -80,14 +81,14 @@ cc.MenuPassive = cc.Layer.extend(/** @lends cc.MenuPassive# */{
         if (color.a !== undefined && !color.a_undefined) {
             this.setOpacity(color.a);
         }
-    },
+    }
 
     /** Opacity: conforms with CCRGBAProtocol protocol */
-    getOpacity:function () {
+    getOpacity() {
         return this._opacity;
-    },
+    }
 
-    setOpacity:function (opacity) {
+    setOpacity(opacity) {
         this._opacity = opacity;
 
         if (this._children && this._children.length > 0) {
@@ -99,10 +100,10 @@ cc.MenuPassive = cc.Layer.extend(/** @lends cc.MenuPassive# */{
         }
 
         this._color.a = opacity;
-    },
+    }
 
     /** initializes a CCMenu with it's items */
-    initWithItems:function (item, args) {
+    initWithItems(item, args) {
         if (this.init()) {
             //this.m_bIsTouchEnabled = false;
 
@@ -129,17 +130,17 @@ cc.MenuPassive = cc.Layer.extend(/** @lends cc.MenuPassive# */{
             return true;
         }
         return false;
-    },
+    }
 
     /** align items vertically */
-    alignItemsVertically:function () {
+    alignItemsVertically() {
         this.alignItemsVerticallyWithPadding(cc.DEFAULT_PADDING);
-    },
+    }
 
     /** align items vertically with padding
      @since v0.7.2
      */
-    alignItemsVerticallyWithPadding:function (padding) {
+    alignItemsVerticallyWithPadding(padding) {
         var height = -padding;
 
         var i;
@@ -163,17 +164,17 @@ cc.MenuPassive = cc.Layer.extend(/** @lends cc.MenuPassive# */{
             }
         }
         this.setContentSize(width, height);
-    },
+    }
 
     /** align items horizontally */
-    alignItemsHorizontally:function () {
+    alignItemsHorizontally() {
         this.alignItemsHorizontallyWithPadding(cc.DEFAULT_PADDING);
-    },
+    }
 
     /** align items horizontally with padding
      @since v0.7.2
      */
-    alignItemsHorizontallyWithPadding:function (padding) {
+    alignItemsHorizontallyWithPadding(padding) {
         var width = -padding;
         var i;
         if (this._children && this._children.length > 0) {
@@ -196,10 +197,10 @@ cc.MenuPassive = cc.Layer.extend(/** @lends cc.MenuPassive# */{
             }
         }
         this.setContentSize(width, height);
-    },
+    }
 
     /** align items in rows of columns */
-    alignItemsInColumns:function (columns) {
+    alignItemsInColumns(columns) {
         var rows = [];
         var i;
         for (i = 1; i < arguments.length; i++) {
@@ -283,10 +284,10 @@ cc.MenuPassive = cc.Layer.extend(/** @lends cc.MenuPassive# */{
                 }
             }
         }
-    },
+    }
 
     /** align items in columns of rows */
-    alignItemsInRows:function (rows) {
+    alignItemsInRows(rows) {
         var columns = [];
         var i;
         for (i = 1; i < arguments.length; i++) {
@@ -378,15 +379,15 @@ cc.MenuPassive = cc.Layer.extend(/** @lends cc.MenuPassive# */{
                 }
             }
         }
-    },
+    }
 
     //RGBA protocol
-    setOpacityModifyRGB:function (bValue) {
-    },
-    isOpacityModifyRGB:function () {
+    setOpacityModifyRGB(bValue) {
+    }
+    isOpacityModifyRGB() {
         return false;
     }
-});
+};
 
 /** creates an empty CCMenu */
 cc.MenuPassive.create = function (item) {

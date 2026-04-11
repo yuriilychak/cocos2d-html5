@@ -43,37 +43,37 @@
  * @property {cc.Sprite}    slider      - <@readonly> The slider sprite
  * @property {cc.Point}     startPos    - <@readonly> The start position of the picker
  */
-cc.ControlHuePicker = cc.Control.extend(/** @lends cc.ControlHuePicker# */{
-    _hue:0,
-    _huePercentage:0,
-    _background:null,
-    _slider:null,
-    _startPos:null,
-    _className:"ControlHuePicker",
+cc.ControlHuePicker = class ControlHuePicker extends cc.Control {
+    _hue = 0;
+    _huePercentage = 0;
+    _background = null;
+    _slider = null;
+    _startPos = null;
+    _className = "ControlHuePicker";
 
     /**
      * The constructor of cc.ControlHuePicker
      * @param {cc.Node} target
      * @param {cc.Point} pos position
      */
-    ctor:function(target, pos) {
-        cc.Control.prototype.ctor.call(this);
+    constructor(target, pos) {
+        super();
         pos && this.initWithTargetAndPos(target, pos);
-    },
+    }
 
     //maunally put in the setters
-    getHue:function () {
+    getHue() {
         return this._hue;
-    },
-    setHue:function (hueValue) {
+    }
+    setHue(hueValue) {
         this._hue = hueValue;
         this.setHuePercentage(this._hue / 360.0);
-    },
+    }
 
-    getHuePercentage:function () {
+    getHuePercentage() {
         return this._huePercentage;
-    },
-    setHuePercentage:function (hueValueInPercent) {
+    }
+    setHuePercentage(hueValueInPercent) {
         this._huePercentage = hueValueInPercent;
         this._hue = this._huePercentage * 360.0;
 
@@ -95,27 +95,27 @@ cc.ControlHuePicker = cc.Control.extend(/** @lends cc.ControlHuePicker# */{
         var x = centerX + limit * Math.cos(angle);
         var y = centerY + limit * Math.sin(angle);
         this._slider.setPosition(x, y);
-    },
+    }
 
-    setEnabled:function (enabled) {
-        cc.Control.prototype.setEnabled.call(this, enabled);
+    setEnabled(enabled) {
+        super.setEnabled(enabled);
         if (this._slider) {
             this._slider.setOpacity(enabled ? 255 : 128);
         }
-    },
+    }
 
-    getBackground:function () {
+    getBackground() {
         return this._background;
-    },
-    getSlider:function () {
+    }
+    getSlider() {
         return this._slider;
-    },
-    getStartPos:function () {
+    }
+    getStartPos() {
         return this._startPos;
-    },
+    }
 
-    initWithTargetAndPos:function (target, pos) {
-        if (cc.Control.prototype.init.call(this)) {
+    initWithTargetAndPos(target, pos) {
+        if (super.init()) {
             // Add background and slider sprites
             this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, cc.p(0.0, 0.0));
             this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, cc.p(0.5, 0.5));
@@ -129,9 +129,9 @@ cc.ControlHuePicker = cc.Control.extend(/** @lends cc.ControlHuePicker# */{
             return true;
         } else
             return false;
-    },
+    }
 
-    _updateSliderPosition:function (location) {
+    _updateSliderPosition(location) {
         // Clamp the position of the icon within the circle
         var backgroundBox = this._background.getBoundingBox();
 
@@ -152,8 +152,8 @@ cc.ControlHuePicker = cc.Control.extend(/** @lends cc.ControlHuePicker# */{
 
         // send CCControl callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
-    },
-    _checkSliderPosition:function (location) {
+    }
+    _checkSliderPosition(location) {
         // compute the distance between the current location and the center
         var distance = Math.sqrt(Math.pow(location.x + 10, 2) + Math.pow(location.y, 2));
 
@@ -163,9 +163,9 @@ cc.ControlHuePicker = cc.Control.extend(/** @lends cc.ControlHuePicker# */{
             return true;
         }
         return false;
-    },
+    }
 
-    onTouchBegan:function (touch, event) {
+    onTouchBegan(touch, event) {
         if (!this.isEnabled() || !this.isVisible())        {
             return false;
         }
@@ -173,8 +173,8 @@ cc.ControlHuePicker = cc.Control.extend(/** @lends cc.ControlHuePicker# */{
 
         // Check the touch position on the slider
         return this._checkSliderPosition(touchLocation);
-    },
-    onTouchMoved:function (touch, event) {
+    }
+    onTouchMoved(touch, event) {
         // Get the touch location
         var touchLocation = this.getTouchLocation(touch);
 
@@ -184,7 +184,7 @@ cc.ControlHuePicker = cc.Control.extend(/** @lends cc.ControlHuePicker# */{
         // Check the touch position on the slider
         this._checkSliderPosition(touchLocation);
     }
-});
+};
 
 var _p = cc.ControlHuePicker.prototype;
 
