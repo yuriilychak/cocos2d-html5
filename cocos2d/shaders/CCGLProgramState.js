@@ -35,72 +35,72 @@ var types = {
   GL_TEXTURE: 7
 };
 
-cc.UniformValue = class UniformValue {
-  constructor(uniform, glprogram) {
-    this._uniform = uniform;
-    this._glprogram = glprogram;
+cc.UniformValue = function (uniform, glprogram) {
+  this._uniform = uniform;
+  this._glprogram = glprogram;
 
-    this._value = null;
-    this._type = -1;
-  }
+  this._value = null;
+  this._type = -1;
+};
 
-  setFloat(value) {
+cc.UniformValue.prototype = {
+  setFloat: function setFloat(value) {
     this._value = value;
     this._type = types.GL_FLOAT;
-  }
+  },
 
-  setInt(value) {
+  setInt: function setInt(value) {
     this._value = value;
     this._type = types.GL_INT;
-  }
+  },
 
-  setVec2(v1, v2) {
+  setVec2: function setVec2(v1, v2) {
     this._value = [v1, v2];
     this._type = types.GL_FLOAT_VEC2;
-  }
+  },
 
-  setVec2v(value) {
+  setVec2v: function setVec2v(value) {
     this._value = value.slice(0);
     this._type = types.GL_FLOAT_VEC2;
-  }
+  },
 
-  setVec3(v1, v2, v3) {
+  setVec3: function setVec3(v1, v2, v3) {
     this._value = [v1, v2, v3];
     this._type = types.GL_FLOAT_VEC3;
-  }
+  },
 
-  setVec3v(value) {
+  setVec3v: function setVec3v(value) {
     this._value = value.slice(0);
     this._type = types.GL_FLOAT_VEC3;
-  }
+  },
 
-  setVec4(v1, v2, v3, v4) {
+  setVec4: function setVec4(v1, v2, v3, v4) {
     this._value = [v1, v2, v3, v4];
     this._type = types.GL_FLOAT_VEC4;
-  }
+  },
 
-  setVec4v(value) {
+  setVec4v: function setVec4v(value) {
     this._value = value.slice(0);
     this._type = types.GL_FLOAT_VEC4;
-  }
+  },
 
-  setMat4(value) {
+  setMat4: function setMat4(value) {
     this._value = value.slice(0);
     this._type = types.GL_FLOAT_MAT4;
-  }
+  },
 
-  setCallback(fn) {
+  setCallback: function setCallback(fn) {
     this._value = fn;
     this._type = types.GL_CALLBACK;
-  }
+  },
 
-  setTexture(textureId, textureUnit) {
+  setTexture: function setTexture(textureId, textureUnit) {
     this._value = textureUnit;
     this._textureId = textureId;
     this._type = types.GL_TEXTURE;
-  }
+  },
 
-  apply() {
+  apply: function apply() {
     switch (this._type) {
       case types.GL_INT:
         this._glprogram.setUniformLocationWith1i(
@@ -152,157 +152,157 @@ cc.UniformValue = class UniformValue {
     }
   }
 };
-cc.GLProgramState = class GLProgramState {
-  constructor(glprogram) {
-    super();
-    this._glprogram = glprogram;
-    this._uniforms = {};
-    this._boundTextureUnits = {};
-    this._textureUnitIndex = 1; // Start at 1, as CC_Texture0 is bound to 0
 
-    const activeUniforms = glprogram._glContext.getProgramParameter(
+cc.GLProgramState = function (glprogram) {
+  this._glprogram = glprogram;
+  this._uniforms = {};
+  this._boundTextureUnits = {};
+  this._textureUnitIndex = 1; // Start at 1, as CC_Texture0 is bound to 0
+
+  var activeUniforms = glprogram._glContext.getProgramParameter(
+    glprogram._programObj,
+    glprogram._glContext.ACTIVE_UNIFORMS
+  );
+
+  for (var i = 0; i < activeUniforms; i += 1) {
+    var uniform = glprogram._glContext.getActiveUniform(
       glprogram._programObj,
-      glprogram._glContext.ACTIVE_UNIFORMS
+      i
     );
-
-    for (let i = 0; i < activeUniforms; i += 1) {
-      const uniform = glprogram._glContext.getActiveUniform(
+    if (uniform.name.indexOf("CC_") !== 0) {
+      uniform._location = glprogram._glContext.getUniformLocation(
         glprogram._programObj,
-        i
+        uniform.name
       );
-      if (uniform.name.indexOf("CC_") !== 0) {
-        uniform._location = glprogram._glContext.getUniformLocation(
-          glprogram._programObj,
-          uniform.name
-        );
-        uniform._location._name = uniform.name;
-        const uniformValue = new cc.UniformValue(uniform, glprogram);
-        this._uniforms[uniform.name] = uniformValue;
-      }
+      uniform._location._name = uniform.name;
+      var uniformValue = new cc.UniformValue(uniform, glprogram);
+      this._uniforms[uniform.name] = uniformValue;
     }
   }
+};
 
-  apply(modelView) {
+cc.GLProgramState.prototype = {
+  apply: function apply(modelView) {
     this._glprogram.use();
     if (modelView) {
       this._glprogram._setUniformForMVPMatrixWithMat4(modelView);
     }
 
-    for (const name in this._uniforms) {
+    for (var name in this._uniforms) {
       this._uniforms[name].apply();
     }
-  }
+  },
 
-  setGLProgram(glprogram) {
+  setGLProgram: function setGLProgram(glprogram) {
     this._glprogram = glprogram;
-  }
+  },
 
-  getGLProgram() {
+  getGLProgram: function getGLProgram() {
     return this._glprogram;
-  }
+  },
 
-  getUniformCount() {
+  getUniformCount: function getUniformCount() {
     return this._uniforms.length;
-  }
+  },
 
-  getUniformValue(uniform) {
+  getUniformValue: function getUniformValue(uniform) {
     return this._uniforms[uniform];
-  }
+  },
 
-  setUniformInt(uniform, value) {
-    const v = this.getUniformValue(uniform);
+  setUniformInt: function setUniformInt(uniform, value) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setInt(value);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformFloat(uniform, value) {
-    const v = this.getUniformValue(uniform);
+  setUniformFloat: function setUniformFloat(uniform, value) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setFloat(value);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformVec2(uniform, v1, v2) {
-    const v = this.getUniformValue(uniform);
+  setUniformVec2: function setUniformVec2(uniform, v1, v2) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setVec2(v1, v2);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformVec2v(uniform, value) {
-    const v = this.getUniformValue(uniform);
+  setUniformVec2v: function setUniformVec2v(uniform, value) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setVec2v(value);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformVec3(uniform, v1, v2, v3) {
-    const v = this.getUniformValue(uniform);
+  setUniformVec3: function setUniformVec3(uniform, v1, v2, v3) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setVec3(v1, v2, v3);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformVec3v(uniform, value) {
-    const v = this.getUniformValue(uniform);
+  setUniformVec3v: function setUniformVec3v(uniform, value) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setVec3v(value);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformVec4(uniform, v1, v2, v3, v4) {
-    const v = this.getUniformValue(uniform);
+  setUniformVec4: function setUniformVec4(uniform, v1, v2, v3, v4) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setVec4(v1, v2, v3, v4);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformVec4v(uniform, value) {
-    const v = this.getUniformValue(uniform);
+  setUniformVec4v: function setUniformVec4v(uniform, value) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setVec4v(value);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformMat4(uniform, value) {
-    const v = this.getUniformValue(uniform);
+  setUniformMat4: function setUniformMat4(uniform, value) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setMat4(value);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformCallback(uniform, callback) {
-    const v = this.getUniformValue(uniform);
+  setUniformCallback: function setUniformCallback(uniform, callback) {
+    var v = this.getUniformValue(uniform);
     if (v) {
       v.setCallback(callback);
     } else {
       cc.log("cocos2d: warning: Uniform not found: " + uniform);
     }
-  }
+  },
 
-  setUniformTexture(uniform, texture) {
-    const uniformValue = this.getUniformValue(uniform);
+  setUniformTexture: function setUniformTexture(uniform, texture) {
+    var uniformValue = this.getUniformValue(uniform);
     if (uniformValue) {
-      const textureUnit = this._boundTextureUnits[uniform];
+      var textureUnit = this._boundTextureUnits[uniform];
       if (textureUnit) {
         uniformValue.setTexture(texture, textureUnit);
       } else {
@@ -311,16 +311,15 @@ cc.GLProgramState = class GLProgramState {
       }
     }
   }
+};
 
-  static _cache = {};
-
-  static getOrCreateWithGLProgram(glprogram) {
-    let programState = cc.GLProgramState._cache[glprogram.__instanceId];
-    if (!programState) {
-      programState = new cc.GLProgramState(glprogram);
-      cc.GLProgramState._cache[glprogram.__instanceId] = programState;
-    }
-
-    return programState;
+cc.GLProgramState._cache = {};
+cc.GLProgramState.getOrCreateWithGLProgram = function (glprogram) {
+  var programState = cc.GLProgramState._cache[glprogram.__instanceId];
+  if (!programState) {
+    programState = new cc.GLProgramState(glprogram);
+    cc.GLProgramState._cache[glprogram.__instanceId] = programState;
   }
+
+  return programState;
 };
