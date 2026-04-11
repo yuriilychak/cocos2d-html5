@@ -26,66 +26,65 @@
  * cc.AtlasNode's rendering objects of Canvas
  */
 (function () {
-    cc.AtlasNode.CanvasRenderCmd = function (renderableObject) {
-        this._rootCtor(renderableObject);
-        this._needDraw = false;
-        this._colorUnmodified = cc.color.WHITE;
-        this._textureToRender = null;
-    };
-
-    var proto = cc.AtlasNode.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    proto.constructor = cc.AtlasNode.CanvasRenderCmd;
-
-    proto.initWithTexture = function (texture, tileWidth, tileHeight, itemsToRender) {
-        var node = this._node;
-        node._itemWidth = tileWidth;
-        node._itemHeight = tileHeight;
-
-        node._opacityModifyRGB = true;
-        node._texture = texture;
-        if (!node._texture) {
-            cc.log(cc._LogInfos.AtlasNode__initWithTexture);
-            return false;
+    cc.AtlasNode.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+            this._needDraw = false;
+            this._colorUnmodified = cc.color.WHITE;
+            this._textureToRender = null;
         }
-        this._textureToRender = texture;
-        this._calculateMaxItems();
 
-        node.quadsToDraw = itemsToRender;
-        return true;
-    };
+        initWithTexture(texture, tileWidth, tileHeight, itemsToRender) {
+            const node = this._node;
+            node._itemWidth = tileWidth;
+            node._itemHeight = tileHeight;
 
-    proto.setColor = function (color3) {
-        var node = this._node;
-        var locRealColor = node._realColor;
-        if ((locRealColor.r === color3.r) && (locRealColor.g === color3.g) && (locRealColor.b === color3.b))
-            return;
-        this._colorUnmodified = color3;
-        this._changeTextureColor();
-    };
+            node._opacityModifyRGB = true;
+            node._texture = texture;
+            if (!node._texture) {
+                cc.log(cc._LogInfos.AtlasNode__initWithTexture);
+                return false;
+            }
+            this._textureToRender = texture;
+            this._calculateMaxItems();
 
-    proto._changeTextureColor = function () {
-        var node = this._node;
-        var texture = node._texture,
-            color = this._colorUnmodified,
-            element = texture.getHtmlElementObj();
-        var textureRect = cc.rect(0, 0, element.width, element.height);
-        if (texture === this._textureToRender)
-            this._textureToRender = texture._generateColorTexture(color.r, color.g, color.b, textureRect);
-        else
-            texture._generateColorTexture(color.r, color.g, color.b, textureRect, this._textureToRender.getHtmlElementObj());
-    };
+            node.quadsToDraw = itemsToRender;
+            return true;
+        }
 
-    proto.setOpacity = function (opacity) {
-        var node = this._node;
-        cc.Node.prototype.setOpacity.call(node, opacity);
-    };
+        setColor(color3) {
+            const node = this._node;
+            const locRealColor = node._realColor;
+            if ((locRealColor.r === color3.r) && (locRealColor.g === color3.g) && (locRealColor.b === color3.b))
+                return;
+            this._colorUnmodified = color3;
+            this._changeTextureColor();
+        }
 
-    proto._calculateMaxItems = function () {
-        var node = this._node;
-        var selTexture = node._texture;
-        var size = selTexture.getContentSize();
+        _changeTextureColor() {
+            const node = this._node;
+            const texture = node._texture,
+                color = this._colorUnmodified,
+                element = texture.getHtmlElementObj();
+            const textureRect = cc.rect(0, 0, element.width, element.height);
+            if (texture === this._textureToRender)
+                this._textureToRender = texture._generateColorTexture(color.r, color.g, color.b, textureRect);
+            else
+                texture._generateColorTexture(color.r, color.g, color.b, textureRect, this._textureToRender.getHtmlElementObj());
+        }
 
-        node._itemsPerColumn = 0 | (size.height / node._itemHeight);
-        node._itemsPerRow = 0 | (size.width / node._itemWidth);
+        setOpacity(opacity) {
+            const node = this._node;
+            cc.Node.prototype.setOpacity.call(node, opacity);
+        }
+
+        _calculateMaxItems() {
+            const node = this._node;
+            const selTexture = node._texture;
+            const size = selTexture.getContentSize();
+
+            node._itemsPerColumn = 0 | (size.height / node._itemHeight);
+            node._itemsPerRow = 0 | (size.width / node._itemWidth);
+        }
     };
 })();

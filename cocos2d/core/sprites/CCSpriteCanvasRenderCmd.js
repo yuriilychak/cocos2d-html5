@@ -23,208 +23,208 @@
  ****************************************************************************/
 
 (function () {
-    cc.Sprite.CanvasRenderCmd = function (renderable) {
-        this._rootCtor(renderable);
-        this._needDraw = true;
-        this._textureCoord = {
-            renderX: 0,                             //the x of texture coordinate for render, when texture tinted, its value doesn't equal x.
-            renderY: 0,                             //the y of texture coordinate for render, when texture tinted, its value doesn't equal y.
-            x: 0,                                   //the x of texture coordinate for node.
-            y: 0,                                   //the y of texture coordinate for node.
-            width: 0,
-            height: 0,
-            validRect: false
-        };
-        this._blendFuncStr = "source-over";
-        this._colorized = false;
-        this._canUseDirtyRegion = true;
-        this._textureToRender = null;
-    };
-
-    var proto = cc.Sprite.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    proto.constructor = cc.Sprite.CanvasRenderCmd;
-    proto._spriteCmdCtor = cc.Sprite.CanvasRenderCmd;
-
-    proto.setDirtyRecursively = function (value) {
-    };
-
-    proto._setTexture = function (texture) {
-        var node = this._node;
-        if (node._texture !== texture) {
-            node._textureLoaded = texture ? texture._textureLoaded : false;
-            node._texture = texture;
-
-            var texSize = texture._contentSize;
-            var rect = cc.rect(0, 0, texSize.width, texSize.height);
-            node.setTextureRect(rect);
-            this._updateColor();
-        }
-    };
-
-    proto._setColorDirty = function () {
-        this.setDirtyFlag(cc.Node._dirtyFlags.colorDirty | cc.Node._dirtyFlags.opacityDirty);
-    };
-
-    proto.isFrameDisplayed = function (frame) {      //TODO there maybe has a bug
-        var node = this._node;
-        if (frame.getTexture() !== node._texture)
-            return false;
-        return cc.rectEqualToRect(frame.getRect(), node._rect);
-    };
-
-    proto.updateBlendFunc = function (blendFunc) {
-        this._blendFuncStr = cc.Node.CanvasRenderCmd._getCompositeOperationByBlendFunc(blendFunc);
-    };
-
-    proto._setBatchNodeForAddChild = function (child) {
-        return true;
-    };
-
-    proto._handleTextureForRotatedTexture = function (texture, rect, rotated, counterclockwise) {
-        if (rotated && texture.isLoaded()) {
-            var tempElement = texture.getHtmlElementObj();
-            tempElement = cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas(tempElement, rect, counterclockwise);
-            var tempTexture = new cc.Texture2D();
-            tempTexture.initWithElement(tempElement);
-            tempTexture.handleLoadedTexture();
-            texture = tempTexture;
-            rect.x = rect.y = 0;
-            this._node._rect = cc.rect(0, 0, rect.width, rect.height);
-        }
-        return texture;
-    };
-
-    proto._checkTextureBoundary = function (texture, rect, rotated) {
-        if (texture && texture.url) {
-            var _x = rect.x + rect.width, _y = rect.y + rect.height;
-            if (_x > texture.width)
-                cc.error(cc._LogInfos.RectWidth, texture.url);
-            if (_y > texture.height)
-                cc.error(cc._LogInfos.RectHeight, texture.url);
-        }
-    };
-
-    proto.rendering = function (ctx, scaleX, scaleY) {
-        var node = this._node;
-        var locTextureCoord = this._textureCoord, alpha = (this._displayedOpacity / 255);
-        var texture = this._textureToRender || node._texture;
-
-        if ((texture && (locTextureCoord.width === 0 || locTextureCoord.height === 0 || !texture._textureLoaded)) || alpha === 0)
-            return;
-
-        var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
-        var locX = node._offsetPosition.x, locHeight = node._rect.height, locWidth = node._rect.width,
-            locY = -node._offsetPosition.y - locHeight, image;
-
-        wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-        wrapper.setCompositeOperation(this._blendFuncStr);
-        wrapper.setGlobalAlpha(alpha);
-
-        if (node._flippedX || node._flippedY)
-            wrapper.save();
-        if (node._flippedX) {
-            locX = -locX - locWidth;
-            context.scale(-1, 1);
-        }
-        if (node._flippedY) {
-            locY = node._offsetPosition.y;
-            context.scale(1, -1);
+    cc.Sprite.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = true;
+            this._textureCoord = {
+                renderX: 0,                             //the x of texture coordinate for render, when texture tinted, its value doesn't equal x.
+                renderY: 0,                             //the y of texture coordinate for render, when texture tinted, its value doesn't equal y.
+                x: 0,                                   //the x of texture coordinate for node.
+                y: 0,                                   //the y of texture coordinate for node.
+                width: 0,
+                height: 0,
+                validRect: false
+            };
+            this._blendFuncStr = "source-over";
+            this._colorized = false;
+            this._canUseDirtyRegion = true;
+            this._textureToRender = null;
         }
 
-        var sx, sy, sw, sh, x, y, w, h;
-        if (this._colorized) {
-            sx = 0;
-            sy = 0;
-        } else {
-            sx = locTextureCoord.renderX;
-            sy = locTextureCoord.renderY;
+        setDirtyRecursively(value) {
         }
-        sw = locTextureCoord.width;
-        sh = locTextureCoord.height;
 
-        x = locX;
-        y = locY;
-        w = locWidth;
-        h = locHeight;
+        _setTexture(texture) {
+            const node = this._node;
+            if (node._texture !== texture) {
+                node._textureLoaded = texture ? texture._textureLoaded : false;
+                node._texture = texture;
 
-        if (texture && texture._htmlElementObj) {
-            image = texture._htmlElementObj;
-            if (texture._pattern !== "") {
-                wrapper.setFillStyle(context.createPattern(image, texture._pattern));
-                context.fillRect(x, y, w, h);
+                const texSize = texture._contentSize;
+                const rect = cc.rect(0, 0, texSize.width, texSize.height);
+                node.setTextureRect(rect);
+                this._updateColor();
+            }
+        }
+
+        _setColorDirty() {
+            this.setDirtyFlag(cc.Node._dirtyFlags.colorDirty | cc.Node._dirtyFlags.opacityDirty);
+        }
+
+        isFrameDisplayed(frame) {      //TODO there maybe has a bug
+            const node = this._node;
+            if (frame.getTexture() !== node._texture)
+                return false;
+            return cc.rectEqualToRect(frame.getRect(), node._rect);
+        }
+
+        updateBlendFunc(blendFunc) {
+            this._blendFuncStr = cc.Node.CanvasRenderCmd._getCompositeOperationByBlendFunc(blendFunc);
+        }
+
+        _setBatchNodeForAddChild(child) {
+            return true;
+        }
+
+        _handleTextureForRotatedTexture(texture, rect, rotated, counterclockwise) {
+            if (rotated && texture.isLoaded()) {
+                let tempElement = texture.getHtmlElementObj();
+                tempElement = cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas(tempElement, rect, counterclockwise);
+                const tempTexture = new cc.Texture2D();
+                tempTexture.initWithElement(tempElement);
+                tempTexture.handleLoadedTexture();
+                texture = tempTexture;
+                rect.x = rect.y = 0;
+                this._node._rect = cc.rect(0, 0, rect.width, rect.height);
+            }
+            return texture;
+        }
+
+        _checkTextureBoundary(texture, rect, rotated) {
+            if (texture && texture.url) {
+                const _x = rect.x + rect.width, _y = rect.y + rect.height;
+                if (_x > texture.width)
+                    cc.error(cc._LogInfos.RectWidth, texture.url);
+                if (_y > texture.height)
+                    cc.error(cc._LogInfos.RectHeight, texture.url);
+            }
+        }
+
+        rendering(ctx, scaleX, scaleY) {
+            const node = this._node;
+            const locTextureCoord = this._textureCoord, alpha = (this._displayedOpacity / 255);
+            const texture = this._textureToRender || node._texture;
+
+            if ((texture && (locTextureCoord.width === 0 || locTextureCoord.height === 0 || !texture._textureLoaded)) || alpha === 0)
+                return;
+
+            const wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            let locX = node._offsetPosition.x;
+            const locHeight = node._rect.height, locWidth = node._rect.width;
+            let locY = -node._offsetPosition.y - locHeight, image;
+
+            wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+            wrapper.setCompositeOperation(this._blendFuncStr);
+            wrapper.setGlobalAlpha(alpha);
+
+            if (node._flippedX || node._flippedY)
+                wrapper.save();
+            if (node._flippedX) {
+                locX = -locX - locWidth;
+                context.scale(-1, 1);
+            }
+            if (node._flippedY) {
+                locY = node._offsetPosition.y;
+                context.scale(1, -1);
+            }
+
+            let sx, sy, sw, sh, x, y, w, h;
+            if (this._colorized) {
+                sx = 0;
+                sy = 0;
             } else {
-                context.drawImage(image,
-                    sx, sy, sw, sh,
-                    x, y, w, h);
+                sx = locTextureCoord.renderX;
+                sy = locTextureCoord.renderY;
             }
-        } else {
-            var contentSize = node._contentSize;
-            if (locTextureCoord.validRect) {
-                var curColor = this._displayedColor;
-                wrapper.setFillStyle("rgba(" + curColor.r + "," + curColor.g + "," + curColor.b + ",1)");
-                context.fillRect(x, y, contentSize.width * scaleX, contentSize.height * scaleY);
+            sw = locTextureCoord.width;
+            sh = locTextureCoord.height;
+
+            x = locX;
+            y = locY;
+            w = locWidth;
+            h = locHeight;
+
+            if (texture && texture._htmlElementObj) {
+                image = texture._htmlElementObj;
+                if (texture._pattern !== "") {
+                    wrapper.setFillStyle(context.createPattern(image, texture._pattern));
+                    context.fillRect(x, y, w, h);
+                } else {
+                    context.drawImage(image,
+                        sx, sy, sw, sh,
+                        x, y, w, h);
+                }
+            } else {
+                const contentSize = node._contentSize;
+                if (locTextureCoord.validRect) {
+                    const curColor = this._displayedColor;
+                    wrapper.setFillStyle("rgba(" + curColor.r + "," + curColor.g + "," + curColor.b + ",1)");
+                    context.fillRect(x, y, contentSize.width * scaleX, contentSize.height * scaleY);
+                }
             }
-        }
-        if (node._flippedX || node._flippedY)
-            wrapper.restore();
-        cc.g_NumberOfDraws++;
-    };
-
-    proto._updateColor = function () {
-        var node = this._node;
-
-        var texture = node._texture, rect = this._textureCoord;
-        var dColor = this._displayedColor;
-
-        if (texture) {
-            if (dColor.r !== 255 || dColor.g !== 255 || dColor.b !== 255) {
-                this._textureToRender = texture._generateColorTexture(dColor.r, dColor.g, dColor.b, rect);
-                this._colorized = true;
-            } else if (texture) {
-                this._textureToRender = texture;
-                this._colorized = false;
-            }
-        }
-    };
-
-    proto._textureLoadedCallback = function (sender) {
-        var node = this;
-        if (node._textureLoaded)
-            return;
-
-        node._textureLoaded = true;
-        var locRect = node._rect, locRenderCmd = this._renderCmd;
-        if (!locRect) {
-            locRect = cc.rect(0, 0, sender.width, sender.height);
-        } else if (cc._rectEqualToZero(locRect)) {
-            locRect.width = sender.width;
-            locRect.height = sender.height;
+            if (node._flippedX || node._flippedY)
+                wrapper.restore();
+            cc.g_NumberOfDraws++;
         }
 
-        node.texture = sender;
-        node.setTextureRect(locRect, node._rectRotated);
+        _updateColor() {
+            const node = this._node;
 
-        //set the texture's color after the it loaded
-        var locColor = locRenderCmd._displayedColor;
-        if (locColor.r !== 255 || locColor.g !== 255 || locColor.b !== 255)
-            locRenderCmd._updateColor();
+            const texture = node._texture, rect = this._textureCoord;
+            const dColor = this._displayedColor;
 
-        // by default use "Self Render".
-        // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-        node.setBatchNode(node._batchNode);
-        node.dispatchEvent("load");
-    };
+            if (texture) {
+                if (dColor.r !== 255 || dColor.g !== 255 || dColor.b !== 255) {
+                    this._textureToRender = texture._generateColorTexture(dColor.r, dColor.g, dColor.b, rect);
+                    this._colorized = true;
+                } else if (texture) {
+                    this._textureToRender = texture;
+                    this._colorized = false;
+                }
+            }
+        }
 
-    proto._setTextureCoords = function (rect, needConvert) {
-        if (needConvert === undefined)
-            needConvert = true;
-        var locTextureRect = this._textureCoord,
-            scaleFactor = needConvert ? cc.contentScaleFactor() : 1;
-        locTextureRect.renderX = locTextureRect.x = 0 | (rect.x * scaleFactor);
-        locTextureRect.renderY = locTextureRect.y = 0 | (rect.y * scaleFactor);
-        locTextureRect.width = 0 | (rect.width * scaleFactor);
-        locTextureRect.height = 0 | (rect.height * scaleFactor);
-        locTextureRect.validRect = !(locTextureRect.width === 0 || locTextureRect.height === 0 || locTextureRect.x < 0 || locTextureRect.y < 0);
+        _textureLoadedCallback(sender) {
+            const node = this;
+            if (node._textureLoaded)
+                return;
+
+            node._textureLoaded = true;
+            let locRect = node._rect;
+            const locRenderCmd = this._renderCmd;
+            if (!locRect) {
+                locRect = cc.rect(0, 0, sender.width, sender.height);
+            } else if (cc._rectEqualToZero(locRect)) {
+                locRect.width = sender.width;
+                locRect.height = sender.height;
+            }
+
+            node.texture = sender;
+            node.setTextureRect(locRect, node._rectRotated);
+
+            //set the texture's color after the it loaded
+            const locColor = locRenderCmd._displayedColor;
+            if (locColor.r !== 255 || locColor.g !== 255 || locColor.b !== 255)
+                locRenderCmd._updateColor();
+
+            // by default use "Self Render".
+            // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
+            node.setBatchNode(node._batchNode);
+            node.dispatchEvent("load");
+        }
+
+        _setTextureCoords(rect, needConvert) {
+            if (needConvert === undefined)
+                needConvert = true;
+            const locTextureRect = this._textureCoord,
+                scaleFactor = needConvert ? cc.contentScaleFactor() : 1;
+            locTextureRect.renderX = locTextureRect.x = 0 | (rect.x * scaleFactor);
+            locTextureRect.renderY = locTextureRect.y = 0 | (rect.y * scaleFactor);
+            locTextureRect.width = 0 | (rect.width * scaleFactor);
+            locTextureRect.height = 0 | (rect.height * scaleFactor);
+            locTextureRect.validRect = !(locTextureRect.width === 0 || locTextureRect.height === 0 || locTextureRect.x < 0 || locTextureRect.y < 0);
+        }
     };
 
     cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas = function (texture, rect, counterclockwise) {
@@ -236,10 +236,10 @@
 
         counterclockwise = counterclockwise == null ? true : counterclockwise;   // texture package is counterclockwise, spine is clockwise
 
-        var nCanvas = document.createElement("canvas");
+        const nCanvas = document.createElement("canvas");
         nCanvas.width = rect.width;
         nCanvas.height = rect.height;
-        var ctx = nCanvas.getContext("2d");
+        const ctx = nCanvas.getContext("2d");
         ctx.translate(nCanvas.width / 2, nCanvas.height / 2);
         if (counterclockwise)
             ctx.rotate(-1.5707963267948966);
