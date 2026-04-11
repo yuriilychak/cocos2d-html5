@@ -83,7 +83,6 @@ var setClearColorTest = class setClearColorTest extends SysTestBase {
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         this.addChild(bg);
-        return true;
     }
     onEnter()
     {

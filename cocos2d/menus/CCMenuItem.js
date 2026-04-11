@@ -675,11 +675,10 @@ cc.MenuItemSprite = class MenuItemSprite extends cc.MenuItem {
                 this._loader.once(normalSprite, function () {
                     this.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback, target);
                 }, this);
-                return false;
+                return;
             }
 
             this.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback, target);
-            return true;
         }
     }
 
