@@ -36,11 +36,11 @@
     cc.texture_matrix_stack = new cc.math.Matrix4Stack();
 
     cc.current_stack = null;
-    var initialized = false;
+    let initialized = false;
 
     cc.lazyInitialize = function () {
         if (!initialized) {
-            var identity = new cc.math.Matrix4(); //Temporary identity matrix
+            const identity = new cc.math.Matrix4(); //Temporary identity matrix
 
             //Initialize all 3 stacks
             cc.modelview_matrix_stack.initialize();
@@ -104,7 +104,6 @@
                 break;
             default:
                 throw new Error("Invalid matrix mode specified");   //TODO: Proper error handling
-                break;
         }
         cc.current_stack.lastUpdated = cc.director.getTotalFrames();
     };
@@ -124,27 +123,27 @@
         cc.current_stack.top.multiply(pIn);
     };
 
-    var tempMatrix = new cc.math.Matrix4();    //an internal matrix
+    const tempMatrix = new cc.math.Matrix4();    //an internal matrix
     cc.kmGLTranslatef = function (x, y, z) {
         //Create a rotation matrix using translation
-        var translation = cc.math.Matrix4.createByTranslation(x, y, z, tempMatrix);
+        const translation = cc.math.Matrix4.createByTranslation(x, y, z, tempMatrix);
 
         //Multiply the rotation matrix by the current matrix
         cc.current_stack.top.multiply(translation);
     };
 
-    var tempVector3 = new cc.math.Vec3();
+    const tempVector3 = new cc.math.Vec3();
     cc.kmGLRotatef = function (angle, x, y, z) {
         tempVector3.fill(x, y, z);
         //Create a rotation matrix using the axis and the angle
-        var rotation = cc.math.Matrix4.createByAxisAndAngle(tempVector3, cc.degreesToRadians(angle), tempMatrix);
+        const rotation = cc.math.Matrix4.createByAxisAndAngle(tempVector3, cc.degreesToRadians(angle), tempMatrix);
 
         //Multiply the rotation matrix by the current matrix
         cc.current_stack.top.multiply(rotation);
     };
 
     cc.kmGLScalef = function (x, y, z) {
-        var scaling = cc.math.Matrix4.createByScale(x, y, z, tempMatrix);
+        const scaling = cc.math.Matrix4.createByScale(x, y, z, tempMatrix);
         cc.current_stack.top.multiply(scaling);
     };
 
