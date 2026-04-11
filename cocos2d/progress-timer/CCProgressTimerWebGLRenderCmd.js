@@ -405,7 +405,7 @@
                 for (i = 0; i <= locProTextCoordsCount; ++i) {
                     const pIndex = (i + (locProTextCoordsCount - 1)) % locProTextCoordsCount;
 
-                    const edgePtA = this._boundaryTexCoord(i % locProTextCoordsCount);
+                    let edgePtA = this._boundaryTexCoord(i % locProTextCoordsCount);
                     let edgePtB = this._boundaryTexCoord(pIndex);
 
                     //    Remember that the top edge is split in half for the 12 o'clock position
