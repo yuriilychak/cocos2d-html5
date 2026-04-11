@@ -23,43 +23,41 @@
  ****************************************************************************/
 // ------------------------------ The cc.Node's render command for WebGL ----------------------------------
 (function () {
-    cc.Node.WebGLRenderCmd = function (renderable) {
-        this._node = renderable;
-        this._anchorPointInPoints = {x: 0, y: 0};
-        this._displayedColor = cc.color(255, 255, 255, 255);
+    cc.Node.WebGLRenderCmd = class WebGLRenderCmd extends cc.Node.RenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._glProgramState = null;
+        }
+
+        _updateColor() {
+        }
+
+        setShaderProgram(shaderProgram) {
+            this._glProgramState = cc.GLProgramState.getOrCreateWithGLProgram(shaderProgram);
+        }
+
+        getShaderProgram() {
+            return this._glProgramState ? this._glProgramState.getGLProgram() : null;
+        }
+
+        getGLProgramState() {
+            return this._glProgramState;
+        }
+
+        setGLProgramState(glProgramState) {
+            this._glProgramState = glProgramState;
+        }
+
+        // Use a property getter/setter for backwards compatability, and
+        // to ease the transition from using glPrograms directly, to 
+        // using glProgramStates. 
+        set _shaderProgram(value) { this.setShaderProgram(value); }
+        get _shaderProgram() { return this.getShaderProgram(); }
+    };
+
+    // Backward-compatible _rootCtor shim for old-style constructors in extensions/
+    cc.Node.WebGLRenderCmd.prototype._rootCtor = function (renderable) {
+        cc.Node.RenderCmd.prototype._rootCtor.call(this, renderable);
         this._glProgramState = null;
     };
-
-    var proto = cc.Node.WebGLRenderCmd.prototype = Object.create(cc.Node.RenderCmd.prototype);
-    proto.constructor = cc.Node.WebGLRenderCmd;
-    proto._rootCtor = cc.Node.WebGLRenderCmd;
-
-    proto._updateColor = function () {
-    };
-
-    proto.setShaderProgram = function (shaderProgram) {
-        this._glProgramState = cc.GLProgramState.getOrCreateWithGLProgram(shaderProgram);
-    };
-
-    proto.getShaderProgram = function () {
-        return this._glProgramState ? this._glProgramState.getGLProgram() : null;
-    };
-
-    proto.getGLProgramState = function () {
-        return this._glProgramState;
-    };
-
-    proto.setGLProgramState = function (glProgramState) {
-        this._glProgramState = glProgramState;
-    };
-
-    // Use a property getter/setter for backwards compatability, and
-    // to ease the transition from using glPrograms directly, to 
-    // using glProgramStates. 
-    Object.defineProperty(proto, '_shaderProgram', {
-        set: function (value) { this.setShaderProgram(value); },
-        get: function () { return this.getShaderProgram(); }
-    });
-    /** @expose */
-    proto._shaderProgram;
 })();

@@ -23,88 +23,88 @@
  ****************************************************************************/
 
 (function(){
-    cc.LabelAtlas.CanvasRenderCmd = function(renderableObject){
-        cc.AtlasNode.CanvasRenderCmd.call(this, renderableObject);
-        this._needDraw = false;
-    };
+    cc.LabelAtlas.CanvasRenderCmd = class CanvasRenderCmd extends cc.AtlasNode.CanvasRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+            this._needDraw = false;
+        }
 
-    var proto = cc.LabelAtlas.CanvasRenderCmd.prototype = Object.create(cc.AtlasNode.CanvasRenderCmd.prototype);
-    proto.constructor = cc.LabelAtlas.CanvasRenderCmd;
+        setCascade() {
+            const node = this._node;
+            node._cascadeOpacityEnabled = true;
+            node._cascadeColorEnabled = false;
+        }
 
-    proto.setCascade = function(){
-        var node = this._node;
-        node._cascadeOpacityEnabled = true;
-        node._cascadeColorEnabled = false;
-    };
+        updateAtlasValues() {
+            const node = this._node;
+            const locString = node._string || "";
+            const n = locString.length;
+            const texture = this._textureToRender;
+            const locItemWidth = node._itemWidth, locItemHeight = node._itemHeight;     //needn't multiply cc.contentScaleFactor(), because sprite's draw will do this
 
-    proto.updateAtlasValues = function(){
-        var node = this._node;
-        var locString = node._string || "";
-        var n = locString.length;
-        var texture = this._textureToRender;
-        var locItemWidth = node._itemWidth , locItemHeight = node._itemHeight;     //needn't multiply cc.contentScaleFactor(), because sprite's draw will do this
+            let i, cr = -1;
+            for (i = 0; i < n; i++) {
+                const a = locString.charCodeAt(i) - node._mapStartChar.charCodeAt(0);
+                const row = parseInt(a % node._itemsPerRow, 10);
+                const col = parseInt(a / node._itemsPerRow, 10);
+                if(row < 0 || col < 0)
+                    continue;
+                const rect = cc.rect(row * locItemWidth, col * locItemHeight, locItemWidth, locItemHeight);
+                const textureContent = texture._contentSize;
+                if(rect.x < 0 || rect.y < 0 || rect.x + rect.width > textureContent.width || rect.y + rect.height > textureContent.height)
+                    continue;
 
-        for (var i = 0, cr = -1; i < n; i++) {
-            var a = locString.charCodeAt(i) - node._mapStartChar.charCodeAt(0);
-            var row = parseInt(a % node._itemsPerRow, 10);
-            var col = parseInt(a / node._itemsPerRow, 10);
-            if(row < 0 || col < 0)
-                continue;
-            var rect = cc.rect(row * locItemWidth, col * locItemHeight, locItemWidth, locItemHeight);
-            var textureContent = texture._contentSize;
-            if(rect.x < 0 || rect.y < 0 || rect.x + rect.width > textureContent.width || rect.y + rect.height > textureContent.height)
-                continue;
+                cr++;
+                const c = locString.charCodeAt(i);
+                let fontChar = node.getChildByTag(i);
+                if (!fontChar) {
+                    fontChar = new cc.Sprite();
+                    if (c === 32) {
+                        fontChar.init();
+                        fontChar.setTextureRect(cc.rect(0, 0, 10, 10), false, cc.size(0, 0));
+                    } else
+                        fontChar.initWithTexture(texture, rect);
 
-            cr++;
-            var c = locString.charCodeAt(i);
-            var fontChar = node.getChildByTag(i);
-            if (!fontChar) {
-                fontChar = new cc.Sprite();
-                if (c === 32) {
-                    fontChar.init();
-                    fontChar.setTextureRect(cc.rect(0, 0, 10, 10), false, cc.size(0, 0));
-                } else
-                    fontChar.initWithTexture(texture, rect);
-
-                cc.Node.prototype.addChild.call(node, fontChar, 0, i);
-            } else {
-                if (c === 32) {
-                    fontChar.init();
-                    fontChar.setTextureRect(cc.rect(0, 0, 10, 10), false, cc.size(0, 0));
+                    cc.Node.prototype.addChild.call(node, fontChar, 0, i);
                 } else {
-                    // reusing fonts
-                    fontChar.initWithTexture(texture, rect);
-                    // restore to default in case they were modified
-                    fontChar.visible = true;
+                    if (c === 32) {
+                        fontChar.init();
+                        fontChar.setTextureRect(cc.rect(0, 0, 10, 10), false, cc.size(0, 0));
+                    } else {
+                        // reusing fonts
+                        fontChar.initWithTexture(texture, rect);
+                        // restore to default in case they were modified
+                        fontChar.visible = true;
+                    }
+                }
+                fontChar.setPosition(cr * locItemWidth + locItemWidth / 2, locItemHeight / 2);
+            }
+            this.updateContentSize(i, cr+1);
+        }
+
+        updateContentSize(i, cr) {
+            const node = this._node,
+                contentSize = node._contentSize;
+            if(i !== cr && i*node._itemWidth === contentSize.width && node._itemHeight === contentSize.height){
+                node.setContentSize(cr * node._itemWidth, node._itemHeight);
+            }
+        }
+
+        setString(label) {
+            const node = this._node;
+            if (node._children) {
+                const locChildren = node._children;
+                const len = locChildren.length;
+                for (let i = 0; i < len; i++) {
+                    const child = locChildren[i];
+                    if (child && !child._lateChild)
+                        child.visible = false;
                 }
             }
-            fontChar.setPosition(cr * locItemWidth + locItemWidth / 2, locItemHeight / 2);
         }
-        this.updateContentSize(i, cr+1);
-    };
 
-    proto.updateContentSize = function(i, cr){
-        var node = this._node,
-            contentSize = node._contentSize;
-        if(i !== cr && i*node._itemWidth === contentSize.width && node._itemHeight === contentSize.height){
-            node.setContentSize(cr * node._itemWidth, node._itemHeight);
+        _addChild() {
+            child._lateChild = true;
         }
-    };
-
-    proto.setString = function(label){
-        var node = this._node;
-        if (node._children) {
-            var locChildren = node._children;
-            var len = locChildren.length;
-            for (var i = 0; i < len; i++) {
-                var child = locChildren[i];
-                if (child && !child._lateChild)
-                    child.visible = false;
-            }
-        }
-    };
-
-    proto._addChild = function(){
-        child._lateChild = true;
     };
 })();

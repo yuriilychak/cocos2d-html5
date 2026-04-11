@@ -50,7 +50,7 @@ cc.glInvalidateStateCache = function () {
     cc._currentProjectionMatrix = -1;
     if (cc.ENABLE_GL_STATE_CACHE) {
         cc._currentShaderProgram = -1;
-        for (var i = 0; i < cc.MAX_ACTIVETEXTURE; i++) {
+        for (let i = 0; i < cc.MAX_ACTIVETEXTURE; i++) {
             cc._currentBoundTexture[i] = -1;
         }
         cc._blendingSource = -1;
@@ -94,7 +94,7 @@ cc.glDeleteProgram = function (program) {
  * @param {Number} dfactor
  */
 cc.setBlending = function (sfactor, dfactor) {
-    var ctx = cc._renderContext;
+    const ctx = cc._renderContext;
     if ((sfactor === ctx.ONE) && (dfactor === ctx.ZERO)) {
         ctx.disable(ctx.BLEND);
     } else {
@@ -129,7 +129,7 @@ cc.glBlendFuncForParticle = function(sfactor, dfactor) {
     if ((sfactor !== cc._blendingSource) || (dfactor !== cc._blendingDest)) {
         cc._blendingSource = sfactor;
         cc._blendingDest = dfactor;
-        var ctx = cc._renderContext;
+        const ctx = cc._renderContext;
         if ((sfactor === ctx.ONE) && (dfactor === ctx.ZERO)) {
             ctx.disable(ctx.BLEND);
         } else {
@@ -146,7 +146,7 @@ cc.glBlendFuncForParticle = function(sfactor, dfactor) {
  * @function
  */
 cc.glBlendResetToCache = function () {
-    var ctx = cc._renderContext;
+    const ctx = cc._renderContext;
     ctx.blendEquation(ctx.FUNC_ADD);
     if (cc.ENABLE_GL_STATE_CACHE)
         cc.setBlending(cc._blendingSource, cc._blendingDest);
@@ -184,14 +184,14 @@ cc.glBindTexture2DN = cc.ENABLE_GL_STATE_CACHE ? function (textureUnit, textureI
         return;
     cc._currentBoundTexture[textureUnit] = textureId;
 
-    var ctx = cc._renderContext;
+    const ctx = cc._renderContext;
     ctx.activeTexture(ctx.TEXTURE0 + textureUnit);
     if(textureId)
         ctx.bindTexture(ctx.TEXTURE_2D, textureId._webTextureObj);
     else
         ctx.bindTexture(ctx.TEXTURE_2D, null);
 } : function (textureUnit, textureId) {
-    var ctx = cc._renderContext;
+    const ctx = cc._renderContext;
     ctx.activeTexture(ctx.TEXTURE0 + textureUnit);
     if(textureId)
         ctx.bindTexture(ctx.TEXTURE_2D, textureId._webTextureObj);

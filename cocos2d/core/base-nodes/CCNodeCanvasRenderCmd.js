@@ -23,21 +23,28 @@
  ****************************************************************************/
 
 //---------------------- Customer render cmd --------------------
-cc.CustomRenderCmd = function (target, func) {
-    this._needDraw = true;
-    this._target = target;
-    this._callback = func;
-};
-cc.CustomRenderCmd.prototype.rendering = function (ctx, scaleX, scaleY) {
-    if (!this._callback)
-        return;
-    this._callback.call(this._target, ctx, scaleX, scaleY);
-};
-cc.CustomRenderCmd.prototype.needDraw = function () {
-    return this._needDraw;
+cc.CustomRenderCmd = class CustomRenderCmd {
+    _needDraw = true;
+    _target = null;
+    _callback = null;
+
+    constructor(target, func) {
+        this._target = target;
+        this._callback = func;
+    }
+
+    rendering(ctx, scaleX, scaleY) {
+        if (!this._callback)
+            return;
+        this._callback.call(this._target, ctx, scaleX, scaleY);
+    }
+
+    needDraw() {
+        return this._needDraw;
+    }
 };
 
-var dirtyFlags = cc.Node._dirtyFlags = {
+const dirtyFlags = cc.Node._dirtyFlags = {
     transformDirty: 1 << 0, visibleDirty: 1 << 1, colorDirty: 1 << 2, opacityDirty: 1 << 3, cacheDirty: 1 << 4,
     orderDirty: 1 << 5, textDirty: 1 << 6, gradientDirty: 1 << 7, textureDirty: 1 << 8,
     contentDirty: 1 << 9,
@@ -45,12 +52,12 @@ var dirtyFlags = cc.Node._dirtyFlags = {
     all: (1 << 10) - 1
 };
 
-var ONE_DEGREE = Math.PI / 180;
+const ONE_DEGREE = Math.PI / 180;
 
 function transformChildTree(root) {
-    var index = 1;
-    var children, child, curr, parentCmd, i, len;
-    var stack = cc.Node._performStacks[cc.Node._performing];
+    let index = 1;
+    let children, child, curr, parentCmd, i, len;
+    const stack = cc.Node._performStacks[cc.Node._performing];
     if (!stack) {
         stack = [];
         cc.Node._performStacks.push(stack);
@@ -74,7 +81,7 @@ function transformChildTree(root) {
                 child._renderCmd.transform(parentCmd);
             }
         }
-        var pChildren = curr._protectedChildren;
+        const pChildren = curr._protectedChildren;
         if (pChildren && pChildren.length > 0) {
             parentCmd = curr._renderCmd;
             for (i = 0, len = pChildren.length; i < len; ++i) {
@@ -89,55 +96,51 @@ function transformChildTree(root) {
 }
 
 //-------------------------Base -------------------------
-cc.Node.RenderCmd = function (renderable) {
-    this._node = renderable;
-    this._anchorPointInPoints = {x: 0, y: 0};
-    this._displayedColor = cc.color(255, 255, 255, 255);
-};
+cc.Node.RenderCmd = class RenderCmd {
+    _needDraw = false;
+    _dirtyFlag = 1;
+    _curLevel = -1;
+    _displayedOpacity = 255;
+    _cascadeColorEnabledDirty = false;
+    _cascadeOpacityEnabledDirty = false;
+    _transform = null;
+    _worldTransform = null;
+    _inverse = null;
 
-cc.Node.RenderCmd.prototype = {
-    constructor: cc.Node.RenderCmd,
+    constructor(renderable) {
+        this._node = renderable;
+        this._anchorPointInPoints = {x: 0, y: 0};
+        this._displayedColor = cc.color(255, 255, 255, 255);
+    }
 
-    _needDraw: false,
-    _dirtyFlag: 1,
-    _curLevel: -1,
-
-    _displayedOpacity: 255,
-    _cascadeColorEnabledDirty: false,
-    _cascadeOpacityEnabledDirty: false,
-
-    _transform: null,
-    _worldTransform: null,
-    _inverse: null,
-
-    needDraw: function () {
+    needDraw() {
         return this._needDraw;
-    },
+    }
 
-    getAnchorPointInPoints: function () {
+    getAnchorPointInPoints() {
         return cc.p(this._anchorPointInPoints);
-    },
+    }
 
-    getDisplayedColor: function () {
-        var tmpColor = this._displayedColor;
+    getDisplayedColor() {
+        const tmpColor = this._displayedColor;
         return cc.color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
-    },
+    }
 
-    getDisplayedOpacity: function () {
+    getDisplayedOpacity() {
         return this._displayedOpacity;
-    },
+    }
 
-    setCascadeColorEnabledDirty: function () {
+    setCascadeColorEnabledDirty() {
         this._cascadeColorEnabledDirty = true;
         this.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
-    },
+    }
 
-    setCascadeOpacityEnabledDirty: function () {
+    setCascadeOpacityEnabledDirty() {
         this._cascadeOpacityEnabledDirty = true;
         this.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
-    },
+    }
 
-    getParentToNodeTransform: function () {
+    getParentToNodeTransform() {
         if (!this._inverse) {
             this._inverse = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
         }
@@ -145,53 +148,53 @@ cc.Node.RenderCmd.prototype = {
             cc.affineTransformInvertOut(this.getNodeToParentTransform(), this._inverse);
         }
         return this._inverse;
-    },
+    }
 
-    detachFromParent: function () {
-    },
+    detachFromParent() {
+    }
 
-    _updateAnchorPointInPoint: function () {
-        var locAPP = this._anchorPointInPoints, locSize = this._node._contentSize, locAnchorPoint = this._node._anchorPoint;
+    _updateAnchorPointInPoint() {
+        const locAPP = this._anchorPointInPoints, locSize = this._node._contentSize, locAnchorPoint = this._node._anchorPoint;
         locAPP.x = locSize.width * locAnchorPoint.x;
         locAPP.y = locSize.height * locAnchorPoint.y;
         this.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
-    setDirtyFlag: function (dirtyFlag) {
+    setDirtyFlag(dirtyFlag) {
         if (this._dirtyFlag === 0 && dirtyFlag !== 0)
             cc.renderer.pushDirtyNode(this);
         this._dirtyFlag |= dirtyFlag;
-    },
+    }
 
-    getParentRenderCmd: function () {
+    getParentRenderCmd() {
         if (this._node && this._node._parent && this._node._parent._renderCmd)
             return this._node._parent._renderCmd;
         return null;
-    },
+    }
 
-    transform: function (parentCmd, recursive) {
+    transform(parentCmd, recursive) {
         if (!this._transform) {
             this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
             this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
         }
 
-        var node = this._node,
+        const node = this._node,
             pt = parentCmd ? parentCmd._worldTransform : null,
             t = this._transform,
             wt = this._worldTransform;         //get the world transform
 
         if (node._usingNormalizedPosition && node._parent) {
-            var conSize = node._parent._contentSize;
+            const conSize = node._parent._contentSize;
             node._position.x = node._normalizedPosition.x * conSize.width;
             node._position.y = node._normalizedPosition.y * conSize.height;
             node._normalizedPositionDirty = false;
         }
 
-        var hasRotation = node._rotationX || node._rotationY;
-        var hasSkew = node._skewX || node._skewY;
-        var sx = node._scaleX, sy = node._scaleY;
-        var appX = this._anchorPointInPoints.x, appY = this._anchorPointInPoints.y;
-        var a = 1, b = 0, c = 0, d = 1;
+        const hasRotation = node._rotationX || node._rotationY;
+        const hasSkew = node._skewX || node._skewY;
+        const sx = node._scaleX, sy = node._scaleY;
+        const appX = this._anchorPointInPoints.x, appY = this._anchorPointInPoints.y;
+        let a = 1, b = 0, c = 0, d = 1;
         if (hasRotation || hasSkew) {
             // position 
             t.tx = node._position.x;
@@ -199,7 +202,7 @@ cc.Node.RenderCmd.prototype = {
 
             // rotation
             if (hasRotation) {
-                var rotationRadiansX = node._rotationX * ONE_DEGREE;
+                const rotationRadiansX = node._rotationX * ONE_DEGREE;
                 c = Math.sin(rotationRadiansX);
                 d = Math.cos(rotationRadiansX);
                 if (node._rotationY === node._rotationX) {
@@ -207,7 +210,7 @@ cc.Node.RenderCmd.prototype = {
                     b = -c;
                 }
                 else {
-                    var rotationRadiansY = node._rotationY * ONE_DEGREE;
+                    const rotationRadiansY = node._rotationY * ONE_DEGREE;
                     a = Math.cos(rotationRadiansY);
                     b = -Math.sin(rotationRadiansY);
                 }
@@ -221,8 +224,8 @@ cc.Node.RenderCmd.prototype = {
 
             // skew
             if (hasSkew) {
-                var skx = Math.tan(node._skewX * ONE_DEGREE);
-                var sky = Math.tan(node._skewY * ONE_DEGREE);
+                let skx = Math.tan(node._skewX * ONE_DEGREE);
+                let sky = Math.tan(node._skewY * ONE_DEGREE);
                 if (skx === Infinity)
                     skx = 99999999;
                 if (sky === Infinity)
@@ -313,17 +316,17 @@ cc.Node.RenderCmd.prototype = {
         }
 
         this._cacheDirty = true;
-    },
+    }
 
-    getNodeToParentTransform: function () {
+    getNodeToParentTransform() {
         if (!this._transform || this._dirtyFlag & cc.Node._dirtyFlags.transformDirty) {
             this.transform();
         }
         return this._transform;
-    },
+    }
 
-    visit: function (parentCmd) {
-        var node = this._node, renderer = cc.renderer;
+    visit(parentCmd) {
+        const node = this._node, renderer = cc.renderer;
 
         parentCmd = parentCmd || this.getParentRenderCmd();
         if (parentCmd)
@@ -335,18 +338,18 @@ cc.Node.RenderCmd.prototype = {
         }
 
         this._syncStatus(parentCmd);
-    },
+    }
 
-    _updateDisplayColor: function (parentColor) {
-        var node = this._node;
-        var locDispColor = this._displayedColor, locRealColor = node._realColor;
-        var i, len, selChildren, item;
+    _updateDisplayColor(parentColor) {
+        const node = this._node;
+        const locDispColor = this._displayedColor, locRealColor = node._realColor;
+        let i, len, selChildren, item;
         this._notifyRegionStatus && this._notifyRegionStatus(cc.Node.CanvasRenderCmd.RegionStatus.Dirty);
         if (this._cascadeColorEnabledDirty && !node._cascadeColorEnabled) {
             locDispColor.r = locRealColor.r;
             locDispColor.g = locRealColor.g;
             locDispColor.b = locRealColor.b;
-            var whiteColor = new cc.Color(255, 255, 255, 255);
+            const whiteColor = new cc.Color(255, 255, 255, 255);
             selChildren = node._children;
             for (i = 0, len = selChildren.length; i < len; i++) {
                 item = selChildren[i];
@@ -356,7 +359,7 @@ cc.Node.RenderCmd.prototype = {
             this._cascadeColorEnabledDirty = false;
         } else {
             if (parentColor === undefined) {
-                var locParent = node._parent;
+                const locParent = node._parent;
                 if (locParent && locParent._cascadeColorEnabled)
                     parentColor = locParent.getDisplayedColor();
                 else
@@ -377,11 +380,11 @@ cc.Node.RenderCmd.prototype = {
             }
         }
         this._dirtyFlag &= ~dirtyFlags.colorDirty;
-    },
+    }
 
-    _updateDisplayOpacity: function (parentOpacity) {
-        var node = this._node;
-        var i, len, selChildren, item;
+    _updateDisplayOpacity(parentOpacity) {
+        const node = this._node;
+        let i, len, selChildren, item;
         this._notifyRegionStatus && this._notifyRegionStatus(cc.Node.CanvasRenderCmd.RegionStatus.Dirty);
         if (this._cascadeOpacityEnabledDirty && !node._cascadeOpacityEnabled) {
             this._displayedOpacity = node._realOpacity;
@@ -394,7 +397,7 @@ cc.Node.RenderCmd.prototype = {
             this._cascadeOpacityEnabledDirty = false;
         } else {
             if (parentOpacity === undefined) {
-                var locParent = node._parent;
+                const locParent = node._parent;
                 parentOpacity = 255;
                 if (locParent && locParent._cascadeOpacityEnabled)
                     parentOpacity = locParent.getDisplayedOpacity();
@@ -412,12 +415,12 @@ cc.Node.RenderCmd.prototype = {
             }
         }
         this._dirtyFlag &= ~dirtyFlags.opacityDirty;
-    },
+    }
 
-    _syncDisplayColor: function (parentColor) {
-        var node = this._node, locDispColor = this._displayedColor, locRealColor = node._realColor;
+    _syncDisplayColor(parentColor) {
+        const node = this._node, locDispColor = this._displayedColor, locRealColor = node._realColor;
         if (parentColor === undefined) {
-            var locParent = node._parent;
+            const locParent = node._parent;
             if (locParent && locParent._cascadeColorEnabled)
                 parentColor = locParent.getDisplayedColor();
             else
@@ -426,25 +429,25 @@ cc.Node.RenderCmd.prototype = {
         locDispColor.r = 0 | (locRealColor.r * parentColor.r / 255.0);
         locDispColor.g = 0 | (locRealColor.g * parentColor.g / 255.0);
         locDispColor.b = 0 | (locRealColor.b * parentColor.b / 255.0);
-    },
+    }
 
-    _syncDisplayOpacity: function (parentOpacity) {
-        var node = this._node;
+    _syncDisplayOpacity(parentOpacity) {
+        const node = this._node;
         if (parentOpacity === undefined) {
-            var locParent = node._parent;
+            const locParent = node._parent;
             parentOpacity = 255;
             if (locParent && locParent._cascadeOpacityEnabled)
                 parentOpacity = locParent.getDisplayedOpacity();
         }
         this._displayedOpacity = node._realOpacity * parentOpacity / 255.0;
-    },
+    }
 
-    _updateColor: function () {
-    },
+    _updateColor() {
+    }
 
-    _propagateFlagsDown: function (parentCmd) {
-        var locFlag = this._dirtyFlag;
-        var parentNode = parentCmd ? parentCmd._node : null;
+    _propagateFlagsDown(parentCmd) {
+        let locFlag = this._dirtyFlag;
+        const parentNode = parentCmd ? parentCmd._node : null;
 
         if(parentNode && parentNode._cascadeColorEnabled && (parentCmd._dirtyFlag & dirtyFlags.colorDirty))
             locFlag |= dirtyFlags.colorDirty;
@@ -456,11 +459,11 @@ cc.Node.RenderCmd.prototype = {
             locFlag |= dirtyFlags.transformDirty;
 
         this._dirtyFlag = locFlag;
-    },
+    }
 
-    updateStatus: function () {
-        var locFlag = this._dirtyFlag;
-        var colorDirty = locFlag & dirtyFlags.colorDirty,
+    updateStatus() {
+        const locFlag = this._dirtyFlag;
+        const colorDirty = locFlag & dirtyFlags.colorDirty,
             opacityDirty = locFlag & dirtyFlags.opacityDirty;
 
         if (locFlag & dirtyFlags.contentDirty) {
@@ -485,12 +488,13 @@ cc.Node.RenderCmd.prototype = {
 
         if (locFlag & dirtyFlags.orderDirty)
             this._dirtyFlag &= ~dirtyFlags.orderDirty;
-    },
+    }
 
-    _syncStatus: function (parentCmd) {
+    _syncStatus(parentCmd) {
         //  In the visit logic does not restore the _dirtyFlag
         //  Because child elements need parent's _dirtyFlag to change himself
-        var locFlag = this._dirtyFlag, parentNode = parentCmd ? parentCmd._node : null;
+        let locFlag = this._dirtyFlag;
+        const parentNode = parentCmd ? parentCmd._node : null;
 
         //  There is a possibility:
         //    The parent element changed color, child element not change
@@ -509,7 +513,7 @@ cc.Node.RenderCmd.prototype = {
 
         this._dirtyFlag = locFlag;
 
-        var colorDirty = locFlag & dirtyFlags.colorDirty,
+        const colorDirty = locFlag & dirtyFlags.colorDirty,
             opacityDirty = locFlag & dirtyFlags.opacityDirty;
 
         if (colorDirty)
@@ -529,43 +533,121 @@ cc.Node.RenderCmd.prototype = {
 
         if (locFlag & dirtyFlags.orderDirty)
             this._dirtyFlag &= ~dirtyFlags.orderDirty;
-    },
+    }
 
-    setShaderProgram: function (shaderProgram) {
+    setShaderProgram(shaderProgram) {
         //do nothing.
-    },
+    }
 
-    getShaderProgram: function () {
+    getShaderProgram() {
         return null;
-    },
+    }
 
-    getGLProgramState: function () {
+    getGLProgramState() {
         return null;
-    },
+    }
 
-    setGLProgramState: function (glProgramState) {
+    setGLProgramState(glProgramState) {
         // do nothing
-    },
+    }
 };
 
 cc.Node.RenderCmd.prototype.originTransform = cc.Node.RenderCmd.prototype.transform;
 cc.Node.RenderCmd.prototype.originUpdateStatus = cc.Node.RenderCmd.prototype.updateStatus;
 cc.Node.RenderCmd.prototype._originSyncStatus = cc.Node.RenderCmd.prototype._syncStatus;
 
+// Backward-compatible _rootCtor shim for old-style constructors in extensions/
+// that call this._rootCtor(renderable) instead of super(renderable).
+cc.Node.RenderCmd.prototype._rootCtor = function (renderable) {
+    this._needDraw = false;
+    this._dirtyFlag = 1;
+    this._curLevel = -1;
+    this._displayedOpacity = 255;
+    this._cascadeColorEnabledDirty = false;
+    this._cascadeOpacityEnabledDirty = false;
+    this._transform = null;
+    this._worldTransform = null;
+    this._inverse = null;
+    this._node = renderable;
+    this._anchorPointInPoints = {x: 0, y: 0};
+    this._displayedColor = cc.color(255, 255, 255, 255);
+};
+
 //-----------------------Canvas ---------------------------
 
 (function () {
 //The cc.Node's render command for Canvas
-    cc.Node.CanvasRenderCmd = function (renderable) {
-        this._node = renderable;
-        this._anchorPointInPoints = {x: 0, y: 0};
-        this._displayedColor = cc.color(255, 255, 255, 255);
-        this._cachedParent = null;
-        this._cacheDirty = false;
-        this._currentRegion = new cc.Region();
-        this._oldRegion = new cc.Region();
-        this._regionFlag = 0;
-        this._canUseDirtyRegion = false;
+    cc.Node.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.RenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._cachedParent = null;
+            this._cacheDirty = false;
+            this._currentRegion = new cc.Region();
+            this._oldRegion = new cc.Region();
+            this._regionFlag = 0;
+            this._canUseDirtyRegion = false;
+        }
+
+        _notifyRegionStatus(status) {
+            if (this._needDraw && this._regionFlag < status) {
+                this._regionFlag = status;
+            }
+        }
+
+        getLocalBB() {
+            const node = this._node;
+            localBB.x = localBB.y = 0;
+            localBB.width = node._contentSize.width;
+            localBB.height = node._contentSize.height;
+            return localBB;
+        }
+
+        _updateCurrentRegions() {
+            const temp = this._currentRegion;
+            this._currentRegion = this._oldRegion;
+            this._oldRegion = temp;
+            //hittest will call the transform, and set region flag to DirtyDouble, and the changes need to be considered for rendering
+            if (cc.Node.CanvasRenderCmd.RegionStatus.DirtyDouble === this._regionFlag && (!this._currentRegion.isEmpty())) {
+                this._oldRegion.union(this._currentRegion);
+            }
+            this._currentRegion.updateRegion(this.getLocalBB(), this._worldTransform);
+        }
+
+        setDirtyFlag(dirtyFlag, child) {
+            cc.Node.RenderCmd.prototype.setDirtyFlag.call(this, dirtyFlag, child);
+            this._setCacheDirty(child);                  //TODO it should remove from here.
+            if (this._cachedParent)
+                this._cachedParent.setDirtyFlag(dirtyFlag, true);
+        }
+
+        _setCacheDirty() {
+            if (this._cacheDirty === false) {
+                this._cacheDirty = true;
+                const cachedP = this._cachedParent;
+                cachedP && cachedP !== this && cachedP._setNodeDirtyForCache && cachedP._setNodeDirtyForCache();
+            }
+        }
+
+        _setCachedParent(cachedParent) {
+            if (this._cachedParent === cachedParent)
+                return;
+
+            this._cachedParent = cachedParent;
+            const children = this._node._children;
+            for (let i = 0, len = children.length; i < len; i++)
+                children[i]._renderCmd._setCachedParent(cachedParent);
+        }
+
+        detachFromParent() {
+            this._cachedParent = null;
+            const selChildren = this._node._children;
+            let item;
+            for (let i = 0, len = selChildren.length; i < len; i++) {
+                item = selChildren[i];
+                if (item && item._renderCmd)
+                    item._renderCmd.detachFromParent();
+            }
+        }
     };
 
     cc.Node.CanvasRenderCmd.RegionStatus = {
@@ -574,70 +656,7 @@ cc.Node.RenderCmd.prototype._originSyncStatus = cc.Node.RenderCmd.prototype._syn
         DirtyDouble: 2  //the region is moved, the old and the new one need considered when rendering
     };
 
-    var proto = cc.Node.CanvasRenderCmd.prototype = Object.create(cc.Node.RenderCmd.prototype);
-    proto.constructor = cc.Node.CanvasRenderCmd;
-    proto._rootCtor = cc.Node.CanvasRenderCmd;
-
-    proto._notifyRegionStatus = function (status) {
-        if (this._needDraw && this._regionFlag < status) {
-            this._regionFlag = status;
-        }
-    };
-
-    var localBB = new cc.Rect();
-    proto.getLocalBB = function () {
-        var node = this._node;
-        localBB.x = localBB.y = 0;
-        localBB.width = node._contentSize.width;
-        localBB.height = node._contentSize.height;
-        return localBB;
-    };
-
-    proto._updateCurrentRegions = function () {
-        var temp = this._currentRegion;
-        this._currentRegion = this._oldRegion;
-        this._oldRegion = temp;
-        //hittest will call the transform, and set region flag to DirtyDouble, and the changes need to be considered for rendering
-        if (cc.Node.CanvasRenderCmd.RegionStatus.DirtyDouble === this._regionFlag && (!this._currentRegion.isEmpty())) {
-            this._oldRegion.union(this._currentRegion);
-        }
-        this._currentRegion.updateRegion(this.getLocalBB(), this._worldTransform);
-    };
-
-    proto.setDirtyFlag = function (dirtyFlag, child) {
-        cc.Node.RenderCmd.prototype.setDirtyFlag.call(this, dirtyFlag, child);
-        this._setCacheDirty(child);                  //TODO it should remove from here.
-        if (this._cachedParent)
-            this._cachedParent.setDirtyFlag(dirtyFlag, true);
-    };
-
-    proto._setCacheDirty = function () {
-        if (this._cacheDirty === false) {
-            this._cacheDirty = true;
-            var cachedP = this._cachedParent;
-            cachedP && cachedP !== this && cachedP._setNodeDirtyForCache && cachedP._setNodeDirtyForCache();
-        }
-    };
-
-    proto._setCachedParent = function (cachedParent) {
-        if (this._cachedParent === cachedParent)
-            return;
-
-        this._cachedParent = cachedParent;
-        var children = this._node._children;
-        for (var i = 0, len = children.length; i < len; i++)
-            children[i]._renderCmd._setCachedParent(cachedParent);
-    };
-
-    proto.detachFromParent = function () {
-        this._cachedParent = null;
-        var selChildren = this._node._children, item;
-        for (var i = 0, len = selChildren.length; i < len; i++) {
-            item = selChildren[i];
-            if (item && item._renderCmd)
-                item._renderCmd.detachFromParent();
-        }
-    };
+    const localBB = new cc.Rect();
 
     //util functions
     cc.Node.CanvasRenderCmd._getCompositeOperationByBlendFunc = function (blendFunc) {
@@ -653,5 +672,16 @@ cc.Node.RenderCmd.prototype._originSyncStatus = cc.Node.RenderCmd.prototype._syn
             else
                 return "source-over";
         }
+    };
+
+    // Backward-compatible _rootCtor shim for old-style constructors in extensions/
+    cc.Node.CanvasRenderCmd.prototype._rootCtor = function (renderable) {
+        cc.Node.RenderCmd.prototype._rootCtor.call(this, renderable);
+        this._cachedParent = null;
+        this._cacheDirty = false;
+        this._currentRegion = new cc.Region();
+        this._oldRegion = new cc.Region();
+        this._regionFlag = 0;
+        this._canUseDirtyRegion = false;
     };
 })();

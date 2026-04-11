@@ -215,8 +215,8 @@ cc.shaderCache = /** @lends cc.shaderCache# */{
      * loads the default shaders
      */
     loadDefaultShaders: function () {
-        for (var i = 0; i < this.TYPE_MAX; ++i) {
-            var key = this._keyMap[i];
+        for (let i = 0; i < this.TYPE_MAX; ++i) {
+            const key = this._keyMap[i];
             this.programForKey(key);
         }
     },
@@ -228,7 +228,7 @@ cc.shaderCache = /** @lends cc.shaderCache# */{
         // reset all programs and reload them
 
         // Position Texture Color shader
-        var program = this.programForKey(cc.SHADER_POSITION_TEXTURECOLOR);
+        let program = this.programForKey(cc.SHADER_POSITION_TEXTURECOLOR);
         program.reset();
         this._loadDefaultShader(program, cc.SHADER_POSITION_TEXTURECOLOR);
 
@@ -294,7 +294,7 @@ cc.shaderCache = /** @lends cc.shaderCache# */{
      */
     programForKey: function (key) {
         if (!this._programs[key]) {
-            var program = new cc.GLProgram();
+            const program = new cc.GLProgram();
             this._loadDefaultShader(program, key);
             this._programs[key] = program;
         }

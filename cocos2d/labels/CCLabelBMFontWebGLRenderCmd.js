@@ -31,27 +31,26 @@
  ****************************************************************************/
 
 (function () {
-    cc.LabelBMFont.WebGLRenderCmd = function (renderableObject) {
-        this._rootCtor(renderableObject);
-    };
+    cc.LabelBMFont.WebGLRenderCmd = class WebGLRenderCmd extends cc.Node.WebGLRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+        }
 
-    var proto = cc.LabelBMFont.WebGLRenderCmd.prototype = Object.create(cc.Node.WebGLRenderCmd.prototype);
-    proto.constructor = cc.LabelBMFont.WebGLRenderCmd;
+        setTexture(texture) {
+            this._node.setOpacityModifyRGB(this._node._texture.hasPremultipliedAlpha());
+        }
 
-    proto.setTexture = function (texture) {
-        this._node.setOpacityModifyRGB(this._node._texture.hasPremultipliedAlpha());
-    };
+        _updateCharTexture(fontChar, rect, key, isRotated) {
+            // updating previous sprite
+            fontChar.setTextureRect(rect, isRotated);
+            // restore to default in case they were modified
+            fontChar.visible = true;
+        }
 
-    proto._updateCharTexture = function(fontChar, rect, key, isRotated){
-        // updating previous sprite
-        fontChar.setTextureRect(rect, isRotated);
-        // restore to default in case they were modified
-        fontChar.visible = true;
-    };
+        _changeTextureColor() {
+        }
 
-    proto._changeTextureColor = function () {
-    };
-
-    proto._updateCharColorAndOpacity = function () {
+        _updateCharColorAndOpacity() {
+        }
     };
 })();
