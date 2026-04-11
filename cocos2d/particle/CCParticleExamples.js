@@ -32,23 +32,23 @@
  * @example
  * var emitter = new cc.ParticleFire();
  */
-cc.ParticleFire = cc.ParticleSystem.extend(/** @lends cc.ParticleFire# */{
+cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
     /**
      * <p>The cc.ParticleFire's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleFire()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 300 : 150);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 300 : 150);
+    }
 
     /**
      * initialize a fire particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -101,7 +101,7 @@ cc.ParticleFire = cc.ParticleSystem.extend(/** @lends cc.ParticleFire# */{
         }
         return false;
     }
-});
+};
 
 
 /**
@@ -112,23 +112,23 @@ cc.ParticleFire = cc.ParticleSystem.extend(/** @lends cc.ParticleFire# */{
  * @example
  * var emitter = new cc.ParticleFireworks();
  */
-cc.ParticleFireworks = cc.ParticleSystem.extend(/** @lends cc.ParticleFireworks# */{
+cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
     /**
      * <p>The cc.ParticleFireworks's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleFireworks()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 1500 : 150);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 1500 : 150);
+    }
 
     /**
      * initialize a fireworks particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -178,7 +178,7 @@ cc.ParticleFireworks = cc.ParticleSystem.extend(/** @lends cc.ParticleFireworks#
         }
         return false;
     }
-});
+};
 
 
 /**
@@ -189,23 +189,23 @@ cc.ParticleFireworks = cc.ParticleSystem.extend(/** @lends cc.ParticleFireworks#
  * @example
  * var emitter = new cc.ParticleSun();
  */
-cc.ParticleSun = cc.ParticleSystem.extend(/** @lends cc.ParticleSun# */{
+cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
     /**
      * <p>The cc.ParticleSun's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleSun()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 350 : 150);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 350 : 150);
+    }
 
     /**
      * initialize a sun particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // additive
             this.setBlendAdditive(true);
 
@@ -257,7 +257,7 @@ cc.ParticleSun = cc.ParticleSystem.extend(/** @lends cc.ParticleSun# */{
         }
         return false;
     }
-});
+};
 
 
 //! @brief A  particle system
@@ -269,23 +269,23 @@ cc.ParticleSun = cc.ParticleSystem.extend(/** @lends cc.ParticleSun# */{
  * @example
  * var emitter = new cc.ParticleGalaxy();
  */
-cc.ParticleGalaxy = cc.ParticleSystem.extend(/** @lends cc.ParticleGalaxy# */{
+cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
     /**
      * <p>The cc.ParticleGalaxy's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleGalaxy()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 200 : 100);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 200 : 100);
+    }
 
     /**
      * initialize a galaxy particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -340,7 +340,7 @@ cc.ParticleGalaxy = cc.ParticleSystem.extend(/** @lends cc.ParticleGalaxy# */{
         }
         return false;
     }
-});
+};
 
 /**
  * A flower particle system
@@ -350,23 +350,23 @@ cc.ParticleGalaxy = cc.ParticleSystem.extend(/** @lends cc.ParticleGalaxy# */{
  * @example
  * var emitter = new cc.ParticleFlower();
  */
-cc.ParticleFlower = cc.ParticleSystem.extend(/** @lends cc.ParticleFlower# */{
+cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
     /**
      * <p>The cc.ParticleFlower's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleFlower()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor : function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 250 : 100);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 250 : 100);
+    }
 
     /**
      * initialize a flower particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -421,7 +421,7 @@ cc.ParticleFlower = cc.ParticleSystem.extend(/** @lends cc.ParticleFlower# */{
         }
         return false;
     }
-});
+};
 
 
 //! @brief A meteor particle system
@@ -433,23 +433,23 @@ cc.ParticleFlower = cc.ParticleSystem.extend(/** @lends cc.ParticleFlower# */{
  * @example
  * var emitter = new cc.ParticleMeteor();
  */
-cc.ParticleMeteor = cc.ParticleSystem.extend(/** @lends cc.ParticleMeteor# */{
+cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
     /**
      * <p>The cc.ParticleMeteor's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleMeteor()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 150 : 100);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 150 : 100);
+    }
 
     /**
      * initialize a meteor particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -504,7 +504,7 @@ cc.ParticleMeteor = cc.ParticleSystem.extend(/** @lends cc.ParticleMeteor# */{
         }
         return false;
     }
-});
+};
 
 
 /**
@@ -515,24 +515,24 @@ cc.ParticleMeteor = cc.ParticleSystem.extend(/** @lends cc.ParticleMeteor# */{
  * @example
  * var emitter = new cc.ParticleSpiral();
  */
-cc.ParticleSpiral = cc.ParticleSystem.extend(/** @lends cc.ParticleSpiral# */{
+cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
 
     /**
      * <p>The cc.ParticleSpiral's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleSpiral()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function() {
-        cc.ParticleSystem.prototype.ctor.call(this,(cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 500 : 100);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 500 : 100);
+    }
 
     /**
      * initialize a spiral particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -587,7 +587,7 @@ cc.ParticleSpiral = cc.ParticleSystem.extend(/** @lends cc.ParticleSpiral# */{
         }
         return false;
     }
-});
+};
 
 
 /**
@@ -598,23 +598,23 @@ cc.ParticleSpiral = cc.ParticleSystem.extend(/** @lends cc.ParticleSpiral# */{
  * @example
  * var emitter = new cc.ParticleExplosion();
  */
-cc.ParticleExplosion = cc.ParticleSystem.extend(/** @lends cc.ParticleExplosion# */{
+cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
     /**
      * <p>The cc.ParticleExplosion's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleExplosion()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 700 : 300);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 700 : 300);
+    }
 
     /**
      * initialize an explosion particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(0.1);
 
@@ -668,7 +668,7 @@ cc.ParticleExplosion = cc.ParticleSystem.extend(/** @lends cc.ParticleExplosion#
         }
         return false;
     }
-});
+};
 
 
 /**
@@ -679,24 +679,24 @@ cc.ParticleExplosion = cc.ParticleSystem.extend(/** @lends cc.ParticleExplosion#
  * @example
  * var emitter = new cc.ParticleSmoke();
  */
-cc.ParticleSmoke = cc.ParticleSystem.extend(/** @lends cc.ParticleSmoke# */{
+cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
 
     /**
      * <p>The cc.ParticleSmoke's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleSmoke()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 200 : 100);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 200 : 100);
+    }
 
     /**
      * initialize a smoke particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -747,7 +747,7 @@ cc.ParticleSmoke = cc.ParticleSystem.extend(/** @lends cc.ParticleSmoke# */{
         }
         return false;
     }
-});
+};
 
 
 /**
@@ -758,24 +758,24 @@ cc.ParticleSmoke = cc.ParticleSystem.extend(/** @lends cc.ParticleSmoke# */{
  * @example
  * var emitter = new cc.ParticleSnow();
  */
-cc.ParticleSnow = cc.ParticleSystem.extend(/** @lends cc.ParticleSnow# */{
+cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
 
     /**
      * <p>The cc.ParticleSnow's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleSnow()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 700 : 250);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 700 : 250);
+    }
 
     /**
      * initialize a snow particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -830,7 +830,7 @@ cc.ParticleSnow = cc.ParticleSystem.extend(/** @lends cc.ParticleSnow# */{
         }
         return false;
     }
-});
+};
 
 
 //! @brief A rain particle system
@@ -842,24 +842,24 @@ cc.ParticleSnow = cc.ParticleSystem.extend(/** @lends cc.ParticleSnow# */{
  * @example
  * var emitter = new cc.ParticleRain();
  */
-cc.ParticleRain = cc.ParticleSystem.extend(/** @lends cc.ParticleRain# */{
+cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
 
     /**
      * <p>The cc.ParticleRain's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleRain()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
-        cc.ParticleSystem.prototype.ctor.call(this, (cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 1000 : 300);
-    },
+    constructor() {
+        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 1000 : 300);
+    }
 
     /**
      * initialize a rain particle system with number Of Particles
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
-        if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
+    initWithTotalParticles(numberOfParticles) {
+        if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
             this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
 
@@ -914,5 +914,5 @@ cc.ParticleRain = cc.ParticleSystem.extend(/** @lends cc.ParticleRain# */{
         }
         return false;
     }
-});
+};
 

@@ -40,25 +40,25 @@
  * @example
  * var trans = new cc.TransitionPageTurn(t, scene, backwards);
  */
-cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTurn# */{
+cc.TransitionPageTurn = class TransitionPageTurn extends cc.TransitionScene {
 
     /**
      * @param {Number} t time in seconds
      * @param {cc.Scene} scene
      * @param {Boolean} backwards
      */
-    ctor: function (t, scene, backwards) {
-        cc.TransitionScene.prototype.ctor.call(this);
+    constructor(t, scene, backwards) {
+        super();
         this._gridProxy = new cc.NodeGrid();
         this.initWithDuration(t, scene, backwards);
-    },
+    }
 
     /**
      * @type Boolean
      */
-    _back: true,
-    _gridProxy: null,
-    _className: "TransitionPageTurn",
+    _back = true;
+    _gridProxy = null;
+    _className = "TransitionPageTurn";
 
     /**
      * Creates a base transition with duration and incoming scene.<br/>
@@ -69,32 +69,32 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
      * @param {Boolean} backwards
      * @return {Boolean}
      */
-    initWithDuration: function (t, scene, backwards) {
+    initWithDuration(t, scene, backwards) {
         // XXX: needed before [super init]
         this._back = backwards;
 
-        if (cc.TransitionScene.prototype.initWithDuration.call(this, t, scene)) {
+        if (super.initWithDuration(t, scene)) {
             // do something
         }
         return true;
-    },
+    }
 
     /**
      * @param {cc.Size} vector
      * @return {cc.ReverseTime|cc.TransitionScene}
      */
-    actionWithSize: function (vector) {
+    actionWithSize(vector) {
         if (this._back)
             return cc.reverseTime(cc.pageTurn3D(this._duration, vector));        // Get hold of the PageTurn3DAction
         else
             return cc.pageTurn3D(this._duration, vector);     // Get hold of the PageTurn3DAction
-    },
+    }
 
     /**
      * custom on enter
      */
-    onEnter: function () {
-        cc.TransitionScene.prototype.onEnter.call(this);
+    onEnter() {
+        super.onEnter();
         var winSize = cc.director.getWinSize();
         var x, y;
         if (winSize.width > winSize.height) {
@@ -121,19 +121,19 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
             );
             this._inScene.runAction(cc.show());
         }
-    },
+    }
 
-    visit: function () {
-        //cc.TransitionScene.prototype.visit.call(this);
+    visit() {
+        //super.visit();
         if (this._back)
             this._outScene.visit();
         else
             this._inScene.visit();
         this._gridProxy.visit();
-    },
+    }
 
-    _sceneOrder: function () {
+    _sceneOrder() {
         this._isInSceneOnTop = this._back;
     }
-});
+};
 
