@@ -41,115 +41,117 @@ cc.IMEKeyboardNotificationInfo = function (begin, end, duration) {
  * @class
  * @extends cc.Class
  */
-cc.IMEDelegate = cc.Class.extend(/** @lends cc.IMEDelegate# */{
+cc.IMEDelegate = class IMEDelegate extends cc.NewClass {
     /**
      * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
      */
-    ctor: function () {
+    constructor() {
+        super();
         cc.imeDispatcher.addDelegate(this);
-    },
+    }
     /**
      * Remove delegate
      */
-    removeDelegate: function () {
+    removeDelegate() {
         cc.imeDispatcher.removeDelegate(this);
-    },
+    }
     /**
      * Remove delegate
      * @return {Boolean}
      */
-    attachWithIME: function () {
+    attachWithIME() {
         return cc.imeDispatcher.attachDelegateWithIME(this);
-    },
+    }
     /**
      * Detach with IME
      * @return {Boolean}
      */
-    detachWithIME: function () {
+    detachWithIME() {
         return cc.imeDispatcher.detachDelegateWithIME(this);
-    },
+    }
 
     /**
      * Decide the delegate instance is ready for receive ime message or not.<br />
      * Called by CCIMEDispatcher.
      * @return {Boolean}
      */
-    canAttachWithIME: function () {
+    canAttachWithIME() {
         return false;
-    },
+    }
 
     /**
      * When the delegate detach with IME, this method call by CCIMEDispatcher.
      */
-    didAttachWithIME: function () {
-    },
+    didAttachWithIME() {
+    }
 
     /**
      * Decide the delegate instance can stop receive ime message or not.
      * @return {Boolean}
      */
-    canDetachWithIME: function () {
+    canDetachWithIME() {
         return false;
-    },
+    }
 
     /**
      * When the delegate detach with IME, this method call by CCIMEDispatcher.
      */
-    didDetachWithIME: function () {
-    },
+    didDetachWithIME() {
+    }
 
     /**
      * Called by CCIMEDispatcher when some text input from IME.
      */
-    insertText: function (text, len) {
-    },
+    insertText(text, len) {
+    }
 
     /**
      * Called by CCIMEDispatcher when user clicked the backward key.
      */
-    deleteBackward: function () {
-    },
+    deleteBackward() {
+    }
 
     /**
      * Called by CCIMEDispatcher for get text which delegate already has.
      * @return {String}
      */
-    getContentText: function () {
+    getContentText() {
         return "";
-    },
+    }
 
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////
-    keyboardWillShow: function (info) {
-    },
-    keyboardDidShow: function (info) {
-    },
-    keyboardWillHide: function (info) {
-    },
-    keyboardDidHide: function (info) {
+    keyboardWillShow(info) {
     }
-});
+    keyboardDidShow(info) {
+    }
+    keyboardWillHide(info) {
+    }
+    keyboardDidHide(info) {
+    }
+};
 
 /**
  * cc.imeDispatcher is a singleton object which manage input message dispatching.
  * @class
  * @name cc.imeDispatcher
  */
-cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
-    _domInputControl: null,
-    impl: null,
-    _currentInputString: "",
-    _lastClickPosition: null,
+cc.IMEDispatcher = class IMEDispatcher extends cc.NewClass {
+    _domInputControl = null;
+    impl = null;
+    _currentInputString = "";
+    _lastClickPosition = null;
     /**
      * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
      */
-    ctor: function () {
+    constructor() {
+        super();
         this.impl = new cc.IMEDispatcher.Impl();
         this._lastClickPosition = cc.p(0, 0);
-    },
+    }
 
-    init: function () {
+    init() {
         if (cc.sys.isMobile)
             return;
         this._domInputControl = cc.$("#imeDispatcherInput");
@@ -200,9 +202,9 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
             selfPointer._lastClickPosition.x = tx;
             selfPointer._lastClickPosition.y = ty;
         }, false);
-    },
+    }
 
-    _processDomInputString: function (text) {
+    _processDomInputString(text) {
         var i, startPos;
         var len = this._currentInputString.length < text.length ? this._currentInputString.length : text.length;
         for (startPos = 0; startPos < len; startPos++) {
@@ -218,14 +220,14 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
             this.dispatchInsertText(text[startPos + i], 1);
 
         this._currentInputString = text;
-    },
+    }
 
     /**
      * Dispatch the input text from ime
      * @param {String} text
      * @param {Number} len
      */
-    dispatchInsertText: function (text, len) {
+    dispatchInsertText(text, len) {
         if (!this.impl || !text || len <= 0)
             return;
 
@@ -234,12 +236,12 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
             return;
 
         this.impl._delegateWithIme.insertText(text, len);
-    },
+    }
 
     /**
      * Dispatch the delete backward operation
      */
-    dispatchDeleteBackward: function () {
+    dispatchDeleteBackward() {
         if (!this.impl) {
             return;
         }
@@ -249,25 +251,25 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
             return;
 
         this.impl._delegateWithIme.deleteBackward();
-    },
+    }
 
     /**
      * Get the content text, which current CCIMEDelegate which attached with IME has.
      * @return {String}
      */
-    getContentText: function () {
+    getContentText() {
         if (this.impl && this.impl._delegateWithIme) {
             var pszContentText = this.impl._delegateWithIme.getContentText();
             return (pszContentText) ? pszContentText : "";
         }
         return "";
-    },
+    }
 
     /**
      * Dispatch keyboard notification
      * @param {cc.IMEKeyboardNotificationInfo} info
      */
-    dispatchKeyboardWillShow: function (info) {
+    dispatchKeyboardWillShow(info) {
         if (this.impl) {
             for (var i = 0; i < this.impl._delegateList.length; i++) {
                 var delegate = this.impl._delegateList[i];
@@ -276,13 +278,13 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
                 }
             }
         }
-    },
+    }
 
     /**
      * Dispatch keyboard notification
      * @param {cc.IMEKeyboardNotificationInfo} info
      */
-    dispatchKeyboardDidShow: function (info) {
+    dispatchKeyboardDidShow(info) {
         if (this.impl) {
             for (var i = 0; i < this.impl._delegateList.length; i++) {
                 var delegate = this.impl._delegateList[i];
@@ -290,13 +292,13 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
                     delegate.keyboardDidShow(info);
             }
         }
-    },
+    }
 
     /**
      * Dispatch keyboard notification
      * @param {cc.IMEKeyboardNotificationInfo} info
      */
-    dispatchKeyboardWillHide: function (info) {
+    dispatchKeyboardWillHide(info) {
         if (this.impl) {
             for (var i = 0; i < this.impl._delegateList.length; i++) {
                 var delegate = this.impl._delegateList[i];
@@ -305,13 +307,13 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
                 }
             }
         }
-    },
+    }
 
     /**
      * Dispatch keyboard notification
      * @param {cc.IMEKeyboardNotificationInfo} info
      */
-    dispatchKeyboardDidHide: function (info) {
+    dispatchKeyboardDidHide(info) {
         if (this.impl) {
             for (var i = 0; i < this.impl._delegateList.length; i++) {
                 var delegate = this.impl._delegateList[i];
@@ -320,7 +322,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
                 }
             }
         }
-    },
+    }
 
     /**
      * Add delegate to concern ime msg
@@ -329,7 +331,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
      * //example
      * cc.imeDispatcher.addDelegate(this);
      */
-    addDelegate: function (delegate) {
+    addDelegate(delegate) {
         if (!delegate || !this.impl)
             return;
 
@@ -338,7 +340,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
             return;
         }
         this.impl._delegateList.splice(0, 0, delegate);
-    },
+    }
 
     /**
      * Attach the pDeleate with ime.
@@ -348,7 +350,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
      * //example
      * var ret = cc.imeDispatcher.attachDelegateWithIME(this);
      */
-    attachDelegateWithIME: function (delegate) {
+    attachDelegateWithIME(delegate) {
         if (!this.impl || !delegate)
             return false;
 
@@ -379,9 +381,9 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
 
         this._focusDomInput(delegate);
         return true;
-    },
+    }
 
-    _focusDomInput: function (delegate) {
+    _focusDomInput(delegate) {
         if (cc.sys.isMobile) {
             this.impl._delegateWithIme = delegate;
             delegate.didAttachWithIME();
@@ -408,16 +410,16 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
             this._domInputControl.value = this._currentInputString;
             this._domInputControlTranslate();
         }
-    },
+    }
 
-    _domInputControlTranslate: function () {
+    _domInputControlTranslate() {
         if (/msie/i.test(navigator.userAgent)) {
             this._domInputControl.style.left = this._lastClickPosition.x + "px";
             this._domInputControl.style.top = this._lastClickPosition.y + "px";
         } else {
             this._domInputControl.translates(this._lastClickPosition.x, this._lastClickPosition.y);
         }
-    },
+    }
 
     /**
      * Detach the pDeleate with ime.
@@ -427,7 +429,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
      * //example
      * var ret = cc.imeDispatcher.detachDelegateWithIME(this);
      */
-    detachDelegateWithIME: function (delegate) {
+    detachDelegateWithIME(delegate) {
         if (!this.impl || !delegate)
             return false;
 
@@ -442,7 +444,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
         delegate.didDetachWithIME();
         cc._canvas.focus();
         return true;
-    },
+    }
 
     /**
      * Remove the delegate from the delegates who concern ime msg
@@ -451,7 +453,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
      * //example
      * cc.imeDispatcher.removeDelegate(this);
      */
-    removeDelegate: function (delegate) {
+    removeDelegate(delegate) {
         if (!this.impl || !delegate)
             return;
 
@@ -465,7 +467,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
             }
         }
         cc.arrayRemoveObject(this.impl._delegateList, delegate);
-    },
+    }
 
     /**
      * Process keydown's keycode
@@ -476,7 +478,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
      *      cc.imeDispatcher.processKeycode(e.keyCode);
      * });
      */
-    processKeycode: function (keyCode) {
+    processKeycode(keyCode) {
         if (keyCode < 32) {
             if (keyCode === cc.KEY.backspace) {
                 this.dispatchDeleteBackward();
@@ -493,7 +495,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
             //
         }
     }
-});
+};
 
 /**
  * Create the cc.IMEDispatcher.Imp Object. <br />
@@ -502,28 +504,29 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.imeDispatcher# */{
  * @extends cc.Class
  * @name cc.IMEDispatcher.Impl
  */
-cc.IMEDispatcher.Impl = cc.Class.extend(/** @lends cc.IMEDispatcher.Impl# */{
-    _delegateWithIme: null,
-    _delegateList: null,
+cc.IMEDispatcher.Impl = class Impl extends cc.NewClass {
+    _delegateWithIme = null;
+    _delegateList = null;
     /**
      * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
      */
-    ctor: function () {
+    constructor() {
+        super();
         this._delegateList = [];
-    },
+    }
     /**
      * Find delegate
      * @param {cc.IMEDelegate} delegate
      * @return {Number|Null}
      */
-    findDelegate: function (delegate) {
+    findDelegate(delegate) {
         for (var i = 0; i < this._delegateList.length; i++) {
             if (this._delegateList[i] === delegate)
                 return i;
         }
         return null;
     }
-});
+};
 
 // Initialize imeDispatcher singleton
 cc.imeDispatcher = new cc.IMEDispatcher();

@@ -55,20 +55,20 @@ cc.DEFAULT_PADDING = 5;
  * @example
  * var layer = new cc.Menu(menuitem1, menuitem2, menuitem3);
  */
-cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
-    enabled: false,
+cc.Menu = class Menu extends cc.Layer {
+    enabled = false;
 
-    _selectedItem: null,
-    _state: -1,
-    _touchListener: null,
-    _className: "Menu",
+    _selectedItem = null;
+    _state = -1;
+    _touchListener = null;
+    _className = "Menu";
 
     /**
      * Constructor of cc.Menu override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
      * @param {...cc.MenuItem|null} menuItems
      */
-    ctor: function (menuItems) {
-        cc.Layer.prototype.ctor.call(this);
+    constructor(menuItems) {
+        super();
         this._color = cc.color.WHITE;
         this.enabled = false;
         this._opacity = 255;
@@ -99,7 +99,8 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
             }
         }
         this.initWithArray(items);
-    },
+    }
+
     /**
      * <p>
      *     Event callback that is invoked every time when CCMenu enters the 'stage'.                                   <br/>
@@ -108,35 +109,35 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
      *     If you override onEnter, you must call its parent's onEnter function with this._super().
      * </p>
      */
-    onEnter: function () {
+    onEnter() {
         var locListener = this._touchListener;
         if (!locListener._isRegistered())
             cc.eventManager.addListener(locListener, this);
         cc.Node.prototype.onEnter.call(this);
-    },
+    }
 
     /**
      * return whether or not the menu will receive events
      * @return {Boolean}
      */
-    isEnabled: function () {
+    isEnabled() {
         return this.enabled;
-    },
+    }
 
     /**
      * set whether or not the menu will receive events
      * @param {Boolean} enabled
      */
-    setEnabled: function (enabled) {
+    setEnabled(enabled) {
         this.enabled = enabled;
-    },
+    }
 
     /**
      * initializes a cc.Menu with it's items
      * @param {Array} args
      * @return {Boolean}
      */
-    initWithItems: function (args) {
+    initWithItems(args) {
         var pArray = [];
         if (args) {
             for (var i = 0; i < args.length; i++) {
@@ -146,15 +147,15 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
         }
 
         return this.initWithArray(pArray);
-    },
+    }
 
     /**
      * initializes a cc.Menu with a Array of cc.MenuItem objects
      * @param {Array} arrayOfItems array Of cc.MenuItem Items
      * @return {Boolean}
      */
-    initWithArray: function (arrayOfItems) {
-        if (cc.Layer.prototype.init.call(this)) {
+    initWithArray(arrayOfItems) {
+        if (super.init()) {
             this.enabled = true;
 
             // menu in the center of the screen
@@ -179,7 +180,7 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
             return true;
         }
         return false;
-    },
+    }
 
     /**
      * add a child for  cc.Menu
@@ -187,13 +188,13 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
      * @param {Number|Null} [zOrder=] zOrder for the child
      * @param {Number|Null} [tag=] tag for the child
      */
-    addChild: function (child, zOrder, tag) {
+    addChild(child, zOrder, tag) {
         if (!(child instanceof cc.MenuItem))
             throw new Error("cc.Menu.addChild() : Menu only supports MenuItem objects as children");
-        cc.Layer.prototype.addChild.call(this, child, zOrder, tag);
-    },
+        super.addChild(child, zOrder, tag);
+    }
 
-    updateAlign: function () {
+    updateAlign() {
         switch (this._align) {
             case 'vertically':
                 this.alignItemsVertically();
@@ -202,20 +203,20 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
                 this.alignItemsHorizontally();
                 break;
         }
-    },
+    }
 
     /**
      * align items vertically with default padding
      */
-    alignItemsVertically: function () {
+    alignItemsVertically() {
         this.alignItemsVerticallyWithPadding(cc.DEFAULT_PADDING);
-    },
+    }
 
     /**
      * align items vertically with specified padding
      * @param {Number} padding
      */
-    alignItemsVerticallyWithPadding: function (padding) {
+    alignItemsVerticallyWithPadding(padding) {
         this._align = 'vertically';
         var height = -padding, locChildren = this._children, len, i, locScaleY, locHeight, locChild;
         if (locChildren && locChildren.length > 0) {
@@ -232,20 +233,20 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
                 y -= locHeight * locScaleY + padding;
             }
         }
-    },
+    }
 
     /**
      * align items horizontally with default padding
      */
-    alignItemsHorizontally: function () {
+    alignItemsHorizontally() {
         this.alignItemsHorizontallyWithPadding(cc.DEFAULT_PADDING);
-    },
+    }
 
     /**
      * align items horizontally with specified padding
      * @param {Number} padding
      */
-    alignItemsHorizontallyWithPadding: function (padding) {
+    alignItemsHorizontallyWithPadding(padding) {
         this._align = 'horizontally';
         var width = -padding, locChildren = this._children, i, len, locScaleX, locWidth, locChild;
         if (locChildren && locChildren.length > 0) {
@@ -262,7 +263,7 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
                 x += locWidth * locScaleX + padding;
             }
         }
-    },
+    }
 
     /**
      * align items in columns
@@ -272,7 +273,7 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
      *
      * menu.alignItemsInColumns(3,3)//this creates 2 columns, each have 3 items
      */
-    alignItemsInColumns: function (/*Multiple Arguments*/) {
+    alignItemsInColumns(/*Multiple Arguments*/) {
         if ((arguments.length > 0) && (arguments[arguments.length - 1] == null))
             cc.log("parameters should not be ending with null in Javascript");
 
@@ -345,7 +346,8 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
                 }
             }
         }
-    },
+    }
+
     /**
      * align menu items in rows
      * @param {Number}
@@ -355,7 +357,7 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
      *
      * menu.alignItemsInRows(4,4,4,4)//this creates 4 rows each have 4 items
      */
-    alignItemsInRows: function (/*Multiple arguments*/) {
+    alignItemsInRows(/*Multiple arguments*/) {
         if ((arguments.length > 0) && (arguments[arguments.length - 1] == null))
             cc.log("parameters should not be ending with null in Javascript");
         var i, columns = [];
@@ -440,14 +442,14 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
                 }
             }
         }
-    },
+    }
 
     /**
      * remove a child from cc.Menu
      * @param {cc.Node} child the child you want to remove
      * @param {boolean} cleanup whether to cleanup
      */
-    removeChild: function (child, cleanup) {
+    removeChild(child, cleanup) {
         if (child == null)
             return;
         if (!(child instanceof cc.MenuItem)) {
@@ -458,9 +460,9 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
         if (this._selectedItem === child)
             this._selectedItem = null;
         cc.Node.prototype.removeChild.call(this, child, cleanup);
-    },
+    }
 
-    _onTouchBegan: function (touch, event) {
+    _onTouchBegan(touch, event) {
         var target = event.getCurrentTarget();
         if (target._state !== cc.MENU_STATE_WAITING || !target._visible || !target.enabled)
             return false;
@@ -478,9 +480,9 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
             return true;
         }
         return false;
-    },
+    }
 
-    _onTouchEnded: function (touch, event) {
+    _onTouchEnded(touch, event) {
         var target = event.getCurrentTarget();
         if (target._state !== cc.MENU_STATE_TRACKING_TOUCH) {
             cc.log("cc.Menu.onTouchEnded(): invalid state");
@@ -492,9 +494,9 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
             target._selectedItem.activate();
         }
         target._state = cc.MENU_STATE_WAITING;
-    },
+    }
 
-    _onTouchCancelled: function (touch, event) {
+    _onTouchCancelled(touch, event) {
         var target = event.getCurrentTarget();
         if (target._state !== cc.MENU_STATE_TRACKING_TOUCH) {
             cc.log("cc.Menu.onTouchCancelled(): invalid state");
@@ -505,9 +507,9 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
             target._selectedItem.setNodeDirty();
         }
         target._state = cc.MENU_STATE_WAITING;
-    },
+    }
 
-    _onTouchMoved: function (touch, event) {
+    _onTouchMoved(touch, event) {
         var target = event.getCurrentTarget();
         if (target._state !== cc.MENU_STATE_TRACKING_TOUCH) {
             cc.log("cc.Menu.onTouchMoved(): invalid state");
@@ -525,7 +527,7 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
                 target._selectedItem.setNodeDirty();
             }
         }
-    },
+    }
 
     /**
      * <p>
@@ -535,7 +537,7 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
      * If you override onExit, you shall call its parent's onExit with this._super().
      * </p>
      */
-    onExit: function () {
+    onExit() {
         if (this._state === cc.MENU_STATE_TRACKING_TOUCH) {
             if (this._selectedItem) {
                 this._selectedItem.unselected();
@@ -544,22 +546,24 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
             this._state = cc.MENU_STATE_WAITING;
         }
         cc.Node.prototype.onExit.call(this);
-    },
+    }
+
     /**
      * only use for jsbinding
      * @param value
      */
-    setOpacityModifyRGB: function (value) {
-    },
+    setOpacityModifyRGB(value) {
+    }
+
     /**
      * only use for jsbinding
      * @returns {boolean}
      */
-    isOpacityModifyRGB: function () {
+    isOpacityModifyRGB() {
         return false;
-    },
+    }
 
-    _itemForTouch: function (touch) {
+    _itemForTouch(touch) {
         var touchLocation = touch.getLocation();
         var itemChildren = this._children, locItemChild;
         if (itemChildren && itemChildren.length > 0) {
@@ -577,7 +581,7 @@ cc.Menu = cc.Layer.extend(/** @lends cc.Menu# */{
         }
         return null;
     }
-});
+};
 
 var _p = cc.Menu.prototype;
 

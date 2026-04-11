@@ -46,23 +46,22 @@ cc.stencilBits = -1;
  * @property {Boolean}  inverted        - Indicate whether in inverted mode.
  * @property {cc.Node}  stencil         - he cc.Node to use as a stencil to do the clipping.
  */
-cc.ClippingNode = cc.Node.extend(
-  /** @lends cc.ClippingNode# */ {
-    inverted: false,
-    _alphaThreshold: 0,
+cc.ClippingNode = class ClippingNode extends cc.Node {
+    inverted = false;
+    _alphaThreshold = 0;
 
-    _stencil: null,
-    _className: "ClippingNode",
+    _stencil = null;
+    _className = "ClippingNode";
 
-    _originStencilProgram: null,
+    _originStencilProgram = null;
 
     /**
      * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
      * @param {cc.Node} [stencil=null]
      */
-    ctor: function (stencil) {
+    constructor(stencil) {
       stencil = stencil || null;
-      cc.Node.prototype.ctor.call(this);
+      super();
       this._stencil = stencil;
       if (stencil) {
         this._originStencilProgram = stencil.getShaderProgram();
@@ -70,7 +69,7 @@ cc.ClippingNode = cc.Node.extend(
       this.alphaThreshold = 1;
       this.inverted = false;
       this._renderCmd.initStencilBits();
-    },
+    }
 
     /**
      * <p>
@@ -81,11 +80,11 @@ cc.ClippingNode = cc.Node.extend(
      * </p>
      * @function
      */
-    onEnter: function () {
-      cc.Node.prototype.onEnter.call(this);
+    onEnter() {
+      super.onEnter();
       if (this._stencil)
         this._stencil._performRecursive(cc.Node._stateCallbackType.onEnter);
-    },
+    }
 
     /**
      * <p>
@@ -95,13 +94,13 @@ cc.ClippingNode = cc.Node.extend(
      * </p>
      * @function
      */
-    onEnterTransitionDidFinish: function () {
-      cc.Node.prototype.onEnterTransitionDidFinish.call(this);
+    onEnterTransitionDidFinish() {
+      super.onEnterTransitionDidFinish();
       if (this._stencil)
         this._stencil._performRecursive(
           cc.Node._stateCallbackType.onEnterTransitionDidFinish
         );
-    },
+    }
 
     /**
      * <p>
@@ -111,12 +110,12 @@ cc.ClippingNode = cc.Node.extend(
      * </p>
      * @function
      */
-    onExitTransitionDidStart: function () {
+    onExitTransitionDidStart() {
       this._stencil._performRecursive(
         cc.Node._stateCallbackType.onExitTransitionDidStart
       );
-      cc.Node.prototype.onExitTransitionDidStart.call(this);
-    },
+      super.onExitTransitionDidStart();
+    }
 
     /**
      * <p>
@@ -127,16 +126,16 @@ cc.ClippingNode = cc.Node.extend(
      * </p>
      * @function
      */
-    onExit: function () {
+    onExit() {
       this._stencil._performRecursive(cc.Node._stateCallbackType.onExit);
-      cc.Node.prototype.onExit.call(this);
-    },
+      super.onExit();
+    }
 
-    visit: function (parent) {
+    visit(parent) {
       this._renderCmd.clippingVisit(parent && parent._renderCmd);
-    },
+    }
 
-    _visitChildren: function () {
+    _visitChildren() {
       var renderer = cc.renderer;
       if (this._reorderChildDirty) {
         this.sortAllChildren();
@@ -150,7 +149,7 @@ cc.ClippingNode = cc.Node.extend(
         }
       }
       this._renderCmd._dirtyFlag = 0;
-    },
+    }
 
     /**
      * <p>
@@ -161,21 +160,21 @@ cc.ClippingNode = cc.Node.extend(
      * </P>
      * @return {Number}
      */
-    getAlphaThreshold: function () {
+    getAlphaThreshold() {
       return this._alphaThreshold;
-    },
+    }
 
     /**
      * set alpha threshold.
      * @param {Number} alphaThreshold
      */
-    setAlphaThreshold: function (alphaThreshold) {
+    setAlphaThreshold(alphaThreshold) {
       if (alphaThreshold === 1 && alphaThreshold !== this._alphaThreshold) {
         // should reset program used by _stencil
         this._renderCmd.resetProgramByStencil();
       }
       this._alphaThreshold = alphaThreshold;
-    },
+    }
 
     /**
      * <p>
@@ -185,45 +184,44 @@ cc.ClippingNode = cc.Node.extend(
      * </p>
      * @return {Boolean}
      */
-    isInverted: function () {
+    isInverted() {
       return this.inverted;
-    },
+    }
 
     /**
      * set whether or not invert of stencil
      * @param {Boolean} inverted
      */
-    setInverted: function (inverted) {
+    setInverted(inverted) {
       this.inverted = inverted;
-    },
+    }
 
     /**
      * The cc.Node to use as a stencil to do the clipping.                                   <br/>
      * The stencil node will be retained. This default to nil.
      * @return {cc.Node}
      */
-    getStencil: function () {
+    getStencil() {
       return this._stencil;
-    },
+    }
 
     /**
      * Set stencil.
      * @function
      * @param {cc.Node} stencil
      */
-    setStencil: function (stencil) {
+    setStencil(stencil) {
       if (this._stencil === stencil) return;
       if (stencil) this._originStencilProgram = stencil.getShaderProgram();
       this._renderCmd.setStencil(stencil);
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
       if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
         return new cc.ClippingNode.CanvasRenderCmd(this);
       else return new cc.ClippingNode.WebGLRenderCmd(this);
     }
-  }
-);
+};
 
 var _p = cc.ClippingNode.prototype;
 

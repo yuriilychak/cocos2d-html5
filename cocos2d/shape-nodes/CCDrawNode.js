@@ -33,28 +33,28 @@
  * @name cc.DrawNode
  * @extends cc.Node
  */
-cc.DrawNode = cc.Node.extend(/** @lends cc.DrawNode# */{
+cc.DrawNode = class DrawNode extends cc.Node {
 //TODO need refactor
 
-    _buffer: null,
-    _blendFunc: null,
-    _lineWidth: 1,
-    _drawColor: null,
+    _buffer = null;
+    _blendFunc = null;
+    _lineWidth = 1;
+    _drawColor = null;
 
     /**
      * Gets the blend func
      * @returns {Object}
      */
-    getBlendFunc: function () {
+    getBlendFunc() {
         return this._blendFunc;
-    },
+    }
 
     /**
      * Set the blend func
      * @param blendFunc
      * @param dst
      */
-    setBlendFunc: function (blendFunc, dst) {
+    setBlendFunc(blendFunc, dst) {
         if (dst === undefined) {
             this._blendFunc.src = blendFunc.src;
             this._blendFunc.dst = blendFunc.dst;
@@ -62,44 +62,44 @@ cc.DrawNode = cc.Node.extend(/** @lends cc.DrawNode# */{
             this._blendFunc.src = blendFunc;
             this._blendFunc.dst = dst;
         }
-    },
+    }
 
     /**
      * line width setter
      * @param {Number} width
      */
-    setLineWidth: function (width) {
+    setLineWidth(width) {
         this._lineWidth = width;
-    },
+    }
 
     /**
      * line width getter
      * @returns {Number}
      */
-    getLineWidth: function () {
+    getLineWidth() {
         return this._lineWidth;
-    },
+    }
 
     /**
      * draw color setter
      * @param {cc.Color} color
      */
-    setDrawColor: function (color) {
+    setDrawColor(color) {
         var locDrawColor = this._drawColor;
         locDrawColor.r = color.r;
         locDrawColor.g = color.g;
         locDrawColor.b = color.b;
         locDrawColor.a = (color.a == null) ? 255 : color.a;
-    },
+    }
 
     /**
      * draw color getter
      * @returns {cc.Color}
      */
-    getDrawColor: function () {
+    getDrawColor() {
         return cc.color(this._drawColor.r, this._drawColor.g, this._drawColor.b, this._drawColor.a);
     }
-});
+};
 
 
 cc.DrawNode.TYPE_DOT = 0;

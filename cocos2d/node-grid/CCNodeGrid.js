@@ -33,62 +33,64 @@
  * @property {cc.GridBase}  grid    - Grid object that is used when applying effects
  * @property {cc.Node}      target  - <@writeonly>Target
  */
-cc.NodeGrid = cc.Node.extend(/** @lends cc.NodeGrid# */{
-    grid: null,
-    _target: null,
-    _gridRect:null,
+cc.NodeGrid = class NodeGrid extends cc.Node {
+    grid = null;
+    _target = null;
+    _gridRect = null;
 
-    ctor: function (rect) {
-        cc.Node.prototype.ctor.call(this);
+    constructor(rect) {
+        super();
         if(rect === undefined) rect = cc.rect();
         this._gridRect = rect;
-    },
+    }
+
     /**
      * Gets the grid object.
      * @returns {cc.GridBase}
      */
-    getGrid: function () {
+    getGrid() {
         return this.grid;
-    },
+    }
 
     /**
      * Set the grid object.
      * @param {cc.GridBase} grid
      */
-    setGrid: function (grid) {
+    setGrid(grid) {
         this.grid = grid;
-    },
+    }
 
     /**
      * @brief Set the effect grid rect.
      * @param {cc.Rect} rect
      */
-    setGridRect: function (rect) {
+    setGridRect(rect) {
         this._gridRect = rect;
-    },
+    }
+
     /**
      * @brief Get the effect grid rect.
      * @return {cc.Rect} rect.
     */
-    getGridRect: function () {
+    getGridRect() {
         return this._gridRect;
-    },
+    }
 
     /**
      * Set the target
      * @param {cc.Node} target
      */
-    setTarget: function (target) {
+    setTarget(target) {
         this._target = target;
-    },
+    }
 
-    _createRenderCmd: function(){
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
             return new cc.NodeGrid.WebGLRenderCmd(this);
         else
             return new cc.Node.CanvasRenderCmd(this);            // cc.NodeGrid doesn't support Canvas mode.
     }
-});
+};
 
 var _p = cc.NodeGrid.prototype;
 // Extended property

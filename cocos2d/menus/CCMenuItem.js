@@ -35,70 +35,71 @@ cc._globalFontNameRelease = false;
  * @param {function|String} callback
  * @param  {cc.Node} target
  */
-cc.MenuItem = cc.Node.extend(/** @lends cc.MenuItem# */{
-    _enabled: false,
-    _target: null,
-    _callback: null,
-    _isSelected: false,
-    _className: "MenuItem",
+cc.MenuItem = class MenuItem extends cc.Node {
+    _enabled = false;
+    _target = null;
+    _callback = null;
+    _isSelected = false;
+    _className = "MenuItem";
 
     /**
      * Constructor of cc.MenuItem
      * @param {function|String} callback
      * @param {cc.Node} target
      */
-    ctor: function (callback, target) {
-        var nodeP = cc.Node.prototype;
-        nodeP.ctor.call(this);
+    constructor(callback, target) {
+        super();
         this._target = null;
         this._callback = null;
         this._isSelected = false;
         this._enabled = false;
 
-        nodeP.setAnchorPoint.call(this, 0.5, 0.5);
+        super.setAnchorPoint(0.5, 0.5);
         this._target = target || null;
         this._callback = callback || null;
         if (this._callback) {
             this._enabled = true;
         }
-    },
+    }
 
     /**
      * return whether MenuItem is selected
      * @return {Boolean}
      */
-    isSelected: function () {
+    isSelected() {
         return this._isSelected;
-    },
+    }
+
     /**
      * only use for jsbinding
      * @param value
      */
-    setOpacityModifyRGB: function (value) {
-    },
+    setOpacityModifyRGB(value) {
+    }
+
     /**
      * only use for jsbinding
      * @returns {boolean}
      */
-    isOpacityModifyRGB: function () {
+    isOpacityModifyRGB() {
         return false;
-    },
+    }
 
     /**
      * return whether MenuItem is Enabled
      * @return {Boolean}
      */
-    isEnabled: function () {
+    isEnabled() {
         return this._enabled;
-    },
+    }
 
     /**
      * set enable value of MenuItem
      * @param {Boolean} enable
      */
-    setEnabled: function (enable) {
+    setEnabled(enable) {
         this._enabled = enable;
-    },
+    }
 
     /**
      * initializes a cc.MenuItem with callback
@@ -106,7 +107,7 @@ cc.MenuItem = cc.Node.extend(/** @lends cc.MenuItem# */{
      * @param {cc.Node} target
      * @return {Boolean}
      */
-    initWithCallback: function (callback, target) {
+    initWithCallback(callback, target) {
         this.anchorX = 0.5;
         this.anchorY = 0.5;
         this._target = target;
@@ -114,47 +115,47 @@ cc.MenuItem = cc.Node.extend(/** @lends cc.MenuItem# */{
         this._enabled = true;
         this._isSelected = false;
         return true;
-    },
+    }
 
     /**
      * return rect value of cc.MenuItem
      * @return {cc.Rect}
      */
-    rect: function () {
+    rect() {
         var locPosition = this._position, locContentSize = this._contentSize, locAnchorPoint = this._anchorPoint;
         return cc.rect(locPosition.x - locContentSize.width * locAnchorPoint.x,
             locPosition.y - locContentSize.height * locAnchorPoint.y,
             locContentSize.width, locContentSize.height);
-    },
+    }
 
     /**
      * set the cc.MenuItem selected same as setIsSelected(true)
      */
-    selected: function () {
+    selected() {
         this._isSelected = true;
-    },
+    }
 
     /**
      * set the cc.MenuItem unselected same as setIsSelected(false)
      */
-    unselected: function () {
+    unselected() {
         this._isSelected = false;
-    },
+    }
 
     /**
      * set the callback to the menu item
      * @param {function|String} callback
      * @param {cc.Node} target
      */
-    setCallback: function (callback, target) {
+    setCallback(callback, target) {
         this._target = target;
         this._callback = callback;
-    },
+    }
 
     /**
      * call the selector with target
      */
-    activate: function () {
+    activate() {
         if (this._enabled) {
             var locTarget = this._target, locCallback = this._callback;
             if (!locCallback)
@@ -167,7 +168,7 @@ cc.MenuItem = cc.Node.extend(/** @lends cc.MenuItem# */{
                 locCallback(this);
         }
     }
-});
+};
 
 var _p = cc.MenuItem.prototype;
 
@@ -195,11 +196,11 @@ cc.defineGetterSetter(_p, "enabled", _p.isEnabled, _p.setEnabled);
  * @property {cc.Node}  label           - Label of label item
  * @property {cc.Color} disabledColor   - Color of label when it's disabled
  */
-cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
-    _disabledColor: null,
-    _label: null,
-    _originalScale: 0,
-    _colorBackup: null,
+cc.MenuItemLabel = class MenuItemLabel extends cc.MenuItem {
+    _disabledColor = null;
+    _label = null;
+    _originalScale = 0;
+    _colorBackup = null;
 
     /**
      * Constructor of cc.MenuItemLabel
@@ -207,8 +208,8 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
      * @param {function|String} selector
      * @param {cc.Node} target
      */
-    ctor: function (label, selector, target) {
-        cc.MenuItem.prototype.ctor.call(this, selector, target);
+    constructor(label, selector, target) {
+        super(selector, target);
         this._disabledColor = null;
         this._label = null;
         this._colorBackup = null;
@@ -232,37 +233,37 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
             this.setCascadeColorEnabled(true);
             this.setCascadeOpacityEnabled(true);
         }
-    },
+    }
 
     /**
      * return the disable color for this cc.MenuItemLabel
      * @return {cc.Color}
      */
-    getDisabledColor: function () {
+    getDisabledColor() {
         return this._disabledColor;
-    },
+    }
 
     /**
      * set the disable color for this cc.MenuItemLabel
      * @param {cc.Color} color
      */
-    setDisabledColor: function (color) {
+    setDisabledColor(color) {
         this._disabledColor = color;
-    },
+    }
 
     /**
      * return label of cc.MenuItemLabel
      * @return {cc.Node}
      */
-    getLabel: function () {
+    getLabel() {
         return this._label;
-    },
+    }
 
     /**
      * set a label for cc.MenuItemLabel
      * @param {cc.Node} label
      */
-    setLabel: function (label) {
+    setLabel(label) {
         if (label) {
             this.addChild(label);
             label.anchorX = 0;
@@ -277,13 +278,13 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
         }
 
         this._label = label;
-    },
+    }
 
     /**
      * set enable value to cc.MenuItemLabel
      * @param {Boolean} enabled
      */
-    setEnabled: function (enabled) {
+    setEnabled(enabled) {
         if (this._enabled !== enabled) {
             if (!enabled) {
                 this._colorBackup = this.color;
@@ -292,8 +293,8 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
                 this.setColor(this._colorBackup);
             }
         }
-        cc.MenuItem.prototype.setEnabled.call(this, enabled);
-    },
+        super.setEnabled(enabled);
+    }
 
     /**
      * initializes a cc.MenuItemLabel with a label
@@ -302,7 +303,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
      * @param {cc.Node} target
      * @return {Boolean}
      */
-    initWithLabel: function (label, selector, target) {
+    initWithLabel(label, selector, target) {
         this.initWithCallback(selector, target);
         this._originalScale = 1.0;
         this._colorBackup = cc.color.WHITE;
@@ -313,42 +314,43 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
         this.setCascadeOpacityEnabled(true);
 
         return true;
-    },
+    }
 
     /**
      * set the string for  cc.MenuItemLabel
      * @param {String} label
      */
-    setString: function (label) {
+    setString(label) {
         this._label.string = label;
         this.width = this._label.width;
         this.height = this._label.height;
-    },
+    }
+
     /**
      * return the string of cc.MenuItemLabel
      * @returns {String}
      */
-    getString: function () {
+    getString() {
         return this._label.string;
-    },
+    }
 
     /**
      * activate the menu item
      */
-    activate: function () {
+    activate() {
         if (this._enabled) {
             this.stopAllActions();
             this.scale = this._originalScale;
-            cc.MenuItem.prototype.activate.call(this);
+            super.activate();
         }
-    },
+    }
 
     /**
      * menu item is selected (runs callback)
      */
-    selected: function () {
+    selected() {
         if (this._enabled) {
-            cc.MenuItem.prototype.selected.call(this);
+            super.selected();
 
             var action = this.getActionByTag(cc.ZOOM_ACTION_TAG);
             if (action)
@@ -360,21 +362,21 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
             zoomAction.setTag(cc.ZOOM_ACTION_TAG);
             this.runAction(zoomAction);
         }
-    },
+    }
 
     /**
      * menu item goes back to unselected state
      */
-    unselected: function () {
+    unselected() {
         if (this._enabled) {
-            cc.MenuItem.prototype.unselected.call(this);
+            super.unselected();
             this.stopActionByTag(cc.ZOOM_ACTION_TAG);
             var zoomAction = cc.scaleTo(0.1, this._originalScale);
             zoomAction.setTag(cc.ZOOM_ACTION_TAG);
             this.runAction(zoomAction);
         }
     }
-});
+};
 
 var _p = cc.MenuItemLabel.prototype;
 
@@ -405,7 +407,7 @@ cc.defineGetterSetter(_p, "label", _p.getLabel, _p.setLabel);
  * @example
  * var menuItem = new cc.MenuItemAtlasFont(param1,param2...);
  */
-cc.MenuItemAtlasFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemAtlasFont# */{
+cc.MenuItemAtlasFont = class MenuItemAtlasFont extends cc.MenuItemLabel {
 
     /**
      * the contructor of cc.MenuItemAtlasFont
@@ -417,14 +419,14 @@ cc.MenuItemAtlasFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemAtlasFont# 
      * @param {function|String|Null} callback
      * @param {cc.Node|Null} target
      */
-    ctor: function (value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+    constructor(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
         var label;
         if (value && value.length > 0) {
             label = new cc.LabelAtlas(value, charMapFile, itemWidth, itemHeight, startCharMap);
         }
 
-        cc.MenuItemLabel.prototype.ctor.call(this, label, callback, target);
-    },
+        super(label, callback, target);
+    }
 
     /**
      * initializes a cc.MenuItemAtlasFont with string
@@ -437,7 +439,7 @@ cc.MenuItemAtlasFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemAtlasFont# 
      * @param {cc.Node|Null} target
      * @return {Boolean}
      */
-    initWithString: function (value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+    initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
         if (!value || value.length === 0)
             throw new Error("cc.MenuItemAtlasFont.initWithString(): value should be non-null and its length should be greater than 0");
 
@@ -448,7 +450,7 @@ cc.MenuItemAtlasFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemAtlasFont# 
         }
         return true;
     }
-});
+};
 
 
 /**
@@ -464,9 +466,9 @@ cc.MenuItemAtlasFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemAtlasFont# 
  * @property {Number}   fontSize    - Font size of font item
  * @property {String}   fontName    - Font name of font item
  */
-cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
-    _fontSize: null,
-    _fontName: null,
+cc.MenuItemFont = class MenuItemFont extends cc.MenuItemLabel {
+    _fontSize = null;
+    _fontName = null;
 
     /**
      * Constructor of cc.MenuItemFont
@@ -474,7 +476,7 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
      * @param {function|String} callback
      * @param {cc.Node} target
      */
-    ctor: function (value, callback, target) {
+    constructor(value, callback, target) {
         var label;
         if (value && value.length > 0) {
             this._fontName = cc._globalFontName;
@@ -486,8 +488,8 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
             this._fontName = "";
         }
 
-        cc.MenuItemLabel.prototype.ctor.call(this, label, callback, target);
-    },
+        super(label, callback, target);
+    }
 
     /**
      * initializes cc.MenuItemFont with  string
@@ -496,7 +498,7 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
      * @param {cc.Node} target
      * @return {Boolean}
      */
-    initWithString: function (value, callback, target) {
+    initWithString(value, callback, target) {
         if (!value || value.length === 0)
             throw new Error("Value should be non-null and its length should be greater than 0");
 
@@ -508,47 +510,47 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
             // do something ?
         }
         return true;
-    },
+    }
 
     /**
      * set the font size for cc.MenuItemFont
      * @param {Number} s
      */
-    setFontSize: function (s) {
+    setFontSize(s) {
         this._fontSize = s;
         this._recreateLabel();
-    },
+    }
 
     /**
      *return the font size of cc.MenuItemFont
      * @return {Number}
      */
-    getFontSize: function () {
+    getFontSize() {
         return this._fontSize;
-    },
+    }
 
     /**
      * set the font name for cc.MenuItemFont
      * @param {String} name
      */
-    setFontName: function (name) {
+    setFontName(name) {
         this._fontName = name;
         this._recreateLabel();
-    },
+    }
 
     /**
      * return the font name for cc.MenuItemFont
      * @return {String}
      */
-    getFontName: function () {
+    getFontName() {
         return this._fontName;
-    },
+    }
 
-    _recreateLabel: function () {
+    _recreateLabel() {
         var label = new cc.LabelTTF(this._label.string, this._fontName, this._fontSize);
         this.setLabel(label);
     }
-});
+};
 
 /**
  * a shared function to set the fontSize for menuitem font
@@ -625,10 +627,10 @@ cc.MenuItemFont.fontName = function () {
  * @property {cc.Sprite}    selectedImage     - Sprite in selected state
  * @property {cc.Sprite}    disabledImage     - Sprite in disabled state
  */
-cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
-    _normalImage: null,
-    _selectedImage: null,
-    _disabledImage: null,
+cc.MenuItemSprite = class MenuItemSprite extends cc.MenuItem {
+    _normalImage = null;
+    _selectedImage = null;
+    _disabledImage = null;
 
     /**
      * Constructor of cc.MenuItemSprite
@@ -638,8 +640,8 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
      * @param {String|function|cc.Node|Null} four callback function name in string or actual function, OR target Node
      * @param {String|function|Null} five callback function name in string or actual function
      */
-    ctor: function (normalSprite, selectedSprite, three, four, five) {
-        cc.MenuItem.prototype.ctor.call(this);
+    constructor(normalSprite, selectedSprite, three, four, five) {
+        super();
         this._normalImage = null;
         this._selectedImage = null;
         this._disabledImage = null;
@@ -676,21 +678,21 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
             this.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback, target);
             return true;
         }
-    },
+    }
 
     /**
      * return the normal status image(cc.Sprite)
      * @return {cc.Sprite}
      */
-    getNormalImage: function () {
+    getNormalImage() {
         return this._normalImage;
-    },
+    }
 
     /**
      * set the normal status image(cc.Sprite)
      * @param {cc.Sprite} normalImage
      */
-    setNormalImage: function (normalImage) {
+    setNormalImage(normalImage) {
         if (this._normalImage === normalImage) {
             return;
         }
@@ -720,21 +722,21 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
                 }
             }, this);
         }
-    },
+    }
 
     /**
      * return the selected status image(cc.Sprite) of cc.MenuItemSprite
      * @return {cc.Sprite}
      */
-    getSelectedImage: function () {
+    getSelectedImage() {
         return this._selectedImage;
-    },
+    }
 
     /**
      * set the selected status image(cc.Sprite)
      * @param {cc.Sprite} selectedImage
      */
-    setSelectedImage: function (selectedImage) {
+    setSelectedImage(selectedImage) {
         if (this._selectedImage === selectedImage)
             return;
 
@@ -750,21 +752,21 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
 
         this._selectedImage = selectedImage;
         this._updateImagesVisibility();
-    },
+    }
 
     /**
      * return the disabled status of cc.MenuItemSprite
      * @return {cc.Sprite}
      */
-    getDisabledImage: function () {
+    getDisabledImage() {
         return this._disabledImage;
-    },
+    }
 
     /**
      * set the disabled status image(cc.Sprite)
      * @param {cc.Sprite} disabledImage
      */
-    setDisabledImage: function (disabledImage) {
+    setDisabledImage(disabledImage) {
         if (this._disabledImage === disabledImage)
             return;
 
@@ -779,7 +781,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
 
         this._disabledImage = disabledImage;
         this._updateImagesVisibility();
-    },
+    }
 
     /**
      * initializes cc.MenuItemSprite with a cc.Sprite
@@ -790,7 +792,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
      * @param {cc.Node} target
      * @return {Boolean}
      */
-    initWithNormalSprite: function (normalSprite, selectedSprite, disabledSprite, callback, target) {
+    initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback, target) {
         this._loader.clear();
         if (normalSprite.textureLoaded && !normalSprite.textureLoaded()) {
             this._loader.once(normalSprite, function () {
@@ -810,13 +812,13 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
         this.setCascadeColorEnabled(true);
         this.setCascadeOpacityEnabled(true);
         return true;
-    },
+    }
 
     /**
      * menu item is selected (runs callback)
      */
-    selected: function () {
-        cc.MenuItem.prototype.selected.call(this);
+    selected() {
+        super.selected();
         if (this._normalImage) {
             if (this._disabledImage)
                 this._disabledImage.visible = false;
@@ -827,13 +829,13 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
             } else
                 this._normalImage.visible = true;
         }
-    },
+    }
 
     /**
      * menu item goes back to unselected state
      */
-    unselected: function () {
-        cc.MenuItem.prototype.unselected.call(this);
+    unselected() {
+        super.unselected();
         if (this._normalImage) {
             this._normalImage.visible = true;
 
@@ -843,20 +845,20 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
             if (this._disabledImage)
                 this._disabledImage.visible = false;
         }
-    },
+    }
 
     /**
      * set cc.MenuItemSprite  enable to receive the touch event
      * @param {Boolean} bEnabled
      */
-    setEnabled: function (bEnabled) {
+    setEnabled(bEnabled) {
         if (this._enabled !== bEnabled) {
-            cc.MenuItem.prototype.setEnabled.call(this, bEnabled);
+            super.setEnabled(bEnabled);
             this._updateImagesVisibility();
         }
-    },
+    }
 
-    _updateImagesVisibility: function () {
+    _updateImagesVisibility() {
         var locNormalImage = this._normalImage, locSelImage = this._selectedImage, locDisImage = this._disabledImage;
         if (this._enabled) {
             if (locNormalImage)
@@ -881,7 +883,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
             }
         }
     }
-});
+};
 
 var _p = cc.MenuItemSprite.prototype;
 
@@ -915,7 +917,7 @@ cc.defineGetterSetter(_p, "disabledImage", _p.getDisabledImage, _p.setDisabledIm
  * @example
  * var menuItem = new cc.MenuItemImage(normalImage, selectedImage, three, four, five);
  */
-cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
+cc.MenuItemImage = class MenuItemImage extends cc.MenuItemSprite {
 
     /**
      * Constructor of cc.MenuItemImage
@@ -925,7 +927,7 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
      * @param {function|string|null} callback
      * @param {cc.Node|null} target
      */
-    ctor: function (normalImage, selectedImage, three, four, five) {
+    constructor(normalImage, selectedImage, three, four, five) {
         var normalSprite = null,
             selectedSprite = null,
             disabledSprite = null,
@@ -933,7 +935,7 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
             target = null;
 
         if (normalImage === undefined || normalImage === null) {
-            cc.MenuItemSprite.prototype.ctor.call(this);
+            super();
         }
         else {
             normalSprite = new cc.Sprite(normalImage);
@@ -952,33 +954,33 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
                 callback = four;
                 target = five;
             }
-            cc.MenuItemSprite.prototype.ctor.call(this, normalSprite, selectedSprite, disabledSprite, callback, target);
+            super(normalSprite, selectedSprite, disabledSprite, callback, target);
         }
-    },
+    }
 
     /**
      * sets the sprite frame for the normal image
      * @param {cc.SpriteFrame} frame
      */
-    setNormalSpriteFrame: function (frame) {
+    setNormalSpriteFrame(frame) {
         this.setNormalImage(new cc.Sprite(frame));
-    },
+    }
 
     /**
      * sets the sprite frame for the selected image
      * @param {cc.SpriteFrame} frame
      */
-    setSelectedSpriteFrame: function (frame) {
+    setSelectedSpriteFrame(frame) {
         this.setSelectedImage(new cc.Sprite(frame));
-    },
+    }
 
     /**
      * sets the sprite frame for the disabled image
      * @param {cc.SpriteFrame} frame
      */
-    setDisabledSpriteFrame: function (frame) {
+    setDisabledSpriteFrame(frame) {
         this.setDisabledImage(new cc.Sprite(frame));
-    },
+    }
 
     /**
      * initializes a cc.MenuItemImage
@@ -989,7 +991,7 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
      * @param {cc.Node|null} target
      * @returns {boolean}
      */
-    initWithNormalImage: function (normalImage, selectedImage, disabledImage, callback, target) {
+    initWithNormalImage(normalImage, selectedImage, disabledImage, callback, target) {
         var normalSprite = null;
         var selectedSprite = null;
         var disabledSprite = null;
@@ -1005,7 +1007,7 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
         }
         return this.initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback, target);
     }
-});
+};
 
 
 
@@ -1029,19 +1031,19 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
  * notYetToggler.addSubItem(new cc.MenuItemFont("Off"));
  * //this is useful for constructing a toggler without a callback function (you wish to control the behavior from somewhere else)
  */
-cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
-    subItems: null,
+cc.MenuItemToggle = class MenuItemToggle extends cc.MenuItem {
+    subItems = null;
 
-    _selectedIndex: 0,
-    _opacity: null,
-    _color: null,
+    _selectedIndex = 0;
+    _opacity = null;
+    _color = null;
 
     /**
      * Constructor of cc.MenuItemToggle
     */
-    ctor: function (/*Multiple arguments follow*/) {
+    constructor(/*Multiple arguments follow*/) {
 
-        cc.MenuItem.prototype.ctor.call(this);
+        super();
         this._selectedIndex = 0;
         this.subItems = [];
         this._opacity = 0;
@@ -1050,21 +1052,21 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
         if(arguments.length > 0)
             this.initWithItems(Array.prototype.slice.apply(arguments));
 
-    },
+    }
 
     /**
      * return the opacity of cc.MenuItemToggle
      * @return {Number}
      */
-    getOpacity: function () {
+    getOpacity() {
         return this._opacity;
-    },
+    }
 
     /**
      * set the opacity for cc.MenuItemToggle
      * @param {Number} opacity
      */
-    setOpacity: function (opacity) {
+    setOpacity(opacity) {
         this._opacity = opacity;
         if (this.subItems && this.subItems.length > 0) {
             for (var it = 0; it < this.subItems.length; it++) {
@@ -1072,22 +1074,22 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
             }
         }
         this._color.a = opacity;
-    },
+    }
 
     /**
      * return the color of cc.MenuItemToggle
      * @return {cc.Color}
      */
-    getColor: function () {
+    getColor() {
         var locColor = this._color;
         return cc.color(locColor.r, locColor.g, locColor.b, locColor.a);
-    },
+    }
 
     /**
      * set the color for cc.MenuItemToggle
      * @param {cc.Color} Color
      */
-    setColor: function (color) {
+    setColor(color) {
         var locColor = this._color;
         locColor.r = color.r;
         locColor.g = color.g;
@@ -1102,21 +1104,21 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
         if (color.a !== undefined && !color.a_undefined) {
             this.setOpacity(color.a);
         }
-    },
+    }
 
     /**
      * return the index of selected
      * @return {Number}
      */
-    getSelectedIndex: function () {
+    getSelectedIndex() {
         return this._selectedIndex;
-    },
+    }
 
     /**
      * set the seleceted index for cc.MenuItemToggle
      * @param {Number} SelectedIndex
      */
-    setSelectedIndex: function (SelectedIndex) {
+    setSelectedIndex(SelectedIndex) {
         if (SelectedIndex !== this._selectedIndex) {
             this._selectedIndex = SelectedIndex;
             var currItem = this.getChildByTag(cc.CURRENT_ITEM);
@@ -1130,23 +1132,23 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
             this.height = h;
             item.setPosition(w / 2, h / 2);
         }
-    },
+    }
 
     /**
      * similar to get children,return the sumItem array.
      * @return {Array}
      */
-    getSubItems: function () {
+    getSubItems() {
         return this.subItems;
-    },
+    }
 
     /**
      * set the subitem for cc.MenuItemToggle
      * @param {cc.MenuItem} subItems
      */
-    setSubItems: function (subItems) {
+    setSubItems(subItems) {
         this.subItems = subItems;
-    },
+    }
 
     /**
      * initializes a cc.MenuItemToggle with items
@@ -1155,7 +1157,7 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
      * @param {cc.Node} last the first item in the args array is a target
      * @return {Boolean}
      */
-    initWithItems: function (args) {
+    initWithItems(args) {
         var l = args.length;
         // passing callback.
         if (cc.isFunction(args[args.length - 2])) {
@@ -1181,66 +1183,66 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
         this.setCascadeOpacityEnabled(true);
 
         return true;
-    },
+    }
 
     /**
      * add the subitem for cc.MenuItemToggle
      * @param {cc.MenuItem} item
      */
-    addSubItem: function (item) {
+    addSubItem(item) {
         this.subItems.push(item);
-    },
+    }
 
     /**
      * activate the menu item
      */
-    activate: function () {
+    activate() {
         // update index
         if (this._enabled) {
             var newIndex = (this._selectedIndex + 1) % this.subItems.length;
             this.setSelectedIndex(newIndex);
         }
-        cc.MenuItem.prototype.activate.call(this);
-    },
+        super.activate();
+    }
 
     /**
      * menu item is selected (runs callback)
      */
-    selected: function () {
-        cc.MenuItem.prototype.selected.call(this);
+    selected() {
+        super.selected();
         this.subItems[this._selectedIndex].selected();
-    },
+    }
 
     /**
      * menu item goes back to unselected state
      */
-    unselected: function () {
-        cc.MenuItem.prototype.unselected.call(this);
+    unselected() {
+        super.unselected();
         this.subItems[this._selectedIndex].unselected();
-    },
+    }
 
     /**
      * set the enable status for cc.MenuItemToggle
      * @param {Boolean} enabled
      */
-    setEnabled: function (enabled) {
+    setEnabled(enabled) {
         if (this._enabled !== enabled) {
-            cc.MenuItem.prototype.setEnabled.call(this, enabled);
+            super.setEnabled(enabled);
             var locItems = this.subItems;
             if (locItems && locItems.length > 0) {
                 for (var it = 0; it < locItems.length; it++)
                     locItems[it].enabled = enabled;
             }
         }
-    },
+    }
 
     /**
      * returns the selected item.
      * @return {cc.MenuItem}
      */
-    getSelectedItem: function() {
+    getSelectedItem() {
         return this.subItems[this._selectedIndex];
-    },
+    }
 
     /**
      * * <p>
@@ -1250,11 +1252,11 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
      *     If you override onEnter, you must call its parent's onEnter function with this._super().
      * </p>
      */
-    onEnter: function () {
+    onEnter() {
         cc.Node.prototype.onEnter.call(this);
         this.setSelectedIndex(this._selectedIndex);
     }
-});
+};
 
 var _p = cc.MenuItemToggle.prototype;
 

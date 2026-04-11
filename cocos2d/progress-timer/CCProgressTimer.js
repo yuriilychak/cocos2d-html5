@@ -47,23 +47,23 @@
  * @property {Boolean}      reverseDir      - Indicate whether the direction is reversed.
  *
  */
-cc.ProgressTimer = cc.Node.extend(/** @lends cc.ProgressTimer# */{
-    _type:null,
-    _percentage:0.0,
-    _sprite:null,
+cc.ProgressTimer = class ProgressTimer extends cc.Node {
+    _type = null;
+    _percentage = 0.0;
+    _sprite = null;
 
-    _midPoint:null,
-    _barChangeRate:null,
-    _reverseDirection:false,
-    _className:"ProgressTimer",
+    _midPoint = null;
+    _barChangeRate = null;
+    _reverseDirection = false;
+    _className = "ProgressTimer";
 
     /**
      * constructor of cc.cc.ProgressTimer
      * @function
      * @param {cc.Sprite} sprite
      */
-    ctor: function(sprite){
-        cc.Node.prototype.ctor.call(this);
+    constructor(sprite) {
+        super();
 
         this._type = cc.ProgressTimer.TYPE_RADIAL;
         this._percentage = 0.0;
@@ -73,22 +73,22 @@ cc.ProgressTimer = cc.Node.extend(/** @lends cc.ProgressTimer# */{
         this._sprite = null;
 
         sprite && this.initWithSprite(sprite);
-    },
+    }
 
-    onEnter: function () {
-        this._super();
+    onEnter() {
+        super.onEnter();
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             this._renderCmd.initCmd();
             this._renderCmd._updateProgress();
         }
-    },
+    }
 
-    cleanup: function () {
+    cleanup() {
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             this._renderCmd.releaseData();
         }
-        this._super();
-    },
+        super.cleanup();
+    }
 
     /**
      *    Midpoint is used to modify the progress start position.
@@ -101,17 +101,17 @@ cc.ProgressTimer = cc.Node.extend(/** @lends cc.ProgressTimer# */{
      *        you want a top to bottom then set the midpoint all the way to cc.p(x,1)
      *  @return {cc.Point}
      */
-    getMidpoint:function () {
+    getMidpoint() {
         return cc.p(this._midPoint.x, this._midPoint.y);
-    },
+    }
 
     /**
      * Midpoint setter
      * @param {cc.Point} mpoint
      */
-    setMidpoint:function (mpoint) {
+    setMidpoint(mpoint) {
         this._midPoint = cc.pClamp(mpoint, cc.p(0, 0), cc.p(1, 1));
-    },
+    }
 
     /**
      *    This allows the bar type to move the component at a specific rate
@@ -120,125 +120,128 @@ cc.ProgressTimer = cc.Node.extend(/** @lends cc.ProgressTimer# */{
      *    Set the rate to be cc.p(0,1); and set the midpoint to = cc.p(0,.5f);
      *  @return {cc.Point}
      */
-    getBarChangeRate:function () {
+    getBarChangeRate() {
         return cc.p(this._barChangeRate.x, this._barChangeRate.y);
-    },
+    }
 
     /**
      * @param {cc.Point} barChangeRate
      */
-    setBarChangeRate:function (barChangeRate) {
+    setBarChangeRate(barChangeRate) {
         this._barChangeRate = cc.pClamp(barChangeRate, cc.p(0, 0), cc.p(1, 1));
-    },
+    }
 
     /**
      *  Change the percentage to change progress
      * @return {cc.ProgressTimer.TYPE_RADIAL|cc.ProgressTimer.TYPE_BAR}
      */
-    getType:function () {
+    getType() {
         return this._type;
-    },
+    }
 
     /**
      * Percentages are from 0 to 100
      * @return {Number}
      */
-    getPercentage:function () {
+    getPercentage() {
         return this._percentage;
-    },
+    }
 
     /**
      * The image to show the progress percentage, retain
      * @return {cc.Sprite}
      */
-    getSprite:function () {
+    getSprite() {
         return this._sprite;
-    },
+    }
 
     /**
      * from 0-100
      * @param {Number} percentage
      */
-    setPercentage:function (percentage) {
+    setPercentage(percentage) {
         if (this._percentage !== percentage) {
             this._percentage = cc.clampf(percentage, 0, 100);
             this._renderCmd._updateProgress();
         }
-    },
+    }
+
     /**
      * only use for jsbinding
      * @param bValue
      */
-    setOpacityModifyRGB:function (bValue) {
-    },
+    setOpacityModifyRGB(bValue) {
+    }
+
     /**
      * only use for jsbinding
      * @returns {boolean}
      */
-    isOpacityModifyRGB:function () {
+    isOpacityModifyRGB() {
         return false;
-    },
+    }
+
     /**
      * return if reverse direction
      * @returns {boolean}
      */
-    isReverseDirection:function () {
+    isReverseDirection() {
         return this._reverseDirection;
-    },
+    }
 
     /**
      * set color of sprite
      * @param {cc.Color} color
      */
-    setColor:function (color) {
+    setColor(color) {
         this._sprite.color = color;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
-    },
+    }
 
     /**
      *  set opacity of sprite
      * @param {Number} opacity
      */
-    setOpacity:function (opacity) {
+    setOpacity(opacity) {
         this._sprite.opacity = opacity;
         //this._renderCmd._updateColor();
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
-    },
+    }
 
     /**
      * return color of sprite
      * @return {cc.Color}
      */
-    getColor:function () {
+    getColor() {
         return this._sprite.color;
-    },
+    }
 
     /**
      * return Opacity of sprite
      * @return {Number}
      */
-    getOpacity:function () {
+    getOpacity() {
         return this._sprite.opacity;
-    },
+    }
 
     /**
      * set reverse cc.ProgressTimer
      * @function
      * @param {Boolean} reverse
      */
-    setReverseProgress: function(reverse){
+    setReverseProgress(reverse) {
         if (this._reverseDirection !== reverse){
             this._reverseDirection = reverse;
             this._renderCmd.resetVertexData();
         }
-    },
+    }
 
     /**
      * set sprite for cc.ProgressTimer
      * @function
      * @param {cc.Sprite} sprite
      */
-    setSprite: function(sprite){
+    setSprite(sprite) {
         if (this._sprite !== sprite) {
             this._sprite = sprite;
             if(sprite) {
@@ -250,31 +253,31 @@ cc.ProgressTimer = cc.Node.extend(/** @lends cc.ProgressTimer# */{
             }
             this._renderCmd.resetVertexData();
         }
-    },
+    }
 
     /**
      * set Progress type of cc.ProgressTimer
      * @function
      * @param {cc.ProgressTimer.TYPE_RADIAL|cc.ProgressTimer.TYPE_BAR} type
      */
-    setType: function(type){
+    setType(type) {
         if (type !== this._type){
             this._type = type;
             this._renderCmd.resetVertexData();
         }
-    },
+    }
 
     /**
      * Reverse Progress setter
      * @function
      * @param {Boolean} reverse
      */
-    setReverseDirection: function(reverse){
+    setReverseDirection(reverse) {
         if (this._reverseDirection !== reverse){
             this._reverseDirection = reverse;
             this._renderCmd.resetVertexData();
         }
-    },
+    }
 
     /**
      * Initializes a progress timer with the sprite as the shape the timer goes through
@@ -282,7 +285,7 @@ cc.ProgressTimer = cc.Node.extend(/** @lends cc.ProgressTimer# */{
      * @param {cc.Sprite} sprite
      * @return {Boolean}
      */
-    initWithSprite: function(sprite){
+    initWithSprite(sprite) {
         this.percentage = 0;
         this.setAnchorPoint(0.5,0.5);
 
@@ -293,15 +296,15 @@ cc.ProgressTimer = cc.Node.extend(/** @lends cc.ProgressTimer# */{
         this.setSprite(sprite);
         this._renderCmd.resetVertexData();
         return true;
-    },
+    }
 
-    _createRenderCmd: function(){
+    _createRenderCmd() {
         if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.ProgressTimer.CanvasRenderCmd(this);
         else
             return new cc.ProgressTimer.WebGLRenderCmd(this);
     }
-});
+};
 
 // Extended properties
 var _p = cc.ProgressTimer.prototype;

@@ -43,8 +43,8 @@
  * //creates the cc.LabelAtlas with a string, a fnt file
  * var myLabel = new cc.LabelAtlas('Text to display', 'CharMapFile.plist‘);
  */
-cc.LabelAtlas = cc.LabelBMFont.extend(/** @lends cc.LabelBMFont# */{
-    _className: "LabelAtlas",
+cc.LabelAtlas = class LabelAtlas extends cc.LabelBMFont {
+    _className = "LabelAtlas";
 
     /**
      * <p>
@@ -60,23 +60,23 @@ cc.LabelAtlas = cc.LabelBMFont.extend(/** @lends cc.LabelBMFont# */{
      * @param {Number} [itemHeight=0]
      * @param {Number} [startCharMap=""]
      */
-    ctor: function (strText, charMapFile, itemWidth, itemHeight, startCharMap) {
-        cc.SpriteBatchNode.prototype.ctor.call(this);
+    constructor(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
+        super();
         this._imageOffset = cc.p(0, 0);
         this._cascadeColorEnabled = true;
         this._cascadeOpacityEnabled = true;
 
         charMapFile && cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
             return new cc.LabelBMFont.WebGLRenderCmd(this);
         else
             return new cc.LabelBMFont.CanvasRenderCmd(this);
-    },
+    }
 
-    _createFntConfig: function (texture, itemWidth, itemHeight, startCharMap) {
+    _createFntConfig(texture, itemWidth, itemHeight, startCharMap) {
         var fnt = {};
         fnt.commonHeight = itemHeight;
 
@@ -102,7 +102,7 @@ cc.LabelAtlas = cc.LabelBMFont.extend(/** @lends cc.LabelBMFont# */{
         fnt.kerningDict = {};
 
         return fnt;
-    },
+    }
 
     /**
      * <p>
@@ -119,7 +119,7 @@ cc.LabelAtlas = cc.LabelBMFont.extend(/** @lends cc.LabelBMFont# */{
      * @param {Number} [startCharMap=""]
      * @return {Boolean} returns true on success
      */
-    initWithString: function (strText, charMapFile, itemWidth, itemHeight, startCharMap) {
+    initWithString(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
         var label = strText + "", textureFilename, width, height, startChar;
         var self = this, theString = label || "";
         this._initialString = theString;
@@ -194,12 +194,11 @@ cc.LabelAtlas = cc.LabelBMFont.extend(/** @lends cc.LabelBMFont# */{
             return true;
         }
         return false;
-    },
-
-    setFntFile: function () {
-        cc.warn("setFntFile doesn't support with LabelAtlas.");
     }
 
-});
+    setFntFile() {
+        cc.warn("setFntFile doesn't support with LabelAtlas.");
+    }
+};
 
 
