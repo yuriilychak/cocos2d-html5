@@ -33,7 +33,8 @@ var images_path = 'Presentation/';
 // PresentationBaseLayer
 //
 //------------------------------------------------------------------
-var PresentationBaseLayer = function() {
+var PresentationBaseLayer = class PresentationBaseLayer extends BaseTestLayer {
+	constructor() {
 
 	//
 	// VERY IMPORTANT
@@ -41,22 +42,17 @@ var PresentationBaseLayer = function() {
 	// Only subclasses of a native classes MUST call __associateObjectWithNative
 	// Failure to do so, it will crash.
 	//
-	var parent = BaseTestLayer.call(this, cc.color(0,0,0,255), cc.color(98,99,117,255));
+		super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
 	this._title =  "No title";
 	this._subtitle = "No Subtitle";
 	this.isMainTitle = false;
 
-};
-cc.inherits(PresentationBaseLayer, BaseTestLayer );
+	}
 
-//
-// Instance 'base' methods
-// XXX: Should be defined after "cc.inherits"
-//
-PresentationBaseLayer.prototype.onEnter = function() {
+	onEnter() {
 
-	BaseTestLayer.prototype.onEnter.call(this);
+	super.onEnter();
 
 	var fontSize = 36;
 	var tl = this._title.length;
@@ -114,17 +110,14 @@ PresentationBaseLayer.prototype.onEnter = function() {
 	// remove "super" titles
 	this.removeChildByTag(BASE_TEST_TITLE_TAG);
 	this.removeChildByTag(BASE_TEST_SUBTITLE_TAG);
-};
-
-PresentationBaseLayer.prototype.prevTransition = function () {
+}
+	prevTransition() {
     return cc.TransitionSlideInL;
-};
-
-PresentationBaseLayer.prototype.nextTransition = function () {
+}
+	nextTransition() {
     return cc.TransitionSlideInR;
-};
-
-PresentationBaseLayer.prototype.createBulletList = function () {
+}
+	createBulletList() {
 	var str = "";
 	for(var i=0; i<arguments.length; i++)
 	{
@@ -138,69 +131,65 @@ PresentationBaseLayer.prototype.createBulletList = function () {
 	bullets.x = centerPos.x;
 	bullets.y = centerPos.y;
 	this.addChild( bullets, 80 );
-};
-
-PresentationBaseLayer.prototype.createImage = function( file ) {
+}
+	createImage( file ) {
 	var sprite = new cc.Sprite( file );
 	sprite.x = centerPos.x;
 	sprite.y = centerPos.y;
 	this.addChild( sprite, 70 );
 
 	return sprite;
-};
-
-// callbacks
-PresentationBaseLayer.prototype.onRestartCallback = function (sender) {
+}
+	onRestartCallback(sender) {
     var s = new PresentationScene();
     s.addChild(restartPresentationSlide());
     director.runScene(s);
-};
-
-PresentationBaseLayer.prototype.onNextCallback = function (sender) {
+}
+	onNextCallback(sender) {
     var s = new PresentationScene();
     s.addChild(nextPresentationSlide());
     director.runScene(s);
-};
-
-PresentationBaseLayer.prototype.onBackCallback = function (sender) {
+}
+	onBackCallback(sender) {
     var s = new PresentationScene();
     s.addChild(previousPresentationSlide());
     director.runScene(s);
-};
-
-// automation
-PresentationBaseLayer.prototype.numberOfPendingTests = function() {
+}
+	numberOfPendingTests() {
     return ( (arrayOfPresentation.length-1) - presentationSceneIdx );
-};
-
-PresentationBaseLayer.prototype.getTestNumber = function() {
+}
+	getTestNumber() {
     return presentationSceneIdx;
+}
 };
-
-
+//
+//
+// callbacks
+// automation
 //------------------------------------------------------------------
 //
 // Intro Page
 //
 //------------------------------------------------------------------
-var IntroPage = function() {
+var IntroPage = class IntroPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'cocos2d JS';
 	this._subtitle = 'Game Development Kit';
 	this.isMainTitle = true;
+	}
 };
-cc.inherits( IntroPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // Goal Page
 //
 //------------------------------------------------------------------
-var GoalPage = function() {
+var GoalPage = class GoalPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Goals';
 	this._subtitle = '';
@@ -213,32 +202,32 @@ var GoalPage = function() {
 			'High quality code',
 			'Good performance'
 			);
+	}
 };
-cc.inherits( GoalPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // Solutions ?
 //
 //------------------------------------------------------------------
-var SolutionsPage = function() {
+var SolutionsPage = class SolutionsPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Options';
 	this._subtitle = '';
 	this.isMainTitle = true;
+	}
 };
-cc.inherits( SolutionsPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // HTML5 engines ?
 //
 //------------------------------------------------------------------
-var HTML5EnginesPage = function() {
+var HTML5EnginesPage = class HTML5EnginesPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Options';
 	this._subtitle = 'HTML5 engines';
@@ -251,17 +240,17 @@ var HTML5EnginesPage = function() {
 			'Construct 2',
 			'etc...'
 			);
+	}
 };
-cc.inherits( HTML5EnginesPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // Features
 //
 //------------------------------------------------------------------
-var FeaturesHTML5Page = function() {
+var FeaturesHTML5Page = class FeaturesHTML5Page extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'HTML5 Features';
 	this._subtitle = '';
@@ -274,17 +263,17 @@ var FeaturesHTML5Page = function() {
 			'High quality code ???',
 			'Good Performance ???'
 			);
+	}
 };
-cc.inherits( FeaturesHTML5Page, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // ComparisonPage
 //
 //------------------------------------------------------------------
-var ComparisonPage = function() {
+var ComparisonPage = class ComparisonPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'HTML5 Mobile performance';
 	this._subtitle = 'Bad performance, even with accel frameworks';
@@ -292,17 +281,17 @@ var ComparisonPage = function() {
 
 	this.createImage( images_path + 'comparison.png');
 
+	}
 };
-cc.inherits( ComparisonPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // WhatWeWantPage
 //
 //------------------------------------------------------------------
-var WhatWeWantPage = function() {
+var WhatWeWantPage = class WhatWeWantPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Performance';
 	this._subtitle = 'But what we want is...';
@@ -314,17 +303,17 @@ var WhatWeWantPage = function() {
 			'Particles... at 60 FPS'
 			);
 
+	}
 };
-cc.inherits( WhatWeWantPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // Chipmunk Page
 //
 //------------------------------------------------------------------
-var ChipmunkPage = function() {
+var ChipmunkPage = class ChipmunkPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	// batch node
 	this.batch = new cc.SpriteBatchNode( s_pathGrossini, 50 );
@@ -341,21 +330,12 @@ var ChipmunkPage = function() {
 	this.initPhysics();
 
 	this.initMenu();
-};
-cc.inherits( ChipmunkPage, PresentationBaseLayer );
+	}
 
-//
-// Instance 'base' methods
-// XXX: Should be defined after "cc.inherits"
-//
-
-ChipmunkPage.prototype.onTogglePhysicsDebug = function() {
+	onTogglePhysicsDebug() {
 	this.debugNode.visible = ! this.debugNode.visible ;
-};
-
-// Menu
-
-ChipmunkPage.prototype.initMenu = function() {
+}
+	initMenu() {
 	// menu
 	cc.MenuItemFont.setFontSize( 16 );
 	var menuItem = new cc.MenuItemFont('Toggle Physics Debug', this.onTogglePhysicsDebug, this);
@@ -363,10 +343,8 @@ ChipmunkPage.prototype.initMenu = function() {
 	this.addChild( menu, 99 );
 	menu.x = winSize.width-80;
 	menu.y = winSize.height-100;
-};
-
-// init physics
-ChipmunkPage.prototype.initPhysics = function() {
+}
+	initPhysics() {
 	this.space =  new cp.Space();
 	var staticBody = this.space.getStaticBody();
 
@@ -391,9 +369,8 @@ ChipmunkPage.prototype.initPhysics = function() {
 	this.debugNode = new cc.PhysicsDebugNode( this.space.handle );
 	this.debugNode.visible = false ;
 	this.addChild( this.debugNode, 100 );
-};
-
-ChipmunkPage.prototype.createPhysicsSprite = function( pos ) {
+}
+	createPhysicsSprite( pos ) {
 	var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
 	body.setPos( pos );
 	this.space.addBody( body );
@@ -405,10 +382,9 @@ ChipmunkPage.prototype.createPhysicsSprite = function( pos ) {
 	var sprite = new cc.PhysicsSprite(s_pathGrossini);
 	sprite.setBody( body.handle );
 	return sprite;
-};
-
-ChipmunkPage.prototype.onEnter = function () {
-	PresentationBaseLayer.prototype.onEnter.call(this);
+}
+	onEnter() {
+	super.onEnter();
 
 	for(var i=0; i<20; i++) {
 		var x = 40 + Math.random() * (winSize.width-80);
@@ -434,30 +410,34 @@ ChipmunkPage.prototype.onEnter = function () {
                event.getCurrentTarget().addSprite(event.getLocation());
            }
        }, this);
-};
-
-ChipmunkPage.prototype.onExitTransitionDidStart = function () {
+}
+	onExitTransitionDidStart() {
 	director.setDisplayStats( false );
-};
-
-ChipmunkPage.prototype.onEnterTransitionDidFinish = function () {
+}
+	onEnterTransitionDidFinish() {
 	director.setDisplayStats( true );
 
 	this.scheduleUpdate();
-};
-
-ChipmunkPage.prototype.update = function( delta ) {
+}
+	update( delta ) {
 	this.space.step( delta );
+}
 };
+//
+//
 
+// Menu
+
+// init physics
 //------------------------------------------------------------------
 //
 // Particles Page
 //
 //------------------------------------------------------------------
-var ParticlesPage = function() {
+var ParticlesPage = class ParticlesPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Performance';
 	this._subtitle = 'Particles';
@@ -527,69 +507,66 @@ var ParticlesPage = function() {
 	this.onEnterTransitionDidFinish = function () {
 		director.setDisplayStats( true );
 	};
+	}
 };
-cc.inherits( ParticlesPage, PresentationBaseLayer );
-
-
 //------------------------------------------------------------------
 //
 // HowToImprovePage
 //
 //------------------------------------------------------------------
-var HowToImprovePage = function() {
+var HowToImprovePage = class HowToImprovePage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Improving the performance';
 	this._subtitle = 'Redefining "fast" for mobile';
 	this.isMainTitle = true;
+	}
 };
-cc.inherits( HowToImprovePage, PresentationBaseLayer );
-
-
 //------------------------------------------------------------------
 //
 // HTML5AcceleratorPage
 //
 //------------------------------------------------------------------
-var HTML5AcceleratorPage = function() {
+var HTML5AcceleratorPage = class HTML5AcceleratorPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'HTML5 Mobile Accelerators';
 	this._subtitle = '';
 	this.isMainTitle = false;
 
 	this.createImage( images_path + 'html5accelerator.png');
+	}
 };
-cc.inherits( HTML5AcceleratorPage, PresentationBaseLayer );
-
-
 //------------------------------------------------------------------
 //
 // GDKAcceleratorPage
 //
 //------------------------------------------------------------------
-var GDKAcceleratorPage = function() {
+var GDKAcceleratorPage = class GDKAcceleratorPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'cocos2d Acceleration';
 	this._subtitle = '';
 	this.isMainTitle = false;
 
 		this.createImage( images_path + 'gdkaccelerator.png');
+	}
 };
-cc.inherits( GDKAcceleratorPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // GDKComponentsPage
 //
 //------------------------------------------------------------------
-var GDKComponentsPage = function() {
+var GDKComponentsPage = class GDKComponentsPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Components';
 	this._subtitle = '';
@@ -600,69 +577,68 @@ var GDKComponentsPage = function() {
 			'Physics engine: Chipmunk',
 			'World Editor: CocosBuilder'
 			);
+	}
 };
-cc.inherits( GDKComponentsPage, PresentationBaseLayer );
-
-
 //------------------------------------------------------------------
 //
 // CocosStatusPage
 //
 //------------------------------------------------------------------
-var CocosStatusPage = function() {
+var CocosStatusPage = class CocosStatusPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Game Engine';
 	this._subtitle = '';
 	this.isMainTitle = false;
 
     this.createImage( images_path + 'cocos2d_status.png' );
+	}
 };
-cc.inherits( CocosStatusPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // ChipmunkStatusPage
 //
 //------------------------------------------------------------------
-var ChipmunkStatusPage = function() {
+var ChipmunkStatusPage = class ChipmunkStatusPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Physics Engine';
 	this._subtitle = '';
 	this.isMainTitle = false;
 
     this.createImage( images_path + 'chipmunk_status.png' );
+	}
 };
-cc.inherits( ChipmunkStatusPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // CCBStatusPage
 //
 //------------------------------------------------------------------
-var CCBStatusPage = function() {
+var CCBStatusPage = class CCBStatusPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'World Editor';
 	this._subtitle = '';
 	this.isMainTitle = false;
 
     this.createImage( images_path + 'cocosbuilder_status.png' );
+	}
 };
-cc.inherits( CCBStatusPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // WhoIsUsingItPage
 //
 //------------------------------------------------------------------
-var WhoIsUsingItPage = function() {
+var WhoIsUsingItPage = class WhoIsUsingItPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = "Who is using it";
 	this._subtitle = '';
@@ -673,57 +649,50 @@ var WhoIsUsingItPage = function() {
                 'Zynga',
 				'...and you ?'
                 );
+	}
 };
-cc.inherits( WhoIsUsingItPage, PresentationBaseLayer );
-
-
 //------------------------------------------------------------------
 //
 // DemoPage
 //
 //------------------------------------------------------------------
-var DemoPage = function() {
+var DemoPage = class DemoPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Demo';
 	this._subtitle = '';
 	this.isMainTitle = true;
+	}
 };
-cc.inherits( DemoPage, PresentationBaseLayer );
-
 //------------------------------------------------------------------
 //
 // Thanks
 //
 //------------------------------------------------------------------
-var ThanksPage = function() {
+var ThanksPage = class ThanksPage extends PresentationBaseLayer {
+	constructor() {
 
-	PresentationBaseLayer.call(this);
+		super();
 
 	this._title = 'Thanks';
 	this._subtitle = '';
 	this.isMainTitle = true;
+	}
 };
-cc.inherits( ThanksPage, PresentationBaseLayer );
-
-
-
 //
 // Entry point
 //
 
-var PresentationScene = function() {
-	var parent = TestScene.call(this);
-};
-cc.inherits(PresentationScene, TestScene );
-
-PresentationScene.prototype.runThisTest = function () {
-    presentationSceneIdx = -1;
-    centerPos = cc.p(winSize.width/2, winSize.height/2);
-    var layer = nextPresentationSlide();
-    this.addChild(layer);
-    director.runScene(this);
+var PresentationScene = class PresentationScene extends TestScene {
+    runThisTest() {
+        presentationSceneIdx = -1;
+        centerPos = cc.p(winSize.width/2, winSize.height/2);
+        var layer = nextPresentationSlide();
+        this.addChild(layer);
+        director.runScene(this);
+    }
 };
 
 //
@@ -750,20 +719,25 @@ var arrayOfPresentation = [
 	ThanksPage
 ];
 
-var nextPresentationSlide = function () {
+var nextPresentationSlide = class nextPresentationSlide {
+	constructor() {
     presentationSceneIdx++;
     presentationSceneIdx = presentationSceneIdx % arrayOfPresentation.length;
 
     return new arrayOfPresentation[presentationSceneIdx]();
+	}
 };
-var previousPresentationSlide = function () {
+var previousPresentationSlide = class previousPresentationSlide {
+	constructor() {
     presentationSceneIdx--;
     if (presentationSceneIdx < 0)
         presentationSceneIdx += arrayOfPresentation.length;
 
     return new arrayOfPresentation[presentationSceneIdx]();
+	}
 };
-var restartPresentationSlide = function () {
+var restartPresentationSlide = class restartPresentationSlide {
+	constructor() {
     return new arrayOfPresentation[presentationSceneIdx]();
+	}
 };
-

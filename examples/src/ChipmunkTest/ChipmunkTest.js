@@ -1969,17 +1969,13 @@ var LogoSmash = (function(){
 // Entry point
 //
 
-var ChipmunkTestScene = function() {
-    TestScene.call(this);
-    //var parent = cc.base(this);
-};
-cc.inherits(ChipmunkTestScene, TestScene );
-
-ChipmunkTestScene.prototype.runThisTest = function (num) {
-    chipmunkTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
-    var layer = nextChipmunkTest();
-    this.addChild(layer);
-    director.runScene(this);
+var ChipmunkTestScene = class ChipmunkTestScene extends TestScene {
+    runThisTest(num) {
+        chipmunkTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        var layer = nextChipmunkTest();
+        this.addChild(layer);
+        director.runScene(this);
+    }
 };
 
 //
