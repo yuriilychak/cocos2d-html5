@@ -28,52 +28,52 @@
  * @class
  * @extends ccs.Component
  */
-ccs.ComRender = ccs.Component.extend(/** @lends ccs.ComRender# */{
-    _render: null,
+ccs.ComRender = class ComRender extends ccs.Component {
+
     /**
      * Construction of ccs.ComRender
      * @param {cc.Node} node
      * @param {String} comName
      */
-    ctor: function (node, comName) {
-        cc.Component.prototype.ctor.call(this);
+    constructor (node, comName) {
+        super();
         this._render = node;
         this._name = comName;
         this.isRenderer = true;
-        ccs.ComRender.prototype.init.call(this);
-    },
+        this.init();
+    }
 
     /**
      * The callback calls when a render component enter stage.
      */
-    onEnter: function () {
+    onEnter () {
         if (this._owner)
             this._owner.addChild(this._render);
-    },
+    }
 
     /**
      * The callback calls when a render component exit stage.
      */
-    onExit: function () {
+    onExit () {
         if (this._owner) {
             this._owner.removeChild(this._render, true);
             this._render = null;
         }
-    },
+    }
 
     /**
      * Returns a render node
      * @returns {cc.Node}
      */
-    getNode: function () {
+    getNode () {
         return this._render;
-    },
+    }
 
     /**
      * Sets a render node to component.
      * @param {cc.Node} node
      */
-    setNode: function (node) {
+    setNode (node) {
         this._render = node;
     }
-});
+};

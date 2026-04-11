@@ -137,33 +137,29 @@ sp.TrackEntryListeners.getListeners = function(entry){
  * var spineBoy = new sp.SkeletonAnimation('res/skeletons/spineboy.json', 'res/skeletons/spineboy.atlas');
  * this.addChild(spineBoy, 4);
  */
-sp.SkeletonAnimation = sp.Skeleton.extend(/** @lends sp.SkeletonAnimation# */{
-    _state: null,
-
-    _ownsAnimationStateData: false,
-    _listener: null,
+sp.SkeletonAnimation = class SkeletonAnimation extends sp.Skeleton {
 
     /**
      * Initializes a sp.SkeletonAnimation. please do not call this function by yourself, you should pass the parameters to constructor to initialize it.
      * @override
      */
-    init: function () {
-        sp.Skeleton.prototype.init.call(this);
+    init () {
+        super.init();
         this._ownsAnimationStateData = true;
         this.setAnimationStateData(new spine.AnimationStateData(this._skeleton.data));
-    },
+    }
 
     /**
      * Sets animation state data to sp.SkeletonAnimation.
      * @param {sp.spine.AnimationStateData} stateData
      */
-    setAnimationStateData: function (stateData) {
+    setAnimationStateData (stateData) {
         var state = new spine.AnimationState(stateData);
         this._listener = new sp.TrackEntryListeners();
         state.rendererObject = this;
         state.addListener(this._listener);
         this._state = state;
-    },
+    }
 
     /**
      * Mix applies all keyframe values, interpolated for the specified time and mixed with the current values.  <br/>
@@ -171,20 +167,20 @@ sp.SkeletonAnimation = sp.Skeleton.extend(/** @lends sp.SkeletonAnimation# */{
      * @param {String} toAnimation
      * @param {Number} duration
      */
-    setMix: function (fromAnimation, toAnimation, duration) {
+    setMix (fromAnimation, toAnimation, duration) {
         this._state.data.setMixWith(fromAnimation, toAnimation, duration);
-    },
+    }
 
     /**
      * Sets event listener of sp.SkeletonAnimation.
      * @param {Object} target
      * @param {Function} callback
      */
-    setAnimationListener: function (target, callback) {
+    setAnimationListener (target, callback) {
         this._listener.callbackTarget = target;
         this._listener.callback = callback;
         this._listener.skeletonNode = this;
-    },
+    }
 
     /**
      * Set the current animation. Any queued animations are cleared.
@@ -193,14 +189,14 @@ sp.SkeletonAnimation = sp.Skeleton.extend(/** @lends sp.SkeletonAnimation# */{
      * @param {Boolean} loop
      * @returns {sp.spine.TrackEntry|null}
      */
-    setAnimation: function (trackIndex, name, loop) {
+    setAnimation (trackIndex, name, loop) {
         var animation = this._skeleton.data.findAnimation(name);
         if (!animation) {
             cc.log("Spine: Animation not found: " + name);
             return null;
         }
         return this._state.setAnimationWith(trackIndex, animation, loop);
-    },
+    }
 
     /**
      * Adds an animation to be played delay seconds after the current or last queued animation.
@@ -210,7 +206,7 @@ sp.SkeletonAnimation = sp.Skeleton.extend(/** @lends sp.SkeletonAnimation# */{
      * @param {Number} [delay=0]
      * @returns {sp.spine.TrackEntry|null}
      */
-    addAnimation: function (trackIndex, name, loop, delay) {
+    addAnimation (trackIndex, name, loop, delay) {
         delay = delay == null ? 0 : delay;
         var animation = this._skeleton.data.findAnimation(name);
         if (!animation) {
@@ -218,40 +214,40 @@ sp.SkeletonAnimation = sp.Skeleton.extend(/** @lends sp.SkeletonAnimation# */{
             return null;
         }
         return this._state.addAnimationWith(trackIndex, animation, loop, delay);
-    },
+    }
 
     /**
      * Find animation with specified name
      * @param {String} name
      * @returns {sp.spine.Animation|null}
      */
-    findAnimation: function (name) {
+    findAnimation (name) {
         return this._skeleton.data.findAnimation(name);
-    },
+    }
 
     /**
      * Returns track entry by trackIndex.
      * @param trackIndex
      * @returns {sp.spine.TrackEntry|null}
      */
-    getCurrent: function (trackIndex) {
+    getCurrent (trackIndex) {
         return this._state.getCurrent(trackIndex);
-    },
+    }
 
     /**
      * Clears all tracks of animation state.
      */
-    clearTracks: function () {
+    clearTracks () {
         this._state.clearTracks();
-    },
+    }
 
     /**
      * Clears track of animation state by trackIndex.
      * @param {Number} trackIndex
      */
-    clearTrack: function (trackIndex) {
+    clearTrack (trackIndex) {
         this._state.clearTrack(trackIndex);
-    },
+    }
 
     /**
      * Update will be called automatically every frame if "scheduleUpdate" is called when the node is "live".
@@ -259,81 +255,81 @@ sp.SkeletonAnimation = sp.Skeleton.extend(/** @lends sp.SkeletonAnimation# */{
      * @param {Number} dt Delta time since last update
      * @override
      */
-    update: function (dt) {
-        this._super(dt);
+    update (dt) {
+        super.update(dt);
         dt *= this._timeScale;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
         this._state.update(dt);
         this._state.apply(this._skeleton);
         this._skeleton.updateWorldTransform();
         this._renderCmd._updateChild();
-    },
+    }
 
     /**
      * Set the start event listener.
      * @param {function} listener
      */
-    setStartListener: function(listener){
+    setStartListener (listener) {
         this._listener.startListener = listener;
-    },
+    }
 
     /**
      * Set the interrupt listener
      * @param {function} listener
      */
-    setInterruptListener: function(listener) {
+    setInterruptListener (listener) {
         this._listener.interruptListener = listener;
-    },
+    }
 
     /**
      * Set the end event listener.
      * @param {function} listener
      */
-    setEndListener: function(listener) {
+    setEndListener (listener) {
         this._listener.endListener = listener;
-    },
+    }
 
     /**
      * Set the dispose listener
      * @param {function} listener
      */
-    setDisposeListener: function(listener) {
+    setDisposeListener (listener) {
         this._listener.disposeListener = listener;
-    },
+    }
 
-    setCompleteListener: function(listener) {
+    setCompleteListener (listener) {
         this._listener.completeListener = listener;
-    },
+    }
 
-    setEventListener: function(listener){
+    setEventListener (listener) {
         this._listener.eventListener = listener;
-    },
+    }
 
-    setTrackStartListener: function(entry, listener){
+    setTrackStartListener (entry, listener) {
         sp.TrackEntryListeners.getListeners(entry).startListener = listener;
-    },
+    }
 
-    setTrackInterruptListener: function(entry, listener){
+    setTrackInterruptListener (entry, listener) {
         sp.TrackEntryListeners.getListeners(entry).interruptListener = listener;
-    },
+    }
 
-    setTrackEndListener: function(entry, listener){
+    setTrackEndListener (entry, listener) {
         sp.TrackEntryListeners.getListeners(entry).endListener = listener;
-    },
+    }
 
-    setTrackDisposeListener: function(entry, listener){
+    setTrackDisposeListener (entry, listener) {
         sp.TrackEntryListeners.getListeners(entry).disposeListener = listener;
-    },
+    }
 
-    setTrackCompleteListener: function(entry, listener){
+    setTrackCompleteListener (entry, listener) {
         sp.TrackEntryListeners.getListeners(entry).completeListener = listener;
-    },
+    }
 
-    setTrackEventListener: function(entry, listener){
+    setTrackEventListener (entry, listener) {
         sp.TrackEntryListeners.getListeners(entry).eventListener = listener;
-    },
+    }
 
-    getState: function(){
+    getState () {
         return this._state;
     }
-});
+};

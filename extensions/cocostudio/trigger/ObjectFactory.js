@@ -82,11 +82,10 @@ ccs.objectFactory = /** @lends ccs.objectFactory# */{
     }
 };
 
-ccs.TInfo = ccs.Class.extend({
-    _className: "",
-    _fun: null,
+ccs.TInfo = class TInfo extends cc.NewClass {
 
-    ctor: function (c, f) {
+    constructor (c, f) {
+        super();
         if (f) {
             this._className = c;
             this._fun = f;
@@ -96,4 +95,4 @@ ccs.TInfo = ccs.Class.extend({
         }
         ccs.objectFactory.registerType(this);
     }
-});
+};

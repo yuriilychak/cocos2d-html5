@@ -28,172 +28,170 @@
  * @class
  * @extends ccs.Component
  */
-ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
-    _jsonDict: null,
-    _filePath: "",
+ccs.ComAttribute = class ComAttribute extends ccs.Component {
 
     /**
      * Construction of ccs.ComAttribute
      */
-    ctor: function () {
-        cc.Component.prototype.ctor.call(this);
+    constructor () {
+        super();
         this._jsonDict = {};
         this._filePath = "";
         this._name = "CCComAttribute";
-        ccs.ComAttribute.prototype.init.call(this);
-    },
+        this.init();
+    }
 
     /**
      * Initializes a ccs.ComAttribute
      * @returns {boolean}
      */
-    init: function () {
+    init () {
         this._jsonDict = {};
         return true;
-    },
+    }
 
     /**
      * Sets int attribute
      * @param {String} key
      * @param {number} value
      */
-    setInt: function (key, value) {
+    setInt (key, value) {
         if (!key) {
             cc.log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
-    },
+    }
 
     /**
      * Sets double attribute
      * @param {String} key
      * @param {number} value
      */
-    setDouble: function (key, value) {
+    setDouble (key, value) {
         if (!key) {
             cc.log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
-    },
+    }
 
     /**
      * Sets float attribute
      * @param {String} key
      * @param {number} value
      */
-    setFloat: function (key, value) {
+    setFloat (key, value) {
         if (!key) {
             cc.log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
-    },
+    }
 
     /**
      * Sets boolean attribute
      * @param {String} key
      * @param {Boolean} value
      */
-    setBool: function (key, value) {
+    setBool (key, value) {
         if (!key) {
             cc.log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
-    },
+    }
 
     /**
      * Sets string attribute
      * @param {String} key
      * @param {Boolean} value
      */
-    setString: function (key, value) {
+    setString (key, value) {
         if (!key) {
             cc.log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
-    },
+    }
 
     /**
      * Sets object attribute
      * @param {String} key
      * @param {Object} value
      */
-    setObject: function (key, value) {
+    setObject (key, value) {
         if (!key) {
             cc.log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
-    },
+    }
 
     /**
      * Returns int value from attribute
      * @param {String} key
      * @returns {Number}
      */
-    getInt: function (key) {
+    getInt (key) {
         var ret = this._jsonDict[key];
         return parseInt(ret || 0);
-    },
+    }
 
     /**
      * Returns double value from attribute
      * @param {String} key
      * @returns {Number}
      */
-    getDouble: function (key) {
+    getDouble (key) {
         var ret = this._jsonDict[key];
         return parseFloat(ret || 0.0);
-    },
+    }
 
     /**
      * Returns float value from attribute
      * @param {String} key
      * @returns {Number}
      */
-    getFloat: function (key) {
+    getFloat (key) {
         var ret = this._jsonDict[key];
         return parseFloat(ret || 0.0);
-    },
+    }
 
     /**
      * Returns boolean value from attribute
      * @param {String} key
      * @returns {Boolean}
      */
-    getBool: function (key) {
+    getBool (key) {
         var ret = this._jsonDict[key];
         return Boolean(ret || false);
-    },
+    }
 
     /**
      * Returns string value from attribute
      * @param {String} key
      * @returns {String}
      */
-    getString: function (key) {
+    getString (key) {
         var ret = this._jsonDict[key];
         return ret || "";
-    },
+    }
 
     /**
      * Returns object value from attribute
      * @param {String} key
      * @returns {Object}
      */
-    getObject: function (key) {
+    getObject (key) {
         return this._jsonDict[key];
-    },
+    }
 
     /**
      * Parses json file.
      * @param  filename
      */
-    parse:function(filename){
+    parse (filename) {
         this._jsonDict = cc.loader.getRes(filename);
     }
-});
+};

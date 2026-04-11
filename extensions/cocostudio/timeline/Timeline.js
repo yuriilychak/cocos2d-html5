@@ -27,28 +27,10 @@
  * @class
  * @extend ccs.Class
  */
-ccs.Timeline = ccs.Class.extend({
+ccs.Timeline = class Timeline extends cc.NewClass {
 
-    //{ccs.Frame}
-    _frames: null,
-    //{ccs.Frame}
-    _currentKeyFrame: null,
-    //{Number}
-    _currentKeyFrameIndex: null,
-    //{Number}
-    _fromIndex: null,
-    //{Number}
-    _toIndex: null,
-    //{Number}
-    _betweenDuration: null,
-    //{Number}
-    _actionTag: null,
-    //{ccs.ActionTimeline}
-    _ActionTimeline: null,
-    //{cc.Node}
-    _node: null,
-
-    ctor: function () {
+    constructor () {
+        super();
         this._frames = [];
         this._currentKeyFrame = null;
         this._currentKeyFrameIndex = 0;
@@ -58,118 +40,118 @@ ccs.Timeline = ccs.Class.extend({
         this._actionTag = 0;
         this._ActionTimeline = null;
         this._node = null;
-    },
+    }
 
-    _gotoFrame: function (frameIndex) {
+    _gotoFrame (frameIndex) {
         if (this._frames.length === 0)
             return;
 
         this._binarySearchKeyFrame(frameIndex);
         this._apply(frameIndex);
-    },
+    }
 
-    _stepToFrame: function (frameIndex) {
+    _stepToFrame (frameIndex) {
         if (this._frames.length === 0)
             return;
 
         this._updateCurrentKeyFrame(frameIndex);
         this._apply(frameIndex);
-    },
+    }
 
     /**
      * Get the frame list
      * @returns {ccs.Frame}
      */
-    getFrames: function () {
+    getFrames () {
         return this._frames;
-    },
+    }
 
     /**
      * push frame to frame list
      * @param {ccs.Frame} frame
      */
-    addFrame: function (frame) {
+    addFrame (frame) {
         this._frames.push(frame);
         frame.setTimeline(this)
-    },
+    }
 
     /**
      * insert the frame to frame list
      * @param {ccs.Frame} frame
      * @param {Number} index
      */
-    insertFrame: function (frame, index) {
+    insertFrame (frame, index) {
         this._frames.splice(index, 0, frame);
         frame.setTimeline(this);
 
-    },
+    }
 
     /**
      * remove frame
      * @param {ccs.Frame} frame
      */
-    removeFrame: function (frame) {
+    removeFrame (frame) {
         cc.arrayRemoveObject(this._frames, frame);
         frame.setTimeline(null);
-    },
+    }
 
     /**
      * Set the action tag
      * @param {Number} tag
      */
-    setActionTag: function (tag) {
+    setActionTag (tag) {
         this._actionTag = tag;
-    },
+    }
 
     /**
      * Gets the action tag
      * return {Number}
      */
-    getActionTag: function () {
+    getActionTag () {
         return this._actionTag;
-    },
+    }
 
     /**
      * Set the node
      * @param {cc.Node} node
      */
-    setNode: function (node) {
+    setNode (node) {
         for (var i = 0; i < this._frames.length; i++) {
             var frame = this._frames[i];
             frame.setNode(node);
         }
-    },
+    }
 
     /**
      * Gets the node
      * return {cc.Node}
      */
-    getNode: function () {
+    getNode () {
         return this._node;
-    },
+    }
 
     /**
      * Set the action timeline
      * @param {ccs.ActionTimeline} action
      */
-    setActionTimeline: function (action) {
+    setActionTimeline (action) {
         this._ActionTimeline = action;
-    },
+    }
 
     /**
      * get the action timeline
      * return {cc.Action}
      */
-    getActionTimeline: function () {
+    getActionTimeline () {
         return this._ActionTimeline;
-    },
+    }
 
     /**
      * to copy object with deep copy.
      * returns a clone of action.
      * @return {ccs.Timeline}
      */
-    clone: function () {
+    clone () {
         var timeline = new ccs.Timeline();
         timeline._actionTag = this._actionTag;
 
@@ -181,16 +163,16 @@ ccs.Timeline = ccs.Class.extend({
 
         return timeline;
 
-    },
+    }
 
-    _apply: function (frameIndex) {
+    _apply (frameIndex) {
         if (this._currentKeyFrame) {
             var currentPercent = this._betweenDuration <= 0 ? 0 : (frameIndex - this._currentKeyFrameIndex) / this._betweenDuration;
             this._currentKeyFrame.apply(currentPercent);
         }
-    },
+    }
 
-    _binarySearchKeyFrame: function (frameIndex) {
+    _binarySearchKeyFrame (frameIndex) {
         var from = null;
         var to = null;
 
@@ -260,9 +242,9 @@ ccs.Timeline = ccs.Class.extend({
             this._currentKeyFrame.onEnter(to);
         }
 
-    },
+    }
 
-    _updateCurrentKeyFrame: function (frameIndex) {
+    _updateCurrentKeyFrame (frameIndex) {
         if (frameIndex > 60)
             var a = 0;
         //! If play to current frame's front or back, then find current frame again
@@ -316,4 +298,4 @@ ccs.Timeline = ccs.Class.extend({
         }
     }
 
-});
+};

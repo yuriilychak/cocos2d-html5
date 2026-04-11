@@ -28,118 +28,116 @@
  * @class
  * @extends ccs.Class
  */
-ccs.BaseTriggerCondition = ccs.Class.extend(/** @lends ccs.BaseTriggerCondition# */{
+ccs.BaseTriggerCondition = class BaseTriggerCondition extends cc.NewClass {
     /**
      * Construction of ccs.BaseTriggerCondition
      */
-    ctor:function(){
-    },
+    constructor () {
+        super();
+    }
 
     /**
      * initializes a BaseTriggerCondition class.
      * @returns {boolean}
      */
-    init: function () {
+    init () {
         return true;
-    },
+    }
 
     /**
      * Detects trigger condition
      * @returns {boolean}
      */
-    detect: function () {
+    detect () {
         return true;
-    },
+    }
 
     /**
      * Serialize a BaseTriggerCondition object.
      * @param jsonVal
      */
-    serialize: function (jsonVal) {
-    },
+    serialize (jsonVal) {
+    }
 
     /**
      * Removes all condition
      */
-    removeAll: function () {
+    removeAll () {
     }
-});
+};
 
 /**
  * The base class of trigger action
  * @class
  * @extends ccs.Class
  */
-ccs.BaseTriggerAction = ccs.Class.extend(/** @lends ccs.BaseTriggerAction# */{
+ccs.BaseTriggerAction = class BaseTriggerAction extends cc.NewClass {
     /**
      * Construction of ccs.BaseTriggerAction
      */
-    ctor:function(){
-    },
+    constructor () {
+        super();
+    }
 
     /**
      * Initializes a BaseTriggerAction object.
      * @returns {boolean}
      */
-    init: function () {
+    init () {
         return true;
-    },
+    }
 
     /**
      * Sets the action to done.
      */
-    done: function () {
-    },
+    done () {
+    }
 
     /**
      * Serializes a ccs.BaseTriggerAction object.
      * @param jsonVal
      */
-    serialize: function (jsonVal) {
-    },
+    serialize (jsonVal) {
+    }
 
     /**
      * Removes all actions.
      */
-    removeAll: function () {
+    removeAll () {
     }
-});
+};
 
 /**
  * The trigger object of Cocostudio.
  * @class
  * @extends ccs.Class
  */
-ccs.TriggerObj = ccs.Class.extend(/** @lends ccs.TriggerObj# */{
-    _cons: null,
-    _acts: null,
-    _id: 0,
-    _enable: true,
-    _vInt: null,
+ccs.TriggerObj = class TriggerObj extends cc.NewClass {
 
-    ctor: function () {
+    constructor () {
+        super();
         this._id = 0;
         this._enable = true;
 
-        ccs.TriggerObj.prototype.init.call(this);
-    },
+        this.init();
+    }
 
     /**
      * Initializes a ccs.TriggerObj
      * @returns {boolean}
      */
-    init: function () {
+    init () {
         this._cons = [];
         this._acts = [];
         this._vInt = [];
         return true;
-    },
+    }
 
     /**
      * Detects trigger's conditions.
      * @returns {boolean}
      */
-    detect: function () {
+    detect () {
         if (!this._enable || this._cons.length === 0) {
             return true;
         }
@@ -151,12 +149,12 @@ ccs.TriggerObj = ccs.Class.extend(/** @lends ccs.TriggerObj# */{
                 ret = ret && obj.detect();
         }
         return ret;
-    },
+    }
 
     /**
      * Sets trigger's actions to done.
      */
-    done: function () {
+    done () {
         if (!this._enable || this._acts.length === 0)
             return;
         var obj;
@@ -165,12 +163,12 @@ ccs.TriggerObj = ccs.Class.extend(/** @lends ccs.TriggerObj# */{
             if (obj && obj.done)
                 obj.done();
         }
-    },
+    }
 
     /**
      * Removes all condition and actions from ccs.TriggerObj.
      */
-    removeAll: function () {
+    removeAll () {
         var obj = null;
         for (var i = 0; i < this._cons.length; i++) {
             obj = this._cons[i];
@@ -184,13 +182,13 @@ ccs.TriggerObj = ccs.Class.extend(/** @lends ccs.TriggerObj# */{
                 obj.removeAll();
         }
         this._acts = [];
-    },
+    }
 
     /**
      * Serializes ccs.TriggerObj
      * @param jsonVal
      */
-    serialize: function (jsonVal) {
+    serialize (jsonVal) {
         this._id = jsonVal["id"] || 0;
         var conditions = jsonVal["conditions"] || [];
         for (var i = 0; i < conditions.length; i++) {
@@ -231,29 +229,29 @@ ccs.TriggerObj = ccs.Class.extend(/** @lends ccs.TriggerObj# */{
             }
             this._vInt.push(event);
         }
-    },
+    }
 
     /**
      * Returns the id of ccs.TriggerObj.
      * @returns {number}
      */
-    getId: function () {
+    getId () {
         return this._id;
-    },
+    }
 
     /**
      * Sets enable value.
      * @param {Boolean} enable
      */
-    setEnable: function (enable) {
+    setEnable (enable) {
         this._enable = enable;
-    },
+    }
 
     /**
      * Returns the events of ccs.TriggerObj.
      * @returns {null|Array}
      */
-    getEvents: function () {
+    getEvents () {
         return this._vInt;
     }
-});
+};

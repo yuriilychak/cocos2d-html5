@@ -28,140 +28,140 @@
  * @class
  * @extends ccs.Component
  */
-ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
-    _filePath: "",
-    _loop: false,
+ccs.ComAudio = class ComAudio extends ccs.Component {
 
     /**
      * Construction of ccs.ComAudio
      */
-    ctor: function () {
-        cc.Component.prototype.ctor.call(this);
+    constructor () {
+        super();
+        this._filePath = "";
+        this._loop = false;
         this._name = "Audio";
-        ccs.ComAudio.prototype.init.call(this);
-    },
+        this.init();
+    }
 
     /**
      * Initializes a ccs.ComAudio.
      * @returns {boolean}
      */
-    init: function () {
+    init () {
         return true;
-    },
+    }
 
     /**
      * The callback calls when a audio component enter stage.
      * @override
      */
-    onExit: function () {
+    onExit () {
         this.stopBackgroundMusic(true);
         this.stopAllEffects();
-    },
+    }
 
     /**
      * Stops all audios.
      */
-    end: function () {
+    end () {
         cc.audioEngine.end();
-    },
+    }
 
     /**
      * Preload background music resource
      * @param {String} pszFilePath
      */
-    preloadBackgroundMusic: function (pszFilePath) {
+    preloadBackgroundMusic (pszFilePath) {
         cc.loader.load(pszFilePath);
-    },
+    }
 
     /**
      * Play background music
      * @param {String} [pszFilePath]
      * @param {Boolean} [loop]
      */
-    playBackgroundMusic: function (pszFilePath, loop) {
+    playBackgroundMusic (pszFilePath, loop) {
         if(pszFilePath){
             cc.audioEngine.playMusic(pszFilePath, loop);
         }else{
             cc.audioEngine.playMusic(this._filePath, this._loop);
         }
-    },
+    }
 
     /**
      * Stop background music
      * @param {String} releaseData
      */
-    stopBackgroundMusic: function (releaseData) {
+    stopBackgroundMusic (releaseData) {
         cc.audioEngine.stopMusic(releaseData);
-    },
+    }
 
     /**
      * Pause background music
      */
-    pauseBackgroundMusic: function () {
+    pauseBackgroundMusic () {
         cc.audioEngine.pauseMusic();
-    },
+    }
 
     /**
      * Resume background music
      */
-    resumeBackgroundMusic: function () {
+    resumeBackgroundMusic () {
         cc.audioEngine.resumeMusic();
-    },
+    }
 
     /**
      * Rewind background music
      */
-    rewindBackgroundMusic: function () {
+    rewindBackgroundMusic () {
         cc.audioEngine.rewindMusic();
-    },
+    }
 
     /**
      * Indicates whether any background music can be played or not.
      * @returns {boolean}
      */
-    willPlayBackgroundMusic: function () {
+    willPlayBackgroundMusic () {
         return cc.audioEngine.willPlayMusic();
-    },
+    }
 
     /**
      * Whether the music is playing.
      * @returns {Boolean}
      */
-    isBackgroundMusicPlaying: function () {
+    isBackgroundMusicPlaying () {
         return cc.audioEngine.isMusicPlaying();
-    },
+    }
 
     /**
      * The volume of the music max value is 1.0,the min value is 0.0 .
      * @returns {Number}
      */
-    getBackgroundMusicVolume: function () {
+    getBackgroundMusicVolume () {
         return cc.audioEngine.getMusicVolume();
-    },
+    }
 
     /**
      * Set the volume of music.
      * @param {Number} volume   must be in 0.0~1.0 .
      */
-    setBackgroundMusicVolume: function (volume) {
+    setBackgroundMusicVolume (volume) {
         cc.audioEngine.setMusicVolume(volume);
-    },
+    }
 
     /**
      * The volume of the effects max value is 1.0,the min value is 0.0 .
      * @returns {Number}
      */
-    getEffectsVolume: function () {
+    getEffectsVolume () {
         return cc.audioEngine.getEffectsVolume();
-    },
+    }
 
     /**
      * Set the volume of sound effects.
      * @param {Number} volume
      */
-    setEffectsVolume: function (volume) {
+    setEffectsVolume (volume) {
         cc.audioEngine.setEffectsVolume(volume);
-    },
+    }
 
     /**
      * Play sound effect.
@@ -169,105 +169,105 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * @param {Boolean} [loop]
      * @returns {Boolean}
      */
-    playEffect: function (pszFilePath, loop) {
+    playEffect (pszFilePath, loop) {
         if (pszFilePath)
             return cc.audioEngine.playEffect(pszFilePath, loop);
          else
             return cc.audioEngine.playEffect(this._filePath, this._loop);
-    },
+    }
 
     /**
      * Pause playing sound effect.
      * @param {Number} soundId
      */
-    pauseEffect: function (soundId) {
+    pauseEffect (soundId) {
         cc.audioEngine.pauseEffect(soundId);
-    },
+    }
 
     /**
      * Pause all effects
      */
-    pauseAllEffects: function () {
+    pauseAllEffects () {
         cc.audioEngine.pauseAllEffects();
-    },
+    }
 
     /**
      * Resume effect
      * @param {Number} soundId
      */
-    resumeEffect: function (soundId) {
+    resumeEffect (soundId) {
         cc.audioEngine.resumeEffect(soundId);
-    },
+    }
 
     /**
      * Resume all effects
      */
-    resumeAllEffects: function () {
+    resumeAllEffects () {
         cc.audioEngine.resumeAllEffects();
-    },
+    }
 
     /**
      * Stop effect
      * @param {Number} soundId
      */
-    stopEffect: function (soundId) {
+    stopEffect (soundId) {
         cc.audioEngine.stopEffect(soundId);
-    },
+    }
 
     /**
      * stop all effects
      */
-    stopAllEffects: function () {
+    stopAllEffects () {
         cc.audioEngine.stopAllEffects();
-    },
+    }
 
     /**
      * Preload effect
      * @param {String} pszFilePath
      */
-    preloadEffect: function (pszFilePath) {
+    preloadEffect (pszFilePath) {
         cc.loader.getRes(pszFilePath);
         this.setFile(pszFilePath);
         this.setLoop(false);
-    },
+    }
 
     /**
      * Unload effect
      * @param {String} pszFilePath
      */
-    unloadEffect: function (pszFilePath) {
+    unloadEffect (pszFilePath) {
         cc.audioEngine.unloadEffect(pszFilePath);
-    },
+    }
 
     /**
      * File path setter
      * @param {String} pszFilePath
      */
-    setFile: function (pszFilePath) {
+    setFile (pszFilePath) {
         this._filePath = pszFilePath;
-    },
+    }
 
     /**
      * Sets audio component whether plays loop
      * @param {Boolean} loop
      */
-    setLoop: function (loop) {
+    setLoop (loop) {
         this._loop = loop;
-    },
+    }
 
     /**
      * Returns the file path of audio component.
      * @returns {string}
      */
-    getFile: function () {
+    getFile () {
         return this._filePath;
-    },
+    }
 
     /**
      * Returns audio component whether plays loop
      * @returns {boolean}
      */
-    isLoop: function () {
+    isLoop () {
         return this._loop;
     }
-});
+};

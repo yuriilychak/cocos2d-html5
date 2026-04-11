@@ -248,15 +248,15 @@ ccs.triggerManager = /** @lends ccs.triggerManager# */{
  * @class
  * @extends ccs.Class
  */
-ccs.ArmatureMovementDispatcher = ccs.Class.extend(/** @lends ccs.ArmatureMovementDispatcher# */{
-    _mapEventAnimation: null,
+ccs.ArmatureMovementDispatcher = class ArmatureMovementDispatcher extends cc.NewClass {
 
     /**
      * Constructor of ArmatureMovementDispatcher.
      */
-    ctor: function () {
+    constructor () {
+        super();
         this._mapEventAnimation = [];
-    },
+    }
 
     /**
      * Calls armature movement events.
@@ -264,7 +264,7 @@ ccs.ArmatureMovementDispatcher = ccs.Class.extend(/** @lends ccs.ArmatureMovemen
      * @param {Number} movementType
      * @param {String} movementID
      */
-    animationEvent: function (armature, movementType, movementID) {
+    animationEvent (armature, movementType, movementID) {
         var locEventAni, locTarget, locFunc;
         for (var i = 0; i < this._mapEventAnimation.length; i++) {
             locEventAni = this._mapEventAnimation[i];
@@ -273,23 +273,23 @@ ccs.ArmatureMovementDispatcher = ccs.Class.extend(/** @lends ccs.ArmatureMovemen
             if (locFunc)
                 locFunc.call(locTarget, armature, movementType, movementID);
         }
-    },
+    }
 
     /**
      * Adds animation event callback to event animation list
      * @param {function} callFunc
      * @param {Object|null} [target]
      */
-    addAnimationEventCallBack: function (callFunc, target) {
+    addAnimationEventCallBack (callFunc, target) {
         this._mapEventAnimation.push([target, callFunc]);
-    },
+    }
 
     /**
      * Removes animation event callback from trigger manager.
      * @param {function} callFunc
      * @param {Object|null} [target]
      */
-    removeAnimationEventCallBack: function (callFunc, target) {
+    removeAnimationEventCallBack (callFunc, target) {
         var locEventAni;
         for (var i = 0; i < this._mapEventAnimation.length; i++) {
             locEventAni = this._mapEventAnimation[i];
@@ -298,4 +298,4 @@ ccs.ArmatureMovementDispatcher = ccs.Class.extend(/** @lends ccs.ArmatureMovemen
             }
         }
     }
-});
+};

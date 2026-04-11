@@ -28,38 +28,39 @@
  * @class
  * @extends ccs.Component
  */
-ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
+ccs.ComController = class ComController extends ccs.Component {
+
     /**
      * Construction of ccs.ComController.
      */
-    ctor: function () {
-        cc.Component.prototype.ctor.call(this);
+    constructor () {
+        super();
         this._name = "ComController";
-        ccs.ComController.prototype.init.call(this);
-    },
+        this.init();
+    }
 
     /**
      * The callback calls when controller component enter stage.
      * @override
      */
-    onEnter: function () {
+    onEnter () {
         if (this._owner !== null)
             this._owner.scheduleUpdate();
-    },
+    }
 
     /**
      * Returns controller component whether is enabled
      * @returns {Boolean}
      */
-    isEnabled: function () {
+    isEnabled () {
         return this._enabled;
-    },
+    }
 
     /**
      * Sets controller component whether is enabled
      * @param {Boolean} bool
      */
-    setEnabled: function (bool) {
+    setEnabled (bool) {
         this._enabled = bool;
     }
-});
+};
