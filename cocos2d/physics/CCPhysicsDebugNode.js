@@ -150,54 +150,54 @@ cc.CONSTRAINT_COLOR = cc.color(0, 255, 0, 128);
  *
  * @property {cp.Space} space     Physic world space
  */
-cc.PhysicsDebugNode = cc.DrawNode.extend({
-    _space:null,
-    _className:"PhysicsDebugNode",
-
+cc.PhysicsDebugNode = class PhysicsDebugNode extends cc.DrawNode {
     /**
      * constructor of cc.PhysicsDebugNode
      * @param {cp.Space} space
      */
-    ctor: function (space) {
-        cc.DrawNode.prototype.ctor.call(this);
+    constructor(space) {
+        super();
+        this._space = null;
+        this._className = "PhysicsDebugNode";
+
         this._space = space;
-    },
+    }
 
     /**
      * get space
      * @returns {cp.Space}
      */
-    getSpace:function () {
+    getSpace() {
         return this._space;
-    },
+    }
 
     /**
      * set space
      * @param {cp.Space} space
      */
-    setSpace:function (space) {
+    setSpace(space) {
         this._space = space;
-    },
+    }
 
     /**
      * draw
      * @param {object} context
      */
-    draw:function (context) {
+    draw(context) {
         if (!this._space)
             return;
 
         this._space.eachShape(cc.DrawShape.bind(this));
         this._space.eachConstraint(cc.DrawConstraint.bind(this));
-        cc.DrawNode.prototype.draw.call(this);
+        super.draw(context);
         this.clear();
-    },
+    }
 
-    _createRenderCmd: function(){
+    _createRenderCmd() {
         if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.PhysicsDebugNode.CanvasRenderCmd(this);
         else
             return new cc.PhysicsDebugNode.WebGLRenderCmd(this);
     }
-});
+};
 

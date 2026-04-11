@@ -55,35 +55,7 @@
  * @property {Number}               tileWidth           - Width of a tile
  * @property {Number}               tileHeight          - Height of a tile
  */
-cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
-    tiles: null,
-    tileset: null,
-    layerOrientation: null,
-    properties: null,
-    layerName: "",
-
-    _textures: null,
-    _texGrids: null,
-    _spriteTiles: null,
-
-    //size of the layer in tiles
-    _layerSize: null,
-    _mapTileSize: null,
-    //TMX Layer supports opacity
-    _opacity: 255,
-    _minGID: null,
-    _maxGID: null,
-    //Only used when vertexZ is used
-    _vertexZvalue: null,
-    _useAutomaticVertexZ: null,
-    //used for optimization
-    _reusedTile: null,
-    _atlasIndexArray: null,
-    //used for retina display
-    _contentScaleFactor: null,
-
-    _className:"TMXLayer",
-
+cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
     /**
      * Creates a cc.TMXLayer with an tile set info, a layer info and a map info   <br/>
      * Constructor of cc.TMXLayer
@@ -91,8 +63,36 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.TMXLayerInfo} layerInfo
      * @param {cc.TMXMapInfo} mapInfo
      */
-    ctor:function (tilesetInfo, layerInfo, mapInfo) {
-        cc.SpriteBatchNode.prototype.ctor.call(this);
+    constructor(tilesetInfo, layerInfo, mapInfo) {
+        super();
+        this.tiles = null;
+        this.tileset = null;
+        this.layerOrientation = null;
+        this.properties = null;
+        this.layerName = "";
+
+        this._textures = null;
+        this._texGrids = null;
+        this._spriteTiles = null;
+
+        //size of the layer in tiles
+        this._layerSize = null;
+        this._mapTileSize = null;
+        //TMX Layer supports opacity
+        this._opacity = 255;
+        this._minGID = null;
+        this._maxGID = null;
+        //Only used when vertexZ is used
+        this._vertexZvalue = null;
+        this._useAutomaticVertexZ = null;
+        //used for optimization
+        this._reusedTile = null;
+        this._atlasIndexArray = null;
+        //used for retina display
+        this._contentScaleFactor = null;
+
+        this._className = "TMXLayer";
+
         this._descendants = [];
 
         this._layerSize = cc.size(0, 0);
@@ -101,16 +101,16 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
 
         if(mapInfo !== undefined)
             this.initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo);
-    },
+    }
 
-    _createRenderCmd: function(){
+    _createRenderCmd() {
         if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.TMXLayer.CanvasRenderCmd(this);
         else
             return new cc.TMXLayer.WebGLRenderCmd(this);
-    },
+    }
 
-    _fillTextureGrids: function (tileset, texId) {
+    _fillTextureGrids(tileset, texId) {
         var tex = this._textures[texId];
         if (!tex.isLoaded()) {
             tex.addEventListener("load", function () {
@@ -162,7 +162,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
             grid.b = (grid.y + grid.height) / imageH;
             grids[gid] = grid;
         }
-    },
+    }
 
     /**
      * Initializes a cc.TMXLayer with a tileset info, a layer info and a map info
@@ -171,7 +171,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.TMXMapInfo} mapInfo
      * @return {Boolean}
      */
-    initWithTilesetInfo:function (tilesetInfo, layerInfo, mapInfo) {
+    initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo) {
         var size = layerInfo._layerSize;
         var totalNumberOfTiles = parseInt(size.width * size.height);
 
@@ -219,165 +219,165 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         this._useAutomaticVertexZ = false;
         this._vertexZvalue = 0;
         return true;
-    },
+    }
 
     /**
      * Gets layer size.
      * @return {cc.Size}
      */
-    getLayerSize:function () {
+    getLayerSize() {
         return cc.size(this._layerSize.width, this._layerSize.height);
-    },
+    }
 
     /**
      * Set layer size
      * @param {cc.Size} Var
      */
-    setLayerSize:function (Var) {
+    setLayerSize(Var) {
         this._layerSize.width = Var.width;
         this._layerSize.height = Var.height;
-    },
+    }
 
-    _getLayerWidth: function () {
+    _getLayerWidth() {
         return this._layerSize.width;
-    },
-    _setLayerWidth: function (width) {
+    }
+    _setLayerWidth(width) {
         this._layerSize.width = width;
-    },
-    _getLayerHeight: function () {
+    }
+    _getLayerHeight() {
         return this._layerSize.height;
-    },
-    _setLayerHeight: function (height) {
+    }
+    _setLayerHeight(height) {
         this._layerSize.height = height;
-    },
+    }
 
     /**
      * Size of the map's tile (could be different from the tile's size)
      * @return {cc.Size}
      */
-    getMapTileSize:function () {
+    getMapTileSize() {
         return cc.size(this._mapTileSize.width,this._mapTileSize.height);
-    },
+    }
 
     /**
      * Set the map tile size.
      * @param {cc.Size} Var
      */
-    setMapTileSize:function (Var) {
+    setMapTileSize(Var) {
         this._mapTileSize.width = Var.width;
         this._mapTileSize.height = Var.height;
-    },
+    }
 
-    _getTileWidth: function () {
+    _getTileWidth() {
         return this._mapTileSize.width;
-    },
-    _setTileWidth: function (width) {
+    }
+    _setTileWidth(width) {
         this._mapTileSize.width = width;
-    },
-    _getTileHeight: function () {
+    }
+    _getTileHeight() {
         return this._mapTileSize.height;
-    },
-    _setTileHeight: function (height) {
+    }
+    _setTileHeight(height) {
         this._mapTileSize.height = height;
-    },
+    }
 
     /**
      * Pointer to the map of tiles
      * @return {Array}
      */
-    getTiles:function () {
+    getTiles() {
         return this.tiles;
-    },
+    }
 
     /**
      * Pointer to the map of tiles
      * @param {Array} Var
      */
-    setTiles:function (Var) {
+    setTiles(Var) {
         this.tiles = Var;
-    },
+    }
 
     /**
      * Tile set information for the layer
      * @return {cc.TMXTilesetInfo}
      */
-    getTileset:function () {
+    getTileset() {
         return this.tileset;
-    },
+    }
 
     /**
      * Tile set information for the layer
      * @param {cc.TMXTilesetInfo} Var
      */
-    setTileset:function (Var) {
+    setTileset(Var) {
         this.tileset = Var;
-    },
+    }
 
     /**
      * Layer orientation, which is the same as the map orientation
      * @return {Number}
      */
-    getLayerOrientation:function () {
+    getLayerOrientation() {
         return this.layerOrientation;
-    },
+    }
 
     /**
      * Layer orientation, which is the same as the map orientation
      * @param {Number} Var
      */
-    setLayerOrientation:function (Var) {
+    setLayerOrientation(Var) {
         this.layerOrientation = Var;
-    },
+    }
 
     /**
      * properties from the layer. They can be added using Tiled
      * @return {Array}
      */
-    getProperties:function () {
+    getProperties() {
         return this.properties;
-    },
+    }
 
     /**
      * properties from the layer. They can be added using Tiled
      * @param {Array} Var
      */
-    setProperties:function (Var) {
+    setProperties(Var) {
         this.properties = Var;
-    },
+    }
 
     /**
      * Return the value for the specific property name
      * @param {String} propertyName
      * @return {*}
      */
-    getProperty:function (propertyName) {
+    getProperty(propertyName) {
         return this.properties[propertyName];
-    },
+    }
 
     /**
      * Gets the layer name
      * @return {String}
      */
-    getLayerName:function () {
+    getLayerName() {
         return this.layerName;
-    },
+    }
 
     /**
      * Set the layer name
      * @param {String} layerName
      */
-    setLayerName:function (layerName) {
+    setLayerName(layerName) {
         this.layerName = layerName;
-    },
+    }
 
     /**
      * <p>Dealloc the map that contains the tile position from memory. <br />
      * Unless you want to know at runtime the tiles positions, you can safely call this method. <br />
      * If you are going to call layer.getTileGIDAt() then, don't release the map</p>
      */
-    releaseMap:function () {
+    releaseMap() {
         this._spriteTiles = {};
-    },
+    }
 
     /**
      * <p>Returns the tile (cc.Sprite) at a given a tile coordinate. <br/>
@@ -390,7 +390,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {Number} [y]
      * @return {cc.Sprite}
      */
-    getTileAt: function (pos, y) {
+    getTileAt(pos, y) {
         if (pos === undefined) {
             throw new Error("cc.TMXLayer.getTileAt(): pos should be non-null");
         }
@@ -432,7 +432,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
             this.addChild(tile, vertexZ, z);
         }
         return tile;
-    },
+    }
 
     /**
      * Returns the tile gid at a given tile coordinate. <br />
@@ -442,7 +442,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {Number} [y]
      * @return {Number}
      */
-    getTileGIDAt:function (pos, y) {
+    getTileGIDAt(pos, y) {
         if (pos === undefined) {
             throw new Error("cc.TMXLayer.getTileGIDAt(): pos should be non-null");
         }
@@ -464,7 +464,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         var tile = this.tiles[idx];
 
         return (tile & cc.TMX_TILE_FLIPPED_MASK) >>> 0;
-    },
+    }
 
     /**
      * <p>Sets the tile gid (gid = tile global id) at a given tile coordinate.<br />
@@ -475,7 +475,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {Number} flagsOrY flags or y
      * @param {Number} [flags]
      */
-    setTileGID: function(gid, posOrX, flagsOrY, flags) {
+    setTileGID(gid, posOrX, flagsOrY, flags) {
         if (posOrX === undefined) {
             throw new Error("cc.TMXLayer.setTileGID(): pos should be non-null");
         }
@@ -527,24 +527,24 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
                 }
             }
         }
-    },
+    }
 
-    addChild: function (child, localZOrder, tag) {
+    addChild(child, localZOrder, tag) {
         cc.Node.prototype.addChild.call(this, child, localZOrder, tag);
         if (tag !== undefined) {
             this._spriteTiles[tag] = child;
             child._vertexZ = this._vertexZ + cc.renderer.assignedZStep * tag / this.tiles.length;
             // child._renderCmd._needDraw = false;
         }
-    },
+    }
 
-    removeChild: function (child, cleanup) {
+    removeChild(child, cleanup) {
         if (this._spriteTiles[child.tag]) {
             this._spriteTiles[child.tag] = null;
             // child._renderCmd._needDraw = true;
         }
         cc.Node.prototype.removeChild.call(this, child, cleanup);
-    },
+    }
 
     /**
      *  lipped tiles can be changed dynamically
@@ -552,7 +552,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {Number} [y]
      * @return {Number}
      */
-    getTileFlagsAt:function (pos, y) {
+    getTileFlagsAt(pos, y) {
         if(!pos)
             throw new Error("cc.TMXLayer.getTileFlagsAt(): pos should be non-null");
         if(y !== undefined)
@@ -569,14 +569,14 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         var tile = this.tiles[idx];
 
         return (tile & cc.TMX_TILE_FLIPPED_ALL) >>> 0;
-    },
+    }
 
     /**
      * Removes a tile at given tile coordinate
      * @param {cc.Point|Number} pos position or x
      * @param {Number} [y]
      */
-    removeTileAt:function (pos, y) {
+    removeTileAt(pos, y) {
         if (!pos) {
             throw new Error("cc.TMXLayer.removeTileAt(): pos should be non-null");
         }
@@ -603,7 +603,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
                 this.removeChild(sprite, true);
             }
         }
-    },
+    }
 
     /**
      * Returns the position in pixels of a given tile coordinate
@@ -611,7 +611,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {Number} [y]
      * @return {cc.Point}
      */
-    getPositionAt:function (pos, y) {
+    getPositionAt(pos, y) {
         if (y !== undefined)
             pos = cc.p(pos, y);
         var ret = cc.p(0,0);
@@ -627,25 +627,25 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
                 break;
         }
         return cc.pointPixelsToPoints(ret);
-    },
+    }
 
-    _positionForIsoAt:function (pos) {
+    _positionForIsoAt(pos) {
         return cc.p(this._mapTileSize.width / 2 * ( this._layerSize.width + pos.x - pos.y - 1),
             this._mapTileSize.height / 2 * (( this._layerSize.height * 2 - pos.x - pos.y) - 2));
-    },
+    }
 
-    _positionForOrthoAt:function (pos) {
+    _positionForOrthoAt(pos) {
         return cc.p(pos.x * this._mapTileSize.width,
             (this._layerSize.height - pos.y - 1) * this._mapTileSize.height);
-    },
+    }
 
-    _positionForHexAt:function (pos) {
+    _positionForHexAt(pos) {
         var diffY = (pos.x % 2 === 1) ? (-this._mapTileSize.height / 2) : 0;
         return cc.p(pos.x * this._mapTileSize.width * 3 / 4,
             (this._layerSize.height - pos.y - 1) * this._mapTileSize.height + diffY);
-    },
+    }
 
-    _calculateLayerOffset:function (pos) {
+    _calculateLayerOffset(pos) {
         var ret = cc.p(0,0);
         switch (this.layerOrientation) {
             case cc.TMX_ORIENTATION_ORTHO:
@@ -661,9 +661,9 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
                 break;
         }
         return ret;
-    },
+    }
 
-    _updateTileForGID:function (gid, pos) {
+    _updateTileForGID(gid, pos) {
         if (!this._texGrids[gid]) {
             return;
         }
@@ -672,10 +672,10 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         if (idx < this.tiles.length) {
             this.tiles[idx] = gid;
         }
-    },
+    }
 
     //The layer recognizes some special properties, like cc_vertez
-    _parseInternalProperties:function () {
+    _parseInternalProperties() {
         // if cc_vertex=automatic, then tiles will be rendered using vertexz
         var vertexz = this.getProperty("cc_vertexz");
         if (vertexz) {
@@ -695,9 +695,9 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
             } else
                 this._vertexZvalue = parseInt(vertexz, 10);
         }
-    },
+    }
 
-    _setupTileSprite:function (sprite, pos, gid) {
+    _setupTileSprite(sprite, pos, gid) {
         var z = pos.x + pos.y * this._layerSize.width;
         var posInPixel = this.getPositionAt(pos);
         sprite.setPosition(posInPixel);
@@ -735,9 +735,9 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
                 sprite.setFlippedY(true);
             }
         }
-    },
+    }
 
-    _vertexZForPos:function (x, y) {
+    _vertexZForPos(x, y) {
         if (y === undefined) {
             y = x.y;
             x = x.x;
@@ -765,7 +765,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         }
         return ret;
     }
-});
+};
 
 var _p = cc.TMXLayer.prototype;
 

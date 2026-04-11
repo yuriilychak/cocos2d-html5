@@ -27,87 +27,87 @@
 /**
  * cc.TMXObjectGroup represents the TMX object group.
  * @class
- * @extends cc.Class
+ * @extends cc.NewClass
  *
  * @property {Array}    properties  - Properties from the group. They can be added using tilemap editors
  * @property {String}   groupName   - Name of the group
  */
-cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
-	properties: null,
-    groupName: "",
-
-    _positionOffset: null,
-    _objects: null,
-
+cc.TMXObjectGroup = class TMXObjectGroup extends cc.NewClass {
     /**
      * <p>The cc.TMXObjectGroup's constructor. <br/>
      * This function will automatically be invoked when you create a node using new construction: "var node = new cc.TMXObjectGroup()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
-    ctor:function () {
+    constructor() {
+        super();
+        this.properties = null;
+        this.groupName = "";
+        this._positionOffset = null;
+        this._objects = null;
+
         this.groupName = "";
         this._positionOffset = cc.p(0,0);
         this.properties = [];
         this._objects = [];
-    },
+    }
 
     /**
      * Offset position of child objects
      * @return {cc.Point}
      */
-    getPositionOffset:function () {
+    getPositionOffset() {
         return cc.p(this._positionOffset);
-    },
+    }
 
     /**
      * Offset position of child objects
      * @param {cc.Point} offset
      */
-    setPositionOffset:function (offset) {
+    setPositionOffset(offset) {
         this._positionOffset.x = offset.x;
         this._positionOffset.y = offset.y;
-    },
+    }
 
     /**
      * List of properties stored in a dictionary
      * @return {Array}
      */
-    getProperties:function () {
+    getProperties() {
         return this.properties;
-    },
+    }
 
     /**
      * List of properties stored in a dictionary
      * @param {object} Var
      */
-    setProperties:function (Var) {
+    setProperties(Var) {
         this.properties.push(Var);
-    },
+    }
 
     /**
      * Gets the Group name.
      * @return {String}
      */
-    getGroupName:function () {
+    getGroupName() {
         return this.groupName.toString();
-    },
+    }
 
     /**
      * Set the Group name
      * @param {String} groupName
      */
-    setGroupName:function (groupName) {
+    setGroupName(groupName) {
         this.groupName = groupName;
-    },
+    }
 
     /**
      * Return the value for the specific property name
      * @param {String} propertyName
      * @return {object}
      */
-    propertyNamed:function (propertyName) {
+    propertyNamed(propertyName) {
         return this.properties[propertyName];
-    },
+    }
 
     /**
      * <p>Return the dictionary for the specific object name. <br />
@@ -115,7 +115,7 @@ cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
      * @param {String} objectName
      * @return {object|Null}
      */
-    getObject: function(objectName){
+    getObject(objectName) {
         if (this._objects && this._objects.length > 0) {
             var locObjects = this._objects;
             for (var i = 0, len = locObjects.length; i < len; i++) {
@@ -126,21 +126,21 @@ cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
         }
         // object not found
         return null;
-    },
+    }
 
     /**
      * Gets the objects.
      * @return {Array}
      */
-    getObjects:function () {
+    getObjects() {
         return this._objects;
-    },
+    }
 
     /**
      * Set the objects.
      * @param {object} objects
      */
-    setObjects:function (objects) {
+    setObjects(objects) {
         this._objects.push(objects);
     }
-});
+};
