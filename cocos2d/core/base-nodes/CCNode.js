@@ -2417,6 +2417,9 @@ cc.Node = class Node extends cc.NewClass {
     }
 };
 
+// Allow external libraries (e.g. gaf) to use cc.Node.extend()
+cc.Node.extend = cc.Class.extend;
+
 cc.Node._stateCallbackType = {
   onEnter: 1,
   onExit: 2,
