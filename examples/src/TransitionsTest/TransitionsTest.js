@@ -162,7 +162,7 @@ var TransitionBase = class TransitionBase extends BaseTestLayer {
         return arrayOfTransitionsTest[transitionsIdx].title;
     }
     constructor() {
-        super(this.colorA, this.colorB);
+        super();
 
         this.testDuration = TRANSITION_DURATION + 0.1;
 
