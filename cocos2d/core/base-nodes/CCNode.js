@@ -127,69 +127,53 @@ cc.s_globalOrderOfArrival = 1;
  * @property {cc.GLProgram}         shaderProgram       - The shader program currently used for this node
  * @property {Number}               glServerState       - The state of OpenGL server side
  */
-cc.Node = cc.Class.extend(
-  /** @lends cc.Node# */ {
-    _localZOrder: 0, ///< Local order (relative to its siblings) used to sort the node
-    _globalZOrder: 0, ///< Global order used to sort the node
-    _vertexZ: 0.0,
-    _customZ: NaN,
-
-    _rotationX: 0,
-    _rotationY: 0.0,
-    _scaleX: 1.0,
-    _scaleY: 1.0,
-    _position: null,
-
-    _normalizedPosition: null,
-    _usingNormalizedPosition: false,
-    _normalizedPositionDirty: false,
-
-    _skewX: 0.0,
-    _skewY: 0.0,
-    // children (lazy allocs),
-    _children: null,
-    // lazy alloc,
-    _visible: true,
-    _anchorPoint: null,
-    _contentSize: null,
-    _running: false,
-    _parent: null,
-
-    // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
-    _ignoreAnchorPointForPosition: false,
-    tag: cc.NODE_TAG_INVALID,
-    // userData is always initialized as nil
-    userData: null,
-    userObject: null,
-
-    //since 2.0 api
-    _reorderChildDirty: false,
-    arrivalOrder: 0,
-
-    _actionManager: null,
-    _scheduler: null,
-
-    _additionalTransformDirty: false,
-    _additionalTransform: null,
-    _componentContainer: null,
-    _isTransitionFinished: false,
-
-    _className: "Node",
-    _showNode: false,
-    _name: "", ///<a string label, an user defined string to identify this node
-
-    _realOpacity: 255,
-    _realColor: null,
-    _cascadeColorEnabled: false,
-    _cascadeOpacityEnabled: false,
-
-    _renderCmd: null,
-
+cc.Node = class Node extends cc.NewClass {
     /**
      * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
      * @function
      */
-    ctor: function () {
+    constructor() {
+      super();
+      this._localZOrder = 0;
+      this._globalZOrder = 0;
+      this._vertexZ = 0.0;
+      this._customZ = NaN;
+      this._rotationX = 0;
+      this._rotationY = 0.0;
+      this._scaleX = 1.0;
+      this._scaleY = 1.0;
+      this._position = null;
+      this._normalizedPosition = null;
+      this._usingNormalizedPosition = false;
+      this._normalizedPositionDirty = false;
+      this._skewX = 0.0;
+      this._skewY = 0.0;
+      this._children = null;
+      this._visible = true;
+      this._anchorPoint = null;
+      this._contentSize = null;
+      this._running = false;
+      this._parent = null;
+      this._ignoreAnchorPointForPosition = false;
+      this.tag = cc.NODE_TAG_INVALID;
+      this.userData = null;
+      this.userObject = null;
+      this._reorderChildDirty = false;
+      this.arrivalOrder = 0;
+      this._actionManager = null;
+      this._scheduler = null;
+      this._additionalTransformDirty = false;
+      this._additionalTransform = null;
+      this._componentContainer = null;
+      this._isTransitionFinished = false;
+      this._className = "Node";
+      this._showNode = false;
+      this._name = "";
+      this._realOpacity = 255;
+      this._realColor = null;
+      this._cascadeColorEnabled = false;
+      this._cascadeOpacityEnabled = false;
+      this._renderCmd = null;
       var _t = this;
       _t._anchorPoint = cc.p(0, 0);
       _t._contentSize = cc.size(0, 0);
@@ -206,16 +190,16 @@ cc.Node = cc.Class.extend(
       this._realColor = cc.color(255, 255, 255, 255);
 
       this._renderCmd = this._createRenderCmd();
-    },
+    }
 
     /**
      * Initializes the instance of cc.Node
      * @function
      * @returns {boolean} Whether the initialization was successful.
      */
-    init: function () {
+    init() {
       return true;
-    },
+    }
 
     /**
      * <p>Properties configuration function </br>
@@ -226,11 +210,11 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Object} attrs Properties to be set to node
      */
-    attr: function (attrs) {
+    attr(attrs) {
       for (var key in attrs) {
         this[key] = attrs[key];
       }
-    },
+    }
 
     /**
      * <p>Returns the skew degrees in X </br>
@@ -242,9 +226,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {Number} The X skew angle of the node in degrees.
      */
-    getSkewX: function () {
+    getSkewX() {
       return this._skewX;
-    },
+    }
 
     /**
      * <p>
@@ -257,10 +241,10 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} newSkewX The X skew angle of the node in degrees.
      */
-    setSkewX: function (newSkewX) {
+    setSkewX(newSkewX) {
       this._skewX = newSkewX;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * <p>Returns the skew degrees in Y               <br/>
@@ -272,9 +256,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {Number} The Y skew angle of the node in degrees.
      */
-    getSkewY: function () {
+    getSkewY() {
       return this._skewY;
-    },
+    }
 
     /**
      * <p>
@@ -287,10 +271,10 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} newSkewY  The Y skew angle of the node in degrees.
      */
-    setSkewY: function (newSkewY) {
+    setSkewY(newSkewY) {
       this._skewY = newSkewY;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * <p> LocalZOrder is the 'key' used to sort the node relative to its siblings.                                    <br/>
@@ -306,26 +290,26 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} localZOrder
      */
-    setLocalZOrder: function (localZOrder) {
+    setLocalZOrder(localZOrder) {
       if (localZOrder === this._localZOrder) return;
       if (this._parent) this._parent.reorderChild(this, localZOrder);
       else this._localZOrder = localZOrder;
       cc.eventManager._setDirtyForNode(this);
-    },
+    }
 
     //Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
-    _setLocalZOrder: function (localZOrder) {
+    _setLocalZOrder(localZOrder) {
       this._localZOrder = localZOrder;
-    },
+    }
 
     /**
      * Returns the local Z order of this node.
      * @function
      * @returns {Number} The local (relative to its siblings) Z order.
      */
-    getLocalZOrder: function () {
+    getLocalZOrder() {
       return this._localZOrder;
-    },
+    }
 
     /**
      * <p>Defines the oder in which the nodes are renderer.                                                                               <br/>
@@ -343,30 +327,30 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} globalZOrder
      */
-    setGlobalZOrder: function (globalZOrder) {
+    setGlobalZOrder(globalZOrder) {
       if (this._globalZOrder !== globalZOrder) {
         this._globalZOrder = globalZOrder;
         cc.eventManager._setDirtyForNode(this);
       }
-    },
+    }
 
     /**
      * Return the Node's Global Z Order.
      * @function
      * @returns {number} The node's global Z order
      */
-    getGlobalZOrder: function () {
+    getGlobalZOrder() {
       return this._globalZOrder;
-    },
+    }
 
     /**
      * Returns WebGL Z vertex of this node.
      * @function
      * @return {Number} WebGL Z vertex of this node
      */
-    getVertexZ: function () {
+    getVertexZ() {
       return this._vertexZ;
-    },
+    }
 
     /**
      * <p>
@@ -382,20 +366,20 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} Var
      */
-    setVertexZ: function (Var) {
+    setVertexZ(Var) {
       this._customZ = this._vertexZ = Var;
-    },
+    }
 
     /**
      * Returns the rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node clockwise.
      * @function
      * @return {Number} The rotation of the node in degrees.
      */
-    getRotation: function () {
+    getRotation() {
       if (this._rotationX !== this._rotationY)
         cc.log(cc._LogInfos.Node_getRotation);
       return this._rotationX;
-    },
+    }
 
     /**
      * <p>
@@ -407,10 +391,10 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} newRotation The rotation of the node in degrees.
      */
-    setRotation: function (newRotation) {
+    setRotation(newRotation) {
       this._rotationX = this._rotationY = newRotation;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * Returns the X axis rotation (angle) which represent a horizontal rotational skew of the node in degrees. <br/>
@@ -419,9 +403,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {Number} The X rotation in degrees.
      */
-    getRotationX: function () {
+    getRotationX() {
       return this._rotationX;
-    },
+    }
 
     /**
      * <p>
@@ -432,10 +416,10 @@ cc.Node = cc.Class.extend(
      * </p>
      * @param {Number} rotationX The X rotation in degrees which performs a horizontal rotational skew.
      */
-    setRotationX: function (rotationX) {
+    setRotationX(rotationX) {
       this._rotationX = rotationX;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * Returns the Y axis rotation (angle) which represent a vertical rotational skew of the node in degrees. <br/>
@@ -444,9 +428,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {Number} The Y rotation in degrees.
      */
-    getRotationY: function () {
+    getRotationY() {
       return this._rotationY;
-    },
+    }
 
     /**
      * <p>
@@ -457,10 +441,10 @@ cc.Node = cc.Class.extend(
      * </p>
      * @param rotationY The Y rotation in degrees.
      */
-    setRotationY: function (rotationY) {
+    setRotationY(rotationY) {
       this._rotationY = rotationY;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * Returns the scale factor of the node.
@@ -468,10 +452,10 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {Number} The scale factor
      */
-    getScale: function () {
+    getScale() {
       if (this._scaleX !== this._scaleY) cc.log(cc._LogInfos.Node_getScale);
       return this._scaleX;
-    },
+    }
 
     /**
      * Sets the scale factor of the node. 1.0 is the default scale factor. This function can modify the X and Y scale at the same time.
@@ -479,20 +463,20 @@ cc.Node = cc.Class.extend(
      * @param {Number} scale or scaleX value
      * @param {Number} [scaleY=]
      */
-    setScale: function (scale, scaleY) {
+    setScale(scale, scaleY) {
       this._scaleX = scale;
       this._scaleY = scaleY || scaleY === 0 ? scaleY : scale;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * Returns the scale factor on X axis of this node
      * @function
      * @return {Number} The scale factor on X axis.
      */
-    getScaleX: function () {
+    getScaleX() {
       return this._scaleX;
-    },
+    }
 
     /**
      * <p>
@@ -502,19 +486,19 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} newScaleX The scale factor on X axis.
      */
-    setScaleX: function (newScaleX) {
+    setScaleX(newScaleX) {
       this._scaleX = newScaleX;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * Returns the scale factor on Y axis of this node
      * @function
      * @return {Number} The scale factor on Y axis.
      */
-    getScaleY: function () {
+    getScaleY() {
       return this._scaleY;
-    },
+    }
 
     /**
      * <p>
@@ -524,10 +508,10 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} newScaleY The scale factor on Y axis.
      */
-    setScaleY: function (newScaleY) {
+    setScaleY(newScaleY) {
       this._scaleY = newScaleY;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * <p>
@@ -543,7 +527,7 @@ cc.Node = cc.Class.extend(
      *    var size = cc.winSize;
      *    node.setPosition(size.width/2, size.height/2);
      */
-    setPosition: function (newPosOrxValue, yValue) {
+    setPosition(newPosOrxValue, yValue) {
       var locPosition = this._position;
       if (yValue === undefined) {
         if (
@@ -561,7 +545,7 @@ cc.Node = cc.Class.extend(
       }
       this._usingNormalizedPosition = false;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * <p>
@@ -572,7 +556,7 @@ cc.Node = cc.Class.extend(
      * @param {cc.Point|Number} posOrX
      * @param {Number} [y]
      */
-    setNormalizedPosition: function (posOrX, y) {
+    setNormalizedPosition(posOrX, y) {
       var locPosition = this._normalizedPosition;
       if (y === undefined) {
         locPosition.x = posOrX.x;
@@ -583,71 +567,71 @@ cc.Node = cc.Class.extend(
       }
       this._normalizedPositionDirty = this._usingNormalizedPosition = true;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * <p>Returns a copy of the position (x,y) of the node in cocos2d coordinates. (0,0) is the left-bottom corner.</p>
      * @function
      * @return {cc.Point} The position (x,y) of the node in OpenGL coordinates
      */
-    getPosition: function () {
+    getPosition() {
       return cc.p(this._position);
-    },
+    }
 
     /**
      * returns the normalized position
      * @returns {cc.Point}
      */
-    getNormalizedPosition: function () {
+    getNormalizedPosition() {
       return cc.p(this._normalizedPosition);
-    },
+    }
 
     /**
      * <p>Returns the x axis position of the node in cocos2d coordinates.</p>
      * @function
      * @return {Number}
      */
-    getPositionX: function () {
+    getPositionX() {
       return this._position.x;
-    },
+    }
 
     /**
      * <p>Sets the x axis position of the node in cocos2d coordinates.</p>
      * @function
      * @param {Number} x The new position in x axis
      */
-    setPositionX: function (x) {
+    setPositionX(x) {
       this._position.x = x;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * <p>Returns the y axis position of the node in cocos2d coordinates.</p>
      * @function
      * @return {Number}
      */
-    getPositionY: function () {
+    getPositionY() {
       return this._position.y;
-    },
+    }
 
     /**
      * <p>Sets the y axis position of the node in cocos2d coordinates.</p>
      * @function
      * @param {Number} y The new position in y axis
      */
-    setPositionY: function (y) {
+    setPositionY(y) {
       this._position.y = y;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * Returns the amount of children.
      * @function
      * @return {Number} The amount of children.
      */
-    getChildrenCount: function () {
+    getChildrenCount() {
       return this._children.length;
-    },
+    }
 
     /**
      * Returns an array of all children  <br/>
@@ -661,9 +645,9 @@ cc.Node = cc.Class.extend(
      *      allChildren[i].setPosition(0,0);
      *  }
      */
-    getChildren: function () {
+    getChildren() {
       return this._children;
-    },
+    }
 
     /**
      * Returns if the node is visible
@@ -671,9 +655,9 @@ cc.Node = cc.Class.extend(
      * @see cc.Node#setVisible
      * @return {Boolean} true if the node is visible, false if the node is hidden.
      */
-    isVisible: function () {
+    isVisible() {
       return this._visible;
-    },
+    }
 
     /**
      * Sets whether the node is visible <br/>
@@ -681,14 +665,14 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Boolean} visible Pass true to make the node visible, false to hide the node.
      */
-    setVisible: function (visible) {
+    setVisible(visible) {
       if (this._visible !== visible) {
         this._visible = visible;
         //if(visible)
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
         cc.renderer.childrenOrderDirty = true;
       }
-    },
+    }
 
     /**
      *  <p>Returns a copy of the anchor point.<br/>
@@ -700,9 +684,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {cc.Point}  The anchor point of node.
      */
-    getAnchorPoint: function () {
+    getAnchorPoint() {
       return cc.p(this._anchorPoint);
-    },
+    }
 
     /**
      * <p>
@@ -718,7 +702,7 @@ cc.Node = cc.Class.extend(
      * @param {cc.Point|Number} point The anchor point of node or The x axis anchor of node.
      * @param {Number} [y] The y axis anchor of node.
      */
-    setAnchorPoint: function (point, y) {
+    setAnchorPoint(point, y) {
       var locAnchorPoint = this._anchorPoint;
       if (y === undefined) {
         if (point.x === locAnchorPoint.x && point.y === locAnchorPoint.y)
@@ -731,24 +715,24 @@ cc.Node = cc.Class.extend(
         locAnchorPoint.y = y;
       }
       this._renderCmd._updateAnchorPointInPoint();
-    },
+    }
 
-    _getAnchorX: function () {
+    _getAnchorX() {
       return this._anchorPoint.x;
-    },
-    _setAnchorX: function (x) {
+    }
+    _setAnchorX(x) {
       if (this._anchorPoint.x === x) return;
       this._anchorPoint.x = x;
       this._renderCmd._updateAnchorPointInPoint();
-    },
-    _getAnchorY: function () {
+    }
+    _getAnchorY() {
       return this._anchorPoint.y;
-    },
-    _setAnchorY: function (y) {
+    }
+    _setAnchorY(y) {
       if (this._anchorPoint.y === y) return;
       this._anchorPoint.y = y;
       this._renderCmd._updateAnchorPointInPoint();
-    },
+    }
 
     /**
      * Returns a copy of the anchor point in absolute pixels.  <br/>
@@ -757,24 +741,24 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {cc.Point} The anchor point in absolute pixels.
      */
-    getAnchorPointInPoints: function () {
+    getAnchorPointInPoints() {
       return this._renderCmd.getAnchorPointInPoints();
-    },
+    }
 
-    _getWidth: function () {
+    _getWidth() {
       return this._contentSize.width;
-    },
-    _setWidth: function (width) {
+    }
+    _setWidth(width) {
       this._contentSize.width = width;
       this._renderCmd._updateAnchorPointInPoint();
-    },
-    _getHeight: function () {
+    }
+    _getHeight() {
       return this._contentSize.height;
-    },
-    _setHeight: function (height) {
+    }
+    _setHeight(height) {
       this._contentSize.height = height;
       this._renderCmd._updateAnchorPointInPoint();
-    },
+    }
 
     /**
      * <p>Returns a copy the untransformed size of the node. <br/>
@@ -783,9 +767,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {cc.Size} The untransformed size of the node.
      */
-    getContentSize: function () {
+    getContentSize() {
       return cc.size(this._contentSize);
-    },
+    }
 
     /**
      * <p>
@@ -798,7 +782,7 @@ cc.Node = cc.Class.extend(
      * @param {cc.Size|Number} size The untransformed size of the node or The untransformed size's width of the node.
      * @param {Number} [height] The untransformed size's height of the node.
      */
-    setContentSize: function (size, height) {
+    setContentSize(size, height) {
       var locContentSize = this._contentSize;
       if (height === undefined) {
         if (
@@ -815,7 +799,7 @@ cc.Node = cc.Class.extend(
         locContentSize.height = height;
       }
       this._renderCmd._updateAnchorPointInPoint();
-    },
+    }
 
     /**
      * <p>
@@ -825,27 +809,27 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {Boolean} Whether or not the node is running.
      */
-    isRunning: function () {
+    isRunning() {
       return this._running;
-    },
+    }
 
     /**
      * Returns a reference to the parent node
      * @function
      * @return {cc.Node} A reference to the parent node
      */
-    getParent: function () {
+    getParent() {
       return this._parent;
-    },
+    }
 
     /**
      * Sets the parent node
      * @param {cc.Node} parent A reference to the parent node
      */
-    setParent: function (parent) {
+    setParent(parent) {
       this._parent = parent;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /**
      * Returns whether the anchor point will be ignored when you position this node.<br/>
@@ -854,9 +838,9 @@ cc.Node = cc.Class.extend(
      * @see cc.Node#ignoreAnchorPointForPosition
      * @return {Boolean} true if the anchor point will be ignored when you position this node.
      */
-    isIgnoreAnchorPointForPosition: function () {
+    isIgnoreAnchorPointForPosition() {
       return this._ignoreAnchorPointForPosition;
-    },
+    }
 
     /**
      * <p>
@@ -868,12 +852,12 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Boolean} newValue true if anchor point will be ignored when you position this node
      */
-    ignoreAnchorPointForPosition: function (newValue) {
+    ignoreAnchorPointForPosition(newValue) {
       if (newValue !== this._ignoreAnchorPointForPosition) {
         this._ignoreAnchorPointForPosition = newValue;
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
       }
-    },
+    }
 
     /**
      * Returns a tag that is used to identify the node easily.
@@ -901,9 +885,9 @@ cc.Node = cc.Class.extend(
      *     }
      * }
      */
-    getTag: function () {
+    getTag() {
       return this.tag;
-    },
+    }
 
     /**
      * Changes the tag that is used to identify the node easily. <br/>
@@ -912,27 +896,27 @@ cc.Node = cc.Class.extend(
      * @see cc.Node#getTag
      * @param {Number} tag A integer that identifies the node.
      */
-    setTag: function (tag) {
+    setTag(tag) {
       this.tag = tag;
-    },
+    }
 
     /**
      * Changes the name that is used to identify the node easily.
      * @function
      * @param {String} name
      */
-    setName: function (name) {
+    setName(name) {
       this._name = name;
-    },
+    }
 
     /**
      * Returns a string that is used to identify the node.
      * @function
      * @returns {string} A string that identifies the node.
      */
-    getName: function () {
+    getName() {
       return this._name;
-    },
+    }
 
     /**
      * <p>
@@ -942,9 +926,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {object}  A custom user data pointer
      */
-    getUserData: function () {
+    getUserData() {
       return this.userData;
-    },
+    }
 
     /**
      * <p>
@@ -955,9 +939,9 @@ cc.Node = cc.Class.extend(
      * @warning Don't forget to release the memory manually in JSB, especially before you change this data pointer, and before this node is autoreleased.
      * @param {object} Var A custom user data
      */
-    setUserData: function (Var) {
+    setUserData(Var) {
       this.userData = Var;
-    },
+    }
 
     /**
      * Returns a user assigned cocos2d object.                             <br/>
@@ -965,9 +949,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {object} A user assigned CCObject
      */
-    getUserObject: function () {
+    getUserObject() {
       return this.userObject;
-    },
+    }
 
     /**
      * <p>
@@ -978,18 +962,18 @@ cc.Node = cc.Class.extend(
      * </p>
      * @param {object} newValue A user cocos2d object
      */
-    setUserObject: function (newValue) {
+    setUserObject(newValue) {
       if (this.userObject !== newValue) this.userObject = newValue;
-    },
+    }
 
     /**
      * Returns the arrival order, indicates which children should be added previously.
      * @function
      * @return {Number} The arrival order.
      */
-    getOrderOfArrival: function () {
+    getOrderOfArrival() {
       return this.arrivalOrder;
-    },
+    }
 
     /**
      * <p>
@@ -1002,9 +986,9 @@ cc.Node = cc.Class.extend(
      * @warning This method is used internally for zOrder sorting, don't change this manually
      * @param {Number} Var  The arrival order.
      */
-    setOrderOfArrival: function (Var) {
+    setOrderOfArrival(Var) {
       this.arrivalOrder = Var;
-    },
+    }
 
     /**
      * <p>Returns the CCActionManager object that is used by all actions.<br/>
@@ -1013,9 +997,9 @@ cc.Node = cc.Class.extend(
      * @see cc.Node#setActionManager
      * @return {cc.ActionManager} A CCActionManager object.
      */
-    getActionManager: function () {
+    getActionManager() {
       return this._actionManager || cc.director.getActionManager();
-    },
+    }
 
     /**
      * <p>Sets the cc.ActionManager object that is used by all actions. </p>
@@ -1023,12 +1007,12 @@ cc.Node = cc.Class.extend(
      * @warning If you set a new CCActionManager, then previously created actions will be removed.
      * @param {cc.ActionManager} actionManager A CCActionManager object that is used by all actions.
      */
-    setActionManager: function (actionManager) {
+    setActionManager(actionManager) {
       if (this._actionManager !== actionManager) {
         this.stopAllActions();
         this._actionManager = actionManager;
       }
-    },
+    }
 
     /**
      * <p>
@@ -1037,9 +1021,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {cc.Scheduler} A CCScheduler object.
      */
-    getScheduler: function () {
+    getScheduler() {
       return this._scheduler || cc.director.getScheduler();
-    },
+    }
 
     /**
      * <p>
@@ -1050,12 +1034,12 @@ cc.Node = cc.Class.extend(
      * @warning If you set a new CCScheduler, then previously created timers/update are going to be removed.
      * @param scheduler A cc.Scheduler object that is used to schedule all "update" and timers.
      */
-    setScheduler: function (scheduler) {
+    setScheduler(scheduler) {
       if (this._scheduler !== scheduler) {
         this.unscheduleAllCallbacks();
         this._scheduler = scheduler;
       }
-    },
+    }
 
     /**
      * Returns a "local" axis aligned bounding box of the node. <br/>
@@ -1063,7 +1047,7 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {cc.Rect} The calculated bounding box of the node
      */
-    getBoundingBox: function () {
+    getBoundingBox() {
       var rect = cc.rect(
         0,
         0,
@@ -1074,20 +1058,20 @@ cc.Node = cc.Class.extend(
         rect,
         this.getNodeToParentTransform()
       );
-    },
+    }
 
     /**
      * Stops all running actions and schedulers
      * @function
      */
-    cleanup: function () {
+    cleanup() {
       // actions
       this.stopAllActions();
       this.unscheduleAllCallbacks();
 
       // event
       cc.eventManager.removeListeners(this);
-    },
+    }
 
     // composition: GET
     /**
@@ -1096,7 +1080,7 @@ cc.Node = cc.Class.extend(
      * @param {Number} aTag An identifier to find the child node.
      * @return {cc.Node} a CCNode object whose tag equals to the input parameter
      */
-    getChildByTag: function (aTag) {
+    getChildByTag(aTag) {
       var __children = this._children;
       if (__children !== null) {
         for (var i = 0; i < __children.length; i++) {
@@ -1105,7 +1089,7 @@ cc.Node = cc.Class.extend(
         }
       }
       return null;
-    },
+    }
 
     /**
      * Returns a child from the container given its name
@@ -1113,7 +1097,7 @@ cc.Node = cc.Class.extend(
      * @param {String} name A name to find the child node.
      * @return {cc.Node} a CCNode object whose name equals to the input parameter
      */
-    getChildByName: function (name) {
+    getChildByName(name) {
       if (!name) {
         cc.log("Invalid name");
         return null;
@@ -1124,7 +1108,7 @@ cc.Node = cc.Class.extend(
         if (locChildren[i]._name === name) return locChildren[i];
       }
       return null;
-    },
+    }
 
     // composition: ADD
 
@@ -1136,7 +1120,7 @@ cc.Node = cc.Class.extend(
      * @param {Number} [localZOrder=]  Z order for drawing priority. Please refer to setZOrder(int)
      * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
      */
-    addChild: function (child, localZOrder, tag) {
+    addChild(child, localZOrder, tag) {
       localZOrder =
         localZOrder === undefined ? child._localZOrder : localZOrder;
       var name,
@@ -1158,9 +1142,9 @@ cc.Node = cc.Class.extend(
       );
 
       this._addChildHelper(child, localZOrder, tag, name, setTag);
-    },
+    }
 
-    _addChildHelper: function (child, localZOrder, tag, name, setTag) {
+    _addChildHelper(child, localZOrder, tag, name, setTag) {
       if (!this._children) this._children = [];
 
       this._insertChild(child, localZOrder);
@@ -1183,7 +1167,7 @@ cc.Node = cc.Class.extend(
         child._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
       if (this._cascadeOpacityEnabled)
         child._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
-    },
+    }
 
     // composition: REMOVE
     /**
@@ -1194,12 +1178,12 @@ cc.Node = cc.Class.extend(
      * @param {Boolean} [cleanup=true] true if all actions and callbacks on this node should be removed, false otherwise.
      * @see cc.Node#removeFromParentAndCleanup
      */
-    removeFromParent: function (cleanup) {
+    removeFromParent(cleanup) {
       if (this._parent) {
         if (cleanup === undefined) cleanup = true;
         this._parent.removeChild(this, cleanup);
       }
-    },
+    }
 
     /** <p>Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter. </p>
      * If the cleanup parameter is not passed, it will force a cleanup. <br/>
@@ -1210,7 +1194,7 @@ cc.Node = cc.Class.extend(
      * @param {cc.Node} child  The child node which will be removed.
      * @param {Boolean} [cleanup=true]  true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    removeChild: function (child, cleanup) {
+    removeChild(child, cleanup) {
       // explicit nil handling
       if (this._children.length === 0) return;
 
@@ -1219,7 +1203,7 @@ cc.Node = cc.Class.extend(
 
       //this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.visibleDirty);
       cc.renderer.childrenOrderDirty = true;
-    },
+    }
 
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
@@ -1229,22 +1213,22 @@ cc.Node = cc.Class.extend(
      * @param {Boolean} [cleanup=true] true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      * @see cc.Node#removeChildByTag
      */
-    removeChildByTag: function (tag, cleanup) {
+    removeChildByTag(tag, cleanup) {
       if (tag === cc.NODE_TAG_INVALID)
         cc.log(cc._LogInfos.Node_removeChildByTag);
 
       var child = this.getChildByTag(tag);
       if (!child) cc.log(cc._LogInfos.Node_removeChildByTag_2, tag);
       else this.removeChild(child, cleanup);
-    },
+    }
 
     /**
      * Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
      * @param {Boolean} [cleanup=true]
      */
-    removeAllChildrenWithCleanup: function (cleanup) {
+    removeAllChildrenWithCleanup(cleanup) {
       this.removeAllChildren(cleanup);
-    },
+    }
 
     /**
      * Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter. <br/>
@@ -1252,7 +1236,7 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Boolean} [cleanup=true] true if all running actions on all children nodes should be cleanup, false otherwise.
      */
-    removeAllChildren: function (cleanup) {
+    removeAllChildren(cleanup) {
       // not using detachChild improves speed here
       var __children = this._children;
       if (__children !== null) {
@@ -1279,9 +1263,9 @@ cc.Node = cc.Class.extend(
         this._children.length = 0;
         cc.renderer.childrenOrderDirty = true;
       }
-    },
+    }
 
-    _detachChild: function (child, doCleanup) {
+    _detachChild(child, doCleanup) {
       // IMPORTANT:
       //  -1st do onExit
       //  -2nd cleanup
@@ -1300,17 +1284,17 @@ cc.Node = cc.Class.extend(
       child.parent = null;
       child._renderCmd.detachFromParent();
       cc.arrayRemoveObject(this._children, child);
-    },
+    }
 
-    _insertChild: function (child, z) {
+    _insertChild(child, z) {
       cc.renderer.childrenOrderDirty = this._reorderChildDirty = true;
       this._children.push(child);
       child._setLocalZOrder(z);
-    },
+    }
 
-    setNodeDirty: function () {
+    setNodeDirty() {
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-    },
+    }
 
     /** Reorders a child according to a new z value. <br/>
      * The child MUST be already added.
@@ -1318,7 +1302,7 @@ cc.Node = cc.Class.extend(
      * @param {cc.Node} child An already added child node. It MUST be already added.
      * @param {Number} zOrder Z order for drawing priority. Please refer to setZOrder(int)
      */
-    reorderChild: function (child, zOrder) {
+    reorderChild(child, zOrder) {
       cc.assert(child, cc._LogInfos.Node_reorderChild);
       if (this._children.indexOf(child) === -1) {
         cc.log(cc._LogInfos.Node_reorderChild_2);
@@ -1329,7 +1313,7 @@ cc.Node = cc.Class.extend(
       cc.s_globalOrderOfArrival++;
       child._setLocalZOrder(zOrder);
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.orderDirty);
-    },
+    }
 
     /**
      * <p>
@@ -1339,7 +1323,7 @@ cc.Node = cc.Class.extend(
      * @function
      * @note Don't call this manually unless a child added needs to be removed in the same frame
      */
-    sortAllChildren: function () {
+    sortAllChildren() {
       if (this._reorderChildDirty) {
         var _children = this._children;
 
@@ -1372,26 +1356,26 @@ cc.Node = cc.Class.extend(
         //don't need to check children recursively, that's done in visit of each child
         this._reorderChildDirty = false;
       }
-    },
+    }
 
     /**
      * Render function using the canvas 2d context or WebGL context, internal usage only, please do not call this function
      * @function
      * @param {CanvasRenderingContext2D | WebGLRenderingContext} ctx The render context
      */
-    draw: function (ctx) {
+    draw(ctx) {
       // override me
       // Only use- this function to draw your staff.
       // DON'T draw your stuff outside this method
-    },
+    }
 
     // Internal use only, do not call it by yourself,
-    transformAncestors: function () {
+    transformAncestors() {
       if (this._parent !== null) {
         this._parent.transformAncestors();
         this._parent.transform();
       }
-    },
+    }
 
     //scene management
     /**
@@ -1403,13 +1387,13 @@ cc.Node = cc.Class.extend(
      * </p>
      * @function
      */
-    onEnter: function () {
+    onEnter() {
       this._isTransitionFinished = false;
       this._running = true; //should be running before resumeSchedule
       this.resume();
-    },
+    }
 
-    _performRecursive: function (callbackType) {
+    _performRecursive(callbackType) {
       var nodeCallbackType = cc.Node._stateCallbackType;
       if (callbackType >= nodeCallbackType.max) {
         return;
@@ -1470,7 +1454,7 @@ cc.Node = cc.Class.extend(
         }
       }
       cc.Node._performing--;
-    },
+    }
 
     /**
      * <p>
@@ -1480,9 +1464,9 @@ cc.Node = cc.Class.extend(
      * </p>
      * @function
      */
-    onEnterTransitionDidFinish: function () {
+    onEnterTransitionDidFinish() {
       this._isTransitionFinished = true;
-    },
+    }
 
     /**
      * <p>callback that is called every time the cc.Node leaves the 'stage'.  <br/>
@@ -1490,7 +1474,7 @@ cc.Node = cc.Class.extend(
      * If you override onExitTransitionDidStart, you shall call its parent's onExitTransitionDidStart with this._super()</p>
      * @function
      */
-    onExitTransitionDidStart: function () {},
+    onExitTransitionDidStart() {}
 
     /**
      * <p>
@@ -1501,11 +1485,11 @@ cc.Node = cc.Class.extend(
      * </p>
      * @function
      */
-    onExit: function () {
+    onExit() {
       this._running = false;
       this.pause();
       this.removeAllComponents();
-    },
+    }
 
     // actions
     /**
@@ -1516,42 +1500,42 @@ cc.Node = cc.Class.extend(
      * @param {cc.Action} action
      * @return {cc.Action} An Action pointer
      */
-    runAction: function (action) {
+    runAction(action) {
       cc.assert(action, cc._LogInfos.Node_runAction);
 
       this.actionManager.addAction(action, this, !this._running);
       return action;
-    },
+    }
 
     /**
      * Stops and removes all actions from the running action list .
      * @function
      */
-    stopAllActions: function () {
+    stopAllActions() {
       this.actionManager && this.actionManager.removeAllActionsFromTarget(this);
-    },
+    }
 
     /**
      * Stops and removes an action from the running action list.
      * @function
      * @param {cc.Action} action An action object to be removed.
      */
-    stopAction: function (action) {
+    stopAction(action) {
       this.actionManager.removeAction(action);
-    },
+    }
 
     /**
      * Removes an action from the running action list by its tag.
      * @function
      * @param {Number} tag A tag that indicates the action to be removed.
      */
-    stopActionByTag: function (tag) {
+    stopActionByTag(tag) {
       if (tag === cc.ACTION_TAG_INVALID) {
         cc.log(cc._LogInfos.Node_stopActionByTag);
         return;
       }
       this.actionManager.removeActionByTag(tag, this);
-    },
+    }
 
     /**
      * Returns an action from the running action list by its tag.
@@ -1560,13 +1544,13 @@ cc.Node = cc.Class.extend(
      * @param {Number} tag
      * @return {cc.Action} The action object with the given tag.
      */
-    getActionByTag: function (tag) {
+    getActionByTag(tag) {
       if (tag === cc.ACTION_TAG_INVALID) {
         cc.log(cc._LogInfos.Node_getActionByTag);
         return null;
       }
       return this.actionManager.getActionByTag(tag, this);
-    },
+    }
 
     /** <p>Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).<br/>
      *    Composable actions are counted as 1 action. Example:<br/>
@@ -1575,9 +1559,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {Number} The number of actions that are running plus the ones that are schedule to run
      */
-    getNumberOfRunningActions: function () {
+    getNumberOfRunningActions() {
       return this.actionManager.numberOfRunningActionsInTarget(this);
-    },
+    }
 
     // cc.Node - Callbacks
     // timers
@@ -1588,9 +1572,9 @@ cc.Node = cc.Class.extend(
      * Only one "update" method could be scheduled per node.</p>
      * @function
      */
-    scheduleUpdate: function () {
+    scheduleUpdate() {
       this.scheduleUpdateWithPriority(0);
-    },
+    }
 
     /**
      * <p>
@@ -1602,18 +1586,18 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} priority
      */
-    scheduleUpdateWithPriority: function (priority) {
+    scheduleUpdateWithPriority(priority) {
       this.scheduler.scheduleUpdate(this, priority, !this._running);
-    },
+    }
 
     /**
      * Unschedules the "update" method.
      * @function
      * @see cc.Node#scheduleUpdate
      */
-    unscheduleUpdate: function () {
+    unscheduleUpdate() {
       this.scheduler.unscheduleUpdate(this);
-    },
+    }
 
     /**
      * <p>Schedules a custom selector.         <br/>
@@ -1625,7 +1609,7 @@ cc.Node = cc.Class.extend(
      * @param {Number} delay     The amount of time that the first tick will wait before execution.
      * @param {String} key The only string identifying the callback
      */
-    schedule: function (callback, interval, repeat, delay, key) {
+    schedule(callback, interval, repeat, delay, key) {
       var len = arguments.length;
       if (typeof callback === "function") {
         //callback, interval, repeat, delay, key
@@ -1691,7 +1675,7 @@ cc.Node = cc.Class.extend(
         !this._running,
         key
       );
-    },
+    }
 
     /**
      * Schedules a callback function that runs only once, with a delay of 0 or larger
@@ -1701,12 +1685,12 @@ cc.Node = cc.Class.extend(
      * @param {Number} delay  The amount of time that the first tick will wait before execution.
      * @param {String} key The only string identifying the callback
      */
-    scheduleOnce: function (callback, delay, key) {
+    scheduleOnce(callback, delay, key) {
       //selector, delay
       //callback, delay, key
       if (key === undefined) key = this.__instanceId;
       this.schedule(callback, 0, 0, delay, key);
-    },
+    }
 
     /**
      * unschedules a custom callback function.
@@ -1714,43 +1698,43 @@ cc.Node = cc.Class.extend(
      * @see cc.Node#schedule
      * @param {function} callback_fn  A function wrapped as a selector
      */
-    unschedule: function (callback_fn) {
+    unschedule(callback_fn) {
       //key
       //selector
       if (!callback_fn) return;
 
       this.scheduler.unschedule(callback_fn, this);
-    },
+    }
 
     /**
      * <p>unschedule all scheduled callback functions: custom callback functions, and the 'update' callback function.<br/>
      * Actions are not affected by this method.</p>
      * @function
      */
-    unscheduleAllCallbacks: function () {
+    unscheduleAllCallbacks() {
       this.scheduler.unscheduleAllForTarget(this);
-    },
+    }
 
     /**
      * <p>Resumes all scheduled selectors and actions.<br/>
      * This method is called internally by onEnter</p>
      */
-    resume: function () {
+    resume() {
       this.scheduler.resumeTarget(this);
       this.actionManager && this.actionManager.resumeTarget(this);
       cc.eventManager.resumeTarget(this);
-    },
+    }
 
     /**
      * <p>Pauses all scheduled selectors and actions.<br/>
      * This method is called internally by onExit</p>
      * @function
      */
-    pause: function () {
+    pause() {
       this.scheduler.pauseTarget(this);
       this.actionManager && this.actionManager.pauseTarget(this);
       cc.eventManager.pauseTarget(this);
-    },
+    }
 
     /**
      *<p>Sets the additional transform.<br/>
@@ -1801,13 +1785,13 @@ cc.Node = cc.Class.extend(
      * // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
      * spriteB.setAdditionalTransform(t);
      */
-    setAdditionalTransform: function (additionalTransform) {
+    setAdditionalTransform(additionalTransform) {
       if (additionalTransform === undefined)
         return (this._additionalTransformDirty = false);
       this._additionalTransform = additionalTransform;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
       this._additionalTransformDirty = true;
-    },
+    }
 
     /**
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.<br/>
@@ -1815,30 +1799,30 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {cc.AffineTransform}
      */
-    getParentToNodeTransform: function () {
+    getParentToNodeTransform() {
       return this._renderCmd.getParentToNodeTransform();
-    },
+    }
 
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      * @function
      * @return {cc.AffineTransform}
      */
-    getNodeToWorldTransform: function () {
+    getNodeToWorldTransform() {
       var t = this.getNodeToParentTransform();
       for (var p = this._parent; p !== null; p = p.parent)
         t = cc.affineTransformConcat(t, p.getNodeToParentTransform());
       return t;
-    },
+    }
 
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      * @function
      * @return {cc.AffineTransform}
      */
-    getWorldToNodeTransform: function () {
+    getWorldToNodeTransform() {
       return cc.affineTransformInvert(this.getNodeToWorldTransform());
-    },
+    }
 
     /**
      * Converts a Point to node (local) space coordinates. The result is in Points.
@@ -1846,12 +1830,12 @@ cc.Node = cc.Class.extend(
      * @param {cc.Point} worldPoint
      * @return {cc.Point}
      */
-    convertToNodeSpace: function (worldPoint) {
+    convertToNodeSpace(worldPoint) {
       return cc.pointApplyAffineTransform(
         worldPoint,
         this.getWorldToNodeTransform()
       );
-    },
+    }
 
     /**
      * Converts a Point to world space coordinates. The result is in Points.
@@ -1859,13 +1843,13 @@ cc.Node = cc.Class.extend(
      * @param {cc.Point} nodePoint
      * @return {cc.Point}
      */
-    convertToWorldSpace: function (nodePoint) {
+    convertToWorldSpace(nodePoint) {
       nodePoint = nodePoint || cc.p(0, 0);
       return cc.pointApplyAffineTransform(
         nodePoint,
         this.getNodeToWorldTransform()
       );
-    },
+    }
 
     /**
      * Converts a Point to node (local) space coordinates. The result is in Points.<br/>
@@ -1874,12 +1858,12 @@ cc.Node = cc.Class.extend(
      * @param {cc.Point} worldPoint
      * @return {cc.Point}
      */
-    convertToNodeSpaceAR: function (worldPoint) {
+    convertToNodeSpaceAR(worldPoint) {
       return cc.pSub(
         this.convertToNodeSpace(worldPoint),
         this._renderCmd.getAnchorPointInPoints()
       );
-    },
+    }
 
     /**
      * Converts a local Point to world space coordinates.The result is in Points.<br/>
@@ -1888,26 +1872,26 @@ cc.Node = cc.Class.extend(
      * @param {cc.Point} nodePoint
      * @return {cc.Point}
      */
-    convertToWorldSpaceAR: function (nodePoint) {
+    convertToWorldSpaceAR(nodePoint) {
       nodePoint = nodePoint || cc.p(0, 0);
       var pt = cc.pAdd(nodePoint, this._renderCmd.getAnchorPointInPoints());
       return this.convertToWorldSpace(pt);
-    },
+    }
 
-    _convertToWindowSpace: function (nodePoint) {
+    _convertToWindowSpace(nodePoint) {
       var worldPoint = this.convertToWorldSpace(nodePoint);
       return cc.director.convertToUI(worldPoint);
-    },
+    }
 
     /** convenience methods which take a cc.Touch instead of cc.Point
      * @function
      * @param {cc.Touch} touch The touch object
      * @return {cc.Point}
      */
-    convertTouchToNodeSpace: function (touch) {
+    convertTouchToNodeSpace(touch) {
       var point = touch.getLocation();
       return this.convertToNodeSpace(point);
-    },
+    }
 
     /**
      * converts a cc.Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
@@ -1915,10 +1899,10 @@ cc.Node = cc.Class.extend(
      * @param {cc.Touch} touch The touch object
      * @return {cc.Point}
      */
-    convertTouchToNodeSpaceAR: function (touch) {
+    convertTouchToNodeSpaceAR(touch) {
       var point = cc.director.convertToGL(touch.getLocation());
       return this.convertToNodeSpaceAR(point);
-    },
+    }
 
     /**
      * Update will be called automatically every frame if "scheduleUpdate" is called when the node is "live".<br/>
@@ -1927,10 +1911,10 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Number} dt Delta time since last update
      */
-    update: function (dt) {
+    update(dt) {
       if (this._componentContainer && !this._componentContainer.isEmpty())
         this._componentContainer.visit(dt);
-    },
+    }
 
     /**
      * <p>
@@ -1942,14 +1926,14 @@ cc.Node = cc.Class.extend(
      * </p>
      * @function
      */
-    updateTransform: function () {
+    updateTransform() {
       var children = this._children,
         node;
       for (var i = 0; i < children.length; i++) {
         node = children[i];
         if (node) node.updateTransform();
       }
-    },
+    }
 
     /**
      * Returns a component identified by the name given.
@@ -1957,48 +1941,46 @@ cc.Node = cc.Class.extend(
      * @param {String} name The name to search for
      * @return {cc.Component} The component found
      */
-    getComponent: function (name) {
+    getComponent(name) {
       if (this._componentContainer)
         return this._componentContainer.getComponent(name);
       return null;
-    },
+    }
 
     /**
      * Adds a component to the node's component container.
      * @function
      * @param {cc.Component} component
      */
-    addComponent: function (component) {
+    addComponent(component) {
       if (this._componentContainer) this._componentContainer.add(component);
-    },
+    }
 
     /**
      * Removes a component identified by the given name or removes the component object given
      * @function
      * @param {String|cc.Component} component
      */
-    removeComponent: function (component) {
+    removeComponent(component) {
       if (this._componentContainer)
         return this._componentContainer.remove(component);
       return false;
-    },
+    }
 
     /**
      * Removes all components of cc.Node, it called when cc.Node is exiting from stage.
      * @function
      */
-    removeAllComponents: function () {
+    removeAllComponents() {
       if (this._componentContainer) this._componentContainer.removeAll();
-    },
-
-    grid: null,
+    }
 
     /**
      * Recursive method that visit its children and draw them
      * @function
      * @param {cc.Node} parent
      */
-    visit: function (parent) {
+    visit(parent) {
       var cmd = this._renderCmd,
         parentCmd = parent ? parent._renderCmd : null;
 
@@ -2037,7 +2019,7 @@ cc.Node = cc.Class.extend(
         renderer.pushRenderCommand(cmd);
       }
       cmd._dirtyFlag = 0;
-    },
+    }
 
     /**
      * Performs view-matrix transformation based on position, scale, rotation and other attributes.
@@ -2045,9 +2027,9 @@ cc.Node = cc.Class.extend(
      * @param {cc.Node.RenderCmd} parentCmd parent's render command
      * @param {boolean} recursive whether call its children's transform
      */
-    transform: function (parentCmd, recursive) {
+    transform(parentCmd, recursive) {
       this._renderCmd.transform(parentCmd, recursive);
-    },
+    }
 
     /**
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.<br/>
@@ -2055,7 +2037,7 @@ cc.Node = cc.Class.extend(
      * @function
      * @return {cc.AffineTransform} The affine transform object
      */
-    getNodeToParentTransform: function (ancestor) {
+    getNodeToParentTransform(ancestor) {
       var t = this._renderCmd.getNodeToParentTransform();
       if (ancestor) {
         var T = { a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty };
@@ -2070,20 +2052,20 @@ cc.Node = cc.Class.extend(
       } else {
         return t;
       }
-    },
+    }
 
-    getNodeToParentAffineTransform: function (ancestor) {
+    getNodeToParentAffineTransform(ancestor) {
       return this.getNodeToParentTransform(ancestor);
-    },
+    }
 
     /**
      * Return the shader program currently used for this node
      * @function
      * @return {cc.GLProgram} The shader program currently used for this node
      */
-    getShaderProgram: function () {
+    getShaderProgram() {
       return this._renderCmd.getShaderProgram();
-    },
+    }
 
     /**
      * <p>
@@ -2097,24 +2079,24 @@ cc.Node = cc.Class.extend(
      * @example
      * node.setGLProgram(cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLOR));
      */
-    setShaderProgram: function (newShaderProgram) {
+    setShaderProgram(newShaderProgram) {
       this._renderCmd.setShaderProgram(newShaderProgram);
-    },
+    }
 
-    setGLProgramState: function (glProgramState) {
+    setGLProgramState(glProgramState) {
       this._renderCmd.setGLProgramState(glProgramState);
-    },
+    }
 
-    getGLProgramState: function () {
+    getGLProgramState() {
       return this._renderCmd.getGLProgramState();
-    },
+    }
 
     /**
      * Returns a "world" axis aligned bounding box of the node.
      * @function
      * @return {cc.Rect}
      */
-    getBoundingBoxToWorld: function () {
+    getBoundingBoxToWorld() {
       var rect = cc.rect(
         0,
         0,
@@ -2136,9 +2118,9 @@ cc.Node = cc.Class.extend(
         }
       }
       return rect;
-    },
+    }
 
-    _getBoundingBoxToCurrentNode: function (parentTransform) {
+    _getBoundingBoxToCurrentNode(parentTransform) {
       var rect = cc.rect(
         0,
         0,
@@ -2166,16 +2148,16 @@ cc.Node = cc.Class.extend(
         }
       }
       return rect;
-    },
+    }
 
     /**
      * Returns the opacity of Node
      * @function
      * @returns {number} opacity
      */
-    getOpacity: function () {
+    getOpacity() {
       return this._realOpacity;
-    },
+    }
 
     /**
      * Returns the displayed opacity of Node,
@@ -2183,56 +2165,56 @@ cc.Node = cc.Class.extend(
      * @function
      * @returns {number} displayed opacity
      */
-    getDisplayedOpacity: function () {
+    getDisplayedOpacity() {
       return this._renderCmd.getDisplayedOpacity();
-    },
+    }
 
     /**
      * Sets the opacity of Node
      * @function
      * @param {Number} opacity
      */
-    setOpacity: function (opacity) {
+    setOpacity(opacity) {
       this._realOpacity = opacity;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.opacityDirty);
-    },
+    }
 
     /**
      * Update displayed opacity
      * @function
      * @param {Number} parentOpacity
      */
-    updateDisplayedOpacity: function (parentOpacity) {
+    updateDisplayedOpacity(parentOpacity) {
       //TODO  this API shouldn't be public.
       this._renderCmd._updateDisplayOpacity(parentOpacity);
-    },
+    }
 
     /**
      * Returns whether node's opacity value affect its child nodes.
      * @function
      * @returns {boolean}
      */
-    isCascadeOpacityEnabled: function () {
+    isCascadeOpacityEnabled() {
       return this._cascadeOpacityEnabled;
-    },
+    }
 
     /**
      * Enable or disable cascade opacity, if cascade enabled, child nodes' opacity will be the multiplication of parent opacity and its own opacity.
      * @function
      * @param {boolean} cascadeOpacityEnabled
      */
-    setCascadeOpacityEnabled: function (cascadeOpacityEnabled) {
+    setCascadeOpacityEnabled(cascadeOpacityEnabled) {
       if (this._cascadeOpacityEnabled === cascadeOpacityEnabled) return;
       this._cascadeOpacityEnabled = cascadeOpacityEnabled;
       this._renderCmd.setCascadeOpacityEnabledDirty();
-    },
+    }
 
     /**
      * Returns the color of Node
      * @function
      * @returns {cc.Color}
      */
-    getColor: function () {
+    getColor() {
       var locRealColor = this._realColor;
       return cc.color(
         locRealColor.r,
@@ -2240,7 +2222,7 @@ cc.Node = cc.Class.extend(
         locRealColor.b,
         locRealColor.a
       );
-    },
+    }
 
     /**
      * Returns the displayed color of Node,
@@ -2248,9 +2230,9 @@ cc.Node = cc.Class.extend(
      * @function
      * @returns {cc.Color}
      */
-    getDisplayedColor: function () {
+    getDisplayedColor() {
       return this._renderCmd.getDisplayedColor();
-    },
+    }
 
     /**
      * <p>Sets the color of Node.<br/>
@@ -2259,42 +2241,42 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {cc.Color} color The new color given
      */
-    setColor: function (color) {
+    setColor(color) {
       var locRealColor = this._realColor;
       locRealColor.r = color.r;
       locRealColor.g = color.g;
       locRealColor.b = color.b;
       this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty);
-    },
+    }
 
     /**
      * Update the displayed color of Node
      * @function
      * @param {cc.Color} parentColor
      */
-    updateDisplayedColor: function (parentColor) {
+    updateDisplayedColor(parentColor) {
       //TODO  this API shouldn't be public.
       this._renderCmd._updateDisplayColor(parentColor);
-    },
+    }
 
     /**
      * Returns whether node's color value affect its child nodes.
      * @function
      * @returns {boolean}
      */
-    isCascadeColorEnabled: function () {
+    isCascadeColorEnabled() {
       return this._cascadeColorEnabled;
-    },
+    }
 
     /**
      * Enable or disable cascade color, if cascade enabled, child nodes' opacity will be the cascade value of parent color and its own color.
      * @param {boolean} cascadeColorEnabled
      */
-    setCascadeColorEnabled: function (cascadeColorEnabled) {
+    setCascadeColorEnabled(cascadeColorEnabled) {
       if (this._cascadeColorEnabled === cascadeColorEnabled) return;
       this._cascadeColorEnabled = cascadeColorEnabled;
       this._renderCmd.setCascadeColorEnabledDirty();
-    },
+    }
 
     /**
      * Set whether color should be changed with the opacity value,
@@ -2302,22 +2284,22 @@ cc.Node = cc.Class.extend(
      * @function
      * @param {Boolean} opacityValue
      */
-    setOpacityModifyRGB: function (opacityValue) {},
+    setOpacityModifyRGB(opacityValue) {}
 
     /**
      * Get whether color should be changed with the opacity value
      * @function
      * @return {Boolean}
      */
-    isOpacityModifyRGB: function () {
+    isOpacityModifyRGB() {
       return false;
-    },
+    }
 
-    _createRenderCmd: function () {
+    _createRenderCmd() {
       if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
         return new cc.Node.CanvasRenderCmd(this);
       else return new cc.Node.WebGLRenderCmd(this);
-    },
+    }
 
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
@@ -2345,7 +2327,7 @@ cc.Node = cc.Class.extend(
      *  And returns a boolean result. Your callback can return `true` to terminate the enumeration.
      *
      */
-    enumerateChildren: function (name, callback) {
+    enumerateChildren(name, callback) {
       cc.assert(name && name.length != 0, "Invalid name");
       cc.assert(callback != null, "Invalid callback function");
 
@@ -2378,9 +2360,9 @@ cc.Node = cc.Class.extend(
 
       if (searchRecursively) this.doEnumerateRecursive(this, newName, callback);
       else this.doEnumerate(newName, callback);
-    },
+    }
 
-    doEnumerateRecursive: function (node, name, callback) {
+    doEnumerateRecursive(node, name, callback) {
       var ret = false;
       if (node.doEnumerate(name, callback)) {
         ret = true;
@@ -2398,9 +2380,9 @@ cc.Node = cc.Class.extend(
         }
       }
       return ret;
-    },
+    }
 
-    doEnumerate: function (name, callback) {
+    doEnumerate(name, callback) {
       // name may be xxx/yyy, should find its parent
       var pos = name.indexOf("/");
       var searchName = name;
@@ -2433,8 +2415,7 @@ cc.Node = cc.Class.extend(
 
       return ret;
     }
-  }
-);
+};
 
 cc.Node._stateCallbackType = {
   onEnter: 1,

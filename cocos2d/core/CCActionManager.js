@@ -52,24 +52,24 @@ cc.HashElement = function () {
  * @example
  * var mng = new cc.ActionManager();
  */
-cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
-    _elementPool: [],
-
-    _searchElementByTarget:function (arr, target) {
+cc.ActionManager = class ActionManager extends cc.NewClass {
+    _searchElementByTarget(arr, target) {
         for (var k = 0; k < arr.length; k++) {
             if (target === arr[k].target)
                 return arr[k];
         }
         return null;
-    },
+    }
 
-    ctor:function () {
+    constructor() {
+        super();
+        this._elementPool = [];
         this._hashTargets = {};
         this._arrayTargets = [];
         this._currentTarget = null;
-    },
+    }
 
-    _getElement: function (target, paused) {
+    _getElement(target, paused) {
         var element = this._elementPool.pop();
         if (!element) {
             element = new cc.HashElement();
@@ -77,9 +77,9 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
         element.target = target;
         element.paused = !!paused;
         return element;
-    },
+    }
 
-    _putElement: function (element) {
+    _putElement(element) {
         element.actions.length = 0;
         element.actionIndex = 0;
         element.currentAction = null;
@@ -87,7 +87,7 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
         element.target = null;
         element.lock = false;
         this._elementPool.push(element);
-    },
+    }
 
     /** Adds an action with a target.
      * If the target is already present, then the action will be added to the existing target.
@@ -97,7 +97,7 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
      * @param {cc.Node} target
      * @param {Boolean} paused
      */
-    addAction:function (action, target, paused) {
+    addAction(action, target, paused) {
         if(!action)
             throw new Error("cc.ActionManager.addAction(): action must be non-null");
         if(!target)
@@ -117,25 +117,25 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
 
         element.actions.push(action);
         action.startWithTarget(target);
-    },
+    }
 
     /**
      * Removes all actions from all the targets.
      */
-    removeAllActions:function () {
+    removeAllActions() {
         var locTargets = this._arrayTargets;
         for (var i = 0; i < locTargets.length; i++) {
             var element = locTargets[i];
             if (element)
                 this.removeAllActionsFromTarget(element.target, true);
         }
-    },
+    }
     /** Removes all actions from a certain target. <br/>
      * All the actions that belongs to the target will be removed.
      * @param {object} target
      * @param {boolean} forceDelete
      */
-    removeAllActionsFromTarget:function (target, forceDelete) {
+    removeAllActionsFromTarget(target, forceDelete) {
         // explicit null handling
         if (target == null)
             return;
@@ -144,11 +144,11 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
             element.actions.length = 0;
             this._deleteHashElement(element);
         }
-    },
+    }
     /** Removes an action given an action reference.
      * @param {cc.Action} action
      */
-    removeAction:function (action) {
+    removeAction(action) {
         // explicit null handling
         if (action == null)
             return;
@@ -168,13 +168,13 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
         } else {
             cc.log(cc._LogInfos.ActionManager_removeAction);
         }
-    },
+    }
 
     /** Removes an action given its tag and the target
      * @param {Number} tag
      * @param {object} target
      */
-    removeActionByTag:function (tag, target) {
+    removeActionByTag(tag, target) {
         if(tag === cc.ACTION_TAG_INVALID)
             cc.log(cc._LogInfos.ActionManager_addAction);
 
@@ -192,14 +192,14 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
                 }
             }
         }
-    },
+    }
 
     /** Gets an action given its tag an a target
      * @param {Number} tag
      * @param {object} target
      * @return {cc.Action|Null}  return the Action with the given tag on success
      */
-    getActionByTag:function (tag, target) {
+    getActionByTag(tag, target) {
         if(tag === cc.ACTION_TAG_INVALID)
             cc.log(cc._LogInfos.ActionManager_getActionByTag);
 
@@ -215,7 +215,7 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
             cc.log(cc._LogInfos.ActionManager_getActionByTag_2, tag);
         }
         return null;
-    },
+    }
 
 
     /** Returns the numbers of actions that are running in a certain target. <br/>
@@ -226,35 +226,35 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
      * @param {object} target
      * @return {Number}
      */
-    numberOfRunningActionsInTarget:function (target) {
+    numberOfRunningActionsInTarget(target) {
         var element = this._hashTargets[target.__instanceId];
         if (element)
             return (element.actions) ? element.actions.length : 0;
 
         return 0;
-    },
+    }
     /** Pauses the target: all running actions and newly added actions will be paused.
      * @param {object} target
      */
-    pauseTarget:function (target) {
+    pauseTarget(target) {
         var element = this._hashTargets[target.__instanceId];
         if (element)
             element.paused = true;
-    },
+    }
     /** Resumes the target. All queued actions will be resumed.
      * @param {object} target
      */
-    resumeTarget:function (target) {
+    resumeTarget(target) {
         var element = this._hashTargets[target.__instanceId];
         if (element)
             element.paused = false;
-    },
+    }
 
     /**
      * Pauses all running actions, returning a list of targets whose actions were paused.
      * @return {Array}  a list of targets whose actions were paused.
      */
-    pauseAllRunningActions:function(){
+    pauseAllRunningActions(){
         var idsWithActions = [];
         var locTargets = this._arrayTargets;
         for(var i = 0; i< locTargets.length; i++){
@@ -265,13 +265,13 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
             }
         }
         return idsWithActions;
-    },
+    }
 
     /**
      * Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
      * @param {Array} targetsToResume
      */
-    resumeTargets:function(targetsToResume){
+    resumeTargets(targetsToResume){
         if (!targetsToResume)
             return;
 
@@ -279,17 +279,17 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
             if(targetsToResume[i])
                 this.resumeTarget(targetsToResume[i]);
         }
-    },
+    }
 
     /** purges the shared action manager. It releases the retained instance. <br/>
      * because it uses this, so it can not be static
      */
-    purgeSharedManager:function () {
+    purgeSharedManager() {
         cc.director.getScheduler().unscheduleUpdate(this);
-    },
+    }
 
     //protected
-    _removeActionAtIndex:function (index, element) {
+    _removeActionAtIndex(index, element) {
         var action = element.actions[index];
 
         element.actions.splice(index, 1);
@@ -301,9 +301,9 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
         if (element.actions.length === 0) {
             this._deleteHashElement(element);
         }
-    },
+    }
 
-    _deleteHashElement:function (element) {
+    _deleteHashElement(element) {
         var ret = false;
         if (element && !element.lock) {
             if (this._hashTargets[element.target.__instanceId]) {
@@ -320,12 +320,12 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
             }
         }
         return ret;
-    },
+    }
 
     /**
      * @param {Number} dt delta time in seconds
      */
-    update:function (dt) {
+    update(dt) {
         var locTargets = this._arrayTargets , locCurrTarget;
         for (var elt = 0; elt < locTargets.length; elt++) {
             this._currentTarget = locTargets[elt];
@@ -358,4 +358,4 @@ cc.ActionManager = cc.Class.extend(/** @lends cc.ActionManager# */{
             }
         }
     }
-});
+};
