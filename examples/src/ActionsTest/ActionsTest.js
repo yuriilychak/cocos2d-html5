@@ -57,9 +57,6 @@ var ActionsDemo = class ActionsDemo extends BaseTestLayer {
 
       this._kathia = null;
 
-
-      this._code = null;
-
     this._grossini = new cc.Sprite(s_pathGrossini);
     this._tamara = new cc.Sprite(s_pathSister1);
     this._kathia = new cc.Sprite(s_pathSister2);
