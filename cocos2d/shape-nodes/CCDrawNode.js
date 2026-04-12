@@ -34,7 +34,6 @@
  * @extends cc.Node
  */
 cc.DrawNode = class DrawNode extends cc.Node {
-//TODO need refactor
 
     _buffer = null;
     _blendFunc = null;
@@ -43,9 +42,11 @@ cc.DrawNode = class DrawNode extends cc.Node {
 
     constructor() {
         super();
-        if (this.ctor) {
-            this.ctor.apply(this, arguments);
-        }
+        this._initDrawNode.apply(this, arguments);
+    }
+
+    _initDrawNode() {
+        // Overridden by Canvas/WebGL at renderer init
     }
 
     /**
@@ -135,16 +136,10 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             _t.isStroke = isStroke || false;
         };
 
-        cc.extend(cc.DrawNode.prototype, /** @lends cc.DrawNode# */{
-            _className: "DrawNodeCanvas",
+        class DrawNodeCanvas {
 
-            /**
-             * <p>The cc.DrawNodeCanvas's constructor. <br/>
-             * This function will automatically be invoked when you create a node using new construction: "var node = new cc.DrawNodeCanvas()".<br/>
-             * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-             */
-            ctor: function () {
-                cc.Node.prototype.ctor.call(this);
+            _initDrawNode() {
+                this._className = "DrawNodeCanvas";
                 var locCmd = this._renderCmd;
                 locCmd._buffer = this._buffer = [];
                 locCmd._drawColor = this._drawColor = cc.color(255, 255, 255, 255);
@@ -152,9 +147,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
 
                 this.init();
                 this._localBB = new cc.Rect();
-            },
+            }
 
-            setLocalBB: function (rectorX, y, width, height) {
+            setLocalBB(rectorX, y, width, height) {
                 var localBB = this._localBB;
                 if (y === undefined) {
                     localBB.x = rectorX.x;
@@ -167,7 +162,8 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     localBB.width = width;
                     localBB.height = height;
                 }
-            },
+            }
+
             /**
              * draws a rectangle given the origin and destination point measured in points.
              * @param {cc.Point} origin
@@ -176,7 +172,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} lineWidth
              * @param {cc.Color} lineColor
              */
-            drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
+            drawRect(origin, destination, fillColor, lineWidth, lineColor) {
                 lineWidth = (lineWidth == null) ? this._lineWidth : lineWidth;
                 lineColor = lineColor || this.getDrawColor();
                 if (lineColor.a == null)
@@ -202,7 +198,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     element.isFill = true;
                 }
                 this._buffer.push(element);
-            },
+            }
 
             /**
              * draws a circle given the center, radius and number of segments.
@@ -215,7 +211,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} lineWidth
              * @param {cc.Color} color
              */
-            drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
+            drawCircle(center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this.getDrawColor();
                 if (color.a == null)
@@ -240,7 +236,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 element.isClosePolygon = true;
                 element.isStroke = true;
                 this._buffer.push(element);
-            },
+            }
 
             /**
              * draws a quad bezier path
@@ -252,7 +248,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} lineWidth
              * @param {cc.Color} color
              */
-            drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
+            drawQuadBezier(origin, control, destination, segments, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this.getDrawColor();
                 if (color.a == null)
@@ -274,7 +270,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 element.isStroke = true;
                 element.lineCap = "round";
                 this._buffer.push(element);
-            },
+            }
 
             /**
              * draws a cubic bezier path
@@ -287,7 +283,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} lineWidth
              * @param {cc.Color} color
              */
-            drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
+            drawCubicBezier(origin, control1, control2, destination, segments, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this.getDrawColor();
                 if (color.a == null)
@@ -309,7 +305,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 element.isStroke = true;
                 element.lineCap = "round";
                 this._buffer.push(element);
-            },
+            }
 
             /**
              * draw a CatmullRom curve
@@ -319,9 +315,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} [lineWidth]
              * @param {cc.Color} [color]
              */
-            drawCatmullRom: function (points, segments, lineWidth, color) {
+            drawCatmullRom(points, segments, lineWidth, color) {
                 this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
-            },
+            }
 
             /**
              * draw a cardinal spline path
@@ -332,7 +328,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} [lineWidth]
              * @param {cc.Color} [color]
              */
-            drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
+            drawCardinalSpline(config, tension, segments, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this.getDrawColor();
                 if (color.a == null)
@@ -367,7 +363,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 element.isStroke = true;
                 element.lineCap = "round";
                 this._buffer.push(element);
-            },
+            }
 
             /**
              * draw a dot at a position, with a given radius and color
@@ -375,7 +371,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} radius
              * @param {cc.Color} [color]
              */
-            drawDot: function (pos, radius, color) {
+            drawDot(pos, radius, color) {
                 color = color || this.getDrawColor();
                 if (color.a == null)
                     color.a = 255;
@@ -384,7 +380,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 element.lineWidth = radius;
                 element.fillColor = color;
                 this._buffer.push(element);
-            },
+            }
 
             /**
              * draws an array of points.
@@ -393,7 +389,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} radius
              * @param {cc.Color} [color]
              */
-            drawDots: function (points, radius, color) {
+            drawDots(points, radius, color) {
                 if (!points || points.length == 0)
                     return;
                 color = color || this.getDrawColor();
@@ -401,7 +397,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     color.a = 255;
                 for (var i = 0, len = points.length; i < len; i++)
                     this.drawDot(points[i], radius, color);
-            },
+            }
 
             /**
              * draw a segment with a radius and color
@@ -410,7 +406,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} [lineWidth]
              * @param {cc.Color} [color]
              */
-            drawSegment: function (from, to, lineWidth, color) {
+            drawSegment(from, to, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this.getDrawColor();
                 if (color.a == null)
@@ -422,7 +418,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 element.isStroke = true;
                 element.lineCap = "round";
                 this._buffer.push(element);
-            },
+            }
 
             /**
              * draw a polygon with a fill color and line color without copying the vertex list
@@ -431,7 +427,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} [lineWidth]
              * @param {cc.Color} [color]
              */
-            drawPoly_: function (verts, fillColor, lineWidth, color) {
+            drawPoly_(verts, fillColor, lineWidth, color) {
                 lineWidth = (lineWidth == null ) ? this._lineWidth : lineWidth;
                 color = color || this.getDrawColor();
                 if (color.a == null)
@@ -448,7 +444,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 if (fillColor)
                     element.isFill = true;
                 this._buffer.push(element);
-            },
+            }
 
             /**
              * draw a polygon with a fill color and line color, copying the vertex list
@@ -457,23 +453,31 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
              * @param {Number} [lineWidth]
              * @param {cc.Color} [lineColor]
              */
-            drawPoly: function (verts, fillColor, lineWidth, lineColor) {
+            drawPoly(verts, fillColor, lineWidth, lineColor) {
                 var vertsCopy = [];
                 for (var i = 0; i < verts.length; i++) {
                     vertsCopy.push(cc.p(verts[i].x, verts[i].y));
                 }
                 return this.drawPoly_(vertsCopy, fillColor, lineWidth, lineColor);
-            },
+            }
 
             /**
              * Clear the geometry in the node's buffer.
              */
-            clear: function () {
+            clear() {
                 this._buffer.length = 0;
-            },
+            }
 
-            _createRenderCmd: function () {
+            _createRenderCmd() {
                 return new cc.DrawNode.CanvasRenderCmd(this);
+            }
+        }
+
+        // Copy Canvas methods to cc.DrawNode.prototype
+        var canvasProto = DrawNodeCanvas.prototype;
+        Object.getOwnPropertyNames(canvasProto).forEach(function (name) {
+            if (name !== 'constructor') {
+                cc.DrawNode.prototype[name] = canvasProto[name];
             }
         });
     }
@@ -497,22 +501,18 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
         var _n = cc.p(), _t = cc.p(), _nw = cc.p(), _tw = cc.p(),
             _extrude = [];
 
-        cc.extend(cc.DrawNode.prototype, {
-            _bufferCapacity: 0,
-            _vertexCount: 0,
+        class DrawNodeWebGL {
 
-            _offset: 0,
-            _occupiedSize: 0,
-            _f32Buffer: null,
-            _ui32Buffer: null,
-
-            _dirty: false,
-            _className: "DrawNodeWebGL",
-
-            manualRelease: false,
-
-            ctor: function (capacity, manualRelease) {
-                cc.Node.prototype.ctor.call(this);
+            _initDrawNode(capacity, manualRelease) {
+                this._className = "DrawNodeWebGL";
+                this._bufferCapacity = 0;
+                this._vertexCount = 0;
+                this._offset = 0;
+                this._occupiedSize = 0;
+                this._f32Buffer = null;
+                this._ui32Buffer = null;
+                this._dirty = false;
+                this.manualRelease = false;
 
                 if (!_sharedBuffer) {
                     _sharedBuffer = new GlobalVertexBuffer(cc._renderContext, cc.DRAWNODE_TOTAL_VERTICES * VERTEX_BYTE);
@@ -526,31 +526,31 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 this.manualRelease = manualRelease;
 
                 this._dirty = true;
-            },
+            }
 
-            onEnter: function () {
+            onEnter() {
                 cc.Node.prototype.onEnter.call(this);
                 if (this._occupiedSize < this._bufferCapacity) {
                     this._ensureCapacity(this._bufferCapacity);
                 }
-            },
+            }
 
-            onExit: function () {
+            onExit() {
                 if (!this.manualRelease) {
                     this.release();
                 }
                 cc.Node.prototype.onExit.call(this);
-            },
+            }
 
-            release: function () {
+            release() {
                 if (this._occupiedSize > 0) {
                     this._vertexCount = 0;
                     _sharedBuffer.freeBuffer(this._offset, VERTEX_BYTE * this._occupiedSize);
                     this._occupiedSize = 0;
                 }
-            },
+            }
 
-            _ensureCapacity: function (count) {
+            _ensureCapacity(count) {
                 var _t = this;
                 var prev = _t._occupiedSize;
                 var prevOffset = _t._offset;
@@ -587,9 +587,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 else {
                     return true;
                 }
-            },
+            }
 
-            drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
+            drawRect(origin, destination, fillColor, lineWidth, lineColor) {
                 lineWidth = (lineWidth == null) ? this._lineWidth : lineWidth;
                 lineColor = lineColor || this._drawColor;
                 _vertices.length = 0;
@@ -599,9 +599,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 else
                     this.drawPoly(_vertices, fillColor, lineWidth, lineColor);
                 _vertices.length = 0;
-            },
+            }
 
-            drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
+            drawCircle(center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this._drawColor;
                 var coef = 2.0 * Math.PI / segments, i, len;
@@ -624,9 +624,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     this.drawSegment(_from, _to, lineWidth, color);
                 }
                 _vertices.length = 0;
-            },
+            }
 
-            drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
+            drawQuadBezier(origin, control, destination, segments, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this._drawColor;
                 var t = 0.0;
@@ -640,9 +640,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 _vertices.push(destination.x, destination.y);
                 this._drawSegments(_vertices, lineWidth, color, false);
                 _vertices.length = 0;
-            },
+            }
 
-            drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
+            drawCubicBezier(origin, control1, control2, destination, segments, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this._drawColor;
                 var t = 0;
@@ -656,13 +656,13 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 _vertices.push(destination.x, destination.y);
                 this._drawSegments(_vertices, lineWidth, color, false);
                 _vertices.length = 0;
-            },
+            }
 
-            drawCatmullRom: function (points, segments, lineWidth, color) {
+            drawCatmullRom(points, segments, lineWidth, color) {
                 this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
-            },
+            }
 
-            drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
+            drawCardinalSpline(config, tension, segments, lineWidth, color) {
                 lineWidth = lineWidth || this._lineWidth;
                 color = color || this._drawColor;
                 var p, lt, deltaT = 1.0 / config.length;
@@ -699,18 +699,18 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     this.drawSegment(_from, _to, lineWidth, color);
                 }
                 _vertices.length = 0;
-            },
+            }
 
-            drawDots: function (points, radius, color) {
+            drawDots(points, radius, color) {
                 if (!points || points.length === 0)
                     return;
                 color = color || this._drawColor;
                 for (var i = 0, len = points.length; i < len; i++) {
                     this.drawDot(points[i], radius, color);
                 }
-            },
+            }
 
-            _render: function () {
+            _render() {
                 var gl = cc._renderContext;
                 if (this._offset < 0 || this._vertexCount <= 0) {
                     return;
@@ -739,9 +739,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 gl.drawArrays(gl.TRIANGLES, this._offset / VERTEX_BYTE, this._vertexCount);
                 cc.incrementGLDraws(1);
                 //cc.checkGLErrorDebug();
-            },
+            }
 
-            appendVertexData: function (x, y, color, u, v) {
+            appendVertexData(x, y, color, u, v) {
                 var f32Buffer = this._f32Buffer;
                 // Float offset = byte offset / 4 + vertex count * floats by vertex
                 var offset = this._vertexCount * FLOAT_PER_VERTEX;
@@ -752,9 +752,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 f32Buffer[offset + 3] = u;
                 f32Buffer[offset + 4] = v;
                 this._vertexCount++;
-            },
+            }
 
-            drawDot: function (pos, radius, color) {
+            drawDot(pos, radius, color) {
                 color = color || this._drawColor;
                 if (color.a == null)
                     color.a = 255;
@@ -777,9 +777,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 this.appendVertexData(r, b, color, 1, -1);
 
                 this._dirty = true;
-            },
+            }
 
-            drawSegment: function (from, to, radius, color) {
+            drawSegment(from, to, radius, color) {
                 color = color || this.getDrawColor();
                 if (color.a == null)
                     color.a = 255;
@@ -840,9 +840,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 this.appendVertexData(v7x, v7y, color, u7, v7);
                 this.appendVertexData(v5x, v5y, color, u5, v5);
                 this._dirty = true;
-            },
+            }
 
-            drawPoly: function (verts, fillColor, borderWidth, borderColor) {
+            drawPoly(verts, fillColor, borderWidth, borderColor) {
                 // Backward compatibility
                 if (typeof verts[0] === 'object') {
                     _vertices.length = 0;
@@ -946,9 +946,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 _extrude.length = 0;
                 _vertices.length = 0;
                 this._dirty = true;
-            },
+            }
 
-            _drawSegments: function (verts, borderWidth, borderColor, closePoly) {
+            _drawSegments(verts, borderWidth, borderColor, closePoly) {
                 borderWidth = (borderWidth == null) ? this._lineWidth : borderWidth;
                 if (borderWidth <= 0)
                     return;
@@ -1021,15 +1021,23 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 }
                 _extrude.length = 0;
                 this._dirty = true;
-            },
+            }
 
-            clear: function () {
+            clear() {
                 this.release();
                 this._dirty = true;
-            },
+            }
 
-            _createRenderCmd: function () {
+            _createRenderCmd() {
                 return new cc.DrawNode.WebGLRenderCmd(this);
+            }
+        }
+
+        // Copy WebGL methods to cc.DrawNode.prototype
+        var webglProto = DrawNodeWebGL.prototype;
+        Object.getOwnPropertyNames(webglProto).forEach(function (name) {
+            if (name !== 'constructor') {
+                cc.DrawNode.prototype[name] = webglProto[name];
             }
         });
     }
