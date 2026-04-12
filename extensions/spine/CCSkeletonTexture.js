@@ -22,46 +22,46 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-sp.SkeletonTexture = function (image) {
-    sp.spine.Texture.call(this, image);
-};
-cc.inherits(sp.SkeletonTexture, sp.spine.Texture);
-cc.extend(sp.SkeletonTexture.prototype, {
-    name: 'sp.SkeletonTexture',
-    _texture: null,
+sp.SkeletonTexture = class SkeletonTexture extends sp.spine.Texture {
+    name = 'sp.SkeletonTexture';
+    _texture = null;
 
-    setRealTexture: function(tex) {
+    constructor(image) {
+        super(image);
+    }
+
+    setRealTexture(tex) {
         this._texture = tex;
-    },
+    }
 
-    getRealTexture: function() {
+    getRealTexture() {
         return this._texture;
-    },
+    }
 
-    setFilters: function(minFilter, magFilter) {
+    setFilters(minFilter, magFilter) {
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             var gl = cc._renderContext;
             this.bind();
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, minFilter);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, magFilter);
         }
-    },
+    }
 
-    setWraps: function(uWrap, vWrap) {
+    setWraps(uWrap, vWrap) {
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             var gl = cc._renderContext;
             this.bind();
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, uWrap);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, vWrap);
         }
-    },
+    }
 
-    dispose: function() {
-    },
+    dispose() {
+    }
 
-    bind: function() {
+    bind() {
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             cc.glBindTexture2D(this._texture);
         }
     }
-});
+};

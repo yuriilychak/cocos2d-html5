@@ -106,44 +106,6 @@ cc.each = function (obj, iterator, context) {
     }
 };
 
-/**
- * Copy all of the properties in source objects to target object and return the target object.
- * @param {object} target
- * @param {object} *sources
- * @returns {object}
- */
-cc.extend = function (target) {
-    var sources = arguments.length >= 2 ? Array.prototype.slice.call(arguments, 1) : [];
-
-    cc.each(sources, function (src) {
-        for (var key in src) {
-            if (src.hasOwnProperty(key)) {
-                target[key] = src[key];
-            }
-        }
-    });
-    return target;
-};
-
-/**
- * Another way to subclass: Using Google Closure.
- * The following code was copied + pasted from goog.base / goog.inherits
- * @function
- * @param {Function} childCtor
- * @param {Function} parentCtor
- */
-cc.inherits = function (childCtor, parentCtor) {
-    function tempCtor() {}
-    tempCtor.prototype = parentCtor.prototype;
-    childCtor.superClass_ = parentCtor.prototype;
-    childCtor.prototype = new tempCtor();
-    childCtor.prototype.constructor = childCtor;
-
-    // Copy "static" method, but doesn't generate subclasses.
-    // for( var i in parentCtor ) {
-    // childCtor[ i ] = parentCtor[ i ];
-    // }
-};
 
 /**
  * Check the obj whether is function or not
