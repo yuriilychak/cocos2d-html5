@@ -419,7 +419,7 @@ ccui.Layout = class Layout extends ccui.Widget {
             var green = cc.color.GREEN;
             this._clippingStencil.clear();
             this._clippingStencil.setLocalBB && this._clippingStencil.setLocalBB(0, 0, size.width, size.height);
-            this._clippingStencil.drawPoly(rect, 4, green, 0, green);
+            this._clippingStencil.drawPoly(rect, green, 0, green);
         }
     }
 

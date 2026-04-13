@@ -1349,7 +1349,7 @@ var Balls = class Balls extends ChipmunkDemo {
         var rock = space.addBody(new cp.Body(mass, cp.momentForBox(mass, width, height)));
         rock.setPos(v(500, 100));
         rock.setAngle(1);
-        shape = space.addShape(new cp.BoxShape(rock, width, height));
+        var shape = space.addShape(new cp.BoxShape(rock, width, height));
         shape.setFriction(0.3);
         shape.setElasticity(0.3);
 

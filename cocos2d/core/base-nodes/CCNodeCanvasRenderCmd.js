@@ -57,7 +57,7 @@ const ONE_DEGREE = Math.PI / 180;
 function transformChildTree(root) {
     let index = 1;
     let children, child, curr, parentCmd, i, len;
-    const stack = cc.Node._performStacks[cc.Node._performing];
+    let stack = cc.Node._performStacks[cc.Node._performing];
     if (!stack) {
         stack = [];
         cc.Node._performStacks.push(stack);

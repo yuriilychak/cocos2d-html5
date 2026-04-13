@@ -166,7 +166,7 @@ window.Float32Array = window.Float32Array || window.Array;
              now sum up the products of the diagonals going to the right (i.e. 0,4,8)
              and subtract the products of the other diagonals (i.e. 2,4,6)
              */
-      const output =
+      let output =
         mat[0] * mat[4] * mat[8] +
         mat[1] * mat[5] * mat[6] +
         mat[2] * mat[3] * mat[7];

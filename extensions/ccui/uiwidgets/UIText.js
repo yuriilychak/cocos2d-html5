@@ -53,6 +53,8 @@ ccui.Text = class Text extends ccui.Widget {
      */
     constructor(textContent, fontName, fontSize) {
         super();
+        this._type = ccui.Text.Type.SYSTEM;
+        this._textAreaSize = cc.size(0, 0);
         this._touchScaleChangeEnabled = false;
         this._normalScaleValueX = 1;
         this._normalScaleValueY = 1;
