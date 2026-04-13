@@ -48,15 +48,11 @@ ccui.LoadingBar = class LoadingBar extends ccui.Widget {
         this._barRendererTextureSize = cc.size(0, 0);
         this._capInsets = cc.rect(0, 0, 0, 0);
 
-        this._direction = null;
         this._percent = 100;
         this._totalLength = 0;
-        this._barRenderer = null;
         this._renderBarTexType = ccui.Widget.LOCAL_TEXTURE;
-        this._barRendererTextureSize = null;
         this._scale9Enabled = false;
         this._prevIgnoreSize = true;
-        this._capInsets = null;
         this._textureFile = "";
         this._isTextureLoaded = false;
         this._className = "LoadingBar";

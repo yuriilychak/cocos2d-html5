@@ -45,11 +45,8 @@ ccui.ImageView = class ImageView extends ccui.Widget {
         this._imageTextureSize = cc.size(this._capInsets.width, this._capInsets.height);
         this._scale9Enabled = false;
         this._prevIgnoreSize = true;
-        this._capInsets = null;
-        this._imageRenderer = null;
         this._textureFile = "";
         this._imageTexType = ccui.Widget.LOCAL_TEXTURE;
-        this._imageTextureSize = null;
         this._className = "ImageView";
         this._imageRendererAdaptDirty = true;
         texType = texType === undefined ? 0 : texType;

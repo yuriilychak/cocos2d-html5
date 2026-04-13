@@ -42,7 +42,6 @@ ccui.TextBMFont = class TextBMFont extends ccui.Widget {
      */
     constructor(text, filename) {
         super();
-        this._labelBMFontRenderer = null;
         this._fntFileHasInit = false;
         this._fntFileName = "";
         this._stringValue = "";

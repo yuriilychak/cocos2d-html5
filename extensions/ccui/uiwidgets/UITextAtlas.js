@@ -45,7 +45,6 @@ ccui.TextAtlas = class TextAtlas extends ccui.Widget {
      */
     constructor(stringValue, charMapFile, itemWidth, itemHeight, startCharMap) {
         super();
-        this._labelAtlasRenderer = null;
         this._stringValue = "";
         this._charMapFileName = "";
         this._itemWidth = 0;

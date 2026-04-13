@@ -1161,7 +1161,8 @@ var Joints = class Joints extends ChipmunkDemo {
         //#define POS_A vadd(boxOffset, posA)
         //#define POS_B vadd(boxOffset, posB)
 
-        this.labels = labels = [];
+        var labels = [];
+        this.labels = labels;
         var label = function(text) {
             labels.push({text:text, pos:boxOffset});
         };

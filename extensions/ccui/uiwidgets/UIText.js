@@ -53,21 +53,15 @@ ccui.Text = class Text extends ccui.Widget {
      */
     constructor(textContent, fontName, fontSize) {
         super();
-        this._type = ccui.Text.Type.SYSTEM;
-        this._textAreaSize = cc.size(0, 0);
-
         this._touchScaleChangeEnabled = false;
         this._normalScaleValueX = 1;
         this._normalScaleValueY = 1;
         this._fontName = "Arial";
         this._fontSize = 16;
         this._onSelectedScaleOffset = 0.5;
-        this._labelRenderer = null;
-        this._textAreaSize = null;
         this._textVerticalAlignment = 0;
         this._textHorizontalAlignment = 0;
         this._className = "Text";
-        this._type = null;
         this._labelRendererAdaptDirty = true;
         if (fontSize !== undefined) {
             this.setFontName(fontName);

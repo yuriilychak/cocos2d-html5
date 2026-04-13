@@ -232,17 +232,9 @@
             if (node._texture !== texture) {
                 node._textureLoaded = texture ? texture._textureLoaded : false;
                 node._texture = texture;
-
-                // Update texture rect and blend func
-                if (texture) {
-                    const texSize = texture._contentSize;
-                    const rect = cc.rect(0, 0, texSize.width, texSize.height);
-                    node.setTextureRect(rect);
-                    this._updateBlendFunc();
-                }
+                this._updateBlendFunc();
 
                 if (node._textureLoaded) {
-                    // Force refresh the render command list
                     cc.renderer.childrenOrderDirty = true;
                 }
             }

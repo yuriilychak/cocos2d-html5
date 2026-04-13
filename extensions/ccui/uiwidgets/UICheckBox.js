@@ -53,11 +53,6 @@ ccui.CheckBox = class CheckBox extends ccui.Widget {
      */
     constructor(backGround, backGroundSelected,cross,backGroundDisabled,frontCrossDisabled,texType) {
         super();
-        this._backGroundBoxRenderer = null;
-        this._backGroundSelectedBoxRenderer = null;
-        this._frontCrossRenderer = null;
-        this._backGroundBoxDisabledRenderer = null;
-        this._frontCrossDisabledRenderer = null;
         this._isSelected = true;
         this._checkBoxEventListener = null;
         this._checkBoxEventSelector = null;

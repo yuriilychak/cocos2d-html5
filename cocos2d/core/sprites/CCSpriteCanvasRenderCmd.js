@@ -50,10 +50,6 @@
             if (node._texture !== texture) {
                 node._textureLoaded = texture ? texture._textureLoaded : false;
                 node._texture = texture;
-
-                const texSize = texture._contentSize;
-                const rect = cc.rect(0, 0, texSize.width, texSize.height);
-                node.setTextureRect(rect);
                 this._updateColor();
             }
         }

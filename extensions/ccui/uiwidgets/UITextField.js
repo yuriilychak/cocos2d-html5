@@ -232,7 +232,6 @@ ccui.TextField = class TextField extends ccui.Widget {
      */
     constructor(placeholder, fontName, fontSize) {
         super();
-        this._textFieldRenderer = null;
         this._touchWidth = 0;
         this._touchHeight = 0;
         this._useTouchArea = false;
