@@ -37,10 +37,6 @@ ccui.ScrollViewBar = class ScrollViewBar extends ccui.ProtectedNode {
     _parentScroll = null;
     _direction = null;
 
-    _upperHalfCircle = null;
-    _lowerHalfCircle = null;
-    _body = null;
-
     _opacity = 255;
 
     _marginFromBoundary = 0;
@@ -70,7 +66,7 @@ ccui.ScrollViewBar = class ScrollViewBar extends ccui.ProtectedNode {
         this.autoHideTime = ccui.ScrollViewBar.DEFAULT_AUTO_HIDE_TIME;
         this._autoHideEnabled = true;
 
-        super.init();
+        this.init();
 
         this.setCascadeColorEnabled(true);
         this.setCascadeOpacityEnabled(true);

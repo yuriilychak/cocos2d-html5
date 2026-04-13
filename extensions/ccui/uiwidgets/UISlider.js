@@ -101,6 +101,11 @@ ccui.Slider = class Slider extends ccui.Widget {
         this._slidBallRenderer.setCascadeOpacityEnabled(true);
 
         this.addProtectedChild(this._slidBallRenderer, ccui.Slider.BALL_RENDERER_ZORDER, -1);
+
+        // Must be set before setBright() runs (called after _initRenderer in Widget.init),
+        // since _onPressStateChangedToNormal uses these for setScale
+        this._sliderBallNormalTextureScaleX = 1;
+        this._sliderBallNormalTextureScaleY = 1;
     }
 
     /**

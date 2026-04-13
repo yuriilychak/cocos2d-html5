@@ -36,7 +36,6 @@
  * @property {Number}               touchTotalTimeThreshold - Touch total time threshold
  */
 ccui.ScrollView = class ScrollView extends ccui.Layout {
-    _innerContainer = null;
     _direction = null;
 
     _topBoundary = 0;
