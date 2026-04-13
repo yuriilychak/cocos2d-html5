@@ -86,8 +86,6 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
      */
     constructor() {
         super();
-        this.setClippingEnabled(true);
-        this._innerContainer.setTouchEnabled(false);
 
         this._direction = ccui.ScrollView.DIR_NONE;
 
@@ -213,8 +211,11 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         this._innerContainer.setOpacity(255);
         this._innerContainer.setCascadeColorEnabled(true);
         this._innerContainer.setCascadeOpacityEnabled(true);
+        this._innerContainer.setTouchEnabled(false);
 
         this.addProtectedChild(this._innerContainer, 1, 1);
+
+        this.setClippingEnabled(true);
     }
 
     _createRenderCmd() {
