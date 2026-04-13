@@ -283,6 +283,11 @@ cc.Sprite = class Sprite extends cc.Node {
      */
     setVertexRect(rect) {
       var locRect = this._rect;
+      if (!locRect) {
+        this._rect = cc.rect(rect.x, rect.y, rect.width, rect.height);
+        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+        return;
+      }
       locRect.x = rect.x;
       locRect.y = rect.y;
       locRect.width = rect.width;

@@ -1467,7 +1467,7 @@ var Buoyancy = class Buoyancy extends ChipmunkDemo {
             var mass = 0.3*FLUID_DENSITY*width*height;
             var moment = cp.momentForBox(mass, width, height);
 
-            body = space.addBody( new cp.Body(mass, moment));
+            var body = space.addBody( new cp.Body(mass, moment));
             body.setPos( cp.v(270, 140));
             body.setVel( cp.v(0, -100));
             body.setAngVel( 1 );

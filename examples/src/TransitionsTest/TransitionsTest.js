@@ -161,9 +161,11 @@ var TransitionBase = class TransitionBase extends BaseTestLayer {
     title() {
         return arrayOfTransitionsTest[transitionsIdx].title;
     }
-    constructor() {
-        super();
+    constructor(backgroundImage, sceneName, colorA, colorB) {
+        super(colorA, colorB);
 
+        this.backgroundImage = backgroundImage || "";
+        this.sceneName = sceneName || "";
         this.testDuration = TRANSITION_DURATION + 0.1;
 
         var x, y;
@@ -262,11 +264,7 @@ var TransitionBase = class TransitionBase extends BaseTestLayer {
 };
 var TestLayer1 = class TestLayer1 extends TransitionBase {
     constructor() {
-        super();
-        this.backgroundImage = s_back1;
-        this.colorA = cc.color(0,0,0,255);
-        this.colorB = cc.color(160,99,117,255);
-        this.sceneName = "Scene 1";
+        super(s_back1, "Scene 1", cc.color(0,0,0,255), cc.color(160,99,117,255));
     }
 
     createNextScene() {
@@ -277,11 +275,7 @@ var TestLayer1 = class TestLayer1 extends TransitionBase {
 
 var TestLayer2 = class TestLayer2 extends TransitionBase {
     constructor() {
-        super();
-        this.backgroundImage = s_back2;
-        this.colorA = cc.color(0,0,0,255);
-        this.colorB = cc.color(99,160,117,255);
-        this.sceneName = "Scene 2";
+        super(s_back2, "Scene 2", cc.color(0,0,0,255), cc.color(99,160,117,255));
     }
 
     createNextScene() {

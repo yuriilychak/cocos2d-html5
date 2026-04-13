@@ -303,9 +303,6 @@ var NestedTest = class NestedTest extends BaseClippingNodeTest {
 var HoleDemo = class HoleDemo extends BaseClippingNodeTest {
     constructor() {
         super();
-        this._outerClipper = null;
-        this._holes = null;
-        this._holesStencil = null;
     }
 
 

@@ -127,7 +127,7 @@ cc.LabelAtlas = class LabelAtlas extends cc.LabelBMFont {
 
         if (itemWidth === undefined) {
             var dict = cc.loader.getRes(charMapFile);
-            if (parseInt(dict["version"], 10) !== 1) {
+            if (!dict || parseInt(dict["version"], 10) !== 1) {
                 cc.log("cc.LabelAtlas.initWithString(): Unsupported version. Upgrade cocos2d version");
                 return false;
             }

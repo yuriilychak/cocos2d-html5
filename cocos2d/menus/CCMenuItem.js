@@ -288,9 +288,12 @@ cc.MenuItemLabel = class MenuItemLabel extends cc.MenuItem {
         if (this._enabled !== enabled) {
             if (!enabled) {
                 this._colorBackup = this.color;
+                this._opacityBackup = this.opacity;
                 this.setColor(this._disabledColor);
+                this.setOpacity(128);
             } else {
                 this.setColor(this._colorBackup);
+                this.setOpacity(this._opacityBackup !== undefined ? this._opacityBackup : 255);
             }
         }
         super.setEnabled(enabled);
@@ -863,8 +866,10 @@ cc.MenuItemSprite = class MenuItemSprite extends cc.MenuItem {
     _updateImagesVisibility() {
         var locNormalImage = this._normalImage, locSelImage = this._selectedImage, locDisImage = this._disabledImage;
         if (this._enabled) {
-            if (locNormalImage)
+            if (locNormalImage) {
                 locNormalImage.visible = true;
+                locNormalImage.setOpacity(255);
+            }
             if (locSelImage)
                 locSelImage.visible = false;
             if (locDisImage)
@@ -878,8 +883,10 @@ cc.MenuItemSprite = class MenuItemSprite extends cc.MenuItem {
                 if (locDisImage)
                     locDisImage.visible = true;
             } else {
-                if (locNormalImage)
+                if (locNormalImage) {
                     locNormalImage.visible = true;
+                    locNormalImage.setOpacity(128);
+                }
                 if (locSelImage)
                     locSelImage.visible = false;
             }

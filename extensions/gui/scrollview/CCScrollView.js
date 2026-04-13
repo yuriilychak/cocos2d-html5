@@ -563,35 +563,38 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     }
 
     setContentSize(size, height) {
-        if (this.getContainer() !== null) {
+        var container = this.getContainer();
+        if (container) {
             if (height === undefined)
-                this.getContainer().setContentSize(size);
+                container.setContentSize(size);
             else
-                this.getContainer().setContentSize(size, height);
+                container.setContentSize(size, height);
             this.updateInset();
         }
     }
     _setWidth(value) {
         var container = this.getContainer();
-        if (container !== null) {
+        if (container) {
             container._setWidth(value);
             this.updateInset();
         }
     }
     _setHeight(value) {
         var container = this.getContainer();
-        if (container !== null) {
+        if (container) {
             container._setHeight(value);
             this.updateInset();
         }
     }
 
     getContentSize() {
-        return this._container.getContentSize();
+        if (this._container)
+            return this._container.getContentSize();
+        return cc.size(0, 0);
     }
 
     updateInset() {
-        if (this.getContainer() !== null) {
+        if (this.getContainer()) {
             var locViewSize = this._viewSize;
             var tempOffset = this.maxContainerOffset();
             this._maxInset.x = tempOffset.x + locViewSize.width * INSET_RATIO;

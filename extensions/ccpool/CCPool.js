@@ -63,8 +63,9 @@ cc.pool = /** @lends cc.pool# */{
         var pid = obj.constructor.prototype['__pid'];
         if (!pid) {
             var desc = {writable: true, enumerable: false, configurable: true};
-            desc.value = ClassManager.getNewID();
+            desc.value = cc.classManager.getNewID();
             Object.defineProperty(obj.constructor.prototype, '__pid', desc);
+            pid = obj.constructor.prototype['__pid'];
         }
         if (!this._pool[pid]) {
             this._pool[pid] = [];

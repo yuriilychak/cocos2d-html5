@@ -44,20 +44,8 @@ cc.defineGetterSetter = function (
   getterName,
   setterName
 ) {
-  if (proto.__defineGetter__) {
-    getter && proto.__defineGetter__(prop, getter);
-    setter && proto.__defineSetter__(prop, setter);
-  } else if (Object.defineProperty) {
-    var desc = { enumerable: false, configurable: true };
-    getter && (desc.get = getter);
-    setter && (desc.set = setter);
-    Object.defineProperty(proto, prop, desc);
-  } else {
-    throw new Error("browser does not support getters");
-  }
-
   if (!getterName && !setterName) {
-    // Lookup getter/setter function
+    // Lookup getter/setter function names on the prototype
     var hasGetter = getter != null,
       hasSetter = setter != undefined,
       props = Object.getOwnPropertyNames(proto);
@@ -84,7 +72,25 @@ cc.defineGetterSetter = function (
     }
   }
 
-  // Found getter/setter
+  // Use polymorphic dispatch via method names so that subclass overrides
+  // of getter/setter methods are called correctly (ES6 classes don't
+  // automatically re-bind property descriptors like cc.Class.extend did).
+  var desc = { enumerable: false, configurable: true };
+  if (getterName) {
+    var gn = getterName;
+    desc.get = function() { return this[gn](); };
+  } else if (getter) {
+    desc.get = getter;
+  }
+  if (setterName) {
+    var sn = setterName;
+    desc.set = function(v) { this[sn](v); };
+  } else if (setter) {
+    desc.set = setter;
+  }
+  Object.defineProperty(proto, prop, desc);
+
+  // Register getter/setter names for cc.Class.extend compatibility
   var ctor = proto.constructor;
   if (getterName) {
     if (!ctor.__getters__) {
@@ -169,6 +175,7 @@ class ClassManager {
     };
 };
 var classManager = new ClassManager();
+cc.classManager = classManager;
 
 /* Managed JavaScript Inheritance
  * Based on John Resig's Simple JavaScript Inheritance http://ejohn.org/blog/simple-javascript-inheritance/

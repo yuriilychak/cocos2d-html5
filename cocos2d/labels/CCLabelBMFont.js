@@ -151,7 +151,8 @@ cc.LabelBMFont = class LabelBMFont extends cc.SpriteBatchNode {
         this._imageOffset = cc.p(0, 0);
         this._cascadeColorEnabled = true;
         this._cascadeOpacityEnabled = true;
-        this.initWithString(str, fntFile, width, alignment, imageOffset);
+        if (str !== undefined && fntFile !== undefined)
+            this.initWithString(str, fntFile, width, alignment, imageOffset);
     }
 
     /**
@@ -987,3 +988,12 @@ var _fntLoader = {
     }
 };
 cc.loader.register(["fnt"], _fntLoader);
+
+/**
+ * cc.Label compatibility shim (matches cocos2d-x v3 API)
+ */
+cc.Label = {
+    createWithBMFont: function(fntFile, text, alignment, maxLineWidth, imageOffset) {
+        return new cc.LabelBMFont(String(text != null ? text : ""), fntFile, maxLineWidth, alignment, imageOffset);
+    }
+};
