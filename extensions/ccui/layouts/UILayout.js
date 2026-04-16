@@ -1469,26 +1469,8 @@ ccui.Layout = class Layout extends ccui.Widget {
     }
 };
 
-var _p = ccui.Layout.prototype;
-
-// Prototype defaults for properties needed during _initRenderer (before constructor body).
-// In the original ES5 code, _clippingType was set before super.ctor(); ES6 requires super() first.
-_p._clippingType = ccui.Layout.CLIPPING_STENCIL;
-
-// Extended properties
-/** @expose */
-_p.clippingEnabled;
-cc.defineGetterSetter(_p, "clippingEnabled", _p.isClippingEnabled, _p.setClippingEnabled);
-/** @expose */
-_p.clippingType;
-cc.defineGetterSetter(_p, "clippingType", null, _p.setClippingType);
-/** @expose */
-_p.layoutType;
-cc.defineGetterSetter(_p, "layoutType", _p.getLayoutType, _p.setLayoutType);
-
-_p = null;
-
-// Constants
+// Constants — must be defined BEFORE prototype defaults so that
+// references like ccui.Layout.CLIPPING_STENCIL resolve to 0 (not undefined).
 
 //layoutBackGround color type
 /**
@@ -1549,6 +1531,25 @@ ccui.Layout.CLIPPING_STENCIL = 0;
  * @constant
  */
 ccui.Layout.CLIPPING_SCISSOR = 1;
+
+var _p = ccui.Layout.prototype;
+
+// Prototype default for _clippingType needed during _initRenderer (before constructor body).
+// In ES5, _clippingType was set before super.ctor(); ES6 requires super() first.
+_p._clippingType = ccui.Layout.CLIPPING_STENCIL;
+
+// Extended properties
+/** @expose */
+_p.clippingEnabled;
+cc.defineGetterSetter(_p, "clippingEnabled", _p.isClippingEnabled, _p.setClippingEnabled);
+/** @expose */
+_p.clippingType;
+cc.defineGetterSetter(_p, "clippingType", null, _p.setClippingType);
+/** @expose */
+_p.layoutType;
+cc.defineGetterSetter(_p, "layoutType", _p.getLayoutType, _p.setLayoutType);
+
+_p = null;
 
 /**
  * The zOrder value of ccui.Layout's image background.
