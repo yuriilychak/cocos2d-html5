@@ -24,8 +24,17 @@
 
 // Resources prefix
 var s_resprefix = "";
+
+var ccbjs = "";
 // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
 // so the respath will modify to res,
+if (!cc.sys.isNative) {
+    if (cc.game.config && cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+        ccbjs = "";
+    } else {
+        ccbjs = "";
+    }
+}
 
 var s_pathGrossini = "Images/grossini.png";
 var s_pathSister1 = "Images/grossinis_sister1.png";
@@ -309,6 +318,27 @@ var g_s9s_blocks = [
 ];
 
 var g_opengl_resources = [
+    //preload shader source
+    ccbjs + "Shaders/example_Outline.fsh",
+    ccbjs + "Shaders/example_Outline.vsh",
+    ccbjs + "Shaders/example_Blur.fsh",
+    ccbjs + "Shaders/example_ColorBars.fsh",
+    ccbjs + "Shaders/example_ColorBars.vsh",
+    ccbjs + "Shaders/example_Flower.fsh",
+    ccbjs + "Shaders/example_Flower.vsh",
+    ccbjs + "Shaders/example_Heart.fsh",
+    ccbjs + "Shaders/example_Heart.vsh",
+    ccbjs + "Shaders/example_Julia.fsh",
+    ccbjs + "Shaders/example_Julia.vsh",
+    ccbjs + "Shaders/example_Mandelbrot.fsh",
+    ccbjs + "Shaders/example_Mandelbrot.vsh",
+    ccbjs + "Shaders/example_Monjori.fsh",
+    ccbjs + "Shaders/example_Monjori.vsh",
+    ccbjs + "Shaders/example_Plasma.fsh",
+    ccbjs + "Shaders/example_Plasma.vsh",
+    ccbjs + "Shaders/example_Twist.fsh",
+    ccbjs + "Shaders/example_Twist.vsh",
+
     "fonts/west_england-64.fnt",
     "fonts/west_england-64.png"
 ];
