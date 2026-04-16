@@ -392,7 +392,7 @@ var GLNodeWebGLAPITest = class GLNodeWebGLAPITest extends OpenGLTestLayer {
 
         var squareVertexPositionBuffer = this.squareVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
-        vertices = [
+        var vertices = [
             1.0,  1.0,  0.0,
             -1.0,  1.0,  0.0,
             1.0, -1.0,  0.0,
@@ -404,7 +404,7 @@ var GLNodeWebGLAPITest = class GLNodeWebGLAPITest extends OpenGLTestLayer {
 
         var squareVertexColorBuffer = this.squareVertexColorBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
-        colors = [
+        var colors = [
             0.0, 0.0, 1.0, 1.0,
             0.0, 0.0, 1.0, 1.0,
             0.0, 0.0, 1.0, 1.0,
@@ -537,7 +537,7 @@ var GLNodeCCAPITest = class GLNodeCCAPITest extends OpenGLTestLayer {
         //
         var squareVertexPositionBuffer = this.squareVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
-        vertices = [
+        var vertices = [
             winSize.width,  winSize.height,
             0,              winSize.height,
             winSize.width,  0,
@@ -547,7 +547,7 @@ var GLNodeCCAPITest = class GLNodeCCAPITest extends OpenGLTestLayer {
 
         var squareVertexColorBuffer = this.squareVertexColorBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
-        colors = [
+        var colors = [
             0.0, 0.0, 1.0, 1.0,
             0.0, 0.0, 1.0, 1.0,
             0.0, 0.0, 1.0, 1.0,
@@ -598,7 +598,7 @@ var ShaderNode = class ShaderNode extends cc.GLNode {
             this.anchorX = 0.5;
             this.anchorY = 0.5;
 
-            this.shader = cc.GLProgram.create(vertexShader, framentShader);
+            this.shader = new cc.GLProgram(vertexShader, framentShader);
             this.shader.addAttribute("aVertex", cc.VERTEX_ATTRIB_POSITION);
             this.shader.link();
             this.shader.updateUniforms();
@@ -649,7 +649,7 @@ var ShaderNode = class ShaderNode extends cc.GLNode {
         //
         var squareVertexPositionBuffer = this.squareVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
-        vertices = [
+        var vertices = [
             256,            256,
             0,              256,
             256,            0,
