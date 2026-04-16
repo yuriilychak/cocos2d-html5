@@ -423,22 +423,22 @@ var g_fonts = [
     {
         type:"font",
         name:"Thonburi",
-        srcs:["../cpp-tests/Resources/fonts/Thonburi.eot", "../cpp-tests/Resources/fonts/Thonburi.ttf"]
+        srcs:["res/fonts/Thonburi.eot", "res/fonts/Thonburi.ttf"]
     },
     {
         type:"font",
         name:"Schwarzwald Regular",
-        srcs:["../cpp-tests/Resources/fonts/Schwarzwald_Regular.eot", "../cpp-tests/Resources/fonts/Schwarzwald Regular.ttf"]
+        srcs:["res/fonts/Schwarzwald_Regular.eot", "res/fonts/Schwarzwald Regular.ttf"]
     },
     {
         type:"font",
         name:"ThonburiBold",
-        srcs:["../cpp-tests/Resources/fonts/ThonburiBold.eot", "../cpp-tests/Resources/fonts/ThonburiBold.ttf"]
+        srcs:["res/fonts/ThonburiBold.eot", "res/fonts/ThonburiBold.ttf"]
     },
     {
         type:"font",
         name:"Courier New",
-        srcs:["../cpp-tests/Resources/fonts/Courier New.eot", "../cpp-tests/Resources/fonts/Courier New.ttf"]
+        srcs:["res/fonts/Courier New.eot", "res/fonts/Courier New.ttf"]
     }
 ];
 
@@ -497,7 +497,7 @@ var g_ui = [
     "ccs-res/cocosui/Hello.png",
     "ccs-res/cocosui/labelatlas.png",
     "ccs-res/cocosui/loadingbar.png",
-    {type:"font", name:"Marker Felt", srcs:["../cpp-tests/Resources/fonts/Marker Felt.ttf"]},
+    {type:"font", name:"Marker Felt", srcs:["res/fonts/Marker Felt.ttf"]},
     "ccs-res/cocosui/scrollviewbg.png",
     "ccs-res/cocosui/slidbar.png",
     "ccs-res/cocosui/sliderballnormal.png",

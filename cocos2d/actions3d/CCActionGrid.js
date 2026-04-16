@@ -217,7 +217,7 @@ cc.TiledGrid3DAction = class TiledGrid3DAction extends cc.GridAction {
    * @return {cc.Quad3}
    */
   getTile(position) {
-    return this.target.grid.tile(position);
+    return this.target.grid.getTile(position);
   }
 
   /**

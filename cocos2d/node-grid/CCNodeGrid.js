@@ -84,6 +84,22 @@ cc.NodeGrid = class NodeGrid extends cc.Node {
         this._target = target;
     }
 
+    /**
+     * Override visit to delegate entirely to the render command.
+     * NodeGrid.WebGLRenderCmd.visit() handles children traversal with
+     * grid begin/end wrapping — cc.Node.visit() must not re-traverse children.
+     */
+    visit(parent) {
+        var cmd = this._renderCmd;
+        var parentCmd = parent ? parent._renderCmd : null;
+        if (!this._visible) {
+            cmd._propagateFlagsDown(parentCmd);
+            return;
+        }
+        cmd.visit(parentCmd);
+        cmd._dirtyFlag = 0;
+    }
+
     _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
             return new cc.NodeGrid.WebGLRenderCmd(this);

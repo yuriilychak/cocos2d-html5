@@ -57,7 +57,13 @@ ccui.Layout = class Layout extends ccui.Widget {
     constructor() {
         super();
 
-        this._clippingEnabled = false;
+        // Guard clipping properties — they may already be set by a subclass
+        // _initRenderer (e.g. ScrollView) which runs during the super() chain.
+        // In the original ES5 code, _clippingType was set BEFORE super.ctor() and
+        // _clippingEnabled was a prototype default, not set in the ctor body.
+        if (this._clippingEnabled === undefined) {
+            this._clippingEnabled = false;
+        }
         this._backGroundScale9Enabled = null;
         this._backGroundImage = null;
         this._backGroundImageFileName = null;
@@ -67,7 +73,9 @@ ccui.Layout = class Layout extends ccui.Widget {
         this._opacity = 255;
         this._doLayoutDirty = true;
         this._clippingRectDirty = true;
-        this._clippingStencil = null;
+        if (this._clippingStencil === undefined) {
+            this._clippingStencil = null;
+        }
         this._scissorRectDirty = false;
         this._clippingParent = null;
         this._className = "Layout";
@@ -1462,6 +1470,10 @@ ccui.Layout = class Layout extends ccui.Widget {
 };
 
 var _p = ccui.Layout.prototype;
+
+// Prototype defaults for properties needed during _initRenderer (before constructor body).
+// In the original ES5 code, _clippingType was set before super.ctor(); ES6 requires super() first.
+_p._clippingType = ccui.Layout.CLIPPING_SCISSOR;
 
 // Extended properties
 /** @expose */
