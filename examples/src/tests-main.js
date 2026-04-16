@@ -420,36 +420,11 @@ var testNames = [
         }
     },
     {
-        title:"Light Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/LightTest/LightTest.js",
-        testScene:function () {
-            return new LightTestScene();
-        }
-    },
-    {
         title:"Loader Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/LoaderTest/LoaderTest.js",
         testScene:function () {
             return new LoaderTestScene();
-        }
-    },
-    {
-        title:"MaterialSystem Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/MaterialSystemTest/MaterialSystemTest.js",
-        testScene:function () {
-            return new MaterialSystemTestScene();
-        }
-    },
-    {
-        title:"Memory Model Test",
-        resource:g_menu,
-        platforms: PLATFORM_JSB,
-        linksrc:"src/MemoryModelTest/MemoryModelTest.js",
-        testScene:function () {
-            return new MemoryModelTestScene();
         }
     },
     {
