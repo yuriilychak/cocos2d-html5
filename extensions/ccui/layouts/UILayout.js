@@ -89,7 +89,7 @@ ccui.Layout = class Layout extends ccui.Widget {
 
         this._layoutType = ccui.Layout.ABSOLUTE;
         this._widgetType = ccui.Widget.TYPE_CONTAINER;
-        this._clippingType = ccui.Layout.CLIPPING_SCISSOR;
+        this._clippingType = ccui.Layout.CLIPPING_STENCIL;
         this._colorType = ccui.Layout.BG_COLOR_NONE;
 
         this.ignoreContentAdaptWithSize(false);
@@ -418,7 +418,7 @@ ccui.Layout = class Layout extends ccui.Widget {
     }
 
     _setStencilClippingSize(size) {
-        if (this._clippingEnabled) {
+        if (this._clippingEnabled && this._clippingType === ccui.Layout.CLIPPING_STENCIL) {
             var rect = [];
             rect[0] = cc.p(0, 0);
             rect[1] = cc.p(size.width, 0);
@@ -1473,7 +1473,7 @@ var _p = ccui.Layout.prototype;
 
 // Prototype defaults for properties needed during _initRenderer (before constructor body).
 // In the original ES5 code, _clippingType was set before super.ctor(); ES6 requires super() first.
-_p._clippingType = ccui.Layout.CLIPPING_SCISSOR;
+_p._clippingType = ccui.Layout.CLIPPING_STENCIL;
 
 // Extended properties
 /** @expose */
