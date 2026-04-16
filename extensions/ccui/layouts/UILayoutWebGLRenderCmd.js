@@ -183,7 +183,7 @@
     };
 
     proto.postStencilVisit = function () {
-        renderer.pushRenderCommand(cmd._afterVisitCmdStencil);
+        cc.renderer.pushRenderCommand(this._afterVisitCmdStencil);
         cc.current_stack.top = cc.current_stack.stack.pop();
     };
 
