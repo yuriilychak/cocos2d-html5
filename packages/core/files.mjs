@@ -67,5 +67,7 @@ export default [
   'labelttf/CCLabelTTFCanvasRenderCmd.js',
   'labelttf/CCLabelTTFWebGLRenderCmd.js',
   'CCActionManager.js',
+  'components/CCComponent.js',
+  'components/CCComponentContainer.js',
   'utils/CCProfiler.js'
 ];

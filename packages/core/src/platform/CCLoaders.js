@@ -136,7 +136,7 @@ cc._fontLoader = {
         } else {
             self._loadFont(name, srcs);
         }
-        if (document.fonts) {
+        if (typeof document !== 'undefined' && document.fonts) {
             document.fonts.load("1em " + name).then(function () {
                 cb(null, true);
             }, function (err) {

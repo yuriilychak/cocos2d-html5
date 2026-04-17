@@ -29,7 +29,7 @@
  * @class
  * @extends cc.NewClass
  */
-cc.Grabber = class Grabber extends cc.NewClass {
+export class Grabber extends cc.NewClass {
   /**
    * constructor of cc.Grabber
    */

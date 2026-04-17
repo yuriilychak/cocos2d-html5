@@ -30,7 +30,7 @@
  * @class
  * @extends cc.NewClass
  */
-cc.GridBase = class GridBase extends cc.NewClass {
+export class GridBase extends cc.NewClass {
   /**
    * create one cc.GridBase Object
    * Constructor of cc.GridBase
@@ -298,7 +298,7 @@ cc.GridBase = class GridBase extends cc.NewClass {
  * @class
  * @extends cc.GridBase
  */
-cc.Grid3D = class Grid3D extends cc.GridBase {
+export class Grid3D extends GridBase {
   constructor(gridSize, texture, flipped, rect) {
     super();
     this._texCoordinates = null;
@@ -540,7 +540,7 @@ cc.Grid3D = class Grid3D extends cc.GridBase {
  * @class
  * @extends cc.GridBase
  */
-cc.TiledGrid3D = class TiledGrid3D extends cc.GridBase {
+export class TiledGrid3D extends GridBase {
   constructor(gridSize, texture, flipped, rect) {
     super();
     this._texCoordinates = null;

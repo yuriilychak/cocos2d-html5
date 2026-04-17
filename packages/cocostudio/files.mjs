@@ -1,6 +1,4 @@
 export default [
-  'components/CCComponent.js',
-  'components/CCComponentContainer.js',
   'CocoStudio.js',
   'armature/utils/CCArmatureDefine.js',
   'armature/utils/CCDataReaderHelper.js',
