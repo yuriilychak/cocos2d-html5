@@ -43,7 +43,7 @@
  * @class
  * @name cc.pool
  */
-cc.pool = /** @lends cc.pool# */{
+export const pool = /** @lends cc.pool# */{
     _pool: {},
 
     _releaseCB: function () {

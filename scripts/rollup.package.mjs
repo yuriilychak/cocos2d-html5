@@ -1,26 +1,59 @@
 /**
  * Shared Rollup config for individual packages.
  *
- * Each package has a `files.mjs` listing source files in concatenation order.
- * This config reads that list, concatenates the files using MagicString,
- * and outputs a single non-minified bundle at dist/index.js.
+ * Supports two modes:
+ * - Modern: If `src/index.js` exists, uses standard ES module resolution.
+ *   Exports are stripped from the output to keep dist compatible with the
+ *   app-level concat build.
+ * - Legacy: Falls back to concatenating files listed in `files.mjs`.
  *
  * Usage (in each package.json): "build": "rollup -c ../../scripts/rollup.package.mjs"
  */
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import MagicString, { Bundle } from 'magic-string';
 
 const PKG_DIR = process.cwd();
-const VIRTUAL_ENTRY_ID = 'concat-entry';
 
-async function loadFileList() {
-  const filesModule = await import(join(PKG_DIR, 'files.mjs'));
-  return filesModule.default;
+function stripExportsPlugin() {
+  return {
+    name: 'strip-exports',
+    renderChunk(code) {
+      const s = new MagicString(code);
+      const regex = /^export\s*\{[^}]*\}\s*;?/gm;
+      let match;
+
+      while ((match = regex.exec(code)) !== null) {
+        s.remove(match.index, match.index + match[0].length);
+      }
+
+      if (s.hasChanged()) {
+        return { code: s.toString(), map: s.generateMap({ hires: true }) };
+      }
+
+      return null;
+    }
+  };
 }
 
-export default async () => {
-  const files = await loadFileList();
+function createModernConfig() {
+  return {
+    input: join(PKG_DIR, 'src', 'index.js'),
+    treeshake: false,
+    plugins: [stripExportsPlugin()],
+    output: {
+      file: 'dist/index.js',
+      format: 'es',
+      strict: false,
+      sourcemap: true
+    }
+  };
+}
+
+async function createLegacyConfig() {
+  const VIRTUAL_ENTRY_ID = 'concat-entry';
+  const filesModule = await import(join(PKG_DIR, 'files.mjs'));
+  const files = filesModule.default;
 
   return {
     input: VIRTUAL_ENTRY_ID,
@@ -73,4 +106,12 @@ export default async () => {
       sourcemap: true
     }
   };
+}
+
+export default async () => {
+  if (existsSync(join(PKG_DIR, 'src', 'index.js'))) {
+    return createModernConfig();
+  }
+
+  return createLegacyConfig();
 };
