@@ -515,7 +515,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 this.manualRelease = false;
 
                 if (!_sharedBuffer) {
-                    _sharedBuffer = new GlobalVertexBuffer(cc._renderContext, cc.DRAWNODE_TOTAL_VERTICES * VERTEX_BYTE);
+                    _sharedBuffer = new cc.GlobalVertexBuffer(cc._renderContext, cc.DRAWNODE_TOTAL_VERTICES * VERTEX_BYTE);
                 }
 
                 this._renderCmd._shaderProgram = cc.shaderCache.programForKey(cc.SHADER_POSITION_LENGTHTEXTURECOLOR);

@@ -137,3 +137,4 @@ GlobalVertexBuffer.prototype = {
 return GlobalVertexBuffer;
 
 })();
+cc.GlobalVertexBuffer = GlobalVertexBuffer;
