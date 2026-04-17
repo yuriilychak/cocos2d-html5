@@ -1,11 +1,20 @@
-lib
-/web.config
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+
+# Turborepo
+.turbo/
+
+# IDE
 .idea/
 .history/
-build
+.project
+
+# OS
+.DS_Store
+
+# Legacy
+/web.config
 aspnet_client
-node_modules
-/tools/jsdoc_toolkit-2.4.0
-/package
-/tools/jsdoc_toolkit/jsdoc_toolkit-2.4.0
-/.project

@@ -1,0 +1,11 @@
+{
+  "name": "@aspect/external",
+  "version": "3.15.0",
+  "private": true,
+  "dependencies": {
+    "@aspect/box2d": "*",
+    "@aspect/chipmunk": "*",
+    "@aspect/socketio": "*",
+    "@aspect/gaf": "*"
+  }
+}

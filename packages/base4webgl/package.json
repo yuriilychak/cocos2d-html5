@@ -1,0 +1,10 @@
+{
+  "name": "@aspect/base4webgl",
+  "version": "3.15.0",
+  "private": true,
+  "dependencies": {
+    "@aspect/core": "*",
+    "@aspect/kazmath": "*",
+    "@aspect/shaders": "*"
+  }
+}

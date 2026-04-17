@@ -1,0 +1,28 @@
+{
+  "name": "@aspect/cocos2d",
+  "version": "3.15.0",
+  "private": true,
+  "dependencies": {
+    "@aspect/core": "*",
+    "@aspect/kazmath": "*",
+    "@aspect/shaders": "*",
+    "@aspect/render-texture": "*",
+    "@aspect/motion-streak": "*",
+    "@aspect/node-grid": "*",
+    "@aspect/clipping-nodes": "*",
+    "@aspect/effects": "*",
+    "@aspect/shape-nodes": "*",
+    "@aspect/actions": "*",
+    "@aspect/actions3d": "*",
+    "@aspect/progress-timer": "*",
+    "@aspect/transitions": "*",
+    "@aspect/labels": "*",
+    "@aspect/compression": "*",
+    "@aspect/particle": "*",
+    "@aspect/text-input": "*",
+    "@aspect/menus": "*",
+    "@aspect/tilemap": "*",
+    "@aspect/parallax": "*",
+    "@aspect/audio": "*"
+  }
+}

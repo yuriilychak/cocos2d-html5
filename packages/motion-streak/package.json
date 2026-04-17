@@ -1,0 +1,19 @@
+{
+  "name": "@aspect/motion-streak",
+  "version": "3.15.0",
+  "private": true,
+  "main": "dist/index.js",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "rollup -c ../../scripts/rollup.package.mjs"
+  },
+  "dependencies": {
+    "@aspect/core": "*",
+    "@aspect/shaders": "*",
+    "@aspect/kazmath": "*",
+    "@aspect/labels": "*"
+  }
+}

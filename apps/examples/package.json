@@ -1,0 +1,14 @@
+{
+  "name": "@aspect/examples",
+  "version": "3.15.0",
+  "private": true,
+  "scripts": {
+    "dev": "serve . -l 8080 --no-clipboard",
+    "build": "rollup -c rollup.config.mjs"
+  },
+  "dependencies": {
+    "@aspect/cocos2d": "*",
+    "@aspect/extensions": "*",
+    "@aspect/external": "*"
+  }
+}
