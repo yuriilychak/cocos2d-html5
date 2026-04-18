@@ -1,9 +1,9 @@
-export { ActionInstant } from './action-instant.js';
-export { Show } from './show.js';
-export { Hide } from './hide.js';
-export { ToggleVisibility } from './toggle-visibility.js';
-export { RemoveSelf } from './remove-self.js';
-export { FlipX } from './flip-x.js';
-export { FlipY } from './flip-y.js';
-export { Place } from './place.js';
-export { CallFunc } from './call-func.js';
+export { default as ActionInstant } from './action-instant';
+export { default as Show } from './show';
+export { default as Hide } from './hide';
+export { default as ToggleVisibility } from './toggle-visibility';
+export { default as RemoveSelf } from './remove-self';
+export { default as FlipX } from './flip-x';
+export { default as FlipY } from './flip-y';
+export { default as Place } from './place';
+export { default as CallFunc } from './call-func';

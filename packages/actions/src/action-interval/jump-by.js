@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**
  * Moves a cc.Node object simulating a parabolic jump movement by modifying it's position attribute.
@@ -14,7 +14,7 @@ import { ActionInterval } from './action-interval.js';
  * var actionBy = new cc.JumpBy(2, cc.p(300, 0), 50, 4);
  * var actionBy = new cc.JumpBy(2, 300, 0, 50, 4);
  */
-export class JumpBy extends ActionInterval {
+export default class JumpBy extends ActionInterval {
   /** @lends cc.JumpBy# */
   _startPosition = null;
   _delta = null;

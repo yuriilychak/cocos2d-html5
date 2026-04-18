@@ -1,4 +1,4 @@
-import { ActionInterval } from '../action-interval/action-interval.js';
+import ActionInterval from '../action-interval/action-interval';
 
 /**
  * cc.ActionTween
@@ -20,7 +20,7 @@ import { ActionInterval } from '../action-interval/action-interval.js';
  * @param {Number} from
  * @param {Number} to
  */
-export class ActionTween extends ActionInterval {
+export default class ActionTween extends ActionInterval {
   /** @lends cc.ActionTween */
   key = "";
   from = 0;

@@ -1,6 +1,6 @@
-import { ActionInterval } from './action-interval.js';
-import { Sequence } from './sequence.js';
-import { DelayTime } from './delay-time.js';
+import ActionInterval from './action-interval';
+import Sequence from './sequence';
+import DelayTime from './delay-time';
 
 const delayTime = (d) => new DelayTime(d);
 
@@ -8,7 +8,7 @@ const delayTime = (d) => new DelayTime(d);
  * @class
  * @extends cc.ActionInterval
  */
-export class Spawn extends ActionInterval {
+export default class Spawn extends ActionInterval {
   /** @lends cc.Spawn# */
   _one = null;
   _two = null;

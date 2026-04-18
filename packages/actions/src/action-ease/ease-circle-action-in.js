@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * cc.EaseCircleActionIn action. <br />
@@ -10,7 +10,7 @@ import { ActionEase } from './action-ease.js';
  * @example
  * action.easing(cc.easeCircleActionIn());
  */
-export class EaseCircleActionIn extends ActionEase {
+export default class EaseCircleActionIn extends ActionEase {
   /** @lends cc.EaseCircleActionIn# */
   _updateTime(time) {
     return -1 * (Math.sqrt(1 - time * time) - 1);

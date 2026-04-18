@@ -1,4 +1,4 @@
-import { EaseRateAction } from './ease-rate-action.js';
+import EaseRateAction from './ease-rate-action';
 
 /**
  * cc.EaseIn action with a rate. From slow to fast.
@@ -9,7 +9,7 @@ import { EaseRateAction } from './ease-rate-action.js';
  * @example
  * action.easing(cc.easeIn(3.0));
  */
-export class EaseIn extends EaseRateAction {
+export default class EaseIn extends EaseRateAction {
   /** @lends cc.EaseIn# */
 
   /**

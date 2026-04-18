@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * cc.EaseBounce abstract class.
@@ -6,7 +6,7 @@ import { ActionEase } from './action-ease.js';
  * @class
  * @extends cc.ActionEase
  */
-export class EaseBounce extends ActionEase {
+export default class EaseBounce extends ActionEase {
   /** @lends cc.EaseBounce# */
   /**
    * @param {Number} time1

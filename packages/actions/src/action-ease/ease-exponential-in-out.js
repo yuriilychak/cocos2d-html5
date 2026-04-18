@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * Ease Exponential InOut. <br />
@@ -11,7 +11,7 @@ import { ActionEase } from './action-ease.js';
  * @example
  * action.easing(cc.easeExponentialInOut());
  */
-export class EaseExponentialInOut extends ActionEase {
+export default class EaseExponentialInOut extends ActionEase {
   /** @lends cc.EaseExponentialInOut# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.

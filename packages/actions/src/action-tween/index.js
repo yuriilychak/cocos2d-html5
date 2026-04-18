@@ -1,2 +1,2 @@
-export { ActionTweenDelegate } from './action-tween-delegate.js';
-export { ActionTween } from './action-tween.js';
+export { default as ActionTweenDelegate } from './action-tween-delegate';
+export { default as ActionTween } from './action-tween';

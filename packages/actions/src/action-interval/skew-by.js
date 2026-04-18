@@ -1,4 +1,4 @@
-import { SkewTo } from './skew-to.js';
+import SkewTo from './skew-to';
 
 /**
  * Skews a cc.Node object by skewX and skewY degrees.
@@ -9,7 +9,7 @@ import { SkewTo } from './skew-to.js';
  * @param {Number} sx  skew in degrees for X axis
  * @param {Number} sy  skew in degrees for Y axis
  */
-export class SkewBy extends SkewTo {
+export default class SkewBy extends SkewTo {
   /** @lends cc.SkewBy# */
 
   /**

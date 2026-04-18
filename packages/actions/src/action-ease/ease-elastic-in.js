@@ -1,4 +1,4 @@
-import { EaseElastic } from './ease-elastic.js';
+import EaseElastic from './ease-elastic';
 
 /**
  * Ease Elastic In action. <br />
@@ -11,7 +11,7 @@ import { EaseElastic } from './ease-elastic.js';
  * @example
  * action.easing(cc.easeElasticIn(period));
  */
-export class EaseElasticIn extends EaseElastic {
+export default class EaseElasticIn extends EaseElastic {
   /** @lends cc.EaseElasticIn# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.

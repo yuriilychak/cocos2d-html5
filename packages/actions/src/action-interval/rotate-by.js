@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**
  * Rotates a cc.Node object clockwise a number of degrees by modifying it's rotation attribute.
@@ -11,7 +11,7 @@ import { ActionInterval } from './action-interval.js';
  * @example
  * var actionBy = new cc.RotateBy(2, 360);
  */
-export class RotateBy extends ActionInterval {
+export default class RotateBy extends ActionInterval {
   /** @lends cc.RotateBy# */
   _angleX = 0;
   _startAngleX = 0;

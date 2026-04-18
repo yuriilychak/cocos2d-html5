@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**
  * Rotates a cc.Node object to a certain angle by modifying it's.
@@ -12,7 +12,7 @@ import { ActionInterval } from './action-interval.js';
  * @example
  * var rotateTo = new cc.RotateTo(2, 61.0);
  */
-export class RotateTo extends ActionInterval {
+export default class RotateTo extends ActionInterval {
   /** @lends cc.RotateTo# */
   _dstAngleX = 0;
   _startAngleX = 0;

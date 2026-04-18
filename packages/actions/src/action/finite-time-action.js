@@ -1,4 +1,4 @@
-import { Action } from './action.js';
+import Action from './action';
 
 /**
  * Base class actions that do have a finite time duration. <br/>
@@ -10,7 +10,7 @@ import { Action } from './action.js';
  * @class
  * @extends cc.Action
  */
-export class FiniteTimeAction extends Action {
+export default class FiniteTimeAction extends Action {
   /** @lends cc.FiniteTimeAction# */
   // duration in seconds
   _duration = 0;

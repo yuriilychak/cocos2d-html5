@@ -1,5 +1,5 @@
-import { ActionInterval } from './action-interval.js';
-import { bezierAt } from '../action/utils.js';
+import ActionInterval from './action-interval';
+import { bezierAt } from '../action/utils';
 
 /** An action that moves the target with a cubic Bezier curve by a certain distance.
  * Relative to its movement.
@@ -11,7 +11,7 @@ import { bezierAt } from '../action/utils.js';
  * var bezier = [cc.p(0, windowSize.height / 2), cc.p(300, -windowSize.height / 2), cc.p(300, 100)];
  * var bezierForward = new cc.BezierBy(3, bezier);
  */
-export class BezierBy extends ActionInterval {
+export default class BezierBy extends ActionInterval {
   /** @lends cc.BezierBy# */
   _config = null;
   _startPosition = null;

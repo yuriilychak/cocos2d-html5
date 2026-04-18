@@ -1,4 +1,4 @@
-export { CardinalSplineTo } from './cardinal-spline-to.js';
-export { CardinalSplineBy } from './cardinal-spline-by.js';
-export { CatmullRomTo } from './catmull-rom-to.js';
-export { CatmullRomBy } from './catmull-rom-by.js';
+export { default as CardinalSplineTo } from './cardinal-spline-to';
+export { default as CardinalSplineBy } from './cardinal-spline-by';
+export { default as CatmullRomTo } from './catmull-rom-to';
+export { default as CatmullRomBy } from './catmull-rom-by';

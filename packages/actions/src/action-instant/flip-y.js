@@ -1,4 +1,4 @@
-import { ActionInstant } from './action-instant.js';
+import ActionInstant from './action-instant';
 
 /**
  * Flips the sprite vertically
@@ -8,7 +8,7 @@ import { ActionInstant } from './action-instant.js';
  * @example
  * var flipYAction = new cc.FlipY(true);
  */
-export class FlipY extends ActionInstant {
+export default class FlipY extends ActionInstant {
   /** @lends cc.FlipY# */
   _flippedY = false;
 

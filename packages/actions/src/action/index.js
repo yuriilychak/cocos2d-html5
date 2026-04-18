@@ -1,10 +1,10 @@
-export { ACTION_TAG_INVALID } from './constants.js';
+export { ACTION_TAG_INVALID } from './constants';
 export {
   bezierAt, bounceTime,
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,
   getControlPointAt, reverseControlPointsInline
-} from './utils.js';
-export { Action } from './action.js';
-export { FiniteTimeAction } from './finite-time-action.js';
-export { Speed } from './speed.js';
-export { Follow } from './follow.js';
+} from './utils';
+export { default as Action } from './action';
+export { default as FiniteTimeAction } from './finite-time-action';
+export { default as Speed } from './speed';
+export { default as Follow } from './follow';

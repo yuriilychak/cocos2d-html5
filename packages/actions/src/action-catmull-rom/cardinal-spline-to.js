@@ -1,5 +1,5 @@
-import { ActionInterval } from '../action-interval/action-interval.js';
-import { cardinalSplineAt, getControlPointAt, cloneControlPoints, reverseControlPoints } from '../action/utils.js';
+import ActionInterval from '../action-interval/action-interval';
+import { cardinalSplineAt, getControlPointAt, cloneControlPoints, reverseControlPoints } from '../action/utils';
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
@@ -15,7 +15,7 @@ import { cardinalSplineAt, getControlPointAt, cloneControlPoints, reverseControl
  * //create a cc.CardinalSplineTo
  * var action1 = cc.cardinalSplineTo(3, array, 0);
  */
-export class CardinalSplineTo extends ActionInterval {
+export default class CardinalSplineTo extends ActionInterval {
   /** @lends cc.CardinalSplineTo# */
   /** Array of control points */
   _points = null;

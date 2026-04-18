@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * cc.EaseQuarticActionInOut action. <br />
@@ -9,7 +9,7 @@ import { ActionEase } from './action-ease.js';
  * @example
  * action.easing(cc.easeQuarticActionInOut());
  */
-export class EaseQuarticActionInOut extends ActionEase {
+export default class EaseQuarticActionInOut extends ActionEase {
   /** @lends cc.EaseQuarticActionInOut# */
   _updateTime(time) {
     time = time * 2;

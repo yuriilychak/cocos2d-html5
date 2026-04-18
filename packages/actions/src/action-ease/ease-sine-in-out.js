@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * Ease Sine InOut. <br />
@@ -10,7 +10,7 @@ import { ActionEase } from './action-ease.js';
  * @example
  * action.easing(cc.easeSineInOut());
  */
-export class EaseSineInOut extends ActionEase {
+export default class EaseSineInOut extends ActionEase {
   /** @lends cc.EaseSineInOut# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.

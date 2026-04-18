@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * Base class for Easing actions with rate parameters
@@ -11,7 +11,7 @@ import { ActionEase } from './action-ease.js';
  * @example
  * var moveEaseRateAction = cc.easeRateAction(action, 3.0);
  */
-export class EaseRateAction extends ActionEase {
+export default class EaseRateAction extends ActionEase {
   /** @lends cc.EaseRateAction# */
   _rate = 0;
 

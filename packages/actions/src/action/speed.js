@@ -1,4 +1,4 @@
-import { Action } from './action.js';
+import Action from './action';
 
 /**
  * Changes the speed of an action, making it take longer (speed > 1)
@@ -11,7 +11,7 @@ import { Action } from './action.js';
  * @param {cc.ActionInterval} action
  * @param {Number} speed
  */
-export class Speed extends Action {
+export default class Speed extends Action {
   /** @lends cc.Speed# */
   _speed = 0.0;
   _innerAction = null;

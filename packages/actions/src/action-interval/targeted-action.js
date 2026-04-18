@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**
  * <p>
@@ -10,7 +10,7 @@ import { ActionInterval } from './action-interval.js';
  * @param {cc.Node} target
  * @param {cc.FiniteTimeAction} action
  */
-export class TargetedAction extends ActionInterval {
+export default class TargetedAction extends ActionInterval {
   /** @lends cc.TargetedAction# */
   _action = null;
   _forcedTarget = null;

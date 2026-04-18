@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * cc.EaseBezierAction action. <br />
@@ -10,7 +10,7 @@ import { ActionEase } from './action-ease.js';
  * @example
  * action.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
  */
-export class EaseBezierAction extends ActionEase {
+export default class EaseBezierAction extends ActionEase {
   /** @lends cc.EaseBezierAction# */
 
   _p0 = null;

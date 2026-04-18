@@ -1,5 +1,5 @@
-import { CardinalSplineTo } from './cardinal-spline-to.js';
-import { reverseControlPoints, cloneControlPoints } from '../action/utils.js';
+import CardinalSplineTo from './cardinal-spline-to';
+import { reverseControlPoints, cloneControlPoints } from '../action/utils';
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
@@ -15,7 +15,7 @@ import { reverseControlPoints, cloneControlPoints } from '../action/utils.js';
  * //create a cc.CardinalSplineBy
  * var action1 = cc.cardinalSplineBy(3, array, 0);
  */
-export class CardinalSplineBy extends CardinalSplineTo {
+export default class CardinalSplineBy extends CardinalSplineTo {
   /** @lends cc.CardinalSplineBy# */
   _startPosition = null;
 

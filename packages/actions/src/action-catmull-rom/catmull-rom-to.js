@@ -1,5 +1,5 @@
-import { CardinalSplineTo } from './cardinal-spline-to.js';
-import { cloneControlPoints } from '../action/utils.js';
+import CardinalSplineTo from './cardinal-spline-to';
+import { cloneControlPoints } from '../action/utils';
 
 /**
  * An action that moves the target with a CatmullRom curve to a destination point.<br/>
@@ -15,7 +15,7 @@ import { cloneControlPoints } from '../action/utils.js';
  * @example
  * var action1 = cc.catmullRomTo(3, array);
  */
-export class CatmullRomTo extends CardinalSplineTo {
+export default class CatmullRomTo extends CardinalSplineTo {
   /** @lends cc.CatmullRomTo# */
 
   /**

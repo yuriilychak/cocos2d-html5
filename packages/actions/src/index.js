@@ -4,18 +4,18 @@ import {
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,
   getControlPointAt, reverseControlPointsInline,
   Action, FiniteTimeAction, Speed, Follow
-} from './action/index.js';
+} from './action';
 import {
   ActionInterval, Sequence, Repeat, RepeatForever, Spawn,
   RotateTo, RotateBy, MoveBy, MoveTo, SkewTo, SkewBy,
   JumpBy, JumpTo, BezierBy, BezierTo, ScaleTo, ScaleBy,
   Blink, FadeTo, FadeIn, FadeOut, TintTo, TintBy,
   DelayTime, ReverseTime, Animate, TargetedAction
-} from './action-interval/index.js';
+} from './action-interval';
 import {
   ActionInstant, Show, Hide, ToggleVisibility, RemoveSelf,
   FlipX, FlipY, Place, CallFunc
-} from './action-instant/index.js';
+} from './action-instant';
 import {
   ActionEase, EaseRateAction, EaseIn, EaseOut, EaseInOut,
   EaseExponentialIn, EaseExponentialOut, EaseExponentialInOut,
@@ -51,9 +51,9 @@ import {
   easeQuinticActionIn, easeQuinticActionOut, easeQuinticActionInOut,
   easeCircleActionIn, easeCircleActionOut, easeCircleActionInOut,
   easeCubicActionIn, easeCubicActionOut, easeCubicActionInOut
-} from './action-ease/index.js';
-import { CardinalSplineTo, CardinalSplineBy, CatmullRomTo, CatmullRomBy } from './action-catmull-rom/index.js';
-import { ActionTweenDelegate, ActionTween } from './action-tween/index.js';
+} from './action-ease';
+import { CardinalSplineTo, CardinalSplineBy, CatmullRomTo, CatmullRomBy } from './action-catmull-rom';
+import { ActionTweenDelegate, ActionTween } from './action-tween';
 
 // ─── Constants ─────────────────────────────────────────
 cc.ACTION_TAG_INVALID = ACTION_TAG_INVALID;

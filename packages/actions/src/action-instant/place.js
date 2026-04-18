@@ -1,4 +1,4 @@
-import { ActionInstant } from './action-instant.js';
+import ActionInstant from './action-instant';
 
 /**
  * Places the node in a certain position
@@ -10,7 +10,7 @@ import { ActionInstant } from './action-instant.js';
  * var placeAction = new cc.Place(cc.p(200, 200));
  * var placeAction = new cc.Place(200, 200);
  */
-export class Place extends ActionInstant {
+export default class Place extends ActionInstant {
   /** @lends cc.Place# */
   _x = 0;
   _y = 0;

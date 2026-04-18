@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**  Repeats an action for ever.  <br/>
  * To repeat the an action for a limited number of times use the Repeat action. <br/>
@@ -9,7 +9,7 @@ import { ActionInterval } from './action-interval.js';
  * @example
  * var rep = new cc.RepeatForever(cc.sequence(jump2, jump1), 5);
  */
-export class RepeatForever extends ActionInterval {
+export default class RepeatForever extends ActionInterval {
   /** @lends cc.RepeatForever# */
   _innerAction = null; //CCActionInterval
 

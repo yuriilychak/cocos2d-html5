@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**  Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
  * Relative to their own color change.
@@ -11,7 +11,7 @@ import { ActionInterval } from './action-interval.js';
  * @example
  * var action = new cc.TintBy(2, -127, -255, -127);
  */
-export class TintBy extends ActionInterval {
+export default class TintBy extends ActionInterval {
   /** @lends cc.TintBy# */
   _deltaR = 0;
   _deltaG = 0;

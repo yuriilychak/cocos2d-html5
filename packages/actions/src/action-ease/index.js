@@ -1,41 +1,41 @@
-export { ActionEase } from './action-ease.js';
-export { EaseRateAction } from './ease-rate-action.js';
-export { EaseIn } from './ease-in.js';
-export { EaseOut } from './ease-out.js';
-export { EaseInOut } from './ease-in-out.js';
-export { EaseExponentialIn } from './ease-exponential-in.js';
-export { EaseExponentialOut } from './ease-exponential-out.js';
-export { EaseExponentialInOut } from './ease-exponential-in-out.js';
-export { EaseSineIn } from './ease-sine-in.js';
-export { EaseSineOut } from './ease-sine-out.js';
-export { EaseSineInOut } from './ease-sine-in-out.js';
-export { EaseElastic } from './ease-elastic.js';
-export { EaseElasticIn } from './ease-elastic-in.js';
-export { EaseElasticOut } from './ease-elastic-out.js';
-export { EaseElasticInOut } from './ease-elastic-in-out.js';
-export { EaseBounce } from './ease-bounce.js';
-export { EaseBounceIn } from './ease-bounce-in.js';
-export { EaseBounceOut } from './ease-bounce-out.js';
-export { EaseBounceInOut } from './ease-bounce-in-out.js';
-export { EaseBackIn } from './ease-back-in.js';
-export { EaseBackOut } from './ease-back-out.js';
-export { EaseBackInOut } from './ease-back-in-out.js';
-export { EaseBezierAction } from './ease-bezier-action.js';
-export { EaseQuadraticActionIn } from './ease-quadratic-action-in.js';
-export { EaseQuadraticActionOut } from './ease-quadratic-action-out.js';
-export { EaseQuadraticActionInOut } from './ease-quadratic-action-in-out.js';
-export { EaseQuarticActionIn } from './ease-quartic-action-in.js';
-export { EaseQuarticActionOut } from './ease-quartic-action-out.js';
-export { EaseQuarticActionInOut } from './ease-quartic-action-in-out.js';
-export { EaseQuinticActionIn } from './ease-quintic-action-in.js';
-export { EaseQuinticActionOut } from './ease-quintic-action-out.js';
-export { EaseQuinticActionInOut } from './ease-quintic-action-in-out.js';
-export { EaseCircleActionIn } from './ease-circle-action-in.js';
-export { EaseCircleActionOut } from './ease-circle-action-out.js';
-export { EaseCircleActionInOut } from './ease-circle-action-in-out.js';
-export { EaseCubicActionIn } from './ease-cubic-action-in.js';
-export { EaseCubicActionOut } from './ease-cubic-action-out.js';
-export { EaseCubicActionInOut } from './ease-cubic-action-in-out.js';
+export { default as ActionEase } from './action-ease';
+export { default as EaseRateAction } from './ease-rate-action';
+export { default as EaseIn } from './ease-in';
+export { default as EaseOut } from './ease-out';
+export { default as EaseInOut } from './ease-in-out';
+export { default as EaseExponentialIn } from './ease-exponential-in';
+export { default as EaseExponentialOut } from './ease-exponential-out';
+export { default as EaseExponentialInOut } from './ease-exponential-in-out';
+export { default as EaseSineIn } from './ease-sine-in';
+export { default as EaseSineOut } from './ease-sine-out';
+export { default as EaseSineInOut } from './ease-sine-in-out';
+export { default as EaseElastic } from './ease-elastic';
+export { default as EaseElasticIn } from './ease-elastic-in';
+export { default as EaseElasticOut } from './ease-elastic-out';
+export { default as EaseElasticInOut } from './ease-elastic-in-out';
+export { default as EaseBounce } from './ease-bounce';
+export { default as EaseBounceIn } from './ease-bounce-in';
+export { default as EaseBounceOut } from './ease-bounce-out';
+export { default as EaseBounceInOut } from './ease-bounce-in-out';
+export { default as EaseBackIn } from './ease-back-in';
+export { default as EaseBackOut } from './ease-back-out';
+export { default as EaseBackInOut } from './ease-back-in-out';
+export { default as EaseBezierAction } from './ease-bezier-action';
+export { default as EaseQuadraticActionIn } from './ease-quadratic-action-in';
+export { default as EaseQuadraticActionOut } from './ease-quadratic-action-out';
+export { default as EaseQuadraticActionInOut } from './ease-quadratic-action-in-out';
+export { default as EaseQuarticActionIn } from './ease-quartic-action-in';
+export { default as EaseQuarticActionOut } from './ease-quartic-action-out';
+export { default as EaseQuarticActionInOut } from './ease-quartic-action-in-out';
+export { default as EaseQuinticActionIn } from './ease-quintic-action-in';
+export { default as EaseQuinticActionOut } from './ease-quintic-action-out';
+export { default as EaseQuinticActionInOut } from './ease-quintic-action-in-out';
+export { default as EaseCircleActionIn } from './ease-circle-action-in';
+export { default as EaseCircleActionOut } from './ease-circle-action-out';
+export { default as EaseCircleActionInOut } from './ease-circle-action-in-out';
+export { default as EaseCubicActionIn } from './ease-cubic-action-in';
+export { default as EaseCubicActionOut } from './ease-cubic-action-out';
+export { default as EaseCubicActionInOut } from './ease-cubic-action-in-out';
 export {
   _easeExponentialInObj,
   _easeExponentialOutObj,
@@ -100,4 +100,4 @@ export {
   easeCubicActionIn,
   easeCubicActionOut,
   easeCubicActionInOut
-} from './easing.js';
+} from './easing';

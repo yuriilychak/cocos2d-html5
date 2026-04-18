@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**
  * Runs actions sequentially, one after another.
@@ -12,7 +12,7 @@ import { ActionInterval } from './action-interval.js';
  * // create sequence with array
  * var seq = new cc.Sequence(actArray);
  */
-export class Sequence extends ActionInterval {
+export default class Sequence extends ActionInterval {
   /** @lends cc.Sequence# */
   _actions = null;
   _split = null;

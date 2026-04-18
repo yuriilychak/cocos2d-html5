@@ -1,19 +1,19 @@
-import { bounceTime } from '../action/utils.js';
-import { EaseCircleActionIn } from './ease-circle-action-in.js';
-import { EaseCircleActionInOut } from './ease-circle-action-in-out.js';
-import { EaseCircleActionOut } from './ease-circle-action-out.js';
-import { EaseCubicActionIn } from './ease-cubic-action-in.js';
-import { EaseCubicActionInOut } from './ease-cubic-action-in-out.js';
-import { EaseCubicActionOut } from './ease-cubic-action-out.js';
-import { EaseQuadraticActionIn } from './ease-quadratic-action-in.js';
-import { EaseQuadraticActionInOut } from './ease-quadratic-action-in-out.js';
-import { EaseQuadraticActionOut } from './ease-quadratic-action-out.js';
-import { EaseQuarticActionIn } from './ease-quartic-action-in.js';
-import { EaseQuarticActionInOut } from './ease-quartic-action-in-out.js';
-import { EaseQuarticActionOut } from './ease-quartic-action-out.js';
-import { EaseQuinticActionIn } from './ease-quintic-action-in.js';
-import { EaseQuinticActionInOut } from './ease-quintic-action-in-out.js';
-import { EaseQuinticActionOut } from './ease-quintic-action-out.js';
+import { bounceTime } from '../action/utils';
+import EaseCircleActionIn from './ease-circle-action-in';
+import EaseCircleActionInOut from './ease-circle-action-in-out';
+import EaseCircleActionOut from './ease-circle-action-out';
+import EaseCubicActionIn from './ease-cubic-action-in';
+import EaseCubicActionInOut from './ease-cubic-action-in-out';
+import EaseCubicActionOut from './ease-cubic-action-out';
+import EaseQuadraticActionIn from './ease-quadratic-action-in';
+import EaseQuadraticActionInOut from './ease-quadratic-action-in-out';
+import EaseQuadraticActionOut from './ease-quadratic-action-out';
+import EaseQuarticActionIn from './ease-quartic-action-in';
+import EaseQuarticActionInOut from './ease-quartic-action-in-out';
+import EaseQuarticActionOut from './ease-quartic-action-out';
+import EaseQuinticActionIn from './ease-quintic-action-in';
+import EaseQuinticActionInOut from './ease-quintic-action-in-out';
+import EaseQuinticActionOut from './ease-quintic-action-out';
 
 // ─── Singleton Ease Objects ────────────────────────
 

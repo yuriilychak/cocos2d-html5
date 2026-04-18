@@ -1,5 +1,5 @@
-import { FadeTo } from './fade-to.js';
-import { FadeIn } from './fade-in.js';
+import FadeTo from './fade-to';
+import FadeIn from './fade-in';
 
 /** Fades Out an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 255 to 0.
  * The "reverse" of this action is FadeIn
@@ -7,7 +7,7 @@ import { FadeIn } from './fade-in.js';
  * @extends cc.FadeTo
  * @param {Number} duration duration in seconds
  */
-export class FadeOut extends FadeTo {
+export default class FadeOut extends FadeTo {
   /** @lends cc.FadeOut# */
 
   /**

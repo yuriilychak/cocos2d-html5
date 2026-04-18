@@ -12,6 +12,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import MagicString, { Bundle } from 'magic-string';
+import resolve from '@rollup/plugin-node-resolve';
 
 const PKG_DIR = process.cwd();
 
@@ -40,7 +41,7 @@ function createModernConfig() {
   return {
     input: join(PKG_DIR, 'src', 'index.js'),
     treeshake: false,
-    plugins: [stripExportsPlugin()],
+    plugins: [resolve({ extensions: ['.js'] }), stripExportsPlugin()],
     output: {
       file: 'dist/index.js',
       format: 'es',

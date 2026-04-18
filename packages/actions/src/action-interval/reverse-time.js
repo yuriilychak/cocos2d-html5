@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**
  * <p>
@@ -13,7 +13,7 @@ import { ActionInterval } from './action-interval.js';
  * @example
  *  var reverse = new cc.ReverseTime(this);
  */
-export class ReverseTime extends ActionInterval {
+export default class ReverseTime extends ActionInterval {
   /** @lends cc.ReverseTime# */
   _other = null;
 

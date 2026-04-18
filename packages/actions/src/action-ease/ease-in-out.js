@@ -1,4 +1,4 @@
-import { EaseRateAction } from './ease-rate-action.js';
+import EaseRateAction from './ease-rate-action';
 
 /**
  * cc.EaseInOut action with a rate. <br />
@@ -9,7 +9,7 @@ import { EaseRateAction } from './ease-rate-action.js';
  * @example
  * action.easing(cc.easeInOut(3.0));
  */
-export class EaseInOut extends EaseRateAction {
+export default class EaseInOut extends EaseRateAction {
   /** @lends cc.EaseInOut# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.

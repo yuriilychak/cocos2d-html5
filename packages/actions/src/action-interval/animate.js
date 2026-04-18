@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**  Animates a sprite given the name of an Animation
  * @class
@@ -8,7 +8,7 @@ import { ActionInterval } from './action-interval.js';
  * // create the animation with animation
  * var anim = new cc.Animate(dance_grey);
  */
-export class Animate extends ActionInterval {
+export default class Animate extends ActionInterval {
   /** @lends cc.Animate# */
   _animation = null;
   _nextFrame = 0;

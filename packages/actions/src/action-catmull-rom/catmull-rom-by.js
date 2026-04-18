@@ -1,5 +1,5 @@
-import { CardinalSplineBy } from './cardinal-spline-by.js';
-import { cloneControlPoints } from '../action/utils.js';
+import CardinalSplineBy from './cardinal-spline-by';
+import { cloneControlPoints } from '../action/utils';
 
 /**
  * An action that moves the target with a CatmullRom curve by a certain distance.  <br/>
@@ -15,7 +15,7 @@ import { cloneControlPoints } from '../action/utils.js';
  * @example
  * var action1 = cc.catmullRomBy(3, array);
  */
-export class CatmullRomBy extends CardinalSplineBy {
+export default class CatmullRomBy extends CardinalSplineBy {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Creates an action with a Cardinal Spline array of points and tension.

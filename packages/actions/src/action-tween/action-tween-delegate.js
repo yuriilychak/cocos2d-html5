@@ -3,7 +3,7 @@
  * @class
  * @extends cc.Class
  */
-export class ActionTweenDelegate extends cc.NewClass {
+export default class ActionTweenDelegate extends cc.NewClass {
   /** @lends cc.ActionTweenDelegate */
 
   /**

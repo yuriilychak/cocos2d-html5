@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /**
  * <p>
@@ -15,7 +15,7 @@ import { ActionInterval } from './action-interval.js';
  * @example
  * var actionBy = cc.moveBy(2, cc.p(windowSize.width - 40, windowSize.height - 40));
  */
-export class MoveBy extends ActionInterval {
+export default class MoveBy extends ActionInterval {
   /** @lends cc.MoveBy# */
   _positionDelta = null;
   _startPosition = null;

@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * cc.EaseCubicActionOut action. <br />
@@ -10,7 +10,7 @@ import { ActionEase } from './action-ease.js';
  * @example
  * action.easing(cc.easeCubicActionOut());
  */
-export class EaseCubicActionOut extends ActionEase {
+export default class EaseCubicActionOut extends ActionEase {
   /** @lends cc.EaseCubicActionOut# */
   _updateTime(time) {
     time -= 1;

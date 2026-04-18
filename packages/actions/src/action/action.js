@@ -1,4 +1,4 @@
-import { ACTION_TAG_INVALID } from './constants.js';
+import { ACTION_TAG_INVALID } from './constants';
 
 /**
  * Base class for cc.Action objects.
@@ -10,7 +10,7 @@ import { ACTION_TAG_INVALID } from './constants.js';
  * @property {cc.Node}  originalTarget  - The original target of the action.
  * @property {Number}   tag             - The tag of the action, can be used to find the action.
  */
-export class Action extends cc.NewClass {
+export default class Action extends cc.NewClass {
   /** @lends cc.Action# */
   //***********variables*************
   originalTarget = null;

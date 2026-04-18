@@ -1,12 +1,12 @@
-import { ActionInstant } from './action-instant.js';
-import { Show } from './show.js';
+import ActionInstant from './action-instant';
+import Show from './show';
 
 /**
  * Hide the node.
  * @class
  * @extends cc.ActionInstant
  */
-export class Hide extends ActionInstant {
+export default class Hide extends ActionInstant {
   /** @lends cc.Hide# */
 
   /**

@@ -1,4 +1,4 @@
-import { ActionInterval } from '../action-interval/action-interval.js';
+import ActionInterval from '../action-interval/action-interval';
 
 /**
  * Base class for Easing actions
@@ -9,7 +9,7 @@ import { ActionInterval } from '../action-interval/action-interval.js';
  * @example
  * var moveEase = new cc.ActionEase(action);
  */
-export class ActionEase extends ActionInterval {
+export default class ActionEase extends ActionInterval {
   /** @lends cc.ActionEase# */
   _inner = null;
 

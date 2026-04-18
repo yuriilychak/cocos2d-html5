@@ -1,4 +1,4 @@
-import { ActionEase } from './action-ease.js';
+import ActionEase from './action-ease';
 
 /**
  * Ease Elastic abstract class.
@@ -7,7 +7,7 @@ import { ActionEase } from './action-ease.js';
  * @param {cc.ActionInterval} action
  * @param {Number} [period=0.3]
  */
-export class EaseElastic extends ActionEase {
+export default class EaseElastic extends ActionEase {
   /** @lends cc.EaseElastic# */
   _period = 0.3;
 

@@ -1,4 +1,4 @@
-import { BezierBy } from './bezier-by.js';
+import BezierBy from './bezier-by';
 
 /** An action that moves the target with a cubic Bezier curve to a destination point.
  * @class
@@ -9,7 +9,7 @@ import { BezierBy } from './bezier-by.js';
  * var bezier = [cc.p(0, windowSize.height / 2), cc.p(300, -windowSize.height / 2), cc.p(300, 100)];
  * var bezierTo = new cc.BezierTo(2, bezier);
  */
-export class BezierTo extends BezierBy {
+export default class BezierTo extends BezierBy {
   /** @lends cc.BezierTo# */
   _toConfig;
 

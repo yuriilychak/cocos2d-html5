@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /** Blinks a cc.Node object by modifying it's visible attribute
  * @class
@@ -8,7 +8,7 @@ import { ActionInterval } from './action-interval.js';
  * @example
  * var action = new cc.Blink(2, 10);
  */
-export class Blink extends ActionInterval {
+export default class Blink extends ActionInterval {
   /** @lends cc.Blink# */
   _times = 0;
   _originalState = false;

@@ -1,4 +1,4 @@
-import { ActionInstant } from './action-instant.js';
+import ActionInstant from './action-instant';
 
 /**
  * Delete self in the next frame.
@@ -10,7 +10,7 @@ import { ActionInstant } from './action-instant.js';
  * // example
  * var removeSelfAction = new cc.RemoveSelf(false);
  */
-export class RemoveSelf extends ActionInstant {
+export default class RemoveSelf extends ActionInstant {
   _isNeedCleanUp = true;
 
   /**

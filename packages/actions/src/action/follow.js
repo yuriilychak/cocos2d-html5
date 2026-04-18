@@ -1,4 +1,4 @@
-import { Action } from './action.js';
+import Action from './action';
 
 /**
  * cc.Follow is an action that "follows" a node.
@@ -29,7 +29,7 @@ import { Action } from './action.js';
  * @class
  * @extends cc.Action
  */
-export class Follow extends Action {
+export default class Follow extends Action {
   /** @lends cc.Follow# */
   // node to follow
   _followedNode = null;

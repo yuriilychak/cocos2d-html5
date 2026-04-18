@@ -1,5 +1,5 @@
-import { ActionInterval } from './action-interval.js';
-import { ActionInstant } from '../action-instant/action-instant.js';
+import ActionInterval from './action-interval';
+import ActionInstant from '../action-instant/action-instant';
 
 /**
  * Repeats an action a number of times.
@@ -11,7 +11,7 @@ import { ActionInstant } from '../action-instant/action-instant.js';
  * @example
  * var rep = new cc.Repeat(cc.sequence(jump2, jump1), 5);
  */
-export class Repeat extends ActionInterval {
+export default class Repeat extends ActionInterval {
   /** @lends cc.Repeat# */
   _times = 0;
   _total = 0;

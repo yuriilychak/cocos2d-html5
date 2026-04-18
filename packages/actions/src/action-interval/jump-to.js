@@ -1,4 +1,4 @@
-import { JumpBy } from './jump-by.js';
+import JumpBy from './jump-by';
 
 /**
  * Moves a cc.Node object to a parabolic position simulating a jump movement by modifying it's position attribute. <br />
@@ -14,7 +14,7 @@ import { JumpBy } from './jump-by.js';
  * var actionTo = new cc.JumpTo(2, cc.p(300, 0), 50, 4);
  * var actionTo = new cc.JumpTo(2, 300, 0, 50, 4);
  */
-export class JumpTo extends JumpBy {
+export default class JumpTo extends JumpBy {
   /** @lends cc.JumpTo# */
   _endPosition = null;
 

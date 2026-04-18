@@ -1,4 +1,4 @@
-import { ActionInterval } from './action-interval.js';
+import ActionInterval from './action-interval';
 
 /** Fades an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  * @warning This action doesn't support "reverse"
@@ -9,7 +9,7 @@ import { ActionInterval } from './action-interval.js';
  * @example
  * var action = new cc.FadeTo(1.0, 0);
  */
-export class FadeTo extends ActionInterval {
+export default class FadeTo extends ActionInterval {
   /** @lends cc.FadeTo# */
   _toOpacity = 0;
   _fromOpacity = 0;

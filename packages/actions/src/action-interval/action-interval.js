@@ -1,4 +1,4 @@
-import { FiniteTimeAction } from '../action/finite-time-action.js';
+import FiniteTimeAction from '../action/finite-time-action';
 
 /**
  * <p> An interval action is an action that takes place within a certain period of time. <br/>
@@ -19,7 +19,7 @@ import { FiniteTimeAction } from '../action/finite-time-action.js';
  * @example
  * var actionInterval = new cc.ActionInterval(3);
  */
-export class ActionInterval extends FiniteTimeAction {
+export default class ActionInterval extends FiniteTimeAction {
   /** @lends cc.ActionInterval# */
   _elapsed = 0;
   _firstTick = false;

@@ -1,4 +1,4 @@
-import { FiniteTimeAction } from '../action/finite-time-action.js';
+import FiniteTimeAction from '../action/finite-time-action';
 
 /**
  * Instant actions are immediate actions. They don't have a duration like.
@@ -6,7 +6,7 @@ import { FiniteTimeAction } from '../action/finite-time-action.js';
  * @class
  * @extends cc.FiniteTimeAction
  */
-export class ActionInstant extends FiniteTimeAction {
+export default class ActionInstant extends FiniteTimeAction {
   /** @lends cc.ActionInstant# */
   /**
    * return true if the action has finished.

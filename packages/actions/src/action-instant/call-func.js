@@ -1,4 +1,4 @@
-import { ActionInstant } from './action-instant.js';
+import ActionInstant from './action-instant';
 
 /**
  * Calls a 'callback'.
@@ -15,7 +15,7 @@ import { ActionInstant } from './action-instant.js';
  * // CallFunc with data
  * var finish = new cc.CallFunc(this.removeFromParentAndCleanup, this,  true);
  */
-export class CallFunc extends ActionInstant {
+export default class CallFunc extends ActionInstant {
   /** @lends cc.CallFunc# */
   _selectorTarget = null;
   _function = null;

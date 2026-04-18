@@ -1,4 +1,4 @@
-import { MoveBy } from './move-by.js';
+import MoveBy from './move-by';
 
 /**
  * Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute. <br/>
@@ -12,7 +12,7 @@ import { MoveBy } from './move-by.js';
  * @example
  * var actionTo = new cc.MoveTo(2, cc.p(80, 80));
  */
-export class MoveTo extends MoveBy {
+export default class MoveTo extends MoveBy {
   /** @lends cc.MoveTo# */
   _endPosition = null;
 

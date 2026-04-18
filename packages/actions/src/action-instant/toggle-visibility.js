@@ -1,11 +1,11 @@
-import { ActionInstant } from './action-instant.js';
+import ActionInstant from './action-instant';
 
 /**
  * Toggles the visibility of a node.
  * @class
  * @extends cc.ActionInstant
  */
-export class ToggleVisibility extends ActionInstant {
+export default class ToggleVisibility extends ActionInstant {
   /** @lends cc.ToggleVisibility# */
 
   /**
