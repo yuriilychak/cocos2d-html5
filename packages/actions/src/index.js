@@ -1,158 +1,59 @@
-import { ACTION_TAG_INVALID } from './constants.js';
 import {
+  ACTION_TAG_INVALID,
   bezierAt, bounceTime,
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,
-  getControlPointAt, reverseControlPointsInline
-} from './utils.js';
+  getControlPointAt, reverseControlPointsInline,
+  Action, FiniteTimeAction, Speed, Follow
+} from './action/index.js';
 import {
-  _easeExponentialInObj,
-  _easeExponentialOutObj,
-  _easeExponentialInOutObj,
-  _easeSineInObj,
-  _easeSineOutObj,
-  _easeSineInOutObj,
-  _easeElasticInObj,
-  _easeElasticOutObj,
-  _easeBounceInObj,
-  _easeBounceOutObj,
-  _easeBounceInOutObj,
-  _easeBackInObj,
-  _easeBackOutObj,
-  _easeBackInOutObj,
-  _easeQuadraticActionIn,
-  _easeQuadraticActionOut,
-  _easeQuadraticActionInOut,
-  _easeQuarticActionIn,
-  _easeQuarticActionOut,
-  _easeQuarticActionInOut,
-  _easeQuinticActionIn,
-  _easeQuinticActionOut,
-  _easeQuinticActionInOut,
-  _easeCircleActionIn,
-  _easeCircleActionOut,
-  _easeCircleActionInOut,
-  _easeCubicActionIn,
-  _easeCubicActionOut,
-  _easeCubicActionInOut,
-  easeIn,
-  easeOut,
-  easeInOut,
-  easeExponentialIn,
-  easeExponentialOut,
-  easeExponentialInOut,
-  easeSineIn,
-  easeSineOut,
-  easeSineInOut,
-  easeElasticIn,
-  easeElasticOut,
-  easeElasticInOut,
-  easeBounceIn,
-  easeBounceOut,
-  easeBounceInOut,
-  easeBackIn,
-  easeBackOut,
-  easeBackInOut,
+  ActionInterval, Sequence, Repeat, RepeatForever, Spawn,
+  RotateTo, RotateBy, MoveBy, MoveTo, SkewTo, SkewBy,
+  JumpBy, JumpTo, BezierBy, BezierTo, ScaleTo, ScaleBy,
+  Blink, FadeTo, FadeIn, FadeOut, TintTo, TintBy,
+  DelayTime, ReverseTime, Animate, TargetedAction
+} from './action-interval/index.js';
+import {
+  ActionInstant, Show, Hide, ToggleVisibility, RemoveSelf,
+  FlipX, FlipY, Place, CallFunc
+} from './action-instant/index.js';
+import {
+  ActionEase, EaseRateAction, EaseIn, EaseOut, EaseInOut,
+  EaseExponentialIn, EaseExponentialOut, EaseExponentialInOut,
+  EaseSineIn, EaseSineOut, EaseSineInOut,
+  EaseElastic, EaseElasticIn, EaseElasticOut, EaseElasticInOut,
+  EaseBounce, EaseBounceIn, EaseBounceOut, EaseBounceInOut,
+  EaseBackIn, EaseBackOut, EaseBackInOut,
+  EaseBezierAction,
+  EaseQuadraticActionIn, EaseQuadraticActionOut, EaseQuadraticActionInOut,
+  EaseQuarticActionIn, EaseQuarticActionOut, EaseQuarticActionInOut,
+  EaseQuinticActionIn, EaseQuinticActionOut, EaseQuinticActionInOut,
+  EaseCircleActionIn, EaseCircleActionOut, EaseCircleActionInOut,
+  EaseCubicActionIn, EaseCubicActionOut, EaseCubicActionInOut,
+  _easeExponentialInObj, _easeExponentialOutObj, _easeExponentialInOutObj,
+  _easeSineInObj, _easeSineOutObj, _easeSineInOutObj,
+  _easeElasticInObj, _easeElasticOutObj,
+  _easeBounceInObj, _easeBounceOutObj, _easeBounceInOutObj,
+  _easeBackInObj, _easeBackOutObj, _easeBackInOutObj,
+  _easeQuadraticActionIn, _easeQuadraticActionOut, _easeQuadraticActionInOut,
+  _easeQuarticActionIn, _easeQuarticActionOut, _easeQuarticActionInOut,
+  _easeQuinticActionIn, _easeQuinticActionOut, _easeQuinticActionInOut,
+  _easeCircleActionIn, _easeCircleActionOut, _easeCircleActionInOut,
+  _easeCubicActionIn, _easeCubicActionOut, _easeCubicActionInOut,
+  easeIn, easeOut, easeInOut,
+  easeExponentialIn, easeExponentialOut, easeExponentialInOut,
+  easeSineIn, easeSineOut, easeSineInOut,
+  easeElasticIn, easeElasticOut, easeElasticInOut,
+  easeBounceIn, easeBounceOut, easeBounceInOut,
+  easeBackIn, easeBackOut, easeBackInOut,
   easeBezierAction,
-  easeQuadraticActionIn,
-  easeQuadraticActionOut,
-  easeQuadraticActionInOut,
-  easeQuarticActionIn,
-  easeQuarticActionOut,
-  easeQuarticActionInOut,
-  easeQuinticActionIn,
-  easeQuinticActionOut,
-  easeQuinticActionInOut,
-  easeCircleActionIn,
-  easeCircleActionOut,
-  easeCircleActionInOut,
-  easeCubicActionIn,
-  easeCubicActionOut,
-  easeCubicActionInOut
-} from './easing.js';
-import { Action } from './Action.js';
-import { FiniteTimeAction } from './FiniteTimeAction.js';
-import { Speed } from './Speed.js';
-import { Follow } from './Follow.js';
-import { ActionInterval } from './ActionInterval.js';
-import { Sequence } from './Sequence.js';
-import { Repeat } from './Repeat.js';
-import { RepeatForever } from './RepeatForever.js';
-import { Spawn } from './Spawn.js';
-import { RotateTo } from './RotateTo.js';
-import { RotateBy } from './RotateBy.js';
-import { MoveBy } from './MoveBy.js';
-import { MoveTo } from './MoveTo.js';
-import { SkewTo } from './SkewTo.js';
-import { SkewBy } from './SkewBy.js';
-import { JumpBy } from './JumpBy.js';
-import { JumpTo } from './JumpTo.js';
-import { BezierBy } from './BezierBy.js';
-import { BezierTo } from './BezierTo.js';
-import { ScaleTo } from './ScaleTo.js';
-import { ScaleBy } from './ScaleBy.js';
-import { Blink } from './Blink.js';
-import { FadeTo } from './FadeTo.js';
-import { FadeIn } from './FadeIn.js';
-import { FadeOut } from './FadeOut.js';
-import { TintTo } from './TintTo.js';
-import { TintBy } from './TintBy.js';
-import { DelayTime } from './DelayTime.js';
-import { ReverseTime } from './ReverseTime.js';
-import { Animate } from './Animate.js';
-import { TargetedAction } from './TargetedAction.js';
-import { ActionInstant } from './ActionInstant.js';
-import { Show } from './Show.js';
-import { Hide } from './Hide.js';
-import { ToggleVisibility } from './ToggleVisibility.js';
-import { RemoveSelf } from './RemoveSelf.js';
-import { FlipX } from './FlipX.js';
-import { FlipY } from './FlipY.js';
-import { Place } from './Place.js';
-import { CallFunc } from './CallFunc.js';
-import { ActionEase } from './ActionEase.js';
-import { EaseRateAction } from './EaseRateAction.js';
-import { EaseIn } from './EaseIn.js';
-import { EaseOut } from './EaseOut.js';
-import { EaseInOut } from './EaseInOut.js';
-import { EaseExponentialIn } from './EaseExponentialIn.js';
-import { EaseExponentialOut } from './EaseExponentialOut.js';
-import { EaseExponentialInOut } from './EaseExponentialInOut.js';
-import { EaseSineIn } from './EaseSineIn.js';
-import { EaseSineOut } from './EaseSineOut.js';
-import { EaseSineInOut } from './EaseSineInOut.js';
-import { EaseElastic } from './EaseElastic.js';
-import { EaseElasticIn } from './EaseElasticIn.js';
-import { EaseElasticOut } from './EaseElasticOut.js';
-import { EaseElasticInOut } from './EaseElasticInOut.js';
-import { EaseBounce } from './EaseBounce.js';
-import { EaseBounceIn } from './EaseBounceIn.js';
-import { EaseBounceOut } from './EaseBounceOut.js';
-import { EaseBounceInOut } from './EaseBounceInOut.js';
-import { EaseBackIn } from './EaseBackIn.js';
-import { EaseBackOut } from './EaseBackOut.js';
-import { EaseBackInOut } from './EaseBackInOut.js';
-import { EaseBezierAction } from './EaseBezierAction.js';
-import { EaseQuadraticActionIn } from './EaseQuadraticActionIn.js';
-import { EaseQuadraticActionOut } from './EaseQuadraticActionOut.js';
-import { EaseQuadraticActionInOut } from './EaseQuadraticActionInOut.js';
-import { EaseQuarticActionIn } from './EaseQuarticActionIn.js';
-import { EaseQuarticActionOut } from './EaseQuarticActionOut.js';
-import { EaseQuarticActionInOut } from './EaseQuarticActionInOut.js';
-import { EaseQuinticActionIn } from './EaseQuinticActionIn.js';
-import { EaseQuinticActionOut } from './EaseQuinticActionOut.js';
-import { EaseQuinticActionInOut } from './EaseQuinticActionInOut.js';
-import { EaseCircleActionIn } from './EaseCircleActionIn.js';
-import { EaseCircleActionOut } from './EaseCircleActionOut.js';
-import { EaseCircleActionInOut } from './EaseCircleActionInOut.js';
-import { EaseCubicActionIn } from './EaseCubicActionIn.js';
-import { EaseCubicActionOut } from './EaseCubicActionOut.js';
-import { EaseCubicActionInOut } from './EaseCubicActionInOut.js';
-import { CardinalSplineTo } from './CardinalSplineTo.js';
-import { CardinalSplineBy } from './CardinalSplineBy.js';
-import { CatmullRomTo } from './CatmullRomTo.js';
-import { CatmullRomBy } from './CatmullRomBy.js';
-import { ActionTweenDelegate } from './ActionTweenDelegate.js';
-import { ActionTween } from './ActionTween.js';
+  easeQuadraticActionIn, easeQuadraticActionOut, easeQuadraticActionInOut,
+  easeQuarticActionIn, easeQuarticActionOut, easeQuarticActionInOut,
+  easeQuinticActionIn, easeQuinticActionOut, easeQuinticActionInOut,
+  easeCircleActionIn, easeCircleActionOut, easeCircleActionInOut,
+  easeCubicActionIn, easeCubicActionOut, easeCubicActionInOut
+} from './action-ease/index.js';
+import { CardinalSplineTo, CardinalSplineBy, CatmullRomTo, CatmullRomBy } from './action-catmull-rom/index.js';
+import { ActionTweenDelegate, ActionTween } from './action-tween/index.js';
 
 // ─── Constants ─────────────────────────────────────────
 cc.ACTION_TAG_INVALID = ACTION_TAG_INVALID;
