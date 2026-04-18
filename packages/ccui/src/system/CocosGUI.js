@@ -31,21 +31,16 @@
 var ccui = ccui || {};
 
 /**
- * that same as cc.Node
+ * Alias for cc.Node
  * @class
- * @extends ccui.Class
  */
 ccui.Node = ccui.Node || cc.Node;
-ccui.Node.extend = ccui.Node.extend || cc.Node.extend;
-
 
 /**
- * that same as cc.Node
+ * Alias for cc.ProtectedNode
  * @class
- * @extends ccui.Node
  */
 ccui.ProtectedNode = ccui.ProtectedNode || cc.ProtectedNode;
-ccui.ProtectedNode.extend = ccui.ProtectedNode.extend || cc.ProtectedNode.extend;
 
 /**
  * Cocos UI version

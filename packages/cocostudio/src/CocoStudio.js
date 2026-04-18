@@ -30,29 +30,22 @@
 var ccs = ccs || {};
 
 /**
-/**
- * The same as cc.Node
+ * Alias for cc.Node
  * @class
- * @extends ccs.Class
  */
 ccs.Node = ccs.Node || cc.Node;
-ccs.Node.extend = ccs.Node.extend || cc.Node.extend;
 
 /**
- * The same as cc.Sprite
+ * Alias for cc.Sprite
  * @class
- * @extends ccs.Class
  */
 ccs.Sprite = ccs.Sprite || cc.Sprite;
-ccs.Sprite.extend = ccs.Sprite.extend || cc.Sprite.extend;
 
 /**
- * The same as cc.Component
+ * Alias for cc.Component
  * @class
- * @extends ccs.Class
  */
 ccs.Component = ccs.Component || cc.Component;
-ccs.Component.extend = ccs.Component.extend || cc.Component.extend;
 
 /**
  * CocoStudio version

@@ -30,7 +30,7 @@
  * @class
  *
  */
-ccs.ActionTimelineData = class ActionTimelineData extends ccs.Class {
+ccs.ActionTimelineData = class ActionTimelineData extends cc.NewClass {
 
     _actionTag = 0;
 
