@@ -5,7 +5,6 @@
   "dependencies": {
     "@aspect/box2d": "*",
     "@aspect/chipmunk": "*",
-    "@aspect/socketio": "*",
-    "@aspect/gaf": "*"
+    "@aspect/socketio": "*"
   }
 }
