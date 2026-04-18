@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var cc = cc || {};
+var cc = window.cc = window.cc || {};
 
 /**
  * Common getter setter configuration function

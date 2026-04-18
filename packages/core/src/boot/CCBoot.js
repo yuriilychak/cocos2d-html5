@@ -28,7 +28,7 @@
  * @namespace
  * @name cc
  */
-var cc = cc || {};
+var cc = window.cc = window.cc || {};
 cc._tmp = cc._tmp || {};
 cc._LogInfos = {};
 
