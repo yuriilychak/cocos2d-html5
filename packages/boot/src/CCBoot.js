@@ -277,7 +277,7 @@ cc.AsyncPool = class AsyncPool {
 /**
  * @class
  */
-cc.async = class {
+cc.async = class Async {
     /**
      * Do tasks series.
      * @param {Array|Object} tasks
@@ -377,8 +377,8 @@ cc.async = class {
 /**
  * @class
  */
-cc.path = /** @lends cc.path# */{
-    normalizeRE: /[^\.\/]+\/\.\.\//,
+cc.path = class {
+    static normalizeRE = /[^\.\/]+\/\.\.\//;
 
     /**
      * Join strings to be a path.
@@ -390,14 +390,13 @@ cc.path = /** @lends cc.path# */{
      cc.path.join("a", "b/", "/");//-->"a/b/"
      * @returns {string}
      */
-    join: function () {
-        var l = arguments.length;
+    static join(...args) {
         var result = "";
-        for (var i = 0; i < l; i++) {
-            result = (result + (result === "" ? "" : "/") + arguments[i]).replace(/(\/|\\\\)$/, "");
+        for (var i = 0; i < args.length; i++) {
+            result = (result + (result === "" ? "" : "/") + args[i]).replace(/(\/|\\\\)$/, "");
         }
         return result;
-    },
+    }
 
     /**
      * Get the ext name of a path.
@@ -409,24 +408,24 @@ cc.path = /** @lends cc.path# */{
      * @param {string} pathStr
      * @returns {*}
      */
-    extname: function (pathStr) {
+    static extname(pathStr) {
         var temp = /(\.[^\.\/\?\\]*)(\?.*)?$/.exec(pathStr);
         return temp ? temp[1] : null;
-    },
+    }
 
     /**
      * Get the main name of a file name
      * @param {string} fileName
      * @returns {string}
      */
-    mainFileName: function (fileName) {
+    static mainFileName(fileName) {
         if (fileName) {
             var idx = fileName.lastIndexOf(".");
             if (idx !== -1)
                 return fileName.substring(0, idx);
         }
         return fileName;
-    },
+    }
 
     /**
      * Get the file name of a file path.
@@ -440,7 +439,7 @@ cc.path = /** @lends cc.path# */{
      * @param {string} [extname]
      * @returns {*}
      */
-    basename: function (pathStr, extname) {
+    static basename(pathStr, extname) {
         var index = pathStr.indexOf("?");
         if (index > 0) pathStr = pathStr.substring(0, index);
         var reg = /(\/|\\\\)([^(\/|\\\\)]+)$/g;
@@ -450,7 +449,7 @@ cc.path = /** @lends cc.path# */{
         if (extname && pathStr.substring(pathStr.length - extname.length).toLowerCase() === extname.toLowerCase())
             return baseName.substring(0, baseName.length - extname.length);
         return baseName;
-    },
+    }
 
     /**
      * Get dirname of a file path.
@@ -466,9 +465,9 @@ cc.path = /** @lends cc.path# */{
      * @param {string} pathStr
      * @returns {*}
      */
-    dirname: function (pathStr) {
+    static dirname(pathStr) {
         return pathStr.replace(/((.*)(\/|\\|\\\\))?(.*?\..*$)?/, '$2');
-    },
+    }
 
     /**
      * Change extname of a file path.
@@ -479,7 +478,7 @@ cc.path = /** @lends cc.path# */{
      * @param {string} [extname]
      * @returns {string}
      */
-    changeExtname: function (pathStr, extname) {
+    static changeExtname(pathStr, extname) {
         extname = extname || "";
         var index = pathStr.indexOf("?");
         var tempStr = "";
@@ -490,7 +489,8 @@ cc.path = /** @lends cc.path# */{
         index = pathStr.lastIndexOf(".");
         if (index < 0) return pathStr + extname + tempStr;
         return pathStr.substring(0, index) + extname + tempStr;
-    },
+    }
+
     /**
      * Change file name of a file path.
      * @example
@@ -504,11 +504,11 @@ cc.path = /** @lends cc.path# */{
      * @param {Boolean} [isSameExt]
      * @returns {string}
      */
-    changeBasename: function (pathStr, basename, isSameExt) {
-        if (basename.indexOf(".") === 0) return this.changeExtname(pathStr, basename);
+    static changeBasename(pathStr, basename, isSameExt) {
+        if (basename.indexOf(".") === 0) return cc.path.changeExtname(pathStr, basename);
         var index = pathStr.indexOf("?");
         var tempStr = "";
-        var ext = isSameExt ? this.extname(pathStr) : "";
+        var ext = isSameExt ? cc.path.extname(pathStr) : "";
         if (index > 0) {
             tempStr = pathStr.substring(index);
             pathStr = pathStr.substring(0, index);
@@ -516,15 +516,16 @@ cc.path = /** @lends cc.path# */{
         index = pathStr.lastIndexOf("/");
         index = index <= 0 ? 0 : index + 1;
         return pathStr.substring(0, index) + basename + ext + tempStr;
-    },
+    }
+
     //todo make public after verification
-    _normalize: function (url) {
+    static _normalize(url) {
         var oldUrl = url = String(url);
 
         //removing all ../
         do {
             oldUrl = url;
-            url = url.replace(this.normalizeRE, "");
+            url = url.replace(cc.path.normalizeRE, "");
         } while (oldUrl.length !== url.length);
         return url;
     }
@@ -540,8 +541,7 @@ cc.path = /** @lends cc.path# */{
  * @memberof cc
  * @see cc.loader
  */
-
-var imagePool = new class ImagePool {
+class ImagePool {
     _pool = new Array(10);
     _MAX = 10;
     _smallImg = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
@@ -567,7 +567,9 @@ var imagePool = new class ImagePool {
             this.count++;
         }
     }
-}();
+}
+
+var imagePool = new ImagePool();
 
 /**
  * Singleton instance of cc.Loader.
@@ -575,7 +577,7 @@ var imagePool = new class ImagePool {
  * @member {cc.Loader}
  * @memberof cc
  */
-cc.loader = new class Loader {
+class Loader {
     _jsCache = {};
     _register = {};
     _langPathCache = {};
@@ -1229,7 +1231,9 @@ cc.loader = new class Loader {
         for (var key in this._aliases)
             delete this._aliases[key];
     }
-}();
+}
+
+cc.loader = new Loader();
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
 
 /**
