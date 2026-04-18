@@ -1,167 +1,116 @@
-/**
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
- Copyright (c) 2008, Luke Benstead.
- All rights reserved.
+import Matrix4Stack from './mat4-stack';
+import Matrix4 from '../mat4';
+import Vec3 from '../vec3';
 
- Redistribution and use in source and binary forms, with or without modification,
- are permitted provided that the following conditions are met:
+export const KM_GL_MODELVIEW = 0x1700;
+export const KM_GL_PROJECTION = 0x1701;
+export const KM_GL_TEXTURE = 0x1702;
 
- Redistributions of source code must retain the above copyright notice,
- this list of conditions and the following disclaimer.
- Redistributions in binary form must reproduce the above copyright notice,
- this list of conditions and the following disclaimer in the documentation
- and/or other materials provided with the distribution.
+export function lazyInitialize() {
+    if (!cc.initialized) {
+        const identity = new Matrix4();
 
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+        cc.modelview_matrix_stack.initialize();
+        cc.projection_matrix_stack.initialize();
+        cc.texture_matrix_stack.initialize();
 
-(function (cc) {
-    cc.KM_GL_MODELVIEW = 0x1700;
-    cc.KM_GL_PROJECTION = 0x1701;
-    cc.KM_GL_TEXTURE = 0x1702;
+        cc.current_stack = cc.modelview_matrix_stack;
+        cc.initialized = true;
+        identity.identity();
 
-    cc.modelview_matrix_stack = new cc.math.Matrix4Stack();
-    cc.projection_matrix_stack = new cc.math.Matrix4Stack();
-    cc.texture_matrix_stack = new cc.math.Matrix4Stack();
+        cc.modelview_matrix_stack.push(identity);
+        cc.projection_matrix_stack.push(identity);
+        cc.texture_matrix_stack.push(identity);
+    }
+}
 
+export function kmGLFreeAll() {
+    cc.modelview_matrix_stack.release();
+    cc.modelview_matrix_stack = null;
+    cc.projection_matrix_stack.release();
+    cc.projection_matrix_stack = null;
+    cc.texture_matrix_stack.release();
+    cc.texture_matrix_stack = null;
+
+    cc.initialized = false;
     cc.current_stack = null;
-    let initialized = false;
+}
 
-    cc.lazyInitialize = function () {
-        if (!initialized) {
-            const identity = new cc.math.Matrix4(); //Temporary identity matrix
+export function kmGLPushMatrix() {
+    cc.current_stack.push(cc.current_stack.top);
+}
 
-            //Initialize all 3 stacks
-            cc.modelview_matrix_stack.initialize();
-            cc.projection_matrix_stack.initialize();
-            cc.texture_matrix_stack.initialize();
+export function kmGLPushMatrixWitMat4(saveMat) {
+    cc.current_stack.stack.push(cc.current_stack.top);
+    saveMat.assignFrom(cc.current_stack.top);
+    cc.current_stack.top = saveMat;
+}
 
+export function kmGLPopMatrix() {
+    cc.current_stack.top = cc.current_stack.stack.pop();
+}
+
+export function kmGLMatrixMode(mode) {
+    switch (mode) {
+        case KM_GL_MODELVIEW:
             cc.current_stack = cc.modelview_matrix_stack;
-            cc.initialized = true;
-            identity.identity();
+            break;
+        case KM_GL_PROJECTION:
+            cc.current_stack = cc.projection_matrix_stack;
+            break;
+        case KM_GL_TEXTURE:
+            cc.current_stack = cc.texture_matrix_stack;
+            break;
+        default:
+            throw new Error("Invalid matrix mode specified");
+    }
+    cc.current_stack.lastUpdated = cc.director.getTotalFrames();
+}
 
-            //Make sure that each stack has the identity matrix
-            cc.modelview_matrix_stack.push(identity);
-            cc.projection_matrix_stack.push(identity);
-            cc.texture_matrix_stack.push(identity);
-        }
-    };
+export function kmGLLoadIdentity() {
+    cc.current_stack.top.identity();
+}
 
-    cc.lazyInitialize();
+export function kmGLLoadMatrix(pIn) {
+    cc.current_stack.top.assignFrom(pIn);
+}
 
-    cc.kmGLFreeAll = function () {
-        //Clear the matrix stacks
-        cc.modelview_matrix_stack.release();
-        cc.modelview_matrix_stack = null;
-        cc.projection_matrix_stack.release();
-        cc.projection_matrix_stack = null;
-        cc.texture_matrix_stack.release();
-        cc.texture_matrix_stack = null;
+export function kmGLMultMatrix(pIn) {
+    cc.current_stack.top.multiply(pIn);
+}
 
-        //Delete the matrices
-        cc.initialized = false; //Set to uninitialized
-        cc.current_stack = null; //Set the current stack to point nowhere
-    };
+const tempMatrix = new Matrix4();
 
-    cc.kmGLPushMatrix = function () {
-        cc.current_stack.push(cc.current_stack.top);
-    };
+export function kmGLTranslatef(x, y, z) {
+    const translation = Matrix4.createByTranslation(x, y, z, tempMatrix);
+    cc.current_stack.top.multiply(translation);
+}
 
-    cc.kmGLPushMatrixWitMat4 = function (saveMat) {
-        cc.current_stack.stack.push(cc.current_stack.top);
-        saveMat.assignFrom(cc.current_stack.top);
-        cc.current_stack.top = saveMat;
-    };
+const tempVector3 = new Vec3();
 
-    cc.kmGLPopMatrix = function () {
-        //No need to lazy initialize, you shouldn't be popping first anyway!
-        //cc.km_mat4_stack_pop(cc.current_stack, null);
-        cc.current_stack.top = cc.current_stack.stack.pop();
-    };
+export function kmGLRotatef(angle, x, y, z) {
+    tempVector3.fill(x, y, z);
+    const rotation = Matrix4.createByAxisAndAngle(tempVector3, cc.degreesToRadians(angle), tempMatrix);
+    cc.current_stack.top.multiply(rotation);
+}
 
-    cc.kmGLMatrixMode = function (mode) {
-        //cc.lazyInitialize();
-        switch (mode) {
-            case cc.KM_GL_MODELVIEW:
-                cc.current_stack = cc.modelview_matrix_stack;
-                break;
-            case cc.KM_GL_PROJECTION:
-                cc.current_stack = cc.projection_matrix_stack;
-                break;
-            case cc.KM_GL_TEXTURE:
-                cc.current_stack = cc.texture_matrix_stack;
-                break;
-            default:
-                throw new Error("Invalid matrix mode specified");   //TODO: Proper error handling
-        }
-        cc.current_stack.lastUpdated = cc.director.getTotalFrames();
-    };
+export function kmGLScalef(x, y, z) {
+    const scaling = Matrix4.createByScale(x, y, z, tempMatrix);
+    cc.current_stack.top.multiply(scaling);
+}
 
-    cc.kmGLLoadIdentity = function () {
-        //cc.lazyInitialize();
-        cc.current_stack.top.identity(); //Replace the top matrix with the identity matrix
-    };
-
-    cc.kmGLLoadMatrix = function (pIn) {
-        //cc.lazyInitialize();
-        cc.current_stack.top.assignFrom(pIn);
-    };
-
-    cc.kmGLMultMatrix = function (pIn) {
-        //cc.lazyInitialize();
-        cc.current_stack.top.multiply(pIn);
-    };
-
-    const tempMatrix = new cc.math.Matrix4();    //an internal matrix
-    cc.kmGLTranslatef = function (x, y, z) {
-        //Create a rotation matrix using translation
-        const translation = cc.math.Matrix4.createByTranslation(x, y, z, tempMatrix);
-
-        //Multiply the rotation matrix by the current matrix
-        cc.current_stack.top.multiply(translation);
-    };
-
-    const tempVector3 = new cc.math.Vec3();
-    cc.kmGLRotatef = function (angle, x, y, z) {
-        tempVector3.fill(x, y, z);
-        //Create a rotation matrix using the axis and the angle
-        const rotation = cc.math.Matrix4.createByAxisAndAngle(tempVector3, cc.degreesToRadians(angle), tempMatrix);
-
-        //Multiply the rotation matrix by the current matrix
-        cc.current_stack.top.multiply(rotation);
-    };
-
-    cc.kmGLScalef = function (x, y, z) {
-        const scaling = cc.math.Matrix4.createByScale(x, y, z, tempMatrix);
-        cc.current_stack.top.multiply(scaling);
-    };
-
-    cc.kmGLGetMatrix = function (mode, pOut) {
-        //cc.lazyInitialize();
-        switch (mode) {
-            case cc.KM_GL_MODELVIEW:
-                pOut.assignFrom(cc.modelview_matrix_stack.top);
-                break;
-            case cc.KM_GL_PROJECTION:
-                pOut.assignFrom(cc.projection_matrix_stack.top);
-                break;
-            case cc.KM_GL_TEXTURE:
-                pOut.assignFrom(cc.texture_matrix_stack.top);
-                break;
-            default:
-                throw new Error("Invalid matrix mode specified"); //TODO: Proper error handling
-                break;
-        }
-    };
-})(cc);
+export function kmGLGetMatrix(mode, pOut) {
+    switch (mode) {
+        case KM_GL_MODELVIEW:
+            pOut.assignFrom(cc.modelview_matrix_stack.top);
+            break;
+        case KM_GL_PROJECTION:
+            pOut.assignFrom(cc.projection_matrix_stack.top);
+            break;
+        case KM_GL_TEXTURE:
+            pOut.assignFrom(cc.texture_matrix_stack.top);
+            break;
+        default:
+            throw new Error("Invalid matrix mode specified");
+    }
+}
