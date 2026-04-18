@@ -191,93 +191,87 @@ cc.isCrossOrigin = function (url) {
  * @param {object} target
  * @constructor
  */
-cc.AsyncPool = function (srcObj, limit, iterator, onEnd, target) {
-    var self = this;
-    self._finished = false;
-    self._srcObj = srcObj;
-    self._limit = limit;
-    self._pool = [];
-    self._iterator = iterator;
-    self._iteratorTarget = target;
-    self._onEnd = onEnd;
-    self._onEndTarget = target;
-    self._results = srcObj instanceof Array ? [] : {};
-    self._errors = srcObj instanceof Array ? [] : {};
+cc.AsyncPool = class AsyncPool {
+    constructor(srcObj, limit, iterator, onEnd, target) {
+        this._finished = false;
+        this._srcObj = srcObj;
+        this._limit = limit;
+        this._pool = [];
+        this._iterator = iterator;
+        this._iteratorTarget = target;
+        this._onEnd = onEnd;
+        this._onEndTarget = target;
+        this._results = srcObj instanceof Array ? [] : {};
+        this._errors = srcObj instanceof Array ? [] : {};
 
-    cc.each(srcObj, function (value, index) {
-        self._pool.push({index: index, value: value});
-    });
+        cc.each(srcObj, (value, index) => {
+            this._pool.push({index: index, value: value});
+        });
 
-    self.size = self._pool.length;
-    self.finishedSize = 0;
-    self._workingSize = 0;
+        this.size = this._pool.length;
+        this.finishedSize = 0;
+        this._workingSize = 0;
 
-    self._limit = self._limit || self.size;
+        this._limit = this._limit || this.size;
+    }
 
-    self.onIterator = function (iterator, target) {
-        self._iterator = iterator;
-        self._iteratorTarget = target;
-    };
+    onIterator(iterator, target) {
+        this._iterator = iterator;
+        this._iteratorTarget = target;
+    }
 
-    self.onEnd = function (endCb, endCbTarget) {
-        self._onEnd = endCb;
-        self._onEndTarget = endCbTarget;
-    };
+    onEnd(errors, results) {
+        this._finished = true;
+        if (this._onEnd) {
+            var selector = this._onEnd;
+            var target = this._onEndTarget;
+            this._onEnd = null;
+            this._onEndTarget = null;
+            selector.call(target, errors, results);
+        }
+    }
 
-    self._handleItem = function () {
-        var self = this;
-        if (self._pool.length === 0 || self._workingSize >= self._limit)
-            return;                                                         //return directly if the array's length = 0 or the working size great equal limit number
+    _handleItem() {
+        if (this._pool.length === 0 || this._workingSize >= this._limit)
+            return;
 
-        var item = self._pool.shift();
+        var item = this._pool.shift();
         var value = item.value, index = item.index;
-        self._workingSize++;
-        self._iterator.call(self._iteratorTarget, value, index,
-            function (err, result) {
-                if (self._finished) {
+        this._workingSize++;
+        this._iterator.call(this._iteratorTarget, value, index,
+            (err, result) => {
+                if (this._finished) {
                     return;
                 }
 
                 if (err) {
-                    self._errors[this.index] = err;
+                    this._errors[index] = err;
                 }
                 else {
-                    self._results[this.index] = result;
+                    this._results[index] = result;
                 }
 
-                self.finishedSize++;
-                self._workingSize--;
-                if (self.finishedSize === self.size) {
-                    var errors = self._errors.length === 0 ? null : self._errors;
-                    self.onEnd(errors, self._results);
+                this.finishedSize++;
+                this._workingSize--;
+                if (this.finishedSize === this.size) {
+                    var errors = this._errors.length === 0 ? null : this._errors;
+                    this.onEnd(errors, this._results);
                     return;
                 }
-                self._handleItem();
-            }.bind(item),
-            self);
-    };
+                this._handleItem();
+            },
+            this);
+    }
 
-    self.flow = function () {
-        var self = this;
-        if (self._pool.length === 0) {
-            if (self._onEnd)
-                self._onEnd.call(self._onEndTarget, null, []);
+    flow() {
+        if (this._pool.length === 0) {
+            if (this._onEnd)
+                this._onEnd.call(this._onEndTarget, null, []);
             return;
         }
-        for (var i = 0; i < self._limit; i++)
-            self._handleItem();
-    };
-
-    self.onEnd = function(errors, results) {
-        self._finished = true;
-        if (self._onEnd) {
-            var selector = self._onEnd;
-            var target = self._onEndTarget;
-            self._onEnd = null;
-            self._onEndTarget = null;
-            selector.call(target, errors, results);
-        }
-    };
+        for (var i = 0; i < this._limit; i++)
+            this._handleItem();
+    }
 };
 
 /**
@@ -547,13 +541,13 @@ cc.path = /** @lends cc.path# */{
  * @see cc.loader
  */
 
-var imagePool = {
-    _pool: new Array(10),
-    _MAX: 10,
-    _smallImg: "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=",
+var imagePool = new class ImagePool {
+    _pool = new Array(10);
+    _MAX = 10;
+    _smallImg = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
+    count = 0;
 
-    count: 0,
-    get: function () {
+    get() {
         if (this.count > 0) {
             this.count--;
             var result = this._pool[this.count];
@@ -563,8 +557,9 @@ var imagePool = {
         else {
             return new Image();
         }
-    },
-    put: function (img) {
+    }
+
+    put(img) {
         var pool = this._pool;
         if (img instanceof HTMLImageElement && this.count < this._MAX) {
             img.src = this._smallImg;
@@ -572,7 +567,7 @@ var imagePool = {
             this.count++;
         }
     }
-};
+}();
 
 /**
  * Singleton instance of cc.Loader.
@@ -580,664 +575,661 @@ var imagePool = {
  * @member {cc.Loader}
  * @memberof cc
  */
-cc.loader = (function () {
-    var _jsCache = {}, //cache for js
-        _register = {}, //register of loaders
-        _langPathCache = {}, //cache for lang path
-        _aliases = {}, //aliases for res url
-        _queue = {}, // Callback queue for resources already loading
-        _urlRegExp = new RegExp("^(?:https?|ftp)://\\S*$", "i");
+cc.loader = new class Loader {
+    _jsCache = {};
+    _register = {};
+    _langPathCache = {};
+    _aliases = {};
+    _queue = {};
+    _urlRegExp = new RegExp("^(?:https?|ftp)://\\S*$", "i");
+    _noCacheRex = /\?/;
 
-    return /** @lends cc.Loader# */{
-        /**
-         * Root path of resources.
-         * @type {String}
-         */
-        resPath: "",
+    /**
+     * Root path of resources.
+     * @type {String}
+     */
+    resPath = "";
 
-        /**
-         * Root path of audio resources
-         * @type {String}
-         */
-        audioPath: "",
+    /**
+     * Root path of audio resources
+     * @type {String}
+     */
+    audioPath = "";
 
-        /**
-         * Cache for data loaded.
-         * @type {Object}
-         */
-        cache: {},
+    /**
+     * Cache for data loaded.
+     * @type {Object}
+     */
+    cache = {};
 
-        /**
-         * Get XMLHttpRequest.
-         * @returns {XMLHttpRequest}
-         */
-        getXMLHttpRequest: function () {
-            var xhr = window.XMLHttpRequest ? new window.XMLHttpRequest() : new ActiveXObject("MSXML2.XMLHTTP");
-            xhr.timeout = 10000;
-            if (xhr.ontimeout === undefined) {
-                xhr._timeoutId = -1;
-            }
-            return xhr;
-        },
+    /**
+     * Get XMLHttpRequest.
+     * @returns {XMLHttpRequest}
+     */
+    getXMLHttpRequest() {
+        var xhr = window.XMLHttpRequest ? new window.XMLHttpRequest() : new ActiveXObject("MSXML2.XMLHTTP");
+        xhr.timeout = 10000;
+        if (xhr.ontimeout === undefined) {
+            xhr._timeoutId = -1;
+        }
+        return xhr;
+    }
 
-        //@MODE_BEGIN DEV
+    //@MODE_BEGIN DEV
 
-        _getArgs4Js: function (args) {
-            var a0 = args[0], a1 = args[1], a2 = args[2], results = ["", null, null];
+    _getArgs4Js(args) {
+        var a0 = args[0], a1 = args[1], a2 = args[2], results = ["", null, null];
 
-            if (args.length === 1) {
+        if (args.length === 1) {
+            results[1] = a0 instanceof Array ? a0 : [a0];
+        } else if (args.length === 2) {
+            if (typeof a1 === "function") {
                 results[1] = a0 instanceof Array ? a0 : [a0];
-            } else if (args.length === 2) {
-                if (typeof a1 === "function") {
-                    results[1] = a0 instanceof Array ? a0 : [a0];
-                    results[2] = a1;
-                } else {
-                    results[0] = a0 || "";
-                    results[1] = a1 instanceof Array ? a1 : [a1];
-                }
-            } else if (args.length === 3) {
+                results[2] = a1;
+            } else {
                 results[0] = a0 || "";
                 results[1] = a1 instanceof Array ? a1 : [a1];
-                results[2] = a2;
-            } else throw new Error("arguments error to load js!");
-            return results;
-        },
-
-        isLoading: function (url) {
-            return (_queue[url] !== undefined);
-        },
-
-        /**
-         * Load js files.
-         * If the third parameter doesn't exist, then the baseDir turns to be "".
-         *
-         * @param {string} [baseDir]   The pre path for jsList or the list of js path.
-         * @param {array} jsList    List of js path.
-         * @param {function} [cb]  Callback function
-         * @returns {*}
-         */
-        loadJs: function (baseDir, jsList, cb) {
-            var self = this,
-                args = self._getArgs4Js(arguments);
-
-            var preDir = args[0], list = args[1], callback = args[2];
-            if (navigator.userAgent.indexOf("Trident/5") > -1) {
-                self._loadJs4Dependency(preDir, list, 0, callback);
-            } else {
-                cc.async.map(list, function (item, index, cb1) {
-                    var jsPath = cc.path.join(preDir, item);
-                    if (_jsCache[jsPath]) return cb1(null);
-                    self._createScript(jsPath, false, cb1);
-                }, callback);
             }
-        },
-        /**
-         * Load js width loading image.
-         *
-         * @param {string} [baseDir]
-         * @param {array} jsList
-         * @param {function} [cb]
-         */
-        loadJsWithImg: function (baseDir, jsList, cb) {
-            var self = this, jsLoadingImg = self._loadJsImg(),
-                args = self._getArgs4Js(arguments);
-            this.loadJs(args[0], args[1], function (err) {
-                if (err) throw new Error(err);
-                jsLoadingImg.parentNode.removeChild(jsLoadingImg);//remove loading gif
-                if (args[2]) args[2]();
-            });
-        },
-        _createScript: function (jsPath, isAsync, cb) {
-            var d = document, self = this, s = document.createElement('script');
-            s.async = isAsync;
-            _jsCache[jsPath] = true;
-            if (cc.game.config["noCache"] && typeof jsPath === "string") {
-                if (self._noCacheRex.test(jsPath))
-                    s.src = jsPath + "&_t=" + (new Date() - 0);
-                else
-                    s.src = jsPath + "?_t=" + (new Date() - 0);
-            } else {
-                s.src = jsPath;
-            }
-            s.addEventListener('load', function () {
-                s.parentNode.removeChild(s);
-                this.removeEventListener('load', arguments.callee, false);
-                cb();
-            }, false);
-            s.addEventListener('error', function () {
-                s.parentNode.removeChild(s);
-                cb("Load " + jsPath + " failed!");
-            }, false);
-            d.body.appendChild(s);
-        },
-        _loadJs4Dependency: function (baseDir, jsList, index, cb) {
-            if (index >= jsList.length) {
-                if (cb) cb();
-                return;
-            }
-            var self = this;
-            self._createScript(cc.path.join(baseDir, jsList[index]), false, function (err) {
-                if (err) return cb(err);
-                self._loadJs4Dependency(baseDir, jsList, index + 1, cb);
-            });
-        },
-        _loadJsImg: function () {
-            var d = document, jsLoadingImg = d.getElementById("cocos2d_loadJsImg");
-            if (!jsLoadingImg) {
-                jsLoadingImg = document.createElement('img');
+        } else if (args.length === 3) {
+            results[0] = a0 || "";
+            results[1] = a1 instanceof Array ? a1 : [a1];
+            results[2] = a2;
+        } else throw new Error("arguments error to load js!");
+        return results;
+    }
 
-                if (cc._loadingImage)
-                    jsLoadingImg.src = cc._loadingImage;
+    isLoading(url) {
+        return (this._queue[url] !== undefined);
+    }
 
-                var canvasNode = d.getElementById(cc.game.config["id"]);
-                canvasNode.style.backgroundColor = "transparent";
-                canvasNode.parentNode.appendChild(jsLoadingImg);
+    /**
+     * Load js files.
+     * If the third parameter doesn't exist, then the baseDir turns to be "".
+     *
+     * @param {string} [baseDir]   The pre path for jsList or the list of js path.
+     * @param {array} jsList    List of js path.
+     * @param {function} [cb]  Callback function
+     * @returns {*}
+     */
+    loadJs(baseDir, jsList, cb) {
+        var args = this._getArgs4Js(arguments);
 
-                var canvasStyle = getComputedStyle ? getComputedStyle(canvasNode) : canvasNode.currentStyle;
-                if (!canvasStyle)
-                    canvasStyle = {width: canvasNode.width, height: canvasNode.height};
-                jsLoadingImg.style.left = canvasNode.offsetLeft + (parseFloat(canvasStyle.width) - jsLoadingImg.width) / 2 + "px";
-                jsLoadingImg.style.top = canvasNode.offsetTop + (parseFloat(canvasStyle.height) - jsLoadingImg.height) / 2 + "px";
-                jsLoadingImg.style.position = "absolute";
-            }
-            return jsLoadingImg;
-        },
-        //@MODE_END DEV
+        var preDir = args[0], list = args[1], callback = args[2];
+        if (navigator.userAgent.indexOf("Trident/5") > -1) {
+            this._loadJs4Dependency(preDir, list, 0, callback);
+        } else {
+            cc.async.map(list, (item, index, cb1) => {
+                var jsPath = cc.path.join(preDir, item);
+                if (this._jsCache[jsPath]) return cb1(null);
+                this._createScript(jsPath, false, cb1);
+            }, callback);
+        }
+    }
 
-        /**
-         * Load a single resource as txt.
-         * @param {string} url
-         * @param {function} [cb] arguments are : err, txt
-         */
-        loadTxt: function (url, cb) {
-            if (!cc._isNodeJs) {
-                var xhr = this.getXMLHttpRequest(),
-                    errInfo = "load " + url + " failed!";
-                xhr.open("GET", url, true);
-                if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
-                    // IE-specific logic here
-                    xhr.setRequestHeader("Accept-Charset", "utf-8");
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4)
-                            (xhr.status === 200||xhr.status === 0) ? cb(null, xhr.responseText) : cb({status:xhr.status, errorMessage:errInfo}, null);
-                    };
-                } else {
-                    if (xhr.overrideMimeType) xhr.overrideMimeType("text\/plain; charset=utf-8");
-                    var loadCallback = function () {
-                        xhr.removeEventListener('load', loadCallback);
-                        xhr.removeEventListener('error', errorCallback);
-                        if (xhr._timeoutId >= 0) {
-                            clearTimeout(xhr._timeoutId);
-                        }
-                        else {
-                            xhr.removeEventListener('timeout', timeoutCallback);
-                        }
-                        if (xhr.readyState === 4) {
-                            (xhr.status === 200||xhr.status === 0) ? cb(null, xhr.responseText) : cb({status:xhr.status, errorMessage:errInfo}, null);
-                        }
-                    };
-                    var errorCallback = function () {
-                        xhr.removeEventListener('load', loadCallback);
-                        xhr.removeEventListener('error', errorCallback);
-                        if (xhr._timeoutId >= 0) {
-                            clearTimeout(xhr._timeoutId);
-                        }
-                        else {
-                            xhr.removeEventListener('timeout', timeoutCallback);
-                        }
-                        cb({status: xhr.status, errorMessage: errInfo}, null);
-                    };
-                    var timeoutCallback = function () {
-                        xhr.removeEventListener('load', loadCallback);
-                        xhr.removeEventListener('error', errorCallback);
-                        if (xhr._timeoutId >= 0) {
-                            clearTimeout(xhr._timeoutId);
-                        }
-                        else {
-                            xhr.removeEventListener('timeout', timeoutCallback);
-                        }
-                        cb({status: xhr.status, errorMessage: "Request timeout: " + errInfo}, null);
-                    };
-                    xhr.addEventListener('load', loadCallback);
-                    xhr.addEventListener('error', errorCallback);
-                    if (xhr.ontimeout === undefined) {
-                        xhr._timeoutId = setTimeout(function () {
-                            timeoutCallback();
-                        }, xhr.timeout);
-                    }
-                    else {
-                        xhr.addEventListener('timeout', timeoutCallback);
-                    }
-                }
-                xhr.send(null);
-            } else {
-                var fs = require("fs");
-                fs.readFile(url, function (err, data) {
-                    err ? cb(err) : cb(null, data.toString());
-                });
-            }
-        },
+    /**
+     * Load js width loading image.
+     *
+     * @param {string} [baseDir]
+     * @param {array} jsList
+     * @param {function} [cb]
+     */
+    loadJsWithImg(baseDir, jsList, cb) {
+        var jsLoadingImg = this._loadJsImg(),
+            args = this._getArgs4Js(arguments);
+        this.loadJs(args[0], args[1], (err) => {
+            if (err) throw new Error(err);
+            jsLoadingImg.parentNode.removeChild(jsLoadingImg);
+            if (args[2]) args[2]();
+        });
+    }
 
-        loadCsb: function(url, cb){
-            var xhr = cc.loader.getXMLHttpRequest(),
+    _createScript(jsPath, isAsync, cb) {
+        var d = document, s = document.createElement('script');
+        s.async = isAsync;
+        this._jsCache[jsPath] = true;
+        if (cc.game.config["noCache"] && typeof jsPath === "string") {
+            if (this._noCacheRex.test(jsPath))
+                s.src = jsPath + "&_t=" + (new Date() - 0);
+            else
+                s.src = jsPath + "?_t=" + (new Date() - 0);
+        } else {
+            s.src = jsPath;
+        }
+        var onLoad = () => {
+            s.parentNode.removeChild(s);
+            s.removeEventListener('load', onLoad, false);
+            cb();
+        };
+        s.addEventListener('load', onLoad, false);
+        s.addEventListener('error', () => {
+            s.parentNode.removeChild(s);
+            cb("Load " + jsPath + " failed!");
+        }, false);
+        d.body.appendChild(s);
+    }
+
+    _loadJs4Dependency(baseDir, jsList, index, cb) {
+        if (index >= jsList.length) {
+            if (cb) cb();
+            return;
+        }
+        this._createScript(cc.path.join(baseDir, jsList[index]), false, (err) => {
+            if (err) return cb(err);
+            this._loadJs4Dependency(baseDir, jsList, index + 1, cb);
+        });
+    }
+
+    _loadJsImg() {
+        var d = document, jsLoadingImg = d.getElementById("cocos2d_loadJsImg");
+        if (!jsLoadingImg) {
+            jsLoadingImg = document.createElement('img');
+
+            if (cc._loadingImage)
+                jsLoadingImg.src = cc._loadingImage;
+
+            var canvasNode = d.getElementById(cc.game.config["id"]);
+            canvasNode.style.backgroundColor = "transparent";
+            canvasNode.parentNode.appendChild(jsLoadingImg);
+
+            var canvasStyle = getComputedStyle ? getComputedStyle(canvasNode) : canvasNode.currentStyle;
+            if (!canvasStyle)
+                canvasStyle = {width: canvasNode.width, height: canvasNode.height};
+            jsLoadingImg.style.left = canvasNode.offsetLeft + (parseFloat(canvasStyle.width) - jsLoadingImg.width) / 2 + "px";
+            jsLoadingImg.style.top = canvasNode.offsetTop + (parseFloat(canvasStyle.height) - jsLoadingImg.height) / 2 + "px";
+            jsLoadingImg.style.position = "absolute";
+        }
+        return jsLoadingImg;
+    }
+    //@MODE_END DEV
+
+    /**
+     * Load a single resource as txt.
+     * @param {string} url
+     * @param {function} [cb] arguments are : err, txt
+     */
+    loadTxt(url, cb) {
+        if (!cc._isNodeJs) {
+            var xhr = this.getXMLHttpRequest(),
                 errInfo = "load " + url + " failed!";
             xhr.open("GET", url, true);
-            xhr.responseType = "arraybuffer";
-
-            var loadCallback = function () {
-                xhr.removeEventListener('load', loadCallback);
-                xhr.removeEventListener('error', errorCallback);
-                if (xhr._timeoutId >= 0) {
-                    clearTimeout(xhr._timeoutId);
+            if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
+                // IE-specific logic here
+                xhr.setRequestHeader("Accept-Charset", "utf-8");
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState === 4)
+                        (xhr.status === 200||xhr.status === 0) ? cb(null, xhr.responseText) : cb({status:xhr.status, errorMessage:errInfo}, null);
+                };
+            } else {
+                if (xhr.overrideMimeType) xhr.overrideMimeType("text\/plain; charset=utf-8");
+                var loadCallback = () => {
+                    xhr.removeEventListener('load', loadCallback);
+                    xhr.removeEventListener('error', errorCallback);
+                    if (xhr._timeoutId >= 0) {
+                        clearTimeout(xhr._timeoutId);
+                    }
+                    else {
+                        xhr.removeEventListener('timeout', timeoutCallback);
+                    }
+                    if (xhr.readyState === 4) {
+                        (xhr.status === 200||xhr.status === 0) ? cb(null, xhr.responseText) : cb({status:xhr.status, errorMessage:errInfo}, null);
+                    }
+                };
+                var errorCallback = () => {
+                    xhr.removeEventListener('load', loadCallback);
+                    xhr.removeEventListener('error', errorCallback);
+                    if (xhr._timeoutId >= 0) {
+                        clearTimeout(xhr._timeoutId);
+                    }
+                    else {
+                        xhr.removeEventListener('timeout', timeoutCallback);
+                    }
+                    cb({status: xhr.status, errorMessage: errInfo}, null);
+                };
+                var timeoutCallback = () => {
+                    xhr.removeEventListener('load', loadCallback);
+                    xhr.removeEventListener('error', errorCallback);
+                    if (xhr._timeoutId >= 0) {
+                        clearTimeout(xhr._timeoutId);
+                    }
+                    else {
+                        xhr.removeEventListener('timeout', timeoutCallback);
+                    }
+                    cb({status: xhr.status, errorMessage: "Request timeout: " + errInfo}, null);
+                };
+                xhr.addEventListener('load', loadCallback);
+                xhr.addEventListener('error', errorCallback);
+                if (xhr.ontimeout === undefined) {
+                    xhr._timeoutId = setTimeout(() => {
+                        timeoutCallback();
+                    }, xhr.timeout);
                 }
                 else {
-                    xhr.removeEventListener('timeout', timeoutCallback);
+                    xhr.addEventListener('timeout', timeoutCallback);
                 }
-                var arrayBuffer = xhr.response; // Note: not oReq.responseText
-                if (arrayBuffer) {
-                    window.msg = arrayBuffer;
-                }
-                if (xhr.readyState === 4) {
-                    (xhr.status === 200||xhr.status === 0) ? cb(null, xhr.response) : cb({status:xhr.status, errorMessage:errInfo}, null);
-                }
-            };
-            var errorCallback = function(){
-                xhr.removeEventListener('load', loadCallback);
-                xhr.removeEventListener('error', errorCallback);
-                if (xhr._timeoutId >= 0) {
-                    clearTimeout(xhr._timeoutId);
-                }
-                else {
-                    xhr.removeEventListener('timeout', timeoutCallback);
-                }
-                cb({status:xhr.status, errorMessage:errInfo}, null);
-            };
-            var timeoutCallback = function () {
-                xhr.removeEventListener('load', loadCallback);
-                xhr.removeEventListener('error', errorCallback);
-                if (xhr._timeoutId >= 0) {
-                    clearTimeout(xhr._timeoutId);
-                }
-                else {
-                    xhr.removeEventListener('timeout', timeoutCallback);
-                }
-                cb({status: xhr.status, errorMessage: "Request timeout: " + errInfo}, null);
-            };
-            xhr.addEventListener('load', loadCallback);
-            xhr.addEventListener('error', errorCallback);
-            if (xhr.ontimeout === undefined) {
-                xhr._timeoutId = setTimeout(function () {
-                    timeoutCallback();
-                }, xhr.timeout);
-            }
-            else {
-                xhr.addEventListener('timeout', timeoutCallback);
             }
             xhr.send(null);
-        },
-
-        /**
-         * Load a single resource as json.
-         * @param {string} url
-         * @param {function} [cb] arguments are : err, json
-         */
-        loadJson: function (url, cb) {
-            this.loadTxt(url, function (err, txt) {
-                if (err) {
-                    cb(err);
-                }
-                else {
-                    try {
-                        var result = JSON.parse(txt);
-                    }
-                    catch (e) {
-                        throw new Error("parse json [" + url + "] failed : " + e);
-                        return;
-                    }
-                    cb(null, result);
-                }
+        } else {
+            var fs = require("fs");
+            fs.readFile(url, (err, data) => {
+                err ? cb(err) : cb(null, data.toString());
             });
-        },
+        }
+    }
 
-        _checkIsImageURL: function (url) {
-            var ext = /(\.png)|(\.jpg)|(\.bmp)|(\.jpeg)|(\.gif)/.exec(url);
-            return (ext != null);
-        },
-        /**
-         * Load a single image.
-         * @param {!string} url
-         * @param {object} [option]
-         * @param {function} callback
-         * @returns {Image}
-         */
-        loadImg: function (url, option, callback, img) {
-            var opt = {
-                isCrossOrigin: true
-            };
-            if (callback !== undefined)
-                opt.isCrossOrigin = option.isCrossOrigin === undefined ? opt.isCrossOrigin : option.isCrossOrigin;
-            else if (option !== undefined)
-                callback = option;
+    loadCsb(url, cb) {
+        var xhr = this.getXMLHttpRequest(),
+            errInfo = "load " + url + " failed!";
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
 
-            var texture = this.getRes(url);
-            if (texture) {
-                callback && callback(null, texture);
-                return null;
+        var loadCallback = () => {
+            xhr.removeEventListener('load', loadCallback);
+            xhr.removeEventListener('error', errorCallback);
+            if (xhr._timeoutId >= 0) {
+                clearTimeout(xhr._timeoutId);
             }
+            else {
+                xhr.removeEventListener('timeout', timeoutCallback);
+            }
+            var arrayBuffer = xhr.response; // Note: not oReq.responseText
+            if (arrayBuffer) {
+                window.msg = arrayBuffer;
+            }
+            if (xhr.readyState === 4) {
+                (xhr.status === 200||xhr.status === 0) ? cb(null, xhr.response) : cb({status:xhr.status, errorMessage:errInfo}, null);
+            }
+        };
+        var errorCallback = () => {
+            xhr.removeEventListener('load', loadCallback);
+            xhr.removeEventListener('error', errorCallback);
+            if (xhr._timeoutId >= 0) {
+                clearTimeout(xhr._timeoutId);
+            }
+            else {
+                xhr.removeEventListener('timeout', timeoutCallback);
+            }
+            cb({status:xhr.status, errorMessage:errInfo}, null);
+        };
+        var timeoutCallback = () => {
+            xhr.removeEventListener('load', loadCallback);
+            xhr.removeEventListener('error', errorCallback);
+            if (xhr._timeoutId >= 0) {
+                clearTimeout(xhr._timeoutId);
+            }
+            else {
+                xhr.removeEventListener('timeout', timeoutCallback);
+            }
+            cb({status: xhr.status, errorMessage: "Request timeout: " + errInfo}, null);
+        };
+        xhr.addEventListener('load', loadCallback);
+        xhr.addEventListener('error', errorCallback);
+        if (xhr.ontimeout === undefined) {
+            xhr._timeoutId = setTimeout(() => {
+                timeoutCallback();
+            }, xhr.timeout);
+        }
+        else {
+            xhr.addEventListener('timeout', timeoutCallback);
+        }
+        xhr.send(null);
+    }
 
-            var queue = _queue[url];
+    /**
+     * Load a single resource as json.
+     * @param {string} url
+     * @param {function} [cb] arguments are : err, json
+     */
+    loadJson(url, cb) {
+        this.loadTxt(url, (err, txt) => {
+            if (err) {
+                cb(err);
+            }
+            else {
+                try {
+                    var result = JSON.parse(txt);
+                }
+                catch (e) {
+                    throw new Error("parse json [" + url + "] failed : " + e);
+                    return;
+                }
+                cb(null, result);
+            }
+        });
+    }
+
+    _checkIsImageURL(url) {
+        var ext = /(\.png)|(\.jpg)|(\.bmp)|(\.jpeg)|(\.gif)/.exec(url);
+        return (ext != null);
+    }
+
+    /**
+     * Load a single image.
+     * @param {!string} url
+     * @param {object} [option]
+     * @param {function} callback
+     * @returns {Image}
+     */
+    loadImg(url, option, callback, img) {
+        var opt = {
+            isCrossOrigin: true
+        };
+        if (callback !== undefined)
+            opt.isCrossOrigin = option.isCrossOrigin === undefined ? opt.isCrossOrigin : option.isCrossOrigin;
+        else if (option !== undefined)
+            callback = option;
+
+        var texture = this.getRes(url);
+        if (texture) {
+            callback && callback(null, texture);
+            return null;
+        }
+
+        var queue = this._queue[url];
+        if (queue) {
+            queue.callbacks.push(callback);
+            return queue.img;
+        }
+
+        img = img || imagePool.get();
+        if (opt.isCrossOrigin && location.origin !== "file://")
+            img.crossOrigin = "Anonymous";
+        else
+            img.crossOrigin = null;
+
+        var loadCallback = () => {
+            img.removeEventListener('load', loadCallback, false);
+            img.removeEventListener('error', errorCallback, false);
+
+            var queue = this._queue[url];
             if (queue) {
-                queue.callbacks.push(callback);
-                return queue.img;
+                var callbacks = queue.callbacks;
+                for (var i = 0; i < callbacks.length; ++i) {
+                    var cb = callbacks[i];
+                    if (cb) {
+                        cb(null, img);
+                    }
+                }
+                queue.img = null;
+                delete this._queue[url];
             }
 
-            img = img || imagePool.get();
-            if (opt.isCrossOrigin && location.origin !== "file://")
-                img.crossOrigin = "Anonymous";
-            else
-                img.crossOrigin = null;
+            if (window.ENABLE_IMAEG_POOL && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+                imagePool.put(img);
+            }
+        };
 
-            var loadCallback = function () {
-                this.removeEventListener('load', loadCallback, false);
-                this.removeEventListener('error', errorCallback, false);
+        var errorCallback = () => {
+            img.removeEventListener('load', loadCallback, false);
+            img.removeEventListener('error', errorCallback, false);
 
-                var queue = _queue[url];
+            if (window.location.protocol !== 'https:' && img.crossOrigin && img.crossOrigin.toLowerCase() === "anonymous") {
+                opt.isCrossOrigin = false;
+                this.release(url);
+                cc.loader.loadImg(url, opt, callback, img);
+            } else {
+                var queue = this._queue[url];
                 if (queue) {
                     var callbacks = queue.callbacks;
                     for (var i = 0; i < callbacks.length; ++i) {
                         var cb = callbacks[i];
                         if (cb) {
-                            cb(null, img);
+                            cb("load image failed");
                         }
                     }
                     queue.img = null;
-                    delete _queue[url];
+                    delete this._queue[url];
                 }
 
-                if (window.ENABLE_IMAEG_POOL && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+                if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
                     imagePool.put(img);
                 }
-            };
-
-            var self = this;
-            var errorCallback = function () {
-                this.removeEventListener('load', loadCallback, false);
-                this.removeEventListener('error', errorCallback, false);
-
-                if (window.location.protocol !== 'https:' && img.crossOrigin && img.crossOrigin.toLowerCase() === "anonymous") {
-                    opt.isCrossOrigin = false;
-                    self.release(url);
-                    cc.loader.loadImg(url, opt, callback, img);
-                } else {
-                    var queue = _queue[url];
-                    if (queue) {
-                        var callbacks = queue.callbacks;
-                        for (var i = 0; i < callbacks.length; ++i) {
-                            var cb = callbacks[i];
-                            if (cb) {
-                                cb("load image failed");
-                            }
-                        }
-                        queue.img = null;
-                        delete _queue[url];
-                    }
-
-                    if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-                        imagePool.put(img);
-                    }
-                }
-            };
-
-            _queue[url] = {
-                img: img,
-                callbacks: callback ? [callback] : []
-            };
-
-            img.addEventListener("load", loadCallback);
-            img.addEventListener("error", errorCallback);
-            img.src = url;
-            return img;
-        },
-
-        /**
-         * Iterator function to load res
-         * @param {object} item
-         * @param {number} index
-         * @param {function} [cb]
-         * @returns {*}
-         * @private
-         */
-        _loadResIterator: function (item, index, cb) {
-            var self = this, url = null;
-            var type = item.type;
-            if (type) {
-                type = "." + type.toLowerCase();
-                url = item.src ? item.src : item.name + type;
-            } else {
-                url = item;
-                type = cc.path.extname(url);
             }
+        };
 
-            var obj = self.getRes(url);
-            if (obj)
-                return cb(null, obj);
-            var loader = null;
-            if (type) {
-                loader = _register[type.toLowerCase()];
-            }
-            if (!loader) {
-                cc.error("loader for [" + type + "] doesn't exist!");
-                return cb();
-            }
-            var realUrl = url;
-            if (!_urlRegExp.test(url)) {
-                var basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
-                realUrl = self.getUrl(basePath, url);
-            }
+        this._queue[url] = {
+            img: img,
+            callbacks: callback ? [callback] : []
+        };
 
-            if (cc.game.config["noCache"] && typeof realUrl === "string") {
-                if (self._noCacheRex.test(realUrl))
-                    realUrl += "&_t=" + (new Date() - 0);
-                else
-                    realUrl += "?_t=" + (new Date() - 0);
-            }
-            loader.load(realUrl, url, item, function (err, data) {
-                if (err) {
-                    cc.log(err);
-                    self.cache[url] = null;
-                    delete self.cache[url];
-                    cb({status: 520, errorMessage: err}, null);
-                } else {
-                    self.cache[url] = data;
-                    cb(null, data);
-                }
-            });
-        },
-        _noCacheRex: /\?/,
+        img.addEventListener("load", loadCallback);
+        img.addEventListener("error", errorCallback);
+        img.src = url;
+        return img;
+    }
 
-        /**
-         * Get url with basePath.
-         * @param {string} basePath
-         * @param {string} [url]
-         * @returns {*}
-         */
-        getUrl: function (basePath, url) {
-            var self = this, path = cc.path;
-            if (basePath !== undefined && url === undefined) {
-                url = basePath;
-                var type = path.extname(url);
-                type = type ? type.toLowerCase() : "";
-                var loader = _register[type];
-                if (!loader)
-                    basePath = self.resPath;
-                else
-                    basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
-            }
-            url = cc.path.join(basePath || "", url);
-            if (url.match(/[\/(\\\\)]lang[\/(\\\\)]/i)) {
-                if (_langPathCache[url])
-                    return _langPathCache[url];
-                var extname = path.extname(url) || "";
-                url = _langPathCache[url] = url.substring(0, url.length - extname.length) + "_" + cc.sys.language + extname;
-            }
-            return url;
-        },
-
-        /**
-         * Load resources then call the callback.
-         * @param {string} resources
-         * @param {function} [option] callback or trigger
-         * @param {function|Object} [loadCallback]
-         * @return {cc.AsyncPool}
-         */
-        load: function (resources, option, loadCallback) {
-            var self = this;
-            var len = arguments.length;
-            if (len === 0)
-                throw new Error("arguments error!");
-
-            if (len === 3) {
-                if (typeof option === "function") {
-                    if (typeof loadCallback === "function")
-                        option = {trigger: option, cb: loadCallback};
-                    else
-                        option = {cb: option, cbTarget: loadCallback};
-                }
-            } else if (len === 2) {
-                if (typeof option === "function")
-                    option = {cb: option};
-            } else if (len === 1) {
-                option = {};
-            }
-
-            if (!(resources instanceof Array))
-                resources = [resources];
-            var asyncPool = new cc.AsyncPool(
-                resources, cc.CONCURRENCY_HTTP_REQUEST_COUNT,
-                function (value, index, AsyncPoolCallback, aPool) {
-                    self._loadResIterator(value, index, function (err) {
-                        var arr = Array.prototype.slice.call(arguments, 1);
-                        if (option.trigger)
-                            option.trigger.call(option.triggerTarget, arr[0], aPool.size, aPool.finishedSize);   //call trigger
-                        AsyncPoolCallback(err, arr[0]);
-                    });
-                },
-                option.cb, option.cbTarget);
-            asyncPool.flow();
-            return asyncPool;
-        },
-
-        _handleAliases: function (fileNames, cb) {
-            var self = this;
-            var resList = [];
-            for (var key in fileNames) {
-                var value = fileNames[key];
-                _aliases[key] = value;
-                resList.push(value);
-            }
-            this.load(resList, cb);
-        },
-
-        /**
-         * <p>
-         *     Loads alias map from the contents of a filename.                                        <br/>
-         *                                                                                                                 <br/>
-         *     @note The plist file name should follow the format below:                                                   <br/>
-         *     <?xml version="1.0" encoding="UTF-8"?>                                                                      <br/>
-         *         <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">  <br/>
-         *             <plist version="1.0">                                                                               <br/>
-         *                 <dict>                                                                                          <br/>
-         *                     <key>filenames</key>                                                                        <br/>
-         *                     <dict>                                                                                      <br/>
-         *                         <key>sounds/click.wav</key>                                                             <br/>
-         *                         <string>sounds/click.caf</string>                                                       <br/>
-         *                         <key>sounds/endgame.wav</key>                                                           <br/>
-         *                         <string>sounds/endgame.caf</string>                                                     <br/>
-         *                         <key>sounds/gem-0.wav</key>                                                             <br/>
-         *                         <string>sounds/gem-0.caf</string>                                                       <br/>
-         *                     </dict>                                                                                     <br/>
-         *                     <key>metadata</key>                                                                         <br/>
-         *                     <dict>                                                                                      <br/>
-         *                         <key>version</key>                                                                      <br/>
-         *                         <integer>1</integer>                                                                    <br/>
-         *                     </dict>                                                                                     <br/>
-         *                 </dict>                                                                                         <br/>
-         *              </plist>                                                                                           <br/>
-         * </p>
-         * @param {String} url  The plist file name.
-         * @param {Function} [callback]
-         */
-        loadAliases: function (url, callback) {
-            var self = this, dict = self.getRes(url);
-            if (!dict) {
-                self.load(url, function (err, results) {
-                    self._handleAliases(results[0]["filenames"], callback);
-                });
-            } else
-                self._handleAliases(dict["filenames"], callback);
-        },
-
-        /**
-         * Register a resource loader into loader.
-         * @param {string} extNames
-         * @param {function} loader
-         */
-        register: function (extNames, loader) {
-            if (!extNames || !loader) return;
-            var self = this;
-            if (typeof extNames === "string")
-                return _register[extNames.trim().toLowerCase()] = loader;
-            for (var i = 0, li = extNames.length; i < li; i++) {
-                _register["." + extNames[i].trim().toLowerCase()] = loader;
-            }
-        },
-
-        /**
-         * Get resource data by url.
-         * @param url
-         * @returns {*}
-         */
-        getRes: function (url) {
-            return this.cache[url] || this.cache[_aliases[url]];
-        },
-
-        /**
-         * Get aliase by url.
-         * @param url
-         * @returns {*}
-         */
-        _getAliase: function (url) {
-            return _aliases[url];
-        },
-
-        /**
-         * Release the cache of resource by url.
-         * @param url
-         */
-        release: function (url) {
-            var cache = this.cache;
-            var queue = _queue[url];
-            if (queue) {
-                queue.img = null;
-                delete _queue[url];
-            }
-            delete cache[url];
-            delete cache[_aliases[url]];
-            delete _aliases[url];
-        },
-
-        /**
-         * Resource cache of all resources.
-         */
-        releaseAll: function () {
-            var locCache = this.cache;
-            for (var key in locCache)
-                delete locCache[key];
-            for (var key in _aliases)
-                delete _aliases[key];
+    /**
+     * Iterator function to load res
+     * @param {object} item
+     * @param {number} index
+     * @param {function} [cb]
+     * @returns {*}
+     * @private
+     */
+    _loadResIterator(item, index, cb) {
+        var url = null;
+        var type = item.type;
+        if (type) {
+            type = "." + type.toLowerCase();
+            url = item.src ? item.src : item.name + type;
+        } else {
+            url = item;
+            type = cc.path.extname(url);
         }
-    };
-})();
+
+        var obj = this.getRes(url);
+        if (obj)
+            return cb(null, obj);
+        var loader = null;
+        if (type) {
+            loader = this._register[type.toLowerCase()];
+        }
+        if (!loader) {
+            cc.error("loader for [" + type + "] doesn't exist!");
+            return cb();
+        }
+        var realUrl = url;
+        if (!this._urlRegExp.test(url)) {
+            var basePath = loader.getBasePath ? loader.getBasePath() : this.resPath;
+            realUrl = this.getUrl(basePath, url);
+        }
+
+        if (cc.game.config["noCache"] && typeof realUrl === "string") {
+            if (this._noCacheRex.test(realUrl))
+                realUrl += "&_t=" + (new Date() - 0);
+            else
+                realUrl += "?_t=" + (new Date() - 0);
+        }
+        loader.load(realUrl, url, item, (err, data) => {
+            if (err) {
+                cc.log(err);
+                this.cache[url] = null;
+                delete this.cache[url];
+                cb({status: 520, errorMessage: err}, null);
+            } else {
+                this.cache[url] = data;
+                cb(null, data);
+            }
+        });
+    }
+
+    /**
+     * Get url with basePath.
+     * @param {string} basePath
+     * @param {string} [url]
+     * @returns {*}
+     */
+    getUrl(basePath, url) {
+        var path = cc.path;
+        if (basePath !== undefined && url === undefined) {
+            url = basePath;
+            var type = path.extname(url);
+            type = type ? type.toLowerCase() : "";
+            var loader = this._register[type];
+            if (!loader)
+                basePath = this.resPath;
+            else
+                basePath = loader.getBasePath ? loader.getBasePath() : this.resPath;
+        }
+        url = cc.path.join(basePath || "", url);
+        if (url.match(/[\/(\\\\)]lang[\/(\\\\)]/i)) {
+            if (this._langPathCache[url])
+                return this._langPathCache[url];
+            var extname = path.extname(url) || "";
+            url = this._langPathCache[url] = url.substring(0, url.length - extname.length) + "_" + cc.sys.language + extname;
+        }
+        return url;
+    }
+
+    /**
+     * Load resources then call the callback.
+     * @param {string} resources
+     * @param {function} [option] callback or trigger
+     * @param {function|Object} [loadCallback]
+     * @return {cc.AsyncPool}
+     */
+    load(resources, option, loadCallback) {
+        var len = arguments.length;
+        if (len === 0)
+            throw new Error("arguments error!");
+
+        if (len === 3) {
+            if (typeof option === "function") {
+                if (typeof loadCallback === "function")
+                    option = {trigger: option, cb: loadCallback};
+                else
+                    option = {cb: option, cbTarget: loadCallback};
+            }
+        } else if (len === 2) {
+            if (typeof option === "function")
+                option = {cb: option};
+        } else if (len === 1) {
+            option = {};
+        }
+
+        if (!(resources instanceof Array))
+            resources = [resources];
+        var asyncPool = new cc.AsyncPool(
+            resources, cc.CONCURRENCY_HTTP_REQUEST_COUNT,
+            (value, index, AsyncPoolCallback, aPool) => {
+                this._loadResIterator(value, index, (err, ...rest) => {
+                    if (option.trigger)
+                        option.trigger.call(option.triggerTarget, rest[0], aPool.size, aPool.finishedSize);
+                    AsyncPoolCallback(err, rest[0]);
+                });
+            },
+            option.cb, option.cbTarget);
+        asyncPool.flow();
+        return asyncPool;
+    }
+
+    _handleAliases(fileNames, cb) {
+        var resList = [];
+        for (var key in fileNames) {
+            var value = fileNames[key];
+            this._aliases[key] = value;
+            resList.push(value);
+        }
+        this.load(resList, cb);
+    }
+
+    /**
+     * <p>
+     *     Loads alias map from the contents of a filename.                                        <br/>
+     *                                                                                                                 <br/>
+     *     @note The plist file name should follow the format below:                                                   <br/>
+     *     <?xml version="1.0" encoding="UTF-8"?>                                                                      <br/>
+     *         <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">  <br/>
+     *             <plist version="1.0">                                                                               <br/>
+     *                 <dict>                                                                                          <br/>
+     *                     <key>filenames</key>                                                                        <br/>
+     *                     <dict>                                                                                      <br/>
+     *                         <key>sounds/click.wav</key>                                                             <br/>
+     *                         <string>sounds/click.caf</string>                                                       <br/>
+     *                         <key>sounds/endgame.wav</key>                                                           <br/>
+     *                         <string>sounds/endgame.caf</string>                                                     <br/>
+     *                         <key>sounds/gem-0.wav</key>                                                             <br/>
+     *                         <string>sounds/gem-0.caf</string>                                                       <br/>
+     *                     </dict>                                                                                     <br/>
+     *                     <key>metadata</key>                                                                         <br/>
+     *                     <dict>                                                                                      <br/>
+     *                         <key>version</key>                                                                      <br/>
+     *                         <integer>1</integer>                                                                    <br/>
+     *                     </dict>                                                                                     <br/>
+     *                 </dict>                                                                                         <br/>
+     *              </plist>                                                                                           <br/>
+     * </p>
+     * @param {String} url  The plist file name.
+     * @param {Function} [callback]
+     */
+    loadAliases(url, callback) {
+        var dict = this.getRes(url);
+        if (!dict) {
+            this.load(url, (err, results) => {
+                this._handleAliases(results[0]["filenames"], callback);
+            });
+        } else
+            this._handleAliases(dict["filenames"], callback);
+    }
+
+    /**
+     * Register a resource loader into loader.
+     * @param {string} extNames
+     * @param {function} loader
+     */
+    register(extNames, loader) {
+        if (!extNames || !loader) return;
+        if (typeof extNames === "string")
+            return this._register[extNames.trim().toLowerCase()] = loader;
+        for (var i = 0, li = extNames.length; i < li; i++) {
+            this._register["." + extNames[i].trim().toLowerCase()] = loader;
+        }
+    }
+
+    /**
+     * Get resource data by url.
+     * @param url
+     * @returns {*}
+     */
+    getRes(url) {
+        return this.cache[url] || this.cache[this._aliases[url]];
+    }
+
+    /**
+     * Get aliase by url.
+     * @param url
+     * @returns {*}
+     */
+    _getAliase(url) {
+        return this._aliases[url];
+    }
+
+    /**
+     * Release the cache of resource by url.
+     * @param url
+     */
+    release(url) {
+        var cache = this.cache;
+        var queue = this._queue[url];
+        if (queue) {
+            queue.img = null;
+            delete this._queue[url];
+        }
+        delete cache[url];
+        delete cache[this._aliases[url]];
+        delete this._aliases[url];
+    }
+
+    /**
+     * Resource cache of all resources.
+     */
+    releaseAll() {
+        var locCache = this.cache;
+        for (var key in locCache)
+            delete locCache[key];
+        for (var key in this._aliases)
+            delete this._aliases[key];
+    }
+}();
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
 
 /**
@@ -2147,7 +2139,7 @@ function _load(config) {
     var self = this;
     var CONFIG_KEY = cc.game.CONFIG_KEY, engineDir = config[CONFIG_KEY.engineDir], loader = cc.loader;
 
-    if (cc.Class) {
+    if (cc.NewClass) {
         // Single file loaded
         _afterEngineLoaded(config);
     } else {
@@ -2215,80 +2207,80 @@ cc.initEngine = function (config, cb) {
  * @name cc.game
  *
  */
-cc.game = /** @lends cc.game# */{
+cc.game = new class Game {
     /**
      * Debug mode: No debugging. {@static}
      * @const {Number}
      * @static
      */
-    DEBUG_MODE_NONE: 0,
+    DEBUG_MODE_NONE = 0;
     /**
      * Debug mode: Info, warning, error to console.
      * @const {Number}
      * @static
      */
-    DEBUG_MODE_INFO: 1,
+    DEBUG_MODE_INFO = 1;
     /**
      * Debug mode: Warning, error to console.
      * @const {Number}
      * @static
      */
-    DEBUG_MODE_WARN: 2,
+    DEBUG_MODE_WARN = 2;
     /**
      * Debug mode: Error to console.
      * @const {Number}
      * @static
      */
-    DEBUG_MODE_ERROR: 3,
+    DEBUG_MODE_ERROR = 3;
     /**
      * Debug mode: Info, warning, error to web page.
      * @const {Number}
      * @static
      */
-    DEBUG_MODE_INFO_FOR_WEB_PAGE: 4,
+    DEBUG_MODE_INFO_FOR_WEB_PAGE = 4;
     /**
      * Debug mode: Warning, error to web page.
      * @const {Number}
      * @static
      */
-    DEBUG_MODE_WARN_FOR_WEB_PAGE: 5,
+    DEBUG_MODE_WARN_FOR_WEB_PAGE = 5;
     /**
      * Debug mode: Error to web page.
      * @const {Number}
      * @static
      */
-    DEBUG_MODE_ERROR_FOR_WEB_PAGE: 6,
+    DEBUG_MODE_ERROR_FOR_WEB_PAGE = 6;
 
     /**
      * Event that is fired when the game is hidden.
      * @constant {String}
      */
-    EVENT_HIDE: "game_on_hide",
+    EVENT_HIDE = "game_on_hide";
     /**
      * Event that is fired when the game is shown.
      * @constant {String}
      */
-    EVENT_SHOW: "game_on_show",
+    EVENT_SHOW = "game_on_show";
     /**
      * Event that is fired when the game is resized.
      * @constant {String}
      */
-    EVENT_RESIZE: "game_on_resize",
+    EVENT_RESIZE = "game_on_resize";
     /**
      * Event that is fired when the renderer is done being initialized.
      * @constant {String}
      */
-    EVENT_RENDERER_INITED: "renderer_inited",
+    EVENT_RENDERER_INITED = "renderer_inited";
 
     /** @constant {Number} */
-    RENDER_TYPE_CANVAS: 0,
+    RENDER_TYPE_CANVAS = 0;
     /** @constant {Number} */
-    RENDER_TYPE_WEBGL: 1,
+    RENDER_TYPE_WEBGL = 1;
     /** @constant {Number} */
-    RENDER_TYPE_OPENGL: 2,
+    RENDER_TYPE_OPENGL = 2;
 
-    _eventHide: null,
-    _eventShow: null,
+    _eventHide = null;
+    _eventShow = null;
 
     /**
      * Keys found in project.json.
@@ -2306,7 +2298,7 @@ cc.game = /** @lends cc.game# */{
      * @prop {String} renderMode        - Sets the renderer type, only useful on web, 0: Automatic, 1: Canvas, 2: WebGL
      * @prop {String} jsList            - Sets the list of js files in your game.
      */
-    CONFIG_KEY: {
+    CONFIG_KEY = {
         width: "width",
         height: "height",
         engineDir: "engineDir",
@@ -2318,55 +2310,55 @@ cc.game = /** @lends cc.game# */{
         id: "id",
         renderMode: "renderMode",
         jsList: "jsList"
-    },
+    };
 
     // states
-    _paused: true,//whether the game is paused
-    _configLoaded: false,//whether config loaded
-    _prepareCalled: false,//whether the prepare function has been called
-    _prepared: false,//whether the engine has prepared
-    _rendererInitialized: false,
+    _paused = true;
+    _configLoaded = false;
+    _prepareCalled = false;
+    _prepared = false;
+    _rendererInitialized = false;
 
-    _renderContext: null,
+    _renderContext = null;
 
-    _intervalId: null,//interval target of main
+    _intervalId = null;
 
-    _lastTime: null,
-    _frameTime: null,
+    _lastTime = null;
+    _frameTime = null;
 
     /**
      * The outer frame of the game canvas, parent of cc.container
      * @type {Object}
      */
-    frame: null,
+    frame = null;
     /**
      * The container of game canvas, equals to cc.container
      * @type {Object}
      */
-    container: null,
+    container = null;
     /**
      * The canvas of the game, equals to cc._canvas
      * @type {Object}
      */
-    canvas: null,
+    canvas = null;
 
     /**
      * Config of game
      * @type {Object}
      */
-    config: null,
+    config = null;
 
     /**
      * Callback when the scripts of engine have been load.
      * @type {Function|null}
      */
-    onStart: null,
+    onStart = null;
 
     /**
      * Callback when game exits.
      * @type {Function|null}
      */
-    onStop: null,
+    onStop = null;
 
 //@Public Methods
 
@@ -2375,28 +2367,28 @@ cc.game = /** @lends cc.game# */{
      * Set frameRate of game.
      * @param frameRate
      */
-    setFrameRate: function (frameRate) {
-        var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY;
+    setFrameRate(frameRate) {
+        var config = this.config, CONFIG_KEY = this.CONFIG_KEY;
         config[CONFIG_KEY.frameRate] = frameRate;
-        if (self._intervalId)
-            window.cancelAnimationFrame(self._intervalId);
-        self._intervalId = 0;
-        self._paused = true;
-        self._setAnimFrame();
-        self._runMainLoop();
-    },
+        if (this._intervalId)
+            window.cancelAnimationFrame(this._intervalId);
+        this._intervalId = 0;
+        this._paused = true;
+        this._setAnimFrame();
+        this._runMainLoop();
+    }
 
     /**
      * Run the game frame by frame.
      */
-    step: function () {
+    step() {
         cc.director.mainLoop();
-    },
+    }
 
     /**
      * Pause the game.
      */
-    pause: function () {
+    pause() {
         if (this._paused) return;
         this._paused = true;
         // Pause audio engine
@@ -2407,12 +2399,12 @@ cc.game = /** @lends cc.game# */{
         if (this._intervalId)
             window.cancelAnimationFrame(this._intervalId);
         this._intervalId = 0;
-    },
+    }
 
     /**
      * Resume the game from pause.
      */
-    resume: function () {
+    resume() {
         if (!this._paused) return;
         this._paused = false;
         // Resume audio engine
@@ -2421,47 +2413,46 @@ cc.game = /** @lends cc.game# */{
         }
         // Resume main loop
         this._runMainLoop();
-    },
+    }
 
     /**
      * Check whether the game is paused.
      */
-    isPaused: function () {
+    isPaused() {
         return this._paused;
-    },
+    }
 
     /**
      * Restart game.
      */
-    restart: function () {
+    restart() {
         cc.director.popToSceneStackLevel(0);
         // Clean up audio
         cc.audioEngine && cc.audioEngine.end();
 
         cc.game.onStart();
-    },
+    }
 
     /**
      * End game, it will close the game window
      */
-    end: function () {
+    end() {
         close();
-    },
+    }
 
 //  @Game loading
     /**
      * Prepare game.
      * @param cb
      */
-    prepare: function (cb) {
-        var self = this,
-            config = self.config,
-            CONFIG_KEY = self.CONFIG_KEY;
+    prepare(cb) {
+        var config = this.config,
+            CONFIG_KEY = this.CONFIG_KEY;
 
         // Config loaded
         if (!this._configLoaded) {
-            this._loadConfig(function () {
-                self.prepare(cb);
+            this._loadConfig(() => {
+                this.prepare(cb);
             });
             return;
         }
@@ -2513,9 +2504,9 @@ cc.game = /** @lends cc.game# */{
             // Load game scripts
             var jsList = config[CONFIG_KEY.jsList];
             if (jsList) {
-                cc.loader.loadJsWithImg(jsList, function (err) {
+                cc.loader.loadJsWithImg(jsList, (err) => {
                     if (err) throw new Error(err);
-                    self._prepared = true;
+                    this._prepared = true;
                     if (cb) cb();
                 });
             }
@@ -2527,17 +2518,17 @@ cc.game = /** @lends cc.game# */{
         }
 
         // Engine not loaded yet
-        cc.initEngine(this.config, function () {
-            self.prepare(cb);
+        cc.initEngine(this.config, () => {
+            this.prepare(cb);
         });
-    },
+    }
 
     /**
      * Run game with configuration object and onStart function.
      * @param {Object|Function} [config] Pass configuration object or onStart function
      * @param {onStart} [onStart] onStart function to be executed after game initialized
      */
-    run: function (config, onStart) {
+    run(config, onStart) {
         if (typeof config === 'function') {
             cc.game.onStart = config;
         }
@@ -2556,12 +2547,12 @@ cc.game = /** @lends cc.game# */{
         }
 
         this.prepare(cc.game.onStart && cc.game.onStart.bind(cc.game));
-    },
+    }
 
 //@Private Methods
 
 //  @Time ticker section
-    _setAnimFrame: function () {
+    _setAnimFrame() {
         this._lastTime = new Date();
         var frameRate = cc.game.config[cc.game.CONFIG_KEY.frameRate];
         this._frameTime = 1000 / frameRate;
@@ -2588,46 +2579,49 @@ cc.game = /** @lends cc.game# */{
             window.oCancelAnimationFrame ||
             this._ctTime;
         }
-    },
-    _stTime: function (callback) {
+    }
+
+    _stTime = (callback) => {
         var currTime = new Date().getTime();
         var timeToCall = Math.max(0, cc.game._frameTime - (currTime - cc.game._lastTime));
-        var id = window.setTimeout(function() { callback(); },
+        var id = window.setTimeout(() => { callback(); },
             timeToCall);
         cc.game._lastTime = currTime + timeToCall;
         return id;
-    },
-    _ctTime: function (id) {
+    };
+
+    _ctTime = (id) => {
         window.clearTimeout(id);
-    },
+    };
+
     //Run game.
-    _runMainLoop: function () {
-        var self = this, callback, config = self.config, CONFIG_KEY = self.CONFIG_KEY,
+    _runMainLoop() {
+        var config = this.config, CONFIG_KEY = this.CONFIG_KEY,
             director = cc.director,
             skip = true, frameRate = config[CONFIG_KEY.frameRate];
 
         director.setDisplayStats(config[CONFIG_KEY.showFPS]);
 
-        callback = function () {
-            if (!self._paused) {
+        var callback = () => {
+            if (!this._paused) {
                 if (frameRate === 30) {
                     if (skip = !skip) {
-                        self._intervalId = window.requestAnimFrame(callback);
+                        this._intervalId = window.requestAnimFrame(callback);
                         return;
                     }
                 }
 
                 director.mainLoop();
-                self._intervalId = window.requestAnimFrame(callback);
+                this._intervalId = window.requestAnimFrame(callback);
             }
         };
 
-        self._intervalId = window.requestAnimFrame(callback);
-        self._paused = false;
-    },
+        this._intervalId = window.requestAnimFrame(callback);
+        this._paused = false;
+    }
 
 //  @Game loading section
-    _loadConfig: function (cb) {
+    _loadConfig(cb) {
         // Load config
         var config = this.config || document["ccConfig"];
         // Already loaded or Load from document.ccConfig
@@ -2644,10 +2638,9 @@ cc.game = /** @lends cc.game# */{
                     break;
                 }
             }
-            var self = this;
-            var loaded = function (err, txt) {
+            var loaded = (err, txt) => {
                 var data = JSON.parse(txt);
-                self._initConfig(data);
+                this._initConfig(data);
                 cb && cb();
             };
             var _src, txt, _resPath;
@@ -2664,9 +2657,9 @@ cc.game = /** @lends cc.game# */{
                 cc.loader.loadTxt("project.json", loaded);
             }
         }
-    },
+    }
 
-    _initConfig: function (config) {
+    _initConfig(config) {
         var CONFIG_KEY = this.CONFIG_KEY,
             modules = config[CONFIG_KEY.modules];
 
@@ -2687,9 +2680,9 @@ cc.game = /** @lends cc.game# */{
         modules && (config[CONFIG_KEY.modules] = modules);
         this.config = config;
         this._configLoaded = true;
-    },
+    }
 
-    _initRenderer: function (width, height) {
+    _initRenderer(width, height) {
         // Avoid setup to be called twice.
         if (this._rendererInitialized) return;
 
@@ -2763,9 +2756,9 @@ cc.game = /** @lends cc.game# */{
         this.dispatchEvent(this.EVENT_RENDERER_INITED, true);
 
         this._rendererInitialized = true;
-    },
+    }
 
-    _initEvents: function () {
+    _initEvents() {
         var win = window, hidden;
 
         this._eventHide = this._eventHide || new cc.EventCustom(this.EVENT_HIDE);
@@ -2794,18 +2787,18 @@ cc.game = /** @lends cc.game# */{
             "webkitvisibilitychange",
             "qbrowserVisibilityChange"
         ];
-        var onHidden = function () {
+        var onHidden = () => {
             if (cc.eventManager && cc.game._eventHide)
                 cc.eventManager.dispatchEvent(cc.game._eventHide);
         };
-        var onShow = function () {
+        var onShow = () => {
             if (cc.eventManager && cc.game._eventShow)
                 cc.eventManager.dispatchEvent(cc.game._eventShow);
         };
 
         if (hidden) {
             for (var i=0; i<changeList.length; i++) {
-                document.addEventListener(changeList[i], function (event) {
+                document.addEventListener(changeList[i], (event) => {
                     var visible = document[hidden];
                     // QQ App
                     visible = visible || event["hidden"];
@@ -2819,7 +2812,7 @@ cc.game = /** @lends cc.game# */{
         }
 
         if (navigator.userAgent.indexOf("MicroMessenger") > -1) {
-            win.onfocus = function(){ onShow() };
+            win.onfocus = () => { onShow() };
         }
 
         if ("onpageshow" in window && "onpagehide" in window) {
@@ -2827,14 +2820,14 @@ cc.game = /** @lends cc.game# */{
             win.addEventListener("pageshow", onShow, false);
         }
 
-        cc.eventManager.addCustomListener(cc.game.EVENT_HIDE, function () {
+        cc.eventManager.addCustomListener(cc.game.EVENT_HIDE, () => {
             cc.game.pause();
         });
-        cc.eventManager.addCustomListener(cc.game.EVENT_SHOW, function () {
+        cc.eventManager.addCustomListener(cc.game.EVENT_SHOW, () => {
             cc.game.resume();
         });
     }
-};
+}();
 //+++++++++++++++++++++++++something about CCGame end+++++++++++++++++++++++++++++
 
 Function.prototype.bind = Function.prototype.bind || function (oThis) {

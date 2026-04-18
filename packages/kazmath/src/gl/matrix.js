@@ -1,4 +1,3 @@
-import Matrix4Stack from './mat4-stack';
 import Matrix4 from '../mat4';
 import Vec3 from '../vec3';
 
