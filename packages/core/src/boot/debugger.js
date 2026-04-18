@@ -1,29 +1,6 @@
-/****************************************************************************
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+import { isObject } from './utils';
 
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
-cc._LogInfos = {
+export const _LogInfos = {
     ActionManager_addAction: "cc.ActionManager.addAction(): action must be non-null",
     ActionManager_removeAction: "cocos2d: removeAction: Target not found",
     ActionManager_removeActionByTag: "cc.ActionManager.removeActionByTag(): an invalid tag",
@@ -220,8 +197,7 @@ cc._LogInfos = {
     EventManager__updateListeners_2: "_inDispatch should be 1 here."
 };
 
-//+++++++++++++++++++++++++something about log start++++++++++++++++++++++++++++
-cc._logToWebPage = function (msg) {
+export function logToWebPage(msg) {
     if (!cc._canvas)
         return;
 
@@ -261,11 +237,10 @@ cc._logToWebPage = function (msg) {
     }
     logList.value = logList.value + msg + "\r\n";
     logList.scrollTop = logList.scrollHeight;
-};
+}
 
-//to make sure the cc.log, cc.warn, cc.error and cc.assert would not throw error before init by debugger mode.
-cc._formatString = function (arg) {
-    if (cc.isObject(arg)) {
+export function formatString(arg) {
+    if (isObject(arg)) {
         try {
             return JSON.stringify(arg);
         } catch (err) {
@@ -273,13 +248,14 @@ cc._formatString = function (arg) {
         }
     } else
         return arg;
-};
+}
+
 /**
  * Init Debug setting.
  * @function
  * @param {Number} mode
  */
-cc._initDebugSetting = function (mode) {
+export function initDebugSetting(mode) {
     var ccGame = cc.game;
     if(mode === ccGame.DEBUG_MODE_NONE)
         return;
@@ -308,11 +284,8 @@ cc._initDebugSetting = function (mode) {
                 locLog(cc.formatStr.apply(cc, arguments));
             };
         }
-    } else if(console && console.log.apply){//console is null when user doesn't open dev tool on IE9
-        //log to console
-
+    } else if(console && console.log.apply){
         cc.error = Function.prototype.bind.call(console.error, console);
-        //If console.assert is not support user throw Error msg on wrong condition
         if (console.assert) {
             cc.assert = Function.prototype.bind.call(console.assert, console);
         } else {
@@ -329,5 +302,4 @@ cc._initDebugSetting = function (mode) {
         if (mode === ccGame.DEBUG_MODE_INFO)
             cc.log = Function.prototype.bind.call(console.log, console);
     }
-};
-//+++++++++++++++++++++++++something about log end+++++++++++++++++++++++++++++
+}

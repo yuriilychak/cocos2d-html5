@@ -1,7 +1,66 @@
-// Boot
-import './boot/CCBoot.js';
-import './boot/CCDebugger.js';
-import './boot/Base64Images.js';
+// Boot - init (side-effect: sets up cc namespace, window props, log stubs, polyfills)
+import './boot/init';
+
+// Boot - utilities
+import {
+    each, isFunction, isNumber, isString, isArray,
+    isUndefined, isObject, isCrossOrigin, formatStr
+} from './boot/utils';
+
+cc.each = each;
+cc.isFunction = isFunction;
+cc.isNumber = isNumber;
+cc.isString = isString;
+cc.isArray = isArray;
+cc.isUndefined = isUndefined;
+cc.isObject = isObject;
+cc.isCrossOrigin = isCrossOrigin;
+cc.formatStr = formatStr;
+
+// Boot - async
+import AsyncPool from './boot/async-pool';
+import Async from './boot/async';
+
+cc.AsyncPool = AsyncPool;
+cc.async = new Async();
+
+// Boot - path
+import Path from './boot/path';
+
+cc.path = Path;
+
+// Boot - loader
+import Loader from './boot/loader';
+
+cc.loader = new Loader();
+
+// Boot - sys & engine
+import { create3DContext, initSys } from './boot/sys';
+import { initEngine } from './boot/engine';
+
+cc.create3DContext = create3DContext;
+cc.sys = initSys();
+cc.initEngine = initEngine;
+
+// Boot - game
+import Game from './boot/game';
+
+cc.game = new Game();
+
+// Boot - debugger
+import { _LogInfos, logToWebPage, formatString, initDebugSetting } from './boot/debugger';
+
+cc._LogInfos = _LogInfos;
+cc._logToWebPage = logToWebPage;
+cc._formatString = formatString;
+cc._initDebugSetting = initDebugSetting;
+
+// Boot - base64 images
+import { _loadingImage, _fpsImage, _loaderImage } from './boot/base64-images';
+
+cc._loadingImage = _loadingImage;
+cc._fpsImage = _fpsImage;
+cc._loaderImage = _loaderImage;
 
 // Core
 import './event-manager/CCEventHelper.js';
