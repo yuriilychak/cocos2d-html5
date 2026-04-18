@@ -470,7 +470,9 @@ cacheProto._measure = function (text) {
     }
 };
 
-export class CacheCanvasRenderCmd extends cc.Sprite.CanvasRenderCmd {
+import { SpriteCanvasRenderCmd } from '../sprites/sprite-canvas-render-cmd';
+
+export class CacheCanvasRenderCmd extends SpriteCanvasRenderCmd {
     constructor(renderable) {
         super(renderable);
         this._cacheCmdCtor();
@@ -479,7 +481,7 @@ export class CacheCanvasRenderCmd extends cc.Sprite.CanvasRenderCmd {
 
 cc.inject(CacheRenderCmd.prototype, CacheCanvasRenderCmd.prototype);
 
-export class CanvasRenderCmd extends cc.Sprite.CanvasRenderCmd {
+export class CanvasRenderCmd extends SpriteCanvasRenderCmd {
     constructor(renderable) {
         super(renderable);
         this._labelCmdCtor();

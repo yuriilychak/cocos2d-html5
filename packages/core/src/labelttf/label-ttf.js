@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Sprite } from '../sprites/sprite';
+
 /**
  * <p>cc.LabelTTF is a subclass of cc.TextureNode that knows how to render text labels with system font or a ttf font file<br/>
  * All features from cc.Sprite are valid in cc.LabelTTF<br/>
@@ -63,7 +65,7 @@
  * @property {Number}       shadowOpacity   - The opacity of shadow
  * @property {Number}       shadowBlur      - The blur size of shadow
  */
-export class LabelTTF extends cc.Sprite {
+export class LabelTTF extends Sprite {
 
     /**
      * Initializes the cc.LabelTTF with a font name, alignment, dimension and font size, do not call it by yourself,

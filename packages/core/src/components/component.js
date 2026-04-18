@@ -1,4 +1,5 @@
 /****************************************************************************
+ Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -22,17 +23,55 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteWebGLRenderCmd } from '../sprites/sprite-webgl-render-cmd';
+import { NewClass } from '../platform/class';
 
-// ----------------------------------- LabelTTF WebGL render cmd ----------------------------
-export class WebGLRenderCmd extends SpriteWebGLRenderCmd {
-    constructor(renderable) {
-        super(renderable);
-        this._cacheCmdCtor();
+/**
+ * The base class of component in CocoStudio
+ * @class
+ * @extends cc.Class
+ */
+export class Component extends NewClass {
+    _owner = null;
+    _name = "";
+    _enabled = true;
+
+    constructor() {
+        super();
+        this._owner = null;
+        this._name = "";
+        this._enabled = true;
+    }
+
+    init() {
+        return true;
+    }
+
+    onEnter() {}
+    onExit() {}
+    update(delta) {}
+    serialize(reader) {}
+
+    isEnabled() {
+        return this._enabled;
+    }
+
+    setEnabled(enable) {
+        this._enabled = enable;
+    }
+
+    getName() {
+        return this._name;
+    }
+
+    setName(name) {
+        this._name = name;
+    }
+
+    setOwner(owner) {
+        this._owner = owner;
+    }
+
+    getOwner() {
+        return this._owner;
     }
 }
-
-cc.inject(cc.LabelTTF.CacheRenderCmd.prototype, WebGLRenderCmd.prototype);
-
-WebGLRenderCmd.prototype._updateColor = function () {
-};

@@ -21,18 +21,43 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { RenderCmd } from './node-canvas-render-cmd';
 
-import { SpriteWebGLRenderCmd } from '../sprites/sprite-webgl-render-cmd';
-
-// ----------------------------------- LabelTTF WebGL render cmd ----------------------------
-export class WebGLRenderCmd extends SpriteWebGLRenderCmd {
+// ------------------------------ The cc.Node's render command for WebGL ----------------------------------
+export class WebGLRenderCmd extends RenderCmd {
     constructor(renderable) {
         super(renderable);
-        this._cacheCmdCtor();
+        this._glProgramState = null;
     }
+
+    _updateColor() {
+    }
+
+    setShaderProgram(shaderProgram) {
+        this._glProgramState = cc.GLProgramState.getOrCreateWithGLProgram(shaderProgram);
+    }
+
+    getShaderProgram() {
+        return this._glProgramState ? this._glProgramState.getGLProgram() : null;
+    }
+
+    getGLProgramState() {
+        return this._glProgramState;
+    }
+
+    setGLProgramState(glProgramState) {
+        this._glProgramState = glProgramState;
+    }
+
+    // Use a property getter/setter for backwards compatability, and
+    // to ease the transition from using glPrograms directly, to
+    // using glProgramStates.
+    set _shaderProgram(value) { this.setShaderProgram(value); }
+    get _shaderProgram() { return this.getShaderProgram(); }
 }
 
-cc.inject(cc.LabelTTF.CacheRenderCmd.prototype, WebGLRenderCmd.prototype);
-
-WebGLRenderCmd.prototype._updateColor = function () {
+// Backward-compatible _rootCtor shim for old-style constructors in extensions/
+WebGLRenderCmd.prototype._rootCtor = function (renderable) {
+    cc.Node.RenderCmd.prototype._rootCtor.call(this, renderable);
+    this._glProgramState = null;
 };

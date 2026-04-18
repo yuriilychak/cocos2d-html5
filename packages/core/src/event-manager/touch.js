@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import NewClass from '../platform/class';
+import { NewClass } from '../platform/class';
 
 /**
  * The touch event class

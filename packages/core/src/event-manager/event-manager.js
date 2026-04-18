@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import NewClass from '../platform/class';
+import { NewClass } from '../platform/class';
 import { Event, EventCustom, EventTouch } from './event';
 import {
     EventListener,

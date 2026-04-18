@@ -1,5 +1,6 @@
 import ImagePool from './image-pool';
 import Game from './game';
+import Async from './async';
 
 var imagePool = new ImagePool();
 
@@ -93,11 +94,15 @@ export default class Loader {
         if (navigator.userAgent.indexOf("Trident/5") > -1) {
             this._loadJs4Dependency(preDir, list, 0, callback);
         } else {
-            cc.async.map(list, (item, index, cb1) => {
+            Async.map(
+              list,
+              (item, index, cb1) => {
                 var jsPath = cc.path.join(preDir, item);
                 if (this._jsCache[jsPath]) return cb1(null);
                 this._createScript(jsPath, false, cb1);
-            }, callback);
+              },
+              callback
+            );
         }
     }
 

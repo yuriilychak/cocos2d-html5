@@ -1,78 +1,545 @@
-// Boot (barrel - all cc.* assignments happen inside boot/index.js
+// Boot (barrel — all cc.* assignments happen inside boot/index.js
 // so they're available before Core modules execute)
 import './boot';
 
-// Core
-import './event-manager/CCEventHelper.js';
-import './utils/BinaryLoader.js';
-import './platform/CCClass.js';
-import './platform/CCCommon.js';
-import './cocoa/CCGeometry.js';
-import './platform/CCSAXParser.js';
-import './platform/CCLoaders.js';
-import './platform/CCConfig.js';
-import './platform/CCMacro.js';
-import './platform/CCTypes.js';
-import './platform/CCEGLView.js';
-import './platform/CCScreen.js';
-import './platform/CCVisibleRect.js';
-import './platform/CCInputManager.js';
-import './platform/CCInputExtension.js';
-import './cocoa/CCAffineTransform.js';
-import './support/CCPointExtension.js';
-import './support/CCVertex.js';
-import './support/TransformUtils.js';
-import './event-manager/CCTouch.js';
-import './event-manager/CCEvent.js';
-import './event-manager/CCEventListener.js';
-import './event-manager/CCEventManager.js';
-import './event-manager/CCEventExtension.js';
-import './renderer/GlobalVertexBuffer.js';
-import './renderer/RendererCanvas.js';
-import './renderer/RendererWebGL.js';
-import './renderer/DirtyRegion.js';
-import './base-nodes/BaseNodesPropertyDefine.js';
-import './base-nodes/CCNode.js';
-import './base-nodes/CCNodeCanvasRenderCmd.js';
-import './base-nodes/CCNodeWebGLRenderCmd.js';
-import './base-nodes/CCAtlasNode.js';
-import './base-nodes/CCAtlasNodeCanvasRenderCmd.js';
-import './base-nodes/CCAtlasNodeWebGLRenderCmd.js';
-import './textures/TexturesWebGL.js';
-import './textures/TexturesPropertyDefine.js';
-import './textures/CCTexture2D.js';
-import './textures/CCTextureCache.js';
-import './textures/CCTextureAtlas.js';
-import './scenes/CCScene.js';
-import './scenes/CCLoaderScene.js';
-import './layers/CCLayer.js';
-import './layers/CCLayerCanvasRenderCmd.js';
-import './layers/CCLayerWebGLRenderCmd.js';
-import './sprites/SpritesPropertyDefine.js';
-import './sprites/CCSprite.js';
-import './sprites/CCSpriteCanvasRenderCmd.js';
-import './sprites/CCSpriteWebGLRenderCmd.js';
-import './sprites/CCSpriteBatchNode.js';
-import './sprites/CCBakeSprite.js';
-import './sprites/CCAnimation.js';
-import './sprites/CCAnimationCache.js';
-import './sprites/CCSpriteFrame.js';
-import './sprites/CCSpriteFrameCache.js';
-import './CCConfiguration.js';
-import './CCDirector.js';
-import './CCDirectorCanvas.js';
-import './CCDirectorWebGL.js';
-import './CCScheduler.js';
-import './CCDrawingPrimitivesCanvas.js';
-import './CCDrawingPrimitivesWebGL.js';
-import './labelttf/LabelTTFPropertyDefine.js';
-import './labelttf/CCLabelTTF.js';
-import './labelttf/CCLabelTTFCanvasRenderCmd.js';
-import './labelttf/CCLabelTTFWebGLRenderCmd.js';
-import './CCActionManager.js';
-import './components/CCComponent.js';
-import './components/CCComponentContainer.js';
-import './utils/CCProfiler.js';
+// ======================================================================
+// Platform — Foundation
+// ======================================================================
+import { defineGetterSetter, inject, classManager, NewClass } from './platform/class';
+import {
+    KEY, FMT_JPG, FMT_PNG, FMT_TIFF, FMT_RAWDATA, FMT_WEBP, FMT_UNKNOWN,
+    getImageFormatByData, associateWithNative
+} from './platform/common';
+import {
+    FIX_ARTIFACTS_BY_STRECHING_TEXEL, DIRECTOR_STATS_POSITION, DIRECTOR_FPS_INTERVAL,
+    COCOSNODE_RENDER_SUBPIXEL, SPRITEBATCHNODE_RENDER_SUBPIXEL,
+    OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA, TEXTURE_ATLAS_USE_TRIANGLE_STRIP,
+    TEXTURE_ATLAS_USE_VAO, TEXTURE_NPOT_SUPPORT, RETINA_DISPLAY_FILENAME_SUFFIX,
+    USE_LA88_LABELS, SPRITE_DEBUG_DRAW, SPRITEBATCHNODE_DEBUG_DRAW,
+    LABELBMFONT_DEBUG_DRAW, LABELATLAS_DEBUG_DRAW, DRAWNODE_TOTAL_VERTICES,
+    DEFAULT_ENGINE
+} from './platform/config';
+import * as macroConstants from './platform/macro/constants';
+import * as macroUtils from './platform/macro/utils';
+import { SAXParser } from './platform/sax-parser/sax-parser';
+import { PlistParser } from './platform/sax-parser/plist-parser';
+import {
+    _txtLoader, _jsonLoader, _jsLoader, _imgLoader, _serverImgLoader,
+    _plistLoader, _fontLoader, _binaryLoader, _csbLoader
+} from './platform/loaders';
+import { screen } from './platform/screen';
+import { visibleRect } from './platform/visible-rect';
+import {
+    UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight,
+    UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationPortrait,
+    inputManager
+} from './platform/input-manager';
+import { initInputExtension } from './platform/input-extension';
 
+// Platform — Types
+import {
+    Color, color, colorEqual, hexToColor, colorToHex, Acceleration,
+    TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_RIGHT,
+    VERTICAL_TEXT_ALIGNMENT_TOP, VERTICAL_TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_BOTTOM
+} from './platform/types/color';
+import {
+    Vertex2F, Vertex3F, Tex2F, Quad2, Quad3,
+    V3F_C4B_T2F, V3F_C4B_T2F_Quad, V3F_C4B_T2F_QuadZero,
+    V3F_C4B_T2F_QuadCopy, V3F_C4B_T2F_QuadsCopy,
+    V2F_C4B_T2F, V2F_C4B_T2F_Triangle,
+    vertex2, vertex3, tex2
+} from './platform/types/vertex';
+import { BlendFunc, blendFuncDisable } from './platform/types/blend-func';
+import { FontDefinition } from './platform/types/font-definition';
+import { _Dictionary } from './platform/types/dictionary';
+
+// Platform — EGLView
+import { EGLView } from './platform/egl-view/egl-view';
+import { ContainerStrategy } from './platform/egl-view/container-strategy';
+import { ContentStrategy } from './platform/egl-view/content-strategy';
+import { ResolutionPolicy } from './platform/egl-view/resolution-policy';
+import {
+    Touches, TouchesIntergerDict,
+    DENSITYDPI_DEVICE, DENSITYDPI_HIGH, DENSITYDPI_MEDIUM, DENSITYDPI_LOW
+} from './platform/egl-view/constants';
+
+// ======================================================================
+// Cocoa — Geometry & Transforms
+// ======================================================================
+import { Point, p, pointEqualToPoint } from './cocoa/geometry/point';
+import { Size, size, sizeEqualToSize } from './cocoa/geometry/size';
+import {
+    Rect, rect, rectEqualToRect, _rectEqualToZero, rectContainsRect,
+    rectGetMaxX, rectGetMidX, rectGetMinX, rectGetMaxY, rectGetMidY, rectGetMinY,
+    rectContainsPoint, rectIntersectsRect, rectOverlapsRect, rectUnion, rectIntersection
+} from './cocoa/geometry/rect';
+import {
+    AffineTransform, affineTransformMake, pointApplyAffineTransform,
+    _pointApplyAffineTransform, sizeApplyAffineTransform, affineTransformMakeIdentity,
+    rectApplyAffineTransform, _rectApplyAffineTransformIn,
+    affineTransformTranslate, affineTransformScale, affineTransformRotate,
+    affineTransformConcat, affineTransformConcatIn, affineTransformEqualToTransform,
+    affineTransformInvert, affineTransformInvertOut
+} from './cocoa/affine-transform';
+
+// ======================================================================
+// Support
+// ======================================================================
+import {
+    POINT_EPSILON, pNeg, pAdd, pSub, pMult, pMidpoint, pDot, pCross,
+    pPerp, pRPerp, pProject, pRotate, pUnrotate, pLengthSQ, pDistanceSQ,
+    pLength, pDistance, pNormalize, pForAngle, pToAngle, clampf,
+    pClamp, pFromSize, pCompOp, pLerp, pFuzzyEqual, pCompMult,
+    pAngleSigned, pAngle, pRotateByAngle, pLineIntersect, pSegmentIntersect,
+    pIntersectPoint, pSameAs, pZeroIn, pIn, pMultIn, pSubIn, pAddIn, pNormalizeIn
+} from './support/point-extension';
+import { vertexLineToPolygon, vertexLineIntersect, vertexListIsClockwise } from './support/vertex';
+import { CGAffineToGL, GLToCGAffine } from './support/transform-utils';
+
+// ======================================================================
+// Events
+// ======================================================================
+import EventHelper from './event-manager/event-helper';
+import Touch from './event-manager/touch';
+import Event from './event-manager/event/event';
+import EventCustom from './event-manager/event/event-custom';
+import EventMouse from './event-manager/event/event-mouse';
+import EventTouch from './event-manager/event/event-touch';
+import EventFocus from './event-manager/event/event-focus';
+import { TOUCH, KEYBOARD, ACCELERATION, MOUSE, FOCUS, CUSTOM } from './event-manager/event/constants';
+import EventListener from './event-manager/event-listener/event-listener';
+import _EventListenerCustom from './event-manager/event-listener/event-listener-custom';
+import _EventListenerMouse from './event-manager/event-listener/event-listener-mouse';
+import _EventListenerTouchOneByOne from './event-manager/event-listener/event-listener-touch-one-by-one';
+import _EventListenerTouchAllAtOnce from './event-manager/event-listener/event-listener-touch-all-at-once';
+import _EventListenerFocus from './event-manager/event-listener/event-listener-focus';
+import { _EventListenerVector } from './event-manager/event-manager';
+import eventManager from './event-manager/event-manager';
+import EventAcceleration from './event-manager/event-extension/event-acceleration';
+import EventKeyboard from './event-manager/event-extension/event-keyboard';
+import _EventListenerKeyboard from './event-manager/event-extension/event-listener-keyboard';
+import _EventListenerAcceleration from './event-manager/event-extension/event-listener-acceleration';
+
+// ======================================================================
+// Renderer & Utils
+// ======================================================================
+import { GlobalVertexBuffer } from './renderer/global-vertex-buffer';
+import { rendererCanvas, CanvasContextWrapper } from './renderer/renderer-canvas';
+import { rendererWebGL } from './renderer/renderer-webgl';
+import { Region, DirtyRegion } from './renderer/dirty-region';
+import { _convertResponseBodyToText, loadBinary, _str2Uint8Array, loadBinarySync, initBinaryLoader } from './utils/binary-loader';
+import { profiler } from './utils/profiler';
+
+// ======================================================================
+// Base Nodes
+// ======================================================================
+import { CustomRenderCmd, dirtyFlags, RenderCmd, CanvasRenderCmd as NodeCanvasRenderCmd } from './base-nodes/node-canvas-render-cmd';
+import { WebGLRenderCmd as NodeWebGLRenderCmd } from './base-nodes/node-webgl-render-cmd';
+import { Node, NODE_TAG_INVALID, s_globalOrderOfArrival } from './base-nodes/node';
+import { initPrototypeCCNode } from './base-nodes/base-nodes-property-define';
+import { AtlasNode } from './base-nodes/atlas-node';
+import { AtlasNodeCanvasRenderCmd } from './base-nodes/atlas-node-canvas-render-cmd';
+import { AtlasNodeWebGLRenderCmd } from './base-nodes/atlas-node-webgl-render-cmd';
+
+// ======================================================================
+// Textures (side-effect imports — deferred cc.Texture2D via event handler)
+// ======================================================================
+import { ALIGN_CENTER, ALIGN_TOP, ALIGN_TOP_RIGHT, ALIGN_RIGHT, ALIGN_BOTTOM_RIGHT, ALIGN_BOTTOM, ALIGN_BOTTOM_LEFT, ALIGN_LEFT, ALIGN_TOP_LEFT } from './textures/constants';
+import { textureCache } from './textures/texture-cache';
+import { TextureAtlas } from './textures/texture-atlas';
+import './textures/texture-2d';
+
+// ======================================================================
+// Scenes & Layers
+// ======================================================================
+import { Scene } from './scenes/scene';
+import { LoaderScene } from './scenes/loader-scene';
+import { Layer } from './layers/layer';
+import { LayerColor, initLayerColorProperties } from './layers/layer-color';
+import { LayerGradient, initLayerGradientProperties } from './layers/layer-gradient';
+import { LayerMultiplex } from './layers/layer-multiplex';
+import { LayerCanvasRenderCmd, LayerColorCanvasRenderCmd, LayerGradientCanvasRenderCmd } from './layers/layer-canvas-render-cmd';
+import { LayerWebGLRenderCmd, LayerColorWebGLRenderCmd, LayerGradientWebGLRenderCmd } from './layers/layer-webgl-render-cmd';
+
+// ======================================================================
+// Sprites
+// ======================================================================
+import { initPrototypeSprite } from './sprites/sprites-property-define';
+import { Sprite } from './sprites/sprite';
+import { SpriteCanvasRenderCmd } from './sprites/sprite-canvas-render-cmd';
+import { SpriteWebGLRenderCmd } from './sprites/sprite-webgl-render-cmd';
+import { SpriteBatchNode } from './sprites/sprite-batch-node';
+import { BakeSprite } from './sprites/bake-sprite';
+import { AnimationFrame } from './sprites/animation/animation-frame';
+import { Animation } from './sprites/animation/animation';
+import { animationCache } from './sprites/animation-cache';
+import { SpriteFrame } from './sprites/sprite-frame';
+import { spriteFrameCache } from './sprites/sprite-frame-cache';
+
+// ======================================================================
+// Director, Scheduler, ActionManager
+// ======================================================================
+import { configuration } from './configuration';
+import { Director, DisplayLinkDirector, g_NumberOfDraws, defaultFPS } from './director/director';
+import { initDirectorCanvas } from './director/director-canvas';
+import { DirectorDelegate, initDirectorWebGL } from './director/director-webgl';
+import { Scheduler } from './scheduler';
+import { PI2, DrawingPrimitiveCanvas } from './drawing-primitives-canvas';
+import { DrawingPrimitiveWebGL } from './drawing-primitives-webgl';
+
+// ======================================================================
+// LabelTTF
+// ======================================================================
+import { initLabelTTFProperties } from './labelttf/label-ttf-property-define';
+import { LabelTTF } from './labelttf/label-ttf';
+import {
+    CanvasRenderCmd as LabelTTFCanvasRenderCmd,
+    CacheCanvasRenderCmd as LabelTTFCacheCanvasRenderCmd,
+    RenderCmd as LabelTTFRenderCmd,
+    CacheRenderCmd as LabelTTFCacheRenderCmd,
+    _textAlign, _textBaseline
+} from './labelttf/label-ttf-canvas-render-cmd';
+import { WebGLRenderCmd as LabelTTFWebGLRenderCmd } from './labelttf/label-ttf-webgl-render-cmd';
+
+// ======================================================================
+// Action Manager, Components
+// ======================================================================
+import { HashElement, ActionManager } from './action-manager';
+import { Component } from './components/component';
+import { ComponentContainer } from './components/component-container';
+
+// ======================================================================
 // Kazmath
-import './kazmath/index.js';
+// ======================================================================
+import './kazmath';
+
+// ======================================================================
+// cc.* namespace assignments
+// ======================================================================
+
+// Platform — Foundation
+cc.defineGetterSetter = defineGetterSetter;
+cc.inject = inject;
+cc.classManager = classManager;
+cc.NewClass = NewClass;
+cc.Class = NewClass;
+cc.KEY = KEY;
+cc.FMT_JPG = FMT_JPG;
+cc.FMT_PNG = FMT_PNG;
+cc.FMT_TIFF = FMT_TIFF;
+cc.FMT_RAWDATA = FMT_RAWDATA;
+cc.FMT_WEBP = FMT_WEBP;
+cc.FMT_UNKNOWN = FMT_UNKNOWN;
+cc.getImageFormatByData = getImageFormatByData;
+cc.associateWithNative = associateWithNative;
+
+// Platform — Config
+cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = FIX_ARTIFACTS_BY_STRECHING_TEXEL;
+cc.DIRECTOR_STATS_POSITION = DIRECTOR_STATS_POSITION;
+cc.DIRECTOR_FPS_INTERVAL = DIRECTOR_FPS_INTERVAL;
+cc.COCOSNODE_RENDER_SUBPIXEL = COCOSNODE_RENDER_SUBPIXEL;
+cc.SPRITEBATCHNODE_RENDER_SUBPIXEL = SPRITEBATCHNODE_RENDER_SUBPIXEL;
+cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA = OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA;
+cc.TEXTURE_ATLAS_USE_TRIANGLE_STRIP = TEXTURE_ATLAS_USE_TRIANGLE_STRIP;
+cc.TEXTURE_ATLAS_USE_VAO = TEXTURE_ATLAS_USE_VAO;
+cc.TEXTURE_NPOT_SUPPORT = TEXTURE_NPOT_SUPPORT;
+cc.RETINA_DISPLAY_FILENAME_SUFFIX = RETINA_DISPLAY_FILENAME_SUFFIX;
+cc.USE_LA88_LABELS = USE_LA88_LABELS;
+cc.SPRITE_DEBUG_DRAW = SPRITE_DEBUG_DRAW;
+cc.SPRITEBATCHNODE_DEBUG_DRAW = SPRITEBATCHNODE_DEBUG_DRAW;
+cc.LABELBMFONT_DEBUG_DRAW = LABELBMFONT_DEBUG_DRAW;
+cc.LABELATLAS_DEBUG_DRAW = LABELATLAS_DEBUG_DRAW;
+cc.DRAWNODE_TOTAL_VERTICES = DRAWNODE_TOTAL_VERTICES;
+cc.DEFAULT_ENGINE = DEFAULT_ENGINE;
+
+// Platform — Macro constants & utils
+Object.assign(cc, macroConstants);
+Object.assign(cc, macroUtils);
+
+// Platform — SAX/Plist
+cc.SAXParser = SAXParser;
+cc.PlistParser = PlistParser;
+cc.saxParser = new SAXParser();
+cc.plistParser = new PlistParser();
+
+// Platform — Loaders
+cc._txtLoader = _txtLoader;
+cc._jsonLoader = _jsonLoader;
+cc._jsLoader = _jsLoader;
+cc._imgLoader = _imgLoader;
+cc._serverImgLoader = _serverImgLoader;
+cc._plistLoader = _plistLoader;
+cc._fontLoader = _fontLoader;
+cc._binaryLoader = _binaryLoader;
+cc._csbLoader = _csbLoader;
+
+// Platform — Screen, VisibleRect, InputManager
+cc.screen = screen;
+cc.visibleRect = visibleRect;
+cc.UIInterfaceOrientationLandscapeLeft = UIInterfaceOrientationLandscapeLeft;
+cc.UIInterfaceOrientationLandscapeRight = UIInterfaceOrientationLandscapeRight;
+cc.UIInterfaceOrientationPortraitUpsideDown = UIInterfaceOrientationPortraitUpsideDown;
+cc.UIInterfaceOrientationPortrait = UIInterfaceOrientationPortrait;
+cc.inputManager = inputManager;
+
+// Platform — Types
+cc.Color = Color;
+cc.color = color;
+cc.colorEqual = colorEqual;
+cc.hexToColor = hexToColor;
+cc.colorToHex = colorToHex;
+cc.Acceleration = Acceleration;
+cc.TEXT_ALIGNMENT_LEFT = TEXT_ALIGNMENT_LEFT;
+cc.TEXT_ALIGNMENT_CENTER = TEXT_ALIGNMENT_CENTER;
+cc.TEXT_ALIGNMENT_RIGHT = TEXT_ALIGNMENT_RIGHT;
+cc.VERTICAL_TEXT_ALIGNMENT_TOP = VERTICAL_TEXT_ALIGNMENT_TOP;
+cc.VERTICAL_TEXT_ALIGNMENT_CENTER = VERTICAL_TEXT_ALIGNMENT_CENTER;
+cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM = VERTICAL_TEXT_ALIGNMENT_BOTTOM;
+cc.Vertex2F = Vertex2F;
+cc.Vertex3F = Vertex3F;
+cc.Tex2F = Tex2F;
+cc.Quad2 = Quad2;
+cc.Quad3 = Quad3;
+cc.V3F_C4B_T2F = V3F_C4B_T2F;
+cc.V3F_C4B_T2F_Quad = V3F_C4B_T2F_Quad;
+cc.V3F_C4B_T2F_QuadZero = V3F_C4B_T2F_QuadZero;
+cc.V3F_C4B_T2F_QuadCopy = V3F_C4B_T2F_QuadCopy;
+cc.V3F_C4B_T2F_QuadsCopy = V3F_C4B_T2F_QuadsCopy;
+cc.V2F_C4B_T2F = V2F_C4B_T2F;
+cc.V2F_C4B_T2F_Triangle = V2F_C4B_T2F_Triangle;
+cc.vertex2 = vertex2;
+cc.vertex3 = vertex3;
+cc.tex2 = tex2;
+cc.BlendFunc = BlendFunc;
+cc.blendFuncDisable = blendFuncDisable;
+cc.FontDefinition = FontDefinition;
+cc._Dictionary = _Dictionary;
+
+// Platform — EGLView
+cc.EGLView = EGLView;
+cc.ContainerStrategy = ContainerStrategy;
+cc.ContentStrategy = ContentStrategy;
+cc.ResolutionPolicy = ResolutionPolicy;
+cc.Touches = Touches;
+cc.TouchesIntergerDict = TouchesIntergerDict;
+cc.DENSITYDPI_DEVICE = DENSITYDPI_DEVICE;
+cc.DENSITYDPI_HIGH = DENSITYDPI_HIGH;
+cc.DENSITYDPI_MEDIUM = DENSITYDPI_MEDIUM;
+cc.DENSITYDPI_LOW = DENSITYDPI_LOW;
+
+// Cocoa — Geometry
+cc.Point = Point;
+cc.p = p;
+cc.pointEqualToPoint = pointEqualToPoint;
+cc.Size = Size;
+cc.size = size;
+cc.sizeEqualToSize = sizeEqualToSize;
+cc.Rect = Rect;
+cc.rect = rect;
+cc.rectEqualToRect = rectEqualToRect;
+cc._rectEqualToZero = _rectEqualToZero;
+cc.rectContainsRect = rectContainsRect;
+cc.rectGetMaxX = rectGetMaxX;
+cc.rectGetMidX = rectGetMidX;
+cc.rectGetMinX = rectGetMinX;
+cc.rectGetMaxY = rectGetMaxY;
+cc.rectGetMidY = rectGetMidY;
+cc.rectGetMinY = rectGetMinY;
+cc.rectContainsPoint = rectContainsPoint;
+cc.rectIntersectsRect = rectIntersectsRect;
+cc.rectOverlapsRect = rectOverlapsRect;
+cc.rectUnion = rectUnion;
+cc.rectIntersection = rectIntersection;
+
+// Cocoa — AffineTransform
+cc.AffineTransform = AffineTransform;
+cc.affineTransformMake = affineTransformMake;
+cc.pointApplyAffineTransform = pointApplyAffineTransform;
+cc._pointApplyAffineTransform = _pointApplyAffineTransform;
+cc.sizeApplyAffineTransform = sizeApplyAffineTransform;
+cc.affineTransformMakeIdentity = affineTransformMakeIdentity;
+cc.rectApplyAffineTransform = rectApplyAffineTransform;
+cc._rectApplyAffineTransformIn = _rectApplyAffineTransformIn;
+cc.affineTransformTranslate = affineTransformTranslate;
+cc.affineTransformScale = affineTransformScale;
+cc.affineTransformRotate = affineTransformRotate;
+cc.affineTransformConcat = affineTransformConcat;
+cc.affineTransformConcatIn = affineTransformConcatIn;
+cc.affineTransformEqualToTransform = affineTransformEqualToTransform;
+cc.affineTransformInvert = affineTransformInvert;
+cc.affineTransformInvertOut = affineTransformInvertOut;
+
+// Support
+cc.POINT_EPSILON = POINT_EPSILON;
+cc.pNeg = pNeg;
+cc.pAdd = pAdd;
+cc.pSub = pSub;
+cc.pMult = pMult;
+cc.pMidpoint = pMidpoint;
+cc.pDot = pDot;
+cc.pCross = pCross;
+cc.pPerp = pPerp;
+cc.pRPerp = pRPerp;
+cc.pProject = pProject;
+cc.pRotate = pRotate;
+cc.pUnrotate = pUnrotate;
+cc.pLengthSQ = pLengthSQ;
+cc.pDistanceSQ = pDistanceSQ;
+cc.pLength = pLength;
+cc.pDistance = pDistance;
+cc.pNormalize = pNormalize;
+cc.pForAngle = pForAngle;
+cc.pToAngle = pToAngle;
+cc.clampf = clampf;
+cc.pClamp = pClamp;
+cc.pFromSize = pFromSize;
+cc.pCompOp = pCompOp;
+cc.pLerp = pLerp;
+cc.pFuzzyEqual = pFuzzyEqual;
+cc.pCompMult = pCompMult;
+cc.pAngleSigned = pAngleSigned;
+cc.pAngle = pAngle;
+cc.pRotateByAngle = pRotateByAngle;
+cc.pLineIntersect = pLineIntersect;
+cc.pSegmentIntersect = pSegmentIntersect;
+cc.pIntersectPoint = pIntersectPoint;
+cc.pSameAs = pSameAs;
+cc.pZeroIn = pZeroIn;
+cc.pIn = pIn;
+cc.pMultIn = pMultIn;
+cc.pSubIn = pSubIn;
+cc.pAddIn = pAddIn;
+cc.pNormalizeIn = pNormalizeIn;
+cc.vertexLineToPolygon = vertexLineToPolygon;
+cc.vertexLineIntersect = vertexLineIntersect;
+cc.vertexListIsClockwise = vertexListIsClockwise;
+cc.CGAffineToGL = CGAffineToGL;
+cc.GLToCGAffine = GLToCGAffine;
+
+// Events
+cc.EventHelper = EventHelper;
+cc.Touch = Touch;
+cc.Event = Event;
+cc.EventCustom = EventCustom;
+cc.EventMouse = EventMouse;
+cc.EventTouch = EventTouch;
+cc.EventFocus = EventFocus;
+cc.Event.TOUCH = TOUCH;
+cc.Event.KEYBOARD = KEYBOARD;
+cc.Event.ACCELERATION = ACCELERATION;
+cc.Event.MOUSE = MOUSE;
+cc.Event.FOCUS = FOCUS;
+cc.Event.CUSTOM = CUSTOM;
+cc.EventListener = EventListener;
+cc._EventListenerCustom = _EventListenerCustom;
+cc._EventListenerMouse = _EventListenerMouse;
+cc._EventListenerTouchOneByOne = _EventListenerTouchOneByOne;
+cc._EventListenerTouchAllAtOnce = _EventListenerTouchAllAtOnce;
+cc._EventListenerFocus = _EventListenerFocus;
+cc._EventListenerVector = _EventListenerVector;
+cc.eventManager = eventManager;
+cc.EventAcceleration = EventAcceleration;
+cc.EventKeyboard = EventKeyboard;
+cc._EventListenerKeyboard = _EventListenerKeyboard;
+cc._EventListenerAcceleration = _EventListenerAcceleration;
+
+// Renderer & Utils
+cc.GlobalVertexBuffer = GlobalVertexBuffer;
+cc.rendererCanvas = rendererCanvas;
+cc.CanvasContextWrapper = CanvasContextWrapper;
+cc.rendererWebGL = rendererWebGL;
+cc.Region = Region;
+cc.DirtyRegion = DirtyRegion;
+cc._convertResponseBodyToText = _convertResponseBodyToText;
+cc.loadBinary = loadBinary;
+cc._str2Uint8Array = _str2Uint8Array;
+cc.loadBinarySync = loadBinarySync;
+cc.profiler = profiler;
+
+// Base Nodes
+cc.CustomRenderCmd = CustomRenderCmd;
+cc.Node = Node;
+cc.Node._dirtyFlags = dirtyFlags;
+cc.Node.RenderCmd = RenderCmd;
+cc.Node.CanvasRenderCmd = NodeCanvasRenderCmd;
+cc.Node.WebGLRenderCmd = NodeWebGLRenderCmd;
+cc.NODE_TAG_INVALID = NODE_TAG_INVALID;
+cc.s_globalOrderOfArrival = s_globalOrderOfArrival;
+cc.AtlasNode = AtlasNode;
+cc.AtlasNode.CanvasRenderCmd = AtlasNodeCanvasRenderCmd;
+cc.AtlasNode.WebGLRenderCmd = AtlasNodeWebGLRenderCmd;
+
+// Textures
+cc.ALIGN_CENTER = ALIGN_CENTER;
+cc.ALIGN_TOP = ALIGN_TOP;
+cc.ALIGN_TOP_RIGHT = ALIGN_TOP_RIGHT;
+cc.ALIGN_RIGHT = ALIGN_RIGHT;
+cc.ALIGN_BOTTOM_RIGHT = ALIGN_BOTTOM_RIGHT;
+cc.ALIGN_BOTTOM = ALIGN_BOTTOM;
+cc.ALIGN_BOTTOM_LEFT = ALIGN_BOTTOM_LEFT;
+cc.ALIGN_LEFT = ALIGN_LEFT;
+cc.ALIGN_TOP_LEFT = ALIGN_TOP_LEFT;
+cc.textureCache = textureCache;
+cc.TextureAtlas = TextureAtlas;
+
+// Scenes & Layers
+cc.Scene = Scene;
+cc.LoaderScene = LoaderScene;
+cc.Layer = Layer;
+cc.LayerColor = LayerColor;
+cc.LayerGradient = LayerGradient;
+cc.LayerMultiplex = LayerMultiplex;
+cc.Layer.CanvasRenderCmd = LayerCanvasRenderCmd;
+cc.Layer.WebGLRenderCmd = LayerWebGLRenderCmd;
+cc.LayerColor.CanvasRenderCmd = LayerColorCanvasRenderCmd;
+cc.LayerColor.WebGLRenderCmd = LayerColorWebGLRenderCmd;
+cc.LayerGradient.CanvasRenderCmd = LayerGradientCanvasRenderCmd;
+cc.LayerGradient.WebGLRenderCmd = LayerGradientWebGLRenderCmd;
+
+// Sprites
+cc.Sprite = Sprite;
+cc.Sprite.CanvasRenderCmd = SpriteCanvasRenderCmd;
+cc.Sprite.WebGLRenderCmd = SpriteWebGLRenderCmd;
+cc.SpriteBatchNode = SpriteBatchNode;
+cc.BakeSprite = BakeSprite;
+cc.AnimationFrame = AnimationFrame;
+cc.Animation = Animation;
+cc.animationCache = animationCache;
+cc.SpriteFrame = SpriteFrame;
+cc.spriteFrameCache = spriteFrameCache;
+
+// Director, Scheduler, ActionManager
+cc.configuration = configuration;
+cc.Director = Director;
+cc.DisplayLinkDirector = DisplayLinkDirector;
+cc.g_NumberOfDraws = g_NumberOfDraws;
+cc.defaultFPS = defaultFPS;
+cc.Scheduler = Scheduler;
+cc.PI2 = PI2;
+cc.DrawingPrimitiveCanvas = DrawingPrimitiveCanvas;
+cc.DrawingPrimitiveWebGL = DrawingPrimitiveWebGL;
+cc.DirectorDelegate = DirectorDelegate;
+cc.HashElement = HashElement;
+cc.ActionManager = ActionManager;
+
+// LabelTTF
+cc.LabelTTF = LabelTTF;
+cc.LabelTTF._textAlign = _textAlign;
+cc.LabelTTF._textBaseline = _textBaseline;
+
+// Components
+cc.Component = Component;
+cc.ComponentContainer = ComponentContainer;
+
+// ======================================================================
+// Init functions (must run AFTER cc.* class assignments)
+// ======================================================================
+initPrototypeCCNode();
+initLayerColorProperties();
+initLayerGradientProperties();
+initPrototypeSprite();
+initLabelTTFProperties();
+initInputExtension(inputManager);
+initDirectorCanvas();
+initDirectorWebGL();
+initBinaryLoader();

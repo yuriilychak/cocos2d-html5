@@ -1,4 +1,6 @@
 /****************************************************************************
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -22,17 +24,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteWebGLRenderCmd } from '../sprites/sprite-webgl-render-cmd';
+import { Node } from '../base-nodes/node';
 
-// ----------------------------------- LabelTTF WebGL render cmd ----------------------------
-export class WebGLRenderCmd extends SpriteWebGLRenderCmd {
-    constructor(renderable) {
-        super(renderable);
-        this._cacheCmdCtor();
+/**
+ * cc.Scene is a subclass of cc.Node that is used only as an abstract concept.
+ * @class
+ * @extends cc.Node
+ * @example
+ * var scene = new cc.Scene();
+ */
+export class Scene extends Node {
+    constructor() {
+        super();
+        this._className = "Scene";
+        this._ignoreAnchorPointForPosition = true;
+        this.setAnchorPoint(0.5, 0.5);
+        this.setContentSize(cc.director.getWinSize());
     }
 }
-
-cc.inject(cc.LabelTTF.CacheRenderCmd.prototype, WebGLRenderCmd.prototype);
-
-WebGLRenderCmd.prototype._updateColor = function () {
-};
