@@ -2216,7 +2216,7 @@ cc.game = new class Game {
      * Debug mode: No debugging. {@static}
      * @const {Number}
      */
-    static DEBUG_MODE_NONE = 0;
+    DEBUG_MODE_NONE = 0;
     /**
      * Debug mode: Info, warning, error to console.
      * @const {Number}
@@ -2226,56 +2226,56 @@ cc.game = new class Game {
      * Debug mode: Warning, error to console.
      * @const {Number}
      */
-    static DEBUG_MODE_WARN = 2;
+    DEBUG_MODE_WARN = 2;
     /**
      * Debug mode: Error to console.
      * @const {Number}
      * @static
      */
-    static DEBUG_MODE_ERROR = 3;
+    DEBUG_MODE_ERROR = 3;
     /**
      * Debug mode: Info, warning, error to web page.
      * @const {Number}
      */
-    static DEBUG_MODE_INFO_FOR_WEB_PAGE = 4;
+    DEBUG_MODE_INFO_FOR_WEB_PAGE = 4;
     /**
      * Debug mode: Warning, error to web page.
      * @const {Number}
      */
-    static DEBUG_MODE_WARN_FOR_WEB_PAGE = 5;
+    DEBUG_MODE_WARN_FOR_WEB_PAGE = 5;
     /**
      * Debug mode: Error to web page.
      * @const {Number}
      */
-    static DEBUG_MODE_ERROR_FOR_WEB_PAGE = 6;
+    DEBUG_MODE_ERROR_FOR_WEB_PAGE = 6;
 
     /**
      * Event that is fired when the game is hidden.
      * @constant {String}
      */
-    static EVENT_HIDE = "game_on_hide";
+    EVENT_HIDE = "game_on_hide";
     /**
      * Event that is fired when the game is shown.
      * @constant {String}
      */
-    static EVENT_SHOW = "game_on_show";
+    EVENT_SHOW = "game_on_show";
     /**
      * Event that is fired when the game is resized.
      * @constant {String}
      */
-    static EVENT_RESIZE = "game_on_resize";
+    EVENT_RESIZE = "game_on_resize";
     /**
      * Event that is fired when the renderer is done being initialized.
      * @constant {String}
      */
-    static EVENT_RENDERER_INITED = "renderer_inited";
+    EVENT_RENDERER_INITED = "renderer_inited";
 
     /** @constant {Number} */
-    static RENDER_TYPE_CANVAS = 0;
+    RENDER_TYPE_CANVAS = 0;
     /** @constant {Number} */
-    static RENDER_TYPE_WEBGL = 1;
+    RENDER_TYPE_WEBGL = 1;
     /** @constant {Number} */
-    static RENDER_TYPE_OPENGL = 2;
+    RENDER_TYPE_OPENGL = 2;
 
     _eventHide = null;
     _eventShow = null;
