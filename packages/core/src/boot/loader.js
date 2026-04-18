@@ -1,4 +1,5 @@
 import ImagePool from './image-pool';
+import Game from './game';
 
 var imagePool = new ImagePool();
 
@@ -121,7 +122,7 @@ export default class Loader {
         var d = document, s = document.createElement('script');
         s.async = isAsync;
         this._jsCache[jsPath] = true;
-        if (cc.game.config["noCache"] && typeof jsPath === "string") {
+        if (Game.getInstance().config["noCache"] && typeof jsPath === "string") {
             if (this._noCacheRex.test(jsPath))
                 s.src = jsPath + "&_t=" + (new Date() - 0);
             else
@@ -161,7 +162,7 @@ export default class Loader {
             if (cc._loadingImage)
                 jsLoadingImg.src = cc._loadingImage;
 
-            var canvasNode = d.getElementById(cc.game.config["id"]);
+            var canvasNode = d.getElementById(Game.getInstance().config["id"]);
             canvasNode.style.backgroundColor = "transparent";
             canvasNode.parentNode.appendChild(jsLoadingImg);
 
@@ -387,7 +388,7 @@ export default class Loader {
                 delete this._queue[url];
             }
 
-            if (window.ENABLE_IMAEG_POOL && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+            if (window.ENABLE_IMAEG_POOL && cc._renderType === Game.RENDER_TYPE_WEBGL) {
                 imagePool.put(img);
             }
         };
@@ -414,7 +415,7 @@ export default class Loader {
                     delete this._queue[url];
                 }
 
-                if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+                if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
                     imagePool.put(img);
                 }
             }
@@ -467,7 +468,7 @@ export default class Loader {
             realUrl = this.getUrl(basePath, url);
         }
 
-        if (cc.game.config["noCache"] && typeof realUrl === "string") {
+        if (Game.getInstance().config["noCache"] && typeof realUrl === "string") {
             if (this._noCacheRex.test(realUrl))
                 realUrl += "&_t=" + (new Date() - 0);
             else

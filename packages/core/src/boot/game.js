@@ -4,27 +4,36 @@
  * @name cc.game
  */
 export default class Game {
-    DEBUG_MODE_NONE = 0;
-    DEBUG_MODE_INFO = 1;
-    DEBUG_MODE_WARN = 2;
-    DEBUG_MODE_ERROR = 3;
-    DEBUG_MODE_INFO_FOR_WEB_PAGE = 4;
-    DEBUG_MODE_WARN_FOR_WEB_PAGE = 5;
-    DEBUG_MODE_ERROR_FOR_WEB_PAGE = 6;
+    static _instance = null;
 
-    EVENT_HIDE = "game_on_hide";
-    EVENT_SHOW = "game_on_show";
-    EVENT_RESIZE = "game_on_resize";
-    EVENT_RENDERER_INITED = "renderer_inited";
+    /**
+     * @returns {Game}
+     */
+    static getInstance() {
+        if (!Game._instance) {
+            Game._instance = new Game();
+        }
+        return Game._instance;
+    }
 
-    RENDER_TYPE_CANVAS = 0;
-    RENDER_TYPE_WEBGL = 1;
-    RENDER_TYPE_OPENGL = 2;
+    static DEBUG_MODE_NONE = 0;
+    static DEBUG_MODE_INFO = 1;
+    static DEBUG_MODE_WARN = 2;
+    static DEBUG_MODE_ERROR = 3;
+    static DEBUG_MODE_INFO_FOR_WEB_PAGE = 4;
+    static DEBUG_MODE_WARN_FOR_WEB_PAGE = 5;
+    static DEBUG_MODE_ERROR_FOR_WEB_PAGE = 6;
 
-    _eventHide = null;
-    _eventShow = null;
+    static EVENT_HIDE = "game_on_hide";
+    static EVENT_SHOW = "game_on_show";
+    static EVENT_RESIZE = "game_on_resize";
+    static EVENT_RENDERER_INITED = "renderer_inited";
 
-    CONFIG_KEY = {
+    static RENDER_TYPE_CANVAS = 0;
+    static RENDER_TYPE_WEBGL = 1;
+    static RENDER_TYPE_OPENGL = 2;
+
+    static CONFIG_KEY = {
         width: "width",
         height: "height",
         engineDir: "engineDir",
@@ -37,6 +46,28 @@ export default class Game {
         renderMode: "renderMode",
         jsList: "jsList"
     };
+
+    _eventHide = null;
+    _eventShow = null;
+
+    constructor() {
+        // Copy static constants to instance for backward compatibility (cc.game.RENDER_TYPE_WEBGL etc.)
+        this.DEBUG_MODE_NONE = Game.DEBUG_MODE_NONE;
+        this.DEBUG_MODE_INFO = Game.DEBUG_MODE_INFO;
+        this.DEBUG_MODE_WARN = Game.DEBUG_MODE_WARN;
+        this.DEBUG_MODE_ERROR = Game.DEBUG_MODE_ERROR;
+        this.DEBUG_MODE_INFO_FOR_WEB_PAGE = Game.DEBUG_MODE_INFO_FOR_WEB_PAGE;
+        this.DEBUG_MODE_WARN_FOR_WEB_PAGE = Game.DEBUG_MODE_WARN_FOR_WEB_PAGE;
+        this.DEBUG_MODE_ERROR_FOR_WEB_PAGE = Game.DEBUG_MODE_ERROR_FOR_WEB_PAGE;
+        this.EVENT_HIDE = Game.EVENT_HIDE;
+        this.EVENT_SHOW = Game.EVENT_SHOW;
+        this.EVENT_RESIZE = Game.EVENT_RESIZE;
+        this.EVENT_RENDERER_INITED = Game.EVENT_RENDERER_INITED;
+        this.RENDER_TYPE_CANVAS = Game.RENDER_TYPE_CANVAS;
+        this.RENDER_TYPE_WEBGL = Game.RENDER_TYPE_WEBGL;
+        this.RENDER_TYPE_OPENGL = Game.RENDER_TYPE_OPENGL;
+        this.CONFIG_KEY = Game.CONFIG_KEY;
+    }
 
     // states
     _paused = true;
@@ -91,7 +122,7 @@ export default class Game {
      * @param frameRate
      */
     setFrameRate(frameRate) {
-        var config = this.config, CONFIG_KEY = this.CONFIG_KEY;
+        var config = this.config, CONFIG_KEY = Game.CONFIG_KEY;
         config[CONFIG_KEY.frameRate] = frameRate;
         if (this._intervalId)
             window.cancelAnimationFrame(this._intervalId);
@@ -147,7 +178,7 @@ export default class Game {
     restart() {
         cc.director.popToSceneStackLevel(0);
         cc.audioEngine && cc.audioEngine.end();
-        cc.game.onStart();
+        this.onStart();
     }
 
     /**
@@ -163,7 +194,7 @@ export default class Game {
      */
     prepare(cb) {
         var config = this.config,
-            CONFIG_KEY = this.CONFIG_KEY;
+            CONFIG_KEY = Game.CONFIG_KEY;
 
         if (!this._configLoaded) {
             this._loadConfig(() => {
@@ -222,28 +253,28 @@ export default class Game {
      */
     run(config, onStart) {
         if (typeof config === 'function') {
-            cc.game.onStart = config;
+            this.onStart = config;
         }
         else {
             if (config) {
                 if (typeof config === 'string') {
-                    if (!cc.game.config) this._loadConfig();
-                    cc.game.config[cc.game.CONFIG_KEY.id] = config;
+                    if (!this.config) this._loadConfig();
+                    this.config[Game.CONFIG_KEY.id] = config;
                 } else {
-                    cc.game.config = config;
+                    this.config = config;
                 }
             }
             if (typeof onStart === 'function') {
-                cc.game.onStart = onStart;
+                this.onStart = onStart;
             }
         }
 
-        this.prepare(cc.game.onStart && cc.game.onStart.bind(cc.game));
+        this.prepare(this.onStart && this.onStart.bind(this));
     }
 
     _setAnimFrame() {
         this._lastTime = new Date();
-        var frameRate = cc.game.config[cc.game.CONFIG_KEY.frameRate];
+        var frameRate = this.config[Game.CONFIG_KEY.frameRate];
         this._frameTime = 1000 / frameRate;
         if (frameRate !== 60 && frameRate !== 30) {
             window.requestAnimFrame = this._stTime;
@@ -272,10 +303,10 @@ export default class Game {
 
     _stTime = (callback) => {
         var currTime = new Date().getTime();
-        var timeToCall = Math.max(0, cc.game._frameTime - (currTime - cc.game._lastTime));
+        var timeToCall = Math.max(0, this._frameTime - (currTime - this._lastTime));
         var id = window.setTimeout(() => { callback(); },
             timeToCall);
-        cc.game._lastTime = currTime + timeToCall;
+        this._lastTime = currTime + timeToCall;
         return id;
     };
 
@@ -284,7 +315,7 @@ export default class Game {
     };
 
     _runMainLoop() {
-        var config = this.config, CONFIG_KEY = this.CONFIG_KEY,
+        var config = this.config, CONFIG_KEY = Game.CONFIG_KEY,
             director = cc.director,
             skip = true, frameRate = config[CONFIG_KEY.frameRate];
 
@@ -344,7 +375,7 @@ export default class Game {
     }
 
     _initConfig(config) {
-        var CONFIG_KEY = this.CONFIG_KEY,
+        var CONFIG_KEY = Game.CONFIG_KEY,
             modules = config[CONFIG_KEY.modules];
 
         config[CONFIG_KEY.showFPS] = typeof config[CONFIG_KEY.showFPS] === 'undefined' ? true : config[CONFIG_KEY.showFPS];
@@ -368,10 +399,10 @@ export default class Game {
         if (this._rendererInitialized) return;
 
         if (!cc._supportRender) {
-            throw new Error("The renderer doesn't support the renderMode " + this.config[this.CONFIG_KEY.renderMode]);
+            throw new Error("The renderer doesn't support the renderMode " + this.config[Game.CONFIG_KEY.renderMode]);
         }
 
-        var el = this.config[cc.game.CONFIG_KEY.id],
+        var el = this.config[Game.CONFIG_KEY.id],
             win = window,
             element = document.getElementById(el),
             localCanvas, localContainer, localConStyle;
@@ -403,7 +434,7 @@ export default class Game {
         localCanvas.setAttribute("height", height || 320);
         localCanvas.setAttribute("tabindex", 99);
 
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
             this._renderContext = cc._renderContext = cc.webglContext
              = cc.create3DContext(localCanvas, {
                 'stencil': true,
@@ -420,18 +451,18 @@ export default class Game {
             cc.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
             cc.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
         } else {
-            cc._renderType = cc.game.RENDER_TYPE_CANVAS;
+            cc._renderType = Game.RENDER_TYPE_CANVAS;
             cc.renderer = cc.rendererCanvas;
             this._renderContext = cc._renderContext = new cc.CanvasContextWrapper(localCanvas.getContext("2d"));
             cc._drawingUtil = cc.DrawingPrimitiveCanvas ? new cc.DrawingPrimitiveCanvas(this._renderContext) : null;
         }
 
         cc._gameDiv = localContainer;
-        cc.game.canvas.oncontextmenu = function () {
+        this.canvas.oncontextmenu = function () {
             if (!cc._isContextMenuEnable) return false;
         };
 
-        this.dispatchEvent(this.EVENT_RENDERER_INITED, true);
+        this.dispatchEvent(Game.EVENT_RENDERER_INITED, true);
 
         this._rendererInitialized = true;
     }
@@ -439,12 +470,12 @@ export default class Game {
     _initEvents() {
         var win = window, hidden;
 
-        this._eventHide = this._eventHide || new cc.EventCustom(this.EVENT_HIDE);
+        this._eventHide = this._eventHide || new cc.EventCustom(Game.EVENT_HIDE);
         this._eventHide.setUserData(this);
-        this._eventShow = this._eventShow || new cc.EventCustom(this.EVENT_SHOW);
+        this._eventShow = this._eventShow || new cc.EventCustom(Game.EVENT_SHOW);
         this._eventShow.setUserData(this);
 
-        if (this.config[this.CONFIG_KEY.registerSystemEvent])
+        if (this.config[Game.CONFIG_KEY.registerSystemEvent])
             cc.inputManager.registerSystemEvent(this.canvas);
 
         if (!cc.isUndefined(document.hidden)) {
@@ -465,12 +496,12 @@ export default class Game {
             "qbrowserVisibilityChange"
         ];
         var onHidden = () => {
-            if (cc.eventManager && cc.game._eventHide)
-                cc.eventManager.dispatchEvent(cc.game._eventHide);
+            if (cc.eventManager && this._eventHide)
+                cc.eventManager.dispatchEvent(this._eventHide);
         };
         var onShow = () => {
-            if (cc.eventManager && cc.game._eventShow)
-                cc.eventManager.dispatchEvent(cc.game._eventShow);
+            if (cc.eventManager && this._eventShow)
+                cc.eventManager.dispatchEvent(this._eventShow);
         };
 
         if (hidden) {
@@ -496,11 +527,11 @@ export default class Game {
             win.addEventListener("pageshow", onShow, false);
         }
 
-        cc.eventManager.addCustomListener(cc.game.EVENT_HIDE, () => {
-            cc.game.pause();
+        cc.eventManager.addCustomListener(Game.EVENT_HIDE, () => {
+            this.pause();
         });
-        cc.eventManager.addCustomListener(cc.game.EVENT_SHOW, () => {
-            cc.game.resume();
+        cc.eventManager.addCustomListener(Game.EVENT_SHOW, () => {
+            this.resume();
         });
     }
 }

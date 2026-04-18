@@ -45,7 +45,7 @@ cc.initEngine = initEngine;
 // Game
 import Game from './game';
 
-cc.game = new Game();
+cc.game = Game.getInstance();
 
 // Debugger
 import { _LogInfos, logToWebPage, formatString, initDebugSetting } from './debugger';

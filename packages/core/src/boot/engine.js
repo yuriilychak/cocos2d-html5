@@ -1,34 +1,36 @@
+import Game from './game';
+
 var _config = null,
     _jsAddedCache = {},
     _engineInitCalled = false,
     _engineLoadedCallback = null;
 
 function _determineRenderType(config) {
-    var CONFIG_KEY = cc.game.CONFIG_KEY,
+    var CONFIG_KEY = Game.CONFIG_KEY,
         userRenderMode = parseInt(config[CONFIG_KEY.renderMode]) || 0;
 
     if (isNaN(userRenderMode) || userRenderMode > 2 || userRenderMode < 0)
         config[CONFIG_KEY.renderMode] = 0;
 
-    cc._renderType = cc.game.RENDER_TYPE_CANVAS;
+    cc._renderType = Game.RENDER_TYPE_CANVAS;
     cc._supportRender = false;
 
     if (userRenderMode === 0) {
         if (cc.sys.capabilities["opengl"]) {
-            cc._renderType = cc.game.RENDER_TYPE_WEBGL;
+            cc._renderType = Game.RENDER_TYPE_WEBGL;
             cc._supportRender = true;
         }
         else if (cc.sys.capabilities["canvas"]) {
-            cc._renderType = cc.game.RENDER_TYPE_CANVAS;
+            cc._renderType = Game.RENDER_TYPE_CANVAS;
             cc._supportRender = true;
         }
     }
     else if (userRenderMode === 1 && cc.sys.capabilities["canvas"]) {
-        cc._renderType = cc.game.RENDER_TYPE_CANVAS;
+        cc._renderType = Game.RENDER_TYPE_CANVAS;
         cc._supportRender = true;
     }
     else if (userRenderMode === 2 && cc.sys.capabilities["opengl"]) {
-        cc._renderType = cc.game.RENDER_TYPE_WEBGL;
+        cc._renderType = Game.RENDER_TYPE_WEBGL;
         cc._supportRender = true;
     }
 }
@@ -55,14 +57,14 @@ function _getJsListOfModule(moduleMap, moduleName, dir) {
 
 function _afterEngineLoaded(config) {
     if (cc._initDebugSetting)
-        cc._initDebugSetting(config[cc.game.CONFIG_KEY.debugMode]);
+        cc._initDebugSetting(config[Game.CONFIG_KEY.debugMode]);
     cc._engineLoaded = true;
     console.log(cc.ENGINE_VERSION);
     if (_engineLoadedCallback) _engineLoadedCallback();
 }
 
 function _load(config) {
-    var CONFIG_KEY = cc.game.CONFIG_KEY, engineDir = config[CONFIG_KEY.engineDir], loader = cc.loader;
+    var CONFIG_KEY = Game.CONFIG_KEY, engineDir = config[CONFIG_KEY.engineDir], loader = cc.loader;
 
     if (cc.NewClass) {
         _afterEngineLoaded(config);
@@ -93,6 +95,8 @@ function _windowLoaded() {
 }
 
 export function initEngine(config, cb) {
+    var game = Game.getInstance();
+
     if (_engineInitCalled) {
         var previousCallback = _engineLoadedCallback;
         _engineLoadedCallback = function () {
@@ -104,13 +108,13 @@ export function initEngine(config, cb) {
 
     _engineLoadedCallback = cb;
 
-    if (!cc.game.config && config) {
-        cc.game.config = config;
+    if (!game.config && config) {
+        game.config = config;
     }
-    else if (!cc.game.config) {
-        cc.game._loadConfig();
+    else if (!game.config) {
+        game._loadConfig();
     }
-    config = cc.game.config;
+    config = game.config;
 
     _determineRenderType(config);
 

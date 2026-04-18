@@ -1,4 +1,5 @@
 import { isObject } from './utils';
+import Game from './game';
 
 export const _LogInfos = {
     ActionManager_addAction: "cc.ActionManager.addAction(): action must be non-null",
@@ -256,12 +257,11 @@ export function formatString(arg) {
  * @param {Number} mode
  */
 export function initDebugSetting(mode) {
-    var ccGame = cc.game;
-    if(mode === ccGame.DEBUG_MODE_NONE)
+    if(mode === Game.DEBUG_MODE_NONE)
         return;
 
     var locLog;
-    if(mode > ccGame.DEBUG_MODE_ERROR){
+    if(mode > Game.DEBUG_MODE_ERROR){
         //log to web page
         locLog = cc._logToWebPage.bind(cc);
         cc.error = function(){
@@ -274,12 +274,12 @@ export function initDebugSetting(mode) {
                 locLog("Assert: " + msg);
             }
         };
-        if(mode !== ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
+        if(mode !== Game.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
             cc.warn = function(){
                 locLog("WARN :  " + cc.formatStr.apply(cc, arguments));
             };
         }
-        if(mode === ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
+        if(mode === Game.DEBUG_MODE_INFO_FOR_WEB_PAGE){
             cc.log = function(){
                 locLog(cc.formatStr.apply(cc, arguments));
             };
@@ -297,9 +297,9 @@ export function initDebugSetting(mode) {
                 }
             };
         }
-        if (mode !== ccGame.DEBUG_MODE_ERROR)
+        if (mode !== Game.DEBUG_MODE_ERROR)
             cc.warn = Function.prototype.bind.call(console.warn, console);
-        if (mode === ccGame.DEBUG_MODE_INFO)
+        if (mode === Game.DEBUG_MODE_INFO)
             cc.log = Function.prototype.bind.call(console.log, console);
     }
 }
