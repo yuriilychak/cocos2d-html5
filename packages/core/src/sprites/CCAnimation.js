@@ -68,14 +68,6 @@ cc.AnimationFrame = class AnimationFrame extends cc.NewClass {
      * Create a new animation frame and copy all contents into it
      * @returns {AnimationFrame}
      */
-    copyWithZone(pZone) {
-      return cc.clone(this);
-    }
-
-    /**
-     * Create a new animation frame and copy all contents into it
-     * @returns {AnimationFrame}
-     */
     copy(pZone) {
       var newFrame = new cc.AnimationFrame();
       newFrame.initWithSpriteFrame(
