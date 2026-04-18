@@ -154,13 +154,14 @@ cc.IMEDispatcher = class IMEDispatcher extends cc.NewClass {
     init() {
         if (cc.sys.isMobile)
             return;
-        this._domInputControl = cc.$("#imeDispatcherInput");
+        this._domInputControl = document.getElementById("imeDispatcherInput");
         if (!this._domInputControl) {
-            this._domInputControl = cc.$new("input");
+            this._domInputControl = document.createElement("input");
             this._domInputControl.setAttribute("type", "text");
             this._domInputControl.setAttribute("id", "imeDispatcherInput");
-            this._domInputControl.resize(0.0, 0.0);
-            this._domInputControl.translates(0, 0);
+            this._domInputControl.style.width = "0px";
+            this._domInputControl.style.height = "0px";
+            this._domInputControl.style.transform = "translate(0, 0)";
             this._domInputControl.style.opacity = "0";
             //this._domInputControl.style.filter = "alpha(opacity = 0)";
             this._domInputControl.style.fontSize = "1px";

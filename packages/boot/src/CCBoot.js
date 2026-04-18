@@ -2699,7 +2699,7 @@ cc.game = /** @lends cc.game# */{
 
         var el = this.config[cc.game.CONFIG_KEY.id],
             win = window,
-            element = cc.$(el) || cc.$('#' + el),
+            element = document.getElementById(el),
             localCanvas, localContainer, localConStyle;
 
         if (element.tagName === "CANVAS") {
@@ -2718,7 +2718,7 @@ cc.game = /** @lends cc.game# */{
             }
             width = width || element.clientWidth;
             height = height || element.clientHeight;
-            this.canvas = cc._canvas = localCanvas = cc.$(document.createElement("CANVAS"));
+            this.canvas = cc._canvas = localCanvas = document.createElement("CANVAS");
             this.container = cc.container = localContainer = document.createElement("DIV");
             element.appendChild(localContainer);
         }
@@ -2726,7 +2726,7 @@ cc.game = /** @lends cc.game# */{
         localContainer.appendChild(localCanvas);
         this.frame = (localContainer.parentNode === document.body) ? document.documentElement : localContainer.parentNode;
 
-        localCanvas.addClass("gameCanvas");
+        localCanvas.classList.add("gameCanvas");
         localCanvas.setAttribute("width", width || 480);
         localCanvas.setAttribute("height", height || 320);
         localCanvas.setAttribute("tabindex", 99);
