@@ -13,7 +13,6 @@
   "dependencies": {
     "@aspect/core": "*",
     "@aspect/shaders": "*",
-    "@aspect/kazmath": "*",
     "@aspect/labels": "*"
   }
 }

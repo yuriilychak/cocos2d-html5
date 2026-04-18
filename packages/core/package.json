@@ -10,7 +10,5 @@
   "scripts": {
     "build": "rollup -c ../../scripts/rollup.package.mjs"
   },
-  "dependencies": {
-    "@aspect/boot": "*"
-  }
+  "dependencies": {}
 }
