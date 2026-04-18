@@ -277,7 +277,7 @@ cc.AsyncPool = class AsyncPool {
 /**
  * @class
  */
-cc.async = /** @lends cc.async# */{
+cc.async = class {
     /**
      * Do tasks series.
      * @param {Array|Object} tasks
@@ -285,13 +285,13 @@ cc.async = /** @lends cc.async# */{
      * @param {Object} [target]
      * @return {cc.AsyncPool}
      */
-    series: function (tasks, cb, target) {
-        var asyncPool = new cc.AsyncPool(tasks, 1, function (func, index, cb1) {
+    static series(tasks, cb, target) {
+        var asyncPool = new cc.AsyncPool(tasks, 1, (func, index, cb1) => {
             func.call(target, cb1);
         }, cb, target);
         asyncPool.flow();
         return asyncPool;
-    },
+    }
 
     /**
      * Do tasks parallel.
@@ -300,13 +300,13 @@ cc.async = /** @lends cc.async# */{
      * @param {Object} [target]
      * @return {cc.AsyncPool}
      */
-    parallel: function (tasks, cb, target) {
-        var asyncPool = new cc.AsyncPool(tasks, 0, function (func, index, cb1) {
+    static parallel(tasks, cb, target) {
+        var asyncPool = new cc.AsyncPool(tasks, 0, (func, index, cb1) => {
             func.call(target, cb1);
         }, cb, target);
         asyncPool.flow();
         return asyncPool;
-    },
+    }
 
     /**
      * Do tasks waterfall.
@@ -315,18 +315,18 @@ cc.async = /** @lends cc.async# */{
      * @param {Object} [target]
      * @return {cc.AsyncPool}
      */
-    waterfall: function (tasks, cb, target) {
+    static waterfall(tasks, cb, target) {
         var args = [];
-        var lastResults = [null];//the array to store the last results
+        var lastResults = [null];
         var asyncPool = new cc.AsyncPool(tasks, 1,
-            function (func, index, cb1) {
-                args.push(function (err) {
-                    args = Array.prototype.slice.call(arguments, 1);
-                    if (tasks.length - 1 === index) lastResults = lastResults.concat(args);//while the last task
-                    cb1.apply(null, arguments);
+            (func, index, cb1) => {
+                args.push((err, ...rest) => {
+                    args = rest;
+                    if (tasks.length - 1 === index) lastResults = lastResults.concat(args);
+                    cb1(err, ...rest);
                 });
                 func.apply(target, args);
-            }, function (err) {
+            }, (err) => {
                 if (!cb)
                     return;
                 if (err)
@@ -335,7 +335,7 @@ cc.async = /** @lends cc.async# */{
             });
         asyncPool.flow();
         return asyncPool;
-    },
+    }
 
     /**
      * Do tasks by iterator.
@@ -345,7 +345,7 @@ cc.async = /** @lends cc.async# */{
      * @param {Object} [target]
      * @return {cc.AsyncPool}
      */
-    map: function (tasks, iterator, callback, target) {
+    static map(tasks, iterator, callback, target) {
         var locIterator = iterator;
         if (typeof(iterator) === "object") {
             callback = iterator.cb;
@@ -355,7 +355,7 @@ cc.async = /** @lends cc.async# */{
         var asyncPool = new cc.AsyncPool(tasks, 0, locIterator, callback, target);
         asyncPool.flow();
         return asyncPool;
-    },
+    }
 
     /**
      * Do tasks by iterator limit.
@@ -365,7 +365,7 @@ cc.async = /** @lends cc.async# */{
      * @param {function} cb callback
      * @param {Object} [target]
      */
-    mapLimit: function (tasks, limit, iterator, cb, target) {
+    static mapLimit(tasks, limit, iterator, cb, target) {
         var asyncPool = new cc.AsyncPool(tasks, limit, iterator, cb, target);
         asyncPool.flow();
         return asyncPool;
@@ -2211,73 +2211,67 @@ cc.game = new class Game {
     /**
      * Debug mode: No debugging. {@static}
      * @const {Number}
-     * @static
      */
-    DEBUG_MODE_NONE = 0;
+    static DEBUG_MODE_NONE = 0;
     /**
      * Debug mode: Info, warning, error to console.
      * @const {Number}
-     * @static
      */
     DEBUG_MODE_INFO = 1;
     /**
      * Debug mode: Warning, error to console.
      * @const {Number}
-     * @static
      */
-    DEBUG_MODE_WARN = 2;
+    static DEBUG_MODE_WARN = 2;
     /**
      * Debug mode: Error to console.
      * @const {Number}
      * @static
      */
-    DEBUG_MODE_ERROR = 3;
+    static DEBUG_MODE_ERROR = 3;
     /**
      * Debug mode: Info, warning, error to web page.
      * @const {Number}
-     * @static
      */
-    DEBUG_MODE_INFO_FOR_WEB_PAGE = 4;
+    static DEBUG_MODE_INFO_FOR_WEB_PAGE = 4;
     /**
      * Debug mode: Warning, error to web page.
      * @const {Number}
-     * @static
      */
-    DEBUG_MODE_WARN_FOR_WEB_PAGE = 5;
+    static DEBUG_MODE_WARN_FOR_WEB_PAGE = 5;
     /**
      * Debug mode: Error to web page.
      * @const {Number}
-     * @static
      */
-    DEBUG_MODE_ERROR_FOR_WEB_PAGE = 6;
+    static DEBUG_MODE_ERROR_FOR_WEB_PAGE = 6;
 
     /**
      * Event that is fired when the game is hidden.
      * @constant {String}
      */
-    EVENT_HIDE = "game_on_hide";
+    static EVENT_HIDE = "game_on_hide";
     /**
      * Event that is fired when the game is shown.
      * @constant {String}
      */
-    EVENT_SHOW = "game_on_show";
+    static EVENT_SHOW = "game_on_show";
     /**
      * Event that is fired when the game is resized.
      * @constant {String}
      */
-    EVENT_RESIZE = "game_on_resize";
+    static EVENT_RESIZE = "game_on_resize";
     /**
      * Event that is fired when the renderer is done being initialized.
      * @constant {String}
      */
-    EVENT_RENDERER_INITED = "renderer_inited";
+    static EVENT_RENDERER_INITED = "renderer_inited";
 
     /** @constant {Number} */
-    RENDER_TYPE_CANVAS = 0;
+    static RENDER_TYPE_CANVAS = 0;
     /** @constant {Number} */
-    RENDER_TYPE_WEBGL = 1;
+    static RENDER_TYPE_WEBGL = 1;
     /** @constant {Number} */
-    RENDER_TYPE_OPENGL = 2;
+    static RENDER_TYPE_OPENGL = 2;
 
     _eventHide = null;
     _eventShow = null;
