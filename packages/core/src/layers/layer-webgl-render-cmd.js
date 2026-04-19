@@ -154,7 +154,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     constructor(renderable) {
         super(renderable);
         this._needDraw = true;
-        this._clipRect = new cc.Rect();
+        this._clipRect = new Rect();
         this._clippingRectDirty = false;
     }
 

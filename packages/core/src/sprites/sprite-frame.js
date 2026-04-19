@@ -57,7 +57,7 @@ import { Size } from '../cocoa/geometry/size';
  * var frame1 = new cc.SpriteFrame(texture, cc.rect(0,0,90,128));
  * var frame2 = new cc.SpriteFrame(texture, cc.rect(0,0,90,128),false,0,cc.size(90,128));
  */
-export class SpriteFrame extends NewClass {
+export class SpriteFrame extends EventHelper(NewClass) {
     constructor(filename, rect, rotated, offset, originalSize) {
         super();
         this._offset = null;
@@ -401,8 +401,6 @@ export class SpriteFrame extends NewClass {
         return true;
     }
 }
-
-EventHelper.prototype.apply(SpriteFrame.prototype);
 
 SpriteFrame._frameWithTextureForCanvas = function (
     texture,

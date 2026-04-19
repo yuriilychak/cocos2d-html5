@@ -69,7 +69,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
          * @property {Number}           maxS            - Texture max S
          * @property {Number}           maxT            - Texture max T
          */
-        cc.Texture2D = class Texture2D extends NewClass {
+        cc.Texture2D = class Texture2D extends EventHelper(NewClass) {
             constructor() {
                 super();
                 this._contentSize = new Size(0, 0);
@@ -503,8 +503,6 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
     } else if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
         initWebGLTexture2D();
     }
-
-    EventHelper.prototype.apply(cc.Texture2D.prototype);
 
     const _c = cc.Texture2D;
 

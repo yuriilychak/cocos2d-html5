@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { Point } from '../cocoa/geometry/point';
+import { Rect } from '../cocoa/geometry/rect';
 import { Color } from '../platform/types/color';
 
 //---------------------- Customer render cmd --------------------
@@ -561,7 +562,7 @@ RenderCmd.prototype._originSyncStatus = RenderCmd.prototype._syncStatus;
 
 //-----------------------Canvas ---------------------------
 
-const localBB = new cc.Rect();
+const localBB = new Rect();
 
 //The cc.Node's render command for Canvas
 export class CanvasRenderCmd extends RenderCmd {

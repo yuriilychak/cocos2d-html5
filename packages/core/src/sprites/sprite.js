@@ -89,7 +89,7 @@ import { Size } from '../cocoa/geometry/size';
  * @property {cc.SpriteBatchNode}   batchNode           - The batch node object if this sprite is rendered by cc.SpriteBatchNode.
  * @property {cc.V3F_C4B_T2F_Quad}  quad                - <@readonly> The quad (tex coords, vertex coords and color) information.
  */
-export class Sprite extends Node {
+export class Sprite extends EventHelper(Node) {
     constructor(fileName, rect, rotated) {
         super();
         var self = this;
@@ -888,8 +888,6 @@ export class Sprite extends Node {
  * @type {Number}
  */
 Sprite.INDEX_NOT_INITIALIZED = -1;
-
-EventHelper.prototype.apply(Sprite.prototype);
 
 (function () {
     var manager = (Sprite.LoadManager = function () {

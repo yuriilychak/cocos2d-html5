@@ -80,7 +80,7 @@
  * // Example 03
  * var label3 = new cc.LabelBMFont("This is a \n test case", "test.fnt", 200, cc.TEXT_ALIGNMENT_LEFT, cc.p(0,0));
  */
-cc.LabelBMFont = class LabelBMFont extends cc.SpriteBatchNode {
+cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
     //property string is Getter and Setter.
     //property textAlign is Getter and Setter.
     //property boundingWidth is Getter and Setter.
@@ -851,9 +851,6 @@ cc.LabelBMFont = class LabelBMFont extends cc.SpriteBatchNode {
         str.splice(index, len);
     }
 };
-
-cc.EventHelper.prototype.apply(cc.LabelBMFont.prototype);
-
 
 cc.FntFrameCache = {};
 

@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { Point } from '../cocoa/geometry/point';
+import { Rect, rectContainsPoint } from '../cocoa/geometry/rect';
 
 /**
  * ignore
@@ -437,7 +438,7 @@ export const inputManager = /** @lends inputManager# */{
 
                 var pos = selfPointer.getHTMLElementPosition(element);
                 var location = selfPointer.getPointByEvent(event, pos);
-                if (!cc.rectContainsPoint(new cc.Rect(pos.left, pos.top, pos.width, pos.height), location)) {
+                if (!rectContainsPoint(new Rect(pos.left, pos.top, pos.width, pos.height), location)) {
                     selfPointer.handleTouchesEnd([selfPointer.getTouchByXY(location.x, location.y, pos)]);
 
                     var mouseEvent = selfPointer.getMouseEvent(location, pos, cc.EventMouse.UP);

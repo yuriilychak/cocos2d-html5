@@ -50,7 +50,7 @@ export const _lastWordRex = /([a-zA-Z0-9\-¿¡«À-ÖØ-öø-ʯ\u0300-\u034e\u03
 export const _lastEnglish = /[a-zA-Z0-9\-¿¡«À-ÖØ-öø-ʯ\u0300-\u034e\u0350-\u036FͰ-ԯ\u2011‵-‷‹⁅]+$/;
 export const _firsrEnglish = /^[a-zA-Z0-9\-¿¡«À-ÖØ-öø-ʯ\u0300-\u034e\u0350-\u036FͰ-ԯ\u2011‵-‷‹⁅]/;
 
-const localBB = new cc.Rect();
+const localBB = new Rect();
 
 // Mixin that adds label text rendering properties and methods to any RenderCmd base.
 export const LabelRenderMixin = (Base) => class extends Base {

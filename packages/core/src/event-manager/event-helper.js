@@ -23,26 +23,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-// The event helper
-const EventHelper = function () {
-};
-
-EventHelper.prototype = {
-    constructor: EventHelper,
-
-    apply: function (object) {
-        object.addEventListener = EventHelper.prototype.addEventListener;
-        object.hasEventListener = EventHelper.prototype.hasEventListener;
-        object.removeEventListener = EventHelper.prototype.removeEventListener;
-        object.dispatchEvent = EventHelper.prototype.dispatchEvent;
-    },
-
-    addEventListener: function (type, listener, target) {
-        //check 'type' status, if the status is ready, dispatch event next frame
-        if (type === "load" && this._textureLoaded) {            //only load event checked.
-            setTimeout(function () {
-                listener.call(target);
-            }, 0);
+/**
+ * EventHelper mixin — adds event listener methods to a class.
+ * @param {Function} Base - The base class to extend
+ * @returns {Function} A new class extending Base with event methods
+ */
+const EventHelper = (Base) => class extends Base {
+    addEventListener(type, listener, target) {
+        if (type === "load" && this._textureLoaded) {
+            setTimeout(() => listener.call(target), 0);
             return;
         }
 
@@ -54,25 +43,25 @@ EventHelper.prototype = {
             listeners[type] = [];
 
         if (!this.hasEventListener(type, listener, target))
-            listeners[type].push({callback: listener, eventTarget: target});
-    },
+            listeners[type].push({ callback: listener, eventTarget: target });
+    }
 
-    hasEventListener: function (type, listener, target) {
+    hasEventListener(type, listener, target) {
         if (this._listeners === undefined)
             return false;
 
         var listeners = this._listeners;
         if (listeners[type] !== undefined) {
-            for (var i = 0, len = listeners.length; i < len; i++) {
-                var selListener = listeners[i];
+            for (var i = 0, len = listeners[type].length; i < len; i++) {
+                var selListener = listeners[type][i];
                 if (selListener.callback === listener && selListener.eventTarget === target)
                     return true;
             }
         }
         return false;
-    },
+    }
 
-    removeEventListener: function (type, listener, target) {
+    removeEventListener(type, listener, target) {
         if (this._listeners === undefined)
             return;
 
@@ -85,12 +74,12 @@ EventHelper.prototype = {
                 if (selListener.eventTarget === target && selListener.callback === listener)
                     listenerArray.splice(i, 1);
                 else
-                    i++
+                    i++;
             }
         }
-    },
+    }
 
-    removeEventTarget: function (type, listener, target) {
+    removeEventTarget(type, target) {
         if (this._listeners === undefined)
             return;
 
@@ -103,12 +92,12 @@ EventHelper.prototype = {
                 if (selListener.eventTarget === target)
                     listenerArray.splice(i, 1);
                 else
-                    i++
+                    i++;
             }
         }
-    },
+    }
 
-    dispatchEvent: function (event, clearAfterDispatch) {
+    dispatchEvent(event, clearAfterDispatch) {
         if (this._listeners === undefined)
             return;
 

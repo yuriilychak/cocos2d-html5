@@ -342,7 +342,7 @@ var scale9QuadGenerator = {
  * @property {Number}   insetBottom     - The bottom inset of the 9-slice sprite
  */
 
-cc.Scale9Sprite = class Scale9Sprite extends cc.Node {
+cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
     /**
      * Constructor function.
      * @function
@@ -868,8 +868,6 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.Node {
     }
 };
 ccui.Scale9Sprite = cc.Scale9Sprite;
-
-cc.EventHelper.prototype.apply(ccui.Scale9Sprite.prototype);
 
 /**
  * create a ccui.Scale9Sprite with Sprite frame.

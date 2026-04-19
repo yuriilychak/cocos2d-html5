@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Node } from './node';
+import EventHelper from '../event-manager/event-helper';
 
 /**
  * <p>cc.AtlasNode is a subclass of cc.Node, it knows how to render a TextureAtlas object. </p>
@@ -49,7 +50,7 @@ import { Node } from './node';
  * @property {TextureAtlas}  textureAtlas    - Texture atlas for cc.AtlasNode
  * @property {Number}           quadsToDraw     - Number of quads to draw
  */
-export class AtlasNode extends Node {
+export class AtlasNode extends EventHelper(Node) {
     /**
      * <p>Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      * @param {String} tile
@@ -287,6 +288,3 @@ export class AtlasNode extends Node {
         this.setTexture(value);
     }
 }
-
-
-cc.EventHelper.prototype.apply(AtlasNode.prototype);
