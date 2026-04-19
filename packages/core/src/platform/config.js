@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+ import { Point } from '../cocoa/geometry/point';
+
 /**
  * <p>
  *   If enabled, the texture coordinates will be calculated by using this formula: <br/>
@@ -53,9 +55,10 @@ export const FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
  * Position of the FPS (Default: 0,0 (bottom-left corner))<br/>
  * To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
  * @constant
- * @type {cc.Point}
+ * @type {Point}
+ * @namespace cc
  */
-export const DIRECTOR_STATS_POSITION = {x: 0, y: 0};
+export const DIRECTOR_STATS_POSITION = new Point();
 
 /**
  * <p>

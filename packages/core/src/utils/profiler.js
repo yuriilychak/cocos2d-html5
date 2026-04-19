@@ -1,3 +1,5 @@
+import { DIRECTOR_STATS_POSITION, DIRECTOR_FPS_INTERVAL } from '../platform/config';
+
 var _showFPS = false;
 var _inited = false;
 var _frames = 0, _frameRate = 0, _lastSPF = 0, _accumDt = 0;
@@ -17,8 +19,8 @@ _fps.style.position = 'absolute';
 _fps.style.padding = '3px';
 _fps.style.textAlign = 'left';
 _fps.style.backgroundColor = 'rgb(0, 0, 34)';
-_fps.style.bottom = cc.DIRECTOR_STATS_POSITION.y + '0px';
-_fps.style.left = cc.DIRECTOR_STATS_POSITION.x + 'px';
+_fps.style.bottom = DIRECTOR_STATS_POSITION.y + 'px';
+_fps.style.left = DIRECTOR_STATS_POSITION.x + 'px';
 _fps.style.width = '45px';
 _fps.style.height = '80px';
 
@@ -74,7 +76,7 @@ var afterVisit = function () {
     _frames++;
     _accumDt += cc.director.getDeltaTime();
     
-    if (_accumDt > cc.DIRECTOR_FPS_INTERVAL) {
+    if (_accumDt > DIRECTOR_FPS_INTERVAL) {
         _frameRate = _frames / _accumDt;
         _frames = 0;
         _accumDt = 0;
@@ -104,7 +106,7 @@ var profiler = {
 
     setProfileDuration: function (duration) {
         if (!isNaN(duration) && duration > 0) {
-            _levelDetCycle = duration / cc.DIRECTOR_FPS_INTERVAL;
+            _levelDetCycle = duration / DIRECTOR_FPS_INTERVAL;
         }
     },
 

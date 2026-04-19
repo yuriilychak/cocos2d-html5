@@ -59,8 +59,15 @@ export class Director extends NewClass {
     static PROJECTION_CUSTOM = PROJECTION_CUSTOM;
     static PROJECTION_DEFAULT = PROJECTION_DEFAULT;
 
-    static sharedDirector = null;
-    static firstUseDirector = true;
+    static _instance = null;
+
+    static getInstance() {
+        if (!Director._instance) {
+            Director._instance = new DisplayLinkDirector();
+            Director._instance.init();
+        }
+        return Director._instance;
+    }
 
     constructor() {
         super();
@@ -592,11 +599,4 @@ export class DisplayLinkDirector extends Director {
     }
 }
 
-Director._getInstance = function () {
-    if (Director.firstUseDirector) {
-        Director.firstUseDirector = false;
-        Director.sharedDirector = new DisplayLinkDirector();
-        Director.sharedDirector.init();
-    }
-    return Director.sharedDirector;
-};
+

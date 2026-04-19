@@ -1,3 +1,5 @@
+import { Director } from '../director/director';
+
 /**
  * An object to boot the game.
  * @class
@@ -216,7 +218,7 @@ export default class Game {
             this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
 
             cc.view = cc.EGLView._getInstance();
-            cc.director = cc.Director._getInstance();
+            cc.director = Director.getInstance();
             if (cc.director.setOpenGLView)
                 cc.director.setOpenGLView(cc.view);
             cc.winSize = cc.director.getWinSize();
