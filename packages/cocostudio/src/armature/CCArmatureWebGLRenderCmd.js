@@ -24,162 +24,170 @@
 
 (function () {
 
-    ccs.Armature.WebGLRenderCmd = function (renderableObject) {
-        this._rootCtor(renderableObject);
-        this._needDraw = true;
+    ccs.Armature.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
+        constructor(renderableObject) {
+            super(renderableObject);
+            this._needDraw = true;
 
-        this._parentCmd = null;
-        this._realAnchorPointInPoints = new cc.Point(0, 0);
+            this._parentCmd = null;
+            this._realAnchorPointInPoints = new cc.Point(0, 0);
 
-        this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-        this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-    };
+            this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+            this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+        }
 
-    var proto = ccs.Armature.WebGLRenderCmd.prototype = Object.create(cc.Node.WebGLRenderCmd.prototype);
-    cc.inject(ccs.Armature.RenderCmd, proto);
-    proto.constructor = ccs.Armature.WebGLRenderCmd;
+        _updateAnchorPointInPoint() {
+            var node = this._node;
+            var contentSize = node._contentSize, anchorPoint = node._anchorPoint, offsetPoint = node._offsetPoint;
+            this._anchorPointInPoints.x = contentSize.width * anchorPoint.x - offsetPoint.x;
+            this._anchorPointInPoints.y = contentSize.height * anchorPoint.y - offsetPoint.y;
 
-    proto.uploadData = function (f32buffer, ui32buffer, vertexDataOffset) {
-        var node = this._node, cmd;
-        var parentCmd = this._parentCmd || this;
+            this._realAnchorPointInPoints.x = contentSize.width * anchorPoint.x;
+            this._realAnchorPointInPoints.y = contentSize.height * anchorPoint.y;
+            this.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+        }
 
-        var locChildren = node._children;
-        var alphaPremultiplied = cc.BlendFunc.ALPHA_PREMULTIPLIED, alphaNonPremultipled = cc.BlendFunc.ALPHA_NON_PREMULTIPLIED;
-        for (var i = 0, len = locChildren.length; i < len; i++) {
-            var selBone = locChildren[i];
-            var boneCmd = selBone._renderCmd;
-            if (selBone && selBone.getDisplayRenderNode) {
-                var selNode = selBone.getDisplayRenderNode();
-                if (null === selNode)
-                    continue;
-                cmd = selNode._renderCmd;
-                switch (selBone.getDisplayRenderNodeType()) {
-                    case ccs.DISPLAY_TYPE_SPRITE:
-                        if (selNode instanceof ccs.Skin) {
-                            selNode.setShaderProgram(this._shaderProgram);
-                            this._updateColorAndOpacity(cmd, selBone);   //because skin didn't call visit()
-                            cmd.transform(parentCmd);
+        getAnchorPointInPoints() {
+            return cc.p(this._realAnchorPointInPoints);
+        }
 
-                            var func = selBone.getBlendFunc();
-                            if (func.src !== alphaPremultiplied.src || func.dst !== alphaPremultiplied.dst)
-                                selNode.setBlendFunc(selBone.getBlendFunc());
-                            else {
-                                var tex = selNode.getTexture();
-                                if (node._blendFunc.src === alphaPremultiplied.src &&
-                                    node._blendFunc.dst === alphaPremultiplied.dst &&
-                                    tex && !tex.hasPremultipliedAlpha()) {
-                                    selNode.setBlendFunc(alphaNonPremultipled);
-                                }
+        uploadData(f32buffer, ui32buffer, vertexDataOffset) {
+            var node = this._node, cmd;
+            var parentCmd = this._parentCmd || this;
+
+            var locChildren = node._children;
+            var alphaPremultiplied = cc.BlendFunc.ALPHA_PREMULTIPLIED, alphaNonPremultipled = cc.BlendFunc.ALPHA_NON_PREMULTIPLIED;
+            for (var i = 0, len = locChildren.length; i < len; i++) {
+                var selBone = locChildren[i];
+                var boneCmd = selBone._renderCmd;
+                if (selBone && selBone.getDisplayRenderNode) {
+                    var selNode = selBone.getDisplayRenderNode();
+                    if (null === selNode)
+                        continue;
+                    cmd = selNode._renderCmd;
+                    switch (selBone.getDisplayRenderNodeType()) {
+                        case ccs.DISPLAY_TYPE_SPRITE:
+                            if (selNode instanceof ccs.Skin) {
+                                selNode.setShaderProgram(this._shaderProgram);
+                                this._updateColorAndOpacity(cmd, selBone);
+                                cmd.transform(parentCmd);
+
+                                var func = selBone.getBlendFunc();
+                                if (func.src !== alphaPremultiplied.src || func.dst !== alphaPremultiplied.dst)
+                                    selNode.setBlendFunc(selBone.getBlendFunc());
                                 else {
-                                    selNode.setBlendFunc(node._blendFunc);
+                                    var tex = selNode.getTexture();
+                                    if (node._blendFunc.src === alphaPremultiplied.src &&
+                                        node._blendFunc.dst === alphaPremultiplied.dst &&
+                                        tex && !tex.hasPremultipliedAlpha()) {
+                                        selNode.setBlendFunc(alphaNonPremultipled);
+                                    }
+                                    else {
+                                        selNode.setBlendFunc(node._blendFunc);
+                                    }
                                 }
+                                cc.renderer._uploadBufferData(cmd);
                             }
-                            // Support batch for Armature skin
-                            cc.renderer._uploadBufferData(cmd);
-                        }
-                        break;
-                    case ccs.DISPLAY_TYPE_ARMATURE:
-                        selNode.setShaderProgram(this._shaderProgram);
-                        this._updateColorAndOpacity(cmd, selBone);
-                        cmd._parentCmd = this;
-                    // Continue rendering in default
-                    default:
-                        boneCmd._syncStatus(parentCmd);
-                        cmd._syncStatus(boneCmd);
-                        if (cmd.uploadData) {
-                            cc.renderer._uploadBufferData(cmd);
-                        }
-                        else if (cmd.rendering) {
-                            // Finish previous batch
-                            cc.renderer._batchRendering();
-                            cmd.rendering(cc._renderContext);
-                        }
-                        break;
-                }
-            } else if (selBone instanceof cc.Node) {
-                selBone.setShaderProgram(this._shaderProgram);
-                boneCmd._syncStatus(parentCmd);
-                if (boneCmd.uploadData) {
-                    cc.renderer._uploadBufferData(boneCmd);
-                }
-                else if (boneCmd.rendering) {
-                    // Finish previous batch
-                    cc.renderer._batchRendering();
-                    boneCmd.rendering(cc._renderContext);
+                            break;
+                        case ccs.DISPLAY_TYPE_ARMATURE:
+                            selNode.setShaderProgram(this._shaderProgram);
+                            this._updateColorAndOpacity(cmd, selBone);
+                            cmd._parentCmd = this;
+                        // Continue rendering in default
+                        default:
+                            boneCmd._syncStatus(parentCmd);
+                            cmd._syncStatus(boneCmd);
+                            if (cmd.uploadData) {
+                                cc.renderer._uploadBufferData(cmd);
+                            }
+                            else if (cmd.rendering) {
+                                cc.renderer._batchRendering();
+                                cmd.rendering(cc._renderContext);
+                            }
+                            break;
+                    }
+                } else if (selBone instanceof cc.Node) {
+                    selBone.setShaderProgram(this._shaderProgram);
+                    boneCmd._syncStatus(parentCmd);
+                    if (boneCmd.uploadData) {
+                        cc.renderer._uploadBufferData(boneCmd);
+                    }
+                    else if (boneCmd.rendering) {
+                        cc.renderer._batchRendering();
+                        boneCmd.rendering(cc._renderContext);
+                    }
                 }
             }
-        }
-        this._parentCmd = null;
-        return 0;
-    };
-
-    proto.initShaderCache = function () {
-        this._shaderProgram = cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR);
-    };
-
-    proto.setShaderProgram = function (shaderProgram) {
-        this._glProgramState = cc.GLProgramState.getOrCreateWithGLProgram(shaderProgram);
-    };
-
-    proto._updateColorAndOpacity = function (skinRenderCmd, bone) {
-        //update displayNode's color and opacity
-        var parentColor = bone._renderCmd._displayedColor, parentOpacity = bone._renderCmd._displayedOpacity;
-
-        var flags = cc.Node._dirtyFlags, locFlag = skinRenderCmd._dirtyFlag;
-        var colorDirty = locFlag & flags.colorDirty,
-            opacityDirty = locFlag & flags.opacityDirty;
-        if (colorDirty)
-            skinRenderCmd._updateDisplayColor(parentColor);
-        if (opacityDirty)
-            skinRenderCmd._updateDisplayOpacity(parentOpacity);
-        if (colorDirty || opacityDirty)
-            skinRenderCmd._updateColor();
-    };
-
-    proto.visit = function (parentCmd) {
-        var node = this._node;
-        // quick return if not visible. children won't be drawn.
-        if (!node._visible)
-            return;
-
-        parentCmd = parentCmd || this.getParentRenderCmd();
-        if (parentCmd)
-            this._curLevel = parentCmd._curLevel + 1;
-
-        this._syncStatus(parentCmd);
-
-        node.sortAllChildren();
-        var renderer = cc.renderer,
-            children = node._children, child,
-            i, len = children.length;
-
-        if (isNaN(node._customZ)) {
-            node._vertexZ = renderer.assignedZ;
-            renderer.assignedZ += renderer.assignedZStep;
+            this._parentCmd = null;
+            return 0;
         }
 
-        for (i = 0; i < len; i++) {
-            child = children[i];
-            if (child._localZOrder < 0) {
+        initShaderCache() {
+            this._shaderProgram = cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR);
+        }
+
+        setShaderProgram(shaderProgram) {
+            this._glProgramState = cc.GLProgramState.getOrCreateWithGLProgram(shaderProgram);
+        }
+
+        _updateColorAndOpacity(skinRenderCmd, bone) {
+            var parentColor = bone._renderCmd._displayedColor, parentOpacity = bone._renderCmd._displayedOpacity;
+
+            var flags = cc.Node._dirtyFlags, locFlag = skinRenderCmd._dirtyFlag;
+            var colorDirty = locFlag & flags.colorDirty,
+                opacityDirty = locFlag & flags.opacityDirty;
+            if (colorDirty)
+                skinRenderCmd._updateDisplayColor(parentColor);
+            if (opacityDirty)
+                skinRenderCmd._updateDisplayOpacity(parentOpacity);
+            if (colorDirty || opacityDirty)
+                skinRenderCmd._updateColor();
+        }
+
+        visit(parentCmd) {
+            var node = this._node;
+            if (!node._visible)
+                return;
+
+            parentCmd = parentCmd || this.getParentRenderCmd();
+            if (parentCmd)
+                this._curLevel = parentCmd._curLevel + 1;
+
+            this._syncStatus(parentCmd);
+
+            node.sortAllChildren();
+            var renderer = cc.renderer,
+                children = node._children, child,
+                i, len = children.length;
+
+            if (isNaN(node._customZ)) {
+                node._vertexZ = renderer.assignedZ;
+                renderer.assignedZ += renderer.assignedZStep;
+            }
+
+            for (i = 0; i < len; i++) {
+                child = children[i];
+                if (child._localZOrder < 0) {
+                    if (isNaN(child._customZ)) {
+                        child._vertexZ = renderer.assignedZ;
+                        renderer.assignedZ += renderer.assignedZStep;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+
+            renderer.pushRenderCommand(this);
+            for (; i < len; i++) {
+                child = children[i];
                 if (isNaN(child._customZ)) {
                     child._vertexZ = renderer.assignedZ;
                     renderer.assignedZ += renderer.assignedZStep;
                 }
             }
-            else {
-                break;
-            }
-        }
 
-        renderer.pushRenderCommand(this);
-        for (; i < len; i++) {
-            child = children[i];
-            if (isNaN(child._customZ)) {
-                child._vertexZ = renderer.assignedZ;
-                renderer.assignedZ += renderer.assignedZStep;
-            }
+            this._dirtyFlag = 0;
         }
-
-        this._dirtyFlag = 0;
     };
 })();

@@ -283,140 +283,137 @@ ccui.WebView.EventType = {
         RenderCmd = cc.Node.CanvasRenderCmd;
     }
 
-    ccui.WebView.RenderCmd = function (node) {
-        this._rootCtor(node);
+    ccui.WebView.RenderCmd = class extends RenderCmd {
+        constructor(node) {
+            super(node);
 
-        this._div = null;
-        this._iframe = null;
+            this._div = null;
+            this._iframe = null;
 
-        if (polyfill.enableDiv) {
-            this._div = document.createElement("div");
-            this._div.style["-webkit-overflow"] = "auto";
-            this._div.style["-webkit-overflow-scrolling"] = "touch";
-            this._iframe = document.createElement("iframe");
-            this._iframe.style["width"] = "100%";
-            this._iframe.style["height"] = "100%";
-            this._div.appendChild(this._iframe);
-        } else {
-            this._div = this._iframe = document.createElement("iframe");
-        }
-
-        if (polyfill.enableBG)
-            this._div.style["background"] = "#FFF";
-
-        this._iframe.addEventListener("load", function () {
-            node._dispatchEvent(ccui.WebView.EventType.LOADED);
-        });
-        this._iframe.addEventListener("error", function () {
-            node._dispatchEvent(ccui.WebView.EventType.ERROR);
-        });
-        this._div.style["background"] = "#FFF";
-        this._div.style.height = "200px";
-        this._div.style.width = "300px";
-        this._div.style.overflow = "scroll";
-        this._div.style["border"] = "none";
-        this._listener = null;
-        this.initStyle();
-    };
-
-    var proto = ccui.WebView.RenderCmd.prototype = Object.create(RenderCmd.prototype);
-    proto.constructor = ccui.WebView.RenderCmd;
-
-    proto.transform = function (parentCmd, recursive) {
-        this.originTransform(parentCmd, recursive);
-        this.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
-    };
-
-    proto.updateStatus = function () {
-        polyfill.devicePixelRatio = cc.view.isRetinaEnabled();
-        var flags = cc.Node._dirtyFlags, locFlag = this._dirtyFlag;
-        if (locFlag & flags.transformDirty) {
-            //update the transform
-            this.transform(this.getParentRenderCmd(), true);
-            this.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
-            this._dirtyFlag = this._dirtyFlag & cc.Node._dirtyFlags.transformDirty ^ this._dirtyFlag;
-        }
-
-        if (locFlag & flags.orderDirty) {
-            this._dirtyFlag = this._dirtyFlag & flags.orderDirty ^ this._dirtyFlag;
-        }
-    };
-
-    proto.resize = function (view) {
-        view = view || cc.view;
-        var node = this._node,
-            eventManager = cc.eventManager;
-        if (node._parent && node._visible)
-            this.updateMatrix(this._worldTransform, view._scaleX, view._scaleY);
-        else {
-            var list = eventManager._listenersMap[cc.game.EVENT_RESIZE].getFixedPriorityListeners();
-            eventManager._removeListenerInVector(list, this._listener);
-            this._listener = null;
-        }
-    };
-
-    proto.updateMatrix = function (t, scaleX, scaleY) {
-        var node = this._node;
-        if (polyfill.devicePixelRatio) {
-            var dpr = cc.view.getDevicePixelRatio();
-            scaleX = scaleX / dpr;
-            scaleY = scaleY / dpr;
-        }
-        if (this._loaded === false) return;
-        var containerStyle = cc.game.container.style,
-            offsetX = parseInt(containerStyle.paddingLeft),
-            offsetY = parseInt(containerStyle.paddingBottom),
-            cw = node._contentSize.width,
-            ch = node._contentSize.height;
-        var a = t.a * scaleX,
-            b = t.b,
-            c = t.c,
-            d = t.d * scaleY,
-            tx = offsetX + t.tx * scaleX - cw / 2 + cw * node._scaleX / 2 * scaleX,
-            ty = offsetY + t.ty * scaleY - ch / 2 + ch * node._scaleY / 2 * scaleY;
-        var matrix = "matrix(" + a + "," + b + "," + c + "," + d + "," + tx + "," + -ty + ")";
-        this._div.style["transform"] = matrix;
-        this._div.style["-webkit-transform"] = matrix;
-    };
-
-    proto.initStyle = function () {
-        if (!this._div)  return;
-        var div = this._div;
-        div.style.position = "absolute";
-        div.style.bottom = "0px";
-        div.style.left = "0px";
-    };
-
-    proto.updateURL = function (url) {
-        var iframe = this._iframe;
-        iframe.src = url;
-        var self = this;
-        var cb = function () {
-            self._loaded = true;
-            iframe.removeEventListener("load", cb);
-        };
-        iframe.addEventListener("load", cb);
-    };
-
-    proto.changeSize = function (w, h) {
-        var div = this._div;
-        if (div) {
-            div.style["width"] = w + "px";
-            div.style["height"] = h + "px";
-        }
-    };
-
-    proto.removeDom = function () {
-        var div = this._div;
-        if (div) {
-            var hasChild = false;
-            if ('contains' in cc.container) {
-                hasChild = cc.container.contains(div);
+            if (polyfill.enableDiv) {
+                this._div = document.createElement("div");
+                this._div.style["-webkit-overflow"] = "auto";
+                this._div.style["-webkit-overflow-scrolling"] = "touch";
+                this._iframe = document.createElement("iframe");
+                this._iframe.style["width"] = "100%";
+                this._iframe.style["height"] = "100%";
+                this._div.appendChild(this._iframe);
             } else {
-                hasChild = cc.container.compareDocumentPosition(div) % 16;
+                this._div = this._iframe = document.createElement("iframe");
             }
-            if (hasChild)
-                cc.container.removeChild(div);
+
+            if (polyfill.enableBG)
+                this._div.style["background"] = "#FFF";
+
+            this._iframe.addEventListener("load", () => {
+                node._dispatchEvent(ccui.WebView.EventType.LOADED);
+            });
+            this._iframe.addEventListener("error", () => {
+                node._dispatchEvent(ccui.WebView.EventType.ERROR);
+            });
+            this._div.style["background"] = "#FFF";
+            this._div.style.height = "200px";
+            this._div.style.width = "300px";
+            this._div.style.overflow = "scroll";
+            this._div.style["border"] = "none";
+            this._listener = null;
+            this.initStyle();
+        }
+
+        transform(parentCmd, recursive) {
+            this.originTransform(parentCmd, recursive);
+            this.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
+        }
+
+        updateStatus() {
+            polyfill.devicePixelRatio = cc.view.isRetinaEnabled();
+            var flags = cc.Node._dirtyFlags, locFlag = this._dirtyFlag;
+            if (locFlag & flags.transformDirty) {
+                this.transform(this.getParentRenderCmd(), true);
+                this.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
+                this._dirtyFlag = this._dirtyFlag & cc.Node._dirtyFlags.transformDirty ^ this._dirtyFlag;
+            }
+
+            if (locFlag & flags.orderDirty) {
+                this._dirtyFlag = this._dirtyFlag & flags.orderDirty ^ this._dirtyFlag;
+            }
+        }
+
+        resize(view) {
+            view = view || cc.view;
+            var node = this._node,
+                eventManager = cc.eventManager;
+            if (node._parent && node._visible)
+                this.updateMatrix(this._worldTransform, view._scaleX, view._scaleY);
+            else {
+                var list = eventManager._listenersMap[cc.game.EVENT_RESIZE].getFixedPriorityListeners();
+                eventManager._removeListenerInVector(list, this._listener);
+                this._listener = null;
+            }
+        }
+
+        updateMatrix(t, scaleX, scaleY) {
+            var node = this._node;
+            if (polyfill.devicePixelRatio) {
+                var dpr = cc.view.getDevicePixelRatio();
+                scaleX = scaleX / dpr;
+                scaleY = scaleY / dpr;
+            }
+            if (this._loaded === false) return;
+            var containerStyle = cc.game.container.style,
+                offsetX = parseInt(containerStyle.paddingLeft),
+                offsetY = parseInt(containerStyle.paddingBottom),
+                cw = node._contentSize.width,
+                ch = node._contentSize.height;
+            var a = t.a * scaleX,
+                b = t.b,
+                c = t.c,
+                d = t.d * scaleY,
+                tx = offsetX + t.tx * scaleX - cw / 2 + cw * node._scaleX / 2 * scaleX,
+                ty = offsetY + t.ty * scaleY - ch / 2 + ch * node._scaleY / 2 * scaleY;
+            var matrix = "matrix(" + a + "," + b + "," + c + "," + d + "," + tx + "," + -ty + ")";
+            this._div.style["transform"] = matrix;
+            this._div.style["-webkit-transform"] = matrix;
+        }
+
+        initStyle() {
+            if (!this._div)  return;
+            var div = this._div;
+            div.style.position = "absolute";
+            div.style.bottom = "0px";
+            div.style.left = "0px";
+        }
+
+        updateURL(url) {
+            var iframe = this._iframe;
+            iframe.src = url;
+            var cb = () => {
+                this._loaded = true;
+                iframe.removeEventListener("load", cb);
+            };
+            iframe.addEventListener("load", cb);
+        }
+
+        changeSize(w, h) {
+            var div = this._div;
+            if (div) {
+                div.style["width"] = w + "px";
+                div.style["height"] = h + "px";
+            }
+        }
+
+        removeDom() {
+            var div = this._div;
+            if (div) {
+                var hasChild = false;
+                if ('contains' in cc.container) {
+                    hasChild = cc.container.contains(div);
+                } else {
+                    hasChild = cc.container.compareDocumentPosition(div) % 16;
+                }
+                if (hasChild)
+                    cc.container.removeChild(div);
+            }
         }
     };
 

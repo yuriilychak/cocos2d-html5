@@ -246,16 +246,4 @@ SpriteCanvasRenderCmd._cutRotateImageToCanvas = function (texture, rect, counter
     return nCanvas;
 };
 
-// Backward-compatible _spriteCmdCtor shim for old-style constructors in extensions/
-SpriteCanvasRenderCmd.prototype._spriteCmdCtor = function (renderable) {
-    this._rootCtor(renderable);
-    this._needDraw = true;
-    this._textureCoord = {
-        renderX: 0, renderY: 0, x: 0, y: 0,
-        width: 0, height: 0, validRect: false
-    };
-    this._blendFuncStr = "source-over";
-    this._colorized = false;
-    this._canUseDirtyRegion = true;
-    this._textureToRender = null;
-};
+

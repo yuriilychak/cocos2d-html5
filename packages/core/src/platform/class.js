@@ -24,10 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-export function inject(srcPrototype, destPrototype) {
-  for (var key in srcPrototype) destPrototype[key] = srcPrototype[key];
-}
-
 /**
  * @class
  * @name ClassManager

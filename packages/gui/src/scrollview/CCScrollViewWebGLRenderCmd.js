@@ -23,49 +23,46 @@
  ****************************************************************************/
 
 (function () {
-    cc.ScrollView.WebGLRenderCmd = function (renderable) {
-        this._layerCmdCtor(renderable);
-        this._needDraw = false;
+    cc.ScrollView.WebGLRenderCmd = class extends cc.Layer.WebGLRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = false;
 
-        this.startCmd = new cc.CustomRenderCmd(this, this._startCmd);
-        this.endCmd = new cc.CustomRenderCmd(this, this._endCmd);
-    };
-
-    var proto = cc.ScrollView.WebGLRenderCmd.prototype = Object.create(cc.Layer.WebGLRenderCmd.prototype);
-    proto.constructor = cc.ScrollView.WebGLRenderCmd;
-
-    proto._startCmd = function () {
-        var node = this._node;
-        var EGLViewer = cc.view;
-        var frame = node._getViewRect();
-        if (EGLViewer.isScissorEnabled()) {
-            node._scissorRestored = true;
-            node._parentScissorRect = EGLViewer.getScissorRect();
-            //set the intersection of m_tParentScissorRect and frame as the new scissor rect
-            if (cc.rectIntersection(frame, node._parentScissorRect)) {
-                var locPSRect = node._parentScissorRect;
-                var x = Math.max(frame.x, locPSRect.x);
-                var y = Math.max(frame.y, locPSRect.y);
-                var xx = Math.min(frame.x + frame.width, locPSRect.x + locPSRect.width);
-                var yy = Math.min(frame.y + frame.height, locPSRect.y + locPSRect.height);
-                EGLViewer.setScissorInPoints(x, y, xx - x, yy - y);
-            }
-        } else {
-            var ctx = cc._renderContext;
-            ctx.enable(ctx.SCISSOR_TEST);
-            //clip
-            EGLViewer.setScissorInPoints(frame.x, frame.y, frame.width, frame.height);
+            this.startCmd = new cc.CustomRenderCmd(this, this._startCmd);
+            this.endCmd = new cc.CustomRenderCmd(this, this._endCmd);
         }
-    };
 
-    proto._endCmd = function () {
-        var node = this._node;
-        if (node._scissorRestored) {  //restore the parent's scissor rect
-            var rect = node._parentScissorRect;
-            cc.view.setScissorInPoints(rect.x, rect.y, rect.width, rect.height);
-        } else {
-            var ctx = cc._renderContext;
-            ctx.disable(ctx.SCISSOR_TEST);
+        _startCmd() {
+            var node = this._node;
+            var EGLViewer = cc.view;
+            var frame = node._getViewRect();
+            if (EGLViewer.isScissorEnabled()) {
+                node._scissorRestored = true;
+                node._parentScissorRect = EGLViewer.getScissorRect();
+                if (cc.rectIntersection(frame, node._parentScissorRect)) {
+                    var locPSRect = node._parentScissorRect;
+                    var x = Math.max(frame.x, locPSRect.x);
+                    var y = Math.max(frame.y, locPSRect.y);
+                    var xx = Math.min(frame.x + frame.width, locPSRect.x + locPSRect.width);
+                    var yy = Math.min(frame.y + frame.height, locPSRect.y + locPSRect.height);
+                    EGLViewer.setScissorInPoints(x, y, xx - x, yy - y);
+                }
+            } else {
+                var ctx = cc._renderContext;
+                ctx.enable(ctx.SCISSOR_TEST);
+                EGLViewer.setScissorInPoints(frame.x, frame.y, frame.width, frame.height);
+            }
+        }
+
+        _endCmd() {
+            var node = this._node;
+            if (node._scissorRestored) {
+                var rect = node._parentScissorRect;
+                cc.view.setScissorInPoints(rect.x, rect.y, rect.width, rect.height);
+            } else {
+                var ctx = cc._renderContext;
+                ctx.disable(ctx.SCISSOR_TEST);
+            }
         }
     };
 })();

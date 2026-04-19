@@ -26,21 +26,19 @@
 
 var spine = sp.spine;
 
-sp.Skeleton.WebGLRenderCmd = function (renderableObject) {
-    this._rootCtor(renderableObject);
-    this._needDraw = true;
-    this._matrix = new cc.math.Matrix4();
-    this._matrix.identity();
-    this._currTexture = null;
-    this._currBlendFunc = {};
-    this.vertexType = cc.renderer.VertexType.CUSTOM;
-    this.setShaderProgram(cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR));
-};
+sp.Skeleton.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
+    constructor(renderableObject) {
+        super(renderableObject);
+        this._needDraw = true;
+        this._matrix = new cc.math.Matrix4();
+        this._matrix.identity();
+        this._currTexture = null;
+        this._currBlendFunc = {};
+        this.vertexType = cc.renderer.VertexType.CUSTOM;
+        this.setShaderProgram(cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR));
+    }
 
-var proto = sp.Skeleton.WebGLRenderCmd.prototype = Object.create(cc.Node.WebGLRenderCmd.prototype);
-proto.constructor = sp.Skeleton.WebGLRenderCmd;
-
-proto.uploadData = function (f32buffer, ui32buffer, vertexDataOffset){
+    uploadData(f32buffer, ui32buffer, vertexDataOffset){
     var node = this._node;
     var color = this._displayedColor, locSkeleton = node._skeleton;
 
@@ -188,9 +186,9 @@ proto.uploadData = function (f32buffer, ui32buffer, vertexDataOffset){
     }
 
     return 0;
-};
+    }
 
-proto._getBlendFunc = function (blendMode, premultiAlpha) {
+    _getBlendFunc(blendMode, premultiAlpha) {
     var ret = this._currBlendFunc;
     switch (blendMode) {
         case spine.BlendMode.Normal:
@@ -215,13 +213,13 @@ proto._getBlendFunc = function (blendMode, premultiAlpha) {
     }
 
     return ret;
-};
+    }
 
-proto._createChildFormSkeletonData = function(){};
+    _createChildFormSkeletonData() {}
 
-proto._updateChild = function(){};
+    _updateChild() {}
 
-proto._uploadRegionAttachmentData = function(attachment, slot, premultipliedAlpha, f32buffer, ui32buffer, vertexDataOffset) {
+    _uploadRegionAttachmentData(attachment, slot, premultipliedAlpha, f32buffer, ui32buffer, vertexDataOffset) {
     // the vertices in format:
     // [
     //   X1, Y1, C1R, C1G, C1B, C1A, U1, V1,    // bottom left
@@ -292,9 +290,9 @@ proto._uploadRegionAttachmentData = function(attachment, slot, premultipliedAlph
             cc.p(vertices[VERTEX.OX4], vertices[VERTEX.OY4])
         ];
     }
-};
+    }
 
-proto._uploadMeshAttachmentData = function(attachment, slot, premultipliedAlpha, f32buffer, ui32buffer, vertexDataOffset) {
+    _uploadMeshAttachmentData(attachment, slot, premultipliedAlpha, f32buffer, ui32buffer, vertexDataOffset) {
     var wt = this._worldTransform,
         wa = wt.a, wb = wt.b, wc = wt.c, wd = wt.d,
         wx = wt.tx, wy = wt.ty,
@@ -341,6 +339,7 @@ proto._uploadMeshAttachmentData = function(attachment, slot, premultipliedAlpha,
         f32buffer[offset + 4] = uvs[i];
         f32buffer[offset + 5] = uvs[i + 1];
         offset += 6;
+    }
     }
 };
 

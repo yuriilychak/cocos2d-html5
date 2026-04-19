@@ -323,18 +323,4 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     }
 }
 
-// Backward-compatible _spriteCmdCtor shim for old-style constructors in extensions/
-SpriteWebGLRenderCmd.prototype._spriteCmdCtor = function (renderable) {
-    this._rootCtor(renderable);
-    this._needDraw = true;
-    this._vertices = [
-        {x: 0, y: 0, u: 0, v: 0},
-        {x: 0, y: 0, u: 0, v: 0},
-        {x: 0, y: 0, u: 0, v: 0},
-        {x: 0, y: 0, u: 0, v: 0}
-    ];
-    this._color = new Uint32Array(1);
-    this._dirty = false;
-    this._recursiveDirty = false;
-    this._shaderProgram = cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR);
-};
+

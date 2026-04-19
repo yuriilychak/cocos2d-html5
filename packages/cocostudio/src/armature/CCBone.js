@@ -643,75 +643,116 @@ ccs.Bone = class Bone extends ccs.Node {
 
 
 
-ccs.Bone.RenderCmd = {
-    _updateColor: function () {
-        var node = this._node;
-        var display = node._displayManager.getDisplayRenderNode();
-        if (display !== null) {
-            var displayCmd = display._renderCmd;
-            display.setColor(this._displayedColor);
-            display.setOpacity(this._displayedOpacity);
-            displayCmd._syncDisplayColor(node._tweenData);
-            displayCmd._syncDisplayOpacity(node._tweenData.a);
-            displayCmd._updateColor();
-        }
-    },
-
-    transform: function (parentCmd, recursive) {
-        if (!this._transform) {
-            this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-            this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-        }
-
-        var node = this._node,
-            t = this._transform,
-            wt = this._worldTransform,
-            pt = parentCmd ? parentCmd._worldTransform : null;
-
-        if (pt) {
-            this.originTransform();
-            cc.affineTransformConcatIn(t, node._worldTransform);
-        }
-
-        if (pt) {
-            wt.a = t.a * pt.a + t.b * pt.c;
-            wt.b = t.a * pt.b + t.b * pt.d;
-            wt.c = t.c * pt.a + t.d * pt.c;
-            wt.d = t.c * pt.b + t.d * pt.d;
-            wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
-            wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
-        }
-        else {
-            wt.a = t.a;
-            wt.b = t.b;
-            wt.c = t.c;
-            wt.d = t.d;
-            wt.tx = t.tx;
-            wt.ty = t.ty;
-        }
-    }
-};
-
 (function () {
-    ccs.Bone.CanvasRenderCmd = function (renderable) {
-        this._rootCtor(renderable);
-        this._needDraw = false;
-    };
+    ccs.Bone.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = false;
+        }
 
-    var proto = ccs.Bone.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    cc.inject(ccs.Bone.RenderCmd, proto);
-    proto.constructor = ccs.Bone.CanvasRenderCmd;
+        _updateColor() {
+            var node = this._node;
+            var display = node._displayManager.getDisplayRenderNode();
+            if (display !== null) {
+                var displayCmd = display._renderCmd;
+                display.setColor(this._displayedColor);
+                display.setOpacity(this._displayedOpacity);
+                displayCmd._syncDisplayColor(node._tweenData);
+                displayCmd._syncDisplayOpacity(node._tweenData.a);
+                displayCmd._updateColor();
+            }
+        }
+
+        transform(parentCmd, recursive) {
+            if (!this._transform) {
+                this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+                this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+            }
+
+            var node = this._node,
+                t = this._transform,
+                wt = this._worldTransform,
+                pt = parentCmd ? parentCmd._worldTransform : null;
+
+            if (pt) {
+                this.originTransform();
+                cc.affineTransformConcatIn(t, node._worldTransform);
+            }
+
+            if (pt) {
+                wt.a = t.a * pt.a + t.b * pt.c;
+                wt.b = t.a * pt.b + t.b * pt.d;
+                wt.c = t.c * pt.a + t.d * pt.c;
+                wt.d = t.c * pt.b + t.d * pt.d;
+                wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
+                wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
+            }
+            else {
+                wt.a = t.a;
+                wt.b = t.b;
+                wt.c = t.c;
+                wt.d = t.d;
+                wt.tx = t.tx;
+                wt.ty = t.ty;
+            }
+        }
+    };
 })();
 
 (function () {
     if (!cc.Node.WebGLRenderCmd)
         return;
-    ccs.Bone.WebGLRenderCmd = function (renderable) {
-        this._rootCtor(renderable);
-        this._needDraw = false;
-    };
+    ccs.Bone.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = false;
+        }
 
-    var proto = ccs.Bone.WebGLRenderCmd.prototype = Object.create(cc.Node.WebGLRenderCmd.prototype);
-    cc.inject(ccs.Bone.RenderCmd, proto);
-    proto.constructor = ccs.Bone.WebGLRenderCmd;
+        _updateColor() {
+            var node = this._node;
+            var display = node._displayManager.getDisplayRenderNode();
+            if (display !== null) {
+                var displayCmd = display._renderCmd;
+                display.setColor(this._displayedColor);
+                display.setOpacity(this._displayedOpacity);
+                displayCmd._syncDisplayColor(node._tweenData);
+                displayCmd._syncDisplayOpacity(node._tweenData.a);
+                displayCmd._updateColor();
+            }
+        }
+
+        transform(parentCmd, recursive) {
+            if (!this._transform) {
+                this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+                this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+            }
+
+            var node = this._node,
+                t = this._transform,
+                wt = this._worldTransform,
+                pt = parentCmd ? parentCmd._worldTransform : null;
+
+            if (pt) {
+                this.originTransform();
+                cc.affineTransformConcatIn(t, node._worldTransform);
+            }
+
+            if (pt) {
+                wt.a = t.a * pt.a + t.b * pt.c;
+                wt.b = t.a * pt.b + t.b * pt.d;
+                wt.c = t.c * pt.a + t.d * pt.c;
+                wt.d = t.c * pt.b + t.d * pt.d;
+                wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
+                wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
+            }
+            else {
+                wt.a = t.a;
+                wt.b = t.b;
+                wt.c = t.c;
+                wt.d = t.d;
+                wt.tx = t.tx;
+                wt.ty = t.ty;
+            }
+        }
+    };
 })();

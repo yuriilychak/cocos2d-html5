@@ -23,8 +23,14 @@
  ****************************************************************************/
 
 (function () {
-    cc.ProtectedNode.RenderCmd = {
-        _updateDisplayColor: function (parentColor) {
+    cc.ProtectedNode.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._cachedParent = null;
+            this._cacheDirty = false;
+        }
+
+        _updateDisplayColor(parentColor) {
             var node = this._node;
             var locDispColor = this._displayedColor, locRealColor = node._realColor;
             var i, len, selChildren, item;
@@ -71,9 +77,9 @@
                 }
             }
             this._dirtyFlag = this._dirtyFlag & cc.Node._dirtyFlags.colorDirty ^ this._dirtyFlag;
-        },
+        }
 
-        _updateDisplayOpacity: function (parentOpacity) {
+        _updateDisplayOpacity(parentOpacity) {
             var node = this._node;
             var i, len, selChildren, item;
             if (this._cascadeOpacityEnabledDirty && !node._cascadeOpacityEnabled) {
@@ -113,9 +119,9 @@
                 }
             }
             this._dirtyFlag = this._dirtyFlag & cc.Node._dirtyFlags.opacityDirty ^ this._dirtyFlag;
-        },
+        }
 
-        _changeProtectedChild: function (child) {
+        _changeProtectedChild(child) {
             var cmd = child._renderCmd,
                 dirty = cmd._dirtyFlag,
                 flags = cc.Node._dirtyFlags;
@@ -136,34 +142,22 @@
             if (colorDirty || opacityDirty)
                 cmd._updateColor();
         }
-    };
 
-    cc.ProtectedNode.CanvasRenderCmd = function (renderable) {
-        this._rootCtor(renderable);
-        this._cachedParent = null;
-        this._cacheDirty = false;
-    };
+        transform(parentCmd, recursive) {
+            var node = this._node;
 
-    var proto = cc.ProtectedNode.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-    cc.inject(cc.ProtectedNode.RenderCmd, proto);
-    proto.constructor = cc.ProtectedNode.CanvasRenderCmd;
-    proto._pNodeCmdCtor = cc.ProtectedNode.CanvasRenderCmd;
+            if (node._changePosition)
+                node._changePosition();
 
-    proto.transform = function (parentCmd, recursive) {
-        var node = this._node;
+            this.originTransform(parentCmd, recursive);
 
-        if (node._changePosition)
-            node._changePosition();
-
-        this.originTransform(parentCmd, recursive);
-
-        var i, len, locChildren = node._protectedChildren;
-        if (recursive && locChildren && locChildren.length !== 0) {
-            for (i = 0, len = locChildren.length; i < len; i++) {
-                locChildren[i]._renderCmd.transform(this, recursive);
+            var i, len, locChildren = node._protectedChildren;
+            if (recursive && locChildren && locChildren.length !== 0) {
+                for (i = 0, len = locChildren.length; i < len; i++) {
+                    locChildren[i]._renderCmd.transform(this, recursive);
+                }
             }
         }
     };
 
-    proto.pNodeTransform = proto.transform;
 })();

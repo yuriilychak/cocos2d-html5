@@ -181,15 +181,6 @@ export class LayerCanvasRenderCmd extends NodeCanvasRenderCmd {
     }
 }
 
-// Backward-compatible _layerCmdCtor shim for old-style constructors in extensions/
-LayerCanvasRenderCmd.prototype._layerCmdCtor = function (renderable) {
-    this._rootCtor(renderable);
-    this._isBaked = false;
-    this._bakeSprite = null;
-    this._canUseDirtyRegion = true;
-    this._updateCache = 2;
-};
-
 /**
  * cc.LayerColor's Canvas render command
  */

@@ -5,7 +5,7 @@ import './boot';
 // ======================================================================
 // Platform — Foundation
 // ======================================================================
-import { inject, classManager, NewClass } from './platform/class';
+import { classManager, NewClass } from './platform/class';
 import {
     KEY, FMT_JPG, FMT_PNG, FMT_TIFF, FMT_RAWDATA, FMT_WEBP, FMT_UNKNOWN,
     getImageFormatByData, associateWithNative
@@ -191,9 +191,13 @@ import { LabelTTF } from './labelttf/label-ttf';
 import {
     CanvasRenderCmd as LabelTTFCanvasRenderCmd,
     CacheCanvasRenderCmd as LabelTTFCacheCanvasRenderCmd,
-    RenderCmd as LabelTTFRenderCmd,
-    CacheRenderCmd as LabelTTFCacheRenderCmd,
-    _textAlign, _textBaseline
+    _textAlign, _textBaseline,
+    wrapInspection as LabelTTFWrapInspection,
+    _wordRex as LabelTTFWordRex,
+    _symbolRex as LabelTTFSymbolRex,
+    _lastWordRex as LabelTTFLastWordRex,
+    _lastEnglish as LabelTTFLastEnglish,
+    _firsrEnglish as LabelTTFFirsrEnglish
 } from './labelttf/label-ttf-canvas-render-cmd';
 import { WebGLRenderCmd as LabelTTFWebGLRenderCmd } from './labelttf/label-ttf-webgl-render-cmd';
 
@@ -214,7 +218,6 @@ import './kazmath';
 // ======================================================================
 
 // Platform — Foundation
-cc.inject = inject;
 cc.classManager = classManager;
 cc.NewClass = NewClass;
 cc.Class = NewClass;
@@ -521,6 +524,15 @@ cc.ActionManager = ActionManager;
 cc.LabelTTF = LabelTTF;
 cc.LabelTTF._textAlign = _textAlign;
 cc.LabelTTF._textBaseline = _textBaseline;
+cc.LabelTTF.wrapInspection = LabelTTFWrapInspection;
+cc.LabelTTF._wordRex = LabelTTFWordRex;
+cc.LabelTTF._symbolRex = LabelTTFSymbolRex;
+cc.LabelTTF._lastWordRex = LabelTTFLastWordRex;
+cc.LabelTTF._lastEnglish = LabelTTFLastEnglish;
+cc.LabelTTF._firsrEnglish = LabelTTFFirsrEnglish;
+cc.LabelTTF.CacheCanvasRenderCmd = LabelTTFCacheCanvasRenderCmd;
+cc.LabelTTF.CanvasRenderCmd = LabelTTFCanvasRenderCmd;
+cc.LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
 
 // Components
 cc.Component = Component;

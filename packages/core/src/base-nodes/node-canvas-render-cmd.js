@@ -556,23 +556,6 @@ RenderCmd.prototype.originTransform = RenderCmd.prototype.transform;
 RenderCmd.prototype.originUpdateStatus = RenderCmd.prototype.updateStatus;
 RenderCmd.prototype._originSyncStatus = RenderCmd.prototype._syncStatus;
 
-// Backward-compatible _rootCtor shim for old-style constructors in extensions/
-// that call this._rootCtor(renderable) instead of super(renderable).
-RenderCmd.prototype._rootCtor = function (renderable) {
-    this._needDraw = false;
-    this._dirtyFlag = 1;
-    this._curLevel = -1;
-    this._displayedOpacity = 255;
-    this._cascadeColorEnabledDirty = false;
-    this._cascadeOpacityEnabledDirty = false;
-    this._transform = null;
-    this._worldTransform = null;
-    this._inverse = null;
-    this._node = renderable;
-    this._anchorPointInPoints = {x: 0, y: 0};
-    this._displayedColor = cc.color(255, 255, 255, 255);
-};
-
 //-----------------------Canvas ---------------------------
 
 const localBB = new cc.Rect();
@@ -673,13 +656,4 @@ CanvasRenderCmd._getCompositeOperationByBlendFunc = function (blendFunc) {
     }
 };
 
-// Backward-compatible _rootCtor shim for old-style constructors in extensions/
-CanvasRenderCmd.prototype._rootCtor = function (renderable) {
-    RenderCmd.prototype._rootCtor.call(this, renderable);
-    this._cachedParent = null;
-    this._cacheDirty = false;
-    this._currentRegion = new cc.Region();
-    this._oldRegion = new cc.Region();
-    this._regionFlag = 0;
-    this._canUseDirtyRegion = false;
-};
+

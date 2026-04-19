@@ -517,63 +517,49 @@ ccs.BoneNode = (function () {
     
     }
 
-    var BoneNodeCanvasCmd = (function () {
-
-        var BoneNodeCanvasCmd = function (node) {
-            this._rootCtor(node);
+    class BoneNodeCanvasCmd extends Node.CanvasRenderCmd {
+        constructor(node) {
+            super(node);
             this._debug = false;
             this._color = cc.color.WHITE;
             this._drawNode = new cc.DrawNode();
-        };
+        }
 
-        var proto = BoneNodeCanvasCmd.prototype = Object.create(Node.CanvasRenderCmd.prototype);
-        proto.constructor = BoneNodeCanvasCmd;
-
-        proto.updateDebugPoint = function (points) {
+        updateDebugPoint(points) {
             this._drawNode.clear();
             this._drawNode.drawPoly(points, this._color, 0, this._color);
-        };
+        }
 
-        proto.transform = function (parentCmd, recursive) {
+        transform(parentCmd, recursive) {
             var rootSkeleton = this._node._rootSkeleton;
             this.originTransform(parentCmd, recursive);
             if (rootSkeleton && rootSkeleton._renderCmd._debug) {
                 this._drawNode._renderCmd.transform(this);
             }
-        };
+        }
+    }
 
-        return BoneNodeCanvasCmd;
-
-    })();
-
-    var BoneNodeWebGLCmd = (function () {
-
-        var BoneNodeWebGLCmd = function (node) {
-            this._rootCtor(node);
+    class BoneNodeWebGLCmd extends Node.WebGLRenderCmd {
+        constructor(node) {
+            super(node);
             this._debug = false;
             this._color = cc.color.WHITE;
             this._drawNode = new cc.DrawNode();
-        };
+        }
 
-        var proto = BoneNodeWebGLCmd.prototype = Object.create(Node.WebGLRenderCmd.prototype);
-        proto.constructor = BoneNodeWebGLCmd;
-
-        proto.updateDebugPoint = function (points) {
+        updateDebugPoint(points) {
             this._drawNode.clear();
             this._drawNode.drawPoly(points, this._color, 0, this._color);
-        };
+        }
 
-        proto.transform = function (parentCmd, recursive) {
+        transform(parentCmd, recursive) {
             var rootSkeleton = this._node._rootSkeleton;
             this.originTransform(parentCmd, recursive);
             if (rootSkeleton && rootSkeleton._renderCmd._debug) {
                 this._drawNode._renderCmd.transform(this);
             }
-        };
-
-        return BoneNodeWebGLCmd;
-
-    })();
+        }
+    }
 
     return BoneNode;
 

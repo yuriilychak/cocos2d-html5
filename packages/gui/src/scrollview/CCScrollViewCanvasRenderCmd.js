@@ -23,42 +23,41 @@
  ****************************************************************************/
 
 (function () {
-    cc.ScrollView.CanvasRenderCmd = function (renderable) {
-        this._layerCmdCtor(renderable);
-        this._needDraw = false;
+    cc.ScrollView.CanvasRenderCmd = class extends cc.Layer.CanvasRenderCmd {
+        constructor(renderable) {
+            super(renderable);
+            this._needDraw = false;
 
-        this.startCmd = new cc.CustomRenderCmd(this, this._startCmd);
-        this.startCmd._canUseDirtyRegion = true;
-        this.endCmd = new cc.CustomRenderCmd(this, this._endCmd);
-        this.endCmd._canUseDirtyRegion = true;
-    };
-
-    var proto = cc.ScrollView.CanvasRenderCmd.prototype = Object.create(cc.Layer.CanvasRenderCmd.prototype);
-    proto.constructor = cc.ScrollView.CanvasRenderCmd;
-
-    proto._startCmd = function (ctx, scaleX, scaleY) {
-        var node = this._node;
-        var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
-        wrapper.save();
-
-        if (node._clippingToBounds) {
-            this._scissorRestored = false;
-            wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-
-            var locScaleX = node.getScaleX(), locScaleY = node.getScaleY();
-
-            var getWidth = (node._viewSize.width * locScaleX);
-            var getHeight = (node._viewSize.height * locScaleY);
-
-            context.beginPath();
-            context.rect(0, 0, getWidth, -getHeight);
-            context.closePath();
-            context.clip();
+            this.startCmd = new cc.CustomRenderCmd(this, this._startCmd);
+            this.startCmd._canUseDirtyRegion = true;
+            this.endCmd = new cc.CustomRenderCmd(this, this._endCmd);
+            this.endCmd._canUseDirtyRegion = true;
         }
-    };
 
-    proto._endCmd = function (wrapper) {
-        wrapper = wrapper || cc._renderContext;
-        wrapper.restore();
+        _startCmd(ctx, scaleX, scaleY) {
+            var node = this._node;
+            var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            wrapper.save();
+
+            if (node._clippingToBounds) {
+                this._scissorRestored = false;
+                wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+
+                var locScaleX = node.getScaleX(), locScaleY = node.getScaleY();
+
+                var getWidth = (node._viewSize.width * locScaleX);
+                var getHeight = (node._viewSize.height * locScaleY);
+
+                context.beginPath();
+                context.rect(0, 0, getWidth, -getHeight);
+                context.closePath();
+                context.clip();
+            }
+        }
+
+        _endCmd(wrapper) {
+            wrapper = wrapper || cc._renderContext;
+            wrapper.restore();
+        }
     };
 })();

@@ -26,15 +26,25 @@
 
 var spine = sp.spine;
 
-sp.Skeleton.CanvasRenderCmd = function (renderableObject) {
-    this._rootCtor(renderableObject);
-    this._needDraw = true;
+var loaded = function (sprite, texture, attachment) {
+    var rendererObject = attachment.region;
+    var rect = new cc.Rect(rendererObject.x, rendererObject.y, rendererObject.width, rendererObject.height);
+    sprite.initWithTexture(texture, rect, rendererObject.rotate, false);
+    sprite._rect.width = attachment.width;
+    sprite._rect.height = attachment.height;
+    sprite.setContentSize(attachment.width, attachment.height);
+    sprite.setRotation(-attachment.rotation);
+    sprite.setScale(rendererObject.width / rendererObject.originalWidth * attachment.scaleX,
+        rendererObject.height / rendererObject.originalHeight * attachment.scaleY);
 };
 
-var proto = sp.Skeleton.CanvasRenderCmd.prototype = Object.create(cc.Node.CanvasRenderCmd.prototype);
-proto.constructor = sp.Skeleton.CanvasRenderCmd;
+sp.Skeleton.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
+    constructor(renderableObject) {
+        super(renderableObject);
+        this._needDraw = true;
+    }
 
-proto.rendering = function (wrapper, scaleX, scaleY) {
+    rendering(wrapper, scaleX, scaleY) {
     var node = this._node, i, n, slot, slotNode;
     wrapper = wrapper || cc._renderContext;
 
@@ -97,20 +107,20 @@ proto.rendering = function (wrapper, scaleX, scaleY) {
                 drawingUtil.setDrawColor(0, 255, 0, 255);
         }
     }
-};
+    }
 
-proto.updateStatus = function() {
-    this.originUpdateStatus();
-    this._updateCurrentRegions();
-    this._regionFlag = cc.Node.CanvasRenderCmd.RegionStatus.DirtyDouble;
-    this._dirtyFlag &= ~cc.Node._dirtyFlags.contentDirty;
-};
+    updateStatus() {
+        this.originUpdateStatus();
+        this._updateCurrentRegions();
+        this._regionFlag = cc.Node.CanvasRenderCmd.RegionStatus.DirtyDouble;
+        this._dirtyFlag &= ~cc.Node._dirtyFlags.contentDirty;
+    }
 
-proto.getLocalBB = function() {
-    return this._node.getBoundingBox();
-};
+    getLocalBB() {
+        return this._node.getBoundingBox();
+    }
 
-proto._updateRegionAttachmentSlot = function (attachment, slot, points) {
+    _updateRegionAttachmentSlot(attachment, slot, points) {
     if (!points)
         return;
 
@@ -122,9 +132,9 @@ proto._updateRegionAttachmentSlot = function (attachment, slot, points) {
     points.push(cc.p(vertices[VERTEX.OX4], vertices[VERTEX.OY4]));
     points.push(cc.p(vertices[VERTEX.OX3], vertices[VERTEX.OY3]));
     points.push(cc.p(vertices[VERTEX.OX2], vertices[VERTEX.OY2]));
-};
+    }
 
-proto._createChildFormSkeletonData = function () {
+    _createChildFormSkeletonData() {
     var node = this._node;
     var locSkeleton = node._skeleton, spriteName, sprite;
     for (var i = 0, n = locSkeleton.slots.length; i < n; i++) {
@@ -142,21 +152,9 @@ proto._createChildFormSkeletonData = function () {
             //todo for mesh
         }
     }
-};
+    }
 
-var loaded = function (sprite, texture, attachment) {
-    var rendererObject = attachment.region;
-    var rect = new cc.Rect(rendererObject.x, rendererObject.y, rendererObject.width, rendererObject.height);
-    sprite.initWithTexture(texture, rect, rendererObject.rotate, false);
-    sprite._rect.width = attachment.width;
-    sprite._rect.height = attachment.height;
-    sprite.setContentSize(attachment.width, attachment.height);
-    sprite.setRotation(-attachment.rotation);
-    sprite.setScale(rendererObject.width / rendererObject.originalWidth * attachment.scaleX,
-        rendererObject.height / rendererObject.originalHeight * attachment.scaleY);
-};
-
-proto._createSprite = function (slot, attachment) {
+    _createSprite(slot, attachment) {
     var rendererObject = attachment.region;
     var texture = rendererObject.texture.getRealTexture();
     var sprite = new cc.Sprite();
@@ -170,9 +168,9 @@ proto._createSprite = function (slot, attachment) {
     slot.sprites = slot.sprites || {};
     slot.sprites[rendererObject.name] = sprite;
     return sprite;
-};
+    }
 
-proto._updateChild = function () {
+    _updateChild() {
     var locSkeleton = this._node._skeleton, slots = locSkeleton.slots;
     var color = this._displayedColor, opacity = this._displayedOpacity;
     var i, n, selSprite, ax, ay;
@@ -241,6 +239,7 @@ proto._updateChild = function () {
             continue;
         }
         slotNode.setVisible(true);
+    }
     }
 };
 

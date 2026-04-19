@@ -43,12 +43,6 @@ export class LayerWebGLRenderCmd extends NodeWebGLRenderCmd {
     }
 }
 
-// Backward-compatible _layerCmdCtor shim for old-style constructors in extensions/
-LayerWebGLRenderCmd.prototype._layerCmdCtor = function (renderable) {
-    this._rootCtor(renderable);
-    this._isBaked = false;
-};
-
 /**
  * cc.LayerColor's WebGL render command
  */

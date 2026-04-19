@@ -23,16 +23,9 @@
  ****************************************************************************/
 
 import { SpriteWebGLRenderCmd } from '../sprites/sprite-webgl-render-cmd';
+import { CacheLabelRenderMixin } from './label-ttf-canvas-render-cmd';
 
 // ----------------------------------- LabelTTF WebGL render cmd ----------------------------
-export class WebGLRenderCmd extends SpriteWebGLRenderCmd {
-    constructor(renderable) {
-        super(renderable);
-        this._cacheCmdCtor();
-    }
+export class WebGLRenderCmd extends CacheLabelRenderMixin(SpriteWebGLRenderCmd) {
+    _updateColor() {}
 }
-
-cc.inject(cc.LabelTTF.CacheRenderCmd.prototype, WebGLRenderCmd.prototype);
-
-WebGLRenderCmd.prototype._updateColor = function () {
-};

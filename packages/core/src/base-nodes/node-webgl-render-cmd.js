@@ -56,8 +56,4 @@ export class WebGLRenderCmd extends RenderCmd {
     get _shaderProgram() { return this.getShaderProgram(); }
 }
 
-// Backward-compatible _rootCtor shim for old-style constructors in extensions/
-WebGLRenderCmd.prototype._rootCtor = function (renderable) {
-    cc.Node.RenderCmd.prototype._rootCtor.call(this, renderable);
-    this._glProgramState = null;
-};
+

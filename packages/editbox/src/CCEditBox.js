@@ -1379,36 +1379,31 @@ cc.EditBox = class EditBox extends cc.Node {
     this.__orientationChanged = null;
   };
 
-  //define the canvas render command
-  cc.EditBox.CanvasRenderCmd = function (node) {
-    this._rootCtor(node);
-    this.initializeRenderCmd(node);
+  cc.EditBox.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
+    constructor(node) {
+      super(node);
+      this.initializeRenderCmd(node);
+    }
+
+    transform(parentCmd, recursive) {
+      this.originTransform(parentCmd, recursive);
+      this.updateMatrix();
+    }
   };
 
-  var canvasRenderCmdProto = (cc.EditBox.CanvasRenderCmd.prototype =
-    Object.create(cc.Node.CanvasRenderCmd.prototype));
+  Object.assign(cc.EditBox.CanvasRenderCmd.prototype, proto);
 
-  cc.inject(proto, canvasRenderCmdProto);
-  canvasRenderCmdProto.constructor = cc.EditBox.CanvasRenderCmd;
+  cc.EditBox.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
+    constructor(node) {
+      super(node);
+      this.initializeRenderCmd(node);
+    }
 
-  canvasRenderCmdProto.transform = function (parentCmd, recursive) {
-    this.originTransform(parentCmd, recursive);
-    this.updateMatrix();
+    transform(parentCmd, recursive) {
+      this.originTransform(parentCmd, recursive);
+      this.updateMatrix();
+    }
   };
 
-  //define the webgl render command
-  cc.EditBox.WebGLRenderCmd = function (node) {
-    this._rootCtor(node);
-    this.initializeRenderCmd(node);
-  };
-
-  var webGLRenderCmdProto = (cc.EditBox.WebGLRenderCmd.prototype =
-    Object.create(cc.Node.WebGLRenderCmd.prototype));
-  cc.inject(proto, webGLRenderCmdProto);
-  webGLRenderCmdProto.constructor = cc.EditBox.WebGLRenderCmd;
-
-  webGLRenderCmdProto.transform = function (parentCmd, recursive) {
-    this.originTransform(parentCmd, recursive);
-    this.updateMatrix();
-  };
+  Object.assign(cc.EditBox.WebGLRenderCmd.prototype, proto);
 })(cc.EditBox._polyfill);
