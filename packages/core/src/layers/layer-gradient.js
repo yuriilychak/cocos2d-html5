@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { LayerColor } from './layer-color';
+import { Point } from '../cocoa/geometry/point';
 
 /**
  * CCLayerGradient is a subclass of cc.LayerColor that draws gradients across the background.
@@ -43,7 +44,7 @@ export class LayerGradient extends LayerColor {
         this._colorStops = [];
 
         this._endColor = cc.color(0, 0, 0, 255);
-        this._alongVector = cc.p(0, -1);
+        this._alongVector = new Point(0, -1);
         this._startOpacity = 255;
         this._endOpacity = 255;
 
@@ -60,7 +61,7 @@ export class LayerGradient extends LayerColor {
     init(start, end, v, stops) {
         start = start || cc.color(0, 0, 0, 255);
         end = end || cc.color(0, 0, 0, 255);
-        v = v || cc.p(0, -1);
+        v = v || new Point(0, -1);
         var _t = this;
 
         var locEndColor = _t._endColor;
@@ -159,7 +160,7 @@ export class LayerGradient extends LayerColor {
     }
 
     getVector() {
-        return cc.p(this._alongVector.x, this._alongVector.y);
+        return new Point(this._alongVector.x, this._alongVector.y);
     }
 
     isCompressedInterpolation() {

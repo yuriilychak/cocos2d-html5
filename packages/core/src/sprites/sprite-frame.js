@@ -26,6 +26,7 @@
 
 import { NewClass } from '../platform/class';
 import EventHelper from '../event-manager/event-helper';
+import { Point } from '../cocoa/geometry/point';
 
 /**
  * <p>
@@ -67,8 +68,8 @@ export class SpriteFrame extends NewClass {
         this._texture = null;
         this._textureFilename = "";
         this._textureLoaded = false;
-        this._offset = cc.p(0, 0);
-        this._offsetInPixels = cc.p(0, 0);
+        this._offset = new Point(0, 0);
+        this._offsetInPixels = new Point(0, 0);
         this._originalSize = cc.size(0, 0);
         this._rotated = false;
         this._originalSizeInPixels = cc.size(0, 0);
@@ -170,7 +171,7 @@ export class SpriteFrame extends NewClass {
      * @return {cc.Point}
      */
     getOffsetInPixels() {
-        return cc.p(this._offsetInPixels);
+        return new Point(this._offsetInPixels);
     }
 
     /**
@@ -288,7 +289,7 @@ export class SpriteFrame extends NewClass {
      * @return {cc.Point}
      */
     getOffset() {
-        return cc.p(this._offset);
+        return new Point(this._offset);
     }
 
     /**
@@ -355,7 +356,7 @@ export class SpriteFrame extends NewClass {
     initWithTexture(texture, rect, rotated, offset, originalSize) {
         if (arguments.length === 2) rect = cc.rectPointsToPixels(rect);
 
-        offset = offset || cc.p(0, 0);
+        offset = offset || new Point(0, 0);
         originalSize = originalSize || rect;
         rotated = rotated || false;
 

@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from '../base-nodes/node-canvas-render-cmd';
+import { Point } from '../cocoa/geometry/point';
 
 /**
  * cc.Layer's Canvas render command
@@ -302,8 +303,8 @@ export class LayerGradientCanvasRenderCmd extends LayerColorCanvasRenderCmd {
     constructor(renderable) {
         super(renderable);
         this._needDraw = true;
-        this._startPoint = cc.p(0, 0);
-        this._endPoint = cc.p(0, 0);
+        this._startPoint = new Point(0, 0);
+        this._endPoint = new Point(0, 0);
         this._startStopStr = null;
         this._endStopStr = null;
     }
@@ -363,8 +364,8 @@ export class LayerGradientCanvasRenderCmd extends LayerColorCanvasRenderCmd {
         const contentSize = node._contentSize;
         const tWidth = contentSize.width * 0.5, tHeight = contentSize.height * 0.5;
 
-        const angle = cc.pAngleSigned(cc.p(0, -1), node._alongVector);
-        const p1 = cc.pRotateByAngle(cc.p(0, -1), cc.p(0, 0), angle);
+        const angle = cc.pAngleSigned(new Point(0, -1), node._alongVector);
+        const p1 = cc.pRotateByAngle(new Point(0, -1), new Point(0, 0), angle);
         const factor = Math.min(Math.abs(1 / p1.x), Math.abs(1 / p1.y));
 
         this._startPoint.x = tWidth * (-p1.x * factor) + tWidth;

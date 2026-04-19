@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Point } from '../cocoa/geometry/point';
+
 /**
  * visibleRect is a singleton object which defines the actual visible rect of the current view,
  * it should represent the same rect as cc.view.getViewportRect()
@@ -44,15 +46,15 @@
  * @name visibleRect
  */
 export const visibleRect = {
-    topLeft:cc.p(0,0),
-    topRight:cc.p(0,0),
-    top:cc.p(0,0),
-    bottomLeft:cc.p(0,0),
-    bottomRight:cc.p(0,0),
-    bottom:cc.p(0,0),
-    center:cc.p(0,0),
-    left:cc.p(0,0),
-    right:cc.p(0,0),
+    topLeft:new Point(0,0),
+    topRight:new Point(0,0),
+    top:new Point(0,0),
+    bottomLeft:new Point(0,0),
+    bottomRight:new Point(0,0),
+    bottom:new Point(0,0),
+    center:new Point(0,0),
+    left:new Point(0,0),
+    right:new Point(0,0),
     width:0,
     height:0,
 

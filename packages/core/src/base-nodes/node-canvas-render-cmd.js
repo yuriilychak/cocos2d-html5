@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Point } from '../cocoa/geometry/point';
+
 //---------------------- Customer render cmd --------------------
 export class CustomRenderCmd {
     _needDraw = true;
@@ -118,7 +120,7 @@ export class RenderCmd {
     }
 
     getAnchorPointInPoints() {
-        return cc.p(this._anchorPointInPoints);
+        return new Point(this._anchorPointInPoints);
     }
 
     getDisplayedColor() {

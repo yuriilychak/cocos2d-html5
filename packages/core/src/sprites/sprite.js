@@ -26,6 +26,7 @@
 
 import EventHelper from '../event-manager/event-helper';
 import { Node } from '../base-nodes/node';
+import { Point } from '../cocoa/geometry/point';
 
 /**
  * <p>cc.Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -132,8 +133,8 @@ export class Sprite extends Node {
 
         self._loader = new Sprite.LoadManager();
         self._shouldBeHidden = false;
-        self._offsetPosition = cc.p(0, 0);
-        self._unflippedOffsetPositionFromCenter = cc.p(0, 0);
+        self._offsetPosition = new Point(0, 0);
+        self._unflippedOffsetPositionFromCenter = new Point(0, 0);
         self._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
         self._rect = cc.rect(0, 0, 0, 0);
 
@@ -218,7 +219,7 @@ export class Sprite extends Node {
      * @return {cc.Point}
      */
     getOffsetPosition() {
-        return cc.p(this._offsetPosition);
+        return new Point(this._offsetPosition);
     }
 
     /**

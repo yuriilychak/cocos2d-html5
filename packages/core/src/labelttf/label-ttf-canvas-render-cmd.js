@@ -20,6 +20,7 @@
 
 import { LabelTTF } from './label-ttf';
 import { SpriteCanvasRenderCmd } from '../sprites/sprite-canvas-render-cmd';
+import { Point } from '../cocoa/geometry/point';
 
 export const _textAlign = ["left", "center", "right"];
 export const _textBaseline = ["top", "middle", "bottom"];
@@ -249,7 +250,7 @@ export const LabelRenderMixin = (Base) => class extends Base {
             OffsetYArray.push(yOffset);
         }
         const tmpStatus = {
-            contextTransform: cc.p(dx, dy),
+            contextTransform: new Point(dx, dy),
             xOffset: xOffset,
             OffsetYArray: OffsetYArray
         };

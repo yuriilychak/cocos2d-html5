@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Sprite } from '../sprites/sprite';
+import { Point } from '../cocoa/geometry/point';
 
 /**
  * <p>cc.LabelTTF is a subclass of cc.TextureNode that knows how to render text labels with system font or a ttf font file<br/>
@@ -150,7 +151,7 @@ export class LabelTTF extends Sprite {
         this._fontName = "Arial";
 
         this._shadowEnabled = false;
-        this._shadowOffset = cc.p(0, 0);
+        this._shadowOffset = new Point(0, 0);
         this._shadowOpacity = 0;
         this._shadowBlur = 0;
 
@@ -338,7 +339,7 @@ export class LabelTTF extends Sprite {
         }
     }
     _getShadowOffset() {
-        return cc.p(this._shadowOffset.x, this._shadowOffset.y);
+        return new Point(this._shadowOffset.x, this._shadowOffset.y);
     }
     _setShadowOffset(offset) {
         if (false === this._shadowEnabled)

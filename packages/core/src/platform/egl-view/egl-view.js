@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from '../class';
+import { Point } from '../../cocoa/geometry/point';
 
 var __BrowserGetter = {
     init: function () {
@@ -592,7 +593,7 @@ export class EGLView extends NewClass {
      * @return {cc.Point}
      */
     getVisibleOrigin() {
-        return cc.p(this._visibleRect.x, this._visibleRect.y);
+        return new Point(this._visibleRect.x, this._visibleRect.y);
     }
 
     /**
@@ -600,7 +601,7 @@ export class EGLView extends NewClass {
      * @return {cc.Point}
      */
     getVisibleOriginInPixel() {
-        return cc.p(this._visibleRect.x * this._scaleX,
+        return new Point(this._visibleRect.x * this._scaleX,
                     this._visibleRect.y * this._scaleY);
     }
 

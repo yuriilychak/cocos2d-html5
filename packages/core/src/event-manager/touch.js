@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { NewClass } from '../platform/class';
+import { Point } from '../cocoa/geometry/point';
 
 /**
  * The touch event class
@@ -141,10 +142,10 @@ export default class Touch extends NewClass {
      */
     setTouchInfo(id, x, y) {
         this._prevPoint = this._point;
-        this._point = cc.p(x || 0, y || 0);
+        this._point = new Point(x || 0, y || 0);
         this._id = id;
         if (!this._startPointCaptured) {
-            this._startPoint = cc.p(this._point);
+            this._startPoint = new Point(this._point);
             cc.view._convertPointWithScale(this._startPoint);
             this._startPointCaptured = true;
         }
@@ -162,8 +163,8 @@ export default class Touch extends NewClass {
 
     _setPrevPoint(x, y) {
         if(y === undefined)
-            this._prevPoint = cc.p(x.x, x.y);
+            this._prevPoint = new Point(x.x, x.y);
         else
-            this._prevPoint = cc.p(x || 0, y || 0);
+            this._prevPoint = new Point(x || 0, y || 0);
     }
 }

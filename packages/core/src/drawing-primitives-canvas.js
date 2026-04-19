@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from './platform/class';
+import { Point } from './cocoa/geometry/point';
 
 export const PI2 = Math.PI * 2;
 
@@ -79,18 +80,18 @@ export class DrawingPrimitiveCanvas extends NewClass {
     }
 
     drawRect(origin, destination) {
-        this.drawLine(cc.p(origin.x, origin.y), cc.p(destination.x, origin.y));
-        this.drawLine(cc.p(destination.x, origin.y), cc.p(destination.x, destination.y));
-        this.drawLine(cc.p(destination.x, destination.y), cc.p(origin.x, destination.y));
-        this.drawLine(cc.p(origin.x, destination.y), cc.p(origin.x, origin.y));
+        this.drawLine(new Point(origin.x, origin.y), new Point(destination.x, origin.y));
+        this.drawLine(new Point(destination.x, origin.y), new Point(destination.x, destination.y));
+        this.drawLine(new Point(destination.x, destination.y), new Point(origin.x, destination.y));
+        this.drawLine(new Point(origin.x, destination.y), new Point(origin.x, origin.y));
     }
 
     drawSolidRect(origin, destination, color) {
         var vertices = [
             origin,
-            cc.p(destination.x, origin.y),
+            new Point(destination.x, origin.y),
             destination,
-            cc.p(origin.x, destination.y)
+            new Point(origin.x, destination.y)
         ];
 
         this.drawSolidPoly(vertices, 4, color);
@@ -145,10 +146,10 @@ export class DrawingPrimitiveCanvas extends NewClass {
         for (var i = 0; i < segments; i++) {
             var x = Math.pow(1 - t, 2) * origin.x + 2.0 * (1 - t) * t * control.x + t * t * destination.x;
             var y = Math.pow(1 - t, 2) * origin.y + 2.0 * (1 - t) * t * control.y + t * t * destination.y;
-            vertices.push(cc.p(x, y));
+            vertices.push(new Point(x, y));
             t += 1.0 / segments;
         }
-        vertices.push(cc.p(destination.x, destination.y));
+        vertices.push(new Point(destination.x, destination.y));
 
         this.drawPoly(vertices, segments + 1, false, false);
     }
@@ -161,10 +162,10 @@ export class DrawingPrimitiveCanvas extends NewClass {
         for (var i = 0; i < segments; i++) {
             var x = Math.pow(1 - t, 3) * origin.x + 3.0 * Math.pow(1 - t, 2) * t * control1.x + 3.0 * (1 - t) * t * t * control2.x + t * t * t * destination.x;
             var y = Math.pow(1 - t, 3) * origin.y + 3.0 * Math.pow(1 - t, 2) * t * control1.y + 3.0 * (1 - t) * t * t * control2.y + t * t * t * destination.y;
-            vertices.push(cc.p(x, y));
+            vertices.push(new Point(x, y));
             t += 1.0 / segments;
         }
-        vertices.push(cc.p(destination.x, destination.y));
+        vertices.push(new Point(destination.x, destination.y));
 
         this.drawPoly(vertices, segments + 1, false, false);
     }

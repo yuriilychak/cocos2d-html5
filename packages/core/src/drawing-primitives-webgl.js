@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from './platform/class';
+import { Point } from './cocoa/geometry/point';
 
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode
@@ -144,18 +145,18 @@ export class DrawingPrimitiveWebGL extends NewClass {
     }
 
     drawRect(origin, destination) {
-        this.drawLine(cc.p(origin.x, origin.y), cc.p(destination.x, origin.y));
-        this.drawLine(cc.p(destination.x, origin.y), cc.p(destination.x, destination.y));
-        this.drawLine(cc.p(destination.x, destination.y), cc.p(origin.x, destination.y));
-        this.drawLine(cc.p(origin.x, destination.y), cc.p(origin.x, origin.y));
+        this.drawLine(new Point(origin.x, origin.y), new Point(destination.x, origin.y));
+        this.drawLine(new Point(destination.x, origin.y), new Point(destination.x, destination.y));
+        this.drawLine(new Point(destination.x, destination.y), new Point(origin.x, destination.y));
+        this.drawLine(new Point(origin.x, destination.y), new Point(origin.x, origin.y));
     }
 
     drawSolidRect(origin, destination, color) {
         var vertices = [
             origin,
-            cc.p(destination.x, origin.y),
+            new Point(destination.x, origin.y),
             destination,
-            cc.p(origin.x, destination.y)
+            new Point(origin.x, destination.y)
         ];
 
         this.drawSolidPoly(vertices, 4, color);

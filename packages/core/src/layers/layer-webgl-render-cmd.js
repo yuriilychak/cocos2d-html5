@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from '../base-nodes/node-webgl-render-cmd';
+import { Point } from '../cocoa/geometry/point';
 
 /**
  * cc.Layer's WebGL render command
@@ -195,23 +196,23 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
             this.initData(verticesLen);
         }
 
-        const angle = Math.PI + cc.pAngleSigned(cc.p(0, -1), node._alongVector), locAnchor = cc.p(contentSize.width / 2, contentSize.height / 2);
+        const angle = Math.PI + cc.pAngleSigned(new Point(0, -1), node._alongVector), locAnchor = new Point(contentSize.width / 2, contentSize.height / 2);
         const degrees = Math.round(cc.radiansToDegrees(angle));
         let transMat = cc.affineTransformMake(1, 0, 0, 1, locAnchor.x, locAnchor.y);
         transMat = cc.affineTransformRotate(transMat, angle);
         let a, b;
         if (degrees < 90) {
-            a = cc.p(-locAnchor.x, locAnchor.y);
-            b = cc.p(locAnchor.x, locAnchor.y);
+            a = new Point(-locAnchor.x, locAnchor.y);
+            b = new Point(locAnchor.x, locAnchor.y);
         } else if (degrees < 180) {
-            a = cc.p(locAnchor.x, locAnchor.y);
-            b = cc.p(locAnchor.x, -locAnchor.y);
+            a = new Point(locAnchor.x, locAnchor.y);
+            b = new Point(locAnchor.x, -locAnchor.y);
         } else if (degrees < 270) {
-            a = cc.p(locAnchor.x, -locAnchor.y);
-            b = cc.p(-locAnchor.x, -locAnchor.y);
+            a = new Point(locAnchor.x, -locAnchor.y);
+            b = new Point(-locAnchor.x, -locAnchor.y);
         } else {
-            a = cc.p(-locAnchor.x, -locAnchor.y);
-            b = cc.p(-locAnchor.x, locAnchor.y);
+            a = new Point(-locAnchor.x, -locAnchor.y);
+            b = new Point(-locAnchor.x, locAnchor.y);
         }
 
         const sin = Math.sin(angle), cos = Math.cos(angle);

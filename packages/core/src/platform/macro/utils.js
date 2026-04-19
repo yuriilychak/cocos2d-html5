@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { RAD, DEG } from './constants';
+import { Point } from '../../cocoa/geometry/point';
 
 /**
  * <p>
@@ -182,7 +183,7 @@ export function contentScaleFactor() {
  */
 export function pointPointsToPixels(points) {
     var scale = cc.contentScaleFactor();
-    return cc.p(points.x * scale, points.y * scale);
+    return new Point(points.x * scale, points.y * scale);
 }
 
 /**
@@ -193,7 +194,7 @@ export function pointPointsToPixels(points) {
  */
 export function pointPixelsToPoints(pixels) {
 	var scale = cc.contentScaleFactor();
-	return cc.p(pixels.x / scale, pixels.y / scale);
+	return new Point(pixels.x / scale, pixels.y / scale);
 }
 
 export function _pointPixelsToPointsOut(pixels, outPoint){

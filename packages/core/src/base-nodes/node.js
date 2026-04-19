@@ -26,6 +26,7 @@
 
 import { NewClass } from '../platform/class';
 import { dirtyFlags } from './node-canvas-render-cmd';
+import { Point } from '../cocoa/geometry/point';
 
 /**
  * Default Node tag
@@ -182,10 +183,10 @@ export class Node extends NewClass {
       this._cascadeOpacityEnabled = false;
       this._renderCmd = null;
       var _t = this;
-      _t._anchorPoint = cc.p(0, 0);
+      _t._anchorPoint = new Point(0, 0);
       _t._contentSize = cc.size(0, 0);
-      _t._position = cc.p(0, 0);
-      _t._normalizedPosition = cc.p(0, 0);
+      _t._position = new Point(0, 0);
+      _t._normalizedPosition = new Point(0, 0);
       _t._children = [];
 
       _t._additionalTransform = cc.affineTransformMakeIdentity();
@@ -666,7 +667,7 @@ export class Node extends NewClass {
      * @return {cc.Point} The position (x,y) of the node in OpenGL coordinates
      */
     getPosition() {
-      return cc.p(this._position);
+      return new Point(this._position);
     }
 
     /**
@@ -674,7 +675,7 @@ export class Node extends NewClass {
      * @returns {cc.Point}
      */
     getNormalizedPosition() {
-      return cc.p(this._normalizedPosition);
+      return new Point(this._normalizedPosition);
     }
 
     /**
@@ -776,7 +777,7 @@ export class Node extends NewClass {
      * @return {cc.Point}  The anchor point of node.
      */
     getAnchorPoint() {
-      return cc.p(this._anchorPoint);
+      return new Point(this._anchorPoint);
     }
 
     /**
@@ -1936,7 +1937,7 @@ export class Node extends NewClass {
      * @return {cc.Point}
      */
     convertToWorldSpace(nodePoint) {
-      nodePoint = nodePoint || cc.p(0, 0);
+      nodePoint = nodePoint || new Point(0, 0);
       return cc.pointApplyAffineTransform(
         nodePoint,
         this.getNodeToWorldTransform()
@@ -1965,7 +1966,7 @@ export class Node extends NewClass {
      * @return {cc.Point}
      */
     convertToWorldSpaceAR(nodePoint) {
-      nodePoint = nodePoint || cc.p(0, 0);
+      nodePoint = nodePoint || new Point(0, 0);
       var pt = cc.pAdd(nodePoint, this._renderCmd.getAnchorPointInPoints());
       return this.convertToWorldSpace(pt);
     }

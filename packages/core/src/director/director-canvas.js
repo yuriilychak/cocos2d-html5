@@ -1,4 +1,5 @@
 import { DirectorRenderer } from './director-renderer';
+import { Point } from '../cocoa/geometry/point';
 
 export class DirectorCanvasRenderer extends DirectorRenderer {
     setProjection(projection) {
@@ -25,6 +26,6 @@ export class DirectorCanvasRenderer extends DirectorRenderer {
     }
 
     getVisibleOrigin() {
-        return cc.p(0, 0);
+        return new Point(0, 0);
     }
 }

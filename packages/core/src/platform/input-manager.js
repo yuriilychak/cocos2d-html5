@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Point } from '../cocoa/geometry/point';
+
 /**
  * ignore
  */
@@ -62,8 +64,8 @@ export const inputManager = /** @lends inputManager# */{
 
     _isRegisterEvent: false,
 
-    _preTouchPoint: cc.p(0, 0),
-    _prevMousePoint: cc.p(0, 0),
+    _preTouchPoint: new Point(0, 0),
+    _prevMousePoint: new Point(0, 0),
 
     _preTouchPool: [],
     _preTouchPoolPointer: 0,

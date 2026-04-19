@@ -25,44 +25,35 @@
  ****************************************************************************/
 
 /**
- * cc.Point is the class for point object, please do not use its constructor to create points, use cc.p() alias function instead.
+ * cc.Point is the class for point object.
  * @class cc.Point
- * @param {Number} x
- * @param {Number} y
- *
- * @property x {Number}
- * @property y {Number}
- * @see cc.p
+ * @param {Number|cc.Point} [x=0]
+ * @param {Number} [y=0]
  */
-export function Point(x, y) {
-    this.x = x || 0;
-    this.y = y || 0;
+export class Point {
+    constructor(x, y) {
+        if (x === undefined) {
+            this.x = 0;
+            this.y = 0;
+        } else if (y === undefined) {
+            this.x = x.x;
+            this.y = x.y;
+        } else {
+            this.x = x;
+            this.y = y;
+        }
+    }
 }
 
 /**
  * Helper function that creates a cc.Point.
  * @function
- * @param {Number|cc.Point} x a Number or a size object
- * @param {Number} y
+ * @param {Number|cc.Point} [x] a Number or a point object
+ * @param {Number} [y]
  * @return {cc.Point}
- * @example
- * var point1 = cc.p();
- * var point2 = cc.p(100, 100);
- * var point3 = cc.p(point2);
- * var point4 = cc.p({x: 100, y: 100});
  */
 export function p(x, y) {
-    // This can actually make use of "hidden classes" in JITs and thus decrease
-    // memory usage and overall performance drastically
-    // return cc.p(x, y);
-    // but this one will instead flood the heap with newly allocated hash maps
-    // giving little room for optimization by the JIT,
-    // note: we have tested this item on Chrome and firefox, it is faster than cc.p(x, y)
-    if (x === undefined)
-        return {x: 0, y: 0};
-    if (y === undefined)
-        return {x: x.x, y: x.y};
-    return {x: x, y: y};
+    return new Point(x, y);
 }
 
 /**

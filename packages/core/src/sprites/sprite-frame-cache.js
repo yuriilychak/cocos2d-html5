@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Point } from '../cocoa/geometry/point';
+
 /**
  * <p>
  * cc.spriteFrameCache is a singleton that handles the loading of the sprite frames. It saves in a cache the sprite frames.<br/>
@@ -51,8 +53,8 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
 
     _pointFromString: function (content) {
         var result = this._CCNS_REG1.exec(content);
-        if (!result) return cc.p(0, 0);
-        return cc.p(parseFloat(result[1]), parseFloat(result[2]));
+        if (!result) return new Point(0, 0);
+        return new Point(parseFloat(result[1]), parseFloat(result[2]));
     },
 
     _sizeFromString: function (content) {
@@ -98,7 +100,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
             if (format == 0) {
                 tempFrame.rect = cc.rect(frameDict["x"], frameDict["y"], frameDict["width"], frameDict["height"]);
                 tempFrame.rotated = false;
-                tempFrame.offset = cc.p(frameDict["offsetX"], frameDict["offsetY"]);
+                tempFrame.offset = new Point(frameDict["offsetX"], frameDict["offsetY"]);
                 var ow = frameDict["originalWidth"];
                 var oh = frameDict["originalHeight"];
                 // check ow/oh
@@ -131,7 +133,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
                 key = frameDict["filename"] || key;
                 tempFrame.rect = cc.rect(tmpFrame["x"], tmpFrame["y"], tmpFrame["w"], tmpFrame["h"]);
                 tempFrame.rotated = frameDict["rotated"] || false;
-                tempFrame.offset = cc.p(0, 0);
+                tempFrame.offset = new Point(0, 0);
                 tempFrame.size = cc.size(tmpSourceSize["w"], tmpSourceSize["h"]);
             }
             frames[key] = tempFrame;
