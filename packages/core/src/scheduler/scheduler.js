@@ -33,7 +33,7 @@ import { CallbackTimer } from './callback-timer';
 /**
  * Scheduler is responsible of triggering the scheduled callbacks.
  */
-export class Scheduler extends NewClass {
+export default class Scheduler extends NewClass {
     static PRIORITY_SYSTEM = (-2147483647 - 1);
     static PRIORITY_NON_SYSTEM = Scheduler.PRIORITY_SYSTEM + 1;
 
