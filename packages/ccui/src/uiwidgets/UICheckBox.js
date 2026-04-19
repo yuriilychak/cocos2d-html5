@@ -103,6 +103,10 @@ ccui.CheckBox = class CheckBox extends ccui.Widget {
         this.loadTextures(backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
     }
 
+    get selected() { return this.isSelected(); }
+    set selected(v) { this.setSelected(v); }
+
+
     _initRenderer() {
         this._backGroundBoxRenderer = new cc.Sprite();
         this._backGroundSelectedBoxRenderer = new cc.Sprite();
@@ -643,14 +647,6 @@ ccui.CheckBox = class CheckBox extends ccui.Widget {
 
 };
 
-var _p = ccui.CheckBox.prototype;
-
-// Extended properties
-/** @expose */
-_p.selected;
-cc.defineGetterSetter(_p, "selected", _p.isSelected, _p.setSelected);
-
-_p = null;
 
 // Constants
 //CheckBoxEvent type

@@ -72,6 +72,24 @@ ccs.Bone = class Bone extends ccs.Node {
         this.init(name);
     }
 
+    get boneData() { return this.getBoneData(); }
+    set boneData(v) { this.setBoneData(v); }
+
+    get armature() { return this.getArmature(); }
+    set armature(v) { this.setArmature(v); }
+
+    get childArmature() { return this.getChildArmature(); }
+    set childArmature(v) { this.setChildArmature(v); }
+
+    get childrenBone() { return this.getChildrenBone(); }
+
+    get tween() { return this.getTween(); }
+
+    get tweenData() { return this.getTweenData(); }
+
+    get colliderFilter() { return this.getColliderFilter(); }
+    set colliderFilter(v) { this.setColliderFilter(v); }
+
     /**
      * Initializes a ccs.Bone with the specified name
      * @param {String} name bone name
@@ -622,32 +640,7 @@ ccs.Bone = class Bone extends ccs.Node {
 
 };
 
-var _p = ccs.Bone.prototype;
 
-// Extended properties
-/** @expose */
-_p.boneData;
-cc.defineGetterSetter(_p, "boneData", _p.getBoneData, _p.setBoneData);
-/** @expose */
-_p.armature;
-cc.defineGetterSetter(_p, "armature", _p.getArmature, _p.setArmature);
-/** @expose */
-_p.childArmature;
-cc.defineGetterSetter(_p, "childArmature", _p.getChildArmature, _p.setChildArmature);
-/** @expose */
-_p.childrenBone;
-cc.defineGetterSetter(_p, "childrenBone", _p.getChildrenBone);
-/** @expose */
-_p.tween;
-cc.defineGetterSetter(_p, "tween", _p.getTween);
-/** @expose */
-_p.tweenData;
-cc.defineGetterSetter(_p, "tweenData", _p.getTweenData);
-/** @expose */
-_p.colliderFilter;
-cc.defineGetterSetter(_p, "colliderFilter", _p.getColliderFilter, _p.setColliderFilter);
-
-_p = null;
 
 
 ccs.Bone.RenderCmd = {

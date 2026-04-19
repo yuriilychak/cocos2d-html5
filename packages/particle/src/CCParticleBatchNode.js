@@ -101,6 +101,10 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
         }
     }
 
+
+    get texture() { return this.getTexture(); }
+    set texture(v) { this.setTexture(v); }
+
     _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.ParticleBatchNode.CanvasRenderCmd(this);
@@ -518,11 +522,5 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
     }
 };
 
-var _p = cc.ParticleBatchNode.prototype;
-
-// Extended properties
-/** @expose */
-_p.texture;
-cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
 
 

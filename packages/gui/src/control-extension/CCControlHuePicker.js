@@ -56,6 +56,14 @@ cc.ControlHuePicker = class ControlHuePicker extends cc.Control {
      * @param {cc.Node} target
      * @param {cc.Point} pos position
      */
+    get hue() { return this.getHue(); }
+    set hue(v) { this.setHue(v); }
+    get huePercent() { return this.getHuePercentage(); }
+    set huePercent(v) { this.setHuePercentage(v); }
+    get background() { return this.getBackground(); }
+    get slider() { return this.getSlider(); }
+    get startPos() { return this.getStartPos(); }
+
     constructor(target, pos) {
         super();
         pos && this.initWithTargetAndPos(target, pos);
@@ -185,24 +193,3 @@ cc.ControlHuePicker = class ControlHuePicker extends cc.Control {
         this._checkSliderPosition(touchLocation);
     }
 };
-
-var _p = cc.ControlHuePicker.prototype;
-
-// Extended properties
-/** @expose */
-_p.hue;
-cc.defineGetterSetter(_p, "hue", _p.getHue, _p.setHue);
-/** @expose */
-_p.huePercent;
-cc.defineGetterSetter(_p, "huePercent", _p.getHuePercentage, _p.setHuePercentage);
-/** @expose */
-_p.background;
-cc.defineGetterSetter(_p, "background", _p.getBackground);
-/** @expose */
-_p.slider;
-cc.defineGetterSetter(_p, "slider", _p.getSlider);
-/** @expose */
-_p.startPos;
-cc.defineGetterSetter(_p, "startPos", _p.getStartPos);
-
-_p = null;

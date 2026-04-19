@@ -72,6 +72,13 @@ ccui.ScrollViewBar = class ScrollViewBar extends ccui.ProtectedNode {
         this.setCascadeOpacityEnabled(true);
     }
 
+    get opacity() { return this.getOpacity(); }
+    set opacity(v) { this.setOpacity(v); }
+
+    get autoHideEnabled() { return this.isAutoHideEnabled(); }
+    set autoHideEnabled(v) { this.setAutoHideEnabled(v); }
+
+
     /**
      * Initializes a ccui.ScrollViewBar. Please do not call this function by yourself, you should pass the parameters to constructor to initialize it.
      * @returns {boolean}
@@ -315,15 +322,6 @@ ccui.ScrollViewBar = class ScrollViewBar extends ccui.ProtectedNode {
     }
 
 };
-var _p = ccui.ScrollViewBar.prototype;
-
-// Extended properties
-/** @expose */
-_p.opacity;
-cc.defineGetterSetter(_p, "opacity", _p.getOpacity, _p.setOpacity);
-/** @expose */
-_p.autoHideEnabled;
-cc.defineGetterSetter(_p, "autoHideEnabled", _p.isAutoHideEnabled, _p.setAutoHideEnabled);
 
 /**
  * @ignore

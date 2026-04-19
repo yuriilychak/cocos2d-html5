@@ -62,6 +62,13 @@ cc.ControlButton = class ControlButton extends cc.Control {
     _marginH = 0;
     _className = "ControlButton";
 
+    get adjustBackground() { return this.getAdjustBackgroundImage(); }
+    set adjustBackground(v) { this.setAdjustBackgroundImage(v); }
+    get preferredSize() { return this.getPreferredSize(); }
+    set preferredSize(v) { this.setPreferredSize(v); }
+    get labelAnchor() { return this.getLabelAnchorPoint(); }
+    set labelAnchor(v) { this.setLabelAnchorPoint(v); }
+
     constructor(label, backgroundSprite, fontSize) {
         super();
         this._preferredSize = cc.size(0, 0);
@@ -658,20 +665,5 @@ cc.ControlButton = class ControlButton extends cc.Control {
         this.setBackgroundSpriteForState(sprite, state);
     }
 };
-
-var _p = cc.ControlButton.prototype;
-
-// Extended properties
-/** @expose */
-_p.adjustBackground;
-cc.defineGetterSetter(_p, "adjustBackground", _p.getAdjustBackgroundImage, _p.setAdjustBackgroundImage);
-/** @expose */
-_p.preferredSize;
-cc.defineGetterSetter(_p, "preferredSize", _p.getPreferredSize, _p.setPreferredSize);
-/** @expose */
-_p.labelAnchor;
-cc.defineGetterSetter(_p, "labelAnchor", _p.getLabelAnchorPoint, _p.setLabelAnchorPoint);
-
-_p = null;
 
 

@@ -75,6 +75,20 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
         sprite && this.initWithSprite(sprite);
     }
 
+
+    get midPoint() { return this.getMidpoint(); }
+    set midPoint(v) { this.setMidpoint(v); }
+    get barChangeRate() { return this.getBarChangeRate(); }
+    set barChangeRate(v) { this.setBarChangeRate(v); }
+    get type() { return this.getType(); }
+    set type(v) { this.setType(v); }
+    get percentage() { return this.getPercentage(); }
+    set percentage(v) { this.setPercentage(v); }
+    get sprite() { return this.getSprite(); }
+    set sprite(v) { this.setSprite(v); }
+    get reverseDir() { return this.isReverseDirection(); }
+    set reverseDir(v) { this.setReverseDirection(v); }
+
     onEnter() {
         super.onEnter();
         if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
@@ -306,27 +320,6 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
     }
 };
 
-// Extended properties
-var _p = cc.ProgressTimer.prototype;
-
-/** @expose */
-_p.midPoint;
-cc.defineGetterSetter(_p, "midPoint", _p.getMidpoint, _p.setMidpoint);
-/** @expose */
-_p.barChangeRate;
-cc.defineGetterSetter(_p, "barChangeRate", _p.getBarChangeRate, _p.setBarChangeRate);
-/** @expose */
-_p.type;
-cc.defineGetterSetter(_p, "type", _p.getType, _p.setType);
-/** @expose */
-_p.percentage;
-cc.defineGetterSetter(_p, "percentage", _p.getPercentage, _p.setPercentage);
-/** @expose */
-_p.sprite;
-cc.defineGetterSetter(_p, "sprite", _p.getSprite, _p.setSprite);
-/** @expose */
-_p.reverseDir;
-cc.defineGetterSetter(_p, "reverseDir", _p.isReverseDirection, _p.setReverseDirection);
 
 
 

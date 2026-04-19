@@ -62,6 +62,9 @@ cc.MenuItem = class MenuItem extends cc.Node {
         }
     }
 
+    get enabled() { return this.isEnabled(); }
+    set enabled(v) { this.setEnabled(v); }
+
     /**
      * return whether MenuItem is selected
      * @return {Boolean}
@@ -170,13 +173,6 @@ cc.MenuItem = class MenuItem extends cc.Node {
     }
 };
 
-var _p = cc.MenuItem.prototype;
-
-// Extended properties
-/** @expose */
-_p.enabled;
-cc.defineGetterSetter(_p, "enabled", _p.isEnabled, _p.setEnabled);
-
 
 /**
  *  Any cc.Node that supports the cc.LabelProtocol protocol can be added.<br/>
@@ -234,6 +230,15 @@ cc.MenuItemLabel = class MenuItemLabel extends cc.MenuItem {
             this.setCascadeOpacityEnabled(true);
         }
     }
+
+    get string() { return this.getString(); }
+    set string(v) { this.setString(v); }
+
+    get disabledColor() { return this.getDisabledColor(); }
+    set disabledColor(v) { this.setDisabledColor(v); }
+
+    get label() { return this.getLabel(); }
+    set label(v) { this.setLabel(v); }
 
     /**
      * return the disable color for this cc.MenuItemLabel
@@ -381,19 +386,6 @@ cc.MenuItemLabel = class MenuItemLabel extends cc.MenuItem {
     }
 };
 
-var _p = cc.MenuItemLabel.prototype;
-
-// Extended properties
-/** @expose */
-_p.string;
-cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
-/** @expose */
-_p.disabledColor;
-cc.defineGetterSetter(_p, "disabledColor", _p.getDisabledColor, _p.setDisabledColor);
-/** @expose */
-_p.label;
-cc.defineGetterSetter(_p, "label", _p.getLabel, _p.setLabel);
-
 
 
 /**
@@ -497,6 +489,12 @@ cc.MenuItemFont = class MenuItemFont extends cc.MenuItemLabel {
         }
     }
 
+    get fontSize() { return this.getFontSize(); }
+    set fontSize(v) { this.setFontSize(v); }
+
+    get fontName() { return this.getFontName(); }
+    set fontName(v) { this.setFontName(v); }
+
     /**
      * initializes cc.MenuItemFont with  string
      * @param {String} value text for the menu item
@@ -586,16 +584,6 @@ cc.MenuItemFont.setFontName = function (name) {
     cc._globalFontNameRelease = true;
 };
 
-var _p = cc.MenuItemFont.prototype;
-
-// Extended properties
-/** @expose */
-_p.fontSize;
-cc.defineGetterSetter(_p, "fontSize", _p.getFontSize, _p.setFontSize);
-/** @expose */
-_p.fontName;
-cc.defineGetterSetter(_p, "fontName", _p.getFontName, _p.setFontName);
-
 
 /**
  * a shared function to get the font name for menuitem font
@@ -684,6 +672,15 @@ cc.MenuItemSprite = class MenuItemSprite extends cc.MenuItem {
             this.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback, target);
         }
     }
+
+    get normalImage() { return this.getNormalImage(); }
+    set normalImage(v) { this.setNormalImage(v); }
+
+    get selectedImage() { return this.getSelectedImage(); }
+    set selectedImage(v) { this.setSelectedImage(v); }
+
+    get disabledImage() { return this.getDisabledImage(); }
+    set disabledImage(v) { this.setDisabledImage(v); }
 
     /**
      * return the normal status image(cc.Sprite)
@@ -894,19 +891,6 @@ cc.MenuItemSprite = class MenuItemSprite extends cc.MenuItem {
     }
 };
 
-var _p = cc.MenuItemSprite.prototype;
-
-// Extended properties
-/** @expose */
-_p.normalImage;
-cc.defineGetterSetter(_p, "normalImage", _p.getNormalImage, _p.setNormalImage);
-/** @expose */
-_p.selectedImage;
-cc.defineGetterSetter(_p, "selectedImage", _p.getSelectedImage, _p.setSelectedImage);
-/** @expose */
-_p.disabledImage;
-cc.defineGetterSetter(_p, "disabledImage", _p.getDisabledImage, _p.setDisabledImage);
-
 
 /**
  * cc.MenuItemImage accepts images as items.<br/>
@@ -1062,6 +1046,9 @@ cc.MenuItemToggle = class MenuItemToggle extends cc.MenuItem {
             this.initWithItems(Array.prototype.slice.apply(arguments));
 
     }
+
+    get selectedIndex() { return this.getSelectedIndex(); }
+    set selectedIndex(v) { this.setSelectedIndex(v); }
 
     /**
      * return the opacity of cc.MenuItemToggle
@@ -1266,12 +1253,5 @@ cc.MenuItemToggle = class MenuItemToggle extends cc.MenuItem {
         this.setSelectedIndex(this._selectedIndex);
     }
 };
-
-var _p = cc.MenuItemToggle.prototype;
-
-// Extended properties
-/** @expose */
-_p.selectedIndex;
-cc.defineGetterSetter(_p, "selectedIndex", _p.getSelectedIndex, _p.setSelectedIndex);
 
 

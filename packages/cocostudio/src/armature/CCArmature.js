@@ -60,6 +60,14 @@ ccs.Armature = class Armature extends ccs.Node {
         this._texture = {};
     }
 
+    get parentBone() { return this.getParentBone(); }
+    set parentBone(v) { this.setParentBone(v); }
+
+    get body() { return this.getBody(); }
+    set body(v) { this.setBody(v); }
+
+    set colliderFilter(v) { this.setColliderFilter(v); }
+
     /**
      * Initializes a CCArmature with the specified name and CCBone
      * @param {String} [name]
@@ -553,16 +561,4 @@ ccs.Armature = class Armature extends ccs.Node {
 
 };
 
-var _p = ccs.Armature.prototype;
 
-/** @expose */
-_p.parentBone;
-cc.defineGetterSetter(_p, "parentBone", _p.getParentBone, _p.setParentBone);
-/** @expose */
-_p.body;
-cc.defineGetterSetter(_p, "body", _p.getBody, _p.setBody);
-/** @expose */
-_p.colliderFilter;
-cc.defineGetterSetter(_p, "colliderFilter", null, _p.setColliderFilter);
-
-_p = null;

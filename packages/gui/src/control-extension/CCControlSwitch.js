@@ -193,6 +193,29 @@ cc.ControlSwitchSprite = class ControlSwitchSprite extends cc.Sprite {
     _stencil = null;
     _backRT = null;
 
+    get sliderX() { return this.getSliderXPosition(); }
+    set sliderX(v) { this.setSliderXPosition(v); }
+    get onPos() { return this.getOnPosition(); }
+    set onPos(v) { this.setOnPosition(v); }
+    get offPos() { return this.getOffPosition(); }
+    set offPos(v) { this.setOffPosition(v); }
+    get maskTexture() { return this.getMaskTexture(); }
+    set maskTexture(v) { this.setMaskTexture(v); }
+    get maskPos() { return this.getMaskLocation(); }
+    set maskPos(v) { this.setMaskLocation(v); }
+    get onSprite() { return this.getOnSprite(); }
+    set onSprite(v) { this.setOnSprite(v); }
+    get offSprite() { return this.getOffSprite(); }
+    set offSprite(v) { this.setOffSprite(v); }
+    get thumbSprite() { return this.getThumbSprite(); }
+    set thumbSprite(v) { this.setThumbSprite(v); }
+    get onLabel() { return this.getOnLabel(); }
+    set onLabel(v) { this.setOnLabel(v); }
+    get offLabel() { return this.getOffLabel(); }
+    set offLabel(v) { this.setOffLabel(v); }
+    get onSideWidth() { return this._getOnSideWidth(); }
+    get offSideWidth() { return this._getOffSideWidth(); }
+
     constructor() {
         super();
         this._sliderXPosition = 0;
@@ -375,44 +398,3 @@ cc.ControlSwitchSprite = class ControlSwitchSprite extends cc.Sprite {
         return this._offLabel;
     }
 };
-
-var _p = cc.ControlSwitchSprite.prototype;
-
-/** @expose */
-_p.sliderX;
-cc.defineGetterSetter(_p, "sliderX", _p.getSliderXPosition, _p.setSliderXPosition);
-/** @expose */
-_p.onPos;
-cc.defineGetterSetter(_p, "onPos", _p.getOnPosition, _p.setOnPosition);
-/** @expose */
-_p.offPos;
-cc.defineGetterSetter(_p, "offPos", _p.getOffPosition, _p.setOffPosition);
-/** @expose */
-_p.maskTexture;
-cc.defineGetterSetter(_p, "maskTexture", _p.getMaskTexture, _p.setMaskTexture);
-/** @expose */
-_p.maskPos;
-cc.defineGetterSetter(_p, "maskPos", _p.getMaskLocation, _p.setMaskLocation);
-/** @expose */
-_p.onSprite;
-cc.defineGetterSetter(_p, "onSprite", _p.getOnSprite, _p.setOnSprite);
-/** @expose */
-_p.offSprite;
-cc.defineGetterSetter(_p, "offSprite", _p.getOffSprite, _p.setOffSprite);
-/** @expose */
-_p.thumbSprite;
-cc.defineGetterSetter(_p, "thumbSprite", _p.getThumbSprite, _p.setThumbSprite);
-/** @expose */
-_p.onLabel;
-cc.defineGetterSetter(_p, "onLabel", _p.getOnLabel, _p.setOnLabel);
-/** @expose */
-_p.offLabel;
-cc.defineGetterSetter(_p, "offLabel", _p.getOffLabel, _p.setOffLabel);
-/** @expose */
-_p.onSideWidth;
-cc.defineGetterSetter(_p, "onSideWidth", _p._getOnSideWidth);
-/** @expose */
-_p.offSideWidth;
-cc.defineGetterSetter(_p, "offSideWidth", _p._getOffSideWidth);
-
-_p = null;

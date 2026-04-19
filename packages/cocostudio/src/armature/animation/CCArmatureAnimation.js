@@ -121,6 +121,12 @@ ccs.ArmatureAnimation = class ArmatureAnimation extends ccs.ProcessBase {
         armature && this.init(armature);
     }
 
+    get speedScale() { return this.getSpeedScale(); }
+    set speedScale(v) { this.setSpeedScale(v); }
+
+    get animationScale() { return this.getAnimationScale(); }
+    set animationScale(v) { this.setAnimationScale(v); }
+
     /**
      * Initializes with an armature object
      * @param {ccs.Armature} armature
@@ -628,15 +634,5 @@ ccs.ArmatureAnimation = class ArmatureAnimation extends ccs.ProcessBase {
 
 };
 
-var _p = ccs.ArmatureAnimation.prototype;
 
-// Extended properties
-/** @expose */
-_p.speedScale;
-cc.defineGetterSetter(_p, "speedScale", _p.getSpeedScale, _p.setSpeedScale);
-/** @expose */
-_p.animationScale;
-cc.defineGetterSetter(_p, "animationScale", _p.getAnimationScale, _p.setAnimationScale);
-
-_p = null;
 

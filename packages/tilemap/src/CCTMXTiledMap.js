@@ -155,6 +155,16 @@ cc.TMXTiledMap = class TMXTiledMap extends cc.Node {
      * Gets the map size.
      * @return {cc.Size}
      */
+
+    get mapWidth() { return this._getMapWidth(); }
+    set mapWidth(v) { this._setMapWidth(v); }
+    get mapHeight() { return this._getMapHeight(); }
+    set mapHeight(v) { this._setMapHeight(v); }
+    get tileWidth() { return this._getTileWidth(); }
+    set tileWidth(v) { this._setTileWidth(v); }
+    get tileHeight() { return this._getTileHeight(); }
+    set tileHeight(v) { this._setTileHeight(v); }
+
     getMapSize() {
         return cc.size(this._mapSize.width, this._mapSize.height);
     }
@@ -437,20 +447,5 @@ cc.TMXTiledMap = class TMXTiledMap extends cc.Node {
     }
 };
 
-var _p = cc.TMXTiledMap.prototype;
-
-// Extended properties
-/** @expose */
-_p.mapWidth;
-cc.defineGetterSetter(_p, "mapWidth", _p._getMapWidth, _p._setMapWidth);
-/** @expose */
-_p.mapHeight;
-cc.defineGetterSetter(_p, "mapHeight", _p._getMapHeight, _p._setMapHeight);
-/** @expose */
-_p.tileWidth;
-cc.defineGetterSetter(_p, "tileWidth", _p._getTileWidth, _p._setTileWidth);
-/** @expose */
-_p.tileHeight;
-cc.defineGetterSetter(_p, "tileHeight", _p._getTileHeight, _p._setTileHeight);
 
 

@@ -61,6 +61,20 @@ cc.ControlSlider = class ControlSlider extends cc.Control {
     _backgroundSprite = null;
     _className = "ControlSlider";
 
+    get value() { return this.getValue(); }
+    set value(v) { this.setValue(v); }
+    get minValue() { return this.getMinimumValue(); }
+    set minValue(v) { this.setMinimumValue(v); }
+    get maxValue() { return this.getMaximumValue(); }
+    set maxValue(v) { this.setMaximumValue(v); }
+    get minAllowedValue() { return this.getMinimumAllowedValue(); }
+    set minAllowedValue(v) { this.setMinimumAllowedValue(v); }
+    get maxAllowedValue() { return this.getMaximumAllowedValue(); }
+    set maxAllowedValue(v) { this.setMaximumAllowedValue(v); }
+    get thumbSprite() { return this.getThumbSprite(); }
+    get progressSprite() { return this.getProgressSprite(); }
+    get backgroundSprite() { return this.getBackgroundSprite(); }
+
     constructor(bgFile, progressFile, thumbFile) {
         super();
         if (thumbFile != undefined) {
@@ -266,33 +280,3 @@ cc.ControlSlider = class ControlSlider extends cc.Control {
         return Math.max(Math.min(this._minimumValue + percent * (this._maximumValue - this._minimumValue), this._maximumAllowedValue), this._minimumAllowedValue);
     }
 };
-
-var _p = cc.ControlSlider.prototype;
-
-// Extended properties
-/** @expose */
-_p.value;
-cc.defineGetterSetter(_p, "value", _p.getValue, _p.setValue);
-/** @expose */
-_p.minValue;
-cc.defineGetterSetter(_p, "minValue", _p.getMinimumValue, _p.setMinimumValue);
-/** @expose */
-_p.maxValue;
-cc.defineGetterSetter(_p, "maxValue", _p.getMaximumValue, _p.setMaximumValue);
-/** @expose */
-_p.minAllowedValue;
-cc.defineGetterSetter(_p, "minAllowedValue", _p.getMinimumAllowedValue, _p.setMinimumAllowedValue);
-/** @expose */
-_p.maxAllowedValue;
-cc.defineGetterSetter(_p, "maxAllowedValue", _p.getMaximumAllowedValue, _p.setMaximumAllowedValue);
-/** @expose */
-_p.thumbSprite;
-cc.defineGetterSetter(_p, "thumbSprite", _p.getThumbSprite);
-/** @expose */
-_p.progressSprite;
-cc.defineGetterSetter(_p, "progressSprite", _p.getProgressSprite);
-/** @expose */
-_p.backgroundSprite;
-cc.defineGetterSetter(_p, "backgroundSprite", _p.getBackgroundSprite);
-
-_p = null;

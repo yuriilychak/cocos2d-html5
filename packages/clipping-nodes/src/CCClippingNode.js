@@ -80,6 +80,12 @@ cc.ClippingNode = class ClippingNode extends cc.Node {
      * </p>
      * @function
      */
+
+    get stencil() { return this.getStencil(); }
+    set stencil(v) { this.setStencil(v); }
+    get alphaThreshold() { return this.getAlphaThreshold(); }
+    set alphaThreshold(v) { this.setAlphaThreshold(v); }
+
     onEnter() {
       super.onEnter();
       if (this._stencil)
@@ -223,17 +229,3 @@ cc.ClippingNode = class ClippingNode extends cc.Node {
     }
 };
 
-var _p = cc.ClippingNode.prototype;
-
-// Extended properties
-/** @expose */
-_p.stencil;
-cc.defineGetterSetter(_p, "stencil", _p.getStencil, _p.setStencil);
-/** @expose */
-_p.alphaThreshold;
-cc.defineGetterSetter(
-  _p,
-  "alphaThreshold",
-  _p.getAlphaThreshold,
-  _p.setAlphaThreshold
-);

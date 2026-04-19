@@ -354,6 +354,61 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
       }
     }
 
+
+    get opacityModifyRGB() { return this.isOpacityModifyRGB(); }
+    set opacityModifyRGB(v) { this.setOpacityModifyRGB(v); }
+    get batchNode() { return this.getBatchNode(); }
+    set batchNode(v) { this.setBatchNode(v); }
+    get drawMode() { return this.getDrawMode(); }
+    set drawMode(v) { this.setDrawMode(v); }
+    get shapeType() { return this.getShapeType(); }
+    set shapeType(v) { this.setShapeType(v); }
+    get active() { return this.isActive(); }
+    get sourcePos() { return this.getSourcePosition(); }
+    set sourcePos(v) { this.setSourcePosition(v); }
+    get posVar() { return this.getPosVar(); }
+    set posVar(v) { this.setPosVar(v); }
+    get gravity() { return this.getGravity(); }
+    set gravity(v) { this.setGravity(v); }
+    get speed() { return this.getSpeed(); }
+    set speed(v) { this.setSpeed(v); }
+    get speedVar() { return this.getSpeedVar(); }
+    set speedVar(v) { this.setSpeedVar(v); }
+    get tangentialAccel() { return this.getTangentialAccel(); }
+    set tangentialAccel(v) { this.setTangentialAccel(v); }
+    get tangentialAccelVar() { return this.getTangentialAccelVar(); }
+    set tangentialAccelVar(v) { this.setTangentialAccelVar(v); }
+    get radialAccel() { return this.getRadialAccel(); }
+    set radialAccel(v) { this.setRadialAccel(v); }
+    get radialAccelVar() { return this.getRadialAccelVar(); }
+    set radialAccelVar(v) { this.setRadialAccelVar(v); }
+    get rotationIsDir() { return this.getRotationIsDir(); }
+    set rotationIsDir(v) { this.setRotationIsDir(v); }
+    get startRadius() { return this.getStartRadius(); }
+    set startRadius(v) { this.setStartRadius(v); }
+    get startRadiusVar() { return this.getStartRadiusVar(); }
+    set startRadiusVar(v) { this.setStartRadiusVar(v); }
+    get endRadius() { return this.getEndRadius(); }
+    set endRadius(v) { this.setEndRadius(v); }
+    get endRadiusVar() { return this.getEndRadiusVar(); }
+    set endRadiusVar(v) { this.setEndRadiusVar(v); }
+    get rotatePerS() { return this.getRotatePerSecond(); }
+    set rotatePerS(v) { this.setRotatePerSecond(v); }
+    get rotatePerSVar() { return this.getRotatePerSecondVar(); }
+    set rotatePerSVar(v) { this.setRotatePerSecondVar(v); }
+    get startColor() { return this.getStartColor(); }
+    set startColor(v) { this.setStartColor(v); }
+    get startColorVar() { return this.getStartColorVar(); }
+    set startColorVar(v) { this.setStartColorVar(v); }
+    get endColor() { return this.getEndColor(); }
+    set endColor(v) { this.setEndColor(v); }
+    get endColorVar() { return this.getEndColorVar(); }
+    set endColorVar(v) { this.setEndColorVar(v); }
+    get totalParticles() { return this.getTotalParticles(); }
+    set totalParticles(v) { this.setTotalParticles(v); }
+    get texture() { return this.getTexture(); }
+    set texture(v) { this.setTexture(v); }
+
     _createRenderCmd() {
       if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
         return new cc.ParticleSystem.CanvasRenderCmd(this);
@@ -2302,150 +2357,6 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
     }
   };
 
-var _p = cc.ParticleSystem.prototype;
-
-// Extended properties
-/** @expose */
-_p.opacityModifyRGB;
-cc.defineGetterSetter(
-  _p,
-  "opacityModifyRGB",
-  _p.isOpacityModifyRGB,
-  _p.setOpacityModifyRGB
-);
-/** @expose */
-_p.batchNode;
-cc.defineGetterSetter(_p, "batchNode", _p.getBatchNode, _p.setBatchNode);
-/** @expose */
-_p.drawMode;
-cc.defineGetterSetter(_p, "drawMode", _p.getDrawMode, _p.setDrawMode);
-/** @expose */
-_p.shapeType;
-cc.defineGetterSetter(_p, "shapeType", _p.getShapeType, _p.setShapeType);
-/** @expose */
-_p.active;
-cc.defineGetterSetter(_p, "active", _p.isActive);
-/** @expose */
-_p.sourcePos;
-cc.defineGetterSetter(
-  _p,
-  "sourcePos",
-  _p.getSourcePosition,
-  _p.setSourcePosition
-);
-/** @expose */
-_p.posVar;
-cc.defineGetterSetter(_p, "posVar", _p.getPosVar, _p.setPosVar);
-/** @expose */
-_p.gravity;
-cc.defineGetterSetter(_p, "gravity", _p.getGravity, _p.setGravity);
-/** @expose */
-_p.speed;
-cc.defineGetterSetter(_p, "speed", _p.getSpeed, _p.setSpeed);
-/** @expose */
-_p.speedVar;
-cc.defineGetterSetter(_p, "speedVar", _p.getSpeedVar, _p.setSpeedVar);
-/** @expose */
-_p.tangentialAccel;
-cc.defineGetterSetter(
-  _p,
-  "tangentialAccel",
-  _p.getTangentialAccel,
-  _p.setTangentialAccel
-);
-/** @expose */
-_p.tangentialAccelVar;
-cc.defineGetterSetter(
-  _p,
-  "tangentialAccelVar",
-  _p.getTangentialAccelVar,
-  _p.setTangentialAccelVar
-);
-/** @expose */
-_p.radialAccel;
-cc.defineGetterSetter(_p, "radialAccel", _p.getRadialAccel, _p.setRadialAccel);
-/** @expose */
-_p.radialAccelVar;
-cc.defineGetterSetter(
-  _p,
-  "radialAccelVar",
-  _p.getRadialAccelVar,
-  _p.setRadialAccelVar
-);
-/** @expose */
-_p.rotationIsDir;
-cc.defineGetterSetter(
-  _p,
-  "rotationIsDir",
-  _p.getRotationIsDir,
-  _p.setRotationIsDir
-);
-/** @expose */
-_p.startRadius;
-cc.defineGetterSetter(_p, "startRadius", _p.getStartRadius, _p.setStartRadius);
-/** @expose */
-_p.startRadiusVar;
-cc.defineGetterSetter(
-  _p,
-  "startRadiusVar",
-  _p.getStartRadiusVar,
-  _p.setStartRadiusVar
-);
-/** @expose */
-_p.endRadius;
-cc.defineGetterSetter(_p, "endRadius", _p.getEndRadius, _p.setEndRadius);
-/** @expose */
-_p.endRadiusVar;
-cc.defineGetterSetter(
-  _p,
-  "endRadiusVar",
-  _p.getEndRadiusVar,
-  _p.setEndRadiusVar
-);
-/** @expose */
-_p.rotatePerS;
-cc.defineGetterSetter(
-  _p,
-  "rotatePerS",
-  _p.getRotatePerSecond,
-  _p.setRotatePerSecond
-);
-/** @expose */
-_p.rotatePerSVar;
-cc.defineGetterSetter(
-  _p,
-  "rotatePerSVar",
-  _p.getRotatePerSecondVar,
-  _p.setRotatePerSecondVar
-);
-/** @expose */
-_p.startColor;
-cc.defineGetterSetter(_p, "startColor", _p.getStartColor, _p.setStartColor);
-/** @expose */
-_p.startColorVar;
-cc.defineGetterSetter(
-  _p,
-  "startColorVar",
-  _p.getStartColorVar,
-  _p.setStartColorVar
-);
-/** @expose */
-_p.endColor;
-cc.defineGetterSetter(_p, "endColor", _p.getEndColor, _p.setEndColor);
-/** @expose */
-_p.endColorVar;
-cc.defineGetterSetter(_p, "endColorVar", _p.getEndColorVar, _p.setEndColorVar);
-/** @expose */
-_p.totalParticles;
-cc.defineGetterSetter(
-  _p,
-  "totalParticles",
-  _p.getTotalParticles,
-  _p.setTotalParticles
-);
-/** @expose */
-_p.texture;
-cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
 
 // Different modes
 /**

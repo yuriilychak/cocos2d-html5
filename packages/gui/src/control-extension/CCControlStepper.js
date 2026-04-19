@@ -72,6 +72,26 @@ cc.ControlStepper = class ControlStepper extends cc.Control {
     _touchedPart = cc.CONTROL_STEPPER_PARTNONE;
     _autorepeatCount = 0;
     _className = "ControlStepper";
+    get wraps() { return this.getWraps(); }
+    set wraps(v) { this.setWraps(v); }
+    get value() { return this.getValue(); }
+    set value(v) { this.setValue(v); }
+    get minValue() { return this.getMinimumValue(); }
+    set minValue(v) { this.setMinimumValue(v); }
+    get maxValue() { return this.getMaximumValue(); }
+    set maxValue(v) { this.setMaximumValue(v); }
+    get stepValue() { return this.getStepValue(); }
+    set stepValue(v) { this.setStepValue(v); }
+    get continuous() { return this.isContinuous(); }
+    get minusSprite() { return this.getMinusSprite(); }
+    set minusSprite(v) { this.setMinusSprite(v); }
+    get plusSprite() { return this.getPlusSprite(); }
+    set plusSprite(v) { this.setPlusSprite(v); }
+    get minusLabel() { return this.getMinusLabel(); }
+    set minusLabel(v) { this.setMinusLabel(v); }
+    get plusLabel() { return this.getPlusLabel(); }
+    set plusLabel(v) { this.setPlusLabel(v); }
+
     constructor(minusSprite, plusSprite) {
         super();
         this._minusSprite = null;
@@ -342,39 +362,3 @@ cc.ControlStepper = class ControlStepper extends cc.Control {
         return this._plusLabel;
     }
 };
-
-var _p = cc.ControlStepper.prototype;
-
-// Extedned properties
-/** @expose */
-_p.wraps;
-cc.defineGetterSetter(_p, "wraps", _p.getWraps, _p.setWraps);
-/** @expose */
-_p.value;
-cc.defineGetterSetter(_p, "value", _p.getValue, _p.setValue);
-/** @expose */
-_p.minValue;
-cc.defineGetterSetter(_p, "minValue", _p.getMinimumValue, _p.setMinimumValue);
-/** @expose */
-_p.maxValue;
-cc.defineGetterSetter(_p, "maxValue", _p.getMaximumValue, _p.setMaximumValue);
-/** @expose */
-_p.stepValue;
-cc.defineGetterSetter(_p, "stepValue", _p.getStepValue, _p.setStepValue);
-/** @expose */
-_p.continuous;
-cc.defineGetterSetter(_p, "continuous", _p.isContinuous);
-/** @expose */
-_p.minusSprite;
-cc.defineGetterSetter(_p, "minusSprite", _p.getMinusSprite, _p.setMinusSprite);
-/** @expose */
-_p.plusSprite;
-cc.defineGetterSetter(_p, "plusSprite", _p.getPlusSprite, _p.setPlusSprite);
-/** @expose */
-_p.minusLabel;
-cc.defineGetterSetter(_p, "minusLabel", _p.getMinusLabel, _p.setMinusLabel);
-/** @expose */
-_p.plusLabel;
-cc.defineGetterSetter(_p, "plusLabel", _p.getPlusLabel, _p.setPlusLabel);
-
-_p = null;

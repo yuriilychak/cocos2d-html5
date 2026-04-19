@@ -250,6 +250,39 @@ cc.EditBox = class EditBox extends cc.Node {
     this.setInputFlag(this._editBoxInputFlag);
   }
 
+  set font(v) { this._setFont(v); }
+
+  set fontName(v) { this.setFontName(v); }
+
+  set fontSize(v) { this.setFontSize(v); }
+
+  set fontColor(v) { this.setFontColor(v); }
+
+  get string() { return this.getString(); }
+  set string(v) { this.setString(v); }
+
+  get maxLength() { return this.getMaxLength(); }
+  set maxLength(v) { this.setMaxLength(v); }
+
+  get placeholder() { return this.getPlaceHolder(); }
+  set placeholder(v) { this.setPlaceHolder(v); }
+
+  set placeholderFont(v) { this._setPlaceholderFont(v); }
+
+  set placeholderFontName(v) { this.setPlaceholderFontName(v); }
+
+  set placeholderFontSize(v) { this.setPlaceholderFontSize(v); }
+
+  set placeholderFontColor(v) { this.setPlaceholderFontColor(v); }
+
+  set inputFlag(v) { this.setInputFlag(v); }
+
+  set delegate(v) { this.setDelegate(v); }
+
+  set inputMode(v) { this.setInputMode(v); }
+
+  set returnType(v) { this.setReturnType(v); }
+
   setTouchEnabled(enable) {
     if (this._touchEnabled === enable) {
       return;
@@ -615,72 +648,6 @@ cc.EditBox = class EditBox extends cc.Node {
     this.dom.style.backgroundColor = cc.colorToHex(bgColor);
   }
 };
-
-var _p = cc.EditBox.prototype;
-
-// Extended properties
-/** @expose */
-_p.font;
-cc.defineGetterSetter(_p, "font", null, _p._setFont);
-/** @expose */
-_p.fontName;
-cc.defineGetterSetter(_p, "fontName", null, _p.setFontName);
-/** @expose */
-_p.fontSize;
-cc.defineGetterSetter(_p, "fontSize", null, _p.setFontSize);
-/** @expose */
-_p.fontColor;
-cc.defineGetterSetter(_p, "fontColor", null, _p.setFontColor);
-/** @expose */
-_p.string;
-cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
-/** @expose */
-_p.maxLength;
-cc.defineGetterSetter(_p, "maxLength", _p.getMaxLength, _p.setMaxLength);
-/** @expose */
-_p.placeHolder;
-cc.defineGetterSetter(_p, "placeholder", _p.getPlaceHolder, _p.setPlaceHolder);
-/** @expose */
-_p.placeHolderFont;
-cc.defineGetterSetter(_p, "placeholderFont", null, _p._setPlaceholderFont);
-/** @expose */
-_p.placeHolderFontName;
-cc.defineGetterSetter(
-  _p,
-  "placeholderFontName",
-  null,
-  _p.setPlaceholderFontName
-);
-/** @expose */
-_p.placeHolderFontSize;
-cc.defineGetterSetter(
-  _p,
-  "placeholderFontSize",
-  null,
-  _p.setPlaceholderFontSize
-);
-/** @expose */
-_p.placeHolderFontColor;
-cc.defineGetterSetter(
-  _p,
-  "placeholderFontColor",
-  null,
-  _p.setPlaceholderFontColor
-);
-/** @expose */
-_p.inputFlag;
-cc.defineGetterSetter(_p, "inputFlag", null, _p.setInputFlag);
-/** @expose */
-_p.delegate;
-cc.defineGetterSetter(_p, "delegate", null, _p.setDelegate);
-/** @expose */
-_p.inputMode;
-cc.defineGetterSetter(_p, "inputMode", null, _p.setInputMode);
-/** @expose */
-_p.returnType;
-cc.defineGetterSetter(_p, "returnType", null, _p.setReturnType);
-
-_p = null;
 
 (function (editbox) {
   editbox._polyfill = {

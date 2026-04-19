@@ -141,6 +141,14 @@ cc.Control = class Control extends cc.Layer {
         return true;
     }
 
+    get state() { return this.getState(); }
+    get enabled() { return this.isEnabled(); }
+    set enabled(v) { this.setEnabled(v); }
+    get selected() { return this.isSelected(); }
+    set selected(v) { this.setSelected(v); }
+    get highlighted() { return this.isHighlighted(); }
+    set highlighted(v) { this.setHighlighted(v); }
+
     constructor() {
         super();
         this._dispatchTable = {};
@@ -350,24 +358,6 @@ cc.Control = class Control extends cc.Layer {
     needsLayout() {
     }
 };
-
-var _p = cc.Control.prototype;
-
-// Extended properties
-/** @expose */
-_p.state;
-cc.defineGetterSetter(_p, "state", _p.getState);
-/** @expose */
-_p.enabled;
-cc.defineGetterSetter(_p, "enabled", _p.isEnabled, _p.setEnabled);
-/** @expose */
-_p.selected;
-cc.defineGetterSetter(_p, "selected", _p.isSelected, _p.setSelected);
-/** @expose */
-_p.highlighted;
-cc.defineGetterSetter(_p, "highlighted", _p.isHighlighted, _p.setHighlighted);
-
-_p = null;
 
 cc.Control.create = function () {
     var retControl = new cc.Control();

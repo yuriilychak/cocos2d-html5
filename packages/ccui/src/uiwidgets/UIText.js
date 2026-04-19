@@ -74,6 +74,33 @@ ccui.Text = class Text extends ccui.Widget {
         }
     }
 
+    get boundingWidth() { return this._getBoundingWidth(); }
+    set boundingWidth(v) { this._setBoundingWidth(v); }
+
+    get boundingHeight() { return this._getBoundingHeight(); }
+    set boundingHeight(v) { this._setBoundingHeight(v); }
+
+    get string() { return this.getString(); }
+    set string(v) { this.setString(v); }
+
+    get stringLength() { return this.getStringLength(); }
+
+    get font() { return this._getFont(); }
+    set font(v) { this._setFont(v); }
+
+    get fontSize() { return this.getFontSize(); }
+    set fontSize(v) { this.setFontSize(v); }
+
+    get fontName() { return this.getFontName(); }
+    set fontName(v) { this.setFontName(v); }
+
+    get textAlign() { return this.getTextHorizontalAlignment(); }
+    set textAlign(v) { this.setTextHorizontalAlignment(v); }
+
+    get verticalAlign() { return this.getTextVerticalAlignment(); }
+    set verticalAlign(v) { this.setTextVerticalAlignment(v); }
+
+
     _initRenderer() {
         this._labelRenderer = new cc.LabelTTF();
         this.addProtectedChild(this._labelRenderer, ccui.Text.RENDERER_ZORDER, -1);
@@ -464,38 +491,6 @@ ccui.Text = class Text extends ccui.Widget {
 
 };
 
-var _p = ccui.Text.prototype;
-
-// Extended properties
-/** @expose */
-_p.boundingWidth;
-cc.defineGetterSetter(_p, "boundingWidth", _p._getBoundingWidth, _p._setBoundingWidth);
-/** @expose */
-_p.boundingHeight;
-cc.defineGetterSetter(_p, "boundingHeight", _p._getBoundingHeight, _p._setBoundingHeight);
-/** @expose */
-_p.string;
-cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
-/** @expose */
-_p.stringLength;
-cc.defineGetterSetter(_p, "stringLength", _p.getStringLength);
-/** @expose */
-_p.font;
-cc.defineGetterSetter(_p, "font", _p._getFont, _p._setFont);
-/** @expose */
-_p.fontSize;
-cc.defineGetterSetter(_p, "fontSize", _p.getFontSize, _p.setFontSize);
-/** @expose */
-_p.fontName;
-cc.defineGetterSetter(_p, "fontName", _p.getFontName, _p.setFontName);
-/** @expose */
-_p.textAlign;
-cc.defineGetterSetter(_p, "textAlign", _p.getTextHorizontalAlignment, _p.setTextHorizontalAlignment);
-/** @expose */
-_p.verticalAlign;
-cc.defineGetterSetter(_p, "verticalAlign", _p.getTextVerticalAlignment, _p.setTextVerticalAlignment);
-
-_p = null;
 
 /**
  * The zOrder value of ccui.Text's renderer.

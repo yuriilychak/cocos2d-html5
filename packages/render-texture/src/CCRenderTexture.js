@@ -125,6 +125,10 @@ cc.RenderTexture = class RenderTexture extends cc.Node {
         this.setAnchorPoint(0, 0);
     }
 
+
+    get clearColorVal() { return this.getClearColor(); }
+    set clearColorVal(v) { this.setClearColor(v); }
+
     _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.RenderTexture.CanvasRenderCmd(this);
@@ -405,10 +409,5 @@ cc.RenderTexture = class RenderTexture extends cc.Node {
     }
 };
 
-var _p = cc.RenderTexture.prototype;
-// Extended
-/** @expose */
-_p.clearColorVal;
-cc.defineGetterSetter(_p, "clearColorVal", _p.getClearColor, _p.setClearColor);
 
 

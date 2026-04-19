@@ -81,6 +81,10 @@ ccui.Slider = class Slider extends ccui.Widget {
         }
     }
 
+    get percent() { return this.getPercent(); }
+    set percent(v) { this.setPercent(v); }
+
+
     _initRenderer() {
         //todo use Scale9Sprite
         this._barRenderer = new cc.Sprite();
@@ -735,14 +739,6 @@ ccui.Slider = class Slider extends ccui.Widget {
 
 };
 
-var _p = ccui.Slider.prototype;
-
-// Extended properties
-/** @expose */
-_p.percent;
-cc.defineGetterSetter(_p, "percent", _p.getPercent, _p.setPercent);
-
-_p = null;
 
 // Constant
 //Slider event type

@@ -97,6 +97,22 @@ ccui.Button = class Button extends ccui.Widget {
         }
     }
 
+    get titleText() { return this.getTitleText(); }
+    set titleText(v) { this.setTitleText(v); }
+
+    get titleFont() { return this._getTitleFont(); }
+    set titleFont(v) { this._setTitleFont(v); }
+
+    get titleFontSize() { return this.getTitleFontSize(); }
+    set titleFontSize(v) { this.setTitleFontSize(v); }
+
+    get titleFontName() { return this.getTitleFontName(); }
+    set titleFontName(v) { this.setTitleFontName(v); }
+
+    get titleColor() { return this.getTitleColor(); }
+    set titleColor(v) { this.setTitleColor(v); }
+
+
     _createTitleRendererIfNeeded( ) {
         if(!this._titleRenderer) {
             this._titleRenderer = new cc.LabelTTF("");
@@ -781,26 +797,6 @@ ccui.Button = class Button extends ccui.Widget {
 
 };
 
-var _p = ccui.Button.prototype;
-
-// Extended properties
-/** @expose */
-_p.titleText;
-cc.defineGetterSetter(_p, "titleText", _p.getTitleText, _p.setTitleText);
-/** @expose */
-_p.titleFont;
-cc.defineGetterSetter(_p, "titleFont", _p._getTitleFont, _p._setTitleFont);
-/** @expose */
-_p.titleFontSize;
-cc.defineGetterSetter(_p, "titleFontSize", _p.getTitleFontSize, _p.setTitleFontSize);
-/** @expose */
-_p.titleFontName;
-cc.defineGetterSetter(_p, "titleFontName", _p.getTitleFontName, _p.setTitleFontName);
-/** @expose */
-_p.titleColor;
-cc.defineGetterSetter(_p, "titleColor", _p.getTitleColor, _p.setTitleColor);
-
-_p = null;
 
 // Constants
 /**

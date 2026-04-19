@@ -109,6 +109,15 @@ ccui.Layout = class Layout extends ccui.Widget {
         this._backGroundImageColor = cc.color(255, 255, 255, 255);
     }
 
+    get clippingEnabled() { return this.isClippingEnabled(); }
+    set clippingEnabled(v) { this.setClippingEnabled(v); }
+
+    set clippingType(v) { this.setClippingType(v); }
+
+    get layoutType() { return this.getLayoutType(); }
+    set layoutType(v) { this.setLayoutType(v); }
+
+
     /**
      * Calls its parent's onEnter, and calls its clippingStencil's onEnter if clippingStencil isn't null.
      * @override
@@ -1532,24 +1541,9 @@ ccui.Layout.CLIPPING_STENCIL = 0;
  */
 ccui.Layout.CLIPPING_SCISSOR = 1;
 
-var _p = ccui.Layout.prototype;
-
 // Prototype default for _clippingType needed during _initRenderer (before constructor body).
 // In ES5, _clippingType was set before super.ctor(); ES6 requires super() first.
-_p._clippingType = ccui.Layout.CLIPPING_STENCIL;
-
-// Extended properties
-/** @expose */
-_p.clippingEnabled;
-cc.defineGetterSetter(_p, "clippingEnabled", _p.isClippingEnabled, _p.setClippingEnabled);
-/** @expose */
-_p.clippingType;
-cc.defineGetterSetter(_p, "clippingType", null, _p.setClippingType);
-/** @expose */
-_p.layoutType;
-cc.defineGetterSetter(_p, "layoutType", _p.getLayoutType, _p.setLayoutType);
-
-_p = null;
+ccui.Layout.prototype._clippingType = ccui.Layout.CLIPPING_STENCIL;
 
 /**
  * The zOrder value of ccui.Layout's image background.

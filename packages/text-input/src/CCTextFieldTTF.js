@@ -139,6 +139,11 @@ cc.TextFieldTTF = class TextFieldTTF extends cc.LabelTTF {
         }
     }
 
+
+    get charCount() { return this.getCharCount(); }
+    get placeHolder() { return this.getPlaceHolder(); }
+    set placeHolder(v) { this.setPlaceHolder(v); }
+
     onEnter() {
         super.onEnter();
         cc.imeDispatcher.addDelegate(this);
@@ -465,14 +470,5 @@ cc.TextFieldTTF = class TextFieldTTF extends cc.LabelTTF {
     }
 };
 
-var _p = cc.TextFieldTTF.prototype;
-
-// Extended properties
-/** @expose */
-_p.charCount;
-cc.defineGetterSetter(_p, "charCount", _p.getCharCount);
-/** @expose */
-_p.placeHolder;
-cc.defineGetterSetter(_p, "placeHolder", _p.getPlaceHolder, _p.setPlaceHolder);
 
 

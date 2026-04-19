@@ -96,6 +96,12 @@
       cc.renderer.pushRenderCommand(this._renderCmd);
     }
 
+
+    get body() { return this.getBody(); }
+    set body(v) { this.setBody(v); }
+    get dirty() { return this.isDirty(); }
+    set dirty(v) { this.setDirty(v); }
+
     visit() {
       cc.renderer.pushRenderCommand(this._renderCmd);
       super.visit();
@@ -243,12 +249,4 @@
     }
   };
   cc.PhysicsSprite._className = "PhysicsSprite";
-  var _p = cc.PhysicsSprite.prototype;
-  // Extended properties
-  /** @expose */
-  _p.body;
-  cc.defineGetterSetter(_p, "body", _p.getBody, _p.setBody);
-  /** @expose */
-  _p.dirty;
-  cc.defineGetterSetter(_p, "dirty", _p.isDirty, _p.setDirty);
 })();

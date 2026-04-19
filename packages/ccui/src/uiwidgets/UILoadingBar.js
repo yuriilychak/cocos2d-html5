@@ -63,6 +63,13 @@ ccui.LoadingBar = class LoadingBar extends ccui.Widget {
             this.setPercent(percentage);
     }
 
+    get direction() { return this.getDirection(); }
+    set direction(v) { this.setDirection(v); }
+
+    get percent() { return this.getPercent(); }
+    set percent(v) { this.setPercent(v); }
+
+
     _initRenderer() {
         //todo use Scale9Sprite
         this._barRenderer = new cc.Sprite();
@@ -393,17 +400,6 @@ ccui.LoadingBar = class LoadingBar extends ccui.Widget {
 
 };
 
-var _p = ccui.LoadingBar.prototype;
-
-// Extended properties
-/** @expose */
-_p.direction;
-cc.defineGetterSetter(_p, "direction", _p.getDirection, _p.setDirection);
-/** @expose */
-_p.percent;
-cc.defineGetterSetter(_p, "percent", _p.getPercent, _p.setPercent);
-
-_p = null;
 
 // Constants
 //loadingBar Type

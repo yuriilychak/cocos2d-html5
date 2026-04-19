@@ -108,6 +108,21 @@ cc.ScrollView = class ScrollView extends cc.Layer {
      * @param container
      * @returns {ScrollView}
      */
+    get minOffset() { return this.minContainerOffset(); }
+    get maxOffset() { return this.maxContainerOffset(); }
+    get bounceable() { return this.isBounceable(); }
+    set bounceable(v) { this.setBounceable(v); }
+    get viewSize() { return this.getViewSize(); }
+    set viewSize(v) { this.setViewSize(v); }
+    get container() { return this.getContainer(); }
+    set container(v) { this.setContainer(v); }
+    get direction() { return this.getDirection(); }
+    set direction(v) { this.setDirection(v); }
+    get delegate() { return this.getDelegate(); }
+    set delegate(v) { this.setDelegate(v); }
+    get clippingToBounds() { return this.isClippingToBounds(); }
+    set clippingToBounds(v) { this.setClippingToBounds(v); }
+
     constructor(size, container) {
         super();
         this._contentOffset = cc.p(0, 0);
@@ -810,33 +825,3 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         }
     }
 };
-
-var _p = cc.ScrollView.prototype;
-
-// Extended properties
-/** @expose */
-_p.minOffset;
-cc.defineGetterSetter(_p, "minOffset", _p.minContainerOffset);
-/** @expose */
-_p.maxOffset;
-cc.defineGetterSetter(_p, "maxOffset", _p.maxContainerOffset);
-/** @expose */
-_p.bounceable;
-cc.defineGetterSetter(_p, "bounceable", _p.isBounceable, _p.setBounceable);
-/** @expose */
-_p.viewSize;
-cc.defineGetterSetter(_p, "viewSize", _p.getViewSize, _p.setViewSize);
-/** @expose */
-_p.container;
-cc.defineGetterSetter(_p, "container", _p.getContainer, _p.setContainer);
-/** @expose */
-_p.direction;
-cc.defineGetterSetter(_p, "direction", _p.getDirection, _p.setDirection);
-/** @expose */
-_p.delegate;
-cc.defineGetterSetter(_p, "delegate", _p.getDelegate, _p.setDelegate);
-/** @expose */
-_p.clippingToBounds;
-cc.defineGetterSetter(_p, "clippingToBounds", _p.isClippingToBounds, _p.setClippingToBounds);
-
-_p = null;

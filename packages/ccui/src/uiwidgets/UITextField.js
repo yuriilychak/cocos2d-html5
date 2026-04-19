@@ -252,6 +252,31 @@ ccui.TextField = class TextField extends ccui.Widget {
             this.setPlaceHolder(placeholder);
     }
 
+    get string() { return this.getString(); }
+    set string(v) { this.setString(v); }
+
+    get placeHolder() { return this.getPlaceHolder(); }
+    set placeHolder(v) { this.setPlaceHolder(v); }
+
+    get font() { return this._getFont(); }
+    set font(v) { this._setFont(v); }
+
+    get fontSize() { return this.getFontSize(); }
+    set fontSize(v) { this.setFontSize(v); }
+
+    get fontName() { return this.getFontName(); }
+    set fontName(v) { this.setFontName(v); }
+
+    get maxLengthEnabled() { return this.isMaxLengthEnabled(); }
+    set maxLengthEnabled(v) { this.setMaxLengthEnabled(v); }
+
+    get maxLength() { return this.getMaxLength(); }
+    set maxLength(v) { this.setMaxLength(v); }
+
+    get passwordEnabled() { return this.isPasswordEnabled(); }
+    set passwordEnabled(v) { this.setPasswordEnabled(v); }
+
+
     /**
      * Calls parent class' onEnter and schedules update function.
      * @override
@@ -818,35 +843,6 @@ ccui.TextField = class TextField extends ccui.Widget {
     }
 };
 
-var _p = ccui.TextField.prototype;
-
-// Extended properties
-/** @expose */
-_p.string;
-cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
-/** @expose */
-_p.placeHolder;
-cc.defineGetterSetter(_p, "placeHolder", _p.getPlaceHolder, _p.setPlaceHolder);
-/** @expose */
-_p.font;
-cc.defineGetterSetter(_p, "font", _p._getFont, _p._setFont);
-/** @expose */
-_p.fontSize;
-cc.defineGetterSetter(_p, "fontSize", _p.getFontSize, _p.setFontSize);
-/** @expose */
-_p.fontName;
-cc.defineGetterSetter(_p, "fontName", _p.getFontName, _p.setFontName);
-/** @expose */
-_p.maxLengthEnabled;
-cc.defineGetterSetter(_p, "maxLengthEnabled", _p.isMaxLengthEnabled, _p.setMaxLengthEnabled);
-/** @expose */
-_p.maxLength;
-cc.defineGetterSetter(_p, "maxLength", _p.getMaxLength, _p.setMaxLength);
-/** @expose */
-_p.passwordEnabled;
-cc.defineGetterSetter(_p, "passwordEnabled", _p.isPasswordEnabled, _p.setPasswordEnabled);
-
-_p = null;
 
 // Constants
 //TextField event

@@ -63,6 +63,10 @@ ccui.PageViewIndicator = class PageViewIndicator extends ccui.ProtectedNode {
         // this.setCascadeOpacityEnabled(true);
     }
 
+    get spaceBetweenIndexNodes() { return this.getSpaceBetweenIndexNodes(); }
+    set spaceBetweenIndexNodes(v) { this.setSpaceBetweenIndexNodes(v); }
+
+
     /**
      * Sets direction of indicator
      * @param {ccui.ScrollView.DIR_NONE | ccui.ScrollView.DIR_VERTICAL | ccui.ScrollView.DIR_HORIZONTAL | ccui.ScrollView.DIR_BOTH} direction
@@ -290,12 +294,7 @@ ccui.PageViewIndicator = class PageViewIndicator extends ccui.ProtectedNode {
     }
 
 };
-var _p = ccui.PageViewIndicator.prototype;
 
-// Extended properties
-/** @expose */
-_p.spaceBetweenIndexNodes;
-cc.defineGetterSetter(_p, "spaceBetweenIndexNodes", _p.getSpaceBetweenIndexNodes, _p.setSpaceBetweenIndexNodes);
 /**
  * @ignore
  */

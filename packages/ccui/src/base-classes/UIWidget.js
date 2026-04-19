@@ -168,6 +168,50 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
         this.init();
     }
 
+    get xPercent() { return this._getXPercent(); }
+    set xPercent(v) { this._setXPercent(v); }
+
+    get yPercent() { return this._getYPercent(); }
+    set yPercent(v) { this._setYPercent(v); }
+
+    get widthPercent() { return this._getWidthPercent(); }
+    set widthPercent(v) { this._setWidthPercent(v); }
+
+    get heightPercent() { return this._getHeightPercent(); }
+    set heightPercent(v) { this._setHeightPercent(v); }
+
+    get widgetParent() { return this.getWidgetParent(); }
+
+    get enabled() { return this.isEnabled(); }
+    set enabled(v) { this.setEnabled(v); }
+
+    get focused() { return this.isFocused(); }
+    set focused(v) { this.setFocused(v); }
+
+    get sizeType() { return this.getSizeType(); }
+    set sizeType(v) { this.setSizeType(v); }
+
+    get widgetType() { return this.getWidgetType(); }
+
+    get touchEnabled() { return this.isTouchEnabled(); }
+    set touchEnabled(v) { this.setTouchEnabled(v); }
+
+    get updateEnabled() { return this.isUpdateEnabled(); }
+    set updateEnabled(v) { this.setUpdateEnabled(v); }
+
+    get bright() { return this.isBright(); }
+    set bright(v) { this.setBright(v); }
+
+    get name() { return this.getName(); }
+    set name(v) { this.setName(v); }
+
+    get actionTag() { return this.getActionTag(); }
+    set actionTag(v) { this.setActionTag(v); }
+
+    get opacity() { return this.getOpacity(); }
+    set opacity(v) { this.setOpacity(v); }
+
+
     /**
      * initializes state of widget. please do not call this function by yourself, you should pass the parameters to constructor to initialize it.
      * @returns {boolean}
@@ -1720,56 +1764,6 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
     }
 };
 
-var _p = ccui.Widget.prototype;
-
-// Extended properties
-/** @expose */
-_p.xPercent;
-cc.defineGetterSetter(_p, "xPercent", _p._getXPercent, _p._setXPercent);
-/** @expose */
-_p.yPercent;
-cc.defineGetterSetter(_p, "yPercent", _p._getYPercent, _p._setYPercent);
-/** @expose */
-_p.widthPercent;
-cc.defineGetterSetter(_p, "widthPercent", _p._getWidthPercent, _p._setWidthPercent);
-/** @expose */
-_p.heightPercent;
-cc.defineGetterSetter(_p, "heightPercent", _p._getHeightPercent, _p._setHeightPercent);
-/** @expose */
-_p.widgetParent;
-cc.defineGetterSetter(_p, "widgetParent", _p.getWidgetParent);
-/** @expose */
-_p.enabled;
-cc.defineGetterSetter(_p, "enabled", _p.isEnabled, _p.setEnabled);
-/** @expose */
-_p.focused;
-cc.defineGetterSetter(_p, "focused", _p.isFocused, _p.setFocused);
-/** @expose */
-_p.sizeType;
-cc.defineGetterSetter(_p, "sizeType", _p.getSizeType, _p.setSizeType);
-/** @expose */
-_p.widgetType;
-cc.defineGetterSetter(_p, "widgetType", _p.getWidgetType);
-/** @expose */
-_p.touchEnabled;
-cc.defineGetterSetter(_p, "touchEnabled", _p.isTouchEnabled, _p.setTouchEnabled);
-/** @expose */
-_p.updateEnabled;
-cc.defineGetterSetter(_p, "updateEnabled", _p.isUpdateEnabled, _p.setUpdateEnabled);
-/** @expose */
-_p.bright;
-cc.defineGetterSetter(_p, "bright", _p.isBright, _p.setBright);
-/** @expose */
-_p.name;
-cc.defineGetterSetter(_p, "name", _p.getName, _p.setName);
-/** @expose */
-_p.actionTag;
-cc.defineGetterSetter(_p, "actionTag", _p.getActionTag, _p.setActionTag);
-/** @expose */
-_p.opacity;
-cc.defineGetterSetter(_p, "opacity", _p.getOpacity, _p.setOpacity);
-
-_p = null;
 
 ccui.Widget._focusedWidget = null;                        //both layout & widget will be stored in this variable
 ccui.Widget._focusNavigationController = null;

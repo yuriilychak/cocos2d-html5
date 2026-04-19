@@ -57,6 +57,11 @@ ccs.Skin = class Skin extends ccs.Sprite {
         }
     }
 
+    get skinData() { return this.getSkinData(); }
+    set skinData(v) { this.setSkinData(v); }
+
+    get displayName() { return this.getDisplayName(); }
+
     /**
      * Initializes with sprite frame name
      * @param {String} spriteFrameName
@@ -168,14 +173,4 @@ ccs.Skin = class Skin extends ccs.Sprite {
 
 };
 
-var _p = ccs.Skin.prototype;
 
-// Extended properties
-/** @expose */
-_p.skinData;
-cc.defineGetterSetter(_p, "skinData", _p.getSkinData, _p.setSkinData);
-/** @expose */
-_p.displayName;
-cc.defineGetterSetter(_p, "displayName", _p.getDisplayName);
-
-_p = null;

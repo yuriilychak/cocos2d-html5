@@ -41,6 +41,9 @@ ccs.Tween = class Tween extends ccs.ProcessBase {
         this.init(bone);
     }
 
+    get animation() { return this.getAnimation(); }
+    set animation(v) { this.setAnimation(v); }
+
     /**
      * initializes a ccs.Tween with a CCBone
      * @param {ccs.Bone} bone
@@ -416,11 +419,4 @@ ccs.Tween = class Tween extends ccs.ProcessBase {
 
 };
 
-var _p = ccs.Tween.prototype;
 
-// Extended properties
-/** @expose */
-_p.animation;
-cc.defineGetterSetter(_p, "animation", _p.getAnimation, _p.setAnimation);
-
-_p = null;

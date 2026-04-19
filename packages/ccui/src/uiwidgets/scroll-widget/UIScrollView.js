@@ -106,6 +106,19 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         this.setTouchEnabled(true);
     }
 
+    get innerWidth() { return this._getInnerWidth(); }
+    set innerWidth(v) { this._setInnerWidth(v); }
+
+    get innerHeight() { return this._getInnerHeight(); }
+    set innerHeight(v) { this._setInnerHeight(v); }
+
+    get direction() { return this.getDirection(); }
+    set direction(v) { this.setDirection(v); }
+
+    get touchTotalTimeThreshold() { return this.getTouchTotalTimeThreshold(); }
+    set touchTotalTimeThreshold(v) { this.setTouchTotalTimeThreshold(v); }
+
+
     /**
      * Calls the parent class' onEnter and schedules update function.
      * @override
@@ -1776,22 +1789,6 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         this._innerContainer.addNode(node, zOrder, tag);
     }
 };
-var _p = ccui.ScrollView.prototype;
-
-// Extended properties
-/** @expose */
-_p.innerWidth;
-cc.defineGetterSetter(_p, "innerWidth", _p._getInnerWidth, _p._setInnerWidth);
-/** @expose */
-_p.innerHeight;
-cc.defineGetterSetter(_p, "innerHeight", _p._getInnerHeight, _p._setInnerHeight);
-/** @expose */
-_p.direction;
-cc.defineGetterSetter(_p, "direction", _p.getDirection, _p.setDirection);
-/** @expose */
-_p.touchTotalTimeThreshold;
-cc.defineGetterSetter(_p, "touchTotalTimeThreshold", _p.getTouchTotalTimeThreshold, _p.setTouchTotalTimeThreshold);
-_p = null;
 
 // Constants
 //ScrollView direction

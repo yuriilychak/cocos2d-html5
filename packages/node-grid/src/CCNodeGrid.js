@@ -44,6 +44,8 @@ cc.NodeGrid = class NodeGrid extends cc.Node {
         this._gridRect = rect;
     }
 
+    set target(v) { this.setTarget(v); }
+
     /**
      * Gets the grid object.
      * @returns {cc.GridBase}
@@ -108,12 +110,5 @@ cc.NodeGrid = class NodeGrid extends cc.Node {
     }
 };
 
-var _p = cc.NodeGrid.prototype;
-// Extended property
-/** @expose */
-_p.grid;
-/** @expose */
-_p.target;
-cc.defineGetterSetter(_p, "target", null, _p.setTarget);
 
 

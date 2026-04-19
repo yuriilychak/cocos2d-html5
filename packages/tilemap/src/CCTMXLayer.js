@@ -103,6 +103,16 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
             this.initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo);
     }
 
+
+    get layerWidth() { return this._getLayerWidth(); }
+    set layerWidth(v) { this._setLayerWidth(v); }
+    get layerHeight() { return this._getLayerHeight(); }
+    set layerHeight(v) { this._setLayerHeight(v); }
+    get tileWidth() { return this._getTileWidth(); }
+    set tileWidth(v) { this._setTileWidth(v); }
+    get tileHeight() { return this._getTileHeight(); }
+    set tileHeight(v) { this._setTileHeight(v); }
+
     _createRenderCmd() {
         if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.TMXLayer.CanvasRenderCmd(this);
@@ -767,20 +777,5 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
     }
 };
 
-var _p = cc.TMXLayer.prototype;
-
-// Extended properties
-/** @expose */
-_p.layerWidth;
-cc.defineGetterSetter(_p, "layerWidth", _p._getLayerWidth, _p._setLayerWidth);
-/** @expose */
-_p.layerHeight;
-cc.defineGetterSetter(_p, "layerHeight", _p._getLayerHeight, _p._setLayerHeight);
-/** @expose */
-_p.tileWidth;
-cc.defineGetterSetter(_p, "tileWidth", _p._getTileWidth, _p._setTileWidth);
-/** @expose */
-_p.tileHeight;
-cc.defineGetterSetter(_p, "tileHeight", _p._getTileHeight, _p._setTileHeight);
 
 

@@ -57,6 +57,10 @@ ccui.TextAtlas = class TextAtlas extends ccui.Widget {
         }
     }
 
+    get string() { return this.getString(); }
+    set string(v) { this.setString(v); }
+
+
     _initRenderer() {
         this._labelAtlasRenderer = new cc.LabelAtlas();
         this._labelAtlasRenderer.setAnchorPoint(cc.p(0.5, 0.5));
@@ -208,14 +212,6 @@ ccui.TextAtlas = class TextAtlas extends ccui.Widget {
     }
 };
 
-var _p = ccui.TextAtlas.prototype;
-
-// Extended properties
-/** @expose */
-_p.string;
-cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
-
-_p = null;
 
 // Constants
 /**

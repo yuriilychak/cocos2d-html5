@@ -417,6 +417,25 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.Node {
         }
     }
 
+    get preferredSize() { return this.getPreferredSize(); }
+    set preferredSize(v) { this.setPreferredSize(v); }
+
+    get capInsets() { return this.getCapInsets(); }
+    set capInsets(v) { this.setCapInsets(v); }
+
+    get insetLeft() { return this.getInsetLeft(); }
+    set insetLeft(v) { this.setInsetLeft(v); }
+
+    get insetTop() { return this.getInsetTop(); }
+    set insetTop(v) { this.setInsetTop(v); }
+
+    get insetRight() { return this.getInsetRight(); }
+    set insetRight(v) { this.setInsetRight(v); }
+
+    get insetBottom() { return this.getInsetBottom(); }
+    set insetBottom(v) { this.setInsetBottom(v); }
+
+
     textureLoaded() {
         return this._textureLoaded;
     }
@@ -850,30 +869,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.Node {
 };
 ccui.Scale9Sprite = cc.Scale9Sprite;
 
-var _p = ccui.Scale9Sprite.prototype;
-cc.EventHelper.prototype.apply(_p);
-
-// Extended properties
-/** @expose */
-_p.preferredSize;
-cc.defineGetterSetter(_p, "preferredSize", _p.getPreferredSize, _p.setPreferredSize);
-/** @expose */
-_p.capInsets;
-cc.defineGetterSetter(_p, "capInsets", _p.getCapInsets, _p.setCapInsets);
-/** @expose */
-_p.insetLeft;
-cc.defineGetterSetter(_p, "insetLeft", _p.getInsetLeft, _p.setInsetLeft);
-/** @expose */
-_p.insetTop;
-cc.defineGetterSetter(_p, "insetTop", _p.getInsetTop, _p.setInsetTop);
-/** @expose */
-_p.insetRight;
-cc.defineGetterSetter(_p, "insetRight", _p.getInsetRight, _p.setInsetRight);
-/** @expose */
-_p.insetBottom;
-cc.defineGetterSetter(_p, "insetBottom", _p.getInsetBottom, _p.setInsetBottom);
-
-_p = null;
+cc.EventHelper.prototype.apply(ccui.Scale9Sprite.prototype);
 
 /**
  * create a ccui.Scale9Sprite with Sprite frame.

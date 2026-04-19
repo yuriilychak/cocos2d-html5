@@ -44,6 +44,8 @@ cc.ControlColourPicker = class ControlColourPicker extends cc.Control {
 
     _background = null;
     _className = "ControlColourPicker";
+    get background() { return this.getBackground(); }
+
     constructor() {
         super();
         this.init();
@@ -163,15 +165,6 @@ cc.ControlColourPicker = class ControlColourPicker extends cc.Control {
         return false;
     }
 };
-
-var _p = cc.ControlColourPicker.prototype;
-
-// Extended properties
-/** @expose */
-_p.background;
-cc.defineGetterSetter(_p, "background", _p.getBackground);
-
-_p = null;
 
 // compatible with NPM
 var res = res || {};

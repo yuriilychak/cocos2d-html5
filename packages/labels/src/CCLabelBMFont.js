@@ -113,6 +113,16 @@ cc.LabelBMFont = class LabelBMFont extends cc.SpriteBatchNode {
             return new cc.LabelBMFont.CanvasRenderCmd(this);
     }
 
+
+    get string() { return this.getString(); }
+    set string(v) { this._setStringForSetter(v); }
+    get boundingWidth() { return this._getBoundingWidth(); }
+    set boundingWidth(v) { this.setBoundingWidth(v); }
+    get textAlign() { return this._getAlignment(); }
+    set textAlign(v) { this.setAlignment(v); }
+    get texture() { return this.getTexture(); }
+    set texture(v) { this.setTexture(v); }
+
     _setString(newString, needUpdateLabel) {
         if (!needUpdateLabel) {
             this._string = newString;
@@ -842,23 +852,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.SpriteBatchNode {
     }
 };
 
-(function () {
-    var p = cc.LabelBMFont.prototype;
-    cc.EventHelper.prototype.apply(p);
-
-    /** @expose */
-    p.string;
-    cc.defineGetterSetter(p, "string", p.getString, p._setStringForSetter);
-    /** @expose */
-    p.boundingWidth;
-    cc.defineGetterSetter(p, "boundingWidth", p._getBoundingWidth, p.setBoundingWidth);
-    /** @expose */
-    p.textAlign;
-    cc.defineGetterSetter(p, "textAlign", p._getAlignment, p.setAlignment);
-
-    // Override properties
-    cc.defineGetterSetter(p, "texture", p.getTexture, p.setTexture);
-})();
+cc.EventHelper.prototype.apply(cc.LabelBMFont.prototype);
 
 
 cc.FntFrameCache = {};

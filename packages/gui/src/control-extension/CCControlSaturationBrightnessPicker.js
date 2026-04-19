@@ -64,6 +64,14 @@ cc.ControlSaturationBrightnessPicker = class ControlSaturationBrightnessPicker e
      * @param {cc.Node} target
      * @param {cc.Point} pos position
      */
+    get saturation() { return this.getSaturation(); }
+    get brightness() { return this.getBrightness(); }
+    get background() { return this.getBackground(); }
+    get overlay() { return this.getOverlay(); }
+    get shadow() { return this.getShadow(); }
+    get slider() { return this.getSlider(); }
+    get startPos() { return this.getStartPos(); }
+
     constructor(target, pos) {
         super();
         pos && this.initWithTargetAndPos(target, pos);
@@ -218,30 +226,3 @@ cc.ControlSaturationBrightnessPicker = class ControlSaturationBrightnessPicker e
         this._checkSliderPosition(touchLocation);
     }
 };
-
-var _p = cc.ControlSaturationBrightnessPicker.prototype;
-
-// Extended properties
-/** @expose */
-_p.saturation;
-cc.defineGetterSetter(_p, "saturation", _p.getSaturation);
-/** @expose */
-_p.brightness;
-cc.defineGetterSetter(_p, "brightness", _p.getBrightness);
-/** @expose */
-_p.background;
-cc.defineGetterSetter(_p, "background", _p.getBackground);
-/** @expose */
-_p.overlay;
-cc.defineGetterSetter(_p, "overlay", _p.getOverlay);
-/** @expose */
-_p.shadow;
-cc.defineGetterSetter(_p, "shadow", _p.getShadow);
-/** @expose */
-_p.slider;
-cc.defineGetterSetter(_p, "slider", _p.getSlider);
-/** @expose */
-_p.startPos;
-cc.defineGetterSetter(_p, "startPos", _p.getStartPos);
-
-_p = null;

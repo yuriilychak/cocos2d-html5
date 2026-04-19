@@ -55,6 +55,10 @@ ccui.TextBMFont = class TextBMFont extends ccui.Widget {
         }
     }
 
+    get string() { return this.getString(); }
+    set string(v) { this.setString(v); }
+
+
     _initRenderer() {
         this._labelBMFontRenderer = new cc.LabelBMFont();
         this.addProtectedChild(this._labelBMFontRenderer, ccui.TextBMFont.RENDERER_ZORDER, -1);
@@ -196,14 +200,6 @@ ccui.TextBMFont = class TextBMFont extends ccui.Widget {
 };
 ccui.LabelBMFont = ccui.TextBMFont;
 
-var _p = ccui.TextBMFont.prototype;
-
-// Extended properties
-/** @expose */
-_p.string;
-cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
-
-_p = null;
 
 // Constants
 /**

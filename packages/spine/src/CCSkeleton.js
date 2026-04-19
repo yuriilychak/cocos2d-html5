@@ -66,6 +66,11 @@ sp.Skeleton = class Skeleton extends cc.Node {
             this.initWithArgs(skeletonDataFile, atlasFile, scale);
     }
 
+
+    get opacityModifyRGB() { return this.isOpacityModifyRGB(); }
+    get _blendFunc() { return this.getBlendFunc(); }
+    get _texture() { return this._renderCmd._currTexture; }
+
     _createRenderCmd() {
         if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new sp.Skeleton.CanvasRenderCmd(this);
@@ -361,10 +366,5 @@ sp.Skeleton = class Skeleton extends cc.Node {
     }
 };
 
-cc.defineGetterSetter(sp.Skeleton.prototype, "opacityModifyRGB", sp.Skeleton.prototype.isOpacityModifyRGB);
 
-// For renderer webgl to identify skeleton's default texture and blend function
-cc.defineGetterSetter(sp.Skeleton.prototype, "_blendFunc", sp.Skeleton.prototype.getBlendFunc);
-cc.defineGetterSetter(sp.Skeleton.prototype, '_texture', function () {
-    return this._renderCmd._currTexture;
-});
+

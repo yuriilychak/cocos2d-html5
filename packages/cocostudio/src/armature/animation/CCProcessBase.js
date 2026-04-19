@@ -106,6 +106,22 @@ ccs.ProcessBase = class ProcessBase extends cc.NewClass {
         this._isLoopBack = false;
     }
 
+    get currentFrameIndex() { return this.getCurrentFrameIndex(); }
+
+    get paused() { return this.isPause(); }
+
+    get completed() { return this.isComplete(); }
+
+    get currentPercent() { return this.getCurrentPercent(); }
+
+    get rawDuration() { return this.getRawDuration(); }
+
+    get loop() { return this.getLoop(); }
+
+    get tweenEasing() { return this.getTweenEasing(); }
+
+    get playing() { return this.isPlaying(); }
+
     /**
      * Pauses the Process
      */
@@ -322,32 +338,4 @@ ccs.ProcessBase = class ProcessBase extends cc.NewClass {
 
 };
 
-var _p = ccs.ProcessBase.prototype;
 
-// Extended properties
-/** @expose */
-_p.currentFrameIndex;
-cc.defineGetterSetter(_p, "currentFrameIndex", _p.getCurrentFrameIndex);
-/** @expose */
-_p.paused;
-cc.defineGetterSetter(_p, "paused", _p.isPause);
-/** @expose */
-_p.completed;
-cc.defineGetterSetter(_p, "completed", _p.isComplete);
-/** @expose */
-_p.currentPercent;
-cc.defineGetterSetter(_p, "currentPercent", _p.getCurrentPercent);
-/** @expose */
-_p.rawDuration;
-cc.defineGetterSetter(_p, "rawDuration", _p.getRawDuration);
-/** @expose */
-_p.loop;
-cc.defineGetterSetter(_p, "loop", _p.getLoop);
-/** @expose */
-_p.tweenEasing;
-cc.defineGetterSetter(_p, "tweenEasing", _p.getTweenEasing);
-/** @expose */
-_p.playing;
-cc.defineGetterSetter(_p, "playing", _p.isPlaying);
-
-_p = null;

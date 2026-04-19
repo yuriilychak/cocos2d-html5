@@ -54,6 +54,19 @@ cc.ControlPotentiometer = class ControlPotentiometer extends cc.Control {
     _maximumValue = 1;
     _className = "ControlPotentiometer";
 
+    get value() { return this.getValue(); }
+    set value(v) { this.setValue(v); }
+    get minValue() { return this.getMinimumValue(); }
+    set minValue(v) { this.setMinimumValue(v); }
+    get maxValue() { return this.getMaximumValue(); }
+    set maxValue(v) { this.setMaximumValue(v); }
+    get progressTimer() { return this.getProgressTimer(); }
+    set progressTimer(v) { this.setProgressTimer(v); }
+    get thumbSprite() { return this.getThumbSprite(); }
+    set thumbSprite(v) { this.setThumbSprite(v); }
+    get prevLocation() { return this.getPreviousLocation(); }
+    set prevLocation(v) { this.setPreviousLocation(v); }
+
     constructor(backgroundFile, progressFile, thumbFile) {
         super();
         if (thumbFile != undefined) {
@@ -263,27 +276,3 @@ cc.ControlPotentiometer = class ControlPotentiometer extends cc.Control {
         return this._previousLocation;
     }
 };
-
-var _p = cc.ControlPotentiometer.prototype;
-
-// Extended properties
-/** @expose */
-_p.value;
-cc.defineGetterSetter(_p, "value", _p.getValue, _p.setValue);
-/** @expose */
-_p.minValue;
-cc.defineGetterSetter(_p, "minValue", _p.getMinimumValue, _p.setMinimumValue);
-/** @expose */
-_p.maxValue;
-cc.defineGetterSetter(_p, "maxValue", _p.getMaximumValue, _p.setMaximumValue);
-/** @expose */
-_p.progressTimer;
-cc.defineGetterSetter(_p, "progressTimer", _p.getProgressTimer, _p.setProgressTimer);
-/** @expose */
-_p.thumbSprite;
-cc.defineGetterSetter(_p, "thumbSprite", _p.getThumbSprite, _p.setThumbSprite);
-/** @expose */
-_p.prevLocation;
-cc.defineGetterSetter(_p, "prevLocation", _p.getPreviousLocation, _p.setPreviousLocation);
-
-_p = null;

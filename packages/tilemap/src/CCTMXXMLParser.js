@@ -345,6 +345,16 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
      * Gets Map orientation.
      * @return {Number}
      */
+
+    get mapWidth() { return this._getMapWidth(); }
+    set mapWidth(v) { this._setMapWidth(v); }
+    get mapHeight() { return this._getMapHeight(); }
+    set mapHeight(v) { this._setMapHeight(v); }
+    get tileWidth() { return this._getTileWidth(); }
+    set tileWidth(v) { this._setTileWidth(v); }
+    get tileHeight() { return this._getTileHeight(); }
+    set tileHeight(v) { this._setTileHeight(v); }
+
     getOrientation() {
         return this.orientation;
     }
@@ -943,21 +953,6 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
     }
 };
 
-var _p = cc.TMXMapInfo.prototype;
-
-// Extended properties
-/** @expose */
-_p.mapWidth;
-cc.defineGetterSetter(_p, "mapWidth", _p._getMapWidth, _p._setMapWidth);
-/** @expose */
-_p.mapHeight;
-cc.defineGetterSetter(_p, "mapHeight", _p._getMapHeight, _p._setMapHeight);
-/** @expose */
-_p.tileWidth;
-cc.defineGetterSetter(_p, "tileWidth", _p._getTileWidth, _p._setTileWidth);
-/** @expose */
-_p.tileHeight;
-cc.defineGetterSetter(_p, "tileHeight", _p._getTileHeight, _p._setTileHeight);
 
 
 

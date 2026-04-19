@@ -167,6 +167,15 @@ ccs.ColliderDetector = class ColliderDetector extends cc.NewClass {
 
         this.init(bone);
     }
+
+    get colliderFilter() { return this.getColliderFilter(); }
+    set colliderFilter(v) { this.setColliderFilter(v); }
+
+    get active() { return this.getActive(); }
+    set active(v) { this.setActive(v); }
+
+    get body() { return this.getBody(); }
+    set body(v) { this.setBody(v); }
     init(bone) {
         this._colliderBodyList.length = 0;
         if (bone)
@@ -368,17 +377,3 @@ ccs.ColliderDetector = class ColliderDetector extends cc.NewClass {
 
 };
 
-var _p = ccs.ColliderDetector.prototype;
-
-// Extended properties
-/** @expose */
-_p.colliderFilter;
-cc.defineGetterSetter(_p, "colliderFilter", _p.getColliderFilter, _p.setColliderFilter);
-/** @expose */
-_p.active;
-cc.defineGetterSetter(_p, "active", _p.getActive, _p.setActive);
-/** @expose */
-_p.body;
-cc.defineGetterSetter(_p, "body", _p.getBody, _p.setBody);
-
-_p = null;

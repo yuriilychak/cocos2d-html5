@@ -68,6 +68,9 @@ cc.TableViewCell = class TableViewCell extends cc.Node {
         this._idx = cc.INVALID_INDEX;
     }
 
+    get objectId() { return this.getObjectID(); }
+    set objectId(v) { this.setObjectID(v); }
+
     setObjectID(idx) {
         this._idx = idx;
     }
@@ -75,14 +78,6 @@ cc.TableViewCell = class TableViewCell extends cc.Node {
         return this._idx;
     }
 };
-
-var _p = cc.TableViewCell.prototype;
-
-/** @expose */
-_p.objectId;
-cc.defineGetterSetter(_p, "objectId", _p.getObjectID, _p.setObjectID);
-
-_p = null;
 
 /**
  * Sole purpose of this delegate is to single touch event in this version.
@@ -201,6 +196,13 @@ cc.TableView = class TableView extends cc.ScrollView {
      * @param size
      * @param container
      */
+    get dataSource() { return this.getDataSource(); }
+    set dataSource(v) { this.setDataSource(v); }
+    get delegate() { return this.getDelegate(); }
+    set delegate(v) { this.setDelegate(v); }
+    get verticalFillOrder() { return this.getVerticalFillOrder(); }
+    set verticalFillOrder(v) { this.setVerticalFillOrder(v); }
+
     constructor(dataSource, size, container) {
         super();
         this._oldDirection = cc.SCROLLVIEW_DIRECTION_NONE;
@@ -696,17 +698,3 @@ cc.TableView = class TableView extends cc.ScrollView {
         }
     }
 };
-
-var _p = cc.TableView.prototype;
-
-/** @expose */
-_p.dataSource;
-cc.defineGetterSetter(_p, "dataSource", _p.getDataSource, _p.setDataSource);
-/** @expose */
-_p.delegate;
-cc.defineGetterSetter(_p, "delegate", _p.getDelegate, _p.setDelegate);
-/** @expose */
-_p.verticalFillOrder;
-cc.defineGetterSetter(_p, "verticalFillOrder", _p.getVerticalFillOrder, _p.setVerticalFillOrder);
-
-_p = null;
