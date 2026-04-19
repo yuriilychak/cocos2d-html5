@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { Point } from '../cocoa/geometry/point';
+import { Color } from '../platform/types/color';
 
 //---------------------- Customer render cmd --------------------
 export class CustomRenderCmd {
@@ -112,7 +113,7 @@ export class RenderCmd {
     constructor(renderable) {
         this._node = renderable;
         this._anchorPointInPoints = {x: 0, y: 0};
-        this._displayedColor = cc.color(255, 255, 255, 255);
+        this._displayedColor = new Color(255, 255, 255, 255);
     }
 
     needDraw() {
@@ -125,7 +126,7 @@ export class RenderCmd {
 
     getDisplayedColor() {
         const tmpColor = this._displayedColor;
-        return cc.color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
+        return new Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
     }
 
     getDisplayedOpacity() {

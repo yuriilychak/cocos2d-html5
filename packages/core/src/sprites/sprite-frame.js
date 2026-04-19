@@ -27,6 +27,8 @@
 import { NewClass } from '../platform/class';
 import EventHelper from '../event-manager/event-helper';
 import { Point } from '../cocoa/geometry/point';
+import { Rect } from '../cocoa/geometry/rect';
+import { Size } from '../cocoa/geometry/size';
 
 /**
  * <p>
@@ -70,9 +72,9 @@ export class SpriteFrame extends NewClass {
         this._textureLoaded = false;
         this._offset = new Point(0, 0);
         this._offsetInPixels = new Point(0, 0);
-        this._originalSize = cc.size(0, 0);
+        this._originalSize = new Size(0, 0);
         this._rotated = false;
-        this._originalSizeInPixels = cc.size(0, 0);
+        this._originalSizeInPixels = new Size(0, 0);
         this._textureFilename = "";
         this._texture = null;
         this._textureLoaded = false;
@@ -103,7 +105,7 @@ export class SpriteFrame extends NewClass {
      */
     getRectInPixels() {
         var locRectInPixels = this._rectInPixels;
-        return cc.rect(
+        return new Rect(
             locRectInPixels.x,
             locRectInPixels.y,
             locRectInPixels.width,
@@ -117,7 +119,7 @@ export class SpriteFrame extends NewClass {
      */
     setRectInPixels(rectInPixels) {
         if (!this._rectInPixels) {
-            this._rectInPixels = cc.rect(0, 0, 0, 0);
+            this._rectInPixels = new Rect(0, 0, 0, 0);
         }
         this._rectInPixels.x = rectInPixels.x;
         this._rectInPixels.y = rectInPixels.y;
@@ -148,7 +150,7 @@ export class SpriteFrame extends NewClass {
      */
     getRect() {
         var locRect = this._rect;
-        return cc.rect(locRect.x, locRect.y, locRect.width, locRect.height);
+        return new Rect(locRect.x, locRect.y, locRect.width, locRect.height);
     }
 
     /**
@@ -157,7 +159,7 @@ export class SpriteFrame extends NewClass {
      */
     setRect(rect) {
         if (!this._rect) {
-            this._rect = cc.rect(0, 0, 0, 0);
+            this._rect = new Rect(0, 0, 0, 0);
         }
         this._rect.x = rect.x;
         this._rect.y = rect.y;
@@ -189,7 +191,7 @@ export class SpriteFrame extends NewClass {
      * @return {cc.Size}
      */
     getOriginalSizeInPixels() {
-        return cc.size(this._originalSizeInPixels);
+        return new Size(this._originalSizeInPixels);
     }
 
     /**
@@ -206,7 +208,7 @@ export class SpriteFrame extends NewClass {
      * @return {cc.Size}
      */
     getOriginalSize() {
-        return cc.size(this._originalSize);
+        return new Size(this._originalSize);
     }
 
     /**
@@ -261,7 +263,7 @@ export class SpriteFrame extends NewClass {
                             this.setTexture(tempTexture);
 
                             var rect = this.getRect();
-                            this.setRect(cc.rect(0, 0, rect.width, rect.height));
+                            this.setRect(new Rect(0, 0, rect.width, rect.height));
                         }
                         var locRect = this._rect;
                         if (locRect.width === 0 && locRect.height === 0) {

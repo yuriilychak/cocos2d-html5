@@ -37,6 +37,7 @@ import {
     PROJECTION_CUSTOM,
     PROJECTION_DEFAULT
 } from './constants';
+import { Size } from '../cocoa/geometry/size';
 
 export var g_NumberOfDraws = 0;
 
@@ -110,7 +111,7 @@ export class Director extends NewClass {
         this._paused = false;
         this._purgeDirectorInNextLoop = false;
 
-        this._winSizeInPoints = cc.size(0, 0);
+        this._winSizeInPoints = new Size(0, 0);
 
         this._openGLView = null;
         this._contentScaleFactor = 1.0;
@@ -243,11 +244,11 @@ export class Director extends NewClass {
     }
 
     getWinSize() {
-        return cc.size(this._winSizeInPoints);
+        return new Size(this._winSizeInPoints);
     }
 
     getWinSizeInPixels() {
-        return cc.size(this._winSizeInPoints.width * this._contentScaleFactor, this._winSizeInPoints.height * this._contentScaleFactor);
+        return new Size(this._winSizeInPoints.width * this._contentScaleFactor, this._winSizeInPoints.height * this._contentScaleFactor);
     }
 
     pause() {

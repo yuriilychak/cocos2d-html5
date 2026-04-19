@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from './node-webgl-render-cmd';
+import { Color } from '../platform/types/color';
 
 /**
  * AtlasNode's rendering objects of WebGL
@@ -105,7 +106,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     }
 
     setColor(color3) {
-        const temp = cc.color(color3.r, color3.g, color3.b), node = this._node;
+        const temp = new Color(color3.r, color3.g, color3.b), node = this._node;
         this._colorUnmodified = color3;
         const locDisplayedOpacity = this._displayedOpacity;
         if (node._opacityModifyRGB) {

@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from '../class';
+import { Rect } from '../../cocoa/geometry/rect';
 
 /**
  * <p>cc.ContentStrategy class is the root strategy class of content's scale strategy,
@@ -48,7 +49,7 @@ export class ContentStrategy extends NewClass {
         Math.abs(containerW - contentW) < 2 && (contentW = containerW);
         Math.abs(containerH - contentH) < 2 && (contentH = containerH);
 
-        var viewport = cc.rect(Math.round((containerW - contentW) / 2),
+        var viewport = new Rect(Math.round((containerW - contentW) / 2),
                                Math.round((containerH - contentH) / 2),
                                contentW, contentH);
 

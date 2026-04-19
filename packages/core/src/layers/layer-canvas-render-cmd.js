@@ -24,6 +24,7 @@
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from '../base-nodes/node-canvas-render-cmd';
 import { Point } from '../cocoa/geometry/point';
+import { Rect } from '../cocoa/geometry/rect';
 
 /**
  * cc.Layer's Canvas render command
@@ -162,7 +163,7 @@ export class LayerCanvasRenderCmd extends NodeCanvasRenderCmd {
         const node = this._node;
 
         if (!node._children || node._children.length === 0)
-            return cc.rect(0, 0, 10, 10);
+            return new Rect(0, 0, 10, 10);
         const trans = node.getNodeToWorldTransform();
 
         const locChildren = node._children;
@@ -277,7 +278,7 @@ export class LayerColorCanvasRenderCmd extends LayerCanvasRenderCmd {
 
     _getBoundingBoxForBake() {
         const node = this._node;
-        let rect = cc.rect(0, 0, node._contentSize.width, node._contentSize.height);
+        let rect = new Rect(0, 0, node._contentSize.width, node._contentSize.height);
         const trans = node.getNodeToWorldTransform();
         rect = cc.rectApplyAffineTransform(rect, node.getNodeToWorldTransform());
 

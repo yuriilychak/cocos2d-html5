@@ -27,6 +27,9 @@
 import { NewClass } from '../platform/class';
 import { dirtyFlags } from './node-canvas-render-cmd';
 import { Point } from '../cocoa/geometry/point';
+import { Color } from '../platform/types/color';
+import { Rect } from '../cocoa/geometry/rect';
+import { Size } from '../cocoa/geometry/size';
 
 /**
  * Default Node tag
@@ -184,7 +187,7 @@ export class Node extends NewClass {
       this._renderCmd = null;
       var _t = this;
       _t._anchorPoint = new Point(0, 0);
-      _t._contentSize = cc.size(0, 0);
+      _t._contentSize = new Size(0, 0);
       _t._position = new Point(0, 0);
       _t._normalizedPosition = new Point(0, 0);
       _t._children = [];
@@ -193,7 +196,7 @@ export class Node extends NewClass {
       if (cc.ComponentContainer) {
         _t._componentContainer = new cc.ComponentContainer(_t);
       }
-      this._realColor = cc.color(255, 255, 255, 255);
+      this._realColor = new Color(255, 255, 255, 255);
 
       this._renderCmd = this._createRenderCmd();
     }
@@ -860,7 +863,7 @@ export class Node extends NewClass {
      * @return {cc.Size} The untransformed size of the node.
      */
     getContentSize() {
-      return cc.size(this._contentSize);
+      return new Size(this._contentSize);
     }
 
     /**
@@ -1140,7 +1143,7 @@ export class Node extends NewClass {
      * @return {cc.Rect} The calculated bounding box of the node
      */
     getBoundingBox() {
-      var rect = cc.rect(
+      var rect = new Rect(
         0,
         0,
         this._contentSize.width,
@@ -2190,7 +2193,7 @@ export class Node extends NewClass {
      * @return {cc.Rect}
      */
     getBoundingBoxToWorld() {
-      var rect = cc.rect(
+      var rect = new Rect(
         0,
         0,
         this._contentSize.width,
@@ -2214,7 +2217,7 @@ export class Node extends NewClass {
     }
 
     _getBoundingBoxToCurrentNode(parentTransform) {
-      var rect = cc.rect(
+      var rect = new Rect(
         0,
         0,
         this._contentSize.width,
@@ -2309,7 +2312,7 @@ export class Node extends NewClass {
      */
     getColor() {
       var locRealColor = this._realColor;
-      return cc.color(
+      return new Color(
         locRealColor.r,
         locRealColor.g,
         locRealColor.b,

@@ -26,6 +26,7 @@
 
 import { LayerColor } from './layer-color';
 import { Point } from '../cocoa/geometry/point';
+import { Color } from '../platform/types/color';
 
 /**
  * CCLayerGradient is a subclass of cc.LayerColor that draws gradients across the background.
@@ -43,7 +44,7 @@ export class LayerGradient extends LayerColor {
         this._className = "LayerGradient";
         this._colorStops = [];
 
-        this._endColor = cc.color(0, 0, 0, 255);
+        this._endColor = new Color(0, 0, 0, 255);
         this._alongVector = new Point(0, -1);
         this._startOpacity = 255;
         this._endOpacity = 255;
@@ -59,8 +60,8 @@ export class LayerGradient extends LayerColor {
     }
 
     init(start, end, v, stops) {
-        start = start || cc.color(0, 0, 0, 255);
-        end = end || cc.color(0, 0, 0, 255);
+        start = start || new Color(0, 0, 0, 255);
+        end = end || new Color(0, 0, 0, 255);
         v = v || new Point(0, -1);
         var _t = this;
 
@@ -75,7 +76,7 @@ export class LayerGradient extends LayerColor {
         _t._alongVector = v;
         _t._compressedInterpolation = true;
 
-        super.init(cc.color(start.r, start.g, start.b, 255));
+        super.init(new Color(start.r, start.g, start.b, 255));
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty | cc.Node._dirtyFlags.opacityDirty | cc.Node._dirtyFlags.gradientDirty);
         return true;
     }
@@ -96,7 +97,7 @@ export class LayerGradient extends LayerColor {
     }
 
     getStartColor() {
-        return cc.color(this._realColor);
+        return new Color(this._realColor);
     }
 
     setStartColor(color) {
@@ -126,7 +127,7 @@ export class LayerGradient extends LayerColor {
     }
 
     getEndColor() {
-        return cc.color(this._endColor);
+        return new Color(this._endColor);
     }
 
     setStartOpacity(o) {

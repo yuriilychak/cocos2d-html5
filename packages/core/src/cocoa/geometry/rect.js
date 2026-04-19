@@ -25,47 +25,45 @@
  ****************************************************************************/
 
 /**
- * cc.Rect is the class for rect object, please do not use its constructor to create rects, use cc.rect() alias function instead.
+ * cc.Rect is the class for rect object.
  * @class cc.Rect
- * @param {Number} x
- * @param {Number} y
- * @param {Number} width
- * @param {Number} height
- *
- * @property {Number} x
- * @property {Number} y
- * @property {Number} width
- * @property {Number} height
- *
- * @see cc.rect
+ * @param {Number|cc.Rect} [x=0]
+ * @param {Number} [y=0]
+ * @param {Number} [width=0]
+ * @param {Number} [height=0]
  */
-export function Rect(x, y, width, height) {
-    this.x = x||0;
-    this.y = y||0;
-    this.width = width||0;
-    this.height = height||0;
+export class Rect {
+    constructor(x, y, width, height) {
+        if (x === undefined) {
+            this.x = 0;
+            this.y = 0;
+            this.width = 0;
+            this.height = 0;
+        } else if (y === undefined) {
+            this.x = x.x;
+            this.y = x.y;
+            this.width = x.width;
+            this.height = x.height;
+        } else {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+    }
 }
 
 /**
  * Helper function that creates a cc.Rect.
  * @function
- * @param {Number|cc.Rect} x a number or a rect object
- * @param {Number} y
- * @param {Number} w
- * @param {Number} h
+ * @param {Number|cc.Rect} [x] a number or a rect object
+ * @param {Number} [y]
+ * @param {Number} [w]
+ * @param {Number} [h]
  * @returns {cc.Rect}
- * @example
- * var rect1 = cc.rect();
- * var rect2 = cc.rect(100,100,100,100);
- * var rect3 = cc.rect(rect2);
- * var rect4 = cc.rect({x: 100, y: 100, width: 100, height: 100});
  */
 export function rect(x, y, w, h) {
-    if (x === undefined)
-        return {x: 0, y: 0, width: 0, height: 0};
-    if (y === undefined)
-        return {x: x.x, y: x.y, width: x.width, height: x.height};
-    return {x: x, y: y, width: w, height: h };
+    return new Rect(x, y, w, h);
 }
 
 /**
@@ -207,7 +205,7 @@ export function rectOverlapsRect(rectA, rectB) {
  * @return {cc.Rect}
  */
 export function rectUnion(rectA, rectB) {
-    var r = rect(0, 0, 0, 0);
+    var r = new Rect(0, 0, 0, 0);
     r.x = Math.min(rectA.x, rectB.x);
     r.y = Math.min(rectA.y, rectB.y);
     r.width = Math.max(rectA.x + rectA.width, rectB.x + rectB.width) - r.x;
@@ -223,7 +221,7 @@ export function rectUnion(rectA, rectB) {
  * @return {cc.Rect}
  */
 export function rectIntersection(rectA, rectB) {
-    var intersection = rect(
+    var intersection = new Rect(
         Math.max(rectGetMinX(rectA), rectGetMinX(rectB)),
         Math.max(rectGetMinY(rectA), rectGetMinY(rectB)),
         0, 0);

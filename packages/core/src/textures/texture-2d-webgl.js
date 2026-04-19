@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from '../platform/class';
+import { Size } from '../cocoa/geometry/size';
 
 export function initWebGLTexture2D() {
 
@@ -62,7 +63,7 @@ export function initWebGLTexture2D() {
             this._pixelsWide = 0;
             this._pixelsHigh = 0;
             this._name = "";
-            this._contentSize = cc.size(0, 0);
+            this._contentSize = new Size(0, 0);
             this.maxS = 0;
             this.maxT = 0;
             this._hasPremultipliedAlpha = false;
@@ -121,7 +122,7 @@ export function initWebGLTexture2D() {
          * @return {cc.Size}
          */
         getContentSize() {
-            return cc.size(this._contentSize.width / cc.contentScaleFactor(), this._contentSize.height / cc.contentScaleFactor());
+            return new Size(this._contentSize.width / cc.contentScaleFactor(), this._contentSize.height / cc.contentScaleFactor());
         }
 
         _getWidth() {
@@ -659,7 +660,7 @@ export function initWebGLTexture2D() {
             var inPixel8 = null;
             var outPixel16 = null;
             var hasAlpha = uiImage.hasAlpha();
-            var imageSize = cc.size(uiImage.getWidth(), uiImage.getHeight());
+            var imageSize = new Size(uiImage.getWidth(), uiImage.getHeight());
             var pixelFormat = tex2d.defaultPixelFormat;
             var bpp = uiImage.getBitsPerComponent();
 

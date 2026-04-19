@@ -21,6 +21,8 @@
 import { LabelTTF } from './label-ttf';
 import { SpriteCanvasRenderCmd } from '../sprites/sprite-canvas-render-cmd';
 import { Point } from '../cocoa/geometry/point';
+import { Rect } from '../cocoa/geometry/rect';
+import { Size } from '../cocoa/geometry/size';
 
 export const _textAlign = ["left", "center", "right"];
 export const _textBaseline = ["top", "middle", "bottom"];
@@ -164,7 +166,7 @@ export const LabelRenderMixin = (Base) => class extends Base {
         //get offset for stroke and shadow
         if (locDimensionsWidth === 0) {
             if (this._isMultiLine) {
-                locSize = cc.size(Math.ceil(Math.max.apply(Math, locLineWidth) + locStrokeShadowOffsetX),
+                locSize = new Size(Math.ceil(Math.max.apply(Math, locLineWidth) + locStrokeShadowOffsetX),
                                   Math.ceil((this._fontClientHeight * pixelRatio * this._strings.length) + locStrokeShadowOffsetY));
             }
             else {
@@ -172,22 +174,22 @@ export const LabelRenderMixin = (Base) => class extends Base {
                 if(!measuredWidth && node._string) {
                     measuredWidth = this._measure(node._string);
                 }
-                locSize = cc.size(Math.ceil((measuredWidth ? measuredWidth : 0) + locStrokeShadowOffsetX),
+                locSize = new Size(Math.ceil((measuredWidth ? measuredWidth : 0) + locStrokeShadowOffsetX),
                                   Math.ceil(this._fontClientHeight * pixelRatio + locStrokeShadowOffsetY));
             }
         } else {
             if (node._dimensions.height === 0) {
                 if (this._isMultiLine)
-                    locSize = cc.size(
+                    locSize = new Size(
                         Math.ceil(locDimensionsWidth + locStrokeShadowOffsetX),
                         Math.ceil((node.getLineHeight() * pixelRatio * this._strings.length) + locStrokeShadowOffsetY));
                 else
-                    locSize = cc.size(
+                    locSize = new Size(
                         Math.ceil(locDimensionsWidth + locStrokeShadowOffsetX),
                         Math.ceil(node.getLineHeight() * pixelRatio + locStrokeShadowOffsetY));
             } else {
                 //dimension is already set, contentSize must be same as dimension
-                locSize = cc.size(
+                locSize = new Size(
                     Math.ceil(locDimensionsWidth + locStrokeShadowOffsetX),
                     Math.ceil(node._dimensions.height * pixelRatio + locStrokeShadowOffsetY));
             }
@@ -436,7 +438,7 @@ export const CacheLabelRenderMixin = (Base) => class extends LabelRenderMixin(Ba
                 node._texture._htmlElementObj = this._labelCanvas;
                 node._texture.handleLoadedTexture();
             }
-            node.setTextureRect(cc.rect(0, 0, 1, locContentSize.height));
+            node.setTextureRect(new Rect(0, 0, 1, locContentSize.height));
             return true;
         }
 
@@ -453,7 +455,7 @@ export const CacheLabelRenderMixin = (Base) => class extends LabelRenderMixin(Ba
             node._texture._htmlElementObj = this._labelCanvas;
             node._texture.handleLoadedTexture();
         }
-        node.setTextureRect(cc.rect(0, 0, width, height));
+        node.setTextureRect(new Rect(0, 0, width, height));
         return true;
     }
 
@@ -492,11 +494,11 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
         this._updateTTF();
         const width = locContentSize.width, height = locContentSize.height;
         if (node._string.length === 0) {
-            node.setTextureRect(cc.rect(0, 0, 1, locContentSize.height));
+            node.setTextureRect(new Rect(0, 0, 1, locContentSize.height));
             return true;
         }
         this._saveStatus();
-        node.setTextureRect(cc.rect(0, 0, width, height));
+        node.setTextureRect(new Rect(0, 0, width, height));
         return true;
     }
 

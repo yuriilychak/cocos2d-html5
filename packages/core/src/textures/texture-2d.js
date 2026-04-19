@@ -27,6 +27,8 @@
 import { NewClass } from '../platform/class';
 import EventHelper from '../event-manager/event-helper';
 import { initWebGLTexture2D } from './texture-2d-webgl';
+import { Rect } from '../cocoa/geometry/rect';
+import { Size } from '../cocoa/geometry/size';
 
 
 export {
@@ -70,7 +72,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
         cc.Texture2D = class Texture2D extends NewClass {
             constructor() {
                 super();
-                this._contentSize = cc.size(0, 0);
+                this._contentSize = new Size(0, 0);
                 this._textureLoaded = false;
                 this._htmlElementObj = null;
                 this.url = null;
@@ -92,7 +94,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
 
             getContentSize() {
                 var locScaleFactor = cc.contentScaleFactor();
-                return cc.size(this._contentSize.width / locScaleFactor, this._contentSize.height / locScaleFactor);
+                return new Size(this._contentSize.width / locScaleFactor, this._contentSize.height / locScaleFactor);
             }
 
             _getWidth() {
@@ -389,7 +391,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     canvas = document.createElement("canvas");
                 var textureImage = this._htmlElementObj;
                 if (!rect)
-                    rect = cc.rect(0, 0, textureImage.width, textureImage.height);
+                    rect = new Rect(0, 0, textureImage.width, textureImage.height);
 
                 canvas.width = rect.width;
                 canvas.height = rect.height;
@@ -428,7 +430,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
 
                 var textureImage = this._htmlElementObj;
                 if (!rect)
-                    rect = cc.rect(0, 0, textureImage.width, textureImage.height);
+                    rect = new Rect(0, 0, textureImage.width, textureImage.height);
                 var x, y, w, h;
                 x = rect.x; y = rect.y; w = rect.width; h = rect.height;
                 if (!w || !h)
@@ -483,7 +485,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             if (texture === null)
                 return null;
             renderCanvas = renderCanvas || document.createElement("canvas");
-            rect = rect || cc.rect(0, 0, texture.width, texture.height);
+            rect = rect || new Rect(0, 0, texture.width, texture.height);
             renderCanvas.width = rect.width;
             renderCanvas.height = rect.height;
 

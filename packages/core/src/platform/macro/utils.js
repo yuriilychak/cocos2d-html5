@@ -26,6 +26,8 @@
 
 import { RAD, DEG } from './constants';
 import { Point } from '../../cocoa/geometry/point';
+import { Rect } from '../../cocoa/geometry/rect';
+import { Size } from '../../cocoa/geometry/size';
 
 /**
  * <p>
@@ -211,7 +213,7 @@ export function _pointPixelsToPointsOut(pixels, outPoint){
  */
 export function sizePointsToPixels(sizeInPoints) {
     var scale = cc.contentScaleFactor();
-    return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
+    return new Size(sizeInPoints.width * scale, sizeInPoints.height * scale);
 }
 
 /**
@@ -222,7 +224,7 @@ export function sizePointsToPixels(sizeInPoints) {
  */
 export function sizePixelsToPoints(sizeInPixels) {
     var scale = cc.contentScaleFactor();
-    return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
+    return new Size(sizeInPixels.width / scale, sizeInPixels.height / scale);
 }
 
 export function _sizePixelsToPointsOut(sizeInPixels, outSize) {
@@ -239,7 +241,7 @@ export function _sizePixelsToPointsOut(sizeInPixels, outSize) {
  */
 export function rectPixelsToPoints(pixel) {
     var scale = cc.contentScaleFactor();
-    return cc.rect(pixel.x / scale, pixel.y / scale,
+    return new Rect(pixel.x / scale, pixel.y / scale,
         pixel.width / scale, pixel.height / scale);
 }
 
@@ -251,7 +253,7 @@ export function rectPixelsToPoints(pixel) {
  */
 export function rectPointsToPixels(point) {
    var scale = cc.contentScaleFactor();
-    return cc.rect(point.x * scale, point.y * scale,
+    return new Rect(point.x * scale, point.y * scale,
         point.width * scale, point.height * scale);
 }
 

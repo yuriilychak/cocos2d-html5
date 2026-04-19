@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from '../base-nodes/node-webgl-render-cmd';
+import { Rect } from '../cocoa/geometry/rect';
 
 //Sprite's WebGL render command
 export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -99,7 +100,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
         this._textureLoaded = true;
         let locRect = this._rect;
         if (!locRect) {
-            locRect = cc.rect(0, 0, sender.width, sender.height);
+            locRect = new Rect(0, 0, sender.width, sender.height);
         } else if (cc._rectEqualToZero(locRect)) {
             locRect.width = sender.width;
             locRect.height = sender.height;

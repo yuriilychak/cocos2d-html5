@@ -35,11 +35,15 @@
  */
 export class Color {
     constructor(r, g, b, a) {
-        r = r || 0;
-        g = g || 0;
-        b = b || 0;
-        a = typeof a === 'number' ? a : 255;
-        this._val = ((r << 24) >>> 0) + (g << 16) + (b << 8) + a;
+        if (typeof r === 'object') {
+            this._val = (((r.r || 0) << 24) >>> 0) + ((r.g || 0) << 16) + ((r.b || 0) << 8) + ((r.a == null) ? 255 : r.a);
+        } else {
+            r = r || 0;
+            g = g || 0;
+            b = b || 0;
+            a = typeof a === 'number' ? a : 255;
+            this._val = ((r << 24) >>> 0) + (g << 16) + (b << 8) + a;
+        }
     }
 
     get r() {

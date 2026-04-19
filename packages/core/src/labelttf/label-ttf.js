@@ -26,6 +26,8 @@
 
 import { Sprite } from '../sprites/sprite';
 import { Point } from '../cocoa/geometry/point';
+import { Color } from '../platform/types/color';
+import { Size } from '../cocoa/geometry/size';
 
 /**
  * <p>cc.LabelTTF is a subclass of cc.TextureNode that knows how to render text labels with system font or a ttf font file<br/>
@@ -87,12 +89,12 @@ export class LabelTTF extends Sprite {
             strInfo = "";
 
         fontSize = fontSize || 16;
-        dimensions = dimensions || cc.size(0, 0/*fontSize*/);
+        dimensions = dimensions || new Size(0, 0/*fontSize*/);
         hAlignment = hAlignment || cc.TEXT_ALIGNMENT_LEFT;
         vAlignment = vAlignment || cc.VERTICAL_TEXT_ALIGNMENT_TOP;
 
         this._opacityModifyRGB = false;
-        this._dimensions = cc.size(dimensions.width, dimensions.height);
+        this._dimensions = new Size(dimensions.width, dimensions.height);
         this._fontName = fontName || "Arial";
         this._hAlignment = hAlignment;
         this._vAlignment = vAlignment;
@@ -144,7 +146,7 @@ export class LabelTTF extends Sprite {
         this._fontWeight = "normal";
         this._lineHeight = "normal";
 
-        this._dimensions = cc.size(0, 0);
+        this._dimensions = new Size(0, 0);
         this._hAlignment = cc.TEXT_ALIGNMENT_LEFT;
         this._vAlignment = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
         this._opacityModifyRGB = false;
@@ -156,10 +158,10 @@ export class LabelTTF extends Sprite {
         this._shadowBlur = 0;
 
         this._strokeEnabled = false;
-        this._strokeColor = cc.color(255, 255, 255, 255);
+        this._strokeColor = new Color(255, 255, 255, 255);
         this._strokeSize = 0;
 
-        this._textFillColor = cc.color(255, 255, 255, 255);
+        this._textFillColor = new Color(255, 255, 255, 255);
         this._strokeShadowOffsetX = 0;
         this._strokeShadowOffsetY = 0;
         this._needUpdateTexture = false;
@@ -215,7 +217,7 @@ export class LabelTTF extends Sprite {
      * @return {cc.Size}
      */
     getDimensions() {
-        return cc.size(this._dimensions);
+        return new Size(this._dimensions);
     }
     /**
      * Returns font size of cc.LabelTTF
@@ -300,7 +302,7 @@ export class LabelTTF extends Sprite {
     }
     _enableShadow(shadowColor, offset, blurRadius) {
         if (!this._shadowColor) {
-            this._shadowColor = cc.color(255, 255, 255, 128);
+            this._shadowColor = new Color(255, 255, 255, 128);
         }
         this._shadowColor.r = shadowColor.r;
         this._shadowColor.g = shadowColor.g;
@@ -524,7 +526,7 @@ export class LabelTTF extends Sprite {
         if (this._strokeEnabled) {
             texDef.strokeEnabled = true;
             var locStrokeColor = this._strokeColor;
-            texDef.strokeStyle = cc.color(locStrokeColor.r, locStrokeColor.g, locStrokeColor.b);
+            texDef.strokeStyle = new Color(locStrokeColor.r, locStrokeColor.g, locStrokeColor.b);
             texDef.lineWidth = this._strokeSize;
         } else
             texDef.strokeEnabled = false;
@@ -542,7 +544,7 @@ export class LabelTTF extends Sprite {
 
         // text tint
         var locTextFillColor = this._textFillColor;
-        texDef.fillStyle = cc.color(locTextFillColor.r, locTextFillColor.g, locTextFillColor.b);
+        texDef.fillStyle = new Color(locTextFillColor.r, locTextFillColor.g, locTextFillColor.b);
         return texDef;
     }
     /*
@@ -754,7 +756,7 @@ export class LabelTTF extends Sprite {
         if (this._needUpdateTexture)
             this._renderCmd._updateTTF();
         var ratio = cc.view.getDevicePixelRatio();
-        return cc.size( this._contentSize.width / ratio, this._contentSize.height / ratio );
+        return new Size( this._contentSize.width / ratio, this._contentSize.height / ratio );
     }
     _getWidth() {
         if (this._needUpdateTexture)

@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Layer } from './layer';
+import { Color } from '../platform/types/color';
 
 /**
  * CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
@@ -54,7 +55,7 @@ export class LayerColor extends Layer {
 
     init(color, width, height) {
         var winSize = cc.director.getWinSize();
-        color = color || cc.color(0, 0, 0, 255);
+        color = color || new Color(0, 0, 0, 255);
         width = width === undefined ? winSize.width : width;
         height = height === undefined ? winSize.height : height;
 

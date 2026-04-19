@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Color } from '../platform/types/color';
+
 var rendererCanvas = {
     childrenOrderDirty: true,
     assignedZ: 0,
@@ -34,7 +36,7 @@ var rendererCanvas = {
     _cacheToCanvasCmds: {},                              // an array saves the renderer commands need for cache to other canvas
     _cacheInstanceIds: [],
     _currentID: 0,
-    _clearColor: cc.color(),                                  //background color,default BLACK
+    _clearColor: new Color(),                                  //background color,default BLACK
     _clearFillStyle: "rgb(0, 0, 0)",
 
     _dirtyRegion: null,

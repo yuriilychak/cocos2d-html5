@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from '../base-nodes/node-canvas-render-cmd';
+import { Rect } from '../cocoa/geometry/rect';
 
 export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     constructor(renderable) {
@@ -83,7 +84,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
             tempTexture.handleLoadedTexture();
             texture = tempTexture;
             rect.x = rect.y = 0;
-            this._node._rect = cc.rect(0, 0, rect.width, rect.height);
+            this._node._rect = new Rect(0, 0, rect.width, rect.height);
         }
         return texture;
     }
@@ -191,7 +192,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
         let locRect = node._rect;
         const locRenderCmd = this._renderCmd;
         if (!locRect) {
-            locRect = cc.rect(0, 0, sender.width, sender.height);
+            locRect = new Rect(0, 0, sender.width, sender.height);
         } else if (cc._rectEqualToZero(locRect)) {
             locRect.width = sender.width;
             locRect.height = sender.height;

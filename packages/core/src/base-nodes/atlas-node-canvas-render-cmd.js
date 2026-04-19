@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from './node-canvas-render-cmd';
+import { Rect } from '../cocoa/geometry/rect';
 
 /**
  * AtlasNode's rendering objects of Canvas
@@ -67,7 +68,7 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
         const texture = node._texture,
             color = this._colorUnmodified,
             element = texture.getHtmlElementObj();
-        const textureRect = cc.rect(0, 0, element.width, element.height);
+        const textureRect = new Rect(0, 0, element.width, element.height);
         if (texture === this._textureToRender)
             this._textureToRender = texture._generateColorTexture(color.r, color.g, color.b, textureRect);
         else

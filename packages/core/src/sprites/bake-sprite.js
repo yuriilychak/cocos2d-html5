@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { Sprite } from './sprite';
+import { Rect } from '../cocoa/geometry/rect';
 
 /**
  * cc.BakeSprite is a type of sprite that will be cached.
@@ -74,6 +75,6 @@ export class BakeSprite extends Sprite {
         if(fillStyle !== locContext._context.fillStyle)
             locContext._context.fillStyle = fillStyle;
         this.getTexture().handleLoadedTexture();
-        this.setTextureRect(cc.rect(0,0, sizeOrWidth, height), false, null, false);
+        this.setTextureRect(new Rect(0,0, sizeOrWidth, height), false, null, false);
     }
 }

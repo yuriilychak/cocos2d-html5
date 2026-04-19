@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Color } from './color';
+
 /**
  * Common usage:
  *
@@ -51,12 +53,12 @@ export var FontDefinition = function (properties) {
     _t.fontSize = 12;
     _t.textAlign = cc.TEXT_ALIGNMENT_CENTER;
     _t.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
-    _t.fillStyle = cc.color(255, 255, 255, 255);
+    _t.fillStyle = new Color(255, 255, 255, 255);
     _t.boundingWidth = 0;
     _t.boundingHeight = 0;
 
     _t.strokeEnabled = false;
-    _t.strokeStyle = cc.color(255, 255, 255, 255);
+    _t.strokeStyle = new Color(255, 255, 255, 255);
     _t.lineWidth = 1;
     _t.lineHeight = "normal";
     _t.fontStyle = "normal";

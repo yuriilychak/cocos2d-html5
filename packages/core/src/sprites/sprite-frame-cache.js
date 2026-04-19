@@ -25,6 +25,8 @@
  ****************************************************************************/
 
 import { Point } from '../cocoa/geometry/point';
+import { Rect } from '../cocoa/geometry/rect';
+import { Size } from '../cocoa/geometry/size';
 
 /**
  * <p>
@@ -47,8 +49,8 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
 
     _rectFromString: function (content) {
         var result = this._CCNS_REG2.exec(content);
-        if (!result) return cc.rect(0, 0, 0, 0);
-        return cc.rect(parseFloat(result[1]), parseFloat(result[2]), parseFloat(result[3]), parseFloat(result[4]));
+        if (!result) return new Rect(0, 0, 0, 0);
+        return new Rect(parseFloat(result[1]), parseFloat(result[2]), parseFloat(result[3]), parseFloat(result[4]));
     },
 
     _pointFromString: function (content) {
@@ -59,8 +61,8 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
 
     _sizeFromString: function (content) {
         var result = this._CCNS_REG1.exec(content);
-        if (!result) return cc.size(0, 0);
-        return cc.size(parseFloat(result[1]), parseFloat(result[2]));
+        if (!result) return new Size(0, 0);
+        return new Size(parseFloat(result[1]), parseFloat(result[2]));
     },
 
     _getFrameConfig: function (url) {
@@ -98,7 +100,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
             var tempFrame = {};
 
             if (format == 0) {
-                tempFrame.rect = cc.rect(frameDict["x"], frameDict["y"], frameDict["width"], frameDict["height"]);
+                tempFrame.rect = new Rect(frameDict["x"], frameDict["y"], frameDict["width"], frameDict["height"]);
                 tempFrame.rotated = false;
                 tempFrame.offset = new Point(frameDict["offsetX"], frameDict["offsetY"]);
                 var ow = frameDict["originalWidth"];
@@ -110,7 +112,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
                 // Math.abs ow/oh
                 ow = Math.abs(ow);
                 oh = Math.abs(oh);
-                tempFrame.size = cc.size(ow, oh);
+                tempFrame.size = new Size(ow, oh);
             } else if (format == 1 || format == 2) {
                 tempFrame.rect = this._rectFromString(frameDict["frame"]);
                 tempFrame.rotated = frameDict["rotated"] || false;
@@ -121,7 +123,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
                 var spriteSize = this._sizeFromString(frameDict["spriteSize"]);
                 var textureRect = this._rectFromString(frameDict["textureRect"]);
                 if (spriteSize) {
-                    textureRect = cc.rect(textureRect.x, textureRect.y, spriteSize.width, spriteSize.height);
+                    textureRect = new Rect(textureRect.x, textureRect.y, spriteSize.width, spriteSize.height);
                 }
                 tempFrame.rect = textureRect;
                 tempFrame.rotated = frameDict["textureRotated"] || false; // == "true";
@@ -131,10 +133,10 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
             } else {
                 var tmpFrame = frameDict["frame"], tmpSourceSize = frameDict["sourceSize"];
                 key = frameDict["filename"] || key;
-                tempFrame.rect = cc.rect(tmpFrame["x"], tmpFrame["y"], tmpFrame["w"], tmpFrame["h"]);
+                tempFrame.rect = new Rect(tmpFrame["x"], tmpFrame["y"], tmpFrame["w"], tmpFrame["h"]);
                 tempFrame.rotated = frameDict["rotated"] || false;
                 tempFrame.offset = new Point(0, 0);
-                tempFrame.size = cc.size(tmpSourceSize["w"], tmpSourceSize["h"]);
+                tempFrame.size = new Size(tmpSourceSize["w"], tmpSourceSize["h"]);
             }
             frames[key] = tempFrame;
         }
@@ -171,7 +173,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
             var frame = frames[key];
             var spriteFrame = spriteFrames[key];
             if (!spriteFrame) {
-                spriteFrame = new cc.SpriteFrame(texture, cc.rect(frame.rect), frame.rotated, frame.offset, frame.size);
+                spriteFrame = new cc.SpriteFrame(texture, new Rect(frame.rect), frame.rotated, frame.offset, frame.size);
                 var aliases = frame.aliases;
                 if (aliases) {//set aliases
                     for (var i = 0, li = aliases.length; i < li; i++) {
@@ -195,7 +197,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
                         spriteFrame.setRotated(false);
 
                         var rect = spriteFrame._rect;
-                        spriteFrame.setRect(cc.rect(0, 0, rect.width, rect.height));
+                        spriteFrame.setRect(new Rect(0, 0, rect.width, rect.height));
                     }
                 }
                 spriteFrames[key] = spriteFrame;

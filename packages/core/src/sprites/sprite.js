@@ -27,6 +27,8 @@
 import EventHelper from '../event-manager/event-helper';
 import { Node } from '../base-nodes/node';
 import { Point } from '../cocoa/geometry/point';
+import { Rect } from '../cocoa/geometry/rect';
+import { Size } from '../cocoa/geometry/size';
 
 /**
  * <p>cc.Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -136,7 +138,7 @@ export class Sprite extends Node {
         self._offsetPosition = new Point(0, 0);
         self._unflippedOffsetPositionFromCenter = new Point(0, 0);
         self._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
-        self._rect = cc.rect(0, 0, 0, 0);
+        self._rect = new Rect(0, 0, 0, 0);
 
         self._softInit(fileName, rect, rotated);
     }
@@ -195,7 +197,7 @@ export class Sprite extends Node {
      * @return {cc.Rect}
      */
     getTextureRect() {
-        return cc.rect(this._rect);
+        return new Rect(this._rect);
     }
 
     /**
@@ -281,7 +283,7 @@ export class Sprite extends Node {
     setVertexRect(rect) {
         var locRect = this._rect;
         if (!locRect) {
-            this._rect = cc.rect(rect.x, rect.y, rect.width, rect.height);
+            this._rect = new Rect(rect.x, rect.y, rect.width, rect.height);
             this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
             return;
         }
@@ -505,7 +507,7 @@ export class Sprite extends Node {
 
         // updated in "useSelfRender"
         // Atlas: TexCoords
-        _t.setTextureRect(cc.rect(0, 0, 0, 0), false, cc.size(0, 0));
+        _t.setTextureRect(new Rect(0, 0, 0, 0), false, new Size(0, 0));
         return true;
     }
 
@@ -545,7 +547,7 @@ export class Sprite extends Node {
 
         if (!rect) {
             var size = tex.getContentSize();
-            rect = cc.rect(0, 0, size.width, size.height);
+            rect = new Rect(0, 0, size.width, size.height);
         }
         return this.initWithTexture(tex, rect);
     }
@@ -615,7 +617,7 @@ export class Sprite extends Node {
             _t._rect.height = rect.height;
         }
 
-        if (!rect) rect = cc.rect(0, 0, texture.width, texture.height);
+        if (!rect) rect = new Rect(0, 0, texture.width, texture.height);
 
         this._renderCmd._checkTextureBoundary(texture, rect, rotated);
 
@@ -797,7 +799,7 @@ export class Sprite extends Node {
 
     _changeRectWithTexture(texture) {
         var contentSize = texture._contentSize;
-        var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
+        var rect = new Rect(0, 0, contentSize.width, contentSize.height);
         this.setTextureRect(rect);
     }
 

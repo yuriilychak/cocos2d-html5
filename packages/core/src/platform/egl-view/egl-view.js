@@ -26,6 +26,8 @@
 
 import { NewClass } from '../class';
 import { Point } from '../../cocoa/geometry/point';
+import { Rect } from '../../cocoa/geometry/rect';
+import { Size } from '../../cocoa/geometry/size';
 
 var __BrowserGetter = {
     init: function () {
@@ -156,14 +158,14 @@ export class EGLView extends NewClass {
         __BrowserGetter.init(this);
 
         _t._frame = (cc.container.parentNode === d.body) ? d.documentElement : cc.container.parentNode;
-        _t._frameSize = cc.size(0, 0);
+        _t._frameSize = new Size(0, 0);
         _t._initFrameSize();
 
         var w = cc._canvas.width, h = cc._canvas.height;
-        _t._designResolutionSize = cc.size(w, h);
-        _t._originalDesignResolutionSize = cc.size(w, h);
-        _t._viewPortRect = cc.rect(0, 0, w, h);
-        _t._visibleRect = cc.rect(0, 0, w, h);
+        _t._designResolutionSize = new Size(w, h);
+        _t._originalDesignResolutionSize = new Size(w, h);
+        _t._viewPortRect = new Rect(0, 0, w, h);
+        _t._visibleRect = new Rect(0, 0, w, h);
         _t._contentTranslateLeftTop = {left: 0, top: 0};
         _t._viewName = "Cocos2dHTML5";
 
@@ -543,7 +545,7 @@ export class EGLView extends NewClass {
      * @return {cc.Size}
      */
     getCanvasSize() {
-        return cc.size(cc._canvas.width, cc._canvas.height);
+        return new Size(cc._canvas.width, cc._canvas.height);
     }
 
     /**
@@ -553,7 +555,7 @@ export class EGLView extends NewClass {
      * @return {cc.Size}
      */
     getFrameSize() {
-        return cc.size(this._frameSize.width, this._frameSize.height);
+        return new Size(this._frameSize.width, this._frameSize.height);
     }
 
     /**
@@ -576,7 +578,7 @@ export class EGLView extends NewClass {
      * @return {cc.Size}
      */
     getVisibleSize() {
-        return cc.size(this._visibleRect.width, this._visibleRect.height);
+        return new Size(this._visibleRect.width, this._visibleRect.height);
     }
 
     /**
@@ -584,7 +586,7 @@ export class EGLView extends NewClass {
      * @return {cc.Size}
      */
     getVisibleSizeInPixel() {
-        return cc.size( this._visibleRect.width * this._scaleX,
+        return new Size( this._visibleRect.width * this._scaleX,
                         this._visibleRect.height * this._scaleY );
     }
 
@@ -741,7 +743,7 @@ export class EGLView extends NewClass {
      * @return {cc.Size}
      */
     getDesignResolutionSize() {
-        return cc.size(this._designResolutionSize.width, this._designResolutionSize.height);
+        return new Size(this._designResolutionSize.width, this._designResolutionSize.height);
     }
 
     /**
@@ -803,7 +805,7 @@ export class EGLView extends NewClass {
 
         if (!_scissorRect) {
             var boxArr = gl.getParameter(gl.SCISSOR_BOX);
-            _scissorRect = cc.rect(boxArr[0], boxArr[1], boxArr[2], boxArr[3]);
+            _scissorRect = new Rect(boxArr[0], boxArr[1], boxArr[2], boxArr[3]);
         }
 
         if (_scissorRect.x != sx || _scissorRect.y != sy || _scissorRect.width != sw || _scissorRect.height != sh) {
@@ -830,11 +832,11 @@ export class EGLView extends NewClass {
     getScissorRect() {
         if (!_scissorRect) {
             var boxArr = gl.getParameter(gl.SCISSOR_BOX);
-            _scissorRect = cc.rect(boxArr[0], boxArr[1], boxArr[2], boxArr[3]);
+            _scissorRect = new Rect(boxArr[0], boxArr[1], boxArr[2], boxArr[3]);
         }
         var scaleXFactor = 1 / this._scaleX;
         var scaleYFactor = 1 / this._scaleY;
-        return cc.rect(
+        return new Rect(
             (_scissorRect.x - this._viewPortRect.x) * scaleXFactor,
             (_scissorRect.y - this._viewPortRect.y) * scaleYFactor,
             _scissorRect.width * scaleXFactor,

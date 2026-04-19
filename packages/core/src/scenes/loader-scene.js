@@ -25,6 +25,7 @@
 
 import { Scene } from './scene';
 import { Point } from '../cocoa/geometry/point';
+import { Color } from '../platform/types/color';
 
 /**
  * cc.LoaderScene is a scene that you can load it when you loading files
@@ -50,7 +51,7 @@ export class LoaderScene extends Scene {
         var logoWidth = 160;
         var logoHeight = 200;
 
-        var bgLayer = self._bgLayer = new cc.LayerColor(cc.color(32, 32, 32, 255));
+        var bgLayer = self._bgLayer = new cc.LayerColor(new Color(32, 32, 32, 255));
         self.addChild(bgLayer, 0);
 
         var fontSize = 24, lblHeight = -logoHeight / 2 + 100;
@@ -65,7 +66,7 @@ export class LoaderScene extends Scene {
         }
         var label = self._label = new cc.LabelTTF("Loading... 0%", "Arial", fontSize);
         label.setPosition(cc.pAdd(cc.visibleRect.center, new Point(0, lblHeight)));
-        label.setColor(cc.color(180, 180, 180));
+        label.setColor(new Color(180, 180, 180));
         bgLayer.addChild(this._label, 10);
         return true;
     }

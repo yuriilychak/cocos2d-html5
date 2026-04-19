@@ -26,6 +26,7 @@
 
 import { NewClass } from '../../platform/class';
 import { AnimationFrame } from './animation-frame';
+import { Rect } from '../../cocoa/geometry/rect';
 
 /**
  * <p>
@@ -130,7 +131,7 @@ export class Animation extends NewClass {
      */
     addSpriteFrameWithFile(fileName) {
         var texture = cc.textureCache.addImage(fileName);
-        var rect = cc.rect(0, 0, 0, 0);
+        var rect = new Rect(0, 0, 0, 0);
         rect.width = texture.width;
         rect.height = texture.height;
         var frame = new cc.SpriteFrame(texture, rect);

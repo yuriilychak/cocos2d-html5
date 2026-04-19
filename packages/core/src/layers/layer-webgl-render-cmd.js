@@ -24,6 +24,7 @@
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from '../base-nodes/node-webgl-render-cmd';
 import { Point } from '../cocoa/geometry/point';
+import { Rect } from '../cocoa/geometry/rect';
 
 /**
  * cc.Layer's WebGL render command
@@ -304,7 +305,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     _getClippingRect() {
         if (this._clippingRectDirty) {
             const node = this._node;
-            const rect = cc.rect(0, 0, node._contentSize.width, node._contentSize.height);
+            const rect = new Rect(0, 0, node._contentSize.width, node._contentSize.height);
             const trans = node.getNodeToWorldTransform();
             this._clipRect = cc._rectApplyAffineTransformIn(rect, trans);
         }
