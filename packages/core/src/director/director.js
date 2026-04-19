@@ -25,6 +25,18 @@
  ****************************************************************************/
 
 import { NewClass } from '../platform/class';
+import { DirectorCanvasRenderer } from './director-canvas';
+import { DirectorWebGLRenderer } from './director-webgl';
+import {
+    EVENT_PROJECTION_CHANGED,
+    EVENT_AFTER_UPDATE,
+    EVENT_AFTER_VISIT,
+    EVENT_AFTER_DRAW,
+    PROJECTION_2D,
+    PROJECTION_3D,
+    PROJECTION_CUSTOM,
+    PROJECTION_DEFAULT
+} from './constants';
 
 export var g_NumberOfDraws = 0;
 
@@ -36,15 +48,15 @@ export const defaultFPS = 60;
  * @extends cc.Class
  */
 export class Director extends NewClass {
-    static EVENT_PROJECTION_CHANGED = "director_projection_changed";
-    static EVENT_AFTER_UPDATE = "director_after_update";
-    static EVENT_AFTER_VISIT = "director_after_visit";
-    static EVENT_AFTER_DRAW = "director_after_draw";
+    static EVENT_PROJECTION_CHANGED = EVENT_PROJECTION_CHANGED;
+    static EVENT_AFTER_UPDATE = EVENT_AFTER_UPDATE;
+    static EVENT_AFTER_VISIT = EVENT_AFTER_VISIT;
+    static EVENT_AFTER_DRAW = EVENT_AFTER_DRAW;
 
-    static PROJECTION_2D = 0;
-    static PROJECTION_3D = 1;
-    static PROJECTION_CUSTOM = 3;
-    static PROJECTION_DEFAULT = 1; // PROJECTION_3D
+    static PROJECTION_2D = PROJECTION_2D;
+    static PROJECTION_3D = PROJECTION_3D;
+    static PROJECTION_CUSTOM = PROJECTION_CUSTOM;
+    static PROJECTION_DEFAULT = PROJECTION_DEFAULT;
 
     static sharedDirector = null;
     static firstUseDirector = true;
@@ -78,6 +90,7 @@ export class Director extends NewClass {
         this._eventAfterUpdate = null;
         this._eventAfterVisit = null;
         this._eventAfterDraw = null;
+        this._rendererDelegate = null;
         var self = this;
         self._lastUpdate = Date.now();
         cc.eventManager.addCustomListener(cc.game.EVENT_SHOW, () => {
@@ -118,6 +131,12 @@ export class Director extends NewClass {
         this._eventAfterDraw.setUserData(this);
         this._eventProjectionChanged = new cc.EventCustom(Director.EVENT_PROJECTION_CHANGED);
         this._eventProjectionChanged.setUserData(this);
+
+        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+            this._rendererDelegate = new DirectorCanvasRenderer(this);
+        } else {
+            this._rendererDelegate = new DirectorWebGLRenderer(this);
+        }
 
         return true;
     }
@@ -335,6 +354,55 @@ export class Director extends NewClass {
     }
 
     setDefaultValues() {
+    }
+
+    // Renderer-delegated methods
+    getProjection() {
+        return this._rendererDelegate.getProjection();
+    }
+
+    setProjection(projection) {
+        this._rendererDelegate.setProjection(projection);
+    }
+
+    setDepthTest(on) {
+        this._rendererDelegate.setDepthTest(on);
+    }
+
+    setClearColor(clearColor) {
+        this._rendererDelegate.setClearColor(clearColor);
+    }
+
+    setOpenGLView(openGLView) {
+        this._rendererDelegate.setOpenGLView(openGLView);
+    }
+
+    getVisibleSize() {
+        return this._rendererDelegate.getVisibleSize();
+    }
+
+    getVisibleOrigin() {
+        return this._rendererDelegate.getVisibleOrigin();
+    }
+
+    getOpenGLView() {
+        return this._rendererDelegate.getOpenGLView();
+    }
+
+    getZEye() {
+        return this._rendererDelegate.getZEye();
+    }
+
+    setViewport() {
+        this._rendererDelegate.setViewport();
+    }
+
+    setAlphaBlending(on) {
+        this._rendererDelegate.setAlphaBlending(on);
+    }
+
+    setGLDefaultValues() {
+        this._rendererDelegate.setGLDefaultValues();
     }
 
     setNextDeltaTimeZero(nextDeltaTimeZero) {

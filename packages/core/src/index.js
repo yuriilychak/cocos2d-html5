@@ -179,8 +179,7 @@ import { spriteFrameCache } from './sprites/sprite-frame-cache';
 // ======================================================================
 import { configuration } from './configuration';
 import { Director, DisplayLinkDirector, g_NumberOfDraws, defaultFPS } from './director/director';
-import { initDirectorCanvas } from './director/director-canvas';
-import { DirectorDelegate, initDirectorWebGL } from './director/director-webgl';
+import { DirectorDelegate } from './director/director-webgl';
 import { Scheduler } from './scheduler';
 import { PI2, DrawingPrimitiveCanvas } from './drawing-primitives-canvas';
 import { DrawingPrimitiveWebGL } from './drawing-primitives-webgl';
@@ -531,6 +530,4 @@ cc.ComponentContainer = ComponentContainer;
 // Init functions (must run AFTER cc.* class assignments)
 // ======================================================================
 initInputExtension(inputManager);
-initDirectorCanvas();
-initDirectorWebGL();
 initBinaryLoader();
