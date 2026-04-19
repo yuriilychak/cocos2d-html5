@@ -1,217 +1,377 @@
 // Boot (barrel — all cc.* assignments happen inside boot/index.js
 // so they're available before Core modules execute)
-import './boot';
+import "./boot";
 
 // ======================================================================
 // Platform — Foundation
 // ======================================================================
-import { classManager, NewClass } from './platform/class';
+import { classManager, NewClass } from "./platform/class";
 import {
-    KEY, FMT_JPG, FMT_PNG, FMT_TIFF, FMT_RAWDATA, FMT_WEBP, FMT_UNKNOWN,
-    getImageFormatByData, associateWithNative
-} from './platform/common';
+  KEY,
+  FMT_JPG,
+  FMT_PNG,
+  FMT_TIFF,
+  FMT_RAWDATA,
+  FMT_WEBP,
+  FMT_UNKNOWN,
+  getImageFormatByData,
+  associateWithNative
+} from "./platform/common";
 import {
-    FIX_ARTIFACTS_BY_STRECHING_TEXEL, DIRECTOR_STATS_POSITION, DIRECTOR_FPS_INTERVAL,
-    COCOSNODE_RENDER_SUBPIXEL, SPRITEBATCHNODE_RENDER_SUBPIXEL,
-    OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA, TEXTURE_ATLAS_USE_TRIANGLE_STRIP,
-    TEXTURE_ATLAS_USE_VAO, TEXTURE_NPOT_SUPPORT, RETINA_DISPLAY_FILENAME_SUFFIX,
-    USE_LA88_LABELS, SPRITE_DEBUG_DRAW, SPRITEBATCHNODE_DEBUG_DRAW,
-    LABELBMFONT_DEBUG_DRAW, LABELATLAS_DEBUG_DRAW, DRAWNODE_TOTAL_VERTICES,
-    DEFAULT_ENGINE
-} from './platform/config';
-import * as macroConstants from './platform/macro/constants';
-import * as macroUtils from './platform/macro/utils';
-import { SAXParser } from './platform/sax-parser/sax-parser';
-import { PlistParser } from './platform/sax-parser/plist-parser';
+  FIX_ARTIFACTS_BY_STRECHING_TEXEL,
+  DIRECTOR_STATS_POSITION,
+  DIRECTOR_FPS_INTERVAL,
+  COCOSNODE_RENDER_SUBPIXEL,
+  SPRITEBATCHNODE_RENDER_SUBPIXEL,
+  OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA,
+  TEXTURE_ATLAS_USE_TRIANGLE_STRIP,
+  TEXTURE_ATLAS_USE_VAO,
+  TEXTURE_NPOT_SUPPORT,
+  RETINA_DISPLAY_FILENAME_SUFFIX,
+  USE_LA88_LABELS,
+  SPRITE_DEBUG_DRAW,
+  SPRITEBATCHNODE_DEBUG_DRAW,
+  LABELBMFONT_DEBUG_DRAW,
+  LABELATLAS_DEBUG_DRAW,
+  DRAWNODE_TOTAL_VERTICES,
+  DEFAULT_ENGINE,
+  ENGINE_VERSION
+} from "./platform/config";
+import * as macroConstants from "./platform/macro/constants";
+import * as macroUtils from "./platform/macro/utils";
+import { SAXParser } from "./platform/sax-parser/sax-parser";
+import { PlistParser } from "./platform/sax-parser/plist-parser";
 import {
-    _txtLoader, _jsonLoader, _jsLoader, _imgLoader, _serverImgLoader,
-    _plistLoader, _fontLoader, _binaryLoader, _csbLoader
-} from './platform/loaders';
-import { screen } from './platform/screen';
-import { visibleRect } from './platform/visible-rect';
+  _txtLoader,
+  _jsonLoader,
+  _jsLoader,
+  _imgLoader,
+  _serverImgLoader,
+  _plistLoader,
+  _fontLoader,
+  _binaryLoader,
+  _csbLoader
+} from "./platform/loaders";
+import { screen } from "./platform/screen";
+import { visibleRect } from "./platform/visible-rect";
 import {
-    UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight,
-    UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationPortrait,
-    inputManager
-} from './platform/input-manager';
-import { initInputExtension } from './platform/input-extension';
+  UIInterfaceOrientationLandscapeLeft,
+  UIInterfaceOrientationLandscapeRight,
+  UIInterfaceOrientationPortraitUpsideDown,
+  UIInterfaceOrientationPortrait,
+  inputManager
+} from "./platform/input-manager";
+import { initInputExtension } from "./platform/input-extension";
 
 // Platform — Types
 import {
-    Color, color, colorEqual, hexToColor, colorToHex, Acceleration,
-    TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_RIGHT,
-    VERTICAL_TEXT_ALIGNMENT_TOP, VERTICAL_TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_BOTTOM
-} from './platform/types/color';
+  Color,
+  color,
+  colorEqual,
+  hexToColor,
+  colorToHex,
+  Acceleration,
+  TEXT_ALIGNMENT_LEFT,
+  TEXT_ALIGNMENT_CENTER,
+  TEXT_ALIGNMENT_RIGHT,
+  VERTICAL_TEXT_ALIGNMENT_TOP,
+  VERTICAL_TEXT_ALIGNMENT_CENTER,
+  VERTICAL_TEXT_ALIGNMENT_BOTTOM
+} from "./platform/types/color";
 import {
-    Vertex2F, Vertex3F, Tex2F, Quad2, Quad3,
-    V3F_C4B_T2F, V3F_C4B_T2F_Quad, V3F_C4B_T2F_QuadZero,
-    V3F_C4B_T2F_QuadCopy, V3F_C4B_T2F_QuadsCopy,
-    V2F_C4B_T2F, V2F_C4B_T2F_Triangle,
-    vertex2, vertex3, tex2
-} from './platform/types/vertex';
-import { BlendFunc, blendFuncDisable } from './platform/types/blend-func';
-import { FontDefinition } from './platform/types/font-definition';
-import { _Dictionary } from './platform/types/dictionary';
+  Vertex2F,
+  Vertex3F,
+  Tex2F,
+  Quad2,
+  Quad3,
+  V3F_C4B_T2F,
+  V3F_C4B_T2F_Quad,
+  V3F_C4B_T2F_QuadZero,
+  V3F_C4B_T2F_QuadCopy,
+  V3F_C4B_T2F_QuadsCopy,
+  V2F_C4B_T2F,
+  V2F_C4B_T2F_Triangle,
+  vertex2,
+  vertex3,
+  tex2
+} from "./platform/types/vertex";
+import { BlendFunc, blendFuncDisable } from "./platform/types/blend-func";
+import { FontDefinition } from "./platform/types/font-definition";
+import { _Dictionary } from "./platform/types/dictionary";
 
 // Platform — EGLView
-import { EGLView } from './platform/egl-view/egl-view';
-import { ContainerStrategy } from './platform/egl-view/container-strategy';
-import { ContentStrategy } from './platform/egl-view/content-strategy';
-import { ResolutionPolicy } from './platform/egl-view/resolution-policy';
+import { EGLView } from "./platform/egl-view/egl-view";
+import { ContainerStrategy } from "./platform/egl-view/container-strategy";
+import { ContentStrategy } from "./platform/egl-view/content-strategy";
+import { ResolutionPolicy } from "./platform/egl-view/resolution-policy";
 import {
-    Touches, TouchesIntergerDict,
-    DENSITYDPI_DEVICE, DENSITYDPI_HIGH, DENSITYDPI_MEDIUM, DENSITYDPI_LOW
-} from './platform/egl-view/constants';
+  Touches,
+  TouchesIntergerDict,
+  DENSITYDPI_DEVICE,
+  DENSITYDPI_HIGH,
+  DENSITYDPI_MEDIUM,
+  DENSITYDPI_LOW
+} from "./platform/egl-view/constants";
 
 // ======================================================================
 // Cocoa — Geometry & Transforms
 // ======================================================================
-import { Point, p, pointEqualToPoint } from './cocoa/geometry/point';
-import { Size, size, sizeEqualToSize } from './cocoa/geometry/size';
+import { Point, p, pointEqualToPoint } from "./cocoa/geometry/point";
+import { Size, size, sizeEqualToSize } from "./cocoa/geometry/size";
 import {
-    Rect, rect, rectEqualToRect, _rectEqualToZero, rectContainsRect,
-    rectGetMaxX, rectGetMidX, rectGetMinX, rectGetMaxY, rectGetMidY, rectGetMinY,
-    rectContainsPoint, rectIntersectsRect, rectOverlapsRect, rectUnion, rectIntersection
-} from './cocoa/geometry/rect';
+  Rect,
+  rect,
+  rectEqualToRect,
+  _rectEqualToZero,
+  rectContainsRect,
+  rectGetMaxX,
+  rectGetMidX,
+  rectGetMinX,
+  rectGetMaxY,
+  rectGetMidY,
+  rectGetMinY,
+  rectContainsPoint,
+  rectIntersectsRect,
+  rectOverlapsRect,
+  rectUnion,
+  rectIntersection
+} from "./cocoa/geometry/rect";
 import {
-    AffineTransform, affineTransformMake, pointApplyAffineTransform,
-    _pointApplyAffineTransform, sizeApplyAffineTransform, affineTransformMakeIdentity,
-    rectApplyAffineTransform, _rectApplyAffineTransformIn,
-    affineTransformTranslate, affineTransformScale, affineTransformRotate,
-    affineTransformConcat, affineTransformConcatIn, affineTransformEqualToTransform,
-    affineTransformInvert, affineTransformInvertOut
-} from './cocoa/affine-transform';
+  AffineTransform,
+  affineTransformMake,
+  pointApplyAffineTransform,
+  _pointApplyAffineTransform,
+  sizeApplyAffineTransform,
+  affineTransformMakeIdentity,
+  rectApplyAffineTransform,
+  _rectApplyAffineTransformIn,
+  affineTransformTranslate,
+  affineTransformScale,
+  affineTransformRotate,
+  affineTransformConcat,
+  affineTransformConcatIn,
+  affineTransformEqualToTransform,
+  affineTransformInvert,
+  affineTransformInvertOut
+} from "./cocoa/affine-transform";
 
 // ======================================================================
 // Support
 // ======================================================================
 import {
-    POINT_EPSILON, pNeg, pAdd, pSub, pMult, pMidpoint, pDot, pCross,
-    pPerp, pRPerp, pProject, pRotate, pUnrotate, pLengthSQ, pDistanceSQ,
-    pLength, pDistance, pNormalize, pForAngle, pToAngle, clampf,
-    pClamp, pFromSize, pCompOp, pLerp, pFuzzyEqual, pCompMult,
-    pAngleSigned, pAngle, pRotateByAngle, pLineIntersect, pSegmentIntersect,
-    pIntersectPoint, pSameAs, pZeroIn, pIn, pMultIn, pSubIn, pAddIn, pNormalizeIn
-} from './support/point-extension';
-import { vertexLineToPolygon, vertexLineIntersect, vertexListIsClockwise } from './support/vertex';
-import { CGAffineToGL, GLToCGAffine } from './support/transform-utils';
+  POINT_EPSILON,
+  pNeg,
+  pAdd,
+  pSub,
+  pMult,
+  pMidpoint,
+  pDot,
+  pCross,
+  pPerp,
+  pRPerp,
+  pProject,
+  pRotate,
+  pUnrotate,
+  pLengthSQ,
+  pDistanceSQ,
+  pLength,
+  pDistance,
+  pNormalize,
+  pForAngle,
+  pToAngle,
+  clampf,
+  pClamp,
+  pFromSize,
+  pCompOp,
+  pLerp,
+  pFuzzyEqual,
+  pCompMult,
+  pAngleSigned,
+  pAngle,
+  pRotateByAngle,
+  pLineIntersect,
+  pSegmentIntersect,
+  pIntersectPoint,
+  pSameAs,
+  pZeroIn,
+  pIn,
+  pMultIn,
+  pSubIn,
+  pAddIn,
+  pNormalizeIn
+} from "./support/point-extension";
+import {
+  vertexLineToPolygon,
+  vertexLineIntersect,
+  vertexListIsClockwise
+} from "./support/vertex";
+import { CGAffineToGL, GLToCGAffine } from "./support/transform-utils";
 
 // ======================================================================
 // Events
 // ======================================================================
-import EventHelper from './event-manager/event-helper';
-import Touch from './event-manager/touch';
-import Event from './event-manager/event/event';
-import EventCustom from './event-manager/event/event-custom';
-import EventMouse from './event-manager/event/event-mouse';
-import EventTouch from './event-manager/event/event-touch';
-import EventFocus from './event-manager/event/event-focus';
-import { TOUCH, KEYBOARD, ACCELERATION, MOUSE, FOCUS, CUSTOM } from './event-manager/event/constants';
-import EventListener from './event-manager/event-listener/event-listener';
-import _EventListenerCustom from './event-manager/event-listener/event-listener-custom';
-import _EventListenerMouse from './event-manager/event-listener/event-listener-mouse';
-import _EventListenerTouchOneByOne from './event-manager/event-listener/event-listener-touch-one-by-one';
-import _EventListenerTouchAllAtOnce from './event-manager/event-listener/event-listener-touch-all-at-once';
-import _EventListenerFocus from './event-manager/event-listener/event-listener-focus';
-import { _EventListenerVector } from './event-manager/event-manager';
-import eventManager from './event-manager/event-manager';
-import EventAcceleration from './event-manager/event-extension/event-acceleration';
-import EventKeyboard from './event-manager/event-extension/event-keyboard';
-import _EventListenerKeyboard from './event-manager/event-extension/event-listener-keyboard';
-import _EventListenerAcceleration from './event-manager/event-extension/event-listener-acceleration';
+import EventHelper from "./event-manager/event-helper";
+import Touch from "./event-manager/touch";
+import Event from "./event-manager/event/event";
+import EventCustom from "./event-manager/event/event-custom";
+import EventMouse from "./event-manager/event/event-mouse";
+import EventTouch from "./event-manager/event/event-touch";
+import EventFocus from "./event-manager/event/event-focus";
+import {
+  TOUCH,
+  KEYBOARD,
+  ACCELERATION,
+  MOUSE,
+  FOCUS,
+  CUSTOM
+} from "./event-manager/event/constants";
+import EventListener from "./event-manager/event-listener/event-listener";
+import _EventListenerCustom from "./event-manager/event-listener/event-listener-custom";
+import _EventListenerMouse from "./event-manager/event-listener/event-listener-mouse";
+import _EventListenerTouchOneByOne from "./event-manager/event-listener/event-listener-touch-one-by-one";
+import _EventListenerTouchAllAtOnce from "./event-manager/event-listener/event-listener-touch-all-at-once";
+import _EventListenerFocus from "./event-manager/event-listener/event-listener-focus";
+import { _EventListenerVector } from "./event-manager/event-manager";
+import eventManager from "./event-manager/event-manager";
+import EventAcceleration from "./event-manager/event-extension/event-acceleration";
+import EventKeyboard from "./event-manager/event-extension/event-keyboard";
+import _EventListenerKeyboard from "./event-manager/event-extension/event-listener-keyboard";
+import _EventListenerAcceleration from "./event-manager/event-extension/event-listener-acceleration";
 
 // ======================================================================
 // Renderer & Utils
 // ======================================================================
-import { GlobalVertexBuffer } from './renderer/global-vertex-buffer';
-import { rendererCanvas, CanvasContextWrapper } from './renderer/renderer-canvas';
-import { rendererWebGL } from './renderer/renderer-webgl';
-import { Region, DirtyRegion } from './renderer/dirty-region';
-import { _convertResponseBodyToText, loadBinary, _str2Uint8Array, loadBinarySync, initBinaryLoader } from './utils/binary-loader';
-import { profiler } from './utils/profiler';
+import { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
+import {
+  rendererCanvas,
+  CanvasContextWrapper
+} from "./renderer/renderer-canvas";
+import { rendererWebGL } from "./renderer/renderer-webgl";
+import { Region, DirtyRegion } from "./renderer/dirty-region";
+import {
+  _convertResponseBodyToText,
+  loadBinary,
+  _str2Uint8Array,
+  loadBinarySync,
+  initBinaryLoader
+} from "./utils/binary-loader";
+import { profiler } from "./utils/profiler";
 
 // ======================================================================
 // Base Nodes
 // ======================================================================
-import { CustomRenderCmd, dirtyFlags, RenderCmd, CanvasRenderCmd as NodeCanvasRenderCmd } from './base-nodes/node-canvas-render-cmd';
-import { WebGLRenderCmd as NodeWebGLRenderCmd } from './base-nodes/node-webgl-render-cmd';
-import { Node, NODE_TAG_INVALID, s_globalOrderOfArrival } from './base-nodes/node';
-import { AtlasNode } from './base-nodes/atlas-node';
-import { AtlasNodeCanvasRenderCmd } from './base-nodes/atlas-node-canvas-render-cmd';
-import { AtlasNodeWebGLRenderCmd } from './base-nodes/atlas-node-webgl-render-cmd';
+import {
+  CustomRenderCmd,
+  dirtyFlags,
+  RenderCmd,
+  CanvasRenderCmd as NodeCanvasRenderCmd
+} from "./base-nodes/node-canvas-render-cmd";
+import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
+import {
+  Node,
+  NODE_TAG_INVALID,
+  s_globalOrderOfArrival
+} from "./base-nodes/node";
+import { AtlasNode } from "./base-nodes/atlas-node";
+import { AtlasNodeCanvasRenderCmd } from "./base-nodes/atlas-node-canvas-render-cmd";
+import { AtlasNodeWebGLRenderCmd } from "./base-nodes/atlas-node-webgl-render-cmd";
 
 // ======================================================================
 // Textures (side-effect imports — deferred cc.Texture2D via event handler)
 // ======================================================================
-import { ALIGN_CENTER, ALIGN_TOP, ALIGN_TOP_RIGHT, ALIGN_RIGHT, ALIGN_BOTTOM_RIGHT, ALIGN_BOTTOM, ALIGN_BOTTOM_LEFT, ALIGN_LEFT, ALIGN_TOP_LEFT } from './textures/constants';
-import { textureCache } from './textures/texture-cache';
-import { TextureAtlas } from './textures/texture-atlas';
-import './textures/texture-2d';
+import {
+  ALIGN_CENTER,
+  ALIGN_TOP,
+  ALIGN_TOP_RIGHT,
+  ALIGN_RIGHT,
+  ALIGN_BOTTOM_RIGHT,
+  ALIGN_BOTTOM,
+  ALIGN_BOTTOM_LEFT,
+  ALIGN_LEFT,
+  ALIGN_TOP_LEFT
+} from "./textures/constants";
+import { textureCache } from "./textures/texture-cache";
+import { TextureAtlas } from "./textures/texture-atlas";
+import "./textures/texture-2d";
 
 // ======================================================================
 // Scenes & Layers
 // ======================================================================
-import { Scene } from './scenes/scene';
-import { LoaderScene } from './scenes/loader-scene';
-import { Layer } from './layers/layer';
-import { LayerColor } from './layers/layer-color';
-import { LayerGradient } from './layers/layer-gradient';
-import { LayerMultiplex } from './layers/layer-multiplex';
-import { LayerCanvasRenderCmd, LayerColorCanvasRenderCmd, LayerGradientCanvasRenderCmd } from './layers/layer-canvas-render-cmd';
-import { LayerWebGLRenderCmd, LayerColorWebGLRenderCmd, LayerGradientWebGLRenderCmd } from './layers/layer-webgl-render-cmd';
+import { Scene } from "./scenes/scene";
+import { LoaderScene } from "./scenes/loader-scene";
+import { Layer } from "./layers/layer";
+import { LayerColor } from "./layers/layer-color";
+import { LayerGradient } from "./layers/layer-gradient";
+import { LayerMultiplex } from "./layers/layer-multiplex";
+import {
+  LayerCanvasRenderCmd,
+  LayerColorCanvasRenderCmd,
+  LayerGradientCanvasRenderCmd
+} from "./layers/layer-canvas-render-cmd";
+import {
+  LayerWebGLRenderCmd,
+  LayerColorWebGLRenderCmd,
+  LayerGradientWebGLRenderCmd
+} from "./layers/layer-webgl-render-cmd";
 
 // ======================================================================
 // Sprites
 // ======================================================================
-import { Sprite } from './sprites/sprite';
-import { SpriteCanvasRenderCmd } from './sprites/sprite-canvas-render-cmd';
-import { SpriteWebGLRenderCmd } from './sprites/sprite-webgl-render-cmd';
-import { SpriteBatchNode } from './sprites/sprite-batch-node';
-import { BakeSprite } from './sprites/bake-sprite';
-import { AnimationFrame } from './sprites/animation/animation-frame';
-import { Animation } from './sprites/animation/animation';
-import { animationCache } from './sprites/animation-cache';
-import { SpriteFrame } from './sprites/sprite-frame';
-import { spriteFrameCache } from './sprites/sprite-frame-cache';
+import { Sprite } from "./sprites/sprite";
+import { SpriteCanvasRenderCmd } from "./sprites/sprite-canvas-render-cmd";
+import { SpriteWebGLRenderCmd } from "./sprites/sprite-webgl-render-cmd";
+import { SpriteBatchNode } from "./sprites/sprite-batch-node";
+import { BakeSprite } from "./sprites/bake-sprite";
+import { AnimationFrame } from "./sprites/animation/animation-frame";
+import { Animation } from "./sprites/animation/animation";
+import { animationCache } from "./sprites/animation-cache";
+import { SpriteFrame } from "./sprites/sprite-frame";
+import { spriteFrameCache } from "./sprites/sprite-frame-cache";
 
 // ======================================================================
 // Director, Scheduler, ActionManager
 // ======================================================================
-import { configuration } from './configuration';
-import { Director, DisplayLinkDirector, g_NumberOfDraws, defaultFPS } from './director/director';
-import { DirectorDelegate } from './director/director-webgl';
-import { Scheduler } from './scheduler';
-import { PI2, DrawingPrimitiveCanvas } from './drawing-primitives-canvas';
-import { DrawingPrimitiveWebGL } from './drawing-primitives-webgl';
+import { Configuration } from "./configuration";
+import {
+  Director,
+  DisplayLinkDirector,
+  g_NumberOfDraws,
+  defaultFPS
+} from "./director/director";
+import { DirectorDelegate } from "./director/director-webgl";
+import { Scheduler } from "./scheduler";
+import { PI2, DrawingPrimitiveCanvas } from "./drawing-primitives-canvas";
+import { DrawingPrimitiveWebGL } from "./drawing-primitives-webgl";
 
 // ======================================================================
 // LabelTTF
 // ======================================================================
-import { LabelTTF } from './labelttf/label-ttf';
+import { LabelTTF } from "./labelttf/label-ttf";
 import {
-    CanvasRenderCmd as LabelTTFCanvasRenderCmd,
-    CacheCanvasRenderCmd as LabelTTFCacheCanvasRenderCmd,
-    _textAlign, _textBaseline,
-    wrapInspection as LabelTTFWrapInspection,
-    _wordRex as LabelTTFWordRex,
-    _symbolRex as LabelTTFSymbolRex,
-    _lastWordRex as LabelTTFLastWordRex,
-    _lastEnglish as LabelTTFLastEnglish,
-    _firsrEnglish as LabelTTFFirsrEnglish
-} from './labelttf/label-ttf-canvas-render-cmd';
-import { WebGLRenderCmd as LabelTTFWebGLRenderCmd } from './labelttf/label-ttf-webgl-render-cmd';
+  CanvasRenderCmd as LabelTTFCanvasRenderCmd,
+  CacheCanvasRenderCmd as LabelTTFCacheCanvasRenderCmd,
+  _textAlign,
+  _textBaseline,
+  wrapInspection as LabelTTFWrapInspection,
+  _wordRex as LabelTTFWordRex,
+  _symbolRex as LabelTTFSymbolRex,
+  _lastWordRex as LabelTTFLastWordRex,
+  _lastEnglish as LabelTTFLastEnglish,
+  _firsrEnglish as LabelTTFFirsrEnglish
+} from "./labelttf/label-ttf-canvas-render-cmd";
+import { WebGLRenderCmd as LabelTTFWebGLRenderCmd } from "./labelttf/label-ttf-webgl-render-cmd";
 
 // ======================================================================
 // Action Manager, Components
 // ======================================================================
-import { HashElement, ActionManager } from './action-manager';
-import { Component } from './components/component';
-import { ComponentContainer } from './components/component-container';
+import { HashElement, ActionManager } from "./action-manager";
+import { Component } from "./components/component";
+import { ComponentContainer } from "./components/component-container";
 
 // ======================================================================
 // Kazmath
 // ======================================================================
-import './kazmath';
+import "./kazmath";
 
 // ======================================================================
 // cc.* namespace assignments
@@ -237,7 +397,8 @@ cc.DIRECTOR_STATS_POSITION = DIRECTOR_STATS_POSITION;
 cc.DIRECTOR_FPS_INTERVAL = DIRECTOR_FPS_INTERVAL;
 cc.COCOSNODE_RENDER_SUBPIXEL = COCOSNODE_RENDER_SUBPIXEL;
 cc.SPRITEBATCHNODE_RENDER_SUBPIXEL = SPRITEBATCHNODE_RENDER_SUBPIXEL;
-cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA = OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA;
+cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA =
+  OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA;
 cc.TEXTURE_ATLAS_USE_TRIANGLE_STRIP = TEXTURE_ATLAS_USE_TRIANGLE_STRIP;
 cc.TEXTURE_ATLAS_USE_VAO = TEXTURE_ATLAS_USE_VAO;
 cc.TEXTURE_NPOT_SUPPORT = TEXTURE_NPOT_SUPPORT;
@@ -249,6 +410,7 @@ cc.LABELBMFONT_DEBUG_DRAW = LABELBMFONT_DEBUG_DRAW;
 cc.LABELATLAS_DEBUG_DRAW = LABELATLAS_DEBUG_DRAW;
 cc.DRAWNODE_TOTAL_VERTICES = DRAWNODE_TOTAL_VERTICES;
 cc.DEFAULT_ENGINE = DEFAULT_ENGINE;
+cc.ENGINE_VERSION = ENGINE_VERSION;
 
 // Platform — Macro constants & utils
 Object.assign(cc, macroConstants);
@@ -271,12 +433,22 @@ cc._fontLoader = _fontLoader;
 cc._binaryLoader = _binaryLoader;
 cc._csbLoader = _csbLoader;
 
+cc.loader.register(["txt", "xml", "vsh", "fsh", "atlas"], _txtLoader);
+cc.loader.register(["json", "ExportJson"], _jsonLoader);
+cc.loader.register(["js"], _jsLoader);
+cc.loader.register(["png", "jpg", "bmp", "jpeg", "gif", "ico", "tiff", "webp"], _imgLoader);
+cc.loader.register(["serverImg"], _serverImgLoader);
+cc.loader.register(["plist"], _plistLoader);
+cc.loader.register(["font", "eot", "ttf", "woff", "svg", "ttc"], _fontLoader);
+cc.loader.register(["csb"], _csbLoader);
+
 // Platform — Screen, VisibleRect, InputManager
 cc.screen = screen;
 cc.visibleRect = visibleRect;
 cc.UIInterfaceOrientationLandscapeLeft = UIInterfaceOrientationLandscapeLeft;
 cc.UIInterfaceOrientationLandscapeRight = UIInterfaceOrientationLandscapeRight;
-cc.UIInterfaceOrientationPortraitUpsideDown = UIInterfaceOrientationPortraitUpsideDown;
+cc.UIInterfaceOrientationPortraitUpsideDown =
+  UIInterfaceOrientationPortraitUpsideDown;
 cc.UIInterfaceOrientationPortrait = UIInterfaceOrientationPortrait;
 cc.inputManager = inputManager;
 
@@ -507,7 +679,7 @@ cc.SpriteFrame = SpriteFrame;
 cc.spriteFrameCache = spriteFrameCache;
 
 // Director, Scheduler, ActionManager
-cc.configuration = configuration;
+cc.configuration = Configuration.getInstance();
 cc.Director = Director;
 cc.DisplayLinkDirector = DisplayLinkDirector;
 cc.g_NumberOfDraws = g_NumberOfDraws;

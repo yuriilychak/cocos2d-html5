@@ -474,13 +474,7 @@ var LayerTestBlend = class LayerTestBlend extends LayerTest {
     }
 
 };
-
-//------------------------------------------------------------------
-//
-// LayerGradient
-//
-//------------------------------------------------------------------
-var LayerGradient = class LayerGradient extends LayerTest {
+class LayerGradientTest extends LayerTest {
     constructor() {
         //----start7----onEnter
         super();
@@ -581,7 +575,7 @@ var LayerGradient = class LayerGradient extends LayerTest {
 var arrayOfLayerTest = [
     LayerTest1,
     LayerTest2,
-    LayerGradient,
+    LayerGradientTest,
     LayerTestBlend,
     IgnoreAnchorpointTest1,
     IgnoreAnchorpointTest2,

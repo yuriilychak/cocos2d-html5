@@ -26,6 +26,7 @@
 
 import { NewClass } from '../platform/class';
 import EventHelper from '../event-manager/event-helper';
+import Game from '../boot/game';
 import { Point } from '../cocoa/geometry/point';
 import { Rect } from '../cocoa/geometry/rect';
 import { Size } from '../cocoa/geometry/size';
@@ -250,7 +251,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
                         this._textureLoaded = true;
                         if (
                             this._rotated &&
-                            cc._renderType === cc.game.RENDER_TYPE_CANVAS
+                            cc._renderType === Game.RENDER_TYPE_CANVAS
                         ) {
                             var tempElement = sender.getHtmlElementObj();
                             tempElement = cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas(

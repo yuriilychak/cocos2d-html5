@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { RAD, DEG } from './constants';
+import Game from '../../boot/game';
 import { Point } from '../../cocoa/geometry/point';
 import { Rect } from '../../cocoa/geometry/rect';
 import { Size } from '../../cocoa/geometry/size';
@@ -262,7 +263,7 @@ export function rectPointsToPixels(point) {
  * @function
  */
 export function checkGLErrorDebug() {
-    if (cc.renderMode === cc.game.RENDER_TYPE_WEBGL) {
+    if (cc.renderMode === Game.RENDER_TYPE_WEBGL) {
         var _error = cc._renderContext.getError();
         if (_error) {
             cc.log(cc._LogInfos.checkGLErrorDebug, _error);

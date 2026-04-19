@@ -28,8 +28,6 @@
 
 var sceneIdx = -1;
 
-var spriteFrameCache = cc.spriteFrameCache;
-
 //------------------------------------------------------------------
 //
 // S9SpriteTestDemo

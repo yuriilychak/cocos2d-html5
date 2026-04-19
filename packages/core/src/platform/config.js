@@ -238,12 +238,14 @@ export const LABELATLAS_DEBUG_DRAW = 0;
 
 export const DRAWNODE_TOTAL_VERTICES = 20000;
 
+export const ENGINE_VERSION = "Cocos2d-JS v3.17";
+
 /**
  * Default engine
  * @constant
  * @type {String}
  */
-export const DEFAULT_ENGINE = cc.ENGINE_VERSION + "-canvas";
+export const DEFAULT_ENGINE = ENGINE_VERSION + "-canvas";
 
 /**
  * <p>

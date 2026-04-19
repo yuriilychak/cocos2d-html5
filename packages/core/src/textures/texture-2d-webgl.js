@@ -26,6 +26,8 @@
 
 import { NewClass } from '../platform/class';
 import { Size } from '../cocoa/geometry/size';
+import EventHelper from '../event-manager/event-helper';
+import Game from '../boot/game';
 
 export function initWebGLTexture2D() {
 
@@ -51,7 +53,7 @@ export function initWebGLTexture2D() {
      * @property {Number}           maxT            - Texture max T
      */
     //Original : Texture2DWebGL
-    cc.Texture2D = class Texture2D extends NewClass {
+    cc.Texture2D = class Texture2D extends EventHelper(NewClass) {
         /**
          * constructor of cc.Texture2D
          */
@@ -454,7 +456,7 @@ export function initWebGLTexture2D() {
                     ? premultiplied
                     : self._hasPremultipliedAlpha;
             // Not sure about this ! Some texture need to be updated even after loaded
-            if (!cc.game._rendererInitialized)
+            if (!Game.getInstance()._rendererInitialized)
                 return;
             if (!self._htmlElementObj)
                 return;
@@ -846,7 +848,7 @@ export function initWebGLTextureCache() {
     _p.handleLoadedTexture = function (url, img) {
         var locTexs = this._textures, tex, ext;
         //remove judge(webgl)
-        if (!cc.game._rendererInitialized) {
+        if (!Game.getInstance()._rendererInitialized) {
             locTexs = this._loadedTexturesBefore;
         }
         tex = locTexs[url];
@@ -884,7 +886,7 @@ export function initWebGLTextureCache() {
 
         var locTexs = this._textures;
         //remove judge(webgl)
-        if (!cc.game._rendererInitialized) {
+        if (!Game.getInstance()._rendererInitialized) {
             locTexs = this._loadedTexturesBefore;
         }
         var tex = locTexs[url] || locTexs[cc.loader._getAliase(url)];

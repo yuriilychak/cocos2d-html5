@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Sprite } from '../sprites/sprite';
+import Game from '../boot/game';
 import { Point } from '../cocoa/geometry/point';
 import { Color } from '../platform/types/color';
 import { Size } from '../cocoa/geometry/size';
@@ -796,7 +797,7 @@ export class LabelTTF extends Sprite {
         this._onCacheCanvasMode = onCacheMode;
     }
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
+        if (cc._renderType === Game.RENDER_TYPE_WEBGL)
             return new cc.LabelTTF.WebGLRenderCmd(this);
         else if (this._onCacheCanvasMode)
             return new cc.LabelTTF.CacheCanvasRenderCmd(this);

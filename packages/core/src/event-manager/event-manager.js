@@ -25,6 +25,7 @@
 
 import { NewClass } from '../platform/class';
 import { Event, EventCustom, EventTouch } from './event';
+import Game from '../boot/game';
 import {
     EventListener,
     _EventListenerCustom,
@@ -132,7 +133,7 @@ const eventManager = /** @lends eventManager# */{
     _isEnabled: false,
     _nodePriorityIndex: 0,
 
-    _internalCustomListenerIDs: [cc.game.EVENT_HIDE, cc.game.EVENT_SHOW],
+    _internalCustomListenerIDs: [Game.EVENT_HIDE, Game.EVENT_SHOW],
 
     _setDirtyForNode: function (node) {
         // Mark the node dirty only when there is an event listener associated with it.

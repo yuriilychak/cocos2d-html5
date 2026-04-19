@@ -90,7 +90,7 @@ function _load(config) {
 
 function _windowLoaded() {
     this.removeEventListener('load', _windowLoaded, false);
-    _load(cc.game.config);
+    _load(Game.getInstance().config);
 }
 
 export function initEngine(config, cb) {

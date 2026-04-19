@@ -26,6 +26,7 @@
 
 import { Node } from './node';
 import EventHelper from '../event-manager/event-helper';
+import Game from '../boot/game';
 
 /**
  * <p>cc.AtlasNode is a subclass of cc.Node, it knows how to render a TextureAtlas object. </p>
@@ -89,7 +90,7 @@ export class AtlasNode extends EventHelper(Node) {
     }
 
     _createRenderCmd() {
-        if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if(cc._renderType === Game.RENDER_TYPE_CANVAS)
             this._renderCmd = new cc.AtlasNode.CanvasRenderCmd(this);
         else
             this._renderCmd = new cc.AtlasNode.WebGLRenderCmd(this);

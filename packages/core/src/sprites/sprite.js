@@ -26,6 +26,7 @@
 
 import EventHelper from '../event-manager/event-helper';
 import { Node } from '../base-nodes/node';
+import Game from '../boot/game';
 import { Point } from '../cocoa/geometry/point';
 import { Rect } from '../cocoa/geometry/rect';
 import { Size } from '../cocoa/geometry/size';
@@ -876,7 +877,7 @@ export class Sprite extends EventHelper(Node) {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if (cc._renderType === Game.RENDER_TYPE_CANVAS)
             return new cc.Sprite.CanvasRenderCmd(this);
         else return new cc.Sprite.WebGLRenderCmd(this);
     }

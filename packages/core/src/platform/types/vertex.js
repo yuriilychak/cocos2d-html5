@@ -24,6 +24,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+class WebGLColor {
+    static BYTES_PER_ELEMENT = 4;
+
+    constructor(r, g, b, a, arrayBuffer, offset) {
+        this._arrayBuffer = arrayBuffer || new ArrayBuffer(WebGLColor.BYTES_PER_ELEMENT);
+        this._offset = offset || 0;
+        this._view = new Uint8Array(this._arrayBuffer, this._offset, 4);
+        this._view[0] = r || 0;
+        this._view[1] = g || 0;
+        this._view[2] = b || 0;
+        this._view[3] = (a == null) ? 255 : a;
+
+        if (a === undefined)
+            this.a_undefined = true;
+    }
+
+    get r() { return this._view[0]; }
+    set r(value) { this._view[0] = value < 0 ? 0 : value; }
+
+    get g() { return this._view[1]; }
+    set g(value) { this._view[1] = value < 0 ? 0 : value; }
+
+    get b() { return this._view[2]; }
+    set b(value) { this._view[2] = value < 0 ? 0 : value; }
+
+    get a() { return this._view[3]; }
+    set a(value) { this._view[3] = value < 0 ? 0 : value; }
+}
+
 /**
  * @class Vertex2F
  * @param {Number} x
@@ -253,10 +282,10 @@ export class V3F_C4B_T2F {
             new Vertex3F(0, 0, 0, locArrayBuffer, locOffset);
 
         locOffset += Vertex3F.BYTES_PER_ELEMENT;
-        this._colors = colors ? new cc._WebGLColor(colors.r, colors.g, colors.b, colors.a, locArrayBuffer, locOffset) :
-            new cc._WebGLColor(0, 0, 0, 0, locArrayBuffer, locOffset);
+        this._colors = colors ? new WebGLColor(colors.r, colors.g, colors.b, colors.a, locArrayBuffer, locOffset) :
+            new WebGLColor(0, 0, 0, 0, locArrayBuffer, locOffset);
 
-        locOffset += cc._WebGLColor.BYTES_PER_ELEMENT;
+        locOffset += WebGLColor.BYTES_PER_ELEMENT;
         this._texCoords = texCoords ? new Tex2F(texCoords.u, texCoords.v, locArrayBuffer, locOffset) :
             new Tex2F(0, 0, locArrayBuffer, locOffset);
     }
@@ -450,9 +479,9 @@ export class V2F_C4B_T2F {
         this._vertices = vertices ? new Vertex2F(vertices.x, vertices.y, locArrayBuffer, locOffset) :
             new Vertex2F(0, 0, locArrayBuffer, locOffset);
         locOffset += Vertex2F.BYTES_PER_ELEMENT;
-        this._colors = colors ? new cc._WebGLColor(colors.r, colors.g, colors.b, colors.a, locArrayBuffer, locOffset) :
-            new cc._WebGLColor(0, 0, 0, 0, locArrayBuffer, locOffset);
-        locOffset += cc._WebGLColor.BYTES_PER_ELEMENT;
+        this._colors = colors ? new WebGLColor(colors.r, colors.g, colors.b, colors.a, locArrayBuffer, locOffset) :
+            new WebGLColor(0, 0, 0, 0, locArrayBuffer, locOffset);
+        locOffset += WebGLColor.BYTES_PER_ELEMENT;
         this._texCoords = texCoords ? new Tex2F(texCoords.u, texCoords.v, locArrayBuffer, locOffset) :
             new Tex2F(0, 0, locArrayBuffer, locOffset);
     }

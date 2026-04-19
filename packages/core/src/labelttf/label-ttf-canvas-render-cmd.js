@@ -23,6 +23,7 @@ import { SpriteCanvasRenderCmd } from '../sprites/sprite-canvas-render-cmd';
 import { Point } from '../cocoa/geometry/point';
 import { Rect } from '../cocoa/geometry/rect';
 import { Size } from '../cocoa/geometry/size';
+import Game from '../boot/game';
 
 export const _textAlign = ["left", "center", "right"];
 export const _textBaseline = ["top", "middle", "bottom"];
@@ -358,7 +359,7 @@ export const LabelRenderMixin = (Base) => class extends Base {
 
         this._originSyncStatus(parentCmd);
 
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL || locFlag & flags.transformDirty)
+        if (cc._renderType === Game.RENDER_TYPE_WEBGL || locFlag & flags.transformDirty)
             this.transform(parentCmd);
     }
 

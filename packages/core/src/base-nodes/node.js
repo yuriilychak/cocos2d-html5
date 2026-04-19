@@ -26,6 +26,7 @@
 
 import { NewClass } from '../platform/class';
 import { dirtyFlags } from './node-canvas-render-cmd';
+import Game from '../boot/game';
 import { Point } from '../cocoa/geometry/point';
 import { Color } from '../platform/types/color';
 import { Rect } from '../cocoa/geometry/rect';
@@ -2392,7 +2393,7 @@ export class Node extends NewClass {
     }
 
     _createRenderCmd() {
-      if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+      if (cc._renderType === Game.RENDER_TYPE_CANVAS)
         return new cc.Node.CanvasRenderCmd(this);
       else return new cc.Node.WebGLRenderCmd(this);
     }

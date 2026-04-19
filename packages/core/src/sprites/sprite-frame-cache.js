@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Point } from '../cocoa/geometry/point';
+import Game from '../boot/game';
 import { Rect } from '../cocoa/geometry/rect';
 import { Size } from '../cocoa/geometry/size';
 
@@ -184,7 +185,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */{
                     }
                 }
 
-                if (cc._renderType === cc.game.RENDER_TYPE_CANVAS && spriteFrame.isRotated()) {
+                if (cc._renderType === Game.RENDER_TYPE_CANVAS && spriteFrame.isRotated()) {
                     //clip to canvas
                     var locTexture = spriteFrame.getTexture();
                     if (locTexture.isLoaded()) {

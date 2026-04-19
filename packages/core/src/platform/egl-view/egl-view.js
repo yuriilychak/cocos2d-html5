@@ -28,6 +28,7 @@ import { NewClass } from '../class';
 import { Point } from '../../cocoa/geometry/point';
 import { Rect } from '../../cocoa/geometry/rect';
 import { Size } from '../../cocoa/geometry/size';
+import Game from '../../boot/game';
 
 var __BrowserGetter = {
     init: function () {
@@ -203,7 +204,7 @@ export class EGLView extends NewClass {
         // Check frame size changed or not
         var prevFrameW = view._frameSize.width, prevFrameH = view._frameSize.height, prevRotated = view._isRotated;
         if (cc.sys.isMobile) {
-            var containerStyle = cc.game.container.style,
+            var containerStyle = Game.getInstance().container.style,
                 margin = containerStyle.margin;
             containerStyle.margin = '0';
             containerStyle.display = 'none';
@@ -235,7 +236,7 @@ export class EGLView extends NewClass {
     _orientationChange() {
         cc.view._orientationChanging = true;
         if (cc.sys.isMobile) {
-            cc.game.container.style.display = "none";
+            Game.getInstance().container.style.display = "none";
         }
         setTimeout(function () {
             cc.view._orientationChanging = false;
@@ -495,7 +496,7 @@ export class EGLView extends NewClass {
      * @return {Boolean}
      */
     isOpenGLReady() {
-        return (cc.game.canvas && cc._renderContext);
+        return (Game.getInstance().canvas && cc._renderContext);
     }
 
     /*
@@ -724,11 +725,11 @@ export class EGLView extends NewClass {
         cc.winSize.width = director._winSizeInPoints.width;
         cc.winSize.height = director._winSizeInPoints.height;
 
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
             // reset director's member variables to fit visible rect
             director.setGLDefaultValues();
         }
-        else if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+        else if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
             cc.renderer._allNeedDraw = true;
         }
 

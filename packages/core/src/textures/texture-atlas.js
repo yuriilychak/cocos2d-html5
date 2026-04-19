@@ -26,6 +26,7 @@
 
 import { NewClass } from '../platform/class';
 import { initWebGLTextureAtlas } from './texture-2d-webgl';
+import Game from '../boot/game';
 
 
 /**
@@ -730,8 +731,8 @@ export class TextureAtlas extends NewClass {
     }
 }
 
-cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
-  if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
+  if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
     initWebGLTextureAtlas();
   }
 });

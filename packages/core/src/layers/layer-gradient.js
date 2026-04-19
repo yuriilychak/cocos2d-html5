@@ -27,6 +27,7 @@
 import { LayerColor } from './layer-color';
 import { Point } from '../cocoa/geometry/point';
 import { Color } from '../platform/types/color';
+import Game from '../boot/game';
 
 /**
  * CCLayerGradient is a subclass of cc.LayerColor that draws gradients across the background.
@@ -231,7 +232,7 @@ export class LayerGradient extends LayerColor {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if (cc._renderType === Game.RENDER_TYPE_CANVAS)
             return new cc.LayerGradient.CanvasRenderCmd(this);
         else
             return new cc.LayerGradient.WebGLRenderCmd(this);

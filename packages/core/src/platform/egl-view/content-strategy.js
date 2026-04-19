@@ -26,6 +26,7 @@
 
 import { NewClass } from '../class';
 import { Rect } from '../../cocoa/geometry/rect';
+import Game from '../../boot/game';
 
 /**
  * <p>cc.ContentStrategy class is the root strategy class of content's scale strategy,
@@ -54,7 +55,7 @@ export class ContentStrategy extends NewClass {
                                contentW, contentH);
 
         // Translate the content
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+        if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
             //TODO: modify something for setTransform
             //cc._renderContext.translate(viewport.x, viewport.y + contentH);
         }

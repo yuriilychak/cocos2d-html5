@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { initWebGLTextureCache } from './texture-2d-webgl';
+import Game from "../boot/game";
 
 /**
  * cc.textureCache is a singleton object, it's the global cache for cc.Texture2D
@@ -296,76 +297,77 @@ export const textureCache = /** @lends cc.textureCache# */{
     }
 };
 
-cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
-    if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
+  if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
+    var _p = cc.textureCache;
 
-        var _p = cc.textureCache;
+    _p.handleLoadedTexture = function (url, img) {
+      var locTexs = this._textures;
+      //remove judge
+      var tex = locTexs[url];
+      if (!tex) {
+        tex = locTexs[url] = new cc.Texture2D();
+        tex.url = url;
+      }
+      tex.initWithElement(img);
+      tex.handleLoadedTexture();
+      return tex;
+    };
 
-        _p.handleLoadedTexture = function (url, img) {
-            var locTexs = this._textures;
-            //remove judge
-            var tex = locTexs[url];
-            if (!tex) {
-                tex = locTexs[url] = new cc.Texture2D();
-                tex.url = url;
-            }
-            tex.initWithElement(img);
-            tex.handleLoadedTexture();
-            return tex;
-        };
+    /**
+     * <p>Returns a Texture2D object given an file image <br />
+     * If the file image was not previously loaded, it will create a new Texture2D <br />
+     *  object and it will return it. It will use the filename as a key.<br />
+     * Otherwise it will return a reference of a previously loaded image. <br />
+     * Supported image extensions: .png, .jpg, .gif</p>
+     * @param {String} url
+     * @param {Function} cb
+     * @param {Object} target
+     * @return {cc.Texture2D}
+     * @example
+     * //example
+     * cc.textureCache.addImage("hello.png");
+     */
+    _p.addImage = function (url, cb, target) {
+      cc.assert(url, cc._LogInfos.Texture2D_addImage);
 
-        /**
-         * <p>Returns a Texture2D object given an file image <br />
-         * If the file image was not previously loaded, it will create a new Texture2D <br />
-         *  object and it will return it. It will use the filename as a key.<br />
-         * Otherwise it will return a reference of a previously loaded image. <br />
-         * Supported image extensions: .png, .jpg, .gif</p>
-         * @param {String} url
-         * @param {Function} cb
-         * @param {Object} target
-         * @return {cc.Texture2D}
-         * @example
-         * //example
-         * cc.textureCache.addImage("hello.png");
-         */
-        _p.addImage = function (url, cb, target) {
+      var locTexs = this._textures;
+      //remove judge
+      var tex = locTexs[url] || locTexs[cc.loader._getAliase(url)];
+      if (tex) {
+        if (tex.isLoaded()) {
+          cb && cb.call(target, tex);
+          return tex;
+        } else {
+          tex.addEventListener(
+            "load",
+            function () {
+              cb && cb.call(target, tex);
+            },
+            target
+          );
+          return tex;
+        }
+      }
 
-            cc.assert(url, cc._LogInfos.Texture2D_addImage);
+      tex = locTexs[url] = new cc.Texture2D();
+      tex.url = url;
+      var basePath = cc.loader.getBasePath
+        ? cc.loader.getBasePath()
+        : cc.loader.resPath;
+      cc.loader.loadImg(cc.path.join(basePath || "", url), function (err, img) {
+        if (err) return cb && cb.call(target, err);
 
-            var locTexs = this._textures;
-            //remove judge
-            var tex = locTexs[url] || locTexs[cc.loader._getAliase(url)];
-            if (tex) {
-                if (tex.isLoaded()) {
-                    cb && cb.call(target, tex);
-                    return tex;
-                }
-                else {
-                    tex.addEventListener("load", function () {
-                        cb && cb.call(target, tex);
-                    }, target);
-                    return tex;
-                }
-            }
+        var texResult = cc.textureCache.handleLoadedTexture(url, img);
+        cb && cb.call(target, texResult);
+      });
 
-            tex = locTexs[url] = new cc.Texture2D();
-            tex.url = url;
-            var basePath = cc.loader.getBasePath ? cc.loader.getBasePath() : cc.loader.resPath;
-            cc.loader.loadImg(cc.path.join(basePath || "", url), function (err, img) {
-                if (err)
-                    return cb && cb.call(target, err);
+      return tex;
+    };
 
-                var texResult = cc.textureCache.handleLoadedTexture(url, img);
-                cb && cb.call(target, texResult);
-            });
-
-            return tex;
-        };
-
-        _p.addImageAsync = _p.addImage;
-        _p = null;
-
-    } else if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-        initWebGLTextureCache();
-    }
+    _p.addImageAsync = _p.addImage;
+    _p = null;
+  } else if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
+    initWebGLTextureCache();
+  }
 });

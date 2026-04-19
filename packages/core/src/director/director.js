@@ -27,6 +27,7 @@
 import { NewClass } from '../platform/class';
 import { DirectorCanvasRenderer } from './director-canvas';
 import { DirectorWebGLRenderer } from './director-webgl';
+import Game from '../boot/game';
 import {
     EVENT_PROJECTION_CHANGED,
     EVENT_AFTER_UPDATE,
@@ -101,7 +102,7 @@ export class Director extends NewClass {
         this._rendererDelegate = null;
         var self = this;
         self._lastUpdate = Date.now();
-        cc.eventManager.addCustomListener(cc.game.EVENT_SHOW, () => {
+        cc.eventManager.addCustomListener(Game.EVENT_SHOW, () => {
             self._lastUpdate = Date.now();
         });
     }
@@ -140,7 +141,7 @@ export class Director extends NewClass {
         this._eventProjectionChanged = new cc.EventCustom(Director.EVENT_PROJECTION_CHANGED);
         this._eventProjectionChanged.setUserData(this);
 
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+        if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
             this._rendererDelegate = new DirectorCanvasRenderer(this);
         } else {
             this._rendererDelegate = new DirectorWebGLRenderer(this);
@@ -159,7 +160,7 @@ export class Director extends NewClass {
             this._deltaTime = (now - this._lastUpdate) / 1000;
         }
 
-        if ((cc.game.config[cc.game.CONFIG_KEY.debugMode] > 0) && (this._deltaTime > 0.2))
+        if ((Game.getInstance().config[Game.CONFIG_KEY.debugMode] > 0) && (this._deltaTime > 0.2))
             this._deltaTime = 1 / 60.0;
 
         this._lastUpdate = now;
@@ -227,7 +228,7 @@ export class Director extends NewClass {
             this._notificationNode.visit();
 
         cc.eventManager.dispatchEvent(this._eventAfterVisit);
-        g_NumberOfDraws = 0;
+        cc.g_NumberOfDraws = 0;
 
         renderer.rendering(cc._renderContext);
         this._totalFrames++;

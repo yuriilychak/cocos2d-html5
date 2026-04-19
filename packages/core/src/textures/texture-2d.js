@@ -29,6 +29,7 @@ import EventHelper from '../event-manager/event-helper';
 import { initWebGLTexture2D } from './texture-2d-webgl';
 import { Rect } from '../cocoa/geometry/rect';
 import { Size } from '../cocoa/geometry/size';
+import Game from '../boot/game';
 
 
 export {
@@ -44,9 +45,9 @@ export let PVRHaveAlphaPremultiplied_ = false;
 
 //cc.Texture2DWebGL move to TextureWebGL.js
 
-cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
+Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
 
-    if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+    if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
 
         /**
          * <p>
@@ -500,7 +501,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             return renderCanvas;
         };
 
-    } else if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+    } else if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
         initWebGLTexture2D();
     }
 

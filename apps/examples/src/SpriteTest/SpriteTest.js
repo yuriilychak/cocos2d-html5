@@ -46,8 +46,6 @@ var IDC_RESTART = 102;
 
 var spriteTestIdx = -1;
 
-var spriteFrameCache = cc.spriteFrameCache;
-
 //------------------------------------------------------------------
 //
 // SpriteTestDemo
@@ -923,7 +921,7 @@ var SpriteBatchNodeReorderIssue767 = class SpriteBatchNodeReorderIssue767 extend
 
         this.curPixel2 = null;
 
-        spriteFrameCache.addSpriteFrames(s_ghostsPlist, s_ghosts);
+        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist, s_ghosts);
         //
         // SpriteBatchNode: 3 levels of children
         //
@@ -931,14 +929,14 @@ var SpriteBatchNodeReorderIssue767 = class SpriteBatchNodeReorderIssue767 extend
         this.addChild(aParent, 0, TAG_SPRITE1);
 
         // parent
-        var l1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("father.gif"));
+        var l1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("father.gif"));
         l1.x = winSize.width / 2;
         l1.y = winSize.height / 2;
         aParent.addChild(l1, 0, TAG_SPRITE2);
         var l1W = l1.width, l1H = l1.height;
 
         // child left
-        var l2a = new cc.Sprite(spriteFrameCache.getSpriteFrame("sister1.gif"));
+        var l2a = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("sister1.gif"));
         l2a.x = -25 + l1W / 2;
         l2a.y = 0 + l1H / 2;
         l1.addChild(l2a, -1, TAG_SPRITE_LEFT);
@@ -946,7 +944,7 @@ var SpriteBatchNodeReorderIssue767 = class SpriteBatchNodeReorderIssue767 extend
 
 
         // child right
-        var l2b = new cc.Sprite(spriteFrameCache.getSpriteFrame("sister2.gif"));
+        var l2b = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("sister2.gif"));
         l2b.x = 25 + l1W / 2;
         l2b.y = 0 + l1H / 2;
         l1.addChild(l2b, 1, TAG_SPRITE_RIGHT);
@@ -954,28 +952,28 @@ var SpriteBatchNodeReorderIssue767 = class SpriteBatchNodeReorderIssue767 extend
 
 
         // child left bottom
-        var l3a1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3a1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3a1.scale = 0.65;
         l3a1.x = 0 + l2aW / 2;
         l3a1.y = -50 + l2aH / 2;
         l2a.addChild(l3a1, -1);
 
         // child left top
-        var l3a2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3a2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3a2.scale = 0.65;
         l3a2.x = 0 + l2aW / 2;
         l3a2.y = +50 + l2aH / 2;
         l2a.addChild(l3a2, 1);
 
         // child right bottom
-        var l3b1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3b1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3b1.scale = 0.65;
         l3b1.x = 0 + l2bW / 2;
         l3b1.y = -50 + l2bH / 2;
         l2b.addChild(l3b1, -1);
 
         // child right top
-        var l3b2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3b2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3b2.scale = 0.65;
         l3b2.x = 0 + l2bW / 2;
         l3b2.y = +50 + l2bH / 2;
@@ -1861,10 +1859,10 @@ var SpriteFrameTest = class SpriteFrameTest extends SpriteTestDemo {
         super.onEnter();
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-        //     cc.spriteFrameCache.removeUnusedSpriteFrames);
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
-        spriteFrameCache.addSpriteFrames(s_grossini_bluePlist, s_grossini_blue);
+        //     cc.cc.spriteFrameCache.removeUnusedSpriteFrames);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_bluePlist, s_grossini_blue);
 
         //
         // Animation using Sprite BatchNode
@@ -1882,7 +1880,7 @@ var SpriteFrameTest = class SpriteFrameTest extends SpriteTestDemo {
         var frame;
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -1904,13 +1902,13 @@ var SpriteFrameTest = class SpriteFrameTest extends SpriteTestDemo {
         var moreFrames = [];
         for (i = 1; i < 15; i++) {
             str = "grossini_dance_gray_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             moreFrames.push(frame);
         }
 
         for (i = 1; i < 5; i++) {
             str = "grossini_blue_0" + i + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             moreFrames.push(frame);
         }
 
@@ -1931,9 +1929,9 @@ var SpriteFrameTest = class SpriteFrameTest extends SpriteTestDemo {
     onExit() {
         //----start2----onExit
         super.onExit();
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_bluePlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_bluePlist);
         //----end2----
     }
     onStartIn05Secs() {
@@ -2012,9 +2010,9 @@ var SpriteFrameAliasNameTest = class SpriteFrameAliasNameTest extends SpriteTest
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
         //
-        // cc.SpriteFrameCache is a cache of cc.SpriteFrames
+        // cc.cc.spriteFrameCache is a cache of cc.SpriteFrames
         // cc.SpriteFrames each contain a texture id and a rect (frame).
-        spriteFrameCache.addSpriteFrames(s_grossini_aliasesPlist, s_grossini_aliases);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_aliasesPlist, s_grossini_aliases);
 
         //
         // Animation using Sprite batch
@@ -2042,7 +2040,7 @@ var SpriteFrameAliasNameTest = class SpriteFrameAliasNameTest extends SpriteTest
         for (var i = 1; i < 15; i++) {
             // Obtain frames by alias name
             str = "dance_" + (i < 10 ? ("0" + i) : i);
-            var frame = spriteFrameCache.getSpriteFrame(str);
+            var frame = cc.spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -2054,7 +2052,7 @@ var SpriteFrameAliasNameTest = class SpriteFrameAliasNameTest extends SpriteTest
     }
     onExit() {
         super.onExit();
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_aliasesPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_aliasesPlist);
     }
     //
     // Automation
@@ -2090,14 +2088,14 @@ var SpriteOffsetAnchorRotation = class SpriteOffsetAnchorRotation extends Sprite
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -2130,7 +2128,7 @@ var SpriteOffsetAnchorRotation = class SpriteOffsetAnchorRotation extends Sprite
             var str = "";
             for (var j = 1; j < 15; j++) {
                 str = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(str);
+                var frame = cc.spriteFrameCache.getSpriteFrame(str);
                 animFrames.push(frame);
             }
 
@@ -2145,8 +2143,8 @@ var SpriteOffsetAnchorRotation = class SpriteOffsetAnchorRotation extends Sprite
     onExit() {
         //----start6----onExit
         super.onExit();
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end6----
     }
     //
@@ -2186,8 +2184,8 @@ var SpriteBatchNodeOffsetAnchorRotation = class SpriteBatchNodeOffsetAnchorRotat
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         var spritebatch = new cc.SpriteBatchNode(s_grossini);
         this.addChild(spritebatch);
@@ -2196,7 +2194,7 @@ var SpriteBatchNodeOffsetAnchorRotation = class SpriteBatchNodeOffsetAnchorRotat
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -2227,7 +2225,7 @@ var SpriteBatchNodeOffsetAnchorRotation = class SpriteBatchNodeOffsetAnchorRotat
             var str = "";
             for (var k = 1; k < 15; k++) {
                 str = "grossini_dance_" + (k < 10 ? ("0" + k) : k) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(str);
+                var frame = cc.spriteFrameCache.getSpriteFrame(str);
                 animFrames.push(frame);
             }
 
@@ -2241,8 +2239,8 @@ var SpriteBatchNodeOffsetAnchorRotation = class SpriteBatchNodeOffsetAnchorRotat
     }
     onExit() {
         super.onExit();
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
     }
     //
     // Automation
@@ -2284,14 +2282,14 @@ var SpriteOffsetAnchorScale = class SpriteOffsetAnchorScale extends SpriteTestDe
 
 
         this.pixel = {"0":153, "1":0, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -2324,7 +2322,7 @@ var SpriteOffsetAnchorScale = class SpriteOffsetAnchorScale extends SpriteTestDe
             var str = "";
             for (var k = 1; k <= 14; k++) {
                 str = "grossini_dance_" + (k < 10 ? ("0" + k) : k) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(str);
+                var frame = cc.spriteFrameCache.getSpriteFrame(str);
                 animFrames.push(frame);
             }
 
@@ -2344,8 +2342,8 @@ var SpriteOffsetAnchorScale = class SpriteOffsetAnchorScale extends SpriteTestDe
     onExit() {
         //----start8----onExit
         super.onExit();
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end8----
     }
     //
@@ -2392,14 +2390,14 @@ var SpriteBatchNodeOffsetAnchorScale = class SpriteBatchNodeOffsetAnchorScale ex
         var batch = new cc.SpriteBatchNode(s_grossini);
         this.addChild(batch);
 
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -2431,7 +2429,7 @@ var SpriteBatchNodeOffsetAnchorScale = class SpriteBatchNodeOffsetAnchorScale ex
             var str = "";
             for (var k = 1; k <= 14; k++) {
                 str = "grossini_dance_" + (k < 10 ? ("0" + k) : k) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(str);
+                var frame = cc.spriteFrameCache.getSpriteFrame(str);
                 animFrames.push(frame);
             }
 
@@ -2450,8 +2448,8 @@ var SpriteBatchNodeOffsetAnchorScale = class SpriteBatchNodeOffsetAnchorScale ex
     onExit() {
         //----start9----onExit
         super.onExit();
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end9----
     }
     //
@@ -2492,8 +2490,8 @@ var SpriteOffsetAnchorSkew = class SpriteOffsetAnchorSkew extends SpriteTestDemo
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
@@ -2531,7 +2529,7 @@ var SpriteOffsetAnchorSkew = class SpriteOffsetAnchorSkew extends SpriteTestDemo
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(tmp);
+                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 
@@ -2588,8 +2586,8 @@ var SpriteBatchNodeOffsetAnchorSkew = class SpriteBatchNodeOffsetAnchorSkew exte
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         var spritebatch = new cc.SpriteBatchNode(s_grossini);
         this.addChild(spritebatch);
@@ -2630,7 +2628,7 @@ var SpriteBatchNodeOffsetAnchorSkew = class SpriteBatchNodeOffsetAnchorSkew exte
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(tmp);
+                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 
@@ -2685,14 +2683,14 @@ var SpriteOffsetAnchorSkewScale = class SpriteOffsetAnchorSkewScale extends Spri
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite batch
             //
-            var sprite = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -2724,7 +2722,7 @@ var SpriteOffsetAnchorSkewScale = class SpriteOffsetAnchorSkewScale extends Spri
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(tmp);
+                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 
@@ -2793,8 +2791,8 @@ var SpriteBatchNodeOffsetAnchorSkewScale = class SpriteBatchNodeOffsetAnchorSkew
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         var spritebatch = new cc.SpriteBatchNode(s_grossini);
         this.addChild(spritebatch);
@@ -2835,7 +2833,7 @@ var SpriteBatchNodeOffsetAnchorSkewScale = class SpriteBatchNodeOffsetAnchorSkew
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(tmp);
+                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 
@@ -2907,8 +2905,8 @@ var SpriteOffsetAnchorFlip = class SpriteOffsetAnchorFlip extends SpriteTestDemo
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
@@ -2946,7 +2944,7 @@ var SpriteOffsetAnchorFlip = class SpriteOffsetAnchorFlip extends SpriteTestDemo
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(tmp);
+                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 
@@ -3008,8 +3006,8 @@ var SpriteBatchNodeOffsetAnchorFlip = class SpriteBatchNodeOffsetAnchorFlip exte
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         var spritebatch = new cc.SpriteBatchNode(s_grossini);
         this.addChild(spritebatch);
@@ -3018,7 +3016,7 @@ var SpriteBatchNodeOffsetAnchorFlip = class SpriteBatchNodeOffsetAnchorFlip exte
             //
             // Animation using Sprite batch
             //
-            var sprite = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -3050,7 +3048,7 @@ var SpriteBatchNodeOffsetAnchorFlip = class SpriteBatchNodeOffsetAnchorFlip exte
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(tmp);
+                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 
@@ -3203,7 +3201,7 @@ var SpriteHybrid = class SpriteHybrid extends SpriteTestDemo {
 
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
         // create 250 sprites
         // only show 80% of them
@@ -3213,7 +3211,7 @@ var SpriteHybrid = class SpriteHybrid extends SpriteTestDemo {
                 spriteIdx = 1;
             var str = "grossini_dance_" + (spriteIdx < 10 ? ("0" + spriteIdx) : spriteIdx) + ".png";
 
-            var frame = spriteFrameCache.getSpriteFrame(str);
+            var frame = cc.spriteFrameCache.getSpriteFrame(str);
             var sprite = new cc.Sprite(frame);
             parent1.addChild(sprite, i, i);
 
@@ -3238,7 +3236,7 @@ var SpriteHybrid = class SpriteHybrid extends SpriteTestDemo {
     onExit() {
         //----start28----onExit
         super.onExit();
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         //----end28----
     }
     reparentSprite() {
@@ -3286,7 +3284,7 @@ var SpriteHybrid = class SpriteHybrid extends SpriteTestDemo {
     }
     addTestSprite() {
         var p = this.getChildByTag(TAG_NODE);
-        var frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+        var frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
         var sprite1 = new cc.Sprite(frame);
         p.addChild(sprite1, 1000);
         sprite1.x = winSize.width / 4;
@@ -3340,17 +3338,17 @@ var SpriteBatchNodeChildren = class SpriteBatchNodeChildren extends SpriteTestDe
         var batch = new cc.SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
-        var sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = winSize.width / 3;
         sprite1.y = winSize.height / 2;
 
-        var sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 50;
         sprite2.y = 50;
 
-        var sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -50;
         sprite3.y = -50;
 
@@ -3363,7 +3361,7 @@ var SpriteBatchNodeChildren = class SpriteBatchNodeChildren extends SpriteTestDe
         var str = "";
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            var frame = spriteFrameCache.getSpriteFrame(str);
+            var frame = cc.spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -3435,21 +3433,21 @@ var SpriteBatchNodeChildrenZ = class SpriteBatchNodeChildrenZ extends SpriteTest
         // parents
         var batch;
         var sprite1, sprite2, sprite3;
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
         // test 1
         batch = new cc.SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = winSize.width / 3;
         sprite1.y = winSize.height / 2;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -3461,15 +3459,15 @@ var SpriteBatchNodeChildrenZ = class SpriteBatchNodeChildrenZ extends SpriteTest
         batch = new cc.SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 2 * winSize.width / 3;
         sprite1.y = winSize.height / 2;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -3481,15 +3479,15 @@ var SpriteBatchNodeChildrenZ = class SpriteBatchNodeChildrenZ extends SpriteTest
         batch = new cc.SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = winSize.width / 2 - 90;
         sprite1.y = winSize.height / 4;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = winSize.width / 2 - 60;
         sprite2.y = winSize.height / 4;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = winSize.width / 2 - 30;
         sprite3.y = winSize.height / 4;
 
@@ -3501,15 +3499,15 @@ var SpriteBatchNodeChildrenZ = class SpriteBatchNodeChildrenZ extends SpriteTest
         batch = new cc.SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = winSize.width / 2 + 30;
         sprite1.y = winSize.height / 4;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = winSize.width / 2 + 60;
         sprite2.y = winSize.height / 4;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = winSize.width / 2 + 90;
         sprite3.y = winSize.height / 4;
 
@@ -3566,7 +3564,7 @@ var SpriteChildrenVisibility = class SpriteChildrenVisibility extends SpriteTest
 
         this.visible2 = null;
 
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         //
         // SpriteBatchNode
         //
@@ -3576,15 +3574,15 @@ var SpriteChildrenVisibility = class SpriteChildrenVisibility extends SpriteTest
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        var sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        var sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -3602,15 +3600,15 @@ var SpriteChildrenVisibility = class SpriteChildrenVisibility extends SpriteTest
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -3675,7 +3673,7 @@ var SpriteChildrenVisibilityIssue665 = class SpriteChildrenVisibilityIssue665 ex
 
 
         this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         //
         // SpriteBatchNode
         //
@@ -3685,15 +3683,15 @@ var SpriteChildrenVisibilityIssue665 = class SpriteChildrenVisibilityIssue665 ex
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        var sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        var sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -3712,15 +3710,15 @@ var SpriteChildrenVisibilityIssue665 = class SpriteChildrenVisibilityIssue665 ex
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -3771,27 +3769,27 @@ var SpriteChildrenAnchorPoint = class SpriteChildrenAnchorPoint extends SpriteTe
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
         var aParent = new cc.Node();
         this.addChild(aParent, 0);
 
         // anchor (0,0)
-        var sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 0;
         sprite1.anchorY = 0;
 
-        var sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        var sprite4 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        var sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -3808,21 +3806,21 @@ var SpriteChildrenAnchorPoint = class SpriteChildrenAnchorPoint extends SpriteTe
         this.addChild(point, 10);
 
         // anchor (0.5, 0.5)
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 2;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 0.5;
         sprite1.anchorY = 0.5;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        sprite4 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -3839,21 +3837,21 @@ var SpriteChildrenAnchorPoint = class SpriteChildrenAnchorPoint extends SpriteTe
         this.addChild(point, 10);
 
         // anchor (1,1)
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 2 + winSize.width / 4;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 1;
         sprite1.anchorY = 1;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        sprite4 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -3911,7 +3909,7 @@ var SpriteBatchNodeChildrenAnchorPoint = class SpriteBatchNodeChildrenAnchorPoin
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         //
         // SpriteBatchNode
         //
@@ -3920,21 +3918,21 @@ var SpriteBatchNodeChildrenAnchorPoint = class SpriteBatchNodeChildrenAnchorPoin
         this.addChild(aParent, 0);
 
         // anchor (0,0)
-        var sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 0;
         sprite1.anchorY = 0;
 
-        var sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        var sprite4 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        var sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -3951,21 +3949,21 @@ var SpriteBatchNodeChildrenAnchorPoint = class SpriteBatchNodeChildrenAnchorPoin
         this.addChild(point, 10);
 
         // anchor (0.5, 0.5)
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 2;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 0.5;
         sprite1.anchorY = 0.5;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        sprite4 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -3983,21 +3981,21 @@ var SpriteBatchNodeChildrenAnchorPoint = class SpriteBatchNodeChildrenAnchorPoin
 
 
         // anchor (1,1)
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 2 + winSize.width / 4;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 1;
         sprite1.anchorY = 1;
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        sprite4 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -4058,7 +4056,7 @@ var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends Sp
 
 
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossini_familyPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_familyPlist);
 
         var rot = cc.rotateBy(10, 360);
         var seq = rot.repeatForever();
@@ -4068,7 +4066,7 @@ var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends Sp
         // Test 1
         //
         var aParent = new cc.Node();
-        var sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
+        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 4;
         sprite1.scaleX = 0.5;
@@ -4076,7 +4074,7 @@ var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends Sp
         sprite1.runAction(seq);
 
 
-        var sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
+        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -4091,14 +4089,14 @@ var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends Sp
         // Test 2
         //
         aParent = new cc.SpriteBatchNode(s_grossini_family);
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = 3 * winSize.width / 4;
         sprite1.y = winSize.height / 4;
         sprite1.scaleX = 0.5;
         sprite1.scaleY = 2.0;
         sprite1.runAction(seq);
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -4113,14 +4111,14 @@ var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends Sp
         // Test 3
         //
         aParent = new cc.Node();
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = 2 * winSize.height / 3;
         sprite1.scaleX = 1.5;
         sprite1.scaleY = 0.5;
         sprite1.runAction(seq);
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -4135,14 +4133,14 @@ var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends Sp
         // Test 4
         //
         aParent = new cc.SpriteBatchNode(s_grossini_family);
-        sprite1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = 3 * winSize.width / 4;
         sprite1.y = 2 * winSize.height / 3;
         sprite1.scaleX = 1.5;
         sprite1.scaleY = 0.5;
         sprite1.runAction(seq);
 
-        sprite2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -4192,7 +4190,7 @@ var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo
 
         this.pixel = {"0":153, "1":204, "2":153, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 
         var rot = cc.rotateBy(10, 360);
         var seq = rot.repeatForever();
@@ -4207,7 +4205,7 @@ var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo
         this.addChild(aParent);
 
         // parent
-        var l1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("father.gif"));
+        var l1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("father.gif"));
         l1.x = winSize.width / 2;
         l1.y = winSize.height / 2;
         l1.runAction(seq.clone());
@@ -4215,7 +4213,7 @@ var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo
         var l1W = l1.width, l1H = l1.height;
 
         // child left
-        var l2a = new cc.Sprite(spriteFrameCache.getSpriteFrame("sister1.gif"));
+        var l2a = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("sister1.gif"));
         l2a.x = -50 + l1W / 2;
         l2a.y = 0 + l1H / 2;
         l2a.runAction(rot_back_fe.clone());
@@ -4224,7 +4222,7 @@ var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo
 
 
         // child right
-        var l2b = new cc.Sprite(spriteFrameCache.getSpriteFrame("sister2.gif"));
+        var l2b = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("sister2.gif"));
         l2b.x = +50 + l1W / 2;
         l2b.y = 0 + l1H / 2;
         l2b.runAction(rot_back_fe.clone());
@@ -4233,21 +4231,21 @@ var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo
 
 
         // child left bottom
-        var l3a1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3a1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3a1.scale = 0.45;
         l3a1.x = 0 + l2aW / 2;
         l3a1.y = -100 + l2aH / 2;
         l2a.addChild(l3a1);
 
         // child left top
-        var l3a2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3a2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3a2.scale = 0.45;
         l3a2.x = 0 + l2aW / 2;
         l3a2.y = +100 + l2aH / 2;
         l2a.addChild(l3a2);
 
         // child right bottom
-        var l3b1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3b1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3b1.scale = 0.45;
         l3b1.setFlippedY(true);
         l3b1.x = 0 + l2bW / 2;
@@ -4255,7 +4253,7 @@ var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo
         l2b.addChild(l3b1);
 
         // child right top
-        var l3b2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3b2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3b2.scale = 0.45;
         l3b2.setFlippedY(true);
         l3b2.x = 0 + l2bW / 2;
@@ -4308,7 +4306,7 @@ var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren exte
 
         this.pixel = {"0":153, "1":204, "2":153, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 
         var rot = cc.rotateBy(10, 360);
         var seq = rot.repeatForever();
@@ -4325,7 +4323,7 @@ var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren exte
         this.addChild(aParent);
 
         // parent
-        var l1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("father.gif"));
+        var l1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("father.gif"));
         l1.x = winSize.width / 2;
         l1.y = winSize.height / 2;
         l1.runAction(seq.clone());
@@ -4333,7 +4331,7 @@ var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren exte
         var l1W = l1.width, l1H = l1.height;
 
         // child left
-        var l2a = new cc.Sprite(spriteFrameCache.getSpriteFrame("sister1.gif"));
+        var l2a = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("sister1.gif"));
         l2a.x = -50 + l1W / 2;
         l2a.y = 0 + l1H / 2;
         l2a.runAction(rot_back_fe.clone());
@@ -4342,7 +4340,7 @@ var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren exte
 
 
         // child right
-        var l2b = new cc.Sprite(spriteFrameCache.getSpriteFrame("sister2.gif"));
+        var l2b = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("sister2.gif"));
         l2b.x = 50 + l1W / 2;
         l2b.y = 0 + l1H / 2;
         l2b.runAction(rot_back_fe.clone());
@@ -4351,21 +4349,21 @@ var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren exte
 
 
         // child left bottom
-        var l3a1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3a1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3a1.scale = 0.45;
         l3a1.x = 0 + l2aW / 2;
         l3a1.y = -100 + l2aH / 2;
         l2a.addChild(l3a1);
 
         // child left top
-        var l3a2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3a2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3a2.scale = 0.45;
         l3a2.x = 0 + l2aW / 2;
         l3a2.y = +100 + l2aH / 2;
         l2a.addChild(l3a2);
 
         // child right bottom
-        var l3b1 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3b1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3b1.scale = 0.45;
         l3b1.setFlippedY(true);
         l3b1.x = 0 + l2bW / 2;
@@ -4373,7 +4371,7 @@ var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren exte
         l2b.addChild(l3b1);
 
         // child right top
-        var l3b2 = new cc.Sprite(spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3b2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3b2.scale = 0.45;
         l3b2.setFlippedY(true);
         l3b2.x = 0 + l2bW / 2;
@@ -4446,7 +4444,7 @@ var SpriteSubclass = class SpriteSubclass extends SpriteTestDemo {
 
         this.pixel2 = {"0":255, "1":204, "2":153, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 		var aParent = new cc.SpriteBatchNode(s_ghosts);
 
 		// MySprite1
@@ -4526,9 +4524,9 @@ var AnimationCacheTest = class AnimationCacheTest extends SpriteTestDemo {
 
 
         this.cPixel3 = null;
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_bluePlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_bluePlist);
 
         //
         // create animation "dance"
@@ -4538,7 +4536,7 @@ var AnimationCacheTest = class AnimationCacheTest extends SpriteTestDemo {
         var str = "";
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             animFrame = new cc.AnimationFrame(frame, 1);
             animFrames.push(animFrame);
         }
@@ -4554,7 +4552,7 @@ var AnimationCacheTest = class AnimationCacheTest extends SpriteTestDemo {
         animFrames = [];
         for (i = 1; i < 15; i++) {
             str = "grossini_dance_gray_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -4569,7 +4567,7 @@ var AnimationCacheTest = class AnimationCacheTest extends SpriteTestDemo {
         animFrames = [];
         for (i = 1; i < 4; i++) {
             str = "grossini_blue_0" + i + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -4593,7 +4591,7 @@ var AnimationCacheTest = class AnimationCacheTest extends SpriteTestDemo {
 
         var seq = cc.sequence(animN, animG, animB);
 
-        frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+        frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
         var grossini = new cc.Sprite(frame);
 
         grossini.x = winSize.width / 2;
@@ -4776,7 +4774,7 @@ var SpriteBatchNodeReorderOneChild = class SpriteBatchNodeReorderOneChild extend
 
         this.pixel = {"0":0, "1":102, "2":255, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
         //
         // SpriteBatchNode: 3 levels of children
         //
@@ -4890,7 +4888,7 @@ var SpriteBatchNodeSkewNegativeScaleChildren = class SpriteBatchNodeSkewNegative
 
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
 
-        var cache = spriteFrameCache;
+        var cache = cc.spriteFrameCache;
         cache.addSpriteFrames(s_grossiniPlist);
         cache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -4962,7 +4960,7 @@ var SpriteSkewNegativeScaleChildren = class SpriteSkewNegativeScaleChildren exte
 
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
 
-        var cache = spriteFrameCache;
+        var cache = cc.spriteFrameCache;
         cache.addSpriteFrames(s_grossiniPlist);
         cache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
@@ -5033,14 +5031,23 @@ var DoubleSprite = class DoubleSprite extends cc.Sprite {
         }
         super.setContentSize(newSize);
     }
-	_setWidth(value) {
+
+    get width() {
+        return super._getWidth();
+    }
+
+    get height() {
+        return super._getHeight();
+    }
+    
+	set width(value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
 		if (cc.contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
 		super._setWidth(value);
 	}
-	_setHeight(value) {
+	set height(value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
 		if (cc.contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
@@ -5058,9 +5065,6 @@ var DoubleSprite = class DoubleSprite extends cc.Sprite {
     }
 
 };
-
-cc.defineGetterSetter(DoubleSprite.prototype, "width", DoubleSprite.prototype._getWidth, DoubleSprite.prototype._setWidth);
-cc.defineGetterSetter(DoubleSprite.prototype, "height", DoubleSprite.prototype._getHeight, DoubleSprite.prototype._setHeight);
 
 var SpriteDoubleResolution = class SpriteDoubleResolution extends SpriteTestDemo {
 
@@ -5172,7 +5176,7 @@ var AnimationCacheFile = class AnimationCacheFile extends SpriteTestDemo {
 
 
         this.cPixel3 = null;
-        var frameCache = spriteFrameCache;
+        var frameCache = cc.spriteFrameCache;
         frameCache.addSpriteFrames(s_grossiniPlist);
         frameCache.addSpriteFrames(s_grossini_grayPlist);
         frameCache.addSpriteFrames(s_grossini_bluePlist);
@@ -5341,9 +5345,8 @@ var TextureColorCacheIssue = class TextureColorCacheIssue extends SpriteTestDemo
 
         this.pixel2 = {"0":0, "1":0, "2":153, "3":255};
 
-        var spriteFrameCache = cc.spriteFrameCache;
-        spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
-        spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
+        cc.spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
+        cc.spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
 
         var grossini = new cc.Sprite('#tcc_grossini_dance_01.png');
         grossini.x = winSize.width / 3;
@@ -5362,8 +5365,8 @@ var TextureColorCacheIssue = class TextureColorCacheIssue extends SpriteTestDemo
     }
     onExit() {
         //----start55----onExit
-        spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
         super.onExit();
         //----end55----
     }
@@ -5405,9 +5408,8 @@ var TextureColorCacheIssue2 = class TextureColorCacheIssue2 extends SpriteTestDe
 
         this.pixel2 = {"0":255, "1":0, "2":153, "3":255};
 
-        var spriteFrameCache = cc.spriteFrameCache;
-        spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
-        spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
+        cc.spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
+        cc.spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
 
         var grossini = new cc.Sprite('#tcc_grossini_dance_01.png');
         grossini.x = winSize.width / 3;
@@ -5426,8 +5428,8 @@ var TextureColorCacheIssue2 = class TextureColorCacheIssue2 extends SpriteTestDe
     }
     onExit() {
         //----start56----onExit
-        spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
         super.onExit();
         //----end56----
     }
@@ -5469,7 +5471,7 @@ var TextureRotatedSpriteFrame = class TextureRotatedSpriteFrame extends SpriteTe
 
         this.pixel2 = {"0":51, "1":0, "2":51, "3":255};
 
-        cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
+        cc.cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
 
         var block = new cc.Sprite('#blocks9r.png');
 

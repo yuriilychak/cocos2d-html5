@@ -1,4 +1,5 @@
 import { DIRECTOR_STATS_POSITION, DIRECTOR_FPS_INTERVAL } from '../platform/config';
+import Game from '../boot/game';
 
 var _showFPS = false;
 var _inited = false;
@@ -86,7 +87,7 @@ var afterVisit = function () {
         }
 
         if (_showFPS) {
-            var mode = cc._renderType === cc.game.RENDER_TYPE_CANVAS ? "\n canvas" : "\n webgl";
+            var mode = cc._renderType === Game.RENDER_TYPE_CANVAS ? "\n canvas" : "\n webgl";
             _SPFLabel.innerHTML = _lastSPF.toFixed(3);
             _FPSLabel.innerHTML = _frameRate.toFixed(1).toString() + mode;
             _drawsLabel.innerHTML = (0 | cc.g_NumberOfDraws).toString();
