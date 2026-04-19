@@ -5,7 +5,7 @@ import './boot';
 // ======================================================================
 // Platform — Foundation
 // ======================================================================
-import { defineGetterSetter, inject, classManager, NewClass } from './platform/class';
+import { inject, classManager, NewClass } from './platform/class';
 import {
     KEY, FMT_JPG, FMT_PNG, FMT_TIFF, FMT_RAWDATA, FMT_WEBP, FMT_UNKNOWN,
     getImageFormatByData, associateWithNative
@@ -215,7 +215,6 @@ import './kazmath';
 // ======================================================================
 
 // Platform — Foundation
-cc.defineGetterSetter = defineGetterSetter;
 cc.inject = inject;
 cc.classManager = classManager;
 cc.NewClass = NewClass;

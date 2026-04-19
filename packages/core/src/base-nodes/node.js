@@ -197,10 +197,6 @@ export class Node extends NewClass {
       this._renderCmd = this._createRenderCmd();
     }
 
-    // ======================================================================
-    // ES6 property accessors (migrated from defineGetterSetter)
-    // ======================================================================
-
     get x() { return this.getPositionX(); }
     set x(v) { this.setPositionX(v); }
 
