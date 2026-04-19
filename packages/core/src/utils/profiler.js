@@ -1,5 +1,6 @@
 import { DIRECTOR_STATS_POSITION, DIRECTOR_FPS_INTERVAL } from '../platform/config';
 import Game from '../boot/game';
+import EventManager from '../event-manager/event-manager';
 
 var _showFPS = false;
 var _inited = false;
@@ -112,11 +113,11 @@ var profiler = {
     },
 
     resumeProfiling: function () {
-        cc.eventManager.addListener(_afterVisitListener, 1);
+        EventManager.getInstance().addListener(_afterVisitListener, 1);
     },
 
     stopProfiling: function () {
-        cc.eventManager.removeListener(_afterVisitListener);
+        EventManager.getInstance().removeListener(_afterVisitListener);
     },
 
     isShowingStats: function () {
@@ -143,7 +144,7 @@ var profiler = {
 
     init: function () {
         if (!_inited) {
-            _afterVisitListener = cc.eventManager.addCustomListener(cc.Director.EVENT_AFTER_VISIT, afterVisit);
+            _afterVisitListener = EventManager.getInstance().addCustomListener(cc.Director.EVENT_AFTER_VISIT, afterVisit);
             _inited = true;
         }
     }

@@ -6,6 +6,7 @@ import {
     PROJECTION_3D,
     PROJECTION_CUSTOM
 } from './constants';
+import EventManager from '../event-manager/event-manager';
 
 /**
  * OpenGL projection protocol
@@ -39,7 +40,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
             cc.Director._fpsImage.src = cc._fpsImage;
         }
 
-        cc.eventManager.addCustomListener(EVENT_PROJECTION_CHANGED, () => {
+        EventManager.getInstance().addCustomListener(EVENT_PROJECTION_CHANGED, () => {
             var stack = this._director._scenesStack;
             for (var i = 0; i < stack.length; i++)
                 recursiveChild(stack[i]);
@@ -94,7 +95,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
                 break;
         }
         director._projection = projection;
-        cc.eventManager.dispatchEvent(director._eventProjectionChanged);
+        EventManager.getInstance().dispatchEvent(director._eventProjectionChanged);
         cc.setProjectionMatrixDirty();
         cc.renderer.childrenOrderDirty = true;
     }
@@ -119,8 +120,8 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
         this.setGLDefaultValues();
 
-        if (cc.eventManager)
-            cc.eventManager.setEnabled(true);
+        if (EventManager.getInstance())
+            EventManager.getInstance().setEnabled(true);
     }
 
     getVisibleSize() {

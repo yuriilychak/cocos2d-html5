@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node } from '../base-nodes/node';
+import { Node } from "../base-nodes/node";
 
 /**
  * <p>
@@ -52,237 +52,236 @@ import { Node } from '../base-nodes/node';
  * var texture = cc.textureCache.addImage("res/animations/grossini.png");
  * var spriteBatchNode = new cc.SpriteBatchNode(texture);
  *
- * @property {cc.TextureAtlas}  textureAtlas    - The texture atlas
+ * @property {TextureAtlas}  textureAtlas    - The texture atlas
  * @property {Array}            descendants     - <@readonly> Descendants of sprite batch node
  */
 export class SpriteBatchNode extends Node {
-    constructor(fileImage) {
-        super();
-        this._blendFunc = null;
-        // all descendants: chlidren, gran children, etc...
-        this._texture = null;
-        this._className = "SpriteBatchNode";
-        this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
+  constructor(fileImage) {
+    super();
+    this._blendFunc = null;
+    // all descendants: chlidren, gran children, etc...
+    this._texture = null;
+    this._className = "SpriteBatchNode";
+    this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
 
-        var texture2D;
-        if (cc.isString(fileImage)) {
-            texture2D = cc.textureCache.getTextureForKey(fileImage);
-            if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
-        } else if (fileImage instanceof cc.Texture2D) texture2D = fileImage;
+    var texture2D;
+    if (cc.isString(fileImage)) {
+      texture2D = cc.textureCache.getTextureForKey(fileImage);
+      if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
+    } else if (fileImage instanceof cc.Texture2D) texture2D = fileImage;
 
-        texture2D && this.initWithTexture(texture2D);
+    texture2D && this.initWithTexture(texture2D);
+  }
+
+  /**
+   * <p>
+   *    Initializes a cc.SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
+   *    The capacity will be increased in 33% in runtime if it run out of space.<br/>
+   *    The file will be loaded using the TextureMgr.<br/>
+   *    Please pass parameters to constructor to initialize the sprite batch node, do not call this function yourself.
+   * </p>
+   * @param {String} fileImage
+   * @param {Number} capacity
+   * @return {Boolean}
+   */
+  initWithFile(fileImage, capacity) {
+    var texture2D = cc.textureCache.getTextureForKey(fileImage);
+    if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
+    return this.initWithTexture(texture2D, capacity);
+  }
+
+  /**
+   * <p>
+   *    initializes a cc.SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
+   *    The capacity will be increased in 33% in runtime if it run out of space.<br/>
+   *    The file will be loaded using the TextureMgr.<br/>
+   *    Please pass parameters to constructor to initialize the sprite batch node, do not call this function yourself.
+   * </p>
+   * @param {String} fileImage
+   * @param {Number} capacity
+   * @return {Boolean}
+   */
+  init(fileImage, capacity) {
+    var texture2D = cc.textureCache.getTextureForKey(fileImage);
+    if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
+    return this.initWithTexture(texture2D, capacity);
+  }
+
+  /**
+   * Removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
+   * @warning Removing a child from a cc.SpriteBatchNode is very slow
+   * @param {Number} index
+   * @param {Boolean} doCleanup
+   */
+  removeChildAtIndex(index, doCleanup) {
+    this.removeChild(this._children[index], doCleanup);
+  }
+
+  /**
+   * Sets the source and destination blending function for the texture
+   * @param {Number | cc.BlendFunc} src
+   * @param {Number} dst
+   */
+  setBlendFunc(src, dst) {
+    if (dst === undefined) this._blendFunc = src;
+    else this._blendFunc = { src: src, dst: dst };
+  }
+
+  /**
+   * Returns the blending function used for the texture
+   * @return {BlendFunc}
+   */
+  getBlendFunc() {
+    return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
+  }
+
+  /**
+   * <p>
+   *   Updates a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.                 <br/>
+   *   This method should be called only when you are dealing with very big AtlasSrite and when most of the cc.Sprite won't be updated.<br/>
+   *   For example: a tile map (cc.TMXMap) or a label with lots of characters (BitmapFontAtlas)<br/>
+   * </p>
+   * @function
+   * @param {Sprite} sprite
+   * @param {Number} index
+   */
+  updateQuadFromSprite(sprite, index) {
+    cc.assert(sprite, cc._LogInfos.CCSpriteBatchNode_updateQuadFromSprite_2);
+    if (!(sprite instanceof cc.Sprite)) {
+      cc.log(cc._LogInfos.CCSpriteBatchNode_updateQuadFromSprite);
+      return;
     }
 
-    /**
-     * <p>
-     *    Initializes a cc.SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
-     *    The capacity will be increased in 33% in runtime if it run out of space.<br/>
-     *    The file will be loaded using the TextureMgr.<br/>
-     *    Please pass parameters to constructor to initialize the sprite batch node, do not call this function yourself.
-     * </p>
-     * @param {String} fileImage
-     * @param {Number} capacity
-     * @return {Boolean}
-     */
-    initWithFile(fileImage, capacity) {
-        var texture2D = cc.textureCache.getTextureForKey(fileImage);
-        if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
-        return this.initWithTexture(texture2D, capacity);
-    }
+    //
+    // update the quad directly. Don't add the sprite to the scene graph
+    //
+    sprite.dirty = true;
+    // UpdateTransform updates the textureAtlas quad
+    sprite._renderCmd.transform(this._renderCmd, true);
+  }
 
-    /**
-     * <p>
-     *    initializes a cc.SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
-     *    The capacity will be increased in 33% in runtime if it run out of space.<br/>
-     *    The file will be loaded using the TextureMgr.<br/>
-     *    Please pass parameters to constructor to initialize the sprite batch node, do not call this function yourself.
-     * </p>
-     * @param {String} fileImage
-     * @param {Number} capacity
-     * @return {Boolean}
-     */
-    init(fileImage, capacity) {
-        var texture2D = cc.textureCache.getTextureForKey(fileImage);
-        if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
-        return this.initWithTexture(texture2D, capacity);
-    }
+  /**
+   * Add child at the end
+   * @function
+   * @param {Sprite} sprite
+   */
+  appendChild(sprite) {
+    this.sortAllChildren();
+    var lastLocalZOrder =
+      this._children[this._children.length - 1]._localZOrder;
+    this.addChild(sprite.lastLocalZOrder + 1);
+  }
 
-    /**
-     * Removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
-     * @warning Removing a child from a cc.SpriteBatchNode is very slow
-     * @param {Number} index
-     * @param {Boolean} doCleanup
-     */
-    removeChildAtIndex(index, doCleanup) {
-        this.removeChild(this._children[index], doCleanup);
-    }
+  /**
+   * Set the texture property
+   * @function
+   * @param {Texture2D} tex
+   * @return {Boolean}
+   */
+  initWithTexture(tex) {
+    this.setTexture(tex);
+    return true;
+  }
 
-    /**
-     * Sets the source and destination blending function for the texture
-     * @param {Number | cc.BlendFunc} src
-     * @param {Number} dst
-     */
-    setBlendFunc(src, dst) {
-        if (dst === undefined) this._blendFunc = src;
-        else this._blendFunc = { src: src, dst: dst };
-    }
+  // CCTextureProtocol
+  /**
+   * Returns texture of the sprite batch node
+   * @function
+   * @return {Texture2D}
+   */
+  getTexture() {
+    return this._texture;
+  }
 
-    /**
-     * Returns the blending function used for the texture
-     * @return {cc.BlendFunc}
-     */
-    getBlendFunc() {
-        return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
-    }
+  /**
+   * Sets the texture of the sprite batch node.
+   * @function
+   * @param {Texture2D} texture
+   */
+  setTexture(texture) {
+    this._texture = texture;
 
-    /**
-     * <p>
-     *   Updates a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.                 <br/>
-     *   This method should be called only when you are dealing with very big AtlasSrite and when most of the cc.Sprite won't be updated.<br/>
-     *   For example: a tile map (cc.TMXMap) or a label with lots of characters (BitmapFontAtlas)<br/>
-     * </p>
-     * @function
-     * @param {cc.Sprite} sprite
-     * @param {Number} index
-     */
-    updateQuadFromSprite(sprite, index) {
-        cc.assert(sprite, cc._LogInfos.CCSpriteBatchNode_updateQuadFromSprite_2);
-        if (!(sprite instanceof cc.Sprite)) {
-            cc.log(cc._LogInfos.CCSpriteBatchNode_updateQuadFromSprite);
-            return;
-        }
-
-        //
-        // update the quad directly. Don't add the sprite to the scene graph
-        //
-        sprite.dirty = true;
-        // UpdateTransform updates the textureAtlas quad
-        sprite._renderCmd.transform(this._renderCmd, true);
-    }
-
-
-    /**
-     * Add child at the end
-     * @function
-     * @param {cc.Sprite} sprite
-     */
-    appendChild(sprite) {
-        this.sortAllChildren();
-        var lastLocalZOrder =
-            this._children[this._children.length - 1]._localZOrder;
-        this.addChild(sprite.lastLocalZOrder + 1);
-    }
-
-    /**
-     * Set the texture property
-     * @function
-     * @param {cc.Texture2D} tex
-     * @return {Boolean}
-     */
-    initWithTexture(tex) {
-        this.setTexture(tex);
-        return true;
-    }
-
-    // CCTextureProtocol
-    /**
-     * Returns texture of the sprite batch node
-     * @function
-     * @return {cc.Texture2D}
-     */
-    getTexture() {
-        return this._texture;
-    }
-
-    /**
-     * Sets the texture of the sprite batch node.
-     * @function
-     * @param {cc.Texture2D} texture
-     */
-    setTexture(texture) {
-        this._texture = texture;
-
-        if (texture._textureLoaded) {
-            var i,
-                children = this._children,
-                len = children.length;
-            for (i = 0; i < len; ++i) {
-                children[i].setTexture(texture);
-            }
-        } else {
-            texture.addEventListener(
-                "load",
-                function () {
-                    var i,
-                        children = this._children,
-                        len = children.length;
-                    for (i = 0; i < len; ++i) {
-                        children[i].setTexture(texture);
-                    }
-                },
-                this
-            );
-        }
-    }
-
-    setShaderProgram(newShaderProgram) {
-        this._renderCmd.setShaderProgram(newShaderProgram);
-        var i,
+    if (texture._textureLoaded) {
+      var i,
+        children = this._children,
+        len = children.length;
+      for (i = 0; i < len; ++i) {
+        children[i].setTexture(texture);
+      }
+    } else {
+      texture.addEventListener(
+        "load",
+        function () {
+          var i,
             children = this._children,
             len = children.length;
-        for (i = 0; i < len; ++i) {
-            children[i].setShaderProgram(newShaderProgram);
-        }
+          for (i = 0; i < len; ++i) {
+            children[i].setTexture(texture);
+          }
+        },
+        this
+      );
     }
+  }
 
-    /**
-     * Add child to the sprite batch node (override addChild of cc.Node)
-     * @function
-     * @override
-     * @param {cc.Sprite} child
-     * @param {Number} [zOrder]
-     * @param {Number} [tag]
-     */
-    addChild(child, zOrder, tag) {
-        cc.assert(child !== undefined, cc._LogInfos.CCSpriteBatchNode_addChild_3);
-
-        if (!this._isValidChild(child)) return;
-
-        zOrder = zOrder === undefined ? child.zIndex : zOrder;
-        tag = tag === undefined ? child.tag : tag;
-        super.addChild(child, zOrder, tag);
-
-        // Apply shader
-        if (this._renderCmd._shaderProgram) {
-            child.shaderProgram = this._renderCmd._shaderProgram;
-        }
+  setShaderProgram(newShaderProgram) {
+    this._renderCmd.setShaderProgram(newShaderProgram);
+    var i,
+      children = this._children,
+      len = children.length;
+    for (i = 0; i < len; ++i) {
+      children[i].setShaderProgram(newShaderProgram);
     }
+  }
 
-    _isValidChild(child) {
-        if (!(child instanceof cc.Sprite)) {
-            cc.log(cc._LogInfos.Sprite_addChild_4);
-            return false;
-        }
-        if (child.texture !== this._texture) {
-            cc.log(cc._LogInfos.Sprite_addChild_5);
-            return false;
-        }
-        return true;
-    }
+  /**
+   * Add child to the sprite batch node (override addChild of cc.Node)
+   * @function
+   * @override
+   * @param {Sprite} child
+   * @param {Number} [zOrder]
+   * @param {Number} [tag]
+   */
+  addChild(child, zOrder, tag) {
+    cc.assert(child !== undefined, cc._LogInfos.CCSpriteBatchNode_addChild_3);
 
-    get texture() {
-        return this.getTexture();
-    }
+    if (!this._isValidChild(child)) return;
 
-    set texture(value) {
-        this.setTexture(value);
-    }
+    zOrder = zOrder === undefined ? child.zIndex : zOrder;
+    tag = tag === undefined ? child.tag : tag;
+    super.addChild(child, zOrder, tag);
 
-    get shaderProgram() {
-        return this.getShaderProgram();
+    // Apply shader
+    if (this._renderCmd._shaderProgram) {
+      child.shaderProgram = this._renderCmd._shaderProgram;
     }
+  }
 
-    set shaderProgram(value) {
-        this.setShaderProgram(value);
+  _isValidChild(child) {
+    if (!(child instanceof cc.Sprite)) {
+      cc.log(cc._LogInfos.Sprite_addChild_4);
+      return false;
     }
+    if (child.texture !== this._texture) {
+      cc.log(cc._LogInfos.Sprite_addChild_5);
+      return false;
+    }
+    return true;
+  }
+
+  get texture() {
+    return this.getTexture();
+  }
+
+  set texture(value) {
+    this.setTexture(value);
+  }
+
+  get shaderProgram() {
+    return this.getShaderProgram();
+  }
+
+  set shaderProgram(value) {
+    this.setShaderProgram(value);
+  }
 }

@@ -31,18 +31,18 @@
  * @param {Number} [y=0]
  */
 export class Point {
-    constructor(x, y) {
-        if (x === undefined) {
-            this.x = 0;
-            this.y = 0;
-        } else if (y === undefined) {
-            this.x = x.x;
-            this.y = x.y;
-        } else {
-            this.x = x;
-            this.y = y;
-        }
+  constructor(x, y) {
+    if (x === undefined) {
+      this.x = 0;
+      this.y = 0;
+    } else if (y === undefined) {
+      this.x = x.x;
+      this.y = x.y;
+    } else {
+      this.x = x;
+      this.y = y;
     }
+  }
 }
 
 /**
@@ -50,19 +50,19 @@ export class Point {
  * @function
  * @param {Number|cc.Point} [x] a Number or a point object
  * @param {Number} [y]
- * @return {cc.Point}
+ * @return {Point}
  */
 export function p(x, y) {
-    return new Point(x, y);
+  return new Point(x, y);
 }
 
 /**
  * Check whether a point's value equals to another
  * @function
- * @param {cc.Point} point1
- * @param {cc.Point} point2
+ * @param {Point} point1
+ * @param {Point} point2
  * @return {Boolean}
  */
 export function pointEqualToPoint(point1, point2) {
-    return point1 && point2 && (point1.x === point2.x) && (point1.y === point2.y);
+  return point1 && point2 && point1.x === point2.x && point1.y === point2.y;
 }

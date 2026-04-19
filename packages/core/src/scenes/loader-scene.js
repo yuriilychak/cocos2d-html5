@@ -26,6 +26,8 @@
 import { Scene } from './scene';
 import { Point } from '../cocoa/geometry/point';
 import { Color } from '../platform/types/color';
+import EventManager from '../event-manager/event-manager';
+import Loader from '../boot/loader';
 
 /**
  * cc.LoaderScene is a scene that you can load it when you loading files
@@ -56,7 +58,7 @@ export class LoaderScene extends Scene {
 
         var fontSize = 24, lblHeight = -logoHeight / 2 + 100;
         if (cc._loaderImage) {
-            cc.loader.loadImg(cc._loaderImage, { isCrossOrigin: false }, function (err, img) {
+            Loader.getInstance().loadImg(cc._loaderImage, { isCrossOrigin: false }, function (err, img) {
                 logoWidth = img.width;
                 logoHeight = img.height;
                 self._initStage(img, cc.visibleRect.center);
@@ -107,7 +109,7 @@ export class LoaderScene extends Scene {
         var self = this;
         self.unschedule(self._startLoading);
         var res = self.resources;
-        cc.loader.load(res,
+        Loader.getInstance().load(res,
             function (result, count, loadedCount) {
                 var percent = (loadedCount / count * 100) | 0;
                 percent = Math.min(percent, 100);
@@ -131,7 +133,7 @@ LoaderScene.preload = function (resources, cb, target) {
     if (!_cc.loaderScene) {
         _cc.loaderScene = new cc.LoaderScene();
         _cc.loaderScene.init();
-        cc.eventManager.addCustomListener(cc.Director.EVENT_PROJECTION_CHANGED, function () {
+        EventManager.getInstance().addCustomListener(cc.Director.EVENT_PROJECTION_CHANGED, function () {
             _cc.loaderScene._updateTransform();
         });
     }

@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from '../../platform/class';
-import { AnimationFrame } from './animation-frame';
-import { Rect } from '../../cocoa/geometry/rect';
+import { NewClass } from "../../platform/class";
+import { AnimationFrame } from "./animation-frame";
+import { Rect } from "../../cocoa/geometry/rect";
 
 /**
  * <p>
@@ -68,247 +68,243 @@ import { Rect } from '../../cocoa/geometry/rect';
  * sprite.runAction(action);
  */
 export class Animation extends NewClass {
-    constructor(frames, delay, loops) {
-        super();
-        this._frames = null;
-        this._loops = 0;
-        this._restoreOriginalFrame = false;
-        this._duration = 0;
-        this._delayPerUnit = 0;
-        this._totalDelayUnits = 0;
-        this._frames = [];
+  constructor(frames, delay, loops) {
+    super();
+    this._frames = null;
+    this._loops = 0;
+    this._restoreOriginalFrame = false;
+    this._duration = 0;
+    this._delayPerUnit = 0;
+    this._totalDelayUnits = 0;
+    this._frames = [];
 
-        if (frames === undefined) {
-            this.initWithSpriteFrames(null, 0);
-        } else {
-            var frame0 = frames[0];
-            if (frame0) {
-                if (frame0 instanceof cc.SpriteFrame) {
-                    //init with sprite frames , delay and loops.
-                    this.initWithSpriteFrames(frames, delay, loops);
-                } else if (frame0 instanceof AnimationFrame) {
-                    //init with sprite frames , delay and loops.
-                    this.initWithAnimationFrames(frames, delay, loops);
-                }
-            }
+    if (frames === undefined) {
+      this.initWithSpriteFrames(null, 0);
+    } else {
+      var frame0 = frames[0];
+      if (frame0) {
+        if (frame0 instanceof cc.SpriteFrame) {
+          //init with sprite frames , delay and loops.
+          this.initWithSpriteFrames(frames, delay, loops);
+        } else if (frame0 instanceof AnimationFrame) {
+          //init with sprite frames , delay and loops.
+          this.initWithAnimationFrames(frames, delay, loops);
         }
+      }
+    }
+  }
+
+  // attributes
+
+  /**
+   * Returns the array of animation frames
+   * @return {Array}
+   */
+  getFrames() {
+    return this._frames;
+  }
+
+  /**
+   * Sets array of animation frames
+   * @param {Array} frames
+   */
+  setFrames(frames) {
+    this._frames = frames;
+  }
+
+  /**
+   * Adds a frame to a cc.Animation, the frame will be added with one "delay unit".
+   * @param {SpriteFrame} frame
+   */
+  addSpriteFrame(frame) {
+    var animFrame = new AnimationFrame();
+
+    animFrame.initWithSpriteFrame(frame, 1, null);
+    this._frames.push(animFrame);
+    // update duration
+    this._totalDelayUnits++;
+  }
+
+  /**
+   * Adds a frame with an image filename. Internally it will create a cc.SpriteFrame and it will add it. The frame will be added with one "delay unit".
+   * @param {String} fileName
+   */
+  addSpriteFrameWithFile(fileName) {
+    var texture = cc.textureCache.addImage(fileName);
+    var rect = new Rect(0, 0, 0, 0);
+    rect.width = texture.width;
+    rect.height = texture.height;
+    var frame = new cc.SpriteFrame(texture, rect);
+    this.addSpriteFrame(frame);
+  }
+
+  /**
+   * Adds a frame with a texture and a rect. Internally it will create a cc.SpriteFrame and it will add it. The frame will be added with one "delay unit".
+   * @param {Texture2D} texture
+   * @param {Rect} rect
+   */
+  addSpriteFrameWithTexture(texture, rect) {
+    var pFrame = new cc.SpriteFrame(texture, rect);
+    this.addSpriteFrame(pFrame);
+  }
+
+  /**
+   * Initializes a cc.Animation with cc.AnimationFrame, do not call this method yourself, please pass parameters to constructor to initialize.
+   * @param {Array} arrayOfAnimationFrames
+   * @param {Number} delayPerUnit
+   * @param {Number} [loops=1]
+   */
+  initWithAnimationFrames(arrayOfAnimationFrames, delayPerUnit, loops) {
+    cc.arrayVerifyType(arrayOfAnimationFrames, AnimationFrame);
+
+    this._delayPerUnit = delayPerUnit;
+    this._loops = loops === undefined ? 1 : loops;
+    this._totalDelayUnits = 0;
+
+    var locFrames = this._frames;
+    locFrames.length = 0;
+    for (var i = 0; i < arrayOfAnimationFrames.length; i++) {
+      var animFrame = arrayOfAnimationFrames[i];
+      locFrames.push(animFrame);
+      this._totalDelayUnits += animFrame.getDelayUnits();
     }
 
-    // attributes
+    return true;
+  }
 
-    /**
-     * Returns the array of animation frames
-     * @return {Array}
-     */
-    getFrames() {
-        return this._frames;
-    }
+  /**
+   * Clone the current animation
+   * @return {Animation}
+   */
+  clone() {
+    var animation = new Animation();
+    animation.initWithAnimationFrames(
+      this._copyFrames(),
+      this._delayPerUnit,
+      this._loops
+    );
+    animation.setRestoreOriginalFrame(this._restoreOriginalFrame);
+    return animation;
+  }
 
-    /**
-     * Sets array of animation frames
-     * @param {Array} frames
-     */
-    setFrames(frames) {
-        this._frames = frames;
-    }
+  /**
+   * Clone the current animation
+   * @return {Animation}
+   */
+  copyWithZone(pZone) {
+    var pCopy = new Animation();
+    pCopy.initWithAnimationFrames(
+      this._copyFrames(),
+      this._delayPerUnit,
+      this._loops
+    );
+    pCopy.setRestoreOriginalFrame(this._restoreOriginalFrame);
+    return pCopy;
+  }
 
-    /**
-     * Adds a frame to a cc.Animation, the frame will be added with one "delay unit".
-     * @param {cc.SpriteFrame} frame
-     */
-    addSpriteFrame(frame) {
+  _copyFrames() {
+    var copyFrames = [];
+    for (var i = 0; i < this._frames.length; i++)
+      copyFrames.push(this._frames[i].clone());
+    return copyFrames;
+  }
+
+  /**
+   * Clone the current animation
+   * @param pZone
+   * @returns {Animation}
+   */
+  copy(pZone) {
+    return this.copyWithZone(null);
+  }
+
+  /**
+   * Returns how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ...
+   * @return {Number}
+   */
+  getLoops() {
+    return this._loops;
+  }
+
+  /**
+   * Sets how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ...
+   * @param {Number} value
+   */
+  setLoops(value) {
+    this._loops = value;
+  }
+
+  /**
+   * Sets whether or not it shall restore the original frame when the animation finishes
+   * @param {Boolean} restOrigFrame
+   */
+  setRestoreOriginalFrame(restOrigFrame) {
+    this._restoreOriginalFrame = restOrigFrame;
+  }
+
+  /**
+   * Returns whether or not it shall restore the original frame when the animation finishes
+   * @return {Boolean}
+   */
+  getRestoreOriginalFrame() {
+    return this._restoreOriginalFrame;
+  }
+
+  /**
+   * Returns duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit
+   * @return {Number}
+   */
+  getDuration() {
+    return this._totalDelayUnits * this._delayPerUnit;
+  }
+
+  /**
+   * Returns delay in seconds of the "delay unit"
+   * @return {Number}
+   */
+  getDelayPerUnit() {
+    return this._delayPerUnit;
+  }
+
+  /**
+   * Sets delay in seconds of the "delay unit"
+   * @param {Number} delayPerUnit
+   */
+  setDelayPerUnit(delayPerUnit) {
+    this._delayPerUnit = delayPerUnit;
+  }
+
+  /**
+   * Returns total delay units of the cc.Animation.
+   * @return {Number}
+   */
+  getTotalDelayUnits() {
+    return this._totalDelayUnits;
+  }
+
+  /**
+   * Initializes a cc.Animation with frames and a delay between frames, do not call this method yourself, please pass parameters to constructor to initialize.
+   * @param {Array} frames
+   * @param {Number} delay
+   * @param {Number} [loops=1]
+   */
+  initWithSpriteFrames(frames, delay, loops) {
+    cc.arrayVerifyType(frames, cc.SpriteFrame);
+    this._loops = loops === undefined ? 1 : loops;
+    this._delayPerUnit = delay || 0;
+    this._totalDelayUnits = 0;
+
+    var locFrames = this._frames;
+    locFrames.length = 0;
+    if (frames) {
+      for (var i = 0; i < frames.length; i++) {
+        var frame = frames[i];
         var animFrame = new AnimationFrame();
-
         animFrame.initWithSpriteFrame(frame, 1, null);
-        this._frames.push(animFrame);
-        // update duration
-        this._totalDelayUnits++;
+        locFrames.push(animFrame);
+      }
+      this._totalDelayUnits += frames.length;
     }
-
-    /**
-     * Adds a frame with an image filename. Internally it will create a cc.SpriteFrame and it will add it. The frame will be added with one "delay unit".
-     * @param {String} fileName
-     */
-    addSpriteFrameWithFile(fileName) {
-        var texture = cc.textureCache.addImage(fileName);
-        var rect = new Rect(0, 0, 0, 0);
-        rect.width = texture.width;
-        rect.height = texture.height;
-        var frame = new cc.SpriteFrame(texture, rect);
-        this.addSpriteFrame(frame);
-    }
-
-    /**
-     * Adds a frame with a texture and a rect. Internally it will create a cc.SpriteFrame and it will add it. The frame will be added with one "delay unit".
-     * @param {cc.Texture2D} texture
-     * @param {cc.Rect} rect
-     */
-    addSpriteFrameWithTexture(texture, rect) {
-        var pFrame = new cc.SpriteFrame(texture, rect);
-        this.addSpriteFrame(pFrame);
-    }
-
-    /**
-     * Initializes a cc.Animation with cc.AnimationFrame, do not call this method yourself, please pass parameters to constructor to initialize.
-     * @param {Array} arrayOfAnimationFrames
-     * @param {Number} delayPerUnit
-     * @param {Number} [loops=1]
-     */
-    initWithAnimationFrames(
-        arrayOfAnimationFrames,
-        delayPerUnit,
-        loops
-    ) {
-        cc.arrayVerifyType(arrayOfAnimationFrames, AnimationFrame);
-
-        this._delayPerUnit = delayPerUnit;
-        this._loops = loops === undefined ? 1 : loops;
-        this._totalDelayUnits = 0;
-
-        var locFrames = this._frames;
-        locFrames.length = 0;
-        for (var i = 0; i < arrayOfAnimationFrames.length; i++) {
-            var animFrame = arrayOfAnimationFrames[i];
-            locFrames.push(animFrame);
-            this._totalDelayUnits += animFrame.getDelayUnits();
-        }
-
-        return true;
-    }
-
-    /**
-     * Clone the current animation
-     * @return {cc.Animation}
-     */
-    clone() {
-        var animation = new Animation();
-        animation.initWithAnimationFrames(
-            this._copyFrames(),
-            this._delayPerUnit,
-            this._loops
-        );
-        animation.setRestoreOriginalFrame(this._restoreOriginalFrame);
-        return animation;
-    }
-
-    /**
-     * Clone the current animation
-     * @return {cc.Animation}
-     */
-    copyWithZone(pZone) {
-        var pCopy = new Animation();
-        pCopy.initWithAnimationFrames(
-            this._copyFrames(),
-            this._delayPerUnit,
-            this._loops
-        );
-        pCopy.setRestoreOriginalFrame(this._restoreOriginalFrame);
-        return pCopy;
-    }
-
-    _copyFrames() {
-        var copyFrames = [];
-        for (var i = 0; i < this._frames.length; i++)
-            copyFrames.push(this._frames[i].clone());
-        return copyFrames;
-    }
-
-    /**
-     * Clone the current animation
-     * @param pZone
-     * @returns {cc.Animation}
-     */
-    copy(pZone) {
-        return this.copyWithZone(null);
-    }
-
-    /**
-     * Returns how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ...
-     * @return {Number}
-     */
-    getLoops() {
-        return this._loops;
-    }
-
-    /**
-     * Sets how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ...
-     * @param {Number} value
-     */
-    setLoops(value) {
-        this._loops = value;
-    }
-
-    /**
-     * Sets whether or not it shall restore the original frame when the animation finishes
-     * @param {Boolean} restOrigFrame
-     */
-    setRestoreOriginalFrame(restOrigFrame) {
-        this._restoreOriginalFrame = restOrigFrame;
-    }
-
-    /**
-     * Returns whether or not it shall restore the original frame when the animation finishes
-     * @return {Boolean}
-     */
-    getRestoreOriginalFrame() {
-        return this._restoreOriginalFrame;
-    }
-
-    /**
-     * Returns duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit
-     * @return {Number}
-     */
-    getDuration() {
-        return this._totalDelayUnits * this._delayPerUnit;
-    }
-
-    /**
-     * Returns delay in seconds of the "delay unit"
-     * @return {Number}
-     */
-    getDelayPerUnit() {
-        return this._delayPerUnit;
-    }
-
-    /**
-     * Sets delay in seconds of the "delay unit"
-     * @param {Number} delayPerUnit
-     */
-    setDelayPerUnit(delayPerUnit) {
-        this._delayPerUnit = delayPerUnit;
-    }
-
-    /**
-     * Returns total delay units of the cc.Animation.
-     * @return {Number}
-     */
-    getTotalDelayUnits() {
-        return this._totalDelayUnits;
-    }
-
-    /**
-     * Initializes a cc.Animation with frames and a delay between frames, do not call this method yourself, please pass parameters to constructor to initialize.
-     * @param {Array} frames
-     * @param {Number} delay
-     * @param {Number} [loops=1]
-     */
-    initWithSpriteFrames(frames, delay, loops) {
-        cc.arrayVerifyType(frames, cc.SpriteFrame);
-        this._loops = loops === undefined ? 1 : loops;
-        this._delayPerUnit = delay || 0;
-        this._totalDelayUnits = 0;
-
-        var locFrames = this._frames;
-        locFrames.length = 0;
-        if (frames) {
-            for (var i = 0; i < frames.length; i++) {
-                var frame = frames[i];
-                var animFrame = new AnimationFrame();
-                animFrame.initWithSpriteFrame(frame, 1, null);
-                locFrames.push(animFrame);
-            }
-            this._totalDelayUnits += frames.length;
-        }
-        return true;
-    }
+    return true;
+  }
 }

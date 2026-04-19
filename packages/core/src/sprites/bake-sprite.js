@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Sprite } from './sprite';
-import { Rect } from '../cocoa/geometry/rect';
+import { Sprite } from "./sprite";
+import { Rect } from "../cocoa/geometry/rect";
 
 /**
  * cc.BakeSprite is a type of sprite that will be cached.
@@ -31,50 +31,57 @@ import { Rect } from '../cocoa/geometry/rect';
  * @extend cc.Sprite
  */
 export class BakeSprite extends Sprite {
-    constructor(){
-        super();
-        this._cacheCanvas = null;
-        this._cacheContext = null;
-        var canvasElement = document.createElement("canvas");
-        canvasElement.width = canvasElement.height = 10;
-        this._cacheCanvas = canvasElement;
-        this._cacheContext = new cc.CanvasContextWrapper(canvasElement.getContext("2d"));
+  constructor() {
+    super();
+    this._cacheCanvas = null;
+    this._cacheContext = null;
+    var canvasElement = document.createElement("canvas");
+    canvasElement.width = canvasElement.height = 10;
+    this._cacheCanvas = canvasElement;
+    this._cacheContext = new cc.CanvasContextWrapper(
+      canvasElement.getContext("2d")
+    );
 
-        var texture = new cc.Texture2D();
-        texture.initWithElement(canvasElement);
-        texture.handleLoadedTexture();
-        this.setTexture(texture);
-    }
+    var texture = new cc.Texture2D();
+    texture.initWithElement(canvasElement);
+    texture.handleLoadedTexture();
+    this.setTexture(texture);
+  }
 
-    getCacheContext(){
-        return this._cacheContext;
-    }
+  getCacheContext() {
+    return this._cacheContext;
+  }
 
-    getCacheCanvas(){
-        return this._cacheCanvas;
-    }
+  getCacheCanvas() {
+    return this._cacheCanvas;
+  }
 
-    /**
-     * reset the cache canvas size
-     * @param {cc.Size|Number} sizeOrWidth  size or width
-     * @param {Number} [height]
-     */
-    resetCanvasSize(sizeOrWidth, height){
-        var locCanvas = this._cacheCanvas,
-            locContext = this._cacheContext,
-            strokeStyle = locContext._context.strokeStyle,
-            fillStyle = locContext._context.fillStyle;
-        if(height === undefined){
-            height = sizeOrWidth.height;
-            sizeOrWidth = sizeOrWidth.width;
-        }
-        locCanvas.width = sizeOrWidth;
-        locCanvas.height = height;
-        if(strokeStyle !== locContext._context.strokeStyle)
-            locContext._context.strokeStyle = strokeStyle;
-        if(fillStyle !== locContext._context.fillStyle)
-            locContext._context.fillStyle = fillStyle;
-        this.getTexture().handleLoadedTexture();
-        this.setTextureRect(new Rect(0,0, sizeOrWidth, height), false, null, false);
+  /**
+   * reset the cache canvas size
+   * @param {Size|Number} sizeOrWidth  size or width
+   * @param {Number} [height]
+   */
+  resetCanvasSize(sizeOrWidth, height) {
+    var locCanvas = this._cacheCanvas,
+      locContext = this._cacheContext,
+      strokeStyle = locContext._context.strokeStyle,
+      fillStyle = locContext._context.fillStyle;
+    if (height === undefined) {
+      height = sizeOrWidth.height;
+      sizeOrWidth = sizeOrWidth.width;
     }
+    locCanvas.width = sizeOrWidth;
+    locCanvas.height = height;
+    if (strokeStyle !== locContext._context.strokeStyle)
+      locContext._context.strokeStyle = strokeStyle;
+    if (fillStyle !== locContext._context.fillStyle)
+      locContext._context.fillStyle = fillStyle;
+    this.getTexture().handleLoadedTexture();
+    this.setTextureRect(
+      new Rect(0, 0, sizeOrWidth, height),
+      false,
+      null,
+      false
+    );
+  }
 }

@@ -30,6 +30,8 @@
  * @param {object} jsObj subclass
  * @param {object} superclass
  */
+import EventManager from '../event-manager/event-manager';
+
 export function associateWithNative(jsObj, superclass) {
 }
 
@@ -39,7 +41,7 @@ export function associateWithNative(jsObj, superclass) {
  * @constant
  * @type {Object}
  * @example
- cc.eventManager.addListener({
+ EventManager.getInstance().addListener({
         event: cc.EventListener.KEYBOARD,
         onKeyPressed:  function(keyCode, event){
             if (cc.KEY["a"] == keyCode) {

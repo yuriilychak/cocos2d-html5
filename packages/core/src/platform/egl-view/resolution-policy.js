@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from '../class';
-import { ContainerStrategy } from './container-strategy';
-import { ContentStrategy } from './content-strategy';
+import { NewClass } from "../class";
+import { ContainerStrategy } from "./container-strategy";
+import { ContentStrategy } from "./content-strategy";
 
 /**
  * <p>cc.ResolutionPolicy class is the root strategy class of scale strategy,
@@ -38,68 +38,68 @@ import { ContentStrategy } from './content-strategy';
  * @param {ContentStrategy} contentStg The content strategy
  */
 export class ResolutionPolicy extends NewClass {
-    /**
-     * Constructor of ResolutionPolicy
-     * @param {ContainerStrategy} containerStg
-     * @param {ContentStrategy} contentStg
-     */
-    constructor(containerStg, contentStg) {
-        super();
-        this._containerStrategy = null;
-        this._contentStrategy = null;
+  /**
+   * Constructor of ResolutionPolicy
+   * @param {ContainerStrategy} containerStg
+   * @param {ContentStrategy} contentStg
+   */
+  constructor(containerStg, contentStg) {
+    super();
+    this._containerStrategy = null;
+    this._contentStrategy = null;
 
-        this.setContainerStrategy(containerStg);
-        this.setContentStrategy(contentStg);
-    }
+    this.setContainerStrategy(containerStg);
+    this.setContentStrategy(contentStg);
+  }
 
-    /**
-     * Manipulation before applying the resolution policy
-     * @param {cc.view} view The target view
-     */
-    preApply(view) {
-        this._containerStrategy.preApply(view);
-        this._contentStrategy.preApply(view);
-    }
+  /**
+   * Manipulation before applying the resolution policy
+   * @param {view} view The target view
+   */
+  preApply(view) {
+    this._containerStrategy.preApply(view);
+    this._contentStrategy.preApply(view);
+  }
 
-    /**
-     * Function to apply this resolution policy
-     * The return value is {scale: [scaleX, scaleY], viewport: {cc.Rect}},
-     * The target view can then apply these value to itself, it's preferred not to modify directly its private variables
-     * @param {cc.view} view The target view
-     * @param {cc.Size} designedResolution The user defined design resolution
-     * @return {object} An object contains the scale X/Y values and the viewport rect
-     */
-    apply(view, designedResolution) {
-        this._containerStrategy.apply(view, designedResolution);
-        return this._contentStrategy.apply(view, designedResolution);
-    }
+  /**
+   * Function to apply this resolution policy
+   * The return value is {scale: [scaleX, scaleY], viewport: {Rect}},
+   * The target view can then apply these value to itself, it's preferred not to modify directly its private variables
+   * @param {view} view The target view
+   * @param {Size} designedResolution The user defined design resolution
+   * @return {object} An object contains the scale X/Y values and the viewport rect
+   */
+  apply(view, designedResolution) {
+    this._containerStrategy.apply(view, designedResolution);
+    return this._contentStrategy.apply(view, designedResolution);
+  }
 
-    /**
-     * Manipulation after appyling the strategy
-     * @param {cc.view} view The target view
-     */
-    postApply(view) {
-        this._containerStrategy.postApply(view);
-        this._contentStrategy.postApply(view);
-    }
+  /**
+   * Manipulation after appyling the strategy
+   * @param {view} view The target view
+   */
+  postApply(view) {
+    this._containerStrategy.postApply(view);
+    this._contentStrategy.postApply(view);
+  }
 
-    /**
-     * Setup the container's scale strategy
-     * @param {ContainerStrategy} containerStg
-     */
-    setContainerStrategy(containerStg) {
-        if (containerStg instanceof ContainerStrategy)
-            this._containerStrategy = containerStg;
-    }
+  /**
+   * Setup the container's scale strategy
+   * @param {ContainerStrategy} containerStg
+   */
+  setContainerStrategy(containerStg) {
+    if (containerStg instanceof ContainerStrategy)
+      this._containerStrategy = containerStg;
+  }
 
-    /**
-     * Setup the content's scale strategy
-     * @param {ContentStrategy} contentStg
-     */
-    setContentStrategy(contentStg) {
-        if (contentStg instanceof ContentStrategy)
-            this._contentStrategy = contentStg;
-    }
+  /**
+   * Setup the content's scale strategy
+   * @param {ContentStrategy} contentStg
+   */
+  setContentStrategy(contentStg) {
+    if (contentStg instanceof ContentStrategy)
+      this._contentStrategy = contentStg;
+  }
 }
 
 /**

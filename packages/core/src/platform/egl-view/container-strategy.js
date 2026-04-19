@@ -24,8 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from '../class';
-import Game from '../../boot/game';
+import { NewClass } from "../class";
+import Game from "../../boot/game";
 
 /**
  * <p>cc.ContainerStrategy class is the root strategy class of container's scale strategy,
@@ -35,64 +35,64 @@ import Game from '../../boot/game';
  * @extends NewClass
  */
 export class ContainerStrategy extends NewClass {
-    /**
-     * Manipulation before appling the strategy
-     * @param {cc.view} view The target view
-     */
-    preApply(view) {
+  /**
+   * Manipulation before appling the strategy
+   * @param {view} view The target view
+   */
+  preApply(view) {}
+
+  /**
+   * Function to apply this strategy
+   * @param {view} view
+   * @param {Size} designedResolution
+   */
+  apply(view, designedResolution) {}
+
+  /**
+   * Manipulation after applying the strategy
+   * @param {view} view  The target view
+   */
+  postApply(view) {}
+
+  _setupContainer(view, w, h) {
+    var locCanvas = Game.getInstance().canvas,
+      locContainer = Game.getInstance().container;
+    if (cc.sys.os === cc.sys.OS_ANDROID) {
+      document.body.style.width = (view._isRotated ? h : w) + "px";
+      document.body.style.height = (view._isRotated ? w : h) + "px";
     }
 
-    /**
-     * Function to apply this strategy
-     * @param {cc.view} view
-     * @param {cc.Size} designedResolution
-     */
-    apply(view, designedResolution) {
-    }
+    // Setup style
+    locContainer.style.width = locCanvas.style.width = w + "px";
+    locContainer.style.height = locCanvas.style.height = h + "px";
+    // Setup pixel ratio for retina display
+    var devicePixelRatio = (view._devicePixelRatio = 1);
+    if (view.isRetinaEnabled())
+      devicePixelRatio = view._devicePixelRatio = Math.min(
+        2,
+        window.devicePixelRatio || 1
+      );
+    // Setup canvas
+    locCanvas.width = w * devicePixelRatio;
+    locCanvas.height = h * devicePixelRatio;
+    cc._renderContext.resetCache && cc._renderContext.resetCache();
+  }
 
-    /**
-     * Manipulation after applying the strategy
-     * @param {cc.view} view  The target view
-     */
-    postApply(view) {
-
-    }
-
-    _setupContainer(view, w, h) {
-        var locCanvas = Game.getInstance().canvas, locContainer = Game.getInstance().container;
-        if (cc.sys.os === cc.sys.OS_ANDROID) {
-            document.body.style.width = (view._isRotated ? h : w) + 'px';
-            document.body.style.height = (view._isRotated ? w : h) + 'px';
-        }
-
-        // Setup style
-        locContainer.style.width = locCanvas.style.width = w + 'px';
-        locContainer.style.height = locCanvas.style.height = h + 'px';
-        // Setup pixel ratio for retina display
-        var devicePixelRatio = view._devicePixelRatio = 1;
-        if (view.isRetinaEnabled())
-            devicePixelRatio = view._devicePixelRatio = Math.min(2, window.devicePixelRatio || 1);
-        // Setup canvas
-        locCanvas.width = w * devicePixelRatio;
-        locCanvas.height = h * devicePixelRatio;
-        cc._renderContext.resetCache && cc._renderContext.resetCache();
-    }
-
-    _fixContainer() {
-        // Add container to document body
-        document.body.insertBefore(cc.container, document.body.firstChild);
-        // Set body's width height to window's size, and forbid overflow, so that game will be centered
-        var bs = document.body.style;
-        bs.width = window.innerWidth + "px";
-        bs.height = window.innerHeight + "px";
-        bs.overflow = "hidden";
-        // Body size solution doesn't work on all mobile browser so this is the aleternative: fixed container
-        var contStyle = cc.container.style;
-        contStyle.position = "fixed";
-        contStyle.left = contStyle.top = "0px";
-        // Reposition body
-        document.body.scrollTop = 0;
-    }
+  _fixContainer() {
+    // Add container to document body
+    document.body.insertBefore(cc.container, document.body.firstChild);
+    // Set body's width height to window's size, and forbid overflow, so that game will be centered
+    var bs = document.body.style;
+    bs.width = window.innerWidth + "px";
+    bs.height = window.innerHeight + "px";
+    bs.overflow = "hidden";
+    // Body size solution doesn't work on all mobile browser so this is the aleternative: fixed container
+    var contStyle = cc.container.style;
+    contStyle.position = "fixed";
+    contStyle.left = contStyle.top = "0px";
+    // Reposition body
+    document.body.scrollTop = 0;
+  }
 }
 
 // Container scale strategies (subclasses)
@@ -102,17 +102,17 @@ export class ContainerStrategy extends NewClass {
  * @extends ContainerStrategy
  */
 class EqualToFrame extends ContainerStrategy {
-    apply(view) {
-        var frameH = view._frameSize.height, containerStyle = cc.container.style;
-        this._setupContainer(view, view._frameSize.width, view._frameSize.height);
-        // Setup container's margin and padding
-        if (view._isRotated) {
-            containerStyle.margin = '0 0 0 ' + frameH + 'px';
-        }
-        else {
-            containerStyle.margin = '0px';
-        }
+  apply(view) {
+    var frameH = view._frameSize.height,
+      containerStyle = cc.container.style;
+    this._setupContainer(view, view._frameSize.width, view._frameSize.height);
+    // Setup container's margin and padding
+    if (view._isRotated) {
+      containerStyle.margin = "0 0 0 " + frameH + "px";
+    } else {
+      containerStyle.margin = "0px";
     }
+  }
 }
 
 /**
@@ -120,33 +120,39 @@ class EqualToFrame extends ContainerStrategy {
  * @extends ContainerStrategy
  */
 class ProportionalToFrame extends ContainerStrategy {
-    apply(view, designedResolution) {
-        var frameW = view._frameSize.width, frameH = view._frameSize.height, containerStyle = cc.container.style,
-            designW = designedResolution.width, designH = designedResolution.height,
-            scaleX = frameW / designW, scaleY = frameH / designH,
-            containerW, containerH;
+  apply(view, designedResolution) {
+    var frameW = view._frameSize.width,
+      frameH = view._frameSize.height,
+      containerStyle = cc.container.style,
+      designW = designedResolution.width,
+      designH = designedResolution.height,
+      scaleX = frameW / designW,
+      scaleY = frameH / designH,
+      containerW,
+      containerH;
 
-        scaleX < scaleY ? (containerW = frameW, containerH = designH * scaleX) : (containerW = designW * scaleY, containerH = frameH);
+    scaleX < scaleY
+      ? ((containerW = frameW), (containerH = designH * scaleX))
+      : ((containerW = designW * scaleY), (containerH = frameH));
 
-        // Adjust container size with integer value
-        var offx = Math.round((frameW - containerW) / 2);
-        var offy = Math.round((frameH - containerH) / 2);
-        containerW = frameW - 2 * offx;
-        containerH = frameH - 2 * offy;
+    // Adjust container size with integer value
+    var offx = Math.round((frameW - containerW) / 2);
+    var offy = Math.round((frameH - containerH) / 2);
+    containerW = frameW - 2 * offx;
+    containerH = frameH - 2 * offy;
 
-        this._setupContainer(view, containerW, containerH);
-        // Setup container's margin and padding
-        if (view._isRotated) {
-            containerStyle.margin = '0 0 0 ' + frameH + 'px';
-        }
-        else {
-            containerStyle.margin = '0px';
-        }
-        containerStyle.paddingLeft = offx + "px";
-        containerStyle.paddingRight = offx + "px";
-        containerStyle.paddingTop = offy + "px";
-        containerStyle.paddingBottom = offy + "px";
+    this._setupContainer(view, containerW, containerH);
+    // Setup container's margin and padding
+    if (view._isRotated) {
+      containerStyle.margin = "0 0 0 " + frameH + "px";
+    } else {
+      containerStyle.margin = "0px";
     }
+    containerStyle.paddingLeft = offx + "px";
+    containerStyle.paddingRight = offx + "px";
+    containerStyle.paddingTop = offy + "px";
+    containerStyle.paddingBottom = offy + "px";
+  }
 }
 
 /**
@@ -154,15 +160,15 @@ class ProportionalToFrame extends ContainerStrategy {
  * @extends EqualToFrame
  */
 class EqualToWindow extends EqualToFrame {
-    preApply(view) {
-        super.preApply(view);
-        view._frame = document.documentElement;
-    }
+  preApply(view) {
+    super.preApply(view);
+    view._frame = document.documentElement;
+  }
 
-    apply(view) {
-        super.apply(view);
-        this._fixContainer();
-    }
+  apply(view) {
+    super.apply(view);
+    this._fixContainer();
+  }
 }
 
 /**
@@ -170,15 +176,15 @@ class EqualToWindow extends EqualToFrame {
  * @extends ProportionalToFrame
  */
 class ProportionalToWindow extends ProportionalToFrame {
-    preApply(view) {
-        super.preApply(view);
-        view._frame = document.documentElement;
-    }
+  preApply(view) {
+    super.preApply(view);
+    view._frame = document.documentElement;
+  }
 
-    apply(view, designedResolution) {
-        super.apply(view, designedResolution);
-        this._fixContainer();
-    }
+  apply(view, designedResolution) {
+    super.apply(view, designedResolution);
+    this._fixContainer();
+  }
 }
 
 /**
@@ -186,9 +192,9 @@ class ProportionalToWindow extends ProportionalToFrame {
  * @extends ContainerStrategy
  */
 class OriginalContainer extends ContainerStrategy {
-    apply(view) {
-        this._setupContainer(view, cc._canvas.width, cc._canvas.height);
-    }
+  apply(view) {
+    this._setupContainer(view, cc._canvas.width, cc._canvas.height);
+  }
 }
 
 // Alias: Strategy that makes the container's size equals to the frame's size

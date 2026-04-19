@@ -23,7 +23,7 @@
  ****************************************************************************/
 import { RenderCmd } from './node-canvas-render-cmd';
 
-// ------------------------------ The cc.Node's render command for WebGL ----------------------------------
+// ------------------------------ The ode's render command for WebGL ----------------------------------
 export class WebGLRenderCmd extends RenderCmd {
     constructor(renderable) {
         super(renderable);

@@ -22,7 +22,7 @@ import AsyncPool from './async-pool';
 import Async from './async';
 
 cc.AsyncPool = AsyncPool;
-cc.async = new Async();
+cc.async = Async;
 
 // Path
 import Path from './path';
@@ -32,7 +32,7 @@ cc.path = Path;
 // Loader
 import Loader from './loader';
 
-cc.loader = new Loader();
+cc.loader = Loader.getInstance();
 
 // Sys & Engine
 import { create3DContext, initSys } from './sys';

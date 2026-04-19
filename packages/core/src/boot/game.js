@@ -1,6 +1,9 @@
 import { Director } from "../director/director";
 import { NewClass } from "../platform/class";
 import EventHelper from "../event-manager/event-helper";
+import EventManager from "../event-manager/event-manager";
+import Loader from "./loader";
+import Path from "./path";
 
 /**
  * An object to boot the game.
@@ -229,7 +232,7 @@ export default class Game extends EventHelper(NewClass) {
 
       var jsList = config[CONFIG_KEY.jsList];
       if (jsList) {
-        cc.loader.loadJsWithImg(jsList, (err) => {
+        Loader.getInstance().loadJsWithImg(jsList, (err) => {
           if (err) throw new Error(err);
           this._prepared = true;
           if (cb) cb();
@@ -365,13 +368,13 @@ export default class Game extends EventHelper(NewClass) {
         _src = cocos_script[i].src;
         if (_src) {
           _resPath = /(.*)\//.exec(_src)[0];
-          cc.loader.resPath = _resPath;
-          _src = cc.path.join(_resPath, "project.json");
+          Loader.getInstance().resPath = _resPath;
+          _src = Path.join(_resPath, "project.json");
         }
-        cc.loader.loadTxt(_src, loaded);
+        Loader.getInstance().loadTxt(_src, loaded);
       }
       if (!txt) {
-        cc.loader.loadTxt("project.json", loaded);
+        Loader.getInstance().loadTxt("project.json", loaded);
       }
     }
   }
@@ -522,12 +525,12 @@ export default class Game extends EventHelper(NewClass) {
       "qbrowserVisibilityChange"
     ];
     var onHidden = () => {
-      if (cc.eventManager && this._eventHide)
-        cc.eventManager.dispatchEvent(this._eventHide);
+      if (EventManager.getInstance() && this._eventHide)
+        EventManager.getInstance().dispatchEvent(this._eventHide);
     };
     var onShow = () => {
-      if (cc.eventManager && this._eventShow)
-        cc.eventManager.dispatchEvent(this._eventShow);
+      if (EventManager.getInstance() && this._eventShow)
+        EventManager.getInstance().dispatchEvent(this._eventShow);
     };
 
     if (hidden) {
@@ -559,10 +562,10 @@ export default class Game extends EventHelper(NewClass) {
       win.addEventListener("pageshow", onShow, false);
     }
 
-    cc.eventManager.addCustomListener(Game.EVENT_HIDE, () => {
+    EventManager.getInstance().addCustomListener(Game.EVENT_HIDE, () => {
       this.pause();
     });
-    cc.eventManager.addCustomListener(Game.EVENT_SHOW, () => {
+    EventManager.getInstance().addCustomListener(Game.EVENT_SHOW, () => {
       this.resume();
     });
   }

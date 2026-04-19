@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node } from './node';
-import EventHelper from '../event-manager/event-helper';
-import Game from '../boot/game';
+import { Node } from "./node";
+import EventHelper from "../event-manager/event-helper";
+import Game from "../boot/game";
 
 /**
  * <p>cc.AtlasNode is a subclass of cc.Node, it knows how to render a TextureAtlas object. </p>
@@ -52,240 +52,244 @@ import Game from '../boot/game';
  * @property {Number}           quadsToDraw     - Number of quads to draw
  */
 export class AtlasNode extends EventHelper(Node) {
-    /**
-     * <p>Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     * @param {String} tile
-     * @param {Number} tileWidth
-     * @param {Number} tileHeight
-     * @param {Number} itemsToRender
-     */
-    constructor(tile, tileWidth, tileHeight, itemsToRender) {
-        super();
-        this.textureAtlas = null;
-        this.quadsToDraw = 0;
+  /**
+   * <p>Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   * @param {String} tile
+   * @param {Number} tileWidth
+   * @param {Number} tileHeight
+   * @param {Number} itemsToRender
+   */
+  constructor(tile, tileWidth, tileHeight, itemsToRender) {
+    super();
+    this.textureAtlas = null;
+    this.quadsToDraw = 0;
 
-        //! chars per row
-        this._itemsPerRow = 0;
-        //! chars per column
-        this._itemsPerColumn = 0;
-        //! width of each char
-        this._itemWidth = 0;
-        //! height of each char
-        this._itemHeight = 0;
+    //! chars per row
+    this._itemsPerRow = 0;
+    //! chars per column
+    this._itemsPerColumn = 0;
+    //! width of each char
+    this._itemWidth = 0;
+    //! height of each char
+    this._itemHeight = 0;
 
-        // protocol variables
-        this._opacityModifyRGB = false;
-        this._blendFunc = null;
+    // protocol variables
+    this._opacityModifyRGB = false;
+    this._blendFunc = null;
 
-        // This variable is only used for CCLabelAtlas FPS display. So plz don't modify its value.
-        this._ignoreContentScaleFactor = false;
-        this._className = "AtlasNode";
+    // This variable is only used for CCLabelAtlas FPS display. So plz don't modify its value.
+    this._ignoreContentScaleFactor = false;
+    this._className = "AtlasNode";
 
-        this._texture = null;
-        this._textureForCanvas = null;
+    this._texture = null;
+    this._textureForCanvas = null;
 
-        this._blendFunc = {src: cc.BLEND_SRC, dst: cc.BLEND_DST};
-        this._ignoreContentScaleFactor = false;
-        itemsToRender !== undefined && this.initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
-    }
+    this._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
+    this._ignoreContentScaleFactor = false;
+    itemsToRender !== undefined &&
+      this.initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
+  }
 
-    _createRenderCmd() {
-        if(cc._renderType === Game.RENDER_TYPE_CANVAS)
-            this._renderCmd = new cc.AtlasNode.CanvasRenderCmd(this);
-        else
-            this._renderCmd = new cc.AtlasNode.WebGLRenderCmd(this);
-    }
+  _createRenderCmd() {
+    if (cc._renderType === Game.RENDER_TYPE_CANVAS)
+      this._renderCmd = new cc.AtlasNode.CanvasRenderCmd(this);
+    else this._renderCmd = new cc.AtlasNode.WebGLRenderCmd(this);
+  }
 
-    /**
-     * Updates the Atlas (indexed vertex array).
-     * Empty implementation, shall be overridden in subclasses
-     * @function
-     */
-    updateAtlasValues() {
-        cc.log(cc._LogInfos.AtlasNode_updateAtlasValues);
-    }
+  /**
+   * Updates the Atlas (indexed vertex array).
+   * Empty implementation, shall be overridden in subclasses
+   * @function
+   */
+  updateAtlasValues() {
+    cc.log(cc._LogInfos.AtlasNode_updateAtlasValues);
+  }
 
-    /**
-     * Get color value of the atlas node
-     * @function
-     * @return {cc.Color}
-     */
-    getColor() {
-        if (this._opacityModifyRGB)
-            return this._renderCmd._colorUnmodified;
-        return super.getColor();
-    }
+  /**
+   * Get color value of the atlas node
+   * @function
+   * @return {Color}
+   */
+  getColor() {
+    if (this._opacityModifyRGB) return this._renderCmd._colorUnmodified;
+    return super.getColor();
+  }
 
-    /**
-     * Set whether color should be changed with the opacity value,
-     * if true, node color will change while opacity changes.
-     * @function
-     * @param {Boolean} value
-     */
-    setOpacityModifyRGB(value) {
-        var oldColor = this.color;
-        this._opacityModifyRGB = value;
-        this.setColor(oldColor);
-    }
+  /**
+   * Set whether color should be changed with the opacity value,
+   * if true, node color will change while opacity changes.
+   * @function
+   * @param {Boolean} value
+   */
+  setOpacityModifyRGB(value) {
+    var oldColor = this.color;
+    this._opacityModifyRGB = value;
+    this.setColor(oldColor);
+  }
 
-    /**
-     * Get whether color should be changed with the opacity value
-     * @function
-     * @return {Boolean}
-     */
-    isOpacityModifyRGB() {
-        return this._opacityModifyRGB;
-    }
+  /**
+   * Get whether color should be changed with the opacity value
+   * @function
+   * @return {Boolean}
+   */
+  isOpacityModifyRGB() {
+    return this._opacityModifyRGB;
+  }
 
-    /**
-     * Get node's blend function
-     * @function
-     * @return {cc.BlendFunc}
-     */
-    getBlendFunc() {
-        return this._blendFunc;
-    }
+  /**
+   * Get node's blend function
+   * @function
+   * @return {BlendFunc}
+   */
+  getBlendFunc() {
+    return this._blendFunc;
+  }
 
-    /**
-     * Set node's blend function
-     * This function accept either cc.BlendFunc object or source value and destination value
-     * @function
-     * @param {Number | cc.BlendFunc} src
-     * @param {Number} dst
-     */
-    setBlendFunc(src, dst) {
-        if (dst === undefined)
-            this._blendFunc = src;
-        else
-            this._blendFunc = {src: src, dst: dst};
-    }
+  /**
+   * Set node's blend function
+   * This function accept either cc.BlendFunc object or source value and destination value
+   * @function
+   * @param {Number | cc.BlendFunc} src
+   * @param {Number} dst
+   */
+  setBlendFunc(src, dst) {
+    if (dst === undefined) this._blendFunc = src;
+    else this._blendFunc = { src: src, dst: dst };
+  }
 
-    /**
-     * Set the atlas texture
-     * @function
-     * @param {cc.TextureAtlas} value The texture
-     */
-    setTextureAtlas(value) {
-        this.textureAtlas = value;
-    }
+  /**
+   * Set the atlas texture
+   * @function
+   * @param {TextureAtlas} value The texture
+   */
+  setTextureAtlas(value) {
+    this.textureAtlas = value;
+  }
 
-    /**
-     * Get the atlas texture
-     * @function
-     * @return {cc.TextureAtlas}
-     */
-    getTextureAtlas() {
-        return this.textureAtlas;
-    }
+  /**
+   * Get the atlas texture
+   * @function
+   * @return {TextureAtlas}
+   */
+  getTextureAtlas() {
+    return this.textureAtlas;
+  }
 
-    /**
-     * Get the number of quads to be rendered
-     * @function
-     * @return {Number}
-     */
-    getQuadsToDraw() {
-        return this.quadsToDraw;
-    }
+  /**
+   * Get the number of quads to be rendered
+   * @function
+   * @return {Number}
+   */
+  getQuadsToDraw() {
+    return this.quadsToDraw;
+  }
 
-    /**
-     * Set the number of quads to be rendered
-     * @function
-     * @param {Number} quadsToDraw
-     */
-    setQuadsToDraw(quadsToDraw) {
-        this.quadsToDraw = quadsToDraw;
-    }
+  /**
+   * Set the number of quads to be rendered
+   * @function
+   * @param {Number} quadsToDraw
+   */
+  setQuadsToDraw(quadsToDraw) {
+    this.quadsToDraw = quadsToDraw;
+  }
 
-    /**
-     * Initializes an cc.AtlasNode object with an atlas texture file name, the width, the height of each tile and the quantity of tiles to render
-     * @function
-     * @param {String} tile             The atlas texture file name
-     * @param {Number} tileWidth        The width of each tile
-     * @param {Number} tileHeight       The height of each tile
-     * @param {Number} itemsToRender    The quantity of tiles to be rendered
-     * @return {Boolean}
-     */
-    initWithTileFile(tile, tileWidth, tileHeight, itemsToRender) {
-        if (!tile)
-            throw new Error("cc.AtlasNode.initWithTileFile(): title should not be null");
-        var texture = cc.textureCache.addImage(tile);
-        return this.initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
-    }
+  /**
+   * Initializes an cc.AtlasNode object with an atlas texture file name, the width, the height of each tile and the quantity of tiles to render
+   * @function
+   * @param {String} tile             The atlas texture file name
+   * @param {Number} tileWidth        The width of each tile
+   * @param {Number} tileHeight       The height of each tile
+   * @param {Number} itemsToRender    The quantity of tiles to be rendered
+   * @return {Boolean}
+   */
+  initWithTileFile(tile, tileWidth, tileHeight, itemsToRender) {
+    if (!tile)
+      throw new Error(
+        "cc.AtlasNode.initWithTileFile(): title should not be null"
+      );
+    var texture = cc.textureCache.addImage(tile);
+    return this.initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
+  }
 
-    /**
-     * Initializes an CCAtlasNode with an atlas texture, the width, the height of each tile and the quantity of tiles to render
-     * @function
-     * @param {cc.Texture2D} texture    The atlas texture
-     * @param {Number} tileWidth        The width of each tile
-     * @param {Number} tileHeight       The height of each tile
-     * @param {Number} itemsToRender    The quantity of tiles to be rendered
-     * @return {Boolean}
-     */
-    initWithTexture(texture, tileWidth, tileHeight, itemsToRender) {
-        return this._renderCmd.initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
-    }
+  /**
+   * Initializes an CCAtlasNode with an atlas texture, the width, the height of each tile and the quantity of tiles to render
+   * @function
+   * @param {Texture2D} texture    The atlas texture
+   * @param {Number} tileWidth        The width of each tile
+   * @param {Number} tileHeight       The height of each tile
+   * @param {Number} itemsToRender    The quantity of tiles to be rendered
+   * @return {Boolean}
+   */
+  initWithTexture(texture, tileWidth, tileHeight, itemsToRender) {
+    return this._renderCmd.initWithTexture(
+      texture,
+      tileWidth,
+      tileHeight,
+      itemsToRender
+    );
+  }
 
-    /**
-     * Set node's color
-     * @function
-     * @param {cc.Color} color Color object created with cc.color(r, g, b).
-     */
-    setColor(color) {
-        this._renderCmd.setColor(color);
-    }
+  /**
+   * Set node's color
+   * @function
+   * @param {Color} color Color object created with cc.color(r, g, b).
+   */
+  setColor(color) {
+    this._renderCmd.setColor(color);
+  }
 
-    /**
-     * Set node's opacity
-     * @function
-     * @param {Number} opacity The opacity value
-     */
-    setOpacity(opacity) {
-        this._renderCmd.setOpacity(opacity);
-    }
+  /**
+   * Set node's opacity
+   * @function
+   * @param {Number} opacity The opacity value
+   */
+  setOpacity(opacity) {
+    this._renderCmd.setOpacity(opacity);
+  }
 
-    /**
-     * Get the current texture
-     * @function
-     * @return {cc.Texture2D}
-     */
-    getTexture() {
-        return this._texture;
-    }
+  /**
+   * Get the current texture
+   * @function
+   * @return {Texture2D}
+   */
+  getTexture() {
+    return this._texture;
+  }
 
-    /**
-     * Replace the current texture with a new one
-     * @function
-     * @param {cc.Texture2D} texture    The new texture
-     */
-    setTexture(texture) {
-        this._texture = texture;
-    }
+  /**
+   * Replace the current texture with a new one
+   * @function
+   * @param {Texture2D} texture    The new texture
+   */
+  setTexture(texture) {
+    this._texture = texture;
+  }
 
-    _setIgnoreContentScaleFactor(ignoreContentScaleFactor) {
-        this._ignoreContentScaleFactor = ignoreContentScaleFactor;
-    }
+  _setIgnoreContentScaleFactor(ignoreContentScaleFactor) {
+    this._ignoreContentScaleFactor = ignoreContentScaleFactor;
+  }
 
-    get opacity() {
-        return this.getOpacity();
-    }
+  get opacity() {
+    return this.getOpacity();
+  }
 
-    set opacity(value) {
-        this.setOpacity(value);
-    }
+  set opacity(value) {
+    this.setOpacity(value);
+  }
 
-    get color() {
-        return this.getColor();
-    }
+  get color() {
+    return this.getColor();
+  }
 
-    set color(value) {
-        this.setColor(value);
-    }
+  set color(value) {
+    this.setColor(value);
+  }
 
-    get texture() {
-        return this.getTexture();
-    }
+  get texture() {
+    return this.getTexture();
+  }
 
-    set texture(value) {
-        this.setTexture(value);
-    }
+  set texture(value) {
+    this.setTexture(value);
+  }
 }

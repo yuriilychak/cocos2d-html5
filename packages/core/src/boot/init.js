@@ -1,4 +1,4 @@
-var cc = window.cc = window.cc || {};
+var cc = (window.cc = window.cc || {});
 cc._tmp = cc._tmp || {};
 cc._LogInfos = {};
 
@@ -14,8 +14,8 @@ _p.DeviceMotionEvent;
 /** @expose */
 _p.AudioContext;
 if (!_p.AudioContext) {
-    /** @expose */
-    _p.webkitAudioContext;
+  /** @expose */
+  _p.webkitAudioContext;
 }
 /** @expose */
 _p.mozAudioContext;
@@ -28,7 +28,7 @@ _p = null;
 
 /**
  * drawing primitive of game engine
- * @type {cc.DrawingPrimitive}
+ * @type {DrawingPrimitive}
  */
 cc._drawingUtil = null;
 
@@ -54,26 +54,29 @@ cc._gameDiv = null;
 
 window.ENABLE_IMAEG_POOL = true;
 
-cc.log = cc.warn = cc.error = cc.assert = function () {
-};
+cc.log = cc.warn = cc.error = cc.assert = function () {};
 
 cc._engineLoaded = false;
 
 // Function.prototype.bind polyfill
-Function.prototype.bind = Function.prototype.bind || function (oThis) {
+Function.prototype.bind =
+  Function.prototype.bind ||
+  function (oThis) {
     if (typeof this !== "function") {
-        throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+      throw new TypeError(
+        "Function.prototype.bind - what is trying to be bound is not callable"
+      );
     }
     var aArgs = Array.prototype.slice.call(arguments, 1),
-        fToBind = this,
-        FNOP = function () {},
-        fBound = function () {
-            return fToBind.apply(this instanceof FNOP && oThis
-                ? this
-                : oThis,
-                aArgs.concat(Array.prototype.slice.call(arguments)));
-        };
+      fToBind = this,
+      FNOP = function () {},
+      fBound = function () {
+        return fToBind.apply(
+          this instanceof FNOP && oThis ? this : oThis,
+          aArgs.concat(Array.prototype.slice.call(arguments))
+        );
+      };
     FNOP.prototype = this.prototype;
     fBound.prototype = new FNOP();
     return fBound;
-};
+  };

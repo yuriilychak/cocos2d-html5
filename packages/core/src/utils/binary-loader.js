@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import Loader from '../boot/loader';
+
 /**
  * Helper to convert from responseBody to a "responseText" like thing (IE compat).
  * @function
@@ -53,7 +55,7 @@ export function _convertResponseBodyToText(binary) {
  * @param {Function} [cb]
  */
 export function loadBinary(url, cb) {
-    var self = cc.loader;
+    var self = Loader.getInstance();
     var xhr = self.getXMLHttpRequest(),
         errInfo = "load " + url + " failed!";
     xhr.open("GET", url, true);
@@ -96,7 +98,7 @@ export function _str2Uint8Array(strData) {
  * @return {Uint8Array}
  */
 export function loadBinarySync(url) {
-    var self = cc.loader;
+    var self = Loader.getInstance();
     var req = self.getXMLHttpRequest();
     req.timeout = 0;
     var errInfo = "load " + url + " failed!";
@@ -134,10 +136,11 @@ export function loadBinarySync(url) {
  * @function
  */
 export function initBinaryLoader() {
-    cc.loader.loadBinary = loadBinary;
-    cc.loader.loadBinary._IEFilter = _IEFilter;
-    cc.loader._str2Uint8Array = _str2Uint8Array;
-    cc.loader.loadBinarySync = loadBinarySync;
+    var loader = Loader.getInstance();
+    loader.loadBinary = loadBinary;
+    loader.loadBinary._IEFilter = _IEFilter;
+    loader._str2Uint8Array = _str2Uint8Array;
+    loader.loadBinarySync = loadBinarySync;
 
     //Compatibility with IE9
     window.Uint8Array = window.Uint8Array || window.Array;

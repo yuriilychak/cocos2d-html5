@@ -1,4 +1,6 @@
 import Game from './game';
+import Loader from './loader';
+import Path from './path';
 
 var _jsAddedCache = {},
     _engineInitCalled = false,
@@ -40,15 +42,14 @@ function _getJsListOfModule(moduleMap, moduleName, dir) {
     var jsList = [];
     var tempList = moduleMap[moduleName];
     if (!tempList) throw new Error("can not find module [" + moduleName + "]");
-    var ccPath = cc.path;
     for (var i = 0, li = tempList.length; i < li; i++) {
         var item = tempList[i];
         if (_jsAddedCache[item]) continue;
-        var extname = ccPath.extname(item);
+        var extname = Path.extname(item);
         if (!extname) {
             var arr = _getJsListOfModule(moduleMap, item, dir);
             if (arr) jsList = jsList.concat(arr);
-        } else if (extname.toLowerCase() === ".js") jsList.push(ccPath.join(dir, item));
+        } else if (extname.toLowerCase() === ".js") jsList.push(Path.join(dir, item));
         _jsAddedCache[item] = 1;
     }
     return jsList;
@@ -63,12 +64,12 @@ function _afterEngineLoaded(config) {
 }
 
 function _load(config) {
-    var CONFIG_KEY = Game.CONFIG_KEY, engineDir = config[CONFIG_KEY.engineDir], loader = cc.loader;
+    var CONFIG_KEY = Game.CONFIG_KEY, engineDir = config[CONFIG_KEY.engineDir], loader = Loader.getInstance();
 
     if (cc.NewClass) {
         _afterEngineLoaded(config);
     } else {
-        var ccModulesPath = cc.path.join(engineDir, "moduleConfig.json");
+        var ccModulesPath = Path.join(engineDir, "moduleConfig.json");
         loader.loadJson(ccModulesPath, function (err, modulesJson) {
             if (err) throw new Error(err);
             var modules = config["modules"] || [];
@@ -80,7 +81,7 @@ function _load(config) {
                 var arr = _getJsListOfModule(moduleMap, modules[i], engineDir);
                 if (arr) jsList = jsList.concat(arr);
             }
-            cc.loader.loadJsWithImg(jsList, function (err) {
+            Loader.getInstance().loadJsWithImg(jsList, function (err) {
                 if (err) throw err;
                 _afterEngineLoaded(config);
             });

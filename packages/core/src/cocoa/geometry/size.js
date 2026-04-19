@@ -31,18 +31,18 @@
  * @param {Number} [height=0]
  */
 export class Size {
-    constructor(width, height) {
-        if (width === undefined) {
-            this.width = 0;
-            this.height = 0;
-        } else if (height === undefined) {
-            this.width = width.width;
-            this.height = width.height;
-        } else {
-            this.width = width;
-            this.height = height;
-        }
+  constructor(width, height) {
+    if (width === undefined) {
+      this.width = 0;
+      this.height = 0;
+    } else if (height === undefined) {
+      this.width = width.width;
+      this.height = width.height;
+    } else {
+      this.width = width;
+      this.height = height;
     }
+  }
 }
 
 /**
@@ -50,19 +50,24 @@ export class Size {
  * @function
  * @param {Number|cc.Size} [w] width or a size object
  * @param {Number} [h] height
- * @return {cc.Size}
+ * @return {Size}
  */
 export function size(w, h) {
-    return new Size(w, h);
+  return new Size(w, h);
 }
 
 /**
  * Check whether a point's value equals to another
  * @function
- * @param {cc.Size} size1
- * @param {cc.Size} size2
+ * @param {Size} size1
+ * @param {Size} size2
  * @return {Boolean}
  */
 export function sizeEqualToSize(size1, size2) {
-    return (size1 && size2 && (size1.width === size2.width) && (size1.height === size2.height));
+  return (
+    size1 &&
+    size2 &&
+    size1.width === size2.width &&
+    size1.height === size2.height
+  );
 }

@@ -24,11 +24,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RAD, DEG } from './constants';
-import Game from '../../boot/game';
-import { Point } from '../../cocoa/geometry/point';
-import { Rect } from '../../cocoa/geometry/rect';
-import { Size } from '../../cocoa/geometry/size';
+import { RAD, DEG } from "./constants";
+import Game from "../../boot/game";
+import { Point } from "../../cocoa/geometry/point";
+import { Rect } from "../../cocoa/geometry/rect";
+import { Size } from "../../cocoa/geometry/size";
 
 /**
  * <p>
@@ -43,7 +43,7 @@ import { Size } from '../../cocoa/geometry/size';
  * cc.lerp(2,10,0.2)//returns 3.6
  */
 export function lerp(a, b, r) {
-    return a + (b - a) * r;
+  return a + (b - a) * r;
 }
 
 /**
@@ -52,7 +52,7 @@ export function lerp(a, b, r) {
  * @returns {number}
  */
 export function rand() {
-	return Math.random() * 0xffffff;
+  return Math.random() * 0xffffff;
 }
 
 /**
@@ -61,7 +61,7 @@ export function rand() {
  * @function
  */
 export function randomMinus1To1() {
-    return (Math.random() - 0.5) * 2;
+  return (Math.random() - 0.5) * 2;
 }
 
 /**
@@ -78,7 +78,7 @@ export var random0To1 = Math.random;
  * @function
  */
 export function degreesToRadians(angle) {
-    return angle * RAD;
+  return angle * RAD;
 }
 
 /**
@@ -88,7 +88,7 @@ export function degreesToRadians(angle) {
  * @function
  */
 export function radiansToDegrees(angle) {
-    return angle * DEG;
+  return angle * DEG;
 }
 
 /**
@@ -98,22 +98,22 @@ export function radiansToDegrees(angle) {
  * @function
  */
 export function radiansToDegress(angle) {
-    cc.log(cc._LogInfos.radiansToDegress);
-    return angle * DEG;
+  cc.log(cc._LogInfos.radiansToDegress);
+  return angle * DEG;
 }
 
 /**
  * Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
- * @param {cc.Node} node setup node
+ * @param {Node} node setup node
  * @function
  */
 export function nodeDrawSetup(node) {
-    //cc.glEnable(node._glServerState);
-    if (node._shaderProgram) {
-        //cc._renderContext.useProgram(node._shaderProgram._programObj);
-        node._glProgramState.apply();
-        node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
-    }
+  //cc.glEnable(node._glServerState);
+  if (node._shaderProgram) {
+    //cc._renderContext.useProgram(node._shaderProgram._programObj);
+    node._glProgramState.apply();
+    node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
+  }
 }
 
 /**
@@ -127,8 +127,8 @@ export function nodeDrawSetup(node) {
  * @function
  */
 export function enableDefaultGLStates() {
-    //TODO OPENGL STUFF
-    /*
+  //TODO OPENGL STUFF
+  /*
      glEnableClientState(GL_VERTEX_ARRAY);
      glEnableClientState(GL_COLOR_ARRAY);
      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -145,8 +145,8 @@ export function enableDefaultGLStates() {
  * @function
  */
 export function disableDefaultGLStates() {
-    //TODO OPENGL
-    /*
+  //TODO OPENGL
+  /*
      glDisable(GL_TEXTURE_2D);
      glDisableClientState(GL_COLOR_ARRAY);
      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -163,7 +163,7 @@ export function disableDefaultGLStates() {
  * @function
  */
 export function incrementGLDraws(addNumber) {
-    cc.g_NumberOfDraws += addNumber;
+  cc.g_NumberOfDraws += addNumber;
 }
 
 /**
@@ -175,87 +175,95 @@ export function incrementGLDraws(addNumber) {
  * @function
  */
 export function contentScaleFactor() {
-    return cc.director._contentScaleFactor;
+  return cc.director._contentScaleFactor;
 }
 
 /**
  * Converts a Point in points to pixels
- * @param {cc.Point} points
- * @return {cc.Point}
+ * @param {Point} points
+ * @return {Point}
  * @function
  */
 export function pointPointsToPixels(points) {
-    var scale = cc.contentScaleFactor();
-    return new Point(points.x * scale, points.y * scale);
+  var scale = cc.contentScaleFactor();
+  return new Point(points.x * scale, points.y * scale);
 }
 
 /**
  * Converts a Point in pixels to points
- * @param {cc.Rect} pixels
- * @return {cc.Point}
+ * @param {Rect} pixels
+ * @return {Point}
  * @function
  */
 export function pointPixelsToPoints(pixels) {
-	var scale = cc.contentScaleFactor();
-	return new Point(pixels.x / scale, pixels.y / scale);
+  var scale = cc.contentScaleFactor();
+  return new Point(pixels.x / scale, pixels.y / scale);
 }
 
-export function _pointPixelsToPointsOut(pixels, outPoint){
-	var scale = cc.contentScaleFactor();
-	outPoint.x = pixels.x / scale;
-	outPoint.y = pixels.y / scale;
+export function _pointPixelsToPointsOut(pixels, outPoint) {
+  var scale = cc.contentScaleFactor();
+  outPoint.x = pixels.x / scale;
+  outPoint.y = pixels.y / scale;
 }
 
 /**
  * Converts a Size in points to pixels
- * @param {cc.Size} sizeInPoints
- * @return {cc.Size}
+ * @param {Size} sizeInPoints
+ * @return {Size}
  * @function
  */
 export function sizePointsToPixels(sizeInPoints) {
-    var scale = cc.contentScaleFactor();
-    return new Size(sizeInPoints.width * scale, sizeInPoints.height * scale);
+  var scale = cc.contentScaleFactor();
+  return new Size(sizeInPoints.width * scale, sizeInPoints.height * scale);
 }
 
 /**
  * Converts a size in pixels to points
- * @param {cc.Size} sizeInPixels
- * @return {cc.Size}
+ * @param {Size} sizeInPixels
+ * @return {Size}
  * @function
  */
 export function sizePixelsToPoints(sizeInPixels) {
-    var scale = cc.contentScaleFactor();
-    return new Size(sizeInPixels.width / scale, sizeInPixels.height / scale);
+  var scale = cc.contentScaleFactor();
+  return new Size(sizeInPixels.width / scale, sizeInPixels.height / scale);
 }
 
 export function _sizePixelsToPointsOut(sizeInPixels, outSize) {
-    var scale = cc.contentScaleFactor();
-    outSize.width = sizeInPixels.width / scale;
-    outSize.height = sizeInPixels.height / scale;
+  var scale = cc.contentScaleFactor();
+  outSize.width = sizeInPixels.width / scale;
+  outSize.height = sizeInPixels.height / scale;
 }
 
 /**
  * Converts a rect in pixels to points
- * @param {cc.Rect} pixel
- * @return {cc.Rect}
+ * @param {Rect} pixel
+ * @return {Rect}
  * @function
  */
 export function rectPixelsToPoints(pixel) {
-    var scale = cc.contentScaleFactor();
-    return new Rect(pixel.x / scale, pixel.y / scale,
-        pixel.width / scale, pixel.height / scale);
+  var scale = cc.contentScaleFactor();
+  return new Rect(
+    pixel.x / scale,
+    pixel.y / scale,
+    pixel.width / scale,
+    pixel.height / scale
+  );
 }
 
 /**
  * Converts a rect in points to pixels
- * @param {cc.Rect} point
- * @return {cc.Rect}
+ * @param {Rect} point
+ * @return {Rect}
  * @function
  */
 export function rectPointsToPixels(point) {
-   var scale = cc.contentScaleFactor();
-    return new Rect(point.x * scale, point.y * scale,
-        point.width * scale, point.height * scale);
+  var scale = cc.contentScaleFactor();
+  return new Rect(
+    point.x * scale,
+    point.y * scale,
+    point.width * scale,
+    point.height * scale
+  );
 }
 
 /**
@@ -263,12 +271,12 @@ export function rectPointsToPixels(point) {
  * @function
  */
 export function checkGLErrorDebug() {
-    if (cc.renderMode === Game.RENDER_TYPE_WEBGL) {
-        var _error = cc._renderContext.getError();
-        if (_error) {
-            cc.log(cc._LogInfos.checkGLErrorDebug, _error);
-        }
+  if (cc.renderMode === Game.RENDER_TYPE_WEBGL) {
+    var _error = cc._renderContext.getError();
+    if (_error) {
+      cc.log(cc._LogInfos.checkGLErrorDebug, _error);
     }
+  }
 }
 
 // Array utils
@@ -281,15 +289,15 @@ export function checkGLErrorDebug() {
  * @function
  */
 export function arrayVerifyType(arr, type) {
-    if (arr && arr.length > 0) {
-        for (var i = 0; i < arr.length; i++) {
-            if (!(arr[i] instanceof  type)) {
-                cc.log("element type is wrong!");
-                return false;
-            }
-        }
+  if (arr && arr.length > 0) {
+    for (var i = 0; i < arr.length; i++) {
+      if (!(arr[i] instanceof type)) {
+        cc.log("element type is wrong!");
+        return false;
+      }
     }
-    return true;
+  }
+  return true;
 }
 
 /**
@@ -299,12 +307,12 @@ export function arrayVerifyType(arr, type) {
  * @param {*} delObj  remove object
  */
 export function arrayRemoveObject(arr, delObj) {
-    for (var i = 0, l = arr.length; i < l; i++) {
-        if (arr[i] === delObj) {
-            arr.splice(i, 1);
-            break;
-        }
+  for (var i = 0, l = arr.length; i < l; i++) {
+    if (arr[i] === delObj) {
+      arr.splice(i, 1);
+      break;
     }
+  }
 }
 
 /**
@@ -314,9 +322,9 @@ export function arrayRemoveObject(arr, delObj) {
  * @param {Array} minusArr minus Array
  */
 export function arrayRemoveArray(arr, minusArr) {
-    for (var i = 0, l = minusArr.length; i < l; i++) {
-        arrayRemoveObject(arr, minusArr[i]);
-    }
+  for (var i = 0, l = minusArr.length; i < l; i++) {
+    arrayRemoveObject(arr, minusArr[i]);
+  }
 }
 
 /**
@@ -327,9 +335,9 @@ export function arrayRemoveArray(arr, minusArr) {
  * @param {Number} index
  * @return {Array}
  */
-export function arrayAppendObjectsToIndex(arr, addObjs, index){
-    arr.splice.apply(arr, [index, 0].concat(addObjs));
-    return arr;
+export function arrayAppendObjectsToIndex(arr, addObjs, index) {
+  arr.splice.apply(arr, [index, 0].concat(addObjs));
+  return arr;
 }
 
 /**
@@ -337,9 +345,10 @@ export function arrayAppendObjectsToIndex(arr, addObjs, index){
  * @param {Array} arr
  * @return {Array}
  */
-export function copyArray(arr){
-    var i, len = arr.length, arr_clone = new Array(len);
-    for (i = 0; i < len; i += 1)
-        arr_clone[i] = arr[i];
-    return arr_clone;
+export function copyArray(arr) {
+  var i,
+    len = arr.length,
+    arr_clone = new Array(len);
+  for (i = 0; i < len; i += 1) arr_clone[i] = arr[i];
+  return arr_clone;
 }

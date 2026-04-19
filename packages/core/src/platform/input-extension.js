@@ -30,6 +30,8 @@
  * @function
  * @param {Object} _p - The inputManager object to extend
  */
+import EventManager from '../event-manager/event-manager';
+
 export function initInputExtension(_p) {
 
     /**
@@ -68,12 +70,12 @@ export function initInputExtension(_p) {
 
     _p._registerKeyboardEvent = function(){
         cc._canvas.addEventListener("keydown", function (e) {
-            cc.eventManager.dispatchEvent(new cc.EventKeyboard(e.keyCode, true));
+            EventManager.getInstance().dispatchEvent(new cc.EventKeyboard(e.keyCode, true));
             e.stopPropagation();
             e.preventDefault();
         }, false);
         cc._canvas.addEventListener("keyup", function (e) {
-            cc.eventManager.dispatchEvent(new cc.EventKeyboard(e.keyCode, false));
+            EventManager.getInstance().dispatchEvent(new cc.EventKeyboard(e.keyCode, false));
             e.stopPropagation();
             e.preventDefault();
         }, false);

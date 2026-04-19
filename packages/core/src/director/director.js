@@ -28,6 +28,7 @@ import { NewClass } from '../platform/class';
 import { DirectorCanvasRenderer } from './director-canvas';
 import { DirectorWebGLRenderer } from './director-webgl';
 import Game from '../boot/game';
+import EventManager from '../event-manager/event-manager';
 import {
     EVENT_PROJECTION_CHANGED,
     EVENT_AFTER_UPDATE,
@@ -102,7 +103,7 @@ export class Director extends NewClass {
         this._rendererDelegate = null;
         var self = this;
         self._lastUpdate = Date.now();
-        cc.eventManager.addCustomListener(Game.EVENT_SHOW, () => {
+        EventManager.getInstance().addCustomListener(Game.EVENT_SHOW, () => {
             self._lastUpdate = Date.now();
         });
     }
@@ -202,7 +203,7 @@ export class Director extends NewClass {
 
         if (!this._paused) {
             this._scheduler.update(this._deltaTime);
-            cc.eventManager.dispatchEvent(this._eventAfterUpdate);
+            EventManager.getInstance().dispatchEvent(this._eventAfterUpdate);
         }
 
         if (this._nextScene) {
@@ -227,14 +228,14 @@ export class Director extends NewClass {
         if (this._notificationNode)
             this._notificationNode.visit();
 
-        cc.eventManager.dispatchEvent(this._eventAfterVisit);
+        EventManager.getInstance().dispatchEvent(this._eventAfterVisit);
         cc.g_NumberOfDraws = 0;
 
         renderer.rendering(cc._renderContext);
         this._totalFrames++;
 
-        cc.eventManager.dispatchEvent(this._eventAfterDraw);
-        cc.eventManager.frameUpdateListeners();
+        EventManager.getInstance().dispatchEvent(this._eventAfterDraw);
+        EventManager.getInstance().frameUpdateListeners();
 
         this._calculateMPF();
     }
@@ -291,8 +292,8 @@ export class Director extends NewClass {
     purgeDirector() {
         this.getScheduler().unscheduleAll();
 
-        if (cc.eventManager)
-            cc.eventManager.setEnabled(false);
+        if (EventManager.getInstance())
+            EventManager.getInstance().setEnabled(false);
 
         if (this._runningScene) {
             this._runningScene._performRecursive(cc.Node._stateCallbackType.onExitTransitionDidStart);

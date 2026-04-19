@@ -23,28 +23,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import Loader from '../boot/loader';
+import Path from '../boot/path';
+
 export const _txtLoader = {
     load: function (realUrl, url, res, cb) {
-        cc.loader.loadTxt(realUrl, cb);
+        Loader.getInstance().loadTxt(realUrl, cb);
     }
 };
 
 export const _jsonLoader = {
     load: function (realUrl, url, res, cb) {
-        cc.loader.loadJson(realUrl, cb);
+        Loader.getInstance().loadJson(realUrl, cb);
     }
 };
 
 export const _jsLoader = {
     load: function (realUrl, url, res, cb) {
-        cc.loader.loadJs(realUrl, cb);
+        Loader.getInstance().loadJs(realUrl, cb);
     }
 };
 
 export const _imgLoader = {
     load: function (realUrl, url, res, cb) {
         var callback;
-        if (cc.loader.isLoading(realUrl)) {
+        if (Loader.getInstance().isLoading(realUrl)) {
             callback = function (err, img) {
                 if (err)
                     return cb(err);
@@ -60,7 +63,7 @@ export const _imgLoader = {
                 cb(null, tex);
             };
         }
-        cc.loader.loadImg(realUrl, callback);
+        Loader.getInstance().loadImg(realUrl, callback);
     }
 };
 
@@ -72,7 +75,7 @@ export const _serverImgLoader = {
 
 export const _plistLoader = {
     load: function (realUrl, url, res, cb) {
-        cc.loader.loadTxt(realUrl, function (err, txt) {
+        Loader.getInstance().loadTxt(realUrl, function (err, txt) {
             if (err)
                 return cb(err);
             cb(null, cc.plistParser.parse(txt));
@@ -89,7 +92,7 @@ export const _fontLoader = {
         ".svg": "svg"
     },
     _loadFont: function (name, srcs, type) {
-        var doc = document, path = cc.path, TYPE = this.TYPE, fontStyle = document.createElement("style");
+        var doc = document, TYPE = this.TYPE, fontStyle = document.createElement("style");
         fontStyle.type = "text/css";
         doc.body.appendChild(fontStyle);
 
@@ -101,7 +104,7 @@ export const _fontLoader = {
         if (srcs instanceof Array) {
             for (var i = 0, li = srcs.length; i < li; i++) {
                 var src = srcs[i];
-                type = path.extname(src).toLowerCase();
+                type = Path.extname(src).toLowerCase();
                 fontStr += "url('" + srcs[i] + "') format('" + TYPE[type] + "')";
                 fontStr += (i === li - 1) ? ";" : ",";
             }
@@ -125,8 +128,8 @@ export const _fontLoader = {
         var self = this;
         var type = res.type, name = res.name, srcs = res.srcs;
         if (cc.isString(res)) {
-            type = cc.path.extname(res);
-            name = cc.path.basename(res, type);
+            type = Path.extname(res);
+            name = Path.basename(res, type);
             self._loadFont(name, res, type);
         } else {
             self._loadFont(name, srcs);
@@ -145,12 +148,12 @@ export const _fontLoader = {
 
 export const _binaryLoader = {
     load: function (realUrl, url, res, cb) {
-        cc.loader.loadBinary(realUrl, cb);
+        Loader.getInstance().loadBinary(realUrl, cb);
     }
 };
 
 export const _csbLoader = {
     load: function(realUrl, url, res, cb){
-        cc.loader.loadCsb(realUrl, cb);
+        Loader.getInstance().loadCsb(realUrl, cb);
     }
 };

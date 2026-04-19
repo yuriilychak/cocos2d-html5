@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Event from './event';
+import Event from "./event";
 
 /**
  * The mouse event
@@ -31,132 +31,132 @@ import Event from './event';
  * @extends Event
  */
 export default class EventMouse extends Event {
-    constructor(eventType) {
-        super(Event.MOUSE);
-        this._eventType = 0;
-        this._button = 0;
-        this._x = 0;
-        this._y = 0;
-        this._prevX = 0;
-        this._prevY = 0;
-        this._scrollX = 0;
-        this._scrollY = 0;
+  constructor(eventType) {
+    super(Event.MOUSE);
+    this._eventType = 0;
+    this._button = 0;
+    this._x = 0;
+    this._y = 0;
+    this._prevX = 0;
+    this._prevY = 0;
+    this._scrollX = 0;
+    this._scrollY = 0;
 
-        this._eventType = eventType;
-    }
+    this._eventType = eventType;
+  }
 
-    /**
-     * Sets scroll data
-     * @param {number} scrollX
-     * @param {number} scrollY
-     */
-    setScrollData(scrollX, scrollY) {
-        this._scrollX = scrollX;
-        this._scrollY = scrollY;
-    }
+  /**
+   * Sets scroll data
+   * @param {number} scrollX
+   * @param {number} scrollY
+   */
+  setScrollData(scrollX, scrollY) {
+    this._scrollX = scrollX;
+    this._scrollY = scrollY;
+  }
 
-    /**
-     * Returns the x axis scroll value
-     * @returns {number}
-     */
-    getScrollX() {
-        return this._scrollX;
-    }
+  /**
+   * Returns the x axis scroll value
+   * @returns {number}
+   */
+  getScrollX() {
+    return this._scrollX;
+  }
 
-    /**
-     * Returns the y axis scroll value
-     * @returns {number}
-     */
-    getScrollY() {
-        return this._scrollY;
-    }
+  /**
+   * Returns the y axis scroll value
+   * @returns {number}
+   */
+  getScrollY() {
+    return this._scrollY;
+  }
 
-    /**
-     * Sets cursor location
-     * @param {number} x
-     * @param {number} y
-     */
-    setLocation(x, y) {
-        this._x = x;
-        this._y = y;
-    }
+  /**
+   * Sets cursor location
+   * @param {number} x
+   * @param {number} y
+   */
+  setLocation(x, y) {
+    this._x = x;
+    this._y = y;
+  }
 
-    /**
-     * Returns cursor location
-     * @return {cc.Point} location
-     */
-    getLocation() {
-        return {x: this._x, y: this._y};
-    }
+  /**
+   * Returns cursor location
+   * @return {Point} location
+   */
+  getLocation() {
+    return { x: this._x, y: this._y };
+  }
 
-    /**
-     * Returns the current cursor location in screen coordinates
-     * @return {cc.Point}
-     */
-    getLocationInView() {
-        return {x: this._x, y: cc.view._designResolutionSize.height - this._y};
-    }
+  /**
+   * Returns the current cursor location in screen coordinates
+   * @return {Point}
+   */
+  getLocationInView() {
+    return { x: this._x, y: cc.view._designResolutionSize.height - this._y };
+  }
 
-    _setPrevCursor(x, y) {
-        this._prevX = x;
-        this._prevY = y;
-    }
+  _setPrevCursor(x, y) {
+    this._prevX = x;
+    this._prevY = y;
+  }
 
-    /**
-     * Returns the delta distance from the previous location to current location
-     * @return {cc.Point}
-     */
-    getDelta() {
-        return {x: this._x - this._prevX, y: this._y - this._prevY};
-    }
+  /**
+   * Returns the delta distance from the previous location to current location
+   * @return {Point}
+   */
+  getDelta() {
+    return { x: this._x - this._prevX, y: this._y - this._prevY };
+  }
 
-    /**
-     * Returns the X axis delta distance from the previous location to current location
-     * @return {Number}
-     */
-    getDeltaX() {
-        return this._x - this._prevX;
-    }
+  /**
+   * Returns the X axis delta distance from the previous location to current location
+   * @return {Number}
+   */
+  getDeltaX() {
+    return this._x - this._prevX;
+  }
 
-    /**
-     * Returns the Y axis delta distance from the previous location to current location
-     * @return {Number}
-     */
-    getDeltaY() {
-        return this._y - this._prevY;
-    }
+  /**
+   * Returns the Y axis delta distance from the previous location to current location
+   * @return {Number}
+   */
+  getDeltaY() {
+    return this._y - this._prevY;
+  }
 
-    /**
-     * Sets mouse button
-     * @param {number} button
-     */
-    setButton(button) {
-        this._button = button;
-    }
+  /**
+   * Sets mouse button
+   * @param {number} button
+   */
+  setButton(button) {
+    this._button = button;
+  }
 
-    /**
-     * Returns mouse button
-     * @returns {number}
-     */
-    getButton() {
-        return this._button;
-    }
+  /**
+   * Returns mouse button
+   * @returns {number}
+   */
+  getButton() {
+    return this._button;
+  }
 
-    /**
-     * Returns location X axis data
-     * @returns {number}
-     */
-    getLocationX() {
-        return this._x;
-    }
+  /**
+   * Returns location X axis data
+   * @returns {number}
+   */
+  getLocationX() {
+    return this._x;
+  }
 
-    /**
-     * Returns location Y axis data
-     * @returns {number}
-     */
-    getLocationY() {
-        return this._y;
-    }
+  /**
+   * Returns location Y axis data
+   * @returns {number}
+   */
+  getLocationY() {
+    return this._y;
+  }
 }
 
 //Different types of MouseEvent

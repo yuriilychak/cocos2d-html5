@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from '../../platform/class';
-import * as EventType from './constants';
+import { NewClass } from "../../platform/class";
+import * as EventType from "./constants";
 
 /**
  * Base class of all kinds of events.
@@ -32,57 +32,57 @@ import * as EventType from './constants';
  * @extends NewClass
  */
 export default class Event extends NewClass {
-    constructor(type) {
-        super();
-        this._type = 0;
-        this._isStopped = false;
-        this._currentTarget = null;
+  constructor(type) {
+    super();
+    this._type = 0;
+    this._isStopped = false;
+    this._currentTarget = null;
 
-        this._type = type;
-    }
+    this._type = type;
+  }
 
-    _setCurrentTarget(target) {
-        this._currentTarget = target;
-    }
+  _setCurrentTarget(target) {
+    this._currentTarget = target;
+  }
 
-    /**
-     * Gets the event type
-     * @function
-     * @returns {Number}
-     */
-    getType() {
-        return this._type;
-    }
+  /**
+   * Gets the event type
+   * @function
+   * @returns {Number}
+   */
+  getType() {
+    return this._type;
+  }
 
-    /**
-     * Stops propagation for current event
-     * @function
-     */
-    stopPropagation() {
-        this._isStopped = true;
-    }
+  /**
+   * Stops propagation for current event
+   * @function
+   */
+  stopPropagation() {
+    this._isStopped = true;
+  }
 
-    /**
-     * Checks whether the event has been stopped
-     * @function
-     * @returns {boolean}
-     */
-    isStopped() {
-        return this._isStopped;
-    }
+  /**
+   * Checks whether the event has been stopped
+   * @function
+   * @returns {boolean}
+   */
+  isStopped() {
+    return this._isStopped;
+  }
 
-    /**
-     * <p>
-     *     Gets current target of the event                                                            <br/>
-     *     note: It only be available when the event listener is associated with node.                <br/>
-     *          It returns 0 when the listener is associated with fixed priority.
-     * </p>
-     * @function
-     * @returns {cc.Node}  The target with which the event associates.
-     */
-    getCurrentTarget() {
-        return this._currentTarget;
-    }
+  /**
+   * <p>
+   *     Gets current target of the event                                                            <br/>
+   *     note: It only be available when the event listener is associated with node.                <br/>
+   *          It returns 0 when the listener is associated with fixed priority.
+   * </p>
+   * @function
+   * @returns {Node}  The target with which the event associates.
+   */
+  getCurrentTarget() {
+    return this._currentTarget;
+  }
 }
 
 Event.TOUCH = EventType.TOUCH;

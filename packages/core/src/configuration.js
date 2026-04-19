@@ -25,6 +25,7 @@
  ****************************************************************************/
 
  import Game from './boot/game';
+ import Loader from './boot/loader';
 
 /**
  * Class that contains some openGL variables
@@ -181,7 +182,7 @@ export class Configuration {
 	loadConfigFile(url) {
 		if (!this._inited)
 			this._init();
-		const dict = cc.loader.getRes(url);
+		const dict = Loader.getInstance().getRes(url);
 		if (!dict) throw new Error("Please load the resource first : " + url);
 		cc.assert(dict, cc._LogInfos.configuration_loadConfigFile_2, url);
 

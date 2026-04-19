@@ -1,6 +1,7 @@
 // Boot (barrel — all cc.* assignments happen inside boot/index.js
 // so they're available before Core modules execute)
 import "./boot";
+import Loader from "./boot/loader";
 
 // ======================================================================
 // Platform — Foundation
@@ -232,7 +233,7 @@ import _EventListenerTouchOneByOne from "./event-manager/event-listener/event-li
 import _EventListenerTouchAllAtOnce from "./event-manager/event-listener/event-listener-touch-all-at-once";
 import _EventListenerFocus from "./event-manager/event-listener/event-listener-focus";
 import { _EventListenerVector } from "./event-manager/event-manager";
-import eventManager from "./event-manager/event-manager";
+import EventManager from "./event-manager/event-manager";
 import EventAcceleration from "./event-manager/event-extension/event-acceleration";
 import EventKeyboard from "./event-manager/event-extension/event-keyboard";
 import _EventListenerKeyboard from "./event-manager/event-extension/event-listener-keyboard";
@@ -433,14 +434,14 @@ cc._fontLoader = _fontLoader;
 cc._binaryLoader = _binaryLoader;
 cc._csbLoader = _csbLoader;
 
-cc.loader.register(["txt", "xml", "vsh", "fsh", "atlas"], _txtLoader);
-cc.loader.register(["json", "ExportJson"], _jsonLoader);
-cc.loader.register(["js"], _jsLoader);
-cc.loader.register(["png", "jpg", "bmp", "jpeg", "gif", "ico", "tiff", "webp"], _imgLoader);
-cc.loader.register(["serverImg"], _serverImgLoader);
-cc.loader.register(["plist"], _plistLoader);
-cc.loader.register(["font", "eot", "ttf", "woff", "svg", "ttc"], _fontLoader);
-cc.loader.register(["csb"], _csbLoader);
+Loader.getInstance().register(["txt", "xml", "vsh", "fsh", "atlas"], _txtLoader);
+Loader.getInstance().register(["json", "ExportJson"], _jsonLoader);
+Loader.getInstance().register(["js"], _jsLoader);
+Loader.getInstance().register(["png", "jpg", "bmp", "jpeg", "gif", "ico", "tiff", "webp"], _imgLoader);
+Loader.getInstance().register(["serverImg"], _serverImgLoader);
+Loader.getInstance().register(["plist"], _plistLoader);
+Loader.getInstance().register(["font", "eot", "ttf", "woff", "svg", "ttc"], _fontLoader);
+Loader.getInstance().register(["csb"], _csbLoader);
 
 // Platform — Screen, VisibleRect, InputManager
 cc.screen = screen;
@@ -607,7 +608,7 @@ cc._EventListenerTouchOneByOne = _EventListenerTouchOneByOne;
 cc._EventListenerTouchAllAtOnce = _EventListenerTouchAllAtOnce;
 cc._EventListenerFocus = _EventListenerFocus;
 cc._EventListenerVector = _EventListenerVector;
-cc.eventManager = eventManager;
+cc.eventManager = EventManager.getInstance();
 cc.EventAcceleration = EventAcceleration;
 cc.EventKeyboard = EventKeyboard;
 cc._EventListenerKeyboard = _EventListenerKeyboard;

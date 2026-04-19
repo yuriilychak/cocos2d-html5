@@ -1,10 +1,11 @@
 import { DirectorRenderer } from './director-renderer';
 import { Point } from '../cocoa/geometry/point';
+import EventManager from '../event-manager/event-manager';
 
 export class DirectorCanvasRenderer extends DirectorRenderer {
     setProjection(projection) {
         this._director._projection = projection;
-        cc.eventManager.dispatchEvent(this._director._eventProjectionChanged);
+        EventManager.getInstance().dispatchEvent(this._director._eventProjectionChanged);
     }
 
     setClearColor(clearColor) {
@@ -17,8 +18,8 @@ export class DirectorCanvasRenderer extends DirectorRenderer {
         director._winSizeInPoints.width = cc._canvas.width;
         director._winSizeInPoints.height = cc._canvas.height;
         director._openGLView = openGLView || cc.view;
-        if (cc.eventManager)
-            cc.eventManager.setEnabled(true);
+        if (EventManager.getInstance())
+            EventManager.getInstance().setEnabled(true);
     }
 
     getVisibleSize() {
