@@ -24,16 +24,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from './platform/class';
-import { ListEntry } from './scheduler/list-entry';
-import { HashUpdateEntry } from './scheduler/hash-update-entry';
-import { HashTimerEntry } from './scheduler/hash-timer-entry';
-import { CallbackTimer } from './scheduler/callback-timer';
+import { NewClass } from '../platform/class';
+import { ListEntry } from './list-entry';
+import { HashUpdateEntry } from './hash-update-entry';
+import { HashTimerEntry } from './hash-timer-entry';
+import { CallbackTimer } from './callback-timer';
 
 /**
  * Scheduler is responsible of triggering the scheduled callbacks.
- * @class
- * @extends cc.Class
  */
 export class Scheduler extends NewClass {
     static PRIORITY_SYSTEM = (-2147483647 - 1);
