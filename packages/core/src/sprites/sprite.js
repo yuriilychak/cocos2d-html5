@@ -25,7 +25,6 @@
  ****************************************************************************/
 
 import EventHelper from '../event-manager/event-helper';
-import { initPrototypeSprite } from './sprites-property-define';
 import { Node } from '../base-nodes/node';
 
 /**
@@ -220,13 +219,6 @@ export class Sprite extends Node {
      */
     getOffsetPosition() {
         return cc.p(this._offsetPosition);
-    }
-
-    _getOffsetX() {
-        return this._offsetPosition.x;
-    }
-    _getOffsetY() {
-        return this._offsetPosition.y;
     }
 
     /**
@@ -806,6 +798,78 @@ export class Sprite extends Node {
         var contentSize = texture._contentSize;
         var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
         this.setTextureRect(rect);
+    }
+
+    get opacityModifyRGB() {
+        return this.isOpacityModifyRGB();
+    }
+
+    set opacityModifyRGB(value) {
+        this.setOpacityModifyRGB(value);
+    }
+
+    get opacity() {
+        return this.getOpacity();
+    }
+
+    set opacity(value) {
+        this.setOpacity(value);
+    }
+
+    get color() {
+        return this.getColor();
+    }
+
+    set color(value) {
+        this.setColor(value);
+    }
+
+    get flippedX() {
+        return this.isFlippedX();
+    }
+
+    set flippedX(value) {
+        this.setFlippedX(value);
+    }
+
+    get flippedY() {
+        return this.isFlippedY();
+    }
+
+    set flippedY(value) {
+        this.setFlippedY(value);
+    }
+
+    get offsetX() {
+        return this._offsetPosition.x;
+    }
+
+    get offsetY() {
+        return this._offsetPosition.y;
+    }
+
+    get texture() {
+        return this.getTexture();
+    }
+
+    set texture(value) {
+        this.setTexture(value);
+    }
+
+    get textureRectRotated() {
+        return this.isTextureRectRotated();
+    }
+
+    get batchNode() {
+        return this.getBatchNode();
+    }
+
+    set batchNode(value) {
+        this.setBatchNode(value);
+    }
+
+    get quad() {
+        return this.getQuad();
     }
 
     _createRenderCmd() {

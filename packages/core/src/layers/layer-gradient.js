@@ -180,20 +180,58 @@ export class LayerGradient extends LayerColor {
         this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty | cc.Node._dirtyFlags.opacityDirty | cc.Node._dirtyFlags.gradientDirty);
     }
 
+    get startColor() {
+        return this.getStartColor();
+    }
+
+    set startColor(value) {
+        this.setStartColor(value);
+    }
+
+    get endColor() {
+        return this.getEndColor();
+    }
+
+    set endColor(value) {
+        this.setEndColor(value);
+    }
+
+    get startOpacity() {
+        return this.getStartOpacity();
+    }
+
+    set startOpacity(value) {
+        this.setStartOpacity(value);
+    }
+
+    get endOpacity() {
+        return this.getEndOpacity();
+    }
+
+    set endOpacity(value) {
+        this.setEndOpacity(value);
+    }
+
+    get vector() {
+        return this.getVector();
+    }
+
+    set vector(value) {
+        this.setVector(value);
+    }
+
+    get colorStops() {
+        return this.getColorStops();
+    }
+
+    set colorStops(value) {
+        this.setColorStops(value);
+    }
+
     _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.LayerGradient.CanvasRenderCmd(this);
         else
             return new cc.LayerGradient.WebGLRenderCmd(this);
     }
-}
-
-export function initLayerGradientProperties() {
-    var proto = LayerGradient.prototype;
-    cc.defineGetterSetter(proto, "startColor", proto.getStartColor, proto.setStartColor);
-    cc.defineGetterSetter(proto, "endColor", proto.getEndColor, proto.setEndColor);
-    cc.defineGetterSetter(proto, "startOpacity", proto.getStartOpacity, proto.setStartOpacity);
-    cc.defineGetterSetter(proto, "endOpacity", proto.getEndOpacity, proto.setEndOpacity);
-    cc.defineGetterSetter(proto, "vector", proto.getVector, proto.setVector);
-    cc.defineGetterSetter(proto, "colorStops", proto.getColorStops, proto.setColorStops);
 }

@@ -24,8 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { defineGetterSetter } from '../class';
-
 /**
  * Blend Function used for textures
  * @Class BlendFunc
@@ -33,10 +31,28 @@ import { defineGetterSetter } from '../class';
  * @param {Number} src1 source blend function
  * @param {Number} dst1 destination blend function
  */
-export var BlendFunc = function (src1, dst1) {
-    this.src = src1;
-    this.dst = dst1;
-};
+export class BlendFunc {
+    constructor(src1, dst1) {
+        this.src = src1;
+        this.dst = dst1;
+    }
+
+    static get DISABLE() {
+        return new BlendFunc(cc.ONE, cc.ZERO);
+    }
+
+    static get ALPHA_PREMULTIPLIED() {
+        return new BlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA);
+    }
+
+    static get ALPHA_NON_PREMULTIPLIED() {
+        return new BlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
+    }
+
+    static get ADDITIVE() {
+        return new BlendFunc(cc.SRC_ALPHA, cc.ONE);
+    }
+}
 
 /**
  * @function
@@ -45,29 +61,3 @@ export var BlendFunc = function (src1, dst1) {
 export function blendFuncDisable() {
     return new BlendFunc(cc.ONE, cc.ZERO);
 }
-
-BlendFunc._disable = function(){
-    return new BlendFunc(cc.ONE, cc.ZERO);
-};
-BlendFunc._alphaPremultiplied = function(){
-    return new BlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA);
-};
-BlendFunc._alphaNonPremultiplied = function(){
-    return new BlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
-};
-BlendFunc._additive = function(){
-    return new BlendFunc(cc.SRC_ALPHA, cc.ONE);
-};
-
-/** @expose */
-BlendFunc.DISABLE;
-defineGetterSetter(BlendFunc, "DISABLE", BlendFunc._disable);
-/** @expose */
-BlendFunc.ALPHA_PREMULTIPLIED;
-defineGetterSetter(BlendFunc, "ALPHA_PREMULTIPLIED", BlendFunc._alphaPremultiplied);
-/** @expose */
-BlendFunc.ALPHA_NON_PREMULTIPLIED;
-defineGetterSetter(BlendFunc, "ALPHA_NON_PREMULTIPLIED", BlendFunc._alphaNonPremultiplied);
-/** @expose */
-BlendFunc.ADDITIVE;
-defineGetterSetter(BlendFunc, "ADDITIVE", BlendFunc._additive);

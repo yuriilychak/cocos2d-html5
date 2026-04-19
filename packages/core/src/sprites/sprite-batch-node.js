@@ -24,7 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { defineGetterSetter } from '../platform/class';
 import { Node } from '../base-nodes/node';
 
 /**
@@ -270,15 +269,20 @@ export class SpriteBatchNode extends Node {
         }
         return true;
     }
+
+    get texture() {
+        return this.getTexture();
+    }
+
+    set texture(value) {
+        this.setTexture(value);
+    }
+
+    get shaderProgram() {
+        return this.getShaderProgram();
+    }
+
+    set shaderProgram(value) {
+        this.setShaderProgram(value);
+    }
 }
-
-var _p = SpriteBatchNode.prototype;
-
-// Override properties
-defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
-defineGetterSetter(
-    _p,
-    "shaderProgram",
-    _p.getShaderProgram,
-    _p.setShaderProgram
-);

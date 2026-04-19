@@ -136,7 +136,6 @@ import { profiler } from './utils/profiler';
 import { CustomRenderCmd, dirtyFlags, RenderCmd, CanvasRenderCmd as NodeCanvasRenderCmd } from './base-nodes/node-canvas-render-cmd';
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from './base-nodes/node-webgl-render-cmd';
 import { Node, NODE_TAG_INVALID, s_globalOrderOfArrival } from './base-nodes/node';
-import { initPrototypeCCNode } from './base-nodes/base-nodes-property-define';
 import { AtlasNode } from './base-nodes/atlas-node';
 import { AtlasNodeCanvasRenderCmd } from './base-nodes/atlas-node-canvas-render-cmd';
 import { AtlasNodeWebGLRenderCmd } from './base-nodes/atlas-node-webgl-render-cmd';
@@ -155,8 +154,8 @@ import './textures/texture-2d';
 import { Scene } from './scenes/scene';
 import { LoaderScene } from './scenes/loader-scene';
 import { Layer } from './layers/layer';
-import { LayerColor, initLayerColorProperties } from './layers/layer-color';
-import { LayerGradient, initLayerGradientProperties } from './layers/layer-gradient';
+import { LayerColor } from './layers/layer-color';
+import { LayerGradient } from './layers/layer-gradient';
 import { LayerMultiplex } from './layers/layer-multiplex';
 import { LayerCanvasRenderCmd, LayerColorCanvasRenderCmd, LayerGradientCanvasRenderCmd } from './layers/layer-canvas-render-cmd';
 import { LayerWebGLRenderCmd, LayerColorWebGLRenderCmd, LayerGradientWebGLRenderCmd } from './layers/layer-webgl-render-cmd';
@@ -164,7 +163,6 @@ import { LayerWebGLRenderCmd, LayerColorWebGLRenderCmd, LayerGradientWebGLRender
 // ======================================================================
 // Sprites
 // ======================================================================
-import { initPrototypeSprite } from './sprites/sprites-property-define';
 import { Sprite } from './sprites/sprite';
 import { SpriteCanvasRenderCmd } from './sprites/sprite-canvas-render-cmd';
 import { SpriteWebGLRenderCmd } from './sprites/sprite-webgl-render-cmd';
@@ -190,7 +188,6 @@ import { DrawingPrimitiveWebGL } from './drawing-primitives-webgl';
 // ======================================================================
 // LabelTTF
 // ======================================================================
-import { initLabelTTFProperties } from './labelttf/label-ttf-property-define';
 import { LabelTTF } from './labelttf/label-ttf';
 import {
     CanvasRenderCmd as LabelTTFCanvasRenderCmd,
@@ -534,11 +531,6 @@ cc.ComponentContainer = ComponentContainer;
 // ======================================================================
 // Init functions (must run AFTER cc.* class assignments)
 // ======================================================================
-initPrototypeCCNode();
-initLayerColorProperties();
-initLayerGradientProperties();
-initPrototypeSprite();
-initLabelTTFProperties();
 initInputExtension(inputManager);
 initDirectorCanvas();
 initDirectorWebGL();

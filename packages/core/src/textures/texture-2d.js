@@ -27,7 +27,7 @@
 import { NewClass } from '../platform/class';
 import EventHelper from '../event-manager/event-helper';
 import { initWebGLTexture2D } from './texture-2d-webgl';
-import { initPrototypeTexture2D } from './texture-property-define';
+
 
 export {
     ALIGN_CENTER, ALIGN_TOP, ALIGN_TOP_RIGHT, ALIGN_RIGHT,
@@ -504,5 +504,57 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
 
     EventHelper.prototype.apply(cc.Texture2D.prototype);
 
-    initPrototypeTexture2D();
+    const _c = cc.Texture2D;
+
+    _c.PVRImagesHavePremultipliedAlpha = function (haveAlphaPremultiplied) {
+        cc.PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
+    };
+
+    _c.PIXEL_FORMAT_RGBA8888 = 2;
+    _c.PIXEL_FORMAT_RGB888 = 3;
+    _c.PIXEL_FORMAT_RGB565 = 4;
+    _c.PIXEL_FORMAT_A8 = 5;
+    _c.PIXEL_FORMAT_I8 = 6;
+    _c.PIXEL_FORMAT_AI88 = 7;
+    _c.PIXEL_FORMAT_RGBA4444 = 8;
+    _c.PIXEL_FORMAT_RGB5A1 = 7;
+    _c.PIXEL_FORMAT_PVRTC4 = 9;
+    _c.PIXEL_FORMAT_PVRTC2 = 10;
+    _c.PIXEL_FORMAT_DEFAULT = _c.PIXEL_FORMAT_RGBA8888;
+    _c.defaultPixelFormat = _c.PIXEL_FORMAT_DEFAULT;
+
+    const _M = cc.Texture2D._M = {};
+    _M[_c.PIXEL_FORMAT_RGBA8888] = "RGBA8888";
+    _M[_c.PIXEL_FORMAT_RGB888] = "RGB888";
+    _M[_c.PIXEL_FORMAT_RGB565] = "RGB565";
+    _M[_c.PIXEL_FORMAT_A8] = "A8";
+    _M[_c.PIXEL_FORMAT_I8] = "I8";
+    _M[_c.PIXEL_FORMAT_AI88] = "AI88";
+    _M[_c.PIXEL_FORMAT_RGBA4444] = "RGBA4444";
+    _M[_c.PIXEL_FORMAT_RGB5A1] = "RGB5A1";
+    _M[_c.PIXEL_FORMAT_PVRTC4] = "PVRTC4";
+    _M[_c.PIXEL_FORMAT_PVRTC2] = "PVRTC2";
+
+    const _B = cc.Texture2D._B = {};
+    _B[_c.PIXEL_FORMAT_RGBA8888] = 32;
+    _B[_c.PIXEL_FORMAT_RGB888] = 24;
+    _B[_c.PIXEL_FORMAT_RGB565] = 16;
+    _B[_c.PIXEL_FORMAT_A8] = 8;
+    _B[_c.PIXEL_FORMAT_I8] = 8;
+    _B[_c.PIXEL_FORMAT_AI88] = 16;
+    _B[_c.PIXEL_FORMAT_RGBA4444] = 16;
+    _B[_c.PIXEL_FORMAT_RGB5A1] = 16;
+    _B[_c.PIXEL_FORMAT_PVRTC4] = 4;
+    _B[_c.PIXEL_FORMAT_PVRTC2] = 3;
+
+    const _p = cc.Texture2D.prototype;
+
+    Object.defineProperties(_p, {
+        name: { get() { return this.getName(); } },
+        pixelFormat: { get() { return this.getPixelFormat(); } },
+        pixelsWidth: { get() { return this.getPixelsWide(); } },
+        pixelsHeight: { get() { return this.getPixelsHigh(); } },
+        width: { get() { return this._getWidth(); } },
+        height: { get() { return this._getHeight(); } }
+    });
 });

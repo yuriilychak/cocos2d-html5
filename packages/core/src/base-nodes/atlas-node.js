@@ -24,7 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { defineGetterSetter } from '../platform/class';
 import { Node } from './node';
 
 /**
@@ -263,21 +262,31 @@ export class AtlasNode extends Node {
     _setIgnoreContentScaleFactor(ignoreContentScaleFactor) {
         this._ignoreContentScaleFactor = ignoreContentScaleFactor;
     }
+
+    get opacity() {
+        return this.getOpacity();
+    }
+
+    set opacity(value) {
+        this.setOpacity(value);
+    }
+
+    get color() {
+        return this.getColor();
+    }
+
+    set color(value) {
+        this.setColor(value);
+    }
+
+    get texture() {
+        return this.getTexture();
+    }
+
+    set texture(value) {
+        this.setTexture(value);
+    }
 }
 
 
-var _p = AtlasNode.prototype;
-// Override properties
-defineGetterSetter(_p, "opacity", _p.getOpacity, _p.setOpacity);
-defineGetterSetter(_p, "color", _p.getColor, _p.setColor);
-
-// Extended properties
-/** @expose */
-_p.texture;
-defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
-/** @expose */
-_p.textureAtlas;
-/** @expose */
-_p.quadsToDraw;
-
-cc.EventHelper.prototype.apply(_p);
+cc.EventHelper.prototype.apply(AtlasNode.prototype);

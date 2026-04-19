@@ -197,6 +197,96 @@ export class Node extends NewClass {
       this._renderCmd = this._createRenderCmd();
     }
 
+    // ======================================================================
+    // ES6 property accessors (migrated from defineGetterSetter)
+    // ======================================================================
+
+    get x() { return this.getPositionX(); }
+    set x(v) { this.setPositionX(v); }
+
+    get y() { return this.getPositionY(); }
+    set y(v) { this.setPositionY(v); }
+
+    get width() { return this._getWidth(); }
+    set width(v) { this._setWidth(v); }
+
+    get height() { return this._getHeight(); }
+    set height(v) { this._setHeight(v); }
+
+    get anchorX() { return this._getAnchorX(); }
+    set anchorX(v) { this._setAnchorX(v); }
+
+    get anchorY() { return this._getAnchorY(); }
+    set anchorY(v) { this._setAnchorY(v); }
+
+    get skewX() { return this.getSkewX(); }
+    set skewX(v) { this.setSkewX(v); }
+
+    get skewY() { return this.getSkewY(); }
+    set skewY(v) { this.setSkewY(v); }
+
+    get zIndex() { return this.getLocalZOrder(); }
+    set zIndex(v) { this.setLocalZOrder(v); }
+
+    get vertexZ() { return this.getVertexZ(); }
+    set vertexZ(v) { this.setVertexZ(v); }
+
+    get rotation() { return this.getRotation(); }
+    set rotation(v) { this.setRotation(v); }
+
+    get rotationX() { return this.getRotationX(); }
+    set rotationX(v) { this.setRotationX(v); }
+
+    get rotationY() { return this.getRotationY(); }
+    set rotationY(v) { this.setRotationY(v); }
+
+    get scale() { return this.getScale(); }
+    set scale(v) { this.setScale(v); }
+
+    get scaleX() { return this.getScaleX(); }
+    set scaleX(v) { this.setScaleX(v); }
+
+    get scaleY() { return this.getScaleY(); }
+    set scaleY(v) { this.setScaleY(v); }
+
+    get children() { return this.getChildren(); }
+
+    get childrenCount() { return this.getChildrenCount(); }
+
+    get parent() { return this.getParent(); }
+    set parent(v) { this.setParent(v); }
+
+    get visible() { return this.isVisible(); }
+    set visible(v) { this.setVisible(v); }
+
+    get running() { return this.isRunning(); }
+
+    get ignoreAnchor() { return this.isIgnoreAnchorPointForPosition(); }
+    set ignoreAnchor(v) { this.ignoreAnchorPointForPosition(v); }
+
+    get actionManager() { return this.getActionManager(); }
+    set actionManager(v) { this.setActionManager(v); }
+
+    get scheduler() { return this.getScheduler(); }
+    set scheduler(v) { this.setScheduler(v); }
+
+    get shaderProgram() { return this.getShaderProgram(); }
+    set shaderProgram(v) { this.setShaderProgram(v); }
+
+    get opacity() { return this.getOpacity(); }
+    set opacity(v) { this.setOpacity(v); }
+
+    get opacityModifyRGB() { return this.isOpacityModifyRGB(); }
+
+    get cascadeOpacity() { return this.isCascadeOpacityEnabled(); }
+    set cascadeOpacity(v) { this.setCascadeOpacityEnabled(v); }
+
+    get color() { return this.getColor(); }
+    set color(v) { this.setColor(v); }
+
+    get cascadeColor() { return this.isCascadeColorEnabled(); }
+    set cascadeColor(v) { this.setCascadeColorEnabled(v); }
+
     /**
      * Initializes the instance of cc.Node
      * @function

@@ -125,16 +125,26 @@ export class LayerColor extends Layer {
         this._renderCmd.updateBlendFunc(locBlendFunc);
     }
 
+    get width() {
+        return this._getWidth();
+    }
+
+    set width(value) {
+        this._setWidth(value);
+    }
+
+    get height() {
+        return this._getHeight();
+    }
+
+    set height(value) {
+        this._setHeight(value);
+    }
+
     _createRenderCmd() {
         if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
             return new cc.LayerColor.CanvasRenderCmd(this);
         else
             return new cc.LayerColor.WebGLRenderCmd(this);
     }
-}
-
-export function initLayerColorProperties() {
-    var proto = LayerColor.prototype;
-    cc.defineGetterSetter(proto, "width", proto._getWidth, proto._setWidth);
-    cc.defineGetterSetter(proto, "height", proto._getHeight, proto._setHeight);
 }

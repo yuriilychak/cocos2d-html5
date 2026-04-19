@@ -821,6 +821,142 @@ export class LabelTTF extends Sprite {
     _getFontWeight() {
         return this._fontWeight;
     }
+
+    get color() {
+        return this.getColor();
+    }
+
+    set color(value) {
+        this.setColor(value);
+    }
+
+    get opacity() {
+        return this.getOpacity();
+    }
+
+    set opacity(value) {
+        this.setOpacity(value);
+    }
+
+    get string() {
+        return this.getString();
+    }
+
+    set string(value) {
+        this.setString(value);
+    }
+
+    get textAlign() {
+        return this.getHorizontalAlignment();
+    }
+
+    set textAlign(value) {
+        this.setHorizontalAlignment(value);
+    }
+
+    get verticalAlign() {
+        return this.getVerticalAlignment();
+    }
+
+    set verticalAlign(value) {
+        this.setVerticalAlignment(value);
+    }
+
+    get fontSize() {
+        return this.getFontSize();
+    }
+
+    set fontSize(value) {
+        this.setFontSize(value);
+    }
+
+    get fontName() {
+        return this.getFontName();
+    }
+
+    set fontName(value) {
+        this.setFontName(value);
+    }
+
+    get font() {
+        return this._getFont();
+    }
+
+    set font(value) {
+        this._setFont(value);
+    }
+
+    get boundingWidth() {
+        return this._getBoundingWidth();
+    }
+
+    set boundingWidth(value) {
+        this._setBoundingWidth(value);
+    }
+
+    get boundingHeight() {
+        return this._getBoundingHeight();
+    }
+
+    set boundingHeight(value) {
+        this._setBoundingHeight(value);
+    }
+
+    get fillStyle() {
+        return this._getFillStyle();
+    }
+
+    set fillStyle(value) {
+        this.setFontFillColor(value);
+    }
+
+    get strokeStyle() {
+        return this._getStrokeStyle();
+    }
+
+    set strokeStyle(value) {
+        this._setStrokeStyle(value);
+    }
+
+    get lineWidth() {
+        return this._getLineWidth();
+    }
+
+    set lineWidth(value) {
+        this._setLineWidth(value);
+    }
+
+    get shadowOffsetX() {
+        return this._getShadowOffsetX();
+    }
+
+    set shadowOffsetX(value) {
+        this._setShadowOffsetX(value);
+    }
+
+    get shadowOffsetY() {
+        return this._getShadowOffsetY();
+    }
+
+    set shadowOffsetY(value) {
+        this._setShadowOffsetY(value);
+    }
+
+    get shadowOpacity() {
+        return this._getShadowOpacity();
+    }
+
+    set shadowOpacity(value) {
+        this._setShadowOpacity(value);
+    }
+
+    get shadowBlur() {
+        return this._getShadowBlur();
+    }
+
+    set shadowBlur(value) {
+        this._setShadowBlur(value);
+    }
 }
 
 // Only support style in this format: "18px Verdana" or "18px 'Helvetica Neue'"

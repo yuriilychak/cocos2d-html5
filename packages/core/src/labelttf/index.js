@@ -1,5 +1,4 @@
 export { LabelTTF } from './label-ttf';
-export { initLabelTTFProperties } from './label-ttf-property-define';
 export {
     _textAlign, _textBaseline, wrapInspection,
     _wordRex, _symbolRex, _lastWordRex, _lastEnglish, _firsrEnglish,

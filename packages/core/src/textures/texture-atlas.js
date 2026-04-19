@@ -26,7 +26,7 @@
 
 import { NewClass } from '../platform/class';
 import { initWebGLTextureAtlas } from './texture-2d-webgl';
-import { initPrototypeTextureAtlas } from './texture-property-define';
+
 
 /**
  * <p>A class that implements a Texture Atlas. <br />
@@ -712,6 +712,22 @@ export class TextureAtlas extends NewClass {
       }
       if (this._quadsWebBuffer) gl.deleteBuffer(this._quadsWebBuffer);
     }
+
+    get totalQuads() {
+        return this.getTotalQuads();
+    }
+
+    get capacity() {
+        return this.getCapacity();
+    }
+
+    get quads() {
+        return this.getQuads();
+    }
+
+    set quads(value) {
+        this.setQuads(value);
+    }
 }
 
 cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
@@ -719,5 +735,3 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
     initWebGLTextureAtlas();
   }
 });
-
-initPrototypeTextureAtlas();

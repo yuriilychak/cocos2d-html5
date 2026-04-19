@@ -24,8 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { defineGetterSetter } from '../class';
-
 /**
  * Color class, please use cc.color() to construct a color
  * @class Color
@@ -35,52 +33,119 @@ import { defineGetterSetter } from '../class';
  * @param {Number} a
  * @see cc.color
  */
-export var Color = function (r, g, b, a) {
-    r = r || 0;
-    g = g || 0;
-    b = b || 0;
-    a = typeof a === 'number' ? a : 255;
-    this._val = ((r << 24) >>> 0) + (g << 16) + (b << 8) + a;
-};
+export class Color {
+    constructor(r, g, b, a) {
+        r = r || 0;
+        g = g || 0;
+        b = b || 0;
+        a = typeof a === 'number' ? a : 255;
+        this._val = ((r << 24) >>> 0) + (g << 16) + (b << 8) + a;
+    }
 
-var _p = Color.prototype;
-_p._getR = function () {
-    return (this._val & 0xff000000) >>> 24;
-};
-_p._setR = function (value) {
-    this._val = (this._val & 0x00ffffff) | ((value << 24) >>> 0);
-};
-_p._getG = function () {
-    return (this._val & 0x00ff0000) >> 16;
-};
-_p._setG = function (value) {
-    this._val = (this._val & 0xff00ffff) | (value << 16);
-};
-_p._getB = function () {
-    return (this._val & 0x0000ff00) >> 8;
-};
-_p._setB = function (value) {
-    this._val = (this._val & 0xffff00ff) | (value << 8);
-};
-_p._getA = function () {
-    return this._val & 0x000000ff;
-};
-_p._setA = function (value) {
-    this._val = (this._val & 0xffffff00) | value;
-};
+    get r() {
+        return (this._val & 0xff000000) >>> 24;
+    }
 
-/** @expose */
-_p.r;
-defineGetterSetter(_p, "r", _p._getR, _p._setR);
-/** @expose */
-_p.g;
-defineGetterSetter(_p, "g", _p._getG, _p._setG);
-/** @expose */
-_p.b;
-defineGetterSetter(_p, "b", _p._getB, _p._setB);
-/** @expose */
-_p.a;
-defineGetterSetter(_p, "a", _p._getA, _p._setA);
+    set r(value) {
+        this._val = (this._val & 0x00ffffff) | ((value << 24) >>> 0);
+    }
+
+    get g() {
+        return (this._val & 0x00ff0000) >> 16;
+    }
+
+    set g(value) {
+        this._val = (this._val & 0xff00ffff) | (value << 16);
+    }
+
+    get b() {
+        return (this._val & 0x0000ff00) >> 8;
+    }
+
+    set b(value) {
+        this._val = (this._val & 0xffff00ff) | (value << 8);
+    }
+
+    get a() {
+        return this._val & 0x000000ff;
+    }
+
+    set a(value) {
+        this._val = (this._val & 0xffffff00) | value;
+    }
+
+    /**
+     * White color (255, 255, 255, 255)
+     * @returns {Color}
+     */
+    static get WHITE() {
+        return new Color(255, 255, 255, 255);
+    }
+
+    /**
+     * Yellow color (255, 255, 0, 255)
+     * @returns {Color}
+     */
+    static get YELLOW() {
+        return new Color(255, 255, 0, 255);
+    }
+
+    /**
+     * Blue color (0, 0, 255, 255)
+     * @returns {Color}
+     */
+    static get BLUE() {
+        return new Color(0, 0, 255, 255);
+    }
+
+    /**
+     * Green Color (0, 255, 0, 255)
+     * @returns {Color}
+     */
+    static get GREEN() {
+        return new Color(0, 255, 0, 255);
+    }
+
+    /**
+     * Red Color (255, 0, 0, 255)
+     * @returns {Color}
+     */
+    static get RED() {
+        return new Color(255, 0, 0, 255);
+    }
+
+    /**
+     * Magenta Color (255, 0, 255, 255)
+     * @returns {Color}
+     */
+    static get MAGENTA() {
+        return new Color(255, 0, 255, 255);
+    }
+
+    /**
+     * Black Color (0, 0, 0, 255)
+     * @returns {Color}
+     */
+    static get BLACK() {
+        return new Color(0, 0, 0, 255);
+    }
+
+    /**
+     * Orange Color (255, 127, 0, 255)
+     * @returns {Color}
+     */
+    static get ORANGE() {
+        return new Color(255, 127, 0, 255);
+    }
+
+    /**
+     * Gray Color (166, 166, 166, 255)
+     * @returns {Color}
+     */
+    static get GRAY() {
+        return new Color(166, 166, 166, 255);
+    }
+}
 
 /**
  * Generate a color object based on multiple forms of parameters
@@ -210,114 +275,15 @@ export const VERTICAL_TEXT_ALIGNMENT_CENTER = 1;
  */
 export const VERTICAL_TEXT_ALIGNMENT_BOTTOM = 2;
 
-// Color preset getters on the color factory function
-_p = color;
-
-/**
- * White color (255, 255, 255, 255)
- * @returns {Color}
- * @private
- */
-_p._getWhite = function () {
-    return color(255, 255, 255);
-};
-
-/**
- *  Yellow color (255, 255, 0, 255)
- * @returns {Color}
- * @private
- */
-_p._getYellow = function () {
-    return color(255, 255, 0);
-};
-
-/**
- *  Blue color (0, 0, 255, 255)
- * @type {Color}
- * @private
- */
-_p._getBlue = function () {
-    return  color(0, 0, 255);
-};
-
-/**
- *  Green Color (0, 255, 0, 255)
- * @type {Color}
- * @private
- */
-_p._getGreen = function () {
-    return color(0, 255, 0);
-};
-
-/**
- *  Red Color (255, 0, 0, 255)
- * @type {Color}
- * @private
- */
-_p._getRed = function () {
-    return color(255, 0, 0);
-};
-
-/**
- *  Magenta Color (255, 0, 255, 255)
- * @type {Color}
- * @private
- */
-_p._getMagenta = function () {
-    return color(255, 0, 255);
-};
-
-/**
- *  Black Color (0, 0, 0, 255)
- * @type {Color}
- * @private
- */
-_p._getBlack = function () {
-    return color(0, 0, 0);
-};
-
-/**
- *  Orange Color (255, 127, 0, 255)
- * @type {Color}
- * @private
- */
-_p._getOrange = function () {
-    return color(255, 127, 0);
-};
-
-/**
- *  Gray Color (166, 166, 166, 255)
- * @type {Color}
- * @private
- */
-_p._getGray = function () {
-    return color(166, 166, 166);
-};
-
-/** @expose */
-_p.WHITE;
-defineGetterSetter(_p, "WHITE", _p._getWhite);
-/** @expose */
-_p.YELLOW;
-defineGetterSetter(_p, "YELLOW", _p._getYellow);
-/** @expose */
-_p.BLUE;
-defineGetterSetter(_p, "BLUE", _p._getBlue);
-/** @expose */
-_p.GREEN;
-defineGetterSetter(_p, "GREEN", _p._getGreen);
-/** @expose */
-_p.RED;
-defineGetterSetter(_p, "RED", _p._getRed);
-/** @expose */
-_p.MAGENTA;
-defineGetterSetter(_p, "MAGENTA", _p._getMagenta);
-/** @expose */
-_p.BLACK;
-defineGetterSetter(_p, "BLACK", _p._getBlack);
-/** @expose */
-_p.ORANGE;
-defineGetterSetter(_p, "ORANGE", _p._getOrange);
-/** @expose */
-_p.GRAY;
-defineGetterSetter(_p, "GRAY", _p._getGray);
+// Forward color preset getters on the color factory function for backward compatibility
+Object.defineProperties(color, {
+    WHITE: { get() { return Color.WHITE; } },
+    YELLOW: { get() { return Color.YELLOW; } },
+    BLUE: { get() { return Color.BLUE; } },
+    GREEN: { get() { return Color.GREEN; } },
+    RED: { get() { return Color.RED; } },
+    MAGENTA: { get() { return Color.MAGENTA; } },
+    BLACK: { get() { return Color.BLACK; } },
+    ORANGE: { get() { return Color.ORANGE; } },
+    GRAY: { get() { return Color.GRAY; } }
+});
