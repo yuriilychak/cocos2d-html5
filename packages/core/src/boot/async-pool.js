@@ -1,5 +1,3 @@
-import { each } from './utils';
-
 /**
  * Async Pool class, a helper of cc.async
  * @param {Object|Array} srcObj
@@ -7,7 +5,6 @@ import { each } from './utils';
  * @param {function} iterator
  * @param {function} onEnd
  * @param {object} target
- * @constructor
  */
 export default class AsyncPool {
     constructor(srcObj, limit, iterator, onEnd, target) {
@@ -19,12 +16,21 @@ export default class AsyncPool {
         this._iteratorTarget = target;
         this._onEnd = onEnd;
         this._onEndTarget = target;
-        this._results = srcObj instanceof Array ? [] : {};
-        this._errors = srcObj instanceof Array ? [] : {};
+        const isArray = srcObj instanceof Array;
+        this._results = isArray ? [] : {};
+        this._errors = isArray ? [] : {};
 
-        each(srcObj, (value, index) => {
-            this._pool.push({index: index, value: value});
-        });
+        if (srcObj) {
+            if (isArray) {
+                for (let i = 0, li = srcObj.length; i < li; i++) {
+                    this._pool.push({ index: i, value: srcObj[i] });
+                }
+            } else {
+                for (const key in srcObj) {
+                    this._pool.push({ index: key, value: srcObj[key] });
+                }
+            }
+        }
 
         this.size = this._pool.length;
         this.finishedSize = 0;

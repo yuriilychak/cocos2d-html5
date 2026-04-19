@@ -37,8 +37,8 @@ import { Node } from './node';
  * <p>You can create a cc.AtlasNode with an Atlas file, the width, the height of each item and the quantity of items to render</p>
  *
  * @class
- * @extends cc.Node
- *
+ * @extends Node
+ * @namespace cc
  * @param {String} tile
  * @param {Number} tileWidth
  * @param {Number} tileHeight
@@ -46,8 +46,8 @@ import { Node } from './node';
  * @example
  * var node = new cc.AtlasNode("pathOfTile", 16, 16, 1);
  *
- * @property {cc.Texture2D}     texture         - Current used texture
- * @property {cc.TextureAtlas}  textureAtlas    - Texture atlas for cc.AtlasNode
+ * @property {Texture2D}     texture         - Current used texture
+ * @property {TextureAtlas}  textureAtlas    - Texture atlas for cc.AtlasNode
  * @property {Number}           quadsToDraw     - Number of quads to draw
  */
 export class AtlasNode extends Node {

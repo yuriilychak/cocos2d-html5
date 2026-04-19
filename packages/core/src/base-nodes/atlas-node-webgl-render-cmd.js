@@ -25,7 +25,7 @@
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from './node-webgl-render-cmd';
 
 /**
- * cc.AtlasNode's rendering objects of WebGL
+ * AtlasNode's rendering objects of WebGL
  */
 export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     constructor(renderableObject) {

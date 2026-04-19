@@ -188,8 +188,6 @@ export class Node extends NewClass {
       _t._normalizedPosition = cc.p(0, 0);
       _t._children = [];
 
-      var director = cc.director;
-
       _t._additionalTransform = cc.affineTransformMakeIdentity();
       if (cc.ComponentContainer) {
         _t._componentContainer = new cc.ComponentContainer(_t);

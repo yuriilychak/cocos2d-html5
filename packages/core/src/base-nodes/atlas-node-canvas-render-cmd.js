@@ -25,7 +25,7 @@
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from './node-canvas-render-cmd';
 
 /**
- * cc.AtlasNode's rendering objects of Canvas
+ * AtlasNode's rendering objects of Canvas
  */
 export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
     constructor(renderableObject) {
