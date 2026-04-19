@@ -22,12 +22,12 @@ export default class AsyncPool {
 
         if (srcObj) {
             if (isArray) {
-                for (let i = 0, li = srcObj.length; i < li; i++) {
-                    this._pool.push({ index: i, value: srcObj[i] });
+                for (let i = 0; i < srcObj.length; ++i) {
+                  this._addToPoll(srcObj[i], i);
                 }
             } else {
                 for (const key in srcObj) {
-                    this._pool.push({ index: key, value: srcObj[key] });
+                    this._addToPoll(srcObj[key], key);
                 }
             }
         }
@@ -37,6 +37,10 @@ export default class AsyncPool {
         this._workingSize = 0;
 
         this._limit = this._limit || this.size;
+    }
+
+    _addToPoll(value, index) {
+        this._pool.push({ index, value });
     }
 
     onIterator(iterator, target) {

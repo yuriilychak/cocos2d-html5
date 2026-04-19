@@ -1,7 +1,6 @@
 import Game from './game';
 
-var _config = null,
-    _jsAddedCache = {},
+var _jsAddedCache = {},
     _engineInitCalled = false,
     _engineLoadedCallback = null;
 

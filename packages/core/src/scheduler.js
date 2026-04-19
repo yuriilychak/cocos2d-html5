@@ -26,218 +26,231 @@
 
 import { NewClass } from './platform/class';
 
-var MAX_POOL_SIZE = 20;
+const MAX_POOL_SIZE = 20;
 
-var ListEntry = function (prev, next, callback, target, priority, paused, markedForDeletion) {
-    this.prev = prev;
-    this.next = next;
-    this.callback = callback;
-    this.target = target;
-    this.priority = priority;
-    this.paused = paused;
-    this.markedForDeletion = markedForDeletion;
-};
+class ListEntry {
+    static _pool = [];
 
-var _listEntries = [];
-ListEntry.get = function (prev, next, callback, target, priority, paused, markedForDeletion) {
-    var result = _listEntries.pop();
-    if (result) {
-        result.prev = prev;
-        result.next = next;
-        result.callback = callback;
-        result.target = target;
-        result.priority = priority;
-        result.paused = paused;
-        result.markedForDeletion = markedForDeletion;
+    constructor(prev, next, callback, target, priority, paused, markedForDeletion) {
+        this.prev = prev;
+        this.next = next;
+        this.callback = callback;
+        this.target = target;
+        this.priority = priority;
+        this.paused = paused;
+        this.markedForDeletion = markedForDeletion;
     }
-    else {
-        result = new ListEntry(prev, next, callback, target, priority, paused, markedForDeletion);
-    }
-    return result;
-};
-ListEntry.put = function (entry) {
-    entry.prev = null;
-    entry.next = null;
-    entry.callback = null;
-    entry.target = null;
-    entry.priority = 0;
-    entry.paused = false;
-    entry.markedForDeletion = false;
-    if (_listEntries.length < MAX_POOL_SIZE)
-        _listEntries.push(entry);
-};
 
-var HashUpdateEntry = function (list, entry, target, callback) {
-    this.list = list;
-    this.entry = entry;
-    this.target = target;
-    this.callback = callback;
-};
-var _hashUpdateEntries = [];
-HashUpdateEntry.get = function (list, entry, target, callback) {
-    var result = _hashUpdateEntries.pop();
-    if (result) {
-        result.list = list;
-        result.entry = entry;
-        result.target = target;
-        result.callback = callback;
-    }
-    else {
-        result = new HashUpdateEntry(list, entry, target, callback);
-    }
-    return result;
-};
-HashUpdateEntry.put = function (entry) {
-    entry.list = null;
-    entry.entry = null;
-    entry.target = null;
-    entry.callback = null;
-    if (_hashUpdateEntries.length < MAX_POOL_SIZE)
-        _hashUpdateEntries.push(entry);
-};
-
-var HashTimerEntry = function (timers, target, timerIndex, currentTimer, currentTimerSalvaged, paused) {
-    var _t = this;
-    _t.timers = timers;
-    _t.target = target;
-    _t.timerIndex = timerIndex;
-    _t.currentTimer = currentTimer;
-    _t.currentTimerSalvaged = currentTimerSalvaged;
-    _t.paused = paused;
-};
-var _hashTimerEntries = [];
-HashTimerEntry.get = function (timers, target, timerIndex, currentTimer, currentTimerSalvaged, paused) {
-    var result = _hashTimerEntries.pop();
-    if (result) {
-        result.timers = timers;
-        result.target = target;
-        result.timerIndex = timerIndex;
-        result.currentTimer = currentTimer;
-        result.currentTimerSalvaged = currentTimerSalvaged;
-        result.paused = paused;
-    }
-    else {
-        result = new HashTimerEntry(timers, target, timerIndex, currentTimer, currentTimerSalvaged, paused);
-    }
-    return result;
-};
-HashTimerEntry.put = function (entry) {
-    entry.timers = null;
-    entry.target = null;
-    entry.timerIndex = 0;
-    entry.currentTimer = null;
-    entry.currentTimerSalvaged = false;
-    entry.paused = false;
-    if (_hashTimerEntries.length < MAX_POOL_SIZE)
-        _hashTimerEntries.push(entry);
-};
-
-var CallbackTimer = function () {
-    this._scheduler = null;
-    this._elapsed = -1;
-    this._runForever = false;
-    this._useDelay = false;
-    this._timesExecuted = 0;
-    this._repeat = 0;
-    this._delay = 0;
-    this._interval = 0;
-
-    this._target = null;
-    this._callback = null;
-    this._key = null;
-};
-
-CallbackTimer.prototype.initWithCallback = function (scheduler, callback, target, seconds, repeat, delay, key) {
-    this._scheduler = scheduler;
-    this._target = target;
-    this._callback = callback;
-    if (key)
-        this._key = key;
-
-    this._elapsed = -1;
-    this._interval = seconds;
-    this._delay = delay;
-    this._useDelay = (this._delay > 0);
-    this._repeat = repeat;
-    this._runForever = (this._repeat === cc.REPEAT_FOREVER);
-    return true;
-};
-
-CallbackTimer.prototype.getInterval = function () { return this._interval; };
-CallbackTimer.prototype.setInterval = function (interval) { this._interval = interval; };
-
-CallbackTimer.prototype.update = function (dt) {
-    if (this._elapsed === -1) {
-        this._elapsed = 0;
-        this._timesExecuted = 0;
-    } else {
-        this._elapsed += dt;
-        if (this._runForever && !this._useDelay) {
-            if (this._elapsed >= this._interval) {
-                this.trigger();
-                this._elapsed = 0;
-            }
+    static get(prev, next, callback, target, priority, paused, markedForDeletion) {
+        var result = ListEntry._pool.pop();
+        if (result) {
+            result.prev = prev;
+            result.next = next;
+            result.callback = callback;
+            result.target = target;
+            result.priority = priority;
+            result.paused = paused;
+            result.markedForDeletion = markedForDeletion;
         } else {
-            if (this._useDelay) {
-                if (this._elapsed >= this._delay) {
-                    this.trigger();
+            result = new ListEntry(prev, next, callback, target, priority, paused, markedForDeletion);
+        }
+        return result;
+    }
 
-                    this._elapsed -= this._delay;
-                    this._timesExecuted += 1;
-                    this._useDelay = false;
-                }
-            } else {
+    static put(entry) {
+        entry.prev = null;
+        entry.next = null;
+        entry.callback = null;
+        entry.target = null;
+        entry.priority = 0;
+        entry.paused = false;
+        entry.markedForDeletion = false;
+        if (ListEntry._pool.length < MAX_POOL_SIZE)
+            ListEntry._pool.push(entry);
+    }
+}
+
+class HashUpdateEntry {
+    static _pool = [];
+
+    constructor(list, entry, target, callback) {
+        this.list = list;
+        this.entry = entry;
+        this.target = target;
+        this.callback = callback;
+    }
+
+    static get(list, entry, target, callback) {
+        var result = HashUpdateEntry._pool.pop();
+        if (result) {
+            result.list = list;
+            result.entry = entry;
+            result.target = target;
+            result.callback = callback;
+        } else {
+            result = new HashUpdateEntry(list, entry, target, callback);
+        }
+        return result;
+    }
+
+    static put(entry) {
+        entry.list = null;
+        entry.entry = null;
+        entry.target = null;
+        entry.callback = null;
+        if (HashUpdateEntry._pool.length < MAX_POOL_SIZE)
+            HashUpdateEntry._pool.push(entry);
+    }
+}
+
+class HashTimerEntry {
+    static _pool = [];
+
+    constructor(timers, target, timerIndex, currentTimer, currentTimerSalvaged, paused) {
+        this.timers = timers;
+        this.target = target;
+        this.timerIndex = timerIndex;
+        this.currentTimer = currentTimer;
+        this.currentTimerSalvaged = currentTimerSalvaged;
+        this.paused = paused;
+    }
+
+    static get(timers, target, timerIndex, currentTimer, currentTimerSalvaged, paused) {
+        var result = HashTimerEntry._pool.pop();
+        if (result) {
+            result.timers = timers;
+            result.target = target;
+            result.timerIndex = timerIndex;
+            result.currentTimer = currentTimer;
+            result.currentTimerSalvaged = currentTimerSalvaged;
+            result.paused = paused;
+        } else {
+            result = new HashTimerEntry(timers, target, timerIndex, currentTimer, currentTimerSalvaged, paused);
+        }
+        return result;
+    }
+
+    static put(entry) {
+        entry.timers = null;
+        entry.target = null;
+        entry.timerIndex = 0;
+        entry.currentTimer = null;
+        entry.currentTimerSalvaged = false;
+        entry.paused = false;
+        if (HashTimerEntry._pool.length < MAX_POOL_SIZE)
+            HashTimerEntry._pool.push(entry);
+    }
+}
+
+class CallbackTimer {
+    static _pool = [];
+
+    constructor() {
+        this._scheduler = null;
+        this._elapsed = -1;
+        this._runForever = false;
+        this._useDelay = false;
+        this._timesExecuted = 0;
+        this._repeat = 0;
+        this._delay = 0;
+        this._interval = 0;
+        this._target = null;
+        this._callback = null;
+        this._key = null;
+    }
+
+    initWithCallback(scheduler, callback, target, seconds, repeat, delay, key) {
+        this._scheduler = scheduler;
+        this._target = target;
+        this._callback = callback;
+        if (key)
+            this._key = key;
+
+        this._elapsed = -1;
+        this._interval = seconds;
+        this._delay = delay;
+        this._useDelay = (this._delay > 0);
+        this._repeat = repeat;
+        this._runForever = (this._repeat === cc.REPEAT_FOREVER);
+        return true;
+    }
+
+    getInterval() { return this._interval; }
+    setInterval(interval) { this._interval = interval; }
+
+    update(dt) {
+        if (this._elapsed === -1) {
+            this._elapsed = 0;
+            this._timesExecuted = 0;
+        } else {
+            this._elapsed += dt;
+            if (this._runForever && !this._useDelay) {
                 if (this._elapsed >= this._interval) {
                     this.trigger();
-
                     this._elapsed = 0;
-                    this._timesExecuted += 1;
                 }
-            }
+            } else {
+                if (this._useDelay) {
+                    if (this._elapsed >= this._delay) {
+                        this.trigger();
 
-            if (this._callback && !this._runForever && this._timesExecuted > this._repeat)
-                this.cancel();
+                        this._elapsed -= this._delay;
+                        this._timesExecuted += 1;
+                        this._useDelay = false;
+                    }
+                } else {
+                    if (this._elapsed >= this._interval) {
+                        this.trigger();
+
+                        this._elapsed = 0;
+                        this._timesExecuted += 1;
+                    }
+                }
+
+                if (this._callback && !this._runForever && this._timesExecuted > this._repeat)
+                    this.cancel();
+            }
         }
     }
-};
 
-CallbackTimer.prototype.getCallback = function () {
-    return this._callback;
-};
-
-CallbackTimer.prototype.getKey = function () {
-    return this._key;
-};
-
-CallbackTimer.prototype.trigger = function () {
-    if (this._target && this._callback) {
-        this._callback.call(this._target, this._elapsed);
+    getCallback() {
+        return this._callback;
     }
-};
 
-CallbackTimer.prototype.cancel = function () {
-    this._scheduler.unschedule(this._callback, this._target);
-};
+    getKey() {
+        return this._key;
+    }
 
-var _timers = [];
-CallbackTimer.get = function () {
-    return _timers.pop() || new CallbackTimer();
-};
-CallbackTimer.put = function (timer) {
-    timer._scheduler = null;
-    timer._elapsed = -1;
-    timer._runForever = false;
-    timer._useDelay = false;
-    timer._timesExecuted = 0;
-    timer._repeat = 0;
-    timer._delay = 0;
-    timer._interval = 0;
-    timer._target = null;
-    timer._callback = null;
-    timer._key = null;
-    if (_timers.length < MAX_POOL_SIZE)
-        _timers.push(timer);
-};
+    trigger() {
+        if (this._target && this._callback) {
+            this._callback.call(this._target, this._elapsed);
+        }
+    }
+
+    cancel() {
+        this._scheduler.unschedule(this._callback, this._target);
+    }
+
+    static get() {
+        return CallbackTimer._pool.pop() || new CallbackTimer();
+    }
+
+    static put(timer) {
+        timer._scheduler = null;
+        timer._elapsed = -1;
+        timer._runForever = false;
+        timer._useDelay = false;
+        timer._timesExecuted = 0;
+        timer._repeat = 0;
+        timer._delay = 0;
+        timer._interval = 0;
+        timer._target = null;
+        timer._callback = null;
+        timer._key = null;
+        if (CallbackTimer._pool.length < MAX_POOL_SIZE)
+            CallbackTimer._pool.push(timer);
+    }
+}
 
 /**
  * Scheduler is responsible of triggering the scheduled callbacks.
