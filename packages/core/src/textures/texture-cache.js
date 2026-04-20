@@ -24,27 +24,58 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { initWebGLTextureCache } from "./texture-2d-webgl";
 import Game from "../boot/game";
 import Loader from "../boot/loader";
 import Path from "../boot/path";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import TextureCacheCanvasRenderer from "./texture-cache-canvas-renderer";
+import TextureCacheWebGLRenderer from "./texture-cache-webgl-renderer";
 
 /**
- * cc.textureCache is a singleton object, it's the global cache for cc.Texture2D
- * @class
- * @name cc.textureCache
+ * TextureCache is a singleton class, it's the global cache for Texture2D
  */
-export const textureCache = /** @lends cc.textureCache# */ {
-  _textures: {},
-  _textureColorsCache: {},
-  _textureKeySeq: 0 | (Math.random() * 1000),
+export default class TextureCache {
+  static _instance = null;
 
-  _loadedTexturesBefore: {},
+  static getInstance() {
+    if (!TextureCache._instance) {
+      TextureCache._instance = new TextureCache();
+    }
+    return TextureCache._instance;
+  }
+
+  constructor() {
+    if (TextureCache._instance) {
+      return TextureCache._instance;
+    }
+    
+    this._textures = {};
+    this._textureColorsCache = {};
+    this._textureKeySeq = 0 | (Math.random() * 1000);
+    this._loadedTexturesBefore = {};
+    this._renderer = null; // Will be set by initRenderer()
+    
+    TextureCache._instance = this;
+  }
+
+  /**
+   * Initialize the renderer-specific logic. This should be called
+   * from Game._initRenderer() after the renderer type is determined.
+   */
+  initRenderer() {
+    if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
+      this._renderer = new TextureCacheCanvasRenderer(this);
+    } else {
+      this._renderer = new TextureCacheWebGLRenderer(this);
+    }
+    
+    // Process any textures that were loaded before renderer was ready
+    this._initializingRenderer();
+  }
 
   //handleLoadedTexture move to Canvas/WebGL
 
-  _initializingRenderer: function () {
+  _initializingRenderer() {
     var selPath;
     //init texture from _loadedTexturesBefore
     var locLoadedTexturesBefore = this._loadedTexturesBefore,
@@ -55,7 +86,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
       locTextures[selPath] = tex2d;
     }
     this._loadedTexturesBefore = {};
-  },
+  }
 
   /**
    * <p>
@@ -67,9 +98,9 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @param {String} filename
    * @return {Texture2D}
    */
-  addPVRTCImage: function (filename) {
+  addPVRTCImage(filename) {
     log(_LogInfos.textureCache_addPVRTCImage);
-  },
+  }
 
   /**
    * <p>
@@ -81,19 +112,19 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @param {String} filename
    * @return {Texture2D}
    */
-  addETCImage: function (filename) {
+  addETCImage(filename) {
     log(_LogInfos.textureCache_addETCImage);
-  },
+  }
 
   /**
    * Description
    * @return {String}
    */
-  description: function () {
+  description() {
     return (
       "<TextureCache | Number of textures = " + this._textures.length + ">"
     );
-  },
+  }
 
   /**
    * Returns an already created texture. Returns null if the texture doesn't exist.
@@ -101,14 +132,14 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @return {Texture2D|Null}
    * @example
    * //example
-   * var key = cc.textureCache.getTextureForKey("hello.png");
+   * var key = textureCache.getTextureForKey("hello.png");
    */
-  getTextureForKey: function (textureKeyName) {
+  getTextureForKey(textureKeyName) {
     return (
       this._textures[textureKeyName] ||
       this._textures[Loader.getInstance()._getAliase(textureKeyName)]
     );
-  },
+  }
 
   /**
    * @param {Image} texture
@@ -117,18 +148,18 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * //example
    * var key = cc.textureCache.getKeyByTexture(texture);
    */
-  getKeyByTexture: function (texture) {
+  getKeyByTexture(texture) {
     for (var key in this._textures) {
       if (this._textures[key] === texture) {
         return key;
       }
     }
     return null;
-  },
+  }
 
-  _generalTextureKey: function (id) {
+  _generalTextureKey(id) {
     return "_textureKey_" + id;
-  },
+  }
 
   /**
    * @param {Image} texture
@@ -137,7 +168,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * //example
    * var cacheTextureForColor = cc.textureCache.getTextureColors(texture);
    */
-  getTextureColors: function (texture) {
+  getTextureColors(texture) {
     var image = texture._htmlElementObj;
     var key = this.getKeyByTexture(image);
     if (!key) {
@@ -148,7 +179,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
     if (!this._textureColorsCache[key])
       this._textureColorsCache[key] = texture._generateTextureCacheForColor();
     return this._textureColorsCache[key];
-  },
+  }
 
   /**
    * <p>Returns a Texture2D object given an PVR filename<br />
@@ -157,9 +188,9 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @param {String} path
    * @return {Texture2D}
    */
-  addPVRImage: function (path) {
+  addPVRImage(path) {
     log(_LogInfos.textureCache_addPVRImage);
-  },
+  }
 
   /**
    * <p>Purges the dictionary of loaded textures. <br />
@@ -169,15 +200,15 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * In the long term: it will be the same</p>
    * @example
    * //example
-   * cc.textureCache.removeAllTextures();
+   * textureCache.removeAllTextures();
    */
-  removeAllTextures: function () {
+  removeAllTextures() {
     var locTextures = this._textures;
     for (var selKey in locTextures) {
       if (locTextures[selKey]) locTextures[selKey].releaseTexture();
     }
     this._textures = {};
-  },
+  }
 
   /**
    * Deletes a texture from the cache given a texture
@@ -186,7 +217,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * //example
    * cc.textureCache.removeTexture(texture);
    */
-  removeTexture: function (texture) {
+  removeTexture(texture) {
     if (!texture) return;
 
     var locTextures = this._textures;
@@ -196,7 +227,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
         delete locTextures[selKey];
       }
     }
-  },
+  }
 
   /**
    * Deletes a texture from the cache given a its key name
@@ -205,14 +236,14 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * //example
    * cc.textureCache.removeTexture("hello.png");
    */
-  removeTextureForKey: function (textureKeyName) {
+  removeTextureForKey(textureKeyName) {
     if (textureKeyName == null) return;
     var tex = this._textures[textureKeyName];
     if (tex) {
       tex.releaseTexture();
       delete this._textures[textureKeyName];
     }
-  },
+  }
 
   //addImage move to Canvas/WebGL
 
@@ -221,7 +252,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @param {String} path
    * @param {Image|HTMLImageElement|HTMLCanvasElement} texture
    */
-  cacheImage: function (path, texture) {
+  cacheImage(path, texture) {
     if (texture instanceof cc.Texture2D) {
       this._textures[path] = texture;
       return;
@@ -230,7 +261,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
     texture2d.initWithElement(texture);
     texture2d.handleLoadedTexture();
     this._textures[path] = texture2d;
-  },
+  }
 
   /**
    * <p>Returns a Texture2D object given an UIImage image<br />
@@ -242,7 +273,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @param {String} key
    * @return {Texture2D}
    */
-  addUIImage: function (image, key) {
+  addUIImage(image, key) {
     assert(image, _LogInfos.textureCache_addUIImage_2);
 
     if (key) {
@@ -255,13 +286,13 @@ export const textureCache = /** @lends cc.textureCache# */ {
     if (key != null) this._textures[key] = texture;
     else log(_LogInfos.textureCache_addUIImage);
     return texture;
-  },
+  }
 
   /**
-   * <p>Output to cc.log the current contents of this TextureCache <br />
+   * <p>Output to log the current contents of this TextureCache <br />
    * This will attempt to calculate the size of each texture, and the total texture memory in use. </p>
    */
-  dumpCachedTextureInfo: function () {
+  dumpCachedTextureInfo() {
     var count = 0;
     var totalBytes = 0,
       locTextures = this._textures;
@@ -309,53 +340,37 @@ export const textureCache = /** @lends cc.textureCache# */ {
       totalBytes / 1024,
       (totalBytes / (1024.0 * 1024.0)).toFixed(2)
     );
-  },
+  }
 
-  _clear: function () {
+  _clear() {
     this._textures = {};
     this._textureColorsCache = {};
     this._textureKeySeq = 0 | (Math.random() * 1000);
     this._loadedTexturesBefore = {};
   }
-};
-
-Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
-  if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
-    var _p = cc.textureCache;
-
-    _p.handleLoadedTexture = function (url, img) {
-      var locTexs = this._textures;
-      //remove judge
-      var tex = locTexs[url];
+  handleLoadedTexture(url, img) {
+    if (!this._renderer) {
+      // If renderer is not yet initialized, store in _loadedTexturesBefore
+      // to be processed later by _initializingRenderer()
+      var tex = this._loadedTexturesBefore[url];
       if (!tex) {
-        tex = locTexs[url] = new cc.Texture2D();
+        tex = this._loadedTexturesBefore[url] = new cc.Texture2D();
         tex.url = url;
       }
-      tex.initWithElement(img);
-      tex.handleLoadedTexture();
+      // Set basic dimensions before renderer is ready
+      tex._htmlElementObj = img;
+      tex._pixelsWide = tex._contentSize.width = img.width;
+      tex._pixelsHigh = tex._contentSize.height = img.height;
+      tex._textureLoaded = true;
       return tex;
-    };
+    }
+    return this._renderer.handleLoadedTexture(url, img);
+  }
 
-    /**
-     * <p>Returns a Texture2D object given an file image <br />
-     * If the file image was not previously loaded, it will create a new Texture2D <br />
-     *  object and it will return it. It will use the filename as a key.<br />
-     * Otherwise it will return a reference of a previously loaded image. <br />
-     * Supported image extensions: .png, .jpg, .gif</p>
-     * @param {String} url
-     * @param {Function} cb
-     * @param {Object} target
-     * @return {Texture2D}
-     * @example
-     * //example
-     * cc.textureCache.addImage("hello.png");
-     */
-    _p.addImage = function (url, cb, target) {
-      assert(url, _LogInfos.Texture2D_addImage);
-
-      var locTexs = this._textures;
-      //remove judge
-      var tex = locTexs[url] || locTexs[Loader.getInstance()._getAliase(url)];
+  addImage(url, cb, target) {
+    if (!this._renderer) {
+      // If renderer is not yet initialized, create texture in _loadedTexturesBefore
+      var tex = this._loadedTexturesBefore[url] || this._loadedTexturesBefore[Loader.getInstance()._getAliase(url)];
       if (tex) {
         if (tex.isLoaded()) {
           cb && cb.call(target, tex);
@@ -371,25 +386,26 @@ Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
           return tex;
         }
       }
-
-      tex = locTexs[url] = new cc.Texture2D();
+      
+      tex = this._loadedTexturesBefore[url] = new cc.Texture2D();
       tex.url = url;
       var basePath = Loader.getInstance().getBasePath
         ? Loader.getInstance().getBasePath()
         : Loader.getInstance().resPath;
+      var textureCache = this;
       Loader.getInstance().loadImg(Path.join(basePath || "", url), function (err, img) {
         if (err) return cb && cb.call(target, err);
 
-        var texResult = cc.textureCache.handleLoadedTexture(url, img);
+        var texResult = textureCache.handleLoadedTexture(url, img);
         cb && cb.call(target, texResult);
       });
-
+      
       return tex;
-    };
-
-    _p.addImageAsync = _p.addImage;
-    _p = null;
-  } else if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
-    initWebGLTextureCache();
+    }
+    return this._renderer.addImage(url, cb, target);
   }
-});
+
+  addImageAsync(url, cb, target) {
+    return this.addImage(url, cb, target);
+  }
+}

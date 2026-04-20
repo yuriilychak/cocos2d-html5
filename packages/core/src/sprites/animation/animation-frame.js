@@ -28,18 +28,15 @@ import { NewClass } from "../../platform/class";
 
 /**
  * <p>
- *    cc.AnimationFrame
+ *    AnimationFrame
  *    A frame of the animation. It contains information like:
  *       - sprite frame name
  *       - # of delay units.
  *       - offset
  * </p>
- * @class
- * @extends cc.Class
  * @param spriteFrame
  * @param delayUnits
  * @param userInfo
- * @returns {AnimationFrame}
  */
 export class AnimationFrame extends NewClass {
   constructor(spriteFrame, delayUnits, userInfo) {

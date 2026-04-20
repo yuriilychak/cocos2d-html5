@@ -31,6 +31,7 @@ import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { error, _LogInfos } from "../boot/debugger";
+import TextureCache from "../textures/texture-cache";
 
 /**
  * <p>
@@ -55,7 +56,7 @@ import { error, _LogInfos } from "../boot/debugger";
  * var frame2 = new cc.SpriteFrame("res/grossini_dance.png",cc.rect(0,0,90,128),false,0,cc.size(90,128));
  *
  * // 2. Create a cc.SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
- * var texture = cc.textureCache.addImage("res/grossini_dance.png");
+ * var texture = TextureCache.getInstance().addImage("res/grossini_dance.png");
  * var frame1 = new cc.SpriteFrame(texture, cc.rect(0,0,90,128));
  * var frame2 = new cc.SpriteFrame(texture, cc.rect(0,0,90,128),false,0,cc.size(90,128));
  */
@@ -228,7 +229,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
   getTexture() {
     if (this._texture) return this._texture;
     if (this._textureFilename !== "") {
-      var locTexture = cc.textureCache.addImage(this._textureFilename);
+      var locTexture = TextureCache.getInstance().addImage(this._textureFilename);
       if (locTexture) this._textureLoaded = locTexture.isLoaded();
       return locTexture;
     }

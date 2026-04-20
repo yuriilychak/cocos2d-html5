@@ -28,6 +28,7 @@ import { Node } from "./node";
 import EventHelper from "../event-manager/event-helper";
 import Game from "../boot/game";
 import { log, _LogInfos } from "../boot/debugger";
+import TextureCache from "../textures/texture-cache";
 
 /**
  * <p>cc.AtlasNode is a subclass of cc.Node, it knows how to render a TextureAtlas object. </p>
@@ -208,7 +209,7 @@ export class AtlasNode extends EventHelper(Node) {
       throw new Error(
         "cc.AtlasNode.initWithTileFile(): title should not be null"
       );
-    var texture = cc.textureCache.addImage(tile);
+    var texture = TextureCache.getInstance().addImage(tile);
     return this.initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
   }
 

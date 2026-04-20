@@ -30,9 +30,7 @@ import { Color } from '../platform/types/color';
 import Game from '../boot/game';
 
 /**
- * CCLayerGradient is a subclass of cc.LayerColor that draws gradients across the background.
- * @class
- * @extends cc.LayerColor
+ * LayerGradient is a subclass of LayerColor that draws gradients across the background.
  */
 export class LayerGradient extends LayerColor {
     constructor(start, end, v, stops) {

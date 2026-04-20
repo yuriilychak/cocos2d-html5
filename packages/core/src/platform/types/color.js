@@ -25,13 +25,12 @@
  ****************************************************************************/
 
 /**
- * Color class, please use cc.color() to construct a color
+ * Color class, please use color() to construct a color
  * @class Color
  * @param {Number} r
  * @param {Number} g
  * @param {Number} b
  * @param {Number} a
- * @see cc.color
  */
 export class Color {
     constructor(r, g, b, a) {
@@ -156,13 +155,13 @@ export class Color {
  * @example
  *
  * // 1. All channels separately as parameters
- * var color1 = cc.color(255, 255, 255, 255);
+ * var color1 = color(255, 255, 255, 255);
  *
  * // 2. Convert a hex string to a color
- * var color2 = cc.color("#000000");
+ * var color2 = color("#000000");
  *
  * // 3. An color object as parameter
- * var color3 = cc.color({r: 255, g: 255, b: 255, a: 255});
+ * var color3 = color({r: 255, g: 255, b: 255, a: 255});
  *
  * Alpha channel is optional. Default value is 255
  *
@@ -195,7 +194,7 @@ export function colorEqual(color1, color2) {
 
 /**
  * convert a string of color for style to Color.
- * e.g. "#ff06ff"  to : cc.color(255,6,255)
+ * e.g. "#ff06ff"  to : color(255,6,255)
  * @function
  * @param {String} hex
  * @return {Color}
@@ -211,7 +210,7 @@ export function hexToColor(hex) {
 
 /**
  * convert Color to a string of color for style.
- * e.g.  cc.color(255,6,255)  to : "#ff06ff"
+ * e.g.  color(255,6,255)  to : "#ff06ff"
  * @function
  * @param {Color} color
  * @return {String}

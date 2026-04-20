@@ -25,6 +25,7 @@
 
 import Loader from '../boot/loader';
 import Path from '../boot/path';
+import TextureCache from '../textures/texture-cache';
 
 export const _txtLoader = {
     load: function (realUrl, url, res, cb) {
@@ -51,7 +52,7 @@ export const _imgLoader = {
             callback = function (err, img) {
                 if (err)
                     return cb(err);
-                var tex = cc.textureCache.getTextureForKey(url) || cc.textureCache.handleLoadedTexture(url, img);
+                var tex = TextureCache.getInstance().getTextureForKey(url) || TextureCache.getInstance().handleLoadedTexture(url, img);
                 cb(null, tex);
             };
         }
@@ -59,7 +60,7 @@ export const _imgLoader = {
             callback = function (err, img) {
                 if (err)
                     return cb(err);
-                var tex = cc.textureCache.handleLoadedTexture(url, img);
+                var tex = TextureCache.getInstance().handleLoadedTexture(url, img);
                 cb(null, tex);
             };
         }

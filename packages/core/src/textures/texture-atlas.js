@@ -25,9 +25,11 @@
  ****************************************************************************/
 
 import { NewClass } from "../platform/class";
-import { initWebGLTextureAtlas } from "./texture-2d-webgl";
 import Game from "../boot/game";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import TextureCache from "./texture-cache";
+import TextureAtlasCanvasRenderer from "./texture-atlas-canvas-renderer";
+import TextureAtlasWebGLRenderer from "./texture-atlas-webgl-renderer";
 
 /**
  * <p>A class that implements a Texture Atlas. <br />
@@ -60,7 +62,7 @@ export class TextureAtlas extends NewClass {
    * var textureAtlas = new cc.TextureAtlas("res/hello.png", 3);
    * 2.
    * //creates a TextureAtlas with texture
-   * var texture = cc.textureCache.addImage("hello.png");
+   * var texture = TextureCache.getInstance().addImage("hello.png");
    * var textureAtlas = new cc.TextureAtlas(texture, 3);
    */
   constructor(fileName, capacity) {
@@ -76,6 +78,11 @@ export class TextureAtlas extends NewClass {
     this._quadsArrayBuffer = null;
     this._quadsWebBuffer = null;
     this._quadsReader = null;
+
+    // Initialize renderer based on render type
+    this._renderer = cc._renderType === Game.RENDER_TYPE_CANVAS
+      ? new TextureAtlasCanvasRenderer(this)
+      : new TextureAtlasWebGLRenderer(this);
 
     if (cc.isString(fileName)) {
       this.initWithFile(fileName, capacity);
@@ -208,23 +215,11 @@ export class TextureAtlas extends NewClass {
   }
 
   _setupVBO() {
-    var gl = cc._renderContext;
-    //create WebGLBuffer
-    this._buffersVBO[0] = gl.createBuffer();
-    this._buffersVBO[1] = gl.createBuffer();
-
-    this._quadsWebBuffer = gl.createBuffer();
-    this._mapBuffers();
+    this._renderer.setupVBO();
   }
 
   _mapBuffers() {
-    var gl = cc._renderContext;
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._quadsWebBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, this._quadsArrayBuffer, gl.DYNAMIC_DRAW);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._buffersVBO[1]);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._indices, gl.STATIC_DRAW);
+    this._renderer.mapBuffers();
   }
 
   /**
@@ -241,7 +236,7 @@ export class TextureAtlas extends NewClass {
    */
   initWithFile(file, capacity) {
     // retained in property
-    var texture = cc.textureCache.addImage(file);
+    var texture = TextureCache.getInstance().addImage(file);
     if (texture) return this.initWithTexture(texture, capacity);
     else {
       log(_LogInfos.TextureAtlas_initWithFile, file);
@@ -259,7 +254,7 @@ export class TextureAtlas extends NewClass {
    * @return {Boolean}
    * @example
    * //example
-   * var texture = cc.textureCache.addImage("hello.png");
+   * var texture = TextureCache.getInstance().addImage("hello.png");
    * var textureAtlas = new cc.TextureAtlas();
    * textureAtlas.initWithTexture(texture, 3);
    */
@@ -699,6 +694,16 @@ export class TextureAtlas extends NewClass {
   // TextureAtlas - Drawing
 
   /**
+   * <p>Draws n quads from an index (offset). <br />
+   * n + start can't be greater than the capacity of the atlas</p>
+   * @param {Number} n
+   * @param {Number} start
+   */
+  drawNumberOfQuads(n, start) {
+    this._renderer.drawNumberOfQuads(n, start);
+  }
+
+  /**
    * Draws all the Atlas's Quads
    */
   drawQuads() {
@@ -706,12 +711,7 @@ export class TextureAtlas extends NewClass {
   }
 
   _releaseBuffer() {
-    var gl = cc._renderContext;
-    if (this._buffersVBO) {
-      if (this._buffersVBO[0]) gl.deleteBuffer(this._buffersVBO[0]);
-      if (this._buffersVBO[1]) gl.deleteBuffer(this._buffersVBO[1]);
-    }
-    if (this._quadsWebBuffer) gl.deleteBuffer(this._quadsWebBuffer);
+    this._renderer.releaseBuffer();
   }
 
   get totalQuads() {
@@ -730,9 +730,3 @@ export class TextureAtlas extends NewClass {
     this.setQuads(value);
   }
 }
-
-Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
-  if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
-    initWebGLTextureAtlas();
-  }
-});

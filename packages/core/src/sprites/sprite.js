@@ -31,6 +31,7 @@ import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import TextureCache from "../textures/texture-cache";
 
 /**
  * <p>cc.Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -75,7 +76,7 @@ import { log, assert, _LogInfos } from "../boot/debugger";
  *
  * 4.Create a sprite with an existing texture contained in a CCTexture2D object
  *      After creation, the rect will be the size of the texture, and the offset will be (0,0).
- * var texture = cc.textureCache.addImage("HelloHTML5World.png");
+ * var texture = TextureCache.getInstance().addImage("HelloHTML5World.png");
  * var sprite1 = new cc.Sprite(texture);
  * var sprite2 = new cc.Sprite(texture, cc.rect(0,0,480,320));
  *
@@ -529,9 +530,9 @@ export class Sprite extends EventHelper(Node) {
   initWithFile(filename, rect) {
     assert(filename, _LogInfos.Sprite_initWithFile);
 
-    var tex = cc.textureCache.getTextureForKey(filename);
+    var tex = TextureCache.getInstance().getTextureForKey(filename);
     if (!tex) {
-      tex = cc.textureCache.addImage(filename);
+      tex = TextureCache.getInstance().addImage(filename);
     }
 
     if (!tex.isLoaded()) {
@@ -777,7 +778,7 @@ export class Sprite extends EventHelper(Node) {
     //CCSprite.cpp 327 and 338
     var isFileName = typeof texture === "string";
 
-    if (isFileName) texture = cc.textureCache.addImage(texture);
+    if (isFileName) texture = TextureCache.getInstance().addImage(texture);
 
     this._loader.clear();
     if (!texture._textureLoaded) {

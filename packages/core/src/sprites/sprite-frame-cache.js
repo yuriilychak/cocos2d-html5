@@ -31,6 +31,7 @@ import Path from "../boot/path";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import TextureCache from "../textures/texture-cache";
 
 /**
  * <p>
@@ -195,12 +196,12 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
       meta = frameConfig.meta;
     if (!texture) {
       var texturePath = Path.changeBasename(url, meta.image || ".png");
-      texture = cc.textureCache.addImage(texturePath);
+      texture = TextureCache.getInstance().addImage(texturePath);
     } else if (texture instanceof cc.Texture2D) {
       //do nothing
     } else if (cc.isString(texture)) {
       //string
-      texture = cc.textureCache.addImage(texture);
+      texture = TextureCache.getInstance().addImage(texture);
     } else {
       assert(0, _LogInfos.spriteFrameCache_addSpriteFrames_3);
     }

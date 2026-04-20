@@ -29,6 +29,7 @@ import { DirectorCanvasRenderer } from './director-canvas';
 import { DirectorWebGLRenderer } from './director-webgl';
 import Game from '../boot/game';
 import EventManager from '../event-manager/event-manager';
+import TextureCache from '../textures/texture-cache';
 import {
     EVENT_PROJECTION_CHANGED,
     EVENT_AFTER_UPDATE,
@@ -287,7 +288,7 @@ export class Director extends NewClass {
     purgeCachedData() {
         cc.animationCache._clear();
         cc.spriteFrameCache._clear();
-        cc.textureCache._clear();
+        TextureCache.getInstance()._clear();
     }
 
     purgeDirector() {

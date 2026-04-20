@@ -27,7 +27,7 @@ import { Point } from '../cocoa/geometry/point';
 import { Rect } from '../cocoa/geometry/rect';
 
 /**
- * cc.Layer's Canvas render command
+ * Layer's Canvas render command
  */
 export class LayerCanvasRenderCmd extends NodeCanvasRenderCmd {
     constructor(renderable) {
@@ -184,7 +184,7 @@ export class LayerCanvasRenderCmd extends NodeCanvasRenderCmd {
 }
 
 /**
- * cc.LayerColor's Canvas render command
+ * LayerColor's Canvas render command
  */
 export class LayerColorCanvasRenderCmd extends LayerCanvasRenderCmd {
     constructor(renderable) {
@@ -298,7 +298,7 @@ export class LayerColorCanvasRenderCmd extends LayerCanvasRenderCmd {
 }
 
 /**
- * cc.LayerGradient's Canvas render command
+ * LayerGradient's Canvas render command
  */
 export class LayerGradientCanvasRenderCmd extends LayerColorCanvasRenderCmd {
     constructor(renderable) {

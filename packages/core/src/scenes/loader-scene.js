@@ -30,11 +30,9 @@ import EventManager from '../event-manager/event-manager';
 import Loader from '../boot/loader';
 
 /**
- * cc.LoaderScene is a scene that you can load it when you loading files
- * @class
- * @extends cc.Scene
+ * LoaderScene is a scene that you can load it when you loading files
  * @example
- * var lc = new cc.LoaderScene();
+ * var lc = new LoaderScene();
  */
 export class LoaderScene extends Scene {
     constructor() {
@@ -131,7 +129,7 @@ export class LoaderScene extends Scene {
 LoaderScene.preload = function (resources, cb, target) {
     var _cc = cc;
     if (!_cc.loaderScene) {
-        _cc.loaderScene = new cc.LoaderScene();
+        _cc.loaderScene = new LoaderScene();
         _cc.loaderScene.init();
         EventManager.getInstance().addCustomListener(cc.Director.EVENT_PROJECTION_CHANGED, function () {
             _cc.loaderScene._updateTransform();

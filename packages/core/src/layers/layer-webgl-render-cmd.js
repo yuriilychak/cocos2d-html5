@@ -27,7 +27,7 @@ import { Point } from '../cocoa/geometry/point';
 import { Rect } from '../cocoa/geometry/rect';
 
 /**
- * cc.Layer's WebGL render command
+ * Layer's WebGL render command
  */
 export class LayerWebGLRenderCmd extends NodeWebGLRenderCmd {
     constructor(renderable) {
@@ -46,7 +46,7 @@ export class LayerWebGLRenderCmd extends NodeWebGLRenderCmd {
 }
 
 /**
- * cc.LayerColor's WebGL render command
+ * LayerColor's WebGL render command
  */
 const FLOAT_PER_VERTEX_COLOR = 4;
 

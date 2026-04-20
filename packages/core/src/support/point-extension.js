@@ -25,15 +25,15 @@
  ****************************************************************************/
 
 /**
- * <p>cc.Point extensions based on Chipmunk's cpVect file.<br />
- * These extensions work both with cc.Point</p>
+ * <p>Point extensions based on Chipmunk's cpVect file.<br />
+ * These extensions work both with Point</p>
  *
  * <p>The "ccp" prefix means: "CoCos2d Point"</p>
  *
  * <p> //Examples:<br />
- * - cc.pAdd( cc.p(1,1), cc.p(2,2) ); // preferred cocos2d way<br />
- * - cc.pAdd( cc.p(1,1), cc.p(2,2) ); // also ok but more verbose<br />
- * - cc.pAdd( cc.cpv(1,1), cc.cpv(2,2) ); // mixing chipmunk and cocos2d (avoid)</p>
+ * -    pAdd( p(1,1), p(2,2) ); // preferred cocos2d way<br />
+ * - pAdd( p(1,1), p(2,2) ); // also ok but more verbose<br />
+ * - pAdd( cpv(1,1), cpv(2,2) ); // mixing chipmunk and cocos2d (avoid)</p>
  */
 
 import { p } from "../cocoa/geometry/point";
@@ -163,7 +163,7 @@ export function pUnrotate(v1, v2) {
 }
 
 /**
- * Calculates the square length of a cc.Point (not calling sqrt() )
+ * Calculates the square length of a Point (not calling sqrt() )
  * @param  {Point} v
  *@return {Number}
  */
@@ -263,7 +263,7 @@ export function pClamp(pt, min_inclusive, max_inclusive) {
 }
 
 /**
- * Quickly convert cc.Size to a cc.Point
+ * Quickly convert Size to a Point
  * @param {Size} s
  * @return {Point}
  */
@@ -279,7 +279,7 @@ export function pFromSize(s) {
  * @return {Point}
  * @example
  * //For example: let's try to take the floor of x,y
- * var p = cc.pCompOp(cc.p(10,10),Math.abs);
+ * var p = pCompOp(p(10,10),Math.abs);
  */
 export function pCompOp(pt, opFunc) {
   return p(opFunc(pt.x), opFunc(pt.y));

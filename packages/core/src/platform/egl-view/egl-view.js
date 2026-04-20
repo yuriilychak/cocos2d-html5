@@ -672,7 +672,7 @@ export class EGLView extends NewClass {
 
   /**
    * Sets the current resolution policy
-   * @see cc.ResolutionPolicy
+   * @see ResolutionPolicy
    * @param {ResolutionPolicy|Number} resolutionPolicy
    */
   setResolutionPolicy(resolutionPolicy) {

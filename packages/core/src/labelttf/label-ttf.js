@@ -32,31 +32,29 @@ import { Size } from "../cocoa/geometry/size";
 import { log, _LogInfos } from '../boot/debugger';
 
 /**
- * <p>cc.LabelTTF is a subclass of cc.TextureNode that knows how to render text labels with system font or a ttf font file<br/>
- * All features from cc.Sprite are valid in cc.LabelTTF<br/>
- * cc.LabelTTF objects are slow for js-binding on mobile devices.<br/>
- * Consider using cc.LabelAtlas or cc.LabelBMFont instead.<br/>
- * You can create a cc.LabelTTF from a font name, alignment, dimension and font size or a cc.FontDefinition object.</p>
- * @class
- * @extends cc.Sprite
+ * <p>LabelTTF is a subclass of TextureNode that knows how to render text labels with system font or a ttf font file<br/>
+ * All features from Sprite are valid in LabelTTF<br/>
+ * LabelTTF objects are slow for js-binding on mobile devices.<br/>
+ * Consider using LabelAtlas or LabelBMFont instead.<br/>
+ * You can create a LabelTTF from a font name, alignment, dimension and font size or a FontDefinition object.</p>
  *
  * @param {String} text
- * @param {String|cc.FontDefinition} [fontName="Arial"]
+ * @param {String|FontDefinition} [fontName="Arial"]
  * @param {Number} [fontSize=16]
- * @param {Size} [dimensions=cc.size(0,0)]
- * @param {Number} [hAlignment=cc.TEXT_ALIGNMENT_LEFT]
- * @param {Number} [vAlignment=cc.VERTICAL_TEXT_ALIGNMENT_TOP]
+ * @param {Size} [dimensions=size(0,0)]
+ * @param {Number} [hAlignment=TEXT_ALIGNMENT_LEFT]
+ * @param {Number} [vAlignment=VERTICAL_TEXT_ALIGNMENT_TOP]
  * @example
- * var myLabel = new cc.LabelTTF('label text',  'Times New Roman', 32, cc.size(320,32), cc.TEXT_ALIGNMENT_LEFT);
+ * var myLabel = new LabelTTF('label text',  'Times New Roman', 32, size(320,32), TEXT_ALIGNMENT_LEFT);
  *
- * var fontDef = new cc.FontDefinition();
+ * var fontDef = new FontDefinition();
  * fontDef.fontName = "Arial";
  * fontDef.fontSize = "32";
- * var myLabel = new cc.LabelTTF('label text',  fontDef);
+ * var myLabel = new LabelTTF('label text',  fontDef);
  *
  * @property {String}       string          - Content string of label
- * @property {Number}       textAlign       - Horizontal Alignment of label: cc.TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT
- * @property {Number}       verticalAlign   - Vertical Alignment of label: cc.VERTICAL_TEXT_ALIGNMENT_TOP|cc.VERTICAL_TEXT_ALIGNMENT_CENTER|cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM
+ * @property {Number}       textAlign       - Horizontal Alignment of label: TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT
+ * @property {Number}       verticalAlign   - Vertical Alignment of label: VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM
  * @property {Number}       fontSize        - Font size of label
  * @property {String}       fontName        - Font name of label
  * @property {String}       font            - The label font with a style string: e.g. "18px Verdana"
@@ -72,7 +70,7 @@ import { log, _LogInfos } from '../boot/debugger';
  */
 export class LabelTTF extends Sprite {
   /**
-   * Initializes the cc.LabelTTF with a font name, alignment, dimension and font size, do not call it by yourself,
+   * Initializes the LabelTTF with a font name, alignment, dimension and font size, do not call it by yourself,
    * you should pass the correct arguments in constructor to initialize the label.
    * @param {String} label string
    * @param {String} fontName
@@ -223,36 +221,36 @@ export class LabelTTF extends Sprite {
     return this._string;
   }
   /**
-   * Returns Horizontal Alignment of cc.LabelTTF
+   * Returns Horizontal Alignment of LabelTTF
    * @return {TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT}
    */
   getHorizontalAlignment() {
     return this._hAlignment;
   }
   /**
-   * Returns Vertical Alignment of cc.LabelTTF
+   * Returns Vertical Alignment of LabelTTF
    * @return {VERTICAL_TEXT_ALIGNMENT_TOP|cc.VERTICAL_TEXT_ALIGNMENT_CENTER|cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM}
    */
   getVerticalAlignment() {
     return this._vAlignment;
   }
   /**
-   * Returns the dimensions of cc.LabelTTF, the dimension is the maximum size of the label, set it so that label will automatically change lines when necessary.
-   * @see cc.LabelTTF#setDimensions, cc.LabelTTF#boundingWidth and cc.LabelTTF#boundingHeight
+   * Returns the dimensions of LabelTTF, the dimension is the maximum size of the label, set it so that label will automatically change lines when necessary.
+   * @see LabelTTF#setDimensions, LabelTTF#boundingWidth and LabelTTF#boundingHeight
    * @return {Size}
    */
   getDimensions() {
     return new Size(this._dimensions);
   }
   /**
-   * Returns font size of cc.LabelTTF
+   * Returns font size of LabelTTF
    * @return {Number}
    */
   getFontSize() {
     return this._fontSize;
   }
   /**
-   * Returns font name of cc.LabelTTF
+   * Returns font name of LabelTTF
    * @return {String}
    */
   getFontName() {
@@ -669,7 +667,7 @@ export class LabelTTF extends Sprite {
 
   /**
    * Changes the text content of the label
-   * @warning Changing the string is as expensive as creating a new cc.LabelTTF. To obtain better performance use cc.LabelAtlas
+   * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
    * @param {String} text Text content for the label
    */
   setString(text) {
@@ -693,7 +691,7 @@ export class LabelTTF extends Sprite {
     this._string = this._originalText;
   }
   /**
-   * Sets Horizontal Alignment of cc.LabelTTF
+   * Sets Horizontal Alignment of LabelTTF
    * @param {TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT} alignment Horizontal Alignment
    */
   setHorizontalAlignment(alignment) {
@@ -704,7 +702,7 @@ export class LabelTTF extends Sprite {
     }
   }
   /**
-   * Sets Vertical Alignment of cc.LabelTTF
+   * Sets Vertical Alignment of LabelTTF
    * @param {VERTICAL_TEXT_ALIGNMENT_TOP|cc.VERTICAL_TEXT_ALIGNMENT_CENTER|cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM} verticalAlignment
    */
   setVerticalAlignment(verticalAlignment) {
@@ -716,7 +714,7 @@ export class LabelTTF extends Sprite {
     }
   }
   /**
-   * Set Dimensions of cc.LabelTTF, the dimension is the maximum size of the label, set it so that label will automatically change lines when necessary.
+   * Set Dimensions of LabelTTF, the dimension is the maximum size of the label, set it so that label will automatically change lines when necessary.
    * @param {Size|Number} dim dimensions or width of dimensions
    * @param {Number} [height] height of dimensions
    */
@@ -761,7 +759,7 @@ export class LabelTTF extends Sprite {
     }
   }
   /**
-   * Sets font size of cc.LabelTTF
+   * Sets font size of LabelTTF
    * @param {Number} fontSize
    */
   setFontSize(fontSize) {
@@ -778,7 +776,7 @@ export class LabelTTF extends Sprite {
     }
   }
   /**
-   * Sets font name of cc.LabelTTF
+   * Sets font name of LabelTTF
    * @param {String} fontName
    */
   setFontName(fontName) {
@@ -1060,7 +1058,7 @@ document.body
  * Returns the height of text with an specified font family and font size, in
  * device independent pixels.
  *
- * @param {string|cc.FontDefinition} fontName
+ * @param {string|FontDefinition} fontName
  * @param {number} fontSize
  * @returns {number}
  * @private
@@ -1069,7 +1067,7 @@ LabelTTF.__getFontHeightByDiv = function (fontName, fontSize) {
   var clientHeight,
     labelDiv = LabelTTF.__labelHeightDiv;
   if (fontName instanceof cc.FontDefinition) {
-    /** @type cc.FontDefinition */
+    /** @type FontDefinition */
     var fontDef = fontName;
     clientHeight = LabelTTF.__fontHeightCache[fontDef._getCanvasFontStr()];
     if (clientHeight > 0) return clientHeight;

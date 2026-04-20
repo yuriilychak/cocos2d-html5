@@ -4,7 +4,8 @@ import EventHelper from "../event-manager/event-helper";
 import EventManager from "../event-manager/event-manager";
 import Loader from "./loader";
 import Path from "./path";
-import { log } from './debugger';
+import { log } from "./debugger";
+import TextureCache from "../textures/texture-cache";
 
 /**
  * An object to boot the game.
@@ -471,7 +472,6 @@ export default class Game extends EventHelper(NewClass) {
       win.gl = this._renderContext;
       cc.renderer.init();
       cc._drawingUtil = new cc.DrawingPrimitiveWebGL(this._renderContext);
-      cc.textureCache._initializingRenderer();
       cc.glExt = {};
       cc.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
       cc.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
@@ -494,6 +494,9 @@ export default class Game extends EventHelper(NewClass) {
     this.dispatchEvent(Game.EVENT_RENDERER_INITED, true);
 
     this._rendererInitialized = true;
+
+    // Initialize TextureCache renderer after renderer type is determined
+    TextureCache.getInstance().initRenderer();
   }
 
   _initEvents() {

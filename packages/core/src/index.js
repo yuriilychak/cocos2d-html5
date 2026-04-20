@@ -283,7 +283,7 @@ import { AtlasNodeCanvasRenderCmd } from "./base-nodes/atlas-node-canvas-render-
 import { AtlasNodeWebGLRenderCmd } from "./base-nodes/atlas-node-webgl-render-cmd";
 
 // ======================================================================
-// Textures (side-effect imports — deferred cc.Texture2D via event handler)
+// Textures
 // ======================================================================
 import {
   ALIGN_CENTER,
@@ -296,9 +296,9 @@ import {
   ALIGN_LEFT,
   ALIGN_TOP_LEFT
 } from "./textures/constants";
-import { textureCache } from "./textures/texture-cache";
+import TextureCache from "./textures/texture-cache";
 import { TextureAtlas } from "./textures/texture-atlas";
-import "./textures/texture-2d";
+import { Texture2D } from "./textures/texture-2d";
 
 // ======================================================================
 // Scenes & Layers
@@ -710,8 +710,9 @@ cc.ALIGN_BOTTOM = ALIGN_BOTTOM;
 cc.ALIGN_BOTTOM_LEFT = ALIGN_BOTTOM_LEFT;
 cc.ALIGN_LEFT = ALIGN_LEFT;
 cc.ALIGN_TOP_LEFT = ALIGN_TOP_LEFT;
-cc.textureCache = textureCache;
+cc.textureCache = TextureCache.getInstance();
 cc.TextureAtlas = TextureAtlas;
+cc.Texture2D = Texture2D;
 
 // Scenes & Layers
 cc.Scene = Scene;

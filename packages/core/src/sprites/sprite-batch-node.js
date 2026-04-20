@@ -26,6 +26,7 @@
 
 import { Node } from "../base-nodes/node";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import TextureCache from "../textures/texture-cache";
 
 /**
  * <p>
@@ -50,7 +51,7 @@ import { log, assert, _LogInfos } from "../boot/debugger";
  * var spriteBatchNode = new cc.SpriteBatchNode("res/animations/grossini.png");
  *
  * // 2. create a SpriteBatchNode with texture
- * var texture = cc.textureCache.addImage("res/animations/grossini.png");
+ * var texture = TextureCache.getInstance().addImage("res/animations/grossini.png");
  * var spriteBatchNode = new cc.SpriteBatchNode(texture);
  *
  * @property {TextureAtlas}  textureAtlas    - The texture atlas
@@ -67,8 +68,8 @@ export class SpriteBatchNode extends Node {
 
     var texture2D;
     if (cc.isString(fileImage)) {
-      texture2D = cc.textureCache.getTextureForKey(fileImage);
-      if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
+      texture2D = TextureCache.getInstance().getTextureForKey(fileImage);
+      if (!texture2D) texture2D = TextureCache.getInstance().addImage(fileImage);
     } else if (fileImage instanceof cc.Texture2D) texture2D = fileImage;
 
     texture2D && this.initWithTexture(texture2D);
@@ -86,8 +87,8 @@ export class SpriteBatchNode extends Node {
    * @return {Boolean}
    */
   initWithFile(fileImage, capacity) {
-    var texture2D = cc.textureCache.getTextureForKey(fileImage);
-    if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
+    var texture2D = TextureCache.getInstance().getTextureForKey(fileImage);
+    if (!texture2D) texture2D = TextureCache.getInstance().addImage(fileImage);
     return this.initWithTexture(texture2D, capacity);
   }
 
@@ -103,8 +104,8 @@ export class SpriteBatchNode extends Node {
    * @return {Boolean}
    */
   init(fileImage, capacity) {
-    var texture2D = cc.textureCache.getTextureForKey(fileImage);
-    if (!texture2D) texture2D = cc.textureCache.addImage(fileImage);
+    var texture2D = TextureCache.getInstance().getTextureForKey(fileImage);
+    if (!texture2D) texture2D = TextureCache.getInstance().addImage(fileImage);
     return this.initWithTexture(texture2D, capacity);
   }
 

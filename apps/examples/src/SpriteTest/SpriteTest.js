@@ -1859,7 +1859,7 @@ var SpriteFrameTest = class SpriteFrameTest extends SpriteTestDemo {
         super.onEnter();
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-        //     cc.cc.spriteFrameCache.removeUnusedSpriteFrames);
+        //     cc.spriteFrameCache.removeUnusedSpriteFrames);
         cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
         cc.spriteFrameCache.addSpriteFrames(s_grossini_bluePlist, s_grossini_blue);
@@ -5471,7 +5471,7 @@ var TextureRotatedSpriteFrame = class TextureRotatedSpriteFrame extends SpriteTe
 
         this.pixel2 = {"0":51, "1":0, "2":51, "3":255};
 
-        cc.cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
+        cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
 
         var block = new cc.Sprite('#blocks9r.png');
 
