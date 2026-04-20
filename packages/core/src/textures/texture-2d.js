@@ -31,6 +31,7 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import Game from "../boot/game";
 import Loader from "../boot/loader";
+import Sys from "../boot/sys";
 
 export {
   ALIGN_CENTER,
@@ -408,7 +409,7 @@ Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
     };
 
     //change color function
-    if (cc.sys._supportCanvasNewBlendModes) {
+    if (Sys.getInstance()._supportCanvasNewBlendModes) {
       //multiply mode
       cc.Texture2D.prototype._generateColorTexture = function (
         r,

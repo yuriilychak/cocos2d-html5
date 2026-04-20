@@ -1,6 +1,7 @@
 import Game from './game';
 import Loader from './loader';
 import Path from './path';
+import Sys from './sys';
 
 var _jsAddedCache = {},
     _engineInitCalled = false,
@@ -17,20 +18,20 @@ function _determineRenderType(config) {
     cc._supportRender = false;
 
     if (userRenderMode === 0) {
-        if (cc.sys.capabilities["opengl"]) {
+        if (Sys.getInstance().capabilities["opengl"]) {
             cc._renderType = Game.RENDER_TYPE_WEBGL;
             cc._supportRender = true;
         }
-        else if (cc.sys.capabilities["canvas"]) {
+        else if (Sys.getInstance().capabilities["canvas"]) {
             cc._renderType = Game.RENDER_TYPE_CANVAS;
             cc._supportRender = true;
         }
     }
-    else if (userRenderMode === 1 && cc.sys.capabilities["canvas"]) {
+    else if (userRenderMode === 1 && Sys.getInstance().capabilities["canvas"]) {
         cc._renderType = Game.RENDER_TYPE_CANVAS;
         cc._supportRender = true;
     }
-    else if (userRenderMode === 2 && cc.sys.capabilities["opengl"]) {
+    else if (userRenderMode === 2 && Sys.getInstance().capabilities["opengl"]) {
         cc._renderType = Game.RENDER_TYPE_WEBGL;
         cc._supportRender = true;
     }
@@ -75,7 +76,7 @@ function _load(config) {
             var modules = config["modules"] || [];
             var moduleMap = modulesJson["module"];
             var jsList = [];
-            if (cc.sys.capabilities["opengl"] && modules.indexOf("base4webgl") < 0) modules.splice(0, 0, "base4webgl");
+            if (Sys.getInstance().capabilities["opengl"] && modules.indexOf("base4webgl") < 0) modules.splice(0, 0, "base4webgl");
             else if (modules.indexOf("core") < 0) modules.splice(0, 0, "core");
             for (var i = 0, li = modules.length; i < li; i++) {
                 var arr = _getJsListOfModule(moduleMap, modules[i], engineDir);

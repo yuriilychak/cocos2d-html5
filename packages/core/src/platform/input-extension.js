@@ -31,6 +31,7 @@
  * @param {Object} _p - The inputManager object to extend
  */
 import EventManager from '../event-manager/event-manager';
+import Sys from '../boot/sys';
 
 export function initInputExtension(_p) {
 
@@ -87,12 +88,12 @@ export function initInputExtension(_p) {
         _t._accelDeviceEvent = w.DeviceMotionEvent || w.DeviceOrientationEvent;
 
         //TODO fix DeviceMotionEvent bug on QQ Browser version 4.1 and below.
-        if (cc.sys.browserType === cc.sys.BROWSER_TYPE_MOBILE_QQ)
+        if (Sys.getInstance().browserType === Sys.getInstance().BROWSER_TYPE_MOBILE_QQ)
             _t._accelDeviceEvent = window.DeviceOrientationEvent;
 
         var _deviceEventType = (_t._accelDeviceEvent === w.DeviceMotionEvent) ? "devicemotion" : "deviceorientation";
         var ua = navigator.userAgent;
-        if (/Android/.test(ua) || (/Adr/.test(ua) && cc.sys.browserType === cc.BROWSER_TYPE_UC)) {
+        if (/Android/.test(ua) || (/Adr/.test(ua) && Sys.getInstance().browserType === cc.BROWSER_TYPE_UC)) {
             _t._minus = -1;
         }
 

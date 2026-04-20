@@ -26,6 +26,7 @@
 
 import { NewClass } from "../class";
 import Game from "../../boot/game";
+import Sys from "../../boot/sys";
 
 /**
  * <p>cc.ContainerStrategy class is the root strategy class of container's scale strategy,
@@ -57,7 +58,7 @@ export class ContainerStrategy extends NewClass {
   _setupContainer(view, w, h) {
     var locCanvas = Game.getInstance().canvas,
       locContainer = Game.getInstance().container;
-    if (cc.sys.os === cc.sys.OS_ANDROID) {
+    if (Sys.getInstance().os === Sys.getInstance().OS_ANDROID) {
       document.body.style.width = (view._isRotated ? h : w) + "px";
       document.body.style.height = (view._isRotated ? w : h) + "px";
     }

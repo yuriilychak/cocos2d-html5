@@ -30,6 +30,9 @@ import { Rect } from "../../cocoa/geometry/rect";
 import { Size } from "../../cocoa/geometry/size";
 import Game from "../../boot/game";
 import EventManager from "../../event-manager/event-manager";
+import Sys from "../../boot/sys";
+
+var __sys = Sys.getInstance();
 
 var __BrowserGetter = {
   init: function () {
@@ -46,25 +49,25 @@ var __BrowserGetter = {
   meta: {
     width: "device-width"
   },
-  adaptationType: cc.sys.browserType
+  adaptationType: __sys.browserType
 };
 
 if (window.navigator.userAgent.indexOf("OS 8_1_") > -1)
-  __BrowserGetter.adaptationType = cc.sys.BROWSER_TYPE_MIUI;
+  __BrowserGetter.adaptationType = __sys.BROWSER_TYPE_MIUI;
 
-if (cc.sys.os === cc.sys.OS_IOS)
-  __BrowserGetter.adaptationType = cc.sys.BROWSER_TYPE_SAFARI;
+if (__sys.os === __sys.OS_IOS)
+  __BrowserGetter.adaptationType = __sys.BROWSER_TYPE_SAFARI;
 
 switch (__BrowserGetter.adaptationType) {
-  case cc.sys.BROWSER_TYPE_SAFARI:
+  case __sys.BROWSER_TYPE_SAFARI:
     __BrowserGetter.meta["minimal-ui"] = "true";
     break;
-  case cc.sys.BROWSER_TYPE_CHROME:
+  case __sys.BROWSER_TYPE_CHROME:
     __BrowserGetter.__defineGetter__("target-densitydpi", function () {
       return cc.view._targetDensityDPI;
     });
     break;
-  case cc.sys.BROWSER_TYPE_MIUI:
+  case __sys.BROWSER_TYPE_MIUI:
     __BrowserGetter.init = function (view) {
       if (view.__resizeWithBrowserSize) return;
       var resize = function () {
@@ -174,7 +177,7 @@ export class EGLView extends NewClass {
     _t._contentTranslateLeftTop = { left: 0, top: 0 };
     _t._viewName = "Cocos2dHTML5";
 
-    var sys = cc.sys;
+    var sys = __sys;
     cc.visibleRect && cc.visibleRect.init(_t._visibleRect);
 
     // Setup system default resolution policies
@@ -224,7 +227,7 @@ export class EGLView extends NewClass {
     var prevFrameW = view._frameSize.width,
       prevFrameH = view._frameSize.height,
       prevRotated = view._isRotated;
-    if (cc.sys.isMobile) {
+    if (__sys.isMobile) {
       var containerStyle = Game.getInstance().container.style,
         margin = containerStyle.margin;
       containerStyle.margin = "0";
@@ -259,7 +262,7 @@ export class EGLView extends NewClass {
 
   _orientationChange() {
     cc.view._orientationChanging = true;
-    if (cc.sys.isMobile) {
+    if (__sys.isMobile) {
       Game.getInstance().container.style.display = "none";
     }
     setTimeout(function () {
@@ -373,7 +376,7 @@ export class EGLView extends NewClass {
     var isLandscape = w >= h;
 
     if (
-      !cc.sys.isMobile ||
+      !__sys.isMobile ||
       (isLandscape && this._orientation & cc.ORIENTATION_LANDSCAPE) ||
       (!isLandscape && this._orientation & cc.ORIENTATION_PORTRAIT)
     ) {
@@ -509,7 +512,7 @@ export class EGLView extends NewClass {
     if (
       enabled &&
       enabled !== this._autoFullScreen &&
-      cc.sys.isMobile &&
+      __sys.isMobile &&
       this._frame === document.documentElement
     ) {
       // Automatically full screen when user touches on mobile version
@@ -719,7 +722,7 @@ export class EGLView extends NewClass {
     }
 
     // Reinit frame size
-    if (cc.sys.isMobile) this._adjustViewportMeta();
+    if (__sys.isMobile) this._adjustViewportMeta();
 
     // If resizing, then frame size is already initialized, this logic should be improved
     if (!this._resizing) this._initFrameSize();

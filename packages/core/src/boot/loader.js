@@ -3,6 +3,7 @@ import Game from "./game";
 import Async from "./async";
 import AsyncPool from "./async-pool";
 import Path from "./path";
+import Sys from "./sys";
 
 var imagePool = new ImagePool();
 
@@ -553,7 +554,7 @@ export default class Loader {
       url = this._langPathCache[url] =
         url.substring(0, url.length - extname.length) +
         "_" +
-        cc.sys.language +
+        Sys.getInstance().language +
         extname;
     }
     return url;

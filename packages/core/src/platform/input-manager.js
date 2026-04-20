@@ -26,6 +26,7 @@
 import { Point } from "../cocoa/geometry/point";
 import { Rect, rectContainsPoint } from "../cocoa/geometry/rect";
 import EventManager from "../event-manager/event-manager";
+import Sys from "../boot/sys";
 
 /**
  * ignore
@@ -87,7 +88,7 @@ export const inputManager = /** @lends inputManager# */ {
 
   _getUnUsedIndex: function () {
     var temp = this._indexBitsUsed;
-    var now = cc.sys.now();
+    var now = Sys.getInstance().now();
 
     for (var i = 0; i < this._maxTouches; i++) {
       if (!(temp & 0x00000001)) {
@@ -129,7 +130,7 @@ export const inputManager = /** @lends inputManager# */ {
       touchID,
       handleTouches = [],
       locTouchIntDict = this._touchesIntegerDict,
-      now = cc.sys.now();
+      now = Sys.getInstance().now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
       touchID = selTouch.getID();
@@ -171,7 +172,7 @@ export const inputManager = /** @lends inputManager# */ {
       touchID,
       handleTouches = [],
       locTouches = this._touches,
-      now = cc.sys.now();
+      now = Sys.getInstance().now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
       touchID = selTouch.getID();
@@ -394,7 +395,7 @@ export const inputManager = /** @lends inputManager# */ {
       touch_event = event.changedTouches[i];
       if (touch_event) {
         var location;
-        if (cc.sys.BROWSER_TYPE_FIREFOX === cc.sys.browserType)
+        if (Sys.getInstance().BROWSER_TYPE_FIREFOX === Sys.getInstance().browserType)
           location = locView.convertToLocationInView(
             touch_event.pageX,
             touch_event.pageY,
@@ -433,8 +434,8 @@ export const inputManager = /** @lends inputManager# */ {
 
     var locView = (this._glView = cc.view);
     var selfPointer = this;
-    var supportMouse = "mouse" in cc.sys.capabilities,
-      supportTouches = "touches" in cc.sys.capabilities;
+    var supportMouse = "mouse" in Sys.getInstance().capabilities,
+      supportTouches = "touches" in Sys.getInstance().capabilities;
 
     //HACK
     //  - At the same time to trigger the ontouch event and onmouse event
@@ -444,7 +445,7 @@ export const inputManager = /** @lends inputManager# */ {
     //  miui
     //  WECHAT
     var prohibition = false;
-    if (cc.sys.isMobile) prohibition = true;
+    if (Sys.getInstance().isMobile) prohibition = true;
 
     //register touch event
     if (supportMouse) {

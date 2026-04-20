@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { Color } from '../platform/types/color';
+import Sys from '../boot/sys';
 
 // Internal variables
     // Batching general informations
@@ -139,7 +140,7 @@ var rendererWebGL = {
         this.mat4Identity = new cc.math.Matrix4();
         this.mat4Identity.identity();
         initQuadBuffer(cc.BATCH_VERTEX_COUNT);
-        if (cc.sys.os === cc.sys.OS_IOS) {
+        if (Sys.getInstance().os === Sys.getInstance().OS_IOS) {
             _IS_IOS = true;
         }
     },

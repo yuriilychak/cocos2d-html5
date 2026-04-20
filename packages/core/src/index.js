@@ -1,7 +1,12 @@
-// Boot (barrel — all cc.* assignments happen inside boot/index.js
-// so they're available before Core modules execute)
-import "./boot";
-import Loader from "./boot/loader";
+// Boot (barrel — re-exports boot modules; init side-effect runs on import)
+import {
+  each, isFunction, isNumber, isString, isArray,
+  isUndefined, isObject, isCrossOrigin, formatStr,
+  AsyncPool, Async, Path, Loader,
+  create3DContext, Sys, initEngine, Game,
+  _LogInfos, logToWebPage, formatString, initDebugSetting,
+  _loadingImage, _fpsImage, _loaderImage
+} from "./boot";
 
 // ======================================================================
 // Platform — Foundation
@@ -372,11 +377,62 @@ import { ComponentContainer } from "./components/component-container";
 // ======================================================================
 // Kazmath
 // ======================================================================
-import "./kazmath";
+import {
+  EPSILON, square, almostEqual,
+  Vec2, Vec3, Vec4, Ray2,
+  Matrix3, Matrix4, Plane, Quaternion, AABB,
+  Matrix4Stack,
+  kmMat4Identity, kmMat4Inverse, kmMat4Multiply,
+  getMat4MultiplyValue, kmMat4Assign, kmMat4Translation,
+  kmMat4PerspectiveProjection, kmMat4LookAt, kmMat4RotationAxisAngle,
+  km_mat4_stack_push, km_mat4_stack_pop, km_mat4_stack_release,
+  KM_GL_MODELVIEW, KM_GL_PROJECTION, KM_GL_TEXTURE,
+  lazyInitialize, kmGLFreeAll,
+  kmGLPushMatrix, kmGLPushMatrixWitMat4, kmGLPopMatrix,
+  kmGLMatrixMode, kmGLLoadIdentity, kmGLLoadMatrix,
+  kmGLMultMatrix, kmGLTranslatef, kmGLRotatef,
+  kmGLScalef, kmGLGetMatrix
+} from "./kazmath";
 
 // ======================================================================
 // cc.* namespace assignments
 // ======================================================================
+
+// Boot — Utilities
+cc.each = each;
+cc.isFunction = isFunction;
+cc.isNumber = isNumber;
+cc.isString = isString;
+cc.isArray = isArray;
+cc.isUndefined = isUndefined;
+cc.isObject = isObject;
+cc.isCrossOrigin = isCrossOrigin;
+cc.formatStr = formatStr;
+
+// Boot — Async, Path, Loader
+cc.AsyncPool = AsyncPool;
+cc.async = Async;
+cc.path = Path;
+cc.loader = Loader.getInstance();
+
+// Boot — Sys & Engine
+cc.create3DContext = create3DContext;
+cc.sys = Sys.getInstance();
+cc.initEngine = initEngine;
+
+// Boot — Game
+cc.game = Game.getInstance();
+
+// Boot — Debugger
+cc._LogInfos = _LogInfos;
+cc._logToWebPage = logToWebPage;
+cc._formatString = formatString;
+cc._initDebugSetting = initDebugSetting;
+
+// Boot — Base64 images
+cc._loadingImage = _loadingImage;
+cc._fpsImage = _fpsImage;
+cc._loaderImage = _loaderImage;
 
 // Platform — Foundation
 cc.classManager = classManager;
@@ -711,8 +767,67 @@ cc.LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
 cc.Component = Component;
 cc.ComponentContainer = ComponentContainer;
 
+// Kazmath
+cc.math = cc.math || {};
+cc.math.EPSILON = EPSILON;
+cc.math.square = square;
+cc.math.almostEqual = almostEqual;
+cc.math.Vec2 = Vec2;
+cc.math.Vec3 = Vec3;
+cc.math.Vec4 = Vec4;
+cc.math.Ray2 = Ray2;
+cc.math.Matrix3 = Matrix3;
+cc.math.Matrix4 = Matrix4;
+cc.math.Plane = Plane;
+cc.math.Quaternion = Quaternion;
+cc.math.AABB = AABB;
+cc.math.Matrix4Stack = Matrix4Stack;
+cc.math.vec3 = function (x, y, z) {
+    return new Vec3(x, y, z);
+};
+cc.kmVec3 = Vec3;
+cc.kmMat3 = Matrix3;
+cc.kmMat4 = Matrix4;
+cc.kmPlane = Plane;
+cc.kmQuaternion = Quaternion;
+cc.kmRay2 = Ray2;
+cc.km_mat4_stack = Matrix4Stack;
+cc.kmMat4Identity = kmMat4Identity;
+cc.kmMat4Inverse = kmMat4Inverse;
+cc.kmMat4Multiply = kmMat4Multiply;
+cc.getMat4MultiplyValue = getMat4MultiplyValue;
+cc.kmMat4Assign = kmMat4Assign;
+cc.kmMat4Translation = kmMat4Translation;
+cc.kmMat4PerspectiveProjection = kmMat4PerspectiveProjection;
+cc.kmMat4LookAt = kmMat4LookAt;
+cc.kmMat4RotationAxisAngle = kmMat4RotationAxisAngle;
+cc.km_mat4_stack_push = km_mat4_stack_push;
+cc.km_mat4_stack_pop = km_mat4_stack_pop;
+cc.km_mat4_stack_release = km_mat4_stack_release;
+cc.KM_GL_MODELVIEW = KM_GL_MODELVIEW;
+cc.KM_GL_PROJECTION = KM_GL_PROJECTION;
+cc.KM_GL_TEXTURE = KM_GL_TEXTURE;
+cc.modelview_matrix_stack = new Matrix4Stack();
+cc.projection_matrix_stack = new Matrix4Stack();
+cc.texture_matrix_stack = new Matrix4Stack();
+cc.current_stack = null;
+cc.lazyInitialize = lazyInitialize;
+cc.kmGLFreeAll = kmGLFreeAll;
+cc.kmGLPushMatrix = kmGLPushMatrix;
+cc.kmGLPushMatrixWitMat4 = kmGLPushMatrixWitMat4;
+cc.kmGLPopMatrix = kmGLPopMatrix;
+cc.kmGLMatrixMode = kmGLMatrixMode;
+cc.kmGLLoadIdentity = kmGLLoadIdentity;
+cc.kmGLLoadMatrix = kmGLLoadMatrix;
+cc.kmGLMultMatrix = kmGLMultMatrix;
+cc.kmGLTranslatef = kmGLTranslatef;
+cc.kmGLRotatef = kmGLRotatef;
+cc.kmGLScalef = kmGLScalef;
+cc.kmGLGetMatrix = kmGLGetMatrix;
+
 // ======================================================================
 // Init functions (must run AFTER cc.* class assignments)
 // ======================================================================
 initInputExtension(inputManager);
 initBinaryLoader();
+cc.lazyInitialize();
