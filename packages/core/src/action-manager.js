@@ -29,9 +29,8 @@ import { log, assert, _LogInfos } from './boot/debugger';
 
 /**
  * @class
- * @extends cc.Class
  * @example
- * var element = new cc.HashElement();
+ * var element = new HashElement();
  */
 export var HashElement = function () {
     this.actions = [];
@@ -92,9 +91,9 @@ export class ActionManager extends NewClass {
 
     addAction(action, target, paused) {
         if (!action)
-            throw new Error("cc.ActionManager.addAction(): action must be non-null");
+            throw new Error("ActionManager.addAction(): action must be non-null");
         if (!target)
-            throw new Error("cc.ActionManager.addAction(): target must be non-null");
+            throw new Error("ActionManager.addAction(): target must be non-null");
 
         var element = this._hashTargets[target.__instanceId];
         if (!element) {

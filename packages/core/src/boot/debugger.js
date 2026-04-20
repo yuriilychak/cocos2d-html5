@@ -1,10 +1,10 @@
 import { isObject, formatStr } from './utils';
 import Game from './game';
 
-export let log = function () {};
-export let warn = function () {};
-export let error = function () {};
-export let assert = function () {};
+let _enableLog = false;
+let _enableWarn = false;
+let _enableError = false;
+let _useWebPage = false;
 
 export const _LogInfos = {
     ActionManager_addAction: "ActionManager.addAction(): action must be non-null",
@@ -203,6 +203,48 @@ export const _LogInfos = {
     EventManager__updateListeners_2: "_inDispatch should be 1 here."
 };
 
+export function log() {
+    if (!_enableLog) return;
+    if (_useWebPage) {
+        logToWebPage(formatStr.apply(null, arguments));
+    } else {
+        console.log.apply(console, arguments);
+    }
+}
+
+export function warn() {
+    if (!_enableWarn) return;
+    if (_useWebPage) {
+        logToWebPage("WARN :  " + formatStr.apply(null, arguments));
+    } else {
+        console.warn.apply(console, arguments);
+    }
+}
+
+export function error() {
+    if (!_enableError) return;
+    if (_useWebPage) {
+        logToWebPage("ERROR :  " + formatStr.apply(null, arguments));
+    } else {
+        console.error.apply(console, arguments);
+    }
+}
+
+export function assert(cond, msg) {
+    if (!_enableError || cond) return;
+    if (msg) {
+        for (var i = 2; i < arguments.length; i++)
+            msg = msg.replace(/(%s)|(%d)/, formatString(arguments[i]));
+    }
+    if (_useWebPage) {
+        logToWebPage("Assert: " + msg);
+    } else if (console.assert) {
+        console.assert(false, msg);
+    } else {
+        throw new Error(msg);
+    }
+}
+
 export function logToWebPage(msg) {
     if (!_canvas)
         return;
@@ -262,54 +304,9 @@ export function formatString(arg) {
  * @param {Number} mode
  */
 export function initDebugSetting(mode) {
-    if(mode === Game.DEBUG_MODE_NONE)
-        return;
-
-    var locLog;
-    if(mode > Game.DEBUG_MODE_ERROR){
-        //log to web page
-        locLog = _logToWebPage.bind(cc);
-        error = function(){
-            locLog("ERROR :  " + formatStr.apply(cc, arguments));
-        };
-        assert = function(cond, msg) {
-            if (!cond && msg) {
-                for (var i = 2; i < arguments.length; i++)
-                    msg = msg.replace(/(%s)|(%d)/, formatString(arguments[i]));
-                locLog("Assert: " + msg);
-            }
-        };
-        if(mode !== Game.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            warn = function(){
-                locLog("WARN :  " + formatStr.apply(cc, arguments));
-            };
-        }
-        if(mode === Game.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            log = function(){
-                locLog(formatStr.apply(cc, arguments));
-            };
-        }
-    } else if(console && console.log.apply){
-        error = Function.prototype.bind.call(console.error, console);
-        if (console.assert) {
-            assert = Function.prototype.bind.call(console.assert, console);
-        } else {
-            assert = function (cond, msg) {
-                if (!cond && msg) {
-                    for (var i = 2; i < arguments.length; i++)
-                        msg = msg.replace(/(%s)|(%d)/, formatString(arguments[i]));
-                    throw new Error(msg);
-                }
-            };
-        }
-        if (mode !== Game.DEBUG_MODE_ERROR)
-            warn = Function.prototype.bind.call(console.warn, console);
-        if (mode === Game.DEBUG_MODE_INFO)
-            log = Function.prototype.bind.call(console.log, console);
-    }
-
-    cc.log = (...args) => log(...args);
-    cc.warn = (...args) => warn(...args);
-    cc.error = (...args) => error(...args);
-    cc.assert = (...args) => assert(...args);
+    _useWebPage = mode > Game.DEBUG_MODE_ERROR;
+    _enableError = mode !== Game.DEBUG_MODE_NONE;
+    _enableWarn = mode === Game.DEBUG_MODE_INFO || mode === Game.DEBUG_MODE_WARN
+        || mode === Game.DEBUG_MODE_INFO_FOR_WEB_PAGE || mode === Game.DEBUG_MODE_WARN_FOR_WEB_PAGE;
+    _enableLog = mode === Game.DEBUG_MODE_INFO || mode === Game.DEBUG_MODE_INFO_FOR_WEB_PAGE;
 }

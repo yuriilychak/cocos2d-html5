@@ -129,7 +129,7 @@ export default class Matrix3 {
 
     assignFrom(matIn) {
         if (this === matIn) {
-            log("cc.math.Matrix3.assign(): current matrix equals matIn");
+            log("math.Matrix3.assign(): current matrix equals matIn");
             return this;
         }
         const mat = this.mat, m2 = matIn.mat;

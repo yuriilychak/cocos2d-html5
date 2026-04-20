@@ -425,10 +425,10 @@ cc.game = Game.getInstance();
 
 // Boot — Debugger
 cc._LogInfos = _LogInfos;
-cc.log = (...args) => log(...args);
-cc.warn = (...args) => warn(...args);
-cc.error = (...args) => error(...args);
-cc.assert = (...args) => assert(...args);
+cc.log = log;
+cc.warn = warn;
+cc.error = error;
+cc.assert = assert;
 cc._logToWebPage = logToWebPage;
 cc._formatString = formatString;
 cc._initDebugSetting = initDebugSetting;

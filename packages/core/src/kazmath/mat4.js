@@ -106,7 +106,7 @@ export default class Matrix4 {
 
     assignFrom(mat4) {
         if (this === mat4) {
-            log("cc.mat.Matrix4.assignFrom(): mat4 equals current matrix");
+            log("mat.Matrix4.assignFrom(): mat4 equals current matrix");
             return this;
         }
         const outArr = this.mat, inArr = mat4.mat;
@@ -119,7 +119,7 @@ export default class Matrix4 {
 
     equals(mat4) {
         if (this === mat4) {
-            log("cc.kmMat4AreEqual(): pMat1 and pMat2 are same object.");
+            log("kmMat4AreEqual(): pMat1 and pMat2 are same object.");
             return true;
         }
         const matA = this.mat, matB = mat4.mat;
@@ -207,7 +207,7 @@ export default class Matrix4 {
                 plane.c = mat[11] + mat[10]; plane.d = mat[15] + mat[14];
                 break;
             default:
-                log("cc.math.Matrix4.extractPlane: Invalid plane index");
+                log("math.Matrix4.extractPlane: Invalid plane index");
                 break;
         }
         const t = Math.sqrt(plane.a * plane.a + plane.b * plane.b + plane.c * plane.c);
