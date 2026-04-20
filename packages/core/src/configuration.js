@@ -26,6 +26,7 @@
 
  import Game from './boot/game';
  import Loader from './boot/loader';
+ import { log, assert, _LogInfos } from './boot/debugger';
 
 /**
  * Class that contains some openGL variables
@@ -133,9 +134,9 @@ export class Configuration {
 
 	dumpInfo() {
 		if (cc.ENABLE_GL_STATE_CACHE === 0) {
-			cc.log("");
-			cc.log(cc._LogInfos.configuration_dumpInfo);
-			cc.log("");
+			log("");
+			log(_LogInfos.configuration_dumpInfo);
+			log("");
 		}
 	}
 
@@ -184,11 +185,11 @@ export class Configuration {
 			this._init();
 		const dict = Loader.getInstance().getRes(url);
 		if (!dict) throw new Error("Please load the resource first : " + url);
-		cc.assert(dict, cc._LogInfos.configuration_loadConfigFile_2, url);
+		assert(dict, _LogInfos.configuration_loadConfigFile_2, url);
 
 		const getDatas = dict["data"];
 		if (!getDatas) {
-			cc.log(cc._LogInfos.configuration_loadConfigFile, url);
+			log(_LogInfos.configuration_loadConfigFile, url);
 			return;
 		}
 

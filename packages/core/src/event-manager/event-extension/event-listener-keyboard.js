@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import EventListener from '../event-listener/event-listener';
+import { log, _LogInfos } from '../../boot/debugger';
 
 export default class _EventListenerKeyboard extends EventListener {
     constructor() {
@@ -53,7 +54,7 @@ export default class _EventListenerKeyboard extends EventListener {
 
     checkAvailable() {
         if (this.onKeyPressed === null && this.onKeyReleased === null) {
-            cc.log(cc._LogInfos._EventListenerKeyboard_checkAvailable);
+            log(_LogInfos._EventListenerKeyboard_checkAvailable);
             return false;
         }
         return true;

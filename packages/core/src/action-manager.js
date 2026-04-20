@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from './platform/class';
+import { log, assert, _LogInfos } from './boot/debugger';
 
 /**
  * @class
@@ -144,15 +145,15 @@ export class ActionManager extends NewClass {
                 }
             }
         } else {
-            cc.log(cc._LogInfos.ActionManager_removeAction);
+            log(_LogInfos.ActionManager_removeAction);
         }
     }
 
     removeActionByTag(tag, target) {
         if (tag === cc.ACTION_TAG_INVALID)
-            cc.log(cc._LogInfos.ActionManager_addAction);
+            log(_LogInfos.ActionManager_addAction);
 
-        cc.assert(target, cc._LogInfos.ActionManager_addAction);
+        assert(target, _LogInfos.ActionManager_addAction);
 
         var element = this._hashTargets[target.__instanceId];
 
@@ -170,7 +171,7 @@ export class ActionManager extends NewClass {
 
     getActionByTag(tag, target) {
         if (tag === cc.ACTION_TAG_INVALID)
-            cc.log(cc._LogInfos.ActionManager_getActionByTag);
+            log(_LogInfos.ActionManager_getActionByTag);
 
         var element = this._hashTargets[target.__instanceId];
         if (element) {
@@ -181,7 +182,7 @@ export class ActionManager extends NewClass {
                         return action;
                 }
             }
-            cc.log(cc._LogInfos.ActionManager_getActionByTag_2, tag);
+            log(_LogInfos.ActionManager_getActionByTag_2, tag);
         }
         return null;
     }

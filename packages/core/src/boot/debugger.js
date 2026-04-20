@@ -1,5 +1,10 @@
-import { isObject } from './utils';
+import { isObject, formatStr } from './utils';
 import Game from './game';
+
+export let log = function () {};
+export let warn = function () {};
+export let error = function () {};
+export let assert = function () {};
 
 export const _LogInfos = {
     ActionManager_addAction: "ActionManager.addAction(): action must be non-null",
@@ -270,7 +275,7 @@ export function initDebugSetting(mode) {
         assert = function(cond, msg) {
             if (!cond && msg) {
                 for (var i = 2; i < arguments.length; i++)
-                    msg = msg.replace(/(%s)|(%d)/, _formatString(arguments[i]));
+                    msg = msg.replace(/(%s)|(%d)/, formatString(arguments[i]));
                 locLog("Assert: " + msg);
             }
         };
@@ -292,7 +297,7 @@ export function initDebugSetting(mode) {
             assert = function (cond, msg) {
                 if (!cond && msg) {
                     for (var i = 2; i < arguments.length; i++)
-                        msg = msg.replace(/(%s)|(%d)/, _formatString(arguments[i]));
+                        msg = msg.replace(/(%s)|(%d)/, formatString(arguments[i]));
                     throw new Error(msg);
                 }
             };
@@ -302,4 +307,9 @@ export function initDebugSetting(mode) {
         if (mode === Game.DEBUG_MODE_INFO)
             log = Function.prototype.bind.call(console.log, console);
     }
+
+    cc.log = (...args) => log(...args);
+    cc.warn = (...args) => warn(...args);
+    cc.error = (...args) => error(...args);
+    cc.assert = (...args) => assert(...args);
 }

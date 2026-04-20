@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import EventListener from './event-listener';
+import { log } from '../../boot/debugger';
 
 export default class _EventListenerFocus extends EventListener {
     constructor() {
@@ -41,7 +42,7 @@ export default class _EventListenerFocus extends EventListener {
 
     checkAvailable() {
         if(!this.onFocusChanged){
-            cc.log("Invalid EventListenerFocus!");
+            log("Invalid EventListenerFocus!");
             return false;
         }
         return true;

@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { Color } from "../platform/types/color";
+import { log } from "../boot/debugger";
 
 var rendererCanvas = {
   childrenOrderDirty: true,
@@ -224,7 +225,7 @@ var rendererCanvas = {
    * @param {Number} [scaleY]
    */
   _renderingToCacheCanvas: function (ctx, instanceID, scaleX, scaleY) {
-    if (!ctx) cc.log("The context of RenderTexture is invalid.");
+    if (!ctx) log("The context of RenderTexture is invalid.");
     scaleX = cc.isUndefined(scaleX) ? 1 : scaleX;
     scaleY = cc.isUndefined(scaleY) ? 1 : scaleY;
     instanceID = instanceID || this._currentID;

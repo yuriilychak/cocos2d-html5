@@ -24,6 +24,7 @@
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from './node-canvas-render-cmd';
 import { Rect } from '../cocoa/geometry/rect';
+import { log, _LogInfos } from '../boot/debugger';
 
 /**
  * AtlasNode's rendering objects of Canvas
@@ -44,7 +45,7 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
         node._opacityModifyRGB = true;
         node._texture = texture;
         if (!node._texture) {
-            cc.log(cc._LogInfos.AtlasNode__initWithTexture);
+            log(_LogInfos.AtlasNode__initWithTexture);
             return false;
         }
         this._textureToRender = texture;

@@ -4,6 +4,7 @@ import Async from "./async";
 import AsyncPool from "./async-pool";
 import Path from "./path";
 import Sys from "./sys";
+import { error, log } from './debugger';
 
 var imagePool = new ImagePool();
 
@@ -506,7 +507,7 @@ export default class Loader {
       loader = this._register[type.toLowerCase()];
     }
     if (!loader) {
-      cc.error("loader for [" + type + "] doesn't exist!");
+      error("loader for [" + type + "] doesn't exist!");
       return cb();
     }
     var realUrl = url;
@@ -521,7 +522,7 @@ export default class Loader {
     }
     loader.load(realUrl, url, item, (err, data) => {
       if (err) {
-        cc.log(err);
+        log(err);
         this.cache[url] = null;
         delete this.cache[url];
         cb({ status: 520, errorMessage: err }, null);

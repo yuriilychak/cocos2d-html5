@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Layer } from './layer';
+import { log, _LogInfos } from '../boot/debugger';
 
 /**
  * CCMultipleLayer is a CCLayer with the ability to multiplex its children.
@@ -46,7 +47,7 @@ export class LayerMultiplex extends Layer {
 
     initWithLayers(layers) {
         if ((layers.length > 0) && (layers[layers.length - 1] == null))
-            cc.log(cc._LogInfos.LayerMultiplex_initWithLayers);
+            log(_LogInfos.LayerMultiplex_initWithLayers);
 
         this._layers = layers;
         this._enabledLayer = 0;
@@ -56,7 +57,7 @@ export class LayerMultiplex extends Layer {
 
     switchTo(n) {
         if (n >= this._layers.length) {
-            cc.log(cc._LogInfos.LayerMultiplex_switchTo);
+            log(_LogInfos.LayerMultiplex_switchTo);
             return;
         }
 
@@ -67,7 +68,7 @@ export class LayerMultiplex extends Layer {
 
     switchToAndReleaseMe(n) {
         if (n >= this._layers.length) {
-            cc.log(cc._LogInfos.LayerMultiplex_switchToAndReleaseMe);
+            log(_LogInfos.LayerMultiplex_switchToAndReleaseMe);
             return;
         }
 
@@ -79,7 +80,7 @@ export class LayerMultiplex extends Layer {
 
     addLayer(layer) {
         if (!layer) {
-            cc.log(cc._LogInfos.LayerMultiplex_addLayer);
+            log(_LogInfos.LayerMultiplex_addLayer);
             return;
         }
         this._layers.push(layer);

@@ -30,6 +30,7 @@ import Game from "../boot/game";
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
+import { error, _LogInfos } from "../boot/debugger";
 
 /**
  * <p>
@@ -381,10 +382,10 @@ export class SpriteFrame extends EventHelper(NewClass) {
         _y = rect.y + rect.height;
       }
       if (_x > texture.getPixelsWide()) {
-        cc.error(cc._LogInfos.RectWidth, texture.url);
+        error(_LogInfos.RectWidth, texture.url);
       }
       if (_y > texture.getPixelsHigh()) {
-        cc.error(cc._LogInfos.RectHeight, texture.url);
+        error(_LogInfos.RectHeight, texture.url);
       }
     }
 

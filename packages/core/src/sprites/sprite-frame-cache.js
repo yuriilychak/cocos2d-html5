@@ -30,6 +30,7 @@ import Loader from "../boot/loader";
 import Path from "../boot/path";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
+import { log, assert, _LogInfos } from "../boot/debugger";
 
 /**
  * <p>
@@ -77,7 +78,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
   _getFrameConfig: function (url) {
     var dict = Loader.getInstance().getRes(url);
 
-    cc.assert(dict, cc._LogInfos.spriteFrameCache__getFrameConfig_2, url);
+    assert(dict, _LogInfos.spriteFrameCache__getFrameConfig_2, url);
 
     Loader.getInstance().release(url); //release it in loader
     if (dict._inited) {
@@ -89,7 +90,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
   },
 
   _getFrameConfigByJsonObject: function (url, jsonObject) {
-    cc.assert(jsonObject, cc._LogInfos.spriteFrameCache__getFrameConfig_2, url);
+    assert(jsonObject, _LogInfos.spriteFrameCache__getFrameConfig_2, url);
     this._frameConfigCache[url] = this._parseFrameConfig(jsonObject);
     return this._frameConfigCache[url];
   },
@@ -130,7 +131,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
         var oh = frameDict["originalHeight"];
         // check ow/oh
         if (!ow || !oh) {
-          cc.log(cc._LogInfos.spriteFrameCache__getFrameConfig);
+          log(_LogInfos.spriteFrameCache__getFrameConfig);
         }
         // Math.abs ow/oh
         ow = Math.abs(ow);
@@ -179,7 +180,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
 
   // Adds multiple Sprite Frames from a json object. it uses for local web view app.
   _addSpriteFramesByObject: function (url, jsonObject, texture) {
-    cc.assert(url, cc._LogInfos.spriteFrameCache_addSpriteFrames_2);
+    assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
     if (!jsonObject || !jsonObject["frames"]) return;
 
     var frameConfig =
@@ -201,7 +202,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
       //string
       texture = cc.textureCache.addImage(texture);
     } else {
-      cc.assert(0, cc._LogInfos.spriteFrameCache_addSpriteFrames_3);
+      assert(0, _LogInfos.spriteFrameCache_addSpriteFrames_3);
     }
 
     //create sprite frames
@@ -224,7 +225,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
           for (var i = 0, li = aliases.length; i < li; i++) {
             var alias = aliases[i];
             if (spAliases[alias])
-              cc.log(cc._LogInfos.spriteFrameCache_addSpriteFrames, alias);
+              log(_LogInfos.spriteFrameCache_addSpriteFrames, alias);
             spAliases[alias] = key;
           }
         }
@@ -270,7 +271,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
    * cc.spriteFrameCache.addSpriteFrames(s_grossiniJson);
    */
   addSpriteFrames: function (url, texture) {
-    cc.assert(url, cc._LogInfos.spriteFrameCache_addSpriteFrames_2);
+    assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
 
     //Is it a SpriteFrame plist?
     var dict = this._frameConfigCache[url] || Loader.getInstance().getRes(url);
@@ -287,7 +288,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
 
     for (var key in framesDict) {
       if (this._spriteFrames[key]) {
-        cc.log(cc._LogInfos.spriteFrameCache__checkConflict, key);
+        log(_LogInfos.spriteFrameCache__checkConflict, key);
       }
     }
   },

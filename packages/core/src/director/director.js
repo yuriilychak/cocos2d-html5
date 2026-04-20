@@ -40,6 +40,7 @@ import {
     PROJECTION_DEFAULT
 } from './constants';
 import { Size } from '../cocoa/geometry/size';
+import { log, assert, _LogInfos } from '../boot/debugger';
 
 export var g_NumberOfDraws = 0;
 
@@ -270,7 +271,7 @@ export class Director extends NewClass {
     }
 
     popScene() {
-        cc.assert(this._runningScene, cc._LogInfos.Director_popScene);
+        assert(this._runningScene, _LogInfos.Director_popScene);
 
         this._scenesStack.pop();
         var c = this._scenesStack.length;
@@ -314,7 +315,7 @@ export class Director extends NewClass {
     }
 
     pushScene(scene) {
-        cc.assert(scene, cc._LogInfos.Director_pushScene);
+        assert(scene, _LogInfos.Director_pushScene);
 
         this._sendCleanupToScene = false;
 
@@ -323,7 +324,7 @@ export class Director extends NewClass {
     }
 
     runScene(scene) {
-        cc.assert(scene, cc._LogInfos.Director_pushScene);
+        assert(scene, _LogInfos.Director_pushScene);
 
         if (!this._runningScene) {
             this.pushScene(scene);
@@ -350,7 +351,7 @@ export class Director extends NewClass {
         this.setAnimationInterval(this._oldAnimationInterval);
         this._lastUpdate = Date.now();
         if (!this._lastUpdate) {
-            cc.log(cc._LogInfos.Director_resume);
+            log(_LogInfos.Director_resume);
         }
 
         this._paused = false;
@@ -512,7 +513,7 @@ export class Director extends NewClass {
     }
 
     popToSceneStackLevel(level) {
-        cc.assert(this._runningScene, cc._LogInfos.Director_popToSceneStackLevel_2);
+        assert(this._runningScene, _LogInfos.Director_popToSceneStackLevel_2);
 
         var locScenesStack = this._scenesStack;
         var c = locScenesStack.length;

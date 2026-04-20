@@ -25,9 +25,8 @@
  ****************************************************************************/
 
 /**
- * cc.Rect is the class for rect object.
- * @class cc.Rect
- * @param {Number|cc.Rect} [x=0]
+ * Rect is the class for rect object.
+ * @param {Number|Rect} [x=0]
  * @param {Number} [y=0]
  * @param {Number} [width=0]
  * @param {Number} [height=0]
@@ -54,9 +53,9 @@ export class Rect {
 }
 
 /**
- * Helper function that creates a cc.Rect.
+ * Helper function that creates a Rect.
  * @function
- * @param {Number|cc.Rect} [x] a number or a rect object
+ * @param {Number|Rect} [x] a number or a rect object
  * @param {Number} [y]
  * @param {Number} [w]
  * @param {Number} [h]

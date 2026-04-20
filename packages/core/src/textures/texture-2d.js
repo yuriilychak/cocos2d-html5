@@ -32,6 +32,7 @@ import { Size } from "../cocoa/geometry/size";
 import Game from "../boot/game";
 import Loader from "../boot/loader";
 import Sys from "../boot/sys";
+import { log, _LogInfos } from "../boot/debugger";
 
 export {
   ALIGN_CENTER,
@@ -253,7 +254,7 @@ Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
        * @warning does not support on HTML5
        */
       initWithETCFile(file) {
-        cc.log(cc._LogInfos.Texture2D_initWithETCFile);
+        log(_LogInfos.Texture2D_initWithETCFile);
         return false;
       }
 
@@ -262,7 +263,7 @@ Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
        * @warning does not support on HTML5
        */
       initWithPVRFile(file) {
-        cc.log(cc._LogInfos.Texture2D_initWithPVRFile);
+        log(_LogInfos.Texture2D_initWithPVRFile);
         return false;
       }
 
@@ -271,7 +272,7 @@ Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
        * @warning does not support on HTML5
        */
       initWithPVRTCData(data, level, bpp, hasAlpha, length, pixelFormat) {
-        cc.log(cc._LogInfos.Texture2D_initWithPVRTCData);
+        log(_LogInfos.Texture2D_initWithPVRTCData);
         return false;
       }
 

@@ -25,9 +25,8 @@
  ****************************************************************************/
 
 /**
- * cc.Point is the class for point object.
- * @class cc.Point
- * @param {Number|cc.Point} [x=0]
+ * Point is the class for point object.
+ * @param {Number|Point} [x=0]
  * @param {Number} [y=0]
  */
 export class Point {
@@ -46,9 +45,9 @@ export class Point {
 }
 
 /**
- * Helper function that creates a cc.Point.
+ * Helper function that creates a Point.
  * @function
- * @param {Number|cc.Point} [x] a Number or a point object
+ * @param {Number|Point} [x] a Number or a point object
  * @param {Number} [y]
  * @return {Point}
  */

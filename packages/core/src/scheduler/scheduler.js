@@ -29,6 +29,7 @@ import { ListEntry } from './list-entry';
 import { HashUpdateEntry } from './hash-update-entry';
 import { HashTimerEntry } from './hash-timer-entry';
 import { CallbackTimer } from './callback-timer';
+import { log, assert, _LogInfos } from '../boot/debugger';
 
 /**
  * Scheduler is responsible of triggering the scheduled callbacks.
@@ -58,7 +59,7 @@ export default class Scheduler extends NewClass {
         if (hashElement && hashElement.entry) {
             if (hashElement.entry.priority !== priority) {
                 if (this._updateHashLocked) {
-                    cc.log("warning: you CANNOT change update priority in scheduled function");
+                    log("warning: you CANNOT change update priority in scheduled function");
                     hashElement.entry.markedForDeletion = false;
                     hashElement.entry.paused = paused;
                     return;
@@ -241,7 +242,7 @@ export default class Scheduler extends NewClass {
             key = target.__instanceId + "";
         }
 
-        cc.assert(target, cc._LogInfos.Scheduler_scheduleCallbackForTarget_3);
+        assert(target, _LogInfos.Scheduler_scheduleCallbackForTarget_3);
 
         var element = this._hashForTimers[target.__instanceId];
 
@@ -250,7 +251,7 @@ export default class Scheduler extends NewClass {
             this._arrayForTimers.push(element);
             this._hashForTimers[target.__instanceId] = element;
         } else {
-            cc.assert(element.paused === paused, "");
+            assert(element.paused === paused, "");
         }
 
         var timer, i;
@@ -260,7 +261,7 @@ export default class Scheduler extends NewClass {
             for (i = 0; i < element.timers.length; i++) {
                 timer = element.timers[i];
                 if (callback === timer._callback) {
-                    cc.log(cc._LogInfos.Scheduler_scheduleCallbackForTarget, timer.getInterval().toFixed(4), interval.toFixed(4));
+                    log(_LogInfos.Scheduler_scheduleCallbackForTarget, timer.getInterval().toFixed(4), interval.toFixed(4));
                     timer._interval = interval;
                     return;
                 }
@@ -409,8 +410,8 @@ export default class Scheduler extends NewClass {
     }
 
     isScheduled(callback, target) {
-        cc.assert(callback, "Argument callback must not be empty");
-        cc.assert(target, "Argument target must be non-nullptr");
+        assert(callback, "Argument callback must not be empty");
+        assert(target, "Argument target must be non-nullptr");
 
         var element = this._hashForTimers[target.__instanceId];
 
@@ -497,7 +498,7 @@ export default class Scheduler extends NewClass {
     }
 
     pauseTarget(target) {
-        cc.assert(target, cc._LogInfos.Scheduler_pauseTarget);
+        assert(target, _LogInfos.Scheduler_pauseTarget);
 
         var self = this, element = self._hashForTimers[target.__instanceId];
         if (element) {
@@ -511,7 +512,7 @@ export default class Scheduler extends NewClass {
     }
 
     resumeTarget(target) {
-        cc.assert(target, cc._LogInfos.Scheduler_resumeTarget);
+        assert(target, _LogInfos.Scheduler_resumeTarget);
 
         var self = this, element = self._hashForTimers[target.__instanceId];
 
@@ -527,7 +528,7 @@ export default class Scheduler extends NewClass {
     }
 
     isTargetPaused(target) {
-        cc.assert(target, cc._LogInfos.Scheduler_isTargetPaused);
+        assert(target, _LogInfos.Scheduler_isTargetPaused);
 
         var element = this._hashForTimers[target.__instanceId];
         if (element) {

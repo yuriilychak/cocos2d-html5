@@ -29,6 +29,7 @@ import Game from "../../boot/game";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
 import { Size } from "../../cocoa/geometry/size";
+import { log, _LogInfos } from "../../boot/debugger";
 
 /**
  * <p>
@@ -98,7 +99,7 @@ export function radiansToDegrees(angle) {
  * @function
  */
 export function radiansToDegress(angle) {
-  cc.log(cc._LogInfos.radiansToDegress);
+  log(_LogInfos.radiansToDegress);
   return angle * DEG;
 }
 
@@ -274,7 +275,7 @@ export function checkGLErrorDebug() {
   if (cc.renderMode === Game.RENDER_TYPE_WEBGL) {
     var _error = cc._renderContext.getError();
     if (_error) {
-      cc.log(cc._LogInfos.checkGLErrorDebug, _error);
+      log(_LogInfos.checkGLErrorDebug, _error);
     }
   }
 }
@@ -292,7 +293,7 @@ export function arrayVerifyType(arr, type) {
   if (arr && arr.length > 0) {
     for (var i = 0; i < arr.length; i++) {
       if (!(arr[i] instanceof type)) {
-        cc.log("element type is wrong!");
+        log("element type is wrong!");
         return false;
       }
     }

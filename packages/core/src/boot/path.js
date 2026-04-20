@@ -7,11 +7,11 @@ export default class Path {
     /**
      * Join strings to be a path.
      * @example
-     cc.path.join("a", "b.png");//-->"a/b.png"
-     cc.path.join("a", "b", "c.png");//-->"a/b/c.png"
-     cc.path.join("a", "b");//-->"a/b"
-     cc.path.join("a", "b", "/");//-->"a/b/"
-     cc.path.join("a", "b/", "/");//-->"a/b/"
+     Path.join("a", "b.png");//-->"a/b.png"
+     Path.join("a", "b", "c.png");//-->"a/b/c.png"
+     Path.join("a", "b");//-->"a/b"
+     Path.join("a", "b", "/");//-->"a/b/"
+     Path.join("a", "b/", "/");//-->"a/b/"
      * @returns {string}
      */
     static join(...args) {
@@ -25,10 +25,10 @@ export default class Path {
     /**
      * Get the ext name of a path.
      * @example
-     cc.path.extname("a/b.png");//-->".png"
-     cc.path.extname("a/b.png?a=1&b=2");//-->".png"
-     cc.path.extname("a/b");//-->null
-     cc.path.extname("a/b?a=1&b=2");//-->null
+     Path.extname("a/b.png");//-->".png"
+     Path.extname("a/b.png?a=1&b=2");//-->".png"
+     Path.extname("a/b");//-->null
+     Path.extname("a/b?a=1&b=2");//-->null
      * @param {string} pathStr
      * @returns {*}
      */
@@ -54,11 +54,11 @@ export default class Path {
     /**
      * Get the file name of a file path.
      * @example
-     cc.path.basename("a/b.png");//-->"b.png"
-     cc.path.basename("a/b.png?a=1&b=2");//-->"b.png"
-     cc.path.basename("a/b.png", ".png");//-->"b"
-     cc.path.basename("a/b.png?a=1&b=2", ".png");//-->"b"
-     cc.path.basename("a/b.png", ".txt");//-->"b.png"
+     Path.basename("a/b.png");//-->"b.png"
+     Path.basename("a/b.png?a=1&b=2");//-->"b.png"
+     Path.basename("a/b.png", ".png");//-->"b"
+     Path.basename("a/b.png?a=1&b=2", ".png");//-->"b"
+     Path.basename("a/b.png", ".txt");//-->"b.png"
      * @param {string} pathStr
      * @param {string} [extname]
      * @returns {*}
@@ -79,13 +79,13 @@ export default class Path {
      * Get dirname of a file path.
      * @example
      * unix
-     cc.path.driname("a/b/c.png");//-->"a/b"
-     cc.path.driname("a/b/c.png?a=1&b=2");//-->"a/b"
-     cc.path.dirname("a/b/");//-->"a/b"
-     cc.path.dirname("c.png");//-->""
+     Path.driname("a/b/c.png");//-->"a/b"
+     Path.driname("a/b/c.png?a=1&b=2");//-->"a/b"
+     Path.dirname("a/b/");//-->"a/b"
+     Path.dirname("c.png");//-->""
      * windows
-     cc.path.driname("a\\b\\c.png");//-->"a\b"
-     cc.path.driname("a\\b\\c.png?a=1&b=2");//-->"a\b"
+     Path.driname("a\\b\\c.png");//-->"a\b"
+     Path.driname("a\\b\\c.png?a=1&b=2");//-->"a\b"
      * @param {string} pathStr
      * @returns {*}
      */
@@ -96,8 +96,8 @@ export default class Path {
     /**
      * Change extname of a file path.
      * @example
-     cc.path.changeExtname("a/b.png", ".plist");//-->"a/b.plist"
-     cc.path.changeExtname("a/b.png?a=1&b=2", ".plist");//-->"a/b.plist?a=1&b=2"
+     Path.changeExtname("a/b.png", ".plist");//-->"a/b.plist"
+     Path.changeExtname("a/b.png?a=1&b=2", ".plist");//-->"a/b.plist?a=1&b=2"
      * @param {string} pathStr
      * @param {string} [extname]
      * @returns {string}
@@ -118,11 +118,11 @@ export default class Path {
     /**
      * Change file name of a file path.
      * @example
-     cc.path.changeBasename("a/b/c.plist", "b.plist");//-->"a/b/b.plist"
-     cc.path.changeBasename("a/b/c.plist?a=1&b=2", "b.plist");//-->"a/b/b.plist?a=1&b=2"
-     cc.path.changeBasename("a/b/c.plist", ".png");//-->"a/b/c.png"
-     cc.path.changeBasename("a/b/c.plist", "b");//-->"a/b/b"
-     cc.path.changeBasename("a/b/c.plist", "b", true);//-->"a/b/b.plist"
+     Path.changeBasename("a/b/c.plist", "b.plist");//-->"a/b/b.plist"
+     Path.changeBasename("a/b/c.plist?a=1&b=2", "b.plist");//-->"a/b/b.plist?a=1&b=2"
+     Path.changeBasename("a/b/c.plist", ".png");//-->"a/b/c.png"
+     Path.changeBasename("a/b/c.plist", "b");//-->"a/b/b"
+     Path.changeBasename("a/b/c.plist", "b", true);//-->"a/b/b.plist"
      * @param {String} pathStr
      * @param {String} basename
      * @param {Boolean} [isSameExt]

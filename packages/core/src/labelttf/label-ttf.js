@@ -29,6 +29,7 @@ import Game from "../boot/game";
 import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
 import { Size } from "../cocoa/geometry/size";
+import { log, _LogInfos } from '../boot/debugger';
 
 /**
  * <p>cc.LabelTTF is a subclass of cc.TextureNode that knows how to render text labels with system font or a ttf font file<br/>
@@ -607,7 +608,7 @@ export class LabelTTF extends Sprite {
    * @return {Number} The scale factor
    */
   getScale() {
-    if (this._scaleX !== this._scaleY) cc.log(cc._LogInfos.Node_getScale);
+    if (this._scaleX !== this._scaleY) log(_LogInfos.Node_getScale);
     return this._scaleX * cc.view.getDevicePixelRatio();
   }
   /**

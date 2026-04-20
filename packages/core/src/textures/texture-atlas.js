@@ -27,6 +27,7 @@
 import { NewClass } from "../platform/class";
 import { initWebGLTextureAtlas } from "./texture-2d-webgl";
 import Game from "../boot/game";
+import { log, assert, _LogInfos } from "../boot/debugger";
 
 /**
  * <p>A class that implements a Texture Atlas. <br />
@@ -243,7 +244,7 @@ export class TextureAtlas extends NewClass {
     var texture = cc.textureCache.addImage(file);
     if (texture) return this.initWithTexture(texture, capacity);
     else {
-      cc.log(cc._LogInfos.TextureAtlas_initWithFile, file);
+      log(_LogInfos.TextureAtlas_initWithFile, file);
       return false;
     }
   }
@@ -263,7 +264,7 @@ export class TextureAtlas extends NewClass {
    * textureAtlas.initWithTexture(texture, 3);
    */
   initWithTexture(texture, capacity) {
-    cc.assert(texture, cc._LogInfos.TextureAtlas_initWithTexture);
+    assert(texture, _LogInfos.TextureAtlas_initWithTexture);
 
     capacity = 0 | capacity;
     this._capacity = capacity;
@@ -305,10 +306,10 @@ export class TextureAtlas extends NewClass {
    * @param {Number} index
    */
   updateQuad(quad, index) {
-    cc.assert(quad, cc._LogInfos.TextureAtlas_updateQuad);
-    cc.assert(
+    assert(quad, _LogInfos.TextureAtlas_updateQuad);
+    assert(
       index >= 0 && index < this._capacity,
-      cc._LogInfos.TextureAtlas_updateQuad_2
+      _LogInfos.TextureAtlas_updateQuad_2
     );
 
     this._totalQuads = Math.max(index + 1, this._totalQuads);
@@ -323,11 +324,11 @@ export class TextureAtlas extends NewClass {
    * @param {Number} index
    */
   insertQuad(quad, index) {
-    cc.assert(index < this._capacity, cc._LogInfos.TextureAtlas_insertQuad_2);
+    assert(index < this._capacity, _LogInfos.TextureAtlas_insertQuad_2);
 
     this._totalQuads++;
     if (this._totalQuads > this._capacity) {
-      cc.log(cc._LogInfos.TextureAtlas_insertQuad);
+      log(_LogInfos.TextureAtlas_insertQuad);
       return;
     }
     var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
@@ -365,15 +366,15 @@ export class TextureAtlas extends NewClass {
   insertQuads(quads, index, amount) {
     amount = amount || quads.length;
 
-    cc.assert(
+    assert(
       index + amount <= this._capacity,
-      cc._LogInfos.TextureAtlas_insertQuads
+      _LogInfos.TextureAtlas_insertQuads
     );
 
     var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     this._totalQuads += amount;
     if (this._totalQuads > this._capacity) {
-      cc.log(cc._LogInfos.TextureAtlas_insertQuad);
+      log(_LogInfos.TextureAtlas_insertQuad);
       return;
     }
 
@@ -411,14 +412,14 @@ export class TextureAtlas extends NewClass {
   insertQuadFromIndex(fromIndex, newIndex) {
     if (fromIndex === newIndex) return;
 
-    cc.assert(
+    assert(
       newIndex >= 0 || newIndex < this._totalQuads,
-      cc._LogInfos.TextureAtlas_insertQuadFromIndex
+      _LogInfos.TextureAtlas_insertQuadFromIndex
     );
 
-    cc.assert(
+    assert(
       fromIndex >= 0 || fromIndex < this._totalQuads,
-      cc._LogInfos.TextureAtlas_insertQuadFromIndex_2
+      _LogInfos.TextureAtlas_insertQuadFromIndex_2
     );
 
     var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
@@ -451,9 +452,9 @@ export class TextureAtlas extends NewClass {
    * @param {Number} index
    */
   removeQuadAtIndex(index) {
-    cc.assert(
+    assert(
       index < this._totalQuads,
-      cc._LogInfos.TextureAtlas_removeQuadAtIndex
+      _LogInfos.TextureAtlas_removeQuadAtIndex
     );
 
     var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
@@ -477,9 +478,9 @@ export class TextureAtlas extends NewClass {
    * @param {Number} amount
    */
   removeQuadsAtIndex(index, amount) {
-    cc.assert(
+    assert(
       index + amount <= this._totalQuads,
-      cc._LogInfos.TextureAtlas_removeQuadsAtIndex
+      _LogInfos.TextureAtlas_removeQuadsAtIndex
     );
 
     this._totalQuads -= amount;
@@ -634,20 +635,20 @@ export class TextureAtlas extends NewClass {
       newIndex = amount;
       amount = this._totalQuads - oldIndex;
 
-      cc.assert(
+      assert(
         newIndex + (this._totalQuads - oldIndex) <= this._capacity,
-        cc._LogInfos.TextureAtlas_moveQuadsFromIndex
+        _LogInfos.TextureAtlas_moveQuadsFromIndex
       );
 
       if (amount === 0) return;
     } else {
-      cc.assert(
+      assert(
         newIndex + amount <= this._totalQuads,
-        cc._LogInfos.TextureAtlas_moveQuadsFromIndex_2
+        _LogInfos.TextureAtlas_moveQuadsFromIndex_2
       );
-      cc.assert(
+      assert(
         oldIndex < this._totalQuads,
-        cc._LogInfos.TextureAtlas_moveQuadsFromIndex_3
+        _LogInfos.TextureAtlas_moveQuadsFromIndex_3
       );
 
       if (oldIndex === newIndex) return;

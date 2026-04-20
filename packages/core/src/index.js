@@ -4,7 +4,7 @@ import {
   isUndefined, isObject, isCrossOrigin, formatStr,
   AsyncPool, Async, Path, Loader,
   create3DContext, Sys, initEngine, Game,
-  _LogInfos, logToWebPage, formatString, initDebugSetting,
+  _LogInfos, log, warn, error, assert, logToWebPage, formatString, initDebugSetting,
   _loadingImage, _fpsImage, _loaderImage
 } from "./boot";
 
@@ -425,6 +425,10 @@ cc.game = Game.getInstance();
 
 // Boot — Debugger
 cc._LogInfos = _LogInfos;
+cc.log = (...args) => log(...args);
+cc.warn = (...args) => warn(...args);
+cc.error = (...args) => error(...args);
+cc.assert = (...args) => assert(...args);
 cc._logToWebPage = logToWebPage;
 cc._formatString = formatString;
 cc._initDebugSetting = initDebugSetting;

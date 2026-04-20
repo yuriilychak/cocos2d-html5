@@ -1,4 +1,5 @@
 import Game from './game';
+import { log, warn } from './debugger';
 
 export function create3DContext(canvas, opt_attribs) {
     var names = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
@@ -231,7 +232,7 @@ export default class Sys {
             localStorage = null;
         } catch (e) {
             var warn = function () {
-                cc.warn("Warning: localStorage isn't enabled. Please confirm browser cookie or privacy option");
+                warn("Warning: localStorage isn't enabled. Please confirm browser cookie or privacy option");
             };
             this.localStorage = {
                 getItem : warn,
@@ -340,7 +341,7 @@ export default class Sys {
         str += "osVersion : " + this.osVersion + "\r\n";
         str += "platform : " + this.platform + "\r\n";
         str += "Using " + (cc._renderType === Game.RENDER_TYPE_WEBGL ? "WEBGL" : "CANVAS") + " renderer." + "\r\n";
-        cc.log(str);
+        log(str);
     }
 
     openURL(url) {

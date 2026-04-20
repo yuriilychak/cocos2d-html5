@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Node } from "../base-nodes/node";
+import { log, assert, _LogInfos } from "../boot/debugger";
 
 /**
  * <p>
@@ -146,9 +147,9 @@ export class SpriteBatchNode extends Node {
    * @param {Number} index
    */
   updateQuadFromSprite(sprite, index) {
-    cc.assert(sprite, cc._LogInfos.CCSpriteBatchNode_updateQuadFromSprite_2);
+    assert(sprite, _LogInfos.CCSpriteBatchNode_updateQuadFromSprite_2);
     if (!(sprite instanceof cc.Sprite)) {
-      cc.log(cc._LogInfos.CCSpriteBatchNode_updateQuadFromSprite);
+      log(_LogInfos.CCSpriteBatchNode_updateQuadFromSprite);
       return;
     }
 
@@ -243,7 +244,7 @@ export class SpriteBatchNode extends Node {
    * @param {Number} [tag]
    */
   addChild(child, zOrder, tag) {
-    cc.assert(child !== undefined, cc._LogInfos.CCSpriteBatchNode_addChild_3);
+    assert(child !== undefined, _LogInfos.CCSpriteBatchNode_addChild_3);
 
     if (!this._isValidChild(child)) return;
 
@@ -259,11 +260,11 @@ export class SpriteBatchNode extends Node {
 
   _isValidChild(child) {
     if (!(child instanceof cc.Sprite)) {
-      cc.log(cc._LogInfos.Sprite_addChild_4);
+      log(_LogInfos.Sprite_addChild_4);
       return false;
     }
     if (child.texture !== this._texture) {
-      cc.log(cc._LogInfos.Sprite_addChild_5);
+      log(_LogInfos.Sprite_addChild_5);
       return false;
     }
     return true;

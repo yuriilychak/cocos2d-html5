@@ -24,11 +24,11 @@
  ****************************************************************************/
 
 import { NewClass } from '../platform/class';
+import { Component } from './component';
+import { log } from '../boot/debugger';
 
 /**
  * The component container for Cocostudio, it has some components.
- * @class
- * @extends cc.Class
  */
 export class ComponentContainer extends NewClass {
     _components = null;
@@ -42,7 +42,7 @@ export class ComponentContainer extends NewClass {
 
     getComponent(name) {
         if (!name)
-            throw new Error("cc.ComponentContainer.getComponent(): name should be non-null");
+            throw new Error("ComponentContainer.getComponent(): name should be non-null");
         name = name.trim();
         if (!this._components) {
             this._components = {};
@@ -52,9 +52,9 @@ export class ComponentContainer extends NewClass {
 
     add(component) {
         if (!component)
-            throw new Error("cc.ComponentContainer.add(): component should be non-null");
+            throw new Error("ComponentContainer.add(): component should be non-null");
         if (component.getOwner()) {
-            cc.log("cc.ComponentContainer.add(): Component already added. It can't be added again");
+            log("ComponentContainer.add(): Component already added. It can't be added again");
             return false;
         }
 
@@ -64,7 +64,7 @@ export class ComponentContainer extends NewClass {
         }
         var oldComponent = this._components[component.getName()];
         if (oldComponent) {
-            cc.log("cc.ComponentContainer.add(): Component already added. It can't be added again");
+            log("ComponentContainer.add(): Component already added. It can't be added again");
             return false;
         }
         component.setOwner(this._owner);
@@ -75,10 +75,10 @@ export class ComponentContainer extends NewClass {
 
     remove(name) {
         if (!name)
-            throw new Error("cc.ComponentContainer.remove(): name should be non-null");
+            throw new Error("ComponentContainer.remove(): name should be non-null");
         if (!this._components)
             return false;
-        if (name instanceof cc.Component)
+        if (name instanceof Component)
             return this._removeByComponent(name);
         else {
             name = name.trim();

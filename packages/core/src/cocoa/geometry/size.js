@@ -25,9 +25,8 @@
  ****************************************************************************/
 
 /**
- * cc.Size is the class for size object.
- * @class cc.Size
- * @param {Number|cc.Size} [width=0]
+ * Size is the class for size object.
+ * @param {Number|Size} [width=0]
  * @param {Number} [height=0]
  */
 export class Size {
@@ -46,9 +45,9 @@ export class Size {
 }
 
 /**
- * Helper function that creates a cc.Size.
+ * Helper function that creates a Size.
  * @function
- * @param {Number|cc.Size} [w] width or a size object
+ * @param {Number|Size} [w] width or a size object
  * @param {Number} [h] height
  * @return {Size}
  */

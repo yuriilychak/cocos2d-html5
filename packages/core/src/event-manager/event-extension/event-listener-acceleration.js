@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import EventListener from '../event-listener/event-listener';
+import { assert, _LogInfos } from '../../boot/debugger';
 
 export default class _EventListenerAcceleration extends EventListener {
     constructor(callback) {
@@ -40,7 +41,7 @@ export default class _EventListenerAcceleration extends EventListener {
 
     checkAvailable() {
 
-        cc.assert(this._onAccelerationEvent, cc._LogInfos._EventListenerAcceleration_checkAvailable);
+        assert(this._onAccelerationEvent, _LogInfos._EventListenerAcceleration_checkAvailable);
 
         return true;
     }

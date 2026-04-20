@@ -24,6 +24,7 @@
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from '../base-nodes/node-canvas-render-cmd';
 import { Rect } from '../cocoa/geometry/rect';
+import { error, _LogInfos } from '../boot/debugger';
 
 export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     constructor(renderable) {
@@ -93,9 +94,9 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
         if (texture && texture.url) {
             const _x = rect.x + rect.width, _y = rect.y + rect.height;
             if (_x > texture.width)
-                cc.error(cc._LogInfos.RectWidth, texture.url);
+                error(_LogInfos.RectWidth, texture.url);
             if (_y > texture.height)
-                cc.error(cc._LogInfos.RectHeight, texture.url);
+                error(_LogInfos.RectHeight, texture.url);
         }
     }
 

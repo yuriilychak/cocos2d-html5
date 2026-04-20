@@ -31,6 +31,7 @@ import _EventListenerTouchAllAtOnce from './event-listener-touch-all-at-once';
 import _EventListenerFocus from './event-listener-focus';
 import _EventListenerKeyboard from '../event-extension/event-listener-keyboard';
 import _EventListenerAcceleration from '../event-extension/event-listener-acceleration';
+import { assert, _LogInfos } from '../../boot/debugger';
 
 /**
  * Create a EventListener object by json object
@@ -51,7 +52,7 @@ import _EventListenerAcceleration from '../event-extension/event-listener-accele
  */
 EventListener.create = function(argObj){
 
-    cc.assert(argObj&&argObj.event, cc._LogInfos.EventListener_create);
+    assert(argObj&&argObj.event, _LogInfos.EventListener_create);
 
     var listenerType = argObj.event;
     delete argObj.event;

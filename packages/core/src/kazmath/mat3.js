@@ -1,5 +1,6 @@
 import { EPSILON } from './utility';
 import Quaternion from './quaternion';
+import { log } from '../boot/debugger';
 
 export default class Matrix3 {
     constructor(mat3) {
@@ -128,7 +129,7 @@ export default class Matrix3 {
 
     assignFrom(matIn) {
         if (this === matIn) {
-            cc.log("cc.math.Matrix3.assign(): current matrix equals matIn");
+            log("cc.math.Matrix3.assign(): current matrix equals matIn");
             return this;
         }
         const mat = this.mat, m2 = matIn.mat;

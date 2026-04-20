@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import EventListener from './event-listener';
+import { log, _LogInfos } from '../../boot/debugger';
 
 export default class _EventListenerTouchOneByOne extends EventListener {
     constructor() {
@@ -58,7 +59,7 @@ export default class _EventListenerTouchOneByOne extends EventListener {
 
     checkAvailable() {
         if(!this.onTouchBegan){
-            cc.log(cc._LogInfos._EventListenerTouchOneByOne_checkAvailable);
+            log(_LogInfos._EventListenerTouchOneByOne_checkAvailable);
             return false;
         }
         return true;

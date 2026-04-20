@@ -54,8 +54,6 @@ cc._gameDiv = null;
 
 window.ENABLE_IMAEG_POOL = true;
 
-cc.log = cc.warn = cc.error = cc.assert = function () {};
-
 cc._engineLoaded = false;
 
 // Function.prototype.bind polyfill

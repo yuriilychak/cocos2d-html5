@@ -27,6 +27,7 @@ import { Point } from "../cocoa/geometry/point";
 import { Rect, rectContainsPoint } from "../cocoa/geometry/rect";
 import EventManager from "../event-manager/event-manager";
 import Sys from "../boot/sys";
+import { log, _LogInfos } from "../boot/debugger";
 
 /**
  * ignore
@@ -139,7 +140,7 @@ export const inputManager = /** @lends inputManager# */ {
       if (index == null) {
         var unusedIndex = this._getUnUsedIndex();
         if (unusedIndex === -1) {
-          cc.log(cc._LogInfos.inputManager_handleTouchesBegin, unusedIndex);
+          log(_LogInfos.inputManager_handleTouchesBegin, unusedIndex);
           continue;
         }
         //curTouch = this._touches[unusedIndex] = selTouch;

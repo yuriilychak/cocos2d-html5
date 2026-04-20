@@ -30,6 +30,7 @@ import Game from "../boot/game";
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
+import { log, assert, _LogInfos } from "../boot/debugger";
 
 /**
  * <p>cc.Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -240,7 +241,7 @@ export class Sprite extends EventHelper(Node) {
    * @return {Boolean}  true if the sprite is initialized properly, false otherwise.
    */
   initWithSpriteFrame(spriteFrame) {
-    cc.assert(spriteFrame, cc._LogInfos.Sprite_initWithSpriteFrame);
+    assert(spriteFrame, _LogInfos.Sprite_initWithSpriteFrame);
     return this.setSpriteFrame(spriteFrame);
   }
 
@@ -256,11 +257,11 @@ export class Sprite extends EventHelper(Node) {
    * sprite.initWithSpriteFrameName("grossini_dance_01.png");
    */
   initWithSpriteFrameName(spriteFrameName) {
-    cc.assert(spriteFrameName, cc._LogInfos.Sprite_initWithSpriteFrameName);
+    assert(spriteFrameName, _LogInfos.Sprite_initWithSpriteFrameName);
     var frame = cc.spriteFrameCache.getSpriteFrame(spriteFrameName);
-    cc.assert(
+    assert(
       frame,
-      spriteFrameName + cc._LogInfos.Sprite_initWithSpriteFrameName1
+      spriteFrameName + _LogInfos.Sprite_initWithSpriteFrameName1
     );
     return this.initWithSpriteFrame(frame);
   }
@@ -383,19 +384,19 @@ export class Sprite extends EventHelper(Node) {
    * @param {Number} frameIndex
    */
   setDisplayFrameWithAnimationName(animationName, frameIndex) {
-    cc.assert(
+    assert(
       animationName,
-      cc._LogInfos.Sprite_setDisplayFrameWithAnimationName_3
+      _LogInfos.Sprite_setDisplayFrameWithAnimationName_3
     );
 
     var cache = cc.animationCache.getAnimation(animationName);
     if (!cache) {
-      cc.log(cc._LogInfos.Sprite_setDisplayFrameWithAnimationName);
+      log(_LogInfos.Sprite_setDisplayFrameWithAnimationName);
       return;
     }
     var animFrame = cache.getFrames()[frameIndex];
     if (!animFrame) {
-      cc.log(cc._LogInfos.Sprite_setDisplayFrameWithAnimationName_2);
+      log(_LogInfos.Sprite_setDisplayFrameWithAnimationName_2);
       return;
     }
     this.setSpriteFrame(animFrame.getSpriteFrame());
@@ -426,7 +427,7 @@ export class Sprite extends EventHelper(Node) {
         var frameName = fileName.substr(1, fileName.length - 1);
         var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
         if (spriteFrame) this.initWithSpriteFrame(spriteFrame);
-        else cc.log("%s does not exist", fileName);
+        else log("%s does not exist", fileName);
       } else {
         // Init  with filename and rect
         Sprite.prototype.init.call(this, fileName, rect);
@@ -526,7 +527,7 @@ export class Sprite extends EventHelper(Node) {
    * @return {Boolean} true if the sprite is initialized properly, false otherwise.
    */
   initWithFile(filename, rect) {
-    cc.assert(filename, cc._LogInfos.Sprite_initWithFile);
+    assert(filename, _LogInfos.Sprite_initWithFile);
 
     var tex = cc.textureCache.getTextureForKey(filename);
     if (!tex) {
@@ -566,9 +567,9 @@ export class Sprite extends EventHelper(Node) {
    */
   initWithTexture(texture, rect, rotated, counterclockwise) {
     var _t = this;
-    cc.assert(
+    assert(
       arguments.length !== 0,
-      cc._LogInfos.CCSpriteBatchNode_initWithTexture
+      _LogInfos.CCSpriteBatchNode_initWithTexture
     );
     this._loader.clear();
 
@@ -669,7 +670,7 @@ export class Sprite extends EventHelper(Node) {
    * @override
    */
   addChild(child, localZOrder, tag) {
-    cc.assert(child, cc._LogInfos.CCSpriteBatchNode_addChild_2);
+    assert(child, _LogInfos.CCSpriteBatchNode_addChild_2);
 
     if (localZOrder == null) localZOrder = child._localZOrder;
     if (tag == null) tag = child.tag;
@@ -691,7 +692,7 @@ export class Sprite extends EventHelper(Node) {
     var _t = this;
     if (typeof newFrame === "string") {
       newFrame = cc.spriteFrameCache.getSpriteFrame(newFrame);
-      cc.assert(newFrame, cc._LogInfos.Sprite_setSpriteFrame);
+      assert(newFrame, _LogInfos.Sprite_setSpriteFrame);
     }
     this._loader.clear();
 

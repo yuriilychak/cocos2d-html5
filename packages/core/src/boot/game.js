@@ -4,6 +4,7 @@ import EventHelper from "../event-manager/event-helper";
 import EventManager from "../event-manager/event-manager";
 import Loader from "./loader";
 import Path from "./path";
+import { log } from './debugger';
 
 /**
  * An object to boot the game.
@@ -433,7 +434,7 @@ export default class Game extends EventHelper(NewClass) {
         localCanvas.parentNode.insertBefore(localContainer, localCanvas);
     } else {
       if (element.tagName !== "DIV") {
-        cc.log("Warning: target element is not a DIV or CANVAS");
+        log("Warning: target element is not a DIV or CANVAS");
       }
       width = width || element.clientWidth;
       height = height || element.clientHeight;

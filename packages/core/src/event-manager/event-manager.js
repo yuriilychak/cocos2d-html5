@@ -38,6 +38,7 @@ import {
   _EventListenerAcceleration,
   _EventListenerKeyboard
 } from "./event-extension";
+import { log, assert, _LogInfos } from '../boot/debugger';
 
 /**
  * @ignore
@@ -101,7 +102,7 @@ function __getListenerID(event) {
   if (getType === eventType.TOUCH) {
     // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
     // return UNKNOWN instead.
-    cc.log(cc._LogInfos.__getListenerID);
+    log(_LogInfos.__getListenerID);
   }
   return "";
 }
@@ -215,7 +216,7 @@ export default class EventManager {
 
       var node = listener._getSceneGraphPriority();
       if (node === null)
-        cc.log(cc._LogInfos.eventManager__forceAddEventListener);
+        log(_LogInfos.eventManager__forceAddEventListener);
 
       this._associateNodeAndEventListener(node, listener);
       if (node.isRunning()) this.resumeTarget(node);
@@ -441,7 +442,7 @@ export default class EventManager {
 
   _updateTouchListeners(event) {
     var locInDispatch = this._inDispatch;
-    cc.assert(locInDispatch > 0, cc._LogInfos.EventManager__updateListeners);
+    assert(locInDispatch > 0, _LogInfos.EventManager__updateListeners);
 
     if (locInDispatch > 1) return;
 
@@ -455,9 +456,9 @@ export default class EventManager {
       this._onUpdateListeners(listeners);
     }
 
-    cc.assert(
+    assert(
       locInDispatch === 1,
-      cc._LogInfos.EventManager__updateListeners_2
+      _LogInfos.EventManager__updateListeners_2
     );
 
     var locToAddedListeners = this._toAddedListeners;
@@ -785,19 +786,19 @@ export default class EventManager {
    * @return {EventListener} Return the listener. Needed in order to remove the event from the dispatcher.
    */
   addListener(listener, nodeOrPriority) {
-    cc.assert(
+    assert(
       listener && nodeOrPriority,
-      cc._LogInfos.eventManager_addListener_2
+      _LogInfos.eventManager_addListener_2
     );
     if (!(listener instanceof EventListener)) {
-      cc.assert(
+      assert(
         !cc.isNumber(nodeOrPriority),
-        cc._LogInfos.eventManager_addListener_3
+        _LogInfos.eventManager_addListener_3
       );
       listener = EventListener.create(listener);
     } else {
       if (listener._isRegistered()) {
-        cc.log(cc._LogInfos.eventManager_addListener_4);
+        log(_LogInfos.eventManager_addListener_4);
         return;
       }
     }
@@ -806,7 +807,7 @@ export default class EventManager {
 
     if (cc.isNumber(nodeOrPriority)) {
       if (nodeOrPriority === 0) {
-        cc.log(cc._LogInfos.eventManager_addListener);
+        log(_LogInfos.eventManager_addListener);
         return;
       }
 
@@ -1004,7 +1005,7 @@ export default class EventManager {
         );
       else if (listenerType === EventListener.KEYBOARD)
         _t._removeListenersForListenerID(_EventListenerKeyboard.LISTENER_ID);
-      else cc.log(cc._LogInfos.eventManager_removeListeners);
+      else log(_LogInfos.eventManager_removeListeners);
     }
   }
 
@@ -1044,7 +1045,7 @@ export default class EventManager {
         var found = fixedPriorityListeners.indexOf(listener);
         if (found !== -1) {
           if (listener._getSceneGraphPriority() != null)
-            cc.log(cc._LogInfos.eventManager_setPriority);
+            log(_LogInfos.eventManager_setPriority);
           if (listener._getFixedPriority() !== fixedPriority) {
             listener._setFixedPriority(fixedPriority);
             this._setDirty(

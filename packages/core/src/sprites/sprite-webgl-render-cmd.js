@@ -24,6 +24,7 @@
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from '../base-nodes/node-webgl-render-cmd';
 import { Rect } from '../cocoa/geometry/rect';
+import { log, error, _LogInfos } from '../boot/debugger';
 
 //Sprite's WebGL render command
 export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -69,11 +70,11 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
         const node = this._node;
         if (node._batchNode) {
             if (!(child instanceof cc.Sprite)) {
-                cc.log(cc._LogInfos.Sprite_addChild);
+                log(_LogInfos.Sprite_addChild);
                 return false;
             }
             if (child.texture._webTextureObj !== node.textureAtlas.texture._webTextureObj)
-                cc.log(cc._LogInfos.Sprite_addChild_2);
+                log(_LogInfos.Sprite_addChild_2);
 
             //put it in descendants array of batch node
             node._batchNode.appendChild(child);
@@ -208,7 +209,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     _updateBlendFunc() {
         if (this._batchNode) {
-            cc.log(cc._LogInfos.Sprite__updateBlendFunc);
+            log(_LogInfos.Sprite__updateBlendFunc);
             return;
         }
 
@@ -252,10 +253,10 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
                 _y = rect.y + rect.height;
             }
             if (_x > texture.width) {
-                cc.error(cc._LogInfos.RectWidth, texture.url);
+                error(_LogInfos.RectWidth, texture.url);
             }
             if (_y > texture.height) {
-                cc.error(cc._LogInfos.RectHeight, texture.url);
+                error(_LogInfos.RectHeight, texture.url);
             }
         }
     }

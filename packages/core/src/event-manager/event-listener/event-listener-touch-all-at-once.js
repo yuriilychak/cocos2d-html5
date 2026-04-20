@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import EventListener from './event-listener';
+import { log, _LogInfos } from '../../boot/debugger';
 
 export default class _EventListenerTouchAllAtOnce extends EventListener {
     constructor() {
@@ -46,7 +47,7 @@ export default class _EventListenerTouchAllAtOnce extends EventListener {
     checkAvailable() {
         if (this.onTouchesBegan === null && this.onTouchesMoved === null
             && this.onTouchesEnded === null && this.onTouchesCancelled === null) {
-            cc.log(cc._LogInfos._EventListenerTouchAllAtOnce_checkAvailable);
+            log(_LogInfos._EventListenerTouchAllAtOnce_checkAvailable);
             return false;
         }
         return true;

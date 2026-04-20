@@ -32,6 +32,7 @@ import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
+import { log, assert, _LogInfos } from "../boot/debugger";
 
 /**
  * Default Node tag
@@ -586,7 +587,7 @@ export class Node extends NewClass {
    */
   getRotation() {
     if (this._rotationX !== this._rotationY)
-      cc.log(cc._LogInfos.Node_getRotation);
+      log(_LogInfos.Node_getRotation);
     return this._rotationX;
   }
 
@@ -662,7 +663,7 @@ export class Node extends NewClass {
    * @return {Number} The scale factor
    */
   getScale() {
-    if (this._scaleX !== this._scaleY) cc.log(cc._LogInfos.Node_getScale);
+    if (this._scaleX !== this._scaleY) log(_LogInfos.Node_getScale);
     return this._scaleX;
   }
 
@@ -1306,7 +1307,7 @@ export class Node extends NewClass {
    */
   getChildByName(name) {
     if (!name) {
-      cc.log("Invalid name");
+      log("Invalid name");
       return null;
     }
 
@@ -1341,8 +1342,8 @@ export class Node extends NewClass {
       name = "";
     }
 
-    cc.assert(child, cc._LogInfos.Node_addChild_3);
-    cc.assert(
+    assert(child, _LogInfos.Node_addChild_3);
+    assert(
       child._parent === null,
       "child already added. It can't be added again"
     );
@@ -1421,10 +1422,10 @@ export class Node extends NewClass {
    * @see cc.Node#removeChildByTag
    */
   removeChildByTag(tag, cleanup) {
-    if (tag === NODE_TAG_INVALID) cc.log(cc._LogInfos.Node_removeChildByTag);
+    if (tag === NODE_TAG_INVALID) log(_LogInfos.Node_removeChildByTag);
 
     var child = this.getChildByTag(tag);
-    if (!child) cc.log(cc._LogInfos.Node_removeChildByTag_2, tag);
+    if (!child) log(_LogInfos.Node_removeChildByTag_2, tag);
     else this.removeChild(child, cleanup);
   }
 
@@ -1505,9 +1506,9 @@ export class Node extends NewClass {
    * @param {Number} zOrder Z order for drawing priority. Please refer to setZOrder(int)
    */
   reorderChild(child, zOrder) {
-    cc.assert(child, cc._LogInfos.Node_reorderChild);
+    assert(child, _LogInfos.Node_reorderChild);
     if (this._children.indexOf(child) === -1) {
-      cc.log(cc._LogInfos.Node_reorderChild_2);
+      log(_LogInfos.Node_reorderChild_2);
       return;
     }
     cc.renderer.childrenOrderDirty = this._reorderChildDirty = true;
@@ -1703,7 +1704,7 @@ export class Node extends NewClass {
    * @return {Action} An Action pointer
    */
   runAction(action) {
-    cc.assert(action, cc._LogInfos.Node_runAction);
+    assert(action, _LogInfos.Node_runAction);
 
     this.actionManager.addAction(action, this, !this._running);
     return action;
@@ -1733,7 +1734,7 @@ export class Node extends NewClass {
    */
   stopActionByTag(tag) {
     if (tag === cc.ACTION_TAG_INVALID) {
-      cc.log(cc._LogInfos.Node_stopActionByTag);
+      log(_LogInfos.Node_stopActionByTag);
       return;
     }
     this.actionManager.removeActionByTag(tag, this);
@@ -1748,7 +1749,7 @@ export class Node extends NewClass {
    */
   getActionByTag(tag) {
     if (tag === cc.ACTION_TAG_INVALID) {
-      cc.log(cc._LogInfos.Node_getActionByTag);
+      log(_LogInfos.Node_getActionByTag);
       return null;
     }
     return this.actionManager.getActionByTag(tag, this);
@@ -1861,8 +1862,8 @@ export class Node extends NewClass {
       }
     }
 
-    cc.assert(callback, cc._LogInfos.Node_schedule);
-    cc.assert(interval >= 0, cc._LogInfos.Node_schedule_2);
+    assert(callback, _LogInfos.Node_schedule);
+    assert(interval >= 0, _LogInfos.Node_schedule_2);
 
     interval = interval || 0;
     repeat = isNaN(repeat) ? cc.REPEAT_FOREVER : repeat;
@@ -2530,8 +2531,8 @@ export class Node extends NewClass {
    *
    */
   enumerateChildren(name, callback) {
-    cc.assert(name && name.length != 0, "Invalid name");
-    cc.assert(callback != null, "Invalid callback function");
+    assert(name && name.length != 0, "Invalid name");
+    assert(callback != null, "Invalid callback function");
 
     var length = name.length;
     var subStrStartPos = 0;

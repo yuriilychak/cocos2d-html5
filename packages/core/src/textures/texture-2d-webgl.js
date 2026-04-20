@@ -30,6 +30,7 @@ import EventHelper from "../event-manager/event-helper";
 import Game from "../boot/game";
 import Loader from "../boot/loader";
 import Path from "../boot/path";
+import { log, assert, _LogInfos } from "../boot/debugger";
 
 export function initWebGLTexture2D() {
   /**
@@ -308,7 +309,7 @@ export function initWebGLTexture2D() {
           format = gl.LUMINANCE;
           break;
         default:
-          cc.assert(0, cc._LogInfos.Texture2D_initWithData);
+          assert(0, _LogInfos.Texture2D_initWithData);
       }
       gl.texImage2D(
         gl.TEXTURE_2D,
@@ -477,7 +478,7 @@ export function initWebGLTexture2D() {
      */
     initWithImage(uiImage) {
       if (uiImage == null) {
-        cc.log(cc._LogInfos.Texture2D_initWithImage);
+        log(_LogInfos.Texture2D_initWithImage);
         return false;
       }
 
@@ -486,8 +487,8 @@ export function initWebGLTexture2D() {
 
       var maxTextureSize = cc.configuration.getMaxTextureSize();
       if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) {
-        cc.log(
-          cc._LogInfos.Texture2D_initWithImage_2,
+        log(
+          _LogInfos.Texture2D_initWithImage_2,
           imageWidth,
           imageHeight,
           maxTextureSize,
@@ -620,7 +621,7 @@ export function initWebGLTexture2D() {
       hAlignment,
       vAlignment
     ) {
-      cc.log(cc._LogInfos.Texture2D_initWithString);
+      log(_LogInfos.Texture2D_initWithString);
       return null;
     }
 
@@ -631,7 +632,7 @@ export function initWebGLTexture2D() {
      * @return {Boolean}
      */
     initWithETCFile(file) {
-      cc.log(cc._LogInfos.Texture2D_initWithETCFile_2);
+      log(_LogInfos.Texture2D_initWithETCFile_2);
       return false;
     }
 
@@ -641,7 +642,7 @@ export function initWebGLTexture2D() {
      * @return {Boolean}
      */
     initWithPVRFile(file) {
-      cc.log(cc._LogInfos.Texture2D_initWithPVRFile_2);
+      log(_LogInfos.Texture2D_initWithPVRFile_2);
       return false;
     }
 
@@ -661,7 +662,7 @@ export function initWebGLTexture2D() {
      * @return {Boolean}
      */
     initWithPVRTCData(data, level, bpp, hasAlpha, length, pixelFormat) {
-      cc.log(cc._LogInfos.Texture2D_initWithPVRTCData_2);
+      log(_LogInfos.Texture2D_initWithPVRTCData_2);
       return false;
     }
 
@@ -685,7 +686,7 @@ export function initWebGLTexture2D() {
           wrapT: wrapT
         };
 
-      cc.assert(
+      assert(
         (_t._pixelsWide === cc.NextPOT(_t._pixelsWide) &&
           _t._pixelsHigh === cc.NextPOT(_t._pixelsHigh)) ||
           (texParams.wrapS === gl.CLAMP_TO_EDGE &&
@@ -754,7 +755,7 @@ export function initWebGLTexture2D() {
      */
     generateMipmap() {
       var _t = this;
-      cc.assert(
+      assert(
         _t._pixelsWide === cc.NextPOT(_t._pixelsWide) &&
           _t._pixelsHigh === cc.NextPOT(_t._pixelsHigh),
         "Mimpap texture only works in POT textures"
@@ -782,7 +783,7 @@ export function initWebGLTexture2D() {
       format = format || this._pixelFormat;
       var value = cc.Texture2D._B[format];
       if (value != null) return value;
-      cc.log(cc._LogInfos.Texture2D_bitsPerPixelForFormat, format);
+      log(_LogInfos.Texture2D_bitsPerPixelForFormat, format);
       return -1;
     }
 
@@ -802,7 +803,7 @@ export function initWebGLTexture2D() {
         if (bpp >= 8) {
           pixelFormat = tex2d.PIXEL_FORMAT_RGB888;
         } else {
-          cc.log(cc._LogInfos.Texture2D__initPremultipliedATextureWithImage);
+          log(_LogInfos.Texture2D__initPremultipliedATextureWithImage);
           pixelFormat = tex2d.PIXEL_FORMAT_RGB565;
         }
       }
@@ -1044,7 +1045,7 @@ export function initWebGLTextureCache() {
    * cc.textureCache.addImage("hello.png");
    */
   _p.addImage = function (url, cb, target) {
-    cc.assert(url, cc._LogInfos.Texture2D_addImage_2);
+    assert(url, _LogInfos.Texture2D_addImage_2);
 
     var locTexs = this._textures;
     //remove judge(webgl)

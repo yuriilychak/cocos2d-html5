@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { SAXParser } from './sax-parser';
+import { warn } from '../../boot/debugger';
 
 /**
  *
@@ -44,7 +45,7 @@ export class PlistParser extends SAXParser {
         var xmlDoc = this._parseXML(xmlTxt);
         var plist = xmlDoc.documentElement;
         if (plist.tagName !== 'plist') {
-            cc.warn("Not a plist file!");
+            warn("Not a plist file!");
             return {};
         }
 

@@ -27,6 +27,7 @@
 import { Node } from "./node";
 import EventHelper from "../event-manager/event-helper";
 import Game from "../boot/game";
+import { log, _LogInfos } from "../boot/debugger";
 
 /**
  * <p>cc.AtlasNode is a subclass of cc.Node, it knows how to render a TextureAtlas object. </p>
@@ -102,7 +103,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @function
    */
   updateAtlasValues() {
-    cc.log(cc._LogInfos.AtlasNode_updateAtlasValues);
+    log(_LogInfos.AtlasNode_updateAtlasValues);
   }
 
   /**

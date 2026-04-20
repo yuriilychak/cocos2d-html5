@@ -3,6 +3,7 @@ import Vec3 from './vec3';
 import Matrix3 from './mat3';
 import Plane from './plane';
 import Quaternion from './quaternion';
+import { log } from '../boot/debugger';
 
 export default class Matrix4 {
     constructor(mat4) {
@@ -105,7 +106,7 @@ export default class Matrix4 {
 
     assignFrom(mat4) {
         if (this === mat4) {
-            cc.log("cc.mat.Matrix4.assignFrom(): mat4 equals current matrix");
+            log("cc.mat.Matrix4.assignFrom(): mat4 equals current matrix");
             return this;
         }
         const outArr = this.mat, inArr = mat4.mat;
@@ -118,7 +119,7 @@ export default class Matrix4 {
 
     equals(mat4) {
         if (this === mat4) {
-            cc.log("cc.kmMat4AreEqual(): pMat1 and pMat2 are same object.");
+            log("cc.kmMat4AreEqual(): pMat1 and pMat2 are same object.");
             return true;
         }
         const matA = this.mat, matB = mat4.mat;
@@ -206,7 +207,7 @@ export default class Matrix4 {
                 plane.c = mat[11] + mat[10]; plane.d = mat[15] + mat[14];
                 break;
             default:
-                cc.log("cc.math.Matrix4.extractPlane: Invalid plane index");
+                log("cc.math.Matrix4.extractPlane: Invalid plane index");
                 break;
         }
         const t = Math.sqrt(plane.a * plane.a + plane.b * plane.b + plane.c * plane.c);
@@ -492,7 +493,7 @@ export function getMat4MultiplyValue(pM1, pM2) {
 
 export function kmMat4Assign(pOut, pIn) {
     if (pOut === pIn) {
-        cc.log("cc.kmMat4Assign(): pOut equals pIn");
+        log("cc.kmMat4Assign(): pOut equals pIn");
         return pOut;
     }
     const outArr = pOut.mat, inArr = pIn.mat;

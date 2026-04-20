@@ -14,5 +14,5 @@ export { default as Loader } from './loader';
 export { create3DContext, default as Sys } from './sys';
 export { initEngine } from './engine';
 export { default as Game } from './game';
-export { _LogInfos, logToWebPage, formatString, initDebugSetting } from './debugger';
+export { _LogInfos, log, warn, error, assert, logToWebPage, formatString, initDebugSetting } from './debugger';
 export { _loadingImage, _fpsImage, _loaderImage } from './base64-images';

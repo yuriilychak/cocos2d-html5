@@ -26,6 +26,7 @@
 
 import Loader from '../boot/loader';
 import Path from '../boot/path';
+import { log, assert, _LogInfos } from '../boot/debugger';
 
 /**
  * <p>
@@ -80,7 +81,7 @@ export const animationCache = /** @lends cc.animationCache# */ {
   _addAnimationsWithDictionary: function (dictionary, plist) {
     var animations = dictionary["animations"];
     if (!animations) {
-      cc.log(cc._LogInfos.animationCache__addAnimationsWithDictionary);
+      log(_LogInfos.animationCache__addAnimationsWithDictionary);
       return;
     }
 
@@ -106,7 +107,7 @@ export const animationCache = /** @lends cc.animationCache# */ {
         this._parseVersion2(animations);
         break;
       default:
-        cc.log(cc._LogInfos.animationCache__addAnimationsWithDictionary_2);
+        log(_LogInfos.animationCache__addAnimationsWithDictionary_2);
         break;
     }
   },
@@ -119,12 +120,12 @@ export const animationCache = /** @lends cc.animationCache# */ {
    * @param {String} plist
    */
   addAnimations: function (plist) {
-    cc.assert(plist, cc._LogInfos.animationCache_addAnimations_2);
+    assert(plist, _LogInfos.animationCache_addAnimations_2);
 
     var dict = Loader.getInstance().getRes(plist);
 
     if (!dict) {
-      cc.log(cc._LogInfos.animationCache_addAnimations);
+      log(_LogInfos.animationCache_addAnimations);
       return;
     }
 
@@ -140,7 +141,7 @@ export const animationCache = /** @lends cc.animationCache# */ {
       var delay = parseFloat(animationDict["delay"]) || 0;
       var animation = null;
       if (!frameNames) {
-        cc.log(cc._LogInfos.animationCache__parseVersion1, key);
+        log(_LogInfos.animationCache__parseVersion1, key);
         continue;
       }
 
@@ -148,8 +149,8 @@ export const animationCache = /** @lends cc.animationCache# */ {
       for (var i = 0; i < frameNames.length; i++) {
         var spriteFrame = frameCache.getSpriteFrame(frameNames[i]);
         if (!spriteFrame) {
-          cc.log(
-            cc._LogInfos.animationCache__parseVersion1_2,
+          log(
+            _LogInfos.animationCache__parseVersion1_2,
             key,
             frameNames[i]
           );
@@ -161,10 +162,10 @@ export const animationCache = /** @lends cc.animationCache# */ {
       }
 
       if (frames.length === 0) {
-        cc.log(cc._LogInfos.animationCache__parseVersion1_3, key);
+        log(_LogInfos.animationCache__parseVersion1_3, key);
         continue;
       } else if (frames.length !== frameNames.length) {
-        cc.log(cc._LogInfos.animationCache__parseVersion1_4, key);
+        log(_LogInfos.animationCache__parseVersion1_4, key);
       }
       animation = new cc.Animation(frames, delay, 1);
       cc.animationCache.addAnimation(animation, key);
@@ -188,7 +189,7 @@ export const animationCache = /** @lends cc.animationCache# */ {
       var frameArray = animationDict["frames"];
 
       if (!frameArray) {
-        cc.log(cc._LogInfos.animationCache__parseVersion2, key);
+        log(_LogInfos.animationCache__parseVersion2, key);
         continue;
       }
 
@@ -199,8 +200,8 @@ export const animationCache = /** @lends cc.animationCache# */ {
         var spriteFrameName = entry["spriteframe"];
         var spriteFrame = frameCache.getSpriteFrame(spriteFrameName);
         if (!spriteFrame) {
-          cc.log(
-            cc._LogInfos.animationCache__parseVersion2_2,
+          log(
+            _LogInfos.animationCache__parseVersion2_2,
             key,
             spriteFrameName
           );

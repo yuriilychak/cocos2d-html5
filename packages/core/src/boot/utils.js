@@ -1,3 +1,5 @@
+import { log } from './debugger';
+
 /**
  * Iterate over an object or an array, executing a function for each matched element.
  * @param {object|array} obj
@@ -82,7 +84,7 @@ export function isObject(obj) {
  */
 export function isCrossOrigin(url) {
     if (!url) {
-        cc.log("invalid URL");
+        log("invalid URL");
         return false;
     }
     var startIndex = url.indexOf("://");

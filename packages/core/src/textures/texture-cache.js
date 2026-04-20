@@ -28,6 +28,7 @@ import { initWebGLTextureCache } from "./texture-2d-webgl";
 import Game from "../boot/game";
 import Loader from "../boot/loader";
 import Path from "../boot/path";
+import { log, assert, _LogInfos } from "../boot/debugger";
 
 /**
  * cc.textureCache is a singleton object, it's the global cache for cc.Texture2D
@@ -67,7 +68,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @return {Texture2D}
    */
   addPVRTCImage: function (filename) {
-    cc.log(cc._LogInfos.textureCache_addPVRTCImage);
+    log(_LogInfos.textureCache_addPVRTCImage);
   },
 
   /**
@@ -81,7 +82,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @return {Texture2D}
    */
   addETCImage: function (filename) {
-    cc.log(cc._LogInfos.textureCache_addETCImage);
+    log(_LogInfos.textureCache_addETCImage);
   },
 
   /**
@@ -157,7 +158,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @return {Texture2D}
    */
   addPVRImage: function (path) {
-    cc.log(cc._LogInfos.textureCache_addPVRImage);
+    log(_LogInfos.textureCache_addPVRImage);
   },
 
   /**
@@ -242,7 +243,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
    * @return {Texture2D}
    */
   addUIImage: function (image, key) {
-    cc.assert(image, cc._LogInfos.textureCache_addUIImage_2);
+    assert(image, _LogInfos.textureCache_addUIImage_2);
 
     if (key) {
       if (this._textures[key]) return this._textures[key];
@@ -252,7 +253,7 @@ export const textureCache = /** @lends cc.textureCache# */ {
     var texture = new cc.Texture2D();
     texture.initWithImage(image);
     if (key != null) this._textures[key] = texture;
-    else cc.log(cc._LogInfos.textureCache_addUIImage);
+    else log(_LogInfos.textureCache_addUIImage);
     return texture;
   },
 
@@ -269,16 +270,16 @@ export const textureCache = /** @lends cc.textureCache# */ {
       var selTexture = locTextures[key];
       count++;
       if (selTexture.getHtmlElementObj() instanceof HTMLImageElement)
-        cc.log(
-          cc._LogInfos.textureCache_dumpCachedTextureInfo,
+        log(
+          _LogInfos.textureCache_dumpCachedTextureInfo,
           key,
           selTexture.getHtmlElementObj().src,
           selTexture.getPixelsWide(),
           selTexture.getPixelsHigh()
         );
       else {
-        cc.log(
-          cc._LogInfos.textureCache_dumpCachedTextureInfo_2,
+        log(
+          _LogInfos.textureCache_dumpCachedTextureInfo_2,
           key,
           selTexture.getPixelsWide(),
           selTexture.getPixelsHigh()
@@ -293,8 +294,8 @@ export const textureCache = /** @lends cc.textureCache# */ {
       for (var selCanvasKey in selCanvasColorsArr) {
         var selCanvas = selCanvasColorsArr[selCanvasKey];
         count++;
-        cc.log(
-          cc._LogInfos.textureCache_dumpCachedTextureInfo_2,
+        log(
+          _LogInfos.textureCache_dumpCachedTextureInfo_2,
           key,
           selCanvas.width,
           selCanvas.height
@@ -302,8 +303,8 @@ export const textureCache = /** @lends cc.textureCache# */ {
         totalBytes += selCanvas.width * selCanvas.height * 4;
       }
     }
-    cc.log(
-      cc._LogInfos.textureCache_dumpCachedTextureInfo_3,
+    log(
+      _LogInfos.textureCache_dumpCachedTextureInfo_3,
       count,
       totalBytes / 1024,
       (totalBytes / (1024.0 * 1024.0)).toFixed(2)
@@ -350,7 +351,7 @@ Game.getInstance().addEventListener(Game.EVENT_RENDERER_INITED, function () {
      * cc.textureCache.addImage("hello.png");
      */
     _p.addImage = function (url, cb, target) {
-      cc.assert(url, cc._LogInfos.Texture2D_addImage);
+      assert(url, _LogInfos.Texture2D_addImage);
 
       var locTexs = this._textures;
       //remove judge

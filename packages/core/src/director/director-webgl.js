@@ -7,11 +7,10 @@ import {
     PROJECTION_CUSTOM
 } from './constants';
 import EventManager from '../event-manager/event-manager';
+import { log, _LogInfos } from '../boot/debugger';
 
 /**
  * OpenGL projection protocol
- * @class
- * @extends cc.Class
  */
 export class DirectorDelegate extends NewClass {
     updateProjection() {
@@ -32,12 +31,12 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     constructor(director) {
         super(director);
 
-        cc.Director._fpsImage = new Image();
-        cc.Director._fpsImage.addEventListener("load", () => {
-            cc.Director._fpsImageLoaded = true;
+        director._fpsImage = new Image();
+        director._fpsImage.addEventListener("load", () => {
+          director._fpsImageLoaded = true;
         });
         if (cc._fpsImage) {
-            cc.Director._fpsImage.src = cc._fpsImage;
+            director._fpsImage.src = cc._fpsImage;
         }
 
         EventManager.getInstance().addCustomListener(EVENT_PROJECTION_CHANGED, () => {
@@ -91,7 +90,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
                     director._projectionDelegate.updateProjection();
                 break;
             default:
-                cc.log(cc._LogInfos.Director_setProjection);
+                log(_LogInfos.Director_setProjection);
                 break;
         }
         director._projection = projection;

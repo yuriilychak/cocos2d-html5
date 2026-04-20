@@ -24,6 +24,7 @@
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from './node-webgl-render-cmd';
 import { Color } from '../platform/types/color';
+import { log, _LogInfos } from '../boot/debugger';
 
 /**
  * AtlasNode's rendering objects of WebGL
@@ -93,7 +94,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
         this._textureAtlas.initWithTexture(texture, itemsToRender);
 
         if (!this._textureAtlas) {
-            cc.log(cc._LogInfos.AtlasNode__initWithTexture);
+            log(_LogInfos.AtlasNode__initWithTexture);
             return false;
         }
 

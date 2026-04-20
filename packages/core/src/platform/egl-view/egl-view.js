@@ -31,6 +31,7 @@ import { Size } from "../../cocoa/geometry/size";
 import Game from "../../boot/game";
 import EventManager from "../../event-manager/event-manager";
 import Sys from "../../boot/sys";
+import { log, _LogInfos } from "../../boot/debugger";
 
 var __sys = Sys.getInstance();
 
@@ -711,7 +712,7 @@ export class EGLView extends NewClass {
   setDesignResolutionSize(width, height, resolutionPolicy) {
     // Defensive code
     if (!(width > 0 || height > 0)) {
-      cc.log(cc._LogInfos.EGLView_setDesignResolutionSize);
+      log(_LogInfos.EGLView_setDesignResolutionSize);
       return;
     }
 
@@ -728,7 +729,7 @@ export class EGLView extends NewClass {
     if (!this._resizing) this._initFrameSize();
 
     if (!policy) {
-      cc.log(cc._LogInfos.EGLView_setDesignResolutionSize_2);
+      log(_LogInfos.EGLView_setDesignResolutionSize_2);
       return;
     }
 

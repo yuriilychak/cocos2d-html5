@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import Loader from '../boot/loader';
+import { log } from '../boot/debugger';
 
 /**
  * Helper to convert from responseBody to a "responseText" like thing (IE compat).
@@ -108,7 +109,7 @@ export function loadBinarySync(url) {
         req.setRequestHeader("Accept-Charset", "x-user-defined");
         req.send(null);
         if (req.status !== 200) {
-            cc.log(errInfo);
+            log(errInfo);
             return null;
         }
 
@@ -121,7 +122,7 @@ export function loadBinarySync(url) {
             req.overrideMimeType('text\/plain; charset=x-user-defined');
         req.send(null);
         if (req.status !== 200) {
-            cc.log(errInfo);
+            log(errInfo);
             return null;
         }
 

@@ -27,8 +27,6 @@ import { NewClass } from '../platform/class';
 
 /**
  * The base class of component in CocoStudio
- * @class
- * @extends cc.Class
  */
 export class Component extends NewClass {
     _owner = null;
