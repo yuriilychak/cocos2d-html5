@@ -44,7 +44,7 @@ export default class TextureCacheWebGLRenderer {
    * @return {Texture2D}
    * @example
    * //example
-   * cc.textureCache.addImage("hello.png");
+   * textureCache.addImage("hello.png");
    */
   addImage(url, cb, target) {
     var textureCache = this._textureCache;

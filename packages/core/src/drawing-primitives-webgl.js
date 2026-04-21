@@ -29,8 +29,6 @@ import { Point } from './cocoa/geometry/point';
 
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode
- * @class
- * @extends cc.Class
  */
 export class DrawingPrimitiveWebGL extends NewClass {
     constructor(ctx) {

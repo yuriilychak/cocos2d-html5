@@ -328,9 +328,9 @@ import { SpriteBatchNode } from "./sprites/sprite-batch-node";
 import { BakeSprite } from "./sprites/bake-sprite";
 import { AnimationFrame } from "./sprites/animation/animation-frame";
 import { Animation } from "./sprites/animation/animation";
-import { animationCache } from "./sprites/animation-cache";
+import AnimationCache from "./sprites/animation-cache";
 import { SpriteFrame } from "./sprites/sprite-frame";
-import { spriteFrameCache } from "./sprites/sprite-frame-cache";
+import SpriteFrameCache from "./sprites/sprite-frame-cache";
 
 // ======================================================================
 // Director, Scheduler, ActionManager
@@ -734,9 +734,9 @@ cc.SpriteBatchNode = SpriteBatchNode;
 cc.BakeSprite = BakeSprite;
 cc.AnimationFrame = AnimationFrame;
 cc.Animation = Animation;
-cc.animationCache = animationCache;
+cc.animationCache = AnimationCache.getInstance();
 cc.SpriteFrame = SpriteFrame;
-cc.spriteFrameCache = spriteFrameCache;
+cc.spriteFrameCache = SpriteFrameCache.getInstance();
 
 // Director, Scheduler, ActionManager
 cc.configuration = Configuration.getInstance();

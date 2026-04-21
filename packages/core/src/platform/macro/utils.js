@@ -40,8 +40,8 @@ import { log, _LogInfos } from "../../boot/debugger";
  * @param {Number} r ratio between 0 and 1
  * @function
  * @example
- * cc.lerp(2,10,0.5)//returns 6<br/>
- * cc.lerp(2,10,0.2)//returns 3.6
+ * lerp(2,10,0.5)//returns 6<br/>
+ * lerp(2,10,0.2)//returns 3.6
  */
 export function lerp(a, b, r) {
   return a + (b - a) * r;

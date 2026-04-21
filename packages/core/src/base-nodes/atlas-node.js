@@ -31,26 +31,23 @@ import { log, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 
 /**
- * <p>cc.AtlasNode is a subclass of cc.Node, it knows how to render a TextureAtlas object. </p>
+ * <p>AtlasNode is a subclass of Node, it knows how to render a TextureAtlas object. </p>
  *
- * <p>If you are going to render a TextureAtlas consider subclassing cc.AtlasNode (or a subclass of cc.AtlasNode)</p>
+ * <p>If you are going to render a TextureAtlas consider subclassing AtlasNode (or a subclass of AtlasNode)</p>
  *
- * <p>All features from cc.Node are valid</p>
+ * <p>All features from Node are valid</p>
  *
- * <p>You can create a cc.AtlasNode with an Atlas file, the width, the height of each item and the quantity of items to render</p>
+ * <p>You can create a AtlasNode with an Atlas file, the width, the height of each item and the quantity of items to render</p>
  *
- * @class
- * @extends Node
- * @namespace cc
  * @param {String} tile
  * @param {Number} tileWidth
  * @param {Number} tileHeight
  * @param {Number} itemsToRender
  * @example
- * var node = new cc.AtlasNode("pathOfTile", 16, 16, 1);
+ * var node = new AtlasNode("pathOfTile", 16, 16, 1);
  *
  * @property {Texture2D}     texture         - Current used texture
- * @property {TextureAtlas}  textureAtlas    - Texture atlas for cc.AtlasNode
+ * @property {TextureAtlas}  textureAtlas    - Texture atlas for AtlasNode
  * @property {Number}           quadsToDraw     - Number of quads to draw
  */
 export class AtlasNode extends EventHelper(Node) {
@@ -149,9 +146,9 @@ export class AtlasNode extends EventHelper(Node) {
 
   /**
    * Set node's blend function
-   * This function accept either cc.BlendFunc object or source value and destination value
+   * This function accept either BlendFunc object or source value and destination value
    * @function
-   * @param {Number | cc.BlendFunc} src
+   * @param {Number | BlendFunc} src
    * @param {Number} dst
    */
   setBlendFunc(src, dst) {
@@ -196,7 +193,7 @@ export class AtlasNode extends EventHelper(Node) {
   }
 
   /**
-   * Initializes an cc.AtlasNode object with an atlas texture file name, the width, the height of each tile and the quantity of tiles to render
+   * Initializes an AtlasNode object with an atlas texture file name, the width, the height of each tile and the quantity of tiles to render
    * @function
    * @param {String} tile             The atlas texture file name
    * @param {Number} tileWidth        The width of each tile
@@ -207,7 +204,7 @@ export class AtlasNode extends EventHelper(Node) {
   initWithTileFile(tile, tileWidth, tileHeight, itemsToRender) {
     if (!tile)
       throw new Error(
-        "cc.AtlasNode.initWithTileFile(): title should not be null"
+        "AtlasNode.initWithTileFile(): title should not be null"
       );
     var texture = TextureCache.getInstance().addImage(tile);
     return this.initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
@@ -234,7 +231,7 @@ export class AtlasNode extends EventHelper(Node) {
   /**
    * Set node's color
    * @function
-   * @param {Color} color Color object created with cc.color(r, g, b).
+   * @param {Color} color Color object created with color(r, g, b).
    */
   setColor(color) {
     this._renderCmd.setColor(color);

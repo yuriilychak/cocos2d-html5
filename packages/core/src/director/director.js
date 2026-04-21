@@ -30,6 +30,8 @@ import { DirectorWebGLRenderer } from './director-webgl';
 import Game from '../boot/game';
 import EventManager from '../event-manager/event-manager';
 import TextureCache from '../textures/texture-cache';
+import SpriteFrameCache from '../sprites/sprite-frame-cache';
+import AnimationCache from '../sprites/animation-cache';
 import {
     EVENT_PROJECTION_CHANGED,
     EVENT_AFTER_UPDATE,
@@ -48,9 +50,7 @@ export var g_NumberOfDraws = 0;
 export const defaultFPS = 60;
 
 /**
- * cc.Director is a singleton object which manage your game's logic flow.
- * @class
- * @extends cc.Class
+ * Director is a singleton object which manage your game's logic flow.
  */
 export class Director extends NewClass {
     static EVENT_PROJECTION_CHANGED = EVENT_PROJECTION_CHANGED;
@@ -286,8 +286,8 @@ export class Director extends NewClass {
     }
 
     purgeCachedData() {
-        cc.animationCache._clear();
-        cc.spriteFrameCache._clear();
+        AnimationCache.getInstance()._clear();
+        SpriteFrameCache.getInstance()._clear();
         TextureCache.getInstance()._clear();
     }
 

@@ -27,42 +27,53 @@
 import Loader from '../boot/loader';
 import Path from '../boot/path';
 import { log, assert, _LogInfos } from '../boot/debugger';
+import SpriteFrameCache from './sprite-frame-cache';
 
 /**
  * <p>
- *     cc.animationCache is a singleton object that manages the Animations.<br/>
+ *     AnimationCache is a singleton object that manages the Animations.<br/>
  *     It saves in a cache the animations. You should use this class if you want to save your animations in a cache.<br/>
  * <br/>
  * example<br/>
- * cc.animationCache.addAnimation(animation,"animation1");<br/>
+ * AnimationCache.getInstance().addAnimation(animation,"animation1");<br/>
  * </p>
  * @class
- * @name cc.animationCache
  */
-export const animationCache = /** @lends cc.animationCache# */ {
-  _animations: {},
+export default class AnimationCache {
+  static _instance = null;
+
+  static getInstance() {
+    if (!AnimationCache._instance) {
+      AnimationCache._instance = new AnimationCache();
+    }
+    return AnimationCache._instance;
+  }
+
+  constructor() {
+    this._animations = {};
+  }
 
   /**
    * Adds a cc.Animation with a name.
    * @param {Animation} animation
    * @param {String} name
    */
-  addAnimation: function (animation, name) {
+  addAnimation(animation, name) {
     this._animations[name] = animation;
-  },
+  }
 
   /**
    * Deletes a cc.Animation from the cache.
    * @param {String} name
    */
-  removeAnimation: function (name) {
+  removeAnimation(name) {
     if (!name) {
       return;
     }
     if (this._animations[name]) {
       delete this._animations[name];
     }
-  },
+  }
 
   /**
    * <p>
@@ -73,12 +84,12 @@ export const animationCache = /** @lends cc.animationCache# */ {
    * @param {String} name
    * @return {Animation}
    */
-  getAnimation: function (name) {
+  getAnimation(name) {
     if (this._animations[name]) return this._animations[name];
     return null;
-  },
+  }
 
-  _addAnimationsWithDictionary: function (dictionary, plist) {
+  _addAnimationsWithDictionary(dictionary, plist) {
     var animations = dictionary["animations"];
     if (!animations) {
       log(_LogInfos.animationCache__addAnimationsWithDictionary);
@@ -91,7 +102,7 @@ export const animationCache = /** @lends cc.animationCache# */ {
       version =
         properties["format"] != null ? parseInt(properties["format"]) : version;
       var spritesheets = properties["spritesheets"];
-      var spriteFrameCache = cc.spriteFrameCache;
+      var spriteFrameCache = SpriteFrameCache.getInstance();
       for (var i = 0; i < spritesheets.length; i++) {
         spriteFrameCache.addSpriteFrames(
           Path.changeBasename(plist, spritesheets[i])
@@ -110,7 +121,7 @@ export const animationCache = /** @lends cc.animationCache# */ {
         log(_LogInfos.animationCache__addAnimationsWithDictionary_2);
         break;
     }
-  },
+  }
 
   /**
    * <p>
@@ -119,7 +130,7 @@ export const animationCache = /** @lends cc.animationCache# */ {
    * </p>
    * @param {String} plist
    */
-  addAnimations: function (plist) {
+  addAnimations(plist) {
     assert(plist, _LogInfos.animationCache_addAnimations_2);
 
     var dict = Loader.getInstance().getRes(plist);
@@ -130,10 +141,10 @@ export const animationCache = /** @lends cc.animationCache# */ {
     }
 
     this._addAnimationsWithDictionary(dict, plist);
-  },
+  }
 
-  _parseVersion1: function (animations) {
-    var frameCache = cc.spriteFrameCache;
+  _parseVersion1(animations) {
+    var frameCache = SpriteFrameCache.getInstance();
 
     for (var key in animations) {
       var animationDict = animations[key];
@@ -168,12 +179,12 @@ export const animationCache = /** @lends cc.animationCache# */ {
         log(_LogInfos.animationCache__parseVersion1_4, key);
       }
       animation = new cc.Animation(frames, delay, 1);
-      cc.animationCache.addAnimation(animation, key);
+      this.addAnimation(animation, key);
     }
-  },
+  }
 
-  _parseVersion2: function (animations) {
-    var frameCache = cc.spriteFrameCache;
+  _parseVersion2(animations) {
+    var frameCache = SpriteFrameCache.getInstance();
 
     for (var key in animations) {
       var animationDict = animations[key];
@@ -219,11 +230,11 @@ export const animationCache = /** @lends cc.animationCache# */ {
       var animation = new cc.Animation();
       animation.initWithAnimationFrames(arr, delayPerUnit, loops);
       animation.setRestoreOriginalFrame(restoreOriginalFrame);
-      cc.animationCache.addAnimation(animation, key);
+      this.addAnimation(animation, key);
     }
-  },
+  }
 
-  _clear: function () {
+  _clear() {
     this._animations = {};
   }
-};
+}

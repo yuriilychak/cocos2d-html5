@@ -32,31 +32,31 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
+import SpriteFrameCache from "./sprite-frame-cache";
+import AnimationCache from "./animation-cache";
 
 /**
- * <p>cc.Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
+ * <p>Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
  *
- * cc.Sprite can be created with an image, or with a sub-rectangle of an image.  <br/>
+ * Sprite can be created with an image, or with a sub-rectangle of an image.  <br/>
  *
- * If the parent or any of its ancestors is a cc.SpriteBatchNode then the following features/limitations are valid   <br/>
- *    - Features when the parent is a cc.BatchNode: <br/>
- *        - MUCH faster rendering, specially if the cc.SpriteBatchNode has many children. All the children will be drawn in a single batch.  <br/>
+ * If the parent or any of its ancestors is a SpriteBatchNode then the following features/limitations are valid   <br/>
+ *    - Features when the parent is a BatchNode: <br/>
+ *        - MUCH faster rendering, specially if the SpriteBatchNode has many children. All the children will be drawn in a single batch.  <br/>
  *
  *    - Limitations   <br/>
- *        - Camera is not supported yet (eg: CCOrbitCamera action doesn't work)  <br/>
- *        - GridBase actions are not supported (eg: CCLens, CCRipple, CCTwirl) <br/>
- *        - The Alias/Antialias property belongs to CCSpriteBatchNode, so you can't individually set the aliased property.  <br/>
- *        - The Blending function property belongs to CCSpriteBatchNode, so you can't individually set the blending function property. <br/>
+ *        - Camera is not supported yet (eg: OrbitCamera action doesn't work)  <br/>
+ *        - GridBase actions are not supported (eg: Lens, Ripple, Twirl) <br/>
+ *        - The Alias/Antialias property belongs to SpriteBatchNode, so you can't individually set the aliased property.  <br/>
+ *        - The Blending function property belongs to SpriteBatchNode, so you can't individually set the blending function property. <br/>
  *        - Parallax scroller is not supported, but can be simulated with a "proxy" sprite.        <br/>
  *
- *  If the parent is an standard cc.Node, then cc.Sprite behaves like any other cc.Node:      <br/>
+ *  If the parent is an standard Node, then Sprite behaves like any other Node:      <br/>
  *    - It supports blending functions    <br/>
  *    - It supports aliasing / antialiasing    <br/>
  *    - But the rendering will be slower: 1 draw per children.   <br/>
  *
  * The default anchorPoint in cc.Sprite is (0.5, 0.5). </p>
- * @class
- * @extends cc.Node
  *
  * @param {String|cc.SpriteFrame|HTMLImageElement|cc.Texture2D} fileName  The string which indicates a path to image file, e.g., "scene1/monster.png".
  * @param {Rect} [rect]  Only the contents inside rect of pszFileName's texture will be applied for this sprite.
@@ -64,21 +64,21 @@ import TextureCache from "../textures/texture-cache";
  * @example
  *
  * 1.Create a sprite with image path and rect
- * var sprite1 = new cc.Sprite("res/HelloHTML5World.png");
- * var sprite2 = new cc.Sprite("res/HelloHTML5World.png",cc.rect(0,0,480,320));
+ * var sprite1 = new Sprite("res/HelloHTML5World.png");
+ * var sprite2 = new Sprite("res/HelloHTML5World.png",cc.rect(0,0,480,320));
  *
  * 2.Create a sprite with a sprite frame name. Must add "#" before frame name.
- * var sprite = new cc.Sprite('#grossini_dance_01.png');
+ * var sprite = new Sprite('#grossini_dance_01.png');
  *
  * 3.Create a sprite with a sprite frame
- * var spriteFrame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
- * var sprite = new cc.Sprite(spriteFrame);
+ * var spriteFrame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+ * var sprite = new Sprite(spriteFrame);
  *
- * 4.Create a sprite with an existing texture contained in a CCTexture2D object
+ * 4.Create a sprite with an existing texture contained in a Texture2D object
  *      After creation, the rect will be the size of the texture, and the offset will be (0,0).
  * var texture = TextureCache.getInstance().addImage("HelloHTML5World.png");
- * var sprite1 = new cc.Sprite(texture);
- * var sprite2 = new cc.Sprite(texture, cc.rect(0,0,480,320));
+ * var sprite1 = new Sprite(texture);
+ * var sprite2 = new Sprite(texture, cc.rect(0,0,480,320));
  *
  * @property {Boolean}              dirty               - Indicates whether the sprite needs to be updated.
  * @property {Boolean}              flippedX            - Indicates whether or not the sprite is flipped on x axis.
@@ -88,8 +88,8 @@ import TextureCache from "../textures/texture-cache";
  * @property {Number}               atlasIndex          - The index used on the TextureAtlas.
  * @property {Texture2D}         texture             - Texture used to render the sprite.
  * @property {Boolean}              textureRectRotated  - <@readonly> Indicate whether the texture rectangle is rotated.
- * @property {TextureAtlas}      textureAtlas        - The weak reference of the cc.TextureAtlas when the sprite is rendered using via cc.SpriteBatchNode.
- * @property {SpriteBatchNode}   batchNode           - The batch node object if this sprite is rendered by cc.SpriteBatchNode.
+ * @property {TextureAtlas}      textureAtlas        - The weak reference of the TextureAtlas when the sprite is rendered using via cc.SpriteBatchNode.
+ * @property {SpriteBatchNode}   batchNode           - The batch node object if this sprite is rendered by SpriteBatchNode.
  * @property {V3F_C4B_T2F_Quad}  quad                - <@readonly> The quad (tex coords, vertex coords and color) information.
  */
 export class Sprite extends EventHelper(Node) {
@@ -259,7 +259,7 @@ export class Sprite extends EventHelper(Node) {
    */
   initWithSpriteFrameName(spriteFrameName) {
     assert(spriteFrameName, _LogInfos.Sprite_initWithSpriteFrameName);
-    var frame = cc.spriteFrameCache.getSpriteFrame(spriteFrameName);
+    var frame = SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameName);
     assert(
       frame,
       spriteFrameName + _LogInfos.Sprite_initWithSpriteFrameName1
@@ -390,7 +390,7 @@ export class Sprite extends EventHelper(Node) {
       _LogInfos.Sprite_setDisplayFrameWithAnimationName_3
     );
 
-    var cache = cc.animationCache.getAnimation(animationName);
+    var cache = AnimationCache.getInstance().getAnimation(animationName);
     if (!cache) {
       log(_LogInfos.Sprite_setDisplayFrameWithAnimationName);
       return;
@@ -426,7 +426,7 @@ export class Sprite extends EventHelper(Node) {
       if (fileName[0] === "#") {
         // Init with a sprite frame name
         var frameName = fileName.substr(1, fileName.length - 1);
-        var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
+        var spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(frameName);
         if (spriteFrame) this.initWithSpriteFrame(spriteFrame);
         else log("%s does not exist", fileName);
       } else {
@@ -692,7 +692,7 @@ export class Sprite extends EventHelper(Node) {
   setSpriteFrame(newFrame) {
     var _t = this;
     if (typeof newFrame === "string") {
-      newFrame = cc.spriteFrameCache.getSpriteFrame(newFrame);
+      newFrame = SpriteFrameCache.getInstance().getSpriteFrame(newFrame);
       assert(newFrame, _LogInfos.Sprite_setSpriteFrame);
     }
     this._loader.clear();
@@ -886,7 +886,7 @@ export class Sprite extends EventHelper(Node) {
 }
 
 /**
- * cc.Sprite invalid index on the cc.SpriteBatchNode
+ * Sprite invalid index on the cc.SpriteBatchNode
  * @constant
  * @type {Number}
  */

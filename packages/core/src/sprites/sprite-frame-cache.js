@@ -35,25 +35,34 @@ import TextureCache from "../textures/texture-cache";
 
 /**
  * <p>
- * cc.spriteFrameCache is a singleton that handles the loading of the sprite frames. It saves in a cache the sprite frames.<br/>
+ * SpriteFrameCache is a singleton that handles the loading of the sprite frames. It saves in a cache the sprite frames.<br/>
  * <br/>
  * example<br/>
  * // add SpriteFrames to spriteFrameCache With File<br/>
- * cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);<br/>
+ * SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);<br/>
  * </p>
  * @class
- * @name cc.spriteFrameCache
  */
-export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
-  _CCNS_REG1: /^\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*$/,
-  _CCNS_REG2:
-    /^\s*\{\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*,\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*\}\s*$/,
+export default class SpriteFrameCache {
+  static _instance = null;
 
-  _spriteFrames: {},
-  _spriteFramesAliases: {},
-  _frameConfigCache: {},
+  static getInstance() {
+    if (!SpriteFrameCache._instance) {
+      SpriteFrameCache._instance = new SpriteFrameCache();
+    }
+    return SpriteFrameCache._instance;
+  }
 
-  _rectFromString: function (content) {
+  constructor() {
+    this._CCNS_REG1 = /^\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*$/;
+    this._CCNS_REG2 = /^\s*\{\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*,\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*\}\s*$/;
+    
+    this._spriteFrames = {};
+    this._spriteFramesAliases = {};
+    this._frameConfigCache = {};
+  }
+
+  _rectFromString(content) {
     var result = this._CCNS_REG2.exec(content);
     if (!result) return new Rect(0, 0, 0, 0);
     return new Rect(
@@ -62,21 +71,21 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
       parseFloat(result[3]),
       parseFloat(result[4])
     );
-  },
+  }
 
-  _pointFromString: function (content) {
+  _pointFromString(content) {
     var result = this._CCNS_REG1.exec(content);
     if (!result) return new Point(0, 0);
     return new Point(parseFloat(result[1]), parseFloat(result[2]));
-  },
+  }
 
-  _sizeFromString: function (content) {
+  _sizeFromString(content) {
     var result = this._CCNS_REG1.exec(content);
     if (!result) return new Size(0, 0);
     return new Size(parseFloat(result[1]), parseFloat(result[2]));
-  },
+  }
 
-  _getFrameConfig: function (url) {
+  _getFrameConfig(url) {
     var dict = Loader.getInstance().getRes(url);
 
     assert(dict, _LogInfos.spriteFrameCache__getFrameConfig_2, url);
@@ -88,15 +97,15 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
     }
     this._frameConfigCache[url] = this._parseFrameConfig(dict);
     return this._frameConfigCache[url];
-  },
+  }
 
-  _getFrameConfigByJsonObject: function (url, jsonObject) {
+  _getFrameConfigByJsonObject(url, jsonObject) {
     assert(jsonObject, _LogInfos.spriteFrameCache__getFrameConfig_2, url);
     this._frameConfigCache[url] = this._parseFrameConfig(jsonObject);
     return this._frameConfigCache[url];
-  },
+  }
 
-  _parseFrameConfig: function (dict) {
+  _parseFrameConfig(dict) {
     var tempFrames = dict["frames"],
       tempMeta = dict["metadata"] || dict["meta"];
     var frames = {},
@@ -177,10 +186,10 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
       frames[key] = tempFrame;
     }
     return { _inited: true, frames: frames, meta: meta };
-  },
+  }
 
   // Adds multiple Sprite Frames from a json object. it uses for local web view app.
-  _addSpriteFramesByObject: function (url, jsonObject, texture) {
+  _addSpriteFramesByObject(url, jsonObject, texture) {
     assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
     if (!jsonObject || !jsonObject["frames"]) return;
 
@@ -189,9 +198,9 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
       this._getFrameConfigByJsonObject(url, jsonObject);
     //this._checkConflict(frameConfig);                             //TODO
     this._createSpriteFrames(url, frameConfig, texture);
-  },
+  }
 
-  _createSpriteFrames: function (url, frameConfig, texture) {
+  _createSpriteFrames(url, frameConfig, texture) {
     var frames = frameConfig.frames,
       meta = frameConfig.meta;
     if (!texture) {
@@ -256,7 +265,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
         spriteFrames[key] = spriteFrame;
       }
     }
-  },
+  }
 
   /**
    * <p>
@@ -268,10 +277,10 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
    * @param {HTMLImageElement|cc.Texture2D|string} [texture]
    * @example
    * // add SpriteFrames to SpriteFrameCache With File
-   * cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-   * cc.spriteFrameCache.addSpriteFrames(s_grossiniJson);
+   * SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+   * SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniJson);
    */
-  addSpriteFrames: function (url, texture) {
+  addSpriteFrames(url, texture) {
     assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
 
     //Is it a SpriteFrame plist?
@@ -281,10 +290,10 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
     var frameConfig = this._frameConfigCache[url] || this._getFrameConfig(url);
     //this._checkConflict(frameConfig);                             //TODO
     this._createSpriteFrames(url, frameConfig, texture);
-  },
+  }
 
   // Function to check if frames to add exists already, if so there may be name conflit that must be solved
-  _checkConflict: function (dictionary) {
+  _checkConflict(dictionary) {
     var framesDict = dictionary["frames"];
 
     for (var key in framesDict) {
@@ -292,7 +301,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
         log(_LogInfos.spriteFrameCache__checkConflict, key);
       }
     }
-  },
+  }
 
   /**
    * <p>
@@ -302,9 +311,9 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
    * @param {SpriteFrame} frame
    * @param {String} frameName
    */
-  addSpriteFrame: function (frame, frameName) {
+  addSpriteFrame(frame, frameName) {
     this._spriteFrames[frameName] = frame;
-  },
+  }
 
   /**
    * <p>
@@ -315,16 +324,16 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
    *   In the long term: it will be the same.<br/>
    * </p>
    */
-  removeSpriteFrames: function () {
+  removeSpriteFrames() {
     this._spriteFrames = {};
     this._spriteFramesAliases = {};
-  },
+  }
 
   /**
    * Deletes an sprite frame from the sprite frame cache.
    * @param {String} name
    */
-  removeSpriteFrameByName: function (name) {
+  removeSpriteFrameByName(name) {
     // explicit nil handling
     if (!name) {
       return;
@@ -338,7 +347,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
       delete this._spriteFrames[name];
     }
     // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
-  },
+  }
 
   /**
    * <p>
@@ -348,7 +357,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
    * </p>
    * @param {String} url Plist filename
    */
-  removeSpriteFramesFromFile: function (url) {
+  removeSpriteFramesFromFile(url) {
     var self = this,
       spriteFrames = self._spriteFrames,
       aliases = self._spriteFramesAliases,
@@ -364,7 +373,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
         }
       }
     }
-  },
+  }
 
   /**
    * <p>
@@ -373,7 +382,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
    * </p>
    * @param {HTMLImageElement|HTMLCanvasElement|cc.Texture2D} texture
    */
-  removeSpriteFramesFromTexture: function (texture) {
+  removeSpriteFramesFromTexture(texture) {
     var self = this,
       spriteFrames = self._spriteFrames,
       aliases = self._spriteFramesAliases;
@@ -387,7 +396,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
         }
       }
     }
-  },
+  }
 
   /**
    * <p>
@@ -401,7 +410,7 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
    * //get a SpriteFrame by name
    * var frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
    */
-  getSpriteFrame: function (name) {
+  getSpriteFrame(name) {
     var self = this,
       frame = self._spriteFrames[name];
     if (!frame) {
@@ -413,11 +422,11 @@ export const spriteFrameCache = /** @lends cc.spriteFrameCache# */ {
       }
     }
     return frame;
-  },
+  }
 
-  _clear: function () {
+  _clear() {
     this._spriteFrames = {};
     this._spriteFramesAliases = {};
     this._frameConfigCache = {};
   }
-};
+}

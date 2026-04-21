@@ -215,7 +215,7 @@ export default class TextureCache {
    * @param {Image} texture
    * @example
    * //example
-   * cc.textureCache.removeTexture(texture);
+   * textureCache.removeTexture(texture);
    */
   removeTexture(texture) {
     if (!texture) return;
@@ -234,7 +234,7 @@ export default class TextureCache {
    * @param {String} textureKeyName
    * @example
    * //example
-   * cc.textureCache.removeTexture("hello.png");
+   * textureCache.removeTexture("hello.png");
    */
   removeTextureForKey(textureKeyName) {
     if (textureKeyName == null) return;

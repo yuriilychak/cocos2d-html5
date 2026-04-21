@@ -1,8 +1,5 @@
 import AsyncPool from './async-pool';
 
-/**
- * @class
- */
 export default class Async {
     /**
      * Do tasks series.
