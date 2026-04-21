@@ -250,6 +250,22 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     if (texture && texture.url) {
       var texW = texture.getPixelsWide(),
         texH = texture.getPixelsHigh();
+      var htmlElement = texture.getHtmlElementObj
+        ? texture.getHtmlElementObj()
+        : null;
+      if (htmlElement) {
+        texW = Math.max(
+          texW,
+          htmlElement.naturalWidth || htmlElement.width || 0
+        );
+        texH = Math.max(
+          texH,
+          htmlElement.naturalHeight || htmlElement.height || 0
+        );
+      }
+
+      if (texW <= 0 || texH <= 0) return;
+
       let _x, _y;
       if (rotated) {
         _x = rect.x + rect.height;
@@ -258,10 +274,27 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
         _x = rect.x + rect.width;
         _y = rect.y + rect.height;
       }
-      if (_x > texW) {
+
+      var exceedsWidth = _x > texW,
+        exceedsHeight = _y > texH;
+
+      // Some call sites pass rects in points. Accept those by checking scaled coordinates.
+      if (exceedsWidth || exceedsHeight) {
+        var scale = cc.contentScaleFactor ? cc.contentScaleFactor() : 1;
+        if (scale > 1) {
+          var scaledX = _x * scale,
+            scaledY = _y * scale;
+          if (scaledX <= texW && scaledY <= texH) {
+            exceedsWidth = false;
+            exceedsHeight = false;
+          }
+        }
+      }
+
+      if (exceedsWidth) {
         error(_LogInfos.RectWidth, texture.url);
       }
-      if (_y > texH) {
+      if (exceedsHeight) {
         error(_LogInfos.RectHeight, texture.url);
       }
     }
