@@ -26,6 +26,7 @@
 
 import { Node } from '../base-nodes/node';
 import Game from '../boot/game';
+import { LayerCanvasRenderer, LayerWebGLRenderer } from './renderer';
 
 /**
  * cc.Layer is a subclass of cc.Node that implements the TouchEventsDelegate protocol.
@@ -106,8 +107,8 @@ export class Layer extends Node {
 
     _createRenderCmd() {
         if (cc._renderType === Game.RENDER_TYPE_CANVAS)
-            return new cc.Layer.CanvasRenderCmd(this);
+            return new LayerCanvasRenderer(this);
         else
-            return new cc.Layer.WebGLRenderCmd(this);
+            return new LayerWebGLRenderer(this);
     }
 }

@@ -310,15 +310,13 @@ import { LayerColor } from "./layers/layer-color";
 import { LayerGradient } from "./layers/layer-gradient";
 import { LayerMultiplex } from "./layers/layer-multiplex";
 import {
-  LayerCanvasRenderCmd,
-  LayerColorCanvasRenderCmd,
-  LayerGradientCanvasRenderCmd
-} from "./layers/layer-canvas-render-cmd";
-import {
-  LayerWebGLRenderCmd,
-  LayerColorWebGLRenderCmd,
-  LayerGradientWebGLRenderCmd
-} from "./layers/layer-webgl-render-cmd";
+  LayerCanvasRenderer,
+  LayerColorCanvasRenderer,
+  LayerGradientCanvasRenderer,
+  LayerWebGLRenderer,
+  LayerColorWebGLRenderer,
+  LayerGradientWebGLRenderer
+} from "./layers";
 
 // ======================================================================
 // Sprites
@@ -721,12 +719,12 @@ cc.Layer = Layer;
 cc.LayerColor = LayerColor;
 cc.LayerGradient = LayerGradient;
 cc.LayerMultiplex = LayerMultiplex;
-cc.Layer.CanvasRenderCmd = LayerCanvasRenderCmd;
-cc.Layer.WebGLRenderCmd = LayerWebGLRenderCmd;
-cc.LayerColor.CanvasRenderCmd = LayerColorCanvasRenderCmd;
-cc.LayerColor.WebGLRenderCmd = LayerColorWebGLRenderCmd;
-cc.LayerGradient.CanvasRenderCmd = LayerGradientCanvasRenderCmd;
-cc.LayerGradient.WebGLRenderCmd = LayerGradientWebGLRenderCmd;
+cc.Layer.CanvasRenderCmd = LayerCanvasRenderer;
+cc.Layer.WebGLRenderCmd = LayerWebGLRenderer;
+cc.LayerColor.CanvasRenderCmd = LayerColorCanvasRenderer;
+cc.LayerColor.WebGLRenderCmd = LayerColorWebGLRenderer;
+cc.LayerGradient.CanvasRenderCmd = LayerGradientCanvasRenderer;
+cc.LayerGradient.WebGLRenderCmd = LayerGradientWebGLRenderer;
 
 // Sprites
 cc.Sprite = Sprite;

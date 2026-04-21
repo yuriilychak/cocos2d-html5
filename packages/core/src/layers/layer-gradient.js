@@ -28,6 +28,7 @@ import { LayerColor } from './layer-color';
 import { Point } from '../cocoa/geometry/point';
 import { Color } from '../platform/types/color';
 import Game from '../boot/game';
+import { LayerGradientCanvasRenderer, LayerGradientWebGLRenderer } from './renderer';
 
 /**
  * LayerGradient is a subclass of LayerColor that draws gradients across the background.
@@ -231,8 +232,8 @@ export class LayerGradient extends LayerColor {
 
     _createRenderCmd() {
         if (cc._renderType === Game.RENDER_TYPE_CANVAS)
-            return new cc.LayerGradient.CanvasRenderCmd(this);
+            return new LayerGradientCanvasRenderer(this);
         else
-            return new cc.LayerGradient.WebGLRenderCmd(this);
+            return new LayerGradientWebGLRenderer(this);
     }
 }

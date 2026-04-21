@@ -27,11 +27,12 @@
 import { Layer } from './layer';
 import { Color } from '../platform/types/color';
 import Game from '../boot/game';
+import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from './renderer';
 
 /**
  * CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
  * @class
- * @extends cc.Layer
+ * @extends Layer
  */
 export class LayerColor extends Layer {
     getBlendFunc() {
@@ -145,8 +146,8 @@ export class LayerColor extends Layer {
 
     _createRenderCmd() {
         if (cc._renderType === Game.RENDER_TYPE_CANVAS)
-            return new cc.LayerColor.CanvasRenderCmd(this);
+            return new LayerColorCanvasRenderer(this);
         else
-            return new cc.LayerColor.WebGLRenderCmd(this);
+            return new LayerColorWebGLRenderer(this);
     }
 }

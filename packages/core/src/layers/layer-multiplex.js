@@ -28,9 +28,7 @@ import { Layer } from './layer';
 import { log, _LogInfos } from '../boot/debugger';
 
 /**
- * CCMultipleLayer is a CCLayer with the ability to multiplex its children.
- * @class
- * @extends cc.Layer
+ * LayerMultiplex is a CCLayer with the ability to multiplex its children.
  */
 export class LayerMultiplex extends Layer {
     constructor(layers) {
