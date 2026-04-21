@@ -26,12 +26,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { NewClass } from "../platform/class";
+import { log } from "../boot/debugger";
+import { Director } from "../director/director";
+import Game from "../boot/game";
+import Loader from "../boot/loader";
+import {
+  UNIFORM_PMATRIX_S,
+  UNIFORM_MVPMATRIX_S,
+  UNIFORM_MVMATRIX_S,
+  UNIFORM_TIME_S,
+  UNIFORM_SINTIME_S,
+  UNIFORM_COSTIME_S,
+  UNIFORM_RANDOM01_S,
+  UNIFORM_SAMPLER_S
+} from "../platform/macro/constants";
+import {
+  KM_GL_MODELVIEW,
+  KM_GL_PROJECTION,
+  kmGLGetMatrix
+} from "../kazmath/gl/matrix";
+import Matrix4, { kmMat4Multiply, getMat4MultiplyValue } from "../kazmath/mat4";
+import { checkGLErrorDebug } from "../platform/macro/utils";
+
 /**
  * Class that implements a WebGL program
- * @class
- * @extends cc.NewClass
  */
-cc.GLProgram = class GLProgram extends cc.NewClass {
+export default class GLProgram extends NewClass {
   _glContext = null;
   _programObj = null;
   _vertShader = null;
@@ -91,7 +112,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
   _compileShader(shader, type, source) {
     if (!source || !shader) return false;
 
-    let preStr = cc.GLProgram._isHighpSupported()
+    let preStr = GLProgram._isHighpSupported()
       ? "precision highp float;\n"
       : "precision mediump float;\n";
     source =
@@ -115,22 +136,22 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
     );
 
     if (!status) {
-      cc.log(
+      log(
         "cocos2d: ERROR: Failed to compile shader:\n" +
           this._glContext.getShaderSource(shader)
       );
       if (type === this._glContext.VERTEX_SHADER)
-        cc.log("cocos2d: \n" + this.vertexShaderLog());
-      else cc.log("cocos2d: \n" + this.fragmentShaderLog());
+        log("cocos2d: \n" + this.vertexShaderLog());
+      else log("cocos2d: \n" + this.fragmentShaderLog());
     }
     return status === true;
   }
 
   /**
-   * Create a cc.GLProgram object
+   * Create a GLProgram object
    * @param {String} vShaderFileName
    * @param {String} fShaderFileName
-   * @returns {cc.GLProgram}
+   * @returns {GLProgram}
    */
   constructor(vShaderFileName, fShaderFileName, glContext) {
     super();
@@ -156,7 +177,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
   }
 
   /**
-   * Initializes the cc.GLProgram with a vertex and fragment with string
+   * Initializes the GLProgram with a vertex and fragment with string
    * @param {String} vertShaderStr
    * @param {String} fragShaderStr
    * @return {Boolean}
@@ -164,7 +185,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
   initWithVertexShaderByteArray(vertShaderStr, fragShaderStr) {
     let locGL = this._glContext;
     this._programObj = locGL.createProgram();
-    //cc.checkGLErrorDebug();
+    //checkGLErrorDebug();
 
     this._vertShader = null;
     this._fragShader = null;
@@ -178,7 +199,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
           vertShaderStr
         )
       ) {
-        cc.log("cocos2d: ERROR: Failed to compile vertex shader");
+        log("cocos2d: ERROR: Failed to compile vertex shader");
       }
     }
 
@@ -192,13 +213,13 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
           fragShaderStr
         )
       ) {
-        cc.log("cocos2d: ERROR: Failed to compile fragment shader");
+        log("cocos2d: ERROR: Failed to compile fragment shader");
       }
     }
 
     if (this._vertShader)
       locGL.attachShader(this._programObj, this._vertShader);
-    cc.checkGLErrorDebug();
+    checkGLErrorDebug();
 
     if (this._fragShader)
       locGL.attachShader(this._programObj, this._fragShader);
@@ -206,12 +227,12 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
     if (Object.keys(this._hashForUniforms).length > 0)
       this._hashForUniforms = {};
 
-    cc.checkGLErrorDebug();
+    checkGLErrorDebug();
     return true;
   }
 
   /**
-   * Initializes the cc.GLProgram with a vertex and fragment with string
+   * Initializes the GLProgram with a vertex and fragment with string
    * @param {String} vertShaderStr
    * @param {String} fragShaderStr
    * @return {Boolean}
@@ -227,10 +248,10 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
    * @return {Boolean}
    */
   initWithVertexShaderFilename(vShaderFilename, fShaderFileName) {
-    let vertexSource = cc.loader.getRes(vShaderFilename);
+    let vertexSource = Loader.getInstance().getRes(vShaderFilename);
     if (!vertexSource)
       throw new Error("Please load the resource firset : " + vShaderFilename);
-    let fragmentSource = cc.loader.getRes(fShaderFileName);
+    let fragmentSource = Loader.getInstance().getRes(fShaderFileName);
     if (!fragmentSource)
       throw new Error("Please load the resource firset : " + fShaderFileName);
     return this.initWithVertexShaderByteArray(vertexSource, fragmentSource);
@@ -261,7 +282,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
    */
   link() {
     if (!this._programObj) {
-      cc.log("cc.GLProgram.link(): Cannot link invalid program");
+      log("GLProgram.link(): Cannot link invalid program");
       return false;
     }
 
@@ -273,13 +294,13 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
     this._vertShader = null;
     this._fragShader = null;
 
-    if (cc.game.config[cc.game.CONFIG_KEY.debugMode]) {
+    if (Game.getInstance().config[Game.getInstance().CONFIG_KEY.debugMode]) {
       let status = this._glContext.getProgramParameter(
         this._programObj,
         this._glContext.LINK_STATUS
       );
       if (!status) {
-        cc.log(
+        log(
           "cocos2d: ERROR: Failed to link program: " +
             this._glContext.getProgramInfoLog(this._programObj)
         );
@@ -301,28 +322,28 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
 
   /**
    * It will create 4 uniforms:
-   *  cc.UNIFORM_PMATRIX
-   *  cc.UNIFORM_MVMATRIX
-   *  cc.UNIFORM_MVPMATRIX
-   *  cc.UNIFORM_SAMPLER
+   *  UNIFORM_PMATRIX
+   *  UNIFORM_MVMATRIX
+   *  UNIFORM_MVPMATRIX
+   *  UNIFORM_SAMPLER
    */
   updateUniforms() {
-    this._addUniformLocation(cc.UNIFORM_PMATRIX_S);
-    this._addUniformLocation(cc.UNIFORM_MVMATRIX_S);
-    this._addUniformLocation(cc.UNIFORM_MVPMATRIX_S);
-    this._addUniformLocation(cc.UNIFORM_TIME_S);
-    this._addUniformLocation(cc.UNIFORM_SINTIME_S);
-    this._addUniformLocation(cc.UNIFORM_COSTIME_S);
-    this._addUniformLocation(cc.UNIFORM_RANDOM01_S);
-    this._addUniformLocation(cc.UNIFORM_SAMPLER_S);
+    this._addUniformLocation(UNIFORM_PMATRIX_S);
+    this._addUniformLocation(UNIFORM_MVMATRIX_S);
+    this._addUniformLocation(UNIFORM_MVPMATRIX_S);
+    this._addUniformLocation(UNIFORM_TIME_S);
+    this._addUniformLocation(UNIFORM_SINTIME_S);
+    this._addUniformLocation(UNIFORM_COSTIME_S);
+    this._addUniformLocation(UNIFORM_RANDOM01_S);
+    this._addUniformLocation(UNIFORM_SAMPLER_S);
     this._usesTime =
-      this._uniforms[cc.UNIFORM_TIME_S] != null ||
-      this._uniforms[cc.UNIFORM_SINTIME_S] != null ||
-      this._uniforms[cc.UNIFORM_COSTIME_S] != null;
+      this._uniforms[UNIFORM_TIME_S] != null ||
+      this._uniforms[UNIFORM_SINTIME_S] != null ||
+      this._uniforms[UNIFORM_COSTIME_S] != null;
 
     this.use();
     // Since sample most probably won't change, set it to 0 now.
-    this.setUniformLocationWith1i(this._uniforms[cc.UNIFORM_SAMPLER_S], 0);
+    this.setUniformLocationWith1i(this._uniforms[UNIFORM_SAMPLER_S], 0);
   }
 
   _addUniformLocation(name) {
@@ -340,11 +361,11 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
   getUniformLocationForName(name) {
     if (!name)
       throw new Error(
-        "cc.GLProgram.getUniformLocationForName(): uniform name should be non-null"
+        "GLProgram.getUniformLocationForName(): uniform name should be non-null"
       );
     if (!this._programObj)
       throw new Error(
-        "cc.GLProgram.getUniformLocationForName(): Invalid operation. Cannot get uniform location when program is not initialized"
+        "GLProgram.getUniformLocationForName(): Invalid operation. Cannot get uniform location when program is not initialized"
       );
 
     let location = this._uniforms[name] || this._addUniformLocation(name);
@@ -356,7 +377,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
    * @returns {WebGLUniformLocation}
    */
   getUniformMVPMatrix() {
-    return this._uniforms[cc.UNIFORM_MVPMATRIX_S];
+    return this._uniforms[UNIFORM_MVPMATRIX_S];
   }
 
   /**
@@ -364,7 +385,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
    * @returns {WebGLUniformLocation}
    */
   getUniformSampler() {
-    return this._uniforms[cc.UNIFORM_SAMPLER_S];
+    return this._uniforms[UNIFORM_SAMPLER_S];
   }
 
   /**
@@ -584,7 +605,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
       }
     } else {
       this._glContext.uniform4f(location, f1, f2, f3, f4);
-      cc.log("uniform4f", f1, f2, f3, f4);
+      log("uniform4f", f1, f2, f3, f4);
     }
   }
 
@@ -639,7 +660,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
       }
     } else {
       this._glContext.uniform4fv(location, floatArray);
-      cc.log("uniform4fv", floatArray);
+      log("uniform4fv", floatArray);
     }
   }
 
@@ -731,54 +752,55 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
    * will update the builtin uniforms if they are different than the previous call for this same shader program.
    */
   setUniformsForBuiltins() {
-    let matrixP = new cc.math.Matrix4();
-    let matrixMV = new cc.math.Matrix4();
-    let matrixMVP = new cc.math.Matrix4();
+    let matrixP = new Matrix4();
+    let matrixMV = new Matrix4();
+    let matrixMVP = new Matrix4();
 
-    cc.kmGLGetMatrix(cc.KM_GL_PROJECTION, matrixP);
-    cc.kmGLGetMatrix(cc.KM_GL_MODELVIEW, matrixMV);
+    kmGLGetMatrix(KM_GL_PROJECTION, matrixP);
+    kmGLGetMatrix(KM_GL_MODELVIEW, matrixMV);
 
-    cc.kmMat4Multiply(matrixMVP, matrixP, matrixMV);
+    kmMat4Multiply(matrixMVP, matrixP, matrixMV);
 
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_PMATRIX_S],
+      this._uniforms[UNIFORM_PMATRIX_S],
       matrixP.mat,
       1
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_MVMATRIX_S],
+      this._uniforms[UNIFORM_MVMATRIX_S],
       matrixMV.mat,
       1
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_MVPMATRIX_S],
+      this._uniforms[UNIFORM_MVPMATRIX_S],
       matrixMVP.mat,
       1
     );
 
     if (this._usesTime) {
-      let director = cc.director;
       // This doesn't give the most accurate global time value.
       // Cocos2D doesn't store a high precision time value, so this will have to do.
       // Getting Mach time per frame per shader using time could be extremely expensive.
-      let time = director.getTotalFrames() * director.getAnimationInterval();
+      let time =
+        Director.getInstance().getTotalFrames() *
+        Director.getInstance().getAnimationInterval();
 
       this.setUniformLocationWith4f(
-        this._uniforms[cc.UNIFORM_TIME_S],
+        this._uniforms[UNIFORM_TIME_S],
         time / 10.0,
         time,
         time * 2,
         time * 4
       );
       this.setUniformLocationWith4f(
-        this._uniforms[cc.UNIFORM_SINTIME_S],
+        this._uniforms[UNIFORM_SINTIME_S],
         time / 8.0,
         time / 4.0,
         time / 2.0,
         Math.sin(time)
       );
       this.setUniformLocationWith4f(
-        this._uniforms[cc.UNIFORM_COSTIME_S],
+        this._uniforms[UNIFORM_COSTIME_S],
         time / 8.0,
         time / 4.0,
         time / 2.0,
@@ -786,9 +808,9 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
       );
     }
 
-    if (this._uniforms[cc.UNIFORM_RANDOM01_S] !== -1)
+    if (this._uniforms[UNIFORM_RANDOM01_S] !== -1)
       this.setUniformLocationWith4f(
-        this._uniforms[cc.UNIFORM_RANDOM01_S],
+        this._uniforms[UNIFORM_RANDOM01_S],
         Math.random(),
         Math.random(),
         Math.random(),
@@ -799,54 +821,55 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
   _setUniformsForBuiltinsForRenderer(node) {
     if (!node || !node._renderCmd) return;
 
-    let matrixP = new cc.math.Matrix4();
-    //var matrixMV = new cc.kmMat4();
-    let matrixMVP = new cc.math.Matrix4();
+    let matrixP = new Matrix4();
+    //var matrixMV = new kmMat4();
+    let matrixMVP = new Matrix4();
 
-    cc.kmGLGetMatrix(cc.KM_GL_PROJECTION, matrixP);
-    //cc.kmGLGetMatrix(cc.KM_GL_MODELVIEW, node._stackMatrix);
+    kmGLGetMatrix(KM_GL_PROJECTION, matrixP);
+    //kmGLGetMatrix(KM_GL_MODELVIEW, node._stackMatrix);
 
-    cc.kmMat4Multiply(matrixMVP, matrixP, node._renderCmd._stackMatrix);
+    kmMat4Multiply(matrixMVP, matrixP, node._renderCmd._stackMatrix);
 
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_PMATRIX_S],
+      this._uniforms[UNIFORM_PMATRIX_S],
       matrixP.mat,
       1
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_MVMATRIX_S],
+      this._uniforms[UNIFORM_MVMATRIX_S],
       node._renderCmd._stackMatrix.mat,
       1
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_MVPMATRIX_S],
+      this._uniforms[UNIFORM_MVPMATRIX_S],
       matrixMVP.mat,
       1
     );
 
     if (this._usesTime) {
-      let director = cc.director;
+      let director = Director.getInstance();
       // This doesn't give the most accurate global time value.
       // Cocos2D doesn't store a high precision time value, so this will have to do.
       // Getting Mach time per frame per shader using time could be extremely expensive.
-      let time = director.getTotalFrames() * director.getAnimationInterval();
+      let time =
+        director.getTotalFrames() * director.getAnimationInterval();
 
       this.setUniformLocationWith4f(
-        this._uniforms[cc.UNIFORM_TIME_S],
+        this._uniforms[UNIFORM_TIME_S],
         time / 10.0,
         time,
         time * 2,
         time * 4
       );
       this.setUniformLocationWith4f(
-        this._uniforms[cc.UNIFORM_SINTIME_S],
+        this._uniforms[UNIFORM_SINTIME_S],
         time / 8.0,
         time / 4.0,
         time / 2.0,
         Math.sin(time)
       );
       this.setUniformLocationWith4f(
-        this._uniforms[cc.UNIFORM_COSTIME_S],
+        this._uniforms[UNIFORM_COSTIME_S],
         time / 8.0,
         time / 4.0,
         time / 2.0,
@@ -854,9 +877,9 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
       );
     }
 
-    if (this._uniforms[cc.UNIFORM_RANDOM01_S] !== -1)
+    if (this._uniforms[UNIFORM_RANDOM01_S] !== -1)
       this.setUniformLocationWith4f(
-        this._uniforms[cc.UNIFORM_RANDOM01_S],
+        this._uniforms[UNIFORM_RANDOM01_S],
         Math.random(),
         Math.random(),
         Math.random(),
@@ -869,8 +892,8 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
    */
   setUniformForModelViewProjectionMatrix() {
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_MVPMATRIX_S],
-      cc.getMat4MultiplyValue(
+      this._uniforms[UNIFORM_MVPMATRIX_S],
+      getMat4MultiplyValue(
         cc.projection_matrix_stack.top,
         cc.modelview_matrix_stack.top
       )
@@ -878,24 +901,24 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
   }
 
   setUniformForModelViewProjectionMatrixWithMat4(swapMat4) {
-    cc.kmMat4Multiply(
+    kmMat4Multiply(
       swapMat4,
       cc.projection_matrix_stack.top,
       cc.modelview_matrix_stack.top
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_MVPMATRIX_S],
+      this._uniforms[UNIFORM_MVPMATRIX_S],
       swapMat4.mat
     );
   }
 
   setUniformForModelViewAndProjectionMatrixWithMat4() {
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_MVMATRIX_S],
+      this._uniforms[UNIFORM_MVMATRIX_S],
       cc.modelview_matrix_stack.top.mat
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_PMATRIX_S],
+      this._uniforms[UNIFORM_PMATRIX_S],
       cc.projection_matrix_stack.top.mat
     );
   }
@@ -903,11 +926,11 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
   _setUniformForMVPMatrixWithMat4(modelViewMatrix) {
     if (!modelViewMatrix) throw new Error("modelView matrix is undefined.");
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_MVMATRIX_S],
+      this._uniforms[UNIFORM_MVMATRIX_S],
       modelViewMatrix.mat
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[cc.UNIFORM_PMATRIX_S],
+      this._uniforms[UNIFORM_PMATRIX_S],
       cc.projection_matrix_stack.top.mat
     );
   }
@@ -916,7 +939,7 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
     let stack = cc.projection_matrix_stack;
     if (stack.lastUpdated !== this._projectionUpdated) {
       this._glContext.uniformMatrix4fv(
-        this._uniforms[cc.UNIFORM_PMATRIX_S],
+        this._uniforms[UNIFORM_PMATRIX_S],
         false,
         stack.top.mat
       );
@@ -998,38 +1021,16 @@ cc.GLProgram = class GLProgram extends cc.NewClass {
   getProgram() {
     return this._programObj;
   }
-  
+
   static _isHighpSupported() {
     let ctx = cc._renderContext;
-    if (ctx.getShaderPrecisionFormat && cc.GLProgram._highpSupported == null) {
+    if (ctx.getShaderPrecisionFormat && GLProgram._highpSupported == null) {
       let highp = ctx.getShaderPrecisionFormat(
         ctx.FRAGMENT_SHADER,
         ctx.HIGH_FLOAT
       );
-      cc.GLProgram._highpSupported = highp.precision !== 0;
+      GLProgram._highpSupported = highp.precision !== 0;
     }
-    return cc.GLProgram._highpSupported;
+    return GLProgram._highpSupported;
   }
-};
-
-/**
- * <p>
- *     Sets the shader program for this node
- *
- *     Since v2.0, each rendering node must set its shader program.
- *     It should be set in initialize phase.
- * </p>
- * @function
- * @param {cc.Node} node
- * @param {cc.GLProgram} program The shader program which fetches from CCShaderCache.
- * @example
- * cc.setGLProgram(node, cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLOR));
- */
-cc.setProgram = function (node, program) {
-  node.shaderProgram = program;
-
-  let children = node.children;
-  if (!children) return;
-
-  for (let i = 0; i < children.length; i++) cc.setProgram(children[i], program);
-};
+}

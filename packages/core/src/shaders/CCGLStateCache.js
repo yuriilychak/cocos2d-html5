@@ -45,7 +45,7 @@ if (cc.ENABLE_GL_STATE_CACHE) {
  * If CC_ENABLE_GL_STATE_CACHE it will reset the GL state cache.
  * @function
  */
-cc.glInvalidateStateCache = function () {
+cc.glInvalidateStateCache = function glInvalidateStateCache() {
     cc.kmGLFreeAll();
     cc._currentProjectionMatrix = -1;
     if (cc.ENABLE_GL_STATE_CACHE) {

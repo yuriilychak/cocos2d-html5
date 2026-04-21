@@ -1,11 +1,33 @@
 // Boot (barrel — re-exports boot modules; init side-effect runs on import)
 import {
-  each, isFunction, isNumber, isString, isArray,
-  isUndefined, isObject, isCrossOrigin, formatStr,
-  AsyncPool, Async, Path, Loader,
-  create3DContext, Sys, initEngine, Game,
-  _LogInfos, log, warn, error, assert, logToWebPage, formatString, initDebugSetting,
-  _loadingImage, _fpsImage, _loaderImage
+  each,
+  isFunction,
+  isNumber,
+  isString,
+  isArray,
+  isUndefined,
+  isObject,
+  isCrossOrigin,
+  formatStr,
+  AsyncPool,
+  Async,
+  Path,
+  Loader,
+  create3DContext,
+  Sys,
+  initEngine,
+  Game,
+  _LogInfos,
+  log,
+  warn,
+  error,
+  assert,
+  logToWebPage,
+  formatString,
+  initDebugSetting,
+  _loadingImage,
+  _fpsImage,
+  _loaderImage
 } from "./boot";
 
 // ======================================================================
@@ -331,6 +353,32 @@ import { Animation } from "./sprites/animation/animation";
 import AnimationCache from "./sprites/animation-cache";
 import { SpriteFrame } from "./sprites/sprite-frame";
 import SpriteFrameCache from "./sprites/sprite-frame-cache";
+import {
+  ShaderCache,
+  GLProgram,
+  setProgramForNode,
+  UniformValue,
+  GLProgramState,
+  SHADER_POSITION_UCOLOR_FRAG,
+  SHADER_POSITION_UCOLOR_VERT,
+  SHADER_POSITION_COLOR_FRAG,
+  SHADER_POSITION_COLOR_VERT,
+  SHADER_SPRITE_POSITION_COLOR_VERT,
+  SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG,
+  SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT,
+  SHADER_POSITION_TEXTURE_FRAG,
+  SHADER_POSITION_TEXTURE_VERT,
+  SHADER_POSITION_TEXTURE_UCOLOR_FRAG,
+  SHADER_POSITION_TEXTURE_UCOLOR_VERT,
+  SHADER_POSITION_TEXTURE_A8COLOR_FRAG,
+  SHADER_POSITION_TEXTURE_A8COLOR_VERT,
+  SHADER_POSITION_TEXTURE_COLOR_FRAG,
+  SHADER_POSITION_TEXTURE_COLOR_VERT,
+  SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT,
+  SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG,
+  SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG,
+  SHADEREX_SWITCHMASK_FRAG
+} from "./shaders";
 
 // ======================================================================
 // Director, Scheduler, ActionManager
@@ -376,20 +424,47 @@ import { ComponentContainer } from "./components/component-container";
 // Kazmath
 // ======================================================================
 import {
-  EPSILON, square, almostEqual,
-  Vec2, Vec3, Vec4, Ray2,
-  Matrix3, Matrix4, Plane, Quaternion, AABB,
+  EPSILON,
+  square,
+  almostEqual,
+  Vec2,
+  Vec3,
+  Vec4,
+  Ray2,
+  Matrix3,
+  Matrix4,
+  Plane,
+  Quaternion,
+  AABB,
   Matrix4Stack,
-  kmMat4Identity, kmMat4Inverse, kmMat4Multiply,
-  getMat4MultiplyValue, kmMat4Assign, kmMat4Translation,
-  kmMat4PerspectiveProjection, kmMat4LookAt, kmMat4RotationAxisAngle,
-  km_mat4_stack_push, km_mat4_stack_pop, km_mat4_stack_release,
-  KM_GL_MODELVIEW, KM_GL_PROJECTION, KM_GL_TEXTURE,
-  lazyInitialize, kmGLFreeAll,
-  kmGLPushMatrix, kmGLPushMatrixWitMat4, kmGLPopMatrix,
-  kmGLMatrixMode, kmGLLoadIdentity, kmGLLoadMatrix,
-  kmGLMultMatrix, kmGLTranslatef, kmGLRotatef,
-  kmGLScalef, kmGLGetMatrix
+  kmMat4Identity,
+  kmMat4Inverse,
+  kmMat4Multiply,
+  getMat4MultiplyValue,
+  kmMat4Assign,
+  kmMat4Translation,
+  kmMat4PerspectiveProjection,
+  kmMat4LookAt,
+  kmMat4RotationAxisAngle,
+  km_mat4_stack_push,
+  km_mat4_stack_pop,
+  km_mat4_stack_release,
+  KM_GL_MODELVIEW,
+  KM_GL_PROJECTION,
+  KM_GL_TEXTURE,
+  lazyInitialize,
+  kmGLFreeAll,
+  kmGLPushMatrix,
+  kmGLPushMatrixWitMat4,
+  kmGLPopMatrix,
+  kmGLMatrixMode,
+  kmGLLoadIdentity,
+  kmGLLoadMatrix,
+  kmGLMultMatrix,
+  kmGLTranslatef,
+  kmGLRotatef,
+  kmGLScalef,
+  kmGLGetMatrix
 } from "./kazmath";
 
 // ======================================================================
@@ -492,13 +567,22 @@ cc._fontLoader = _fontLoader;
 cc._binaryLoader = _binaryLoader;
 cc._csbLoader = _csbLoader;
 
-Loader.getInstance().register(["txt", "xml", "vsh", "fsh", "atlas"], _txtLoader);
+Loader.getInstance().register(
+  ["txt", "xml", "vsh", "fsh", "atlas"],
+  _txtLoader
+);
 Loader.getInstance().register(["json", "ExportJson"], _jsonLoader);
 Loader.getInstance().register(["js"], _jsLoader);
-Loader.getInstance().register(["png", "jpg", "bmp", "jpeg", "gif", "ico", "tiff", "webp"], _imgLoader);
+Loader.getInstance().register(
+  ["png", "jpg", "bmp", "jpeg", "gif", "ico", "tiff", "webp"],
+  _imgLoader
+);
 Loader.getInstance().register(["serverImg"], _serverImgLoader);
 Loader.getInstance().register(["plist"], _plistLoader);
-Loader.getInstance().register(["font", "eot", "ttf", "woff", "svg", "ttc"], _fontLoader);
+Loader.getInstance().register(
+  ["font", "eot", "ttf", "woff", "svg", "ttc"],
+  _fontLoader
+);
 Loader.getInstance().register(["csb"], _csbLoader);
 
 // Platform — Screen, VisibleRect, InputManager
@@ -786,7 +870,7 @@ cc.math.Quaternion = Quaternion;
 cc.math.AABB = AABB;
 cc.math.Matrix4Stack = Matrix4Stack;
 cc.math.vec3 = function (x, y, z) {
-    return new Vec3(x, y, z);
+  return new Vec3(x, y, z);
 };
 cc.kmVec3 = Vec3;
 cc.kmMat3 = Matrix3;
@@ -827,6 +911,37 @@ cc.kmGLTranslatef = kmGLTranslatef;
 cc.kmGLRotatef = kmGLRotatef;
 cc.kmGLScalef = kmGLScalef;
 cc.kmGLGetMatrix = kmGLGetMatrix;
+
+// Shaders
+cc.GLProgram = GLProgram;
+cc.setProgram = setProgramForNode;
+cc.UniformValue = UniformValue;
+cc.GLProgramState = GLProgramState;
+cc.shaderCache = ShaderCache.getInstance();
+cc.SHADER_POSITION_UCOLOR_FRAG = SHADER_POSITION_UCOLOR_FRAG;
+cc.SHADER_POSITION_UCOLOR_VERT = SHADER_POSITION_UCOLOR_VERT;
+cc.SHADER_POSITION_COLOR_FRAG = SHADER_POSITION_COLOR_FRAG;
+cc.SHADER_POSITION_COLOR_VERT = SHADER_POSITION_COLOR_VERT;
+cc.SHADER_SPRITE_POSITION_COLOR_VERT = SHADER_SPRITE_POSITION_COLOR_VERT;
+cc.SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG =
+  SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG;
+cc.SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT =
+  SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT;
+cc.SHADER_POSITION_TEXTURE_FRAG = SHADER_POSITION_TEXTURE_FRAG;
+cc.SHADER_POSITION_TEXTURE_VERT = SHADER_POSITION_TEXTURE_VERT;
+cc.SHADER_POSITION_TEXTURE_UCOLOR_FRAG = SHADER_POSITION_TEXTURE_UCOLOR_FRAG;
+cc.SHADER_POSITION_TEXTURE_UCOLOR_VERT = SHADER_POSITION_TEXTURE_UCOLOR_VERT;
+cc.SHADER_POSITION_TEXTURE_A8COLOR_FRAG = SHADER_POSITION_TEXTURE_A8COLOR_FRAG;
+cc.SHADER_POSITION_TEXTURE_A8COLOR_VERT = SHADER_POSITION_TEXTURE_A8COLOR_VERT;
+cc.SHADER_POSITION_TEXTURE_COLOR_FRAG = SHADER_POSITION_TEXTURE_COLOR_FRAG;
+cc.SHADER_POSITION_TEXTURE_COLOR_VERT = SHADER_POSITION_TEXTURE_COLOR_VERT;
+cc.SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT =
+  SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT;
+cc.SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG =
+  SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG;
+cc.SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG =
+  SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG;
+cc.SHADEREX_SWITCHMASK_FRAG = SHADEREX_SWITCHMASK_FRAG;
 
 // ======================================================================
 // Init functions (must run AFTER cc.* class assignments)

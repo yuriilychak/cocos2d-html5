@@ -25,6 +25,7 @@
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-render-cmd";
 import { Rect } from "../cocoa/geometry/rect";
 import { log, error, _LogInfos } from "../boot/debugger";
+import ShaderCache from '../shaders/CCShaderCache';
 
 //Sprite's WebGL render command
 export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -42,7 +43,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._dirty = false;
     this._recursiveDirty = false;
 
-    this._shaderProgram = cc.shaderCache.programForKey(
+    this._shaderProgram = ShaderCache.getInstance().programForKey(
       cc.SHADER_SPRITE_POSITION_TEXTURECOLOR
     );
   }

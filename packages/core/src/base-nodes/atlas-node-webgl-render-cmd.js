@@ -25,6 +25,7 @@
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from './node-webgl-render-cmd';
 import { Color } from '../platform/types/color';
 import { log, _LogInfos } from '../boot/debugger';
+import ShaderCache from '../shaders/CCShaderCache';
 
 /**
  * AtlasNode's rendering objects of WebGL
@@ -42,7 +43,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
         this._matrix.identity();
 
         //shader stuff
-        this._shaderProgram = cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURE_UCOLOR);
+        this._shaderProgram = ShaderCache.getInstance().programForKey(cc.SHADER_POSITION_TEXTURE_UCOLOR);
         this._uniformColor = cc._renderContext.getUniformLocation(this._shaderProgram.getProgram(), "u_color");
     }
 

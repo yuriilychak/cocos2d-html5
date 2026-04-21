@@ -29,7 +29,7 @@
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_UCOLOR_FRAG =
+export const SHADER_POSITION_UCOLOR_FRAG =
         "precision lowp float;\n"
         + "varying vec4 v_fragmentColor;\n"
         + "void main()                              \n"
@@ -40,7 +40,7 @@ cc.SHADER_POSITION_UCOLOR_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_UCOLOR_VERT =
+export const SHADER_POSITION_UCOLOR_VERT =
         "attribute vec4 a_position;\n"
         + "uniform    vec4 u_color;\n"
         + "uniform float u_pointSize;\n"
@@ -58,7 +58,7 @@ cc.SHADER_POSITION_UCOLOR_VERT =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_COLOR_FRAG =
+export const SHADER_POSITION_COLOR_FRAG =
         "precision lowp float; \n"
         + "varying vec4 v_fragmentColor; \n"
         + "void main() \n"
@@ -70,7 +70,7 @@ cc.SHADER_POSITION_COLOR_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_COLOR_VERT =
+export const SHADER_POSITION_COLOR_VERT =
         "attribute vec4 a_position;\n"
         + "attribute vec4 a_color;\n"
         + "varying lowp vec4 v_fragmentColor;\n"
@@ -80,7 +80,7 @@ cc.SHADER_POSITION_COLOR_VERT =
         + "    v_fragmentColor = a_color;             \n"
         + "}";
 
-cc.SHADER_SPRITE_POSITION_COLOR_VERT =
+export const SHADER_SPRITE_POSITION_COLOR_VERT =
         "attribute vec4 a_position;\n"
         + "attribute vec4 a_color;\n"
         + "varying lowp vec4 v_fragmentColor;\n"
@@ -95,7 +95,7 @@ cc.SHADER_SPRITE_POSITION_COLOR_VERT =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG =
+export const SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG =
         "// #extension GL_OES_standard_derivatives : enable\n"
         + "varying mediump vec4 v_color;\n"
         + "varying mediump vec2 v_texcoord;\n"
@@ -112,7 +112,7 @@ cc.SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT =
+export const SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT =
         "attribute mediump vec4 a_position; \n"
         + "attribute mediump vec2 a_texcoord; \n"
         + "attribute mediump vec4 a_color;	\n"
@@ -131,7 +131,7 @@ cc.SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_FRAG =
+export const SHADER_POSITION_TEXTURE_FRAG =
         "precision lowp float;   \n"
         + "varying vec2 v_texCoord;  \n"
         + "void main() \n"
@@ -143,7 +143,7 @@ cc.SHADER_POSITION_TEXTURE_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_VERT =
+export const SHADER_POSITION_TEXTURE_VERT =
         "attribute vec4 a_position; \n"
         + "attribute vec2 a_texCoord; \n"
         + "varying mediump vec2 v_texCoord; \n"
@@ -159,7 +159,7 @@ cc.SHADER_POSITION_TEXTURE_VERT =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_UCOLOR_FRAG =
+export const SHADER_POSITION_TEXTURE_UCOLOR_FRAG =
         "precision lowp float;  \n"
         + "uniform vec4 u_color; \n"
         + "varying vec2 v_texCoord; \n"
@@ -172,7 +172,7 @@ cc.SHADER_POSITION_TEXTURE_UCOLOR_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_UCOLOR_VERT =
+export const SHADER_POSITION_TEXTURE_UCOLOR_VERT =
         "attribute vec4 a_position;\n"
         + "attribute vec2 a_texCoord; \n"
         + "varying mediump vec2 v_texCoord; \n"
@@ -188,7 +188,7 @@ cc.SHADER_POSITION_TEXTURE_UCOLOR_VERT =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_A8COLOR_FRAG =
+export const SHADER_POSITION_TEXTURE_A8COLOR_FRAG =
         "precision lowp float;  \n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord; \n"
@@ -203,7 +203,7 @@ cc.SHADER_POSITION_TEXTURE_A8COLOR_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_A8COLOR_VERT =
+export const SHADER_POSITION_TEXTURE_A8COLOR_VERT =
         "attribute vec4 a_position; \n"
         + "attribute vec2 a_texCoord; \n"
         + "attribute vec4 a_color;  \n"
@@ -221,7 +221,7 @@ cc.SHADER_POSITION_TEXTURE_A8COLOR_VERT =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_COLOR_FRAG =
+export const SHADER_POSITION_TEXTURE_COLOR_FRAG =
         "precision lowp float;\n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord; \n"
@@ -234,7 +234,7 @@ cc.SHADER_POSITION_TEXTURE_COLOR_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_COLOR_VERT =
+export const SHADER_POSITION_TEXTURE_COLOR_VERT =
         "attribute vec4 a_position; \n"
         + "attribute vec2 a_texCoord; \n"
         + "attribute vec4 a_color;  \n"
@@ -251,7 +251,7 @@ cc.SHADER_POSITION_TEXTURE_COLOR_VERT =
  * @constant
  * @type {String}
  */
-cc.SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT =
+export const SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT =
         "attribute vec4 a_position; \n"
         + "attribute vec2 a_texCoord; \n"
         + "attribute vec4 a_color;  \n"
@@ -264,7 +264,7 @@ cc.SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT =
         + "    v_texCoord = a_texCoord; \n"
     + "}";
 
-cc.SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG =
+export const SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG =
         "precision lowp float;\n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord; \n"
@@ -279,7 +279,7 @@ cc.SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG =
+export const SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG =
         "precision lowp float;   \n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord;   \n"
@@ -299,7 +299,7 @@ cc.SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG =
  * @constant
  * @type {String}
  */
-cc.SHADEREX_SWITCHMASK_FRAG =
+export const SHADEREX_SWITCHMASK_FRAG =
         "precision lowp float; \n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord; \n"

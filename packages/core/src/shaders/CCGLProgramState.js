@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { log } from '../boot/debugger';
+
 const types = {
   GL_FLOAT: 0,
   GL_INT: 1,
@@ -35,7 +37,7 @@ const types = {
   GL_TEXTURE: 7
 };
 
-cc.UniformValue = class UniformValue {
+export class UniformValue {
   _uniform = null;
   _glprogram = null;
   _value = null;
@@ -156,14 +158,14 @@ cc.UniformValue = class UniformValue {
   }
 };
 
-cc.GLProgramState = class GLProgramState {
+export class GLProgramState {
   static _cache = {};
 
   static getOrCreateWithGLProgram(glprogram) {
-    let programState = cc.GLProgramState._cache[glprogram.__instanceId];
+    let programState = GLProgramState._cache[glprogram.__instanceId];
     if (!programState) {
-      programState = new cc.GLProgramState(glprogram);
-      cc.GLProgramState._cache[glprogram.__instanceId] = programState;
+      programState = new GLProgramState(glprogram);
+      GLProgramState._cache[glprogram.__instanceId] = programState;
     }
     return programState;
   }
@@ -195,7 +197,7 @@ cc.GLProgramState = class GLProgramState {
           uniform.name
         );
         uniform._location._name = uniform.name;
-        const uniformValue = new cc.UniformValue(uniform, glprogram);
+        const uniformValue = new UniformValue(uniform, glprogram);
         this._uniforms[uniform.name] = uniformValue;
       }
     }
@@ -233,7 +235,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setInt(value);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -242,7 +244,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setFloat(value);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -251,7 +253,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setVec2(v1, v2);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -260,7 +262,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setVec2v(value);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -269,7 +271,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setVec3(v1, v2, v3);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -278,7 +280,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setVec3v(value);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -287,7 +289,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setVec4(v1, v2, v3, v4);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -296,7 +298,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setVec4v(value);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -305,7 +307,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setMat4(value);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 
@@ -314,7 +316,7 @@ cc.GLProgramState = class GLProgramState {
     if (v) {
       v.setCallback(callback);
     } else {
-      cc.log("cocos2d: warning: Uniform not found: " + uniform);
+      log("cocos2d: warning: Uniform not found: " + uniform);
     }
   }
 

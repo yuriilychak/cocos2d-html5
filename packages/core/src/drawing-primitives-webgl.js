@@ -26,6 +26,7 @@
 
 import { NewClass } from './platform/class';
 import { Point } from './cocoa/geometry/point';
+import ShaderCache from './shaders/CCShaderCache';
 
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode
@@ -55,7 +56,7 @@ export class DrawingPrimitiveWebGL extends NewClass {
     lazy_init() {
         var _t = this;
         if (!_t._initialized) {
-            _t._shader = cc.shaderCache.programForKey(cc.SHADER_POSITION_UCOLOR);
+            _t._shader = ShaderCache.getInstance().programForKey(cc.SHADER_POSITION_UCOLOR);
             _t._shader._addUniformLocation(this._colorLocation);
             _t._shader._addUniformLocation(this._pointSizeLocation);
             _t._glProgramState = cc.GLProgramState.getOrCreateWithGLProgram(_t._shader);
