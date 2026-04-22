@@ -24,7 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Game from "./boot/game";
 import Loader from "./boot/loader";
 import { log, assert, _LogInfos } from "./boot/debugger";
 import { RendererConfig } from "./renderer/renderer-config";
@@ -68,8 +67,7 @@ export class Configuration {
     const locValueDict = this._valueDict;
     locValueDict["cocos2d.x.version"] = cc.ENGINE_VERSION;
     locValueDict["cocos2d.x.compiled_with_profiler"] = false;
-    locValueDict["cocos2d.x.compiled_with_gl_state_cache"] =
-      cc.ENABLE_GL_STATE_CACHE;
+    locValueDict["cocos2d.x.compiled_with_gl_state_cache"] = true;
     this._inited = true;
   }
 
@@ -132,13 +130,7 @@ export class Configuration {
     this._valueDict[key] = value;
   }
 
-  dumpInfo() {
-    if (cc.ENABLE_GL_STATE_CACHE === 0) {
-      log("");
-      log(_LogInfos.configuration_dumpInfo);
-      log("");
-    }
-  }
+  dumpInfo() {}
 
   gatherGPUInfo() {
     if (RendererConfig.getInstance().isCanvas) return;

@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
- import { Point } from '../cocoa/geometry/point';
+import { Point } from "../cocoa/geometry/point";
 
 /**
  * <p>
@@ -257,20 +257,3 @@ export const DEFAULT_ENGINE = ENGINE_VERSION + "-canvas";
  * @type {number}
  */
 export const ENABLE_STACKABLE_ACTIONS = 1;
-
-/**
- * <p>
- *      If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.                                     <br/>
- *      In order to use them, you have to use the following functions, instead of the the GL ones:                                             <br/>
- *          - ccGLUseProgram() instead of glUseProgram()                                                                                      <br/>
- *          - ccGLDeleteProgram() instead of glDeleteProgram()                                                                                <br/>
- *          - ccGLBlendFunc() instead of glBlendFunc()                                                                                        <br/>
- *                                                                                                                                            <br/>
- *      If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.              <br/>
- *      It is recommend to enable whenever possible to improve speed.                                                                        <br/>
- *      If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
- * </p>
- * @constant
- * @type {Number}
- */
-export const ENABLE_GL_STATE_CACHE = 1;
