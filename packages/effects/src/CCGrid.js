@@ -270,7 +270,7 @@ export class GridBase extends cc.NewClass {
   set2DProjection() {
     const winSize = cc.director.getWinSizeInPixels();
 
-    const gl = cc._renderContext;
+    const gl = cc.rendererConfig.renderContext;
     gl.viewport(0, 0, winSize.width, winSize.height);
     cc.kmGLMatrixMode(cc.KM_GL_PROJECTION);
     cc.kmGLLoadIdentity();
@@ -369,7 +369,7 @@ export class Grid3D extends GridBase {
 
   beforeBlit() {
     if (this._needDepthTestForBlit) {
-      const gl = cc._renderContext;
+      const gl = cc.rendererConfig.renderContext;
       this._oldDepthTestValue = gl.isEnabled(gl.DEPTH_TEST);
       this._oldDepthWriteValue = gl.getParameter(gl.DEPTH_WRITEMASK);
       //CHECK_GL_ERROR_DEBUG();
@@ -380,7 +380,7 @@ export class Grid3D extends GridBase {
 
   afterBlit() {
     if (this._needDepthTestForBlit) {
-      const gl = cc._renderContext;
+      const gl = cc.rendererConfig.renderContext;
       if (this._oldDepthTestValue) gl.enable(gl.DEPTH_TEST);
       else gl.disable(gl.DEPTH_TEST);
       gl.depthMask(this._oldDepthWriteValue);
@@ -400,7 +400,7 @@ export class Grid3D extends GridBase {
 
     this._glProgramState.apply(this._matrix);
 
-    const gl = cc._renderContext;
+    const gl = cc.rendererConfig.renderContext;
     const locDirty = this._dirty;
 
     gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
@@ -446,7 +446,7 @@ export class Grid3D extends GridBase {
   }
 
   calculateVertexPoints() {
-    const gl = cc._renderContext;
+    const gl = cc.rendererConfig.renderContext;
 
     const width = this._texture.pixelsWidth;
     const height = this._texture.pixelsHeight;
@@ -665,7 +665,7 @@ export class TiledGrid3D extends GridBase {
     //
     // Attributes
     //
-    const gl = cc._renderContext;
+    const gl = cc.rendererConfig.renderContext;
     const locDirty = this._dirty;
     gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
@@ -725,7 +725,7 @@ export class TiledGrid3D extends GridBase {
     this._texCoordinates = new Float32Array(numQuads * 8);
     this._indices = new Uint16Array(numQuads * 6);
 
-    const gl = cc._renderContext;
+    const gl = cc.rendererConfig.renderContext;
     if (this._verticesBuffer) gl.deleteBuffer(this._verticesBuffer);
     this._verticesBuffer = gl.createBuffer();
     if (this._texCoordinateBuffer) gl.deleteBuffer(this._texCoordinateBuffer);

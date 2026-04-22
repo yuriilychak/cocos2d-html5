@@ -58,7 +58,7 @@
             var node = this._node, parent = node._parent;
             this.transform(parent ? parent._renderCmd : null);
 
-            var wrapper = ctx || cc._renderContext;
+            var wrapper = ctx || cc.rendererConfig.renderContext;
             wrapper.save();
             wrapper._switchToArmatureMode(true, this._worldTransform, scaleX, scaleY);
         }

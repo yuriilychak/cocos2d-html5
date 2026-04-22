@@ -42,7 +42,7 @@
         }
 
         rendering(ctx, scaleX, scaleY) {
-            const wrapper = ctx || cc._renderContext, context = wrapper.getContext(), node = this._node, locSprite = node._sprite;
+            const wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext(), node = this._node, locSprite = node._sprite;
             const locTextureCoord = locSprite._renderCmd._textureCoord, alpha = locSprite._renderCmd._displayedOpacity / 255;
 
             if (locTextureCoord.width === 0 || locTextureCoord.height === 0)

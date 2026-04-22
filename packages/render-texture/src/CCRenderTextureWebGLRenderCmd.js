@@ -51,7 +51,7 @@
         }
 
         rendering(ctx) {
-            const gl = ctx || cc._renderContext;
+            const gl = ctx || cc.rendererConfig.renderContext;
             const node = this._node;
             if (node.autoDraw) {
                 node.begin();
@@ -106,7 +106,7 @@
         }
 
         clearStencil(stencilValue) {
-            const gl = cc._renderContext;
+            const gl = cc.rendererConfig.renderContext;
             // save old stencil value
             const stencilClearValue = gl.getParameter(gl.STENCIL_CLEAR_VALUE);
 
@@ -122,7 +122,7 @@
             //node.sprite = null;
             this._textureCopy = null;
 
-            const gl = cc._renderContext;
+            const gl = cc.rendererConfig.renderContext;
             gl.deleteFramebuffer(this._fBO);
             if (this._depthRenderBuffer)
                 gl.deleteRenderbuffer(this._depthRenderBuffer);
@@ -136,7 +136,7 @@
             if (format === cc.Texture2D.PIXEL_FORMAT_A8)
                 cc.log("cc.RenderTexture._initWithWidthAndHeightForWebGL() : only RGB and RGBA formats are valid for a render texture;");
 
-            const gl = cc._renderContext, locScaleFactor = cc.contentScaleFactor();
+            const gl = cc.rendererConfig.renderContext, locScaleFactor = cc.contentScaleFactor();
             this._fullRect = new cc.Rect(0, 0, width, height);
             this._fullViewport = new cc.Rect(0, 0, width, height);
 
@@ -230,7 +230,7 @@
             cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
             cc.kmGLPushMatrix();
 
-            const gl = cc._renderContext;
+            const gl = cc.rendererConfig.renderContext;
 
             const director = cc.director;
             director.setProjection(director.getProjection());
@@ -279,7 +279,7 @@
             b = b / 255;
             a = a / 255;
 
-            const gl = cc._renderContext;
+            const gl = cc.rendererConfig.renderContext;
 
             // save clear color
             let clearColor = [0.0, 0.0, 0.0, 0.0];
@@ -318,7 +318,7 @@
             const node = this._node;
             cc.renderer._renderingToBuffer(node.__instanceId);
 
-            const gl = cc._renderContext;
+            const gl = cc.rendererConfig.renderContext;
             const director = cc.director;
             gl.bindFramebuffer(gl.FRAMEBUFFER, this._oldFBO);
 
@@ -350,7 +350,7 @@
             const node = this._node;
             node.begin();
 
-            const gl = cc._renderContext;
+            const gl = cc.rendererConfig.renderContext;
             //! save old depth value
             const depthClearValue = gl.getParameter(gl.DEPTH_CLEAR_VALUE);
 

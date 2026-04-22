@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RendererConfig } from "../../renderer/renderer-config";
 import LayerColorWebGLRenderer from "./layer-color-webgl-renderer";
 import { Node } from "../../base-nodes/node";
 import { Point } from "../../cocoa/geometry/point";
@@ -162,7 +163,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
   }
 
   rendering(ctx) {
-    const context = ctx || cc._renderContext,
+    const context = ctx || RendererConfig.getInstance().renderContext,
       node = this._node;
 
     if (!this._matrix) {

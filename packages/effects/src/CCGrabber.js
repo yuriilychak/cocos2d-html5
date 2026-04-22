@@ -34,7 +34,7 @@ export class Grabber extends cc.NewClass {
   constructor() {
     cc.sys._checkWebGLRenderMode();
     super();
-    this._gl = cc._renderContext;
+    this._gl = cc.rendererConfig.renderContext;
     this._oldClearColor = [0, 0, 0, 0];
     this._oldFBO = null;
     // generate FBO

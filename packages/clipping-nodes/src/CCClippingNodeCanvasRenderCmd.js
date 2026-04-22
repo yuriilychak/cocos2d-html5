@@ -76,7 +76,7 @@
         }
 
         _saveCmdCallback(ctx, scaleX, scaleY) {
-            const wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            const wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
 
             if (this._clipElemType) {
                 const locCache = cc.ClippingNode.CanvasRenderCmd._getSharedCache();
@@ -115,7 +115,7 @@
 
         _clipCmdCallback(ctx) {
             const node = this._node;
-            const wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            const wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
 
             if (this._clipElemType) {
                 //hack
@@ -144,7 +144,7 @@
 
         _restoreCmdCallback(ctx) {
             const locCache = cc.ClippingNode.CanvasRenderCmd._getSharedCache();
-            const wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            const wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
             if (this._clipElemType) {
                 // Redraw the cached canvas, so that the clipped area shows the background etc.
                 context.save();

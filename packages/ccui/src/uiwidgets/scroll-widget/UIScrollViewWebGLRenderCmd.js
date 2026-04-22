@@ -12,7 +12,7 @@
             var currentID = this._node.__instanceId,
                 locCmds = cc.renderer._cacheToBufferCmds[currentID],
                 i, len, checkNode, cmd,
-                context = ctx || cc._renderContext;
+                context = ctx || cc.rendererConfig.renderContext;
             if (!locCmds) {
                 return;
             }

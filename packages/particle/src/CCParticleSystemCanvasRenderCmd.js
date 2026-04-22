@@ -70,7 +70,7 @@
 
         rendering(ctx, scaleX, scaleY) {
             //TODO: need refactor rendering for performance
-            const wrapper = ctx || cc._renderContext, context = wrapper.getContext(),
+            const wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext(),
                 node = this._node, pointRect = this._pointRect;
 
             wrapper.setTransform(this._worldTransform, scaleX, scaleY);

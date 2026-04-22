@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RendererConfig } from "../renderer/renderer-config";
+
 cc._currentProjectionMatrix = -1;
 cc.MAX_ACTIVETEXTURE = 16;
 cc._currentShaderProgram = -1;
@@ -63,7 +65,7 @@ cc.glInvalidateStateCache = function glInvalidateStateCache() {
 cc.glUseProgram = function (program) {
   if (program !== cc._currentShaderProgram) {
     cc._currentShaderProgram = program;
-    cc._renderContext.useProgram(program);
+    RendererConfig.getInstance().renderContext.useProgram(program);
   }
 };
 
@@ -84,12 +86,12 @@ cc.glDeleteProgram = function (program) {
  * @param {Number} dfactor
  */
 cc.setBlending = function (sfactor, dfactor) {
-  const ctx = cc._renderContext;
+  const ctx = RendererConfig.getInstance().renderContext;
   if (sfactor === ctx.ONE && dfactor === ctx.ZERO) {
     ctx.disable(ctx.BLEND);
   } else {
     ctx.enable(ctx.BLEND);
-    cc._renderContext.blendFunc(sfactor, dfactor);
+    RendererConfig.getInstance().renderContext.blendFunc(sfactor, dfactor);
     //TODO need fix for WebGL
     //ctx.blendFuncSeparate(ctx.SRC_ALPHA, dfactor, sfactor, dfactor);
   }
@@ -119,7 +121,7 @@ cc.glBlendFuncForParticle = function (sfactor, dfactor) {
   if (sfactor !== cc._blendingSource || dfactor !== cc._blendingDest) {
     cc._blendingSource = sfactor;
     cc._blendingDest = dfactor;
-    const ctx = cc._renderContext;
+    const ctx = RendererConfig.getInstance().renderContext;
     if (sfactor === ctx.ONE && dfactor === ctx.ZERO) {
       ctx.disable(ctx.BLEND);
     } else {
@@ -136,7 +138,7 @@ cc.glBlendFuncForParticle = function (sfactor, dfactor) {
  * @function
  */
 cc.glBlendResetToCache = function () {
-  const ctx = cc._renderContext;
+  const ctx = RendererConfig.getInstance().renderContext;
   ctx.blendEquation(ctx.FUNC_ADD);
   cc.setBlending(cc._blendingSource, cc._blendingDest);
 };
@@ -170,7 +172,7 @@ cc.glBindTexture2DN = function (textureUnit, textureId) {
   if (cc._currentBoundTexture[textureUnit] === textureId) return;
   cc._currentBoundTexture[textureUnit] = textureId;
 
-  const ctx = cc._renderContext;
+  const ctx = RendererConfig.getInstance().renderContext;
   ctx.activeTexture(ctx.TEXTURE0 + textureUnit);
   if (textureId) ctx.bindTexture(ctx.TEXTURE_2D, textureId._webTextureObj);
   else ctx.bindTexture(ctx.TEXTURE_2D, null);
@@ -196,7 +198,7 @@ cc.glDeleteTexture = function (textureId) {
 cc.glDeleteTextureN = function (textureUnit, textureId) {
   if (textureId === cc._currentBoundTexture[textureUnit])
     cc._currentBoundTexture[textureUnit] = -1;
-  cc._renderContext.deleteTexture(textureId._webTextureObj);
+  RendererConfig.getInstance().renderContext.deleteTexture(textureId._webTextureObj);
 };
 
 /**

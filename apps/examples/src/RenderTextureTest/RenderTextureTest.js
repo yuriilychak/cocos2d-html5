@@ -222,7 +222,7 @@ var RenderTextureIssue937 = class RenderTextureIssue937 extends RenderTextureBas
             return;
         // It's possible to modify the RenderTexture blending function by
         //        [[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-        //rend.getSprite().setBlendFunc(cc._renderContext.ONE, cc._renderContext.ONE_MINUS_SRC_ALPHA);
+        //rend.getSprite().setBlendFunc(cc.rendererConfig.renderContext.ONE, cc.rendererConfig.renderContext.ONE_MINUS_SRC_ALPHA);
         rend.begin();
         spr_premulti.visit();
         spr_nonpremulti.visit();
@@ -480,7 +480,7 @@ var RenderTextureTestDepthStencil = class RenderTextureTestDepthStencil extends 
     }
 
     releaseMask() {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
         gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
         gl.disable(gl.STENCIL_TEST);
@@ -488,7 +488,7 @@ var RenderTextureTestDepthStencil = class RenderTextureTestDepthStencil extends 
     }
 
     maskTest(sender) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
 
         gl.clear(gl.STENCIL_BUFFER_BIT);
         this._rend.beginWithClear(0, 0, 0, 0, 0, 0);
@@ -580,7 +580,7 @@ var RenderTextureTargetNode = class RenderTextureTargetNode extends RenderTextur
         renderTexture.addChild(this._sprite1);
         renderTexture.addChild(this._sprite2);
         renderTexture.clearColorVal = cc.color(0, 0, 0, 0);
-        renderTexture.clearFlags = cc._renderContext.COLOR_BUFFER_BIT;
+        renderTexture.clearFlags = cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
 
         /* add the render texture to the scene */
         this.addChild(renderTexture);
@@ -620,7 +620,7 @@ var RenderTextureTargetNode = class RenderTextureTargetNode extends RenderTextur
 
     touched(sender) {
         if (this._renderTexture.clearFlags == 0)
-            this._renderTexture.clearFlags = cc._renderContext.COLOR_BUFFER_BIT;
+            this._renderTexture.clearFlags = cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
         else {
             this._renderTexture.clearFlags = 0;
             this._renderTexture.clearColorVal = cc.color(Math.random()*255, Math.random()*255, Math.random()*255, 255);

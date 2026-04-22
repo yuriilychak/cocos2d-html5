@@ -52,7 +52,7 @@ function setProgram (node, program) {
             // get (only once) the number of bits of the stencil buffer
             cc.ClippingNode.WebGLRenderCmd._init_once = true;
             if (cc.ClippingNode.WebGLRenderCmd._init_once) {
-                cc.stencilBits = cc._renderContext.getParameter(cc._renderContext.STENCIL_BITS);
+                cc.stencilBits = cc.rendererConfig.renderContext.getParameter(cc.rendererConfig.renderContext.STENCIL_BITS);
                 if (cc.stencilBits <= 0)
                     cc.log("Stencil buffer is not enabled.");
                 cc.ClippingNode.WebGLRenderCmd._init_once = false;
@@ -138,7 +138,7 @@ function setProgram (node, program) {
         }
 
         _onBeforeVisit(ctx) {
-            const gl = ctx || cc._renderContext, node = this._node;
+            const gl = ctx || cc.rendererConfig.renderContext, node = this._node;
             cc.ClippingNode.WebGLRenderCmd._layer++;
 
             // mask of the current layer (ie: for layer 3: 00000100)
@@ -173,14 +173,14 @@ function setProgram (node, program) {
         }
 
         _onAfterDrawStencil(ctx) {
-            const gl = ctx || cc._renderContext;
+            const gl = ctx || cc.rendererConfig.renderContext;
             gl.depthMask(true);
             gl.stencilFunc(!this._node.inverted ? gl.EQUAL : gl.NOTEQUAL, this._mask_layer_le, this._mask_layer_le);
             gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
         }
 
         _onAfterVisit(ctx) {
-            const gl = ctx || cc._renderContext;
+            const gl = ctx || cc.rendererConfig.renderContext;
 
             cc.ClippingNode.WebGLRenderCmd._layer--;
 

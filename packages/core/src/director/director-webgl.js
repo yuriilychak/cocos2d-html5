@@ -1,3 +1,4 @@
+import { RendererConfig } from "../renderer/renderer-config";
 import { NewClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import Matrix4 from "../kazmath/mat4";
@@ -172,12 +173,16 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
   setAlphaBlending(on) {
     if (on) cc.glBlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
-    else cc.glBlendFunc(cc._renderContext.ONE, cc._renderContext.ZERO);
+    else
+      cc.glBlendFunc(
+        RendererConfig.getInstance().renderContext.ONE,
+        RendererConfig.getInstance().renderContext.ZERO
+      );
   }
 
   setGLDefaultValues() {
     this.setAlphaBlending(true);
     this.setProjection(this._director._projection);
-    cc._renderContext.clearColor(0.0, 0.0, 0.0, 0.0);
+    RendererConfig.getInstance().renderContext.clearColor(0.0, 0.0, 0.0, 0.0);
   }
 }

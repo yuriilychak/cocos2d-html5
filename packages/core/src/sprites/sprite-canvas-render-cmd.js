@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RendererConfig } from "../renderer/renderer-config";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
 import { Node } from "../base-nodes/node";
 import { Rect } from "../cocoa/geometry/rect";
@@ -156,7 +157,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     )
       return;
 
-    const wrapper = ctx || cc._renderContext,
+    const wrapper = ctx || RendererConfig.getInstance().renderContext,
       context = wrapper.getContext();
     let locX = node._offsetPosition.x;
     const locHeight = node._rect.height,

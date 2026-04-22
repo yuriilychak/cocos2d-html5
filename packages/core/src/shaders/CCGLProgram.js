@@ -26,6 +26,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RendererConfig } from "../renderer/renderer-config";
 import { NewClass } from "../platform/class";
 import { log } from "../boot/debugger";
 import { Director } from "../director/director";
@@ -157,7 +158,7 @@ export default class GLProgram extends NewClass {
     super();
     this._uniforms = {};
     this._hashForUniforms = {};
-    this._glContext = glContext || cc._renderContext;
+    this._glContext = glContext || RendererConfig.getInstance().renderContext;
 
     vShaderFileName &&
       fShaderFileName &&
@@ -851,8 +852,7 @@ export default class GLProgram extends NewClass {
       // This doesn't give the most accurate global time value.
       // Cocos2D doesn't store a high precision time value, so this will have to do.
       // Getting Mach time per frame per shader using time could be extremely expensive.
-      let time =
-        director.getTotalFrames() * director.getAnimationInterval();
+      let time = director.getTotalFrames() * director.getAnimationInterval();
 
       this.setUniformLocationWith4f(
         this._uniforms[UNIFORM_TIME_S],
@@ -1023,7 +1023,7 @@ export default class GLProgram extends NewClass {
   }
 
   static _isHighpSupported() {
-    let ctx = cc._renderContext;
+    let ctx = RendererConfig.getInstance().renderContext;
     if (ctx.getShaderPrecisionFormat && GLProgram._highpSupported == null) {
       let highp = ctx.getShaderPrecisionFormat(
         ctx.FRAGMENT_SHADER,

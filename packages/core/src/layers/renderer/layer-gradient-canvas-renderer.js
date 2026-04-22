@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RendererConfig } from "../../renderer/renderer-config";
 import LayerColorCanvasRenderer from "./layer-color-canvas-renderer";
 import { Node } from "../../base-nodes/node";
 import { Point } from "../../cocoa/geometry/point";
@@ -40,7 +41,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
   }
 
   rendering(ctx, scaleX, scaleY) {
-    const wrapper = ctx || cc._renderContext,
+    const wrapper = ctx || RendererConfig.getInstance().renderContext,
       context = wrapper.getContext(),
       node = this._node,
       opacity = this._displayedOpacity / 255;

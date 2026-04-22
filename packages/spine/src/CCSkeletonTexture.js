@@ -40,7 +40,7 @@ sp.SkeletonTexture = class SkeletonTexture extends sp.spine.Texture {
 
     setFilters(minFilter, magFilter) {
         if (cc.rendererConfig.isWebGL) {
-            var gl = cc._renderContext;
+            var gl = cc.rendererConfig.renderContext;
             this.bind();
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, minFilter);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, magFilter);
@@ -49,7 +49,7 @@ sp.SkeletonTexture = class SkeletonTexture extends sp.spine.Texture {
 
     setWraps(uWrap, vWrap) {
         if (cc.rendererConfig.isWebGL) {
-            var gl = cc._renderContext;
+            var gl = cc.rendererConfig.renderContext;
             this.bind();
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, uWrap);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, vWrap);

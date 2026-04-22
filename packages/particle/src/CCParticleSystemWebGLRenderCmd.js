@@ -76,7 +76,7 @@
                     node._batchNode.textureAtlas._copyQuadsToTextureAtlas(this._quads, node.atlasIndex);
 
                     //delete buffer
-                    cc._renderContext.deleteBuffer(this._buffersVBO[1]);     //where is re-bindBuffer code?
+                    cc.rendererConfig.renderContext.deleteBuffer(this._buffersVBO[1]);     //where is re-bindBuffer code?
                 }
             }
         }
@@ -193,7 +193,7 @@
             if (!node._texture)
                 return;
 
-            const gl = ctx || cc._renderContext;
+            const gl = ctx || cc.rendererConfig.renderContext;
 
             if (!this._matrix) {
                 this._matrix = new cc.math.Matrix4();
@@ -345,7 +345,7 @@
         }
 
         _setupVBO() {
-            const gl = cc._renderContext;
+            const gl = cc.rendererConfig.renderContext;
 
             //gl.deleteBuffer(this._buffersVBO[0]);
             this._buffersVBO[0] = gl.createBuffer();
@@ -385,7 +385,7 @@
         }
 
         postStep() {
-            const gl = cc._renderContext;
+            const gl = cc.rendererConfig.renderContext;
             gl.bindBuffer(gl.ARRAY_BUFFER, this._buffersVBO[0]);
             gl.bufferSubData(gl.ARRAY_BUFFER, 0, this._quadsArrayBuffer);
         }

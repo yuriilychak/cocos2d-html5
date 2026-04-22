@@ -13,6 +13,15 @@ export class RendererConfig {
 
   _renderType = Game.RENDER_TYPE_CANVAS;
   _supportRender = false;
+  _renderContext = null;
+
+  get renderContext() {
+    return this._renderContext;
+  }
+
+  initRenderContext(context) {
+    this._renderContext = context;
+  }
 
   get isWebGL() {
     return this._renderType === Game.RENDER_TYPE_WEBGL;

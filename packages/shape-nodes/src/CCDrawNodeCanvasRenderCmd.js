@@ -39,7 +39,7 @@
         }
 
         rendering(ctx, scaleX, scaleY) {
-            const wrapper = ctx || cc._renderContext, context = wrapper.getContext(), node = this._node;
+            const wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext(), node = this._node;
             const alpha = this._displayedOpacity / 255;
             if (alpha === 0)
                 return;

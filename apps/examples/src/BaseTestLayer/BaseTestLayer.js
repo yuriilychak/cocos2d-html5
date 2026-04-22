@@ -269,7 +269,7 @@ var BaseTestLayer = class BaseTestLayer extends cc.LayerGradient {
             return array;
         } else {
             // implement a canvas-html5 readpixels
-            return cc._renderContext.getImageData(x, winSize.height-y-h, w, h).data;
+            return cc.rendererConfig.renderContext.getImageData(x, winSize.height-y-h, w, h).data;
         }
     }
 

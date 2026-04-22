@@ -46,7 +46,7 @@ sp.Skeleton.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
 
     rendering(wrapper, scaleX, scaleY) {
     var node = this._node, i, n, slot, slotNode;
-    wrapper = wrapper || cc._renderContext;
+    wrapper = wrapper || cc.rendererConfig.renderContext;
 
     var locSkeleton = node._skeleton, drawOrder = locSkeleton.drawOrder;
     for (i = 0, n = drawOrder.length; i < n; i++) {

@@ -33,12 +33,6 @@ _p = null;
 cc._drawingUtil = null;
 
 /**
- * main Canvas 2D/3D Context of game engine
- * @type {CanvasRenderingContext2D|WebGLRenderingContext}
- */
-cc._renderContext = null;
-
-/**
  * Main canvas of game engine
  * @type {HTMLCanvasElement}
  */

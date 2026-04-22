@@ -473,13 +473,11 @@ export default class Game extends EventHelper(NewClass) {
     localCanvas.setAttribute("tabindex", 99);
 
     if (RendererConfig.getInstance().isWebGL) {
-      this._renderContext =
-        cc._renderContext =
-        cc.webglContext =
-          create3DContext(localCanvas, {
-            stencil: true,
-            alpha: false
-          });
+      this._renderContext = cc.webglContext = create3DContext(localCanvas, {
+        stencil: true,
+        alpha: false
+      });
+      RendererConfig.getInstance().initRenderContext(this._renderContext);
     }
     if (this._renderContext) {
       cc.renderer = rendererWebGL;
@@ -492,9 +490,10 @@ export default class Game extends EventHelper(NewClass) {
     } else {
       RendererConfig.getInstance().setRenderType(Game.RENDER_TYPE_CANVAS);
       cc.renderer = rendererCanvas;
-      this._renderContext = cc._renderContext = new CanvasContextWrapper(
+      this._renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")
       );
+      RendererConfig.getInstance().initRenderContext(this._renderContext);
       cc._drawingUtil = DrawingPrimitiveCanvas
         ? new DrawingPrimitiveCanvas(this._renderContext)
         : null;

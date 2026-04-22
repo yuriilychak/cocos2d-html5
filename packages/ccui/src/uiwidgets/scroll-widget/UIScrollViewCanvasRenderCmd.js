@@ -12,7 +12,7 @@
             var i, locCmds = cc.renderer._cacheToCanvasCmds[currentID], len,
                 scaleX = cc.view.getScaleX(),
                 scaleY = cc.view.getScaleY();
-            var context = ctx || cc._renderContext;
+            var context = ctx || cc.rendererConfig.renderContext;
             context.computeRealOffsetY();
 
             this._node.updateChildren();

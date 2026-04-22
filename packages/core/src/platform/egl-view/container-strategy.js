@@ -24,6 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RendererConfig } from "../../renderer/renderer-config";
 import { NewClass } from "../class";
 import Game from "../../boot/game";
 import Sys from "../../boot/sys";
@@ -74,7 +75,8 @@ export class ContainerStrategy extends NewClass {
     // Setup canvas
     locCanvas.width = w * devicePixelRatio;
     locCanvas.height = h * devicePixelRatio;
-    cc._renderContext.resetCache && cc._renderContext.resetCache();
+    RendererConfig.getInstance().renderContext.resetCache &&
+      RendererConfig.getInstance().renderContext.resetCache();
   }
 
   _fixContainer() {

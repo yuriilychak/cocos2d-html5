@@ -249,7 +249,7 @@ export class Director extends NewClass {
     EventManager.getInstance().dispatchEvent(this._eventAfterVisit);
     cc.g_NumberOfDraws = 0;
 
-    renderer.rendering(cc._renderContext);
+    renderer.rendering(RendererConfig.getInstance().renderContext);
     this._totalFrames++;
 
     EventManager.getInstance().dispatchEvent(this._eventAfterDraw);

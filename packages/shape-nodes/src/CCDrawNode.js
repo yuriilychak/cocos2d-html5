@@ -513,7 +513,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 this.manualRelease = false;
 
                 if (!_sharedBuffer) {
-                    _sharedBuffer = new cc.GlobalVertexBuffer(cc._renderContext, cc.DRAWNODE_TOTAL_VERTICES * VERTEX_BYTE);
+                    _sharedBuffer = new cc.GlobalVertexBuffer(cc.rendererConfig.renderContext, cc.DRAWNODE_TOTAL_VERTICES * VERTEX_BYTE);
                 }
 
                 this._renderCmd._shaderProgram = cc.shaderCache.programForKey(cc.SHADER_POSITION_LENGTHTEXTURECOLOR);
@@ -709,7 +709,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             }
 
             _render() {
-                var gl = cc._renderContext;
+                var gl = cc.rendererConfig.renderContext;
                 if (this._offset < 0 || this._vertexCount <= 0) {
                     return;
                 }

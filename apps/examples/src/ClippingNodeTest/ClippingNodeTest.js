@@ -523,7 +523,7 @@ var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTe
     }
 
     setup() {
-        _stencilBits = cc._renderContext.getParameter(cc._renderContext.STENCIL_BITS);
+        _stencilBits = cc.rendererConfig.renderContext.getParameter(cc.rendererConfig.renderContext.STENCIL_BITS);
         if (_stencilBits < 3)
             cc.log("Stencil must be enabled for the current CCGLView.");
 
@@ -535,7 +535,7 @@ var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTe
     }
 
     draw(ctx) {
-        var gl = ctx || cc._renderContext;
+        var gl = ctx || cc.rendererConfig.renderContext;
         var winPoint = cc.pFromSize(cc.director.getWinSize());
         var planeSize = cc.pMult(winPoint, 1.0 / _PLANE_COUNT);
 
@@ -576,7 +576,7 @@ var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTe
     }
 
     setupStencilForClippingOnPlane(plane) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         var planeMask = 0x1 << plane;
         gl.stencilMask(planeMask);
         gl.clearStencil(0x0);
@@ -587,7 +587,7 @@ var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTe
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         var planeMask = 0x1 << plane;
         var equalOrLessPlanesMask = planeMask | (planeMask - 1);
         gl.stencilFunc(gl.EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);
@@ -603,11 +603,11 @@ var RawStencilBufferTest2 = class RawStencilBufferTest2 extends RawStencilBuffer
 
     setupStencilForClippingOnPlane(plane) {
         super.setupStencilForClippingOnPlane(plane);
-        cc._renderContext.depthMask(false);
+        cc.rendererConfig.renderContext.depthMask(false);
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        cc._renderContext.depthMask(true);
+        cc.rendererConfig.renderContext.depthMask(true);
         super.setupStencilForDrawingOnPlane(plane);
     }
 
@@ -619,14 +619,14 @@ var RawStencilBufferTest3 = class RawStencilBufferTest3 extends RawStencilBuffer
     }
 
     setupStencilForClippingOnPlane(plane) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         super.setupStencilForClippingOnPlane(plane);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         gl.depthMask(true);
         //gl.enable(gl.DEPTH_TEST);
         super.setupStencilForDrawingOnPlane(plane);
@@ -640,7 +640,7 @@ var RawStencilBufferTest4 = class RawStencilBufferTest4 extends RawStencilBuffer
     }
 
     setupStencilForClippingOnPlane(plane) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         super.setupStencilForClippingOnPlane(plane);
         gl.depthMask(false);
 
@@ -652,7 +652,7 @@ var RawStencilBufferTest4 = class RawStencilBufferTest4 extends RawStencilBuffer
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        cc._renderContext.depthMask(true);
+        cc.rendererConfig.renderContext.depthMask(true);
         super.setupStencilForDrawingOnPlane(plane);
     }
 
@@ -664,7 +664,7 @@ var RawStencilBufferTest5 = class RawStencilBufferTest5 extends RawStencilBuffer
     }
 
     setupStencilForClippingOnPlane(plane) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         super.setupStencilForClippingOnPlane(plane);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
@@ -677,8 +677,8 @@ var RawStencilBufferTest5 = class RawStencilBufferTest5 extends RawStencilBuffer
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        cc._renderContext.depthMask(true);
-        //cc._renderContext.enable(cc._renderContext.DEPTH_TEST);
+        cc.rendererConfig.renderContext.depthMask(true);
+        //cc.rendererConfig.renderContext.enable(cc.rendererConfig.renderContext.DEPTH_TEST);
         super.setupStencilForDrawingOnPlane(plane);
     }
 
@@ -690,12 +690,12 @@ var RawStencilBufferTest6 = class RawStencilBufferTest6 extends RawStencilBuffer
     }
 
     setup() {
-        cc._renderContext.stencilMask(~0);
+        cc.rendererConfig.renderContext.stencilMask(~0);
         super.setup();
     }
 
     setupStencilForClippingOnPlane(plane) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         var planeMask = 0x1 << plane;
         gl.stencilMask(planeMask);
         gl.stencilFunc(gl.NEVER, 0, planeMask);
@@ -716,7 +716,7 @@ var RawStencilBufferTest6 = class RawStencilBufferTest6 extends RawStencilBuffer
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        var gl = cc._renderContext;
+        var gl = cc.rendererConfig.renderContext;
         gl.depthMask(true);
         //gl.enable(gl.DEPTH_TEST);
         super.setupStencilForDrawingOnPlane(plane);

@@ -37,7 +37,7 @@ cc.MotionStreak.WebGLRenderCmd = class WebGLRenderCmd extends cc.Node.WebGLRende
             return;
 
         if (node.texture && node.texture.isLoaded()) {
-            ctx = ctx || cc._renderContext;
+            ctx = ctx || cc.rendererConfig.renderContext;
 
             const wt = this._worldTransform;
             this._matrix.mat[0] = wt.a;

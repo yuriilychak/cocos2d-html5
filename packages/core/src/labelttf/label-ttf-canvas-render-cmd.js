@@ -578,7 +578,7 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
 
   _measure(text) {
     if (text) {
-      const context = cc._renderContext.getContext();
+      const context = RendererConfig.getInstance().renderContext.getContext();
       context.font = this._fontStyleStr;
       return context.measureText(text).width;
     } else {
@@ -606,7 +606,7 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
   rendering(ctx) {
     const scaleX = cc.view.getScaleX(),
       scaleY = cc.view.getScaleY();
-    const wrapper = ctx || cc._renderContext,
+    const wrapper = ctx || RendererConfig.getInstance().renderContext,
       context = wrapper.getContext();
     if (!context) return;
     const node = this._node;

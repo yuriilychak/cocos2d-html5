@@ -136,7 +136,7 @@ export class Configuration {
     if (RendererConfig.getInstance().isCanvas) return;
 
     if (!this._inited) this._init();
-    const gl = cc._renderContext;
+    const gl = RendererConfig.getInstance().renderContext;
     const locValueDict = this._valueDict;
     locValueDict["gl.vendor"] = gl.getParameter(gl.VENDOR);
     locValueDict["gl.renderer"] = gl.getParameter(gl.RENDERER);

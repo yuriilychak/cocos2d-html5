@@ -52,7 +52,7 @@
         }
 
         _onBeforeVisitStencil(ctx) {
-            var gl = ctx || cc._renderContext;
+            var gl = ctx || cc.rendererConfig.renderContext;
 
             ccui.Layout.WebGLRenderCmd._layer++;
 
@@ -76,14 +76,14 @@
         }
 
         _onAfterDrawStencil(ctx) {
-            var gl = ctx || cc._renderContext;
+            var gl = ctx || cc.rendererConfig.renderContext;
             gl.depthMask(true);
             gl.stencilFunc(gl.EQUAL, this._mask_layer_le, this._mask_layer_le);
             gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
         }
 
         _onAfterVisitStencil(ctx) {
-            var gl = ctx || cc._renderContext;
+            var gl = ctx || cc.rendererConfig.renderContext;
 
             ccui.Layout.WebGLRenderCmd._layer--;
 
@@ -103,7 +103,7 @@
         _onBeforeVisitScissor(ctx) {
             this._node._clippingRectDirty = true;
             var clippingRect = this._node._getClippingRect();
-            var gl = ctx || cc._renderContext;
+            var gl = ctx || cc.rendererConfig.renderContext;
 
             this._scissorOldState = gl.isEnabled(gl.SCISSOR_TEST);
 
@@ -119,7 +119,7 @@
         }
 
         _onAfterVisitScissor(ctx) {
-            var gl = ctx || cc._renderContext;
+            var gl = ctx || cc.rendererConfig.renderContext;
             if (this._scissorOldState) {
                 if (!cc.rectEqualToRect(this._clippingOldRect, this._node._clippingRect)) {
                     cc.view.setScissorInPoints(this._clippingOldRect.x,

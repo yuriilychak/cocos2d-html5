@@ -102,7 +102,7 @@
                             }
                             else if (cmd.rendering) {
                                 cc.renderer._batchRendering();
-                                cmd.rendering(cc._renderContext);
+                                cmd.rendering(cc.rendererConfig.renderContext);
                             }
                             break;
                     }
@@ -114,7 +114,7 @@
                     }
                     else if (boneCmd.rendering) {
                         cc.renderer._batchRendering();
-                        boneCmd.rendering(cc._renderContext);
+                        boneCmd.rendering(cc.rendererConfig.renderContext);
                     }
                 }
             }

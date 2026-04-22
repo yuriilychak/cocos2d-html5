@@ -33,6 +33,7 @@ import {
 import { incrementGLDraws, contentScaleFactor } from "./platform/macro/utils";
 import { GLProgramState } from "./shaders/CCGLProgramState";
 import ShaderCache from "./shaders/CCShaderCache";
+import { RendererConfig } from "./renderer/renderer-config";
 
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode
@@ -49,7 +50,7 @@ export class DrawingPrimitiveWebGL extends NewClass {
     this._pointSizeLocation = "u_pointSize";
     this._pointSize = -1;
 
-    if (ctx == null) ctx = cc._renderContext;
+    if (ctx == null) ctx = RendererConfig.getInstance().renderContext;
 
     if ((!ctx) instanceof WebGLRenderingContext)
       throw new Error(

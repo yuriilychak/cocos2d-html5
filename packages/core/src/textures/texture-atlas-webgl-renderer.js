@@ -1,3 +1,4 @@
+import { RendererConfig } from "../renderer/renderer-config";
 import { TEXTURE_ATLAS_USE_TRIANGLE_STRIP } from "../platform/config";
 
 export default class TextureAtlasWebGLRenderer {
@@ -7,7 +8,7 @@ export default class TextureAtlasWebGLRenderer {
 
   setupVBO() {
     var textureAtlas = this._textureAtlas;
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     //create WebGLBuffer
     textureAtlas._buffersVBO[0] = gl.createBuffer();
     textureAtlas._buffersVBO[1] = gl.createBuffer();
@@ -18,7 +19,7 @@ export default class TextureAtlasWebGLRenderer {
 
   mapBuffers() {
     var textureAtlas = this._textureAtlas;
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
 
     gl.bindBuffer(gl.ARRAY_BUFFER, textureAtlas._quadsWebBuffer);
     gl.bufferData(
@@ -49,7 +50,7 @@ export default class TextureAtlasWebGLRenderer {
     if (0 === n || !textureAtlas.texture || !textureAtlas.texture.isLoaded())
       return;
 
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     cc.glBindTexture2D(textureAtlas.texture);
 
     //
@@ -121,7 +122,7 @@ export default class TextureAtlasWebGLRenderer {
 
   releaseBuffer() {
     var textureAtlas = this._textureAtlas;
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     if (textureAtlas._buffersVBO) {
       if (textureAtlas._buffersVBO[0])
         gl.deleteBuffer(textureAtlas._buffersVBO[0]);

@@ -49,7 +49,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._shaderProgram = ShaderCache.getInstance().programForKey(
       cc.SHADER_POSITION_TEXTURE_UCOLOR
     );
-    this._uniformColor = cc._renderContext.getUniformLocation(
+    this._uniformColor = RendererConfig.getInstance().renderContext.getUniformLocation(
       this._shaderProgram.getProgram(),
       "u_color"
     );
@@ -69,7 +69,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const context = ctx || cc._renderContext,
+    const context = ctx || RendererConfig.getInstance().renderContext,
       node = this._node;
 
     const wt = this._worldTransform;

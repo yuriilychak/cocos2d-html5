@@ -545,7 +545,7 @@ export class EGLView extends NewClass {
    * @return {Boolean}
    */
   isOpenGLReady() {
-    return Game.getInstance().canvas && cc._renderContext;
+    return Game.getInstance().canvas && RendererConfig.getInstance().renderContext;
   }
 
   /*
@@ -765,7 +765,7 @@ export class EGLView extends NewClass {
       vb.y = -vp.y / this._scaleY;
       vb.width = cc._canvas.width / this._scaleX;
       vb.height = cc._canvas.height / this._scaleY;
-      cc._renderContext.setOffset && cc._renderContext.setOffset(vp.x, -vp.y);
+      RendererConfig.getInstance().renderContext.setOffset && RendererConfig.getInstance().renderContext.setOffset(vp.x, -vp.y);
     }
 
     // reset director's member variables to fit visible rect
@@ -839,7 +839,7 @@ export class EGLView extends NewClass {
     var locFrameZoomFactor = this._frameZoomFactor,
       locScaleX = this._scaleX,
       locScaleY = this._scaleY;
-    cc._renderContext.viewport(
+    RendererConfig.getInstance().renderContext.viewport(
       x * locScaleX * locFrameZoomFactor +
         this._viewPortRect.x * locFrameZoomFactor,
       y * locScaleY * locFrameZoomFactor +
@@ -886,7 +886,7 @@ export class EGLView extends NewClass {
       _scissorRect.y = sy;
       _scissorRect.width = sw;
       _scissorRect.height = sh;
-      cc._renderContext.scissor(sx, sy, sw, sh);
+      RendererConfig.getInstance().renderContext.scissor(sx, sy, sw, sh);
     }
   }
 
@@ -895,7 +895,7 @@ export class EGLView extends NewClass {
    * @return {Boolean}
    */
   isScissorEnabled() {
-    return cc._renderContext.isEnabled(gl.SCISSOR_TEST);
+    return RendererConfig.getInstance().renderContext.isEnabled(gl.SCISSOR_TEST);
   }
 
   /**

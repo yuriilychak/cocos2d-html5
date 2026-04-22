@@ -36,7 +36,7 @@
 
         _startCmd(ctx, scaleX, scaleY) {
             var node = this._node;
-            var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            var wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
             wrapper.save();
 
             if (node._clippingToBounds) {
@@ -56,7 +56,7 @@
         }
 
         _endCmd(wrapper) {
-            wrapper = wrapper || cc._renderContext;
+            wrapper = wrapper || cc.rendererConfig.renderContext;
             wrapper.restore();
         }
     };

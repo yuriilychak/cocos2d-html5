@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RendererConfig } from "./renderer-config";
 import { Color } from "../platform/types/color";
 import { log } from "../boot/debugger";
 
@@ -152,7 +153,7 @@ var rendererCanvas = {
     var dirtyRegion = (this._dirtyRegion =
       this._dirtyRegion || new cc.DirtyRegion());
     var viewport = cc._canvas;
-    var wrapper = ctxWrapper || cc._renderContext;
+    var wrapper = ctxWrapper || RendererConfig.getInstance().renderContext;
     var ctx = wrapper.getContext();
 
     var scaleX = cc.view.getScaleX(),

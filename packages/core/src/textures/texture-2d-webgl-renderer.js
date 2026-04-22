@@ -1,3 +1,4 @@
+import { RendererConfig } from "../renderer/renderer-config";
 import { Size } from "../cocoa/geometry/size";
 import Game from "../boot/game";
 import { log, assert, _LogInfos } from "../boot/debugger";
@@ -18,7 +19,7 @@ export default class WebGLTextureRenderer {
   initWithElement(element) {
     if (!element) return;
     var t = this._texture;
-    this._webTextureObj = cc._renderContext.createTexture();
+    this._webTextureObj = RendererConfig.getInstance().renderContext.createTexture();
     t._htmlElementObj = element;
     t._pixelsWide = t._contentSize.width = element.width;
     t._pixelsHigh = t._contentSize.height = element.height;
@@ -34,7 +35,7 @@ export default class WebGLTextureRenderer {
     if (!t._htmlElementObj) return;
     if (!t._htmlElementObj.width || !t._htmlElementObj.height) return;
 
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
 
     cc.glBindTexture2D(t);
 
@@ -82,7 +83,7 @@ export default class WebGLTextureRenderer {
   releaseTexture() {
     var t = this._texture;
     if (this._webTextureObj)
-      cc._renderContext.deleteTexture(this._webTextureObj);
+      RendererConfig.getInstance().renderContext.deleteTexture(this._webTextureObj);
     t._htmlElementObj = null;
   }
 
@@ -146,7 +147,7 @@ export default class WebGLTextureRenderer {
   initWithData(data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
     var t = this._texture;
     var tex2d = cc.Texture2D;
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     var format = gl.RGBA,
       type = gl.UNSIGNED_BYTE;
 
@@ -242,7 +243,7 @@ export default class WebGLTextureRenderer {
         this._maxS,
         0.0
       ],
-      gl = cc._renderContext;
+      gl = RendererConfig.getInstance().renderContext;
 
     var width = t._pixelsWide * this._maxS,
       height = t._pixelsHigh * this._maxT;
@@ -318,7 +319,7 @@ export default class WebGLTextureRenderer {
 
     cc.glBindTexture2D(t);
 
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
     gl.vertexAttribPointer(
@@ -377,7 +378,7 @@ export default class WebGLTextureRenderer {
 
   setTexParameters(texParams, magFilter, wrapS, wrapT) {
     var t = this._texture;
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
 
     if (magFilter !== undefined)
       texParams = {
@@ -403,7 +404,7 @@ export default class WebGLTextureRenderer {
   }
 
   setAntiAliasTexParameters() {
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     var t = this._texture;
 
     cc.glBindTexture2D(t);
@@ -419,7 +420,7 @@ export default class WebGLTextureRenderer {
   }
 
   setAliasTexParameters() {
-    var gl = cc._renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     var t = this._texture;
 
     cc.glBindTexture2D(t);
@@ -443,7 +444,9 @@ export default class WebGLTextureRenderer {
     );
 
     cc.glBindTexture2D(t);
-    cc._renderContext.generateMipmap(cc._renderContext.TEXTURE_2D);
+    RendererConfig.getInstance().renderContext.generateMipmap(
+      RendererConfig.getInstance().renderContext.TEXTURE_2D
+    );
     this._hasMipmaps = true;
   }
 

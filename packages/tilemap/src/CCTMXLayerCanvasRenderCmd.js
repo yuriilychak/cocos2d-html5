@@ -114,7 +114,7 @@
                 mapx = ox * a + oy * c + wt.tx,
                 mapy = ox * b + oy * d + wt.ty;
 
-            const wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            const wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
 
             // Culling
             let startCol = 0, startRow = 0,

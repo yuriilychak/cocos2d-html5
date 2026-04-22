@@ -35,7 +35,7 @@
         }
 
         _onRenderSaveCmd(ctx, scaleX, scaleY) {
-            var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            var wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
             wrapper.save();
             wrapper.save();
             wrapper.setTransform(this._worldTransform, scaleX, scaleY);
@@ -53,13 +53,13 @@
         }
 
         _onRenderClipCmd(ctx) {
-            var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            var wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
             wrapper.restore();
             context.clip();
         }
 
         _onRenderRestoreCmd(ctx) {
-            var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            var wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
             wrapper.restore();
         }
 

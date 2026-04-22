@@ -48,7 +48,7 @@
                     EGLViewer.setScissorInPoints(x, y, xx - x, yy - y);
                 }
             } else {
-                var ctx = cc._renderContext;
+                var ctx = cc.rendererConfig.renderContext;
                 ctx.enable(ctx.SCISSOR_TEST);
                 EGLViewer.setScissorInPoints(frame.x, frame.y, frame.width, frame.height);
             }
@@ -60,7 +60,7 @@
                 var rect = node._parentScissorRect;
                 cc.view.setScissorInPoints(rect.x, rect.y, rect.width, rect.height);
             } else {
-                var ctx = cc._renderContext;
+                var ctx = cc.rendererConfig.renderContext;
                 ctx.disable(ctx.SCISSOR_TEST);
             }
         }

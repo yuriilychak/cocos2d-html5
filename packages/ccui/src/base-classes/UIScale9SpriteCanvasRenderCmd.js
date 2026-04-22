@@ -73,7 +73,7 @@
                     this._textureToRender = this._textureToRender._generateColorTexture(color.r,color.g,color.b);
             }
 
-            var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
+            var wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
             wrapper.setTransform(this._worldTransform, scaleX, scaleY);
             wrapper.setCompositeOperation(cc.Node.CanvasRenderCmd._getCompositeOperationByBlendFunc(node._blendFunc));
             wrapper.setGlobalAlpha(alpha);

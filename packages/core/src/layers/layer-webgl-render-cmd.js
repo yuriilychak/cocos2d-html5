@@ -27,6 +27,7 @@ import { Node } from "../base-nodes/node";
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import Matrix4 from "../kazmath/mat4";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * Layer's WebGL render command
@@ -109,7 +110,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const gl = ctx || cc._renderContext;
+    const gl = ctx || RendererConfig.getInstance().renderContext;
     const node = this._node;
 
     if (!this._matrix) {
@@ -299,7 +300,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const context = ctx || cc._renderContext,
+    const context = ctx || RendererConfig.getInstance().renderContext,
       node = this._node;
 
     if (!this._matrix) {

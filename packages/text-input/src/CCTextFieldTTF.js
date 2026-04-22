@@ -299,7 +299,7 @@ cc.TextFieldTTF = class TextFieldTTF extends cc.LabelTTF {
      */
     draw(ctx) {
         //console.log("size",this._contentSize);
-        var context = ctx || cc._renderContext;
+        var context = ctx || cc.rendererConfig.renderContext;
         if (this.delegate && this.delegate.onDraw(this))
             return;
 

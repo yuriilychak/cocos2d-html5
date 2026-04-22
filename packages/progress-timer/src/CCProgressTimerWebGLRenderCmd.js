@@ -61,7 +61,7 @@
 
         rendering(ctx) {
             const node = this._node;
-            const context = ctx || cc._renderContext;
+            const context = ctx || cc.rendererConfig.renderContext;
             if (this._vertexDataCount === 0 || !node._sprite)
                 return;
 
@@ -199,7 +199,7 @@
                 //release all previous information
                 const webglBuffer = this._vertexWebGLBuffer;
                 setTimeout(function () {
-                    cc._renderContext.deleteBuffer(webglBuffer);
+                    cc.rendererConfig.renderContext.deleteBuffer(webglBuffer);
                 }, 0.1);
                 this._vertexWebGLBuffer = null;
                 this._vertexData = null;
@@ -211,7 +211,7 @@
 
         initCmd() {
             if (!this._vertexData) {
-                this._vertexWebGLBuffer = cc._renderContext.createBuffer();
+                this._vertexWebGLBuffer = cc.rendererConfig.renderContext.createBuffer();
                 
                 const vertexDataLen = cc.V3F_C4B_T2F.BYTES_PER_ELEMENT;
                 this._vertexArrayBuffer = new ArrayBuffer(MAX_VERTEX_COUNT * vertexDataLen);
