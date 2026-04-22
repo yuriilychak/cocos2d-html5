@@ -4,14 +4,11 @@ import ActionEase from './action-ease';
  * cc.EaseCubicActionIn action. <br />
  * Reference easeInCubic: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @class
- * @extends cc.ActionEase
  *
  * @example
  * action.easing(cc.easeCubicActionIn());
  */
 export default class EaseCubicActionIn extends ActionEase {
-  /** @lends cc.EaseCubicActionIn# */
   _updateTime(time) {
     return time * time * time;
   }

@@ -37,8 +37,6 @@ cc.SLIDER_MARGIN_V = 8;
 
 /**
  * ControlSlider: Slider ui component.
- * @class
- * @extends cc.Control
  *
  * @property {Number}       value               - The value of the slider
  * @property {Number}       minValue            - The minimum value of the slider
@@ -175,9 +173,9 @@ cc.ControlSlider = class ControlSlider extends cc.Control {
      * Initializes a slider with a background sprite, a progress bar and a thumb
      * item.
      *
-     * @param {cc.Sprite} backgroundSprite  CCSprite, that is used as a background.
-     * @param {cc.Sprite} progressSprite    CCSprite, that is used as a progress bar.
-     * @param {cc.Sprite} thumbSprite         CCMenuItem, that is used as a thumb.
+     * @param {cc.Sprite} backgroundSprite  Sprite, that is used as a background.
+     * @param {cc.Sprite} progressSprite    Sprite, that is used as a progress bar.
+     * @param {cc.Sprite} thumbSprite         MenuItem, that is used as a thumb.
      */
     initWithSprites(backgroundSprite, progressSprite, thumbSprite) {
         if (super.init()) {

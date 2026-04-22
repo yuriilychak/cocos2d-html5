@@ -25,8 +25,6 @@
 
 /**
  * The base class of component in CocoStudio
- * @class
- * @extends cc.Class
  */
 cc.Component = class extends cc.NewClass {
     _owner = null;

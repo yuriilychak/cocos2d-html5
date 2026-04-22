@@ -3,8 +3,6 @@ import JumpBy from './jump-by';
 /**
  * Moves a cc.Node object to a parabolic position simulating a jump movement by modifying it's position attribute. <br />
  * Jump to the specified location.
- * @class
- * @extends cc.JumpBy
  * @param {Number} duration
  * @param {cc.Point|Number} position
  * @param {Number} [y]
@@ -15,7 +13,6 @@ import JumpBy from './jump-by';
  * var actionTo = new cc.JumpTo(2, 300, 0, 50, 4);
  */
 export default class JumpTo extends JumpBy {
-  /** @lends cc.JumpTo# */
   _endPosition = null;
 
   /**

@@ -308,7 +308,6 @@ cc.__setDataToArray = function (sourceData, destArray, startIndex) {
 /**
  * Binary Stream Reader
  *
- * @class
  * @param binaryData
  */
 cc.BinaryStreamReader = class BinaryStreamReader extends cc.NewClass {

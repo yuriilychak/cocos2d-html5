@@ -3,8 +3,6 @@ import { bezierAt } from '../action/utils';
 
 /** An action that moves the target with a cubic Bezier curve by a certain distance.
  * Relative to its movement.
- * @class
- * @extends cc.ActionInterval
  * @param {Number} t time in seconds
  * @param {Array} c Array of points
  * @example
@@ -12,7 +10,6 @@ import { bezierAt } from '../action/utils';
  * var bezierForward = new cc.BezierBy(3, bezier);
  */
 export default class BezierBy extends ActionInterval {
-  /** @lends cc.BezierBy# */
   _config = null;
   _startPosition = null;
   _previousPosition = null;

@@ -25,8 +25,6 @@
 
 /**
  * The Cocostudio's action object.
- * @class
- * @extends ccs.Class
  */
 ccs.ActionObject = class ActionObject extends cc.NewClass {
 

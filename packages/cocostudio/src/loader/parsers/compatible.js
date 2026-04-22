@@ -36,7 +36,7 @@
 
         //@deprecated This function will be deprecated sooner or later please use ccs.load
         /**
-         * Create CCUI Node
+         * Create UI Node
          * @param file
          * @returns {*}
          */

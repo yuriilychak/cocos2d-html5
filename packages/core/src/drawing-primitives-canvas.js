@@ -31,8 +31,6 @@ export const PI2 = Math.PI * 2;
 
 /**
  * Canvas of DrawingPrimitive implement version use for canvasMode
- * @class
- * @extends cc.Class
  * @param {CanvasRenderingContext2D} renderContext
  */
 export class DrawingPrimitiveCanvas extends NewClass {

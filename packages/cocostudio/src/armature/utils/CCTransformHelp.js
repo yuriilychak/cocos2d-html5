@@ -25,7 +25,6 @@
 
 /**
  *  use to calculate the matrix of node from parent node
- * @class ccs.TransformHelp
  * @extend ccs.Class
  */
 ccs.TransformHelp = class TransformHelp extends cc.NewClass {};

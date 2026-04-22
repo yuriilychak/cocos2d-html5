@@ -18,7 +18,6 @@ export function create3DContext(canvas, opt_attribs) {
 
 /**
  * System variables singleton.
- * @class
  */
 export default class Sys {
     static _instance = null;

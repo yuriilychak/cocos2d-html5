@@ -95,8 +95,6 @@ cc.TMX_ORIENTATION_ISO = 2;
  * layer.getProperty(name_of_the_property); <br />
  * objectGroup.getProperty(name_of_the_property); <br />
  * object.getProperty(name_of_the_property);</p>
- * @class
- * @extends cc.Node
  * @param {String} tmxFile tmxFile fileName or content string
  * @param {String} resourcePath   If tmxFile is a file name ,it is not required.If tmxFile is content string ,it is must required.
 

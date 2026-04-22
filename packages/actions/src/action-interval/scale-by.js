@@ -2,11 +2,8 @@ import ScaleTo from './scale-to';
 
 /** Scales a cc.Node object a zoom factor by modifying it's scale attribute.
  * Relative to its changes.
- * @class
- * @extends cc.ScaleTo
  */
 export default class ScaleBy extends ScaleTo {
-  /** @lends cc.ScaleBy# */
   /**
    * Start the action with target.
    * @param {cc.Node} target

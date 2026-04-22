@@ -2,16 +2,13 @@ import { ACTION_TAG_INVALID } from './constants';
 
 /**
  * Base class for cc.Action objects.
- * @class
  *
- * @extends cc.Class
  *
  * @property {cc.Node}  target          - The target will be set with the 'startWithTarget' method. When the 'stop' method is called, target will be set to nil.
  * @property {cc.Node}  originalTarget  - The original target of the action.
  * @property {Number}   tag             - The tag of the action, can be used to find the action.
  */
 export default class Action extends cc.NewClass {
-  /** @lends cc.Action# */
   //***********variables*************
   originalTarget = null;
   target = null;

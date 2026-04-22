@@ -36,7 +36,6 @@ import {
  * <p>cc.AffineTransform class represent an affine transform matrix. It's composed basically by translation, rotation, scale transformations.<br/>
  * Please do not use its constructor directly, use cc.affineTransformMake alias function instead.
  * </p>
- * @class cc.AffineTransform
  * @param {Number} a
  * @param {Number} b
  * @param {Number} c

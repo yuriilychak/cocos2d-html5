@@ -97,9 +97,7 @@ var _scissorRect = null;
  * Since the cc.view is a singleton, you don't need to call any constructor or create functions,<br/>
  * the standard way to use it is by calling:<br/>
  *  - cc.view.methodName(); <br/>
- * @class
  * @name EGLView
- * @extends NewClass
  */
 export class EGLView extends NewClass {
   /**

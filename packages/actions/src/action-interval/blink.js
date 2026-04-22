@@ -1,15 +1,12 @@
 import ActionInterval from './action-interval';
 
 /** Blinks a cc.Node object by modifying it's visible attribute
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration  duration in seconds
  * @param {Number} blinks  blinks in times
  * @example
  * var action = new cc.Blink(2, 10);
  */
 export default class Blink extends ActionInterval {
-  /** @lends cc.Blink# */
   _times = 0;
   _originalState = false;
 

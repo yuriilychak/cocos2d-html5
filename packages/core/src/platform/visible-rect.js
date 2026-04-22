@@ -42,7 +42,6 @@ import { Point } from "../cocoa/geometry/point";
  * @property {Number}       width           - Width of the screen
  * @property {Number}       height          - Height of the screen
  *
- * @class
  * @name visibleRect
  */
 export const visibleRect = {

@@ -2,8 +2,6 @@ import ActionInterval from './action-interval';
 
 /** Scales a cc.Node object to a zoom factor by modifying it's scale attribute.
  * @warning This action doesn't support "reverse"
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration
  * @param {Number} sx  scale parameter in X
  * @param {Number} [sy] scale parameter in Y, if Null equal to sx
@@ -15,7 +13,6 @@ import ActionInterval from './action-interval';
  * var actionTo = new cc.ScaleTo(2, 0.5, 2);
  */
 export default class ScaleTo extends ActionInterval {
-  /** @lends cc.ScaleTo# */
   _scaleX = 1;
   _scaleY = 1;
   _startScaleX = 1;

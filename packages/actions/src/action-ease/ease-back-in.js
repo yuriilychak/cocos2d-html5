@@ -4,13 +4,10 @@ import ActionEase from './action-ease';
  * cc.EaseBackIn action. <br />
  * In the opposite direction to move slowly, and then accelerated to the right direction.
  * @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
- * @class
- * @extends cc.ActionEase
  * @example
  * action.easing(cc.easeBackIn());
  */
 export default class EaseBackIn extends ActionEase {
-  /** @lends cc.EaseBackIn# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    *

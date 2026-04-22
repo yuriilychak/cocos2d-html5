@@ -2,13 +2,10 @@ import ActionEase from './action-ease';
 
 /**
  * Ease Elastic abstract class.
- * @class
- * @extends cc.ActionEase
  * @param {cc.ActionInterval} action
  * @param {Number} [period=0.3]
  */
 export default class EaseElastic extends ActionEase {
-  /** @lends cc.EaseElastic# */
   _period = 0.3;
 
   /**

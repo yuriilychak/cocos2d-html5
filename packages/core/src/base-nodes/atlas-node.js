@@ -76,7 +76,7 @@ export class AtlasNode extends EventHelper(Node) {
     this._opacityModifyRGB = false;
     this._blendFunc = null;
 
-    // This variable is only used for CCLabelAtlas FPS display. So plz don't modify its value.
+    // This variable is only used for LabelAtlas FPS display. So plz don't modify its value.
     this._ignoreContentScaleFactor = false;
     this._className = "AtlasNode";
 
@@ -211,7 +211,7 @@ export class AtlasNode extends EventHelper(Node) {
   }
 
   /**
-   * Initializes an CCAtlasNode with an atlas texture, the width, the height of each tile and the quantity of tiles to render
+   * Initializes an AtlasNode with an atlas texture, the width, the height of each tile and the quantity of tiles to render
    * @function
    * @param {Texture2D} texture    The atlas texture
    * @param {Number} tileWidth        The width of each tile

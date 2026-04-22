@@ -27,7 +27,6 @@
 /**
  * BoneNode
  * base class
- * @class
  */
 ccs.BoneNode = (function () {
 

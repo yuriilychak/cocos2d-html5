@@ -32,13 +32,11 @@ var ccui = ccui || {};
 
 /**
  * Alias for cc.Node
- * @class
  */
 ccui.Node = ccui.Node || cc.Node;
 
 /**
  * Alias for cc.ProtectedNode
- * @class
  */
 ccui.ProtectedNode = ccui.ProtectedNode || cc.ProtectedNode;
 

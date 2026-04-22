@@ -206,8 +206,6 @@ ccui._TextFieldRenderer.create = function (placeholder, fontName, fontSize) {
 
 /**
  *
- * @class
- * @extends ccui.Widget
  *
  * @property {String}   string              - The content string of the label
  * @property {String}   placeHolder         - The place holder of the text field

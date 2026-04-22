@@ -2,11 +2,8 @@ import ActionInstant from './action-instant';
 
 /**
  * Toggles the visibility of a node.
- * @class
- * @extends cc.ActionInstant
  */
 export default class ToggleVisibility extends ActionInstant {
-  /** @lends cc.ToggleVisibility# */
 
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.

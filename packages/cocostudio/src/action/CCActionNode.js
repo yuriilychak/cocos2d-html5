@@ -25,8 +25,6 @@
 
 /**
  * The Cocostudio's action node, it contains action target, action frame list and current frame index.  it can be play action by calling playAciton.
- * @class
- * @extends ccs.Class
  */
 ccs.ActionNode = class ActionNode extends cc.NewClass {
 

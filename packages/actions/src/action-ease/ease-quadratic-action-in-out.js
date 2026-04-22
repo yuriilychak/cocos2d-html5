@@ -4,13 +4,10 @@ import ActionEase from './action-ease';
  * cc.EaseQuadraticActionInOut action. <br />
  * Reference easeInOutQuad: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @class
- * @extends cc.ActionEase
  * @example
  * action.easing(cc.easeQuadraticActionInOut());
  */
 export default class EaseQuadraticActionInOut extends ActionEase {
-  /** @lends cc.EaseQuadraticActionInOut# */
 
   _updateTime(time) {
     var resultTime = time;

@@ -25,8 +25,6 @@
 
 /**
  * Base class for ccui.Margin
- * @class
- * @extends cc.NewClass
  *
  * @property {Number}           left       - Left of margin
  * @property {Number}           top        - Top of margin
@@ -96,8 +94,6 @@ ccui.MarginZero = function(){
 
 /**
  * Layout parameter contains a margin and layout parameter type. It uses for ccui.LayoutManager.
- * @class
- * @extends cc.NewClass
  */
 ccui.LayoutParameter = class LayoutParameter extends cc.NewClass {
     /**
@@ -197,8 +193,6 @@ ccui.LayoutParameter.RELATIVE = 2;
 
 /**
  * The linear of Layout parameter. its parameter type is ccui.LayoutParameter.LINEAR.
- * @class
- * @extends ccui.LayoutParameter
  */
 ccui.LinearLayoutParameter = class LinearLayoutParameter extends ccui.LayoutParameter {
     /**
@@ -286,8 +280,6 @@ ccui.LinearLayoutParameter.CENTER_HORIZONTAL = 6;
 
 /**
  * The relative of layout parameter. Its layout parameter type is ccui.LayoutParameter.RELATIVE.
- * @class
- * @extends ccui.LayoutParameter
  */
 ccui.RelativeLayoutParameter = class RelativeLayoutParameter extends ccui.LayoutParameter {
     /**

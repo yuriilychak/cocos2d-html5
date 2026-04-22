@@ -2,8 +2,6 @@ import ActionInterval from './action-interval';
 
 /**  Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
  * Relative to their own color change.
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration  duration in seconds
  * @param {Number} deltaRed
  * @param {Number} deltaGreen
@@ -12,7 +10,6 @@ import ActionInterval from './action-interval';
  * var action = new cc.TintBy(2, -127, -255, -127);
  */
 export default class TintBy extends ActionInterval {
-  /** @lends cc.TintBy# */
   _deltaR = 0;
   _deltaG = 0;
   _deltaB = 0;

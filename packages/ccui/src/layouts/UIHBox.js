@@ -25,8 +25,6 @@
 
 /**
  * The horizontal box of Cocos UI. Its layout type is ccui.Layout.LINEAR_HORIZONTAL.
- * @class
- * @extends ccui.Layout
  */
 ccui.HBox = class HBox extends ccui.Layout {
     /**

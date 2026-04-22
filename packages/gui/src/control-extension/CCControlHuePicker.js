@@ -34,8 +34,6 @@
 
 /**
  * ControlHuePicker: HUE picker ui component.
- * @class
- * @extends cc.Control
  *
  * @property {Number}       hue         - The hue value
  * @property {Number}       huePercent  - The hue value in percentage
@@ -158,7 +156,7 @@ cc.ControlHuePicker = class ControlHuePicker extends cc.Control {
         // use the position / slider width to determin the percentage the dragger is at
         this.setHue(angleDeg);
 
-        // send CCControl callback
+        // send Control callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
     }
     _checkSliderPosition(location) {

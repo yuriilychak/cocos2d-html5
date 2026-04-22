@@ -26,8 +26,6 @@
 /**
  * ccui.Layout is the base class of  ccui.PageView and ccui.ScrollView, it does layout by layout manager
  *  and clips area by its _clippingStencil when clippingEnabled is true.
- * @class
- * @extends ccui.Widget
  *
  * @property {Boolean}                  clippingEnabled - Indicate whether clipping is enabled
  * @property {ccui.Layout.CLIPPING_STENCIL|ccui.Layout.CLIPPING_SCISSOR}   clippingType
@@ -37,8 +35,6 @@
 /**
  * ccui.Layout is the base class of  ccui.PageView and ccui.ScrollView, it does layout by layout manager
  *  and clips area by its _clippingStencil when clippingEnabled is true.
- * @class
- * @extends ccui.Widget
  *
  * @property {Boolean}                  clippingEnabled - Indicate whether clipping is enabled
  * @property {ccui.Layout.CLIPPING_STENCIL|ccui.Layout.CLIPPING_SCISSOR}   clippingType

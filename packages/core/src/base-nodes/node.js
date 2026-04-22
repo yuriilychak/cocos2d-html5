@@ -101,8 +101,6 @@ export function setGlobalOrderOfArrival(val) {
  * -# The grid will capture the screen <br/>
  * -# The grid will render the captured screen <br/></P>
  *
- * @class
- * @extends cc.Class
  *
  * @property {Number}               x                   - x axis position of node
  * @property {Number}               y                   - y axis position of node
@@ -133,9 +131,9 @@ export function setGlobalOrderOfArrival(val) {
  * @property {Boolean}              running             - <@readonly> Indicate whether node is running or not
  * @property {Number}               tag                 - Tag of node
  * @property {Object}               userData            - Custom user data
- * @property {Object}               userObject          - User assigned CCObject, similar to userData, but instead of holding a void* it holds an id
+ * @property {Object}               userObject          - User assigned Object, similar to userData, but instead of holding a void* it holds an id
  * @property {Number}               arrivalOrder        - The arrival order, indicates which children is added previously
- * @property {ActionManager}     actionManager       - The CCActionManager object that is used by all actions.
+ * @property {ActionManager}     actionManager       - The ActionManager object that is used by all actions.
  * @property {Scheduler}         scheduler           - cc.Scheduler used to schedule all "updates" and timers.
  * @property {GridBase}          grid                - grid object that is used when applying effects
  * @property {GLProgram}         shaderProgram       - The shader program currently used for this node
@@ -461,7 +459,7 @@ export class Node extends NewClass {
    * The Y skew angle of the node in degrees.                            <br/>
    * This angle describes the shear distortion in the Y direction.       <br/>
    * Thus, it is the angle between the X axis and the bottom edge of the shape       <br/>
-   * The default skewY angle is 0. Positive values distort the node in a CCW direction.    <br/>
+   * The default skewY angle is 0. Positive values distort the node in a W direction.    <br/>
    * </p>
    * @function
    * @return {Number} The Y skew angle of the node in degrees.
@@ -476,7 +474,7 @@ export class Node extends NewClass {
    *                                                                                                         <br/>
    * This angle describes the shear distortion in the Y direction.                                           <br/>
    * Thus, it is the angle between the X axis and the bottom edge of the shape                               <br/>
-   * The default skewY angle is 0. Positive values distort the node in a CCW direction.                      <br/>
+   * The default skewY angle is 0. Positive values distort the node in a W direction.                      <br/>
    * </p>
    * @function
    * @param {Number} newSkewY  The Y skew angle of the node in degrees.
@@ -727,8 +725,8 @@ export class Node extends NewClass {
    * <p>
    *     Changes the position (x,y) of the node in cocos2d coordinates.<br/>
    *     The original point (0,0) is at the left-bottom corner of screen.<br/>
-   *     Usually we use cc.p(x,y) to compose CCPoint object.<br/>
-   *     and Passing two numbers (x,y) is more efficient than passing CCPoint object.
+   *     Usually we use cc.p(x,y) to compose Point object.<br/>
+   *     and Passing two numbers (x,y) is more efficient than passing Point object.
    * </p>
    * @function
    * @param {Point|Number} newPosOrxValue The position (x,y) of the node in coordinates or the X coordinate for position
@@ -844,7 +842,7 @@ export class Node extends NewClass {
 
   /**
    * Returns an array of all children  <br/>
-   * Composing a "tree" structure is a very important feature of CCNode
+   * Composing a "tree" structure is a very important feature of Node
    * @function
    * @return {Array} An array of children
    * @example
@@ -1054,8 +1052,8 @@ export class Node extends NewClass {
    * <p>
    *     Sets whether the anchor point will be ignored when you position this node.                              <br/>
    *     When anchor point ignored, position will be calculated based on the origin point (0, 0) in parent's coordinates.  <br/>
-   *     This is an internal method, only used by CCLayer and CCScene. Don't call it outside framework.        <br/>
-   *     The default value is false, while in CCLayer and CCScene are true
+   *     This is an internal method, only used by Layer and Scene. Don't call it outside framework.        <br/>
+   *     The default value is false, while in Layer and Scene are true
    * </p>
    * @function
    * @param {Boolean} newValue true if anchor point will be ignored when you position this node
@@ -1155,7 +1153,7 @@ export class Node extends NewClass {
    * Returns a user assigned cocos2d object.                             <br/>
    * Similar to userData, but instead of holding all kinds of data it can only hold a cocos2d object
    * @function
-   * @return {object} A user assigned CCObject
+   * @return {object} A user assigned Object
    */
   getUserObject() {
     return this.userObject;
@@ -1166,7 +1164,7 @@ export class Node extends NewClass {
    *      Sets a user assigned cocos2d object                                                                                       <br/>
    *      Similar to UserData, but instead of holding all kinds of data it can only hold a cocos2d object                        <br/>
    *      In JSB, the UserObject will be retained once in this method, and the previous UserObject (if existed) will be release. <br/>
-   *      The UserObject will be released in CCNode's destruction.
+   *      The UserObject will be released in Node's destruction.
    * </p>
    * @param {object} newValue A user cocos2d object
    */
@@ -1199,11 +1197,11 @@ export class Node extends NewClass {
   }
 
   /**
-   * <p>Returns the CCActionManager object that is used by all actions.<br/>
+   * <p>Returns the ActionManager object that is used by all actions.<br/>
    * (IMPORTANT: If you set a new cc.ActionManager, then previously created actions are going to be removed.)</p>
    * @function
    * @see cc.Node#setActionManager
-   * @return {ActionManager} A CCActionManager object.
+   * @return {ActionManager} A ActionManager object.
    */
   getActionManager() {
     return this._actionManager || cc.director.getActionManager();
@@ -1212,8 +1210,8 @@ export class Node extends NewClass {
   /**
    * <p>Sets the cc.ActionManager object that is used by all actions. </p>
    * @function
-   * @warning If you set a new CCActionManager, then previously created actions will be removed.
-   * @param {ActionManager} actionManager A CCActionManager object that is used by all actions.
+   * @warning If you set a new ActionManager, then previously created actions will be removed.
+   * @param {ActionManager} actionManager A ActionManager object that is used by all actions.
    */
   setActionManager(actionManager) {
     if (this._actionManager !== actionManager) {
@@ -1227,7 +1225,7 @@ export class Node extends NewClass {
    *   Returns the cc.Scheduler object used to schedule all "updates" and timers.
    * </p>
    * @function
-   * @return {Scheduler} A CCScheduler object.
+   * @return {Scheduler} A Scheduler object.
    */
   getScheduler() {
     return this._scheduler || cc.director.getScheduler();
@@ -1235,11 +1233,11 @@ export class Node extends NewClass {
 
   /**
    * <p>
-   *   Sets a CCScheduler object that is used to schedule all "updates" and timers.           <br/>
+   *   Sets a Scheduler object that is used to schedule all "updates" and timers.           <br/>
    *   IMPORTANT: If you set a new cc.Scheduler, then previously created timers/update are going to be removed.
    * </p>
    * @function
-   * @warning If you set a new CCScheduler, then previously created timers/update are going to be removed.
+   * @warning If you set a new Scheduler, then previously created timers/update are going to be removed.
    * @param scheduler A cc.Scheduler object that is used to schedule all "update" and timers.
    */
   setScheduler(scheduler) {
@@ -1286,7 +1284,7 @@ export class Node extends NewClass {
    * Returns a child from the container given its tag
    * @function
    * @param {Number} aTag An identifier to find the child node.
-   * @return {Node} a CCNode object whose tag equals to the input parameter
+   * @return {Node} a Node object whose tag equals to the input parameter
    */
   getChildByTag(aTag) {
     var __children = this._children;
@@ -1303,7 +1301,7 @@ export class Node extends NewClass {
    * Returns a child from the container given its name
    * @function
    * @param {String} name A name to find the child node.
-   * @return {Node} a CCNode object whose name equals to the input parameter
+   * @return {Node} a Node object whose name equals to the input parameter
    */
   getChildByName(name) {
     if (!name) {
@@ -1583,8 +1581,8 @@ export class Node extends NewClass {
   //scene management
   /**
    * <p>
-   *     Event callback that is invoked every time when CCNode enters the 'stage'.                                   <br/>
-   *     If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.        <br/>
+   *     Event callback that is invoked every time when Node enters the 'stage'.                                   <br/>
+   *     If the Node enters the 'stage' with a transition, this event is called when the transition starts.        <br/>
    *     During onEnter you can't access a "sister/brother" node.                                                    <br/>
    *     If you override onEnter, you must call its parent's onEnter function with this._super().
    * </p>
@@ -1661,8 +1659,8 @@ export class Node extends NewClass {
 
   /**
    * <p>
-   *     Event callback that is invoked when the CCNode enters in the 'stage'.                                                        <br/>
-   *     If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.                       <br/>
+   *     Event callback that is invoked when the Node enters in the 'stage'.                                                        <br/>
+   *     If the Node enters the 'stage' with a transition, this event is called when the transition finishes.                       <br/>
    *     If you override onEnterTransitionDidFinish, you shall call its parent's onEnterTransitionDidFinish with this._super()
    * </p>
    * @function
@@ -2123,8 +2121,8 @@ export class Node extends NewClass {
    * <p>
    * Calls children's updateTransform() method recursively.                                        <br/>
    *                                                                                               <br/>
-   * This method is moved from CCSprite, so it's no longer specific to CCSprite.                   <br/>
-   * As the result, you apply CCSpriteBatchNode's optimization on your customed CCNode.            <br/>
+   * This method is moved from Sprite, so it's no longer specific to Sprite.                   <br/>
+   * As the result, you apply SpriteBatchNode's optimization on your customed Node.            <br/>
    * e.g., batchNode->addChild(myCustomNode), while you can only addChild(sprite) before.
    * </p>
    * @function
@@ -2278,7 +2276,7 @@ export class Node extends NewClass {
    *     It should be set in initialize phase.
    * </p>
    * @function
-   * @param {GLProgram} newShaderProgram The shader program which fetches from CCShaderCache.
+   * @param {GLProgram} newShaderProgram The shader program which fetches from ShaderCache.
    * @example
    * node.setGLProgram(cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLOR));
    */

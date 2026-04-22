@@ -25,8 +25,6 @@
 
 /**
  * The PageView control of Cocos UI.
- * @class
- * @extends ccui.ListView
  * @example
  * var pageView = new ccui.PageView();
  * pageView.setTouchEnabled(true);

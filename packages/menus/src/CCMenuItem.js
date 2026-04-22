@@ -30,8 +30,6 @@ cc._globalFontNameRelease = false;
 
 /**
  * Subclass cc.MenuItem (or any subclass) to create your custom cc.MenuItem objects.
- * @class
- * @extends cc.Node
  * @param {function|String} callback
  * @param  {cc.Node} target
  */
@@ -180,8 +178,6 @@ cc.MenuItem = class MenuItem extends cc.Node {
  * - cc.BitmapFontAtlas<br/>
  * - cc.LabelAtlas<br/>
  * - cc.LabelTTF<br/>
- * @class
- * @extends cc.MenuItem
  * @param {cc.Node} label
  * @param {function|String} selector
  * @param {cc.Node} target
@@ -390,8 +386,6 @@ cc.MenuItemLabel = class MenuItemLabel extends cc.MenuItem {
 
 /**
  * Helper class that creates a MenuItemLabel class with a LabelAtlas
- * @class
- * @extends cc.MenuItemLabel
  * @param {String} value
  * @param {String} charMapFile
  * @param {Number} itemWidth
@@ -449,9 +443,7 @@ cc.MenuItemAtlasFont = class MenuItemAtlasFont extends cc.MenuItemLabel {
 
 
 /**
- * Helper class that creates a CCMenuItemLabel class with a Label
- * @class
- * @extends cc.MenuItemLabel
+ * Helper class that creates a MenuItemLabel class with a Label
  * @param {String} value text for the menu item
  * @param {function|String} callback
  * @param {cc.Node} target
@@ -596,13 +588,11 @@ cc.MenuItemFont.fontName = function () {
 
 
 /**
- * CCMenuItemSprite accepts CCNode<CCRGBAProtocol> objects as items.<br/>
+ * MenuItemSprite accepts Node<RGBAProtocol> objects as items.<br/>
  * The images has 3 different states:<br/>
  *   - unselected image<br/>
  *   - selected image<br/>
  *   - disabled image<br/>
- * @class
- * @extends cc.MenuItem
  * @param {Image|Null} normalSprite normal state image
  * @param {Image|Null} selectedSprite selected state image
  * @param {Image|cc.Node|Null} three disabled state image OR target node
@@ -900,8 +890,6 @@ cc.MenuItemSprite = class MenuItemSprite extends cc.MenuItem {
  * - disabled image<br/>
  * <br/>
  * For best results try that all images are of the same size<br/>
- * @class
- * @extends cc.MenuItemSprite
  * @param {string|null} normalImage
  * @param {string|null} selectedImage
  * @param {string|null} disabledImage
@@ -1007,8 +995,6 @@ cc.MenuItemImage = class MenuItemImage extends cc.MenuItemSprite {
 /**
  * A simple container class that "toggles" it's inner items<br/>
  * The inner items can be any MenuItem
- * @class
- * @extends cc.MenuItem
  *
  * @property {Array}    subItems        - Sub items
  * @property {Number}   selectedIndex   - Index of selected sub item

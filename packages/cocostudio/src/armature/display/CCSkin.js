@@ -25,8 +25,6 @@
 
 /**
  * ccs.Bone uses ccs.Skin to displays on screen.
- * @class
- * @extends ccs.Sprite
  *
  * @param {String} [fileName]
  * @param {cc.Rect} [rect]

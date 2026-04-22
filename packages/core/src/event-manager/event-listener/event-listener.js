@@ -32,8 +32,6 @@ import { NewClass } from "../../platform/class";
  *     For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard,                       <br/>
  *      EventListenerTouchOneByOne, EventListenerCustom.
  * </p>
- * @class
- * @extends NewClass
  */
 export default class EventListener extends NewClass {
   /**

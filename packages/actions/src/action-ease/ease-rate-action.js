@@ -3,8 +3,6 @@ import ActionEase from './action-ease';
 /**
  * Base class for Easing actions with rate parameters
  *
- * @class
- * @extends cc.ActionEase
  * @param {cc.ActionInterval} action
  * @param {Number} rate
  *
@@ -12,7 +10,6 @@ import ActionEase from './action-ease';
  * var moveEaseRateAction = cc.easeRateAction(action, 3.0);
  */
 export default class EaseRateAction extends ActionEase {
-  /** @lends cc.EaseRateAction# */
   _rate = 0;
 
   /**

@@ -117,8 +117,6 @@ ccs.FrameEaseType = {
 
 /**
  * The action frame of Cocostudio. It's the base class of ccs.ActionMoveFrame, ccs.ActionScaleFrame etc.
- * @class
- * @extends ccs.Class
  *
  * @property {Number}               frameType               - frame type of ccs.ActionFrame
  * @property {Number}               easingType              - easing type of ccs.ActionFrame
@@ -279,8 +277,6 @@ ccs.ActionFrame = class ActionFrame extends cc.NewClass {
 
 /**
  * The Cocostudio's move action frame.
- * @class
- * @extends ccs.ActionFrame
  */
 ccs.ActionMoveFrame = class ActionMoveFrame extends ccs.ActionFrame {
     /**
@@ -316,7 +312,7 @@ ccs.ActionMoveFrame = class ActionMoveFrame extends ccs.ActionFrame {
     }
 
     /**
-     * Returns the CCAction of ActionFrame.
+     * Returns the Action of ActionFrame.
      * @param {number} duration
      * @returns {cc.MoveTo}
      */
@@ -328,8 +324,6 @@ ccs.ActionMoveFrame = class ActionMoveFrame extends ccs.ActionFrame {
 
 /**
  * The Cocostudio's scale action frame
- * @class
- * @extends ccs.ActionFrame
  */
 ccs.ActionScaleFrame = class ActionScaleFrame extends ccs.ActionFrame {
     /**
@@ -387,8 +381,6 @@ ccs.ActionScaleFrame = class ActionScaleFrame extends ccs.ActionFrame {
 
 /**
  * The Cocostudio's rotation action frame.
- * @class
- * @extends ccs.ActionFrame
  */
 ccs.ActionRotationFrame = class ActionRotationFrame extends ccs.ActionFrame {
     /**
@@ -417,7 +409,7 @@ ccs.ActionRotationFrame = class ActionRotationFrame extends ccs.ActionFrame {
     }
 
     /**
-     * Returns the CCAction of ActionFrame.
+     * Returns the Action of ActionFrame.
      * @param {number} duration
      * @param {cc.ActionFrame} [srcFrame]
      * @returns {cc.RotateTo}
@@ -439,8 +431,6 @@ ccs.ActionRotationFrame = class ActionRotationFrame extends ccs.ActionFrame {
 
 /**
  * The Cocostudio's fade action frame.
- * @class
- * @extends ccs.ActionFrame
  */
 ccs.ActionFadeFrame = class ActionFadeFrame extends ccs.ActionFrame {
     /**
@@ -481,8 +471,6 @@ ccs.ActionFadeFrame = class ActionFadeFrame extends ccs.ActionFrame {
 
 /**
  * The Cocostudio's tint action frame.
- * @class
- * @extends ccs.ActionFrame
  */
 ccs.ActionTintFrame = class ActionTintFrame extends ccs.ActionFrame {
     /**

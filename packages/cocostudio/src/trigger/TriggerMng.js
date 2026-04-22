@@ -25,10 +25,9 @@
 
 /**
  * The trigger manager of Cocostudio
- * @class
  * @name ccs.triggerManager
  */
-ccs.triggerManager = /** @lends ccs.triggerManager# */{
+ccs.triggerManager = {
     _eventTriggers: {},
     _triggerObjs: {},
     _movementDispatches: [],
@@ -245,8 +244,6 @@ ccs.triggerManager = /** @lends ccs.triggerManager# */{
 
 /**
  * The armature movement dispatcher for trigger manager.
- * @class
- * @extends ccs.Class
  */
 ccs.ArmatureMovementDispatcher = class ArmatureMovementDispatcher extends cc.NewClass {
 

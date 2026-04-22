@@ -38,8 +38,6 @@ cc.IMEKeyboardNotificationInfo = function (begin, end, duration) {
 
 /**
  * Input method editor delegate.
- * @class
- * @extends cc.Class
  */
 cc.IMEDelegate = class IMEDelegate extends cc.NewClass {
     /**
@@ -72,7 +70,7 @@ cc.IMEDelegate = class IMEDelegate extends cc.NewClass {
 
     /**
      * Decide the delegate instance is ready for receive ime message or not.<br />
-     * Called by CCIMEDispatcher.
+     * Called by IMEDispatcher.
      * @return {Boolean}
      */
     canAttachWithIME() {
@@ -80,7 +78,7 @@ cc.IMEDelegate = class IMEDelegate extends cc.NewClass {
     }
 
     /**
-     * When the delegate detach with IME, this method call by CCIMEDispatcher.
+     * When the delegate detach with IME, this method call by IMEDispatcher.
      */
     didAttachWithIME() {
     }
@@ -94,25 +92,25 @@ cc.IMEDelegate = class IMEDelegate extends cc.NewClass {
     }
 
     /**
-     * When the delegate detach with IME, this method call by CCIMEDispatcher.
+     * When the delegate detach with IME, this method call by IMEDispatcher.
      */
     didDetachWithIME() {
     }
 
     /**
-     * Called by CCIMEDispatcher when some text input from IME.
+     * Called by IMEDispatcher when some text input from IME.
      */
     insertText(text, len) {
     }
 
     /**
-     * Called by CCIMEDispatcher when user clicked the backward key.
+     * Called by IMEDispatcher when user clicked the backward key.
      */
     deleteBackward() {
     }
 
     /**
-     * Called by CCIMEDispatcher for get text which delegate already has.
+     * Called by IMEDispatcher for get text which delegate already has.
      * @return {String}
      */
     getContentText() {
@@ -134,7 +132,6 @@ cc.IMEDelegate = class IMEDelegate extends cc.NewClass {
 
 /**
  * cc.imeDispatcher is a singleton object which manage input message dispatching.
- * @class
  * @name cc.imeDispatcher
  */
 cc.IMEDispatcher = class IMEDispatcher extends cc.NewClass {
@@ -255,7 +252,7 @@ cc.IMEDispatcher = class IMEDispatcher extends cc.NewClass {
     }
 
     /**
-     * Get the content text, which current CCIMEDelegate which attached with IME has.
+     * Get the content text, which current IMEDelegate which attached with IME has.
      * @return {String}
      */
     getContentText() {
@@ -501,8 +498,6 @@ cc.IMEDispatcher = class IMEDispatcher extends cc.NewClass {
 /**
  * Create the cc.IMEDispatcher.Imp Object. <br />
  * This is the inner class...
- * @class
- * @extends cc.Class
  * @name cc.IMEDispatcher.Impl
  */
 cc.IMEDispatcher.Impl = class Impl extends cc.NewClass {

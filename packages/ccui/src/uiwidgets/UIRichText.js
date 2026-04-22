@@ -25,8 +25,6 @@
 
 /**
  * ccui.RichElement is the base class of RichElementText, RichElementImage etc. It has type, tag, color and opacity attributes.
- * @class
- * @extends ccui.Class
  */
 ccui.RichElement = class RichElement extends cc.NewClass {
     /**
@@ -59,8 +57,6 @@ ccui.RichElement = class RichElement extends cc.NewClass {
 
 /**
  * The text element for RichText, it has text, fontName, fontSize attributes.
- * @class
- * @extends ccui.RichElement
  */
 ccui.RichElementText = class RichElementText extends ccui.RichElement {
     /** @type cc.FontDefinition */
@@ -108,8 +104,6 @@ ccui.RichElementText = class RichElementText extends ccui.RichElement {
 
 /**
  * The image element for RichText, it has filePath, textureRect, textureType attributes.
- * @class
- * @extends ccui.RichElement
  */
 ccui.RichElementImage = class RichElementImage extends ccui.RichElement {
 
@@ -135,8 +129,6 @@ ccui.RichElementImage = class RichElementImage extends ccui.RichElement {
 
 /**
  * The custom node element for RichText.
- * @class
- * @extends ccui.RichElement
  */
 ccui.RichElementCustomNode = class RichElementCustomNode extends ccui.RichElement {
 
@@ -158,8 +150,6 @@ ccui.RichElementCustomNode = class RichElementCustomNode extends ccui.RichElemen
 
 /**
  * The rich text control of Cocos UI. It receives text, image, and custom node as its children to display.
- * @class
- * @extends ccui.Widget
  */
 ccui.RichText = class RichText extends ccui.Widget {
 

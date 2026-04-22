@@ -33,8 +33,6 @@
  * streak will move before adding a new ribbon segment, and the texture                     <br/>
  * length is the how many pixels the texture is stretched across. The texture               <br/>
  * is vertically aligned along the streak segment.
- * @class
- * @extends cc.Node
  *
  * @property {cc.Texture2D} texture                         - Texture used for the motion streak.
  * @property {Boolean}      fastMode                        - Indicate whether use fast mode.

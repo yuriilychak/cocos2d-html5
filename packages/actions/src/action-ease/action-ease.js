@@ -2,15 +2,12 @@ import ActionInterval from '../action-interval/action-interval';
 
 /**
  * Base class for Easing actions
- * @class
- * @extends cc.ActionInterval
  * @param {cc.ActionInterval} action
  *
  * @example
  * var moveEase = new cc.ActionEase(action);
  */
 export default class ActionEase extends ActionInterval {
-  /** @lends cc.ActionEase# */
   _inner = null;
 
   /**

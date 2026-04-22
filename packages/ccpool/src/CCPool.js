@@ -40,10 +40,9 @@
  * cc.pool.putInPool(sp);
  *
  * cc.pool.getFromPool(cc.Sprite, "a.png");
- * @class
  * @name cc.pool
  */
-export const pool = /** @lends cc.pool# */{
+export const pool = {
     _pool: {},
 
     _releaseCB: function () {

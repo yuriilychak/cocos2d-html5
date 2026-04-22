@@ -26,8 +26,6 @@
 /**
  * The PageViewIndicator control of Cocos UI <br/>
  * Indicator being attached to page view.
- * @class
- * @extends ccui.ProtectedNode
  * @property {Number}               spaceBetweenIndexNodes             - Space between index nodes in PageViewIndicator
  */
 ccui.PageViewIndicator = class PageViewIndicator extends ccui.ProtectedNode {

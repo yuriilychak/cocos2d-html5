@@ -5,7 +5,7 @@ import FiniteTimeAction from '../action/finite-time-action';
  * It has an start time, and a finish time. The finish time is the parameter<br/>
  * duration plus the start time.</p>
  *
- * <p>These CCActionInterval actions have some interesting properties, like:<br/>
+ * <p>These ActionInterval actions have some interesting properties, like:<br/>
  * - They can run normally (default)  <br/>
  * - They can run reversed with the reverse method   <br/>
  * - They can run with the time altered with the Accelerate, AccelDeccel and Speed actions. </p>
@@ -13,14 +13,11 @@ import FiniteTimeAction from '../action/finite-time-action';
  * <p>For example, you can simulate a Ping Pong effect running the action normally and<br/>
  * then running it again in Reverse mode. </p>
  *
- * @class
- * @extends cc.FiniteTimeAction
  * @param {Number} d duration in seconds
  * @example
  * var actionInterval = new cc.ActionInterval(3);
  */
 export default class ActionInterval extends FiniteTimeAction {
-  /** @lends cc.ActionInterval# */
   _elapsed = 0;
   _firstTick = false;
   _easeList = null;
@@ -255,7 +252,7 @@ export default class ActionInterval extends FiniteTimeAction {
 
   /**
    * Repeats an action a number of times.
-   * To repeat an action forever use the CCRepeatForever action.
+   * To repeat an action forever use the RepeatForever action.
    * @param times
    * @returns {cc.ActionInterval}
    */

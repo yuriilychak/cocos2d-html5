@@ -6,13 +6,10 @@ import Action from './action';
  * Useful to simulate 'slow motion' or 'fast forward' effect.
  *
  * @warning This action can't be Sequenceable because it is not an cc.IntervalAction
- * @class
- * @extends cc.Action
  * @param {cc.ActionInterval} action
  * @param {Number} speed
  */
 export default class Speed extends Action {
-  /** @lends cc.Speed# */
   _speed = 0.0;
   _innerAction = null;
 

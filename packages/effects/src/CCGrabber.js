@@ -26,8 +26,6 @@
 
 /**
  * FBO class that grabs the the contents of the screen
- * @class
- * @extends cc.NewClass
  */
 export class Grabber extends cc.NewClass {
   /**
@@ -84,7 +82,7 @@ export class Grabber extends cc.NewClass {
     locGL.clearColor(0, 0, 0, 0);
 
     // BUG #631: To fix #631, uncomment the lines with #631
-    // Warning: But it CCGrabber won't work with 2 effects at the same time
+    // Warning: But it Grabber won't work with 2 effects at the same time
     //  glClearColor(0.0f,0.0f,0.0f,1.0f);    // #631
 
     locGL.clear(locGL.COLOR_BUFFER_BIT | locGL.DEPTH_BUFFER_BIT);

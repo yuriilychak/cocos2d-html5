@@ -27,8 +27,6 @@ import Event from './event';
 
 /**
  * Focus change event for UI widget
- * @class
- * @extends Event
  */
 export default class EventFocus extends Event {
     /**

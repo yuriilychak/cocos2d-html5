@@ -27,15 +27,12 @@
 
 /**
  * Progress to percentage
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration duration in seconds
  * @param {Number} percent
  * @example
  * var to = new cc.ProgressTo(2, 100);
  */
 cc.ProgressTo = class ProgressTo extends cc.ActionInterval {
-  /** @lends cc.ProgressTo# */
   _to = 0;
   _from = 0;
 
@@ -118,8 +115,6 @@ cc.progressTo = (duration, percent) => new cc.ProgressTo(duration, percent);
 
 /**
  * Progress from a percentage to another percentage
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration duration in seconds
  * @param {Number} fromPercentage
  * @param {Number} toPercentage
@@ -127,7 +122,6 @@ cc.progressTo = (duration, percent) => new cc.ProgressTo(duration, percent);
  *  var fromTo = new cc.ProgressFromTo(2, 100.0, 0.0);
  */
 cc.ProgressFromTo = class ProgressFromTo extends cc.ActionInterval {
-  /** @lends cc.ProgressFromTo# */
   _to = 0;
   _from = 0;
 

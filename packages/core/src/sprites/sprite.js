@@ -110,7 +110,7 @@ export class Sprite extends EventHelper(Node) {
     //
     // Data used when the sprite is self-rendered
     //
-    this._blendFunc = null; //It's required for CCTextureProtocol inheritance
+    this._blendFunc = null; //It's required for TextureProtocol inheritance
     this._texture = null; //cc.Texture2D object that is used to render the sprite
 
     //
@@ -238,7 +238,7 @@ export class Sprite extends EventHelper(Node) {
   /**
    * Initializes a sprite with a SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.<br/>
    * Please pass parameters to the constructor to initialize the sprite, do not call this function yourself,
-   * @param {SpriteFrame} spriteFrame A CCSpriteFrame object. It should includes a valid texture and a rect
+   * @param {SpriteFrame} spriteFrame A SpriteFrame object. It should includes a valid texture and a rect
    * @return {Boolean}  true if the sprite is initialized properly, false otherwise.
    */
   initWithSpriteFrame(spriteFrame) {
@@ -380,7 +380,7 @@ export class Sprite extends EventHelper(Node) {
 
   /**
    * Changes the display frame with animation name and index.<br/>
-   * The animation name will be get from the CCAnimationCache
+   * The animation name will be get from the AnimationCache
    * @param {String} animationName
    * @param {Number} frameIndex
    */
@@ -411,7 +411,7 @@ export class Sprite extends EventHelper(Node) {
     return this._batchNode;
   }
 
-  // CCTextureProtocol
+  // TextureProtocol
   /**
    * Returns the texture of the sprite node
    * @returns {Texture2D}
@@ -518,8 +518,8 @@ export class Sprite extends EventHelper(Node) {
    * <p>
    *     Initializes a sprite with an image filename.<br/>
    *
-   *     This method will find pszFilename from local file system, load its content to CCTexture2D,<br/>
-   *     then use CCTexture2D to create a sprite.<br/>
+   *     This method will find pszFilename from local file system, load its content to Texture2D,<br/>
+   *     then use Texture2D to create a sprite.<br/>
    *     After initialization, the rect used will be the size of the image. The offset will be (0,0).<br/>
    *     Please pass parameters to the constructor to initialize the sprite, do not call this function yourself.
    * </p>
@@ -560,7 +560,7 @@ export class Sprite extends EventHelper(Node) {
    * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).<br/>
    * Please pass parameters to the constructor to initialize the sprite, do not call this function yourself.
    * @function
-   * @param {Texture2D|HTMLImageElement|HTMLCanvasElement} texture A pointer to an existing CCTexture2D object. You can use a CCTexture2D object for many sprites.
+   * @param {Texture2D|HTMLImageElement|HTMLCanvasElement} texture A pointer to an existing Texture2D object. You can use a Texture2D object for many sprites.
    * @param {Rect} [rect] Only the contents inside rect of this texture will be applied for this sprite.
    * @param {Boolean} [rotated] Whether or not the texture rectangle is rotated.
    * @param {Boolean} [counterclockwise=true] Whether or not the texture rectangle rotation is counterclockwise (texture package is counterclockwise, spine is clockwise).
@@ -634,7 +634,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   /**
-   * Updates the texture rect of the CCSprite in points.
+   * Updates the texture rect of the Sprite in points.
    * @function
    * @param {Rect} rect a rect of texture
    * @param {Boolean} [rotated] Whether or not the texture is rotated
@@ -766,7 +766,7 @@ export class Sprite extends EventHelper(Node) {
    */
   setBatchNode(spriteBatchNode) {}
 
-  // CCTextureProtocol
+  // TextureProtocol
   /**
    * Sets the texture of sprite
    * @function
@@ -775,7 +775,7 @@ export class Sprite extends EventHelper(Node) {
   setTexture(texture) {
     if (!texture) return this._renderCmd._setTexture(null);
 
-    //CCSprite.cpp 327 and 338
+    //Sprite.cpp 327 and 338
     var isFileName = typeof texture === "string";
 
     if (isFileName) texture = TextureCache.getInstance().addImage(texture);

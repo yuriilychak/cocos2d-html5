@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-/** A CCSprite subclass that is bound to a physics body.
+/** A Sprite subclass that is bound to a physics body.
  It works with:
  - Chipmunk: Preprocessor macro CC_ENABLE_CHIPMUNK_INTEGRATION should be defined
  - Objective-Chipmunk: Preprocessor macro CC_ENABLE_CHIPMUNK_INTEGRATION should be defined
@@ -37,7 +37,6 @@
  */
 (function () {
   /**
-   * @class
    */
   cc.PhysicsSprite = class PhysicsSprite extends cc.Sprite {
     /**
@@ -58,7 +57,7 @@
      * var spriteFrame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
      * var physicsSprite = new cc.PhysicsSprite(spriteFrame);
      *
-     * 4.Creates a sprite with an exsiting texture contained in a CCTexture2D object
+     * 4.Creates a sprite with an exsiting texture contained in a Texture2D object
      *      After creation, the rect will be the size of the texture, and the offset will be (0,0).
      * var texture = cc.textureCache.addImage("HelloHTML5World.png");
      * var physicsSprite1 = new cc.PhysicsSprite(texture);

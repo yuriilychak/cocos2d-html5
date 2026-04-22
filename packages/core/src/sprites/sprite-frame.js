@@ -41,8 +41,6 @@ import TextureCache from "../textures/texture-cache";
  *    <br/>
  *    You can modify the frame of a cc.Sprite by doing:<br/>
  * </p>
- * @class
- * @extends cc.Class
  *
  * @param {String|cc.Texture2D} filename
  * @param {Rect} rect If parameters' length equal 2, rect in points, else rect in pixels

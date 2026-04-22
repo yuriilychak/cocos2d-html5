@@ -26,8 +26,6 @@
 
 /**
  * cc.TMXObjectGroup represents the TMX object group.
- * @class
- * @extends cc.NewClass
  *
  * @property {Array}    properties  - Properties from the group. They can be added using tilemap editors
  * @property {String}   groupName   - Name of the group

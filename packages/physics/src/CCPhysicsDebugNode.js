@@ -145,8 +145,6 @@ cc.CONSTRAINT_COLOR = cc.color(0, 255, 0, 128);
  * - Chipmunk<br/>
  * - Objective-Chipmunk</p>
  *
- * @class
- * @extends cc.DrawNode
  *
  * @property {cp.Space} space     Physic world space
  */

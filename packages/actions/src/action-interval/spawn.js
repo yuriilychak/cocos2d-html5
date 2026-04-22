@@ -5,11 +5,8 @@ import DelayTime from './delay-time';
 const delayTime = (d) => new DelayTime(d);
 
 /** Spawn a new action immediately
- * @class
- * @extends cc.ActionInterval
  */
 export default class Spawn extends ActionInterval {
-  /** @lends cc.Spawn# */
   _one = null;
   _two = null;
 

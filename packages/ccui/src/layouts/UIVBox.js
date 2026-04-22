@@ -25,8 +25,6 @@
 
 /**
  * The vertical box of Cocos UI. Its layout type is ccui.Layout.LINEAR_VERTICAL.
- * @class
- * @extends ccui.Layout
  */
 ccui.VBox = class VBox extends ccui.Layout {
     /**

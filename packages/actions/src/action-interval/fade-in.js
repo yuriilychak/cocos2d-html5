@@ -3,12 +3,9 @@ import FadeOut from './fade-out';
 
 /** Fades In an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 0 to 255.<br/>
  * The "reverse" of this action is FadeOut
- * @class
- * @extends cc.FadeTo
  * @param {Number} duration duration in seconds
  */
 export default class FadeIn extends FadeTo {
-  /** @lends cc.FadeIn# */
   _reverseAction = null;
 
   /**

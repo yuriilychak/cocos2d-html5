@@ -25,8 +25,6 @@
 
 /**
  * The text atlas control of Cocos UI.
- * @class
- * @extends ccui.Widget
  *
  * @property {String}   string  - Content string of the label
  */

@@ -2,8 +2,6 @@ import ActionInterval from './action-interval';
 
 /**
  * Runs actions sequentially, one after another.
- * @class
- * @extends cc.ActionInterval
  * @param {Array|cc.FiniteTimeAction} tempArray
  * @example
  * // create sequence with actions
@@ -13,7 +11,6 @@ import ActionInterval from './action-interval';
  * var seq = new cc.Sequence(actArray);
  */
 export default class Sequence extends ActionInterval {
-  /** @lends cc.Sequence# */
   _actions = null;
   _split = null;
   _last = 0;

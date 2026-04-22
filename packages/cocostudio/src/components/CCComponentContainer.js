@@ -25,8 +25,6 @@
 
 /**
  * The component container for Cocostudio, it has some components.
- * @class
- * @extends cc.Class
  */
 cc.ComponentContainer = class extends cc.NewClass {
     _components = null;

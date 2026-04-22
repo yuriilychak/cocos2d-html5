@@ -28,7 +28,7 @@ import { Layer } from './layer';
 import { log, _LogInfos } from '../boot/debugger';
 
 /**
- * LayerMultiplex is a CCLayer with the ability to multiplex its children.
+ * LayerMultiplex is a Layer with the ability to multiplex its children.
  */
 export class LayerMultiplex extends Layer {
     constructor(layers) {

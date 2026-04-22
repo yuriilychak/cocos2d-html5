@@ -32,8 +32,6 @@ import Sys from "../../boot/sys";
  * <p>cc.ContainerStrategy class is the root strategy class of container's scale strategy,
  * it controls the behavior of how to scale the cc.container and cc._canvas object</p>
  *
- * @class
- * @extends NewClass
  */
 export class ContainerStrategy extends NewClass {
   /**
@@ -99,8 +97,6 @@ export class ContainerStrategy extends NewClass {
 // Container scale strategies (subclasses)
 
 /**
- * @class
- * @extends ContainerStrategy
  */
 class EqualToFrame extends ContainerStrategy {
   apply(view) {
@@ -117,8 +113,6 @@ class EqualToFrame extends ContainerStrategy {
 }
 
 /**
- * @class
- * @extends ContainerStrategy
  */
 class ProportionalToFrame extends ContainerStrategy {
   apply(view, designedResolution) {
@@ -157,8 +151,6 @@ class ProportionalToFrame extends ContainerStrategy {
 }
 
 /**
- * @class
- * @extends EqualToFrame
  */
 class EqualToWindow extends EqualToFrame {
   preApply(view) {
@@ -173,8 +165,6 @@ class EqualToWindow extends EqualToFrame {
 }
 
 /**
- * @class
- * @extends ProportionalToFrame
  */
 class ProportionalToWindow extends ProportionalToFrame {
   preApply(view) {
@@ -189,8 +179,6 @@ class ProportionalToWindow extends ProportionalToFrame {
 }
 
 /**
- * @class
- * @extends ContainerStrategy
  */
 class OriginalContainer extends ContainerStrategy {
   apply(view) {

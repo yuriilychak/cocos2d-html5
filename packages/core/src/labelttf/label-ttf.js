@@ -257,7 +257,7 @@ export class LabelTTF extends Sprite {
     return this._fontName;
   }
   /**
-   * Initializes the CCLabelTTF with a font name, alignment, dimension and font size, do not call it by yourself, you should pass the correct arguments in constructor to initialize the label.
+   * Initializes the LabelTTF with a font name, alignment, dimension and font size, do not call it by yourself, you should pass the correct arguments in constructor to initialize the label.
    * @param {String} text
    * @param {FontDefinition} textDefinition
    * @return {Boolean}

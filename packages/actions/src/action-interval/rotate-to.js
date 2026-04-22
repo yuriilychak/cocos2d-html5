@@ -4,8 +4,6 @@ import ActionInterval from './action-interval';
  * Rotates a cc.Node object to a certain angle by modifying it's.
  * rotation attribute. <br/>
  * The direction will be decided by the shortest angle.
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration duration in seconds
  * @param {Number} deltaAngleX deltaAngleX in degrees.
  * @param {Number} [deltaAngleY] deltaAngleY in degrees.
@@ -13,7 +11,6 @@ import ActionInterval from './action-interval';
  * var rotateTo = new cc.RotateTo(2, 61.0);
  */
 export default class RotateTo extends ActionInterval {
-  /** @lends cc.RotateTo# */
   _dstAngleX = 0;
   _startAngleX = 0;
   _diffAngleX = 0;

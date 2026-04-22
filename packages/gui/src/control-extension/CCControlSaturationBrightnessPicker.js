@@ -34,8 +34,6 @@
 
 /**
  * ControlSaturationBrightnessPicker: Saturation brightness picker ui component.
- * @class
- * @extends cc.Control
  *
  * @property {Number}       saturation  - <@readonly> Saturation value of the picker
  * @property {Number}       brightness  - <@readonly> Brightness value of the picker

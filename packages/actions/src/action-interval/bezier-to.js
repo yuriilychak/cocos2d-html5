@@ -1,8 +1,6 @@
 import BezierBy from './bezier-by';
 
 /** An action that moves the target with a cubic Bezier curve to a destination point.
- * @class
- * @extends cc.BezierBy
  * @param {Number} t
  * @param {Array} c array of points
  * @example
@@ -10,7 +8,6 @@ import BezierBy from './bezier-by';
  * var bezierTo = new cc.BezierTo(2, bezier);
  */
 export default class BezierTo extends BezierBy {
-  /** @lends cc.BezierTo# */
   _toConfig;
 
   /**

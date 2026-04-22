@@ -7,8 +7,6 @@ import { cloneControlPoints } from '../action/utils';
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  * Relative coordinates.
  *
- * @class
- * @extends cc.CardinalSplineBy
  * @param {Number} dt
  * @param {Array} points
  *

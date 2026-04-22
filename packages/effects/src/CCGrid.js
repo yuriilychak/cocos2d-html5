@@ -27,8 +27,6 @@
 
 /**
  * Base class for cc.Grid
- * @class
- * @extends cc.NewClass
  */
 export class GridBase extends cc.NewClass {
   /**
@@ -295,8 +293,6 @@ export class GridBase extends cc.NewClass {
 
 /**
  * cc.Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
- * @class
- * @extends cc.GridBase
  */
 export class Grid3D extends GridBase {
   constructor(gridSize, texture, flipped, rect) {
@@ -537,8 +533,6 @@ export class Grid3D extends GridBase {
 /**
  * cc.TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that   <br/>
  * the tiles can be separated from the grid.
- * @class
- * @extends cc.GridBase
  */
 export class TiledGrid3D extends GridBase {
   constructor(gridSize, texture, flipped, rect) {

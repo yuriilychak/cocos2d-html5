@@ -57,8 +57,6 @@
  * http://www.n4te.com/hiero/hiero.jnlp (Free, Java)<br/>
  * http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)<br/>
  * http://www.angelcode.com/products/bmfont/ (Free, Windows only)</p>
- * @class
- * @extends cc.SpriteBatchNode
  *
  * @property {String}   string          - Content string of label
  * @property {Number}   textAlign       - Horizontal Alignment of label, cc.TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT

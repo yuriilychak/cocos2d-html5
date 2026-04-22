@@ -32,8 +32,6 @@
 
 /**
  * ControlColourPicker: color picker ui component.
- * @class
- * @extends cc.Control
  *
  * @property {cc.Sprite}  background   - <@readonly> The background sprite
  */
@@ -57,7 +55,7 @@ cc.ControlColourPicker = class ControlColourPicker extends cc.Control {
         var rgb = cc.ControlUtils.RGBfromHSV(this._hsv);
         super.setColor(cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
 
-        // Send CCControl callback
+        // Send Control callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
         this._updateControlPicker();
     }
@@ -71,7 +69,7 @@ cc.ControlColourPicker = class ControlColourPicker extends cc.Control {
         var rgb = cc.ControlUtils.RGBfromHSV(this._hsv);
         super.setColor(cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
 
-        // Send CCControl callback
+        // Send Control callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
     }
 

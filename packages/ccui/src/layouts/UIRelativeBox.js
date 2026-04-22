@@ -25,8 +25,6 @@
 
 /**
  * The Relative box for Cocos UI layout.  Its layout type is ccui.Layout.RELATIVE.
- * @class
- * @extends ccui.Layout
  */
 ccui.RelativeBox = class RelativeBox extends ccui.Layout {
     /**

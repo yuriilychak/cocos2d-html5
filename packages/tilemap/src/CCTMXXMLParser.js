@@ -101,8 +101,6 @@ cc.TMX_TILE_FLIPPED_MASK = (~(cc.TMX_TILE_FLIPPED_ALL)) >>> 0;
  * - Whether the layer is visible (if it's not visible, then the CocosNode won't be created) <br />
  *  <br />
  * This information is obtained from the TMX file.</p>
- * @class
- * @extends cc.NewClass
  *
  * @property {Array}    properties  - Properties of the layer info.
  */
@@ -160,8 +158,6 @@ cc.TMXLayerInfo = class TMXLayerInfo extends cc.NewClass {
  * - Image size<br />
  *
  * This information is obtained from the TMX file. </p>
- * @class
- * @extends cc.NewClass
  *
  * @property {string} name - Tileset name
  * @property {number} firstGid - First grid
@@ -226,8 +222,6 @@ cc.TMXTilesetInfo = class TMXTilesetInfo extends cc.NewClass {
  * - ObjectGroups (an array of TMXObjectGroupInfo objects) </p>
  *
  * <p>This information is obtained from the TMX file. </p>
- * @class
- * @extends cc.saxParser
  *
  * @property {Array}    properties          - Properties of the map info.
  * @property {Number}   orientation         - Map orientation.
@@ -267,8 +261,6 @@ cc.TMXTilesetInfo = class TMXTilesetInfo extends cc.NewClass {
  * - ObjectGroups (an array of TMXObjectGroupInfo objects) </p>
  *
  * <p>This information is obtained from the TMX file. </p>
- * @class
- * @extends cc.SAXParser
  *
  * @property {Array}    properties          - Properties of the map info.
  * @property {Number}   orientation         - Map orientation.

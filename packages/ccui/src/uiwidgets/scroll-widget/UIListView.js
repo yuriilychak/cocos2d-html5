@@ -25,8 +25,6 @@
 
 /**
  * The list view control of Cocos UI.
- * @class
- * @extends ccui.ScrollView
  * @example
  * var listView = new ccui.ListView();
  * // set list view ex direction

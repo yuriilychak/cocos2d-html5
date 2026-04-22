@@ -26,8 +26,6 @@
 
 /**
  * An Invocation class
- * @class
- * @extends cc.Class
  */
 cc.Invocation = class Invocation extends cc.NewClass {
     _action = null;

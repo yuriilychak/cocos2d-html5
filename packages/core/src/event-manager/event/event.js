@@ -28,8 +28,6 @@ import * as EventType from "./constants";
 
 /**
  * Base class of all kinds of events.
- * @class
- * @extends NewClass
  */
 export default class Event extends NewClass {
   constructor(type) {

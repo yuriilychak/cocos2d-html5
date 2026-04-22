@@ -40,8 +40,6 @@ import TextureAtlasWebGLRenderer from "./texture-atlas-webgl-renderer";
  * Quads can be removed in runtime <br />
  * Quads can be re-ordered in runtime <br />
  * The TextureAtlas capacity can be increased or decreased in runtime.</p>
- * @class
- * @extends cc.Class
  *
  * @property {Boolean}  dirty           - Indicates whether or not the array buffer of the VBO needs to be updated.
  * @property {Image}    texture         - Image texture for cc.TextureAtlas.
@@ -509,7 +507,7 @@ export class TextureAtlas extends NewClass {
   }
 
   /**
-   * <p>Resize the capacity of the CCTextureAtlas.<br />
+   * <p>Resize the capacity of the TextureAtlas.<br />
    * The new capacity can be lower or higher than the current one<br />
    * It returns YES if the resize was successful. <br />
    * If it fails to resize the capacity it will return NO with a new capacity of 0. <br />
@@ -611,7 +609,7 @@ export class TextureAtlas extends NewClass {
   }
 
   /**
-   * Used internally by CCParticleBatchNode                                    <br/>
+   * Used internally by ParticleBatchNode                                    <br/>
    * don't use this unless you know what you're doing
    * @param {Number} amount
    */
@@ -677,7 +675,7 @@ export class TextureAtlas extends NewClass {
 
   /**
    * Ensures that after a realloc quads are still empty                                <br/>
-   * Used internally by CCParticleBatchNode
+   * Used internally by ParticleBatchNode
    * @param {Number} index
    * @param {Number} amount
    */

@@ -25,7 +25,6 @@
 
 /**
  * The display manager for CocoStudio Armature bone.
- * @Class ccs.DisplayManager
  * @extend cc.Class
  *
  * @param {ccs.Bone} bone The bone for the display manager

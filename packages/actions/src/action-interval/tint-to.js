@@ -2,8 +2,6 @@ import ActionInterval from './action-interval';
 
 /** Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
  * @warning This action doesn't support "reverse"
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration
  * @param {Number} red 0-255
  * @param {Number} green  0-255
@@ -12,7 +10,6 @@ import ActionInterval from './action-interval';
  * var action = new cc.TintTo(2, 255, 0, 255);
  */
 export default class TintTo extends ActionInterval {
-  /** @lends cc.TintTo# */
   _to = null;
   _from = null;
 

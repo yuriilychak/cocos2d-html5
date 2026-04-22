@@ -28,7 +28,6 @@ import { NewClass } from './platform/class';
 import { log, assert, _LogInfos } from './boot/debugger';
 
 /**
- * @class
  * @example
  * var element = new HashElement();
  */
@@ -43,11 +42,11 @@ export var HashElement = function () {
 
 /**
  * ActionManager is a class that can manage actions.<br/>
- * Normally you won't need to use this class directly. 99% of the cases you will use the CCNode interface,
+ * Normally you won't need to use this class directly. 99% of the cases you will use the Node interface,
  * which uses this class's singleton object.
  * But there are some cases where you might need to use this class. <br/>
  * Examples:<br/>
- * - When you want to run an action where the target is different from a CCNode.<br/>
+ * - When you want to run an action where the target is different from a Node.<br/>
  * - When you want to pause / resume the actions<br/>
  * @example
  * var mng = new ActionManager();

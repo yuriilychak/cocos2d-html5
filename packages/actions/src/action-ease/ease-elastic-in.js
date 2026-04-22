@@ -5,14 +5,11 @@ import EaseElastic from './ease-elastic';
  * Reference easeInElastic: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
  * @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
- * @class
- * @extends cc.EaseElastic
  *
  * @example
  * action.easing(cc.easeElasticIn(period));
  */
 export default class EaseElasticIn extends EaseElastic {
-  /** @lends cc.EaseElasticIn# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    *

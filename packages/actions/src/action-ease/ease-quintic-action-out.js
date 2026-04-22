@@ -4,14 +4,11 @@ import ActionEase from './action-ease';
  * cc.EaseQuinticActionOut action. <br />
  * Reference easeQuint: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @class
- * @extends cc.ActionEase
  *
  * @example
  * action.easing(cc.easeQuadraticActionOut());
  */
 export default class EaseQuinticActionOut extends ActionEase {
-  /** @lends cc.EaseQuinticActionOut# */
   _updateTime(time) {
     time -= 1;
     return time * time * time * time * time + 1;

@@ -4,14 +4,11 @@ import ActionEase from './action-ease';
  * cc.EaseBezierAction action. <br />
  * Manually set a 4 order Bessel curve. <br />
  * According to the set point, calculate the trajectory.
- * @class
- * @extends cc.ActionEase
  * @param {cc.Action} action
  * @example
  * action.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
  */
 export default class EaseBezierAction extends ActionEase {
-  /** @lends cc.EaseBezierAction# */
 
   _p0 = null;
   _p1 = null;

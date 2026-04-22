@@ -3,14 +3,11 @@ import EaseRateAction from './ease-rate-action';
 /**
  * cc.EaseIn action with a rate. From slow to fast.
  *
- * @class
- * @extends cc.EaseRateAction
  *
  * @example
  * action.easing(cc.easeIn(3.0));
  */
 export default class EaseIn extends EaseRateAction {
-  /** @lends cc.EaseIn# */
 
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.

@@ -26,8 +26,6 @@
 /**
  * The ScrollViewBar control of Cocos UI <br/>
  * Scroll bar being attached to ScrollView layout container.
- * @class
- * @extends ccui.ProtectedNode
  *
  * @property {Number}               opacity              - Opacity of the scroll view bar
  * @property {Boolean}              autoHideEnabled             - Auto hide is enabled in the scroll view bar

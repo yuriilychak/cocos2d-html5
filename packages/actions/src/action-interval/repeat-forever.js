@@ -3,15 +3,12 @@ import ActionInterval from './action-interval';
 /**  Repeats an action for ever.  <br/>
  * To repeat the an action for a limited number of times use the Repeat action. <br/>
  * @warning This action can't be Sequenceable because it is not an IntervalAction
- * @class
- * @extends cc.ActionInterval
  * @param {cc.FiniteTimeAction} action
  * @example
  * var rep = new cc.RepeatForever(cc.sequence(jump2, jump1), 5);
  */
 export default class RepeatForever extends ActionInterval {
-  /** @lends cc.RepeatForever# */
-  _innerAction = null; //CCActionInterval
+  _innerAction = null; //ActionInterval
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />

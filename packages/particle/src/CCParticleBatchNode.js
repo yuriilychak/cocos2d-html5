@@ -52,8 +52,6 @@ cc.PARTICLE_DEFAULT_CAPACITY = 500;
  *    - Initialize the ParticleBatchNode with the texture and enough capacity for all the particle systems<br/>
  *    - Initialize all particle systems and add them as child to the batch node<br/>
  * </p>
- * @class
- * @extends cc.ParticleSystem
  * @param {String|cc.Texture2D} fileImage
  * @param {Number} capacity
  *
@@ -464,7 +462,7 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
     //     don't use lazy sorting, reordering the particle systems quads afterwards would be too complex                                    <br/>
     //     XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster           <br/>
     //     XXX or possibly using vertexZ for reordering, that would be fastest                                                              <br/>
-    //     this helper is almost equivalent to CCNode's addChild, but doesn't make use of the lazy sorting                                  <br/>
+    //     this helper is almost equivalent to Node's addChild, but doesn't make use of the lazy sorting                                  <br/>
     // </p>
     // @param {cc.ParticleSystem} child
     // @param {Number} z

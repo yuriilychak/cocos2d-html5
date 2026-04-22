@@ -329,10 +329,8 @@ var scale9QuadGenerator = {
  * to specific areas of a sprite. With 9-slice scaling (3x3 grid),                                     <br/>
  * you can ensure that the sprite does not become distorted when                                       <br/>
  * scaled.                                                                                             <br/>
- * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html            <br/>
+ * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/Scale9Sprite.html            <br/>
  * </p>
- * @class
- * @extends cc.Node
  *
  * @property {cc.Size}  preferredSize   - The preferred size of the 9-slice sprite
  * @property {cc.Rect}  capInsets       - The cap insets of the 9-slice sprite

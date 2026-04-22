@@ -25,10 +25,9 @@
 
 /**
  * The singleton object that creating object factory, it creates object with class name, and manager the type mapping.
- * @class
  * @name ccs.objectFactory
  */
-ccs.objectFactory = /** @lends ccs.objectFactory# */{
+ccs.objectFactory = {
     _typeMap: {},
 
     /**

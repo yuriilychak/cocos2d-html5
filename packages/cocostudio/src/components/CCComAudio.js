@@ -25,8 +25,6 @@
 
 /**
  * The audio component for Cocostudio.
- * @class
- * @extends ccs.Component
  */
 ccs.ComAudio = class ComAudio extends ccs.Component {
 

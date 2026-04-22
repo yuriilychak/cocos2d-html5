@@ -28,8 +28,6 @@ import { Point } from "../cocoa/geometry/point";
 
 /**
  * The touch event class
- * @class
- * @extends NewClass
  *
  * @param {Number} x
  * @param {Number} y

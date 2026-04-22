@@ -25,8 +25,6 @@
 
 /**
  * The Bone of Armature, it has bone data, display manager and transform data for armature.
- * @class
- * @extends ccs.Node
  *
  * @param {String} [name] The name of the bone
  * @example
@@ -42,7 +40,7 @@
  * @property {ccs.FrameData}        tweenData               - <@readonly> The tween data
  * @property {ccs.ColliderFilter}   colliderFilter          - The collider filter
  * @property {ccs.DisplayManager}   displayManager          - The displayManager
- * @property {Boolean}              ignoreMovementBoneData  - Indicate whether force the bone to show When CCArmature play a animation and there isn't a CCMovementBoneData of this bone in this CCMovementData.
+ * @property {Boolean}              ignoreMovementBoneData  - Indicate whether force the bone to show When Armature play a animation and there isn't a MovementBoneData of this bone in this MovementData.
  * @property {String}               name                    - The name of the bone
  * @property {Boolean}              blendDirty              - Indicate whether the blend is dirty
  *
@@ -403,7 +401,7 @@ ccs.Bone = class Bone extends ccs.Node {
      * If index already have a display, then replace it.
      * If index is current display index, then also change display to _index
      * @param {ccs.DisplayData} displayData it include the display information, like DisplayType.
-     *          If you want to create a sprite display, then create a CCSpriteDisplayData param
+     *          If you want to create a sprite display, then create a SpriteDisplayData param
      *@param {Number}    index the index of the display you want to replace or add to
      *          -1 : append display from back
      */
@@ -527,7 +525,7 @@ ccs.Bone = class Bone extends ccs.Node {
     }
 
     /**
-     *    When CCArmature play a animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will hide.   <br/>
+     *    When Armature play a animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will hide.   <br/>
      *    Set IgnoreMovementBoneData to true, then this bone will also show.
      * @param {Boolean} bool
      */

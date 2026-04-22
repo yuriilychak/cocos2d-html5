@@ -27,8 +27,6 @@
 /**
  * Parallax Object. <br />
  * Parallax required attributes are stored.
- * @class
- * @extends cc.Class
  */
 cc.PointObject = class PointObject extends cc.NewClass {
     _ratio = null;
@@ -106,8 +104,6 @@ cc.PointObject = class PointObject extends cc.NewClass {
 /**
  * <p>cc.ParallaxNode: A node that simulates a parallax scroller<br />
  * The children will be moved faster / slower than the parent according the the parallax ratio. </p>
- * @class
- * @extends cc.Node
  *
  * @property {Array}    parallaxArray   - Parallax nodes array
  */

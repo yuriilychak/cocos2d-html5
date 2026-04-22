@@ -27,8 +27,6 @@
 /**
  * cc.ShakyTiles3D action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} range
@@ -123,8 +121,6 @@ cc.shakyTiles3D = (duration, gridSize, range, shakeZ) =>
 /**
  * cc.ShatteredTiles3D action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} range
@@ -223,7 +219,6 @@ cc.shatteredTiles3D = (duration, gridSize, range, shatterZ) =>
 
 /**
  * A Tile composed of position, startPosition and delta.
- * @Class
  * @constructor
  * @param {cc.Point} [position=cc.p(0,0)]
  * @param {cc.Point} [startPosition=cc.p(0,0)]
@@ -238,8 +233,6 @@ cc.Tile = function (position, startPosition, delta) {
 /**
  * cc.ShuffleTiles action, Shuffle the tiles in random order. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} seed
@@ -408,8 +401,6 @@ cc.shuffleTiles = (duration, gridSize, seed) =>
 /**
  * cc.FadeOutTRTiles action. Fades out the tiles in a Top-Right direction. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  */
 cc.FadeOutTRTiles = class FadeOutTRTiles extends cc.TiledGrid3DAction {
   /**
@@ -501,8 +492,6 @@ cc.fadeOutTRTiles = (duration, gridSize) =>
 /**
  * cc.FadeOutBLTiles action. Fades out the tiles in a Bottom-Left direction. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.FadeOutTRTiles
  */
 cc.FadeOutBLTiles = class FadeOutBLTiles extends cc.FadeOutTRTiles {
   /**
@@ -534,8 +523,6 @@ cc.fadeOutBLTiles = (duration, gridSize) =>
 /**
  * cc.FadeOutUpTiles action. Fades out the tiles in upwards direction. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.FadeOutTRTiles
  */
 cc.FadeOutUpTiles = class FadeOutUpTiles extends cc.FadeOutTRTiles {
   /**
@@ -577,8 +564,6 @@ cc.fadeOutUpTiles = (duration, gridSize) =>
 /**
  * cc.FadeOutDownTiles action. Fades out the tiles in downwards direction. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.FadeOutUpTiles
  */
 cc.FadeOutDownTiles = class FadeOutDownTiles extends cc.FadeOutUpTiles {
   /**
@@ -609,8 +594,6 @@ cc.fadeOutDownTiles = (duration, gridSize) =>
  * cc.TurnOffTiles action.<br/>
  * Turn off the files in random order. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number|Null} [seed=0]
@@ -741,8 +724,6 @@ cc.turnOffTiles = (duration, gridSize, seed) =>
 /**
  * cc.WavesTiles3D action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} waves
@@ -863,8 +844,6 @@ cc.wavesTiles3D = (duration, gridSize, waves, amplitude) =>
 /**
  * cc.JumpTiles3D action.  A sin function is executed to move the tiles across the Z axis. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} numberOfJumps
@@ -998,8 +977,6 @@ cc.jumpTiles3D = (duration, gridSize, numberOfJumps, amplitude) =>
 /**
  * cc.SplitRows action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  * @param {Number} duration
  * @param {Number} rows
  */
@@ -1077,8 +1054,6 @@ cc.splitRows = (duration, rows) => new cc.SplitRows(duration, rows);
 /**
  * cc.SplitCols action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.TiledGrid3DAction
  * @param {Number} duration
  * @param {Number} cols
  */

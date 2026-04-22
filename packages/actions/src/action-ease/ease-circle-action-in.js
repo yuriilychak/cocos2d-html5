@@ -4,14 +4,11 @@ import ActionEase from './action-ease';
  * cc.EaseCircleActionIn action. <br />
  * Reference easeInCirc: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @class
- * @extends cc.ActionEase
  *
  * @example
  * action.easing(cc.easeCircleActionIn());
  */
 export default class EaseCircleActionIn extends ActionEase {
-  /** @lends cc.EaseCircleActionIn# */
   _updateTime(time) {
     return -1 * (Math.sqrt(1 - time * time) - 1);
   }

@@ -27,8 +27,6 @@ import Event from './event';
 
 /**
  * The touch event
- * @class
- * @extends Event
  */
 export default class EventTouch extends Event {
     constructor(arr) {

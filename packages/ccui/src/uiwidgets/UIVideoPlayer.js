@@ -23,8 +23,6 @@
  ****************************************************************************/
 
 /**
- * @class
- * @extends ccui.Widget
  * @brief Displays a video file.
  *
  * @note VideoPlayer displays a video file based on DOM element

@@ -158,7 +158,7 @@ export function disableDefaultGLStates() {
 /**
  * <p>
  *  Increments the GL Draws counts by one.<br/>
- *  The number of calls per frame are displayed on the screen when the CCDirector's stats are enabled.<br/>
+ *  The number of calls per frame are displayed on the screen when the Director's stats are enabled.<br/>
  * </p>
  * @param {Number} addNumber
  * @function

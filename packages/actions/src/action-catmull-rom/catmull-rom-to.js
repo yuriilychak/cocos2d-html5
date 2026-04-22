@@ -7,8 +7,6 @@ import { cloneControlPoints } from '../action/utils';
  * {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline}
  * Absolute coordinates.
  *
- * @class
- * @extends cc.CardinalSplineTo
  * @param {Number} dt
  * @param {Array} points
  *
@@ -16,7 +14,6 @@ import { cloneControlPoints } from '../action/utils';
  * var action1 = cc.catmullRomTo(3, array);
  */
 export default class CatmullRomTo extends CardinalSplineTo {
-  /** @lends cc.CatmullRomTo# */
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />

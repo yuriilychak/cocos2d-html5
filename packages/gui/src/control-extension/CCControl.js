@@ -47,15 +47,13 @@ cc.CONTROL_STATE_SELECTED = 1 << 3;  // Selected state of a control. This state 
 cc.CONTROL_STATE_INITIAL = 1 << 3;
 
 /**
- * CCControl is inspired by the UIControl API class from the UIKit library of
- * CocoaTouch. It provides a base class for control CCSprites such as CCButton
- * or CCSlider that convey user intent to the application.
- * The goal of CCControl is to define an interface and base implementation for
+ * Control is inspired by the UIControl API class from the UIKit library of
+ * CocoaTouch. It provides a base class for control Sprites such as Button
+ * or Slider that convey user intent to the application.
+ * The goal of Control is to define an interface and base implementation for
  * preparing action messages and initially dispatching them to their targets when
  * certain events occur.
- * To use the CCControl you have to subclass it.
- * @class
- * @extends cc.Layer
+ * To use the Control you have to subclass it.
  *
  * @property {Number}   state       - <@readonly> The current control state: cc.CONTROL_STATE_NORMAL | cc.CONTROL_STATE_HIGHLIGHTED | cc.CONTROL_STATE_DISABLED | cc.CONTROL_STATE_SELECTED | cc.CONTROL_STATE_INITIAL
  * @property {Boolean}  enabled     - Indicate whether the control node is enbaled
@@ -187,7 +185,7 @@ cc.Control = class Control extends cc.Layer {
 
     /**
      * Sends action messages for the given control events.
-     * which action messages are sent. See "CCControlEvent" for bitmask constants.
+     * which action messages are sent. See "ControlEvent" for bitmask constants.
      * @param {Number} controlEvents A bitmask whose set flags specify the control events for
      */
     sendActionsForControlEvents(controlEvents) {
@@ -196,7 +194,7 @@ cc.Control = class Control extends cc.Layer {
             // If the given controlEvents bitmask contains the curent event
             if ((controlEvents & (1 << i))) {
                 // Call invocations
-                // <CCInvocation*>
+                // <Invocation*>
                 var invocationList = this._dispatchListforControlEvent(1 << i);
                 for (var j = 0, inLen = invocationList.length; j < inLen; j++) {
                     invocationList[j].invoke(this);
@@ -215,7 +213,7 @@ cc.Control = class Control extends cc.Layer {
      * </p>
      * @param {Object} target The target object that is, the object to which the action message is sent. It cannot be nil. The target is not retained.
      * @param {function} action A selector identifying an action message. It cannot be NULL.
-     * @param {Number} controlEvents A bitmask specifying the control events for which the action message is sent. See "CCControlEvent" for bitmask constants.
+     * @param {Number} controlEvents A bitmask specifying the control events for which the action message is sent. See "ControlEvent" for bitmask constants.
      */
     addTargetWithActionForControlEvents(target, action, controlEvents) {
         // For each control events
@@ -231,7 +229,7 @@ cc.Control = class Control extends cc.Layer {
      *
      * @param {Object} target The target object that is, the object to which the action message is sent. Pass nil to remove all targets paired with action and the specified control events.
      * @param {function} action A selector identifying an action message. Pass NULL to remove all action messages paired with target.
-     * @param {Number} controlEvents A bitmask specifying the control events associated with target and action. See "CCControlEvent" for bitmask constants.
+     * @param {Number} controlEvents A bitmask specifying the control events associated with target and action. See "ControlEvent" for bitmask constants.
      */
     removeTargetWithActionForControlEvents(target, action, controlEvents) {
         // For each control events
@@ -245,7 +243,7 @@ cc.Control = class Control extends cc.Layer {
     /**
      * Returns a point corresponding to the touh location converted into the
      * control space coordinates.
-     * @param {cc.Touch} touch A CCTouch object that represents a touch.
+     * @param {cc.Touch} touch A Touch object that represents a touch.
      */
     getTouchLocation(touch) {
         var touchLocation = touch.getLocation();                      // Get the touch position
@@ -272,9 +270,9 @@ cc.Control = class Control extends cc.Layer {
      * </p>
      * @param {Object} target The target object.
      * @param {function} action A selector identifying an action message.
-     * @param {Number} controlEvent A control events for which the action message is sent. See "CCControlEvent" for constants.
+     * @param {Number} controlEvent A control events for which the action message is sent. See "ControlEvent" for constants.
      *
-     * @return {cc.Invocation} an CCInvocation object able to construct messages using a given target-action pair.
+     * @return {cc.Invocation} an Invocation object able to construct messages using a given target-action pair.
      */
     _invocationWithTargetAndActionForControlEvent(target, action, controlEvent) {
         return null;
@@ -283,7 +281,7 @@ cc.Control = class Control extends cc.Layer {
     /**
      * Returns the cc.Invocation list for the given control event. If the list does not exist, it'll create an empty array before returning it.
      *
-     * @param {Number} controlEvent A control events for which the action message is sent. See "CCControlEvent" for constants.
+     * @param {Number} controlEvent A control events for which the action message is sent. See "ControlEvent" for constants.
      * @return {cc.Invocation} the cc.Invocation list for the given control event.
      */
     _dispatchListforControlEvent(controlEvent) {
@@ -305,7 +303,7 @@ cc.Control = class Control extends cc.Layer {
      * message is sent. It cannot be nil. The target is not retained.
      * @param action A selector identifying an action message. It cannot be NULL.
      * @param controlEvent A control event for which the action message is sent.
-     * See "CCControlEvent" for constants.
+     * See "ControlEvent" for constants.
      */
     _addTargetWithActionForControlEvent(target, action, controlEvent) {
         // Create the invocation object
@@ -321,11 +319,11 @@ cc.Control = class Control extends cc.Layer {
      *
      * @param {Object} target The target object that is, the object to which the action message is sent. Pass nil to remove all targets paired with action and the specified control events.
      * @param {function} action A selector identifying an action message. Pass NULL to remove all action messages paired with target.
-     * @param {Number} controlEvent A control event for which the action message is sent. See "CCControlEvent" for constants.
+     * @param {Number} controlEvent A control event for which the action message is sent. See "ControlEvent" for constants.
      */
     _removeTargetWithActionForControlEvent(target, action, controlEvent) {
         // Retrieve all invocations for the given control event
-        //<CCInvocation*>
+        //<Invocation*>
         var eventInvocationList = this._dispatchListforControlEvent(controlEvent);
 
         //remove all invocations if the target and action are null

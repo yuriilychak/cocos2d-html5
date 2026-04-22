@@ -7,11 +7,8 @@ import Action from './action';
  * - An action with a duration of 35.5 seconds.
  *
  * Infinite time actions are valid
- * @class
- * @extends cc.Action
  */
 export default class FiniteTimeAction extends Action {
-  /** @lends cc.FiniteTimeAction# */
   // duration in seconds
   _duration = 0;
 

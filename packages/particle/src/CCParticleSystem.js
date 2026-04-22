@@ -46,7 +46,6 @@
 
 /**
  * Structure that contains the values of each particle
- * @Class
  * @Construct
  * @param {cc.Point} [pos=cc.p(0,0)] Position of particle
  * @param {cc.Point} [startPos=cc.p(0,0)]
@@ -93,7 +92,6 @@ cc.Particle = function (
 
 /**
  * Mode A: gravity, direction, radial accel, tangential accel
- * @Class
  * @Construct
  * @param {cc.Point} dir direction of particle
  * @param {Number} radialAccel
@@ -107,7 +105,6 @@ cc.Particle.ModeA = function (dir, radialAccel, tangentialAccel) {
 
 /**
  * Mode B: radius mode
- * @Class
  * @Construct
  * @param {Number} angle
  * @param {Number} degreesPerSecond
@@ -163,8 +160,6 @@ cc.Particle.TemporaryPoints = [cc.p(), cc.p(), cc.p(), cc.p()];
  *     - radius direction (Radius mode) (Particle Designer supports outwards to inwards direction only) <br/>
  *     It is possible to customize any of the above mentioned properties in runtime. Example:   <br/>
  * </p>
- * @class
- * @extends cc.Node
  *
  * @property {Boolean}              opacityModifyRGB    - Indicate whether the alpha value modify color.
  * @property {cc.SpriteBatchNode}   batchNode           - Weak reference to the sprite batch node.
@@ -206,7 +201,7 @@ cc.Particle.TemporaryPoints = [cc.p(), cc.p(), cc.p(), cc.p()];
  * @property {cc.Color}             endColor            - Ending color of each particle.
  * @property {cc.Color}             endColorVar         - Variation of the end color.
  * @property {Number}               emissionRate        - Emission rate of the particles.
- * @property {Number}               emitterMode         - Emitter modes: CCParticleSystem.MODE_GRAVITY: uses gravity, speed, radial and tangential acceleration; CCParticleSystem.MODE_RADIUS: uses radius movement + rotation.
+ * @property {Number}               emitterMode         - Emitter modes: ParticleSystem.MODE_GRAVITY: uses gravity, speed, radial and tangential acceleration; ParticleSystem.MODE_RADIUS: uses radius movement + rotation.
  * @property {Number}               positionType        - Particles movement type: cc.ParticleSystem.TYPE_FREE | cc.ParticleSystem.TYPE_GROUPED.
  * @property {Number}               totalParticles      - Maximum particles of the system.
  * @property {Boolean}              autoRemoveOnFinish  - Indicate whether the node will be auto-removed when it has no particles left.
@@ -1412,8 +1407,8 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
 
     /**
      * <p>Switch between different kind of emitter modes:<br/>
-     *  - CCParticleSystem.MODE_GRAVITY: uses gravity, speed, radial and tangential acceleration<br/>
-     *  - CCParticleSystem.MODE_RADIUS: uses radius movement + rotation <br/>
+     *  - ParticleSystem.MODE_GRAVITY: uses gravity, speed, radial and tangential acceleration<br/>
+     *  - ParticleSystem.MODE_RADIUS: uses radius movement + rotation <br/>
      *  </p>
      * @param {Number} emitterMode
      */
@@ -1430,7 +1425,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
 
     /**
      * <p>
-     *     initializes a CCParticleSystem from a plist file. <br/>
+     *     initializes a ParticleSystem from a plist file. <br/>
      *      This plist files can be creted manually or with Particle Designer:<br/>
      *      http://particledesigner.71squared.com/
      * </p>
@@ -2314,7 +2309,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
     }
 
     /**
-     * <p> Sets a new CCSpriteFrame as particle.</br>
+     * <p> Sets a new SpriteFrame as particle.</br>
      * WARNING: this method is experimental. Use setTextureWithRect instead.
      * </p>
      * @param {cc.SpriteFrame} spriteFrame
@@ -2361,7 +2356,6 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
 // Different modes
 /**
  * Mode A:Gravity + Tangential Accel + Radial Accel
- * @Class
  * @Construct
  * @param {cc.Point} [gravity=] Gravity value.
  * @param {Number} [speed=0] speed of each particle.
@@ -2402,7 +2396,6 @@ cc.ParticleSystem.ModeA = function (
 
 /**
  * Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
- * @Class
  * @Construct
  * @param {Number} [startRadius=0] The starting radius of the particles.
  * @param {Number} [startRadiusVar=0] The starting radius variance of the particles.

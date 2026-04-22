@@ -41,10 +41,9 @@ ccui.getLayoutManager = function (type) {
 
 /**
  * ccui.linearVerticalLayoutManager is a singleton object which is the linear vertical layout manager for ccui.Layout.
- * @class
  * @name ccui.linearVerticalLayoutManager
  */
-ccui.linearVerticalLayoutManager = /** @lends ccui.linearVerticalLayoutManager# */{
+ccui.linearVerticalLayoutManager = {
     _doLayout: function (layout) {
         var layoutSize = layout._getLayoutContentSize();
         var container = layout._getLayoutElements();
@@ -87,10 +86,9 @@ ccui.linearVerticalLayoutManager = /** @lends ccui.linearVerticalLayoutManager# 
 
 /**
  * ccui.linearHorizontalLayoutManager is a singleton object which is the linear horizontal layout manager for ccui.Layout
- * @class
  * @name ccui.linearHorizontalLayoutManager
  */
-ccui.linearHorizontalLayoutManager = /** @lends ccui.linearHorizontalLayoutManager# */{
+ccui.linearHorizontalLayoutManager = {
     _doLayout: function (layout) {
         var layoutSize = layout._getLayoutContentSize();
         var container = layout._getLayoutElements();
@@ -131,10 +129,9 @@ ccui.linearHorizontalLayoutManager = /** @lends ccui.linearHorizontalLayoutManag
 
 /**
  * ccui.relativeLayoutManager is the singleton object which is the relative layout manager for ccui.Layout, it has a _doLayout function to do layout.
- * @class
  * @name ccui.relativeLayoutManager
  */
-ccui.relativeLayoutManager = /** @lends ccui.relativeLayoutManager# */{
+ccui.relativeLayoutManager = {
     _unlayoutChildCount: 0,
     _widgetChildren: [],
     _widget: null,

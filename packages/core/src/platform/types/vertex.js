@@ -54,7 +54,6 @@ class WebGLColor {
 }
 
 /**
- * @class Vertex2F
  * @param {Number} x
  * @param {Number}y
  * @param {Array} arrayBuffer
@@ -90,7 +89,6 @@ export class Vertex2F {
 }
 
 /**
- * @class Vertex3F
  * @param {Number} x
  * @param {Number} y
  * @param {Number}z
@@ -137,7 +135,6 @@ export class Vertex3F {
 }
 
 /**
- * @class Tex2F
  * @param {Number} u
  * @param {Number} v
  * @param {Array} arrayBuffer
@@ -173,7 +170,6 @@ export class Tex2F {
 }
 
 /**
- * @class Quad2
  * @param {Vertex2F} tl
  * @param {Vertex2F} tr
  * @param {Vertex2F} bl
@@ -237,7 +233,6 @@ export class Quad2 {
 
 /**
  * A 3D Quad. 4 * 3 floats
- * @Class Quad3
  * @Construct
  * @param {Vertex3F} bl
  * @param {Vertex3F} br
@@ -263,7 +258,6 @@ export class Quad3 {
 }
 
 /**
- * @class V3F_C4B_T2F
  * @param {Vertex3F} vertices
  * @param {Color} colors
  * @param {Tex2F} texCoords
@@ -324,7 +318,6 @@ export class V3F_C4B_T2F {
 }
 
 /**
- * @class V3F_C4B_T2F_Quad
  * @param {V3F_C4B_T2F} tl
  * @param {V3F_C4B_T2F} bl
  * @param {V3F_C4B_T2F} tr
@@ -461,7 +454,6 @@ export function V3F_C4B_T2F_QuadsCopy(sourceQuads) {
 }
 
 /**
- * @class V2F_C4B_T2F
  * @param {Vertex2F} vertices
  * @param {Color} colors
  * @param {Tex2F} texCoords
@@ -518,7 +510,6 @@ export class V2F_C4B_T2F {
 }
 
 /**
- * @class V2F_C4B_T2F_Triangle
  * @param {V2F_C4B_T2F} a
  * @param {V2F_C4B_T2F} b
  * @param {V2F_C4B_T2F} c

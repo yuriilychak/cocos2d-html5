@@ -25,8 +25,6 @@
 
 /**
  * The ScrollView control of Cocos UI
- * @class
- * @extends ccui.Layout
  *
  * @property {Number}               innerWidth              - Inner container width of the scroll view
  * @property {Number}               innerHeight             - Inner container height of the scroll view

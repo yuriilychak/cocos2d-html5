@@ -27,8 +27,6 @@ import Event from './event';
 
 /**
  * The Custom event
- * @class
- * @extends Event
  */
 export default class EventCustom extends Event {
     constructor(eventName) {

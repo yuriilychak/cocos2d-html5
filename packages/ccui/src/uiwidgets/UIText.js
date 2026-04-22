@@ -25,8 +25,6 @@
 
 /**
  * The text control of Cocos UI.
- * @class
- * @extends ccui.Widget
  *
  * @property {Number}   boundingWidth       - Width of the bounding area of label, the real content width is limited by boundingWidth
  * @property {Number}   boundingHeight      - Height of the bounding area of label, the real content height is limited by boundingHeight

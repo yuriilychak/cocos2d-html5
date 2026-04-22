@@ -26,13 +26,10 @@
 
 /**
  * Base class for Grid actions
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration
  * @param {cc.Size} gridSize
  */
 cc.GridAction = class GridAction extends cc.ActionInterval {
-  /** @lends cc.GridAction# */
   _gridSize = null;
   _gridNodeTarget = null;
 
@@ -142,8 +139,6 @@ cc.gridAction = (duration, gridSize) => new cc.GridAction(duration, gridSize);
 /**
  * Base class for cc.Grid3D actions. <br/>
  * Grid3D actions can modify a non-tiled grid.
- * @class
- * @extends cc.GridAction
  */
 cc.Grid3DAction = class Grid3DAction extends cc.GridAction {
   /**
@@ -207,8 +202,6 @@ cc.grid3DAction = (duration, gridSize) =>
 
 /**
  * Base class for cc.TiledGrid3D actions.
- * @class
- * @extends cc.GridAction
  */
 cc.TiledGrid3DAction = class TiledGrid3DAction extends cc.GridAction {
   /**
@@ -269,8 +262,6 @@ cc.tiledGrid3DAction = (duration, gridSize) =>
  * Call if you want to remove the the grid effect. Example:                          <br/>
  * cc.sequence(Lens.action(...), cc.stopGrid(...), null);              <br/>
  * </p>
- * @class
- * @extends cc.ActionInstant
  */
 cc.StopGrid = class StopGrid extends cc.ActionInstant {
   /**
@@ -295,12 +286,9 @@ cc.stopGrid = () => new cc.StopGrid();
 
 /**
  * cc.ReuseGrid action
- * @class
- * @extends cc.ActionInstant
  * @param {Number} times
  */
 cc.ReuseGrid = class ReuseGrid extends cc.ActionInstant {
-  /** @lends cc.ReuseGrid# */
   _times = null;
 
   /**

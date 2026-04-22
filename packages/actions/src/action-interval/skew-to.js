@@ -2,8 +2,6 @@ import ActionInterval from './action-interval';
 
 /**
  * Skews a cc.Node object to given angles by modifying it's skewX and skewY attributes
- * @class
- * @extends cc.ActionInterval
  * @param {Number} t time in seconds
  * @param {Number} sx
  * @param {Number} sy
@@ -11,7 +9,6 @@ import ActionInterval from './action-interval';
  * var actionTo = new cc.SkewTo(2, 37.2, -37.2);
  */
 export default class SkewTo extends ActionInterval {
-  /** @lends cc.SkewTo# */
   _skewX = 0;
   _skewY = 0;
   _startSkewX = 0;

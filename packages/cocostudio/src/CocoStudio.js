@@ -31,19 +31,16 @@ var ccs = ccs || {};
 
 /**
  * Alias for cc.Node
- * @class
  */
 ccs.Node = ccs.Node || cc.Node;
 
 /**
  * Alias for cc.Sprite
- * @class
  */
 ccs.Sprite = ccs.Sprite || cc.Sprite;
 
 /**
  * Alias for cc.Component
- * @class
  */
 ccs.Component = ccs.Component || cc.Component;
 

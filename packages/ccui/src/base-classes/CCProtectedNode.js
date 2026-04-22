@@ -24,8 +24,6 @@
 
 /**
  * A class inhert from cc.Node, use for saving some protected children in other list.
- * @class
- * @extends cc.Node
  */
 cc.ProtectedNode = class ProtectedNode extends cc.Node {
     _insertProtectedChild(child, z) {

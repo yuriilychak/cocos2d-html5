@@ -25,8 +25,6 @@
 
 /**
  * The ImageView control of Cocos GUI
- * @class
- * @extends ccui.Widget
  */
 ccui.ImageView = class ImageView extends ccui.Widget {
 

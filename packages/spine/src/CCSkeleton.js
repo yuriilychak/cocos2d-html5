@@ -40,8 +40,6 @@ var spine = sp.spine;
  *     which consists of the current pose's bone SRT, slot colors, and which slot attachments are visible.           <br/>
  *     Multiple skeletons can use the same SkeletonData (which includes all animations, skins, and attachments).     <br/>
  * </p>
- * @class
- * @extends cc.Node
  */
 sp.Skeleton = class Skeleton extends cc.Node {
 

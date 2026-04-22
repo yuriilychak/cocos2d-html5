@@ -5,13 +5,10 @@ import ActionInterval from './action-interval';
  *     Overrides the target of an action so that it always runs on the target<br/>
  *     specified at action creation rather than the one specified by runAction.
  * </p>
- * @class
- * @extends cc.ActionInterval
  * @param {cc.Node} target
  * @param {cc.FiniteTimeAction} action
  */
 export default class TargetedAction extends ActionInterval {
-  /** @lends cc.TargetedAction# */
   _action = null;
   _forcedTarget = null;
 

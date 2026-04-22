@@ -146,8 +146,6 @@ cc.EDITBOX_INPUT_FLAG_INITIAL_CAPS_SENTENCE = 3;
 cc.EDITBOX_INPUT_FLAG_INITIAL_CAPS_ALL_CHARACTERS = 4;
 
 /**
- * @class
- * @extends cc.Class
  */
 cc.EditBoxDelegate = class EditBoxDelegate extends cc.NewClass {
   constructor() {
@@ -184,8 +182,6 @@ cc.EditBoxDelegate = class EditBoxDelegate extends cc.NewClass {
  * <p>cc.EditBox is a brief Class for edit box.<br/>
  * You can use this widget to gather small amounts of text from the user.</p>
  *
- * @class
- * @extends cc.Node
  *
  * @property {String}   string                  - Content string of edit box
  * @property {String}   maxLength               - Max length of the content string
@@ -628,7 +624,7 @@ cc.EditBox = class EditBox extends cc.Node {
 
   /**
    * Sets the return type that are to be applied to the edit box.
-   * @param {Number} returnType One of the CCKeyboardReturnType constants.
+   * @param {Number} returnType One of the KeyboardReturnType constants.
    */
   setReturnType(returnType) {
     this._keyboardReturnType = returnType;

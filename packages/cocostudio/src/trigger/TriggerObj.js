@@ -25,8 +25,6 @@
 
 /**
  * The base class of trigger condition.
- * @class
- * @extends ccs.Class
  */
 ccs.BaseTriggerCondition = class BaseTriggerCondition extends cc.NewClass {
     /**
@@ -68,8 +66,6 @@ ccs.BaseTriggerCondition = class BaseTriggerCondition extends cc.NewClass {
 
 /**
  * The base class of trigger action
- * @class
- * @extends ccs.Class
  */
 ccs.BaseTriggerAction = class BaseTriggerAction extends cc.NewClass {
     /**
@@ -109,8 +105,6 @@ ccs.BaseTriggerAction = class BaseTriggerAction extends cc.NewClass {
 
 /**
  * The trigger object of Cocostudio.
- * @class
- * @extends ccs.Class
  */
 ccs.TriggerObj = class TriggerObj extends cc.NewClass {
 

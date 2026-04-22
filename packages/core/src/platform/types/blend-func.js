@@ -26,7 +26,6 @@
 
 /**
  * Blend Function used for textures
- * @Class BlendFunc
  * @Constructor
  * @param {Number} src1 source blend function
  * @param {Number} dst1 destination blend function

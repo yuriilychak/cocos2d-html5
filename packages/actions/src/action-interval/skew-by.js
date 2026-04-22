@@ -3,14 +3,11 @@ import SkewTo from './skew-to';
 /**
  * Skews a cc.Node object by skewX and skewY degrees.
  * Relative to its attribute modification.
- * @class
- * @extends cc.SkewTo
  * @param {Number} t time in seconds
  * @param {Number} sx  skew in degrees for X axis
  * @param {Number} sy  skew in degrees for Y axis
  */
 export default class SkewBy extends SkewTo {
-  /** @lends cc.SkewBy# */
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.

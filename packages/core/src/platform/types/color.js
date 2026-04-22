@@ -26,7 +26,6 @@
 
 /**
  * Color class, please use color() to construct a color
- * @class Color
  * @param {Number} r
  * @param {Number} g
  * @param {Number} b
@@ -222,7 +221,6 @@ export function colorToHex(color) {
 
 /**
  * the device accelerometer reports values for each axis in units of g-force
- * @class Acceleration
  * @constructor
  * @param {Number} x
  * @param {Number} y

@@ -27,8 +27,6 @@ import Event from '../event/event';
 
 /**
  * The acceleration event
- * @class
- * @extends Event
  */
 export default class EventAcceleration extends Event {
     constructor(acc) {

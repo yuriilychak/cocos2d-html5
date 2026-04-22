@@ -26,8 +26,6 @@
 
 /**
  * Text field delegate
- * @class
- * @extends cc.Class
  */
 cc.TextFieldDelegate = class TextFieldDelegate extends cc.NewClass {
     /**
@@ -82,8 +80,6 @@ cc.TextFieldDelegate = class TextFieldDelegate extends cc.NewClass {
 
 /**
  * A simple text input field with TTF font.
- * @class
- * @extends cc.LabelTTF
  *
  * @property {cc.Node}      delegate            - Delegate
  * @property {Number}       charCount           - <@readonly> Characators count
@@ -311,7 +307,7 @@ cc.TextFieldTTF = class TextFieldTTF extends cc.LabelTTF {
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // CCIMEDelegate interface
+    // IMEDelegate interface
     //////////////////////////////////////////////////////////////////////////
     /**
      * Open keyboard and receive input text.
@@ -338,7 +334,7 @@ cc.TextFieldTTF = class TextFieldTTF extends cc.LabelTTF {
     }
 
     /**
-     * When the delegate detach with IME, this method call by CCIMEDispatcher.
+     * When the delegate detach with IME, this method call by IMEDispatcher.
      */
     didAttachWithIME() {
     }
@@ -352,7 +348,7 @@ cc.TextFieldTTF = class TextFieldTTF extends cc.LabelTTF {
     }
 
     /**
-     * When the delegate detach with IME, this method call by CCIMEDispatcher.
+     * When the delegate detach with IME, this method call by IMEDispatcher.
      */
     didDetachWithIME() {
     }

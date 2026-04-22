@@ -26,8 +26,6 @@
 
 /**
  * A fire particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleFire();
@@ -106,8 +104,6 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
 
 /**
  * A fireworks particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleFireworks();
@@ -183,8 +179,6 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
 
 /**
  * A sun particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleSun();
@@ -263,8 +257,6 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
 //! @brief A  particle system
 /**
  * A galaxy particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleGalaxy();
@@ -344,8 +336,6 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
 
 /**
  * A flower particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleFlower();
@@ -427,8 +417,6 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
 //! @brief A meteor particle system
 /**
  * A meteor particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleMeteor();
@@ -509,8 +497,6 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
 
 /**
  * A spiral particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleSpiral();
@@ -592,8 +578,6 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
 
 /**
  * An explosion particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleExplosion();
@@ -673,8 +657,6 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
 
 /**
  * A smoke particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleSmoke();
@@ -752,8 +734,6 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
 
 /**
  * A snow particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleSnow();
@@ -836,8 +816,6 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
 //! @brief A rain particle system
 /**
  * A rain particle system
- * @class
- * @extends cc.ParticleSystem
  *
  * @example
  * var emitter = new cc.ParticleRain();

@@ -11,7 +11,6 @@ var imagePool = new ImagePool();
 /**
  * Resource loading management. Singleton accessed via Loader.getInstance().
  * @name Loader
- * @class
  */
 export default class Loader {
   static _instance = null;

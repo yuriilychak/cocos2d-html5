@@ -3,11 +3,8 @@ import Hide from './hide';
 
 /**
  * Show the node.
- * @class
- * @extends cc.ActionInstant
  */
 export default class Show extends ActionInstant {
-  /** @lends cc.Show# */
 
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.

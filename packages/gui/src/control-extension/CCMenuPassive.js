@@ -26,8 +26,6 @@
 
 /**
  * The Spacer class
- * @class
- * @extends cc.Layer
  */
 cc.Spacer = class Spacer extends cc.Layer {};
 
@@ -47,8 +45,6 @@ cc.Spacer.horizontalSpacer = function (space) {
 
 /**
  * MenuPassive: The menu passive ui component
- * @class
- * @extends cc.Layer
  */
 cc.MenuPassive = class MenuPassive extends cc.Layer {
 
@@ -60,7 +56,7 @@ cc.MenuPassive = class MenuPassive extends cc.Layer {
         super();
     }
 
-    /** Color: conforms with CCRGBAProtocol protocol */
+    /** Color: conforms with RGBAProtocol protocol */
     getColor() {
         var locColor = this._color;
         return cc.color(locColor.r, locColor.g, locColor.b, locColor.a);
@@ -83,7 +79,7 @@ cc.MenuPassive = class MenuPassive extends cc.Layer {
         }
     }
 
-    /** Opacity: conforms with CCRGBAProtocol protocol */
+    /** Opacity: conforms with RGBAProtocol protocol */
     getOpacity() {
         return this._opacity;
     }
@@ -102,7 +98,7 @@ cc.MenuPassive = class MenuPassive extends cc.Layer {
         this._color.a = opacity;
     }
 
-    /** initializes a CCMenu with it's items */
+    /** initializes a Menu with it's items */
     initWithItems(item, args) {
         if (this.init()) {
             //this.m_bIsTouchEnabled = false;
@@ -389,7 +385,7 @@ cc.MenuPassive = class MenuPassive extends cc.Layer {
     }
 };
 
-/** creates an empty CCMenu */
+/** creates an empty Menu */
 cc.MenuPassive.create = function (item) {
     if (!item) {
         item = null;
@@ -407,7 +403,7 @@ cc.MenuPassive.create = function (item) {
     return null;
 };
 
-/** creates a CCMenu with it's item, then use addChild() to add
+/** creates a Menu with it's item, then use addChild() to add
  * other items. It is used for script, it can't init with undetermined
  * number of variables.
  */

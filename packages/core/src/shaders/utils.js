@@ -7,7 +7,7 @@
  * </p>
  * @function
  * @param {Node} node
- * @param {GLProgram} program The shader program which fetches from CCShaderCache.
+ * @param {GLProgram} program The shader program which fetches from ShaderCache.
  * @example
  * setGLProgram(node, shaderCache.programForKey(SHADER_POSITION_TEXTURECOLOR));
  */

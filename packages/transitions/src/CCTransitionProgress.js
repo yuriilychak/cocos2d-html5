@@ -33,8 +33,6 @@ cc.SCENE_RADIAL = 0xc001;
 
 /**
  * cc.TransitionProgress transition.
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time
  * @param {cc.Scene} scene
  * @example
@@ -136,8 +134,6 @@ cc.TransitionProgress = class TransitionProgress extends cc.TransitionScene {
 /**
  *  cc.TransitionRadialCCW transition.<br/>
  *  A counter clock-wise radial transition to the next scene
- * @class
- * @extends cc.TransitionProgress
  * @param {Number} t time
  * @param {cc.Scene} scene
  * @example
@@ -176,8 +172,6 @@ cc.TransitionProgressRadialCCW = class TransitionProgressRadialCCW extends cc.Tr
 /**
  * cc.TransitionRadialCW transition.<br/>
  * A counter colock-wise radial transition to the next scene
- * @class
- * @extends cc.TransitionProgress
  * @param {Number} t time
  * @param {cc.Scene} scene
  * @example
@@ -215,8 +209,6 @@ cc.TransitionProgressRadialCW = class TransitionProgressRadialCW extends cc.Tran
 /**
  * cc.TransitionProgressHorizontal transition.<br/>
  * A  colock-wise radial transition to the next scene
- * @class
- * @extends cc.TransitionProgress
  * @param {Number} t time
  * @param {cc.Scene} scene
  * @example
@@ -254,8 +246,6 @@ cc.TransitionProgressHorizontal = class TransitionProgressHorizontal extends cc.
 
 /**
  * cc.TransitionProgressVertical transition.
- * @class
- * @extends cc.TransitionProgress
  * @param {Number} t time
  * @param {cc.Scene} scene
  * @example
@@ -294,8 +284,6 @@ cc.TransitionProgressVertical = class TransitionProgressVertical extends cc.Tran
 
 /**
  * cc.TransitionProgressInOut transition.
- * @class
- * @extends cc.TransitionProgress
  */
 cc.TransitionProgressInOut = class TransitionProgressInOut extends cc.TransitionProgress {
 
@@ -337,8 +325,6 @@ cc.TransitionProgressInOut = class TransitionProgressInOut extends cc.Transition
 
 /**
  * cc.TransitionProgressOutIn transition.
- * @class
- * @extends cc.TransitionProgress
  */
 cc.TransitionProgressOutIn = class TransitionProgressOutIn extends cc.TransitionProgress {
 

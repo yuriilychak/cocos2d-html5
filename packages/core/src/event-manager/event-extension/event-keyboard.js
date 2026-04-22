@@ -27,8 +27,6 @@ import Event from '../event/event';
 
 /**
  * The keyboard event
- * @class
- * @extends Event
  */
 export default class EventKeyboard extends Event {
     constructor(keyCode, isPressed) {

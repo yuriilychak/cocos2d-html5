@@ -66,8 +66,6 @@ cc.NextPOT = function (x) {
  * adds a sprite as it's display child with the results, so you can simply add<br/>
  * the render texture to your scene and treat it like any other CocosNode.<br/>
  * There are also functions for saving the render texture to disk in PNG or JPG format.
- * @class
- * @extends cc.Node
  *
  * @property {cc.Sprite}    sprite          - The sprite.
  * @property {cc.Sprite}    clearFlags      - Code for "auto" update.
@@ -386,7 +384,7 @@ cc.RenderTexture = class RenderTexture extends cc.Node {
     }
 
     /**
-     * creates a new CCImage from with the texture's data. Caller is responsible for releasing it by calling delete.
+     * creates a new Image from with the texture's data. Caller is responsible for releasing it by calling delete.
      * @return {*}
      */
     newCCImage(flipImage) {

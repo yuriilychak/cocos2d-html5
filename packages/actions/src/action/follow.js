@@ -26,11 +26,8 @@ import Action from './action';
  * var followAction = new cc.Follow(sprite);
  * this.runAction(followAction);
  *
- * @class
- * @extends cc.Action
  */
 export default class Follow extends Action {
-  /** @lends cc.Follow# */
   // node to follow
   _followedNode = null;
   // whether camera should be limited to certain area

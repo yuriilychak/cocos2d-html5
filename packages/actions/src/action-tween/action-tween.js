@@ -4,8 +4,6 @@ import ActionInterval from '../action-interval/action-interval';
  * cc.ActionTween
  * cc.ActionTween is an action that lets you update any property of an object.
  *
- * @class
- * @extends cc.ActionInterval
  * @example
  * //For example, if you want to modify the "width" property of a target from 200 to 300 in 2 seconds, then:
  *  var modifyWidth = cc.actionTween(2,"width",200,300)
@@ -21,7 +19,6 @@ import ActionInterval from '../action-interval/action-interval';
  * @param {Number} to
  */
 export default class ActionTween extends ActionInterval {
-  /** @lends cc.ActionTween */
   key = "";
   from = 0;
   to = 0;

@@ -4,13 +4,10 @@ import EaseBounce from './ease-bounce';
  * cc.EaseBounceOut action. <br />
  * Eased bounce effect at the ending.
  * @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
- * @class
- * @extends cc.EaseBounce
  * @example
  * action.easing(cc.easeBounceOut());
  */
 export default class EaseBounceOut extends EaseBounce {
-  /** @lends cc.EaseBounceOut# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    *

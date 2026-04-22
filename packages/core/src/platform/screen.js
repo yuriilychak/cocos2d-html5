@@ -29,10 +29,9 @@ import Game from '../boot/game';
 /**
  * The fullscreen API provides an easy way for web content to be presented using the user's entire screen.
  * It's invalid on safari, QQbrowser and android browser
- * @class
  * @name screen
  */
-export const screen = /** @lends screen# */{
+export const screen = {
     _supportsFullScreen: false,
     // the pre fullscreenchange function
     _preOnFullScreenChange: null,

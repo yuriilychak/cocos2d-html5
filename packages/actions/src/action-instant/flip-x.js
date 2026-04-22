@@ -2,15 +2,12 @@ import ActionInstant from './action-instant';
 
 /**
  * Flips the sprite horizontally.
- * @class
- * @extends cc.ActionInstant
  * @param {Boolean} flip Indicate whether the target should be flipped or not
  *
  * @example
  * var flipXAction = new cc.FlipX(true);
  */
 export default class FlipX extends ActionInstant {
-  /** @lends cc.FlipX# */
   _flippedX = false;
 
   /**

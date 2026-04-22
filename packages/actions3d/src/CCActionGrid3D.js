@@ -27,8 +27,6 @@
 /**
  * cc.Waves3D action. <br />
  * Reference the test cases (Effects Advanced Test)
- * @class
- * @extends cc.Grid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} waves
@@ -143,8 +141,6 @@ cc.waves3D = (duration, gridSize, waves, amplitude) =>
  * cc.FlipX3D action. <br />
  * Flip around. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.Grid3DAction
  * @param {Number} duration
  */
 cc.FlipX3D = class FlipX3D extends cc.Grid3DAction {
@@ -265,8 +261,6 @@ cc.flipX3D = (duration) => new cc.FlipX3D(duration);
  * cc.FlipY3D action. <br />
  * Upside down. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.FlipX3D
  * @param {Number} duration
  */
 cc.FlipY3D = class FlipY3D extends cc.FlipX3D {
@@ -363,8 +357,6 @@ cc.flipY3D = (duration) => new cc.FlipY3D(duration);
  * cc.Lens3D action. <br />
  * Upside down. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.Grid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {cc.Point} position
@@ -525,8 +517,6 @@ cc.lens3D = (duration, gridSize, position, radius) =>
 /**
  * cc.Ripple3D action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.Grid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {cc.Point} position
@@ -695,8 +685,6 @@ cc.ripple3D = (duration, gridSize, position, radius, waves, amplitude) =>
 /**
  * cc.Shaky3D action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.Grid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} range
@@ -777,8 +765,6 @@ cc.shaky3D = (duration, gridSize, range, shakeZ) =>
 /**
  * cc.Liquid action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.Grid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} waves
@@ -901,8 +887,6 @@ cc.liquid = (duration, gridSize, waves, amplitude) =>
 /**
  * cc.Waves action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.Grid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {Number} waves
@@ -1049,8 +1033,6 @@ cc.waves = (duration, gridSize, waves, amplitude, horizontal, vertical) =>
 /**
  * cc.Twirl action. <br />
  * Reference the test cases (Effects Test)
- * @class
- * @extends cc.Grid3DAction
  * @param {Number} duration
  * @param {cc.Size} gridSize
  * @param {cc.Point} position

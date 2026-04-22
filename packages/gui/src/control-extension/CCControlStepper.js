@@ -42,8 +42,6 @@ cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
 
 /**
  * ControlStepper: Stepper ui component.
- * @class
- * @extends cc.Control
  *
  * @property {Boolean}      wraps       - Indicate whether the stepper wraps
  * @property {Number}       value       - The value of the stepper control
@@ -262,7 +260,7 @@ cc.ControlStepper = class ControlStepper extends cc.Control {
         }
     }
 
-//#pragma mark CCControlStepper Private Methods
+//#pragma mark ControlStepper Private Methods
 
     updateLayoutUsingTouchLocation(location) {
         if (location.x < this._minusSprite.getContentSize().width

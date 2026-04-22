@@ -25,8 +25,6 @@
 
 /**
  * The Slider control of Cocos UI.
- * @class
- * @extends ccui.Widget
  *
  * @property {Number}   percent     - The current progress of loadingbar
  */

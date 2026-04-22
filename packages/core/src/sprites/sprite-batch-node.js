@@ -41,8 +41,6 @@ import TextureCache from "../textures/texture-cache";
  *       - Either all its children are Aliased or Antialiased. It can't be a mix. <br/>
  *          This is because "alias" is a property of the texture, and all the sprites share the same texture. </br>
  * </p>
- * @class
- * @extends cc.Node
  *
  * @param {String|cc.Texture2D} fileImage
  * @example
@@ -139,7 +137,7 @@ export class SpriteBatchNode extends Node {
 
   /**
    * <p>
-   *   Updates a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.                 <br/>
+   *   Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.                 <br/>
    *   This method should be called only when you are dealing with very big AtlasSrite and when most of the cc.Sprite won't be updated.<br/>
    *   For example: a tile map (cc.TMXMap) or a label with lots of characters (BitmapFontAtlas)<br/>
    * </p>
@@ -185,7 +183,7 @@ export class SpriteBatchNode extends Node {
     return true;
   }
 
-  // CCTextureProtocol
+  // TextureProtocol
   /**
    * Returns texture of the sprite batch node
    * @function

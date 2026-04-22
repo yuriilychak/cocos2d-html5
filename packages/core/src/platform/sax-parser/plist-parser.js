@@ -30,9 +30,7 @@ import { warn } from '../../boot/debugger';
 /**
  *
  * PlistParser is a singleton object for parsing plist files
- * @class
  * @name PlistParser
- * @extends SAXParser
  */
 export class PlistParser extends SAXParser {
 

@@ -32,8 +32,6 @@
  * is turned on in cc.director using:</p>
  *
  * <p>cc.director.setDepthBufferFormat(kDepthBuffer16);</p>
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @param {Boolean} backwards

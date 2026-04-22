@@ -1,5 +1,4 @@
 /**
- * @class
  */
 export default class Path {
     static normalizeRE = /[^\.\/]+\/\.\.\//;

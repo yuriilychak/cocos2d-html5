@@ -23,8 +23,6 @@
  ****************************************************************************/
 
 /**
- * @class
- * @extends ccui.Widget
  * @brief A View that displays web pages.
  *
  * @note WebView displays web pages based on DOM element

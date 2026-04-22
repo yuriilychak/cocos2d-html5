@@ -27,8 +27,6 @@
 
 /**
  * The sortable object interface
- * @class
- * @extends cc.Class
  */
 cc.SortableObject = class SortableObject extends cc.NewClass {
     setObjectID(objectId) {
@@ -40,8 +38,6 @@ cc.SortableObject = class SortableObject extends cc.NewClass {
 
 /**
  * The SortedObject class
- * @class
- * @extends cc.SortableObject
  */
 cc.SortedObject = class SortedObject extends cc.SortableObject {
     _objectID = 0;
@@ -66,7 +62,6 @@ var _compareObject = function (val1, val2) {
 
 /**
  * Array for object sorting utils
- * @class
  * @extend cc.Class
  */
 cc.ArrayForObjectSorting = class ArrayForObjectSorting extends cc.NewClass {
@@ -186,7 +181,7 @@ cc.ArrayForObjectSorting = class ArrayForObjectSorting extends cc.NewClass {
     indexOfSortedObject(idxObj) {
         var idx = 0;
         if (idxObj) {
-            //       CCObject* pObj = (CCObject*)bsearch((CCObject*)&object, data.arr, data.num, sizeof(CCObject*), _compareObject);
+            //       Object* pObj = (Object*)bsearch((Object*)&object, data.arr, data.num, sizeof(Object*), _compareObject);
             // FIXME: need to use binary search to improve performance
             var uPrevObjectID = 0;
             var uOfSortObjectID = idxObj.getObjectID();

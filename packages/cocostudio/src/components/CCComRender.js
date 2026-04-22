@@ -25,8 +25,6 @@
 
 /**
  * The render component for Cocostudio.
- * @class
- * @extends ccs.Component
  */
 ccs.ComRender = class ComRender extends ccs.Component {
 

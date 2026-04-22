@@ -2,14 +2,11 @@ import ActionInstant from './action-instant';
 
 /**
  * Flips the sprite vertically
- * @class
- * @extends cc.ActionInstant
  * @param {Boolean} flip
  * @example
  * var flipYAction = new cc.FlipY(true);
  */
 export default class FlipY extends ActionInstant {
-  /** @lends cc.FlipY# */
   _flippedY = false;
 
   /**

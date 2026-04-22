@@ -36,8 +36,6 @@ import TextureCache from "../../textures/texture-cache";
  *      The cc.Animation object contains cc.SpriteFrame objects, and a possible delay between the frames. <br/>
  *      You can animate a cc.Animation object by using the cc.Animate action.
  * </p>
- * @class
- * @extends cc.Class
  * @param {Array} frames
  * @param {Number} delay
  * @param {Number} [loops=1]

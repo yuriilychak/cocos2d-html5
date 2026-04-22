@@ -1,11 +1,9 @@
 import MoveBy from './move-by';
 
 /**
- * Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute. <br/>
- * Several CCMoveTo actions can be concurrently called, and the resulting                                            <br/>
+ * Moves a Node object to the position x,y. x and y are absolute coordinates by modifying it's position attribute. <br/>
+ * Several MoveTo actions can be concurrently called, and the resulting                                            <br/>
  * movement will be the sum of individual movements.
- * @class
- * @extends cc.MoveBy
  * @param {Number} duration duration in seconds
  * @param {cc.Point|Number} position
  * @param {Number} y
@@ -13,7 +11,6 @@ import MoveBy from './move-by';
  * var actionTo = new cc.MoveTo(2, cc.p(80, 80));
  */
 export default class MoveTo extends MoveBy {
-  /** @lends cc.MoveTo# */
   _endPosition = null;
 
   /**

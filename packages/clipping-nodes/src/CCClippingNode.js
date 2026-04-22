@@ -38,8 +38,6 @@ cc.stencilBits = -1;
  *     The stencil is an other cc.Node that will not be drawn.                                               <br/>
  *     The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
  * </p>
- * @class
- * @extends cc.Node
  * @param {cc.Node} [stencil=null]
  *
  * @property {Number}   alphaThreshold  - Threshold for alpha value.
@@ -74,7 +72,7 @@ cc.ClippingNode = class ClippingNode extends cc.Node {
     /**
      * <p>
      *     Event callback that is invoked every time when node enters the 'stage'.                                   <br/>
-     *     If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.        <br/>
+     *     If the Node enters the 'stage' with a transition, this event is called when the transition starts.        <br/>
      *     During onEnter you can't access a "sister/brother" node.                                                    <br/>
      *     If you override onEnter, you must call its parent's onEnter function with this._super().
      * </p>

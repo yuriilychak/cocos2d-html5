@@ -85,8 +85,6 @@ ccui.__LAYOUT_COMPONENT_NAME = "__ui_layout";
  * @sample
  * var uiWidget = new ccui.Widget();
  * this.addChild(uiWidget);
- * @class
- * @extends ccui.ProtectedNode
  *
  * @property {Number}           xPercent        - Position x in percentage of width
  * @property {Number}           yPercent        - Position y in percentage of height

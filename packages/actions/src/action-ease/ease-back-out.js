@@ -4,13 +4,10 @@ import ActionEase from './action-ease';
  * cc.EaseBackOut action. <br />
  * Fast moving more than the finish, and then slowly back to the finish.
  * @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
- * @class
- * @extends cc.ActionEase
  * @example
  * action.easing(cc.easeBackOut());
  */
 export default class EaseBackOut extends ActionEase {
-  /** @lends cc.EaseBackOut# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    *

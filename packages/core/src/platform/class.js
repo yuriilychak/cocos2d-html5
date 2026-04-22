@@ -25,7 +25,6 @@
  ****************************************************************************/
 
 /**
- * @class
  * @name ClassManager
  */
 class ClassManager {
@@ -52,7 +51,6 @@ export var classManager = new ClassManager();
  * The base Class implementation. 
  * All classes created with cc.Class.extend inherit from this.
  * This implementation does nothing and is used for inheritance only.
- * @class
  */
 export class NewClass {
   __instanceId;

@@ -70,7 +70,6 @@ import { checkGLErrorDebug } from "../platform/macro/utils";
 
 /**
  * ShaderCache is a singleton object that stores manages GL shaders
- * @class
  */
 export default class ShaderCache {
     static _instance = null;
@@ -307,7 +306,7 @@ export default class ShaderCache {
     }
 
     /**
-     * adds a CCGLProgram to the cache for a given name
+     * adds a GLProgram to the cache for a given name
      * @param {GLProgram} program
      * @param {String} key
      */

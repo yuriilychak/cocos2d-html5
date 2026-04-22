@@ -29,9 +29,7 @@
  */
 
 /**
- * CCControlPotentiometer: Potentiometer control for Cocos2D.
- * @class
- * @extends cc.Control
+ * ControlPotentiometer: Potentiometer control for Cocos2D.
  *
  * @property {Number}           value           - The current value of the potentionmeter
  * @property {Number}           minValue        - The minimum value of the potentionmeter

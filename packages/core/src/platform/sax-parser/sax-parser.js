@@ -28,9 +28,7 @@ import { NewClass } from '../class';
 
 /**
  * A SAX Parser
- * @class
  * @name SAXParser
- * @extends NewClass
  */
 export class SAXParser extends NewClass {
     /**

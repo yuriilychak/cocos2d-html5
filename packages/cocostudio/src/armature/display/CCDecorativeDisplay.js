@@ -25,8 +25,6 @@
 
 /**
  * Decorative a display node for Cocos Armature
- * @class
- * @extends ccs.Class
  */
 ccs.DecorativeDisplay = class DecorativeDisplay extends cc.NewClass {
 

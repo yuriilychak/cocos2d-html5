@@ -43,7 +43,6 @@ import { Color } from './color';
  *
  *
  *
- * @class FontDefinition
  * @param {Object} properties - (OPTIONAL) Allow inline FontDefinition
  * @constructor
  */

@@ -32,8 +32,6 @@
  *     Based on an original paper by L Hong et al.                                            <br/>
  *     http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
  * </p>
- * @class
- * @extends cc.Grid3DAction
  */
 cc.PageTurn3D = class PageTurn3D extends cc.Grid3DAction {
   getGrid() {

@@ -69,8 +69,6 @@ ccs.ANIMATION_TYPE_MAX = 2;
 
 /**
  * The Base Process class for Cocostudio.
- * @class
- * @extends ccs.Class
  *
  * @property {Number}   currentFrameIndex   - <@readonly> The current frame's index
  * @property {Boolean}  paused              - <@readonly> Indicate whether the process is paused

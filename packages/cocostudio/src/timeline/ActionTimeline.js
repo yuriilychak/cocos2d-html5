@@ -27,7 +27,6 @@
  * ActionTimelineData
  * @name ccs.ActionTimelineData
  * @extend ccs.Class
- * @class
  *
  */
 ccs.ActionTimelineData = class ActionTimelineData extends cc.NewClass {
@@ -99,7 +98,6 @@ ccs.ComExtensionData = class ComExtensionData extends ccs.Component {
 
 /**
  * ActionTimeline
- * @class
  * @extend cc.Action
  *
  * @property gotoFrameAndPlay

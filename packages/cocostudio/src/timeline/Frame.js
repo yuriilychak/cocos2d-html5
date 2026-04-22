@@ -25,7 +25,6 @@
 /**
  * Timeline Frame.
  * base class
- * @class
  */
 ccs.Frame = class Frame extends cc.NewClass {
 
@@ -248,7 +247,6 @@ ccs.Frame.tweenToMap = {
 /**
  * Visible frame
  * To control the display state
- * @class
  * @extend ccs.Frame
  */
 ccs.VisibleFrame = class VisibleFrame extends ccs.Frame {
@@ -301,7 +299,6 @@ ccs.VisibleFrame = class VisibleFrame extends ccs.Frame {
 
 /**
  * Texture frame
- * @class
  * @extend ccs.Frame
  */
 ccs.TextureFrame = class TextureFrame extends ccs.Frame {
@@ -372,7 +369,6 @@ ccs.TextureFrame = class TextureFrame extends ccs.Frame {
 
 /**
  * Rotation Frame
- * @class
  * @extend ccs.Frame
  */
 ccs.RotationFrame = class RotationFrame extends ccs.Frame {
@@ -441,7 +437,6 @@ ccs.RotationFrame = class RotationFrame extends ccs.Frame {
 
 /**
  * Skew frame
- * @class
  * @extend ccs.Frame
  */
 ccs.SkewFrame = class SkewFrame extends ccs.Frame {
@@ -534,7 +529,6 @@ ccs.SkewFrame = class SkewFrame extends ccs.Frame {
 
 /**
  * Rotation skew frame
- * @class
  * @extend ccs.SkewFrame
  */
 ccs.RotationSkewFrame = class RotationSkewFrame extends ccs.SkewFrame {
@@ -591,7 +585,6 @@ ccs.RotationSkewFrame = class RotationSkewFrame extends ccs.SkewFrame {
 
 /**
  * Position frame
- * @class
  * @extend ccs.Frame
  */
 ccs.PositionFrame = class PositionFrame extends ccs.Frame {
@@ -697,7 +690,6 @@ ccs.PositionFrame = class PositionFrame extends ccs.Frame {
 
 /**
  * Scale frame
- * @class
  * @xtend ccs.Frame
  */
 ccs.ScaleFrame = class ScaleFrame extends ccs.Frame {
@@ -800,7 +792,6 @@ ccs.ScaleFrame = class ScaleFrame extends ccs.Frame {
 
 /**
  * AnchorPoint frame
- * @class
  * @extend ccs.Frame
  */
 ccs.AnchorPointFrame = class AnchorPointFrame extends ccs.Frame {
@@ -863,7 +854,6 @@ ccs.InnerActionType = {
 
 /**
  * Inner action frame
- * @class
  * @extend ccs.Frame
  */
 ccs.InnerActionFrame = class InnerActionFrame extends ccs.Frame {
@@ -995,7 +985,6 @@ ccs.InnerActionFrame = class InnerActionFrame extends ccs.Frame {
 
 /**
  * Color frame
- * @class
  * @extend ccs.Frame
  */
 ccs.ColorFrame = class ColorFrame extends ccs.Frame {
@@ -1075,7 +1064,6 @@ ccs.ColorFrame = class ColorFrame extends ccs.Frame {
 
 /**
  * Alpha frame
- * @class
  * @extend ccs.Frame
  */
 ccs.AlphaFrame = class AlphaFrame extends ccs.Frame {
@@ -1127,7 +1115,6 @@ ccs.AlphaFrame = class AlphaFrame extends ccs.Frame {
 
 /**
  * Event frame
- * @class
  * @extend ccs.Frame
  */
 ccs.EventFrame = class EventFrame extends ccs.Frame {
@@ -1180,7 +1167,6 @@ ccs.EventFrame = class EventFrame extends ccs.Frame {
 
 /**
  * zOrder frame
- * @class
  * @extend ccs.Frame
  */
 ccs.ZOrderFrame = class ZOrderFrame extends ccs.Frame {

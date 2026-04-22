@@ -25,8 +25,6 @@
 
 /**
  * The TextBMFont control of Cocos UI, it rendered by LabelBMFont.
- * @class
- * @extends ccui.Widget
  *
  * @property {String}   string  - Content string of the label
  */

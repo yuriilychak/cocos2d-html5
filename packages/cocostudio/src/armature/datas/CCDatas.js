@@ -150,8 +150,6 @@ ccs.DISPLAY_TYPE_MAX = 3;
  *     skewX, skewY can have rotation effect                                                                                           <br/>
  *     To get more matrix information, you can have a look at this pape : http://www.senocular.com/flash/tutorials/transformmatrix/    <br/>
  * </p>
- * @class
- * @extends ccs.Class
  *
  * @property {Number}         x                - x
  * @property {Number}         y                - y
@@ -281,8 +279,6 @@ ccs.BaseData = class BaseData extends cc.NewClass {
 
 /**
  * The class use for save display data.
- * @class
- * @extends ccs.Class
  *
  * @property {Number}         displayType                - the display type
  * @property {String}         displayName                - the display name
@@ -326,8 +322,6 @@ ccs.DisplayData = class DisplayData extends cc.NewClass {
 
 /**
  * The sprite display data class.
- * @class
- * @extends ccs.DisplayData
  *
  * @property {ccs.BaseData}         skinData                - the skin data
  */
@@ -355,8 +349,6 @@ ccs.SpriteDisplayData = class SpriteDisplayData extends ccs.DisplayData {
 
 /**
  * The armature display data class
- * @class ccs.ArmatureDisplayData
- * @extends ccs.DisplayData
  */
 ccs.ArmatureDisplayData = class ArmatureDisplayData extends ccs.DisplayData {
     /**
@@ -372,8 +364,6 @@ ccs.ArmatureDisplayData = class ArmatureDisplayData extends ccs.DisplayData {
 
 /**
  * The particle display data class.
- * @class ccs.ParticleDisplayData
- * @extends ccs.DisplayData
  */
 ccs.ParticleDisplayData = class ParticleDisplayData extends ccs.DisplayData {
     /**
@@ -392,8 +382,6 @@ ccs.ParticleDisplayData = class ParticleDisplayData extends ccs.DisplayData {
  *      BoneData keeps a DisplayData list, a Bone can have many display to change.                  <br/>
  *      The display information saved in the DisplayData                                            <br/>
  * </p>
- * @class ccs.BoneData
- * @extends ccs.BaseData
  *
  * @property {Array}                    displayDataList                - the display data list
  * @property {String}                   name                           - the name of Bone
@@ -444,12 +432,10 @@ ccs.BoneData = class BoneData extends ccs.BaseData {
 
 /**
  * <p>
- * ArmatureData saved the Armature name and BoneData needed for the CCBones in this Armature      <br/>
+ * ArmatureData saved the Armature name and BoneData needed for the Bones in this Armature      <br/>
  * When we create a Armature, we need to get each Bone's BoneData as it's init information.       <br/>
  * So we can get a BoneData from the Dictionary saved in the ArmatureData.                        <br/>
  * </p>
- * @class ccs.ArmatureData
- * @extends ccs.Class
  *
  * @property {Object}                    boneDataDic                - the bone data dictionary
  * @property {String}                    name                       - the name of armature data
@@ -504,8 +490,6 @@ ccs.ArmatureData = class ArmatureData extends cc.NewClass {
 
 /**
  * FrameData saved the frame data needed for armature animation in this Armature.
- * @class ccs.FrameData
- * @extends ccs.BaseData
  *
  * @property {Number}                    duration                - the duration of frame
  * @property {Number}                    tweenEasing             - the easing type of frame
@@ -574,8 +558,6 @@ ccs.FrameData = class FrameData extends ccs.BaseData {
 
 /**
  * MovementBoneData saved the name, delay, frame list of Bone's movement.
- * @class ccs.MovementBoneData
- * @extends ccs.Class
  *
  * @property {Number}                    delay             - the delay of bone's movement.
  * @property {Number}                    scale             - the scale of bone's movement.
@@ -625,7 +607,6 @@ ccs.MovementBoneData = class MovementBoneData extends cc.NewClass {
 
 /**
  * The movement data information of Cocos Armature.
- * @class ccs.MovementData
  * @constructor
  */
 ccs.MovementData = function(){
@@ -678,8 +659,6 @@ ccs.MovementData.prototype.getMovementBoneData = function(boneName){
  * The struct is AnimationData -> MovementData -> MovementBoneData -> FrameData                                    <br/>
  *                                              -> MovementFrameData                                               <br/>
  * </p>
- * @class ccs.AnimationData
- * @extends ccs.Class
  */
 ccs.AnimationData = function(){
     this.movementDataDic = {};
@@ -715,7 +694,6 @@ ccs.AnimationData.prototype.getMovementCount = function(){
 
 /**
  * contour vertex
- * @class ccs.ContourVertex2
  * @param {Number} x
  * @param {Number} y
  * @constructor
@@ -727,7 +705,6 @@ ccs.ContourVertex2 = function (x, y) {
 
 /**
  * The Contour data information of Cocos Armature.
- * @class ccs.ContourData
  * @constructor
  */
 ccs.ContourData = function(){
@@ -750,7 +727,6 @@ ccs.ContourData.prototype.addVertex = function(p){
 
 /**
  * The texture data information of Cocos Armature
- * @class ccs.TextureData
  */
 ccs.TextureData = function(){
     this.height = 0;

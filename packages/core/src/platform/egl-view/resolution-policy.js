@@ -32,8 +32,6 @@ import { ContentStrategy } from "./content-strategy";
  * <p>cc.ResolutionPolicy class is the root strategy class of scale strategy,
  * its main task is to maintain the compatibility with Cocos2d-x</p>
  *
- * @class
- * @extends NewClass
  * @param {ContainerStrategy} containerStg The container strategy
  * @param {ContentStrategy} contentStg The content strategy
  */

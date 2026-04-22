@@ -30,9 +30,7 @@ import Game from '../boot/game';
 import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from './renderer';
 
 /**
- * CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
- * @class
- * @extends Layer
+ * LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
  */
 export class LayerColor extends Layer {
     getBlendFunc() {

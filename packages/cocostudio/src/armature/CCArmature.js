@@ -25,8 +25,6 @@
 
 /**
  * The main class of Armature, it plays armature animation, manages and updates bones' state.
- * @class
- * @extends ccs.Node
  *
  * @property {ccs.Bone}                 parentBone      - The parent bone of the armature node
  * @property {ccs.ArmatureAnimation}    animation       - The animation
@@ -69,7 +67,7 @@ ccs.Armature = class Armature extends ccs.Node {
     set colliderFilter(v) { this.setColliderFilter(v); }
 
     /**
-     * Initializes a CCArmature with the specified name and CCBone
+     * Initializes a Armature with the specified name and Bone
      * @param {String} [name]
      * @param {ccs.Bone} [parentBone]
      * @return {Boolean}
@@ -269,7 +267,7 @@ ccs.Armature = class Armature extends ccs.Node {
     }
 
     /**
-     * Get CCArmature's bone dictionary
+     * Get Armature's bone dictionary
      * @return {Object} Armature's bone dictionary
      */
     getBoneDic() {

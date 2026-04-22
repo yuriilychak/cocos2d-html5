@@ -26,12 +26,10 @@
  ****************************************************************************/
 
 /**
- * <p>CCDrawNode                                                <br/>
+ * <p>DrawNode                                                <br/>
  * Node that draws dots, segments and polygons.                        <br/>
  * Faster than the "drawing primitives" since it draws everything in one single batch.</p>
- * @class
  * @name cc.DrawNode
- * @extends cc.Node
  */
 cc.DrawNode = class DrawNode extends cc.Node {
 

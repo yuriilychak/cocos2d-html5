@@ -29,8 +29,6 @@
  * cc.Progresstimer is a subclass of cc.Node.   <br/>
  * It renders the inner sprite according to the percentage.<br/>
  * The progress can be Radial, Horizontal or vertical.
- * @class
- * @extends cc.Node
  *
  * @property {cc.Point}     midPoint        <p>- Midpoint is used to modify the progress start position.<br/>
  *                                          If you're using radials type then the midpoint changes the center point<br/>

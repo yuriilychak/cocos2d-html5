@@ -2,8 +2,6 @@ import ActionInstant from './action-instant';
 
 /**
  * Delete self in the next frame.
- * @class
- * @extends cc.ActionInstant
  * @param {Boolean} [isNeedCleanUp=true]
  *
  * @example

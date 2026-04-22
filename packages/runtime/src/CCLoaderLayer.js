@@ -50,7 +50,7 @@ function clone(obj) {
   // following keyed assignments won't turn newObj into dictionary mode
   // because they're not *appending new properties* but *assigning existing
   // ones* (note that appending indexed properties is another story). See
-  // CCClass.js for a link to the devils when the assumption fails.
+  // Class.js for a link to the devils when the assumption fails.
   for (var key in obj) {
     var copy = obj[key];
     // Beware that typeof null == "object" !

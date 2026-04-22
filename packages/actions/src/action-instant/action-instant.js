@@ -2,12 +2,9 @@ import FiniteTimeAction from '../action/finite-time-action';
 
 /**
  * Instant actions are immediate actions. They don't have a duration like.
- * the CCIntervalAction actions.
- * @class
- * @extends cc.FiniteTimeAction
+ * the IntervalAction actions.
  */
 export default class ActionInstant extends FiniteTimeAction {
-  /** @lends cc.ActionInstant# */
   /**
    * return true if the action has finished.
    * @return {Boolean}

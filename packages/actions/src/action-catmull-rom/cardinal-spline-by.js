@@ -5,8 +5,6 @@ import { reverseControlPoints, cloneControlPoints } from '../action/utils';
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
  * Relative coordinates.
  *
- * @class
- * @extends cc.CardinalSplineTo
  * @param {Number} duration
  * @param {Array} points
  * @param {Number} tension
@@ -16,7 +14,6 @@ import { reverseControlPoints, cloneControlPoints } from '../action/utils';
  * var action1 = cc.cardinalSplineBy(3, array, 0);
  */
 export default class CardinalSplineBy extends CardinalSplineTo {
-  /** @lends cc.CardinalSplineBy# */
   _startPosition = null;
 
   /**

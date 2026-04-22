@@ -32,8 +32,6 @@ import Game from "../../boot/game";
  * <p>cc.ContentStrategy class is the root strategy class of content's scale strategy,
  * it controls the behavior of how to scale the scene and setup the viewport for the game</p>
  *
- * @class
- * @extends NewClass
  */
 export class ContentStrategy extends NewClass {
   constructor() {

@@ -25,8 +25,6 @@
 
 /**
  * The attribute component for Cocostudio.
- * @class
- * @extends ccs.Component
  */
 ccs.ComAttribute = class ComAttribute extends ccs.Component {
 

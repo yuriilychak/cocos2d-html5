@@ -139,10 +139,9 @@ ccs.DataInfo = function () {
 
 /**
  * ccs.dataReaderHelper is a singleton object for reading CocoStudio data
- * @class
  * @name ccs.dataReaderHelper
  */
-ccs.dataReaderHelper = /** @lends ccs.dataReaderHelper# */{
+ccs.dataReaderHelper = {
     ConfigType: {
         DragonBone_XML: 0,
         CocoStudio_JSON: 1,

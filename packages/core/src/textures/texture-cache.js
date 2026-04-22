@@ -91,7 +91,7 @@ export default class TextureCache {
   /**
    * <p>
    *     Returns a Texture2D object given an PVR filename                                                              <br/>
-   *     If the file image was not previously loaded, it will create a new CCTexture2D                                 <br/>
+   *     If the file image was not previously loaded, it will create a new Texture2D                                 <br/>
    *     object and it will return it. Otherwise it will return a reference of a previously loaded image              <br/>
    *     note: AddPVRTCImage does not support on HTML5
    * </p>
@@ -105,7 +105,7 @@ export default class TextureCache {
   /**
    * <p>
    *     Returns a Texture2D object given an ETC filename                                                               <br/>
-   *     If the file image was not previously loaded, it will create a new CCTexture2D                                  <br/>
+   *     If the file image was not previously loaded, it will create a new Texture2D                                  <br/>
    *     object and it will return it. Otherwise it will return a reference of a previously loaded image                <br/>
    *    note:addETCImage does not support on HTML5
    * </p>

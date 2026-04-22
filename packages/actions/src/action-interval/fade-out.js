@@ -3,12 +3,9 @@ import FadeIn from './fade-in';
 
 /** Fades Out an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 255 to 0.
  * The "reverse" of this action is FadeIn
- * @class
- * @extends cc.FadeTo
  * @param {Number} duration duration in seconds
  */
 export default class FadeOut extends FadeTo {
-  /** @lends cc.FadeOut# */
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.

@@ -4,14 +4,11 @@ import ActionEase from './action-ease';
  * cc.EaseQuinticActionIn action. <br />
  * Reference easeInQuint: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @class
- * @extends cc.ActionEase
  *
  * @example
  * action.easing(cc.easeQuinticActionIn());
  */
 export default class EaseQuinticActionIn extends ActionEase {
-  /** @lends cc.EaseQuinticActionIn# */
   _updateTime(time) {
     return time * time * time * time * time;
   }

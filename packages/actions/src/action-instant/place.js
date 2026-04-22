@@ -2,8 +2,6 @@ import ActionInstant from './action-instant';
 
 /**
  * Places the node in a certain position
- * @class
- * @extends cc.ActionInstant
  * @param {cc.Point|Number} pos
  * @param {Number} [y]
  * @example
@@ -11,7 +9,6 @@ import ActionInstant from './action-instant';
  * var placeAction = new cc.Place(200, 200);
  */
 export default class Place extends ActionInstant {
-  /** @lends cc.Place# */
   _x = 0;
   _y = 0;
 

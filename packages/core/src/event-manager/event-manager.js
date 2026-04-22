@@ -114,7 +114,6 @@ function __getListenerID(event) {
  *  The EventListener list is managed in such way so that event listeners can be added and removed          <br/>
  *  while events are being dispatched.
  * </p>
- * @class
  * @name EventManager
  */
 export default class EventManager {

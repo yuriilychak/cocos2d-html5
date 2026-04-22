@@ -24,7 +24,6 @@
 
 /**
  * timeline object
- * @class
  * @extend ccs.Class
  */
 ccs.Timeline = class Timeline extends cc.NewClass {

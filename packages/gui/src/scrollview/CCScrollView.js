@@ -46,7 +46,7 @@ var BOUNCE_BACK_FACTOR = 0.35;
 cc.convertDistanceFromPointToInch = function (pointDis) {
     var eglViewer = cc.view;
     var factor = (eglViewer.getScaleX() + eglViewer.getScaleY()) / 2;
-    return (pointDis * factor) / 160;               // CCDevice::getDPI() default value
+    return (pointDis * factor) / 160;               // Device::getDPI() default value
 };
 
 cc.ScrollViewDelegate = class ScrollViewDelegate extends cc.NewClass {
@@ -59,8 +59,6 @@ cc.ScrollViewDelegate = class ScrollViewDelegate extends cc.NewClass {
 /**
  * ScrollView support for cocos2d -x.
  * It provides scroll view functionalities to cocos2d projects natively.
- * @class
- * @extends cc.Layer
  *
  * @property {cc.Point}                 minOffset   - <@readonly> The current container's minimum offset
  * @property {cc.Point}                 maxOffset   - <@readonly> The current container's maximum offset
@@ -169,7 +167,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             this._bounceable = true;
             this._clippingToBounds = true;
 
-            //this._container.setContentSize(CCSizeZero);
+            //this._container.setContentSize(SizeZero);
             this._direction = cc.SCROLLVIEW_DIRECTION_BOTH;
             this._container.setPosition(pZero);
             this._touchLength = 0.0;
@@ -388,7 +386,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
     /**
      * <p>
-     * size to clip. CCNode boundingBox uses contentSize directly.                   <br/>
+     * size to clip. Node boundingBox uses contentSize directly.                   <br/>
      * It's semantically different what it actually means to common scroll views.    <br/>
      * Hence, this scroll view will use a separate size property.
      * </p>
@@ -423,7 +421,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     }
 
     /**
-     * direction allowed to scroll. CCScrollViewDirectionBoth by default.
+     * direction allowed to scroll. ScrollViewDirectionBoth by default.
      */
     getDirection() {
         return this._direction;
@@ -518,7 +516,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             }
 
             if (!this._touchMoved && Math.abs(cc.convertDistanceFromPointToInch(dis)) < MOVE_INCH) {
-                //CCLOG("Invalid movement, distance = [%f, %f], disInch = %f", moveDistance.x, moveDistance.y);
+                //LOG("Invalid movement, distance = [%f, %f], disInch = %f", moveDistance.x, moveDistance.y);
                 return;
             }
 
@@ -799,7 +797,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
         // Support negative scaling. Not doing so causes intersectsRect calls
         // (eg: to check if the touch was within the bounds) to return false.
-        // Note, CCNode::getScale will assert if X and Y scales are different.
+        // Note, Node::getScale will assert if X and Y scales are different.
         if (scaleX < 0) {
             screenPos.x += locViewSize.width * scaleX;
             scaleX = -scaleX;

@@ -25,8 +25,6 @@
 
 /**
  * The tween class for Armature.
- * @class
- * @extends ccs.ProcessBase
  *
  * @param {ccs.Bone} The bone to be animated
  *
@@ -45,7 +43,7 @@ ccs.Tween = class Tween extends ccs.ProcessBase {
     set animation(v) { this.setAnimation(v); }
 
     /**
-     * initializes a ccs.Tween with a CCBone
+     * initializes a ccs.Tween with a Bone
      * @param {ccs.Bone} bone
      * @return {Boolean}
      */
@@ -274,7 +272,7 @@ ccs.Tween = class Tween extends ccs.ProcessBase {
     }
 
     /**
-     * According to the percent to calculate current CCFrameData with tween effect
+     * According to the percent to calculate current FrameData with tween effect
      * @param {Number} percent
      * @param {ccs.FrameData} [node]
      * @return {ccs.FrameData}

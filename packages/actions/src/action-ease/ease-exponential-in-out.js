@@ -5,14 +5,11 @@ import ActionEase from './action-ease';
  * Reference easeInOutExpo: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
  *
- * @class
- * @extends cc.ActionEase
  *
  * @example
  * action.easing(cc.easeExponentialInOut());
  */
 export default class EaseExponentialInOut extends ActionEase {
-  /** @lends cc.EaseExponentialInOut# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    *

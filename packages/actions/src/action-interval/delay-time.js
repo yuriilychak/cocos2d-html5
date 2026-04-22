@@ -1,11 +1,8 @@
 import ActionInterval from './action-interval';
 
 /** Delays the action a certain amount of seconds
- * @class
- * @extends cc.ActionInterval
  */
 export default class DelayTime extends ActionInterval {
-  /** @lends cc.DelayTime# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    * Will be overwrite.

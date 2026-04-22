@@ -1,15 +1,12 @@
 import ActionInterval from './action-interval';
 
 /**  Animates a sprite given the name of an Animation
- * @class
- * @extends cc.ActionInterval
  * @param {cc.Animation} animation
  * @example
  * // create the animation with animation
  * var anim = new cc.Animate(dance_grey);
  */
 export default class Animate extends ActionInterval {
-  /** @lends cc.Animate# */
   _animation = null;
   _nextFrame = 0;
   _origFrame = null;

@@ -37,7 +37,6 @@ import SpriteFrameCache from './sprite-frame-cache';
  * example<br/>
  * AnimationCache.getInstance().addAnimation(animation,"animation1");<br/>
  * </p>
- * @class
  */
 export default class AnimationCache {
   static _instance = null;

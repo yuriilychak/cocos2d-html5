@@ -131,8 +131,6 @@ sp.TrackEntryListeners.getListeners = function(entry){
 
 /**
  * The skeleton animation of spine. It updates animation's state and skeleton's world transform.
- * @class
- * @extends sp.Skeleton
  * @example
  * var spineBoy = new sp.SkeletonAnimation('res/skeletons/spineboy.json', 'res/skeletons/spineboy.atlas');
  * this.addChild(spineBoy, 4);

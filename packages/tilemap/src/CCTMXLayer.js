@@ -42,8 +42,6 @@
  *
  * <p>"value" by default is 0, but you can change it from Tiled by adding the "cc_alpha_func" property to the layer. <br />
  * The value 0 should work for most cases, but if you have tiles that are semi-transparent, then you might want to use a different value, like 0.5.</p>
- * @class
- * @extends cc.SpriteBatchNode
  *
  * @property {Array}                tiles               - Tiles for layer
  * @property {cc.TMXTilesetInfo}    tileset             - Tileset for layer

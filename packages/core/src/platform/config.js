@@ -44,7 +44,7 @@
  *      - cc.TileMap                                                                 <br/>
  *                                                                                  <br/>
  *  To enabled set it to 1. Disabled by default.<br/>
- *  To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ *  To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * </p>
  * @constant
  * @type {Number}
@@ -53,7 +53,7 @@ export const FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 
 /**
  * Position of the FPS (Default: 0,0 (bottom-left corner))<br/>
- * To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ * To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * @constant
  * @type {Point}
  * @namespace cc
@@ -67,7 +67,7 @@ export const DIRECTOR_STATS_POSITION = new Point();
  *   Having a bigger number means a more reliable FPS<br/>
  *   <br/>
  *   Default value: 0.1f<br/>
- *   To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ *   To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * </p>
  * @constant
  * @type {Number}
@@ -80,7 +80,7 @@ export const DIRECTOR_FPS_INTERVAL = 0.5;
  *    If disabled, integer pixels will be used.<br/>
  *    <br/>
  *    To enable set it to 1. Enabled by default.<br/>
- *    To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ *    To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * </p>
  * @constant
  * @type {Number}
@@ -93,7 +93,7 @@ export const COCOSNODE_RENDER_SUBPIXEL = 1;
  *   If disabled, integer pixels will be used.<br/>
  *   <br/>
  *   To enable set it to 1. Enabled by default.<br/>
- *   To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ *   To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * </p>
  * @constant
  * @type {Number}
@@ -106,7 +106,7 @@ export const SPRITEBATCHNODE_RENDER_SUBPIXEL = 1;
  *     Only set to 0 if ALL your images by-pass Apple UIImage loading system (eg: if you use libpng or PVR images)<br/>
  *     <br/>
  *     To enable set it to a value different than 0. Enabled by default.<br/>
- *     To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ *     To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * </p>
  * @constant
  * @type {Number}
@@ -119,7 +119,7 @@ export const OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA = 1;
  *   It seems it is the recommend way, but it is much slower, so, enable it at your own risk<br/>
  *   <br/>
  *   To enable set it to a value different than 0. Disabled by default.<br/>
- *   To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ *   To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * </p>
  * @constant
  * @type {Number}
@@ -133,7 +133,7 @@ export const TEXTURE_ATLAS_USE_TRIANGLE_STRIP = 0;
  *    So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.<br/>
  *    <br/>
  *    To disable it set it to 0. disable by default.(Not Supported on WebGL)<br/>
- *    To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ *    To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * </p>
  * @constant
  * @type {Number}
@@ -150,8 +150,8 @@ export const TEXTURE_ATLAS_USE_VAO = 0;
  *  To enable set it to a value different than 0. Disabled by default. <br/>
  *  <br/>
  *  This value governs only the PNG, GIF, BMP, images.<br/>
- *  This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.<br/>
- *  To modify it, in Web engine please refer to CCConfig.js, in JSB please refer to CCConfig.h
+ *  This value DOES NOT govern the PVR (PVR.GZ, PVR.Z) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.<br/>
+ *  To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
  * </p>
  * @constant
  * @type {Number}
@@ -174,7 +174,7 @@ export const RETINA_DISPLAY_FILENAME_SUFFIX = "-hd";
 
 /**
  * <p>
- *     If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects. <br/>
+ *     If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for LabelTTF objects. <br/>
  *     If it is disabled, it will use A8 (Alpha 8-bit textures).                              <br/>
  *     LA88 textures are 6% faster than A8 textures, but they will consume 2x memory.         <br/>
  *                                                                                            <br/>
@@ -249,7 +249,7 @@ export const DEFAULT_ENGINE = ENGINE_VERSION + "-canvas";
 
 /**
  * <p>
- *    If enabled, actions that alter the position property (eg: CCMoveBy, CCJumpBy, CCBezierBy, etc..) will be stacked.                  <br/>
+ *    If enabled, actions that alter the position property (eg: MoveBy, JumpBy, BezierBy, etc..) will be stacked.                  <br/>
  *    If you run 2 or more 'position' actions at the same time on a node, then end position will be the sum of all the positions.        <br/>
  *    If disabled, only the last run action will take effect.
  * </p>

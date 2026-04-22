@@ -58,10 +58,9 @@ export const UIInterfaceOrientationPortrait = 0;
  * <p>
  *  This class manages all events of input. include: touch, mouse, accelerometer, keyboard                                       <br/>
  * </p>
- * @class
  * @name inputManager
  */
-export const inputManager = /** @lends inputManager# */ {
+export const inputManager =  {
   TOUCH_TIMEOUT: 5000,
 
   _mousePressed: false,

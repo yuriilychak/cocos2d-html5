@@ -41,7 +41,6 @@ import TextureCache from "../textures/texture-cache";
  * // add SpriteFrames to spriteFrameCache With File<br/>
  * SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);<br/>
  * </p>
- * @class
  */
 export default class SpriteFrameCache {
   static _instance = null;

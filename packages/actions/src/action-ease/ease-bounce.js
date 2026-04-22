@@ -3,11 +3,8 @@ import ActionEase from './action-ease';
 /**
  * cc.EaseBounce abstract class.
  *
- * @class
- * @extends cc.ActionEase
  */
 export default class EaseBounce extends ActionEase {
-  /** @lends cc.EaseBounce# */
   /**
    * @param {Number} time1
    * @return {Number}

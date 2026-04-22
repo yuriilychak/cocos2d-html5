@@ -25,8 +25,6 @@
 
 /**
  * The LoadingBar control of Cocos UI.
- * @class
- * @extends ccui.Widget
  *
  * @property {ccui.LoadingBar.TYPE_LEFT | ccui.LoadingBar.TYPE_RIGHT}   direction   - The progress direction of loadingbar
  * @property {Number}               percent     - The current progress of loadingbar

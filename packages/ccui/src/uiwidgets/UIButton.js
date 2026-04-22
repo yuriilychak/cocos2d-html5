@@ -26,8 +26,6 @@
 
 /**
  * The button controls of Cocos UI.
- * @class
- * @extends ccui.Widget
  *
  * @property {String}   titleText               - The content string of the button title
  * @property {String}   titleFont               - The content string font of the button title

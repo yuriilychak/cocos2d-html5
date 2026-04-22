@@ -242,7 +242,7 @@ export default class GLProgram extends NewClass {
   }
 
   /**
-   * Initializes the CCGLProgram with a vertex and fragment with contents of filenames
+   * Initializes the GLProgram with a vertex and fragment with contents of filenames
    * @param {String} vShaderFilename
    * @param {String} fShaderFileName
    * @return {Boolean}
@@ -258,7 +258,7 @@ export default class GLProgram extends NewClass {
   }
 
   /**
-   * Initializes the CCGLProgram with a vertex and fragment with contents of filenames
+   * Initializes the GLProgram with a vertex and fragment with contents of filenames
    * @param {String} vShaderFilename
    * @param {String} fShaderFileName
    * @return {Boolean}

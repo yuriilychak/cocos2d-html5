@@ -30,8 +30,6 @@ ccs.PT_RATIO = 32;
 
 /**
  * Base class for ccs.ColliderFilter
- * @class
- * @extends ccs.Class
  */
 ccs.ColliderFilter = class ColliderFilter extends cc.NewClass {
 
@@ -59,8 +57,6 @@ ccs.ColliderFilter = class ColliderFilter extends cc.NewClass {
 
 /**
  * Base class for ccs.ColliderBody
- * @class
- * @extends ccs.Class
  *
  * @property {ccs.ContourData}      contourData     - The contour data of collider body
  * @property {ccs.Shape}            shape           - The shape of collider body
@@ -146,8 +142,6 @@ ccs.ColliderBody = class ColliderBody extends cc.NewClass {
 
 /**
  * Base class for ccs.ColliderDetector
- * @class
- * @extends ccs.Class
  *
  * @param {ccs.Bone} [bone]
  *

@@ -3,21 +3,18 @@ import ActionInstant from '../action-instant/action-instant';
 
 /**
  * Repeats an action a number of times.
- * To repeat an action forever use the CCRepeatForever action.
- * @class
- * @extends cc.ActionInterval
+ * To repeat an action forever use the RepeatForever action.
  * @param {cc.FiniteTimeAction} action
  * @param {Number} times
  * @example
  * var rep = new cc.Repeat(cc.sequence(jump2, jump1), 5);
  */
 export default class Repeat extends ActionInterval {
-  /** @lends cc.Repeat# */
   _times = 0;
   _total = 0;
   _nextDt = 0;
   _actionInstant = false;
-  _innerAction = null; //CCFiniteTimeAction
+  _innerAction = null; //FiniteTimeAction
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />

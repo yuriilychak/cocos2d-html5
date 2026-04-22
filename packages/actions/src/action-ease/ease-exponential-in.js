@@ -4,14 +4,11 @@ import ActionEase from './action-ease';
  * cc.Ease Exponential In. Slow to Fast. <br />
  * Reference easeInExpo: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
- * @class
- * @extends cc.ActionEase
  *
  * @example
  * action.easing(cc.easeExponentialIn());
  */
 export default class EaseExponentialIn extends ActionEase {
-  /** @lends cc.EaseExponentialIn# */
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    *

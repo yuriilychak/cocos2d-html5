@@ -27,8 +27,6 @@ import Event from "./event";
 
 /**
  * The mouse event
- * @class
- * @extends Event
  */
 export default class EventMouse extends Event {
   constructor(eventType) {

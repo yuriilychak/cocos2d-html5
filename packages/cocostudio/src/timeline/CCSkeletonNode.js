@@ -27,7 +27,6 @@
 /**
  * SkeletonNode
  * base class
- * @class
  */
 ccs.SkeletonNode = (function () {
 

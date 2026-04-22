@@ -36,10 +36,9 @@ ccs.RelativeData = function () {
 
 /**
  * ccs.armatureDataManager is a singleton object which format and manage armature configuration and armature animation
- * @class
  * @name ccs.armatureDataManager
  */
-ccs.armatureDataManager = /** @lends ccs.armatureDataManager# */ {
+ccs.armatureDataManager =  {
     _animationDatas: {},
     _armatureDatas: {},
     _textureDatas: {},
@@ -182,7 +181,7 @@ ccs.armatureDataManager = /** @lends ccs.armatureDataManager# */ {
     },
 
     /**
-     * Adds ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     * Adds ArmatureFileInfo, it is managed by ArmatureDataManager.
      * @param {String} imagePath
      * @param {String} plistPath
      * @param {String} configFilePath
@@ -217,7 +216,7 @@ ccs.armatureDataManager = /** @lends ccs.armatureDataManager# */ {
     },
 
     /**
-     * Adds ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     * Adds ArmatureFileInfo, it is managed by ArmatureDataManager.
      * @param {String} imagePath
      * @param {String} plistPath
      * @param {String} configFilePath
@@ -250,7 +249,7 @@ ccs.armatureDataManager = /** @lends ccs.armatureDataManager# */ {
     },
 
     /**
-     * Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     * Add sprite frame to SpriteFrameCache, it will save display name and it's relative image name
      * @param {String} plistPath
      * @param {String} imagePath
      * @param {String} configFilePath

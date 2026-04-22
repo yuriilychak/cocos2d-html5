@@ -2,8 +2,6 @@ import ActionInstant from './action-instant';
 
 /**
  * Calls a 'callback'.
- * @class
- * @extends cc.ActionInstant
  * @param {function} selector
  * @param {object|null} [selectorTarget]
  * @param {*|null} [data] data for function, it accepts all data types.
@@ -16,7 +14,6 @@ import ActionInstant from './action-instant';
  * var finish = new cc.CallFunc(this.removeFromParentAndCleanup, this,  true);
  */
 export default class CallFunc extends ActionInstant {
-  /** @lends cc.CallFunc# */
   _selectorTarget = null;
   _function = null;
   _data = null;

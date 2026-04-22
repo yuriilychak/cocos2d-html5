@@ -2,13 +2,11 @@ import ActionInterval from './action-interval';
 
 /**
  * <p>
- *     Moves a CCNode object x,y pixels by modifying it's position attribute.                                  <br/>
+ *     Moves a Node object x,y pixels by modifying it's position attribute.                                  <br/>
  *     x and y are relative to the position of the object.                                                     <br/>
- *     Several CCMoveBy actions can be concurrently called, and the resulting                                  <br/>
+ *     Several MoveBy actions can be concurrently called, and the resulting                                  <br/>
  *     movement will be the sum of individual movements.
  * </p>
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration duration in seconds
  * @param {cc.Point|Number} deltaPos
  * @param {Number} [deltaY]
@@ -16,7 +14,6 @@ import ActionInterval from './action-interval';
  * var actionBy = cc.moveBy(2, cc.p(windowSize.width - 40, windowSize.height - 40));
  */
 export default class MoveBy extends ActionInterval {
-  /** @lends cc.MoveBy# */
   _positionDelta = null;
   _startPosition = null;
   _previousPosition = null;

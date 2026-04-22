@@ -49,8 +49,6 @@ cc.DEFAULT_PADDING = 5;
  *<p> Features and Limitation:<br/>
  *  - You can add MenuItem objects in runtime using addChild:<br/>
  *  - But the only accepted children are MenuItem objects</p>
- * @class
- * @extends cc.Layer
  * @param {...cc.MenuItem|null} menuItems
  * @example
  * var layer = new cc.Menu(menuitem1, menuitem2, menuitem3);
@@ -103,8 +101,8 @@ cc.Menu = class Menu extends cc.Layer {
 
     /**
      * <p>
-     *     Event callback that is invoked every time when CCMenu enters the 'stage'.                                   <br/>
-     *     If the CCMenu enters the 'stage' with a transition, this event is called when the transition starts.        <br/>
+     *     Event callback that is invoked every time when Menu enters the 'stage'.                                   <br/>
+     *     If the Menu enters the 'stage' with a transition, this event is called when the transition starts.        <br/>
      *     During onEnter you can't access a "sister/brother" node.                                                    <br/>
      *     If you override onEnter, you must call its parent's onEnter function with this._super().
      * </p>

@@ -25,8 +25,6 @@
 
 /**
  * The controller component for Cocostudio.
- * @class
- * @extends ccs.Component
  */
 ccs.ComController = class ComController extends ccs.Component {
 

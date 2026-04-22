@@ -56,8 +56,6 @@ cc.TRANSITION_ORIENTATION_UP_OVER = 0;
 cc.TRANSITION_ORIENTATION_DOWN_OVER = 1;
 
 /**
- * @class
- * @extends cc.Scene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene the scene to transit with
  * @example
@@ -243,8 +241,6 @@ cc.TransitionScene = class TransitionScene extends cc.Scene {
  * A cc.Transition that supports orientation like.<br/>
  * Possible orientation: LeftOver, RightOver, UpOver, DownOver<br/>
  * useful for when you want to make a transition happen between 2 orientations
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @param {cc.TRANSITION_ORIENTATION_LEFT_OVER|cc.TRANSITION_ORIENTATION_RIGHT_OVER|cc.TRANSITION_ORIENTATION_UP_OVER|cc.TRANSITION_ORIENTATION_DOWN_OVER} orientation
@@ -282,8 +278,6 @@ cc.TransitionSceneOriented = class TransitionSceneOriented extends cc.Transition
 
 /**
  *  Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -334,8 +328,6 @@ cc.TransitionRotoZoom = class TransitionRotoZoom extends cc.TransitionScene {
 
 /**
  * Zoom out and jump the outgoing scene, and then jump and zoom in the incoming
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -384,8 +376,6 @@ cc.TransitionJumpZoom = class TransitionJumpZoom extends cc.TransitionScene {
 
 /**
  * Move in from to the left the incoming scene.
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -441,8 +431,6 @@ cc.TransitionMoveInL = class TransitionMoveInL extends cc.TransitionScene {
 
 /**
  * Move in from to the right the incoming scene.
- * @class
- * @extends cc.TransitionMoveInL
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -469,8 +457,6 @@ cc.TransitionMoveInR = class TransitionMoveInR extends cc.TransitionMoveInL {
 
 /**
  * Move in from to the top the incoming scene.
- * @class
- * @extends cc.TransitionMoveInL
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -497,8 +483,6 @@ cc.TransitionMoveInT = class TransitionMoveInT extends cc.TransitionMoveInL {
 
 /**
  *  Move in from to the bottom the incoming scene.
- * @class
- * @extends cc.TransitionMoveInL
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -536,8 +520,6 @@ cc.ADJUST_FACTOR = 0.5;
 
 /**
  * a transition that a new scene is slided from left
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -599,8 +581,6 @@ cc.TransitionSlideInL = class TransitionSlideInL extends cc.TransitionScene {
 
 /**
  *  Slide in the incoming scene from the right border.
- * @class
- * @extends cc.TransitionSlideInL
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -637,8 +617,6 @@ cc.TransitionSlideInR = class TransitionSlideInR extends cc.TransitionSlideInL {
 
 /**
  * Slide in the incoming scene from the bottom border.
- * @class
- * @extends cc.TransitionSlideInL
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -677,8 +655,6 @@ cc.TransitionSlideInB = class TransitionSlideInB extends cc.TransitionSlideInL {
 
 /**
  *  Slide in the incoming scene from the top border.
- *  @class
- *  @extends cc.TransitionSlideInL
  *  @param {Number} t time in seconds
  *  @param {cc.Scene} scene
  *  @example
@@ -717,8 +693,6 @@ cc.TransitionSlideInT = class TransitionSlideInT extends cc.TransitionSlideInL {
 
 /**
  * Shrink the outgoing scene while grow the incoming scene
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -770,8 +744,6 @@ cc.TransitionShrinkGrow = class TransitionShrinkGrow extends cc.TransitionScene 
 
 /**
  * Fade out the outgoing scene and then fade in the incoming scene.
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @param {cc.TRANSITION_ORIENTATION_LEFT_OVER|cc.TRANSITION_ORIENTATION_RIGHT_OVER|cc.TRANSITION_ORIENTATION_UP_OVER|cc.TRANSITION_ORIENTATION_DOWN_OVER} o
@@ -845,8 +817,6 @@ cc.TransitionFade = class TransitionFade extends cc.TransitionScene {
 
 /**
  * Cross fades two scenes using the cc.RenderTexture object.
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -938,8 +908,6 @@ cc.TransitionCrossFade = class TransitionCrossFade extends cc.TransitionScene {
 
 /**
  *  Turn off the tiles of the outgoing scene in random order
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -996,8 +964,6 @@ cc.TransitionTurnOffTiles = class TransitionTurnOffTiles extends cc.TransitionSc
 
 /**
  *  The odd columns goes upwards while the even columns goes downwards.
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -1067,8 +1033,6 @@ cc.TransitionSplitCols = class TransitionSplitCols extends cc.TransitionScene {
 
 /**
  *  The odd rows goes to the left while the even rows goes to the right.
- * @class
- * @extends cc.TransitionSplitCols
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -1096,8 +1060,6 @@ cc.TransitionSplitRows = class TransitionSplitRows extends cc.TransitionSplitCol
 
 /**
  *  Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
- * @class
- * @extends cc.TransitionScene
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -1164,8 +1126,6 @@ cc.TransitionFadeTR = class TransitionFadeTR extends cc.TransitionScene {
 
 /**
  *  Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
- * @class
- * @extends cc.TransitionFadeTR
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -1194,8 +1154,6 @@ cc.TransitionFadeBL = class TransitionFadeBL extends cc.TransitionFadeTR {
 
 /**
  * Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
- * @class
- * @extends cc.TransitionFadeTR
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example
@@ -1226,8 +1184,6 @@ cc.TransitionFadeUp = class TransitionFadeUp extends cc.TransitionFadeTR {
 
 /**
  * Fade the tiles of the outgoing scene from the top to the bottom.
- * @class
- * @extends cc.TransitionFadeTR
  * @param {Number} t time in seconds
  * @param {cc.Scene} scene
  * @example

@@ -3,8 +3,6 @@ import ActionInterval from './action-interval';
 /**
  * Moves a cc.Node object simulating a parabolic jump movement by modifying it's position attribute.
  * Relative to its movement.
- * @class
- * @extends cc.ActionInterval
  * @param {Number} duration
  * @param {cc.Point|Number} position
  * @param {Number} [y]
@@ -15,7 +13,6 @@ import ActionInterval from './action-interval';
  * var actionBy = new cc.JumpBy(2, 300, 0, 50, 4);
  */
 export default class JumpBy extends ActionInterval {
-  /** @lends cc.JumpBy# */
   _startPosition = null;
   _delta = null;
   _height = 0;

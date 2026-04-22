@@ -7,14 +7,11 @@ import ActionInterval from './action-interval';
  * Use it as the default "reversed" method of your own actions, but using it outside the "reversed"      <br/>
  * scope is not recommended.
  * </p>
- * @class
- * @extends cc.ActionInterval
  * @param {cc.FiniteTimeAction} action
  * @example
  *  var reverse = new cc.ReverseTime(this);
  */
 export default class ReverseTime extends ActionInterval {
-  /** @lends cc.ReverseTime# */
   _other = null;
 
   /**

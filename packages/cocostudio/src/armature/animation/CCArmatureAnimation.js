@@ -37,8 +37,6 @@ ccs.MovementEventType = {
 /**
  * The animation event class, it has the callback, target and arguments.
  * @deprecated since v3.0.
- * @class
- * @extends ccs.Class
  */
 ccs.AnimationEvent = class AnimationEvent extends cc.NewClass {
 
@@ -96,8 +94,6 @@ ccs.FrameEvent = function () {
 
 /**
  * The Animation class for Armature, it plays armature animation, and controls speed scale and manages animation frame.
- * @class
- * @extends ccs.ProcessBase
  *
  * @param {ccs.Armature} [armature] The armature
  *
@@ -218,10 +214,10 @@ ccs.ArmatureAnimation = class ArmatureAnimation extends ccs.ProcessBase {
      * @param {String} animationName The animation name you want to play
      * @param {Number} [durationTo=-1]
      *         the frames between two animation changing-over.It's meaning is changing to this animation need how many frames
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      * @param {Number} [loop=-1]
      *          Whether the animation is loop.
-     *         loop < 0 : use the value from CCMovementData get from flash design panel
+     *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      * @example

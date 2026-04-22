@@ -25,8 +25,6 @@
 
 /**
  * The CheckBox control of Cocos UI.
- * @class
- * @extends ccui.Widget
  *
  * @property {Boolean}  selected    - Indicate whether the check box has been selected
  */

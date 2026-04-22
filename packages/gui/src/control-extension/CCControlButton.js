@@ -1,5 +1,5 @@
 /**
- * CCControlButton.m
+ * ControlButton.m
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011-2012 cocos2d-x.org
@@ -32,9 +32,7 @@
 cc.CONTROL_ZOOM_ACTION_TAG = 0xCCCB0001;
 
 /**
- * CCControlButton: Button control for Cocos2D.
- * @class
- * @extends cc.Control
+ * ControlButton: Button control for Cocos2D.
  *
  * @property {Boolean}  adjustBackgroundImage   - Indicate whether the background image will be adjusted
  * @property {Boolean}  zoomOnTouchDown         - Indicate whether the button will be zoomed while touch down
@@ -232,7 +230,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
             // Layout update
             this.needsLayout();
             return true;
-        }//couldn't init the CCControl
+        }//couldn't init the Control
         else
             return false;
     }
@@ -443,7 +441,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
     /**
      * Returns the title used for a state.
      *
-     * @param {Number} state The state that uses the title. Possible values are described in "CCControlState".
+     * @param {Number} state The state that uses the title. Possible values are described in "ControlState".
      * @return {string} The title for the specified state.
      */
     getTitleForState(state) {
@@ -459,10 +457,10 @@ cc.ControlButton = class ControlButton extends cc.Control {
     /**
      * <p>
      * Sets the title string to use for the specified state.                                                  <br/>
-     * If a property is not specified for a state, the default is to use the CCButtonStateNormal value.
+     * If a property is not specified for a state, the default is to use the ButtonStateNormal value.
      * </p>
      * @param {string} title The title string to use for the specified state.
-     * @param {Number} state The state that uses the specified title. The values are described in "CCControlState".
+     * @param {Number} state The state that uses the specified title. The values are described in "ControlState".
      */
     setTitleForState(title, state) {
         this._titleDispatchTable[state] = title || "";
@@ -475,7 +473,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
     /**
      * Returns the title color used for a state.
      *
-     * @param {Number} state The state that uses the specified color. The values are described in "CCControlState".
+     * @param {Number} state The state that uses the specified color. The values are described in "ControlState".
      * @return {cc.Color} The color of the title for the specified state.
      */
     getTitleColorForState(state) {
@@ -492,7 +490,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
      * Sets the color of the title to use for the specified state.
      *
      * @param {cc.Color} color The color of the title to use for the specified state.
-     * @param {Number} state The state that uses the specified color. The values are described in "CCControlState".
+     * @param {Number} state The state that uses the specified color. The values are described in "ControlState".
      */
     setTitleColorForState(color, state) {
         //ccColor3B* colorValue=&color;
@@ -506,7 +504,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
     /**
      * Returns the title label used for a state.
      *
-     * @param state The state that uses the title label. Possible values are described in "CCControlState".
+     * @param state The state that uses the title label. Possible values are described in "ControlState".
      * @return {cc.Node} the title label used for a state.
      */
     getTitleLabelForState(state) {
@@ -519,10 +517,10 @@ cc.ControlButton = class ControlButton extends cc.Control {
 
     /**
      * <p>Sets the title label to use for the specified state.                                          <br/>
-     * If a property is not specified for a state, the default is to use the CCButtonStateNormal value. </p>
+     * If a property is not specified for a state, the default is to use the ButtonStateNormal value. </p>
      *
      * @param {cc.Node} titleLabel The title label to use for the specified state.
-     * @param {Number} state The state that uses the specified title. The values are described in "CCControlState".
+     * @param {Number} state The state that uses the specified title. The values are described in "ControlState".
      */
     setTitleLabelForState(titleLabel, state) {
         var locTable = this._titleLabelDispatchTable;
@@ -593,9 +591,9 @@ cc.ControlButton = class ControlButton extends cc.Control {
     }
 
     /**
-     * Sets the font of the label, changes the label to a CCLabelBMFont if necessary.
+     * Sets the font of the label, changes the label to a LabelBMFont if necessary.
      * @param {string} fntFile The name of the font to change to
-     * @param {Number} state The state that uses the specified fntFile. The values are described in "CCControlState".
+     * @param {Number} state The state that uses the specified fntFile. The values are described in "ControlState".
      */
     setTitleBMFontForState(fntFile, state) {
         var title = this.getTitleForState(state);
@@ -615,7 +613,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
     /**
      * Returns the background sprite used for a state.
      *
-     * @param {Number} state The state that uses the background sprite. Possible values are described in "CCControlState".
+     * @param {Number} state The state that uses the background sprite. Possible values are described in "ControlState".
      */
     getBackgroundSpriteForState(state) {
         var locTable = this._backgroundSpriteDispatchTable;
@@ -629,7 +627,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
      * Sets the background sprite to use for the specified button state.
      *
      * @param {Scale9Sprite} sprite The background sprite to use for the specified state.
-     * @param {Number} state The state that uses the specified image. The values are described in "CCControlState".
+     * @param {Number} state The state that uses the specified image. The values are described in "ControlState".
      */
     setBackgroundSpriteForState(sprite, state) {
         var locTable = this._backgroundSpriteDispatchTable;
@@ -658,7 +656,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
      * Sets the background spriteFrame to use for the specified button state.
      *
      * @param {SpriteFrame} spriteFrame The background spriteFrame to use for the specified state.
-     * @param {Number} state The state that uses the specified image. The values are described in "CCControlState".
+     * @param {Number} state The state that uses the specified image. The values are described in "ControlState".
      */
     setBackgroundSpriteFrameForState(spriteFrame, state) {
         var sprite = cc.Scale9Sprite.createWithSpriteFrame(spriteFrame);
