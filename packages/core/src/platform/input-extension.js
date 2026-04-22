@@ -25,7 +25,7 @@
 
 /**
  * Initializes keyboard, accelerometer, and device-orientation extensions
- * on cc.inputManager. This is a side-effect module that monkey-patches
+ * on inputManager. This is a side-effect module that monkey-patches
  * the inputManager singleton with additional methods.
  * @function
  * @param {Object} _p - The inputManager object to extend

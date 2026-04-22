@@ -51,21 +51,21 @@ export function setGlobalOrderOfArrival(val) {
 }
 
 /**
- * <p>cc.Node is the root class of all node. Anything that gets drawn or contains things that get drawn is a cc.Node.<br/>
- * The most popular cc.Nodes are: cc.Scene, cc.Layer, cc.Sprite, cc.Menu.</p>
+ * <p>Node is the root class of all node. Anything that gets drawn or contains things that get drawn is a Node.<br/>
+ * The most popular Nodes are: Scene, Layer, Sprite, Menu.</p>
  *
- * <p>The main features of a cc.Node are: <br/>
- * - They can contain other cc.Node nodes (addChild, getChildByTag, removeChild, etc) <br/>
+ * <p>The main features of a Node are: <br/>
+ * - They can contain other Node nodes (addChild, getChildByTag, removeChild, etc) <br/>
  * - They can schedule periodic callback (schedule, unschedule, etc) <br/>
  * - They can execute actions (runAction, stopAction, etc) <br/></p>
  *
- * <p>Some cc.Node nodes provide extra functionality for them or their children.</p>
+ * <p>Some Node nodes provide extra functionality for them or their children.</p>
  *
- * <p>Subclassing a cc.Node usually means (one/all) of: <br/>
+ * <p>Subclassing a Node usually means (one/all) of: <br/>
  * - overriding constructor function "ctor" to initialize resources and schedule callbacks<br/>
  * - create callbacks to handle the advancement of time<br/></p>
  *
- * <p>Features of cc.Node: <br/>
+ * <p>Features of Node: <br/>
  * - position  <br/>
  * - scale (x, y) <br/>
  * - rotation (in degrees, clockwise)<br/>
@@ -87,7 +87,7 @@ export function setGlobalOrderOfArrival(val) {
  * - opacity: 255</p>
  *
  * <p> Limitations:<br/>
- * - A cc.Node is a "void" object. It doesn't have a texture <br/></P>
+ * - A Node is a "void" object. It doesn't have a texture <br/></P>
  *
  * <p>Order in transformations with grid disabled <br/>
  * -# The node will be translated (position)  <br/>
@@ -134,7 +134,7 @@ export function setGlobalOrderOfArrival(val) {
  * @property {Object}               userObject          - User assigned Object, similar to userData, but instead of holding a void* it holds an id
  * @property {Number}               arrivalOrder        - The arrival order, indicates which children is added previously
  * @property {ActionManager}     actionManager       - The ActionManager object that is used by all actions.
- * @property {Scheduler}         scheduler           - cc.Scheduler used to schedule all "updates" and timers.
+ * @property {Scheduler}         scheduler           - Scheduler used to schedule all "updates" and timers.
  * @property {GridBase}          grid                - grid object that is used when applying effects
  * @property {GLProgram}         shaderProgram       - The shader program currently used for this node
  * @property {Number}               glServerState       - The state of OpenGL server side
@@ -401,7 +401,7 @@ export class Node extends NewClass {
   }
 
   /**
-   * Initializes the instance of cc.Node
+   * Initializes the instance of Node
    * @function
    * @returns {boolean} Whether the initialization was successful.
    */
@@ -725,14 +725,14 @@ export class Node extends NewClass {
    * <p>
    *     Changes the position (x,y) of the node in cocos2d coordinates.<br/>
    *     The original point (0,0) is at the left-bottom corner of screen.<br/>
-   *     Usually we use cc.p(x,y) to compose Point object.<br/>
+   *     Usually we use p(x,y) to compose Point object.<br/>
    *     and Passing two numbers (x,y) is more efficient than passing Point object.
    * </p>
    * @function
    * @param {Point|Number} newPosOrxValue The position (x,y) of the node in coordinates or the X coordinate for position
    * @param {Number} [yValue] Y coordinate for position
    * @example
-   *    var size = cc.winSize;
+   *    var size = winSize;
    *    node.setPosition(size.width/2, size.height/2);
    */
   setPosition(newPosOrxValue, yValue) {
@@ -859,7 +859,7 @@ export class Node extends NewClass {
   /**
    * Returns if the node is visible
    * @function
-   * @see cc.Node#setVisible
+   * @see Node#setVisible
    * @return {Boolean} true if the node is visible, false if the node is hidden.
    */
   isVisible() {
@@ -943,7 +943,7 @@ export class Node extends NewClass {
   /**
    * Returns a copy of the anchor point in absolute pixels.  <br/>
    * you can only read it. If you wish to modify it, use setAnchorPoint
-   * @see cc.Node#getAnchorPoint
+   * @see Node#getAnchorPoint
    * @function
    * @return {Point} The anchor point in absolute pixels.
    */
@@ -1041,7 +1041,7 @@ export class Node extends NewClass {
    * Returns whether the anchor point will be ignored when you position this node.<br/>
    * When anchor point ignored, position will be calculated based on the origin point (0, 0) in parent's coordinates.
    * @function
-   * @see cc.Node#ignoreAnchorPointForPosition
+   * @see Node#ignoreAnchorPointForPosition
    * @return {Boolean} true if the anchor point will be ignored when you position this node.
    */
   isIgnoreAnchorPointForPosition() {
@@ -1099,7 +1099,7 @@ export class Node extends NewClass {
    * Changes the tag that is used to identify the node easily. <br/>
    * Please refer to getTag for the sample code.
    * @function
-   * @see cc.Node#getTag
+   * @see Node#getTag
    * @param {Number} tag A integer that identifies the node.
    */
   setTag(tag) {
@@ -1198,9 +1198,9 @@ export class Node extends NewClass {
 
   /**
    * <p>Returns the ActionManager object that is used by all actions.<br/>
-   * (IMPORTANT: If you set a new cc.ActionManager, then previously created actions are going to be removed.)</p>
+   * (IMPORTANT: If you set a new ActionManager, then previously created actions are going to be removed.)</p>
    * @function
-   * @see cc.Node#setActionManager
+   * @see Node#setActionManager
    * @return {ActionManager} A ActionManager object.
    */
   getActionManager() {
@@ -1208,7 +1208,7 @@ export class Node extends NewClass {
   }
 
   /**
-   * <p>Sets the cc.ActionManager object that is used by all actions. </p>
+   * <p>Sets the ActionManager object that is used by all actions. </p>
    * @function
    * @warning If you set a new ActionManager, then previously created actions will be removed.
    * @param {ActionManager} actionManager A ActionManager object that is used by all actions.
@@ -1222,7 +1222,7 @@ export class Node extends NewClass {
 
   /**
    * <p>
-   *   Returns the cc.Scheduler object used to schedule all "updates" and timers.
+   *   Returns the Scheduler object used to schedule all "updates" and timers.
    * </p>
    * @function
    * @return {Scheduler} A Scheduler object.
@@ -1234,11 +1234,11 @@ export class Node extends NewClass {
   /**
    * <p>
    *   Sets a Scheduler object that is used to schedule all "updates" and timers.           <br/>
-   *   IMPORTANT: If you set a new cc.Scheduler, then previously created timers/update are going to be removed.
+   *   IMPORTANT: If you set a new Scheduler, then previously created timers/update are going to be removed.
    * </p>
    * @function
    * @warning If you set a new Scheduler, then previously created timers/update are going to be removed.
-   * @param scheduler A cc.Scheduler object that is used to schedule all "update" and timers.
+   * @param scheduler A Scheduler object that is used to schedule all "update" and timers.
    */
   setScheduler(scheduler) {
     if (this._scheduler !== scheduler) {
@@ -1382,7 +1382,7 @@ export class Node extends NewClass {
    * If the node orphan, then nothing happens.
    * @function
    * @param {Boolean} [cleanup=true] true if all actions and callbacks on this node should be removed, false otherwise.
-   * @see cc.Node#removeFromParentAndCleanup
+   * @see Node#removeFromParentAndCleanup
    */
   removeFromParent(cleanup) {
     if (this._parent) {
@@ -1417,7 +1417,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} tag An integer number that identifies a child node
    * @param {Boolean} [cleanup=true] true if all running actions and callbacks on the child node will be cleanup, false otherwise.
-   * @see cc.Node#removeChildByTag
+   * @see Node#removeChildByTag
    */
   removeChildByTag(tag, cleanup) {
     if (tag === NODE_TAG_INVALID) log(_LogInfos.Node_removeChildByTag);
@@ -1670,8 +1670,8 @@ export class Node extends NewClass {
   }
 
   /**
-   * <p>callback that is called every time the cc.Node leaves the 'stage'.  <br/>
-   * If the cc.Node leaves the 'stage' with a transition, this callback is called when the transition starts. <br/>
+   * <p>callback that is called every time the Node leaves the 'stage'.  <br/>
+   * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts. <br/>
    * If you override onExitTransitionDidStart, you shall call its parent's onExitTransitionDidStart with this._super()</p>
    * @function
    */
@@ -1679,8 +1679,8 @@ export class Node extends NewClass {
 
   /**
    * <p>
-   * callback that is called every time the cc.Node leaves the 'stage'.                                         <br/>
-   * If the cc.Node leaves the 'stage' with a transition, this callback is called when the transition finishes. <br/>
+   * callback that is called every time the Node leaves the 'stage'.                                         <br/>
+   * If the Node leaves the 'stage' with a transition, this callback is called when the transition finishes. <br/>
    * During onExit you can't access a sibling node.                                                             <br/>
    * If you override onExit, you shall call its parent's onExit with this._super().
    * </p>
@@ -1695,7 +1695,7 @@ export class Node extends NewClass {
   // actions
   /**
    * Executes an action, and returns the action that is executed.<br/>
-   * The node becomes the action's target. Refer to cc.Action's getTarget()
+   * The node becomes the action's target. Refer to Action's getTarget()
    * @function
    * @warning Starting from v0.8 actions don't retain their target anymore.
    * @param {Action} action
@@ -1741,7 +1741,7 @@ export class Node extends NewClass {
   /**
    * Returns an action from the running action list by its tag.
    * @function
-   * @see cc.Node#getTag and cc.Node#setTag
+   * @see Node#getTag and Node#setTag
    * @param {Number} tag
    * @return {Action} The action object with the given tag.
    */
@@ -1764,7 +1764,7 @@ export class Node extends NewClass {
     return this.actionManager.numberOfRunningActionsInTarget(this);
   }
 
-  // cc.Node - Callbacks
+  // Node - Callbacks
   // timers
   /**
    * <p>schedules the "update" method.                                                                           <br/>
@@ -1794,7 +1794,7 @@ export class Node extends NewClass {
   /**
    * Unschedules the "update" method.
    * @function
-   * @see cc.Node#scheduleUpdate
+   * @see Node#scheduleUpdate
    */
   unscheduleUpdate() {
     this.scheduler.unscheduleUpdate(this);
@@ -1881,7 +1881,7 @@ export class Node extends NewClass {
   /**
    * Schedules a callback function that runs only once, with a delay of 0 or larger
    * @function
-   * @see cc.Node#schedule
+   * @see Node#schedule
    * @param {function} callback  A function wrapped as a selector
    * @param {Number} delay  The amount of time that the first tick will wait before execution.
    * @param {String} key The only string identifying the callback
@@ -1896,7 +1896,7 @@ export class Node extends NewClass {
   /**
    * unschedules a custom callback function.
    * @function
-   * @see cc.Node#schedule
+   * @see Node#schedule
    * @param {function} callback_fn  A function wrapped as a selector
    */
   unschedule(callback_fn) {
@@ -1946,12 +1946,12 @@ export class Node extends NewClass {
    *  @param {AffineTransform} additionalTransform  The additional transform
    *  @example
    * // create a batchNode
-   * var batch = new cc.SpriteBatchNode("Icon-114.png");
+   * var batch = new SpriteBatchNode("Icon-114.png");
    * this.addChild(batch);
    *
    * // create two sprites, spriteA will be added to batchNode, they are using different textures.
-   * var spriteA = new cc.Sprite(batch->getTexture());
-   * var spriteB = new cc.Sprite("Icon-72.png");
+   * var spriteA = new Sprite(batch->getTexture());
+   * var spriteB = new Sprite("Icon-72.png");
    *
    * batch.addChild(spriteA);
    *
@@ -2095,7 +2095,7 @@ export class Node extends NewClass {
   }
 
   /**
-   * converts a cc.Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
+   * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
    * @function
    * @param {Touch} touch The touch object
    * @return {Point}
@@ -2160,7 +2160,7 @@ export class Node extends NewClass {
   /**
    * Removes a component identified by the given name or removes the component object given
    * @function
-   * @param {String|cc.Component} component
+   * @param {String|Component} component
    */
   removeComponent(component) {
     if (this._componentContainer)
@@ -2169,7 +2169,7 @@ export class Node extends NewClass {
   }
 
   /**
-   * Removes all components of cc.Node, it called when cc.Node is exiting from stage.
+   * Removes all components of Node, it called when Node is exiting from stage.
    * @function
    */
   removeAllComponents() {
@@ -2278,7 +2278,7 @@ export class Node extends NewClass {
    * @function
    * @param {GLProgram} newShaderProgram The shader program which fetches from ShaderCache.
    * @example
-   * node.setGLProgram(cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLOR));
+   * node.setGLProgram(shaderCache.programForKey(SHADER_POSITION_TEXTURECOLOR));
    */
   setShaderProgram(newShaderProgram) {
     this._renderCmd.setShaderProgram(newShaderProgram);
@@ -2437,8 +2437,8 @@ export class Node extends NewClass {
 
   /**
    * <p>Sets the color of Node.<br/>
-   * When color doesn't include opacity value like cc.color(128,128,128), this function only change the color. <br/>
-   * When color include opacity like cc.color(128,128,128,100), then this function will change the color and the opacity.</p>
+   * When color doesn't include opacity value like color(128,128,128), this function only change the color. <br/>
+   * When color include opacity like color(128,128,128,100), then this function will change the color and the opacity.</p>
    * @function
    * @param {Color} color The new color given
    */
@@ -2481,7 +2481,7 @@ export class Node extends NewClass {
 
   /**
    * Set whether color should be changed with the opacity value,
-   * useless in cc.Node, but this function is override in some class to have such behavior.
+   * useless in Node, but this function is override in some class to have such behavior.
    * @function
    * @param {Boolean} opacityValue
    */

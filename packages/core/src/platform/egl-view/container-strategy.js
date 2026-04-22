@@ -29,8 +29,8 @@ import Game from "../../boot/game";
 import Sys from "../../boot/sys";
 
 /**
- * <p>cc.ContainerStrategy class is the root strategy class of container's scale strategy,
- * it controls the behavior of how to scale the cc.container and cc._canvas object</p>
+ * <p>ContainerStrategy class is the root strategy class of container's scale strategy,
+ * it controls the behavior of how to scale the container and _canvas object</p>
  *
  */
 export class ContainerStrategy extends NewClass {

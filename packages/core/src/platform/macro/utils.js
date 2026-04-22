@@ -109,9 +109,9 @@ export function radiansToDegress(angle) {
  * @function
  */
 export function nodeDrawSetup(node) {
-  //cc.glEnable(node._glServerState);
+  //glEnable(node._glServerState);
   if (node._shaderProgram) {
-    //cc._renderContext.useProgram(node._shaderProgram._programObj);
+    //_renderContext.useProgram(node._shaderProgram._programObj);
     node._glProgramState.apply();
     node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
   }

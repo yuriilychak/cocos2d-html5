@@ -53,7 +53,7 @@ export default class AnimationCache {
   }
 
   /**
-   * Adds a cc.Animation with a name.
+   * Adds a Animation with a name.
    * @param {Animation} animation
    * @param {String} name
    */
@@ -62,7 +62,7 @@ export default class AnimationCache {
   }
 
   /**
-   * Deletes a cc.Animation from the cache.
+   * Deletes a Animation from the cache.
    * @param {String} name
    */
   removeAnimation(name) {
@@ -76,7 +76,7 @@ export default class AnimationCache {
 
   /**
    * <p>
-   *     Returns a cc.Animation that was previously added.<br/>
+   *     Returns a Animation that was previously added.<br/>
    *      If the name is not found it will return nil.<br/>
    *      You should retain the returned copy if you are going to use it.</br>
    * </p>
@@ -125,7 +125,7 @@ export default class AnimationCache {
   /**
    * <p>
    *    Adds an animations from a plist file.<br/>
-   *    Make sure that the frames were previously loaded in the cc.SpriteFrameCache.
+   *    Make sure that the frames were previously loaded in the SpriteFrameCache.
    * </p>
    * @param {String} plist
    */

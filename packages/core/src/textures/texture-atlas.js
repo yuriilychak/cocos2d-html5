@@ -27,6 +27,10 @@
 import { NewClass } from "../platform/class";
 import Game from "../boot/game";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import { isString } from "../boot/utils";
+import { TEXTURE_ATLAS_USE_TRIANGLE_STRIP } from "../platform/config";
+import { V3F_C4B_T2F_Quad } from "../platform/types";
+import { Texture2D } from "./texture-2d";
 import TextureCache from "./texture-cache";
 import TextureAtlasCanvasRenderer from "./texture-atlas-canvas-renderer";
 import TextureAtlasWebGLRenderer from "./texture-atlas-webgl-renderer";
@@ -42,7 +46,7 @@ import TextureAtlasWebGLRenderer from "./texture-atlas-webgl-renderer";
  * The TextureAtlas capacity can be increased or decreased in runtime.</p>
  *
  * @property {Boolean}  dirty           - Indicates whether or not the array buffer of the VBO needs to be updated.
- * @property {Image}    texture         - Image texture for cc.TextureAtlas.
+ * @property {Image}    texture         - Image texture for TextureAtlas.
  * @property {Number}   capacity        - <@readonly> Quantity of quads that can be stored with the current texture atlas size.
  * @property {Number}   totalQuads      - <@readonly> Quantity of quads that are going to be drawn.
  * @property {Array}    quads           - <@readonly> Quads that are going to be rendered
@@ -51,17 +55,17 @@ export class TextureAtlas extends NewClass {
   /**
    * <p>Creates a TextureAtlas with an filename and with an initial capacity for Quads. <br />
    * The TextureAtlas capacity can be increased in runtime. </p>
-   * Constructor of cc.TextureAtlas
-   * @param {String|cc.Texture2D} fileName
+   * Constructor of TextureAtlas
+   * @param {String|Texture2D} fileName
    * @param {Number} capacity
    * @example
    * 1.
    * //creates a TextureAtlas with  filename
-   * var textureAtlas = new cc.TextureAtlas("res/hello.png", 3);
+   * var textureAtlas = new TextureAtlas("res/hello.png", 3);
    * 2.
    * //creates a TextureAtlas with texture
    * var texture = TextureCache.getInstance().addImage("hello.png");
-   * var textureAtlas = new cc.TextureAtlas(texture, 3);
+   * var textureAtlas = new TextureAtlas(texture, 3);
    */
   constructor(fileName, capacity) {
     super();
@@ -78,13 +82,14 @@ export class TextureAtlas extends NewClass {
     this._quadsReader = null;
 
     // Initialize renderer based on render type
-    this._renderer = cc._renderType === Game.RENDER_TYPE_CANVAS
-      ? new TextureAtlasCanvasRenderer(this)
-      : new TextureAtlasWebGLRenderer(this);
+    this._renderer =
+      cc._renderType === Game.RENDER_TYPE_CANVAS
+        ? new TextureAtlasCanvasRenderer(this)
+        : new TextureAtlasWebGLRenderer(this);
 
-    if (cc.isString(fileName)) {
+    if (isString(fileName)) {
       this.initWithFile(fileName, capacity);
-    } else if (fileName instanceof cc.Texture2D) {
+    } else if (fileName instanceof Texture2D) {
       this.initWithTexture(fileName, capacity);
     }
   }
@@ -163,13 +168,13 @@ export class TextureAtlas extends NewClass {
   _setQuadToArray(quad, index) {
     var locQuads = this._quads;
     if (!locQuads[index]) {
-      locQuads[index] = new cc.V3F_C4B_T2F_Quad(
+      locQuads[index] = new V3F_C4B_T2F_Quad(
         quad.tl,
         quad.bl,
         quad.tr,
         quad.br,
         this._quadsArrayBuffer,
-        index * cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT
+        index * V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT
       );
       return;
     }
@@ -192,7 +197,7 @@ export class TextureAtlas extends NewClass {
     var locIndices = this._indices,
       locCapacity = this._capacity;
     for (var i = 0; i < locCapacity; i++) {
-      if (cc.TEXTURE_ATLAS_USE_TRIANGLE_STRIP) {
+      if (TEXTURE_ATLAS_USE_TRIANGLE_STRIP) {
         locIndices[i * 6 + 0] = i * 4 + 0;
         locIndices[i * 6 + 1] = i * 4 + 0;
         locIndices[i * 6 + 2] = i * 4 + 2;
@@ -229,7 +234,7 @@ export class TextureAtlas extends NewClass {
    * @return {Boolean}
    * @example
    * //example
-   * var textureAtlas = new cc.TextureAtlas();
+   * var textureAtlas = new TextureAtlas();
    * textureAtlas.initWithTexture("hello.png", 3);
    */
   initWithFile(file, capacity) {
@@ -253,7 +258,7 @@ export class TextureAtlas extends NewClass {
    * @example
    * //example
    * var texture = TextureCache.getInstance().addImage("hello.png");
-   * var textureAtlas = new cc.TextureAtlas();
+   * var textureAtlas = new TextureAtlas();
    * textureAtlas.initWithTexture(texture, 3);
    */
   initWithTexture(texture, capacity) {
@@ -269,7 +274,7 @@ export class TextureAtlas extends NewClass {
     // Re-initialization is not allowed
     this._quads = [];
     this._indices = new Uint16Array(capacity * 6);
-    var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    var quadSize = V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     this._quadsArrayBuffer = new ArrayBuffer(quadSize * capacity);
     this._quadsReader = new Uint8Array(this._quadsArrayBuffer);
 
@@ -277,7 +282,7 @@ export class TextureAtlas extends NewClass {
 
     var locQuads = this._quads;
     for (var i = 0; i < capacity; i++)
-      locQuads[i] = new cc.V3F_C4B_T2F_Quad(
+      locQuads[i] = new V3F_C4B_T2F_Quad(
         null,
         null,
         null,
@@ -324,12 +329,12 @@ export class TextureAtlas extends NewClass {
       log(_LogInfos.TextureAtlas_insertQuad);
       return;
     }
-    var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    var quadSize = V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     // issue #575. index can be > totalQuads
     var remaining = this._totalQuads - 1 - index;
     var startOffset = index * quadSize;
     var moveLength = remaining * quadSize;
-    this._quads[this._totalQuads - 1] = new cc.V3F_C4B_T2F_Quad(
+    this._quads[this._totalQuads - 1] = new V3F_C4B_T2F_Quad(
       null,
       null,
       null,
@@ -364,7 +369,7 @@ export class TextureAtlas extends NewClass {
       _LogInfos.TextureAtlas_insertQuads
     );
 
-    var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    var quadSize = V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     this._totalQuads += amount;
     if (this._totalQuads > this._capacity) {
       log(_LogInfos.TextureAtlas_insertQuad);
@@ -379,7 +384,7 @@ export class TextureAtlas extends NewClass {
 
     var i;
     for (i = 0; i < amount; i++)
-      this._quads[lastIndex + i] = new cc.V3F_C4B_T2F_Quad(
+      this._quads[lastIndex + i] = new V3F_C4B_T2F_Quad(
         null,
         null,
         null,
@@ -415,7 +420,7 @@ export class TextureAtlas extends NewClass {
       _LogInfos.TextureAtlas_insertQuadFromIndex_2
     );
 
-    var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    var quadSize = V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     var locQuadsReader = this._quadsReader;
     var sourceArr = locQuadsReader.subarray(fromIndex * quadSize, quadSize);
     var startOffset, moveLength;
@@ -445,12 +450,9 @@ export class TextureAtlas extends NewClass {
    * @param {Number} index
    */
   removeQuadAtIndex(index) {
-    assert(
-      index < this._totalQuads,
-      _LogInfos.TextureAtlas_removeQuadAtIndex
-    );
+    assert(index < this._totalQuads, _LogInfos.TextureAtlas_removeQuadAtIndex);
 
-    var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    var quadSize = V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     this._totalQuads--;
     this._quads.length = this._totalQuads;
     if (index !== this._totalQuads) {
@@ -480,7 +482,7 @@ export class TextureAtlas extends NewClass {
 
     if (index !== this._totalQuads) {
       //move data
-      var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+      var quadSize = V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
       var srcOffset = (index + amount) * quadSize;
       var moveLength = (this._totalQuads - index) * quadSize;
       var dstOffset = index * quadSize;
@@ -518,7 +520,7 @@ export class TextureAtlas extends NewClass {
   resizeCapacity(newCapacity) {
     if (newCapacity === this._capacity) return true;
 
-    var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    var quadSize = V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     var oldCapacity = this._capacity;
     // update capacity and totolQuads
     this._totalQuads = Math.min(this._totalQuads, newCapacity);
@@ -532,7 +534,7 @@ export class TextureAtlas extends NewClass {
       this._quadsArrayBuffer = new ArrayBuffer(quadSize * capacity);
       this._quadsReader = new Uint8Array(this._quadsArrayBuffer);
       for (i = 0; i < capacity; i++)
-        this._quads = new cc.V3F_C4B_T2F_Quad(
+        this._quads = new V3F_C4B_T2F_Quad(
           null,
           null,
           null,
@@ -548,7 +550,7 @@ export class TextureAtlas extends NewClass {
         newQuads = [];
         newArrayBuffer = new ArrayBuffer(quadSize * capacity);
         for (i = 0; i < locTotalQuads; i++) {
-          newQuads[i] = new cc.V3F_C4B_T2F_Quad(
+          newQuads[i] = new V3F_C4B_T2F_Quad(
             quads[i].tl,
             quads[i].bl,
             quads[i].tr,
@@ -558,7 +560,7 @@ export class TextureAtlas extends NewClass {
           );
         }
         for (; i < capacity; i++)
-          newQuads[i] = new cc.V3F_C4B_T2F_Quad(
+          newQuads[i] = new V3F_C4B_T2F_Quad(
             null,
             null,
             null,
@@ -575,7 +577,7 @@ export class TextureAtlas extends NewClass {
         newQuads = [];
         newArrayBuffer = new ArrayBuffer(quadSize * capacity);
         for (i = 0; i < count; i++) {
-          newQuads[i] = new cc.V3F_C4B_T2F_Quad(
+          newQuads[i] = new V3F_C4B_T2F_Quad(
             quads[i].tl,
             quads[i].bl,
             quads[i].tr,
@@ -647,7 +649,7 @@ export class TextureAtlas extends NewClass {
       if (oldIndex === newIndex) return;
     }
 
-    var quadSize = cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    var quadSize = V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     var srcOffset = oldIndex * quadSize;
     var srcLength = amount * quadSize;
     var locQuadsReader = this._quadsReader;
@@ -680,10 +682,10 @@ export class TextureAtlas extends NewClass {
    * @param {Number} amount
    */
   fillWithEmptyQuadsFromIndex(index, amount) {
-    var count = amount * cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    var count = amount * V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
     var clearReader = new Uint8Array(
       this._quadsArrayBuffer,
-      index * cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT,
+      index * V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT,
       count
     );
     for (var i = 0; i < count; i++) clearReader[i] = 0;

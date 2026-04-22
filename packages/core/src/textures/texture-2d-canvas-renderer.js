@@ -1,6 +1,7 @@
 import { Rect } from "../cocoa/geometry/rect";
 import Sys from "../boot/sys";
 import TextureCache from "./texture-cache";
+import { Texture2D } from "./texture-2d";
 
 function renderToCache(image, cache) {
   var w = image.width;
@@ -72,16 +73,14 @@ function generateColorTextureMultiply(texture, r, g, b, rect, canvas) {
   if (canvas) onlyCanvas = true;
   else canvas = document.createElement("canvas");
   var textureImage = texture._htmlElementObj;
-  if (!rect)
-    rect = new Rect(0, 0, textureImage.width, textureImage.height);
+  if (!rect) rect = new Rect(0, 0, textureImage.width, textureImage.height);
 
   canvas.width = rect.width;
   canvas.height = rect.height;
 
   var context = canvas.getContext("2d");
   context.globalCompositeOperation = "source-over";
-  context.fillStyle =
-    "rgb(" + (r | 0) + "," + (g | 0) + "," + (b | 0) + ")";
+  context.fillStyle = "rgb(" + (r | 0) + "," + (g | 0) + "," + (b | 0) + ")";
   context.fillRect(0, 0, rect.width, rect.height);
   context.globalCompositeOperation = "multiply";
   context.drawImage(
@@ -110,7 +109,7 @@ function generateColorTextureMultiply(texture, r, g, b, rect, canvas) {
 
   if (onlyCanvas) return canvas;
 
-  var newTexture = new cc.Texture2D();
+  var newTexture = new Texture2D();
   newTexture.initWithElement(canvas);
   newTexture.handleLoadedTexture();
   return newTexture;
@@ -122,8 +121,7 @@ function generateColorTextureFourChannel(texture, r, g, b, rect, canvas) {
   else canvas = document.createElement("canvas");
 
   var textureImage = texture._htmlElementObj;
-  if (!rect)
-    rect = new Rect(0, 0, textureImage.width, textureImage.height);
+  if (!rect) rect = new Rect(0, 0, textureImage.width, textureImage.height);
   var x, y, w, h;
   x = rect.x;
   y = rect.y;
@@ -152,7 +150,7 @@ function generateColorTextureFourChannel(texture, r, g, b, rect, canvas) {
   }
   if (onlyCanvas) return canvas;
 
-  var newTexture = new cc.Texture2D();
+  var newTexture = new Texture2D();
   newTexture.initWithElement(canvas);
   newTexture.handleLoadedTexture();
   return newTexture;
@@ -299,7 +297,14 @@ export default class CanvasTextureRenderer {
     if (Sys.getInstance()._supportCanvasNewBlendModes) {
       return generateColorTextureMultiply(this._texture, r, g, b, rect, canvas);
     } else {
-      return generateColorTextureFourChannel(this._texture, r, g, b, rect, canvas);
+      return generateColorTextureFourChannel(
+        this._texture,
+        r,
+        g,
+        b,
+        rect,
+        canvas
+      );
     }
   }
 
@@ -327,8 +332,7 @@ export default class CanvasTextureRenderer {
         this._grayElementObj = generateGrayTexture(t._htmlElementObj);
       t._htmlElementObj = this._grayElementObj;
     } else {
-      if (this._backupElement !== null)
-        t._htmlElementObj = this._backupElement;
+      if (this._backupElement !== null) t._htmlElementObj = this._backupElement;
     }
   }
 
@@ -336,7 +340,7 @@ export default class CanvasTextureRenderer {
     var t = this._texture;
     if (!t._textureLoaded) return null;
     var grayElement = generateGrayTexture(t._htmlElementObj);
-    var newTexture = new cc.Texture2D();
+    var newTexture = new Texture2D();
     newTexture.initWithElement(grayElement);
     newTexture.handleLoadedTexture();
     return newTexture;

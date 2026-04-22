@@ -56,16 +56,16 @@ import AnimationCache from "./animation-cache";
  *    - It supports aliasing / antialiasing    <br/>
  *    - But the rendering will be slower: 1 draw per children.   <br/>
  *
- * The default anchorPoint in cc.Sprite is (0.5, 0.5). </p>
+ * The default anchorPoint in Sprite is (0.5, 0.5). </p>
  *
- * @param {String|cc.SpriteFrame|HTMLImageElement|cc.Texture2D} fileName  The string which indicates a path to image file, e.g., "scene1/monster.png".
+ * @param {String|SpriteFrame|HTMLImageElement|Texture2D} fileName  The string which indicates a path to image file, e.g., "scene1/monster.png".
  * @param {Rect} [rect]  Only the contents inside rect of pszFileName's texture will be applied for this sprite.
  * @param {Boolean} [rotated] Whether or not the texture rectangle is rotated.
  * @example
  *
  * 1.Create a sprite with image path and rect
  * var sprite1 = new Sprite("res/HelloHTML5World.png");
- * var sprite2 = new Sprite("res/HelloHTML5World.png",cc.rect(0,0,480,320));
+ * var sprite2 = new Sprite("res/HelloHTML5World.png",rect(0,0,480,320));
  *
  * 2.Create a sprite with a sprite frame name. Must add "#" before frame name.
  * var sprite = new Sprite('#grossini_dance_01.png');
@@ -78,7 +78,7 @@ import AnimationCache from "./animation-cache";
  *      After creation, the rect will be the size of the texture, and the offset will be (0,0).
  * var texture = TextureCache.getInstance().addImage("HelloHTML5World.png");
  * var sprite1 = new Sprite(texture);
- * var sprite2 = new Sprite(texture, cc.rect(0,0,480,320));
+ * var sprite2 = new Sprite(texture, rect(0,0,480,320));
  *
  * @property {Boolean}              dirty               - Indicates whether the sprite needs to be updated.
  * @property {Boolean}              flippedX            - Indicates whether or not the sprite is flipped on x axis.
@@ -88,7 +88,7 @@ import AnimationCache from "./animation-cache";
  * @property {Number}               atlasIndex          - The index used on the TextureAtlas.
  * @property {Texture2D}         texture             - Texture used to render the sprite.
  * @property {Boolean}              textureRectRotated  - <@readonly> Indicate whether the texture rectangle is rotated.
- * @property {TextureAtlas}      textureAtlas        - The weak reference of the TextureAtlas when the sprite is rendered using via cc.SpriteBatchNode.
+ * @property {TextureAtlas}      textureAtlas        - The weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
  * @property {SpriteBatchNode}   batchNode           - The batch node object if this sprite is rendered by SpriteBatchNode.
  * @property {V3F_C4B_T2F_Quad}  quad                - <@readonly> The quad (tex coords, vertex coords and color) information.
  */
@@ -111,13 +111,13 @@ export class Sprite extends EventHelper(Node) {
     // Data used when the sprite is self-rendered
     //
     this._blendFunc = null; //It's required for TextureProtocol inheritance
-    this._texture = null; //cc.Texture2D object that is used to render the sprite
+    this._texture = null; //Texture2D object that is used to render the sprite
 
     //
     // Shared data
     //
     // texture
-    this._rect = null; //Rectangle of cc.Texture2D
+    this._rect = null; //Rectangle of Texture2D
     this._rectRotated = false; //Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)
@@ -196,7 +196,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   /**
-   * Returns the rect of the cc.Sprite in points
+   * Returns the rect of the Sprite in points
    * @return {Rect}
    */
   getTextureRect() {
@@ -204,7 +204,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   /**
-   * Returns the weak reference of the cc.TextureAtlas when the sprite is rendered using via cc.SpriteBatchNode
+   * Returns the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
    * @return {TextureAtlas}
    */
   getTextureAtlas() {
@@ -212,7 +212,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   /**
-   * Sets the weak reference of the cc.TextureAtlas when the sprite is rendered using via cc.SpriteBatchNode
+   * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
    * @param {TextureAtlas} textureAtlas
    */
   setTextureAtlas(textureAtlas) {
@@ -248,13 +248,13 @@ export class Sprite extends EventHelper(Node) {
 
   /**
    * Initializes a sprite with a sprite frame name. <br/>
-   * A cc.SpriteFrame will be fetched from the cc.SpriteFrameCache by name.  <br/>
-   * If the cc.SpriteFrame doesn't exist it will raise an exception. <br/>
+   * A SpriteFrame will be fetched from the SpriteFrameCache by name.  <br/>
+   * If the SpriteFrame doesn't exist it will raise an exception. <br/>
    * Please pass parameters to the constructor to initialize the sprite, do not call this function yourself.
-   * @param {String} spriteFrameName A key string that can fected a valid cc.SpriteFrame from cc.SpriteFrameCache
+   * @param {String} spriteFrameName A key string that can fected a valid SpriteFrame from SpriteFrameCache
    * @return {Boolean} true if the sprite is initialized properly, false otherwise.
    * @example
-   * var sprite = new cc.Sprite();
+   * var sprite = new Sprite();
    * sprite.initWithSpriteFrameName("grossini_dance_01.png");
    */
   initWithSpriteFrameName(spriteFrameName) {
@@ -298,7 +298,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   //
-  // cc.Node property overloads
+  // Node property overloads
   //
 
   /**
@@ -404,8 +404,8 @@ export class Sprite extends EventHelper(Node) {
   }
 
   /**
-   * Returns the batch node object if this sprite is rendered by cc.SpriteBatchNode
-   * @returns {SpriteBatchNode|null} The cc.SpriteBatchNode object if this sprite is rendered by cc.SpriteBatchNode, null if the sprite isn't used batch node.
+   * Returns the batch node object if this sprite is rendered by SpriteBatchNode
+   * @returns {SpriteBatchNode|null} The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode, null if the sprite isn't used batch node.
    */
   getBatchNode() {
     return this._batchNode;
@@ -455,16 +455,16 @@ export class Sprite extends EventHelper(Node) {
 
   /**
    * Returns the quad (tex coords, vertex coords and color) information.
-   * @return {V3F_C4B_T2F_Quad|null} Returns a cc.V3F_C4B_T2F_Quad object when render mode is WebGL, returns null when render mode is Canvas.
+   * @return {V3F_C4B_T2F_Quad|null} Returns a V3F_C4B_T2F_Quad object when render mode is WebGL, returns null when render mode is Canvas.
    */
   getQuad() {
     return null;
   }
 
   /**
-   * conforms to cc.TextureProtocol protocol
+   * conforms to TextureProtocol protocol
    * @function
-   * @param {Number|cc.BlendFunc} src
+   * @param {Number|BlendFunc} src
    * @param {Number} dst
    */
   setBlendFunc(src, dst) {
@@ -663,7 +663,7 @@ export class Sprite extends EventHelper(Node) {
   // BatchNode methods
 
   /**
-   * Add child to sprite (override cc.Node)
+   * Add child to sprite (override Node)
    * @function
    * @param {Sprite} child
    * @param {Number} localZOrder  child's zOrder
@@ -677,7 +677,7 @@ export class Sprite extends EventHelper(Node) {
     if (tag == null) tag = child.tag;
 
     if (this._renderCmd._setBatchNodeForAddChild(child)) {
-      //cc.Node already sets isReorderChildDirty_ so this needs to be after batchNode check
+      //Node already sets isReorderChildDirty_ so this needs to be after batchNode check
       super.addChild(child, localZOrder, tag);
       this._hasChildren = true;
     }
@@ -731,7 +731,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   /**
-   * Returns whether or not a cc.SpriteFrame is being displayed
+   * Returns whether or not a SpriteFrame is being displayed
    * @function
    * @param {SpriteFrame} frame
    * @return {Boolean}
@@ -759,8 +759,8 @@ export class Sprite extends EventHelper(Node) {
    * @function
    * @param {SpriteBatchNode|null} spriteBatchNode
    * @example
-   *  var batch = new cc.SpriteBatchNode("Images/grossini_dance_atlas.png", 15);
-   *  var sprite = new cc.Sprite(batch.texture, cc.rect(0, 0, 57, 57));
+   *  var batch = new SpriteBatchNode("Images/grossini_dance_atlas.png", 15);
+   *  var sprite = new Sprite(batch.texture, rect(0, 0, 57, 57));
    *  batch.addChild(sprite);
    *  layer.addChild(batch);
    */
@@ -886,7 +886,7 @@ export class Sprite extends EventHelper(Node) {
 }
 
 /**
- * Sprite invalid index on the cc.SpriteBatchNode
+ * Sprite invalid index on the SpriteBatchNode
  * @constant
  * @type {Number}
  */

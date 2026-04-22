@@ -31,7 +31,7 @@
 /**
  * Class that contains some openGL variables
  * @example
- * var textureSize = cc.configuration.getMaxTextureSize();
+ * var textureSize = configuration.getMaxTextureSize();
  */
 export class Configuration {
 	static _instance = null;

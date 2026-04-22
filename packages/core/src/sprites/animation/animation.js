@@ -31,10 +31,10 @@ import TextureCache from "../../textures/texture-cache";
 
 /**
  * <p>
- *     A cc.Animation object is used to perform animations on the cc.Sprite objects.<br/>
+ *     A Animation object is used to perform animations on the Sprite objects.<br/>
  *     <br/>
- *      The cc.Animation object contains cc.SpriteFrame objects, and a possible delay between the frames. <br/>
- *      You can animate a cc.Animation object by using the cc.Animate action.
+ *      The Animation object contains SpriteFrame objects, and a possible delay between the frames. <br/>
+ *      You can animate a Animation object by using the Animate action.
  * </p>
  * @param {Array} frames
  * @param {Number} delay
@@ -42,26 +42,26 @@ import TextureCache from "../../textures/texture-cache";
  *
  * @example
  * // 1. Creates an empty animation
- * var animation1 = new cc.Animation();
+ * var animation1 = new Animation();
  *
  * // 2. Create an animation with sprite frames, delay and loops.
  * var spriteFrames = [];
- * var frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+ * var frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
  * spriteFrames.push(frame);
- * var animation1 = new cc.Animation(spriteFrames);
- * var animation2 = new cc.Animation(spriteFrames, 0.2);
- * var animation2 = new cc.Animation(spriteFrames, 0.2, 2);
+ * var animation1 = new Animation(spriteFrames);
+ * var animation2 = new Animation(spriteFrames, 0.2);
+ * var animation2 = new Animation(spriteFrames, 0.2, 2);
  *
  * // 3. Create an animation with animation frames, delay and loops.
  * var animationFrames = [];
- * var frame =  new cc.AnimationFrame();
+ * var frame =  new AnimationFrame();
  * animationFrames.push(frame);
- * var animation1 = new cc.Animation(animationFrames);
- * var animation2 = new cc.Animation(animationFrames, 0.2);
- * var animation3 = new cc.Animation(animationFrames, 0.2, 2);
+ * var animation1 = new Animation(animationFrames);
+ * var animation2 = new Animation(animationFrames, 0.2);
+ * var animation3 = new Animation(animationFrames, 0.2, 2);
  *
  * //create an animate with this animation
- * var action = cc.animate(animation1);
+ * var action = animate(animation1);
  *
  * //run animate
  * sprite.runAction(action);
@@ -112,7 +112,7 @@ export class Animation extends NewClass {
   }
 
   /**
-   * Adds a frame to a cc.Animation, the frame will be added with one "delay unit".
+   * Adds a frame to a Animation, the frame will be added with one "delay unit".
    * @param {SpriteFrame} frame
    */
   addSpriteFrame(frame) {
@@ -125,7 +125,7 @@ export class Animation extends NewClass {
   }
 
   /**
-   * Adds a frame with an image filename. Internally it will create a cc.SpriteFrame and it will add it. The frame will be added with one "delay unit".
+   * Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it. The frame will be added with one "delay unit".
    * @param {String} fileName
    */
   addSpriteFrameWithFile(fileName) {
@@ -138,7 +138,7 @@ export class Animation extends NewClass {
   }
 
   /**
-   * Adds a frame with a texture and a rect. Internally it will create a cc.SpriteFrame and it will add it. The frame will be added with one "delay unit".
+   * Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it. The frame will be added with one "delay unit".
    * @param {Texture2D} texture
    * @param {Rect} rect
    */
@@ -148,7 +148,7 @@ export class Animation extends NewClass {
   }
 
   /**
-   * Initializes a cc.Animation with cc.AnimationFrame, do not call this method yourself, please pass parameters to constructor to initialize.
+   * Initializes a Animation with AnimationFrame, do not call this method yourself, please pass parameters to constructor to initialize.
    * @param {Array} arrayOfAnimationFrames
    * @param {Number} delayPerUnit
    * @param {Number} [loops=1]
@@ -274,7 +274,7 @@ export class Animation extends NewClass {
   }
 
   /**
-   * Returns total delay units of the cc.Animation.
+   * Returns total delay units of the Animation.
    * @return {Number}
    */
   getTotalDelayUnits() {
@@ -282,7 +282,7 @@ export class Animation extends NewClass {
   }
 
   /**
-   * Initializes a cc.Animation with frames and a delay between frames, do not call this method yourself, please pass parameters to constructor to initialize.
+   * Initializes a Animation with frames and a delay between frames, do not call this method yourself, please pass parameters to constructor to initialize.
    * @param {Array} frames
    * @param {Number} delay
    * @param {Number} [loops=1]

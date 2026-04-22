@@ -1,10 +1,23 @@
 import { Director } from "../director/director";
 import { NewClass } from "../platform/class";
+import { EGLView } from "../platform/egl-view/egl-view";
+import { inputManager } from "../platform/input-manager";
 import EventHelper from "../event-manager/event-helper";
 import EventManager from "../event-manager/event-manager";
+import EventCustom from "../event-manager/event/event-custom";
+import { DrawingPrimitiveCanvas } from "../drawing-primitives-canvas";
+import { DrawingPrimitiveWebGL } from "../drawing-primitives-webgl";
+import {
+  rendererCanvas,
+  CanvasContextWrapper
+} from "../renderer/renderer-canvas";
+import { rendererWebGL } from "../renderer/renderer-webgl";
 import Loader from "./loader";
 import Path from "./path";
 import { log } from "./debugger";
+import { initEngine } from "./engine";
+import { create3DContext } from "./sys";
+import { isUndefined } from "./utils";
 import TextureCache from "../textures/texture-cache";
 
 /**
@@ -59,7 +72,7 @@ export default class Game extends EventHelper(NewClass) {
 
   constructor() {
     super();
-    // Copy static constants to instance for backward compatibility (cc.game.RENDER_TYPE_WEBGL etc.)
+    // Copy static constants to instance for backward compatibility (game.RENDER_TYPE_WEBGL etc.)
     this.DEBUG_MODE_NONE = Game.DEBUG_MODE_NONE;
     this.DEBUG_MODE_INFO = Game.DEBUG_MODE_INFO;
     this.DEBUG_MODE_WARN = Game.DEBUG_MODE_WARN;
@@ -92,17 +105,17 @@ export default class Game extends EventHelper(NewClass) {
   _frameTime = null;
 
   /**
-   * The outer frame of the game canvas, parent of cc.container
+   * The outer frame of the game canvas, parent of container
    * @type {Object}
    */
   frame = null;
   /**
-   * The container of game canvas, equals to cc.container
+   * The container of game canvas, equals to container
    * @type {Object}
    */
   container = null;
   /**
-   * The canvas of the game, equals to cc._canvas
+   * The canvas of the game, equals to _canvas
    * @type {Object}
    */
   canvas = null;
@@ -222,7 +235,7 @@ export default class Game extends EventHelper(NewClass) {
 
       this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
 
-      cc.view = cc.EGLView._getInstance();
+      cc.view = EGLView._getInstance();
       cc.director = Director.getInstance();
       if (cc.director.setOpenGLView) cc.director.setOpenGLView(cc.view);
       cc.winSize = cc.director.getWinSize();
@@ -246,7 +259,7 @@ export default class Game extends EventHelper(NewClass) {
       return;
     }
 
-    cc.initEngine(this.config, () => {
+    initEngine(this.config, () => {
       this.prepare(cb);
     });
   }
@@ -462,27 +475,27 @@ export default class Game extends EventHelper(NewClass) {
       this._renderContext =
         cc._renderContext =
         cc.webglContext =
-          cc.create3DContext(localCanvas, {
+          create3DContext(localCanvas, {
             stencil: true,
             alpha: false
           });
     }
     if (this._renderContext) {
-      cc.renderer = cc.rendererWebGL;
+      cc.renderer = rendererWebGL;
       win.gl = this._renderContext;
       cc.renderer.init();
-      cc._drawingUtil = new cc.DrawingPrimitiveWebGL(this._renderContext);
+      cc._drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
       cc.glExt = {};
       cc.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
       cc.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
     } else {
       cc._renderType = Game.RENDER_TYPE_CANVAS;
-      cc.renderer = cc.rendererCanvas;
-      this._renderContext = cc._renderContext = new cc.CanvasContextWrapper(
+      cc.renderer = rendererCanvas;
+      this._renderContext = cc._renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")
       );
-      cc._drawingUtil = cc.DrawingPrimitiveCanvas
-        ? new cc.DrawingPrimitiveCanvas(this._renderContext)
+      cc._drawingUtil = DrawingPrimitiveCanvas
+        ? new DrawingPrimitiveCanvas(this._renderContext)
         : null;
     }
 
@@ -503,21 +516,21 @@ export default class Game extends EventHelper(NewClass) {
     var win = window,
       hidden;
 
-    this._eventHide = this._eventHide || new cc.EventCustom(Game.EVENT_HIDE);
+    this._eventHide = this._eventHide || new EventCustom(Game.EVENT_HIDE);
     this._eventHide.setUserData(this);
-    this._eventShow = this._eventShow || new cc.EventCustom(Game.EVENT_SHOW);
+    this._eventShow = this._eventShow || new EventCustom(Game.EVENT_SHOW);
     this._eventShow.setUserData(this);
 
     if (this.config[Game.CONFIG_KEY.registerSystemEvent])
-      cc.inputManager.registerSystemEvent(this.canvas);
+      inputManager.registerSystemEvent(this.canvas);
 
-    if (!cc.isUndefined(document.hidden)) {
+    if (!isUndefined(document.hidden)) {
       hidden = "hidden";
-    } else if (!cc.isUndefined(document.mozHidden)) {
+    } else if (!isUndefined(document.mozHidden)) {
       hidden = "mozHidden";
-    } else if (!cc.isUndefined(document.msHidden)) {
+    } else if (!isUndefined(document.msHidden)) {
       hidden = "msHidden";
-    } else if (!cc.isUndefined(document.webkitHidden)) {
+    } else if (!isUndefined(document.webkitHidden)) {
       hidden = "webkitHidden";
     }
 

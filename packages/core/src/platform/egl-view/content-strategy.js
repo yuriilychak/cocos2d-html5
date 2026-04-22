@@ -29,7 +29,7 @@ import { Rect } from "../../cocoa/geometry/rect";
 import Game from "../../boot/game";
 
 /**
- * <p>cc.ContentStrategy class is the root strategy class of content's scale strategy,
+ * <p>ContentStrategy class is the root strategy class of content's scale strategy,
  * it controls the behavior of how to scale the scene and setup the viewport for the game</p>
  *
  */
@@ -57,7 +57,7 @@ export class ContentStrategy extends NewClass {
     // Translate the content
     if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
       //TODO: modify something for setTransform
-      //cc._renderContext.translate(viewport.x, viewport.y + contentH);
+      //_renderContext.translate(viewport.x, viewport.y + contentH);
     }
 
     this._result.scale = [scaleX, scaleY];

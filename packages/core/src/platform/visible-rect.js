@@ -28,7 +28,7 @@ import { Point } from "../cocoa/geometry/point";
 
 /**
  * visibleRect is a singleton object which defines the actual visible rect of the current view,
- * it should represent the same rect as cc.view.getViewportRect()
+ * it should represent the same rect as view.getViewportRect()
  *
  * @property {Point}     topLeft         - Top left coordinate of the screen related to the game scene
  * @property {Point}     topRight        - Top right coordinate of the screen related to the game scene

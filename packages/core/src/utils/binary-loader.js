@@ -132,7 +132,7 @@ export function loadBinarySync(url) {
 }
 
 /**
- * Initialize binary loader by attaching methods to cc.loader and
+ * Initialize binary loader by attaching methods to loader and
  * injecting IE VBScript compatibility if needed.
  * @function
  */

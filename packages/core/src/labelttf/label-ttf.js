@@ -25,11 +25,13 @@
  ****************************************************************************/
 
 import { Sprite } from "../sprites/sprite";
+import { Node } from "../base-nodes/node";
 import Game from "../boot/game";
 import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
+import { FontDefinition } from "../platform/types/font-definition";
 import { Size } from "../cocoa/geometry/size";
-import { log, _LogInfos } from '../boot/debugger';
+import { log, _LogInfos } from "../boot/debugger";
 
 /**
  * <p>LabelTTF is a subclass of TextureNode that knows how to render text labels with system font or a ttf font file<br/>
@@ -123,7 +125,7 @@ export class LabelTTF extends Sprite {
   }
   _setUpdateTextureDirty() {
     this._needUpdateTexture = true;
-    this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.textDirty);
+    this._renderCmd.setDirtyFlag(Node._dirtyFlags.textDirty);
   }
   constructor(text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
     super();
@@ -179,10 +181,10 @@ export class LabelTTF extends Sprite {
     this._renderCmd._setColorsString();
     this._textureLoaded = true;
 
-    if (fontName && fontName instanceof cc.FontDefinition) {
+    if (fontName && fontName instanceof FontDefinition) {
       this.initWithStringAndTextDefinition(text, fontName);
     } else {
-      cc.LabelTTF.prototype.initWithString.call(
+      LabelTTF.prototype.initWithString.call(
         this,
         text,
         fontName,
@@ -222,14 +224,14 @@ export class LabelTTF extends Sprite {
   }
   /**
    * Returns Horizontal Alignment of LabelTTF
-   * @return {TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT}
+   * @return {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT}
    */
   getHorizontalAlignment() {
     return this._hAlignment;
   }
   /**
    * Returns Vertical Alignment of LabelTTF
-   * @return {VERTICAL_TEXT_ALIGNMENT_TOP|cc.VERTICAL_TEXT_ALIGNMENT_CENTER|cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM}
+   * @return {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM}
    */
   getVerticalAlignment() {
     return this._vAlignment;
@@ -534,13 +536,13 @@ export class LabelTTF extends Sprite {
     this.setFontFillColor(textDefinition.fillStyle);
 
     if (mustUpdateTexture) this._renderCmd._updateTexture();
-    var flags = cc.Node._dirtyFlags;
+    var flags = Node._dirtyFlags;
     this._renderCmd.setDirtyFlag(
       flags.colorDirty | flags.opacityDirty | flags.textDirty
     );
   }
   _prepareTextDefinition(adjustForResolution) {
-    var texDef = new cc.FontDefinition();
+    var texDef = new FontDefinition();
 
     if (adjustForResolution) {
       texDef.fontSize = this._fontSize;
@@ -619,7 +621,7 @@ export class LabelTTF extends Sprite {
     var ratio = cc.view.getDevicePixelRatio();
     this._scaleX = scale / ratio;
     this._scaleY = (scaleY || scaleY === 0 ? scaleY : scale) / ratio;
-    this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /**
    * Returns the scale factor on X axis of this node
@@ -639,7 +641,7 @@ export class LabelTTF extends Sprite {
    */
   setScaleX(newScaleX) {
     this._scaleX = newScaleX / cc.view.getDevicePixelRatio();
-    this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /**
    * Returns the scale factor on Y axis of this node
@@ -659,7 +661,7 @@ export class LabelTTF extends Sprite {
    */
   setScaleY(newScaleY) {
     this._scaleY = newScaleY / cc.view.getDevicePixelRatio();
-    this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /*
    * END SCALE METHODS
@@ -679,7 +681,7 @@ export class LabelTTF extends Sprite {
 
       // Force update
       this._setUpdateTextureDirty();
-      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
     }
   }
   _updateString() {
@@ -692,7 +694,7 @@ export class LabelTTF extends Sprite {
   }
   /**
    * Sets Horizontal Alignment of LabelTTF
-   * @param {TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT} alignment Horizontal Alignment
+   * @param {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT} alignment Horizontal Alignment
    */
   setHorizontalAlignment(alignment) {
     if (alignment !== this._hAlignment) {
@@ -703,7 +705,7 @@ export class LabelTTF extends Sprite {
   }
   /**
    * Sets Vertical Alignment of LabelTTF
-   * @param {VERTICAL_TEXT_ALIGNMENT_TOP|cc.VERTICAL_TEXT_ALIGNMENT_CENTER|cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM} verticalAlignment
+   * @param {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM} verticalAlignment
    */
   setVerticalAlignment(verticalAlignment) {
     if (verticalAlignment !== this._vAlignment) {
@@ -796,7 +798,7 @@ export class LabelTTF extends Sprite {
     return this._renderCmd._getFontStyle();
   }
   _setFont(fontStyle) {
-    var res = cc.LabelTTF._fontStyleRE.exec(fontStyle);
+    var res = LabelTTF._fontStyleRE.exec(fontStyle);
     if (res) {
       this._fontSize = parseInt(res[1]);
       this._fontName = res[2];
@@ -859,10 +861,10 @@ export class LabelTTF extends Sprite {
   }
   _createRenderCmd() {
     if (cc._renderType === Game.RENDER_TYPE_WEBGL)
-      return new cc.LabelTTF.WebGLRenderCmd(this);
+      return new LabelTTF.WebGLRenderCmd(this);
     else if (this._onCacheCanvasMode)
-      return new cc.LabelTTF.CacheCanvasRenderCmd(this);
-    else return new cc.LabelTTF.CanvasRenderCmd(this);
+      return new LabelTTF.CacheCanvasRenderCmd(this);
+    else return new LabelTTF.CanvasRenderCmd(this);
   }
   //For web only
   _setFontStyle(fontStyle) {
@@ -1066,7 +1068,7 @@ document.body
 LabelTTF.__getFontHeightByDiv = function (fontName, fontSize) {
   var clientHeight,
     labelDiv = LabelTTF.__labelHeightDiv;
-  if (fontName instanceof cc.FontDefinition) {
+  if (fontName instanceof FontDefinition) {
     /** @type FontDefinition */
     var fontDef = fontName;
     clientHeight = LabelTTF.__fontHeightCache[fontDef._getCanvasFontStr()];

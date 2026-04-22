@@ -35,28 +35,28 @@ import TextureCache from "../textures/texture-cache";
 
 /**
  * <p>
- *    A cc.SpriteFrame has:<br/>
- *      - texture: A cc.Texture2D that will be used by the cc.Sprite<br/>
+ *    A SpriteFrame has:<br/>
+ *      - texture: A Texture2D that will be used by the Sprite<br/>
  *      - rectangle: A rectangle of the texture<br/>
  *    <br/>
- *    You can modify the frame of a cc.Sprite by doing:<br/>
+ *    You can modify the frame of a Sprite by doing:<br/>
  * </p>
  *
- * @param {String|cc.Texture2D} filename
+ * @param {String|Texture2D} filename
  * @param {Rect} rect If parameters' length equal 2, rect in points, else rect in pixels
  * @param {Boolean} [rotated] Whether the frame is rotated in the texture
  * @param {Point} [offset] The offset of the frame in the texture
  * @param {Size} [originalSize] The size of the frame in the texture
  *
  * @example
- * // 1. Create a cc.SpriteFrame with image path
- * var frame1 = new cc.SpriteFrame("res/grossini_dance.png",cc.rect(0,0,90,128));
- * var frame2 = new cc.SpriteFrame("res/grossini_dance.png",cc.rect(0,0,90,128),false,0,cc.size(90,128));
+ * // 1. Create a SpriteFrame with image path
+ * var frame1 = new SpriteFrame("res/grossini_dance.png",rect(0,0,90,128));
+ * var frame2 = new SpriteFrame("res/grossini_dance.png",rect(0,0,90,128),false,0,size(90,128));
  *
- * // 2. Create a cc.SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+ * // 2. Create a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
  * var texture = TextureCache.getInstance().addImage("res/grossini_dance.png");
- * var frame1 = new cc.SpriteFrame(texture, cc.rect(0,0,90,128));
- * var frame2 = new cc.SpriteFrame(texture, cc.rect(0,0,90,128),false,0,cc.size(90,128));
+ * var frame1 = new SpriteFrame(texture, rect(0,0,90,128));
+ * var frame2 = new SpriteFrame(texture, rect(0,0,90,128),false,0,size(90,128));
  */
 export class SpriteFrame extends EventHelper(NewClass) {
   constructor(filename, rect, rotated, offset, originalSize) {
@@ -274,7 +274,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
               this._originalSize.width = w;
               this._originalSize.height = h;
             }
-            //dispatch 'load' event of cc.SpriteFrame
+            //dispatch 'load' event of SpriteFrame
             this.dispatchEvent("load");
           },
           this
@@ -345,10 +345,10 @@ export class SpriteFrame extends EventHelper(NewClass) {
   /**
    * Initializes SpriteFrame with Texture, rect, rotated, offset and originalSize in pixels.<br/>
    * Please pass parameters to the constructor to initialize the sprite, do not call this function yourself.
-   * @param {String|cc.Texture2D} texture
+   * @param {String|Texture2D} texture
    * @param {Rect} rect if parameters' length equal 2, rect in points, else rect in pixels
    * @param {Boolean} [rotated=false]
-   * @param {Point} [offset=cc.p(0,0)]
+   * @param {Point} [offset=p(0,0)]
    * @param {Size} [originalSize=rect.size]
    * @return {Boolean}
    */

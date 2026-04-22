@@ -468,7 +468,7 @@ import {
 } from "./kazmath";
 
 // ======================================================================
-// cc.* namespace assignments
+// Namespace assignments
 // ======================================================================
 
 // Boot — Utilities
@@ -944,7 +944,7 @@ cc.SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG =
 cc.SHADEREX_SWITCHMASK_FRAG = SHADEREX_SWITCHMASK_FRAG;
 
 // ======================================================================
-// Init functions (must run AFTER cc.* class assignments)
+// Init functions (must run AFTER class assignments)
 // ======================================================================
 initInputExtension(inputManager);
 initBinaryLoader();

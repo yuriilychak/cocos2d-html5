@@ -26,8 +26,8 @@ import { Sprite } from "./sprite";
 import { Rect } from "../cocoa/geometry/rect";
 
 /**
- * cc.BakeSprite is a type of sprite that will be cached.
- * @extend cc.Sprite
+ * BakeSprite is a type of sprite that will be cached.
+ * @extend Sprite
  */
 export class BakeSprite extends Sprite {
   constructor() {

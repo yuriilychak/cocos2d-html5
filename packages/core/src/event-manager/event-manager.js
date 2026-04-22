@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { NewClass } from "../platform/class";
+import { Node } from "../base-nodes/node";
 import { Event, EventCustom, EventTouch } from "./event";
 import Game from "../boot/game";
 import {
@@ -38,7 +39,7 @@ import {
   _EventListenerAcceleration,
   _EventListenerKeyboard
 } from "./event-extension";
-import { log, assert, _LogInfos } from '../boot/debugger';
+import { log, assert, _LogInfos } from "../boot/debugger";
 
 /**
  * @ignore
@@ -214,8 +215,7 @@ export default class EventManager {
       this._setDirty(listenerID, EventManager.DIRTY_SCENE_GRAPH_PRIORITY);
 
       var node = listener._getSceneGraphPriority();
-      if (node === null)
-        log(_LogInfos.eventManager__forceAddEventListener);
+      if (node === null) log(_LogInfos.eventManager__forceAddEventListener);
 
       this._associateNodeAndEventListener(node, listener);
       if (node.isRunning()) this.resumeTarget(node);
@@ -455,10 +455,7 @@ export default class EventManager {
       this._onUpdateListeners(listeners);
     }
 
-    assert(
-      locInDispatch === 1,
-      _LogInfos.EventManager__updateListeners_2
-    );
+    assert(locInDispatch === 1, _LogInfos.EventManager__updateListeners_2);
 
     var locToAddedListeners = this._toAddedListeners;
     if (locToAddedListeners.length !== 0) {
@@ -785,10 +782,7 @@ export default class EventManager {
    * @return {EventListener} Return the listener. Needed in order to remove the event from the dispatcher.
    */
   addListener(listener, nodeOrPriority) {
-    assert(
-      listener && nodeOrPriority,
-      _LogInfos.eventManager_addListener_2
-    );
+    assert(listener && nodeOrPriority, _LogInfos.eventManager_addListener_2);
     if (!(listener instanceof EventListener)) {
       assert(
         !cc.isNumber(nodeOrPriority),
@@ -947,12 +941,12 @@ export default class EventManager {
 
   /**
    * Removes all listeners with the same event listener type or removes all listeners of a node
-   * @param {Number|cc.Node} listenerType listenerType or a node
+   * @param {Number|Node} listenerType listenerType or a node
    * @param {Boolean} [recursive=false]
    */
   removeListeners(listenerType, recursive) {
     var _t = this;
-    if (listenerType instanceof cc.Node) {
+    if (listenerType instanceof Node) {
       // Ensure the node is removed from these immediately also.
       // Don't want any dangling pointers or the possibility of dealing with deleted objects..
       delete _t._nodePriorityMap[listenerType.__instanceId];

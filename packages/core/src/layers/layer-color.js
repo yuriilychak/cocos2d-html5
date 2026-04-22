@@ -24,128 +24,131 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Layer } from './layer';
-import { Color } from '../platform/types/color';
-import Game from '../boot/game';
-import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from './renderer';
+import { Layer } from "./layer";
+import { Node } from "../base-nodes/node";
+import { Color } from "../platform/types/color";
+import Game from "../boot/game";
+import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from "./renderer";
 
 /**
  * LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
  */
 export class LayerColor extends Layer {
-    getBlendFunc() {
-        return this._blendFunc;
+  getBlendFunc() {
+    return this._blendFunc;
+  }
+
+  setOpacityModifyRGB(value) {}
+
+  isOpacityModifyRGB() {
+    return false;
+  }
+
+  constructor(color, width, height) {
+    super();
+    this._blendFunc = null;
+    this._className = "LayerColor";
+
+    this._blendFunc = cc.BlendFunc.ALPHA_NON_PREMULTIPLIED;
+    LayerColor.prototype.init.call(this, color, width, height);
+  }
+
+  init(color, width, height) {
+    var winSize = cc.director.getWinSize();
+    color = color || new Color(0, 0, 0, 255);
+    width = width === undefined ? winSize.width : width;
+    height = height === undefined ? winSize.height : height;
+
+    var locRealColor = this._realColor;
+    locRealColor.r = color.r;
+    locRealColor.g = color.g;
+    locRealColor.b = color.b;
+    this._realOpacity = color.a;
+    this._renderCmd.setDirtyFlag(
+      Node._dirtyFlags.colorDirty | Node._dirtyFlags.opacityDirty
+    );
+
+    LayerColor.prototype.setContentSize.call(this, width, height);
+    return true;
+  }
+
+  visit(parent) {
+    var cmd = this._renderCmd,
+      parentCmd = parent ? parent._renderCmd : null;
+
+    if (!this._visible) {
+      cmd._propagateFlagsDown(parentCmd);
+      return;
     }
 
-    setOpacityModifyRGB(value) {
-    }
+    var renderer = cc.renderer;
+    cmd.visit(parentCmd);
 
-    isOpacityModifyRGB() {
-        return false;
-    }
-
-    constructor(color, width, height) {
-        super();
-        this._blendFunc = null;
-        this._className = "LayerColor";
-
-        this._blendFunc = cc.BlendFunc.ALPHA_NON_PREMULTIPLIED;
-        LayerColor.prototype.init.call(this, color, width, height);
-    }
-
-    init(color, width, height) {
-        var winSize = cc.director.getWinSize();
-        color = color || new Color(0, 0, 0, 255);
-        width = width === undefined ? winSize.width : width;
-        height = height === undefined ? winSize.height : height;
-
-        var locRealColor = this._realColor;
-        locRealColor.r = color.r;
-        locRealColor.g = color.g;
-        locRealColor.b = color.b;
-        this._realOpacity = color.a;
-        this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.colorDirty | cc.Node._dirtyFlags.opacityDirty);
-
-        LayerColor.prototype.setContentSize.call(this, width, height);
-        return true;
-    }
-
-    visit(parent) {
-        var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
-
-        if (!this._visible) {
-            cmd._propagateFlagsDown(parentCmd);
-            return;
+    if (cmd._isBaked) {
+      renderer.pushRenderCommand(cmd._bakeRenderCmd);
+      cmd._bakeSprite._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+      cmd._bakeSprite.visit(this);
+    } else {
+      var i,
+        child,
+        children = this._children,
+        len = children.length;
+      if (len > 0) {
+        if (this._reorderChildDirty) {
+          this.sortAllChildren();
+        }
+        for (i = 0; i < len; i++) {
+          child = children[i];
+          if (child._localZOrder < 0) {
+            child.visit(this);
+          } else {
+            break;
+          }
         }
 
-        var renderer = cc.renderer;
-        cmd.visit(parentCmd);
-
-        if (cmd._isBaked) {
-            renderer.pushRenderCommand(cmd._bakeRenderCmd);
-            cmd._bakeSprite._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
-            cmd._bakeSprite.visit(this);
+        renderer.pushRenderCommand(cmd);
+        for (; i < len; i++) {
+          children[i].visit(this);
         }
-        else {
-            var i, child, children = this._children, len = children.length;
-            if (len > 0) {
-                if (this._reorderChildDirty) {
-                    this.sortAllChildren();
-                }
-                for (i = 0; i < len; i++) {
-                    child = children[i];
-                    if (child._localZOrder < 0) {
-                        child.visit(this);
-                    }
-                    else {
-                        break;
-                    }
-                }
-
-                renderer.pushRenderCommand(cmd);
-                for (; i < len; i++) {
-                    children[i].visit(this);
-                }
-            } else {
-                renderer.pushRenderCommand(cmd);
-            }
-        }
-
-        cmd._dirtyFlag = 0;
+      } else {
+        renderer.pushRenderCommand(cmd);
+      }
     }
 
-    setBlendFunc(src, dst) {
-        var locBlendFunc = this._blendFunc;
-        if (dst === undefined) {
-            locBlendFunc.src = src.src;
-            locBlendFunc.dst = src.dst;
-        } else {
-            locBlendFunc.src = src;
-            locBlendFunc.dst = dst;
-        }
-        this._renderCmd.updateBlendFunc(locBlendFunc);
-    }
+    cmd._dirtyFlag = 0;
+  }
 
-    get width() {
-        return this._getWidth();
+  setBlendFunc(src, dst) {
+    var locBlendFunc = this._blendFunc;
+    if (dst === undefined) {
+      locBlendFunc.src = src.src;
+      locBlendFunc.dst = src.dst;
+    } else {
+      locBlendFunc.src = src;
+      locBlendFunc.dst = dst;
     }
+    this._renderCmd.updateBlendFunc(locBlendFunc);
+  }
 
-    set width(value) {
-        this._setWidth(value);
-    }
+  get width() {
+    return this._getWidth();
+  }
 
-    get height() {
-        return this._getHeight();
-    }
+  set width(value) {
+    this._setWidth(value);
+  }
 
-    set height(value) {
-        this._setHeight(value);
-    }
+  get height() {
+    return this._getHeight();
+  }
 
-    _createRenderCmd() {
-        if (cc._renderType === Game.RENDER_TYPE_CANVAS)
-            return new LayerColorCanvasRenderer(this);
-        else
-            return new LayerColorWebGLRenderer(this);
-    }
+  set height(value) {
+    this._setHeight(value);
+  }
+
+  _createRenderCmd() {
+    if (cc._renderType === Game.RENDER_TYPE_CANVAS)
+      return new LayerColorCanvasRenderer(this);
+    else return new LayerColorWebGLRenderer(this);
+  }
 }

@@ -1,5 +1,5 @@
 /**
- * Async Pool class, a helper of cc.async
+ * Async Pool class, a helper of async
  * @param {Object|Array} srcObj
  * @param {Number} limit the limit of parallel number
  * @param {function} iterator

@@ -145,8 +145,8 @@ var rendererCanvas = {
     //end add clip
   },
   /**
-   * drawing all renderer command to context (default is cc._renderContext)
-   * @param {CanvasContextWrapper} [ctx=cc._renderContext]
+   * drawing all renderer command to context (default is _renderContext)
+   * @param {CanvasContextWrapper} [ctx=_renderContext]
    */
   rendering: function (ctxWrapper) {
     var dirtyRegion = (this._dirtyRegion =
@@ -342,7 +342,7 @@ var proto = CanvasContextWrapper.prototype;
 
 proto.resetCache = function () {
   var context = this._context;
-  //call it after resize cc._canvas, because context will reset.
+  //call it after resize _canvas, because context will reset.
   this._currentAlpha = context.globalAlpha;
   this._currentCompositeOperation = context.globalCompositeOperation;
   this._currentFillStyle = context.fillStyle;
@@ -361,7 +361,7 @@ proto.computeRealOffsetY = function () {
 };
 
 proto.setViewScale = function (scaleX, scaleY) {
-  //call it at cc.renderCanvas.rendering
+  //call it at renderCanvas.rendering
   this._scaleX = scaleX;
   this._scaleY = scaleY;
 };

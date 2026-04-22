@@ -33,8 +33,8 @@ import {
 } from "./geometry/rect";
 
 /**
- * <p>cc.AffineTransform class represent an affine transform matrix. It's composed basically by translation, rotation, scale transformations.<br/>
- * Please do not use its constructor directly, use cc.affineTransformMake alias function instead.
+ * <p>AffineTransform class represent an affine transform matrix. It's composed basically by translation, rotation, scale transformations.<br/>
+ * Please do not use its constructor directly, use affineTransformMake alias function instead.
  * </p>
  * @param {Number} a
  * @param {Number} b
@@ -42,7 +42,7 @@ import {
  * @param {Number} d
  * @param {Number} tx
  * @param {Number} ty
- * @see cc.affineTransformMake
+ * @see affineTransformMake
  */
 export function AffineTransform(a, b, c, d, tx, ty) {
   this.a = a;
@@ -54,7 +54,7 @@ export function AffineTransform(a, b, c, d, tx, ty) {
 }
 
 /**
- * Create a cc.AffineTransform object with all contents in the matrix
+ * Create a AffineTransform object with all contents in the matrix
  * @function
  *
  * @param {Number} a

@@ -27,9 +27,9 @@
 import { Node } from '../base-nodes/node';
 
 /**
- * cc.Scene is a subclass of cc.Node that is used only as an abstract concept.
+ * Scene is a subclass of Node that is used only as an abstract concept.
  * @example
- * var scene = new cc.Scene();
+ * var scene = new Scene();
  */
 export class Scene extends Node {
     constructor() {

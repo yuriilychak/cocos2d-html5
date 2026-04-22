@@ -387,7 +387,7 @@ var rendererWebGL = {
         }
 
         cc.glBlendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
-        cc.glBindTexture2DN(0, texture);                   // = cc.glBindTexture2D(texture);
+        cc.glBindTexture2DN(0, texture);                   // = glBindTexture2D(texture);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer);
         // upload the vertex data to the gl buffer
@@ -431,8 +431,8 @@ var rendererWebGL = {
     },
 
     /**
-     * drawing all renderer command to context (default is cc._renderContext)
-     * @param {WebGLRenderingContext} [ctx=cc._renderContext]
+     * drawing all renderer command to context (default is _renderContext)
+     * @param {WebGLRenderingContext} [ctx=_renderContext]
      */
     rendering: function (ctx, cmds) {
         var locCmds = cmds || this._renderCmds,

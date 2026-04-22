@@ -29,8 +29,8 @@ import Game from '../boot/game';
 import { LayerCanvasRenderer, LayerWebGLRenderer } from './renderer';
 
 /**
- * cc.Layer is a subclass of cc.Node that implements the TouchEventsDelegate protocol.
- * All features from cc.Node are valid, plus the bake feature.
+ * Layer is a subclass of Node that implements the TouchEventsDelegate protocol.
+ * All features from Node are valid, plus the bake feature.
  */
 export class Layer extends Node {
     constructor() {

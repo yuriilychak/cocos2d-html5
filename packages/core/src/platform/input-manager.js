@@ -179,7 +179,7 @@ export const inputManager =  {
       index = this._touchesIntegerDict[touchID];
 
       if (index == null) {
-        //cc.log("if the index doesn't exist, it is an error");
+        //log("if the index doesn't exist, it is an error");
         continue;
       }
       if (locTouches[index]) {
@@ -243,7 +243,7 @@ export const inputManager =  {
       index = locTouchesIntDict[touchID];
 
       if (index == null) {
-        continue; //cc.log("if the index doesn't exist, it is an error");
+        continue; //log("if the index doesn't exist, it is an error");
       }
       if (locTouches[index]) {
         locTouches[index]._setPoint(selTouch._point);

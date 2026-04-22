@@ -23,8 +23,11 @@
  ****************************************************************************/
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
+import { Node } from "../base-nodes/node";
 import { Rect } from "../cocoa/geometry/rect";
+import { rectEqualToRect } from "../cocoa/geometry/rect";
 import { error, _LogInfos } from "../boot/debugger";
+import { Texture2D } from "../textures/texture-2d";
 
 export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   constructor(renderable) {
@@ -58,19 +61,19 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
   _setColorDirty() {
     this.setDirtyFlag(
-      cc.Node._dirtyFlags.colorDirty | cc.Node._dirtyFlags.opacityDirty
+      Node._dirtyFlags.colorDirty | Node._dirtyFlags.opacityDirty
     );
   }
 
   isFrameDisplayed(frame) {
     const node = this._node;
     if (frame.getTexture() !== node._texture) return false;
-    return cc.rectEqualToRect(frame.getRect(), node._rect);
+    return rectEqualToRect(frame.getRect(), node._rect);
   }
 
   updateBlendFunc(blendFunc) {
     this._blendFuncStr =
-      cc.Node.CanvasRenderCmd._getCompositeOperationByBlendFunc(blendFunc);
+      Node.CanvasRenderCmd._getCompositeOperationByBlendFunc(blendFunc);
   }
 
   _setBatchNodeForAddChild(child) {
@@ -85,7 +88,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
         rect,
         counterclockwise
       );
-      const tempTexture = new cc.Texture2D();
+      const tempTexture = new Texture2D();
       tempTexture.initWithElement(tempElement);
       tempTexture.handleLoadedTexture();
       texture = tempTexture;

@@ -30,6 +30,7 @@ import Path from "../boot/path";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCacheCanvasRenderer from "./texture-cache-canvas-renderer";
 import TextureCacheWebGLRenderer from "./texture-cache-webgl-renderer";
+import { Texture2D } from "./texture-2d";
 
 /**
  * TextureCache is a singleton class, it's the global cache for Texture2D
@@ -48,13 +49,13 @@ export default class TextureCache {
     if (TextureCache._instance) {
       return TextureCache._instance;
     }
-    
+
     this._textures = {};
     this._textureColorsCache = {};
     this._textureKeySeq = 0 | (Math.random() * 1000);
     this._loadedTexturesBefore = {};
     this._renderer = null; // Will be set by initRenderer()
-    
+
     TextureCache._instance = this;
   }
 
@@ -68,7 +69,7 @@ export default class TextureCache {
     } else {
       this._renderer = new TextureCacheWebGLRenderer(this);
     }
-    
+
     // Process any textures that were loaded before renderer was ready
     this._initializingRenderer();
   }
@@ -146,7 +147,7 @@ export default class TextureCache {
    * @return {String|Null}
    * @example
    * //example
-   * var key = cc.textureCache.getKeyByTexture(texture);
+   * var key = textureCache.getKeyByTexture(texture);
    */
   getKeyByTexture(texture) {
     for (var key in this._textures) {
@@ -166,7 +167,7 @@ export default class TextureCache {
    * @return {Array}
    * @example
    * //example
-   * var cacheTextureForColor = cc.textureCache.getTextureColors(texture);
+   * var cacheTextureForColor = textureCache.getTextureColors(texture);
    */
   getTextureColors(texture) {
     var image = texture._htmlElementObj;
@@ -253,11 +254,11 @@ export default class TextureCache {
    * @param {Image|HTMLImageElement|HTMLCanvasElement} texture
    */
   cacheImage(path, texture) {
-    if (texture instanceof cc.Texture2D) {
+    if (texture instanceof Texture2D) {
       this._textures[path] = texture;
       return;
     }
-    var texture2d = new cc.Texture2D();
+    var texture2d = new Texture2D();
     texture2d.initWithElement(texture);
     texture2d.handleLoadedTexture();
     this._textures[path] = texture2d;
@@ -281,7 +282,7 @@ export default class TextureCache {
     }
 
     // prevents overloading the autorelease pool
-    var texture = new cc.Texture2D();
+    var texture = new Texture2D();
     texture.initWithImage(image);
     if (key != null) this._textures[key] = texture;
     else log(_LogInfos.textureCache_addUIImage);
@@ -354,7 +355,7 @@ export default class TextureCache {
       // to be processed later by _initializingRenderer()
       var tex = this._loadedTexturesBefore[url];
       if (!tex) {
-        tex = this._loadedTexturesBefore[url] = new cc.Texture2D();
+        tex = this._loadedTexturesBefore[url] = new Texture2D();
         tex.url = url;
       }
       // Set basic dimensions before renderer is ready
@@ -370,7 +371,9 @@ export default class TextureCache {
   addImage(url, cb, target) {
     if (!this._renderer) {
       // If renderer is not yet initialized, create texture in _loadedTexturesBefore
-      var tex = this._loadedTexturesBefore[url] || this._loadedTexturesBefore[Loader.getInstance()._getAliase(url)];
+      var tex =
+        this._loadedTexturesBefore[url] ||
+        this._loadedTexturesBefore[Loader.getInstance()._getAliase(url)];
       if (tex) {
         if (tex.isLoaded()) {
           cb && cb.call(target, tex);
@@ -386,20 +389,23 @@ export default class TextureCache {
           return tex;
         }
       }
-      
-      tex = this._loadedTexturesBefore[url] = new cc.Texture2D();
+
+      tex = this._loadedTexturesBefore[url] = new Texture2D();
       tex.url = url;
       var basePath = Loader.getInstance().getBasePath
         ? Loader.getInstance().getBasePath()
         : Loader.getInstance().resPath;
       var textureCache = this;
-      Loader.getInstance().loadImg(Path.join(basePath || "", url), function (err, img) {
-        if (err) return cb && cb.call(target, err);
+      Loader.getInstance().loadImg(
+        Path.join(basePath || "", url),
+        function (err, img) {
+          if (err) return cb && cb.call(target, err);
 
-        var texResult = textureCache.handleLoadedTexture(url, img);
-        cb && cb.call(target, texResult);
-      });
-      
+          var texResult = textureCache.handleLoadedTexture(url, img);
+          cb && cb.call(target, texResult);
+        }
+      );
+
       return tex;
     }
     return this._renderer.addImage(url, cb, target);

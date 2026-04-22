@@ -30,27 +30,27 @@ import TextureCache from "../textures/texture-cache";
 
 /**
  * <p>
- *     A cc.SpriteBatchNode can reference one and only one texture (one image file, one texture atlas).<br/>
- *     Only the cc.Sprites that are contained in that texture can be added to the cc.SpriteBatchNode.<br/>
- *     All cc.Sprites added to a cc.SpriteBatchNode are drawn in one WebGL draw call. <br/>
- *     If the cc.Sprites are not added to a cc.SpriteBatchNode then an WebGL draw call will be needed for each one, which is less efficient. <br/>
+ *     A SpriteBatchNode can reference one and only one texture (one image file, one texture atlas).<br/>
+ *     Only the Sprites that are contained in that texture can be added to the SpriteBatchNode.<br/>
+ *     All Sprites added to a SpriteBatchNode are drawn in one WebGL draw call. <br/>
+ *     If the Sprites are not added to a SpriteBatchNode then an WebGL draw call will be needed for each one, which is less efficient. <br/>
  *     <br/>
  *     Limitations:<br/>
- *       - The only object that is accepted as child (or grandchild, grand-grandchild, etc...) is cc.Sprite or any subclass of cc.Sprite. <br/>
- *          eg: particles, labels and layer can't be added to a cc.SpriteBatchNode. <br/>
+ *       - The only object that is accepted as child (or grandchild, grand-grandchild, etc...) is Sprite or any subclass of Sprite. <br/>
+ *          eg: particles, labels and layer can't be added to a SpriteBatchNode. <br/>
  *       - Either all its children are Aliased or Antialiased. It can't be a mix. <br/>
  *          This is because "alias" is a property of the texture, and all the sprites share the same texture. </br>
  * </p>
  *
- * @param {String|cc.Texture2D} fileImage
+ * @param {String|Texture2D} fileImage
  * @example
  *
  * // 1. create a SpriteBatchNode with image path
- * var spriteBatchNode = new cc.SpriteBatchNode("res/animations/grossini.png");
+ * var spriteBatchNode = new SpriteBatchNode("res/animations/grossini.png");
  *
  * // 2. create a SpriteBatchNode with texture
  * var texture = TextureCache.getInstance().addImage("res/animations/grossini.png");
- * var spriteBatchNode = new cc.SpriteBatchNode(texture);
+ * var spriteBatchNode = new SpriteBatchNode(texture);
  *
  * @property {TextureAtlas}  textureAtlas    - The texture atlas
  * @property {Array}            descendants     - <@readonly> Descendants of sprite batch node
@@ -75,7 +75,7 @@ export class SpriteBatchNode extends Node {
 
   /**
    * <p>
-   *    Initializes a cc.SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
+   *    Initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
    *    The capacity will be increased in 33% in runtime if it run out of space.<br/>
    *    The file will be loaded using the TextureMgr.<br/>
    *    Please pass parameters to constructor to initialize the sprite batch node, do not call this function yourself.
@@ -92,7 +92,7 @@ export class SpriteBatchNode extends Node {
 
   /**
    * <p>
-   *    initializes a cc.SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
+   *    initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br/>
    *    The capacity will be increased in 33% in runtime if it run out of space.<br/>
    *    The file will be loaded using the TextureMgr.<br/>
    *    Please pass parameters to constructor to initialize the sprite batch node, do not call this function yourself.
@@ -109,7 +109,7 @@ export class SpriteBatchNode extends Node {
 
   /**
    * Removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
-   * @warning Removing a child from a cc.SpriteBatchNode is very slow
+   * @warning Removing a child from a SpriteBatchNode is very slow
    * @param {Number} index
    * @param {Boolean} doCleanup
    */
@@ -119,7 +119,7 @@ export class SpriteBatchNode extends Node {
 
   /**
    * Sets the source and destination blending function for the texture
-   * @param {Number | cc.BlendFunc} src
+   * @param {Number | BlendFunc} src
    * @param {Number} dst
    */
   setBlendFunc(src, dst) {
@@ -138,8 +138,8 @@ export class SpriteBatchNode extends Node {
   /**
    * <p>
    *   Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.                 <br/>
-   *   This method should be called only when you are dealing with very big AtlasSrite and when most of the cc.Sprite won't be updated.<br/>
-   *   For example: a tile map (cc.TMXMap) or a label with lots of characters (BitmapFontAtlas)<br/>
+   *   This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.<br/>
+   *   For example: a tile map (TMXMap) or a label with lots of characters (BitmapFontAtlas)<br/>
    * </p>
    * @function
    * @param {Sprite} sprite
@@ -235,7 +235,7 @@ export class SpriteBatchNode extends Node {
   }
 
   /**
-   * Add child to the sprite batch node (override addChild of cc.Node)
+   * Add child to the sprite batch node (override addChild of Node)
    * @function
    * @override
    * @param {Sprite} child

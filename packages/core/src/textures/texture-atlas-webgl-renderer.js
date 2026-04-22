@@ -1,3 +1,5 @@
+import { TEXTURE_ATLAS_USE_TRIANGLE_STRIP } from "../platform/config";
+
 export default class TextureAtlasWebGLRenderer {
   constructor(textureAtlas) {
     this._textureAtlas = textureAtlas;
@@ -19,12 +21,20 @@ export default class TextureAtlasWebGLRenderer {
     var gl = cc._renderContext;
 
     gl.bindBuffer(gl.ARRAY_BUFFER, textureAtlas._quadsWebBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, textureAtlas._quadsArrayBuffer, gl.DYNAMIC_DRAW);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      textureAtlas._quadsArrayBuffer,
+      gl.DYNAMIC_DRAW
+    );
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, textureAtlas._buffersVBO[1]);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, textureAtlas._indices, gl.STATIC_DRAW);
+    gl.bufferData(
+      gl.ELEMENT_ARRAY_BUFFER,
+      textureAtlas._indices,
+      gl.STATIC_DRAW
+    );
 
-    //cc.checkGLErrorDebug();
+    //checkGLErrorDebug();
   }
 
   /**
@@ -36,7 +46,8 @@ export default class TextureAtlasWebGLRenderer {
   drawNumberOfQuads(n, start) {
     var textureAtlas = this._textureAtlas;
     start = start || 0;
-    if (0 === n || !textureAtlas.texture || !textureAtlas.texture.isLoaded()) return;
+    if (0 === n || !textureAtlas.texture || !textureAtlas.texture.isLoaded())
+      return;
 
     var gl = cc._renderContext;
     cc.glBindTexture2D(textureAtlas.texture);
@@ -50,7 +61,11 @@ export default class TextureAtlasWebGLRenderer {
 
     gl.bindBuffer(gl.ARRAY_BUFFER, textureAtlas._quadsWebBuffer);
     if (textureAtlas.dirty) {
-      gl.bufferData(gl.ARRAY_BUFFER, textureAtlas._quadsArrayBuffer, gl.DYNAMIC_DRAW);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        textureAtlas._quadsArrayBuffer,
+        gl.DYNAMIC_DRAW
+      );
       textureAtlas.dirty = false;
     }
 
@@ -85,7 +100,7 @@ export default class TextureAtlasWebGLRenderer {
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, textureAtlas._buffersVBO[1]);
 
-    if (cc.TEXTURE_ATLAS_USE_TRIANGLE_STRIP)
+    if (TEXTURE_ATLAS_USE_TRIANGLE_STRIP)
       gl.drawElements(
         gl.TRIANGLE_STRIP,
         n * 6,
@@ -101,16 +116,19 @@ export default class TextureAtlasWebGLRenderer {
       );
 
     cc.g_NumberOfDraws++;
-    //cc.checkGLErrorDebug();
+    //checkGLErrorDebug();
   }
 
   releaseBuffer() {
     var textureAtlas = this._textureAtlas;
     var gl = cc._renderContext;
     if (textureAtlas._buffersVBO) {
-      if (textureAtlas._buffersVBO[0]) gl.deleteBuffer(textureAtlas._buffersVBO[0]);
-      if (textureAtlas._buffersVBO[1]) gl.deleteBuffer(textureAtlas._buffersVBO[1]);
+      if (textureAtlas._buffersVBO[0])
+        gl.deleteBuffer(textureAtlas._buffersVBO[0]);
+      if (textureAtlas._buffersVBO[1])
+        gl.deleteBuffer(textureAtlas._buffersVBO[1]);
     }
-    if (textureAtlas._quadsWebBuffer) gl.deleteBuffer(textureAtlas._quadsWebBuffer);
+    if (textureAtlas._quadsWebBuffer)
+      gl.deleteBuffer(textureAtlas._quadsWebBuffer);
   }
 }

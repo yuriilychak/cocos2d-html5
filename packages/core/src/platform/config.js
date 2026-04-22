@@ -38,10 +38,10 @@
  *  The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.<br/>
  *                                                                                  <br/>
  *  Affected nodes:                                                                 <br/>
- *      - cc.Sprite / cc.SpriteBatchNode and subclasses: cc.LabelBMFont, cc.TMXTiledMap <br/>
- *      - cc.LabelAtlas                                                              <br/>
- *      - cc.QuadParticleSystem                                                      <br/>
- *      - cc.TileMap                                                                 <br/>
+ *      - Sprite / SpriteBatchNode and subclasses: LabelBMFont, TMXTiledMap <br/>
+ *      - LabelAtlas                                                              <br/>
+ *      - QuadParticleSystem                                                      <br/>
+ *      - TileMap                                                                 <br/>
  *                                                                                  <br/>
  *  To enabled set it to 1. Disabled by default.<br/>
  *  To modify it, in Web engine please refer to Config.js, in JSB please refer to Config.h
@@ -76,7 +76,7 @@ export const DIRECTOR_FPS_INTERVAL = 0.5;
 
 /**
  * <p>
- *    If enabled, the cc.Node objects (cc.Sprite, cc.Label,etc) will be able to render in subpixels.<br/>
+ *    If enabled, the Node objects (Sprite, Label,etc) will be able to render in subpixels.<br/>
  *    If disabled, integer pixels will be used.<br/>
  *    <br/>
  *    To enable set it to 1. Enabled by default.<br/>
@@ -89,7 +89,7 @@ export const COCOSNODE_RENDER_SUBPIXEL = 1;
 
 /**
  * <p>
- *   If enabled, the cc.Sprite objects rendered with cc.SpriteBatchNode will be able to render in subpixels.<br/>
+ *   If enabled, the Sprite objects rendered with SpriteBatchNode will be able to render in subpixels.<br/>
  *   If disabled, integer pixels will be used.<br/>
  *   <br/>
  *   To enable set it to 1. Enabled by default.<br/>
@@ -128,7 +128,7 @@ export const TEXTURE_ATLAS_USE_TRIANGLE_STRIP = 0;
 
 /**
  * <p>
- *    By default, cc.TextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).<br/>
+ *    By default, TextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).<br/>
  *    Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.<br/>
  *    So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.<br/>
  *    <br/>
@@ -187,7 +187,7 @@ export const USE_LA88_LABELS = 1;
 
 /**
  * <p>
- *   If enabled, all subclasses of cc.Sprite will draw a bounding box<br/>
+ *   If enabled, all subclasses of Sprite will draw a bounding box<br/>
  *   Useful for debugging purposes only. It is recommend to leave it disabled.<br/>
  *   <br/>
  *   To enable set it to a value different than 0. Disabled by default:<br/>
@@ -202,7 +202,7 @@ export const SPRITE_DEBUG_DRAW = 0;
 
 /**
  * <p>
- *    If enabled, all subclasses of cc.Sprite that are rendered using an cc.SpriteBatchNode draw a bounding box.<br/>
+ *    If enabled, all subclasses of Sprite that are rendered using an SpriteBatchNode draw a bounding box.<br/>
  *    Useful for debugging purposes only. It is recommend to leave it disabled.<br/>
  *    <br/>
  *    To enable set it to a value different than 0. Disabled by default.
@@ -214,7 +214,7 @@ export const SPRITEBATCHNODE_DEBUG_DRAW = 0;
 
 /**
  * <p>
- *   If enabled, all subclasses of cc.LabelBMFont will draw a bounding box <br/>
+ *   If enabled, all subclasses of LabelBMFont will draw a bounding box <br/>
  *   Useful for debugging purposes only. It is recommend to leave it disabled.<br/>
  *   <br/>
  *   To enable set it to a value different than 0. Disabled by default.<br/>
@@ -226,7 +226,7 @@ export const LABELBMFONT_DEBUG_DRAW = 0;
 
 /**
  * <p>
- *    If enabled, all subclasses of cc.LabelAtlas will draw a bounding box<br/>
+ *    If enabled, all subclasses of LabelAtlas will draw a bounding box<br/>
  *    Useful for debugging purposes only. It is recommend to leave it disabled.<br/>
  *    <br/>
  *    To enable set it to a value different than 0. Disabled by default.

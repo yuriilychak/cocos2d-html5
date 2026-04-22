@@ -166,7 +166,7 @@ cc.setProjectionMatrixDirty = function () {
  * If the texture is not already bound, it binds it.<br/>
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
  * @function
- * @param {cc.Texture2D} textureId
+ * @param {Texture2D} textureId
  */
 cc.glBindTexture2D = function (textureId) {
     cc.glBindTexture2DN(0, textureId);
@@ -177,7 +177,7 @@ cc.glBindTexture2D = function (textureId) {
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
  * @function
  * @param {Number} textureUnit
- * @param {cc.Texture2D} textureId
+ * @param {Texture2D} textureId
  */
 cc.glBindTexture2DN = cc.ENABLE_GL_STATE_CACHE ? function (textureUnit, textureId) {
     if (cc._currentBoundTexture[textureUnit] === textureId)

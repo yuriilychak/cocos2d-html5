@@ -31,6 +31,13 @@ import { Size } from "../../cocoa/geometry/size";
 import Game from "../../boot/game";
 import EventManager from "../../event-manager/event-manager";
 import Sys from "../../boot/sys";
+import { contentScaleFactor } from "../macro/utils";
+import { screen } from "../screen";
+import { visibleRect } from "../visible-rect";
+import { ContainerStrategy } from "./container-strategy";
+import { ContentStrategy } from "./content-strategy";
+import { ResolutionPolicy } from "./resolution-policy";
+import { DENSITYDPI_HIGH } from "./constants";
 import { log, _LogInfos } from "../../boot/debugger";
 
 var __sys = Sys.getInstance();
@@ -87,16 +94,16 @@ switch (__BrowserGetter.adaptationType) {
 var _scissorRect = null;
 
 /**
- * cc.view is the singleton object which represents the game window.<br/>
+ * view is the singleton object which represents the game window.<br/>
  * It's main task include: <br/>
  *  - Apply the design resolution policy<br/>
  *  - Provide interaction with the window, like resize event on web, retina display support, etc...<br/>
  *  - Manage the game view port which can be different with the window<br/>
  *  - Manage the content scale and translation<br/>
  * <br/>
- * Since the cc.view is a singleton, you don't need to call any constructor or create functions,<br/>
+ * Since the view is a singleton, you don't need to call any constructor or create functions,<br/>
  * the standard way to use it is by calling:<br/>
- *  - cc.view.methodName(); <br/>
+ *  - view.methodName(); <br/>
  * @name EGLView
  */
 export class EGLView extends NewClass {
@@ -107,7 +114,7 @@ export class EGLView extends NewClass {
     super();
 
     this._delegate = null;
-    // Size of parent node that contains cc.container and cc._canvas
+    // Size of parent node that contains container and _canvas
     this._frameSize = null;
     // resolution size, it is the size appropriate for the app resources.
     this._designResolutionSize = null;
@@ -146,7 +153,7 @@ export class EGLView extends NewClass {
 
     this._contentTranslateLeftTop = null;
 
-    // Parent node that contains cc.container and cc._canvas
+    // Parent node that contains container and _canvas
     this._frame = null;
     this._frameZoomFactor = 1.0;
     this.__resizeWithBrowserSize = false;
@@ -155,8 +162,8 @@ export class EGLView extends NewClass {
 
     var _t = this,
       d = document,
-      _strategyer = cc.ContainerStrategy,
-      _strategy = cc.ContentStrategy;
+      _strategyer = ContainerStrategy,
+      _strategy = ContentStrategy;
 
     __BrowserGetter.init(this);
 
@@ -177,31 +184,31 @@ export class EGLView extends NewClass {
     _t._viewName = "Cocos2dHTML5";
 
     var sys = __sys;
-    cc.visibleRect && cc.visibleRect.init(_t._visibleRect);
+    visibleRect && visibleRect.init(_t._visibleRect);
 
     // Setup system default resolution policies
-    _t._rpExactFit = new cc.ResolutionPolicy(
+    _t._rpExactFit = new ResolutionPolicy(
       _strategyer.EQUAL_TO_FRAME,
       _strategy.EXACT_FIT
     );
-    _t._rpShowAll = new cc.ResolutionPolicy(
+    _t._rpShowAll = new ResolutionPolicy(
       _strategyer.PROPORTION_TO_FRAME,
       _strategy.SHOW_ALL
     );
-    _t._rpNoBorder = new cc.ResolutionPolicy(
+    _t._rpNoBorder = new ResolutionPolicy(
       _strategyer.EQUAL_TO_FRAME,
       _strategy.NO_BORDER
     );
-    _t._rpFixedHeight = new cc.ResolutionPolicy(
+    _t._rpFixedHeight = new ResolutionPolicy(
       _strategyer.EQUAL_TO_FRAME,
       _strategy.FIXED_HEIGHT
     );
-    _t._rpFixedWidth = new cc.ResolutionPolicy(
+    _t._rpFixedWidth = new ResolutionPolicy(
       _strategyer.EQUAL_TO_FRAME,
       _strategy.FIXED_WIDTH
     );
 
-    _t._targetDensityDPI = cc.DENSITYDPI_HIGH;
+    _t._targetDensityDPI = DENSITYDPI_HIGH;
 
     if (sys.isMobile) {
       window.addEventListener("orientationchange", this._orientationChange);
@@ -273,10 +280,10 @@ export class EGLView extends NewClass {
   /**
    * <p>
    * Sets view's target-densitydpi for android mobile browser. it can be set to:           <br/>
-   *   1. cc.DENSITYDPI_DEVICE, value is "device-dpi"                                      <br/>
-   *   2. cc.DENSITYDPI_HIGH, value is "high-dpi"  (default value)                         <br/>
-   *   3. cc.DENSITYDPI_MEDIUM, value is "medium-dpi" (browser's default value)            <br/>
-   *   4. cc.DENSITYDPI_LOW, value is "low-dpi"                                            <br/>
+   *   1. DENSITYDPI_DEVICE, value is "device-dpi"                                      <br/>
+   *   2. DENSITYDPI_HIGH, value is "high-dpi"  (default value)                         <br/>
+   *   3. DENSITYDPI_MEDIUM, value is "medium-dpi" (browser's default value)            <br/>
+   *   4. DENSITYDPI_LOW, value is "low-dpi"                                            <br/>
    *   5. Custom value, e.g: "480"                                                         <br/>
    * </p>
    * @param {String} densityDPI
@@ -287,7 +294,7 @@ export class EGLView extends NewClass {
   }
 
   /**
-   * Returns the current target-densitydpi value of cc.view.
+   * Returns the current target-densitydpi value of view.
    * @returns {String}
    */
   getTargetDensityDPI() {
@@ -316,7 +323,7 @@ export class EGLView extends NewClass {
   }
 
   /**
-   * Sets the callback function for cc.view's resize action,<br/>
+   * Sets the callback function for view's resize action,<br/>
    * this callback will be invoked before applying resolution policy, <br/>
    * so you can do any additional modifications within the callback.<br/>
    * Useful only on web.
@@ -331,10 +338,10 @@ export class EGLView extends NewClass {
   /**
    * Sets the orientation of the game, it can be landscape, portrait or auto.
    * When set it to landscape or portrait, and screen w/h ratio doesn't fit,
-   * cc.view will automatically rotate the game canvas using CSS.
+   * view will automatically rotate the game canvas using CSS.
    * Note that this function doesn't have any effect in native,
    * in native, you need to set the application orientation in native project settings
-   * @param {Number} orientation - Possible values: cc.ORIENTATION_LANDSCAPE | cc.ORIENTATION_PORTRAIT | cc.ORIENTATION_AUTO
+   * @param {Number} orientation - Possible values: ORIENTATION_LANDSCAPE | ORIENTATION_PORTRAIT | ORIENTATION_AUTO
    */
   setOrientation(orientation) {
     orientation = orientation & cc.ORIENTATION_AUTO;
@@ -453,7 +460,7 @@ export class EGLView extends NewClass {
   // RenderTexture hacker
   _setScaleXYForRenderTexture() {
     //hack for RenderTexture on canvas mode when adapting multiple resolution resources
-    var scaleFactor = cc.contentScaleFactor();
+    var scaleFactor = contentScaleFactor();
     this._scaleX = scaleFactor;
     this._scaleY = scaleFactor;
   }
@@ -516,7 +523,7 @@ export class EGLView extends NewClass {
     ) {
       // Automatically full screen when user touches on mobile version
       this._autoFullScreen = true;
-      cc.screen.autoFullScreen(this._frame);
+      screen.autoFullScreen(this._frame);
     } else {
       this._autoFullScreen = false;
     }
@@ -661,7 +668,7 @@ export class EGLView extends NewClass {
 
   /**
    * Returns the current resolution policy
-   * @see cc.ResolutionPolicy
+   * @see ResolutionPolicy
    * @return {ResolutionPolicy}
    */
   getResolutionPolicy() {
@@ -675,12 +682,12 @@ export class EGLView extends NewClass {
    */
   setResolutionPolicy(resolutionPolicy) {
     var _t = this;
-    if (resolutionPolicy instanceof cc.ResolutionPolicy) {
+    if (resolutionPolicy instanceof ResolutionPolicy) {
       _t._resolutionPolicy = resolutionPolicy;
     }
     // Ensure compatibility with JSB
     else {
-      var _locPolicy = cc.ResolutionPolicy;
+      var _locPolicy = ResolutionPolicy;
       if (resolutionPolicy === _locPolicy.EXACT_FIT)
         _t._resolutionPolicy = _t._rpExactFit;
       if (resolutionPolicy === _locPolicy.SHOW_ALL)
@@ -702,7 +709,7 @@ export class EGLView extends NewClass {
    * [3] ResolutionShowAll        Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.<br/>
    * [4] ResolutionFixedHeight    Scale the content's height to screen's height and proportionally scale its width<br/>
    * [5] ResolutionFixedWidth     Scale the content's width to screen's width and proportionally scale its height<br/>
-   * [cc.ResolutionPolicy]        [Web only feature] Custom resolution policy, constructed by cc.ResolutionPolicy<br/>
+   * [ResolutionPolicy]        [Web only feature] Custom resolution policy, constructed by ResolutionPolicy<br/>
    * @param {Number} width Design resolution width.
    * @param {Number} height Design resolution height.
    * @param {ResolutionPolicy|Number} resolutionPolicy The resolution policy desired
@@ -777,7 +784,7 @@ export class EGLView extends NewClass {
 
     this._originalScaleX = this._scaleX;
     this._originalScaleY = this._scaleY;
-    cc.visibleRect && cc.visibleRect.init(this._visibleRect);
+    visibleRect && visibleRect.init(this._visibleRect);
   }
 
   /**

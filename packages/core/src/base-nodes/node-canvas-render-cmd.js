@@ -255,7 +255,7 @@ export class RenderCmd {
             }
 
             if (pt) {
-                // cc.AffineTransformConcat is incorrect at get world transform
+                // AffineTransformConcat is incorrect at get world transform
                 wt.a = t.a * pt.a + t.b * pt.c;                               //a
                 wt.b = t.a * pt.b + t.b * pt.d;                               //b
                 wt.c = t.c * pt.a + t.d * pt.c;                               //c
@@ -564,7 +564,7 @@ RenderCmd.prototype._originSyncStatus = RenderCmd.prototype._syncStatus;
 
 const localBB = new Rect();
 
-//The cc.Node's render command for Canvas
+//The Node's render command for Canvas
 export class CanvasRenderCmd extends RenderCmd {
     constructor(renderable) {
         super(renderable);

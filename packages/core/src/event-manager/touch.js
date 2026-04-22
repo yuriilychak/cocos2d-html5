@@ -52,7 +52,7 @@ export default class Touch extends NewClass {
    */
   getLocation() {
     //TODO
-    //return cc.director.convertToGL(this._point);
+    //return director.convertToGL(this._point);
     return { x: this._point.x, y: this._point.y };
   }
 
@@ -78,7 +78,7 @@ export default class Touch extends NewClass {
    */
   getPreviousLocation() {
     //TODO
-    //return cc.director.convertToGL(this._prevPoint);
+    //return director.convertToGL(this._prevPoint);
     return { x: this._prevPoint.x, y: this._prevPoint.y };
   }
 
@@ -88,7 +88,7 @@ export default class Touch extends NewClass {
    */
   getStartLocation() {
     //TODO
-    //return cc.director.convertToGL(this._startPoint);
+    //return director.convertToGL(this._startPoint);
     return { x: this._startPoint.x, y: this._startPoint.y };
   }
 
@@ -125,7 +125,7 @@ export default class Touch extends NewClass {
   }
 
   /**
-   * Returns the id of cc.Touch
+   * Returns the id of Touch
    * @return {Number}
    */
   getID() {

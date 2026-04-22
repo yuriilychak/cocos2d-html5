@@ -273,7 +273,7 @@ export default class SpriteFrameCache {
    *   If you want to use another texture, you should use the addSpriteFrames:texture parameter.<br/>
    * </p>
    * @param {String} url file path
-   * @param {HTMLImageElement|cc.Texture2D|string} [texture]
+   * @param {HTMLImageElement|Texture2D|string} [texture]
    * @example
    * // add SpriteFrames to SpriteFrameCache With File
    * SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
@@ -379,7 +379,7 @@ export default class SpriteFrameCache {
    *    Removes all Sprite Frames associated with the specified textures.<br/>
    *    It is convenient to call this method when a specific texture needs to be removed.
    * </p>
-   * @param {HTMLImageElement|HTMLCanvasElement|cc.Texture2D} texture
+   * @param {HTMLImageElement|HTMLCanvasElement|Texture2D} texture
    */
   removeSpriteFramesFromTexture(texture) {
     var self = this,
@@ -407,7 +407,7 @@ export default class SpriteFrameCache {
    * @return {SpriteFrame}
    * @example
    * //get a SpriteFrame by name
-   * var frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+   * var frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
    */
   getSpriteFrame(name) {
     var self = this,

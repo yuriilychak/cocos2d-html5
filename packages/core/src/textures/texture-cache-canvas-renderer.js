@@ -1,6 +1,7 @@
 import { assert, _LogInfos } from "../boot/debugger";
 import Loader from "../boot/loader";
 import Path from "../boot/path";
+import { Texture2D } from "./texture-2d";
 
 export default class TextureCacheCanvasRenderer {
   constructor(textureCache) {
@@ -13,7 +14,7 @@ export default class TextureCacheCanvasRenderer {
     //remove judge
     var tex = locTexs[url];
     if (!tex) {
-      tex = locTexs[url] = new cc.Texture2D();
+      tex = locTexs[url] = new Texture2D();
       tex.url = url;
     }
     tex.initWithElement(img);
@@ -57,18 +58,21 @@ export default class TextureCacheCanvasRenderer {
       }
     }
 
-    tex = locTexs[url] = new cc.Texture2D();
+    tex = locTexs[url] = new Texture2D();
     tex.url = url;
     var basePath = Loader.getInstance().getBasePath
       ? Loader.getInstance().getBasePath()
       : Loader.getInstance().resPath;
     var textureCache = this._textureCache;
-    Loader.getInstance().loadImg(Path.join(basePath || "", url), function (err, img) {
-      if (err) return cb && cb.call(target, err);
+    Loader.getInstance().loadImg(
+      Path.join(basePath || "", url),
+      function (err, img) {
+        if (err) return cb && cb.call(target, err);
 
-      var texResult = textureCache._renderer.handleLoadedTexture(url, img);
-      cb && cb.call(target, texResult);
-    });
+        var texResult = textureCache._renderer.handleLoadedTexture(url, img);
+        cb && cb.call(target, texResult);
+      }
+    );
 
     return tex;
   }

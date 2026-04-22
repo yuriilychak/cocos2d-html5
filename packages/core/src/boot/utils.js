@@ -99,8 +99,8 @@ export function isCrossOrigin(url) {
 /**
  * A string tool to construct a string with format string.
  * @example
- *      cc.formatStr("a: %d, b: %b", a, b);
- *      cc.formatStr(a, b, c);
+ *      formatStr("a: %d, b: %b", a, b);
+ *      formatStr(a, b, c);
  * @returns {String}
  */
 export function formatStr(...args) {
