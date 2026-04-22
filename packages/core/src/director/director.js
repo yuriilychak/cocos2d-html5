@@ -48,6 +48,7 @@ import {
 } from "./constants";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import { RendererConfig } from "../renderer/renderer-config";
 
 export var g_NumberOfDraws = 0;
 
@@ -154,7 +155,7 @@ export class Director extends NewClass {
     );
     this._eventProjectionChanged.setUserData(this);
 
-    if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
+    if (RendererConfig.getInstance().isCanvas) {
       this._rendererDelegate = new DirectorCanvasRenderer(this);
     } else {
       this._rendererDelegate = new DirectorWebGLRenderer(this);

@@ -32,6 +32,7 @@ import Loader from "../boot/loader";
 import CanvasTextureRenderer from "./texture-2d-canvas-renderer";
 import WebGLTextureRenderer from "./texture-2d-webgl-renderer";
 import { log, _LogInfos } from "../boot/debugger";
+import { RendererConfig } from "../renderer/renderer-config";
 
 export {
   ALIGN_CENTER,
@@ -78,7 +79,7 @@ export class Texture2D extends EventHelper(NewClass) {
     this._pixelsWide = 0;
     this._pixelsHigh = 0;
 
-    this._renderer = cc._renderType === Game.RENDER_TYPE_CANVAS
+    this._renderer = RendererConfig.getInstance().isCanvas
       ? new CanvasTextureRenderer(this)
       : new WebGLTextureRenderer(this);
   }
@@ -132,7 +133,13 @@ export class Texture2D extends EventHelper(NewClass) {
   }
 
   initWithData(data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
-    return this._renderer.initWithData(data, pixelFormat, pixelsWide, pixelsHigh, contentSize);
+    return this._renderer.initWithData(
+      data,
+      pixelFormat,
+      pixelsWide,
+      pixelsHigh,
+      contentSize
+    );
   }
 
   initWithImage(uiImage) {
@@ -140,7 +147,14 @@ export class Texture2D extends EventHelper(NewClass) {
   }
 
   initWithString(text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
-    return this._renderer.initWithString(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
+    return this._renderer.initWithString(
+      text,
+      fontName,
+      fontSize,
+      dimensions,
+      hAlignment,
+      vAlignment
+    );
   }
 
   releaseTexture() {
@@ -322,7 +336,7 @@ export class Texture2D extends EventHelper(NewClass) {
     [Texture2D.PIXEL_FORMAT_RGBA4444]: "RGBA4444",
     [Texture2D.PIXEL_FORMAT_RGB5A1]: "RGB5A1",
     [Texture2D.PIXEL_FORMAT_PVRTC4]: "PVRTC4",
-    [Texture2D.PIXEL_FORMAT_PVRTC2]: "PVRTC2",
+    [Texture2D.PIXEL_FORMAT_PVRTC2]: "PVRTC2"
   };
 
   static _B = {
@@ -335,13 +349,8 @@ export class Texture2D extends EventHelper(NewClass) {
     [Texture2D.PIXEL_FORMAT_RGBA4444]: 16,
     [Texture2D.PIXEL_FORMAT_RGB5A1]: 16,
     [Texture2D.PIXEL_FORMAT_PVRTC4]: 4,
-    [Texture2D.PIXEL_FORMAT_PVRTC2]: 3,
+    [Texture2D.PIXEL_FORMAT_PVRTC2]: 3
   };
 
   static _generateGrayTexture = CanvasTextureRenderer.generateGrayTexture;
 }
-
-
-
-
-

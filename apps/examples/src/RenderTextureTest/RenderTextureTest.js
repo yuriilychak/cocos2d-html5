@@ -729,7 +729,7 @@ var arrayOfRenderTextureTest = [
     Issue1464
 ];
 
-if(('opengl' in cc.sys.capabilities) && cc._renderType === cc.game.RENDER_TYPE_WEBGL && (!cc.sys.isNative) ){
+if(('opengl' in cc.sys.capabilities) && cc.rendererConfig.isWebGL && (!cc.sys.isNative) ){
     arrayOfRenderTextureTest.push(RenderTextureIssue937);
     arrayOfRenderTextureTest.push(RenderTextureZbuffer);
     arrayOfRenderTextureTest.push(RenderTextureTestDepthStencil);

@@ -508,7 +508,7 @@ ccs.BoneNode = (function () {
         }
 
         _createRenderCmd() {
-            if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+            if (cc.rendererConfig.isCanvas)
                 return new BoneNodeCanvasCmd(this);
             else
                 return new BoneNodeWebGLCmd(this);

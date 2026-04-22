@@ -816,7 +816,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+        if (cc.rendererConfig.isCanvas) {
             return new cc.ScrollView.CanvasRenderCmd(this);
         } else {
             return new cc.ScrollView.WebGLRenderCmd(this);

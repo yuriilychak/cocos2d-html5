@@ -143,7 +143,7 @@ var particleSceneArr = [
     }
 ];
 
-if( 'opengl' in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL){
+if( 'opengl' in cc.sys.capabilities && cc.rendererConfig.isWebGL){
     particleSceneArr.push( function () {
         return new ParallaxParticle();
     });

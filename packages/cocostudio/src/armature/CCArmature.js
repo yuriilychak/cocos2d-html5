@@ -551,7 +551,7 @@ ccs.Armature = class Armature extends ccs.Node {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if (cc.rendererConfig.isCanvas)
             return new ccs.Armature.CanvasRenderCmd(this);
         else
             return new ccs.Armature.WebGLRenderCmd(this);

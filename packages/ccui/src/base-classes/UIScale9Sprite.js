@@ -411,7 +411,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
 
 
         if (webgl === undefined) {
-            webgl = cc._renderType === cc.game.RENDER_TYPE_WEBGL;
+            webgl = cc.rendererConfig.isWebGL;
         }
     }
 
@@ -859,7 +859,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if (cc.rendererConfig.isCanvas)
             return new ccui.Scale9Sprite.CanvasRenderCmd(this);
         else
             return new ccui.Scale9Sprite.WebGLRenderCmd(this);

@@ -37,7 +37,7 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 300 : 150);
+        super((cc.rendererConfig.isWebGL) ? 300 : 150);
     }
 
     /**
@@ -115,7 +115,7 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 1500 : 150);
+        super((cc.rendererConfig.isWebGL) ? 1500 : 150);
     }
 
     /**
@@ -190,7 +190,7 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 350 : 150);
+        super((cc.rendererConfig.isWebGL) ? 350 : 150);
     }
 
     /**
@@ -268,7 +268,7 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 200 : 100);
+        super((cc.rendererConfig.isWebGL) ? 200 : 100);
     }
 
     /**
@@ -347,7 +347,7 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 250 : 100);
+        super((cc.rendererConfig.isWebGL) ? 250 : 100);
     }
 
     /**
@@ -428,7 +428,7 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 150 : 100);
+        super((cc.rendererConfig.isWebGL) ? 150 : 100);
     }
 
     /**
@@ -509,7 +509,7 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 500 : 100);
+        super((cc.rendererConfig.isWebGL) ? 500 : 100);
     }
 
     /**
@@ -589,7 +589,7 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 700 : 300);
+        super((cc.rendererConfig.isWebGL) ? 700 : 300);
     }
 
     /**
@@ -669,7 +669,7 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 200 : 100);
+        super((cc.rendererConfig.isWebGL) ? 200 : 100);
     }
 
     /**
@@ -746,7 +746,7 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 700 : 250);
+        super((cc.rendererConfig.isWebGL) ? 700 : 250);
     }
 
     /**
@@ -828,7 +828,7 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc._renderType === cc.game.RENDER_TYPE_WEBGL) ? 1000 : 300);
+        super((cc.rendererConfig.isWebGL) ? 1000 : 300);
     }
 
     /**

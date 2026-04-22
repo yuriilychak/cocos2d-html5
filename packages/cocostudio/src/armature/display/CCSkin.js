@@ -163,7 +163,7 @@ ccs.Skin = class Skin extends ccs.Sprite {
     }
 
     _createRenderCmd(){
-        if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if(cc.rendererConfig.isCanvas)
             return new ccs.Skin.CanvasRenderCmd(this);
         else
             return new ccs.Skin.WebGLRenderCmd(this);

@@ -29,6 +29,7 @@ import { Node } from "../base-nodes/node";
 import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
 import Game from "../boot/game";
+import { RendererConfig } from "../renderer/renderer-config";
 import {
   LayerGradientCanvasRenderer,
   LayerGradientWebGLRenderer
@@ -244,7 +245,7 @@ export class LayerGradient extends LayerColor {
   }
 
   _createRenderCmd() {
-    if (cc._renderType === Game.RENDER_TYPE_CANVAS)
+    if (RendererConfig.getInstance().isCanvas)
       return new LayerGradientCanvasRenderer(this);
     else return new LayerGradientWebGLRenderer(this);
   }

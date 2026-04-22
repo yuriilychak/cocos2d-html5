@@ -33,6 +33,7 @@ import { Color } from "../platform/types/color";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * Default Node tag
@@ -584,8 +585,7 @@ export class Node extends NewClass {
    * @return {Number} The rotation of the node in degrees.
    */
   getRotation() {
-    if (this._rotationX !== this._rotationY)
-      log(_LogInfos.Node_getRotation);
+    if (this._rotationX !== this._rotationY) log(_LogInfos.Node_getRotation);
     return this._rotationX;
   }
 
@@ -2497,7 +2497,7 @@ export class Node extends NewClass {
   }
 
   _createRenderCmd() {
-    if (cc._renderType === Game.RENDER_TYPE_CANVAS)
+    if (RendererConfig.getInstance().isCanvas)
       return new cc.Node.CanvasRenderCmd(this);
     else return new cc.Node.WebGLRenderCmd(this);
   }

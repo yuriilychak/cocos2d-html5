@@ -102,7 +102,7 @@ var arrayOfTransitionsTest = [
     }}
 ];
 
-if (cc._renderType !== cc.game.RENDER_TYPE_CANVAS) {
+if (!cc.rendererConfig.isCanvas) {
     arrayOfTransitionsTest = arrayOfTransitionsTest.concat(
         [
             {title: "PageTransitionForward", transitionFunc: function (t, s) {

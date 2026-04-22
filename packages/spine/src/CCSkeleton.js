@@ -70,7 +70,7 @@ sp.Skeleton = class Skeleton extends cc.Node {
     get _texture() { return this._renderCmd._currTexture; }
 
     _createRenderCmd() {
-        if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if(cc.rendererConfig.isCanvas)
             return new sp.Skeleton.CanvasRenderCmd(this);
         else
             return new sp.Skeleton.WebGLRenderCmd(this);
@@ -81,7 +81,7 @@ sp.Skeleton = class Skeleton extends cc.Node {
      */
     init() {
         super.init();
-        this._premultipliedAlpha = (cc._renderType === cc.game.RENDER_TYPE_WEBGL && cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA);
+        this._premultipliedAlpha = (cc.rendererConfig.isWebGL && cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA);
     }
 
     onEnter() {

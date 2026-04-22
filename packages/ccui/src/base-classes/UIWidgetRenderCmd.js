@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
-    if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+    if (cc.rendererConfig.isCanvas) {
         ccui.Widget.CanvasRenderCmd = class extends cc.ProtectedNode.CanvasRenderCmd {
             constructor(renderable) {
                 super(renderable);

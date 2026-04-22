@@ -24,9 +24,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
- import Game from './boot/game';
- import Loader from './boot/loader';
- import { log, assert, _LogInfos } from './boot/debugger';
+import Game from "./boot/game";
+import Loader from "./boot/loader";
+import { log, assert, _LogInfos } from "./boot/debugger";
+import { RendererConfig } from "./renderer/renderer-config";
 
 /**
  * Class that contains some openGL variables
@@ -34,166 +35,173 @@
  * var textureSize = configuration.getMaxTextureSize();
  */
 export class Configuration {
-	static _instance = null;
+  static _instance = null;
 
-	static getInstance() {
-		if (!Configuration._instance) {
-			Configuration._instance = new Configuration();
-		}
+  static getInstance() {
+    if (!Configuration._instance) {
+      Configuration._instance = new Configuration();
+    }
 
-		return Configuration._instance;
-	}
+    return Configuration._instance;
+  }
 
-	ERROR = 0;
-	STRING = 1;
-	INT = 2;
-	DOUBLE = 3;
-	BOOLEAN = 4;
+  ERROR = 0;
+  STRING = 1;
+  INT = 2;
+  DOUBLE = 3;
+  BOOLEAN = 4;
 
-	_maxTextureSize = 0;
-	_maxModelviewStackDepth = 0;
-	_supportsPVRTC = false;
-	_supportsNPOT = false;
-	_supportsBGRA8888 = false;
-	_supportsDiscardFramebuffer = false;
-	_supportsShareableVAO = false;
-	_maxSamplesAllowed = 0;
-	_maxTextureUnits = 0;
-	_GlExtensions = "";
-	_valueDict = {};
-	_inited = false;
+  _maxTextureSize = 0;
+  _maxModelviewStackDepth = 0;
+  _supportsPVRTC = false;
+  _supportsNPOT = false;
+  _supportsBGRA8888 = false;
+  _supportsDiscardFramebuffer = false;
+  _supportsShareableVAO = false;
+  _maxSamplesAllowed = 0;
+  _maxTextureUnits = 0;
+  _GlExtensions = "";
+  _valueDict = {};
+  _inited = false;
 
-	_init() {
-		const locValueDict = this._valueDict;
-		locValueDict["cocos2d.x.version"] = cc.ENGINE_VERSION;
-		locValueDict["cocos2d.x.compiled_with_profiler"] = false;
-		locValueDict["cocos2d.x.compiled_with_gl_state_cache"] = cc.ENABLE_GL_STATE_CACHE;
-		this._inited = true;
-	}
+  _init() {
+    const locValueDict = this._valueDict;
+    locValueDict["cocos2d.x.version"] = cc.ENGINE_VERSION;
+    locValueDict["cocos2d.x.compiled_with_profiler"] = false;
+    locValueDict["cocos2d.x.compiled_with_gl_state_cache"] =
+      cc.ENABLE_GL_STATE_CACHE;
+    this._inited = true;
+  }
 
-	getMaxTextureSize() {
-		return this._maxTextureSize;
-	}
+  getMaxTextureSize() {
+    return this._maxTextureSize;
+  }
 
-	getMaxModelviewStackDepth() {
-		return this._maxModelviewStackDepth;
-	}
+  getMaxModelviewStackDepth() {
+    return this._maxModelviewStackDepth;
+  }
 
-	getMaxTextureUnits() {
-		return this._maxTextureUnits;
-	}
+  getMaxTextureUnits() {
+    return this._maxTextureUnits;
+  }
 
-	supportsNPOT() {
-		return this._supportsNPOT;
-	}
+  supportsNPOT() {
+    return this._supportsNPOT;
+  }
 
-	supportsPVRTC() {
-		return this._supportsPVRTC;
-	}
+  supportsPVRTC() {
+    return this._supportsPVRTC;
+  }
 
-	supportsETC() {
-		return false;
-	}
+  supportsETC() {
+    return false;
+  }
 
-	supportsS3TC() {
-		return false;
-	}
+  supportsS3TC() {
+    return false;
+  }
 
-	supportsATITC() {
-		return false;
-	}
+  supportsATITC() {
+    return false;
+  }
 
-	supportsBGRA8888() {
-		return this._supportsBGRA8888;
-	}
+  supportsBGRA8888() {
+    return this._supportsBGRA8888;
+  }
 
-	supportsDiscardFramebuffer() {
-		return this._supportsDiscardFramebuffer;
-	}
+  supportsDiscardFramebuffer() {
+    return this._supportsDiscardFramebuffer;
+  }
 
-	supportsShareableVAO() {
-		return this._supportsShareableVAO;
-	}
+  supportsShareableVAO() {
+    return this._supportsShareableVAO;
+  }
 
-	checkForGLExtension(searchName) {
-		return this._GlExtensions.indexOf(searchName) > -1;
-	}
+  checkForGLExtension(searchName) {
+    return this._GlExtensions.indexOf(searchName) > -1;
+  }
 
-	getValue(key, default_value) {
-		if (!this._inited)
-			this._init();
-		const locValueDict = this._valueDict;
-		if (locValueDict[key])
-			return locValueDict[key];
-		return default_value;
-	}
+  getValue(key, default_value) {
+    if (!this._inited) this._init();
+    const locValueDict = this._valueDict;
+    if (locValueDict[key]) return locValueDict[key];
+    return default_value;
+  }
 
-	setValue(key, value) {
-		this._valueDict[key] = value;
-	}
+  setValue(key, value) {
+    this._valueDict[key] = value;
+  }
 
-	dumpInfo() {
-		if (cc.ENABLE_GL_STATE_CACHE === 0) {
-			log("");
-			log(_LogInfos.configuration_dumpInfo);
-			log("");
-		}
-	}
+  dumpInfo() {
+    if (cc.ENABLE_GL_STATE_CACHE === 0) {
+      log("");
+      log(_LogInfos.configuration_dumpInfo);
+      log("");
+    }
+  }
 
-	gatherGPUInfo() {
-		if (cc._renderType === Game.RENDER_TYPE_CANVAS)
-			return;
+  gatherGPUInfo() {
+    if (RendererConfig.getInstance().isCanvas) return;
 
-		if (!this._inited)
-			this._init();
-		const gl = cc._renderContext;
-		const locValueDict = this._valueDict;
-		locValueDict["gl.vendor"] = gl.getParameter(gl.VENDOR);
-		locValueDict["gl.renderer"] = gl.getParameter(gl.RENDERER);
-		locValueDict["gl.version"] = gl.getParameter(gl.VERSION);
+    if (!this._inited) this._init();
+    const gl = cc._renderContext;
+    const locValueDict = this._valueDict;
+    locValueDict["gl.vendor"] = gl.getParameter(gl.VENDOR);
+    locValueDict["gl.renderer"] = gl.getParameter(gl.RENDERER);
+    locValueDict["gl.version"] = gl.getParameter(gl.VERSION);
 
-		this._GlExtensions = "";
-		const extArr = gl.getSupportedExtensions();
-		for (let i = 0; i < extArr.length; i++)
-			this._GlExtensions += extArr[i] + " ";
+    this._GlExtensions = "";
+    const extArr = gl.getSupportedExtensions();
+    for (let i = 0; i < extArr.length; i++)
+      this._GlExtensions += extArr[i] + " ";
 
-		this._maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
-		locValueDict["gl.max_texture_size"] = this._maxTextureSize;
-		this._maxTextureUnits = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-		locValueDict["gl.max_texture_units"] = this._maxTextureUnits;
+    this._maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+    locValueDict["gl.max_texture_size"] = this._maxTextureSize;
+    this._maxTextureUnits = gl.getParameter(
+      gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS
+    );
+    locValueDict["gl.max_texture_units"] = this._maxTextureUnits;
 
-		this._supportsPVRTC = this.checkForGLExtension("GL_IMG_texture_compression_pvrtc");
-		locValueDict["gl.supports_PVRTC"] = this._supportsPVRTC;
+    this._supportsPVRTC = this.checkForGLExtension(
+      "GL_IMG_texture_compression_pvrtc"
+    );
+    locValueDict["gl.supports_PVRTC"] = this._supportsPVRTC;
 
-		this._supportsNPOT = false;
-		locValueDict["gl.supports_NPOT"] = this._supportsNPOT;
+    this._supportsNPOT = false;
+    locValueDict["gl.supports_NPOT"] = this._supportsNPOT;
 
-		this._supportsBGRA8888 = this.checkForGLExtension("GL_IMG_texture_format_BGRA888");
-		locValueDict["gl.supports_BGRA8888"] = this._supportsBGRA8888;
+    this._supportsBGRA8888 = this.checkForGLExtension(
+      "GL_IMG_texture_format_BGRA888"
+    );
+    locValueDict["gl.supports_BGRA8888"] = this._supportsBGRA8888;
 
-		this._supportsDiscardFramebuffer = this.checkForGLExtension("GL_EXT_discard_framebuffer");
-		locValueDict["gl.supports_discard_framebuffer"] = this._supportsDiscardFramebuffer;
+    this._supportsDiscardFramebuffer = this.checkForGLExtension(
+      "GL_EXT_discard_framebuffer"
+    );
+    locValueDict["gl.supports_discard_framebuffer"] =
+      this._supportsDiscardFramebuffer;
 
-		this._supportsShareableVAO = this.checkForGLExtension("vertex_array_object");
-		locValueDict["gl.supports_vertex_array_object"] = this._supportsShareableVAO;
+    this._supportsShareableVAO = this.checkForGLExtension(
+      "vertex_array_object"
+    );
+    locValueDict["gl.supports_vertex_array_object"] =
+      this._supportsShareableVAO;
 
-		cc.checkGLErrorDebug();
-	}
+    cc.checkGLErrorDebug();
+  }
 
-	loadConfigFile(url) {
-		if (!this._inited)
-			this._init();
-		const dict = Loader.getInstance().getRes(url);
-		if (!dict) throw new Error("Please load the resource first : " + url);
-		assert(dict, _LogInfos.configuration_loadConfigFile_2, url);
+  loadConfigFile(url) {
+    if (!this._inited) this._init();
+    const dict = Loader.getInstance().getRes(url);
+    if (!dict) throw new Error("Please load the resource first : " + url);
+    assert(dict, _LogInfos.configuration_loadConfigFile_2, url);
 
-		const getDatas = dict["data"];
-		if (!getDatas) {
-			log(_LogInfos.configuration_loadConfigFile, url);
-			return;
-		}
+    const getDatas = dict["data"];
+    if (!getDatas) {
+      log(_LogInfos.configuration_loadConfigFile, url);
+      return;
+    }
 
-		for (const selKey in getDatas)
-			this._valueDict[selKey] = getDatas[selKey];
-	}
+    for (const selKey in getDatas) this._valueDict[selKey] = getDatas[selKey];
+  }
 }

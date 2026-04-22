@@ -68,7 +68,7 @@ cc.LabelAtlas = class LabelAtlas extends cc.LabelBMFont {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
+        if (cc.rendererConfig.isWebGL)
             return new cc.LabelBMFont.WebGLRenderCmd(this);
         else
             return new cc.LabelBMFont.CanvasRenderCmd(this);

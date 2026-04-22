@@ -29,6 +29,7 @@ import { Node } from "../base-nodes/node";
 import { Color } from "../platform/types/color";
 import Game from "../boot/game";
 import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from "./renderer";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
@@ -147,7 +148,7 @@ export class LayerColor extends Layer {
   }
 
   _createRenderCmd() {
-    if (cc._renderType === Game.RENDER_TYPE_CANVAS)
+    if (RendererConfig.getInstance().isCanvas)
       return new LayerColorCanvasRenderer(this);
     else return new LayerColorWebGLRenderer(this);
   }

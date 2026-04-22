@@ -24,89 +24,91 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node } from '../base-nodes/node';
-import Game from '../boot/game';
-import { LayerCanvasRenderer, LayerWebGLRenderer } from './renderer';
+import { Node } from "../base-nodes/node";
+import Game from "../boot/game";
+import { RendererConfig } from "../renderer/renderer-config";
+import { LayerCanvasRenderer, LayerWebGLRenderer } from "./renderer";
 
 /**
  * Layer is a subclass of Node that implements the TouchEventsDelegate protocol.
  * All features from Node are valid, plus the bake feature.
  */
 export class Layer extends Node {
-    constructor() {
-        super();
-        this._className = "Layer";
+  constructor() {
+    super();
+    this._className = "Layer";
 
-        this._ignoreAnchorPointForPosition = true;
-        this.setAnchorPoint(0.5, 0.5);
-        this.setContentSize(cc.winSize);
-        this._cascadeColorEnabled = false;
-        this._cascadeOpacityEnabled = false;
+    this._ignoreAnchorPointForPosition = true;
+    this.setAnchorPoint(0.5, 0.5);
+    this.setContentSize(cc.winSize);
+    this._cascadeColorEnabled = false;
+    this._cascadeOpacityEnabled = false;
+  }
+
+  bake() {
+    this._renderCmd.bake();
+  }
+
+  unbake() {
+    this._renderCmd.unbake();
+  }
+
+  isBaked() {
+    return this._renderCmd._isBaked;
+  }
+
+  visit(parent) {
+    var cmd = this._renderCmd,
+      parentCmd = parent ? parent._renderCmd : null;
+
+    if (!this._visible) {
+      cmd._propagateFlagsDown(parentCmd);
+      return;
     }
 
-    bake() {
-        this._renderCmd.bake();
-    }
+    var renderer = cc.renderer;
+    cmd.visit(parentCmd);
 
-    unbake() {
-        this._renderCmd.unbake();
-    }
-
-    isBaked() {
-        return this._renderCmd._isBaked;
-    }
-
-    visit(parent) {
-        var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
-
-        if (!this._visible) {
-            cmd._propagateFlagsDown(parentCmd);
-            return;
+    if (cmd._isBaked) {
+      renderer.pushRenderCommand(cmd);
+      cmd._bakeSprite.visit(this);
+    } else {
+      var i,
+        children = this._children,
+        len = children.length,
+        child;
+      if (len > 0) {
+        if (this._reorderChildDirty) {
+          this.sortAllChildren();
+        }
+        for (i = 0; i < len; i++) {
+          child = children[i];
+          if (child._localZOrder < 0) {
+            child.visit(this);
+          } else {
+            break;
+          }
         }
 
-        var renderer = cc.renderer;
-        cmd.visit(parentCmd);
-
-        if (cmd._isBaked) {
-            renderer.pushRenderCommand(cmd);
-            cmd._bakeSprite.visit(this);
+        renderer.pushRenderCommand(cmd);
+        for (; i < len; i++) {
+          children[i].visit(this);
         }
-        else {
-            var i, children = this._children, len = children.length, child;
-            if (len > 0) {
-                if (this._reorderChildDirty) {
-                    this.sortAllChildren();
-                }
-                for (i = 0; i < len; i++) {
-                    child = children[i];
-                    if (child._localZOrder < 0) {
-                        child.visit(this);
-                    }
-                    else {
-                        break;
-                    }
-                }
-
-                renderer.pushRenderCommand(cmd);
-                for (; i < len; i++) {
-                    children[i].visit(this);
-                }
-            } else {
-                renderer.pushRenderCommand(cmd);
-            }
-        }
-        cmd._dirtyFlag = 0;
+      } else {
+        renderer.pushRenderCommand(cmd);
+      }
     }
+    cmd._dirtyFlag = 0;
+  }
 
-    addChild(child, localZOrder, tag) {
-        super.addChild(child, localZOrder, tag);
-        this._renderCmd._bakeForAddChild(child);
-    }
+  addChild(child, localZOrder, tag) {
+    super.addChild(child, localZOrder, tag);
+    this._renderCmd._bakeForAddChild(child);
+  }
 
-    _createRenderCmd() {
-        if (cc._renderType === Game.RENDER_TYPE_CANVAS)
-            return new LayerCanvasRenderer(this);
-        else
-            return new LayerWebGLRenderer(this);
-    }
+  _createRenderCmd() {
+    if (RendererConfig.getInstance().isCanvas)
+      return new LayerCanvasRenderer(this);
+    else return new LayerWebGLRenderer(this);
+  }
 }

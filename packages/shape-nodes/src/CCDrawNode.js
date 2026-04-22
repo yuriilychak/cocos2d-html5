@@ -119,7 +119,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
         pout.y = pin.y * floatVar;
     }
 
-    if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+    if (cc.rendererConfig.isCanvas) {
 
         cc._DrawNodeElement = function (type, verts, fillColor, lineWidth, lineColor, lineCap, isClosePolygon, isFill, isStroke) {
             var _t = this;
@@ -479,7 +479,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             }
         });
     }
-    else if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+    else if (cc.rendererConfig.isWebGL) {
 
         // 9600 vertices by default configurable in ccConfig.js
         // 20 is 2 float for position, 4 int for color and 2 float for uv

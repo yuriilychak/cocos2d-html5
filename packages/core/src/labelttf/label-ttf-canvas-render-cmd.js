@@ -27,6 +27,7 @@ import { Size } from "../cocoa/geometry/size";
 import Game from "../boot/game";
 import { FontDefinition } from "../platform/types/font-definition";
 import { Texture2D } from "../textures/texture-2d";
+import { RendererConfig } from "../renderer/renderer-config";
 
 export const _textAlign = ["left", "center", "right"];
 export const _textBaseline = ["top", "middle", "bottom"];
@@ -447,7 +448,7 @@ export const LabelRenderMixin = (Base) =>
       this._originSyncStatus(parentCmd);
 
       if (
-        cc._renderType === Game.RENDER_TYPE_WEBGL ||
+        RendererConfig.getInstance().isWebGL ||
         locFlag & flags.transformDirty
       )
         this.transform(parentCmd);

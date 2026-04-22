@@ -242,7 +242,7 @@
     }
 
     _createRenderCmd() {
-      if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+      if (cc.rendererConfig.isCanvas)
         return new cc.PhysicsSprite.CanvasRenderCmd(this);
       else return new cc.PhysicsSprite.WebGLRenderCmd(this);
     }

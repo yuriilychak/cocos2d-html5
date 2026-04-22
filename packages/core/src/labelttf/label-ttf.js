@@ -32,6 +32,7 @@ import { Color } from "../platform/types/color";
 import { FontDefinition } from "../platform/types/font-definition";
 import { Size } from "../cocoa/geometry/size";
 import { log, _LogInfos } from "../boot/debugger";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * <p>LabelTTF is a subclass of TextureNode that knows how to render text labels with system font or a ttf font file<br/>
@@ -860,7 +861,7 @@ export class LabelTTF extends Sprite {
     this._onCacheCanvasMode = onCacheMode;
   }
   _createRenderCmd() {
-    if (cc._renderType === Game.RENDER_TYPE_WEBGL)
+    if (RendererConfig.getInstance().isWebGL)
       return new LabelTTF.WebGLRenderCmd(this);
     else if (this._onCacheCanvasMode)
       return new LabelTTF.CacheCanvasRenderCmd(this);

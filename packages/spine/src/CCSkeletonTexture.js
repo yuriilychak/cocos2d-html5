@@ -39,7 +39,7 @@ sp.SkeletonTexture = class SkeletonTexture extends sp.spine.Texture {
     }
 
     setFilters(minFilter, magFilter) {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc.rendererConfig.isWebGL) {
             var gl = cc._renderContext;
             this.bind();
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, minFilter);
@@ -48,7 +48,7 @@ sp.SkeletonTexture = class SkeletonTexture extends sp.spine.Texture {
     }
 
     setWraps(uWrap, vWrap) {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc.rendererConfig.isWebGL) {
             var gl = cc._renderContext;
             this.bind();
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, uWrap);
@@ -60,7 +60,7 @@ sp.SkeletonTexture = class SkeletonTexture extends sp.spine.Texture {
     }
 
     bind() {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc.rendererConfig.isWebGL) {
             cc.glBindTexture2D(this._texture);
         }
     }

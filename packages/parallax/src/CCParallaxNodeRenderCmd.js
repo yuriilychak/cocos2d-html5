@@ -44,7 +44,7 @@
 })();
 
 cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
-    if (cc._renderType !== cc.game.RENDER_TYPE_WEBGL)
+    if (!cc.rendererConfig.isWebGL)
         return;
 
     cc.ParallaxNode.WebGLRenderCmd = class WebGLRenderCmd extends cc.Node.WebGLRenderCmd {

@@ -505,7 +505,7 @@ cc.MotionStreak = class MotionStreak extends cc.Node {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
+        if (cc.rendererConfig.isWebGL)
             return new cc.MotionStreak.WebGLRenderCmd(this);
         else
             return null;  //MotionStreak doesn't support Canvas mode

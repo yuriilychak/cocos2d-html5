@@ -298,7 +298,7 @@ SpineTestScene.testLayers = [
     //SpineTestPerformanceLayer //it doesn't support mesh on Canvas.
 ];
 
-if(cc.sys.isNative || cc._renderType === cc.game.RENDER_TYPE_WEBGL){
+if(cc.sys.isNative || cc.rendererConfig.isWebGL){
     SpineTestScene.testLayers.push(SpineTestLayerFFD);
     SpineTestScene.testLayers.push(SpineTestPerformanceLayer);
 }

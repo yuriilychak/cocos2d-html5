@@ -276,6 +276,7 @@ import {
 } from "./renderer/renderer-canvas";
 import { rendererWebGL } from "./renderer/renderer-webgl";
 import { Region, DirtyRegion } from "./renderer/dirty-region";
+import { RendererConfig } from "./renderer/renderer-config";
 import {
   _convertResponseBodyToText,
   loadBinary,
@@ -761,6 +762,8 @@ cc.GlobalVertexBuffer = GlobalVertexBuffer;
 cc.rendererCanvas = rendererCanvas;
 cc.CanvasContextWrapper = CanvasContextWrapper;
 cc.rendererWebGL = rendererWebGL;
+cc.rendererConfig = RendererConfig.getInstance();
+cc.RendererConfig = RendererConfig;
 cc.Region = Region;
 cc.DirtyRegion = DirtyRegion;
 cc._convertResponseBodyToText = _convertResponseBodyToText;

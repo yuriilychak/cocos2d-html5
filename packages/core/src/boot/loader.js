@@ -4,7 +4,8 @@ import Async from "./async";
 import AsyncPool from "./async-pool";
 import Path from "./path";
 import Sys from "./sys";
-import { error, log } from './debugger';
+import { error, log } from "./debugger";
+import { RendererConfig } from "../renderer/renderer-config";
 
 var imagePool = new ImagePool();
 
@@ -429,10 +430,7 @@ export default class Loader {
         delete this._queue[url];
       }
 
-      if (
-        window.ENABLE_IMAEG_POOL &&
-        cc._renderType === Game.RENDER_TYPE_WEBGL
-      ) {
+      if (window.ENABLE_IMAEG_POOL && RendererConfig.getInstance().isWebGL) {
         imagePool.put(img);
       }
     };
@@ -463,7 +461,7 @@ export default class Loader {
           delete this._queue[url];
         }
 
-        if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
+        if (RendererConfig.getInstance().isWebGL) {
           imagePool.put(img);
         }
       }

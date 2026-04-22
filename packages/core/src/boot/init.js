@@ -37,7 +37,6 @@ cc._drawingUtil = null;
  * @type {CanvasRenderingContext2D|WebGLRenderingContext}
  */
 cc._renderContext = null;
-cc._supportRender = false;
 
 /**
  * Main canvas of game engine

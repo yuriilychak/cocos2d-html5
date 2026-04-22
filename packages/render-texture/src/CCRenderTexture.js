@@ -128,7 +128,7 @@ cc.RenderTexture = class RenderTexture extends cc.Node {
     set clearColorVal(v) { this.setClearColor(v); }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if (cc.rendererConfig.isCanvas)
             return new cc.RenderTexture.CanvasRenderCmd(this);
         else
             return new cc.RenderTexture.WebGLRenderCmd(this);

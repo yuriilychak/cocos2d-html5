@@ -292,7 +292,7 @@ cc.EditBox = class EditBox extends cc.Node {
   }
 
   _createRenderCmd() {
-    if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+    if (cc.rendererConfig.isCanvas) {
       return new cc.EditBox.CanvasRenderCmd(this);
     } else {
       return new cc.EditBox.WebGLRenderCmd(this);

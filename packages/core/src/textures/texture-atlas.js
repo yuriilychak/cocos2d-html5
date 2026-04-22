@@ -34,6 +34,7 @@ import { Texture2D } from "./texture-2d";
 import TextureCache from "./texture-cache";
 import TextureAtlasCanvasRenderer from "./texture-atlas-canvas-renderer";
 import TextureAtlasWebGLRenderer from "./texture-atlas-webgl-renderer";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * <p>A class that implements a Texture Atlas. <br />
@@ -82,10 +83,9 @@ export class TextureAtlas extends NewClass {
     this._quadsReader = null;
 
     // Initialize renderer based on render type
-    this._renderer =
-      cc._renderType === Game.RENDER_TYPE_CANVAS
-        ? new TextureAtlasCanvasRenderer(this)
-        : new TextureAtlasWebGLRenderer(this);
+    this._renderer = RendererConfig.getInstance().isCanvas
+      ? new TextureAtlasCanvasRenderer(this)
+      : new TextureAtlasWebGLRenderer(this);
 
     if (isString(fileName)) {
       this.initWithFile(fileName, capacity);

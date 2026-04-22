@@ -192,7 +192,7 @@ cc.PhysicsDebugNode = class PhysicsDebugNode extends cc.DrawNode {
     }
 
     _createRenderCmd() {
-        if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if(cc.rendererConfig.isCanvas)
             return new cc.PhysicsDebugNode.CanvasRenderCmd(this);
         else
             return new cc.PhysicsDebugNode.WebGLRenderCmd(this);

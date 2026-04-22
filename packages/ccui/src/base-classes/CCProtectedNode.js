@@ -289,7 +289,7 @@ cc.ProtectedNode = class ProtectedNode extends cc.Node {
     _changePosition() {}
 
     _createRenderCmd() {
-      if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+      if (cc.rendererConfig.isCanvas)
         return new cc.ProtectedNode.CanvasRenderCmd(this);
       else return new cc.ProtectedNode.WebGLRenderCmd(this);
     }

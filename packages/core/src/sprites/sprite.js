@@ -34,6 +34,7 @@ import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import SpriteFrameCache from "./sprite-frame-cache";
 import AnimationCache from "./animation-cache";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * <p>Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -260,10 +261,7 @@ export class Sprite extends EventHelper(Node) {
   initWithSpriteFrameName(spriteFrameName) {
     assert(spriteFrameName, _LogInfos.Sprite_initWithSpriteFrameName);
     var frame = SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameName);
-    assert(
-      frame,
-      spriteFrameName + _LogInfos.Sprite_initWithSpriteFrameName1
-    );
+    assert(frame, spriteFrameName + _LogInfos.Sprite_initWithSpriteFrameName1);
     return this.initWithSpriteFrame(frame);
   }
 
@@ -385,10 +383,7 @@ export class Sprite extends EventHelper(Node) {
    * @param {Number} frameIndex
    */
   setDisplayFrameWithAnimationName(animationName, frameIndex) {
-    assert(
-      animationName,
-      _LogInfos.Sprite_setDisplayFrameWithAnimationName_3
-    );
+    assert(animationName, _LogInfos.Sprite_setDisplayFrameWithAnimationName_3);
 
     var cache = AnimationCache.getInstance().getAnimation(animationName);
     if (!cache) {
@@ -426,7 +421,8 @@ export class Sprite extends EventHelper(Node) {
       if (fileName[0] === "#") {
         // Init with a sprite frame name
         var frameName = fileName.substr(1, fileName.length - 1);
-        var spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(frameName);
+        var spriteFrame =
+          SpriteFrameCache.getInstance().getSpriteFrame(frameName);
         if (spriteFrame) this.initWithSpriteFrame(spriteFrame);
         else log("%s does not exist", fileName);
       } else {
@@ -568,10 +564,7 @@ export class Sprite extends EventHelper(Node) {
    */
   initWithTexture(texture, rect, rotated, counterclockwise) {
     var _t = this;
-    assert(
-      arguments.length !== 0,
-      _LogInfos.CCSpriteBatchNode_initWithTexture
-    );
+    assert(arguments.length !== 0, _LogInfos.CCSpriteBatchNode_initWithTexture);
     this._loader.clear();
 
     _t._textureLoaded = texture.isLoaded();
@@ -879,7 +872,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   _createRenderCmd() {
-    if (cc._renderType === Game.RENDER_TYPE_CANVAS)
+    if (RendererConfig.getInstance().isCanvas)
       return new cc.Sprite.CanvasRenderCmd(this);
     else return new cc.Sprite.WebGLRenderCmd(this);
   }

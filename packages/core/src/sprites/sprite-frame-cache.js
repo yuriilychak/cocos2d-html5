@@ -32,6 +32,7 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * <p>
@@ -53,9 +54,11 @@ export default class SpriteFrameCache {
   }
 
   constructor() {
-    this._CCNS_REG1 = /^\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*$/;
-    this._CCNS_REG2 = /^\s*\{\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*,\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*\}\s*$/;
-    
+    this._CCNS_REG1 =
+      /^\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*$/;
+    this._CCNS_REG2 =
+      /^\s*\{\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*,\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*\}\s*$/;
+
     this._spriteFrames = {};
     this._spriteFramesAliases = {};
     this._frameConfigCache = {};
@@ -240,7 +243,7 @@ export default class SpriteFrameCache {
         }
 
         if (
-          cc._renderType === Game.RENDER_TYPE_CANVAS &&
+          RendererConfig.getInstance().isCanvas &&
           spriteFrame.isRotated()
         ) {
           //clip to canvas

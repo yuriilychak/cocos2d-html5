@@ -1465,7 +1465,7 @@ var SpriteAliased = class SpriteAliased extends SpriteTestDemo {
         // This change will affect every sprite that uses the same texture
         // So sprite1 and sprite2 will be affected by this change
         //
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
+        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
             var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
@@ -1479,7 +1479,7 @@ var SpriteAliased = class SpriteAliased extends SpriteTestDemo {
     }
     onExit() {
         //----start24----onExit
-        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
+        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE1);
             sprite.texture.setAntiAliasTexParameters();
         }
@@ -1540,7 +1540,7 @@ var SpriteBatchNodeAliased = class SpriteBatchNodeAliased extends SpriteTestDemo
         // This change will affect every sprite that uses the same texture
         // So sprite1 and sprite2 will be affected by this change
         //
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
+        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
             var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
@@ -1554,7 +1554,7 @@ var SpriteBatchNodeAliased = class SpriteBatchNodeAliased extends SpriteTestDemo
     }
     onExit() {
         //----start25----onExit
-        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
+        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
             sprite.texture.setAntiAliasTexParameters();
         }
@@ -4318,7 +4318,7 @@ var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren exte
         // SpriteBatchNode: 3 levels of children
         //
         var aParent = new cc.SpriteBatchNode(s_ghosts);
-        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)
+        if ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 
@@ -4782,7 +4782,7 @@ var SpriteBatchNodeReorderOneChild = class SpriteBatchNodeReorderOneChild extend
 
         this._batchNode = aParent;
         //[[aParent texture] generateMipmap];
-        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)
+        if ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 
@@ -5559,7 +5559,7 @@ var SpriteBlendFuncTest = class SpriteBlendFuncTest extends SpriteTestDemo {
         this.addChild(sourceSprite);
         this.addChild(destSprite);
 
-        if(cc._renderType === cc._RENDER_TYPE_CANVAS){
+        if(cc.rendererConfig.isCanvas){
             var info = new cc.LabelTTF("support is not complete on canvas", "Arial", 18);
             info.x = 680;
             info.y = 250;

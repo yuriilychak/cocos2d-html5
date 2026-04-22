@@ -18,6 +18,7 @@ import { log } from "./debugger";
 import { initEngine } from "./engine";
 import { create3DContext } from "./sys";
 import { isUndefined } from "./utils";
+import { RendererConfig } from "../renderer/renderer-config";
 import TextureCache from "../textures/texture-cache";
 
 /**
@@ -421,7 +422,7 @@ export default class Game extends EventHelper(NewClass) {
   _initRenderer(width, height) {
     if (this._rendererInitialized) return;
 
-    if (!cc._supportRender) {
+    if (!RendererConfig.getInstance().isSupportRenderer) {
       throw new Error(
         "The renderer doesn't support the renderMode " +
           this.config[Game.CONFIG_KEY.renderMode]
@@ -471,7 +472,7 @@ export default class Game extends EventHelper(NewClass) {
     localCanvas.setAttribute("height", height || 320);
     localCanvas.setAttribute("tabindex", 99);
 
-    if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
+    if (RendererConfig.getInstance().isWebGL) {
       this._renderContext =
         cc._renderContext =
         cc.webglContext =
@@ -489,7 +490,7 @@ export default class Game extends EventHelper(NewClass) {
       cc.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
       cc.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
     } else {
-      cc._renderType = Game.RENDER_TYPE_CANVAS;
+      RendererConfig.getInstance().setRenderType(Game.RENDER_TYPE_CANVAS);
       cc.renderer = rendererCanvas;
       this._renderContext = cc._renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")

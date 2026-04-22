@@ -89,14 +89,14 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
 
     onEnter() {
         super.onEnter();
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc.rendererConfig.isWebGL) {
             this._renderCmd.initCmd();
             this._renderCmd._updateProgress();
         }
     }
 
     cleanup() {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc.rendererConfig.isWebGL) {
             this._renderCmd.releaseData();
         }
         super.cleanup();
@@ -311,7 +311,7 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
     }
 
     _createRenderCmd() {
-        if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if(cc.rendererConfig.isCanvas)
             return new cc.ProgressTimer.CanvasRenderCmd(this);
         else
             return new cc.ProgressTimer.WebGLRenderCmd(this);

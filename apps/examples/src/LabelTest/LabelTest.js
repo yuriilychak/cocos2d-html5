@@ -2093,7 +2093,7 @@ var labelTTFDrawModeTest = class labelTTFDrawModeTest extends AtlasDemo {
 
 
         var directLabel = new cc.LabelTTF();
-        if(cc._renderType === cc._RENDER_TYPE_CANVAS) {
+        if(cc.rendererConfig.isCanvas) {
             directLabel.setDrawMode(false);
             directLabel.string = "This is a labelTTF \ndrawn On Screen";
         }

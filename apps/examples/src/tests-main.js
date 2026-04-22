@@ -150,7 +150,7 @@ var TestController = class TestController extends cc.LayerGradient {
 
             // enable disable
             if ( !cc.sys.isNative) {
-                if( cc._renderType !== cc.game.RENDER_TYPE_CANVAS ){
+                if( !cc.rendererConfig.isCanvas ){
                     menuItem.enabled = (testNames[i].platforms & PLATFORM_HTML5) | (testNames[i].platforms & PLATFORM_HTML5_WEBGL);
                 }else{
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_HTML5 );

@@ -1755,7 +1755,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
         return this._usingLayoutComponent;
     }
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
+        if (cc.rendererConfig.isWebGL)
             return new ccui.Widget.WebGLRenderCmd(this);
         else
             return new ccui.Widget.CanvasRenderCmd(this);

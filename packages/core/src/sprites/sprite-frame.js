@@ -32,6 +32,7 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { error, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * <p>
@@ -227,7 +228,9 @@ export class SpriteFrame extends EventHelper(NewClass) {
   getTexture() {
     if (this._texture) return this._texture;
     if (this._textureFilename !== "") {
-      var locTexture = TextureCache.getInstance().addImage(this._textureFilename);
+      var locTexture = TextureCache.getInstance().addImage(
+        this._textureFilename
+      );
       if (locTexture) this._textureLoaded = locTexture.isLoaded();
       return locTexture;
     }
@@ -248,7 +251,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
           "load",
           function (sender) {
             this._textureLoaded = true;
-            if (this._rotated && cc._renderType === Game.RENDER_TYPE_CANVAS) {
+            if (this._rotated && RendererConfig.getInstance().isCanvas) {
               var tempElement = sender.getHtmlElementObj();
               tempElement = cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas(
                 tempElement,

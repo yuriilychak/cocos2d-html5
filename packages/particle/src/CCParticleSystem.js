@@ -405,7 +405,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
     set texture(v) { this.setTexture(v); }
 
     _createRenderCmd() {
-      if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+      if (cc.rendererConfig.isCanvas)
         return new cc.ParticleSystem.CanvasRenderCmd(this);
       else return new cc.ParticleSystem.WebGLRenderCmd(this);
     }

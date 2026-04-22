@@ -39,6 +39,7 @@ import { ContentStrategy } from "./content-strategy";
 import { ResolutionPolicy } from "./resolution-policy";
 import { DENSITYDPI_HIGH } from "./constants";
 import { log, _LogInfos } from "../../boot/debugger";
+import { RendererConfig } from "../../renderer/renderer-config";
 
 var __sys = Sys.getInstance();
 
@@ -775,10 +776,10 @@ export class EGLView extends NewClass {
     cc.winSize.width = director._winSizeInPoints.width;
     cc.winSize.height = director._winSizeInPoints.height;
 
-    if (cc._renderType === Game.RENDER_TYPE_WEBGL) {
+    if (RendererConfig.getInstance().isWebGL) {
       // reset director's member variables to fit visible rect
       director.setGLDefaultValues();
-    } else if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
+    } else if (RendererConfig.getInstance().isCanvas) {
       cc.renderer._allNeedDraw = true;
     }
 

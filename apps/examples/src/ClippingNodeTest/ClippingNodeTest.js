@@ -732,7 +732,7 @@ var arrayOfClippingNodeTest = [
 ];
 
 
-if (!cc.sys.isNative && cc._renderType !== cc.game.RENDER_TYPE_CANVAS) {
+if (!cc.sys.isNative && !cc.rendererConfig.isCanvas) {
     arrayOfClippingNodeTest.push(
         ShapeInvertedTest,
         SpriteNoAlphaTest,

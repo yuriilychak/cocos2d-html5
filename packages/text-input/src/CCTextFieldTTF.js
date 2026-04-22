@@ -258,7 +258,7 @@ cc.TextFieldTTF = class TextFieldTTF extends cc.LabelTTF {
             super.setString(this._inputText);
             if (this._colorText) this.setColor(this._colorText);
         }
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if (cc.rendererConfig.isCanvas)
             this._renderCmd._updateTexture();
         this._charCount = this._inputText.length;
     }

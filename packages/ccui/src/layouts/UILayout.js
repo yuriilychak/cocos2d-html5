@@ -1467,7 +1467,7 @@ ccui.Layout = class Layout extends ccui.Widget {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL)
+        if (cc.rendererConfig.isWebGL)
             return new ccui.Layout.WebGLRenderCmd(this);
         else
             return new ccui.Layout.CanvasRenderCmd(this);

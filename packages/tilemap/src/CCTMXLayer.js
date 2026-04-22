@@ -112,7 +112,7 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
     set tileHeight(v) { this._setTileHeight(v); }
 
     _createRenderCmd() {
-        if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if(cc.rendererConfig.isCanvas)
             return new cc.TMXLayer.CanvasRenderCmd(this);
         else
             return new cc.TMXLayer.WebGLRenderCmd(this);
@@ -694,7 +694,7 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
                 if (alphaFuncVal)
                     alphaFuncValue = parseFloat(alphaFuncVal);
 
-                if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {        //todo: need move to WebGL render cmd
+                if (cc.rendererConfig.isWebGL) {        //todo: need move to WebGL render cmd
                     this.shaderProgram = cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST);
                     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
                     this.shaderProgram.use();

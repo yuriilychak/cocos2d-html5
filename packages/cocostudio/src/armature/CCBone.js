@@ -630,7 +630,7 @@ ccs.Bone = class Bone extends ccs.Node {
     }
 
     _createRenderCmd() {
-        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if (cc.rendererConfig.isCanvas)
             return new ccs.Bone.CanvasRenderCmd(this);
         else
             return new ccs.Bone.WebGLRenderCmd(this);

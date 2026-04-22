@@ -645,7 +645,7 @@ ccui.Slider = class Slider extends ccui.Widget {
         this._slidBallDisabledRenderer.setVisible(false);
 
         this._slidBallNormalRenderer.setScale(this._sliderBallNormalTextureScaleX, this._sliderBallNormalTextureScaleY);
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc.rendererConfig.isWebGL) {
             this._slidBallNormalRenderer._renderCmd._shaderProgram = this._getNormalGLProgram();
         } else {
             // TODO: add canvas support
@@ -660,7 +660,7 @@ ccui.Slider = class Slider extends ccui.Widget {
             this._slidBallPressedRenderer.setVisible(true);
             this._slidBallDisabledRenderer.setVisible(false);
         }
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+        if (cc.rendererConfig.isWebGL) {
             this._slidBallNormalRenderer._renderCmd._shaderProgram = this._getNormalGLProgram();
         } else {
             // TODO: add canvas support
@@ -673,7 +673,7 @@ ccui.Slider = class Slider extends ccui.Widget {
             this._slidBallDisabledRenderer.setVisible(true);
         } else {
             this._slidBallNormalRenderer.setVisible(true);
-            if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+            if (cc.rendererConfig.isWebGL) {
                 this._slidBallNormalRenderer._renderCmd._shaderProgram = this._getGrayGLProgram();
             } else {
                 // TODO: add canvas support

@@ -219,7 +219,7 @@ cc.ParallaxNode = class ParallaxNode extends cc.Node {
     }
 
     _createRenderCmd() {
-        if(cc._renderType === cc.game.RENDER_TYPE_CANVAS)
+        if(cc.rendererConfig.isCanvas)
             return new cc.ParallaxNode.CanvasRenderCmd(this);
         else
             return new cc.ParallaxNode.WebGLRenderCmd(this);

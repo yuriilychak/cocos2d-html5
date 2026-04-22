@@ -275,7 +275,7 @@ ccui.WebView.EventType = {
 (function (polyfill) {
 
     var RenderCmd = null;
-    if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+    if (cc.rendererConfig.isWebGL) {
         RenderCmd = cc.Node.WebGLRenderCmd;
     } else {
         RenderCmd = cc.Node.CanvasRenderCmd;

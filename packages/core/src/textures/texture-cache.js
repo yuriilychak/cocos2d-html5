@@ -31,6 +31,7 @@ import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCacheCanvasRenderer from "./texture-cache-canvas-renderer";
 import TextureCacheWebGLRenderer from "./texture-cache-webgl-renderer";
 import { Texture2D } from "./texture-2d";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * TextureCache is a singleton class, it's the global cache for Texture2D
@@ -64,7 +65,7 @@ export default class TextureCache {
    * from Game._initRenderer() after the renderer type is determined.
    */
   initRenderer() {
-    if (cc._renderType === Game.RENDER_TYPE_CANVAS) {
+    if (RendererConfig.getInstance().isCanvas) {
       this._renderer = new TextureCacheCanvasRenderer(this);
     } else {
       this._renderer = new TextureCacheWebGLRenderer(this);
