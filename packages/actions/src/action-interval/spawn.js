@@ -1,6 +1,6 @@
-import ActionInterval from './action-interval';
-import Sequence from './sequence';
-import DelayTime from './delay-time';
+import ActionInterval from "./action-interval";
+import Sequence from "./sequence";
+import DelayTime from "./delay-time";
 
 const delayTime = (d) => new DelayTime(d);
 
@@ -12,7 +12,7 @@ export default class Spawn extends ActionInterval {
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-   * @param {Array|cc.FiniteTimeAction} tempArray
+   * @param {Array|FiniteTimeAction} tempArray
    */
   constructor(tempArray) {
     super();
@@ -38,7 +38,7 @@ export default class Spawn extends ActionInterval {
       for (i = 1; i < last; i++) {
         if (paramArray[i]) {
           action1 = prev;
-          prev = cc.Spawn._actionOneTwo(action1, paramArray[i]);
+          prev = Spawn._actionOneTwo(action1, paramArray[i]);
         }
       }
       this.initWithTwoActions(prev, paramArray[last]);
@@ -46,14 +46,14 @@ export default class Spawn extends ActionInterval {
   }
 
   /** initializes the Spawn action with the 2 actions to spawn
-   * @param {cc.FiniteTimeAction} action1
-   * @param {cc.FiniteTimeAction} action2
+   * @param {FiniteTimeAction} action1
+   * @param {FiniteTimeAction} action2
    * @return {Boolean}
    */
   initWithTwoActions(action1, action2) {
     if (!action1 || !action2)
       throw new Error(
-        "cc.Spawn.initWithTwoActions(): arguments must all be non null"
+        "Spawn.initWithTwoActions(): arguments must all be non null"
       );
 
     var ret = false;
@@ -78,7 +78,7 @@ export default class Spawn extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.Spawn}
+   * @returns {Spawn}
    */
   clone() {
     var action = new Spawn();
@@ -89,7 +89,7 @@ export default class Spawn extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -118,10 +118,10 @@ export default class Spawn extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.Spawn}
+   * @return {Spawn}
    */
   reverse() {
-    var action = cc.Spawn._actionOneTwo(
+    var action = Spawn._actionOneTwo(
       this._one.reverse(),
       this._two.reverse()
     );
@@ -129,4 +129,4 @@ export default class Spawn extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
-};
+}

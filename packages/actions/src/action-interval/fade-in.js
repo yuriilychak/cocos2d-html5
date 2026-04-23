@@ -1,7 +1,7 @@
-import FadeTo from './fade-to';
-import FadeOut from './fade-out';
+import FadeTo from "./fade-to";
+import FadeOut from "./fade-out";
 
-/** Fades In an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 0 to 255.<br/>
+/** Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.<br/>
  * The "reverse" of this action is FadeOut
  * @param {Number} duration duration in seconds
  */
@@ -20,7 +20,7 @@ export default class FadeIn extends FadeTo {
 
   /**
    * Returns a reversed action.
-   * @return {cc.FadeOut}
+   * @return {FadeOut}
    */
   reverse() {
     const action = new FadeOut();
@@ -32,7 +32,7 @@ export default class FadeIn extends FadeTo {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.FadeIn}
+   * @returns {FadeIn}
    */
   clone() {
     const action = new FadeIn();
@@ -43,10 +43,10 @@ export default class FadeIn extends FadeTo {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     if (this._reverseAction) this._toOpacity = this._reverseAction._fromOpacity;
     super.startWithTarget(target);
   }
-};
+}

@@ -1,15 +1,14 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
- * cc.EaseBezierAction action. <br />
+ * EaseBezierAction action. <br />
  * Manually set a 4 order Bessel curve. <br />
  * According to the set point, calculate the trajectory.
- * @param {cc.Action} action
+ * @param {Action} action
  * @example
- * action.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
+ * action.easing(easeBezierAction(0.5, 0.5, 1.0, 1.0));
  */
 export default class EaseBezierAction extends ActionEase {
-
   _p0 = null;
   _p1 = null;
   _p2 = null;
@@ -18,7 +17,7 @@ export default class EaseBezierAction extends ActionEase {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Initialization requires the application of Bessel curve of action.
-   * @param {cc.Action} action
+   * @param {Action} action
    */
   constructor(action) {
     super(action);
@@ -47,7 +46,7 @@ export default class EaseBezierAction extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseBezierAction}
+   * @returns {EaseBezierAction}
    */
   clone() {
     var action = new EaseBezierAction();
@@ -58,7 +57,7 @@ export default class EaseBezierAction extends ActionEase {
 
   /**
    * Create a action. Opposite with the original motion trajectory.
-   * @return {cc.EaseBezierAction}
+   * @return {EaseBezierAction}
    */
   reverse() {
     var action = new EaseBezierAction(this._inner.reverse());
@@ -79,4 +78,4 @@ export default class EaseBezierAction extends ActionEase {
     this._p2 = p2 || 0;
     this._p3 = p3 || 0;
   }
-};
+}

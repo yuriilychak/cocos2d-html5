@@ -1,9 +1,9 @@
 /**
- * Base class for cc.Action objects.
+ * Base class for Action objects.
  *
  *
- * @property {cc.Node}  target          - The target will be set with the 'startWithTarget' method. When the 'stop' method is called, target will be set to nil.
- * @property {cc.Node}  originalTarget  - The original target of the action.
+ * @property {Node}  target          - The target will be set with the 'startWithTarget' method. When the 'stop' method is called, target will be set to nil.
+ * @property {Node}  originalTarget  - The original target of the action.
  * @property {Number}   tag             - The tag of the action, can be used to find the action.
  */
 export default class Action extends cc.NewClass {
@@ -28,7 +28,7 @@ export default class Action extends cc.NewClass {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.Action}
+   * @return {Action}
    */
   clone() {
     return new Action();
@@ -46,7 +46,7 @@ export default class Action extends cc.NewClass {
   /**
    * called before the action start. It will also set the target.
    *
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     this.originalTarget = target;
@@ -83,7 +83,7 @@ export default class Action extends cc.NewClass {
   /**
    * get the target.
    *
-   * @return {cc.Node}
+   * @return {Node}
    */
   getTarget() {
     return this.target;
@@ -92,7 +92,7 @@ export default class Action extends cc.NewClass {
   /**
    * The action will modify the target properties.
    *
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   setTarget(target) {
     this.target = target;
@@ -101,7 +101,7 @@ export default class Action extends cc.NewClass {
   /**
    * get the original target.
    *
-   * @return {cc.Node}
+   * @return {Node}
    */
   getOriginalTarget() {
     return this.originalTarget;
@@ -110,9 +110,9 @@ export default class Action extends cc.NewClass {
   /**
    * Set the original target, since target can be nil. <br/>
    * Is the target that were used to run the action.  <br/>
-   * Unless you are doing something complex, like cc.ActionManager, you should NOT call this method. <br/>
+   * Unless you are doing something complex, like ActionManager, you should NOT call this method. <br/>
    * The target is 'assigned', it is not 'retained'. <br/>
-   * @param {cc.Node} originalTarget
+   * @param {Node} originalTarget
    */
   setOriginalTarget(originalTarget) {
     this.originalTarget = originalTarget;
@@ -133,4 +133,4 @@ export default class Action extends cc.NewClass {
   setTag(tag) {
     this.tag = tag;
   }
-};
+}

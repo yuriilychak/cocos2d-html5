@@ -1,13 +1,13 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**
- * Rotates a cc.Node object clockwise a number of degrees by modifying it's rotation attribute.
+ * Rotates a Node object clockwise a number of degrees by modifying it's rotation attribute.
  * Relative to its properties to modify.
  * @param {Number} duration duration in seconds
  * @param {Number} deltaAngleX deltaAngleX in degrees
  * @param {Number} [deltaAngleY] deltaAngleY in degrees
  * @example
- * var actionBy = new cc.RotateBy(2, 360);
+ * var actionBy = new RotateBy(2, 360);
  */
 export default class RotateBy extends ActionInterval {
   _angleX = 0;
@@ -46,7 +46,7 @@ export default class RotateBy extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.RotateBy}
+   * @returns {RotateBy}
    */
   clone() {
     var action = new RotateBy();
@@ -57,7 +57,7 @@ export default class RotateBy extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -79,7 +79,7 @@ export default class RotateBy extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.RotateBy}
+   * @return {RotateBy}
    */
   reverse() {
     var action = new RotateBy(this._duration, -this._angleX, -this._angleY);
@@ -87,4 +87,4 @@ export default class RotateBy extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
-};
+}

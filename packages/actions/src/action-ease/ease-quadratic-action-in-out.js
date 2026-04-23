@@ -1,14 +1,13 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
- * cc.EaseQuadraticActionInOut action. <br />
+ * EaseQuadraticActionInOut action. <br />
  * Reference easeInOutQuad: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
  * @example
- * action.easing(cc.easeQuadraticActionInOut());
+ * action.easing(easeQuadraticActionInOut());
  */
 export default class EaseQuadraticActionInOut extends ActionEase {
-
   _updateTime(time) {
     var resultTime = time;
     time *= 2;
@@ -34,7 +33,7 @@ export default class EaseQuadraticActionInOut extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseQuadraticActionInOut}
+   * @returns {EaseQuadraticActionInOut}
    */
   clone() {
     var action = new EaseQuadraticActionInOut();
@@ -44,7 +43,7 @@ export default class EaseQuadraticActionInOut extends ActionEase {
 
   /**
    * Create a action. Opposite with the original motion trajectory.
-   * @return {cc.EaseQuadraticActionInOut}
+   * @return {EaseQuadraticActionInOut}
    */
   reverse() {
     return new EaseQuadraticActionInOut(this._inner.reverse());

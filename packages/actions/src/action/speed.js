@@ -1,12 +1,12 @@
-import Action from './action';
+import Action from "./action";
 
 /**
  * Changes the speed of an action, making it take longer (speed > 1)
  * or less (speed < 1) time. <br/>
  * Useful to simulate 'slow motion' or 'fast forward' effect.
  *
- * @warning This action can't be Sequenceable because it is not an cc.IntervalAction
- * @param {cc.ActionInterval} action
+ * @warning This action can't be Sequenceable because it is not an IntervalAction
+ * @param {ActionInterval} action
  * @param {Number} speed
  */
 export default class Speed extends Action {
@@ -15,7 +15,7 @@ export default class Speed extends Action {
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    * @param {Number} speed
    */
   constructor(action, speed) {
@@ -48,13 +48,13 @@ export default class Speed extends Action {
   /**
    * initializes the action.
    *
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    * @param {Number} speed
    * @return {Boolean}
    */
   initWithAction(action, speed) {
     if (!action)
-      throw new Error("cc.Speed.initWithAction(): action must be non nil");
+      throw new Error("Speed.initWithAction(): action must be non nil");
 
     this._innerAction = action;
     this._speed = speed;
@@ -65,7 +65,7 @@ export default class Speed extends Action {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.Speed}
+   * @returns {Speed}
    */
   clone() {
     var action = new Speed();
@@ -76,7 +76,7 @@ export default class Speed extends Action {
   /**
    * called before the action start. It will also set the target.
    *
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -117,7 +117,7 @@ export default class Speed extends Action {
    * - The reversed action will be x of 100 move to 0.
    * - Will be rewritten
    *
-   * @return {cc.Speed}
+   * @return {Speed}
    */
   reverse() {
     return new Speed(this._innerAction.reverse(), this._speed);
@@ -125,7 +125,7 @@ export default class Speed extends Action {
 
   /**
    * Set inner Action.
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    */
   setInnerAction(action) {
     if (this._innerAction !== action) {
@@ -136,9 +136,9 @@ export default class Speed extends Action {
   /**
    * Get inner Action.
    *
-   * @return {cc.ActionInterval}
+   * @return {ActionInterval}
    */
   getInnerAction() {
     return this._innerAction;
   }
-};
+}

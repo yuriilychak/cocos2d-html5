@@ -1,13 +1,13 @@
-import ActionInterval from './action-interval';
-import ActionInstant from '../action-instant/action-instant';
+import ActionInterval from "./action-interval";
+import ActionInstant from "../action-instant/action-instant";
 
 /**
  * Repeats an action a number of times.
  * To repeat an action forever use the RepeatForever action.
- * @param {cc.FiniteTimeAction} action
+ * @param {FiniteTimeAction} action
  * @param {Number} times
  * @example
- * var rep = new cc.Repeat(cc.sequence(jump2, jump1), 5);
+ * var rep = new Repeat(sequence(jump2, jump1), 5);
  */
 export default class Repeat extends ActionInterval {
   _times = 0;
@@ -19,7 +19,7 @@ export default class Repeat extends ActionInterval {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30).
-   * @param {cc.FiniteTimeAction} action
+   * @param {FiniteTimeAction} action
    * @param {Number} times
    */
   constructor(action, times) {
@@ -29,7 +29,7 @@ export default class Repeat extends ActionInterval {
   }
 
   /**
-   * @param {cc.FiniteTimeAction} action
+   * @param {FiniteTimeAction} action
    * @param {Number} times
    * @return {Boolean}
    */
@@ -51,7 +51,7 @@ export default class Repeat extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.Repeat}
+   * @returns {Repeat}
    */
   clone() {
     var action = new Repeat();
@@ -62,7 +62,7 @@ export default class Repeat extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     this._total = 0;
@@ -130,7 +130,7 @@ export default class Repeat extends ActionInterval {
 
   /**
    * returns a reversed action.
-   * @return {cc.Repeat}
+   * @return {Repeat}
    */
   reverse() {
     var action = new Repeat(this._innerAction.reverse(), this._times);
@@ -141,7 +141,7 @@ export default class Repeat extends ActionInterval {
 
   /**
    * Set inner Action.
-   * @param {cc.FiniteTimeAction} action
+   * @param {FiniteTimeAction} action
    */
   setInnerAction(action) {
     if (this._innerAction !== action) {
@@ -151,9 +151,9 @@ export default class Repeat extends ActionInterval {
 
   /**
    * Get inner Action.
-   * @return {cc.FiniteTimeAction}
+   * @return {FiniteTimeAction}
    */
   getInnerAction() {
     return this._innerAction;
   }
-};
+}

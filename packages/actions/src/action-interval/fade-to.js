@@ -1,11 +1,11 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
-/** Fades an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
+/** Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  * @warning This action doesn't support "reverse"
  * @param {Number} duration
  * @param {Number} opacity 0-255, 0 is transparent
  * @example
- * var action = new cc.FadeTo(1.0, 0);
+ * var action = new FadeTo(1.0, 0);
  */
 export default class FadeTo extends ActionInterval {
   _toOpacity = 0;
@@ -37,7 +37,7 @@ export default class FadeTo extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.FadeTo}
+   * @returns {FadeTo}
    */
   clone() {
     const action = new FadeTo();
@@ -59,10 +59,10 @@ export default class FadeTo extends ActionInterval {
 
   /**
    * Start this action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
     this._fromOpacity = target.opacity;
   }
-};
+}

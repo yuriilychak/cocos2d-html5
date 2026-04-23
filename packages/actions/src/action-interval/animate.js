@@ -1,10 +1,10 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**  Animates a sprite given the name of an Animation
- * @param {cc.Animation} animation
+ * @param {Animation} animation
  * @example
  * // create the animation with animation
- * var anim = new cc.Animate(dance_grey);
+ * var anim = new Animate(dance_grey);
  */
 export default class Animate extends ActionInterval {
   _animation = null;
@@ -17,7 +17,7 @@ export default class Animate extends ActionInterval {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * create the animate with animation.
-   * @param {cc.Animation} animation
+   * @param {Animation} animation
    */
   constructor(animation) {
     super();
@@ -27,14 +27,14 @@ export default class Animate extends ActionInterval {
   }
 
   /**
-   * @return {cc.Animation}
+   * @return {Animation}
    */
   getAnimation() {
     return this._animation;
   }
 
   /**
-   * @param {cc.Animation} animation
+   * @param {Animation} animation
    */
   setAnimation(animation) {
     this._animation = animation;
@@ -49,7 +49,7 @@ export default class Animate extends ActionInterval {
   }
 
   /**
-   * @param {cc.Animation} animation
+   * @param {Animation} animation
    * @return {Boolean}
    */
   initWithAnimation(animation) {
@@ -86,7 +86,7 @@ export default class Animate extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.Animate}
+   * @returns {Animate}
    */
   clone() {
     var action = new Animate();
@@ -97,7 +97,7 @@ export default class Animate extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Sprite} target
+   * @param {Sprite} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -134,7 +134,9 @@ export default class Animate extends ActionInterval {
     for (var i = this._nextFrame; i < numberOfFrames; i++) {
       if (locSplitTimes[i] <= dt) {
         this._currFrameIndex = i;
-        this.target.setSpriteFrame(frames[this._currFrameIndex].getSpriteFrame());
+        this.target.setSpriteFrame(
+          frames[this._currFrameIndex].getSpriteFrame()
+        );
         this._nextFrame = i + 1;
       } else {
         // Issue 1438. Could be more than one frame per tick, due to low frame rate or frame delta < 1/FPS
@@ -145,7 +147,7 @@ export default class Animate extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.Animate}
+   * @return {Animate}
    */
   reverse() {
     var locAnimation = this._animation;
@@ -180,4 +182,4 @@ export default class Animate extends ActionInterval {
       this.target.setSpriteFrame(this._origFrame);
     super.stop();
   }
-};
+}

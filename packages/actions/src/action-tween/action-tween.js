@@ -1,18 +1,18 @@
-import ActionInterval from '../action-interval/action-interval';
+import ActionInterval from "../action-interval/action-interval";
 
 /**
- * cc.ActionTween
- * cc.ActionTween is an action that lets you update any property of an object.
+ * ActionTween
+ * ActionTween is an action that lets you update any property of an object.
  *
  * @example
  * //For example, if you want to modify the "width" property of a target from 200 to 300 in 2 seconds, then:
- *  var modifyWidth = cc.actionTween(2,"width",200,300)
+ *  var modifyWidth = actionTween(2,"width",200,300)
  *  target.runAction(modifyWidth);
  *
- * //Another example: cc.ScaleTo action could be rewriten using cc.PropertyAction:
+ * //Another example: ScaleTo action could be rewriten using PropertyAction:
  * // scaleA and scaleB are equivalents
- * var scaleA = cc.scaleTo(2,3);
- * var scaleB = cc.actionTween(2,"scale",1,3);
+ * var scaleA = scaleTo(2,3);
+ * var scaleB = actionTween(2,"scale",1,3);
  * @param {Number} duration
  * @param {String} key
  * @param {Number} from
@@ -59,12 +59,12 @@ export default class ActionTween extends ActionInterval {
 
   /**
    * Start this tween with target.
-   * @param {cc.ActionTweenDelegate} target
+   * @param {ActionTweenDelegate} target
    */
   startWithTarget(target) {
     if (!target || !target.updateTweenAction)
       throw new Error(
-        "cc.ActionTween.startWithTarget(): target must be non-null, and target must implement updateTweenAction function"
+        "ActionTween.startWithTarget(): target must be non-null, and target must implement updateTweenAction function"
       );
     super.startWithTarget(target);
     this.delta = this.to - this.from;
@@ -81,7 +81,7 @@ export default class ActionTween extends ActionInterval {
 
   /**
    * returns a reversed action.
-   * @return {cc.ActionTween}
+   * @return {ActionTween}
    */
   reverse() {
     return new ActionTween(this.duration, this.key, this.to, this.from);
@@ -91,11 +91,11 @@ export default class ActionTween extends ActionInterval {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.ActionTween}
+   * @return {ActionTween}
    */
   clone() {
     const action = new ActionTween();
     action.initWithDuration(this._duration, this.key, this.from, this.to);
     return action;
   }
-};
+}

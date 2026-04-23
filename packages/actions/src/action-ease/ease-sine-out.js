@@ -1,4 +1,4 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
  * Ease Sine Out. <br />
@@ -6,7 +6,7 @@ import ActionEase from './action-ease';
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
  *
  * @example
- * action.easing(cc.easeSineOut());
+ * action.easing(easeSineOut());
  */
 export default class EaseSineOut extends ActionEase {
   /**
@@ -20,8 +20,8 @@ export default class EaseSineOut extends ActionEase {
   }
 
   /**
-   * Create a cc.EaseSineIn action. Opposite with the original motion trajectory.
-   * @return {cc.EaseSineIn}
+   * Create a EaseSineIn action. Opposite with the original motion trajectory.
+   * @return {EaseSineIn}
    */
   reverse() {
     return new cc.EaseSineIn(this._inner.reverse());
@@ -31,11 +31,11 @@ export default class EaseSineOut extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseSineOut}
+   * @returns {EaseSineOut}
    */
   clone() {
     var action = new EaseSineOut();
     action.initWithAction(this._inner.clone());
     return action;
   }
-};
+}

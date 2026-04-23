@@ -1,11 +1,11 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**  Repeats an action for ever.  <br/>
  * To repeat the an action for a limited number of times use the Repeat action. <br/>
  * @warning This action can't be Sequenceable because it is not an IntervalAction
- * @param {cc.FiniteTimeAction} action
+ * @param {FiniteTimeAction} action
  * @example
- * var rep = new cc.RepeatForever(cc.sequence(jump2, jump1), 5);
+ * var rep = new RepeatForever(sequence(jump2, jump1), 5);
  */
 export default class RepeatForever extends ActionInterval {
   _innerAction = null; //ActionInterval
@@ -13,7 +13,7 @@ export default class RepeatForever extends ActionInterval {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Create a acton which repeat forever.
-   * @param {cc.FiniteTimeAction} action
+   * @param {FiniteTimeAction} action
    */
   constructor(action) {
     super();
@@ -23,7 +23,7 @@ export default class RepeatForever extends ActionInterval {
   }
 
   /**
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    * @return {Boolean}
    */
   initWithAction(action) {
@@ -38,7 +38,7 @@ export default class RepeatForever extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.RepeatForever}
+   * @returns {RepeatForever}
    */
   clone() {
     var action = new RepeatForever();
@@ -49,7 +49,7 @@ export default class RepeatForever extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -86,7 +86,7 @@ export default class RepeatForever extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.RepeatForever}
+   * @return {RepeatForever}
    */
   reverse() {
     var action = new RepeatForever(this._innerAction.reverse());
@@ -97,7 +97,7 @@ export default class RepeatForever extends ActionInterval {
 
   /**
    * Set inner action.
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    */
   setInnerAction(action) {
     if (this._innerAction !== action) {
@@ -107,9 +107,9 @@ export default class RepeatForever extends ActionInterval {
 
   /**
    * Get inner action.
-   * @return {cc.ActionInterval}
+   * @return {ActionInterval}
    */
   getInnerAction() {
     return this._innerAction;
   }
-};
+}

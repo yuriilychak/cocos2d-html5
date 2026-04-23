@@ -1,11 +1,11 @@
-import EaseRateAction from './ease-rate-action';
+import EaseRateAction from "./ease-rate-action";
 
 /**
- * cc.EaseInOut action with a rate. <br />
+ * EaseInOut action with a rate. <br />
  * Slow to fast then to slow.
  *
  * @example
- * action.easing(cc.easeInOut(3.0));
+ * action.easing(easeInOut(3.0));
  */
 export default class EaseInOut extends EaseRateAction {
   /**
@@ -23,7 +23,7 @@ export default class EaseInOut extends EaseRateAction {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseInOut}
+   * @returns {EaseInOut}
    */
   clone() {
     var action = new EaseInOut();
@@ -32,10 +32,10 @@ export default class EaseInOut extends EaseRateAction {
   }
 
   /**
-   * Create a cc.EaseInOut action. Opposite with the original motion trajectory.
-   * @return {cc.EaseInOut}
+   * Create a EaseInOut action. Opposite with the original motion trajectory.
+   * @return {EaseInOut}
    */
   reverse() {
     return new EaseInOut(this._inner.reverse(), this._rate);
   }
-};
+}

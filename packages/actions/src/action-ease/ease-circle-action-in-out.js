@@ -1,12 +1,12 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
- * cc.EaseCircleActionInOut action. <br />
+ * EaseCircleActionInOut action. <br />
  * Reference easeInOutCirc: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
  *
  * @example
- * action.easing(cc.easeCircleActionInOut());
+ * action.easing(easeCircleActionInOut());
  */
 export default class EaseCircleActionInOut extends ActionEase {
   _updateTime(time) {
@@ -29,7 +29,7 @@ export default class EaseCircleActionInOut extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseCircleActionInOut}
+   * @returns {EaseCircleActionInOut}
    */
   clone() {
     var action = new EaseCircleActionInOut();
@@ -39,9 +39,9 @@ export default class EaseCircleActionInOut extends ActionEase {
 
   /**
    * Create a action. Opposite with the original motion trajectory.
-   * @return {cc.EaseCircleActionInOut}
+   * @return {EaseCircleActionInOut}
    */
   reverse() {
     return new EaseCircleActionInOut(this._inner.reverse());
   }
-};
+}

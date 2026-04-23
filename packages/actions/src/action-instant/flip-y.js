@@ -1,10 +1,10 @@
-import ActionInstant from './action-instant';
+import ActionInstant from "./action-instant";
 
 /**
  * Flips the sprite vertically
  * @param {Boolean} flip
  * @example
- * var flipYAction = new cc.FlipY(true);
+ * var flipYAction = new FlipY(true);
  */
 export default class FlipY extends ActionInstant {
   _flippedY = false;
@@ -43,7 +43,7 @@ export default class FlipY extends ActionInstant {
 
   /**
    * returns a reversed action.
-   * @return {cc.FlipY}
+   * @return {FlipY}
    */
   reverse() {
     return new FlipY(!this._flippedY);
@@ -53,11 +53,11 @@ export default class FlipY extends ActionInstant {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.FlipY}
+   * @return {FlipY}
    */
   clone() {
     const action = new FlipY();
     action.initWithFlipY(this._flippedY);
     return action;
   }
-};
+}

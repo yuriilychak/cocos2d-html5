@@ -1,4 +1,4 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**
  * <p>
@@ -8,10 +8,10 @@ import ActionInterval from './action-interval';
  *     movement will be the sum of individual movements.
  * </p>
  * @param {Number} duration duration in seconds
- * @param {cc.Point|Number} deltaPos
+ * @param {Point|Number} deltaPos
  * @param {Number} [deltaY]
  * @example
- * var actionBy = cc.moveBy(2, cc.p(windowSize.width - 40, windowSize.height - 40));
+ * var actionBy = moveBy(2, p(windowSize.width - 40, windowSize.height - 40));
  */
 export default class MoveBy extends ActionInterval {
   _positionDelta = null;
@@ -21,15 +21,15 @@ export default class MoveBy extends ActionInterval {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @param {Number} duration duration in seconds
-   * @param {cc.Point|Number} deltaPos
+   * @param {Point|Number} deltaPos
    * @param {Number} [deltaY]
    */
   constructor(duration, deltaPos, deltaY) {
     super();
 
-    this._positionDelta = cc.p(0, 0);
-    this._startPosition = cc.p(0, 0);
-    this._previousPosition = cc.p(0, 0);
+    this._positionDelta = new cc.Point(0, 0);
+    this._startPosition = new cc.Point(0, 0);
+    this._previousPosition = new cc.Point(0, 0);
 
     deltaPos !== undefined && this.initWithDuration(duration, deltaPos, deltaY);
   }
@@ -37,7 +37,7 @@ export default class MoveBy extends ActionInterval {
   /**
    * Initializes the action.
    * @param {Number} duration duration in seconds
-   * @param {cc.Point} position
+   * @param {Point} position
    * @param {Number} [y]
    * @return {Boolean}
    */
@@ -57,7 +57,7 @@ export default class MoveBy extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.MoveBy}
+   * @returns {MoveBy}
    */
   clone() {
     var action = new MoveBy();
@@ -68,7 +68,7 @@ export default class MoveBy extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -112,15 +112,15 @@ export default class MoveBy extends ActionInterval {
 
   /**
    * MoveTo reverse is not implemented
-   * @return {cc.MoveBy}
+   * @return {MoveBy}
    */
   reverse() {
     var action = new MoveBy(
       this._duration,
-      cc.p(-this._positionDelta.x, -this._positionDelta.y)
+      new cc.Point(-this._positionDelta.x, -this._positionDelta.y)
     );
     this._cloneDecoration(action);
     this._reverseEaseList(action);
     return action;
   }
-};
+}

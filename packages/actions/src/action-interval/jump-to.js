@@ -1,16 +1,16 @@
-import JumpBy from './jump-by';
+import JumpBy from "./jump-by";
 
 /**
- * Moves a cc.Node object to a parabolic position simulating a jump movement by modifying it's position attribute. <br />
+ * Moves a Node object to a parabolic position simulating a jump movement by modifying it's position attribute. <br />
  * Jump to the specified location.
  * @param {Number} duration
- * @param {cc.Point|Number} position
+ * @param {Point|Number} position
  * @param {Number} [y]
  * @param {Number} height
  * @param {Number} jumps
  * @example
- * var actionTo = new cc.JumpTo(2, cc.p(300, 0), 50, 4);
- * var actionTo = new cc.JumpTo(2, 300, 0, 50, 4);
+ * var actionTo = new JumpTo(2, p(300, 0), 50, 4);
+ * var actionTo = new JumpTo(2, 300, 0, 50, 4);
  */
 export default class JumpTo extends JumpBy {
   _endPosition = null;
@@ -18,14 +18,14 @@ export default class JumpTo extends JumpBy {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @param {Number} duration
-   * @param {cc.Point|Number} position
+   * @param {Point|Number} position
    * @param {Number} [y]
    * @param {Number} height
    * @param {Number} jumps
    */
   constructor(duration, position, y, height, jumps) {
     super();
-    this._endPosition = cc.p(0, 0);
+    this._endPosition = new cc.Point(0, 0);
 
     height !== undefined &&
       this.initWithDuration(duration, position, y, height, jumps);
@@ -33,13 +33,13 @@ export default class JumpTo extends JumpBy {
   /**
    * Initializes the action.
    * @param {Number} duration
-   * @param {cc.Point|Number} position
+   * @param {Point|Number} position
    * @param {Number} [y]
    * @param {Number} height
    * @param {Number} jumps
    * @return {Boolean}
    * @example
-   * actionTo.initWithDuration(2, cc.p(300, 0), 50, 4);
+   * actionTo.initWithDuration(2, p(300, 0), 50, 4);
    * actionTo.initWithDuration(2, 300, 0, 50, 4);
    */
   initWithDuration(duration, position, y, height, jumps) {
@@ -65,7 +65,7 @@ export default class JumpTo extends JumpBy {
   }
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -75,7 +75,7 @@ export default class JumpTo extends JumpBy {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.JumpTo}
+   * @returns {JumpTo}
    */
   clone() {
     var action = new JumpTo();
@@ -88,4 +88,4 @@ export default class JumpTo extends JumpBy {
     );
     return action;
   }
-};
+}

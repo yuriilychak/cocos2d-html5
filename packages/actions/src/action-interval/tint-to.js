@@ -1,13 +1,13 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
-/** Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
+/** Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
  * @warning This action doesn't support "reverse"
  * @param {Number} duration
  * @param {Number} red 0-255
  * @param {Number} green  0-255
  * @param {Number} blue 0-255
  * @example
- * var action = new cc.TintTo(2, 255, 0, 255);
+ * var action = new TintTo(2, 255, 0, 255);
  */
 export default class TintTo extends ActionInterval {
   _to = null;
@@ -22,8 +22,8 @@ export default class TintTo extends ActionInterval {
    */
   constructor(duration, red, green, blue) {
     super();
-    this._to = cc.color(0, 0, 0);
-    this._from = cc.color(0, 0, 0);
+    this._to = new cc.Color(0, 0, 0);
+    this._from = new cc.Color(0, 0, 0);
 
     blue !== undefined && this.initWithDuration(duration, red, green, blue);
   }
@@ -38,7 +38,7 @@ export default class TintTo extends ActionInterval {
    */
   initWithDuration(duration, red, green, blue) {
     if (super.initWithDuration(duration)) {
-      this._to = cc.color(red, green, blue);
+      this._to = new cc.Color(red, green, blue);
       return true;
     }
     return false;
@@ -46,7 +46,7 @@ export default class TintTo extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.TintTo}
+   * @returns {TintTo}
    */
   clone() {
     var action = new TintTo();
@@ -58,7 +58,7 @@ export default class TintTo extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -76,7 +76,7 @@ export default class TintTo extends ActionInterval {
       locTo = this._to;
     if (locFrom) {
       this.target.setColor(
-        cc.color(
+        new cc.Color(
           locFrom.r + (locTo.r - locFrom.r) * dt,
           locFrom.g + (locTo.g - locFrom.g) * dt,
           locFrom.b + (locTo.b - locFrom.b) * dt
@@ -84,4 +84,4 @@ export default class TintTo extends ActionInterval {
       );
     }
   }
-};
+}

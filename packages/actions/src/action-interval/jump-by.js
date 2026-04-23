@@ -1,16 +1,16 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**
- * Moves a cc.Node object simulating a parabolic jump movement by modifying it's position attribute.
+ * Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.
  * Relative to its movement.
  * @param {Number} duration
- * @param {cc.Point|Number} position
+ * @param {Point|Number} position
  * @param {Number} [y]
  * @param {Number} height
  * @param {Number} jumps
  * @example
- * var actionBy = new cc.JumpBy(2, cc.p(300, 0), 50, 4);
- * var actionBy = new cc.JumpBy(2, 300, 0, 50, 4);
+ * var actionBy = new JumpBy(2, p(300, 0), 50, 4);
+ * var actionBy = new JumpBy(2, 300, 0, 50, 4);
  */
 export default class JumpBy extends ActionInterval {
   _startPosition = null;
@@ -22,16 +22,16 @@ export default class JumpBy extends ActionInterval {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @param {Number} duration
-   * @param {cc.Point|Number} position
+   * @param {Point|Number} position
    * @param {Number} [y]
    * @param {Number} height
    * @param {Number} jumps
    */
   constructor(duration, position, y, height, jumps) {
     super();
-    this._startPosition = cc.p(0, 0);
-    this._previousPosition = cc.p(0, 0);
-    this._delta = cc.p(0, 0);
+    this._startPosition = new cc.Point(0, 0);
+    this._previousPosition = new cc.Point(0, 0);
+    this._delta = new cc.Point(0, 0);
 
     height !== undefined &&
       this.initWithDuration(duration, position, y, height, jumps);
@@ -39,13 +39,13 @@ export default class JumpBy extends ActionInterval {
   /**
    * Initializes the action.
    * @param {Number} duration
-   * @param {cc.Point|Number} position
+   * @param {Point|Number} position
    * @param {Number} [y]
    * @param {Number} height
    * @param {Number} jumps
    * @return {Boolean}
    * @example
-   * actionBy.initWithDuration(2, cc.p(300, 0), 50, 4);
+   * actionBy.initWithDuration(2, p(300, 0), 50, 4);
    * actionBy.initWithDuration(2, 300, 0, 50, 4);
    */
   initWithDuration(duration, position, y, height, jumps) {
@@ -67,7 +67,7 @@ export default class JumpBy extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.JumpBy}
+   * @returns {JumpBy}
    */
   clone() {
     var action = new JumpBy();
@@ -83,7 +83,7 @@ export default class JumpBy extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -130,12 +130,12 @@ export default class JumpBy extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.JumpBy}
+   * @return {JumpBy}
    */
   reverse() {
     var action = new JumpBy(
       this._duration,
-      cc.p(-this._delta.x, -this._delta.y),
+      new cc.Point(-this._delta.x, -this._delta.y),
       this._height,
       this._jumps
     );
@@ -143,4 +143,4 @@ export default class JumpBy extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
-};
+}

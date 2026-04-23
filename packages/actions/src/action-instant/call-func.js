@@ -1,4 +1,4 @@
-import ActionInstant from './action-instant';
+import ActionInstant from "./action-instant";
 
 /**
  * Calls a 'callback'.
@@ -8,10 +8,10 @@ import ActionInstant from './action-instant';
  * @example
  * // example
  * // CallFunc without data
- * var finish = new cc.CallFunc(this.removeSprite, this);
+ * var finish = new CallFunc(this.removeSprite, this);
  *
  * // CallFunc with data
- * var finish = new cc.CallFunc(this.removeFromParentAndCleanup, this,  true);
+ * var finish = new CallFunc(this.removeFromParentAndCleanup, this,  true);
  */
 export default class CallFunc extends ActionInstant {
   _selectorTarget = null;
@@ -92,11 +92,11 @@ export default class CallFunc extends ActionInstant {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.CallFunc}
+   * @return {CallFunc}
    */
   clone() {
     const action = new CallFunc();
     action.initWithFunction(this._function, this._selectorTarget, this._data);
     return action;
   }
-};
+}

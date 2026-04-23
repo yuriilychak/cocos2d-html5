@@ -1,13 +1,13 @@
-import ActionInterval from './action-interval';
-import { bezierAt } from '../action/utils';
+import ActionInterval from "./action-interval";
+import { bezierAt } from "../action/utils";
 
 /** An action that moves the target with a cubic Bezier curve by a certain distance.
  * Relative to its movement.
  * @param {Number} t time in seconds
  * @param {Array} c Array of points
  * @example
- * var bezier = [cc.p(0, windowSize.height / 2), cc.p(300, -windowSize.height / 2), cc.p(300, 100)];
- * var bezierForward = new cc.BezierBy(3, bezier);
+ * var bezier = [p(0, windowSize.height / 2), p(300, -windowSize.height / 2), p(300, 100)];
+ * var bezierForward = new BezierBy(3, bezier);
  */
 export default class BezierBy extends ActionInterval {
   _config = null;
@@ -22,8 +22,8 @@ export default class BezierBy extends ActionInterval {
   constructor(t, c) {
     super();
     this._config = [];
-    this._startPosition = cc.p(0, 0);
-    this._previousPosition = cc.p(0, 0);
+    this._startPosition = new cc.Point(0, 0);
+    this._previousPosition = new cc.Point(0, 0);
 
     c && this.initWithDuration(t, c);
   }
@@ -44,7 +44,7 @@ export default class BezierBy extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.BezierBy}
+   * @returns {BezierBy}
    */
   clone() {
     var action = new BezierBy();
@@ -52,7 +52,7 @@ export default class BezierBy extends ActionInterval {
     var newConfigs = [];
     for (var i = 0; i < this._config.length; i++) {
       var selConf = this._config[i];
-      newConfigs.push(cc.p(selConf.x, selConf.y));
+      newConfigs.push(new cc.Point(selConf.x, selConf.y));
     }
     action.initWithDuration(this._duration, newConfigs);
     return action;
@@ -60,7 +60,7 @@ export default class BezierBy extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -116,7 +116,7 @@ export default class BezierBy extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.BezierBy}
+   * @return {BezierBy}
    */
   reverse() {
     var locConfig = this._config;
@@ -130,4 +130,4 @@ export default class BezierBy extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
-};
+}

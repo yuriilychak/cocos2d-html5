@@ -1,7 +1,7 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
- * cc.EaseBounce abstract class.
+ * EaseBounce abstract class.
  *
  */
 export default class EaseBounce extends ActionEase {
@@ -28,7 +28,7 @@ export default class EaseBounce extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseBounce}
+   * @returns {EaseBounce}
    */
   clone() {
     var action = new EaseBounce();
@@ -38,9 +38,9 @@ export default class EaseBounce extends ActionEase {
 
   /**
    * Create a action. Opposite with the original motion trajectory.
-   * @return {cc.EaseBounce}
+   * @return {EaseBounce}
    */
   reverse() {
     return new EaseBounce(this._inner.reverse());
   }
-};
+}

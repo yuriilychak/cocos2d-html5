@@ -1,13 +1,13 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
-/**  Tints a cc.Node that implements the cc.NodeRGB protocol from current tint to a custom one.
+/**  Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
  * Relative to their own color change.
  * @param {Number} duration  duration in seconds
  * @param {Number} deltaRed
  * @param {Number} deltaGreen
  * @param {Number} deltaBlue
  * @example
- * var action = new cc.TintBy(2, -127, -255, -127);
+ * var action = new TintBy(2, -127, -255, -127);
  */
 export default class TintBy extends ActionInterval {
   _deltaR = 0;
@@ -51,7 +51,7 @@ export default class TintBy extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.TintBy}
+   * @returns {TintBy}
    */
   clone() {
     var action = new TintBy();
@@ -67,7 +67,7 @@ export default class TintBy extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -85,7 +85,7 @@ export default class TintBy extends ActionInterval {
   update(dt) {
     dt = this._computeEaseTime(dt);
 
-    this.target.color = cc.color(
+    this.target.color = new cc.Color(
       this._fromR + this._deltaR * dt,
       this._fromG + this._deltaG * dt,
       this._fromB + this._deltaB * dt
@@ -94,7 +94,7 @@ export default class TintBy extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.TintBy}
+   * @return {TintBy}
    */
   reverse() {
     var action = new TintBy(
@@ -107,4 +107,4 @@ export default class TintBy extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
-};
+}

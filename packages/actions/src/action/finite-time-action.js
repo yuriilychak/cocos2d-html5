@@ -1,4 +1,4 @@
-import Action from './action';
+import Action from "./action";
 
 /**
  * Base class actions that do have a finite time duration. <br/>
@@ -45,7 +45,7 @@ export default class FiniteTimeAction extends Action {
    * - The reversed action will be x of 100 move to 0.
    * - Will be rewritten
    *
-   * @return {?cc.Action}
+   * @return {?Action}
    */
   reverse() {
     cc.log("cocos2d: FiniteTimeAction#reverse: Implement me");
@@ -56,9 +56,9 @@ export default class FiniteTimeAction extends Action {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.FiniteTimeAction}
+   * @return {FiniteTimeAction}
    */
   clone() {
     return new FiniteTimeAction();
   }
-};
+}

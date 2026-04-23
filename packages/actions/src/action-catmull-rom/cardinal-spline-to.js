@@ -1,5 +1,10 @@
-import ActionInterval from '../action-interval/action-interval';
-import { cardinalSplineAt, getControlPointAt, cloneControlPoints, reverseControlPoints } from '../action/utils';
+import ActionInterval from "../action-interval/action-interval";
+import {
+  cardinalSplineAt,
+  getControlPointAt,
+  cloneControlPoints,
+  reverseControlPoints
+} from "../action/utils";
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
@@ -10,8 +15,8 @@ import { cardinalSplineAt, getControlPointAt, cloneControlPoints, reverseControl
  * @param {Number} tension
  *
  * @example
- * //create a cc.CardinalSplineTo
- * var action1 = cc.cardinalSplineTo(3, array, 0);
+ * //create a CardinalSplineTo
+ * var action1 = cardinalSplineTo(3, array, 0);
  */
 export default class CardinalSplineTo extends ActionInterval {
   /** Array of control points */
@@ -61,7 +66,7 @@ export default class CardinalSplineTo extends ActionInterval {
   /**
    * returns a new clone of the action
    *
-   * @returns {cc.CardinalSplineTo}
+   * @returns {CardinalSplineTo}
    */
   clone() {
     const action = new CardinalSplineTo();
@@ -76,17 +81,17 @@ export default class CardinalSplineTo extends ActionInterval {
   /**
    * called before the action start. It will also set the target.
    *
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
     // Issue #1441 from cocos2d-iphone
     this._deltaT = 1 / (this._points.length - 1);
-    this._previousPosition = cc.p(
+    this._previousPosition = new cc.Point(
       this.target.getPositionX(),
       this.target.getPositionY()
     );
-    this._accumulatedDiff = cc.p(0, 0);
+    this._accumulatedDiff = new cc.Point(0, 0);
   }
 
   /**
@@ -138,10 +143,10 @@ export default class CardinalSplineTo extends ActionInterval {
   }
 
   /**
-   * reverse a new cc.CardinalSplineTo. <br />
+   * reverse a new CardinalSplineTo. <br />
    * Along the track of movement in the opposite.
    *
-   * @return {cc.CardinalSplineTo}
+   * @return {CardinalSplineTo}
    */
   reverse() {
     const reversePoints = reverseControlPoints(this._points);
@@ -151,7 +156,7 @@ export default class CardinalSplineTo extends ActionInterval {
   /**
    * update position of target
    *
-   * @param {cc.Point} newPos
+   * @param {Point} newPos
    */
   updatePosition(newPos) {
     this.target.setPosition(newPos);
@@ -175,4 +180,4 @@ export default class CardinalSplineTo extends ActionInterval {
   setPoints(points) {
     this._points = points;
   }
-};
+}

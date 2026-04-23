@@ -1,5 +1,5 @@
-import CardinalSplineTo from './cardinal-spline-to';
-import { reverseControlPoints, cloneControlPoints } from '../action/utils';
+import CardinalSplineTo from "./cardinal-spline-to";
+import { reverseControlPoints, cloneControlPoints } from "../action/utils";
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
@@ -10,8 +10,8 @@ import { reverseControlPoints, cloneControlPoints } from '../action/utils';
  * @param {Number} tension
  *
  * @example
- * //create a cc.CardinalSplineBy
- * var action1 = cc.cardinalSplineBy(3, array, 0);
+ * //create a CardinalSplineBy
+ * var action1 = cardinalSplineBy(3, array, 0);
  */
 export default class CardinalSplineBy extends CardinalSplineTo {
   _startPosition = null;
@@ -25,7 +25,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
    */
   constructor(duration, points, tension) {
     super();
-    this._startPosition = cc.p(0, 0);
+    this._startPosition = new cc.Point(0, 0);
 
     tension !== undefined && this.initWithDuration(duration, points, tension);
   }
@@ -33,7 +33,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
   /**
    * called before the action start. It will also set the target.
    *
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -42,9 +42,9 @@ export default class CardinalSplineBy extends CardinalSplineTo {
   }
 
   /**
-   * reverse a new cc.CardinalSplineBy
+   * reverse a new CardinalSplineBy
    *
-   * @return {cc.CardinalSplineBy}
+   * @return {CardinalSplineBy}
    */
   reverse() {
     const copyConfig = this._points.slice();
@@ -85,7 +85,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
   /**
    * update position of target
    *
-   * @param {cc.Point} newPos
+   * @param {Point} newPos
    */
   updatePosition(newPos) {
     const pos = this._startPosition;
@@ -99,7 +99,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
   /**
    * returns a new clone of the action
    *
-   * @returns {cc.CardinalSplineBy}
+   * @returns {CardinalSplineBy}
    */
   clone() {
     const a = new CardinalSplineBy();
@@ -110,4 +110,4 @@ export default class CardinalSplineBy extends CardinalSplineTo {
     );
     return a;
   }
-};
+}

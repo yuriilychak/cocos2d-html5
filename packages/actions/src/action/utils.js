@@ -39,16 +39,24 @@ export function bounceTime(time1) {
  * Returns the Cardinal Spline position for a given set of control points, tension and time.
  *
  * @function
- * @param {cc.Point} p0
- * @param {cc.Point} p1
- * @param {cc.Point} p2
- * @param {cc.Point} p3
+ * @param {Point} p0
+ * @param {Point} p1
+ * @param {Point} p2
+ * @param {Point} p3
  * @param {Number} tension
  * @param {Number} t
- * @param {cc.Point} [out]
- * @return {cc.Point}
+ * @param {Point} [out]
+ * @return {Point}
  */
-export function cardinalSplineAt(p0, p1, p2, p3, tension, t, out = cc.p(0, 0)) {
+export function cardinalSplineAt(
+  p0,
+  p1,
+  p2,
+  p3,
+  tension,
+  t,
+  out = new cc.Point(0, 0)
+) {
   const t2 = t * t;
   const t3 = t2 * t;
 
@@ -68,13 +76,13 @@ export function cardinalSplineAt(p0, p1, p2, p3, tension, t, out = cc.p(0, 0)) {
 /**
  * returns a new copy of the array reversed.
  *
- * @param {cc.Point[]} controlPoints
- * @return {cc.Point[]}
+ * @param {Point[]} controlPoints
+ * @return {Point[]}
  */
 export function reverseControlPoints(controlPoints) {
   const result = [];
   for (let i = controlPoints.length - 1; i >= 0; i--) {
-    result.push(cc.p(controlPoints[i].x, controlPoints[i].y));
+    result.push(new cc.Point(controlPoints[i].x, controlPoints[i].y));
   }
   return result;
 }
@@ -82,13 +90,13 @@ export function reverseControlPoints(controlPoints) {
 /**
  * returns a new clone of the controlPoints
  *
- * @param {cc.Point[]} controlPoints
- * @returns {cc.Point[]}
+ * @param {Point[]} controlPoints
+ * @returns {Point[]}
  */
 export function cloneControlPoints(controlPoints) {
   const result = [];
   for (let i = 0; i < controlPoints.length; i++)
-    result.push(cc.p(controlPoints[i].x, controlPoints[i].y));
+    result.push(new cc.Point(controlPoints[i].x, controlPoints[i].y));
   return result;
 }
 
@@ -97,7 +105,7 @@ export function cloneControlPoints(controlPoints) {
  *
  * @param {Array} controlPoints
  * @param {Number} pos
- * @return {cc.Point}
+ * @return {Point}
  */
 export function getControlPointAt(controlPoints, pos) {
   const p = Math.min(controlPoints.length - 1, Math.max(pos, 0));
@@ -107,7 +115,7 @@ export function getControlPointAt(controlPoints, pos) {
 /**
  * reverse the current control point array inline, without generating a new one
  *
- * @param {cc.Point[]} controlPoints
+ * @param {Point[]} controlPoints
  */
 export function reverseControlPointsInline(controlPoints) {
   const len = controlPoints.length;

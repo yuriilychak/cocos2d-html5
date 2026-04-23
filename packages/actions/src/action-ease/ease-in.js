@@ -1,14 +1,13 @@
-import EaseRateAction from './ease-rate-action';
+import EaseRateAction from "./ease-rate-action";
 
 /**
- * cc.EaseIn action with a rate. From slow to fast.
+ * EaseIn action with a rate. From slow to fast.
  *
  *
  * @example
- * action.easing(cc.easeIn(3.0));
+ * action.easing(easeIn(3.0));
  */
 export default class EaseIn extends EaseRateAction {
-
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    *
@@ -19,8 +18,8 @@ export default class EaseIn extends EaseRateAction {
   }
 
   /**
-   * Create a cc.easeIn action. Opposite with the original motion trajectory.
-   * @return {cc.EaseIn}
+   * Create a easeIn action. Opposite with the original motion trajectory.
+   * @return {EaseIn}
    */
   reverse() {
     return new EaseIn(this._inner.reverse(), 1 / this._rate);
@@ -30,11 +29,11 @@ export default class EaseIn extends EaseRateAction {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseIn}
+   * @returns {EaseIn}
    */
   clone() {
     var action = new EaseIn();
     action.initWithAction(this._inner.clone(), this._rate);
     return action;
   }
-};
+}

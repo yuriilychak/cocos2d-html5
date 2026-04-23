@@ -1,4 +1,4 @@
-import FiniteTimeAction from '../action/finite-time-action';
+import FiniteTimeAction from "../action/finite-time-action";
 
 /**
  * Instant actions are immediate actions. They don't have a duration like.
@@ -37,7 +37,7 @@ export default class ActionInstant extends FiniteTimeAction {
    * - The action will be x coordinates of 0 move to 100. <br />
    * - The reversed action will be x of 100 move to 0.
    * - Will be rewritten
-   * @returns {cc.Action}
+   * @returns {Action}
    */
   reverse() {
     return this.clone();
@@ -47,9 +47,9 @@ export default class ActionInstant extends FiniteTimeAction {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.FiniteTimeAction}
+   * @return {FiniteTimeAction}
    */
   clone() {
     return new ActionInstant();
   }
-};
+}

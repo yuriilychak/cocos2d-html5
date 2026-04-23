@@ -1,8 +1,8 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
  * Ease Elastic abstract class.
- * @param {cc.ActionInterval} action
+ * @param {ActionInterval} action
  * @param {Number} [period=0.3]
  */
 export default class EaseElastic extends ActionEase {
@@ -11,7 +11,7 @@ export default class EaseElastic extends ActionEase {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Creates the action with the inner action and the period in radians (default is 0.3).
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    * @param {Number} [period=0.3]
    */
   constructor(action, period) {
@@ -38,7 +38,7 @@ export default class EaseElastic extends ActionEase {
 
   /**
    * Initializes the action with the inner action and the period in radians (default is 0.3)
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    * @param {Number} [period=0.3]
    * @return {Boolean}
    */
@@ -51,10 +51,10 @@ export default class EaseElastic extends ActionEase {
   /**
    * Create a action. Opposite with the original motion trajectory. <br />
    * Will be overwrite.
-   * @return {?cc.Action}
+   * @return {?Action}
    */
   reverse() {
-    cc.log("cc.EaseElastic.reverse(): it should be overridden in subclass.");
+    cc.log("EaseElastic.reverse(): it should be overridden in subclass.");
     return null;
   }
 
@@ -62,11 +62,11 @@ export default class EaseElastic extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseElastic}
+   * @returns {EaseElastic}
    */
   clone() {
     const action = new EaseElastic();
     action.initWithAction(this._inner.clone(), this._period);
     return action;
   }
-};
+}

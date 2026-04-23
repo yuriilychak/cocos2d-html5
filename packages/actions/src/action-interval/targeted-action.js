@@ -1,12 +1,12 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**
  * <p>
  *     Overrides the target of an action so that it always runs on the target<br/>
  *     specified at action creation rather than the one specified by runAction.
  * </p>
- * @param {cc.Node} target
- * @param {cc.FiniteTimeAction} action
+ * @param {Node} target
+ * @param {FiniteTimeAction} action
  */
 export default class TargetedAction extends ActionInterval {
   _action = null;
@@ -15,8 +15,8 @@ export default class TargetedAction extends ActionInterval {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Create an action with the specified action and forced target.
-   * @param {cc.Node} target
-   * @param {cc.FiniteTimeAction} action
+   * @param {Node} target
+   * @param {FiniteTimeAction} action
    */
   constructor(target, action) {
     super();
@@ -25,8 +25,8 @@ export default class TargetedAction extends ActionInterval {
 
   /**
    * Init an action with the specified action and forced target
-   * @param {cc.Node} target
-   * @param {cc.FiniteTimeAction} action
+   * @param {Node} target
+   * @param {FiniteTimeAction} action
    * @return {Boolean}
    */
   initWithTarget(target, action) {
@@ -40,7 +40,7 @@ export default class TargetedAction extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.TargetedAction}
+   * @returns {TargetedAction}
    */
   clone() {
     var action = new TargetedAction();
@@ -51,7 +51,7 @@ export default class TargetedAction extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -76,7 +76,7 @@ export default class TargetedAction extends ActionInterval {
 
   /**
    * return the target that the action will be forced to run with
-   * @return {cc.Node}
+   * @return {Node}
    */
   getForcedTarget() {
     return this._forcedTarget;
@@ -84,9 +84,9 @@ export default class TargetedAction extends ActionInterval {
 
   /**
    * set the target that the action will be forced to run with
-   * @param {cc.Node} forcedTarget
+   * @param {Node} forcedTarget
    */
   setForcedTarget(forcedTarget) {
     if (this._forcedTarget !== forcedTarget) this._forcedTarget = forcedTarget;
   }
-};
+}

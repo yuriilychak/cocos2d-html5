@@ -1,11 +1,11 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
- * cc.EaseBackInOut action. <br />
- * Beginning of cc.EaseBackIn. Ending of cc.EaseBackOut.
+ * EaseBackInOut action. <br />
+ * Beginning of EaseBackIn. Ending of EaseBackOut.
  * @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  * @example
- * action.easing(cc.easeBackInOut());
+ * action.easing(easeBackInOut());
  */
 export default class EaseBackInOut extends ActionEase {
   /**
@@ -30,7 +30,7 @@ export default class EaseBackInOut extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseBackInOut}
+   * @returns {EaseBackInOut}
    */
   clone() {
     var action = new EaseBackInOut();
@@ -40,9 +40,9 @@ export default class EaseBackInOut extends ActionEase {
 
   /**
    * Create a action. Opposite with the original motion trajectory.
-   * @return {cc.EaseBackInOut}
+   * @return {EaseBackInOut}
    */
   reverse() {
     return new EaseBackInOut(this._inner.reverse());
   }
-};
+}

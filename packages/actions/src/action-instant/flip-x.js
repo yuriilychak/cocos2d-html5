@@ -1,11 +1,11 @@
-import ActionInstant from './action-instant';
+import ActionInstant from "./action-instant";
 
 /**
  * Flips the sprite horizontally.
  * @param {Boolean} flip Indicate whether the target should be flipped or not
  *
  * @example
- * var flipXAction = new cc.FlipX(true);
+ * var flipXAction = new FlipX(true);
  */
 export default class FlipX extends ActionInstant {
   _flippedX = false;
@@ -42,7 +42,7 @@ export default class FlipX extends ActionInstant {
 
   /**
    * returns a reversed action.
-   * @return {cc.FlipX}
+   * @return {FlipX}
    */
   reverse() {
     return new FlipX(!this._flippedX);
@@ -52,11 +52,11 @@ export default class FlipX extends ActionInstant {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.FiniteTimeAction}
+   * @return {FiniteTimeAction}
    */
   clone() {
     const action = new FlipX();
     action.initWithFlipX(this._flippedX);
     return action;
   }
-};
+}

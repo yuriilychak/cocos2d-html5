@@ -1,4 +1,4 @@
-import EaseElastic from './ease-elastic';
+import EaseElastic from "./ease-elastic";
 
 /**
  * Ease Elastic InOut action. <br />
@@ -7,7 +7,7 @@ import EaseElastic from './ease-elastic';
  * @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  *
  * @example
- * action.easing(cc.easeElasticInOut(period));
+ * action.easing(easeElasticInOut(period));
  */
 export default class EaseElasticInOut extends EaseElastic {
   /**
@@ -43,7 +43,7 @@ export default class EaseElasticInOut extends EaseElastic {
 
   /**
    * Create a action. Opposite with the original motion trajectory.
-   * @return {cc.EaseElasticInOut}
+   * @return {EaseElasticInOut}
    */
   reverse() {
     return new EaseElasticInOut(this._inner.reverse(), this._period);
@@ -53,11 +53,11 @@ export default class EaseElasticInOut extends EaseElastic {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseElasticInOut}
+   * @returns {EaseElasticInOut}
    */
   clone() {
     var action = new EaseElasticInOut();
     action.initWithAction(this._inner.clone(), this._period);
     return action;
   }
-};
+}

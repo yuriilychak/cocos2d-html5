@@ -1,5 +1,5 @@
-import CardinalSplineTo from './cardinal-spline-to';
-import { cloneControlPoints } from '../action/utils';
+import CardinalSplineTo from "./cardinal-spline-to";
+import { cloneControlPoints } from "../action/utils";
 
 /**
  * An action that moves the target with a CatmullRom curve to a destination point.<br/>
@@ -11,10 +11,9 @@ import { cloneControlPoints } from '../action/utils';
  * @param {Array} points
  *
  * @example
- * var action1 = cc.catmullRomTo(3, array);
+ * var action1 = catmullRomTo(3, array);
  */
 export default class CatmullRomTo extends CardinalSplineTo {
-
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * creates an action with a Cardinal Spline array of points and tension.
@@ -43,14 +42,11 @@ export default class CatmullRomTo extends CardinalSplineTo {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.CatmullRomTo}
+   * @returns {CatmullRomTo}
    */
   clone() {
     const action = new CatmullRomTo();
-    action.initWithDuration(
-      this._duration,
-      cloneControlPoints(this._points)
-    );
+    action.initWithDuration(this._duration, cloneControlPoints(this._points));
     return action;
   }
-};
+}

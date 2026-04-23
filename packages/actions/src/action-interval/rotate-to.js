@@ -1,14 +1,14 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**
- * Rotates a cc.Node object to a certain angle by modifying it's.
+ * Rotates a Node object to a certain angle by modifying it's.
  * rotation attribute. <br/>
  * The direction will be decided by the shortest angle.
  * @param {Number} duration duration in seconds
  * @param {Number} deltaAngleX deltaAngleX in degrees.
  * @param {Number} [deltaAngleY] deltaAngleY in degrees.
  * @example
- * var rotateTo = new cc.RotateTo(2, 61.0);
+ * var rotateTo = new RotateTo(2, 61.0);
  */
 export default class RotateTo extends ActionInterval {
   _dstAngleX = 0;
@@ -52,7 +52,7 @@ export default class RotateTo extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.RotateTo}
+   * @returns {RotateTo}
    */
   clone() {
     var action = new RotateTo();
@@ -63,7 +63,7 @@ export default class RotateTo extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -87,10 +87,10 @@ export default class RotateTo extends ActionInterval {
   /**
    * RotateTo reverse not implemented.
    * Will be overridden.
-   * @returns {cc.Action}
+   * @returns {Action}
    */
   reverse() {
-    cc.log("cc.RotateTo.reverse(): it should be overridden in subclass.");
+    cc.log("RotateTo.reverse(): it should be overridden in subclass.");
   }
 
   /**
@@ -104,4 +104,4 @@ export default class RotateTo extends ActionInterval {
       this.target.rotationY = this._startAngleY + this._diffAngleY * dt;
     }
   }
-};
+}

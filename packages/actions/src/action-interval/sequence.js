@@ -1,14 +1,14 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**
  * Runs actions sequentially, one after another.
- * @param {Array|cc.FiniteTimeAction} tempArray
+ * @param {Array|FiniteTimeAction} tempArray
  * @example
  * // create sequence with actions
- * var seq = new cc.Sequence(act1, act2);
+ * var seq = new Sequence(act1, act2);
  *
  * // create sequence with array
- * var seq = new cc.Sequence(actArray);
+ * var seq = new Sequence(actArray);
  */
 export default class Sequence extends ActionInterval {
   _actions = null;
@@ -18,7 +18,7 @@ export default class Sequence extends ActionInterval {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Create an array of sequenceable actions.
-   * @param {Array|cc.FiniteTimeAction} tempArray
+   * @param {Array|FiniteTimeAction} tempArray
    */
   constructor(tempArray) {
     super();
@@ -35,7 +35,7 @@ export default class Sequence extends ActionInterval {
       for (var i = 1; i < last; i++) {
         if (paramArray[i]) {
           action1 = prev;
-          prev = cc.Sequence._actionOneTwo(action1, paramArray[i]);
+          prev = Sequence._actionOneTwo(action1, paramArray[i]);
         }
       }
       this.initWithTwoActions(prev, paramArray[last]);
@@ -44,14 +44,14 @@ export default class Sequence extends ActionInterval {
 
   /**
    * Initializes the action <br/>
-   * @param {cc.FiniteTimeAction} actionOne
-   * @param {cc.FiniteTimeAction} actionTwo
+   * @param {FiniteTimeAction} actionOne
+   * @param {FiniteTimeAction} actionTwo
    * @return {Boolean}
    */
   initWithTwoActions(actionOne, actionTwo) {
     if (!actionOne || !actionTwo)
       throw new Error(
-        "cc.Sequence.initWithTwoActions(): arguments must all be non nil"
+        "Sequence.initWithTwoActions(): arguments must all be non nil"
       );
 
     var d = actionOne._duration + actionTwo._duration;
@@ -64,7 +64,7 @@ export default class Sequence extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.Sequence}
+   * @returns {Sequence}
    */
   clone() {
     var action = new Sequence();
@@ -78,7 +78,7 @@ export default class Sequence extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -152,10 +152,10 @@ export default class Sequence extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.Sequence}
+   * @return {Sequence}
    */
   reverse() {
-    var action = cc.Sequence._actionOneTwo(
+    var action = Sequence._actionOneTwo(
       this._actions[1].reverse(),
       this._actions[0].reverse()
     );
@@ -163,4 +163,4 @@ export default class Sequence extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
-};
+}

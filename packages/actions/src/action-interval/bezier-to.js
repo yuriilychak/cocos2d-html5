@@ -1,11 +1,11 @@
-import BezierBy from './bezier-by';
+import BezierBy from "./bezier-by";
 
 /** An action that moves the target with a cubic Bezier curve to a destination point.
  * @param {Number} t
  * @param {Array} c array of points
  * @example
- * var bezier = [cc.p(0, windowSize.height / 2), cc.p(300, -windowSize.height / 2), cc.p(300, 100)];
- * var bezierTo = new cc.BezierTo(2, bezier);
+ * var bezier = [p(0, windowSize.height / 2), p(300, -windowSize.height / 2), p(300, 100)];
+ * var bezierTo = new BezierTo(2, bezier);
  */
 export default class BezierTo extends BezierBy {
   _toConfig;
@@ -38,7 +38,7 @@ export default class BezierTo extends BezierBy {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.BezierTo}
+   * @returns {BezierTo}
    */
   clone() {
     var action = new BezierTo();
@@ -49,7 +49,7 @@ export default class BezierTo extends BezierBy {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -57,4 +57,4 @@ export default class BezierTo extends BezierBy {
     this._config[1] = cc.pSub(this._toConfig[1], this._startPosition);
     this._config[2] = cc.pSub(this._toConfig[2], this._startPosition);
   }
-};
+}

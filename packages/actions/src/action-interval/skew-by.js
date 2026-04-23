@@ -1,14 +1,13 @@
-import SkewTo from './skew-to';
+import SkewTo from "./skew-to";
 
 /**
- * Skews a cc.Node object by skewX and skewY degrees.
+ * Skews a Node object by skewX and skewY degrees.
  * Relative to its attribute modification.
  * @param {Number} t time in seconds
  * @param {Number} sx  skew in degrees for X axis
  * @param {Number} sy  skew in degrees for Y axis
  */
 export default class SkewBy extends SkewTo {
-
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @param {Number} t time in seconds
@@ -39,7 +38,7 @@ export default class SkewBy extends SkewTo {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.SkewBy}
+   * @returns {SkewBy}
    */
   clone() {
     var action = new SkewBy();
@@ -50,7 +49,7 @@ export default class SkewBy extends SkewTo {
 
   /**
    * Start the action width target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -62,7 +61,7 @@ export default class SkewBy extends SkewTo {
 
   /**
    * Returns a reversed action.
-   * @return {cc.SkewBy}
+   * @return {SkewBy}
    */
   reverse() {
     var action = new SkewBy(this._duration, -this._skewX, -this._skewY);
@@ -70,4 +69,4 @@ export default class SkewBy extends SkewTo {
     this._reverseEaseList(action);
     return action;
   }
-};
+}

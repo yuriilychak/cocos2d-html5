@@ -1,13 +1,13 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
  * Base class for Easing actions with rate parameters
  *
- * @param {cc.ActionInterval} action
+ * @param {ActionInterval} action
  * @param {Number} rate
  *
  * @example
- * var moveEaseRateAction = cc.easeRateAction(action, 3.0);
+ * var moveEaseRateAction = easeRateAction(action, 3.0);
  */
 export default class EaseRateAction extends ActionEase {
   _rate = 0;
@@ -15,7 +15,7 @@ export default class EaseRateAction extends ActionEase {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Creates the action with the inner action and the rate parameter.
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    * @param {Number} rate
    */
   constructor(action, rate) {
@@ -41,7 +41,7 @@ export default class EaseRateAction extends ActionEase {
 
   /**
    * Initializes the action with the inner action and the rate parameter
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    * @param {Number} rate
    * @return {Boolean}
    */
@@ -57,7 +57,7 @@ export default class EaseRateAction extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseRateAction}
+   * @returns {EaseRateAction}
    */
   clone() {
     const action = new EaseRateAction();
@@ -71,9 +71,9 @@ export default class EaseRateAction extends ActionEase {
    * - The action will be x coordinates of 0 move to 100. <br />
    * - The reversed action will be x of 100 move to 0.
    * - Will be rewritten
-   * @return {cc.EaseRateAction}
+   * @return {EaseRateAction}
    */
   reverse() {
     return new EaseRateAction(this._inner.reverse(), 1 / this._rate);
   }
-};
+}

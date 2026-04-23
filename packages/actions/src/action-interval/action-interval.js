@@ -1,4 +1,4 @@
-import FiniteTimeAction from '../action/finite-time-action';
+import FiniteTimeAction from "../action/finite-time-action";
 
 /**
  * <p> An interval action is an action that takes place within a certain period of time. <br/>
@@ -15,7 +15,7 @@ import FiniteTimeAction from '../action/finite-time-action';
  *
  * @param {Number} d duration in seconds
  * @example
- * var actionInterval = new cc.ActionInterval(3);
+ * var actionInterval = new ActionInterval(3);
  */
 export default class ActionInterval extends FiniteTimeAction {
   _elapsed = 0;
@@ -76,7 +76,7 @@ export default class ActionInterval extends FiniteTimeAction {
 
   /**
    * Some additional parameters of cloning.
-   * @param {cc.Action} action
+   * @param {Action} action
    * @private
    */
   _cloneDecoration(action) {
@@ -99,7 +99,7 @@ export default class ActionInterval extends FiniteTimeAction {
 
   /**
    * Returns a new clone of the action.
-   * @returns {cc.ActionInterval}
+   * @returns {ActionInterval}
    */
   clone() {
     var action = new ActionInterval(this._duration);
@@ -112,9 +112,9 @@ export default class ActionInterval extends FiniteTimeAction {
    *
    * @example
    * //example
-   * action.easing(cc.easeIn(3.0));
+   * action.easing(easeIn(3.0));
    * @param {Object} easeObj
-   * @returns {cc.ActionInterval}
+   * @returns {ActionInterval}
    */
   easing(easeObj) {
     if (this._easeList) this._easeList.length = 0;
@@ -144,7 +144,7 @@ export default class ActionInterval extends FiniteTimeAction {
     } else this._elapsed += dt;
 
     //this.update((1 > (this._elapsed / this._duration)) ? this._elapsed / this._duration : 1);
-    //this.update(Math.max(0, Math.min(1, this._elapsed / Math.max(this._duration, cc.FLT_EPSILON))));
+    //this.update(Math.max(0, Math.min(1, this._elapsed / Math.max(this._duration, FLT_EPSILON))));
     var t =
       this._elapsed /
       (this._duration > 0.0000001192092896
@@ -169,7 +169,7 @@ export default class ActionInterval extends FiniteTimeAction {
 
   /**
    * Start this action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -181,7 +181,7 @@ export default class ActionInterval extends FiniteTimeAction {
    * returns a reversed action. <br />
    * Will be overwrite.
    *
-   * @return {?cc.Action}
+   * @return {?Action}
    */
   reverse() {
     cc.log("cc.IntervalAction: reverse not implemented.");
@@ -219,7 +219,7 @@ export default class ActionInterval extends FiniteTimeAction {
    * Useful to simulate 'slow motion' or 'fast forward' effect.
    *
    * @param speed
-   * @returns {cc.Action}
+   * @returns {Action}
    */
   speed(speed) {
     if (speed <= 0) {
@@ -243,7 +243,7 @@ export default class ActionInterval extends FiniteTimeAction {
   /**
    * Set this action speed.
    * @param {Number} speed
-   * @returns {cc.ActionInterval}
+   * @returns {ActionInterval}
    */
   setSpeed(speed) {
     this._speed = speed;
@@ -254,7 +254,7 @@ export default class ActionInterval extends FiniteTimeAction {
    * Repeats an action a number of times.
    * To repeat an action forever use the RepeatForever action.
    * @param times
-   * @returns {cc.ActionInterval}
+   * @returns {ActionInterval}
    */
   repeat(times) {
     times = Math.round(times);
@@ -270,7 +270,7 @@ export default class ActionInterval extends FiniteTimeAction {
   /**
    * Repeats an action for ever.  <br/>
    * To repeat the an action for a limited number of times use the Repeat action. <br/>
-   * @returns {cc.ActionInterval}
+   * @returns {ActionInterval}
    */
   repeatForever() {
     this._repeatMethod = true; //Compatible with repeat class, Discard after can be deleted
@@ -278,4 +278,4 @@ export default class ActionInterval extends FiniteTimeAction {
     this._repeatForever = true;
     return this;
   }
-};
+}

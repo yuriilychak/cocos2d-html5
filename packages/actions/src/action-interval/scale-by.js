@@ -1,12 +1,12 @@
-import ScaleTo from './scale-to';
+import ScaleTo from "./scale-to";
 
-/** Scales a cc.Node object a zoom factor by modifying it's scale attribute.
+/** Scales a Node object a zoom factor by modifying it's scale attribute.
  * Relative to its changes.
  */
 export default class ScaleBy extends ScaleTo {
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -16,7 +16,7 @@ export default class ScaleBy extends ScaleTo {
 
   /**
    * Returns a reversed action.
-   * @return {cc.ScaleBy}
+   * @return {ScaleBy}
    */
   reverse() {
     var action = new ScaleBy(
@@ -31,7 +31,7 @@ export default class ScaleBy extends ScaleTo {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.ScaleBy}
+   * @returns {ScaleBy}
    */
   clone() {
     var action = new ScaleBy();
@@ -39,4 +39,4 @@ export default class ScaleBy extends ScaleTo {
     action.initWithDuration(this._duration, this._endScaleX, this._endScaleY);
     return action;
   }
-};
+}

@@ -1,10 +1,9 @@
-import ActionInstant from './action-instant';
+import ActionInstant from "./action-instant";
 
 /**
  * Toggles the visibility of a node.
  */
 export default class ToggleVisibility extends ActionInstant {
-
   /**
    * Called once per frame. Time is the number of seconds of a frame interval.
    *
@@ -16,7 +15,7 @@ export default class ToggleVisibility extends ActionInstant {
 
   /**
    * returns a reversed action.
-   * @returns {cc.ToggleVisibility}
+   * @returns {ToggleVisibility}
    */
   reverse() {
     return new ToggleVisibility();
@@ -26,9 +25,9 @@ export default class ToggleVisibility extends ActionInstant {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.ToggleVisibility}
+   * @return {ToggleVisibility}
    */
   clone() {
     return new ToggleVisibility();
   }
-};
+}

@@ -1,10 +1,10 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
-/** Blinks a cc.Node object by modifying it's visible attribute
+/** Blinks a Node object by modifying it's visible attribute
  * @param {Number} duration  duration in seconds
  * @param {Number} blinks  blinks in times
  * @example
- * var action = new cc.Blink(2, 10);
+ * var action = new Blink(2, 10);
  */
 export default class Blink extends ActionInterval {
   _times = 0;
@@ -36,7 +36,7 @@ export default class Blink extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.Blink}
+   * @returns {Blink}
    */
   clone() {
     var action = new Blink();
@@ -60,7 +60,7 @@ export default class Blink extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -77,7 +77,7 @@ export default class Blink extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.Blink}
+   * @return {Blink}
    */
   reverse() {
     var action = new Blink(this._duration, this._times);
@@ -85,4 +85,4 @@ export default class Blink extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
-};
+}

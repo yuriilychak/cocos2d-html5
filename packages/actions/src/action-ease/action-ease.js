@@ -1,11 +1,11 @@
-import ActionInterval from '../action-interval/action-interval';
+import ActionInterval from "../action-interval/action-interval";
 
 /**
  * Base class for Easing actions
- * @param {cc.ActionInterval} action
+ * @param {ActionInterval} action
  *
  * @example
- * var moveEase = new cc.ActionEase(action);
+ * var moveEase = new ActionEase(action);
  */
 export default class ActionEase extends ActionInterval {
   _inner = null;
@@ -13,7 +13,7 @@ export default class ActionEase extends ActionInterval {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * creates the action of ActionEase.
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    */
   constructor(action) {
     super();
@@ -23,12 +23,12 @@ export default class ActionEase extends ActionInterval {
   /**
    * initializes the action
    *
-   * @param {cc.ActionInterval} action
+   * @param {ActionInterval} action
    * @return {Boolean}
    */
   initWithAction(action) {
     if (!action)
-      throw new Error("cc.ActionEase.initWithAction(): action must be non nil");
+      throw new Error("ActionEase.initWithAction(): action must be non nil");
 
     if (this.initWithDuration(action.getDuration())) {
       this._inner = action;
@@ -41,7 +41,7 @@ export default class ActionEase extends ActionInterval {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.ActionEase}
+   * @returns {ActionEase}
    */
   clone() {
     const action = new ActionEase();
@@ -52,7 +52,7 @@ export default class ActionEase extends ActionInterval {
   /**
    * called before the action start. It will also set the target.
    *
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -82,7 +82,7 @@ export default class ActionEase extends ActionInterval {
    * - The action will be x coordinates of 0 move to 100. <br />
    * - The reversed action will be x of 100 move to 0.
    * - Will be rewritten
-   * @return {cc.ActionEase}
+   * @return {ActionEase}
    */
   reverse() {
     return new ActionEase(this._inner.reverse());
@@ -91,9 +91,9 @@ export default class ActionEase extends ActionInterval {
   /**
    * Get inner Action.
    *
-   * @return {cc.ActionInterval}
+   * @return {ActionInterval}
    */
   getInnerAction() {
     return this._inner;
   }
-};
+}

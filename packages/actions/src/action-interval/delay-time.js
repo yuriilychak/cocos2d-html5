@@ -1,4 +1,4 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /** Delays the action a certain amount of seconds
  */
@@ -12,7 +12,7 @@ export default class DelayTime extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.DelayTime}
+   * @return {DelayTime}
    */
   reverse() {
     var action = new DelayTime(this._duration);
@@ -23,7 +23,7 @@ export default class DelayTime extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.DelayTime}
+   * @returns {DelayTime}
    */
   clone() {
     var action = new DelayTime();
@@ -31,4 +31,4 @@ export default class DelayTime extends ActionInterval {
     action.initWithDuration(this._duration);
     return action;
   }
-};
+}

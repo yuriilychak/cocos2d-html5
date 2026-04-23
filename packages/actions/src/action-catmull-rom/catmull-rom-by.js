@@ -1,5 +1,5 @@
-import CardinalSplineBy from './cardinal-spline-by';
-import { cloneControlPoints } from '../action/utils';
+import CardinalSplineBy from "./cardinal-spline-by";
+import { cloneControlPoints } from "../action/utils";
 
 /**
  * An action that moves the target with a CatmullRom curve by a certain distance.  <br/>
@@ -11,7 +11,7 @@ import { cloneControlPoints } from '../action/utils';
  * @param {Array} points
  *
  * @example
- * var action1 = cc.catmullRomBy(3, array);
+ * var action1 = catmullRomBy(3, array);
  */
 export default class CatmullRomBy extends CardinalSplineBy {
   /**
@@ -43,14 +43,11 @@ export default class CatmullRomBy extends CardinalSplineBy {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.CatmullRomBy}
+   * @returns {CatmullRomBy}
    */
   clone() {
     const action = new CatmullRomBy();
-    action.initWithDuration(
-      this._duration,
-      cloneControlPoints(this._points)
-    );
+    action.initWithDuration(this._duration, cloneControlPoints(this._points));
     return action;
   }
-};
+}

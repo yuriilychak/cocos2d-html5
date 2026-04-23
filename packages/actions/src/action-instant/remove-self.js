@@ -1,4 +1,4 @@
-import ActionInstant from './action-instant';
+import ActionInstant from "./action-instant";
 
 /**
  * Delete self in the next frame.
@@ -6,7 +6,7 @@ import ActionInstant from './action-instant';
  *
  * @example
  * // example
- * var removeSelfAction = new cc.RemoveSelf(false);
+ * var removeSelfAction = new RemoveSelf(false);
  */
 export default class RemoveSelf extends ActionInstant {
   _isNeedCleanUp = true;
@@ -53,9 +53,9 @@ export default class RemoveSelf extends ActionInstant {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.RemoveSelf}
+   * @return {RemoveSelf}
    */
   clone() {
     return new RemoveSelf(this._isNeedCleanUp);
   }
-};
+}

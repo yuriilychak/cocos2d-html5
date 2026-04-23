@@ -1,4 +1,4 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
  * Ease Exponential Out. <br />
@@ -6,7 +6,7 @@ import ActionEase from './action-ease';
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
  *
  * @example
- * action.easing(cc.easeExponentialOut());
+ * action.easing(easeExponentialOut());
  */
 export default class EaseExponentialOut extends ActionEase {
   /**
@@ -19,8 +19,8 @@ export default class EaseExponentialOut extends ActionEase {
   }
 
   /**
-   * Create a cc.EaseExponentialIn action. Opposite with the original motion trajectory.
-   * @return {cc.EaseExponentialIn}
+   * Create a EaseExponentialIn action. Opposite with the original motion trajectory.
+   * @return {EaseExponentialIn}
    */
   reverse() {
     return new cc.EaseExponentialIn(this._inner.reverse());
@@ -30,11 +30,11 @@ export default class EaseExponentialOut extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseExponentialOut}
+   * @returns {EaseExponentialOut}
    */
   clone() {
     var action = new EaseExponentialOut();
     action.initWithAction(this._inner.clone());
     return action;
   }
-};
+}

@@ -1,12 +1,12 @@
-import ActionEase from './action-ease';
+import ActionEase from "./action-ease";
 
 /**
- * cc.EaseCubicActionOut action. <br />
+ * EaseCubicActionOut action. <br />
  * Reference easeOutCubic: <br />
  * {@link http://www.zhihu.com/question/21981571/answer/19925418}
  *
  * @example
- * action.easing(cc.easeCubicActionOut());
+ * action.easing(easeCubicActionOut());
  */
 export default class EaseCubicActionOut extends ActionEase {
   _updateTime(time) {
@@ -27,7 +27,7 @@ export default class EaseCubicActionOut extends ActionEase {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @returns {cc.EaseCubicActionOut}
+   * @returns {EaseCubicActionOut}
    */
   clone() {
     var action = new EaseCubicActionOut();
@@ -37,9 +37,9 @@ export default class EaseCubicActionOut extends ActionEase {
 
   /**
    * Create a action. Opposite with the original motion trajectory.
-   * @return {cc.EaseCubicActionOut}
+   * @return {EaseCubicActionOut}
    */
   reverse() {
     return new EaseCubicActionOut(this._inner.reverse());
   }
-};
+}

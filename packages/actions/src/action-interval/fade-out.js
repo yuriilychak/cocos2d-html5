@@ -1,12 +1,11 @@
-import FadeTo from './fade-to';
-import FadeIn from './fade-in';
+import FadeTo from "./fade-to";
+import FadeIn from "./fade-in";
 
-/** Fades Out an object that implements the cc.RGBAProtocol protocol. It modifies the opacity from 255 to 0.
+/** Fades Out an object that implements the RGBAProtocol protocol. It modifies the opacity from 255 to 0.
  * The "reverse" of this action is FadeIn
  * @param {Number} duration duration in seconds
  */
 export default class FadeOut extends FadeTo {
-
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @param {Number} duration duration in seconds
@@ -19,7 +18,7 @@ export default class FadeOut extends FadeTo {
 
   /**
    * Returns a reversed action.
-   * @return {cc.FadeIn}
+   * @return {FadeIn}
    */
   reverse() {
     const action = new FadeIn();
@@ -32,7 +31,7 @@ export default class FadeOut extends FadeTo {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.FadeOut}
+   * @returns {FadeOut}
    */
   clone() {
     const action = new FadeOut();
@@ -40,4 +39,4 @@ export default class FadeOut extends FadeTo {
     action.initWithDuration(this._duration, this._toOpacity);
     return action;
   }
-};
+}

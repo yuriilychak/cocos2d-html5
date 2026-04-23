@@ -1,4 +1,4 @@
-import ActionInterval from './action-interval';
+import ActionInterval from "./action-interval";
 
 /**
  * <p>
@@ -7,16 +7,16 @@ import ActionInterval from './action-interval';
  * Use it as the default "reversed" method of your own actions, but using it outside the "reversed"      <br/>
  * scope is not recommended.
  * </p>
- * @param {cc.FiniteTimeAction} action
+ * @param {FiniteTimeAction} action
  * @example
- *  var reverse = new cc.ReverseTime(this);
+ *  var reverse = new ReverseTime(this);
  */
 export default class ReverseTime extends ActionInterval {
   _other = null;
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-   * @param {cc.FiniteTimeAction} action
+   * @param {FiniteTimeAction} action
    */
   constructor(action) {
     super();
@@ -26,17 +26,17 @@ export default class ReverseTime extends ActionInterval {
   }
 
   /**
-   * @param {cc.FiniteTimeAction} action
+   * @param {FiniteTimeAction} action
    * @return {Boolean}
    */
   initWithAction(action) {
     if (!action)
       throw new Error(
-        "cc.ReverseTime.initWithAction(): action must be non null"
+        "ReverseTime.initWithAction(): action must be non null"
       );
     if (action === this._other)
       throw new Error(
-        "cc.ReverseTime.initWithAction(): the action was already passed in."
+        "ReverseTime.initWithAction(): the action was already passed in."
       );
     if (super.initWithDuration(action._duration)) {
       // Don't leak if action is reused
@@ -48,7 +48,7 @@ export default class ReverseTime extends ActionInterval {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.ReverseTime}
+   * @returns {ReverseTime}
    */
   clone() {
     var action = new ReverseTime();
@@ -59,7 +59,7 @@ export default class ReverseTime extends ActionInterval {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
@@ -77,7 +77,7 @@ export default class ReverseTime extends ActionInterval {
 
   /**
    * Returns a reversed action.
-   * @return {cc.ActionInterval}
+   * @return {ActionInterval}
    */
   reverse() {
     return this._other.clone();
@@ -90,4 +90,4 @@ export default class ReverseTime extends ActionInterval {
     this._other.stop();
     super.stop();
   }
-};
+}

@@ -290,7 +290,7 @@ export const _easeCubicActionInOut = {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeIn(3.0));
+ * action.easing(easeIn(3.0));
  */
 export function easeIn(rate) {
   return {
@@ -313,7 +313,7 @@ export function easeIn(rate) {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeOut(3.0));
+ * action.easing(easeOut(3.0));
  */
 export function easeOut(rate) {
   return {
@@ -336,7 +336,7 @@ export function easeOut(rate) {
  *
  * @example
  * //The new usage
- * action.easing(cc.easeInOut(3.0));
+ * action.easing(easeInOut(3.0));
  */
 export function easeInOut(rate) {
   return {
@@ -360,7 +360,7 @@ export function easeInOut(rate) {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeExponentialIn());
+ * action.easing(easeExponentialIn());
  */
 export function easeExponentialIn() {
   return _easeExponentialInObj;
@@ -374,7 +374,7 @@ export function easeExponentialIn() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeExponentialOut());
+ * action.easing(easeExponentialOut());
  */
 export function easeExponentialOut() {
   return _easeExponentialOutObj;
@@ -388,7 +388,7 @@ export function easeExponentialOut() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeExponentialInOut());
+ * action.easing(easeExponentialInOut());
  */
 export function easeExponentialInOut() {
   return _easeExponentialInOutObj;
@@ -402,7 +402,7 @@ export function easeExponentialInOut() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeSineIn());
+ * action.easing(easeSineIn());
  */
 export function easeSineIn() {
   return _easeSineInObj;
@@ -416,7 +416,7 @@ export function easeSineIn() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeSineOut());
+ * action.easing(easeSineOut());
  */
 export function easeSineOut() {
   return _easeSineOutObj;
@@ -429,7 +429,7 @@ export function easeSineOut() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeSineInOut());
+ * action.easing(easeSineInOut());
  */
 export function easeSineInOut() {
   return _easeSineInOutObj;
@@ -444,7 +444,7 @@ export function easeSineInOut() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeElasticIn(3.0));
+ * action.easing(easeElasticIn(3.0));
  */
 export function easeElasticIn(period) {
   if (period && period !== 0.3) {
@@ -475,7 +475,7 @@ export function easeElasticIn(period) {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeElasticOut(3.0));
+ * action.easing(easeElasticOut(3.0));
  */
 export function easeElasticOut(period) {
   if (period && period !== 0.3) {
@@ -505,7 +505,7 @@ export function easeElasticOut(period) {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeElasticInOut(3.0));
+ * action.easing(easeElasticInOut(3.0));
  */
 export function easeElasticInOut(period) {
   period = period || 0.3;
@@ -548,7 +548,7 @@ export function easeElasticInOut(period) {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeBounceIn());
+ * action.easing(easeBounceIn());
  */
 export function easeBounceIn() {
   return _easeBounceInObj;
@@ -561,7 +561,7 @@ export function easeBounceIn() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeBounceOut());
+ * action.easing(easeBounceOut());
  */
 export function easeBounceOut() {
   return _easeBounceOutObj;
@@ -574,7 +574,7 @@ export function easeBounceOut() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeBounceInOut());
+ * action.easing(easeBounceInOut());
  */
 export function easeBounceInOut() {
   return _easeBounceInOutObj;
@@ -587,7 +587,7 @@ export function easeBounceInOut() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeBackIn());
+ * action.easing(easeBackIn());
  */
 export function easeBackIn() {
   return _easeBackInObj;
@@ -600,7 +600,7 @@ export function easeBackIn() {
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeBackOut());
+ * action.easing(easeBackOut());
  */
 export function easeBackOut() {
   return _easeBackOutObj;
@@ -608,12 +608,12 @@ export function easeBackOut() {
 
 /**
  * Creates the action easing object. <br />
- * Beginning of cc.EaseBackIn. Ending of cc.EaseBackOut.
+ * Beginning of EaseBackIn. Ending of EaseBackOut.
  * @function
  * @return {Object}
  * @example
  * // example
- * action.easing(cc.easeBackInOut());
+ * action.easing(easeBackInOut());
  */
 export function easeBackInOut() {
   return _easeBackInOutObj;
@@ -630,7 +630,7 @@ export function easeBackInOut() {
  * @returns {Object}
  * @example
  * // example
- * action.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
+ * action.easing(easeBezierAction(0.5, 0.5, 1.0, 1.0));
  */
 export function easeBezierAction(p0, p1, p2, p3) {
   return {
@@ -650,7 +650,7 @@ export function easeBezierAction(p0, p1, p2, p3) {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeQuadraticActionIn());
+ * action.easing(easeQuadraticActionIn());
  */
 export function easeQuadraticActionIn() {
   return _easeQuadraticActionIn;
@@ -664,7 +664,7 @@ export function easeQuadraticActionIn() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeQuadraticActionOut());
+ * action.easing(easeQuadraticActionOut());
  */
 export function easeQuadraticActionOut() {
   return _easeQuadraticActionOut;
@@ -678,7 +678,7 @@ export function easeQuadraticActionOut() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeQuadraticActionInOut());
+ * action.easing(easeQuadraticActionInOut());
  */
 export function easeQuadraticActionInOut() {
   return _easeQuadraticActionInOut;
@@ -691,7 +691,7 @@ export function easeQuadraticActionInOut() {
  * @function
  * @returns {Object}
  * @example
- * action.easing(cc.easeQuarticActionIn());
+ * action.easing(easeQuarticActionIn());
  */
 export function easeQuarticActionIn() {
   return _easeQuarticActionIn;
@@ -705,7 +705,7 @@ export function easeQuarticActionIn() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.QuarticActionOut());
+ * action.easing(QuarticActionOut());
  */
 export function easeQuarticActionOut() {
   return _easeQuarticActionOut;
@@ -730,7 +730,7 @@ export function easeQuarticActionInOut() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeQuinticActionIn());
+ * action.easing(easeQuinticActionIn());
  */
 export function easeQuinticActionIn() {
   return _easeQuinticActionIn;
@@ -744,7 +744,7 @@ export function easeQuinticActionIn() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeQuadraticActionOut());
+ * action.easing(easeQuadraticActionOut());
  */
 export function easeQuinticActionOut() {
   return _easeQuinticActionOut;
@@ -758,7 +758,7 @@ export function easeQuinticActionOut() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeQuinticActionInOut());
+ * action.easing(easeQuinticActionInOut());
  */
 export function easeQuinticActionInOut() {
   return _easeQuinticActionInOut;
@@ -772,7 +772,7 @@ export function easeQuinticActionInOut() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeCircleActionIn());
+ * action.easing(easeCircleActionIn());
  */
 export function easeCircleActionIn() {
   return _easeCircleActionIn;
@@ -786,7 +786,7 @@ export function easeCircleActionIn() {
  * @returns {Object}
  * @exampple
  * //example
- * actioneasing(cc.easeCircleActionOut());
+ * actioneasing(easeCircleActionOut());
  */
 export function easeCircleActionOut() {
   return _easeCircleActionOut;
@@ -800,7 +800,7 @@ export function easeCircleActionOut() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeCircleActionInOut());
+ * action.easing(easeCircleActionInOut());
  */
 export function easeCircleActionInOut() {
   return _easeCircleActionInOut;
@@ -814,7 +814,7 @@ export function easeCircleActionInOut() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeCubicActionIn());
+ * action.easing(easeCubicActionIn());
  */
 export function easeCubicActionIn() {
   return _easeCubicActionIn;
@@ -828,7 +828,7 @@ export function easeCubicActionIn() {
  * @returns {Object}
  * @example
  * //example
- * action.easing(cc.easeCubicActionOut());
+ * action.easing(easeCubicActionOut());
  */
 export function easeCubicActionOut() {
   return _easeCubicActionOut;

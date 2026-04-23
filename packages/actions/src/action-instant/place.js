@@ -1,12 +1,12 @@
-import ActionInstant from './action-instant';
+import ActionInstant from "./action-instant";
 
 /**
  * Places the node in a certain position
- * @param {cc.Point|Number} pos
+ * @param {Point|Number} pos
  * @param {Number} [y]
  * @example
- * var placeAction = new cc.Place(cc.p(200, 200));
- * var placeAction = new cc.Place(200, 200);
+ * var placeAction = new Place(p(200, 200));
+ * var placeAction = new Place(200, 200);
  */
 export default class Place extends ActionInstant {
   _x = 0;
@@ -15,7 +15,7 @@ export default class Place extends ActionInstant {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * Creates a Place action with a position.
-   * @param {cc.Point|Number} pos
+   * @param {Point|Number} pos
    * @param {Number} [y]
    */
   constructor(pos, y) {
@@ -57,11 +57,11 @@ export default class Place extends ActionInstant {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.Place}
+   * @return {Place}
    */
   clone() {
     const action = new Place();
     action.initWithPosition(this._x, this._y);
     return action;
   }
-};
+}

@@ -1,29 +1,29 @@
-import Action from './action';
+import Action from "./action";
 
 /**
- * cc.Follow is an action that "follows" a node.
+ * Follow is an action that "follows" a node.
  *
  * @example
  * //example
- * //Instead of using cc.Camera as a "follower", use this action instead.
- * layer.runAction(cc.follow(hero));
+ * //Instead of using Camera as a "follower", use this action instead.
+ * layer.runAction(follow(hero));
  *
  * @property {Number}  leftBoundary - world leftBoundary.
  * @property {Number}  rightBoundary - world rightBoundary.
  * @property {Number}  topBoundary - world topBoundary.
  * @property {Number}  bottomBoundary - world bottomBoundary.
  *
- * @param {cc.Node} followedNode
- * @param {cc.Rect} rect
+ * @param {Node} followedNode
+ * @param {Rect} rect
  * @example
  * // creates the action with a set boundary
- * var sprite = new cc.Sprite("spriteFileName");
- * var followAction = new cc.Follow(sprite, cc.rect(0, 0, s.width * 2 - 100, s.height));
+ * var sprite = new Sprite("spriteFileName");
+ * var followAction = new Follow(sprite, rect(0, 0, s.width * 2 - 100, s.height));
  * this.runAction(followAction);
  *
  * // creates the action with no boundary set
- * var sprite = new cc.Sprite("spriteFileName");
- * var followAction = new cc.Follow(sprite);
+ * var sprite = new Sprite("spriteFileName");
+ * var followAction = new Follow(sprite);
  * this.runAction(followAction);
  *
  */
@@ -48,8 +48,8 @@ export default class Follow extends Action {
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * creates the action with a set boundary. <br/>
    * creates the action with no boundary set.
-   * @param {cc.Node} followedNode
-   * @param {cc.Rect} rect
+   * @param {Node} followedNode
+   * @param {Rect} rect
    */
   constructor(followedNode, rect) {
     super();
@@ -76,7 +76,7 @@ export default class Follow extends Action {
    * to copy object with deep copy.
    * returns a clone of action.
    *
-   * @return {cc.Follow}
+   * @return {Follow}
    */
   clone() {
     const action = new Follow();
@@ -112,17 +112,15 @@ export default class Follow extends Action {
   /**
    * initializes the action with a set boundary.
    *
-   * @param {cc.Node} followedNode
-   * @param {cc.Rect} [rect]
+   * @param {Node} followedNode
+   * @param {Rect} [rect]
    * @return {Boolean}
    */
   initWithTarget(followedNode, rect) {
     if (!followedNode)
-      throw new Error(
-        "cc.Follow.initWithAction(): followedNode must be non nil"
-      );
+      throw new Error("Follow.initWithAction(): followedNode must be non nil");
 
-    rect = rect || cc.rect(0, 0, 0, 0);
+    rect = rect || new cc.Rect(0, 0, 0, 0);
     this._followedNode = followedNode;
     this._worldRect = rect;
 
@@ -131,7 +129,7 @@ export default class Follow extends Action {
     this._boundaryFullyCovered = false;
 
     const winSize = cc.director.getWinSize();
-    this._fullScreenSize = cc.p(winSize.width, winSize.height);
+    this._fullScreenSize = new cc.Point(winSize.width, winSize.height);
     this._halfScreenSize = cc.pMult(this._fullScreenSize, 0.5);
 
     if (this._boundarySet) {
@@ -204,4 +202,4 @@ export default class Follow extends Action {
     this.target = null;
     super.stop();
   }
-};
+}

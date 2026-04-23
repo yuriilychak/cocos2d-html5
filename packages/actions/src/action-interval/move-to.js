@@ -1,14 +1,14 @@
-import MoveBy from './move-by';
+import MoveBy from "./move-by";
 
 /**
  * Moves a Node object to the position x,y. x and y are absolute coordinates by modifying it's position attribute. <br/>
  * Several MoveTo actions can be concurrently called, and the resulting                                            <br/>
  * movement will be the sum of individual movements.
  * @param {Number} duration duration in seconds
- * @param {cc.Point|Number} position
+ * @param {Point|Number} position
  * @param {Number} y
  * @example
- * var actionTo = new cc.MoveTo(2, cc.p(80, 80));
+ * var actionTo = new MoveTo(2, p(80, 80));
  */
 export default class MoveTo extends MoveBy {
   _endPosition = null;
@@ -16,12 +16,12 @@ export default class MoveTo extends MoveBy {
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @param {Number} duration duration in seconds
-   * @param {cc.Point|Number} position
+   * @param {Point|Number} position
    * @param {Number} y
    */
   constructor(duration, position, y) {
     super();
-    this._endPosition = cc.p(0, 0);
+    this._endPosition = new cc.Point(0, 0);
 
     position !== undefined && this.initWithDuration(duration, position, y);
   }
@@ -29,7 +29,7 @@ export default class MoveTo extends MoveBy {
   /**
    * Initializes the action.
    * @param {Number} duration  duration in seconds
-   * @param {cc.Point} position
+   * @param {Point} position
    * @param {Number} y
    * @return {Boolean}
    */
@@ -49,7 +49,7 @@ export default class MoveTo extends MoveBy {
 
   /**
    * returns a new clone of the action
-   * @returns {cc.MoveTo}
+   * @returns {MoveTo}
    */
   clone() {
     var action = new MoveTo();
@@ -60,11 +60,11 @@ export default class MoveTo extends MoveBy {
 
   /**
    * Start the action with target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
     this._positionDelta.x = this._endPosition.x - target.getPositionX();
     this._positionDelta.y = this._endPosition.y - target.getPositionY();
   }
-};
+}
