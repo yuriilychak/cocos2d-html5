@@ -26,6 +26,7 @@
 
 import { NewClass } from "../../platform/class";
 import { AnimationFrame } from "./animation-frame";
+import { SpriteFrame } from "../sprite-frame";
 import { Rect } from "../../cocoa/geometry/rect";
 import TextureCache from "../../textures/texture-cache";
 
@@ -82,7 +83,7 @@ export class Animation extends NewClass {
     } else {
       var frame0 = frames[0];
       if (frame0) {
-        if (frame0 instanceof cc.SpriteFrame) {
+        if (frame0 instanceof SpriteFrame) {
           //init with sprite frames , delay and loops.
           this.initWithSpriteFrames(frames, delay, loops);
         } else if (frame0 instanceof AnimationFrame) {
@@ -133,7 +134,7 @@ export class Animation extends NewClass {
     var rect = new Rect(0, 0, 0, 0);
     rect.width = texture.width;
     rect.height = texture.height;
-    var frame = new cc.SpriteFrame(texture, rect);
+    var frame = new SpriteFrame(texture, rect);
     this.addSpriteFrame(frame);
   }
 
@@ -143,7 +144,7 @@ export class Animation extends NewClass {
    * @param {Rect} rect
    */
   addSpriteFrameWithTexture(texture, rect) {
-    var pFrame = new cc.SpriteFrame(texture, rect);
+    var pFrame = new SpriteFrame(texture, rect);
     this.addSpriteFrame(pFrame);
   }
 
@@ -288,7 +289,7 @@ export class Animation extends NewClass {
    * @param {Number} [loops=1]
    */
   initWithSpriteFrames(frames, delay, loops) {
-    cc.arrayVerifyType(frames, cc.SpriteFrame);
+    cc.arrayVerifyType(frames, SpriteFrame);
     this._loops = loops === undefined ? 1 : loops;
     this._delayPerUnit = delay || 0;
     this._totalDelayUnits = 0;

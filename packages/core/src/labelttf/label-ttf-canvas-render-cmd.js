@@ -28,6 +28,13 @@ import Game from "../boot/game";
 import { FontDefinition } from "../platform/types/font-definition";
 import { Texture2D } from "../textures/texture-2d";
 import { RendererConfig } from "../renderer/renderer-config";
+import {
+  TEXT_ALIGNMENT_CENTER,
+  TEXT_ALIGNMENT_RIGHT,
+  VERTICAL_TEXT_ALIGNMENT_TOP,
+  VERTICAL_TEXT_ALIGNMENT_CENTER,
+  VERTICAL_TEXT_ALIGNMENT_BOTTOM
+} from "../platform/types/color";
 
 export const _textAlign = ["left", "center", "right"];
 export const _textBaseline = ["top", "middle", "bottom"];
@@ -301,20 +308,20 @@ export const LabelRenderMixin = (Base) =>
       const lineHeight = node.getLineHeight() * scale;
       const transformTop = (lineHeight - this._fontClientHeight * scale) / 2;
 
-      if (locHAlignment === cc.TEXT_ALIGNMENT_RIGHT) xOffset += locContentWidth;
-      else if (locHAlignment === cc.TEXT_ALIGNMENT_CENTER)
+      if (locHAlignment === TEXT_ALIGNMENT_RIGHT) xOffset += locContentWidth;
+      else if (locHAlignment === TEXT_ALIGNMENT_CENTER)
         xOffset += locContentWidth / 2;
       else xOffset += 0;
 
       if (this._isMultiLine) {
         const locStrLen = this._strings.length;
-        if (locVAlignment === cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM)
+        if (locVAlignment === VERTICAL_TEXT_ALIGNMENT_BOTTOM)
           yOffset =
             lineHeight -
             transformTop * 2 +
             locContentSizeHeight -
             lineHeight * locStrLen;
-        else if (locVAlignment === cc.VERTICAL_TEXT_ALIGNMENT_CENTER)
+        else if (locVAlignment === VERTICAL_TEXT_ALIGNMENT_CENTER)
           yOffset =
             (lineHeight - transformTop * 2) / 2 +
             (locContentSizeHeight - lineHeight * locStrLen) / 2;
@@ -325,9 +332,9 @@ export const LabelRenderMixin = (Base) =>
           OffsetYArray.push(tmpOffsetY);
         }
       } else {
-        if (locVAlignment === cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM) {
+        if (locVAlignment === VERTICAL_TEXT_ALIGNMENT_BOTTOM) {
           //do nothing
-        } else if (locVAlignment === cc.VERTICAL_TEXT_ALIGNMENT_TOP) {
+        } else if (locVAlignment === VERTICAL_TEXT_ALIGNMENT_TOP) {
           yOffset -= locContentSizeHeight;
         } else {
           yOffset -= locContentSizeHeight * 0.5;

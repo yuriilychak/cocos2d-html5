@@ -25,14 +25,15 @@
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-render-cmd";
 import { Rect } from "../cocoa/geometry/rect";
 import { log, error, _LogInfos } from "../boot/debugger";
-import ShaderCache from '../shaders/CCShaderCache';
-import { RendererConfig } from '../renderer/renderer-config';
+import ShaderCache from "../shaders/CCShaderCache";
+import { RendererConfig } from "../renderer/renderer-config";
 import {
   BLEND_DST,
   ONE,
   SHADER_SPRITE_POSITION_TEXTURECOLOR,
   SRC_ALPHA
 } from "../platform/macro/constants";
+import { FIX_ARTIFACTS_BY_STRECHING_TEXEL } from "../platform/config";
 
 //Sprite's WebGL render command
 export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -149,7 +150,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     let left, right, top, bottom, tempSwap;
     if (node._rectRotated) {
-      if (cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL) {
+      if (FIX_ARTIFACTS_BY_STRECHING_TEXEL) {
         left = (2 * rect.x + 1) / (2 * atlasWidth);
         right = left + (rect.height * 2 - 2) / (2 * atlasWidth);
         top = (2 * rect.y + 1) / (2 * atlasHeight);
@@ -182,7 +183,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       uvs[3].u = left; // br
       uvs[3].v = bottom; // br
     } else {
-      if (cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL) {
+      if (FIX_ARTIFACTS_BY_STRECHING_TEXEL) {
         left = (2 * rect.x + 1) / (2 * atlasWidth);
         right = left + (rect.width * 2 - 2) / (2 * atlasWidth);
         top = (2 * rect.y + 1) / (2 * atlasHeight);

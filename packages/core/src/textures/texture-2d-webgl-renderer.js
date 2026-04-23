@@ -135,7 +135,7 @@ export default class WebGLTextureRenderer {
   description() {
     var t = this._texture;
     return (
-      "<cc.Texture2D | Name = " +
+      "<Texture2D | Name = " +
       this._name +
       " | Dimensions = " +
       t._pixelsWide +

@@ -288,7 +288,7 @@ export default class CanvasTextureRenderer {
   description() {
     var t = this._texture;
     return (
-      "<cc.Texture2D | width = " +
+      "<Texture2D | width = " +
       t._contentSize.width +
       " height " +
       t._contentSize.height +

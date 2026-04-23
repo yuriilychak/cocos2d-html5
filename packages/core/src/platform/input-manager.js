@@ -28,6 +28,11 @@ import { Rect, rectContainsPoint } from "../cocoa/geometry/rect";
 import EventManager from "../event-manager/event-manager";
 import Sys from "../boot/sys";
 import { log, _LogInfos } from "../boot/debugger";
+import Touch from "../event-manager/touch";
+import { EventTouch, EventMouse } from "../event-manager/event/index";
+import { EventAcceleration } from "../event-manager/event-extension/index";
+import { isFunction } from "../boot/utils";
+import { EGLView } from "./egl-view/index";
 
 /**
  * ignore
@@ -143,7 +148,7 @@ export const inputManager =  {
           continue;
         }
         //curTouch = this._touches[unusedIndex] = selTouch;
-        curTouch = this._touches[unusedIndex] = new cc.Touch(
+        curTouch = this._touches[unusedIndex] = new Touch(
           selTouch._point.x,
           selTouch._point.y,
           selTouch.getID()
@@ -156,8 +161,8 @@ export const inputManager =  {
     }
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
-      var touchEvent = new cc.EventTouch(handleTouches);
-      touchEvent._eventCode = cc.EventTouch.EventCode.BEGAN;
+      var touchEvent = new EventTouch(handleTouches);
+      touchEvent._eventCode = EventTouch.EventCode.BEGAN;
       EventManager.getInstance().dispatchEvent(touchEvent);
     }
   },
@@ -191,8 +196,8 @@ export const inputManager =  {
     }
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
-      var touchEvent = new cc.EventTouch(handleTouches);
-      touchEvent._eventCode = cc.EventTouch.EventCode.MOVED;
+      var touchEvent = new EventTouch(handleTouches);
+      touchEvent._eventCode = EventTouch.EventCode.MOVED;
       EventManager.getInstance().dispatchEvent(touchEvent);
     }
   },
@@ -205,8 +210,8 @@ export const inputManager =  {
     var handleTouches = this.getSetOfTouchesEndOrCancel(touches);
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
-      var touchEvent = new cc.EventTouch(handleTouches);
-      touchEvent._eventCode = cc.EventTouch.EventCode.ENDED;
+      var touchEvent = new EventTouch(handleTouches);
+      touchEvent._eventCode = EventTouch.EventCode.ENDED;
       EventManager.getInstance().dispatchEvent(touchEvent);
     }
   },
@@ -219,8 +224,8 @@ export const inputManager =  {
     var handleTouches = this.getSetOfTouchesEndOrCancel(touches);
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
-      var touchEvent = new cc.EventTouch(handleTouches);
-      touchEvent._eventCode = cc.EventTouch.EventCode.CANCELLED;
+      var touchEvent = new EventTouch(handleTouches);
+      touchEvent._eventCode = EventTouch.EventCode.CANCELLED;
       EventManager.getInstance().dispatchEvent(touchEvent);
     }
   },
@@ -265,7 +270,7 @@ export const inputManager =  {
     var docElem = document.documentElement;
     var win = window;
     var box = null;
-    if (cc.isFunction(element.getBoundingClientRect)) {
+    if (isFunction(element.getBoundingClientRect)) {
       box = element.getBoundingClientRect();
     } else {
       box = {
@@ -337,7 +342,7 @@ export const inputManager =  {
   getTouchByXY: function (tx, ty, pos) {
     var locPreTouch = this._preTouchPoint;
     var location = this._glView.convertToLocationInView(tx, ty, pos);
-    var touch = new cc.Touch(location.x, location.y);
+    var touch = new Touch(location.x, location.y);
     touch._setPrevPoint(locPreTouch.x, locPreTouch.y);
     locPreTouch.x = location.x;
     locPreTouch.y = location.y;
@@ -354,7 +359,7 @@ export const inputManager =  {
   getMouseEvent: function (location, pos, eventType) {
     var locPreMouse = this._prevMousePoint;
     this._glView._convertMouseToLocationInView(location, pos);
-    var mouseEvent = new cc.EventMouse(eventType);
+    var mouseEvent = new EventMouse(eventType);
     mouseEvent.setLocation(location.x, location.y);
     mouseEvent._setPrevCursor(locPreMouse.x, locPreMouse.y);
     locPreMouse.x = location.x;
@@ -408,13 +413,13 @@ export const inputManager =  {
             pos
           );
         if (touch_event.identifier != null) {
-          touch = new cc.Touch(location.x, location.y, touch_event.identifier);
+          touch = new Touch(location.x, location.y, touch_event.identifier);
           //use Touch Pool
           preLocation = this.getPreTouch(touch).getLocation();
           touch._setPrevPoint(preLocation.x, preLocation.y);
           this.setPreTouch(touch);
         } else {
-          touch = new cc.Touch(location.x, location.y);
+          touch = new Touch(location.x, location.y);
           touch._setPrevPoint(locPreTouch.x, locPreTouch.y);
         }
         locPreTouch.x = location.x;
@@ -432,7 +437,7 @@ export const inputManager =  {
   registerSystemEvent: function (element) {
     if (this._isRegisterEvent) return;
 
-    var locView = (this._glView = cc.view);
+    var locView = (this._glView = EGLView._getInstance());
     var selfPointer = this;
     var supportMouse = "mouse" in Sys.getInstance().capabilities,
       supportTouches = "touches" in Sys.getInstance().capabilities;
@@ -481,7 +486,7 @@ export const inputManager =  {
             var mouseEvent = selfPointer.getMouseEvent(
               location,
               pos,
-              cc.EventMouse.UP
+              EventMouse.UP
             );
             mouseEvent.setButton(event.button);
             EventManager.getInstance().dispatchEvent(mouseEvent);
@@ -507,7 +512,7 @@ export const inputManager =  {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            cc.EventMouse.DOWN
+            EventMouse.DOWN
           );
           mouseEvent.setButton(event.button);
           EventManager.getInstance().dispatchEvent(mouseEvent);
@@ -535,7 +540,7 @@ export const inputManager =  {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            cc.EventMouse.UP
+            EventMouse.UP
           );
           mouseEvent.setButton(event.button);
           EventManager.getInstance().dispatchEvent(mouseEvent);
@@ -561,7 +566,7 @@ export const inputManager =  {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            cc.EventMouse.MOVE
+            EventMouse.MOVE
           );
           if (selfPointer._mousePressed) mouseEvent.setButton(event.button);
           else mouseEvent.setButton(null);
@@ -582,7 +587,7 @@ export const inputManager =  {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            cc.EventMouse.SCROLL
+            EventMouse.SCROLL
           );
           mouseEvent.setButton(event.button);
           mouseEvent.setScrollData(0, event.wheelDelta);
@@ -604,7 +609,7 @@ export const inputManager =  {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            cc.EventMouse.SCROLL
+            EventMouse.SCROLL
           );
           mouseEvent.setButton(event.button);
           mouseEvent.setScrollData(0, event.detail * -120);
@@ -742,7 +747,7 @@ export const inputManager =  {
     if (this._accelCurTime > this._accelInterval) {
       this._accelCurTime -= this._accelInterval;
       EventManager.getInstance().dispatchEvent(
-        new cc.EventAcceleration(this._acceleration)
+        new EventAcceleration(this._acceleration)
       );
     }
     this._accelCurTime += dt;

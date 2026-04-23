@@ -35,10 +35,7 @@ import TextureCache from "../textures/texture-cache";
 import SpriteFrameCache from "./sprite-frame-cache";
 import AnimationCache from "./animation-cache";
 import { RendererConfig } from "../renderer/renderer-config";
-import {
-  BLEND_DST,
-  BLEND_SRC
-} from "../platform/macro/constants";
+import { BLEND_DST, BLEND_SRC } from "../platform/macro/constants";
 
 /**
  * <p>Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -877,8 +874,8 @@ export class Sprite extends EventHelper(Node) {
 
   _createRenderCmd() {
     if (RendererConfig.getInstance().isCanvas)
-      return new cc.Sprite.CanvasRenderCmd(this);
-    else return new cc.Sprite.WebGLRenderCmd(this);
+      return new Sprite.CanvasRenderCmd(this);
+    else return new Sprite.WebGLRenderCmd(this);
   }
 }
 
@@ -889,37 +886,31 @@ export class Sprite extends EventHelper(Node) {
  */
 Sprite.INDEX_NOT_INITIALIZED = -1;
 
-(function () {
-  var manager = (Sprite.LoadManager = function () {
+Sprite.LoadManager = class LoadManager {
+  constructor() {
     this.list = [];
-  });
+  }
 
-  manager.prototype.add = function (source, callback, target) {
+  add(source, callback, target) {
     if (!source || !source.addEventListener) return;
     source.addEventListener("load", callback, target);
-    this.list.push({
-      source: source,
-      listener: callback,
-      target: target
-    });
-  };
-  manager.prototype.once = function (source, callback, target) {
+    this.list.push({ source, listener: callback, target });
+  }
+
+  once(source, callback, target) {
     if (!source || !source.addEventListener) return;
     var tmpCallback = function (event) {
       source.removeEventListener("load", tmpCallback, target);
       callback.call(target, event);
     };
     source.addEventListener("load", tmpCallback, target);
-    this.list.push({
-      source: source,
-      listener: tmpCallback,
-      target: target
-    });
-  };
-  manager.prototype.clear = function () {
+    this.list.push({ source, listener: tmpCallback, target });
+  }
+
+  clear() {
     while (this.list.length > 0) {
       var item = this.list.pop();
       item.source.removeEventListener("load", item.listener, item.target);
     }
-  };
-})();
+  }
+};
