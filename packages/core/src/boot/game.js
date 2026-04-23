@@ -480,8 +480,8 @@ export default class Game extends EventHelper(NewClass) {
       RendererConfig.getInstance().initRenderContext(this._renderContext);
     }
     if (this._renderContext) {
-      cc.renderer = rendererWebGL;
       win.gl = this._renderContext;
+      cc.renderer = rendererWebGL;
       cc.renderer.init();
       cc._drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
       cc.glExt = {};

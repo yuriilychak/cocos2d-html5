@@ -29,6 +29,7 @@ import { Node } from "./node";
 import Matrix4 from "../kazmath/mat4";
 import ShaderCache from "../shaders/CCShaderCache";
 import { TextureAtlas } from "../textures/texture-atlas";
+import { glBlendFunc } from "../shaders/CCGLStateCache";
 
 /**
  * AtlasNode's rendering objects of WebGL
@@ -47,19 +48,20 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     //shader stuff
     this._shaderProgram = ShaderCache.getInstance().programForKey(
-      cc.SHADER_POSITION_TEXTURE_UCOLOR
+      SHADER_POSITION_TEXTURE_UCOLOR
     );
-    this._uniformColor = RendererConfig.getInstance().renderContext.getUniformLocation(
-      this._shaderProgram.getProgram(),
-      "u_color"
-    );
+    this._uniformColor =
+      RendererConfig.getInstance().renderContext.getUniformLocation(
+        this._shaderProgram.getProgram(),
+        "u_color"
+      );
   }
 
   _updateBlendFunc() {
     const node = this._node;
     if (!this._textureAtlas.texture.hasPremultipliedAlpha()) {
-      node._blendFunc.src = cc.SRC_ALPHA;
-      node._blendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
+      node._blendFunc.src = SRC_ALPHA;
+      node._blendFunc.dst = ONE_MINUS_SRC_ALPHA;
     }
   }
 
@@ -82,7 +84,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     this._glProgramState.apply(this._matrix);
 
-    cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+    glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
     if (this._uniformColor && this._colorF32Array) {
       context.uniform4fv(this._uniformColor, this._colorF32Array);
       this._textureAtlas.drawNumberOfQuads(node.quadsToDraw, 0);
@@ -96,8 +98,8 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._colorUnmodified = Color.WHITE;
     node._opacityModifyRGB = true;
 
-    node._blendFunc.src = cc.BLEND_SRC;
-    node._blendFunc.dst = cc.BLEND_DST;
+    node._blendFunc.src = BLEND_SRC;
+    node._blendFunc.dst = BLEND_DST;
 
     const locRealColor = node._realColor;
     this._colorF32Array = new Float32Array([

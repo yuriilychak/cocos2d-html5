@@ -355,6 +355,22 @@ import AnimationCache from "./sprites/animation-cache";
 import { SpriteFrame } from "./sprites/sprite-frame";
 import SpriteFrameCache from "./sprites/sprite-frame-cache";
 import {
+  glInvalidateStateCache,
+  glUseProgram,
+  glDeleteProgram,
+  setBlending,
+  glBlendFunc,
+  glBlendFuncForParticle,
+  glBlendResetToCache,
+  setProjectionMatrixDirty,
+  glBindTexture2D,
+  glBindTexture2DN,
+  glDeleteTexture,
+  glDeleteTextureN,
+  glBindVAO,
+  glEnable
+} from "./shaders/CCGLStateCache";
+import {
   ShaderCache,
   GLProgram,
   setProgramForNode,
@@ -914,6 +930,34 @@ cc.kmGLTranslatef = kmGLTranslatef;
 cc.kmGLRotatef = kmGLRotatef;
 cc.kmGLScalef = kmGLScalef;
 cc.kmGLGetMatrix = kmGLGetMatrix;
+
+// GL State Cache — property initializations
+cc._currentProjectionMatrix = -1;
+cc.MAX_ACTIVETEXTURE = 16;
+cc._currentShaderProgram = -1;
+cc._currentBoundTexture = [
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+];
+cc._blendingSource = -1;
+cc._blendingDest = -1;
+cc._GLServerState = 0;
+if (cc.TEXTURE_ATLAS_USE_VAO) cc._uVAO = 0;
+
+// GL State Cache — function aliases
+cc.glInvalidateStateCache = glInvalidateStateCache;
+cc.glUseProgram = glUseProgram;
+cc.glDeleteProgram = glDeleteProgram;
+cc.setBlending = setBlending;
+cc.glBlendFunc = glBlendFunc;
+cc.glBlendFuncForParticle = glBlendFuncForParticle;
+cc.glBlendResetToCache = glBlendResetToCache;
+cc.setProjectionMatrixDirty = setProjectionMatrixDirty;
+cc.glBindTexture2D = glBindTexture2D;
+cc.glBindTexture2DN = glBindTexture2DN;
+cc.glDeleteTexture = glDeleteTexture;
+cc.glDeleteTextureN = glDeleteTextureN;
+cc.glBindVAO = glBindVAO;
+cc.glEnable = glEnable;
 
 // Shaders
 cc.GLProgram = GLProgram;
