@@ -27,6 +27,9 @@ import { NewClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import { Event, EventCustom, EventTouch } from "./event";
 import Game from "../boot/game";
+import { Director } from "../director/director";
+import { arrayRemoveObject, copyArray } from "../platform/macro/utils";
+import { isNumber } from "../boot/utils";
 import {
   EventListener,
   _EventListenerCustom,
@@ -268,7 +271,7 @@ export default class EventManager {
       }
 
       if (this._inDispatch === 0)
-        cc.arrayRemoveObject(listenerVector, selListener);
+        arrayRemoveObject(listenerVector, selListener);
       else ++i;
     }
   }
@@ -299,7 +302,7 @@ export default class EventManager {
     for (i = 0; i < locToAddedListeners.length; ) {
       listener = locToAddedListeners[i];
       if (listener && listener._getListenerID() === listenerID)
-        cc.arrayRemoveObject(locToAddedListeners, listener);
+        arrayRemoveObject(locToAddedListeners, listener);
       else ++i;
     }
   }
@@ -317,7 +320,7 @@ export default class EventManager {
         this._sortListenersOfFixedPriority(listenerID);
 
       if (dirtyFlag & EventManager.DIRTY_SCENE_GRAPH_PRIORITY) {
-        var rootNode = cc.director.getRunningScene();
+        var rootNode = Director.getInstance().getRunningScene();
         if (rootNode)
           this._sortListenersOfSceneGraphPriority(listenerID, rootNode);
         else locFlagMap[listenerID] = EventManager.DIRTY_SCENE_GRAPH_PRIORITY;
@@ -391,7 +394,7 @@ export default class EventManager {
       for (i = 0; i < sceneGraphPriorityListeners.length; ) {
         selListener = sceneGraphPriorityListeners[i];
         if (!selListener._isRegistered()) {
-          cc.arrayRemoveObject(sceneGraphPriorityListeners, selListener);
+          arrayRemoveObject(sceneGraphPriorityListeners, selListener);
           // if item in toRemove list, remove it from the list
           idx = toRemovedListeners.indexOf(selListener);
           if (idx !== -1) toRemovedListeners.splice(idx, 1);
@@ -403,7 +406,7 @@ export default class EventManager {
       for (i = 0; i < fixedPriorityListeners.length; ) {
         selListener = fixedPriorityListeners[i];
         if (!selListener._isRegistered()) {
-          cc.arrayRemoveObject(fixedPriorityListeners, selListener);
+          arrayRemoveObject(fixedPriorityListeners, selListener);
           // if item in toRemove list, remove it from the list
           idx = toRemovedListeners.indexOf(selListener);
           if (idx !== -1) toRemovedListeners.splice(idx, 1);
@@ -562,7 +565,7 @@ export default class EventManager {
     if (null === oneByOneListeners && null === allAtOnceListeners) return;
 
     var originalTouches = event.getTouches(),
-      mutableTouches = cc.copyArray(originalTouches);
+      mutableTouches = copyArray(originalTouches);
     var oneByOneArgsObj = {
       event: event,
       needsMutableSet: oneByOneListeners && allAtOnceListeners,
@@ -637,7 +640,7 @@ export default class EventManager {
   _dissociateNodeAndEventListener(node, listener) {
     var listeners = this._nodeListenersMap[node.__instanceId];
     if (listeners) {
-      cc.arrayRemoveObject(listeners, listener);
+      arrayRemoveObject(listeners, listener);
       if (listeners.length === 0)
         delete this._nodeListenersMap[node.__instanceId];
     }
@@ -784,10 +787,7 @@ export default class EventManager {
   addListener(listener, nodeOrPriority) {
     assert(listener && nodeOrPriority, _LogInfos.eventManager_addListener_2);
     if (!(listener instanceof EventListener)) {
-      assert(
-        !cc.isNumber(nodeOrPriority),
-        _LogInfos.eventManager_addListener_3
-      );
+      assert(!isNumber(nodeOrPriority), _LogInfos.eventManager_addListener_3);
       listener = EventListener.create(listener);
     } else {
       if (listener._isRegistered()) {
@@ -798,7 +798,7 @@ export default class EventManager {
 
     if (!listener.checkAvailable()) return;
 
-    if (cc.isNumber(nodeOrPriority)) {
+    if (isNumber(nodeOrPriority)) {
       if (nodeOrPriority === 0) {
         log(_LogInfos.eventManager_addListener);
         return;
@@ -881,7 +881,7 @@ export default class EventManager {
       for (var i = 0, len = locToAddedListeners.length; i < len; i++) {
         var selListener = locToAddedListeners[i];
         if (selListener === listener) {
-          cc.arrayRemoveObject(locToAddedListeners, selListener);
+          arrayRemoveObject(locToAddedListeners, selListener);
           selListener._setRegistered(false);
           break;
         }
@@ -907,8 +907,7 @@ export default class EventManager {
           selListener._setSceneGraphPriority(null); // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
         }
 
-        if (this._inDispatch === 0)
-          cc.arrayRemoveObject(listeners, selListener);
+        if (this._inDispatch === 0) arrayRemoveObject(listeners, selListener);
         return true;
       }
     }
@@ -930,8 +929,7 @@ export default class EventManager {
           selListener._setSceneGraphPriority(null); // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
         }
 
-        if (this._inDispatch === 0)
-          cc.arrayRemoveObject(listeners, selListener);
+        if (this._inDispatch === 0) arrayRemoveObject(listeners, selListener);
         else this._toRemovedListeners.push(selListener);
         return true;
       }
@@ -950,11 +948,11 @@ export default class EventManager {
       // Ensure the node is removed from these immediately also.
       // Don't want any dangling pointers or the possibility of dealing with deleted objects..
       delete _t._nodePriorityMap[listenerType.__instanceId];
-      cc.arrayRemoveObject(_t._dirtyNodes, listenerType);
+      arrayRemoveObject(_t._dirtyNodes, listenerType);
       var listeners = _t._nodeListenersMap[listenerType.__instanceId],
         i;
       if (listeners) {
-        var listenersCopy = cc.copyArray(listeners);
+        var listenersCopy = copyArray(listeners);
         for (i = 0; i < listenersCopy.length; i++)
           _t.removeListener(listenersCopy[i]);
         listenersCopy.length = 0;

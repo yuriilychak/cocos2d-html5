@@ -113,6 +113,16 @@ var _scissorRect = null;
  * @name EGLView
  */
 export class EGLView extends NewClass {
+  static _instance = null;
+
+  static getInstance() {
+    if (!EGLView._instance) {
+      EGLView._instance = new EGLView();
+      EGLView._instance.initialize();
+    }
+    return EGLView._instance;
+  }
+
   /**
    * Constructor of EGLView
    */
@@ -1029,16 +1039,3 @@ export class EGLView extends NewClass {
     }
   }
 }
-
-/**
- * @function
- * @return {EGLView}
- * @private
- */
-EGLView._getInstance = function () {
-  if (!this._instance) {
-    this._instance = this._instance || new EGLView();
-    this._instance.initialize();
-  }
-  return this._instance;
-};

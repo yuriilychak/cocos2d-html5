@@ -236,7 +236,7 @@ export default class Game extends EventHelper(NewClass) {
 
       this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
 
-      cc.view = EGLView._getInstance();
+      cc.view = EGLView.getInstance();
       cc.director = Director.getInstance();
       if (cc.director.setOpenGLView) cc.director.setOpenGLView(cc.view);
       cc.winSize = cc.director.getWinSize();

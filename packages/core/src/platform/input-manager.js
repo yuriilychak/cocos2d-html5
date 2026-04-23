@@ -65,7 +65,7 @@ export const UIInterfaceOrientationPortrait = 0;
  * </p>
  * @name inputManager
  */
-export const inputManager =  {
+export const inputManager = {
   TOUCH_TIMEOUT: 5000,
 
   _mousePressed: false,
@@ -400,7 +400,10 @@ export const inputManager =  {
       touch_event = event.changedTouches[i];
       if (touch_event) {
         var location;
-        if (Sys.getInstance().BROWSER_TYPE_FIREFOX === Sys.getInstance().browserType)
+        if (
+          Sys.getInstance().BROWSER_TYPE_FIREFOX ===
+          Sys.getInstance().browserType
+        )
           location = locView.convertToLocationInView(
             touch_event.pageX,
             touch_event.pageY,
@@ -437,7 +440,7 @@ export const inputManager =  {
   registerSystemEvent: function (element) {
     if (this._isRegisterEvent) return;
 
-    var locView = (this._glView = EGLView._getInstance());
+    var locView = (this._glView = EGLView.getInstance());
     var selfPointer = this;
     var supportMouse = "mouse" in Sys.getInstance().capabilities,
       supportTouches = "touches" in Sys.getInstance().capabilities;
