@@ -316,7 +316,7 @@
 
         end() {
             const node = this._node;
-            cc.renderer._renderingToBuffer(node.__instanceId);
+            cc.rendererConfig.renderer._renderingToBuffer(node.__instanceId);
 
             const gl = cc.rendererConfig.renderContext;
             const director = cc.director;

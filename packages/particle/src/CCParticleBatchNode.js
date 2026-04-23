@@ -159,7 +159,7 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
         }
 
         cmd.visit(parentCmd);
-        cc.renderer.pushRenderCommand(cmd);
+        cc.rendererConfig.renderer.pushRenderCommand(cmd);
         cmd._dirtyFlag = 0;
     }
 

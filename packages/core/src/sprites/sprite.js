@@ -35,6 +35,10 @@ import TextureCache from "../textures/texture-cache";
 import SpriteFrameCache from "./sprite-frame-cache";
 import AnimationCache from "./animation-cache";
 import { RendererConfig } from "../renderer/renderer-config";
+import {
+  BLEND_DST,
+  BLEND_SRC
+} from "../platform/macro/constants";
 
 /**
  * <p>Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -141,7 +145,7 @@ export class Sprite extends EventHelper(Node) {
     self._shouldBeHidden = false;
     self._offsetPosition = new Point(0, 0);
     self._unflippedOffsetPositionFromCenter = new Point(0, 0);
-    self._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
+    self._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
     self._rect = new Rect(0, 0, 0, 0);
 
     self._softInit(fileName, rect, rotated);
@@ -489,8 +493,8 @@ export class Sprite extends EventHelper(Node) {
     super.init();
     _t.dirty = _t._recursiveDirty = false;
 
-    _t._blendFunc.src = cc.BLEND_SRC;
-    _t._blendFunc.dst = cc.BLEND_DST;
+    _t._blendFunc.src = BLEND_SRC;
+    _t._blendFunc.dst = BLEND_DST;
 
     _t.texture = null;
     _t._flippedX = _t._flippedY = false;
@@ -595,8 +599,8 @@ export class Sprite extends EventHelper(Node) {
     _t.dirty = false;
     _t._opacityModifyRGB = true;
 
-    _t._blendFunc.src = cc.BLEND_SRC;
-    _t._blendFunc.dst = cc.BLEND_DST;
+    _t._blendFunc.src = BLEND_SRC;
+    _t._blendFunc.dst = BLEND_DST;
 
     _t._flippedX = _t._flippedY = false;
 

@@ -14,6 +14,7 @@ export class RendererConfig {
   _renderType = Game.RENDER_TYPE_CANVAS;
   _supportRender = false;
   _renderContext = null;
+  _renderer = null;
 
   get renderContext() {
     return this._renderContext;
@@ -21,6 +22,14 @@ export class RendererConfig {
 
   initRenderContext(context) {
     this._renderContext = context;
+  }
+
+  get renderer() {
+    return this._renderer;
+  }
+
+  setRenderer(renderer) {
+    this._renderer = renderer;
   }
 
   get isWebGL() {

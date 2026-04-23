@@ -187,7 +187,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             return;
         }
 
-        var renderer = cc.renderer;
+        var renderer = cc.rendererConfig.renderer;
         cmd.visit(parentCmd);
 
         if (this._clippingToBounds) {

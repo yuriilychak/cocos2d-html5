@@ -127,7 +127,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
     }
 
     onExit() {
-        cc.renderer._removeCache(this.__instanceId);
+        cc.rendererConfig.renderer._removeCache(this.__instanceId);
         super.onExit();
     }
 
@@ -143,7 +143,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         this._adaptRenderers();
         this._doLayout();
 
-        var renderer = cc.renderer;
+        var renderer = cc.rendererConfig.renderer;
         cmd.visit(parentCmd);
         
         renderer.pushRenderCommand(cmd);

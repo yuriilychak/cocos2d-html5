@@ -25,6 +25,12 @@
 import { RendererConfig } from "./renderer-config";
 import { Color } from "../platform/types/color";
 import Sys from "../boot/sys";
+import {
+  BATCH_VERTEX_COUNT,
+  VERTEX_ATTRIB_COLOR,
+  VERTEX_ATTRIB_POSITION,
+  VERTEX_ATTRIB_TEX_COORDS
+} from "../platform/macro/constants";
 
 // Internal variables
 // Batching general informations
@@ -138,7 +144,7 @@ var rendererWebGL = {
 
     this.mat4Identity = new cc.math.Matrix4();
     this.mat4Identity.identity();
-    initQuadBuffer(cc.BATCH_VERTEX_COUNT);
+    initQuadBuffer(BATCH_VERTEX_COUNT);
     if (Sys.getInstance().os === Sys.getInstance().OS_IOS) {
       _IS_IOS = true;
     }
@@ -405,11 +411,11 @@ var rendererWebGL = {
       gl.bufferData(gl.ARRAY_BUFFER, view, gl.DYNAMIC_DRAW);
     }
 
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_POSITION,
+      VERTEX_ATTRIB_POSITION,
       3,
       gl.FLOAT,
       false,
@@ -417,7 +423,7 @@ var rendererWebGL = {
       0
     );
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_COLOR,
+      VERTEX_ATTRIB_COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,
@@ -425,7 +431,7 @@ var rendererWebGL = {
       12
     );
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_TEX_COORDS,
+      VERTEX_ATTRIB_TEX_COORDS,
       2,
       gl.FLOAT,
       false,

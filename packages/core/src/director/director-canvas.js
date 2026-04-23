@@ -1,6 +1,7 @@
 import { DirectorRenderer } from './director-renderer';
 import { Point } from '../cocoa/geometry/point';
 import EventManager from '../event-manager/event-manager';
+import { RendererConfig } from '../renderer/renderer-config';
 
 export class DirectorCanvasRenderer extends DirectorRenderer {
     setProjection(projection) {
@@ -9,8 +10,9 @@ export class DirectorCanvasRenderer extends DirectorRenderer {
     }
 
     setClearColor(clearColor) {
-        cc.renderer._clearColor = clearColor;
-        cc.renderer._clearFillStyle = 'rgb(' + clearColor.r + ',' + clearColor.g + ',' + clearColor.b + ')';
+        const renderer = RendererConfig.getInstance().renderer;
+        renderer._clearColor = clearColor;
+        renderer._clearFillStyle = 'rgb(' + clearColor.r + ',' + clearColor.g + ',' + clearColor.b + ')';
     }
 
     setOpenGLView(openGLView) {

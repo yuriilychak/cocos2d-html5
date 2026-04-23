@@ -24,6 +24,11 @@
 
 import { RendererConfig } from "../../renderer/renderer-config";
 import LayerWebGLRenderer from "./layer-webgl-renderer";
+import {
+  SHADER_POSITION_COLOR,
+  VERTEX_ATTRIB_COLOR,
+  VERTEX_ATTRIB_POSITION
+} from "../../platform/macro/constants";
 
 /**
  * LayerColor's WebGL render command
@@ -42,7 +47,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     this._vertexBuffer = null;
 
     this._shaderProgram = cc.shaderCache.programForKey(
-      cc.SHADER_POSITION_COLOR
+      SHADER_POSITION_COLOR
     );
   }
 
@@ -119,11 +124,11 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
 
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_POSITION,
+      VERTEX_ATTRIB_POSITION,
       3,
       gl.FLOAT,
       false,
@@ -131,7 +136,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
       0
     );
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_COLOR,
+      VERTEX_ATTRIB_COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,

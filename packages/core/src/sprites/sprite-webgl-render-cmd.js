@@ -26,6 +26,13 @@ import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-r
 import { Rect } from "../cocoa/geometry/rect";
 import { log, error, _LogInfos } from "../boot/debugger";
 import ShaderCache from '../shaders/CCShaderCache';
+import { RendererConfig } from '../renderer/renderer-config';
+import {
+  BLEND_DST,
+  ONE,
+  SHADER_SPRITE_POSITION_TEXTURECOLOR,
+  SRC_ALPHA
+} from "../platform/macro/constants";
 
 //Sprite's WebGL render command
 export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -44,7 +51,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._recursiveDirty = false;
 
     this._shaderProgram = ShaderCache.getInstance().programForKey(
-      cc.SHADER_SPRITE_POSITION_TEXTURECOLOR
+      SHADER_SPRITE_POSITION_TEXTURECOLOR
     );
   }
 
@@ -125,7 +132,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this.dispatchEvent("load");
 
     // Force refresh the render command list
-    cc.renderer.childrenOrderDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
   }
 
   _setTextureCoords(rect, needConvert) {
@@ -222,13 +229,13 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     const node = this._node,
       blendFunc = node._blendFunc;
     if (!node._texture || !node._texture.hasPremultipliedAlpha()) {
-      if (blendFunc.src === cc.ONE && blendFunc.dst === cc.BLEND_DST) {
-        blendFunc.src = cc.SRC_ALPHA;
+      if (blendFunc.src === ONE && blendFunc.dst === BLEND_DST) {
+        blendFunc.src = SRC_ALPHA;
       }
       node.opacityModifyRGB = false;
     } else {
-      if (blendFunc.src === cc.SRC_ALPHA && blendFunc.dst === cc.BLEND_DST) {
-        blendFunc.src = cc.ONE;
+      if (blendFunc.src === SRC_ALPHA && blendFunc.dst === BLEND_DST) {
+        blendFunc.src = ONE;
       }
       node.opacityModifyRGB = true;
     }
@@ -242,7 +249,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       this._updateBlendFunc();
 
       if (node._textureLoaded) {
-        cc.renderer.childrenOrderDirty = true;
+        RendererConfig.getInstance().renderer.childrenOrderDirty = true;
       }
     }
   }

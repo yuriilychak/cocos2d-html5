@@ -83,14 +83,14 @@
                 this._rendererRestoreCmd = new cc.CustomRenderCmd(this, this._onRenderRestoreCmd);
             }
 
-            cc.renderer.pushRenderCommand(this._rendererSaveCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._rendererSaveCmd);
             node._clippingStencil.visit(this);
 
-            cc.renderer.pushRenderCommand(this._rendererClipCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._rendererClipCmd);
         }
 
         postStencilVisit() {
-            cc.renderer.pushRenderCommand(this._rendererRestoreCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._rendererRestoreCmd);
         }
     };
 

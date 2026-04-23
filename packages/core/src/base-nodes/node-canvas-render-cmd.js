@@ -25,6 +25,13 @@
 import { Point } from '../cocoa/geometry/point';
 import { Rect } from '../cocoa/geometry/rect';
 import { Color } from '../platform/types/color';
+import { RendererConfig } from '../renderer/renderer-config';
+import {
+  ONE,
+  ONE_MINUS_SRC_ALPHA,
+  SRC_ALPHA,
+  ZERO
+} from "../platform/macro/constants";
 
 //---------------------- Customer render cmd --------------------
 export class CustomRenderCmd {
@@ -166,7 +173,7 @@ export class RenderCmd {
 
     setDirtyFlag(dirtyFlag) {
         if (this._dirtyFlag === 0 && dirtyFlag !== 0)
-            cc.renderer.pushDirtyNode(this);
+            RendererConfig.getInstance().renderer.pushDirtyNode(this);
         this._dirtyFlag |= dirtyFlag;
     }
 
@@ -330,7 +337,7 @@ export class RenderCmd {
     }
 
     visit(parentCmd) {
-        const node = this._node, renderer = cc.renderer;
+        const node = this._node, renderer = RendererConfig.getInstance().renderer;
 
         parentCmd = parentCmd || this.getParentRenderCmd();
         if (parentCmd)
@@ -649,11 +656,11 @@ CanvasRenderCmd._getCompositeOperationByBlendFunc = function (blendFunc) {
     if (!blendFunc)
         return "source-over";
     else {
-        if (( blendFunc.src === cc.SRC_ALPHA && blendFunc.dst === cc.ONE) || (blendFunc.src === cc.ONE && blendFunc.dst === cc.ONE))
+        if (( blendFunc.src === SRC_ALPHA && blendFunc.dst === ONE) || (blendFunc.src === ONE && blendFunc.dst === ONE))
             return "lighter";
-        else if (blendFunc.src === cc.ZERO && blendFunc.dst === cc.SRC_ALPHA)
+        else if (blendFunc.src === ZERO && blendFunc.dst === SRC_ALPHA)
             return "destination-in";
-        else if (blendFunc.src === cc.ZERO && blendFunc.dst === cc.ONE_MINUS_SRC_ALPHA)
+        else if (blendFunc.src === ZERO && blendFunc.dst === ONE_MINUS_SRC_ALPHA)
             return "destination-out";
         else
             return "source-over";

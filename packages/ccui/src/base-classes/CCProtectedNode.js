@@ -52,7 +52,7 @@ cc.ProtectedNode = class ProtectedNode extends cc.Node {
         return;
       }
 
-      var renderer = cc.renderer;
+      var renderer = cc.rendererConfig.renderer;
       var i,
         children = this._children,
         len = children.length,

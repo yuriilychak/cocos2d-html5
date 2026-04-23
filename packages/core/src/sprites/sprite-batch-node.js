@@ -27,6 +27,10 @@
 import { Node } from "../base-nodes/node";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
+import {
+  BLEND_DST,
+  BLEND_SRC
+} from "../platform/macro/constants";
 
 /**
  * <p>
@@ -62,7 +66,7 @@ export class SpriteBatchNode extends Node {
     // all descendants: chlidren, gran children, etc...
     this._texture = null;
     this._className = "SpriteBatchNode";
-    this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
+    this._blendFunc = new cc.BlendFunc(BLEND_SRC, BLEND_DST);
 
     var texture2D;
     if (cc.isString(fileImage)) {

@@ -217,7 +217,7 @@ export class Director extends NewClass {
   }
 
   drawScene() {
-    var renderer = cc.renderer;
+    var renderer = RendererConfig.getInstance().renderer;
 
     this.calculateDeltaTime();
 
@@ -232,8 +232,8 @@ export class Director extends NewClass {
 
     if (this._runningScene) {
       if (renderer.childrenOrderDirty) {
-        cc.renderer.clearRenderCommands();
-        cc.renderer.assignedZ = 0;
+        RendererConfig.getInstance().renderer.clearRenderCommands();
+        RendererConfig.getInstance().renderer.assignedZ = 0;
         this._runningScene._renderCmd._curLevel = 0;
         this._runningScene.visit();
         renderer.resetFlag();
@@ -465,7 +465,7 @@ export class Director extends NewClass {
     }
 
     this._runningScene = this._nextScene;
-    cc.renderer.childrenOrderDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
 
     this._nextScene = null;
     if (!runningIsTransition && this._runningScene !== null) {
@@ -477,7 +477,7 @@ export class Director extends NewClass {
   }
 
   setNotificationNode(node) {
-    cc.renderer.childrenOrderDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
     if (this._notificationNode) {
       this._notificationNode._performRecursive(
         Node._stateCallbackType.onExitTransitionDidStart

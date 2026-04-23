@@ -2,6 +2,11 @@ import { RendererConfig } from "../renderer/renderer-config";
 import { Size } from "../cocoa/geometry/size";
 import Game from "../boot/game";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import {
+  SHADER_POSITION_TEXTURE,
+  VERTEX_ATTRIB_POSITION,
+  VERTEX_ATTRIB_TEX_COORDS
+} from "../platform/macro/constants";
 
 export default class WebGLTextureRenderer {
   constructor(texture) {
@@ -57,7 +62,7 @@ export default class WebGLTextureRenderer {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
     this._shaderProgram = cc.shaderCache.programForKey(
-      cc.SHADER_POSITION_TEXTURE
+      SHADER_POSITION_TEXTURE
     );
     cc.glBindTexture2D(null);
     if (premultiplied) gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
@@ -223,7 +228,7 @@ export default class WebGLTextureRenderer {
     this._hasPremultipliedAlpha = false;
     this._hasMipmaps = false;
     this._shaderProgram = cc.shaderCache.programForKey(
-      cc.SHADER_POSITION_TEXTURE
+      SHADER_POSITION_TEXTURE
     );
 
     t._textureLoaded = true;
@@ -268,10 +273,10 @@ export default class WebGLTextureRenderer {
 
     cc.glBindTexture2D(t);
 
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_POSITION,
+      VERTEX_ATTRIB_POSITION,
       2,
       gl.FLOAT,
       false,
@@ -279,7 +284,7 @@ export default class WebGLTextureRenderer {
       vertices
     );
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_TEX_COORDS,
+      VERTEX_ATTRIB_TEX_COORDS,
       2,
       gl.FLOAT,
       false,
@@ -320,10 +325,10 @@ export default class WebGLTextureRenderer {
     cc.glBindTexture2D(t);
 
     var gl = RendererConfig.getInstance().renderContext;
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_POSITION,
+      VERTEX_ATTRIB_POSITION,
       2,
       gl.FLOAT,
       false,
@@ -331,7 +336,7 @@ export default class WebGLTextureRenderer {
       vertices
     );
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_TEX_COORDS,
+      VERTEX_ATTRIB_TEX_COORDS,
       2,
       gl.FLOAT,
       false,

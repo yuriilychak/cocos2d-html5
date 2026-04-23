@@ -9,7 +9,7 @@
 
         rendering(ctx) {
             var currentID = this._node.__instanceId;
-            var i, locCmds = cc.renderer._cacheToCanvasCmds[currentID], len,
+            var i, locCmds = cc.rendererConfig.renderer._cacheToCanvasCmds[currentID], len,
                 scaleX = cc.view.getScaleX(),
                 scaleY = cc.view.getScaleY();
             var context = ctx || cc.rendererConfig.renderContext;

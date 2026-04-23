@@ -690,7 +690,7 @@ export class LabelTTF extends Sprite {
       (!this._string || this._string === "") &&
       this._string !== this._originalText
     )
-      cc.renderer.childrenOrderDirty = true;
+      RendererConfig.getInstance().renderer.childrenOrderDirty = true;
     this._string = this._originalText;
   }
   /**

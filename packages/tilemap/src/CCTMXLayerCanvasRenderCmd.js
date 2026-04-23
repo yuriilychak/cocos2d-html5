@@ -30,7 +30,7 @@
         }
 
         visit(parentCmd) {
-            const node = this._node, renderer = cc.renderer;
+            const node = this._node, renderer = cc.rendererConfig.renderer;
 
             parentCmd = parentCmd || this.getParentRenderCmd();
             if (parentCmd) {

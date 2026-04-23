@@ -1105,7 +1105,7 @@ cc.SplitCols = class SplitCols extends cc.TiledGrid3DAction {
 
       this.setTile(locPos, coords);
     }
-    cc.renderer.childrenOrderDirty = true;
+    cc.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   /**

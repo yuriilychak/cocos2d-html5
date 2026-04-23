@@ -1,4 +1,7 @@
 import { MAX_POOL_SIZE } from './constants';
+import {
+  REPEAT_FOREVER
+} from "../platform/macro/constants";
 
 export class CallbackTimer {
     static _pool = [];
@@ -29,7 +32,7 @@ export class CallbackTimer {
         this._delay = delay;
         this._useDelay = (this._delay > 0);
         this._repeat = repeat;
-        this._runForever = (this._repeat === cc.REPEAT_FOREVER);
+        this._runForever = (this._repeat === REPEAT_FOREVER);
         return true;
     }
 

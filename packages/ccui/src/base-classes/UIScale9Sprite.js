@@ -635,7 +635,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
                 }
                 self._textureLoaded = true;
                 self._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.contentDirty);
-                cc.renderer.childrenOrderDirty = true;
+                cc.rendererConfig.renderer.childrenOrderDirty = true;
             };
             self._textureLoaded = spriteFrame.textureLoaded();
             if (self._textureLoaded) {

@@ -28,6 +28,11 @@ import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import Matrix4 from "../kazmath/mat4";
 import { RendererConfig } from "../renderer/renderer-config";
+import {
+  SHADER_POSITION_COLOR,
+  VERTEX_ATTRIB_COLOR,
+  VERTEX_ATTRIB_POSITION
+} from "../platform/macro/constants";
 
 /**
  * Layer's WebGL render command
@@ -62,7 +67,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     this._vertexBuffer = null;
 
     this._shaderProgram = cc.shaderCache.programForKey(
-      cc.SHADER_POSITION_COLOR
+      SHADER_POSITION_COLOR
     );
   }
 
@@ -139,11 +144,11 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
 
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_POSITION,
+      VERTEX_ATTRIB_POSITION,
       3,
       gl.FLOAT,
       false,
@@ -151,7 +156,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
       0
     );
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_COLOR,
+      VERTEX_ATTRIB_COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,
@@ -338,11 +343,11 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
 
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_POSITION,
+      VERTEX_ATTRIB_POSITION,
       3,
       gl.FLOAT,
       false,
@@ -350,7 +355,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
       0
     );
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_COLOR,
+      VERTEX_ATTRIB_COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,

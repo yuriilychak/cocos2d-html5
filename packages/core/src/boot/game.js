@@ -481,15 +481,15 @@ export default class Game extends EventHelper(NewClass) {
     }
     if (this._renderContext) {
       win.gl = this._renderContext;
-      cc.renderer = rendererWebGL;
-      cc.renderer.init();
+      RendererConfig.getInstance().setRenderer(rendererWebGL);
+      RendererConfig.getInstance().renderer.init();
       cc._drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
       cc.glExt = {};
       cc.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
       cc.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
     } else {
       RendererConfig.getInstance().setRenderType(Game.RENDER_TYPE_CANVAS);
-      cc.renderer = rendererCanvas;
+      RendererConfig.getInstance().setRenderer(rendererCanvas);
       this._renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")
       );

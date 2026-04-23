@@ -28,6 +28,9 @@ import Loader from '../boot/loader';
 import Path from '../boot/path';
 import { log, assert, _LogInfos } from '../boot/debugger';
 import SpriteFrameCache from './sprite-frame-cache';
+import {
+  REPEAT_FOREVER
+} from "../platform/macro/constants";
 
 /**
  * <p>
@@ -190,7 +193,7 @@ export default class AnimationCache {
 
       var isLoop = animationDict["loop"];
       var loopsTemp = parseInt(animationDict["loops"]);
-      var loops = isLoop ? cc.REPEAT_FOREVER : isNaN(loopsTemp) ? 1 : loopsTemp;
+      var loops = isLoop ? REPEAT_FOREVER : isNaN(loopsTemp) ? 1 : loopsTemp;
       var restoreOriginalFrame =
         animationDict["restoreOriginalFrame"] &&
         animationDict["restoreOriginalFrame"] == true

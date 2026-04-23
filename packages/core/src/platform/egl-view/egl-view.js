@@ -40,6 +40,11 @@ import { ResolutionPolicy } from "./resolution-policy";
 import { DENSITYDPI_HIGH } from "./constants";
 import { log, _LogInfos } from "../../boot/debugger";
 import { RendererConfig } from "../../renderer/renderer-config";
+import {
+  ORIENTATION_AUTO,
+  ORIENTATION_LANDSCAPE,
+  ORIENTATION_PORTRAIT
+} from "../macro/constants";
 
 var __sys = Sys.getInstance();
 
@@ -345,7 +350,7 @@ export class EGLView extends NewClass {
    * @param {Number} orientation - Possible values: ORIENTATION_LANDSCAPE | ORIENTATION_PORTRAIT | ORIENTATION_AUTO
    */
   setOrientation(orientation) {
-    orientation = orientation & cc.ORIENTATION_AUTO;
+    orientation = orientation & ORIENTATION_AUTO;
     if (orientation && this._orientation !== orientation) {
       this._orientation = orientation;
       if (this._resolutionPolicy) {
@@ -384,8 +389,8 @@ export class EGLView extends NewClass {
 
     if (
       !__sys.isMobile ||
-      (isLandscape && this._orientation & cc.ORIENTATION_LANDSCAPE) ||
-      (!isLandscape && this._orientation & cc.ORIENTATION_PORTRAIT)
+      (isLandscape && this._orientation & ORIENTATION_LANDSCAPE) ||
+      (!isLandscape && this._orientation & ORIENTATION_PORTRAIT)
     ) {
       locFrameSize.width = w;
       locFrameSize.height = h;
@@ -545,7 +550,9 @@ export class EGLView extends NewClass {
    * @return {Boolean}
    */
   isOpenGLReady() {
-    return Game.getInstance().canvas && RendererConfig.getInstance().renderContext;
+    return (
+      Game.getInstance().canvas && RendererConfig.getInstance().renderContext
+    );
   }
 
   /*
@@ -765,7 +772,8 @@ export class EGLView extends NewClass {
       vb.y = -vp.y / this._scaleY;
       vb.width = cc._canvas.width / this._scaleX;
       vb.height = cc._canvas.height / this._scaleY;
-      RendererConfig.getInstance().renderContext.setOffset && RendererConfig.getInstance().renderContext.setOffset(vp.x, -vp.y);
+      RendererConfig.getInstance().renderContext.setOffset &&
+        RendererConfig.getInstance().renderContext.setOffset(vp.x, -vp.y);
     }
 
     // reset director's member variables to fit visible rect
@@ -780,7 +788,7 @@ export class EGLView extends NewClass {
       // reset director's member variables to fit visible rect
       director.setGLDefaultValues();
     } else if (RendererConfig.getInstance().isCanvas) {
-      cc.renderer._allNeedDraw = true;
+      RendererConfig.getInstance().renderer._allNeedDraw = true;
     }
 
     this._originalScaleX = this._scaleX;
@@ -895,7 +903,9 @@ export class EGLView extends NewClass {
    * @return {Boolean}
    */
   isScissorEnabled() {
-    return RendererConfig.getInstance().renderContext.isEnabled(gl.SCISSOR_TEST);
+    return RendererConfig.getInstance().renderContext.isEnabled(
+      gl.SCISSOR_TEST
+    );
   }
 
   /**

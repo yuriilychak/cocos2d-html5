@@ -19,6 +19,10 @@ import {
 } from "./constants";
 import EventManager from "../event-manager/event-manager";
 import { log, _LogInfos } from "../boot/debugger";
+import {
+  BLEND_DST,
+  BLEND_SRC
+} from "../platform/macro/constants";
 
 /**
  * OpenGL projection protocol
@@ -120,15 +124,15 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     director._projection = projection;
     EventManager.getInstance().dispatchEvent(director._eventProjectionChanged);
     cc.setProjectionMatrixDirty();
-    cc.renderer.childrenOrderDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
   }
 
   setDepthTest(on) {
-    cc.renderer.setDepthTest(on);
+    RendererConfig.getInstance().renderer.setDepthTest(on);
   }
 
   setClearColor(clearColor) {
-    cc.renderer._clearColor = clearColor;
+    RendererConfig.getInstance().renderer._clearColor = clearColor;
   }
 
   setOpenGLView(openGLView) {
@@ -172,7 +176,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   setAlphaBlending(on) {
-    if (on) cc.glBlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
+    if (on) cc.glBlendFunc(BLEND_SRC, BLEND_DST);
     else
       cc.glBlendFunc(
         RendererConfig.getInstance().renderContext.ONE,

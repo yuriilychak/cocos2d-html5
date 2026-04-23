@@ -1640,7 +1640,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
         this._nodes.length = 0;
     }
     _findLayout() {
-        cc.renderer.childrenOrderDirty = true;
+        cc.rendererConfig.renderer.childrenOrderDirty = true;
         var layout = this._parent;
         while (layout) {
             if (layout._doLayout) {

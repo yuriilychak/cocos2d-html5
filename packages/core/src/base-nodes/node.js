@@ -34,6 +34,9 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { RendererConfig } from "../renderer/renderer-config";
+import {
+  REPEAT_FOREVER
+} from "../platform/macro/constants";
 
 /**
  * Default Node tag
@@ -877,7 +880,7 @@ export class Node extends NewClass {
       this._visible = visible;
       //if(visible)
       this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-      cc.renderer.childrenOrderDirty = true;
+      RendererConfig.getInstance().renderer.childrenOrderDirty = true;
     }
   }
 
@@ -1408,7 +1411,7 @@ export class Node extends NewClass {
     if (this._children.indexOf(child) > -1) this._detachChild(child, cleanup);
 
     //this._renderCmd.setDirtyFlag(dirtyFlags.visibleDirty);
-    cc.renderer.childrenOrderDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
   }
 
   /**
@@ -1465,7 +1468,7 @@ export class Node extends NewClass {
         }
       }
       this._children.length = 0;
-      cc.renderer.childrenOrderDirty = true;
+      RendererConfig.getInstance().renderer.childrenOrderDirty = true;
     }
   }
 
@@ -1488,7 +1491,7 @@ export class Node extends NewClass {
   }
 
   _insertChild(child, z) {
-    cc.renderer.childrenOrderDirty = this._reorderChildDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = this._reorderChildDirty = true;
     this._children.push(child);
     child._setLocalZOrder(z);
   }
@@ -1509,7 +1512,7 @@ export class Node extends NewClass {
       log(_LogInfos.Node_reorderChild_2);
       return;
     }
-    cc.renderer.childrenOrderDirty = this._reorderChildDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = this._reorderChildDirty = true;
     child.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
     child._setLocalZOrder(zOrder);
@@ -1817,27 +1820,27 @@ export class Node extends NewClass {
       if (len === 1) {
         //callback
         interval = 0;
-        repeat = cc.REPEAT_FOREVER;
+        repeat = REPEAT_FOREVER;
         delay = 0;
         key = this.__instanceId;
       } else if (len === 2) {
         if (typeof interval === "number") {
           //callback, interval
-          repeat = cc.REPEAT_FOREVER;
+          repeat = REPEAT_FOREVER;
           delay = 0;
           key = this.__instanceId;
         } else {
           //callback, key
           key = interval;
           interval = 0;
-          repeat = cc.REPEAT_FOREVER;
+          repeat = REPEAT_FOREVER;
           delay = 0;
         }
       } else if (len === 3) {
         if (typeof repeat === "string") {
           //callback, interval, key
           key = repeat;
-          repeat = cc.REPEAT_FOREVER;
+          repeat = REPEAT_FOREVER;
         } else {
           //callback, interval, repeat
           key = this.__instanceId;
@@ -1852,10 +1855,10 @@ export class Node extends NewClass {
       //selector, interval, repeat, delay
       if (len === 1) {
         interval = 0;
-        repeat = cc.REPEAT_FOREVER;
+        repeat = REPEAT_FOREVER;
         delay = 0;
       } else if (len === 2) {
-        repeat = cc.REPEAT_FOREVER;
+        repeat = REPEAT_FOREVER;
         delay = 0;
       }
     }
@@ -1864,7 +1867,7 @@ export class Node extends NewClass {
     assert(interval >= 0, _LogInfos.Node_schedule_2);
 
     interval = interval || 0;
-    repeat = isNaN(repeat) ? cc.REPEAT_FOREVER : repeat;
+    repeat = isNaN(repeat) ? REPEAT_FOREVER : repeat;
     delay = delay || 0;
 
     this.scheduler.schedule(
@@ -2191,7 +2194,7 @@ export class Node extends NewClass {
       return;
     }
 
-    var renderer = cc.renderer;
+    var renderer = RendererConfig.getInstance().renderer;
     cmd.visit(parentCmd);
 
     var i,

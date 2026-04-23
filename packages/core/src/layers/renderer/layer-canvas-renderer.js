@@ -26,6 +26,7 @@ import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-ca
 import { Node } from "../../base-nodes/node";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
+import { RendererConfig } from "../../renderer/renderer-config";
 
 /**
  * Layer's Canvas render command
@@ -96,7 +97,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
   bake() {
     if (!this._isBaked) {
       this._needDraw = true;
-      cc.renderer.childrenOrderDirty = true;
+      RendererConfig.getInstance().renderer.childrenOrderDirty = true;
       this._isBaked = this._cacheDirty = true;
       if (this._updateCache === 0) this._updateCache = 2;
 
@@ -113,7 +114,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
 
   unbake() {
     if (this._isBaked) {
-      cc.renderer.childrenOrderDirty = true;
+      RendererConfig.getInstance().renderer.childrenOrderDirty = true;
       this._needDraw = false;
       this._isBaked = false;
       this._cacheDirty = true;
@@ -153,11 +154,12 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
           ctx.canvas.height - boundingBox.height + boundingBox.y
         );
         node.sortAllChildren();
-        cc.renderer._turnToCacheMode(this.__instanceId);
+        const _r = RendererConfig.getInstance().renderer;
+        _r._turnToCacheMode(this.__instanceId);
         for (let i = 0, len = children.length; i < len; i++) {
           children[i].visit(this);
         }
-        cc.renderer._renderingToCacheCanvas(bakeContext, this.__instanceId);
+        _r._renderingToCacheCanvas(bakeContext, this.__instanceId);
         locBakeSprite.transform();
         this._updateCache--;
       }

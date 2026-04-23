@@ -31,7 +31,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             }
 
             visit(parentCmd) {
-                var node = this._node, renderer = cc.renderer;
+                var node = this._node, renderer = cc.rendererConfig.renderer;
 
                 parentCmd = parentCmd || this.getParentRenderCmd();
                 if (parentCmd)
@@ -79,7 +79,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             }
 
             visit(parentCmd) {
-                var node = this._node, renderer = cc.renderer;
+                var node = this._node, renderer = cc.rendererConfig.renderer;
 
                 parentCmd = parentCmd || this.getParentRenderCmd();
                 if (parentCmd)

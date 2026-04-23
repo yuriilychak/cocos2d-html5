@@ -294,7 +294,7 @@ ccs.DisplayManager = class DisplayManager extends cc.NewClass {
         } else
             this._displayType = ccs.DISPLAY_TYPE_MAX;
 
-        cc.renderer.childrenOrderDirty = true;
+        cc.rendererConfig.renderer.childrenOrderDirty = true;
     }
 
     /**

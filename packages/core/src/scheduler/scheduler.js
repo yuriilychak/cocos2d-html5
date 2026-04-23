@@ -30,6 +30,9 @@ import { HashUpdateEntry } from './hash-update-entry';
 import { HashTimerEntry } from './hash-timer-entry';
 import { CallbackTimer } from './callback-timer';
 import { log, assert, _LogInfos } from '../boot/debugger';
+import {
+  REPEAT_FOREVER
+} from "../platform/macro/constants";
 
 /**
  * Scheduler is responsible of triggering the scheduled callbacks.
@@ -235,7 +238,7 @@ export default class Scheduler extends NewClass {
         if (arguments.length === 4 || arguments.length === 5) {
             key = delay;
             paused = repeat;
-            repeat = cc.REPEAT_FOREVER;
+            repeat = REPEAT_FOREVER;
             delay = 0;
         }
         if (key === undefined) {

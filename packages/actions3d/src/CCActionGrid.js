@@ -73,7 +73,7 @@ cc.GridAction = class GridAction extends cc.ActionInterval {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    cc.renderer.childrenOrderDirty = true;
+    cc.rendererConfig.renderer.childrenOrderDirty = true;
     this._cacheTargetAsGridNode(target);
 
     const newGrid = this.getGrid();
@@ -271,7 +271,7 @@ cc.StopGrid = class StopGrid extends cc.ActionInstant {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    cc.renderer.childrenOrderDirty = true;
+    cc.rendererConfig.renderer.childrenOrderDirty = true;
     const grid = this.target.grid;
     if (grid && grid.isActive()) grid.setActive(false);
   }
@@ -317,7 +317,7 @@ cc.ReuseGrid = class ReuseGrid extends cc.ActionInstant {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    cc.renderer.childrenOrderDirty = true;
+    cc.rendererConfig.renderer.childrenOrderDirty = true;
     if (this.target.grid && this.target.grid.isActive())
       this.target.grid.setReuseGrid(
         this.target.grid.getReuseGrid() + this._times

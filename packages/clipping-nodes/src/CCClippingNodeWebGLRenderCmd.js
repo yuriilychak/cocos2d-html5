@@ -97,12 +97,12 @@ function setProgram (node, program) {
                 return;
             }
 
-            cc.renderer.pushRenderCommand(this._beforeVisitCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._beforeVisitCmd);
 
             // node._stencil._stackMatrix = node._stackMatrix;
             node._stencil.visit(node);
 
-            cc.renderer.pushRenderCommand(this._afterDrawStencilCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._afterDrawStencilCmd);
 
             // draw (according to the stencil test func) this node and its children
             const locChildren = node._children;
@@ -115,7 +115,7 @@ function setProgram (node, program) {
                 }
             }
 
-            cc.renderer.pushRenderCommand(this._afterVisitCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._afterVisitCmd);
 
             this._dirtyFlag = 0;
         }
@@ -167,7 +167,7 @@ function setProgram (node, program) {
                 // set our alphaThreshold
                 cc.glUseProgram(program.getProgram());
                 program.setUniformLocationWith1f(cc.UNIFORM_ALPHA_TEST_VALUE_S, node.alphaThreshold);
-                program.setUniformLocationWithMatrix4fv(cc.UNIFORM_MVMATRIX_S, cc.renderer.mat4Identity.mat);
+                program.setUniformLocationWithMatrix4fv(cc.UNIFORM_MVMATRIX_S, cc.rendererConfig.renderer.mat4Identity.mat);
                 cc.setProgram(node._stencil, program);
             }
         }

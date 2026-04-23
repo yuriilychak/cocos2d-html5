@@ -86,7 +86,7 @@
                                         selNode.setBlendFunc(node._blendFunc);
                                     }
                                 }
-                                cc.renderer._uploadBufferData(cmd);
+                                cc.rendererConfig.renderer._uploadBufferData(cmd);
                             }
                             break;
                         case ccs.DISPLAY_TYPE_ARMATURE:
@@ -98,10 +98,10 @@
                             boneCmd._syncStatus(parentCmd);
                             cmd._syncStatus(boneCmd);
                             if (cmd.uploadData) {
-                                cc.renderer._uploadBufferData(cmd);
+                                cc.rendererConfig.renderer._uploadBufferData(cmd);
                             }
                             else if (cmd.rendering) {
-                                cc.renderer._batchRendering();
+                                cc.rendererConfig.renderer._batchRendering();
                                 cmd.rendering(cc.rendererConfig.renderContext);
                             }
                             break;
@@ -110,10 +110,10 @@
                     selBone.setShaderProgram(this._shaderProgram);
                     boneCmd._syncStatus(parentCmd);
                     if (boneCmd.uploadData) {
-                        cc.renderer._uploadBufferData(boneCmd);
+                        cc.rendererConfig.renderer._uploadBufferData(boneCmd);
                     }
                     else if (boneCmd.rendering) {
-                        cc.renderer._batchRendering();
+                        cc.rendererConfig.renderer._batchRendering();
                         boneCmd.rendering(cc.rendererConfig.renderContext);
                     }
                 }
@@ -156,7 +156,7 @@
             this._syncStatus(parentCmd);
 
             node.sortAllChildren();
-            var renderer = cc.renderer,
+            var renderer = cc.rendererConfig.renderer,
                 children = node._children, child,
                 i, len = children.length;
 

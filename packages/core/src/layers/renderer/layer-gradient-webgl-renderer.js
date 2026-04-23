@@ -27,6 +27,10 @@ import LayerColorWebGLRenderer from "./layer-color-webgl-renderer";
 import { Node } from "../../base-nodes/node";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
+import {
+  VERTEX_ATTRIB_COLOR,
+  VERTEX_ATTRIB_POSITION
+} from "../../platform/macro/constants";
 
 /**
  * LayerGradient's WebGL render command
@@ -201,11 +205,11 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
     cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
 
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_POSITION,
+      VERTEX_ATTRIB_POSITION,
       3,
       gl.FLOAT,
       false,
@@ -213,7 +217,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
       0
     );
     gl.vertexAttribPointer(
-      cc.VERTEX_ATTRIB_COLOR,
+      VERTEX_ATTRIB_COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,

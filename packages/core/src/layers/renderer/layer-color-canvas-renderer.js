@@ -107,7 +107,8 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
         );
 
         let child;
-        cc.renderer._turnToCacheMode(this.__instanceId);
+        const _r = RendererConfig.getInstance().renderer;
+        _r._turnToCacheMode(this.__instanceId);
         if (len > 0) {
           node.sortAllChildren();
           for (i = 0; i < len; i++) {
@@ -115,12 +116,12 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
             if (child._localZOrder < 0) child.visit(node);
             else break;
           }
-          cc.renderer.pushRenderCommand(this);
+          _r.pushRenderCommand(this);
           for (; i < len; i++) {
             children[i].visit(node);
           }
-        } else cc.renderer.pushRenderCommand(this);
-        cc.renderer._renderingToCacheCanvas(bakeContext, this.__instanceId);
+        } else _r.pushRenderCommand(this);
+        _r._renderingToCacheCanvas(bakeContext, this.__instanceId);
         locBakeSprite.transform();
         this._updateCache--;
       }

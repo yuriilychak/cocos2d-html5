@@ -30,6 +30,14 @@ import Matrix4 from "../kazmath/mat4";
 import ShaderCache from "../shaders/CCShaderCache";
 import { TextureAtlas } from "../textures/texture-atlas";
 import { glBlendFunc } from "../shaders/CCGLStateCache";
+import { RendererConfig } from "../renderer/renderer-config";
+import {
+  SHADER_POSITION_TEXTURE_UCOLOR,
+  SRC_ALPHA,
+  ONE_MINUS_SRC_ALPHA,
+  BLEND_SRC,
+  BLEND_DST
+} from "../platform/macro/constants";
 
 /**
  * AtlasNode's rendering objects of WebGL

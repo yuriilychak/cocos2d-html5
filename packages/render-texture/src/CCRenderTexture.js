@@ -143,7 +143,7 @@ cc.RenderTexture = class RenderTexture extends cc.Node {
             return;
         }
 
-        var renderer = cc.renderer;
+        var renderer = cc.rendererConfig.renderer;
 
         cmd.visit(parentCmd);
         renderer.pushRenderCommand(cmd);
@@ -204,7 +204,7 @@ cc.RenderTexture = class RenderTexture extends cc.Node {
      * @function
      */
     begin() {
-        cc.renderer._turnToCacheMode(this.__instanceId);
+        cc.rendererConfig.renderer._turnToCacheMode(this.__instanceId);
         this._renderCmd.begin();
     }
 

@@ -1,3 +1,9 @@
+import {
+  ONE,
+  ONE_MINUS_SRC_ALPHA,
+  SRC_ALPHA,
+  ZERO
+} from "../macro/constants";
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -37,19 +43,19 @@ export class BlendFunc {
     }
 
     static get DISABLE() {
-        return new BlendFunc(cc.ONE, cc.ZERO);
+        return new BlendFunc(ONE, ZERO);
     }
 
     static get ALPHA_PREMULTIPLIED() {
-        return new BlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA);
+        return new BlendFunc(ONE, ONE_MINUS_SRC_ALPHA);
     }
 
     static get ALPHA_NON_PREMULTIPLIED() {
-        return new BlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
+        return new BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
     }
 
     static get ADDITIVE() {
-        return new BlendFunc(cc.SRC_ALPHA, cc.ONE);
+        return new BlendFunc(SRC_ALPHA, ONE);
     }
 }
 
@@ -58,5 +64,5 @@ export class BlendFunc {
  * @returns {BlendFunc}
  */
 export function blendFuncDisable() {
-    return new BlendFunc(cc.ONE, cc.ZERO);
+    return new BlendFunc(ONE, ZERO);
 }

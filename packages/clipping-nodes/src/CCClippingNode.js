@@ -140,7 +140,7 @@ cc.ClippingNode = class ClippingNode extends cc.Node {
     }
 
     _visitChildren() {
-      var renderer = cc.renderer;
+      var renderer = cc.rendererConfig.renderer;
       if (this._reorderChildDirty) {
         this.sortAllChildren();
       }

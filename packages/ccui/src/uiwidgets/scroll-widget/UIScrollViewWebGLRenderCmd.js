@@ -10,7 +10,7 @@
 
         rendering(ctx) {
             var currentID = this._node.__instanceId,
-                locCmds = cc.renderer._cacheToBufferCmds[currentID],
+                locCmds = cc.rendererConfig.renderer._cacheToBufferCmds[currentID],
                 i, len, checkNode, cmd,
                 context = ctx || cc.rendererConfig.renderContext;
             if (!locCmds) {
@@ -28,15 +28,15 @@
                     continue;
 
                 if (cmd.uploadData) {
-                    cc.renderer._uploadBufferData(cmd);
+                    cc.rendererConfig.renderer._uploadBufferData(cmd);
                 }
                 else {
                     if (cmd._batchingSize > 0) {
-                        cc.renderer._batchRendering();
+                        cc.rendererConfig.renderer._batchRendering();
                     }
                     cmd.rendering(context);
                 }
-                cc.renderer._batchRendering();
+                cc.rendererConfig.renderer._batchRendering();
             }
         }
     };

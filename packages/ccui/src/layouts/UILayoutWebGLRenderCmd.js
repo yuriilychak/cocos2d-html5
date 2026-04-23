@@ -163,15 +163,15 @@
                 this._afterVisitCmdStencil = new cc.CustomRenderCmd(this, this._onAfterVisitStencil);
             }
 
-            cc.renderer.pushRenderCommand(this._beforeVisitCmdStencil);
+            cc.rendererConfig.renderer.pushRenderCommand(this._beforeVisitCmdStencil);
 
             node._clippingStencil.visit(node);
 
-            cc.renderer.pushRenderCommand(this._afterDrawStencilCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._afterDrawStencilCmd);
         }
 
         postStencilVisit() {
-            cc.renderer.pushRenderCommand(this._afterVisitCmdStencil);
+            cc.rendererConfig.renderer.pushRenderCommand(this._afterVisitCmdStencil);
         }
 
         scissorClippingVisit(parentCmd) {
@@ -179,11 +179,11 @@
                 this._beforeVisitCmdScissor = new cc.CustomRenderCmd(this, this._onBeforeVisitScissor);
                 this._afterVisitCmdScissor = new cc.CustomRenderCmd(this, this._onAfterVisitScissor);
             }
-            cc.renderer.pushRenderCommand(this._beforeVisitCmdScissor);
+            cc.rendererConfig.renderer.pushRenderCommand(this._beforeVisitCmdScissor);
         }
 
         postScissorVisit() {
-            cc.renderer.pushRenderCommand(this._afterVisitCmdScissor);
+            cc.rendererConfig.renderer.pushRenderCommand(this._afterVisitCmdScissor);
         }
     };
 

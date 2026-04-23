@@ -92,7 +92,7 @@
         }
       }
 
-      cc.renderer.pushRenderCommand(this._renderCmd);
+      cc.rendererConfig.renderer.pushRenderCommand(this._renderCmd);
     }
 
 
@@ -102,7 +102,7 @@
     set dirty(v) { this.setDirty(v); }
 
     visit() {
-      cc.renderer.pushRenderCommand(this._renderCmd);
+      cc.rendererConfig.renderer.pushRenderCommand(this._renderCmd);
       super.visit();
     }
 

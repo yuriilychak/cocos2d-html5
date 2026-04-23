@@ -82,7 +82,7 @@ export class LayerColor extends Layer {
       return;
     }
 
-    var renderer = cc.renderer;
+    var renderer = RendererConfig.getInstance().renderer;
     cmd.visit(parentCmd);
 
     if (cmd._isBaked) {

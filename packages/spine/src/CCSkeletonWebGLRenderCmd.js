@@ -34,7 +34,7 @@ sp.Skeleton.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
         this._matrix.identity();
         this._currTexture = null;
         this._currBlendFunc = {};
-        this.vertexType = cc.renderer.VertexType.CUSTOM;
+        this.vertexType = cc.rendererConfig.renderer.VertexType.CUSTOM;
         this.setShaderProgram(cc.shaderCache.programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR));
     }
 
@@ -87,14 +87,14 @@ sp.Skeleton.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
 
         // Broken for changing batch info
         this._currTexture = regionTextureAtlas.texture.getRealTexture();
-        var batchBroken = cc.renderer._updateBatchedInfo(this._currTexture, this._getBlendFunc(slot.data.blendMode, premultiAlpha), this._glProgramState);
+        var batchBroken = cc.rendererConfig.renderer._updateBatchedInfo(this._currTexture, this._getBlendFunc(slot.data.blendMode, premultiAlpha), this._glProgramState);
 
         // keep the same logic with RendererWebGL.js, avoid vertex data overflow
         var uploadAll = vertexDataOffset / 6 + vertCount > (cc.BATCH_VERTEX_COUNT - 200) * 0.5;
         // Broken for vertex data overflow
         if (!batchBroken && uploadAll) {
             // render the cached data
-            cc.renderer._batchRendering();
+            cc.rendererConfig.renderer._batchRendering();
             batchBroken = true;
         }
         if (batchBroken) {
@@ -119,9 +119,9 @@ sp.Skeleton.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
 
         // update the index buffer
         if (attachment instanceof spine.RegionAttachment) {
-            cc.renderer._increaseBatchingSize(vertCount, cc.renderer.VertexType.TRIANGLE);
+            cc.rendererConfig.renderer._increaseBatchingSize(vertCount, cc.rendererConfig.renderer.VertexType.TRIANGLE);
         } else {
-            cc.renderer._increaseBatchingSize(vertCount, cc.renderer.VertexType.CUSTOM, attachment.triangles);
+            cc.rendererConfig.renderer._increaseBatchingSize(vertCount, cc.rendererConfig.renderer.VertexType.CUSTOM, attachment.triangles);
         }
 
         // update the index data
@@ -130,7 +130,7 @@ sp.Skeleton.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
 
     if (node._debugBones || node._debugSlots) {
         // flush previous vertices
-        cc.renderer._batchRendering();
+        cc.rendererConfig.renderer._batchRendering();
 
         var wt = this._worldTransform, mat = this._matrix.mat;
         mat[0] = wt.a;

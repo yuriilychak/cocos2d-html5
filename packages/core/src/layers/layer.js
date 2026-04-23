@@ -66,7 +66,7 @@ export class Layer extends Node {
       return;
     }
 
-    var renderer = cc.renderer;
+    var renderer = RendererConfig.getInstance().renderer;
     cmd.visit(parentCmd);
 
     if (cmd._isBaked) {

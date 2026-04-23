@@ -156,7 +156,7 @@ ccui.Layout = class Layout extends ccui.Widget {
         this._adaptRenderers();
         this._doLayout();
 
-        var renderer = cc.renderer;
+        var renderer = cc.rendererConfig.renderer;
         cmd.visit(parentCmd);
 
         var stencilClipping = this._clippingEnabled && this._clippingType === ccui.Layout.CLIPPING_STENCIL;

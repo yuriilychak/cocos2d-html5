@@ -30,6 +30,10 @@ import Game from "../boot/game";
 import { log, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import { RendererConfig } from "../renderer/renderer-config";
+import {
+  BLEND_DST,
+  BLEND_SRC
+} from "../platform/macro/constants";
 
 /**
  * <p>AtlasNode is a subclass of Node, it knows how to render a TextureAtlas object. </p>
@@ -84,7 +88,7 @@ export class AtlasNode extends EventHelper(Node) {
     this._texture = null;
     this._textureForCanvas = null;
 
-    this._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
+    this._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
     this._ignoreContentScaleFactor = false;
     itemsToRender !== undefined &&
       this.initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
@@ -92,8 +96,8 @@ export class AtlasNode extends EventHelper(Node) {
 
   _createRenderCmd() {
     if (RendererConfig.getInstance().isCanvas)
-      this._renderCmd = new cc.AtlasNode.CanvasRenderCmd(this);
-    else this._renderCmd = new cc.AtlasNode.WebGLRenderCmd(this);
+      this._renderCmd = new AtlasNode.CanvasRenderCmd(this);
+    else this._renderCmd = new AtlasNode.WebGLRenderCmd(this);
   }
 
   /**

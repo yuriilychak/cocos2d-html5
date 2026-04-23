@@ -173,11 +173,11 @@
                     else
                         break;
                 }
-                cc.renderer.pushRenderCommand(cmd);
+                cc.rendererConfig.renderer.pushRenderCommand(cmd);
                 for (; i < len; i++)
                     children[i].visit(childNode);
             } else {
-                cc.renderer.pushRenderCommand(cmd);
+                cc.rendererConfig.renderer.pushRenderCommand(cmd);
             }
             this._dirtyFlag = 0;
         }
@@ -190,9 +190,9 @@
             this._syncStatus(parentCmd);
             node.sortAllChildren();
 
-            cc.renderer.pushRenderCommand(this._startRenderCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._startRenderCmd);
             this.rendering();
-            cc.renderer.pushRenderCommand(this._RestoreRenderCmd);
+            cc.rendererConfig.renderer.pushRenderCommand(this._RestoreRenderCmd);
 
             this._cacheDirty = false;
         }
