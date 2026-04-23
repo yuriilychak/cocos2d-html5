@@ -219,7 +219,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
       }
     }
     if (node._flippedX || node._flippedY) wrapper.restore();
-    cc.g_NumberOfDraws++;
+    RendererConfig.getInstance().incrementDrawCount();
   }
 
   _updateColor() {

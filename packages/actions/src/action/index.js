@@ -1,4 +1,3 @@
-export { ACTION_TAG_INVALID } from './constants';
 export {
   bezierAt, bounceTime,
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,

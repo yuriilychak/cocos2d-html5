@@ -3,7 +3,7 @@ import {
   DIRECTOR_FPS_INTERVAL
 } from "../platform/config";
 import Game from "../boot/game";
-import { Director, g_NumberOfDraws } from "../director/director";
+import { Director } from "../director/director";
 import EventManager from "../event-manager/event-manager";
 import { RendererConfig } from "../renderer/renderer-config";
 
@@ -103,12 +103,11 @@ var afterVisit = function () {
     }
 
     if (_showFPS) {
-      var mode = RendererConfig.getInstance().isCanvas
-        ? "\n canvas"
-        : "\n webgl";
+      var rendererConfig = RendererConfig.getInstance();
+      var mode = rendererConfig.isCanvas ? "\n canvas" : "\n webgl";
       _SPFLabel.innerHTML = _lastSPF.toFixed(3);
       _FPSLabel.innerHTML = _frameRate.toFixed(1).toString() + mode;
-      _drawsLabel.innerHTML = (0 | g_NumberOfDraws).toString();
+      _drawsLabel.innerHTML = (0 | rendererConfig.numberOfDraws).toString();
     }
   }
 };

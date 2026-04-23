@@ -1,5 +1,4 @@
 import {
-  ACTION_TAG_INVALID,
   bezierAt, bounceTime,
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,
   getControlPointAt, reverseControlPointsInline,
@@ -54,9 +53,6 @@ import {
 } from './action-ease';
 import { CardinalSplineTo, CardinalSplineBy, CatmullRomTo, CatmullRomBy } from './action-catmull-rom';
 import { ActionTweenDelegate, ActionTween } from './action-tween';
-
-// ─── Constants ─────────────────────────────────────────
-cc.ACTION_TAG_INVALID = ACTION_TAG_INVALID;
 
 // ─── Utils ────────────────────────────────────────────
 cc.bezierAt = bezierAt;
@@ -315,7 +311,6 @@ Spawn._actionOneTwo = function (action1, action2) {
 };
 
 // ─── Re-exports ─────────────────────────────────────
-export { ACTION_TAG_INVALID };
 export {
   bezierAt, bounceTime,
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,

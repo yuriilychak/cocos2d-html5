@@ -505,3 +505,10 @@ export const SELECTED_TAG = 8802;
  * @type Number
  */
 export const DISABLE_TAG = 8803;
+
+/** Default Action tag
+ * @constant
+ * @type {Number}
+ * @default
+ */
+export const ACTION_TAG_INVALID = -1;

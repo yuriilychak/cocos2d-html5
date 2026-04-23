@@ -500,7 +500,7 @@ export const LabelRenderMixin = (Base) =>
         }
         context.fillText(line, xOffset, yOffsetArray[i]);
       }
-      cc.g_NumberOfDraws++;
+      RendererConfig.getInstance().incrementDrawCount();
     }
   };
 

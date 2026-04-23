@@ -1,5 +1,3 @@
-import { ACTION_TAG_INVALID } from './constants';
-
 /**
  * Base class for cc.Action objects.
  *
@@ -12,7 +10,7 @@ export default class Action extends cc.NewClass {
   //***********variables*************
   originalTarget = null;
   target = null;
-  tag = ACTION_TAG_INVALID;
+  tag = cc.ACTION_TAG_INVALID;
 
   //**************Public Functions***********
 
@@ -23,7 +21,7 @@ export default class Action extends cc.NewClass {
     super();
     this.originalTarget = null;
     this.target = null;
-    this.tag = ACTION_TAG_INVALID;
+    this.tag = cc.ACTION_TAG_INVALID;
   }
 
   /**

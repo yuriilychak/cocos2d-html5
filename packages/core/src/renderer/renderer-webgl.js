@@ -414,14 +414,7 @@ var rendererWebGL = {
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
-    gl.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
-      3,
-      gl.FLOAT,
-      false,
-      24,
-      0
-    );
+    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 24, 0);
     gl.vertexAttribPointer(
       VERTEX_ATTRIB_COLOR,
       4,
@@ -453,7 +446,7 @@ var rendererWebGL = {
     }
     gl.drawElements(gl.TRIANGLES, _indexSize, gl.UNSIGNED_SHORT, 0);
 
-    cc.g_NumberOfDraws++;
+    RendererConfig.getInstance().incrementDrawCount();
 
     if (_pureQuad) {
       _prevIndexSize = _indexSize;

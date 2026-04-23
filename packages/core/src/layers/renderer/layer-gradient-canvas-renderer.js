@@ -73,7 +73,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
 
     wrapper.setTransform(this._worldTransform, scaleX, scaleY);
     context.fillRect(0, 0, locWidth, -locHeight);
-    cc.g_NumberOfDraws++;
+    RendererConfig.getInstance().incrementDrawCount();
   }
 
   updateStatus() {

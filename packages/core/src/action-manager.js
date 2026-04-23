@@ -26,6 +26,7 @@
 
 import { NewClass } from './platform/class';
 import { log, assert, _LogInfos } from './boot/debugger';
+import { ACTION_TAG_INVALID } from "./platform/macro/constants";
 
 /**
  * @example
@@ -148,7 +149,7 @@ export class ActionManager extends NewClass {
     }
 
     removeActionByTag(tag, target) {
-        if (tag === cc.ACTION_TAG_INVALID)
+        if (tag === ACTION_TAG_INVALID)
             log(_LogInfos.ActionManager_addAction);
 
         assert(target, _LogInfos.ActionManager_addAction);
@@ -168,7 +169,7 @@ export class ActionManager extends NewClass {
     }
 
     getActionByTag(tag, target) {
-        if (tag === cc.ACTION_TAG_INVALID)
+        if (tag === ACTION_TAG_INVALID)
             log(_LogInfos.ActionManager_getActionByTag);
 
         var element = this._hashTargets[target.__instanceId];

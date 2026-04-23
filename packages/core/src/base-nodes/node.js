@@ -35,8 +35,26 @@ import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { RendererConfig } from "../renderer/renderer-config";
 import {
-  REPEAT_FOREVER
+  REPEAT_FOREVER,
+  ACTION_TAG_INVALID
 } from "../platform/macro/constants";
+import {
+  affineTransformConcat,
+  affineTransformConcatIn,
+  affineTransformInvert,
+  affineTransformMakeIdentity,
+  rectApplyAffineTransform,
+  _rectApplyAffineTransformIn,
+  pointApplyAffineTransform
+} from "../cocoa/affine-transform";
+import { rectUnion } from "../cocoa/geometry/rect";
+import { pAdd, pSub } from "../support/point-extension";
+import { arrayRemoveObject } from "../platform/macro/utils";
+import { ComponentContainer } from "../components/component-container";
+import { Director } from "../director/index";
+import Touch from "../event-manager/touch";
+import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
+import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
 
 /**
  * Default Node tag
@@ -197,9 +215,9 @@ export class Node extends NewClass {
     _t._normalizedPosition = new Point(0, 0);
     _t._children = [];
 
-    _t._additionalTransform = cc.affineTransformMakeIdentity();
-    if (cc.ComponentContainer) {
-      _t._componentContainer = new cc.ComponentContainer(_t);
+    _t._additionalTransform = affineTransformMakeIdentity();
+    if (ComponentContainer) {
+      _t._componentContainer = new ComponentContainer(_t);
     }
     this._realColor = new Color(255, 255, 255, 255);
 
@@ -1207,7 +1225,7 @@ export class Node extends NewClass {
    * @return {ActionManager} A ActionManager object.
    */
   getActionManager() {
-    return this._actionManager || cc.director.getActionManager();
+    return this._actionManager || Director.getInstance().getActionManager();
   }
 
   /**
@@ -1231,7 +1249,7 @@ export class Node extends NewClass {
    * @return {Scheduler} A Scheduler object.
    */
   getScheduler() {
-    return this._scheduler || cc.director.getScheduler();
+    return this._scheduler || Director.getInstance().getScheduler();
   }
 
   /**
@@ -1263,10 +1281,7 @@ export class Node extends NewClass {
       this._contentSize.width,
       this._contentSize.height
     );
-    return cc._rectApplyAffineTransformIn(
-      rect,
-      this.getNodeToParentTransform()
-    );
+    return _rectApplyAffineTransformIn(rect, this.getNodeToParentTransform());
   }
 
   /**
@@ -1487,11 +1502,12 @@ export class Node extends NewClass {
     // set parent nil at the end
     child.parent = null;
     child._renderCmd.detachFromParent();
-    cc.arrayRemoveObject(this._children, child);
+    arrayRemoveObject(this._children, child);
   }
 
   _insertChild(child, z) {
-    RendererConfig.getInstance().renderer.childrenOrderDirty = this._reorderChildDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty =
+      this._reorderChildDirty = true;
     this._children.push(child);
     child._setLocalZOrder(z);
   }
@@ -1512,7 +1528,8 @@ export class Node extends NewClass {
       log(_LogInfos.Node_reorderChild_2);
       return;
     }
-    RendererConfig.getInstance().renderer.childrenOrderDirty = this._reorderChildDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty =
+      this._reorderChildDirty = true;
     child.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
     child._setLocalZOrder(zOrder);
@@ -1734,7 +1751,7 @@ export class Node extends NewClass {
    * @param {Number} tag A tag that indicates the action to be removed.
    */
   stopActionByTag(tag) {
-    if (tag === cc.ACTION_TAG_INVALID) {
+    if (tag === ACTION_TAG_INVALID) {
       log(_LogInfos.Node_stopActionByTag);
       return;
     }
@@ -1749,7 +1766,7 @@ export class Node extends NewClass {
    * @return {Action} The action object with the given tag.
    */
   getActionByTag(tag) {
-    if (tag === cc.ACTION_TAG_INVALID) {
+    if (tag === ACTION_TAG_INVALID) {
       log(_LogInfos.Node_getActionByTag);
       return null;
     }
@@ -2015,7 +2032,7 @@ export class Node extends NewClass {
   getNodeToWorldTransform() {
     var t = this.getNodeToParentTransform();
     for (var p = this._parent; p !== null; p = p.parent)
-      t = cc.affineTransformConcat(t, p.getNodeToParentTransform());
+      t = affineTransformConcat(t, p.getNodeToParentTransform());
     return t;
   }
 
@@ -2025,7 +2042,7 @@ export class Node extends NewClass {
    * @return {AffineTransform}
    */
   getWorldToNodeTransform() {
-    return cc.affineTransformInvert(this.getNodeToWorldTransform());
+    return affineTransformInvert(this.getNodeToWorldTransform());
   }
 
   /**
@@ -2035,7 +2052,7 @@ export class Node extends NewClass {
    * @return {Point}
    */
   convertToNodeSpace(worldPoint) {
-    return cc.pointApplyAffineTransform(
+    return pointApplyAffineTransform(
       worldPoint,
       this.getWorldToNodeTransform()
     );
@@ -2049,10 +2066,7 @@ export class Node extends NewClass {
    */
   convertToWorldSpace(nodePoint) {
     nodePoint = nodePoint || new Point(0, 0);
-    return cc.pointApplyAffineTransform(
-      nodePoint,
-      this.getNodeToWorldTransform()
-    );
+    return pointApplyAffineTransform(nodePoint, this.getNodeToWorldTransform());
   }
 
   /**
@@ -2063,7 +2077,7 @@ export class Node extends NewClass {
    * @return {Point}
    */
   convertToNodeSpaceAR(worldPoint) {
-    return cc.pSub(
+    return pSub(
       this.convertToNodeSpace(worldPoint),
       this._renderCmd.getAnchorPointInPoints()
     );
@@ -2078,16 +2092,16 @@ export class Node extends NewClass {
    */
   convertToWorldSpaceAR(nodePoint) {
     nodePoint = nodePoint || new Point(0, 0);
-    var pt = cc.pAdd(nodePoint, this._renderCmd.getAnchorPointInPoints());
+    var pt = pAdd(nodePoint, this._renderCmd.getAnchorPointInPoints());
     return this.convertToWorldSpace(pt);
   }
 
   _convertToWindowSpace(nodePoint) {
     var worldPoint = this.convertToWorldSpace(nodePoint);
-    return cc.director.convertToUI(worldPoint);
+    return Director.getInstance().convertToUI(worldPoint);
   }
 
-  /** convenience methods which take a cc.Touch instead of cc.Point
+  /** convenience methods which take a Touch instead of Point
    * @function
    * @param {Touch} touch The touch object
    * @return {Point}
@@ -2104,7 +2118,7 @@ export class Node extends NewClass {
    * @return {Point}
    */
   convertTouchToNodeSpaceAR(touch) {
-    var point = cc.director.convertToGL(touch.getLocation());
+    var point = Director.getInstance().convertToGL(touch.getLocation());
     return this.convertToNodeSpaceAR(point);
   }
 
@@ -2250,7 +2264,7 @@ export class Node extends NewClass {
         p != null && p != ancestor;
         p = p.getParent()
       ) {
-        cc.affineTransformConcatIn(T, p.getNodeToParentTransform());
+        affineTransformConcatIn(T, p.getNodeToParentTransform());
       }
       return T;
     } else {
@@ -2308,7 +2322,7 @@ export class Node extends NewClass {
       this._contentSize.height
     );
     var trans = this.getNodeToWorldTransform();
-    rect = cc.rectApplyAffineTransform(rect, trans);
+    rect = rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
     if (!this._children) return rect;
@@ -2318,7 +2332,7 @@ export class Node extends NewClass {
       var child = locChildren[i];
       if (child && child._visible) {
         var childRect = child._getBoundingBoxToCurrentNode(trans);
-        if (childRect) rect = cc.rectUnion(rect, childRect);
+        if (childRect) rect = rectUnion(rect, childRect);
       }
     }
     return rect;
@@ -2334,11 +2348,11 @@ export class Node extends NewClass {
     var trans =
       parentTransform === undefined
         ? this.getNodeToParentTransform()
-        : cc.affineTransformConcat(
+        : affineTransformConcat(
             this.getNodeToParentTransform(),
             parentTransform
           );
-    rect = cc.rectApplyAffineTransform(rect, trans);
+    rect = rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
     if (!this._children) return rect;
@@ -2348,7 +2362,7 @@ export class Node extends NewClass {
       var child = locChildren[i];
       if (child && child._visible) {
         var childRect = child._getBoundingBoxToCurrentNode(trans);
-        if (childRect) rect = cc.rectUnion(rect, childRect);
+        if (childRect) rect = rectUnion(rect, childRect);
       }
     }
     return rect;
@@ -2501,8 +2515,8 @@ export class Node extends NewClass {
 
   _createRenderCmd() {
     if (RendererConfig.getInstance().isCanvas)
-      return new cc.Node.CanvasRenderCmd(this);
-    else return new cc.Node.WebGLRenderCmd(this);
+      return new NodeCanvasRenderCmd(this);
+    else return new NodeWebGLRenderCmd(this);
   }
 
   /** Search the children of the receiving node to perform processing for nodes which share a name.

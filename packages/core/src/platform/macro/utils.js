@@ -28,9 +28,9 @@ import { RAD, DEG } from "./constants";
 import Game from "../../boot/game";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
+import { RendererConfig } from "../../renderer/renderer-config";
 import { Size } from "../../cocoa/geometry/size";
 import { log, _LogInfos } from "../../boot/debugger";
-import { RendererConfig } from "../../renderer/renderer-config";
 
 /**
  * <p>
@@ -165,7 +165,7 @@ export function disableDefaultGLStates() {
  * @function
  */
 export function incrementGLDraws(addNumber) {
-  cc.g_NumberOfDraws += addNumber;
+  RendererConfig.getInstance().incrementDrawCount(addNumber);
 }
 
 /**
@@ -187,7 +187,7 @@ export function contentScaleFactor() {
  * @function
  */
 export function pointPointsToPixels(points) {
-  var scale = cc.contentScaleFactor();
+  var scale = contentScaleFactor();
   return new Point(points.x * scale, points.y * scale);
 }
 
@@ -198,12 +198,12 @@ export function pointPointsToPixels(points) {
  * @function
  */
 export function pointPixelsToPoints(pixels) {
-  var scale = cc.contentScaleFactor();
+  var scale = contentScaleFactor();
   return new Point(pixels.x / scale, pixels.y / scale);
 }
 
 export function _pointPixelsToPointsOut(pixels, outPoint) {
-  var scale = cc.contentScaleFactor();
+  var scale = contentScaleFactor();
   outPoint.x = pixels.x / scale;
   outPoint.y = pixels.y / scale;
 }
@@ -215,7 +215,7 @@ export function _pointPixelsToPointsOut(pixels, outPoint) {
  * @function
  */
 export function sizePointsToPixels(sizeInPoints) {
-  var scale = cc.contentScaleFactor();
+  var scale = contentScaleFactor();
   return new Size(sizeInPoints.width * scale, sizeInPoints.height * scale);
 }
 
@@ -226,12 +226,12 @@ export function sizePointsToPixels(sizeInPoints) {
  * @function
  */
 export function sizePixelsToPoints(sizeInPixels) {
-  var scale = cc.contentScaleFactor();
+  var scale = contentScaleFactor();
   return new Size(sizeInPixels.width / scale, sizeInPixels.height / scale);
 }
 
 export function _sizePixelsToPointsOut(sizeInPixels, outSize) {
-  var scale = cc.contentScaleFactor();
+  var scale = contentScaleFactor();
   outSize.width = sizeInPixels.width / scale;
   outSize.height = sizeInPixels.height / scale;
 }
@@ -243,7 +243,7 @@ export function _sizePixelsToPointsOut(sizeInPixels, outSize) {
  * @function
  */
 export function rectPixelsToPoints(pixel) {
-  var scale = cc.contentScaleFactor();
+  var scale = contentScaleFactor();
   return new Rect(
     pixel.x / scale,
     pixel.y / scale,
@@ -259,7 +259,7 @@ export function rectPixelsToPoints(pixel) {
  * @function
  */
 export function rectPointsToPixels(point) {
-  var scale = cc.contentScaleFactor();
+  var scale = contentScaleFactor();
   return new Rect(
     point.x * scale,
     point.y * scale,

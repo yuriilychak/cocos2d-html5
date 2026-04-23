@@ -121,7 +121,7 @@ export default class TextureAtlasWebGLRenderer {
         start * 6 * textureAtlas._indices.BYTES_PER_ELEMENT
       );
 
-    cc.g_NumberOfDraws++;
+    RendererConfig.getInstance().incrementDrawCount();
     //checkGLErrorDebug();
   }
 

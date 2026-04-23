@@ -50,8 +50,6 @@ import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { RendererConfig } from "../renderer/renderer-config";
 
-export var g_NumberOfDraws = 0;
-
 export const defaultFPS = 60;
 
 /**
@@ -247,7 +245,7 @@ export class Director extends NewClass {
     if (this._notificationNode) this._notificationNode.visit();
 
     EventManager.getInstance().dispatchEvent(this._eventAfterVisit);
-    cc.g_NumberOfDraws = 0;
+    RendererConfig.getInstance().resetDrawCount();
 
     renderer.rendering(RendererConfig.getInstance().renderContext);
     this._totalFrames++;

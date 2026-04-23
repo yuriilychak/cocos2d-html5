@@ -404,7 +404,6 @@ import { Configuration } from "./configuration";
 import {
   Director,
   DisplayLinkDirector,
-  g_NumberOfDraws,
   defaultFPS
 } from "./director/director";
 import { DirectorDelegate } from "./director/director-webgl";
@@ -845,7 +844,15 @@ cc.spriteFrameCache = SpriteFrameCache.getInstance();
 cc.configuration = Configuration.getInstance();
 cc.Director = Director;
 cc.DisplayLinkDirector = DisplayLinkDirector;
-cc.g_NumberOfDraws = g_NumberOfDraws;
+Object.defineProperty(cc, "g_NumberOfDraws", {
+  configurable: true,
+  enumerable: true,
+  get: () => RendererConfig.getInstance().numberOfDraws,
+  set: (value) => {
+    var rendererConfig = RendererConfig.getInstance();
+    rendererConfig.incrementDrawCount(value - rendererConfig.numberOfDraws);
+  }
+});
 cc.defaultFPS = defaultFPS;
 cc.Scheduler = Scheduler;
 cc.PI2 = PI2;

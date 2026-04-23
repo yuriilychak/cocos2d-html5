@@ -360,7 +360,7 @@ export class RenderCmd {
             locDispColor.r = locRealColor.r;
             locDispColor.g = locRealColor.g;
             locDispColor.b = locRealColor.b;
-            const whiteColor = new cc.Color(255, 255, 255, 255);
+            const whiteColor = new Color(255, 255, 255, 255);
             selChildren = node._children;
             for (i = 0, len = selChildren.length; i < len; i++) {
                 item = selChildren[i];
@@ -374,7 +374,7 @@ export class RenderCmd {
                 if (locParent && locParent._cascadeColorEnabled)
                     parentColor = locParent.getDisplayedColor();
                 else
-                    parentColor = cc.color.WHITE;
+                    parentColor = Color.WHITE;
             }
             locDispColor.r = 0 | (locRealColor.r * parentColor.r / 255.0);
             locDispColor.g = 0 | (locRealColor.g * parentColor.g / 255.0);
@@ -435,7 +435,7 @@ export class RenderCmd {
             if (locParent && locParent._cascadeColorEnabled)
                 parentColor = locParent.getDisplayedColor();
             else
-                parentColor = cc.color.WHITE;
+                parentColor = Color.WHITE;
         }
         locDispColor.r = 0 | (locRealColor.r * parentColor.r / 255.0);
         locDispColor.g = 0 | (locRealColor.g * parentColor.g / 255.0);

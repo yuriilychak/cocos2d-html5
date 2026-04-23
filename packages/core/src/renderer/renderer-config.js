@@ -15,6 +15,7 @@ export class RendererConfig {
   _supportRender = false;
   _renderContext = null;
   _renderer = null;
+  _numberOfDraws = 0;
 
   get renderContext() {
     return this._renderContext;
@@ -30,6 +31,18 @@ export class RendererConfig {
 
   setRenderer(renderer) {
     this._renderer = renderer;
+  }
+
+  get numberOfDraws() {
+    return this._numberOfDraws;
+  }
+
+  incrementDrawCount(n) {
+    this._numberOfDraws += n === undefined ? 1 : n;
+  }
+
+  resetDrawCount() {
+    this._numberOfDraws = 0;
   }
 
   get isWebGL() {

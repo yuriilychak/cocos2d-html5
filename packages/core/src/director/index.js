@@ -1,2 +1,2 @@
-export { Director, DisplayLinkDirector, g_NumberOfDraws, defaultFPS } from './director';
+export { Director, DisplayLinkDirector, defaultFPS } from './director';
 export { DirectorDelegate } from './director-webgl';
