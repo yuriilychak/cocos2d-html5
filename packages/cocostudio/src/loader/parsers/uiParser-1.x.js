@@ -262,7 +262,7 @@
 
         var bgcv1 = options["vectorX"] || 0;
         var bgcv2 = options["vectorY"] || 0;
-        widget.setBackGroundColorVector(cc.p(bgcv1, bgcv2));
+        widget.setBackGroundColorVector(new cc.Point(bgcv1, bgcv2));
 
         var co = options["bgColorOpacity"] || 0;
 

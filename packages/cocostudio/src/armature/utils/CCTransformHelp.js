@@ -31,8 +31,8 @@ ccs.TransformHelp = class TransformHelp extends cc.NewClass {};
 
 ccs.TransformHelp.helpMatrix1 = cc.affineTransformMake(1, 0, 0, 1, 0, 0);
 ccs.TransformHelp.helpMatrix2 = cc.affineTransformMake(1, 0, 0, 1, 0, 0);
-ccs.TransformHelp.helpPoint1 = cc.p(0, 0);
-ccs.TransformHelp.helpPoint2 = cc.p(0, 0);
+ccs.TransformHelp.helpPoint1 = new cc.Point(0, 0);
+ccs.TransformHelp.helpPoint2 = new cc.Point(0, 0);
 ccs.TransformHelp.helpParentNode = {};
 
 /**

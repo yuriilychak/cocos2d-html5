@@ -104,8 +104,8 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
     const tWidth = contentSize.width * 0.5,
       tHeight = contentSize.height * 0.5;
 
-    const angle = cc.pAngleSigned(new Point(0, -1), node._alongVector);
-    const p1 = cc.pRotateByAngle(new Point(0, -1), new Point(0, 0), angle);
+    const angle = Point.angleSigned(new Point(0, -1), node._alongVector);
+    const p1 = Point.rotateByAngle(new Point(0, -1), new Point(0, 0), angle);
     const factor = Math.min(Math.abs(1 / p1.x), Math.abs(1 / p1.y));
 
     this._startPoint.x = tWidth * (-p1.x * factor) + tWidth;

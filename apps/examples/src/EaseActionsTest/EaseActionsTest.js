@@ -165,7 +165,7 @@ var SpriteEase = class SpriteEase extends EaseSpriteDemo {
         //----start0----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
 
@@ -232,7 +232,7 @@ var SpriteEaseInOut = class SpriteEaseInOut extends EaseSpriteDemo {
         //----start1----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
 
         var move_ease_inout1 = move.clone().easing(cc.easeInOut(2.0));
         var move_ease_inout_back1 = move_ease_inout1.reverse();
@@ -271,7 +271,7 @@ var SpriteEaseExponential = class SpriteEaseExponential extends EaseSpriteDemo {
         //----start2----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeExponentialIn());
@@ -308,7 +308,7 @@ var SpriteEaseExponentialInOut = class SpriteEaseExponentialInOut extends EaseSp
         //----start3----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         var move_ease = move.clone().easing(cc.easeExponentialInOut());
@@ -341,7 +341,7 @@ var SpriteEaseSine = class SpriteEaseSine extends EaseSpriteDemo {
         //----start4----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeSineIn());
@@ -378,7 +378,7 @@ var SpriteEaseSineInOut = class SpriteEaseSineInOut extends EaseSpriteDemo {
         //----start5----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         //old api
@@ -414,7 +414,7 @@ var SpriteEaseElastic = class SpriteEaseElastic extends EaseSpriteDemo {
         //----start6----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeElasticIn());
@@ -450,7 +450,7 @@ var SpriteEaseElasticInOut = class SpriteEaseElasticInOut extends EaseSpriteDemo
         //----start7----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
 
         var move_ease_inout1 = move.clone().easing(cc.easeElasticInOut(0.3));
         var move_ease_inout_back1 = move_ease_inout1.reverse();
@@ -488,7 +488,7 @@ var SpriteEaseBounce = class SpriteEaseBounce extends EaseSpriteDemo {
         //----start8----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeBounceIn());
@@ -524,7 +524,7 @@ var SpriteEaseBounceInOut = class SpriteEaseBounceInOut extends EaseSpriteDemo {
         //----start9----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         var move_ease = move.clone().easing(cc.easeBounceInOut());
@@ -557,7 +557,7 @@ var SpriteEaseBack = class SpriteEaseBack extends EaseSpriteDemo {
         //----start10----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeBackIn());
@@ -593,7 +593,7 @@ var SpriteEaseBackInOut = class SpriteEaseBackInOut extends EaseSpriteDemo {
         //----start11----onEnter
         super.onEnter();
 
-        var move = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+        var move = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         var move_ease = move.clone().easing(cc.easeBackInOut());
@@ -627,7 +627,7 @@ var SpeedTest = class SpeedTest extends EaseSpriteDemo {
         super.onEnter();
 
         // rotate and jump
-        var jump1 = cc.jumpBy(4, cc.p(-winSize.width + 80, 0), 100, 4);
+        var jump1 = cc.jumpBy(4, new cc.Point(-winSize.width + 80, 0), 100, 4);
         var jump2 = jump1.reverse();
         var rot1 = cc.rotateBy(4, 360 * 2);
         var rot2 = rot1.reverse();
@@ -693,7 +693,7 @@ var SchedulerTest = class SchedulerTest extends EaseSpriteDemo {
         super.onEnter();
 
         // rotate and jump
-        var jump1 = cc.jumpBy(4, cc.p(-winSize.width + 80, 0), 100, 4);
+        var jump1 = cc.jumpBy(4, new cc.Point(-winSize.width + 80, 0), 100, 4);
         var jump2 = jump1.reverse();
         var rot1 = cc.rotateBy(4, 360 * 2);
         var rot2 = rot1.reverse();
@@ -751,15 +751,15 @@ var SpriteEaseBezierTest = class SpriteEaseBezierTest extends EaseSpriteDemo {
         // is relative to the Bezier curve, make it (0,0)
         //
 
-        this._grossini.setPosition( cc.p(size.width/2, size.height/2));
-        this._tamara.setPosition( cc.p(size.width/4, size.height/2));
-        this._kathia.setPosition( cc.p(3 * size.width/4, size.height/2));
+        this._grossini.setPosition( new cc.Point(size.width/2, size.height/2));
+        this._tamara.setPosition( new cc.Point(size.width/4, size.height/2));
+        this._kathia.setPosition( new cc.Point(3 * size.width/4, size.height/2));
 
         // sprite 1
         var bezier = [
-            cc.p(0, size.height / 2),
-            cc.p(300 / 480 * 800, -size.height / 2),
-            cc.p(300 / 480 * 800, 100 / 320 * 450)
+            new cc.Point(0, size.height / 2),
+            new cc.Point(300 / 480 * 800, -size.height / 2),
+            new cc.Point(300 / 480 * 800, 100 / 320 * 450)
         ];
         var bezierForward = cc.bezierBy(3, bezier);
         var bezierEaseForward = bezierForward.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
@@ -768,17 +768,17 @@ var SpriteEaseBezierTest = class SpriteEaseBezierTest extends EaseSpriteDemo {
         var bezierEaseTo = cc.sequence(bezierEaseForward, bezierEaseBack).repeatForever();
 
         // sprite 2
-        this._tamara.setPosition(cc.p(135,225));
+        this._tamara.setPosition(new cc.Point(135,225));
         var bezier2 = [
-            cc.p(100 / 480 * 800, size.height / 2),
-            cc.p(200 / 480 * 800, -size.height / 2),
-            cc.p(200 / 480 * 800, 160 / 320 * 450)
+            new cc.Point(100 / 480 * 800, size.height / 2),
+            new cc.Point(200 / 480 * 800, -size.height / 2),
+            new cc.Point(200 / 480 * 800, 160 / 320 * 450)
         ];
         var bezierTo1 = cc.bezierTo(2, bezier2);
         var bezierEaseTo1 = bezierTo1.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
 
         // sprite 3
-        this._kathia.setPosition(cc.p(667, 225));
+        this._kathia.setPosition(new cc.Point(667, 225));
         var bezierTo2 = cc.bezierTo(2, bezier2);
         var bezierEaseTo2 = bezierTo2.easing(cc.easeBezierAction(0.0, 0.5, -5.0, 1.0));
 
@@ -805,7 +805,7 @@ var SpriteEaseQuadraticTest = class SpriteEaseQuadraticTest extends EaseSpriteDe
         super.onEnter();
         //----start15----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeQuadraticActionIn());
@@ -841,7 +841,7 @@ var SpriteEaseQuadraticInOutTest = class SpriteEaseQuadraticInOutTest extends Ea
         super.onEnter();
         //----start16----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease = move.clone().easing(cc.easeQuadraticActionInOut());
@@ -873,7 +873,7 @@ var SpriteEaseQuarticTest = class SpriteEaseQuarticTest extends EaseSpriteDemo {
         super.onEnter();
         //----start17----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeQuarticActionIn());
@@ -907,7 +907,7 @@ var SpriteEaseQuarticInOutTest = class SpriteEaseQuarticInOutTest extends EaseSp
         super.onEnter();
         //----start18----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease = move.clone().easing(cc.easeQuarticActionInOut());
@@ -939,7 +939,7 @@ var SpriteEaseQuinticTest = class SpriteEaseQuinticTest extends EaseSpriteDemo {
         super.onEnter();
         //----start19----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeQuinticActionIn());
@@ -975,7 +975,7 @@ var SpriteEaseQuinticInOutTest = class SpriteEaseQuinticInOutTest extends EaseSp
         super.onEnter();
         //----start20----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease = move.clone().easing(cc.easeQuinticActionInOut());
@@ -1007,7 +1007,7 @@ var SpriteEaseCircleTest = class SpriteEaseCircleTest extends EaseSpriteDemo {
         super.onEnter();
         //----start21----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeCircleActionIn());
@@ -1042,7 +1042,7 @@ var SpriteEaseCircleInOutTest = class SpriteEaseCircleInOutTest extends EaseSpri
         super.onEnter();
         //----start22----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease = move.clone().easing(cc.easeCircleActionInOut());
@@ -1074,7 +1074,7 @@ var SpriteEaseCubicTest = class SpriteEaseCubicTest extends EaseSpriteDemo {
         super.onEnter();
         //----start23----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease_in = move.clone().easing(cc.easeCubicActionIn());
@@ -1110,7 +1110,7 @@ var SpriteEaseCubicInOutTest = class SpriteEaseCubicInOutTest extends EaseSprite
         super.onEnter();
         //----start24----onEnter
 
-        var move = cc.moveBy(3, cc.p(winSize.width - 130, 0));
+        var move = cc.moveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
         var move_ease = move.clone().easing(cc.easeCubicActionInOut());

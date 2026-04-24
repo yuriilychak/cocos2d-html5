@@ -130,7 +130,7 @@ var RectUnitTest = class RectUnitTest extends UnitTestBase {
 
         this.log("Test 5: rectContainsPoint 1");
         rectA = cc.rect(0,0,5,10);
-        point = cc.p(1,1);
+        point = new cc.Point(1,1);
         r = cc.rectContainsPoint(rectA, point);
         if(!r)
             throw "Fail rectContainsPoint 1";
@@ -138,7 +138,7 @@ var RectUnitTest = class RectUnitTest extends UnitTestBase {
 
         this.log("Test 6: rectContainsPoint 2");
         rectA = cc.rect(0,0,5,10);
-        point = cc.p(1,-1);
+        point = new cc.Point(1,-1);
         r = cc.rectContainsPoint(rectA, point);
         if(r)
             throw "Fail rectContainsPoint 2";

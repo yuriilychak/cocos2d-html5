@@ -66,9 +66,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     this._color = new Uint32Array(1);
     this._vertexBuffer = null;
 
-    this._shaderProgram = cc.shaderCache.programForKey(
-      SHADER_POSITION_COLOR
-    );
+    this._shaderProgram = cc.shaderCache.programForKey(SHADER_POSITION_COLOR);
   }
 
   initData(vertexCount) {
@@ -147,14 +145,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
 
-    gl.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
-      3,
-      gl.FLOAT,
-      false,
-      16,
-      0
-    );
+    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 16, 0);
     gl.vertexAttribPointer(
       VERTEX_ATTRIB_COLOR,
       4,
@@ -227,7 +218,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     }
 
     const angle =
-        Math.PI + cc.pAngleSigned(new Point(0, -1), node._alongVector),
+        Math.PI + Point.angleSigned(new Point(0, -1), node._alongVector),
       locAnchor = new Point(contentSize.width / 2, contentSize.height / 2);
     const degrees = Math.round(cc.radiansToDegrees(angle));
     let transMat = cc.affineTransformMake(1, 0, 0, 1, locAnchor.x, locAnchor.y);
@@ -346,14 +337,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
 
-    gl.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
-      3,
-      gl.FLOAT,
-      false,
-      16,
-      0
-    );
+    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 16, 0);
     gl.vertexAttribPointer(
       VERTEX_ATTRIB_COLOR,
       4,

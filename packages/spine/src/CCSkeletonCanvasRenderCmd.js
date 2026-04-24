@@ -128,10 +128,10 @@ sp.Skeleton.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
     attachment.computeWorldVertices(slot.bone, vertices, 0, 2);
     var VERTEX = spine.RegionAttachment;
     points.length = 0;
-    points.push(cc.p(vertices[VERTEX.OX1], vertices[VERTEX.OY1]));
-    points.push(cc.p(vertices[VERTEX.OX4], vertices[VERTEX.OY4]));
-    points.push(cc.p(vertices[VERTEX.OX3], vertices[VERTEX.OY3]));
-    points.push(cc.p(vertices[VERTEX.OX2], vertices[VERTEX.OY2]));
+    points.push(new cc.Point(vertices[VERTEX.OX1], vertices[VERTEX.OY1]));
+    points.push(new cc.Point(vertices[VERTEX.OX4], vertices[VERTEX.OY4]));
+    points.push(new cc.Point(vertices[VERTEX.OX3], vertices[VERTEX.OY3]));
+    points.push(new cc.Point(vertices[VERTEX.OX2], vertices[VERTEX.OY2]));
     }
 
     _createChildFormSkeletonData() {

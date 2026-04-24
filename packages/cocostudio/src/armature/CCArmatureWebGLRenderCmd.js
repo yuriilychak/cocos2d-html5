@@ -48,7 +48,7 @@
         }
 
         getAnchorPointInPoints() {
-            return cc.p(this._realAnchorPointInPoints);
+            return new cc.Point(this._realAnchorPointInPoints);
         }
 
         uploadData(f32buffer, ui32buffer, vertexDataOffset) {

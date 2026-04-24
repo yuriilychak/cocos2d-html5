@@ -105,7 +105,7 @@ var Box2DTestLayer = class Box2DTestLayer extends cc.LayerColor {
         var mgr = new cc.SpriteBatchNode(s_pathBlock, 150);
         this.addChild(mgr, 0, TAG_SPRITE_MANAGER);
 
-        this.addNewSpriteWithCoords(cc.p(screenSize.width / 2, screenSize.height / 2));
+        this.addNewSpriteWithCoords(new cc.Point(screenSize.width / 2, screenSize.height / 2));
 
         var label = new cc.LabelTTF("Tap screen", "Marker Felt", 32);
         this.addChild(label, 0);

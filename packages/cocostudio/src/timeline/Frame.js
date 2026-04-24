@@ -591,7 +591,7 @@ ccs.PositionFrame = class PositionFrame extends ccs.Frame {
 
     constructor () {
         super();
-        this._position = cc.p(0, 0);
+        this._position = new cc.Point(0, 0);
     }
 
     /**
@@ -616,7 +616,7 @@ ccs.PositionFrame = class PositionFrame extends ccs.Frame {
      */
     _onApply (percent) {
         if (this._node && (this._betweenX !== 0 || this._betweenY !== 0)) {
-            var p = cc.p(0, 0);
+            var p = new cc.Point(0, 0);
             p.x = this._position.x + this._betweenX * percent;
             p.y = this._position.y + this._betweenY * percent;
 
@@ -798,7 +798,7 @@ ccs.AnchorPointFrame = class AnchorPointFrame extends ccs.Frame {
 
     constructor () {
         super();
-        this._anchorPoint = cc.p(0, 0);
+        this._anchorPoint = new cc.Point(0, 0);
     }
 
     /**

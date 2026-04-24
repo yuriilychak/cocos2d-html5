@@ -27,7 +27,7 @@
 var Ball = class Ball extends cc.Sprite {
     constructor() {
         super();
-        this._velocity = cc.p(0,0);
+        this._velocity = new cc.Point(0,0);
         this._radius = 0;
     }
 
@@ -76,12 +76,12 @@ var Ball = class Ball extends cc.Sprite {
             }
 
             if (hit) {
-                var hitAngle = cc.pToAngle(cc.p(paddle.x - this.x, paddle.y - this.y)) + angleOffset;
+                var hitAngle = cc.Point.toAngle(new cc.Point(paddle.x - this.x, paddle.y - this.y)) + angleOffset;
 
-                var scalarVelocity = cc.pLength(this._velocity) * 1.00000005;
-                var velocityAngle = -cc.pToAngle(this._velocity) + 0.00000005 * hitAngle;
+                var scalarVelocity = cc.Point.length(this._velocity) * 1.00000005;
+                var velocityAngle = -cc.Point.toAngle(this._velocity) + 0.00000005 * hitAngle;
                 //this._velocity = -this._velocity.y;
-                this._velocity = cc.pMult(cc.pForAngle(velocityAngle), scalarVelocity);
+                this._velocity = cc.Point.mult(cc.Point.forAngle(velocityAngle), scalarVelocity);
             }
         }
     }

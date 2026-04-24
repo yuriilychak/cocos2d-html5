@@ -73,7 +73,7 @@ var SpriteLayer = class SpriteLayer extends cc.Layer {
 
         sprite.runAction(rot);
 
-        var jump1 = cc.jumpBy(4, cc.p(-400, 0), 100, 4);
+        var jump1 = cc.jumpBy(4, new cc.Point(-400, 0), 100, 4);
         var jump2 = jump1.reverse();
 
         var rot1 = cc.rotateBy(4, 360 * 2);

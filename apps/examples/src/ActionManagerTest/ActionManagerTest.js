@@ -161,7 +161,7 @@ var LogicTest = class LogicTest extends ActionManagerTest {
 	    grossini.y = 200;
 
         grossini.runAction(cc.sequence(
-            cc.moveBy(1, cc.p(150, 0)),
+            cc.moveBy(1, new cc.Point(150, 0)),
             cc.callFunc(this.onBugMe, this))
         );
 
@@ -232,7 +232,7 @@ var PauseTest = class PauseTest extends ActionManagerTest {
 	    grossini.y = 200;
 
 
-        var action = cc.moveBy(1, cc.p(150, 0));
+        var action = cc.moveBy(1, new cc.Point(150, 0));
 
         director.getActionManager().addAction(action, grossini, true);
 
@@ -261,10 +261,10 @@ var PauseTest = class PauseTest extends ActionManagerTest {
     // Automation
     //
     checkControl1(dt) {
-        this.control1 = cc.p(this._grossini.x, this._grossini.y);
+        this.control1 = new cc.Point(this._grossini.x, this._grossini.y);
     }
     checkControl2(dt) {
-        this.control2 = cc.p(this._grossini.x, this._grossini.y);
+        this.control2 = new cc.Point(this._grossini.x, this._grossini.y);
     }
     getExpectedResult() {
         var ret = [ {"x":200, "y":200}, {"x":350, "y":200} ];
@@ -301,7 +301,7 @@ var RemoveTest = class RemoveTest extends ActionManagerTest {
         l.x = s.width / 2;
 	    l.y = 245;
 
-        var move = cc.moveBy(2, cc.p(200, 0));
+        var move = cc.moveBy(2, new cc.Point(200, 0));
         var callback = cc.callFunc(this.stopAction, this);
         var sequence = cc.sequence(move, callback);
         sequence.tag = TAG_SEQUENCE;

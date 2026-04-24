@@ -371,7 +371,7 @@ ccs.DisplayManager = class DisplayManager extends cc.NewClass {
             return false;
 
         if (y !== undefined)
-            point = cc.p(point, y);
+            point = new cc.Point(point, y);
 
         if (this._currentDecoDisplay.getDisplayData().displayType === ccs.DISPLAY_TYPE_SPRITE) {
             /*
@@ -422,13 +422,13 @@ ccs.DisplayManager = class DisplayManager extends cc.NewClass {
 
     getAnchorPoint() {
         if (!this._displayRenderNode)
-            return cc.p(0, 0);
+            return new cc.Point(0, 0);
         return this._displayRenderNode.getAnchorPoint();
     }
 
     getAnchorPointInPoints() {
         if (!this._displayRenderNode)
-            return cc.p(0, 0);
+            return new cc.Point(0, 0);
         return this._displayRenderNode.getAnchorPointInPoints();
     }
 

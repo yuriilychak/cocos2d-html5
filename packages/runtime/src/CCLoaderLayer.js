@@ -97,7 +97,7 @@ class Dialog extends cc.Layer {
     this.backgroundSprite.setPosition(
       config.position
         ? config.position
-        : cc.p(winSize.width / 2, winSize.height / 2)
+        : new cc.Point(winSize.width / 2, winSize.height / 2)
     );
 
     //menu
@@ -112,7 +112,7 @@ class Dialog extends cc.Layer {
     this.menuItemCancel.setPosition(
       config.cancelBtn.position
         ? config.cancelBtn.position
-        : cc.p(
+        : new cc.Point(
             this.backgroundSprite.width / 2 -
               this.menuItemCancel.width / 2 -
               20,
@@ -122,7 +122,7 @@ class Dialog extends cc.Layer {
     this.menuItemConfirm.setPosition(
       config.confirmBtn.position
         ? config.confirmBtn.position
-        : cc.p(
+        : new cc.Point(
             this.backgroundSprite.width / 2 +
               this.menuItemConfirm.width / 2 +
               20,
@@ -130,7 +130,7 @@ class Dialog extends cc.Layer {
           )
     );
     var menu = new cc.Menu(this.menuItemConfirm, this.menuItemCancel);
-    menu.setPosition(cc.p(0, 0));
+    menu.setPosition(new cc.Point(0, 0));
     this.backgroundSprite.addChild(menu);
 
     //message
@@ -160,7 +160,7 @@ class Dialog extends cc.Layer {
     this.messageLabel.setPosition(
       config.messageLabel.position
         ? config.messageLabel.position
-        : cc.p(
+        : new cc.Point(
             this.backgroundSprite.width / 2,
             this.backgroundSprite.height - this.messageLabel.height / 2 - 20
           )
@@ -198,7 +198,7 @@ class Dialog extends cc.Layer {
       callback,
       this
     );
-    menuLabel.setPosition(cc.p(menuItem.width / 2, menuItem.height / 2));
+    menuLabel.setPosition(new cc.Point(menuItem.width / 2, menuItem.height / 2));
     menuItem.addChild(menuLabel);
     return menuItem;
   }
@@ -525,9 +525,9 @@ class LoaderLayer extends cc.Layer {
     //title
     if (config.title.show) {
       this.titleSprite = new cc.Sprite(config.title.res);
-      var defaultTitlePosition = cc.pAdd(
+      var defaultTitlePosition = cc.Point.add(
         cc.visibleRect.center,
-        cc.p(0, this._scaleFactor < 1 ? 0 : this._isLandScape ? -80 : 30)
+        new cc.Point(0, this._scaleFactor < 1 ? 0 : this._isLandScape ? -80 : 30)
       );
       this.titleSprite.setPosition(
         config.title.position ? config.title.position : defaultTitlePosition
@@ -541,9 +541,9 @@ class LoaderLayer extends cc.Layer {
     //logo
     if (config.logo.show) {
       this.logoSprite = new cc.Sprite(config.logo.res);
-      var defaultLogoPosition = cc.pAdd(
+      var defaultLogoPosition = cc.Point.add(
         cc.visibleRect.top,
-        cc.p(
+        new cc.Point(
           0,
           this._scaleFactor < 1
             ? 0
@@ -590,16 +590,16 @@ class LoaderLayer extends cc.Layer {
           (this.progressBackgroundSprite.height -
             this.progressBarSprite.height) /
           2;
-        config.progressBar.offset = cc.p(
+        config.progressBar.offset = new cc.Point(
           deltaProgressWithX,
           deltaProgressWithY
         );
       }
       this.progressBarSprite.setPosition(config.progressBar.offset);
       this.progressBackgroundSprite.addChild(this.progressBarSprite);
-      var defaultProgressPosition = cc.pAdd(
+      var defaultProgressPosition = cc.Point.add(
         cc.visibleRect.bottom,
-        cc.p(0, this.progressBarSprite.height / 2 + this._isLandScape ? 60 : 80)
+        new cc.Point(0, this.progressBarSprite.height / 2 + this._isLandScape ? 60 : 80)
       );
       this.progressBackgroundSprite.setPosition(
         config.progressBar.position
@@ -620,13 +620,13 @@ class LoaderLayer extends cc.Layer {
         config.tips.position
           ? config.tips.position
           : this.progressBackgroundSprite
-            ? cc.p(
+            ? new cc.Point(
                 this.progressBackgroundSprite.x,
                 this.progressBackgroundSprite.y +
                   this.progressBackgroundSprite.height / 2 +
                   20
               )
-            : cc.pAdd(cc.visibleRect.bottom, cc.p(0, 100))
+            : cc.Point.add(cc.visibleRect.bottom, new cc.Point(0, 100))
       );
       this._contentLayer.addChild(this.tipsLabel);
     }
@@ -634,7 +634,7 @@ class LoaderLayer extends cc.Layer {
     if (this._scaleFactor < 1) {
       this._contentLayer.setScale(this._scaleFactor);
       this._contentLayer.setPosition(
-        cc.pAdd(this._contentLayer.getPosition(), cc.p(0, -50))
+        cc.Point.add(this._contentLayer.getPosition(), new cc.Point(0, -50))
       );
     }
   }
@@ -647,7 +647,7 @@ class LoaderLayer extends cc.Layer {
       );
       if (cc.LoaderLayer._isDefaultProgress) {
         this._barPoint.setPosition(
-          cc.p(this.progressBarSprite.width, this.progressBarSprite.height / 2)
+          new cc.Point(this.progressBarSprite.width, this.progressBarSprite.height / 2)
         );
       }
     }
@@ -1062,9 +1062,9 @@ class LoaderLayer extends cc.Layer {
 
         if (typeof config.logo.action == "undefined" && LoaderLayer._useDefaultSource) {
             config.logo.action = cc.sequence(
-                cc.spawn(cc.moveBy(0.4, cc.p(0, 40)).easing(cc.easeIn(0.5)), cc.scaleTo(0.4, 0.95, 1.05).easing(cc.easeIn(0.5))),
+                cc.spawn(cc.moveBy(0.4, new cc.Point(0, 40)).easing(cc.easeIn(0.5)), cc.scaleTo(0.4, 0.95, 1.05).easing(cc.easeIn(0.5))),
                 cc.delayTime(0.08),
-                cc.spawn(cc.moveBy(0.4, cc.p(0, -40)).easing(cc.easeOut(0.5)), cc.scaleTo(0.4, 1.05, 0.95).easing(cc.easeOut(0.5)))
+                cc.spawn(cc.moveBy(0.4, new cc.Point(0, -40)).easing(cc.easeOut(0.5)), cc.scaleTo(0.4, 1.05, 0.95).easing(cc.easeOut(0.5)))
             ).repeatForever();
             config.logo.action.retain();
         }

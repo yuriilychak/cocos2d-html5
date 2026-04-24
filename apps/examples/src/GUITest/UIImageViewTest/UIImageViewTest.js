@@ -78,35 +78,35 @@ var UIImageViewTest_ContentSize = class UIImageViewTest_ContentSize extends UIMa
             this._bottomDisplayLabel.setString("");
             var alert = new ccui.Text("ImageView ContentSize Change", "Marker Felt", 26);
             alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
+            alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
 
             this._mainNode.addChild(alert);
 
             var status = new ccui.Text("child ImageView position percent", "Marker Felt", 16);
             status.setColor(cc.color.RED);
-            status.setPosition(cc.p(widgetSize.width/2, widgetSize.height/2 + 80));
+            status.setPosition(new cc.Point(widgetSize.width/2, widgetSize.height/2 + 80));
             this._mainNode.addChild(status,20);
 
             // Create the imageview
             var imageView = new ccui.ImageView("ccs-res/cocosui/buttonHighlighted.png");
             imageView.setScale9Enabled(true);
             imageView.setContentSize(cc.size(200, 80));
-            imageView.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+            imageView.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
 
             var imageViewChild = new ccui.ImageView("ccs-res/cocosui/buttonHighlighted.png");
             imageViewChild.setScale9Enabled(true);
             imageViewChild.setSizeType(ccui.Widget.SIZE_PERCENT);
             imageViewChild.setPositionType(ccui.Widget.POSITION_PERCENT);
-            imageViewChild.setSizePercent(cc.p(0.5, 0.5));
-            imageViewChild.setPositionPercent(cc.p(0.5, 0.5));
-            //imageViewChild.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+            imageViewChild.setSizePercent(new cc.Point(0.5, 0.5));
+            imageViewChild.setPositionPercent(new cc.Point(0.5, 0.5));
+            //imageViewChild.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
 
             var imageViewChild2 = new ccui.ImageView("ccs-res/cocosui/buttonHighlighted.png");
             imageViewChild2.setScale9Enabled(true);
             imageViewChild2.setSizeType(ccui.Widget.SIZE_PERCENT);
             imageViewChild2.setPositionType(ccui.Widget.POSITION_PERCENT);
-            imageViewChild2.setSizePercent(cc.p(0.5, 0.5));
-            imageViewChild2.setPositionPercent(cc.p(0.5, 0.5));
+            imageViewChild2.setSizePercent(new cc.Point(0.5, 0.5));
+            imageViewChild2.setPositionPercent(new cc.Point(0.5, 0.5));
             imageViewChild.addChild(imageViewChild2);
 
             imageView.addChild(imageViewChild);
@@ -119,7 +119,7 @@ var UIImageViewTest_ContentSize = class UIImageViewTest_ContentSize extends UIMa
                     var height = (Math.random() * 80 | 0) + 30;
                     imageView.setContentSize(cc.size(width, height));
 
-                    imageViewChild.setPositionPercent(cc.p(Math.random().toFixed(2), Math.random().toFixed(2)));
+                    imageViewChild.setPositionPercent(new cc.Point(Math.random().toFixed(2), Math.random().toFixed(2)));
                     status.setString("child ImageView position percent: "+imageViewChild.getPositionPercent().x+", "+imageViewChild.getPositionPercent().y);
                 }
             });
@@ -146,7 +146,7 @@ var UIImageViewFlipTest = class UIImageViewFlipTest extends UIMainLayer {
             imageView.setFlippedX(true);
             imageView.setScale(0.5);
             imageView.ignoreContentAdaptWithSize(false);
-            imageView.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+            imageView.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
 
             this._mainNode.addChild(imageView);
 

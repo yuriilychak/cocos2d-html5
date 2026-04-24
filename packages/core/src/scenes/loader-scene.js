@@ -28,7 +28,7 @@ import { Node } from "../base-nodes/node";
 import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
 import { visibleRect } from "../platform/visible-rect";
-import { pAdd } from "../support/point-extension";
+
 import EventManager from "../event-manager/event-manager";
 import { Director } from "../director/director";
 import Loader from "../boot/loader";
@@ -83,7 +83,7 @@ export class LoaderScene extends Scene {
       "Arial",
       fontSize
     ));
-    label.setPosition(pAdd(visibleRect.center, new Point(0, lblHeight)));
+    label.setPosition(Point.add(visibleRect.center, new Point(0, lblHeight)));
     label.setColor(new Color(180, 180, 180));
     bgLayer.addChild(this._label, 10);
     return true;

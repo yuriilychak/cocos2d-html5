@@ -65,7 +65,7 @@
         }
 
         updateParticlePosition(particle, position) {
-            cc.pIn(particle.drawPos, position);
+            cc.Point.copyIn(particle.drawPos, position);
         }
 
         rendering(ctx, scaleX, scaleY) {

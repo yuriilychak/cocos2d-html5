@@ -74,7 +74,7 @@
 
         var position = json["Position"];
         if (position != null && (position["X"] != null || position["Y"] != null))
-            node.setPosition(cc.p(position["X"] || 0, position["Y"] || 0));
+            node.setPosition(new cc.Point(position["X"] || 0, position["Y"] || 0));
 
         var scale = json["Scale"];
         if (scale != null) {
@@ -100,7 +100,7 @@
             if (anchor["ScaleY"] == null)
                 anchor["ScaleY"] = 0;
             if (anchor["ScaleX"] != 0.5 || anchor["ScaleY"] != 0.5)
-                node.setAnchorPoint(cc.p(anchor["ScaleX"], anchor["ScaleY"]));
+                node.setAnchorPoint(new cc.Point(anchor["ScaleX"], anchor["ScaleY"]));
         }
 
         if (json["ZOrder"] != null)
@@ -151,7 +151,7 @@
                             if (child.getPositionType() === ccui.Widget.POSITION_PERCENT) {
                                 var position = child.getPositionPercent();
                                 var anchor = node.getAnchorPoint();
-                                child.setPositionPercent(cc.p(position.x + anchor.x, position.y + anchor.y));
+                                child.setPositionPercent(new cc.Point(position.x + anchor.x, position.y + anchor.y));
                             }
                         }
                         node.addChild(child);
@@ -456,7 +456,7 @@
     var setLayoutBackgroundVector = function (widget, vector) {
         var x = vector["ScaleX"] || 0;
         var y = vector["ScaleY"] || 0;
-        widget.setBackGroundColorVector(cc.p(x, y));
+        widget.setBackGroundColorVector(new cc.Point(x, y));
     };
 
     /**

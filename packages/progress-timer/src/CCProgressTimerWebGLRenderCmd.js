@@ -34,8 +34,8 @@
             this._needDraw = true;
             this._progressDirty = true;
 
-            this._bl = cc.p();
-            this._tr = cc.p();
+            this._bl = new cc.Point();
+            this._tr = new cc.Point();
             this._transformUpdating = false;
 
             this.initCmd();
@@ -270,9 +270,9 @@
             let i;
             const alpha = node._percentage / 100.0;
             const locBarChangeRate = node._barChangeRate;
-            const alphaOffset = cc.pMult(cc.p((1.0 - locBarChangeRate.x) + alpha * locBarChangeRate.x,
+            const alphaOffset = cc.Point.mult(new cc.Point((1.0 - locBarChangeRate.x) + alpha * locBarChangeRate.x,
                 (1.0 - locBarChangeRate.y) + alpha * locBarChangeRate.y), 0.5);
-            const min = cc.pSub(node._midPoint, alphaOffset), max = cc.pAdd(node._midPoint, alphaOffset);
+            const min = cc.Point.sub(node._midPoint, alphaOffset), max = cc.Point.add(node._midPoint, alphaOffset);
 
             if (min.x < 0) {
                 max.x += -min.x;
@@ -379,8 +379,8 @@
             //    We find the vector to do a hit detection based on the percentage
             //    We know the first vector is the one @ 12 o'clock (top,mid) so we rotate
             //    from that by the progress angle around the m_tMidpoint pivot
-            const topMid = cc.p(locMidPoint.x, 1);
-            const percentagePt = cc.pRotateByAngle(topMid, locMidPoint, angle);
+            const topMid = new cc.Point(locMidPoint.x, 1);
+            const percentagePt = cc.Point.rotateByAngle(topMid, locMidPoint, angle);
 
             let index = 0;
             let hit;
@@ -411,13 +411,13 @@
                     //    Remember that the top edge is split in half for the 12 o'clock position
                     //    Let's deal with that here by finding the correct endpoints
                     if (i === 0)
-                        edgePtB = cc.pLerp(edgePtA, edgePtB, 1 - locMidPoint.x);
+                        edgePtB = cc.Point.lerp(edgePtA, edgePtB, 1 - locMidPoint.x);
                     else if (i === 4)
-                        edgePtA = cc.pLerp(edgePtA, edgePtB, 1 - locMidPoint.x);
+                        edgePtA = cc.Point.lerp(edgePtA, edgePtB, 1 - locMidPoint.x);
 
                     // retPoint are returned by ccpLineIntersect
-                    const retPoint = cc.p(0, 0);
-                    if (cc.pLineIntersect(edgePtA, edgePtB, locMidPoint, percentagePt, retPoint)) {
+                    const retPoint = new cc.Point(0, 0);
+                    if (cc.Point.lineIntersect(edgePtA, edgePtB, locMidPoint, percentagePt, retPoint)) {
                         //    Since our hit test is on rays we have to deal with the top edge
                         //    being in split in half so we have to test as a segment
                         if ((i === 0 || i === 4)) {
@@ -439,7 +439,7 @@
                 }
 
                 //    Now that we have the minimum magnitude we can use that to find our intersection
-                hit = cc.pAdd(locMidPoint, cc.pMult(cc.pSub(percentagePt, locMidPoint), min_t));
+                hit = cc.Point.add(locMidPoint, cc.Point.mult(cc.Point.sub(percentagePt, locMidPoint), min_t));
             }
 
             //    The size of the vertex data is the index from the hitpoint
@@ -478,11 +478,11 @@
             if (index < cc.ProgressTimer.TEXTURE_COORDS_COUNT) {
                 const locProTextCoords = cc.ProgressTimer.TEXTURE_COORDS;
                 if (this._node._reverseDirection)
-                    return cc.p((locProTextCoords >> (7 - (index << 1))) & 1, (locProTextCoords >> (7 - ((index << 1) + 1))) & 1);
+                    return new cc.Point((locProTextCoords >> (7 - (index << 1))) & 1, (locProTextCoords >> (7 - ((index << 1) + 1))) & 1);
                 else
-                    return cc.p((locProTextCoords >> ((index << 1) + 1)) & 1, (locProTextCoords >> (index << 1)) & 1);
+                    return new cc.Point((locProTextCoords >> ((index << 1) + 1)) & 1, (locProTextCoords >> (index << 1)) & 1);
             }
-            return cc.p(0, 0);
+            return new cc.Point(0, 0);
         }
 
         _textureCoordFromAlphaPoint(coords, ax, ay) {
@@ -495,8 +495,8 @@
             const uvs = locSprite._renderCmd._vertices,
                 bl = uvs[1],
                 tr = uvs[2];
-            const min = cc.p(bl.u, bl.v);
-            const max = cc.p(tr.u, tr.v);
+            const min = new cc.Point(bl.u, bl.v);
+            const max = new cc.Point(tr.u, tr.v);
 
             //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
             if (locSprite.textureRectRotated) {

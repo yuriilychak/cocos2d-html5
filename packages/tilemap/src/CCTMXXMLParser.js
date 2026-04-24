@@ -128,7 +128,7 @@ cc.TMXLayerInfo = class TMXLayerInfo extends cc.NewClass {
         this.ownTiles = true;
         this._minGID = 100000;
         this._maxGID = 0;
-        this.offset = cc.p(0,0);
+        this.offset = new cc.Point(0,0);
     }
 
     /**
@@ -712,7 +712,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
                     layer._opacity = parseInt(255 * parseFloat(opacity));
                 else
                     layer._opacity = 255;
-                layer.offset = cc.p(parseFloat(selLayer.getAttribute('x')) || 0, parseFloat(selLayer.getAttribute('y')) || 0);
+                layer.offset = new cc.Point(parseFloat(selLayer.getAttribute('x')) || 0, parseFloat(selLayer.getAttribute('y')) || 0);
 
                 var nodeValue = '';
                 for (j = 0; j < data.childNodes.length; j++) {
@@ -783,7 +783,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
                 var selGroup = objectGroups[i];
                 var objectGroup = new cc.TMXObjectGroup();
                 objectGroup.groupName = selGroup.getAttribute('name');
-                objectGroup.setPositionOffset(cc.p(parseFloat(selGroup.getAttribute('x')) * this.getTileSize().width || 0,
+                objectGroup.setPositionOffset(new cc.Point(parseFloat(selGroup.getAttribute('x')) * this.getTileSize().width || 0,
                     parseFloat(selGroup.getAttribute('y')) * this.getTileSize().height || 0));
 
                 var groupProps = selGroup.querySelectorAll("objectgroup > properties > property");

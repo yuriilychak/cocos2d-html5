@@ -321,7 +321,7 @@ var ParticleDemo = class ParticleDemo extends BaseTestLayer {
         this._background.x = s.width / 2;
         this._background.y = s.height - 180;
 
-        var move = cc.moveBy(4, cc.p(300, 0));
+        var move = cc.moveBy(4, new cc.Point(300, 0));
         var move_back = move.reverse();
 
         var seq = cc.sequence(move, move_back);
@@ -366,9 +366,9 @@ var ParticleDemo = class ParticleDemo extends BaseTestLayer {
     }
 
     _moveToTouchPoint(location) {
-        var pos = cc.p(0, 0);
+        var pos = new cc.Point(0, 0);
         if (this._background) {
-            pos = this._background.convertToWorldSpace(cc.p(0, 0));
+            pos = this._background.convertToWorldSpace(new cc.Point(0, 0));
         }
         this._emitter.x = location.x - pos.x;
         this._emitter.y = location.y - pos.y;
@@ -525,7 +525,7 @@ var DemoBigFlower = class DemoBigFlower extends ParticleDemo {
         this._emitter.duration = -1;
 
         // gravity
-        this._emitter.gravity = cc.p(0, 0);
+        this._emitter.gravity = new cc.Point(0, 0);
 
         // angle
         this._emitter.angle = 90;
@@ -546,7 +546,7 @@ var DemoBigFlower = class DemoBigFlower extends ParticleDemo {
         // emitter position
         this._emitter.x = 160;
         this._emitter.y = 240;
-        this._emitter.posVar = cc.p(0, 0);
+        this._emitter.posVar = new cc.Point(0, 0);
 
         // life of particles
         this._emitter.life = 4;
@@ -598,7 +598,7 @@ var DemoRotFlower = class DemoRotFlower extends ParticleDemo {
         this._emitter.duration = -1;
 
         // gravity
-        this._emitter.gravity = cc.p(0, 0);
+        this._emitter.gravity = new cc.Point(0, 0);
 
         // angle
         this._emitter.angle = 90;
@@ -619,7 +619,7 @@ var DemoRotFlower = class DemoRotFlower extends ParticleDemo {
         // emitter position
         this._emitter.x = 160;
         this._emitter.y = 240;
-        this._emitter.posVar = cc.p(0, 0);
+        this._emitter.posVar = new cc.Point(0, 0);
 
         // life of particles
         this._emitter.life = 3;
@@ -741,7 +741,7 @@ var DemoSnow = class DemoSnow extends ParticleDemo {
         this._emitter.lifeVar = 1;
 
         // gravity
-        this._emitter.gravity = cc.p(0, -10);
+        this._emitter.gravity = new cc.Point(0, -10);
 
         // speed of particles
         this._emitter.speed = 130;
@@ -805,7 +805,7 @@ var DemoModernArt = class DemoModernArt extends ParticleDemo {
         this._emitter.duration = -1;
 
         // gravity
-        this._emitter.gravity = cc.p(0, 0);
+        this._emitter.gravity = new cc.Point(0, 0);
 
         // angle
         this._emitter.angle = 0;
@@ -896,8 +896,8 @@ var ParallaxParticle = class ParallaxParticle extends ParticleDemo {
         var p1 = new cc.Sprite(s_back3);
         var p2 = new cc.Sprite(s_back3);
 
-        p.addChild(p1, 1, cc.p(0.5, 1), cc.p(0, 250));
-        p.addChild(p2, 2, cc.p(1.5, 1), cc.p(0, 50));
+        p.addChild(p1, 1, new cc.Point(0.5, 1), new cc.Point(0, 250));
+        p.addChild(p2, 2, new cc.Point(1.5, 1), new cc.Point(0, 50));
 
         this._emitter = new cc.ParticleFlower();
         this._emitter.texture = cc.textureCache.addImage(s_fire);
@@ -910,7 +910,7 @@ var ParallaxParticle = class ParallaxParticle extends ParticleDemo {
         p2.addChild(par, 10);
         par.texture = cc.textureCache.addImage(s_fire);
 
-        var move = cc.moveBy(4, cc.p(300, 0));
+        var move = cc.moveBy(4, new cc.Point(300, 0));
         var move_back = move.reverse();
         var seq = cc.sequence(move, move_back);
         p.runAction(seq.repeatForever());
@@ -1000,7 +1000,7 @@ var RadiusMode1 = class RadiusMode1 extends ParticleDemo {
         var size = director.getWinSize();
         this._emitter.x = size.width / 2;
         this._emitter.y = size.height / 2;
-        this._emitter.posVar = cc.p(0, 0);
+        this._emitter.posVar = new cc.Point(0, 0);
 
         // life of particles
         this._emitter.life = 5;
@@ -1071,7 +1071,7 @@ var RadiusMode2 = class RadiusMode2 extends ParticleDemo {
         var size = director.getWinSize();
         this._emitter.x = size.width / 2;
         this._emitter.y = size.height / 2;
-        this._emitter.posVar = cc.p(0, 0);
+        this._emitter.posVar = new cc.Point(0, 0);
 
         // life of particles
         this._emitter.life = 4;
@@ -1143,7 +1143,7 @@ var Issue704 = class Issue704 extends ParticleDemo {
         var size = director.getWinSize();
         this._emitter.x = size.width / 2;
         this._emitter.y = size.height / 2;
-        this._emitter.posVar = cc.p(0, 0);
+        this._emitter.posVar = new cc.Point(0, 0);
 
         // life of particles
         this._emitter.life = 5;

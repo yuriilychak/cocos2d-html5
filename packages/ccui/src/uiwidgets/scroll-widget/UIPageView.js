@@ -51,7 +51,7 @@ ccui.PageView = class PageView extends ccui.ListView {
         super();
 
         this._childFocusCancelOffset = 5;
-        this._indicatorPositionAsAnchorPoint = cc.p(0.5, 0.1);
+        this._indicatorPositionAsAnchorPoint = new cc.Point(0.5, 0.1);
         this._pageViewEventListener = null;
         this._pageViewEventSelector = null;
 
@@ -116,7 +116,7 @@ ccui.PageView = class PageView extends ccui.ListView {
      * @param {number} idx A given index in the PageView. Index start from 0 to pageCount -1.
      */
     scrollToItem(idx) {
-        super.scrollToItem(idx, cc.p(0.5, 0.5), cc.p(0.5, 0.5));
+        super.scrollToItem(idx, new cc.Point(0.5, 0.5), new cc.Point(0.5, 0.5));
     }
 
     /**
@@ -149,10 +149,10 @@ ccui.PageView = class PageView extends ccui.ListView {
     setDirection(direction) {
         super.setDirection(direction);
         if (direction === ccui.ScrollView.DIR_HORIZONTAL) {
-            this._indicatorPositionAsAnchorPoint = cc.p(0.5, 0.1);
+            this._indicatorPositionAsAnchorPoint = new cc.Point(0.5, 0.1);
         }
         else if (direction === ccui.ScrollView.DIR_VERTICAL) {
-            this._indicatorPositionAsAnchorPoint = cc.p(0.1, 0.5);
+            this._indicatorPositionAsAnchorPoint = new cc.Point(0.1, 0.5);
         }
 
         if (this._indicator) {
@@ -226,7 +226,7 @@ ccui.PageView = class PageView extends ccui.ListView {
             var contentSize = this.getContentSize();
             var posX = contentSize.width * this._indicatorPositionAsAnchorPoint.x;
             var posY = contentSize.height * this._indicatorPositionAsAnchorPoint.y;
-            this._indicator.setPosition(cc.p(posX, posY));
+            this._indicator.setPosition(new cc.Point(posX, posY));
         }
     }
 
@@ -240,14 +240,14 @@ ccui.PageView = class PageView extends ccui.ListView {
         var touchMoveVelocity = this._flattenVectorByDirection(this._calculateTouchMoveVelocity());
 
         var INERTIA_THRESHOLD = 500;
-        if (cc.pLength(touchMoveVelocity) < INERTIA_THRESHOLD) {
+        if (cc.Point.length(touchMoveVelocity) < INERTIA_THRESHOLD) {
             this._startMagneticScroll();
         }
         else {
             // Handle paging by inertia force.
             var currentPage = this.getItem(this._curPageIdx);
-            var destination = this._calculateItemDestination(cc.p(0.5, 0.5), currentPage, cc.p(0.5, 0.5));
-            var deltaToCurrentPage = cc.pSub(destination, this.getInnerContainerPosition());
+            var destination = this._calculateItemDestination(new cc.Point(0.5, 0.5), currentPage, new cc.Point(0.5, 0.5));
+            var deltaToCurrentPage = cc.Point.sub(destination, this.getInnerContainerPosition());
             deltaToCurrentPage = this._flattenVectorByDirection(deltaToCurrentPage);
 
             // If the direction of displacement to current page and the direction of touch are same, just start magnetic scroll to the current page.
@@ -309,7 +309,7 @@ ccui.PageView = class PageView extends ccui.ListView {
      * @param {number} index A given index in PageView. Index start from 0 to pageCount -1.
      */
     setCurrentPageIndex(index) {
-        this.jumpToItem(index, cc.p(0.5, 0.5), cc.p(0.5, 0.5));
+        this.jumpToItem(index, new cc.Point(0.5, 0.5), new cc.Point(0.5, 0.5));
     }
 
     /**

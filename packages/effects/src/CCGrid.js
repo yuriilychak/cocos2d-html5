@@ -45,7 +45,7 @@ export class GridBase extends cc.NewClass {
     this._gridSize = null;
     this._gridRect = new cc.rect();
     this._texture = null;
-    this._step = cc.p(0, 0);
+    this._step = new cc.Point(0, 0);
     this._grabber = null;
     this._isTextureFlipped = false;
     this._glProgramState = null;
@@ -131,7 +131,7 @@ export class GridBase extends cc.NewClass {
    * @return {cc.Point}
    */
   getStep() {
-    return cc.p(this._step.x, this._step.y);
+    return new cc.Point(this._step.x, this._step.y);
   }
 
   /**
@@ -498,7 +498,7 @@ export class Grid3D extends GridBase {
 
         const l2 = [e, f, g, h];
         const tex1 = [a * 2, b * 2, c * 2, d * 2];
-        const tex2 = [cc.p(x1, y1), cc.p(x2, y1), cc.p(x2, y2), cc.p(x1, y2)];
+        const tex2 = [new cc.Point(x1, y1), new cc.Point(x2, y1), new cc.Point(x2, y2), new cc.Point(x1, y2)];
         for (i = 0; i < 4; ++i) {
           locVertices[l1[i]] = l2[i].x;
           locVertices[l1[i] + 1] = l2[i].y;

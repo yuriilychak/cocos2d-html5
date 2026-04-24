@@ -151,16 +151,16 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
         this.onFocusChanged = null;
         this.onNextFocusedWidget = null;
         this._brightStyle = ccui.Widget.BRIGHT_STYLE_NONE;
-        this._touchBeganPosition = cc.p(0, 0);
-        this._touchMovePosition = cc.p(0, 0);
-        this._touchEndPosition = cc.p(0, 0);
+        this._touchBeganPosition = new cc.Point(0, 0);
+        this._touchMovePosition = new cc.Point(0, 0);
+        this._touchEndPosition = new cc.Point(0, 0);
         this._widgetType = ccui.Widget.TYPE_WIDGET;
         this._customSize = cc.size(0, 0);
         this._layoutParameterDictionary = {};
         this._sizeType = ccui.Widget.SIZE_ABSOLUTE;
-        this._sizePercent = cc.p(0, 0);
+        this._sizePercent = new cc.Point(0, 0);
         this._positionType = ccui.Widget.POSITION_ABSOLUTE;
-        this._positionPercent = cc.p(0, 0);
+        this._positionPercent = new cc.Point(0, 0);
         this._nodes = [];
         this._layoutParameterType = ccui.LayoutParameter.NONE;
         this.init();
@@ -221,7 +221,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
 
         this.onFocusChanged = this.onFocusChange;
         this.onNextFocusedWidget = null;
-        this.setAnchorPoint(cc.p(0.5, 0.5));
+        this.setAnchorPoint(new cc.Point(0.5, 0.5));
 
         this.ignoreContentAdaptWithSize(true);
         return true;
@@ -547,7 +547,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
                 }
                 break;
             case ccui.Widget.POSITION_PERCENT:
-                absPos = cc.p(parentSize.width * this._positionPercent.x, parentSize.height * this._positionPercent.y);
+                absPos = new cc.Point(parentSize.width * this._positionPercent.x, parentSize.height * this._positionPercent.y);
                 break;
             default:
                 break;
@@ -637,7 +637,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
      * @returns {cc.Point} world position of ccui.Widget.
      */
     getWorldPosition() {
-        return this.convertToWorldSpace(cc.p(this._anchorPoint.x * this._contentSize.width, this._anchorPoint.y * this._contentSize.height));
+        return this.convertToWorldSpace(new cc.Point(this._anchorPoint.x * this._contentSize.width, this._anchorPoint.y * this._contentSize.height));
     }
     /**
      * Gets the Virtual Renderer of widget.
@@ -1205,7 +1205,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
             this._positionPercent.x = component.getPositionPercentX();
             this._positionPercent.y = component.getPositionPercentY();
         }
-        return cc.p(this._positionPercent);
+        return new cc.Point(this._positionPercent);
     }
     _getXPercent() {
         if (this._usingLayoutComponent) {
@@ -1341,21 +1341,21 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
      * @returns {cc.Point}
      */
     getTouchBeganPosition() {
-        return cc.p(this._touchBeganPosition);
+        return new cc.Point(this._touchBeganPosition);
     }
     /**
      * Gets the position of touch moved event
      * @returns {cc.Point}
      */
     getTouchMovePosition() {
-        return cc.p(this._touchMovePosition);
+        return new cc.Point(this._touchMovePosition);
     }
     /**
      * Gets the position of touch end event
      * @returns {cc.Point}
      */
     getTouchEndPosition() {
-        return cc.p(this._touchEndPosition);
+        return new cc.Point(this._touchEndPosition);
     }
     /**
      * get widget type

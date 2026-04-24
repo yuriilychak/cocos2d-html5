@@ -81,7 +81,7 @@ cc.MotionStreak = class MotionStreak extends cc.Node {
      */
     constructor(fade, minSeg, stroke, color, texture) {
         super();
-        this._positionR = cc.p(0, 0);
+        this._positionR = new cc.Point(0, 0);
         this._blendFunc = new cc.BlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
 
         this.fastMode = false;
@@ -252,7 +252,7 @@ cc.MotionStreak = class MotionStreak extends cc.Node {
         if (cc.isString(texture))
             texture = cc.textureCache.addImage(texture);
 
-        super.setPosition(cc.p(0, 0));
+        super.setPosition(new cc.Point(0, 0));
         this.anchorX = 0;
         this.anchorY = 0;
         this.ignoreAnchor = true;
@@ -444,10 +444,10 @@ cc.MotionStreak = class MotionStreak extends cc.Node {
         if (locNuPoints >= this._maxPoints)
             appendNewPoint = false;
         else if (locNuPoints > 0) {
-            var a1 = cc.pDistanceSQ(cc.p(locPointVertexes[(locNuPoints - 1) * 2], locPointVertexes[(locNuPoints - 1) * 2 + 1]),
+            var a1 = cc.Point.distanceSQ(new cc.Point(locPointVertexes[(locNuPoints - 1) * 2], locPointVertexes[(locNuPoints - 1) * 2 + 1]),
                     this._positionR) < this._minSeg;
-            var a2 = (locNuPoints === 1) ? false : (cc.pDistanceSQ(
-                cc.p(locPointVertexes[(locNuPoints - 2) * 2], locPointVertexes[(locNuPoints - 2) * 2 + 1]), this._positionR) < (this._minSeg * 2.0));
+            var a2 = (locNuPoints === 1) ? false : (cc.Point.distanceSQ(
+                new cc.Point(locPointVertexes[(locNuPoints - 2) * 2], locPointVertexes[(locNuPoints - 2) * 2 + 1]), this._positionR) < (this._minSeg * 2.0));
             if (a1 || a2)
                 appendNewPoint = false;
         }

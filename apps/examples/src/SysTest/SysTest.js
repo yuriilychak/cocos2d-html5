@@ -280,7 +280,7 @@ var ScriptTestLayer = class ScriptTestLayer extends SysTestBase {
         this._am = null;
 
         var menu = new cc.Menu();
-        menu.setPosition(cc.p(0, 0));
+        menu.setPosition(new cc.Point(0, 0));
         menu.width = winSize.width;
         menu.height = winSize.height;
         this.addChild(menu, 1);
@@ -291,7 +291,7 @@ var ScriptTestLayer = class ScriptTestLayer extends SysTestBase {
         menu.addChild(item2);
 
         menu.alignItemsVerticallyWithPadding(8);
-        menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
+        menu.setPosition(cc.Point.add(cc.visibleRect.left, new cc.Point(+180, 0)));
     }
 
     getTitle() {
@@ -317,13 +317,13 @@ var RestartGameLayerTest = class RestartGameLayerTest extends SysTestBase {
     constructor() {
         super();
         var menu = new cc.Menu();
-        menu.setPosition(cc.p(0, 0));
+        menu.setPosition(new cc.Point(0, 0));
         menu.width = winSize.width;
         menu.height = winSize.height;
         this.addChild(menu, 1);
         var item1 = new cc.MenuItemLabel(new cc.LabelTTF("restartGame", "Arial", 22), this.restartGame, this);
         menu.addChild(item1);
-        menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
+        menu.setPosition(cc.Point.add(cc.visibleRect.left, new cc.Point(+180, 0)));
     }
 
 };

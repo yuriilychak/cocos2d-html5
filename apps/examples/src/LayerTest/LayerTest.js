@@ -484,7 +484,7 @@ class LayerGradientTest extends LayerTest {
         this.pixel1 = {"0": 255, "1": 0, "2": 0, "3": 255};
 
         this.pixel2 = {"0": 0, "1": 255, "2": 0, "3": 255};
-        var layer1 = new cc.LayerGradient(cc.color(255, 0, 0, 255), cc.color(0, 255, 0, 255), cc.p(0.9, 0.9));
+        var layer1 = new cc.LayerGradient(cc.color(255, 0, 0, 255), cc.color(0, 255, 0, 255), new cc.Point(0.9, 0.9));
         this.addChild(layer1, 0, cc.TAG_LAYER);
 
         if( 'touches' in cc.sys.capabilities ){
@@ -525,8 +525,8 @@ class LayerGradientTest extends LayerTest {
 
     updateGradient(pos) {
         //----start7----updateGradient
-        var diff = cc.pSub(cc.p(winSize.width / 2, winSize.height / 2), pos);
-        diff = cc.pNormalize(diff);
+        var diff = cc.Point.sub(new cc.Point(winSize.width / 2, winSize.height / 2), pos);
+        diff = cc.Point.normalize(diff);
 
         var gradient = this.getChildByTag(1);
         gradient.setVector(diff);

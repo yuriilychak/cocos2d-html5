@@ -420,8 +420,8 @@ var BMFontSubSpriteTest = class BMFontSubSpriteTest extends AtlasDemo {
         var drawNode = new cc.DrawNode();
         this.addChild(drawNode);
         drawNode.setDrawColor(cc.color(255,0,0,128));
-        drawNode.drawSegment(cc.p(0, s.height / 2), cc.p(s.width, s.height / 2), 2);
-        drawNode.drawSegment(cc.p(s.width / 2, 0), cc.p(s.width / 2, s.height), 2);
+        drawNode.drawSegment(new cc.Point(0, s.height / 2), new cc.Point(s.width, s.height / 2), 2);
+        drawNode.drawSegment(new cc.Point(s.width / 2, 0), new cc.Point(s.width / 2, s.height), 2);
 
         // Upper Label
         var label = new cc.LabelBMFont("Bitmap Font Atlas", s_resprefix + "fonts/bitmapFontTest.fnt");
@@ -438,7 +438,7 @@ var BMFontSubSpriteTest = class BMFontSubSpriteTest extends AtlasDemo {
         var AChar = label.getChildByTag(12);
 
         if(autoTestEnabled) {
-            var jump = cc.jumpBy(0.5, cc.p(0,0), 60, 1);
+            var jump = cc.jumpBy(0.5, new cc.Point(0,0), 60, 1);
             var jump_4ever = cc.sequence(jump, cc.delayTime(0.25)).repeatForever();
             var fade_out = cc.fadeOut(0.5);
             var rotate = cc.rotateBy(0.5, 180);
@@ -446,7 +446,7 @@ var BMFontSubSpriteTest = class BMFontSubSpriteTest extends AtlasDemo {
 
             var scale = cc.scaleBy(0.5, 1.5);
         } else {
-            var jump = cc.jumpBy(4, cc.p(0,0), 60, 1);
+            var jump = cc.jumpBy(4, new cc.Point(0,0), 60, 1);
             var jump_4ever = jump.repeatForever();
             var fade_out = cc.fadeOut(1);
             var rotate = cc.rotateBy(2, 360);
@@ -727,7 +727,7 @@ var BMFontSpeedTest = class BMFontSpeedTest extends AtlasDemo {
 
             var s = director.getWinSize();
 
-            var p = cc.p(Math.random() * s.width, Math.random() * s.height);
+            var p = new cc.Point(Math.random() * s.width, Math.random() * s.height);
             label.setPosition(p);
             label.anchorX = 0.5;
             label.anchorY = 0.5;
@@ -1109,7 +1109,7 @@ var LabelTTFStrokeShadowTest = class LabelTTFStrokeShadowTest extends AtlasDemo 
         var blueColor = cc.color(0, 0, 255);
 
         // shadow offset
-        var shadowOffset = cc.p(12, -12);
+        var shadowOffset = new cc.Point(12, -12);
 
         // positioning stuff
         var posX = s.width / 2 - (blockSize.width / 2);
@@ -1506,7 +1506,7 @@ var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends At
         var size = director.getWinSize();
 
         // create and initialize a Label
-        this.labelShouldRetain = new cc.LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, cc.p(0, 0));
+        this.labelShouldRetain = new cc.LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, new cc.Point(0, 0));
         this.arrowsBarShouldRetain = new cc.Sprite(s_resprefix + "Images/arrowsBar.png");
         this.arrowsShouldRetain = new cc.Sprite(s_resprefix + "Images/arrows.png");
 
@@ -1757,12 +1757,12 @@ var BMFontOneAtlas = class BMFontOneAtlas extends AtlasDemo {
         super();
         var s = director.getWinSize();
 
-        var label1 = new cc.LabelBMFont("This is Helvetica", s_resprefix + "fonts/helvetica-32.fnt", cc.LabelAutomaticWidth, cc.TEXT_ALIGNMENT_LEFT, cc.p(0, 0));
+        var label1 = new cc.LabelBMFont("This is Helvetica", s_resprefix + "fonts/helvetica-32.fnt", cc.LabelAutomaticWidth, cc.TEXT_ALIGNMENT_LEFT, new cc.Point(0, 0));
         this.addChild(label1);
         label1.x = s.width / 2;
         label1.y = s.height * 2 / 3;
 
-        var label2 = new cc.LabelBMFont("And this is Geneva", s_resprefix + "fonts/geneva-32.fnt", cc.LabelAutomaticWidth, cc.TEXT_ALIGNMENT_LEFT, cc.p(0, 128));
+        var label2 = new cc.LabelBMFont("And this is Geneva", s_resprefix + "fonts/geneva-32.fnt", cc.LabelAutomaticWidth, cc.TEXT_ALIGNMENT_LEFT, new cc.Point(0, 128));
         this.addChild(label2);
         label2.x = s.width / 2;
         label2.y = s.height / 3;

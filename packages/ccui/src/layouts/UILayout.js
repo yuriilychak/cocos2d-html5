@@ -98,7 +98,7 @@ ccui.Layout = class Layout extends ccui.Widget {
         this._color = cc.color(255, 255, 255, 255);
         this._startColor = cc.color(255, 255, 255, 255);
         this._endColor = cc.color(255, 255, 255, 255);
-        this._alongVector = cc.p(0, -1);
+        this._alongVector = new cc.Point(0, -1);
         this._backGroundImageTextureSize = cc.size(0, 0);
 
         this._clippingRect = cc.rect(0, 0, 0, 0);
@@ -425,10 +425,10 @@ ccui.Layout = class Layout extends ccui.Widget {
     _setStencilClippingSize(size) {
         if (this._clippingEnabled && this._clippingType === ccui.Layout.CLIPPING_STENCIL) {
             var rect = [];
-            rect[0] = cc.p(0, 0);
-            rect[1] = cc.p(size.width, 0);
-            rect[2] = cc.p(size.width, size.height);
-            rect[3] = cc.p(0, size.height);
+            rect[0] = new cc.Point(0, 0);
+            rect[1] = new cc.Point(size.width, 0);
+            rect[2] = new cc.Point(size.width, size.height);
+            rect[3] = new cc.Point(0, size.height);
             var green = cc.color.GREEN;
             this._clippingStencil.clear();
             this._clippingStencil.setLocalBB && this._clippingStencil.setLocalBB(0, 0, size.width, size.height);
@@ -438,7 +438,7 @@ ccui.Layout = class Layout extends ccui.Widget {
 
     _getClippingRect() {
         if (this._clippingRectDirty) {
-            var worldPos = this.convertToWorldSpace(cc.p(0, 0));
+            var worldPos = this.convertToWorldSpace(new cc.Point(0, 0));
             var t = this.getNodeToWorldTransform();
             var scissorWidth = this._contentSize.width * t.a;
             var scissorHeight = this._contentSize.height * t.d;
@@ -960,7 +960,7 @@ ccui.Layout = class Layout extends ccui.Widget {
                 var w = locChildren[index];
                 if (w && w instanceof ccui.Widget && w.isFocusEnabled()) {
                     var length = (w instanceof ccui.Layout) ? w._calculateNearestDistance(baseWidget)
-                        : cc.pLength(cc.pSub(this._getWorldCenterPoint(w), widgetPosition));
+                        : cc.Point.length(cc.Point.sub(this._getWorldCenterPoint(w), widgetPosition));
                     if (length < distance) {
                         found = index;
                         distance = length;
@@ -996,7 +996,7 @@ ccui.Layout = class Layout extends ccui.Widget {
                 var w = locChildren[index];
                 if (w && w instanceof ccui.Widget && w.isFocusEnabled()) {
                     var length = (w instanceof ccui.Layout) ? w._calculateFarthestDistance(baseWidget)
-                        : cc.pLength(cc.pSub(this._getWorldCenterPoint(w), widgetPosition));
+                        : cc.Point.length(cc.Point.sub(this._getWorldCenterPoint(w), widgetPosition));
                     if (length > distance) {
                         found = index;
                         distance = length;
@@ -1027,7 +1027,7 @@ ccui.Layout = class Layout extends ccui.Widget {
                 length = widget._calculateNearestDistance(baseWidget);
             else {
                 if (widget instanceof ccui.Widget && widget.isFocusEnabled())
-                    length = cc.pLength(cc.pSub(this._getWorldCenterPoint(widget), widgetPosition));
+                    length = cc.Point.length(cc.Point.sub(this._getWorldCenterPoint(widget), widgetPosition));
                 else
                     continue;
             }
@@ -1056,7 +1056,7 @@ ccui.Layout = class Layout extends ccui.Widget {
             else {
                 if (layout instanceof ccui.Widget && layout.isFocusEnabled()) {
                     var wPosition = this._getWorldCenterPoint(layout);
-                    length = cc.pLength(cc.pSub(wPosition, widgetPosition));
+                    length = cc.Point.length(cc.Point.sub(wPosition, widgetPosition));
                 } else
                     continue;
             }
@@ -1159,7 +1159,7 @@ ccui.Layout = class Layout extends ccui.Widget {
     _getWorldCenterPoint(widget) {
         //FIXEDME: we don't need to calculate the content size of layout anymore
         var widgetSize = widget instanceof ccui.Layout ? widget._getLayoutAccumulatedSize() : widget.getContentSize();
-        return widget.convertToWorldSpace(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+        return widget.convertToWorldSpace(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
     }
 
     /**

@@ -73,7 +73,7 @@ cc.ShakyTiles3D = class ShakyTiles3D extends cc.TiledGrid3DAction {
   update(dt) {
     const locGridSize = this._gridSize;
     const locRandRange = this._randRange;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locPos.x = i;
@@ -171,7 +171,7 @@ cc.ShatteredTiles3D = class ShatteredTiles3D extends cc.TiledGrid3DAction {
       const locGridSize = this._gridSize;
       const locRandRange = this._randRange;
       let coords;
-      const locPos = cc.p(0, 0);
+      const locPos = new cc.Point(0, 0);
       for (let i = 0; i < locGridSize.width; ++i) {
         for (let j = 0; j < locGridSize.height; ++j) {
           locPos.x = i;
@@ -220,14 +220,14 @@ cc.shatteredTiles3D = (duration, gridSize, range, shatterZ) =>
 /**
  * A Tile composed of position, startPosition and delta.
  * @constructor
- * @param {cc.Point} [position=cc.p(0,0)]
- * @param {cc.Point} [startPosition=cc.p(0,0)]
- * @param {cc.Size} [delta=cc.p(0,0)]
+ * @param {cc.Point} [position=new cc.Point(0,0)]
+ * @param {cc.Point} [startPosition=new cc.Point(0,0)]
+ * @param {cc.Size} [delta=new cc.Point(0,0)]
  */
 cc.Tile = function (position, startPosition, delta) {
-  this.position = position || cc.p(0, 0);
-  this.startPosition = startPosition || cc.p(0, 0);
-  this.delta = delta || cc.p(0, 0);
+  this.position = position || new cc.Point(0, 0);
+  this.startPosition = startPosition || new cc.Point(0, 0);
+  this.delta = delta || new cc.Point(0, 0);
 };
 
 /**
@@ -352,8 +352,8 @@ cc.ShuffleTiles = class ShuffleTiles extends cc.TiledGrid3DAction {
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locTiles[tileIndex] = new cc.Tile();
-        locTiles[tileIndex].position = cc.p(i, j);
-        locTiles[tileIndex].startPosition = cc.p(i, j);
+        locTiles[tileIndex].position = new cc.Point(i, j);
+        locTiles[tileIndex].startPosition = new cc.Point(i, j);
         tempSize.width = i;
         tempSize.height = j;
         locTiles[tileIndex].delta = this.getDelta(tempSize);
@@ -371,7 +371,7 @@ cc.ShuffleTiles = class ShuffleTiles extends cc.TiledGrid3DAction {
     const locGridSize = this._gridSize;
     const locTiles = this._tiles;
     let selTile;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locPos.x = i;
@@ -463,7 +463,7 @@ cc.FadeOutTRTiles = class FadeOutTRTiles extends cc.TiledGrid3DAction {
    */
   update(dt) {
     const locGridSize = this._gridSize;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     let distance;
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
@@ -690,7 +690,7 @@ cc.TurnOffTiles = class TurnOffTiles extends cc.TiledGrid3DAction {
     const l = 0 | (dt * this._tilesCount);
     const locGridSize = this._gridSize;
     let t;
-    const tilePos = cc.p(0, 0);
+    const tilePos = new cc.Point(0, 0);
     const locTilesOrder = this._tilesOrder;
     for (let i = 0; i < this._tilesCount; i++) {
       t = locTilesOrder[i];
@@ -806,7 +806,7 @@ cc.WavesTiles3D = class WavesTiles3D extends cc.TiledGrid3DAction {
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     let coords;
     for (let i = 0; i < locGridSize.width; i++) {
       for (let j = 0; j < locGridSize.height; j++) {
@@ -933,13 +933,13 @@ cc.JumpTiles3D = class JumpTiles3D extends cc.TiledGrid3DAction {
     const locGridSize = this._gridSize;
     const locGrid = this.target.grid;
     let coords;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     for (let i = 0; i < locGridSize.width; i++) {
       for (let j = 0; j < locGridSize.height; j++) {
         locPos.x = i;
         locPos.y = j;
         // hack for html5
-        // var coords = this.getOriginalTile(cc.p(i, j));
+        // var coords = this.getOriginalTile(new cc.Point(i, j));
         coords = locGrid.getOriginalTile(locPos);
 
         if ((i + j) % 2 === 0) {
@@ -954,7 +954,7 @@ cc.JumpTiles3D = class JumpTiles3D extends cc.TiledGrid3DAction {
           coords.tr.z += sinz2;
         }
         // hack for html5
-        // this.setTile(cc.p(i, j), coords);
+        // this.setTile(new cc.Point(i, j), coords);
         locGrid.setTile(locPos, coords);
       }
     }
@@ -1014,7 +1014,7 @@ cc.SplitRows = class SplitRows extends cc.TiledGrid3DAction {
     const locWinSizeWidth = this._winSize.width;
     let coords;
     let direction;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     for (let j = 0; j < locGridSize.height; ++j) {
       locPos.y = j;
       coords = this.getOriginalTile(locPos);
@@ -1090,7 +1090,7 @@ cc.SplitCols = class SplitCols extends cc.TiledGrid3DAction {
     const locWinSizeHeight = this._winSize.height;
     let coords;
     let direction;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     for (let i = 0; i < locGridSizeWidth; ++i) {
       locPos.x = i;
       coords = this.getOriginalTile(locPos);

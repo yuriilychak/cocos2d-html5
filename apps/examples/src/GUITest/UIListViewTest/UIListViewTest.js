@@ -390,7 +390,7 @@ var UIListViewTest_ScrollToItem = class UIListViewTest_ScrollToItem extends UIMa
             listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             listView.setBackGroundImageScale9Enabled(true);
             listView.setContentSize(widgetSize.width / 2, widgetSize.height / 2);
-            listView.setScrollBarPositionFromCorner(cc.p(7, 7));
+            listView.setScrollBarPositionFromCorner(new cc.Point(7, 7));
             listView.setItemsMargin(2.0);
 
             listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
@@ -400,16 +400,16 @@ var UIListViewTest_ScrollToItem = class UIListViewTest_ScrollToItem extends UIMa
             {
                 var pNode = new cc.DrawNode();
 
-                var center = cc.p(widgetSize.width / 2, widgetSize.height / 2);
+                var center = new cc.Point(widgetSize.width / 2, widgetSize.height / 2);
                 if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
                 {
                     var halfY = 110;
-                    pNode.drawSegment(cc.p(center.x, center.y - halfY), cc.p(center.x, center.y + halfY), 2, cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(new cc.Point(center.x, center.y - halfY), new cc.Point(center.x, center.y + halfY), 2, cc.color(0, 0, 0, 255));
                 }
                 else
                 {
                     var halfX = 150;
-                    pNode.drawSegment(cc.p(center.x - halfX, center.y), cc.p(center.x + halfX, center.y), 2, cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(new cc.Point(center.x - halfX, center.y), new cc.Point(center.x + halfX, center.y), 2, cc.color(0, 0, 0, 255));
                 }
                 pNode.setContentSize(listView.getContentSize());
                 this._mainNode.addChild(pNode);
@@ -417,12 +417,12 @@ var UIListViewTest_ScrollToItem = class UIListViewTest_ScrollToItem extends UIMa
             var NUMBER_OF_ITEMS = 31;
             // Button
             var pButton = new ccui.Button("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png");
-            pButton.setAnchorPoint(cc.p(0, 0.5));
+            pButton.setAnchorPoint(new cc.Point(0, 0.5));
             pButton.setScale(0.8);
-            pButton.setPosition(cc.pAdd(cc.p(widgetSize.width / 2, widgetSize.height / 2), cc.p(120, -60)));
+            pButton.setPosition(cc.Point.add(new cc.Point(widgetSize.width / 2, widgetSize.height / 2), new cc.Point(120, -60)));
             pButton.setTitleText("Go to '" +this._nextIndex + "'");
             pButton.addClickEventListener(function(pButton) {
-                listView.scrollToItem(this._nextIndex, cc.p(0.5, 0.5), cc.p(0.5, 0.5));
+                listView.scrollToItem(this._nextIndex, new cc.Point(0.5, 0.5), new cc.Point(0.5, 0.5));
                 this._nextIndex = (this._nextIndex + Math.floor(NUMBER_OF_ITEMS / 2)) % NUMBER_OF_ITEMS;
                 pButton.setTitleText("Go to '" + this._nextIndex+ "'");
             }.bind(this));
@@ -509,9 +509,9 @@ var UIListViewTest_Magnetic = class UIListViewTest_Magnetic extends UIMainLayer 
             this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             this._listView.setBackGroundImageScale9Enabled(true);
             this._listView.setContentSize(widgetSize.width / 2, widgetSize.height / 2);
-            this._listView.setScrollBarPositionFromCorner(cc.p(7, 7));
+            this._listView.setScrollBarPositionFromCorner(new cc.Point(7, 7));
             this._listView.setItemsMargin(2.0);
-            this._listView.setAnchorPoint(cc.p(0.5 ,0.5));
+            this._listView.setAnchorPoint(new cc.Point(0.5 ,0.5));
 
             this._listView.x = widgetSize.width / 2;
             this._listView.y = widgetSize.height / 2;
@@ -523,16 +523,16 @@ var UIListViewTest_Magnetic = class UIListViewTest_Magnetic extends UIMainLayer 
             {
                 var pNode = new cc.DrawNode();
 
-                var center = cc.p(widgetSize.width / 2, widgetSize.height / 2);
+                var center = new cc.Point(widgetSize.width / 2, widgetSize.height / 2);
                 if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
                 {
                     var halfY = 110;
-                    pNode.drawSegment(cc.p(center.x, center.y - halfY), cc.p(center.x, center.y + halfY), 1, cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(new cc.Point(center.x, center.y - halfY), new cc.Point(center.x, center.y + halfY), 1, cc.color(0, 0, 0, 255));
                 }
                 else
                 {
                     var halfX = 150;
-                    pNode.drawSegment(cc.p(center.x - halfX, center.y), cc.p(center.x + halfX, center.y), 1, cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(new cc.Point(center.x - halfX, center.y), new cc.Point(center.x + halfX, center.y), 1, cc.color(0, 0, 0, 255));
                 }
                 pNode.setContentSize(this._listView.getContentSize());
                 this._mainNode.addChild(pNode);
@@ -544,9 +544,9 @@ var UIListViewTest_Magnetic = class UIListViewTest_Magnetic extends UIMainLayer 
 
             // Magnetic change button
             var pButton = new ccui.Button("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png");
-            pButton.setAnchorPoint(cc.p(0.5, 0.5));
+            pButton.setAnchorPoint(new cc.Point(0.5, 0.5));
             pButton.setScale(0.8);
-            pButton.setPosition(cc.pAdd(cc.p(widgetSize.width / 2, widgetSize.height / 2), cc.p(130, -60)));
+            pButton.setPosition(cc.Point.add(new cc.Point(widgetSize.width / 2, widgetSize.height / 2), new cc.Point(130, -60)));
             pButton.setTitleText("Next Magnetic");
             pButton.addClickEventListener(function() {
                 var eCurrentType = this._listView.getMagneticType();

@@ -119,7 +119,7 @@ var BakeLayerTest1 = class BakeLayerTest1 extends BakeLayerBaseTest {
             bakeLayer.addChild(sprite1);
         }
         this._bakeLayer = bakeLayer;
-        bakeLayer.runAction(cc.sequence(cc.moveBy(2, cc.p(100,100)), cc.moveBy(2, cc.p(-100,-100))));
+        bakeLayer.runAction(cc.sequence(cc.moveBy(2, new cc.Point(100,100)), cc.moveBy(2, new cc.Point(-100,-100))));
     }
 
     onBake(){
@@ -283,7 +283,7 @@ var BakeLayerColorTest = class BakeLayerColorTest extends BakeLayerBaseTest {
 
         this._bakeLayer = bakeLayer;
         bakeLayer.bake();
-        bakeLayer.runAction(cc.sequence(cc.moveBy(2, cc.p(100,100)), cc.moveBy(2, cc.p(-100,-100))));
+        bakeLayer.runAction(cc.sequence(cc.moveBy(2, new cc.Point(100,100)), cc.moveBy(2, new cc.Point(-100,-100))));
     }
 
     onBake(){

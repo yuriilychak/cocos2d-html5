@@ -51,7 +51,7 @@
         }
 
         getAnchorPointInPoints() {
-            return cc.p(this._realAnchorPointInPoints);
+            return new cc.Point(this._realAnchorPointInPoints);
         }
 
         _startCmdCallback(ctx, scaleX, scaleY) {

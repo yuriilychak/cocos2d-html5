@@ -50,7 +50,7 @@ ccs.Armature = class Armature extends ccs.Node {
         this._name = "";
         this._topBoneList = [];
         this._armatureIndexDic = {};
-        this._offsetPoint = cc.p(0, 0);
+        this._offsetPoint = new cc.Point(0, 0);
         this._armatureTransformDirty = true;
         this._blendFunc = {src: cc.BLEND_SRC, dst: cc.BLEND_DST};
         name && this.init(name, parentBone);

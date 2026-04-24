@@ -83,21 +83,21 @@ ccui.ScrollViewBar = class ScrollViewBar extends ccui.ProtectedNode {
      */
     init() {
         this._upperHalfCircle = ccui.helper._createSpriteFromBase64(ccui.ScrollViewBar.HALF_CIRCLE_IMAGE, ccui.ScrollViewBar.HALF_CIRCLE_IMAGE_KEY);
-        this._upperHalfCircle.setAnchorPoint(cc.p(0.5, 0));
+        this._upperHalfCircle.setAnchorPoint(new cc.Point(0.5, 0));
 
         this._lowerHalfCircle = ccui.helper._createSpriteFromBase64(ccui.ScrollViewBar.HALF_CIRCLE_IMAGE, ccui.ScrollViewBar.HALF_CIRCLE_IMAGE_KEY);
-        this._lowerHalfCircle.setAnchorPoint(cc.p(0.5, 0));
+        this._lowerHalfCircle.setAnchorPoint(new cc.Point(0.5, 0));
         this._lowerHalfCircle.setScaleY(-1);
 
         this.addProtectedChild(this._upperHalfCircle);
         this.addProtectedChild(this._lowerHalfCircle);
 
         this._body = ccui.helper._createSpriteFromBase64(ccui.ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT, ccui.ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT_KEY);
-        this._body.setAnchorPoint(cc.p(0.5, 0));
+        this._body.setAnchorPoint(new cc.Point(0.5, 0));
         this.addProtectedChild(this._body);
 
         this.setColor(ccui.ScrollViewBar.DEFAULT_COLOR);
-        this.onScrolled(cc.p(0, 0));
+        this.onScrolled(new cc.Point(0, 0));
         super.setOpacity(0);
         this._autoHideRemainingTime = 0;
 
@@ -132,10 +132,10 @@ ccui.ScrollViewBar = class ScrollViewBar extends ccui.ProtectedNode {
      */
     getPositionFromCorner() {
         if (this._direction === ccui.ScrollView.DIR_VERTICAL) {
-            return cc.p(this._marginFromBoundary, this._marginForLength);
+            return new cc.Point(this._marginFromBoundary, this._marginForLength);
         }
         else {
-            return cc.p(this._marginForLength, this._marginFromBoundary);
+            return new cc.Point(this._marginForLength, this._marginFromBoundary);
         }
     }
     /**
@@ -312,10 +312,10 @@ ccui.ScrollViewBar = class ScrollViewBar extends ccui.ProtectedNode {
         var position = (scrollViewMeasure - length - 2 * this._marginForLength) * positionRatio + this._marginForLength;
 
         if (this._direction === ccui.ScrollView.DIR_VERTICAL) {
-            return cc.p(this._parentScroll.width - this._marginFromBoundary, position);
+            return new cc.Point(this._parentScroll.width - this._marginFromBoundary, position);
         }
         else {
-            return cc.p(position, this._marginFromBoundary);
+            return new cc.Point(position, this._marginFromBoundary);
         }
     }
 

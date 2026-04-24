@@ -66,7 +66,7 @@
  * @param {String} fntFile
  * @param {Number} [width=-1]
  * @param {Number} [alignment=cc.TEXT_ALIGNMENT_LEFT]
- * @param {cc.Point} [imageOffset=cc.p(0,0)]
+ * @param {cc.Point} [imageOffset=new cc.Point(0,0)]
  *
  * @example
  * // Example 01
@@ -76,7 +76,7 @@
  * var label2 = new cc.LabelBMFont("test case", "test.fnt", 200, cc.TEXT_ALIGNMENT_LEFT);
  *
  * // Example 03
- * var label3 = new cc.LabelBMFont("This is a \n test case", "test.fnt", 200, cc.TEXT_ALIGNMENT_LEFT, cc.p(0,0));
+ * var label3 = new cc.LabelBMFont("This is a \n test case", "test.fnt", 200, cc.TEXT_ALIGNMENT_LEFT, new cc.Point(0,0));
  */
 cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
     //property string is Getter and Setter.
@@ -152,11 +152,11 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
      * @param {String} fntFile
      * @param {Number} [width=-1]
      * @param {Number} [alignment=cc.TEXT_ALIGNMENT_LEFT]
-     * @param {cc.Point} [imageOffset=cc.p(0,0)]
+     * @param {cc.Point} [imageOffset=new cc.Point(0,0)]
      */
     constructor(str, fntFile, width, alignment, imageOffset) {
         super();
-        this._imageOffset = cc.p(0, 0);
+        this._imageOffset = new cc.Point(0, 0);
         this._cascadeColorEnabled = true;
         this._cascadeOpacityEnabled = true;
         if (str !== undefined && fntFile !== undefined)
@@ -213,7 +213,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
      * @param {String} fntFile
      * @param {Number} [width=-1]
      * @param {Number} [alignment=cc.TEXT_ALIGNMENT_LEFT]
-     * @param {cc.Point} [imageOffset=cc.p(0,0)]
+     * @param {cc.Point} [imageOffset=new cc.Point(0,0)]
      * @return {Boolean}
      */
     initWithString(str, fntFile, width, alignment, imageOffset) {
@@ -264,7 +264,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
 
         if (self.initWithTexture(texture, theString.length)) {
             self._alignment = alignment || cc.TEXT_ALIGNMENT_LEFT;
-            self._imageOffset = imageOffset || cc.p(0, 0);
+            self._imageOffset = imageOffset || new cc.Point(0, 0);
             self._width = (width === undefined) ? -1 : width;
 
             self._realOpacity = 255;
@@ -378,7 +378,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             cmd._updateCharColorAndOpacity(fontChar);
 
             var yOffset = locCfg.commonHeight - fontDef.yOffset;
-            var fontPos = cc.p(nextFontPositionX + fontDef.xOffset + fontDef.rect.width * 0.5 + kerningAmount,
+            var fontPos = new cc.Point(nextFontPositionX + fontDef.xOffset + fontDef.rect.width * 0.5 + kerningAmount,
                 nextFontPositionY + yOffset - rect.height * 0.5 * cc.contentScaleFactor());
             fontChar.setPosition(cc.pointPixelsToPoints(fontPos));
 

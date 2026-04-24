@@ -129,7 +129,7 @@ var AnalyticsTestLayer = class AnalyticsTestLayer extends PluginXTest {
         loadAnalyticsPlugin();
 
         var pMenu = new cc.Menu();
-        pMenu.setPosition( cc.p(0, 0) );
+        pMenu.setPosition( new cc.Point(0, 0) );
         this.addChild(pMenu, 1);
 
         var yPos = 0;
@@ -138,21 +138,21 @@ var AnalyticsTestLayer = class AnalyticsTestLayer extends PluginXTest {
             var pMenuItem = new cc.MenuItemLabel(label, this.eventMenuCallback, this);
             pMenu.addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
             yPos = size.height - 50*i - 100;
-            pMenuItem.setPosition( cc.p(size.width / 2, yPos));
+            pMenuItem.setPosition( new cc.Point(size.width / 2, yPos));
         }
 
         var strName = g_pAnalytics.getPluginName();
         var strVer = g_pAnalytics.getPluginVersion();
         var ret = "Plugin : "+strName+", Ver : "+ strVer;
         var pLabel = new cc.LabelTTF(ret, "Arial", 24, cc.size(size.width, 0), cc.TEXT_ALIGNMENT_CENTER);
-        pLabel.setPosition(cc.p(size.width / 2, yPos - 100));
+        pLabel.setPosition(new cc.Point(size.width / 2, yPos - 100));
         this.addChild(pLabel);
 
         var label = new cc.LabelTTF("reload all plugins", "Arial", 24);
         var pMenuItem = new cc.MenuItemLabel(label, this.reloadPluginMenuCallback, this);
-        pMenuItem.setAnchorPoint(cc.p(0.5, 0));
+        pMenuItem.setAnchorPoint(new cc.Point(0.5, 0));
         pMenu.addChild(pMenuItem, 0);
-        pMenuItem.setPosition( cc.p(size.width / 2, 0));
+        pMenuItem.setPosition( new cc.Point(size.width / 2, 0));
     }
 
     reloadPluginMenuCallback(pSender) {

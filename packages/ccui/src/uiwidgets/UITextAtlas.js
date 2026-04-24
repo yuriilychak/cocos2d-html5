@@ -61,7 +61,7 @@ ccui.TextAtlas = class TextAtlas extends ccui.Widget {
 
     _initRenderer() {
         this._labelAtlasRenderer = new cc.LabelAtlas();
-        this._labelAtlasRenderer.setAnchorPoint(cc.p(0.5, 0.5));
+        this._labelAtlasRenderer.setAnchorPoint(new cc.Point(0.5, 0.5));
         this.addProtectedChild(this._labelAtlasRenderer, ccui.TextAtlas.RENDERER_ZORDER, -1);
 
         this._labelAtlasRenderer.addEventListener('load', function () {

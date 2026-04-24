@@ -33,7 +33,7 @@
 
             this._PI180 = Math.PI / 180;
             this._barRect = cc.rect(0, 0, 0, 0);
-            this._origin = cc.p(0, 0);
+            this._origin = new cc.Point(0, 0);
             this._radius = 0;
             this._startAngle = 270;
             this._endAngle = 270;
@@ -158,7 +158,7 @@
                 const drawingSize = cc.size((sw - drewSize.width) * percentageF, (sh - drewSize.height) * percentageF);
                 const currentDrawSize = cc.size(drewSize.width + drawingSize.width, drewSize.height + drawingSize.height);
 
-                const startPoint = cc.p(sw * locMidPoint.x, sh * locMidPoint.y);
+                const startPoint = new cc.Point(sw * locMidPoint.x, sh * locMidPoint.y);
 
                 let needToLeft = startPoint.x - currentDrawSize.width / 2;
                 if ((locMidPoint.x > 0.5) && (currentDrawSize.width / 2 >= sw - startPoint.x))

@@ -390,7 +390,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
 
         this._renderCmd.setState(this._brightState);
         this._blendFunc = cc.BlendFunc.ALPHA_PREMULTIPLIED;
-        this.setAnchorPoint(cc.p(0.5, 0.5));
+        this.setAnchorPoint(new cc.Point(0.5, 0.5));
         // Init vertex data for simple
         this._rawVerts = null;
         this._rawUvs = null;

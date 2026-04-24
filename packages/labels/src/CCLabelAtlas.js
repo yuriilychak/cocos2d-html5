@@ -60,7 +60,7 @@ cc.LabelAtlas = class LabelAtlas extends cc.LabelBMFont {
      */
     constructor(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
         super();
-        this._imageOffset = cc.p(0, 0);
+        this._imageOffset = new cc.Point(0, 0);
         this._cascadeColorEnabled = true;
         this._cascadeOpacityEnabled = true;
 
@@ -179,7 +179,7 @@ cc.LabelAtlas = class LabelAtlas extends cc.LabelBMFont {
 
         if (self.initWithTexture(texture, theString.length)) {
             self._alignment = cc.TEXT_ALIGNMENT_LEFT;
-            self._imageOffset = cc.p(0, 0);
+            self._imageOffset = new cc.Point(0, 0);
             self._width = -1;
 
             self._realOpacity = 255;

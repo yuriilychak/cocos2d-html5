@@ -104,7 +104,7 @@ var MenuLayerMainMenu = class MenuLayerMainMenu extends cc.Layer {
         var winSize = cc.director.getWinSize();
 
         var locChildren = menu.children;
-        var dstPoint = cc.p(0,0);
+        var dstPoint = new cc.Point(0,0);
         for(var i = 0; i < locChildren.length; i++){
             var selChild = locChildren[i];
             if(selChild){
@@ -116,7 +116,7 @@ var MenuLayerMainMenu = class MenuLayerMainMenu extends cc.Layer {
 
                 selChild.x = dstPoint.x + offset;
                 selChild.y = dstPoint.y;
-                selChild.runAction(cc.moveBy(2, cc.p(dstPoint.x - offset,0)).easing(cc.easeElasticOut(0.35)));
+                selChild.runAction(cc.moveBy(2, new cc.Point(dstPoint.x - offset,0)).easing(cc.easeElasticOut(0.35)));
             }
         }
         this._disabledItem = item3;
@@ -216,7 +216,7 @@ var MenuLayer2 = class MenuLayer2 extends cc.Layer {
 
             this.addChild(menu, 0, 100 + i);
 
-            this._centeredMenu = cc.p(menu.x, menu.y);
+            this._centeredMenu = new cc.Point(menu.x, menu.y);
         }
         this._alignedH = true;
         this.alignMenuH();
@@ -326,7 +326,7 @@ var MenuLayer3 = class MenuLayer3 extends cc.Layer {
         item3.x = s.width / 2;
         item3.y = s.height / 2 - 100;
 
-        var jump = cc.jumpBy(3, cc.p(400, 0), 50, 4);
+        var jump = cc.jumpBy(3, new cc.Point(400, 0), 50, 4);
         item2.runAction(cc.sequence(jump, jump.reverse()).repeatForever());
         var spin1 = cc.rotateBy(3, 360);
         var spin2 = spin1.clone();

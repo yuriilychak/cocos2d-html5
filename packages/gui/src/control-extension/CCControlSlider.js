@@ -260,7 +260,7 @@ cc.ControlSlider = class ControlSlider extends cc.Control {
         this.sliderMoved(location);
     }
     onTouchEnded(touch, event) {
-        this.sliderEnded(cc.p(0,0));
+        this.sliderEnded(new cc.Point(0,0));
     }
     needsLayout(){
         var percent = (this._value - this._minimumValue) / (this._maximumValue - this._minimumValue);

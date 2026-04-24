@@ -373,7 +373,7 @@ ccui.RichText = class RichText extends ccui.Widget {
 
             for (j = 0; j < row.length; j++) {
                 l = row[j];
-                l.setAnchorPoint(cc.p(0, 0));
+                l.setAnchorPoint(new cc.Point(0, 0));
                 l.setPosition(nextPosX, 0);
                 locRenderersContainer.addChild(l, 1, j);
 
@@ -421,8 +421,8 @@ ccui.RichText = class RichText extends ccui.Widget {
 
                 for (j = 0; j < row.length; j++) {
                     l = row[j];
-                    l.setAnchorPoint(cc.p(0, 0));
-                    l.setPosition(cc.p(nextPosX, nextPosY));
+                    l.setAnchorPoint(new cc.Point(0, 0));
+                    l.setPosition(new cc.Point(nextPosX, nextPosY));
                     locRenderersContainer.addChild(l, 1);
                     nextPosX += l.getContentSize().width;
                 }

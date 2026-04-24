@@ -89,7 +89,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
     }
 
     const angle =
-        Math.PI + cc.pAngleSigned(new Point(0, -1), node._alongVector),
+        Math.PI + Point.angleSigned(new Point(0, -1), node._alongVector),
       locAnchor = new Point(contentSize.width / 2, contentSize.height / 2);
     const degrees = Math.round(cc.radiansToDegrees(angle));
     let transMat = cc.affineTransformMake(1, 0, 0, 1, locAnchor.x, locAnchor.y);
@@ -208,14 +208,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
 
-    gl.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
-      3,
-      gl.FLOAT,
-      false,
-      16,
-      0
-    );
+    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 16, 0);
     gl.vertexAttribPointer(
       VERTEX_ATTRIB_COLOR,
       4,

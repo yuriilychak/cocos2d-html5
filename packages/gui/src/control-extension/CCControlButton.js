@@ -70,7 +70,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
     constructor(label, backgroundSprite, fontSize) {
         super();
         this._preferredSize = cc.size(0, 0);
-        this._labelAnchorPoint = cc.p(0, 0);
+        this._labelAnchorPoint = new cc.Point(0, 0);
         this._currentTitle = "";
         this._currentTitleColor = cc.color.WHITE;
         this._titleDispatchTable = {};
@@ -223,7 +223,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
             this._marginH = 24;
             this._marginV = 12;
 
-            this._labelAnchorPoint = cc.p(0.5, 0.5);
+            this._labelAnchorPoint = new cc.Point(0.5, 0.5);
 
             this.setPreferredSize(cc.size(0, 0));
 

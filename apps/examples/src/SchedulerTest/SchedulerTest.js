@@ -584,7 +584,7 @@ var SchedulerTimeScale = class SchedulerTimeScale extends SchedulerTestLayer {
         var s = cc.winSize;
 
         // rotate and jump
-        var jump1 = new cc.JumpBy(4, cc.p(-s.width+80,0), 100, 4);
+        var jump1 = new cc.JumpBy(4, new cc.Point(-s.width+80,0), 100, 4);
         var jump2 = jump1.reverse();
         var rot1 = new cc.RotateBy(4, 360*2);
         var rot2 = rot1.reverse();
@@ -604,9 +604,9 @@ var SchedulerTimeScale = class SchedulerTimeScale extends SchedulerTestLayer {
         grossini.setActionManager(this._newActionManager);
         grossini.setScheduler(this._newScheduler);
 
-        grossini.setPosition(cc.p(40,80));
-        tamara.setPosition(cc.p(40,80));
-        kathia.setPosition(cc.p(40,80));
+        grossini.setPosition(new cc.Point(40,80));
+        tamara.setPosition(new cc.Point(40,80));
+        kathia.setPosition(new cc.Point(40,80));
 
         this.addChild(grossini);
         this.addChild(tamara);

@@ -114,14 +114,14 @@ var UISliderNormalDefaultTest = class UISliderNormalDefaultTest extends UIMainLa
             // Add the alert
             var alert = new ccui.Text("when pressed, the slider ball should scale","Marker Felt",20);
             alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
+            alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
             this._mainNode.addChild(alert);
 
             // Create the slider
             var slider = new ccui.Slider();
             slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
             slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png");
-            slider.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 50));
+            slider.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 50));
             this._mainNode.addChild(slider);
 
             var sliderScale9 = new ccui.Slider("ccs-res/cocosui/sliderTrack2.png", "ccs-res/cocosui/sliderThumb.png");
@@ -129,7 +129,7 @@ var UISliderNormalDefaultTest = class UISliderNormalDefaultTest extends UIMainLa
             sliderScale9.setCapInsets(cc.rect(0, 0, 0, 0));
             sliderScale9.setZoomScale(1);
             sliderScale9.setContentSize(cc.size(250, 19));
-            sliderScale9.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - 20));
+            sliderScale9.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - 20));
             this._mainNode.addChild(sliderScale9);
 
 
@@ -151,7 +151,7 @@ var UISliderDisabledDefaultTest = class UISliderDisabledDefaultTest extends UIMa
             // Add the alert
             var alert = new ccui.Text("slider ball should be gray.","Marker Felt",20);
             alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
+            alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
             this._mainNode.addChild(alert);
 
             // Create the slider
@@ -160,7 +160,7 @@ var UISliderDisabledDefaultTest = class UISliderDisabledDefaultTest extends UIMa
             slider.loadSlidBallTextureNormal("ccs-res/cocosui/sliderballnormal.png");
             slider.setEnabled(false);
             slider.setBright(false);
-            slider.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 50));
+            slider.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 50));
             this._mainNode.addChild(slider);
 
             var sliderScale9 = new ccui.Slider("ccs-res/cocosui/slidbar.png", "ccs-res/cocosui/sliderballnormal.png");
@@ -169,7 +169,7 @@ var UISliderDisabledDefaultTest = class UISliderDisabledDefaultTest extends UIMa
             sliderScale9.setBright(false);
             sliderScale9.setCapInsets(cc.rect(0, 0, 0, 0));
             sliderScale9.setContentSize(cc.size(250, 10));
-            sliderScale9.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - 20));
+            sliderScale9.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - 20));
             this._mainNode.addChild(sliderScale9);
 
             return true;

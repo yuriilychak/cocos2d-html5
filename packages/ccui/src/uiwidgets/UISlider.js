@@ -187,7 +187,7 @@ ccui.Slider = class Slider extends ccui.Widget {
         }
         this._updateChildrenDisplayedRGBA();
 
-        this._progressBarRenderer.setAnchorPoint(cc.p(0, 0.5));
+        this._progressBarRenderer.setAnchorPoint(new cc.Point(0, 0.5));
         var tz = this._progressBarRenderer.getContentSize();
         this._progressBarTextureSize = {width: tz.width, height: tz.height};
         this._progressBarRendererDirty = true;

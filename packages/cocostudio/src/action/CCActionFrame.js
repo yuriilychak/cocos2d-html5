@@ -284,7 +284,7 @@ ccs.ActionMoveFrame = class ActionMoveFrame extends ccs.ActionFrame {
      */
     constructor() {
         super();
-        this._position = cc.p(0, 0);
+        this._position = new cc.Point(0, 0);
         this.frameType = ccs.FRAME_TYPE_MOVE;
     }
 

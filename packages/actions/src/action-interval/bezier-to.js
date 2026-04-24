@@ -53,8 +53,8 @@ export default class BezierTo extends BezierBy {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._config[0] = cc.pSub(this._toConfig[0], this._startPosition);
-    this._config[1] = cc.pSub(this._toConfig[1], this._startPosition);
-    this._config[2] = cc.pSub(this._toConfig[2], this._startPosition);
+    this._config[0] = cc.Point.sub(this._toConfig[0], this._startPosition);
+    this._config[1] = cc.Point.sub(this._toConfig[1], this._startPosition);
+    this._config[2] = cc.Point.sub(this._toConfig[2], this._startPosition);
   }
 }

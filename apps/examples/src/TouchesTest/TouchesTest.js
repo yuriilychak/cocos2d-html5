@@ -60,7 +60,7 @@ var PongLayer = class PongLayer extends cc.Layer {
 
 
         this._winSize = null;
-        this._ballStartingVelocity = cc.p(20.0, -100.0);
+        this._ballStartingVelocity = new cc.Point(20.0, -100.0);
         this._winSize = cc.director.getWinSize();
 
         this._ball = Ball.ballWithTexture(cc.textureCache.addImage(s_ball));
@@ -104,9 +104,9 @@ var PongLayer = class PongLayer extends cc.Layer {
     }
     resetAndScoreBallForPlayer(player) {
         if (Math.abs(this._ball.getVelocity().y) < 300) {
-            this._ballStartingVelocity = cc.pMult(this._ballStartingVelocity, -1.1);
+            this._ballStartingVelocity = cc.Point.mult(this._ballStartingVelocity, -1.1);
         } else {
-            this._ballStartingVelocity = cc.pMult(this._ballStartingVelocity, -1);
+            this._ballStartingVelocity = cc.Point.mult(this._ballStartingVelocity, -1);
         }
         this._ball.setVelocity(this._ballStartingVelocity);
         this._ball.x = this._winSize.width / 2;

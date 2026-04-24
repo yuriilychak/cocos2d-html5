@@ -118,7 +118,7 @@ var Sprite1 = class Sprite1 extends SpriteTestDemo {
 
         this.testSprite = null;
 
-        this.addNewSpriteWithCoords(cc.p(winSize.width / 2, winSize.height / 2));
+        this.addNewSpriteWithCoords(new cc.Point(winSize.width / 2, winSize.height / 2));
 
         if ('touches' in cc.sys.capabilities) {
             cc.eventManager.addListener({
@@ -254,7 +254,7 @@ var SpriteBatchNode1 = class SpriteBatchNode1 extends SpriteTestDemo {
 
         var batchNode = new cc.SpriteBatchNode(s_grossini_dance_atlas, 50);
         this.addChild(batchNode, 0, TAG_SPRITE_BATCH_NODE);
-        this.addNewSpriteWithCoords(cc.p(winSize.width / 2, winSize.height / 2));
+        this.addNewSpriteWithCoords(new cc.Point(winSize.width / 2, winSize.height / 2));
         //----end1----
     }
 
@@ -1624,7 +1624,7 @@ var SpriteNewTexture = class SpriteNewTexture extends SpriteTestDemo {
 
     addNewSprite() {
         //----start26----addNewSprite
-        var p = cc.p(Math.random() * winSize.width, Math.random() * winSize.height);
+        var p = new cc.Point(Math.random() * winSize.width, Math.random() * winSize.height);
 
         var idx = 0 | (Math.random() * 14);
         var x = (idx % 5) * 85;
@@ -1765,7 +1765,7 @@ var SpriteBatchNodeNewTexture = class SpriteBatchNodeNewTexture extends SpriteTe
         //----start27----addNewSprite
         var s = winSize;
 
-        var p = cc.p(Math.random() * winSize.width, Math.random() * winSize.height);
+        var p = new cc.Point(Math.random() * winSize.width, Math.random() * winSize.height);
 
         var batch = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
 
@@ -3369,7 +3369,7 @@ var SpriteBatchNodeChildren = class SpriteBatchNodeChildren extends SpriteTestDe
         sprite1.runAction(cc.animate(animation).repeatForever());
         // END NEW CODE
 
-        var action = cc.moveBy(2, cc.p(200, 0));
+        var action = cc.moveBy(2, new cc.Point(200, 0));
         var action_back = action.reverse();
         var action_rot = cc.rotateBy(2, 360);
         var action_s = cc.scaleBy(2, 2);

@@ -121,9 +121,9 @@ export default class BezierBy extends ActionInterval {
   reverse() {
     var locConfig = this._config;
     var r = [
-      cc.pAdd(locConfig[1], cc.pNeg(locConfig[2])),
-      cc.pAdd(locConfig[0], cc.pNeg(locConfig[2])),
-      cc.pNeg(locConfig[2])
+      cc.Point.add(locConfig[1], cc.Point.neg(locConfig[2])),
+      cc.Point.add(locConfig[0], cc.Point.neg(locConfig[2])),
+      cc.Point.neg(locConfig[2])
     ];
     var action = new BezierBy(this._duration, r);
     this._cloneDecoration(action);

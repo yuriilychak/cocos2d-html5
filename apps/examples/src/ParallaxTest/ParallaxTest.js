@@ -121,19 +121,19 @@ var Parallax1 = class Parallax1 extends ParallaxDemo {
         // NOW add the 3 layers to the 'void' node
 
         // background image is moved at a ratio of 0.4x, 0.5y
-        this._parentNode.addChild(this._background, -1, cc.p(0.4, 0.5), cc.p(0,0));
+        this._parentNode.addChild(this._background, -1, new cc.Point(0.4, 0.5), new cc.Point(0,0));
 
         // tiles are moved at a ratio of 2.2x, 1.0y
-        this._parentNode.addChild(this._tilemap, 1, cc.p(2.2, 1.0), cc.p(0, 0));
+        this._parentNode.addChild(this._tilemap, 1, new cc.Point(2.2, 1.0), new cc.Point(0, 0));
 
         // top image is moved at a ratio of 3.0x, 2.5y
-        this._parentNode.addChild(this._cocosimage, 2, cc.p(3.0, 2.5), cc.p(0, 0));
+        this._parentNode.addChild(this._cocosimage, 2, new cc.Point(3.0, 2.5), new cc.Point(0, 0));
 
         // now create some actions that will move the '_parent' node
         // and the children of the '_parent' node will move at different
         // speed, thus, simulation the 3D environment
-        var goUp = cc.moveBy(2, cc.p(0, 100));
-        var goRight = cc.moveBy(2, cc.p(200, 0));
+        var goUp = cc.moveBy(2, new cc.Point(0, 100));
+        var goRight = cc.moveBy(2, new cc.Point(200, 0));
         var delay = cc.delayTime(2.0);
         var goDown = goUp.reverse();
         var goLeft = goRight.reverse();
@@ -150,20 +150,20 @@ var Parallax1 = class Parallax1 extends ParallaxDemo {
     // default values for automation
     getExpectedResult() {
         var ret = {};
-        ret.pos_parent = cc.p(200,100);
-        ret.pos_child1 = cc.p(-120, -50);
-        ret.pos_child2 = cc.p(240, 0);
-        ret.pos_child3 = cc.p(400, 150);
+        ret.pos_parent = new cc.Point(200,100);
+        ret.pos_child1 = new cc.Point(-120, -50);
+        ret.pos_child2 = new cc.Point(240, 0);
+        ret.pos_child3 = new cc.Point(400, 150);
 
         return JSON.stringify(ret);
     }
 
     getCurrentResult() {
         var ret = {};
-        ret.pos_parent = cc.p(Math.round(this._parentNode.x), Math.round(this._parentNode.y));
-        ret.pos_child1 = cc.p(Math.round(this._background.x), Math.round(this._background.y));
-        ret.pos_child2 = cc.p(Math.round(this._tilemap.x), Math.round(this._tilemap.y));
-        ret.pos_child3 = cc.p(Math.round(this._cocosimage.x), Math.round(this._cocosimage.y));
+        ret.pos_parent = new cc.Point(Math.round(this._parentNode.x), Math.round(this._parentNode.y));
+        ret.pos_child1 = new cc.Point(Math.round(this._background.x), Math.round(this._background.y));
+        ret.pos_child2 = new cc.Point(Math.round(this._tilemap.x), Math.round(this._tilemap.y));
+        ret.pos_child3 = new cc.Point(Math.round(this._cocosimage.x), Math.round(this._cocosimage.y));
 
         return JSON.stringify(ret);
     }
@@ -236,13 +236,13 @@ var Parallax2 = class Parallax2 extends ParallaxDemo {
         // NOW add the 3 layers to the 'void' node
 
         // background image is moved at a ratio of 0.4x, 0.5y
-        voidNode.addChild(background, -1, cc.p(0.4, 0.5), cc.p(0,0));
+        voidNode.addChild(background, -1, new cc.Point(0.4, 0.5), new cc.Point(0,0));
 
         // tiles are moved at a ratio of 1.0, 1.0y
-        voidNode.addChild(tilemap, 1, cc.p(1.0, 1.0), cc.p(0, 0));
+        voidNode.addChild(tilemap, 1, new cc.Point(1.0, 1.0), new cc.Point(0, 0));
 
         // top image is moved at a ratio of 3.0x, 2.5y
-        voidNode.addChild(cocosImage, 2, cc.p(3.0, 2.5), cc.p(0, 0));
+        voidNode.addChild(cocosImage, 2, new cc.Point(3.0, 2.5), new cc.Point(0, 0));
         this.addChild(voidNode, 0, TAG_NODE);
     }
 

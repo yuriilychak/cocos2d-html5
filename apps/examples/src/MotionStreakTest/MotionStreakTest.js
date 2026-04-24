@@ -149,7 +149,7 @@ var MotionStreakTest1 = class MotionStreakTest1 extends MotionStreakTest {
         var a1 = cc.rotateBy(2, 360);
 
         var action1 = a1.repeatForever();
-        var motion = cc.moveBy(2, cc.p(100, 0));
+        var motion = cc.moveBy(2, new cc.Point(100, 0));
         this._root.runAction(cc.sequence(motion, motion.reverse()).repeatForever());
         this._root.runAction(action1);
 
@@ -167,7 +167,7 @@ var MotionStreakTest1 = class MotionStreakTest1 extends MotionStreakTest {
     }
 
     onUpdate(delta) {
-	    var pos = this._target.convertToWorldSpace(cc.p(this._target.width/2, 0));
+	    var pos = this._target.convertToWorldSpace(new cc.Point(this._target.width/2, 0));
         this._streak.x = pos.x;
         this._streak.y = pos.y;
     }
@@ -240,7 +240,7 @@ var Issue1358 = class Issue1358 extends MotionStreakTest {
         this._streak = new cc.MotionStreak(2.0, 1.0, 50.0, cc.color(255, 255, 0), s_image_icon);
         this.addChild(this._streak);
 
-        this._center = cc.p(size.width / 2, size.height / 2);
+        this._center = new cc.Point(size.width / 2, size.height / 2);
         this._radius = size.width / 3;
         this._angle = 0.0;
         this.schedule(this.update, 0);

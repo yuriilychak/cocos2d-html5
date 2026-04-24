@@ -123,11 +123,11 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
     constructor(size, container) {
         super();
-        this._contentOffset = cc.p(0, 0);
-        this._maxInset = cc.p(0, 0);
-        this._minInset = cc.p(0, 0);
-        this._scrollDistance = cc.p(0, 0);
-        this._touchPoint = cc.p(0, 0);
+        this._contentOffset = new cc.Point(0, 0);
+        this._maxInset = new cc.Point(0, 0);
+        this._minInset = new cc.Point(0, 0);
+        this._scrollDistance = new cc.Point(0, 0);
+        this._touchPoint = new cc.Point(0, 0);
         this._touches = [];
         this._viewSize = cc.size(0, 0);
         this._parentScissorRect = new cc.Rect(0, 0, 0, 0);
@@ -151,7 +151,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
      * @return {Boolean}
      */
     initWithViewSize(size, container) {
-        var pZero = cc.p(0, 0);
+        var pZero = new cc.Point(0, 0);
         if (super.init()) {
             if (!container && !this._container) {
                 container = new cc.Layer();
@@ -239,7 +239,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
     getContentOffset() {
         var locPos = this._container.getPosition();
-        return cc.p(locPos.x, locPos.y);
+        return new cc.Point(locPos.x, locPos.y);
     }
 
     /**
@@ -275,7 +275,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
             if (this._touchLength === 0.0) {
                 var locViewSize = this._viewSize;
-                center = cc.p(locViewSize.width * 0.5, locViewSize.height * 0.5);
+                center = new cc.Point(locViewSize.width * 0.5, locViewSize.height * 0.5);
                 center = this.convertToWorldSpace(center);
             } else
                 center = this._touchPoint;
@@ -284,10 +284,10 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             locContainer.setScale(Math.max(this._minScale, Math.min(this._maxScale, scale)));
             newCenter = locContainer.convertToWorldSpace(oldCenter);
 
-            var offset = cc.pSub(center, newCenter);
+            var offset = cc.Point.sub(center, newCenter);
             if (this._delegate && this._delegate.scrollViewDidZoom)
                 this._delegate.scrollViewDidZoom(this);
-            this.setContentOffset(cc.pAdd(locContainer.getPosition(), offset));
+            this.setContentOffset(cc.Point.add(locContainer.getPosition(), offset));
         }
     }
 
@@ -320,7 +320,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     minContainerOffset() {
         var locContainer = this._container;
         var locContentSize = locContainer.getContentSize(), locViewSize = this._viewSize;
-        return cc.p(locViewSize.width - locContentSize.width * locContainer.getScaleX(),
+        return new cc.Point(locViewSize.width - locContentSize.width * locContainer.getScaleX(),
             locViewSize.height - locContentSize.height * locContainer.getScaleY());
     }
 
@@ -329,7 +329,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
      * @return {cc.Point} Returns the current container's maximum offset.
      */
     maxContainerOffset() {
-        return cc.p(0.0, 0.0);
+        return new cc.Point(0.0, 0.0);
     }
 
     /**
@@ -466,9 +466,9 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             this._scrollDistance.y = 0;
             this._touchLength = 0.0;
         } else if (locTouches.length === 2) {
-            this._touchPoint = cc.pMidpoint(this.convertTouchToNodeSpace(locTouches[0]),
+            this._touchPoint = cc.Point.midpoint(this.convertTouchToNodeSpace(locTouches[0]),
                 this.convertTouchToNodeSpace(locTouches[1]));
-            this._touchLength = cc.pDistance(locContainer.convertTouchToNodeSpace(locTouches[0]),
+            this._touchLength = cc.Point.distance(locContainer.convertTouchToNodeSpace(locTouches[0]),
                 locContainer.convertTouchToNodeSpace(locTouches[1]));
             this._dragging = false;
         }
@@ -489,7 +489,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
             //var newPoint = this.convertTouchToNodeSpace(this._touches[0]);
             var newPoint = this.convertTouchToNodeSpace(touch);
-            var moveDistance = cc.pSub(newPoint, this._touchPoint);
+            var moveDistance = cc.Point.sub(newPoint, this._touchPoint);
 
             var dis = 0.0, locDirection = this._direction, pos;
             if (locDirection === cc.SCROLLVIEW_DIRECTION_VERTICAL) {
@@ -545,10 +545,10 @@ cc.ScrollView = class ScrollView extends cc.Layer {
                 var newY = locPosition.y + moveDistance.y;
 
                 this._scrollDistance = moveDistance;
-                this.setContentOffset(cc.p(newX, newY));
+                this.setContentOffset(new cc.Point(newX, newY));
             }
         } else if (this._touches.length === 2 && !this._dragging) {
-            var len = cc.pDistance(this._container.convertTouchToNodeSpace(this._touches[0]),
+            var len = cc.Point.distance(this._container.convertTouchToNodeSpace(this._touches[0]),
                 this._container.convertTouchToNodeSpace(this._touches[1]));
             this.setZoomScale(this.getZoomScale() * len / this._touchLength);
         }
@@ -708,7 +708,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         }
 
         if (newY !== oldPoint.y || newX !== oldPoint.x) {
-            this.setContentOffset(cc.p(newX, newY), animated);
+            this.setContentOffset(new cc.Point(newX, newY), animated);
         }
     }
     /**
@@ -742,7 +742,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         locScrollDistance.x = locScrollDistance.x * SCROLL_DEACCEL_RATE;
         locScrollDistance.y = locScrollDistance.y * SCROLL_DEACCEL_RATE;
 
-        this.setContentOffset(cc.p(newX, newY));
+        this.setContentOffset(new cc.Point(newX, newY));
 
         if ((Math.abs(locScrollDistance.x) <= SCROLL_DEACCEL_DIST &&
             Math.abs(locScrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
@@ -784,7 +784,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     }
 
     _getViewRect() {
-        var screenPos = this.convertToWorldSpace(cc.p(0, 0));
+        var screenPos = this.convertToWorldSpace(new cc.Point(0, 0));
         var locViewSize = this._viewSize;
 
         var scaleX = this.getScaleX();

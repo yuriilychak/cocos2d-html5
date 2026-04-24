@@ -47,8 +47,8 @@
 /**
  * Structure that contains the values of each particle
  * @Construct
- * @param {cc.Point} [pos=cc.p(0,0)] Position of particle
- * @param {cc.Point} [startPos=cc.p(0,0)]
+ * @param {cc.Point} [pos=new cc.Point(0,0)] Position of particle
+ * @param {cc.Point} [startPos=new cc.Point(0,0)]
  * @param {cc.Color} [color= cc.color(0, 0, 0, 255)]
  * @param {cc.Color} [deltaColor=cc.color(0, 0, 0, 255)]
  * @param {cc.Size} [size=0]
@@ -74,8 +74,8 @@ cc.Particle = function (
   modeA,
   modeB
 ) {
-  this.pos = pos ? pos : cc.p(0, 0);
-  this.startPos = startPos ? startPos : cc.p(0, 0);
+  this.pos = pos ? pos : new cc.Point(0, 0);
+  this.startPos = startPos ? startPos : new cc.Point(0, 0);
   this.color = color ? color : { r: 0, g: 0, b: 0, a: 255 };
   this.deltaColor = deltaColor ? deltaColor : { r: 0, g: 0, b: 0, a: 255 };
   this.size = size || 0;
@@ -87,7 +87,7 @@ cc.Particle = function (
   this.modeA = modeA ? modeA : new cc.Particle.ModeA();
   this.modeB = modeB ? modeB : new cc.Particle.ModeB();
   this.isChangeColor = false;
-  this.drawPos = cc.p(0, 0);
+  this.drawPos = new cc.Point(0, 0);
 };
 
 /**
@@ -98,7 +98,7 @@ cc.Particle = function (
  * @param {Number} tangentialAccel
  */
 cc.Particle.ModeA = function (dir, radialAccel, tangentialAccel) {
-  this.dir = dir ? dir : cc.p(0, 0);
+  this.dir = dir ? dir : new cc.Point(0, 0);
   this.radialAccel = radialAccel || 0;
   this.tangentialAccel = tangentialAccel || 0;
 };
@@ -121,7 +121,7 @@ cc.Particle.ModeB = function (angle, degreesPerSecond, radius, deltaRadius) {
 /**
  * Array of Point instances used to optimize particle updates
  */
-cc.Particle.TemporaryPoints = [cc.p(), cc.p(), cc.p(), cc.p()];
+cc.Particle.TemporaryPoints = [new cc.Point(), new cc.Point(), new cc.Point(), new cc.Point()];
 
 /**
  * <p>
@@ -226,7 +226,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
     modeB = null;
 
     //private POINTZERO for ParticleSystem
-    _pointZeroForParticle = cc.p(0, 0);
+    _pointZeroForParticle = new cc.Point(0, 0);
 
     //! Array of particles
     _particles = null;
@@ -294,8 +294,8 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
       this._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
 
       this._particles = [];
-      this._sourcePosition = cc.p(0, 0);
-      this._posVar = cc.p(0, 0);
+      this._sourcePosition = new cc.Point(0, 0);
+      this._posVar = new cc.Point(0, 0);
 
       this._startColor = cc.color(255, 255, 255, 255);
       this._startColorVar = cc.color(255, 255, 255, 255);
@@ -305,7 +305,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
       this._plistFile = "";
       this._elapsed = 0;
       this._dontTint = false;
-      this._pointZeroForParticle = cc.p(0, 0);
+      this._pointZeroForParticle = new cc.Point(0, 0);
       this._emitCounter = 0;
       this._particleIdx = 0;
       this._batchNode = null;
@@ -642,7 +642,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
           "cc.ParticleBatchNode.getGravity() : Particle Mode should be Gravity"
         );
       var locGravity = this.modeA.gravity;
-      return cc.p(locGravity.x, locGravity.y);
+      return new cc.Point(locGravity.x, locGravity.y);
     }
 
     /**
@@ -1804,44 +1804,44 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
       var locEndColor = this._endColor,
         locEndColorVar = this._endColorVar;
       start = {
-        r: cc.clampf(
+        r: cc.Point.clampf(
           locStartColor.r + locStartColorVar.r * locRandomMinus11(),
           0,
           255
         ),
-        g: cc.clampf(
+        g: cc.Point.clampf(
           locStartColor.g + locStartColorVar.g * locRandomMinus11(),
           0,
           255
         ),
-        b: cc.clampf(
+        b: cc.Point.clampf(
           locStartColor.b + locStartColorVar.b * locRandomMinus11(),
           0,
           255
         ),
-        a: cc.clampf(
+        a: cc.Point.clampf(
           locStartColor.a + locStartColorVar.a * locRandomMinus11(),
           0,
           255
         )
       };
       end = {
-        r: cc.clampf(
+        r: cc.Point.clampf(
           locEndColor.r + locEndColorVar.r * locRandomMinus11(),
           0,
           255
         ),
-        g: cc.clampf(
+        g: cc.Point.clampf(
           locEndColor.g + locEndColorVar.g * locRandomMinus11(),
           0,
           255
         ),
-        b: cc.clampf(
+        b: cc.Point.clampf(
           locEndColor.b + locEndColorVar.b * locRandomMinus11(),
           0,
           255
         ),
-        a: cc.clampf(
+        a: cc.Point.clampf(
           locEndColor.a + locEndColorVar.a * locRandomMinus11(),
           0,
           255
@@ -1899,7 +1899,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
         // direction
         locParticleModeA.dir.x = Math.cos(a);
         locParticleModeA.dir.y = Math.sin(a);
-        cc.pMultIn(locParticleModeA.dir, s);
+        cc.Point.multIn(locParticleModeA.dir, s);
 
         // radial accel
         locParticleModeA.radialAccel =
@@ -1913,7 +1913,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
         // rotation is dir
         if (locModeA.rotationIsDir)
           particle.rotation = -cc.radiansToDegrees(
-            cc.pToAngle(locParticleModeA.dir)
+            cc.Point.toAngle(locParticleModeA.dir)
           );
       } else {
         // Mode Radius: B
@@ -2016,7 +2016,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
 
       var currentPosition = cc.Particle.TemporaryPoints[0];
       if (this.positionType === cc.ParticleSystem.TYPE_FREE) {
-        cc.pIn(
+        cc.Point.copyIn(
           currentPosition,
           this.convertToWorldSpace(this._pointZeroForParticle)
         );
@@ -2034,9 +2034,9 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
         var locParticles = this._particles;
         while (this._particleIdx < this.particleCount) {
           // Reset the working particles
-          cc.pZeroIn(tpa);
-          cc.pZeroIn(tpb);
-          cc.pZeroIn(tpc);
+          cc.Point.zeroIn(tpa);
+          cc.Point.zeroIn(tpb);
+          cc.Point.zeroIn(tpc);
 
           var selParticle = locParticles[this._particleIdx];
 
@@ -2052,31 +2052,31 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
 
               // radial acceleration
               if (selParticle.pos.x || selParticle.pos.y) {
-                cc.pIn(radial, selParticle.pos);
-                cc.pNormalizeIn(radial);
+                cc.Point.copyIn(radial, selParticle.pos);
+                cc.Point.normalizeIn(radial);
               } else {
-                cc.pZeroIn(radial);
+                cc.Point.zeroIn(radial);
               }
 
-              cc.pIn(tangential, radial);
-              cc.pMultIn(radial, selParticle.modeA.radialAccel);
+              cc.Point.copyIn(tangential, radial);
+              cc.Point.multIn(radial, selParticle.modeA.radialAccel);
 
               // tangential acceleration
               var newy = tangential.x;
               tangential.x = -tangential.y;
               tangential.y = newy;
 
-              cc.pMultIn(tangential, selParticle.modeA.tangentialAccel);
+              cc.Point.multIn(tangential, selParticle.modeA.tangentialAccel);
 
-              cc.pIn(tmp, radial);
-              cc.pAddIn(tmp, tangential);
-              cc.pAddIn(tmp, this.modeA.gravity);
-              cc.pMultIn(tmp, dt);
-              cc.pAddIn(selParticle.modeA.dir, tmp);
+              cc.Point.copyIn(tmp, radial);
+              cc.Point.addIn(tmp, tangential);
+              cc.Point.addIn(tmp, this.modeA.gravity);
+              cc.Point.multIn(tmp, dt);
+              cc.Point.addIn(selParticle.modeA.dir, tmp);
 
-              cc.pIn(tmp, selParticle.modeA.dir);
-              cc.pMultIn(tmp, dt);
-              cc.pAddIn(selParticle.pos, tmp);
+              cc.Point.copyIn(tmp, selParticle.modeA.dir);
+              cc.Point.multIn(tmp, dt);
+              cc.Point.addIn(selParticle.pos, tmp);
             } else {
               // Mode B: radius movement
               var selModeB = selParticle.modeB;
@@ -2107,13 +2107,13 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
               this.positionType === cc.ParticleSystem.TYPE_RELATIVE
             ) {
               var diff = tpb;
-              cc.pIn(diff, currentPosition);
-              cc.pSubIn(diff, selParticle.startPos);
+              cc.Point.copyIn(diff, currentPosition);
+              cc.Point.subIn(diff, selParticle.startPos);
 
-              cc.pIn(newPos, selParticle.pos);
-              cc.pSubIn(newPos, diff);
+              cc.Point.copyIn(newPos, selParticle.pos);
+              cc.Point.subIn(newPos, diff);
             } else {
-              cc.pIn(newPos, selParticle.pos);
+              cc.Point.copyIn(newPos, selParticle.pos);
             }
 
             // translate newPos to correct position, since matrix transform isn't performed in batchnode
@@ -2242,8 +2242,8 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
         retParticle.setEndSizeVar(this.getEndSizeVar());
 
         // position
-        retParticle.setPosition(cc.p(this.x, this.y));
-        retParticle.setPosVar(cc.p(this.getPosVar().x, this.getPosVar().y));
+        retParticle.setPosition(new cc.Point(this.x, this.y));
+        retParticle.setPosVar(new cc.Point(this.getPosVar().x, this.getPosVar().y));
 
         retParticle.setPositionType(this.getPositionType());
 
@@ -2259,7 +2259,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
         if (this.getEmitterMode() === cc.ParticleSystem.MODE_GRAVITY) {
           // gravity
           var gra = this.getGravity();
-          retParticle.setGravity(cc.p(gra.x, gra.y));
+          retParticle.setGravity(new cc.Point(gra.x, gra.y));
 
           // speed
           retParticle.setSpeed(this.getSpeed());
@@ -2377,7 +2377,7 @@ cc.ParticleSystem.ModeA = function (
   rotationIsDir
 ) {
   /** Gravity value. Only available in 'Gravity' mode. */
-  this.gravity = gravity ? gravity : cc.p(0, 0);
+  this.gravity = gravity ? gravity : new cc.Point(0, 0);
   /** speed of each particle. Only available in 'Gravity' mode.  */
   this.speed = speed || 0;
   /** speed variance of each particle. Only available in 'Gravity' mode. */

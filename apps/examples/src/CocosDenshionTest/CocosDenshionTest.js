@@ -156,7 +156,7 @@ var CocosDenshionTest = class CocosDenshionTest extends cc.LayerGradient {
 
         this._itemMenu = null;
 
-        this._beginPos = cc.p(0, 0);
+        this._beginPos = new cc.Point(0, 0);
 
         this._testCount = 0;
 

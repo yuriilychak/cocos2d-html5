@@ -80,7 +80,7 @@
                 var frame = new ccs.PositionFrame();
                 var x = options["X"];
                 var y = options["Y"];
-                frame.setPosition(cc.p(x,y));
+                frame.setPosition(new cc.Point(x,y));
                 return frame;
             }
         },
@@ -141,7 +141,7 @@
                 var frame = new ccs.AnchorPointFrame();
                 var anchorx = options["X"];
                 var anchory = options["Y"];
-                frame.setAnchorPoint(cc.p(anchorx, anchory));
+                frame.setAnchorPoint(new cc.Point(anchorx, anchory));
                 return frame;
             }
         },{
@@ -150,7 +150,7 @@
                 var frame = new ccs.AnchorPointFrame();
                 var anchorx = options["X"];
                 var anchory = options["Y"];
-                frame.setAnchorPoint(cc.p(anchorx, anchory));
+                frame.setAnchorPoint(new cc.Point(anchorx, anchory));
                 return frame;
             }
         },{

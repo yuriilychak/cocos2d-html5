@@ -41,7 +41,7 @@ var UIRichTextTest = class UIRichTextTest extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -116,7 +116,7 @@ var UIRichTextXMLBasic = class UIRichTextXMLBasic extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -170,7 +170,7 @@ var UIRichTextXMLSmallBig = class UIRichTextXMLSmallBig extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -224,7 +224,7 @@ var UIRichTextXMLColor = class UIRichTextXMLColor extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -278,7 +278,7 @@ var UIRichTextXMLSUIB = class UIRichTextXMLSUIB extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -332,7 +332,7 @@ var UIRichTextXMLSUIB2 = class UIRichTextXMLSUIB2 extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -386,7 +386,7 @@ var UIRichTextXMLSUIB3 = class UIRichTextXMLSUIB3 extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -440,7 +440,7 @@ var UIRichTextXMLImg = class UIRichTextXMLImg extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -494,7 +494,7 @@ var UIRichTextXMLUrl = class UIRichTextXMLUrl extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -548,7 +548,7 @@ var UIRichTextXMLFace = class UIRichTextXMLFace extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -602,7 +602,7 @@ var UIRichTextXMLBR = class UIRichTextXMLBR extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
@@ -656,7 +656,7 @@ var UIRichTextXMLInvalid = class UIRichTextXMLInvalid extends UIMainLayer {
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
+            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 

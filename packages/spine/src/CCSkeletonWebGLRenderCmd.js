@@ -167,7 +167,7 @@ sp.Skeleton.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
                 bone = locSkeleton.bones[i];
                 var x = bone.data.length * bone.a + bone.worldX;
                 var y = bone.data.length * bone.c + bone.worldY;
-                drawingUtil.drawLine(cc.p(bone.worldX, bone.worldY), cc.p(x, y));
+                drawingUtil.drawLine(new cc.Point(bone.worldX, bone.worldY), new cc.Point(x, y));
             }
 
             // Bone origins.
@@ -176,7 +176,7 @@ sp.Skeleton.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
 
             for (i = 0, n = locSkeleton.bones.length; i < n; i++) {
                 bone = locSkeleton.bones[i];
-                drawingUtil.drawPoint(cc.p(bone.worldX, bone.worldY));
+                drawingUtil.drawPoint(new cc.Point(bone.worldX, bone.worldY));
                 if (i == 0) {
                     drawingUtil.setDrawColor(0, 255, 0, 255);
                 }
@@ -284,10 +284,10 @@ sp.Skeleton.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
         // return the quad points info if debug slot enabled
         var VERTEX = spine.RegionAttachment;
         return [
-            cc.p(vertices[VERTEX.OX1], vertices[VERTEX.OY1]),
-            cc.p(vertices[VERTEX.OX2], vertices[VERTEX.OY2]),
-            cc.p(vertices[VERTEX.OX3], vertices[VERTEX.OY3]),
-            cc.p(vertices[VERTEX.OX4], vertices[VERTEX.OY4])
+            new cc.Point(vertices[VERTEX.OX1], vertices[VERTEX.OY1]),
+            new cc.Point(vertices[VERTEX.OX2], vertices[VERTEX.OY2]),
+            new cc.Point(vertices[VERTEX.OX3], vertices[VERTEX.OY3]),
+            new cc.Point(vertices[VERTEX.OX4], vertices[VERTEX.OY4])
         ];
     }
     }

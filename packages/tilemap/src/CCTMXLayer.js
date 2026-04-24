@@ -489,7 +489,7 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
         }
         var pos;
         if (flags !== undefined) {
-            pos = cc.p(posOrX, flagsOrY);
+            pos = new cc.Point(posOrX, flagsOrY);
         } else {
             pos = posOrX;
             flags = flagsOrY;
@@ -564,7 +564,7 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
         if(!pos)
             throw new Error("cc.TMXLayer.getTileFlagsAt(): pos should be non-null");
         if(y !== undefined)
-            pos = cc.p(pos, y);
+            pos = new cc.Point(pos, y);
         if(pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
             throw new Error("cc.TMXLayer.getTileFlagsAt(): invalid position");
         if(!this.tiles){
@@ -589,7 +589,7 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
             throw new Error("cc.TMXLayer.removeTileAt(): pos should be non-null");
         }
         if (y !== undefined) {
-            pos = cc.p(pos, y);
+            pos = new cc.Point(pos, y);
         }
         if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0) {
             throw new Error("cc.TMXLayer.removeTileAt(): invalid position");
@@ -621,8 +621,8 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
      */
     getPositionAt(pos, y) {
         if (y !== undefined)
-            pos = cc.p(pos, y);
-        var ret = cc.p(0,0);
+            pos = new cc.Point(pos, y);
+        var ret = new cc.Point(0,0);
         switch (this.layerOrientation) {
             case cc.TMX_ORIENTATION_ORTHO:
                 ret = this._positionForOrthoAt(pos);
@@ -638,29 +638,29 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
     }
 
     _positionForIsoAt(pos) {
-        return cc.p(this._mapTileSize.width / 2 * ( this._layerSize.width + pos.x - pos.y - 1),
+        return new cc.Point(this._mapTileSize.width / 2 * ( this._layerSize.width + pos.x - pos.y - 1),
             this._mapTileSize.height / 2 * (( this._layerSize.height * 2 - pos.x - pos.y) - 2));
     }
 
     _positionForOrthoAt(pos) {
-        return cc.p(pos.x * this._mapTileSize.width,
+        return new cc.Point(pos.x * this._mapTileSize.width,
             (this._layerSize.height - pos.y - 1) * this._mapTileSize.height);
     }
 
     _positionForHexAt(pos) {
         var diffY = (pos.x % 2 === 1) ? (-this._mapTileSize.height / 2) : 0;
-        return cc.p(pos.x * this._mapTileSize.width * 3 / 4,
+        return new cc.Point(pos.x * this._mapTileSize.width * 3 / 4,
             (this._layerSize.height - pos.y - 1) * this._mapTileSize.height + diffY);
     }
 
     _calculateLayerOffset(pos) {
-        var ret = cc.p(0,0);
+        var ret = new cc.Point(0,0);
         switch (this.layerOrientation) {
             case cc.TMX_ORIENTATION_ORTHO:
-                ret = cc.p(pos.x * this._mapTileSize.width, -pos.y * this._mapTileSize.height);
+                ret = new cc.Point(pos.x * this._mapTileSize.width, -pos.y * this._mapTileSize.height);
                 break;
             case cc.TMX_ORIENTATION_ISO:
-                ret = cc.p((this._mapTileSize.width / 2) * (pos.x - pos.y),
+                ret = new cc.Point((this._mapTileSize.width / 2) * (pos.x - pos.y),
                     (this._mapTileSize.height / 2 ) * (-pos.x - pos.y));
                 break;
             case cc.TMX_ORIENTATION_HEX:

@@ -30,11 +30,11 @@ var UITextFieldTest = class UITextFieldTest extends UIMainLayer {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
-            this._topDisplayLabel.setAnchorPoint(cc.p(0.5, -1));
-            this._topDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + this._topDisplayLabel.getContentSize().height * 1.5));
+            this._topDisplayLabel.setAnchorPoint(new cc.Point(0.5, -1));
+            this._topDisplayLabel.setPosition(new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0 + this._topDisplayLabel.getContentSize().height * 1.5));
 
             this._bottomDisplayLabel.setString("TextField");
-            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.getContentSize().height * 3.4));
+            this._bottomDisplayLabel.setPosition(new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.getContentSize().height * 3.4));
             this._bottomDisplayLabel.setColor(cc.color(255, 255, 255, 255));
 
             // Create the textfield
@@ -54,12 +54,12 @@ var UITextFieldTest = class UITextFieldTest extends UIMainLayer {
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.moveTo(0.225,
-                    cc.p(widgetSize.width / 2, widgetSize.height / 2 + 30)));
+                    new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 30)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
                 var widgetSize = this._widget.getContentSize();
-                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
+                textField.runAction(cc.moveTo(0.175, new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
@@ -107,11 +107,11 @@ var UITextFieldTest_MaxLength = class UITextFieldTest_MaxLength extends UIMainLa
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 textField.runAction(cc.moveTo(0.225,
-                    cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
+                    new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
+                textField.runAction(cc.moveTo(0.175, new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
@@ -159,11 +159,11 @@ var UITextFieldTest_Password = class UITextFieldTest_Password extends UIMainLaye
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 textField.runAction(cc.moveTo(0.225,
-                    cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
+                    new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME IME password");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
+                textField.runAction(cc.moveTo(0.175, new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME password");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
@@ -195,7 +195,7 @@ var UITextFieldTest_LineWrap = class UITextFieldTest_LineWrap extends UIMainLaye
             // Add the alert
             var alert = new ccui.Text("TextField line wrap","Marker Felt",30);
             alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.075));
+            alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.075));
             this._mainNode.addChild(alert);
 
             // Create the textfield
@@ -217,13 +217,13 @@ var UITextFieldTest_LineWrap = class UITextFieldTest_LineWrap extends UIMainLaye
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(cc.moveTo(0.225, cc.p(widgetSize.width / 2, widgetSize.height / 2 + 30)));
+                textField.runAction(cc.moveTo(0.225, new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 30)));
                 textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT);
                 textField.setTextVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP);
                 this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2, widgetSize.height / 2)));
+                textField.runAction(cc.moveTo(0.175, new cc.Point(widgetSize.width / 2, widgetSize.height / 2)));
                 textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
                 textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
                 this._topDisplayLabel.setString("detach with IME");
@@ -250,7 +250,7 @@ var UITextFieldTest_TrueTypeFont = class UITextFieldTest_TrueTypeFont extends UI
 
             // Add a label in which the textfield events will be displayed
             this._topDisplayLabel.setString("True Type Font Test - No Event");
-            this._topDisplayLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + this._topDisplayLabel.height * 1.5));
+            this._topDisplayLabel.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + this._topDisplayLabel.height * 1.5));
 
             // Add the alert
             this._bottomDisplayLabel.setString("TextField");
@@ -269,12 +269,12 @@ var UITextFieldTest_TrueTypeFont = class UITextFieldTest_TrueTypeFont extends UI
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(cc.moveTo(0.225, cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
+                textField.runAction(cc.moveTo(0.225, new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
 
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2, widgetSize.height / 2)));
+                textField.runAction(cc.moveTo(0.175, new cc.Point(widgetSize.width / 2, widgetSize.height / 2)));
                 this._topDisplayLabel.setString("detach with IME");
                 break;
 
@@ -306,14 +306,14 @@ var UITextFieldTest_PlaceHolderColor = class UITextFieldTest_PlaceHolderColor ex
 
             // Add the alert
             this._bottomDisplayLabel.setString("TextField");
-            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075));
+            this._bottomDisplayLabel.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075));
 
             // Create the textfield
             var textField = new ccui.TextField("input words here","Arial",30);
             textField.setPlaceHolder("input text here");
             textField.setPlaceHolderColor(cc.color.GREEN);
             textField.setTextColor(cc.color.RED);
-            textField.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+            textField.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
             textField.addEventListener(this.textFieldEvent, this);
             this._mainNode.addChild(textField);
             return true;
@@ -324,11 +324,11 @@ var UITextFieldTest_PlaceHolderColor = class UITextFieldTest_PlaceHolderColor ex
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(cc.moveTo(0.225, cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
+                textField.runAction(cc.moveTo(0.225, new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2, widgetSize.height / 2)));
+                textField.runAction(cc.moveTo(0.175, new cc.Point(widgetSize.width / 2, widgetSize.height / 2)));
                 this._topDisplayLabel.setString("detach with IME");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:

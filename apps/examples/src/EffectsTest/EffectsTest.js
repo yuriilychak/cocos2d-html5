@@ -92,7 +92,7 @@ var EffectsBaseLayer = class EffectsBaseLayer extends BaseTestLayer {
 
     getEffect(duration) {
         // override me
-        return cc.moveBy(2, cc.p(10,10) );
+        return cc.moveBy(2, new cc.Point(10,10) );
     }
 
     // automation
@@ -178,7 +178,7 @@ var Lens3DTest = class Lens3DTest extends EffectsBaseLayer {
         return "a = cc.lens3D(duration, gridSize, position, radius)";
     }
     getEffect(duration) {
-        return cc.lens3D( duration, cc.size(15,10), cc.p(winSize.width/2, winSize.height/2), 240);
+        return cc.lens3D( duration, cc.size(15,10), new cc.Point(winSize.width/2, winSize.height/2), 240);
     }
 
 };
@@ -191,7 +191,7 @@ var Ripple3DTest = class Ripple3DTest extends EffectsBaseLayer {
         return "a = cc.ripple3D(duration, gridSize, position, radius, waves, amplitude)";
     }
     getEffect(duration) {
-        return cc.ripple3D( duration, cc.size(32,24), cc.p(winSize.width/2, winSize.height/2), 240, 4, 160);
+        return cc.ripple3D( duration, cc.size(32,24), new cc.Point(winSize.width/2, winSize.height/2), 240, 4, 160);
     }
 
 };
@@ -230,7 +230,7 @@ var TwirlTest = class TwirlTest extends EffectsBaseLayer {
         return "a = cc.twirl(duration, gridSize, position, twirls, amplitude)";
     }
     getEffect(duration) {
-        return cc.twirl( duration, cc.size(12,8), cc.p(winSize.width/2, winSize.height/2), 1, 2.5);
+        return cc.twirl( duration, cc.size(12,8), new cc.Point(winSize.width/2, winSize.height/2), 1, 2.5);
     }
 
 };

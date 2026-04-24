@@ -64,7 +64,7 @@ var UIS9NinePatchTest = class UIS9NinePatchTest extends UIMainLayer {
             var spriteFrame = cc.spriteFrameCache.getSpriteFrame("buttonnormal.9.png");
             var buttonScale9Sprite = new cc.Scale9Sprite(spriteFrame);
             buttonScale9Sprite.setContentSize(cc.size(150,80));
-            buttonScale9Sprite.setPosition(cc.p(100,200));
+            buttonScale9Sprite.setPosition(new cc.Point(100,200));
             this.addChild(buttonScale9Sprite);
 
             return true;

@@ -360,7 +360,7 @@ cc.TransitionJumpZoom = class TransitionJumpZoom extends cc.TransitionScene {
         this._outScene.anchorX = 0.5;
         this._outScene.anchorY = 0.5;
 
-        var jump = cc.jumpBy(this._duration / 4, cc.p(-winSize.width, 0), winSize.width / 4, 2);
+        var jump = cc.jumpBy(this._duration / 4, new cc.Point(-winSize.width, 0), winSize.width / 4, 2);
         var scaleIn = cc.scaleTo(this._duration / 4, 1.0);
         var scaleOut = cc.scaleTo(this._duration / 4, 0.5);
 
@@ -415,7 +415,7 @@ cc.TransitionMoveInL = class TransitionMoveInL extends cc.TransitionScene {
      * returns the action that will be performed
      */
     action() {
-        return cc.moveTo(this._duration, cc.p(0, 0));
+        return cc.moveTo(this._duration, new cc.Point(0, 0));
     }
 
     /**
@@ -566,7 +566,7 @@ cc.TransitionSlideInL = class TransitionSlideInL extends cc.TransitionScene {
      * @return {cc.MoveBy}
      */
     action() {
-        return cc.moveBy(this._duration, cc.p(cc.director.getWinSize().width - cc.ADJUST_FACTOR, 0));
+        return cc.moveBy(this._duration, new cc.Point(cc.director.getWinSize().width - cc.ADJUST_FACTOR, 0));
     }
 
     /**
@@ -610,7 +610,7 @@ cc.TransitionSlideInR = class TransitionSlideInR extends cc.TransitionSlideInL {
      * @return {cc.MoveBy}
      */
     action() {
-        return cc.moveBy(this._duration, cc.p(-(cc.director.getWinSize().width - cc.ADJUST_FACTOR), 0));
+        return cc.moveBy(this._duration, new cc.Point(-(cc.director.getWinSize().width - cc.ADJUST_FACTOR), 0));
     }
 };
 
@@ -648,7 +648,7 @@ cc.TransitionSlideInB = class TransitionSlideInB extends cc.TransitionSlideInL {
      * @return {cc.MoveBy}
      */
     action() {
-        return cc.moveBy(this._duration, cc.p(0, cc.director.getWinSize().height - cc.ADJUST_FACTOR));
+        return cc.moveBy(this._duration, new cc.Point(0, cc.director.getWinSize().height - cc.ADJUST_FACTOR));
     }
 };
 
@@ -686,7 +686,7 @@ cc.TransitionSlideInT = class TransitionSlideInT extends cc.TransitionSlideInL {
      * @return {cc.MoveBy}
      */
     action() {
-        return cc.moveBy(this._duration, cc.p(0, -(cc.director.getWinSize().height - cc.ADJUST_FACTOR)));
+        return cc.moveBy(this._duration, new cc.Point(0, -(cc.director.getWinSize().height - cc.ADJUST_FACTOR)));
     }
 };
 

@@ -64,8 +64,8 @@
                     posY = locRect.y;
                 s.width = locRect.width;
                 s.height = locRect.height;
-                const vertices = [cc.p(posX, posY), cc.p(posX + s.width, posY),
-                    cc.p(s.width + posX, s.height + posY), cc.p(posX, posY + s.height)];
+                const vertices = [new cc.Point(posX, posY), new cc.Point(posX + s.width, posY),
+                    new cc.Point(s.width + posX, s.height + posY), new cc.Point(posX, posY + s.height)];
                 cc._drawingUtil.drawPoly(vertices, 4, true);
             }
         }

@@ -97,7 +97,7 @@ export default class Touch extends NewClass {
    * @return {Point}
    */
   getDelta() {
-    return cc.pSub(this._point, this._prevPoint);
+    return Point.sub(this._point, this._prevPoint);
   }
 
   /**

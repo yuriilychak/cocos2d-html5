@@ -86,7 +86,7 @@ ccui.LayoutComponent = class LayoutComponent extends cc.Component {
     }
 
     getPercentContentSize() {
-        return cc.p(this._percentWidth, this._percentHeight);
+        return new cc.Point(this._percentWidth, this._percentHeight);
     }
     setPercentContentSize(percent) {
         this.setPercentWidth(percent.x);

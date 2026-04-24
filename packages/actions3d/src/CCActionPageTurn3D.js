@@ -71,7 +71,7 @@ cc.PageTurn3D = class PageTurn3D extends cc.Grid3DAction {
     const cosTheta = Math.cos(theta);
 
     const locGridSize = this._gridSize;
-    const locVer = cc.p(0, 0);
+    const locVer = new cc.Point(0, 0);
     for (let i = 0; i <= locGridSize.width; ++i) {
       for (let j = 0; j <= locGridSize.height; ++j) {
         locVer.x = i;

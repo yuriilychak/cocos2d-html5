@@ -103,7 +103,7 @@ var SpineTestLayerNormal = class SpineTestLayerNormal extends SpineTestLayer {
         // Make Spine's Animated skeleton Node
         // You need 'json + atlas + image' resource files to make it.
         var spineBoy = new sp.SkeletonAnimation('spine/spineboy-ess.json', 'spine/spineboy.atlas', 0.6);
-        spineBoy.setPosition(cc.p(size.width / 2, size.height / 2 - 150));
+        spineBoy.setPosition(new cc.Point(size.width / 2, size.height / 2 - 150));
         spineBoy.setMix('walk', 'jump', 0.2);
         spineBoy.setMix('jump', 'run', 0.2);
         spineBoy.setAnimation(0, 'walk', true);

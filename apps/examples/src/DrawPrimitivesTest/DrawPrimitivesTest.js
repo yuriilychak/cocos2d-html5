@@ -89,51 +89,51 @@ var DrawNewAPITest2 = class DrawNewAPITest2 extends DrawTestDemo {
         var draw = new cc.DrawNode();
         this.addChild(draw, 10);
         var winSize = cc.director.getWinSize();
-        var centerPos = cc.p(winSize.width / 2, winSize.height / 2);
+        var centerPos = new cc.Point(winSize.width / 2, winSize.height / 2);
         //drawSegment
-        draw.drawSegment(cc.p(0, 0), cc.p(winSize.width, winSize.height), 1, cc.color(255, 255, 255, 255));
-        draw.drawSegment(cc.p(0, winSize.height), cc.p(winSize.width, 0), 5, cc.color(255, 0, 0, 255));
+        draw.drawSegment(new cc.Point(0, 0), new cc.Point(winSize.width, winSize.height), 1, cc.color(255, 255, 255, 255));
+        draw.drawSegment(new cc.Point(0, winSize.height), new cc.Point(winSize.width, 0), 5, cc.color(255, 0, 0, 255));
 
         //drawDot
-        draw.drawDot(cc.p(winSize.width / 2, winSize.height / 2), 40, cc.color(0, 0, 255, 128));
-        var points = [cc.p(60, 60), cc.p(70, 70), cc.p(60, 70), cc.p(70, 60)];
+        draw.drawDot(new cc.Point(winSize.width / 2, winSize.height / 2), 40, cc.color(0, 0, 255, 128));
+        var points = [new cc.Point(60, 60), new cc.Point(70, 70), new cc.Point(60, 70), new cc.Point(70, 60)];
         for (var i = 0; i < points.length; i++) {
             draw.drawDot(points[i], 4, cc.color(0, 255, 255, 255));
         }
         //drawCircle
-        draw.drawCircle(cc.p(winSize.width / 2, winSize.height / 2), 100, 0, 10, false, 6, cc.color(0, 255, 0, 255));
-        draw.drawCircle(cc.p(winSize.width / 2, winSize.height / 2), 50, cc.degreesToRadians(90), 50, true, 2, cc.color(0, 255, 255, 255));
+        draw.drawCircle(new cc.Point(winSize.width / 2, winSize.height / 2), 100, 0, 10, false, 6, cc.color(0, 255, 0, 255));
+        draw.drawCircle(new cc.Point(winSize.width / 2, winSize.height / 2), 50, cc.degreesToRadians(90), 50, true, 2, cc.color(0, 255, 255, 255));
 
         //draw poly
         //not fill
-        var vertices = [cc.p(0, 0), cc.p(50, 50), cc.p(100, 50), cc.p(100, 100), cc.p(50, 100) ];
+        var vertices = [new cc.Point(0, 0), new cc.Point(50, 50), new cc.Point(100, 50), new cc.Point(100, 100), new cc.Point(50, 100) ];
         draw.drawPoly(vertices, null, 5, cc.color(255, 255, 0, 255));
-        var vertices2 = [cc.p(30, 130), cc.p(30, 230), cc.p(50, 200)];
+        var vertices2 = [new cc.Point(30, 130), new cc.Point(30, 230), new cc.Point(50, 200)];
         draw.drawPoly(vertices2, null, 2, cc.color(255, 0, 255, 255));
         //fill
-        var vertices3 = [cc.p(60, 130), cc.p(60, 230), cc.p(80, 200)];
+        var vertices3 = [new cc.Point(60, 130), new cc.Point(60, 230), new cc.Point(80, 200)];
         draw.drawPoly(vertices3, cc.color(0, 255, 255, 50), 2, cc.color(255, 0, 255, 255));
 
         //draw rect
         //not fill
-        draw.drawRect(cc.p(120, 120), cc.p(200, 200), null, 2, cc.color(255, 0, 255, 255));
+        draw.drawRect(new cc.Point(120, 120), new cc.Point(200, 200), null, 2, cc.color(255, 0, 255, 255));
         //fill
-        draw.drawRect(cc.p(120, 220), cc.p(200, 300), cc.color(0, 255, 255, 50), 2, cc.color(128, 128, 0, 255));
+        draw.drawRect(new cc.Point(120, 220), new cc.Point(200, 300), cc.color(0, 255, 255, 50), 2, cc.color(128, 128, 0, 255));
 
         // draw quad bezier path
-        draw.drawQuadBezier(cc.p(0, winSize.height), cc.p(centerPos.x, centerPos.y), cc.p(winSize.width, winSize.height), 50, 2, cc.color(255, 0, 255, 255));
+        draw.drawQuadBezier(new cc.Point(0, winSize.height), new cc.Point(centerPos.x, centerPos.y), new cc.Point(winSize.width, winSize.height), 50, 2, cc.color(255, 0, 255, 255));
 
         // draw cubic bezier path
-        draw.drawCubicBezier(cc.p(winSize.width / 2, winSize.height / 2), cc.p(winSize.width / 2 + 30, winSize.height / 2 + 50),
-            cc.p(winSize.width / 2 + 60, winSize.height / 2 - 50), cc.p(winSize.width, winSize.height / 2), 100, 2, cc.color(255, 0, 255, 255));
+        draw.drawCubicBezier(new cc.Point(winSize.width / 2, winSize.height / 2), new cc.Point(winSize.width / 2 + 30, winSize.height / 2 + 50),
+            new cc.Point(winSize.width / 2 + 60, winSize.height / 2 - 50), new cc.Point(winSize.width, winSize.height / 2), 100, 2, cc.color(255, 0, 255, 255));
 
         //draw cardinal spline
         var vertices4 = [
-            cc.p(centerPos.x - 130, centerPos.y - 130),
-            cc.p(centerPos.x - 130, centerPos.y + 130),
-            cc.p(centerPos.x + 130, centerPos.y + 130),
-            cc.p(centerPos.x + 130, centerPos.y - 130),
-            cc.p(centerPos.x - 130, centerPos.y - 130)
+            new cc.Point(centerPos.x - 130, centerPos.y - 130),
+            new cc.Point(centerPos.x - 130, centerPos.y + 130),
+            new cc.Point(centerPos.x + 130, centerPos.y + 130),
+            new cc.Point(centerPos.x + 130, centerPos.y - 130),
+            new cc.Point(centerPos.x - 130, centerPos.y - 130)
         ];
         draw.drawCardinalSpline(vertices4, 0.5, 100, 2, cc.color(255, 255, 255, 255));
         //----end0----
@@ -167,13 +167,13 @@ var DrawNewAPITest = class DrawNewAPITest extends DrawTestDemo {
         // Circles
         //
         for( var i=0; i < 10; i++) {
-            draw.drawDot( cc.p(winSize.width/2, winSize.height/2), 10*(10-i), cc.color( Math.random()*255, Math.random()*255, Math.random()*255, 255) );
+            draw.drawDot( new cc.Point(winSize.width/2, winSize.height/2), 10*(10-i), cc.color( Math.random()*255, Math.random()*255, Math.random()*255, 255) );
         }
 
         //
         // Polygons
         //
-        var points = [ cc.p(winSize.height/4,0), cc.p(winSize.width,winSize.height/5), cc.p(winSize.width/3*2,winSize.height) ];
+        var points = [ new cc.Point(winSize.height/4,0), new cc.Point(winSize.width,winSize.height/5), new cc.Point(winSize.width/3*2,winSize.height) ];
         draw.drawPoly(points, cc.color(255,0,0,128), 8, cc.color(0,128,128,255) );
 
         // star poly (triggers bugs)
@@ -181,10 +181,10 @@ var DrawNewAPITest = class DrawNewAPITest extends DrawTestDemo {
         var w=20;
         var h=50;
         var star = [
-            cc.p(o+w,o-h), cc.p(o+w*2, o),                  // lower spike
-            cc.p(o + w*2 + h, o+w ), cc.p(o + w*2, o+w*2),  // right spike
-            cc.p(o +w, o+w*2+h), cc.p(o,o+w*2),             // top spike
-            cc.p(o -h, o+w), cc.p(o,o)                     // left spike
+            new cc.Point(o+w,o-h), new cc.Point(o+w*2, o),                  // lower spike
+            new cc.Point(o + w*2 + h, o+w ), new cc.Point(o + w*2, o+w*2),  // right spike
+            new cc.Point(o +w, o+w*2+h), new cc.Point(o,o+w*2),             // top spike
+            new cc.Point(o -h, o+w), new cc.Point(o,o)                     // left spike
         ];
         draw.drawPoly(star, cc.color(255,0,0,128), 2, cc.color(0,0,255,255) );
 
@@ -193,18 +193,18 @@ var DrawNewAPITest = class DrawNewAPITest extends DrawTestDemo {
         w=20;
         h=50;
         star = [
-            cc.p(o,o), cc.p(o+w,o-h), cc.p(o+w*2, o),       // lower spike
-            cc.p(o + w*2 + h, o+w ), cc.p(o + w*2, o+w*2),  // right spike
-            cc.p(o +w, o+w*2+h), cc.p(o,o+w*2),             // top spike
-            cc.p(o -h, o+w)                                 // left spike
+            new cc.Point(o,o), new cc.Point(o+w,o-h), new cc.Point(o+w*2, o),       // lower spike
+            new cc.Point(o + w*2 + h, o+w ), new cc.Point(o + w*2, o+w*2),  // right spike
+            new cc.Point(o +w, o+w*2+h), new cc.Point(o,o+w*2),             // top spike
+            new cc.Point(o -h, o+w)                                 // left spike
         ];
         draw.drawPoly(star, cc.color(255,0,0,128), 2, cc.color(0,0,255,255) );
 
         //
         // Segments
         //
-        draw.drawSegment( cc.p(20,winSize.height), cc.p(20,winSize.height/2), 10, cc.color(0, 255, 0, 255) );
-        draw.drawSegment( cc.p(10,winSize.height/2), cc.p(winSize.width/2, winSize.height/2), 40, cc.color(255, 0, 255, 128) );
+        draw.drawSegment( new cc.Point(20,winSize.height), new cc.Point(20,winSize.height/2), 10, cc.color(0, 255, 0, 255) );
+        draw.drawSegment( new cc.Point(10,winSize.height/2), new cc.Point(winSize.width/2, winSize.height/2), 40, cc.color(255, 0, 255, 128) );
         //----end1----
     }
 

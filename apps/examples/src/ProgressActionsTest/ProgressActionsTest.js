@@ -107,9 +107,9 @@ var SpriteProgressToHorizontal = class SpriteProgressToHorizontal extends Sprite
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the left since the midpoint is 0 for the x
-        left.midPoint = cc.p(0, 0);
+        left.midPoint = new cc.Point(0, 0);
         //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
-        left.barChangeRate = cc.p(1, 0);
+        left.barChangeRate = new cc.Point(1, 0);
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
@@ -118,9 +118,9 @@ var SpriteProgressToHorizontal = class SpriteProgressToHorizontal extends Sprite
         var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the left since the midpoint is 1 for the x
-        right.midPoint = cc.p(1, 0);
+        right.midPoint = new cc.Point(1, 0);
         //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
-        right.barChangeRate = cc.p(1, 0);
+        right.barChangeRate = new cc.Point(1, 0);
         this.addChild(right);
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
@@ -144,9 +144,9 @@ var SpriteProgressToVertical = class SpriteProgressToVertical extends SpriteDemo
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        left.midPoint = cc.p(0, 0);
+        left.midPoint = new cc.Point(0, 0);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        left.barChangeRate = cc.p(0, 1);
+        left.barChangeRate = new cc.Point(0, 1);
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
@@ -155,9 +155,9 @@ var SpriteProgressToVertical = class SpriteProgressToVertical extends SpriteDemo
         var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        right.midPoint = cc.p(0, 1);
+        right.midPoint = new cc.Point(0, 1);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        right.barChangeRate = cc.p(0, 1);
+        right.barChangeRate = new cc.Point(0, 1);
         this.addChild(right);
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
@@ -183,7 +183,7 @@ var SpriteProgressToRadialMidpointChanged = class SpriteProgressToRadialMidpoint
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathBlock));
         left.type = cc.ProgressTimer.TYPE_RADIAL;
         this.addChild(left);
-        left.midPoint = cc.p(0.25, 0.75);
+        left.midPoint = new cc.Point(0.25, 0.75);
         left.x = 200;
         left.y = winSize.height / 2;
         left.runAction(action.clone().repeatForever());
@@ -193,7 +193,7 @@ var SpriteProgressToRadialMidpointChanged = class SpriteProgressToRadialMidpoint
          */
         var right = new cc.ProgressTimer(new cc.Sprite(s_pathBlock));
         right.type = cc.ProgressTimer.TYPE_RADIAL;
-        right.midPoint = cc.p(0.75, 0.25);
+        right.midPoint = new cc.Point(0.75, 0.25);
         /**
          *  Note the reverse property (default=NO) is only added to the right image. That's how
          *  we get a counter clockwise progress.
@@ -222,9 +222,9 @@ var SpriteProgressBarVarious = class SpriteProgressBarVarious extends SpriteDemo
         left.type = cc.ProgressTimer.TYPE_BAR;
 
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        left.midPoint = cc.p(0.5, 0.5);
+        left.midPoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        left.barChangeRate = cc.p(1, 0);
+        left.barChangeRate = new cc.Point(1, 0);
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
@@ -233,9 +233,9 @@ var SpriteProgressBarVarious = class SpriteProgressBarVarious extends SpriteDemo
         var middle = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
         middle.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        middle.midPoint = cc.p(0.5, 0.5);
+        middle.midPoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        middle.barChangeRate = cc.p(1, 1);
+        middle.barChangeRate = new cc.Point(1, 1);
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
@@ -244,9 +244,9 @@ var SpriteProgressBarVarious = class SpriteProgressBarVarious extends SpriteDemo
         var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        right.midPoint = cc.p(0.5, 0.5);
+        right.midPoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        right.barChangeRate = cc.p(0, 1);
+        right.barChangeRate = new cc.Point(0, 1);
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
@@ -278,9 +278,9 @@ var SpriteProgressBarTintAndFade = class SpriteProgressBarTintAndFade extends Sp
         left.type = cc.ProgressTimer.TYPE_BAR;
 
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        left.midPoint = cc.p(0.5, 0.5);
+        left.midPoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        left.barChangeRate = cc.p(1, 0);
+        left.barChangeRate = new cc.Point(1, 0);
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
@@ -292,9 +292,9 @@ var SpriteProgressBarTintAndFade = class SpriteProgressBarTintAndFade extends Sp
         var middle = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
         middle.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        middle.midPoint = cc.p(0.5, 0.5);
+        middle.midPoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        middle.barChangeRate = cc.p(1, 1);
+        middle.barChangeRate = new cc.Point(1, 1);
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
@@ -306,9 +306,9 @@ var SpriteProgressBarTintAndFade = class SpriteProgressBarTintAndFade extends Sp
         var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        right.midPoint = cc.p(0.5, 0.5);
+        right.midPoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        right.barChangeRate = cc.p(0, 1);
+        right.barChangeRate = new cc.Point(0, 1);
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
@@ -338,9 +338,9 @@ var SpriteProgressWithSpriteFrame = class SpriteProgressWithSpriteFrame extends 
         var left = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_01.png"));
         left.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        left.midpoint = cc.p(0.5, 0.5);
+        left.midpoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        left.barChangeRate = cc.p(1, 0);
+        left.barChangeRate = new cc.Point(1, 0);
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
@@ -349,9 +349,9 @@ var SpriteProgressWithSpriteFrame = class SpriteProgressWithSpriteFrame extends 
         var middle = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_02.png"));
         middle.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        middle.midpoint = cc.p(0.5, 0.5);
+        middle.midpoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        middle.barChangeRate = cc.p(1, 1);
+        middle.barChangeRate = new cc.Point(1, 1);
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
@@ -360,9 +360,9 @@ var SpriteProgressWithSpriteFrame = class SpriteProgressWithSpriteFrame extends 
         var right = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_03.png"));
         right.type = cc.ProgressTimer.TYPE_RADIAL;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        right.midPoint = cc.p(0.5, 0.5);
+        right.midPoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        right.barChangeRate = cc.p(0, 1);
+        right.barChangeRate = new cc.Point(0, 1);
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;

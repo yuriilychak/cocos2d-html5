@@ -264,10 +264,10 @@ cc.TableView = class TableView extends cc.ScrollView {
         var offset;
         switch (this.getDirection()) {
             case cc.SCROLLVIEW_DIRECTION_HORIZONTAL:
-                offset = cc.p(this._cellsPositions[index], 0);
+                offset = new cc.Point(this._cellsPositions[index], 0);
                 break;
             default:
-                offset = cc.p(0, this._cellsPositions[index]);
+                offset = new cc.Point(0, this._cellsPositions[index]);
                 break;
         }
 
@@ -328,9 +328,9 @@ cc.TableView = class TableView extends cc.ScrollView {
 
         if (this._oldDirection !== this._direction) {
             if (this._direction === cc.SCROLLVIEW_DIRECTION_HORIZONTAL) {
-                this.setContentOffset(cc.p(0, 0));
+                this.setContentOffset(new cc.Point(0, 0));
             } else {
-                this.setContentOffset(cc.p(0, this.minContainerOffset().y));
+                this.setContentOffset(new cc.Point(0, this.minContainerOffset().y));
             }
             this._oldDirection = this._direction;
         }
@@ -628,7 +628,7 @@ cc.TableView = class TableView extends cc.ScrollView {
 
         if (this._touchedCell) {
             var bb = this.getBoundingBox();
-            var tmpOrigin = cc.p(bb.x, bb.y);
+            var tmpOrigin = new cc.Point(bb.x, bb.y);
             tmpOrigin = this._parent.convertToWorldSpace(tmpOrigin);
             bb.x = tmpOrigin.x;
             bb.y = tmpOrigin.y;

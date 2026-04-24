@@ -101,10 +101,10 @@ cc.ControlSaturationBrightnessPicker = class ControlSaturationBrightnessPicker e
     initWithTargetAndPos(target, pos) {
         if (super.init()) {
             // Add background and slider sprites
-            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, cc.p(0.0, 0.0));
-            this._overlay = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, cc.p(0.0, 0.0));
-            this._shadow = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerShadow.png", target, pos, cc.p(0.0, 0.0));
-            this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, cc.p(0.5, 0.5));
+            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, new cc.Point(0.0, 0.0));
+            this._overlay = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, new cc.Point(0.0, 0.0));
+            this._shadow = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerShadow.png", target, pos, new cc.Point(0.0, 0.0));
+            this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, new cc.Point(0.5, 0.5));
 
             this._startPos = pos; // starting position of the colour picker
             this._boxPos = 35;    // starting position of the virtual box area for picking a colour
@@ -132,7 +132,7 @@ cc.ControlSaturationBrightnessPicker = class ControlSaturationBrightnessPicker e
     }
     updateDraggerWithHSV(hsv) {
         // Set the position of the slider to the correct saturation and brightness
-        var pos = cc.p(this._startPos.x + this._boxPos + (this._boxSize * (1 - hsv.s)),
+        var pos = new cc.Point(this._startPos.x + this._boxPos + (this._boxSize * (1 - hsv.s)),
             this._startPos.y + this._boxPos + (this._boxSize * hsv.v));
 
         // update

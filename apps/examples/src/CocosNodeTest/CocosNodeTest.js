@@ -441,7 +441,7 @@ var StressTest2 = class StressTest2 extends TestNodeDemo {
         sp1.x = 80;
         sp1.y = winSize.height / 2;
 
-        var move = cc.moveBy(3, cc.p(350, 0));
+        var move = cc.moveBy(3, new cc.Point(350, 0));
         var move_ease_inout3 = move.clone().easing(cc.easeInOut(2.0));
         var move_ease_inout_back3 = move_ease_inout3.reverse();
         var seq3 = cc.sequence(move_ease_inout3, move_ease_inout_back3);
@@ -502,7 +502,7 @@ var NodeToWorld = class NodeToWorld extends TestNodeDemo {
         var fe = cc.sequence(rot, delay).repeatForever();
         item.runAction(fe);
 
-        var move = cc.moveBy(3, cc.p(200, 0));
+        var move = cc.moveBy(3, new cc.Point(200, 0));
         var move_back = move.reverse();
         var seq = cc.sequence(move, delay.clone(), move_back);
         var fe2 = seq.repeatForever();
@@ -651,7 +651,7 @@ var ConvertToNode = class ConvertToNode extends TestNodeDemo {
         return JSON.stringify({"p1":this.expectedP1, "p2":this.expectedP2});
     }
     getCurrentResult() {
-        this.processEvent(cc.p(0, 0));
+        this.processEvent(new cc.Point(0, 0));
         var ret = {"p1":this.testP1, "p2":this.testP2};
         return JSON.stringify(ret);
     }

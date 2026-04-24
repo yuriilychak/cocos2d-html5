@@ -130,7 +130,7 @@ export default class Follow extends Action {
 
     const winSize = cc.director.getWinSize();
     this._fullScreenSize = new cc.Point(winSize.width, winSize.height);
-    this._halfScreenSize = cc.pMult(this._fullScreenSize, 0.5);
+    this._halfScreenSize = cc.Point.mult(this._fullScreenSize, 0.5);
 
     if (this._boundarySet) {
       this.leftBoundary = -(rect.x + rect.width - this._fullScreenSize.x);
@@ -178,8 +178,8 @@ export default class Follow extends Action {
       if (this._boundaryFullyCovered) return;
 
       this.target.setPosition(
-        cc.clampf(tempPosX, this.leftBoundary, this.rightBoundary),
-        cc.clampf(tempPosY, this.bottomBoundary, this.topBoundary)
+        cc.Point.clampf(tempPosX, this.leftBoundary, this.rightBoundary),
+        cc.Point.clampf(tempPosY, this.bottomBoundary, this.topBoundary)
       );
     } else {
       this.target.setPosition(tempPosX, tempPosY);

@@ -86,7 +86,7 @@ var TestScene = class TestScene extends cc.Scene {
 
 //Controller stuff
 var LINE_SPACE = 40;
-var curPos = cc.p(0,0);
+var curPos = new cc.Point(0,0);
 
 var TestController = class TestController extends cc.LayerGradient {
 

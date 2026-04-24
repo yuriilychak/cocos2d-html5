@@ -141,7 +141,7 @@ var S9BatchNodeBasic = class S9BatchNodeBasic extends S9SpriteTestDemo {
 
         cc.log("... S9BatchNodeBasic done.");
 
-        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveBy = cc.moveBy(1, new cc.Point(80, 80));
         var moveByBack = moveBy.reverse();
         blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
@@ -181,7 +181,7 @@ var S9FrameNameSpriteSheet = class S9FrameNameSpriteSheet extends S9SpriteTestDe
 
         cc.log("... S9FrameNameSpriteSheet done.");
 
-        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveBy = cc.moveBy(1, new cc.Point(80, 80));
         var moveByBack = moveBy.reverse();
         blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
@@ -635,7 +635,7 @@ var S9SpriteActionTest = class S9SpriteActionTest extends S9SpriteTestDemo {
         var ScaleTo = cc.scaleTo(2, -0.44, 0.47);
         var ScaleToBack = cc.scaleTo(2, 1.0, 1.0);
 
-        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveBy = cc.moveBy(1, new cc.Point(80, 80));
         var moveByBack = moveBy.reverse();
 
         blocks_with_insets.runAction(cc.sequence(rotateBy, delay, rotateByBack));

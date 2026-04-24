@@ -364,7 +364,7 @@ var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotifi
 
         var seq = cc.sequence(
             cc.spawn(
-                cc.moveTo(duration, cc.p(endX, endY)),
+                cc.moveTo(duration, new cc.Point(endX, endY)),
                 cc.scaleTo(duration, 1),
                 cc.fadeOut(duration)),
             cc.callFunc(this.callbackRemoveNodeWhenDidAction, this));
@@ -382,7 +382,7 @@ var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotifi
         beginX += (sender.width - label.width) / 2.0;
 
         var winSize = cc.director.getWinSize();
-        var endPos = cc.p(-winSize.width / 4.0, winSize.height * (0.5 + Math.random() / 2.0));
+        var endPos = new cc.Point(-winSize.width / 4.0, winSize.height * (0.5 + Math.random() / 2.0));
 
         var duration = 1;
         var rotateDuration = 0.2;

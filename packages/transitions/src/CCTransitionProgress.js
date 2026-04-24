@@ -233,8 +233,8 @@ cc.TransitionProgressHorizontal = class TransitionProgressHorizontal extends cc.
             pNode.sprite.flippedY = true;
         pNode.type = cc.ProgressTimer.TYPE_BAR;
 
-        pNode.midPoint = cc.p(1, 0);
-        pNode.barChangeRate = cc.p(1, 0);
+        pNode.midPoint = new cc.Point(1, 0);
+        pNode.barChangeRate = new cc.Point(1, 0);
 
         pNode.percentage = 100;
         this._setAttrs(pNode, size.width / 2, size.height / 2);
@@ -271,8 +271,8 @@ cc.TransitionProgressVertical = class TransitionProgressVertical extends cc.Tran
             pNode.sprite.flippedY = true;
         pNode.type = cc.ProgressTimer.TYPE_BAR;
 
-        pNode.midPoint = cc.p(0, 0);
-        pNode.barChangeRate = cc.p(0, 1);
+        pNode.midPoint = new cc.Point(0, 0);
+        pNode.barChangeRate = new cc.Point(0, 1);
 
         pNode.percentage = 100;
         this._setAttrs(pNode, size.width / 2, size.height / 2);
@@ -305,8 +305,8 @@ cc.TransitionProgressInOut = class TransitionProgressInOut extends cc.Transition
             pNode.sprite.flippedY = true;
         pNode.type = cc.ProgressTimer.TYPE_BAR;
 
-        pNode.midPoint = cc.p(0.5, 0.5);
-        pNode.barChangeRate = cc.p(1, 1);
+        pNode.midPoint = new cc.Point(0.5, 0.5);
+        pNode.barChangeRate = new cc.Point(1, 1);
 
         pNode.percentage = 0;
         this._setAttrs(pNode, size.width / 2, size.height / 2);
@@ -346,8 +346,8 @@ cc.TransitionProgressOutIn = class TransitionProgressOutIn extends cc.Transition
             pNode.sprite.flippedY = true;
         pNode.type = cc.ProgressTimer.TYPE_BAR;
 
-        pNode.midPoint = cc.p(0.5, 0.5);
-        pNode.barChangeRate = cc.p(1, 1);
+        pNode.midPoint = new cc.Point(0.5, 0.5);
+        pNode.barChangeRate = new cc.Point(1, 1);
 
         pNode.percentage = 100;
         this._setAttrs(pNode, size.width / 2, size.height / 2);

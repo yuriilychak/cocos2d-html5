@@ -1040,7 +1040,7 @@ ccs.dataReaderHelper = {
         var vertexDataXML;
         for (var i = 0; i < vertexDatasXML.length; i++) {
             vertexDataXML = vertexDatasXML[i];
-            var vertex = cc.p(0, 0);
+            var vertex = new cc.Point(0, 0);
             vertex.x = parseFloat(vertexDataXML.getAttribute(ccs.CONST_A_X)) || 0;
             vertex.y = parseFloat(vertexDataXML.getAttribute(ccs.CONST_A_Y)) || 0;
 
@@ -1063,7 +1063,7 @@ ccs.dataReaderHelper = {
         var len = vertexPointList.length;
         for (var i = 0; i < len; i++) {
             var dic = vertexPointList[i];
-            var vertex = cc.p(0, 0);
+            var vertex = new cc.Point(0, 0);
             vertex.x = dic[ccs.CONST_A_X] || 0;
             vertex.y = dic[ccs.CONST_A_Y] || 0;
             contourData.vertexList.push(vertex);

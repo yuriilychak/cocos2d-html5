@@ -108,7 +108,7 @@ cc.Waves3D = class Waves3D extends cc.Grid3DAction {
   update(dt) {
     const locGridSize = this._gridSize;
     const locAmplitude = this._amplitude;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     const locAmplitudeRate = this._amplitudeRate;
     const locWaves = this._waves;
     for (let i = 0; i < locGridSize.width + 1; ++i) {
@@ -189,7 +189,7 @@ cc.FlipX3D = class FlipX3D extends cc.Grid3DAction {
     const mx = Math.cos(angle);
 
     const diff = new cc.Vertex3F();
-    const tempVer = cc.p(0, 0);
+    const tempVer = new cc.Point(0, 0);
     tempVer.x = tempVer.y = 1;
     const v0 = this.getOriginalVertex(tempVer);
     tempVer.x = tempVer.y = 0;
@@ -205,17 +205,17 @@ cc.FlipX3D = class FlipX3D extends cc.Grid3DAction {
 
     if (x0 > x1) {
       // Normal Grid
-      a = cc.p(0, 0);
-      b = cc.p(0, 1);
-      c = cc.p(1, 0);
-      d = cc.p(1, 1);
+      a = new cc.Point(0, 0);
+      b = new cc.Point(0, 1);
+      c = new cc.Point(1, 0);
+      d = new cc.Point(1, 1);
       x = x0;
     } else {
       // Reversed Grid
-      c = cc.p(0, 0);
-      d = cc.p(0, 1);
-      a = cc.p(1, 0);
-      b = cc.p(1, 1);
+      c = new cc.Point(0, 0);
+      d = new cc.Point(0, 1);
+      a = new cc.Point(1, 0);
+      b = new cc.Point(1, 1);
       x = x1;
     }
 
@@ -285,7 +285,7 @@ cc.FlipY3D = class FlipY3D extends cc.FlipX3D {
 
     const diff = new cc.Vertex3F();
 
-    const tempP = cc.p(0, 0);
+    const tempP = new cc.Point(0, 0);
     tempP.x = tempP.y = 1;
     const v0 = this.getOriginalVertex(tempP);
     tempP.x = tempP.y = 0;
@@ -301,17 +301,17 @@ cc.FlipY3D = class FlipY3D extends cc.FlipX3D {
 
     if (y0 > y1) {
       // Normal Grid
-      a = cc.p(0, 0);
-      b = cc.p(0, 1);
-      c = cc.p(1, 0);
-      d = cc.p(1, 1);
+      a = new cc.Point(0, 0);
+      b = new cc.Point(0, 1);
+      c = new cc.Point(1, 0);
+      d = new cc.Point(1, 1);
       y = y0;
     } else {
       // Reversed Grid
-      b = cc.p(0, 0);
-      a = cc.p(0, 1);
-      d = cc.p(1, 0);
-      c = cc.p(1, 1);
+      b = new cc.Point(0, 0);
+      a = new cc.Point(0, 1);
+      d = new cc.Point(1, 0);
+      c = new cc.Point(1, 1);
       y = y1;
     }
 
@@ -381,7 +381,7 @@ cc.Lens3D = class Lens3D extends cc.Grid3DAction {
    */
   constructor(duration, gridSize, position, radius) {
     super();
-    this._position = cc.p(0, 0);
+    this._position = new cc.Point(0, 0);
     radius !== undefined &&
       this.initWithDuration(duration, gridSize, position, radius);
   }
@@ -460,8 +460,8 @@ cc.Lens3D = class Lens3D extends cc.Grid3DAction {
       const locGridSizeHeight = this._gridSize.height;
       const locRadius = this._radius;
       const locLensEffect = this._lensEffect;
-      const locPos = cc.p(0, 0);
-      const vect = cc.p(0, 0);
+      const locPos = new cc.Point(0, 0);
+      const vect = new cc.Point(0, 0);
       let v;
       let r;
       let l;
@@ -474,7 +474,7 @@ cc.Lens3D = class Lens3D extends cc.Grid3DAction {
           v = this.getOriginalVertex(locPos);
           vect.x = this._position.x - v.x;
           vect.y = this._position.y - v.y;
-          r = cc.pLength(vect);
+          r = cc.Point.length(vect);
 
           if (r < locRadius) {
             r = locRadius - r;
@@ -484,14 +484,14 @@ cc.Lens3D = class Lens3D extends cc.Grid3DAction {
             l = Math.log(pre_log) * locLensEffect;
             new_r = Math.exp(l) * locRadius;
 
-            r = cc.pLength(vect);
+            r = cc.Point.length(vect);
             if (r > 0) {
               vect.x = vect.x / r;
               vect.y = vect.y / r;
 
               vect.x = vect.x * new_r;
               vect.y = vect.y * new_r;
-              v.z += cc.pLength(vect) * locLensEffect;
+              v.z += cc.Point.length(vect) * locLensEffect;
             }
           }
           this.setVertex(locPos, v);
@@ -544,7 +544,7 @@ cc.Ripple3D = class Ripple3D extends cc.Grid3DAction {
   constructor(duration, gridSize, position, radius, waves, amplitude) {
     super();
 
-    this._position = cc.p(0, 0);
+    this._position = new cc.Point(0, 0);
     amplitude !== undefined &&
       this.initWithDuration(
         duration,
@@ -635,14 +635,14 @@ cc.Ripple3D = class Ripple3D extends cc.Grid3DAction {
   update(dt) {
     const locGridSizeWidth = this._gridSize.width;
     const locGridSizeHeight = this._gridSize.height;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     const locRadius = this._radius;
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;
     let v;
     let r;
-    const tempPos = cc.p(0, 0);
+    const tempPos = new cc.Point(0, 0);
     for (let i = 0; i < locGridSizeWidth + 1; ++i) {
       for (let j = 0; j < locGridSizeHeight + 1; ++j) {
         locPos.x = i;
@@ -651,7 +651,7 @@ cc.Ripple3D = class Ripple3D extends cc.Grid3DAction {
 
         tempPos.x = this._position.x - v.x;
         tempPos.y = this._position.y - v.y;
-        r = cc.pLength(tempPos);
+        r = cc.Point.length(tempPos);
 
         if (r < locRadius) {
           r = locRadius - r;
@@ -734,7 +734,7 @@ cc.Shaky3D = class Shaky3D extends cc.Grid3DAction {
     const locGridSizeHeight = this._gridSize.height;
     const locRandRange = this._randRange;
     const locShakeZ = this._shakeZ;
-    const locP = cc.p(0, 0);
+    const locP = new cc.Point(0, 0);
     let v;
     for (let i = 0; i < locGridSizeWidth + 1; ++i) {
       for (let j = 0; j < locGridSizeHeight + 1; ++j) {
@@ -846,7 +846,7 @@ cc.Liquid = class Liquid extends cc.Grid3DAction {
   update(dt) {
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;
@@ -985,7 +985,7 @@ cc.Waves = class Waves extends cc.Grid3DAction {
   update(dt) {
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     const locVertical = this._vertical;
     const locHorizontal = this._horizontal;
     const locWaves = this._waves;
@@ -1057,7 +1057,7 @@ cc.Twirl = class Twirl extends cc.Grid3DAction {
   constructor(duration, gridSize, position, twirls, amplitude) {
     super();
 
-    this._position = cc.p(0, 0);
+    this._position = new cc.Point(0, 0);
     amplitude !== undefined &&
       this.initWithDuration(duration, gridSize, position, twirls, amplitude);
   }
@@ -1132,14 +1132,14 @@ cc.Twirl = class Twirl extends cc.Grid3DAction {
     const c = this._position;
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
-    const locPos = cc.p(0, 0);
+    const locPos = new cc.Point(0, 0);
     const amp = 0.1 * this._amplitude * this._amplitudeRate;
     const locTwirls = this._twirls;
     let v;
     let a;
     let dX;
     let dY;
-    const avg = cc.p(0, 0);
+    const avg = new cc.Point(0, 0);
     for (let i = 0; i < locSizeWidth + 1; ++i) {
       for (let j = 0; j < locSizeHeight + 1; ++j) {
         locPos.x = i;
@@ -1150,7 +1150,7 @@ cc.Twirl = class Twirl extends cc.Grid3DAction {
         avg.y = j - locSizeHeight / 2.0;
 
         a =
-          cc.pLength(avg) *
+          cc.Point.length(avg) *
           Math.cos(Math.PI / 2.0 + dt * Math.PI * locTwirls * 2) *
           amp;
 

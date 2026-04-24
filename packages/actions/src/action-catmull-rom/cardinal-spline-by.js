@@ -55,7 +55,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
     let p = copyConfig[0];
     for (let i = 1; i < copyConfig.length; ++i) {
       current = copyConfig[i];
-      copyConfig[i] = cc.pSub(current, p);
+      copyConfig[i] = cc.Point.sub(current, p);
       p = current;
     }
 

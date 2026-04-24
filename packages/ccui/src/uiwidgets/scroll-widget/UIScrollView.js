@@ -90,10 +90,10 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         this._childFocusCancelOffset = 5;
         this.inertiaScrollEnabled = true;
 
-        this._outOfBoundaryAmount = cc.p(0, 0);
-        this._autoScrollTargetDelta = cc.p(0, 0);
-        this._autoScrollStartPosition = cc.p(0, 0);
-        this._autoScrollBrakingStartPosition = cc.p(0, 0);
+        this._outOfBoundaryAmount = new cc.Point(0, 0);
+        this._autoScrollTargetDelta = new cc.Point(0, 0);
+        this._autoScrollStartPosition = new cc.Point(0, 0);
+        this._autoScrollBrakingStartPosition = new cc.Point(0, 0);
         this._touchMoveDisplacements = [];
         this._touchMoveTimeDeltas = [];
         this._touchMovePreviousTimestamp = 0;
@@ -287,7 +287,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         }
         this.setInnerContainerPosition(pos);
 
-        this._updateScrollBar(cc.p(0 ,0));
+        this._updateScrollBar(new cc.Point(0 ,0));
     }
 
     _setInnerWidth(width) {
@@ -504,7 +504,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
     }
 
     _flattenVectorByDirection(vector) {
-        var result = cc.p(0, 0);
+        var result = new cc.Point(0, 0);
         result.x = (this._direction === ccui.ScrollView.DIR_VERTICAL ? 0 : vector.x);
         result.y = (this._direction === ccui.ScrollView.DIR_HORIZONTAL ? 0 : vector.y);
         return result;
@@ -512,13 +512,13 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
 
     _getHowMuchOutOfBoundary(addition) {
         if (addition === undefined)
-            addition = cc.p(0, 0);
+            addition = new cc.Point(0, 0);
 
         if (addition.x === 0 && addition.y === 0 && !this._outOfBoundaryAmountDirty) {
             return this._outOfBoundaryAmount;
         }
 
-        var outOfBoundaryAmount = cc.p(0, 0);
+        var outOfBoundaryAmount = new cc.Point(0, 0);
 
         if (this._innerContainer.getLeftBoundary() + addition.x > this._leftBoundary) {
             outOfBoundaryAmount.x = this._leftBoundary - (this._innerContainer.getLeftBoundary() + addition.x);
@@ -566,7 +566,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
     _moveInnerContainer(deltaMove, canStartBounceBack) {
         var adjustedMove = this._flattenVectorByDirection(deltaMove);
 
-        this.setInnerContainerPosition(cc.pAdd(this.getInnerContainerPosition(), adjustedMove));
+        this.setInnerContainerPosition(cc.Point.add(this.getInnerContainerPosition(), adjustedMove));
 
         var outOfBoundary = this._getHowMuchOutOfBoundary();
         this._updateScrollBar(outOfBoundary);
@@ -593,17 +593,17 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
             totalTime += this._touchMoveTimeDeltas[i];
         }
         if (totalTime == 0 || totalTime >= this._touchTotalTimeThreshold) {
-            return cc.p(0, 0);
+            return new cc.Point(0, 0);
         }
 
-        var totalMovement = cc.p(0, 0);
+        var totalMovement = new cc.Point(0, 0);
 
         for (var i = 0; i < this._touchMoveDisplacements.length; ++i) {
             totalMovement.x += this._touchMoveDisplacements[i].x;
             totalMovement.y += this._touchMoveDisplacements[i].y;
         }
 
-        return cc.pMult(totalMovement, 1 / totalTime);
+        return cc.Point.mult(totalMovement, 1 / totalTime);
     }
 
     /**
@@ -625,7 +625,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
 
     _startInertiaScroll(touchMoveVelocity) {
         var MOVEMENT_FACTOR = 0.7;
-        var inertiaTotalMovement = cc.pMult(touchMoveVelocity, MOVEMENT_FACTOR);
+        var inertiaTotalMovement = cc.Point.mult(touchMoveVelocity, MOVEMENT_FACTOR);
         this._startAttenuatingAutoScroll(inertiaTotalMovement, touchMoveVelocity);
     }
 
@@ -644,7 +644,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
     }
 
     _startAutoScrollToDestination(destination, timeInSec, attenuated) {
-        this._startAutoScroll(cc.pSub(destination, this._innerContainer.getPosition()), timeInSec, attenuated);
+        this._startAutoScroll(cc.Point.sub(destination, this._innerContainer.getPosition()), timeInSec, attenuated);
     }
 
     _calculateAutoScrollTimeByInitialSpeed(initialSpeed) {
@@ -653,7 +653,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
     }
 
     _startAttenuatingAutoScroll(deltaMove, initialVelocity) {
-        var time = this._calculateAutoScrollTimeByInitialSpeed(cc.pLength(initialVelocity));
+        var time = this._calculateAutoScrollTimeByInitialSpeed(cc.Point.length(initialVelocity));
         this._startAutoScroll(deltaMove, time, true);
     }
 
@@ -667,7 +667,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         this._autoScrollTotalTime = timeInSec;
         this._autoScrollAccumulatedTime = 0;
         this._autoScrollBraking = false;
-        this._autoScrollBrakingStartPosition = cc.p(0, 0);
+        this._autoScrollBrakingStartPosition = new cc.Point(0, 0);
 
         // If the destination is also out of boundary of same side, start brake from beggining.
         var currentOutOfBoundary = this._getHowMuchOutOfBoundary();
@@ -734,16 +734,16 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         }
 
         // Calculate the new position
-        var newPosition = cc.pAdd(this._autoScrollStartPosition, cc.pMult(this._autoScrollTargetDelta, percentage));
+        var newPosition = cc.Point.add(this._autoScrollStartPosition, cc.Point.mult(this._autoScrollTargetDelta, percentage));
         var reachedEnd = Math.abs(percentage - 1) <= this._getAutoScrollStopEpsilon();
 
         if (this.bounceEnabled) {
             // The new position is adjusted if out of boundary
-            newPosition = cc.pAdd(this._autoScrollBrakingStartPosition, cc.pMult(cc.pSub(newPosition, this._autoScrollBrakingStartPosition), brakingFactor));
+            newPosition = cc.Point.add(this._autoScrollBrakingStartPosition, cc.Point.mult(cc.Point.sub(newPosition, this._autoScrollBrakingStartPosition), brakingFactor));
         }
         else {
             // Don't let go out of boundary
-            var moveDelta = cc.pSub(newPosition, this.getInnerContainerPosition());
+            var moveDelta = cc.Point.sub(newPosition, this.getInnerContainerPosition());
             var outOfBoundary = this._getHowMuchOutOfBoundary(moveDelta);
             if (!this._fltEqualZero(outOfBoundary)) {
                 newPosition.x += outOfBoundary.x;
@@ -759,16 +759,16 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
             this._dispatchEvent(ccui.ScrollView.EVENT_AUTOSCROLL_ENDED);
         }
 
-        this._moveInnerContainer(cc.pSub(newPosition, this.getInnerContainerPosition()), reachedEnd);
+        this._moveInnerContainer(cc.Point.sub(newPosition, this.getInnerContainerPosition()), reachedEnd);
     }
 
     _jumpToDestination(desOrX, y) {
         if (desOrX.x === undefined) {
-            desOrX = cc.p(desOrX, y);
+            desOrX = new cc.Point(desOrX, y);
         }
 
         this._autoScrolling = false;
-        this._moveInnerContainer(cc.pSub(desOrX, this.getInnerContainerPosition()), true);
+        this._moveInnerContainer(cc.Point.sub(desOrX, this.getInnerContainerPosition()), true);
     }
 
     _scrollChildren(deltaMove) {
@@ -845,7 +845,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
      * @param {Boolean} attenuated
      */
     scrollToBottom(time, attenuated) {
-        this._startAutoScrollToDestination(cc.p(this._innerContainer.getPositionX(), 0), time, attenuated);
+        this._startAutoScrollToDestination(new cc.Point(this._innerContainer.getPositionX(), 0), time, attenuated);
     }
 
     /**
@@ -855,7 +855,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
      */
     scrollToTop(time, attenuated) {
         this._startAutoScrollToDestination(
-            cc.p(this._innerContainer.getPositionX(), this._contentSize.height - this._innerContainer.getContentSize().height), time, attenuated);
+            new cc.Point(this._innerContainer.getPositionX(), this._contentSize.height - this._innerContainer.getContentSize().height), time, attenuated);
     }
 
     /**
@@ -864,7 +864,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
      * @param {Boolean} attenuated
      */
     scrollToLeft(time, attenuated) {
-        this._startAutoScrollToDestination(cc.p(0, this._innerContainer.getPositionY()), time, attenuated);
+        this._startAutoScrollToDestination(new cc.Point(0, this._innerContainer.getPositionY()), time, attenuated);
     }
 
     /**
@@ -874,7 +874,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
      */
     scrollToRight(time, attenuated) {
         this._startAutoScrollToDestination(
-            cc.p(this._contentSize.width - this._innerContainer.getContentSize().width, this._innerContainer.getPositionY()), time, attenuated);
+            new cc.Point(this._contentSize.width - this._innerContainer.getContentSize().width, this._innerContainer.getPositionY()), time, attenuated);
     }
 
     /**
@@ -887,7 +887,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
             cc.log("Scroll direction is not both!");
             return;
         }
-        this._startAutoScrollToDestination(cc.p(0, this._contentSize.height - this._innerContainer.getContentSize().height), time, attenuated);
+        this._startAutoScrollToDestination(new cc.Point(0, this._contentSize.height - this._innerContainer.getContentSize().height), time, attenuated);
     }
 
     /**
@@ -901,7 +901,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
             return;
         }
         var inSize = this._innerContainer.getContentSize();
-        this._startAutoScrollToDestination(cc.p(this._contentSize.width - inSize.width,
+        this._startAutoScrollToDestination(new cc.Point(this._contentSize.width - inSize.width,
             this._contentSize.height - inSize.height), time, attenuated);
     }
 
@@ -915,7 +915,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
             cc.log("Scroll direction is not both!");
             return;
         }
-        this._startAutoScrollToDestination(cc.p(0, 0), time, attenuated);
+        this._startAutoScrollToDestination(new cc.Point(0, 0), time, attenuated);
     }
 
     /**
@@ -928,7 +928,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
             cc.log("Scroll direction is not both!");
             return;
         }
-        this._startAutoScrollToDestination(cc.p(this._contentSize.width - this._innerContainer.getContentSize().width, 0), time, attenuated);
+        this._startAutoScrollToDestination(new cc.Point(this._contentSize.width - this._innerContainer.getContentSize().width, 0), time, attenuated);
     }
 
     /**
@@ -940,7 +940,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
     scrollToPercentVertical(percent, time, attenuated) {
         var minY = this._contentSize.height - this._innerContainer.getContentSize().height;
         var h = -minY;
-        this._startAutoScrollToDestination(cc.p(this._innerContainer.getPositionX(), minY + percent * h / 100), time, attenuated);
+        this._startAutoScrollToDestination(new cc.Point(this._innerContainer.getPositionX(), minY + percent * h / 100), time, attenuated);
     }
 
     /**
@@ -951,7 +951,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
      */
     scrollToPercentHorizontal(percent, time, attenuated) {
         var w = this._innerContainer.getContentSize().width - this._contentSize.width;
-        this._startAutoScrollToDestination(cc.p(-(percent * w / 100), this._innerContainer.getPositionY()), time, attenuated);
+        this._startAutoScrollToDestination(new cc.Point(-(percent * w / 100), this._innerContainer.getPositionY()), time, attenuated);
     }
 
     /**
@@ -966,7 +966,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         var minY = this._contentSize.height - this._innerContainer.getContentSize().height;
         var h = -minY;
         var w = this._innerContainer.getContentSize().width - this._contentSize.width;
-        this._startAutoScrollToDestination(cc.p(-(percent.x * w / 100), minY + percent.y * h / 100), time, attenuated);
+        this._startAutoScrollToDestination(new cc.Point(-(percent.x * w / 100), minY + percent.y * h / 100), time, attenuated);
     }
 
     /**
@@ -1112,7 +1112,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
     _handleMoveLogic(touch) {
         var touchPositionInNodeSpace = this.convertToNodeSpace(touch.getLocation()),
             previousTouchPositionInNodeSpace = this.convertToNodeSpace(touch.getPreviousLocation());
-        var delta = cc.pSub(touchPositionInNodeSpace, previousTouchPositionInNodeSpace);
+        var delta = cc.Point.sub(touchPositionInNodeSpace, previousTouchPositionInNodeSpace);
 
         this._scrollChildren(delta);
         this._gatherTouchMove(delta);
@@ -1122,7 +1122,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
 
         var touchPositionInNodeSpace = this.convertToNodeSpace(touch.getLocation()),
             previousTouchPositionInNodeSpace = this.convertToNodeSpace(touch.getPreviousLocation());
-        var delta = cc.pSub(touchPositionInNodeSpace, previousTouchPositionInNodeSpace);
+        var delta = cc.Point.sub(touchPositionInNodeSpace, previousTouchPositionInNodeSpace);
 
         this._gatherTouchMove(delta);
 
@@ -1230,7 +1230,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
                 this._handlePressLogic(touch);
                 break;
             case ccui.Widget.TOUCH_MOVED:
-                var offset = cc.pLength(cc.pSub(sender.getTouchBeganPosition(), touchPoint));
+                var offset = cc.Point.length(cc.Point.sub(sender.getTouchBeganPosition(), touchPoint));
                 this._touchMovePosition.x = touchPoint.x;
                 this._touchMovePosition.y = touchPoint.y;
                 if (offset > this._childFocusCancelOffset) {

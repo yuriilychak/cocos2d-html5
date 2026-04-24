@@ -135,7 +135,7 @@ cc.ParallaxNode = class ParallaxNode extends cc.Node {
     constructor() {
         super();
         this.parallaxArray = [];
-        this._lastPosition = cc.p(-100, -100);
+        this._lastPosition = new cc.Point(-100, -100);
     }
 
     /**
@@ -147,7 +147,7 @@ cc.ParallaxNode = class ParallaxNode extends cc.Node {
      * @param {cc.Point} offset
      * @example
      * //example
-     * voidNode.addChild(background, -1, cc.p(0.4, 0.5), cc.p(0,0));
+     * voidNode.addChild(background, -1, new cc.Point(0.4, 0.5), new cc.Point(0,0));
      */
     addChild(child, z, ratio, offset) {
         if (arguments.length === 3) {
@@ -213,7 +213,7 @@ cc.ParallaxNode = class ParallaxNode extends cc.Node {
         var cn = this;
         while (cn.parent !== null) {
             cn = cn.parent;
-            ret = cc.pAdd(ret, cn.getPosition());
+            ret = cc.Point.add(ret, cn.getPosition());
         }
         return ret;
     }

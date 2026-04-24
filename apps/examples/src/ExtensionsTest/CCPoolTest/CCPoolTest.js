@@ -40,11 +40,11 @@ var CCPoolTest = class CCPoolTest extends cc.Layer {
 
         var MARGIN = 40;
         var label = new cc.LabelTTF("CCPoolTest", "Arial", 28);
-        label.setPosition(cc.p(winSize.width / 2, winSize.height - MARGIN));
+        label.setPosition(new cc.Point(winSize.width / 2, winSize.height - MARGIN));
         this.addChild(label, 0);
 
         var menuRequest = new cc.Menu();
-        menuRequest.setPosition(cc.p(0, 0));
+        menuRequest.setPosition(new cc.Point(0, 0));
         this.initUI();
         return true;
     }
@@ -59,9 +59,9 @@ var CCPoolTest = class CCPoolTest extends cc.Layer {
         menu.alignItemsHorizontallyWithPadding(150);
         this.directLabel = new cc.LabelTTF("create directly cost:", "Arial", 18);
         this.poolLabel = new cc.LabelTTF("use pool cost:", "Arial", 18);
-        this.directLabel.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(-190, -65)));
+        this.directLabel.setPosition(cc.Point.add(cc.visibleRect.center, new cc.Point(-190, -65)));
         this.directLabel.anchorY = 0;
-        this.poolLabel.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(200, -65)));
+        this.poolLabel.setPosition(cc.Point.add(cc.visibleRect.center, new cc.Point(200, -65)));
         this.poolLabel.anchorY = 0;
         this.addChild(this.directLabel);
         this.addChild(this.poolLabel);
@@ -69,9 +69,9 @@ var CCPoolTest = class CCPoolTest extends cc.Layer {
 
         // Back Menu
         var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
-        itemBack.setPosition(cc.p(winSize.width - 50, 25));
+        itemBack.setPosition(new cc.Point(winSize.width - 50, 25));
         var menuBack = new cc.Menu(itemBack);
-        menuBack.setPosition(cc.p(0, 0));
+        menuBack.setPosition(new cc.Point(0, 0));
         this.addChild(menuBack);
     }
     setDirectLabel(time) {

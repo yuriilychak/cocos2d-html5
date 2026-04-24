@@ -172,7 +172,7 @@ var Effect1 = class Effect1 extends EffectAdvanceTextLayer {
         //     Lens3D is Grid3D and it's size is (15,10)
         //     Waves3D is Grid3D and it's size is (15,10)
         var size = cc.director.getWinSize();
-        var lens = cc.lens3D(0.0, cc.size(15, 10), cc.p(size.width / 2, size.height / 2), 240);
+        var lens = cc.lens3D(0.0, cc.size(15, 10), new cc.Point(size.width / 2, size.height / 2), 240);
         var waves = cc.waves3D(10, cc.size(15, 10), 18, 15);
 
         var reuse = cc.reuseGrid(1);
@@ -233,7 +233,7 @@ var Effect3 = class Effect3 extends EffectAdvanceTextLayer {
 	    target2.runAction(shaky.repeatForever());
 
         // moving background. Testing issue #244
-        var move = cc.moveBy(3, cc.p(200, 0));
+        var move = cc.moveBy(3, new cc.Point(200, 0));
         bg.runAction(cc.sequence(move, move.reverse()).repeatForever());
     }
 
@@ -280,8 +280,8 @@ var Effect4 = class Effect4 extends EffectAdvanceTextLayer {
         super.onEnter();
 
         var bgNodeGrid = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        var lens = cc.lens3D(10, cc.size(32, 24), cc.p(100, 180), 150);
-        var move = cc.jumpBy(5, cc.p(380, 0), 100, 4);
+        var lens = cc.lens3D(10, cc.size(32, 24), new cc.Point(100, 180), 150);
+        var move = cc.jumpBy(5, new cc.Point(380, 0), 100, 4);
         var move_back = move.reverse();
         var seq = cc.sequence(move, move_back);
 

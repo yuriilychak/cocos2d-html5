@@ -178,9 +178,9 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
 
                 var vertices = [
                     origin,
-                    cc.p(destination.x, origin.y),
+                    new cc.Point(destination.x, origin.y),
                     destination,
-                    cc.p(origin.x, destination.y)
+                    new cc.Point(origin.x, destination.y)
                 ];
                 var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
                 element.verts = vertices;
@@ -221,10 +221,10 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     var rads = i * coef;
                     var j = radius * Math.cos(rads + angle) + center.x;
                     var k = radius * Math.sin(rads + angle) + center.y;
-                    vertices.push(cc.p(j, k));
+                    vertices.push(new cc.Point(j, k));
                 }
                 if (drawLineToCenter) {
-                    vertices.push(cc.p(center.x, center.y));
+                    vertices.push(new cc.Point(center.x, center.y));
                 }
 
                 var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
@@ -256,10 +256,10 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 for (var i = 0; i < segments; i++) {
                     var x = Math.pow(1 - t, 2) * origin.x + 2.0 * (1 - t) * t * control.x + t * t * destination.x;
                     var y = Math.pow(1 - t, 2) * origin.y + 2.0 * (1 - t) * t * control.y + t * t * destination.y;
-                    vertices.push(cc.p(x, y));
+                    vertices.push(new cc.Point(x, y));
                     t += 1.0 / segments;
                 }
-                vertices.push(cc.p(destination.x, destination.y));
+                vertices.push(new cc.Point(destination.x, destination.y));
 
                 var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
                 element.verts = vertices;
@@ -291,10 +291,10 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 for (var i = 0; i < segments; i++) {
                     var x = Math.pow(1 - t, 3) * origin.x + 3.0 * Math.pow(1 - t, 2) * t * control1.x + 3.0 * (1 - t) * t * t * control2.x + t * t * t * destination.x;
                     var y = Math.pow(1 - t, 3) * origin.y + 3.0 * Math.pow(1 - t, 2) * t * control1.y + 3.0 * (1 - t) * t * t * control2.y + t * t * t * destination.y;
-                    vertices.push(cc.p(x, y));
+                    vertices.push(new cc.Point(x, y));
                     t += 1.0 / segments;
                 }
-                vertices.push(cc.p(destination.x, destination.y));
+                vertices.push(new cc.Point(destination.x, destination.y));
 
                 var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
                 element.verts = vertices;
@@ -454,7 +454,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             drawPoly(verts, fillColor, lineWidth, lineColor) {
                 var vertsCopy = [];
                 for (var i = 0; i < verts.length; i++) {
-                    vertsCopy.push(cc.p(verts[i].x, verts[i].y));
+                    vertsCopy.push(new cc.Point(verts[i].x, verts[i].y));
                 }
                 return this.drawPoly_(vertsCopy, fillColor, lineWidth, lineColor);
             }
@@ -491,12 +491,12 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
         var MAX_INCREMENT = 200;
 
         var _vertices = [],
-            _from = cc.p(),
-            _to = cc.p(),
+            _from = new cc.Point(),
+            _to = new cc.Point(),
             _color = new Uint32Array(1);
 
         // Used in drawSegment
-        var _n = cc.p(), _t = cc.p(), _nw = cc.p(), _tw = cc.p(),
+        var _n = new cc.Point(), _t = new cc.Point(), _nw = new cc.Point(), _tw = new cc.Point(),
             _extrude = [];
 
         class DrawNodeWebGL {
@@ -790,7 +790,7 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                 var a = from, b = to;
                 // var n = normalize(perp(sub(b, a)))
                 _n.x = a.y - b.y; _n.y = b.x - a.x;
-                cc.pNormalizeIn(_n);
+                cc.Point.normalizeIn(_n);
                 // var t = perp(n);
                 _t.x = -_n.y; _t.y = _n.x;
                 // var nw = mult(n, radius), tw = mult(t, radius);
@@ -875,8 +875,8 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     // var n2 = normalize(perp(sub(v2, v1)));
                     _n.x = v0y - v1y; _n.y = v1x - v0x;
                     _nw.x = v1y - v2y; _nw.y = v2x - v1x;
-                    cc.pNormalizeIn(_n);
-                    cc.pNormalizeIn(_nw);
+                    cc.Point.normalizeIn(_n);
+                    cc.Point.normalizeIn(_nw);
                     // var offset = mult(add(n1, n2), 1.0 / (dot(n1, n2) + 1.0));
                     factor = _n.x * _nw.x + _n.y * _nw.y + 1;
                     offx = (_n.x + _nw.x) / factor;
@@ -971,8 +971,8 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
                     // var n2 = normalize(perp(sub(v2, v1)));
                     _n.x = v0y - v1y; _n.y = v1x - v0x;
                     _nw.x = v1y - v2y; _nw.y = v2x - v1x;
-                    cc.pNormalizeIn(_n);
-                    cc.pNormalizeIn(_nw);
+                    cc.Point.normalizeIn(_n);
+                    cc.Point.normalizeIn(_nw);
                     // var offset = multi(add(n1, n2), 1.0 / (dot(n1, n2) + 1.0));
                     factor = _n.x * _nw.x + _n.y * _nw.y + 1;
                     offx = (_n.x + _nw.x) / factor;

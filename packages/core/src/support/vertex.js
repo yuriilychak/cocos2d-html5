@@ -25,16 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { p } from '../cocoa/geometry/point';
-import {
-    pPerp,
-    pNormalize,
-    pSub,
-    pMidpoint,
-    pDot,
-    pMult,
-    pCross
-} from './point-extension';
+import { Point } from "../cocoa/geometry/point";
 
 /**
  * converts a line to a polygon
@@ -44,72 +35,93 @@ import {
  * @param {Number} offset
  * @param {Number} nuPoints
  */
-export function vertexLineToPolygon(points, stroke, vertices, offset, nuPoints) {
-    nuPoints += offset;
-    if (nuPoints <= 1)
-        return;
+export function vertexLineToPolygon(
+  points,
+  stroke,
+  vertices,
+  offset,
+  nuPoints
+) {
+  nuPoints += offset;
+  if (nuPoints <= 1) return;
 
-    stroke *= 0.5;
-    var idx;
-    var nuPointsMinus = nuPoints - 1;
-    for (var i = offset; i < nuPoints; i++) {
-        idx = i * 2;
-        var p1 = p(points[i * 2], points[i * 2 + 1]);
-        var perpVector;
+  stroke *= 0.5;
+  var idx;
+  var nuPointsMinus = nuPoints - 1;
+  for (var i = offset; i < nuPoints; i++) {
+    idx = i * 2;
+    var p1 = new Point(points[i * 2], points[i * 2 + 1]);
+    var perpVector;
 
-        if (i === 0)
-            perpVector = pPerp(pNormalize(pSub(p1, p(points[(i + 1) * 2], points[(i + 1) * 2 + 1]))));
-        else if (i === nuPointsMinus)
-            perpVector = pPerp(pNormalize(pSub(p(points[(i - 1) * 2], points[(i - 1) * 2 + 1]), p1)));
-        else {
-            var p0 = p(points[(i - 1) * 2], points[(i - 1) * 2 + 1]);
-            var p2 = p(points[(i + 1) * 2], points[(i + 1) * 2 + 1]);
+    if (i === 0)
+      perpVector = Point.perp(
+        Point.normalize(
+          Point.sub(p1, new Point(points[(i + 1) * 2], points[(i + 1) * 2 + 1]))
+        )
+      );
+    else if (i === nuPointsMinus)
+      perpVector = Point.perp(
+        Point.normalize(
+          Point.sub(new Point(points[(i - 1) * 2], points[(i - 1) * 2 + 1]), p1)
+        )
+      );
+    else {
+      var p0 = new Point(points[(i - 1) * 2], points[(i - 1) * 2 + 1]);
+      var p2 = new Point(points[(i + 1) * 2], points[(i + 1) * 2 + 1]);
 
-            var p2p1 = pNormalize(pSub(p2, p1));
-            var p0p1 = pNormalize(pSub(p0, p1));
+      var p2p1 = Point.normalize(Point.sub(p2, p1));
+      var p0p1 = Point.normalize(Point.sub(p0, p1));
 
-            // Calculate angle between vectors
-            var angle = Math.acos(pDot(p2p1, p0p1));
+      // Calculate angle between vectors
+      var angle = Math.acos(Point.dot(p2p1, p0p1));
 
-            if (angle < cc.degreesToRadians(70))
-                perpVector = pPerp(pNormalize(pMidpoint(p2p1, p0p1)));
-            else if (angle < cc.degreesToRadians(170))
-                perpVector = pNormalize(pMidpoint(p2p1, p0p1));
-            else
-                perpVector = pPerp(pNormalize(pSub(p2, p0)));
-        }
-        perpVector = pMult(perpVector, stroke);
-
-        vertices[idx * 2] = p1.x + perpVector.x;
-        vertices[idx * 2 + 1] = p1.y + perpVector.y;
-        vertices[(idx + 1) * 2] = p1.x - perpVector.x;
-        vertices[(idx + 1) * 2 + 1] = p1.y - perpVector.y;
+      if (angle < cc.degreesToRadians(70))
+        perpVector = Point.perp(Point.normalize(Point.midpoint(p2p1, p0p1)));
+      else if (angle < cc.degreesToRadians(170))
+        perpVector = Point.normalize(Point.midpoint(p2p1, p0p1));
+      else perpVector = Point.perp(Point.normalize(Point.sub(p2, p0)));
     }
+    perpVector = Point.mult(perpVector, stroke);
 
-    // Validate vertexes
-    offset = (offset === 0) ? 0 : offset - 1;
-    for (i = offset; i < nuPointsMinus; i++) {
-        idx = i * 2;
-        var idx1 = idx + 2;
+    vertices[idx * 2] = p1.x + perpVector.x;
+    vertices[idx * 2 + 1] = p1.y + perpVector.y;
+    vertices[(idx + 1) * 2] = p1.x - perpVector.x;
+    vertices[(idx + 1) * 2 + 1] = p1.y - perpVector.y;
+  }
 
-        var v1 = cc.vertex2(vertices[idx * 2], vertices[idx * 2 + 1]);
-        var v2 = cc.vertex2(vertices[(idx + 1) * 2], vertices[(idx + 1) * 2 + 1]);
-        var v3 = cc.vertex2(vertices[idx1 * 2], vertices[idx1 * 2]);
-        var v4 = cc.vertex2(vertices[(idx1 + 1) * 2], vertices[(idx1 + 1) * 2 + 1]);
+  // Validate vertexes
+  offset = offset === 0 ? 0 : offset - 1;
+  for (i = offset; i < nuPointsMinus; i++) {
+    idx = i * 2;
+    var idx1 = idx + 2;
 
-        //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
-        var fixVertexResult = !vertexLineIntersect(v1.x, v1.y, v4.x, v4.y, v2.x, v2.y, v3.x, v3.y);
-        if (!fixVertexResult.isSuccess)
-            if (fixVertexResult.value < 0.0 || fixVertexResult.value > 1.0)
-                fixVertexResult.isSuccess = true;
+    var v1 = cc.vertex2(vertices[idx * 2], vertices[idx * 2 + 1]);
+    var v2 = cc.vertex2(vertices[(idx + 1) * 2], vertices[(idx + 1) * 2 + 1]);
+    var v3 = cc.vertex2(vertices[idx1 * 2], vertices[idx1 * 2]);
+    var v4 = cc.vertex2(vertices[(idx1 + 1) * 2], vertices[(idx1 + 1) * 2 + 1]);
 
-        if (fixVertexResult.isSuccess) {
-            vertices[idx1 * 2] = v4.x;
-            vertices[idx1 * 2 + 1] = v4.y;
-            vertices[(idx1 + 1) * 2] = v3.x;
-            vertices[(idx1 + 1) * 2 + 1] = v3.y;
-        }
+    //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
+    var fixVertexResult = !vertexLineIntersect(
+      v1.x,
+      v1.y,
+      v4.x,
+      v4.y,
+      v2.x,
+      v2.y,
+      v3.x,
+      v3.y
+    );
+    if (!fixVertexResult.isSuccess)
+      if (fixVertexResult.value < 0.0 || fixVertexResult.value > 1.0)
+        fixVertexResult.isSuccess = true;
+
+    if (fixVertexResult.isSuccess) {
+      vertices[idx1 * 2] = v4.x;
+      vertices[idx1 * 2 + 1] = v4.y;
+      vertices[(idx1 + 1) * 2] = v3.x;
+      vertices[(idx1 + 1) * 2 + 1] = v3.y;
     }
+  }
 }
 
 /**
@@ -125,41 +137,41 @@ export function vertexLineToPolygon(points, stroke, vertices, offset, nuPoints) 
  * @return {Object}
  */
 export function vertexLineIntersect(Ax, Ay, Bx, By, Cx, Cy, Dx, Dy) {
-    var distAB, theCos, theSin, newX;
+  var distAB, theCos, theSin, newX;
 
-    // FAIL: Line undefined
-    if ((Ax === Bx && Ay === By) || (Cx === Dx && Cy === Dy))
-        return {isSuccess:false, value:0};
+  // FAIL: Line undefined
+  if ((Ax === Bx && Ay === By) || (Cx === Dx && Cy === Dy))
+    return { isSuccess: false, value: 0 };
 
-    //  Translate system to make A the origin
-    Bx -= Ax;
-    By -= Ay;
-    Cx -= Ax;
-    Cy -= Ay;
-    Dx -= Ax;
-    Dy -= Ay;
+  //  Translate system to make A the origin
+  Bx -= Ax;
+  By -= Ay;
+  Cx -= Ax;
+  Cy -= Ay;
+  Dx -= Ax;
+  Dy -= Ay;
 
-    // Length of segment AB
-    distAB = Math.sqrt(Bx * Bx + By * By);
+  // Length of segment AB
+  distAB = Math.sqrt(Bx * Bx + By * By);
 
-    // Rotate the system so that point B is on the positive X axis.
-    theCos = Bx / distAB;
-    theSin = By / distAB;
-    newX = Cx * theCos + Cy * theSin;
-    Cy = Cy * theCos - Cx * theSin;
-    Cx = newX;
-    newX = Dx * theCos + Dy * theSin;
-    Dy = Dy * theCos - Dx * theSin;
-    Dx = newX;
+  // Rotate the system so that point B is on the positive X axis.
+  theCos = Bx / distAB;
+  theSin = By / distAB;
+  newX = Cx * theCos + Cy * theSin;
+  Cy = Cy * theCos - Cx * theSin;
+  Cx = newX;
+  newX = Dx * theCos + Dy * theSin;
+  Dy = Dy * theCos - Dx * theSin;
+  Dx = newX;
 
-    // FAIL: Lines are parallel.
-    if (Cy === Dy) return {isSuccess:false, value:0};
+  // FAIL: Lines are parallel.
+  if (Cy === Dy) return { isSuccess: false, value: 0 };
 
-    // Discover the relative position of the intersection in the line AB
-    var t = (Dx + (Cx - Dx) * Dy / (Dy - Cy)) / distAB;
+  // Discover the relative position of the intersection in the line AB
+  var t = (Dx + ((Cx - Dx) * Dy) / (Dy - Cy)) / distAB;
 
-    // Success.
-    return {isSuccess:true, value:t};
+  // Success.
+  return { isSuccess: true, value: t };
 }
 
 /**
@@ -168,14 +180,13 @@ export function vertexLineIntersect(Ax, Ay, Bx, By, Cx, Cy, Dx, Dy) {
  * @return {Boolean}
  */
 export function vertexListIsClockwise(verts) {
-    for (var i = 0, len = verts.length; i < len; i++) {
-        var a = verts[i];
-        var b = verts[(i + 1) % len];
-        var c = verts[(i + 2) % len];
+  for (var i = 0, len = verts.length; i < len; i++) {
+    var a = verts[i];
+    var b = verts[(i + 1) % len];
+    var c = verts[(i + 2) % len];
 
-        if (pCross(pSub(b, a), pSub(c, b)) > 0)
-            return false;
-    }
+    if (Point.cross(Point.sub(b, a), Point.sub(c, b)) > 0) return false;
+  }
 
-    return true;
+  return true;
 }

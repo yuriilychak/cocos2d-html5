@@ -173,14 +173,14 @@ var TileMapEditTest = class TileMapEditTest extends TileDemo {
         var tilemap = this.getChildByTag(TAG_TILE_MAP);
 
         // NEW since v0.7
-        var c = tilemap.getTileAt(cc.p(13, 21));
+        var c = tilemap.getTileAt(new cc.Point(13, 21));
         c.r++;
         c.r %= 50;
         if (c.r == 0)
             c.r = 1;
 
         // NEW since v0.7
-        tilemap.setTile(c, cc.p(13, 21));
+        tilemap.setTile(c, new cc.Point(13, 21));
     }
 
 };
@@ -340,16 +340,16 @@ var TMXOrthoTest4 = class TMXOrthoTest4 extends TileDemo {
         this.ty = s.height - 1;
 
         var sprite;
-        sprite = layer.getTileAt(cc.p(0, 0));
+        sprite = layer.getTileAt(new cc.Point(0, 0));
         sprite.scale = 2;
 
-        sprite = layer.getTileAt(cc.p(s.width - 1, 0));
+        sprite = layer.getTileAt(new cc.Point(s.width - 1, 0));
         sprite.scale = 2;
 
-        sprite = layer.getTileAt(cc.p(0, s.height - 1));
+        sprite = layer.getTileAt(new cc.Point(0, s.height - 1));
         sprite.scale = 2;
 
-        sprite = layer.getTileAt(cc.p(s.width - 1, s.height - 1));
+        sprite = layer.getTileAt(new cc.Point(s.width - 1, s.height - 1));
         sprite.scale = 2;
 
         this.scheduleOnce(this.onRemoveSprite, 0.2);
@@ -360,7 +360,7 @@ var TMXOrthoTest4 = class TMXOrthoTest4 extends TileDemo {
         var layer = map.getLayer("Layer 0");
         var layerSize = layer.getLayerSize();
 
-        var sprite = layer.getTileAt(cc.p(layerSize.width - 1, 0));
+        var sprite = layer.getTileAt(new cc.Point(layerSize.width - 1, 0));
         layer.removeChild(sprite, true);
 
         this.testLayerSize = layerSize;
@@ -411,10 +411,10 @@ var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
 
         map.scale = 1;
 
-        var tile0 = layer.getTileAt(cc.p(1, 63));
-        var tile1 = layer.getTileAt(cc.p(2, 63));
-        var tile2 = layer.getTileAt(cc.p(3, 62));//cc.p(1,62));
-        var tile3 = layer.getTileAt(cc.p(2, 62));
+        var tile0 = layer.getTileAt(new cc.Point(1, 63));
+        var tile1 = layer.getTileAt(new cc.Point(2, 63));
+        var tile2 = layer.getTileAt(new cc.Point(3, 62));//new cc.Point(1,62));
+        var tile3 = layer.getTileAt(new cc.Point(2, 62));
 
         tile0.anchorX = 0.5;
         tile0.anchorY = 0.5;
@@ -425,7 +425,7 @@ var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
         tile3.anchorX = 0.5;
         tile3.anchorY = 0.5;
 
-        var move = cc.moveBy(0.5, cc.p(0, 160));
+        var move = cc.moveBy(0.5, new cc.Point(0, 160));
         var rotate = cc.rotateBy(2, 360);
         var scale = cc.scaleBy(2, 5);
         var opacity = cc.fadeOut(2);
@@ -440,7 +440,7 @@ var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
         tile2.runAction(seq0.clone());
         tile3.runAction(seq0.clone());
 
-        this.gid = layer.getTileGIDAt(cc.p(0, 63));
+        this.gid = layer.getTileGIDAt(new cc.Point(0, 63));
 
         this.schedule(this.updateCol, 2.0);
         this.schedule(this.repaintWithGID, 2.0);
@@ -461,7 +461,7 @@ var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
         var s = layer.getLayerSize();
 
         for (var y = 0; y < s.height; y++) {
-            layer.setTileGID(this.gid2, cc.p(3, y));
+            layer.setTileGID(this.gid2, new cc.Point(3, y));
         }
 
         this.gid2 = (this.gid2 + 1) % 80;
@@ -474,8 +474,8 @@ var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
         var s = layer.getLayerSize();
         for (var x = 0; x < s.width; x++) {
             var y = s.height - 1;
-            var tmpgid = layer.getTileGIDAt(cc.p(x, y));
-            layer.setTileGID(tmpgid + 1, cc.p(x, y));
+            var tmpgid = layer.getTileGIDAt(new cc.Point(x, y));
+            layer.setTileGID(tmpgid + 1, new cc.Point(x, y));
         }
     }
     removeTiles(dt) {
@@ -487,7 +487,7 @@ var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
         var s = layer.getLayerSize();
 
         for (var y = 0; y < s.height; y++) {
-            layer.removeTileAt(cc.p(5.0, y));
+            layer.removeTileAt(new cc.Point(5.0, y));
         }
     }
     title() {
@@ -570,7 +570,7 @@ var TMXIsoTest = class TMXIsoTest extends TileDemo {
         var ms = map.getMapSize();
         var ts = map.getTileSize();
         // map.setPosition(-ms.width * ts.width / 2, -ms.height * ts.height / 2);
-        map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
+        map.runAction(cc.moveTo(1.0, new cc.Point(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
     }
     title() {
         return "TMX Isometric test 0";
@@ -662,7 +662,7 @@ var TMXIsoTest2 = class TMXIsoTest2 extends TileDemo {
         // move map to the center of the screen
         var ms = map.getMapSize();
         var ts = map.getTileSize();
-        map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
+        map.runAction(cc.moveTo(1.0, new cc.Point(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
     }
     title() {
         return "TMX Isometric test 2";
@@ -710,7 +710,7 @@ var TMXUncompressedTest = class TMXUncompressedTest extends TileDemo {
         // move map to the center of the screen
         var ms = map.getMapSize();
         var ts = map.getTileSize();
-        map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
+        map.runAction(cc.moveTo(1.0, new cc.Point(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
 
         // testing release map
         var childrenArray = map.children;
@@ -831,10 +831,10 @@ var TMXOrthoObjectsTest = class TMXOrthoObjectsTest extends TileDemo {
             var x = dict["x"], y = dict["y"];
             var width = dict["width"], height = dict["height"];
 
-            drawNode.drawSegment(cc.p(x, y), cc.p((x + width), y));
-            drawNode.drawSegment(cc.p((x + width), y), cc.p((x + width), (y + height)));
-            drawNode.drawSegment(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
-            drawNode.drawSegment(cc.p(x, (y + height)), cc.p(x, y));
+            drawNode.drawSegment(new cc.Point(x, y), new cc.Point((x + width), y));
+            drawNode.drawSegment(new cc.Point((x + width), y), new cc.Point((x + width), (y + height)));
+            drawNode.drawSegment(new cc.Point((x + width), (y + height)), new cc.Point(x, (y + height)));
+            drawNode.drawSegment(new cc.Point(x, (y + height)), new cc.Point(x, y));
         }
         map.addChild(drawNode);
         //Automation parameters
@@ -907,10 +907,10 @@ var TMXIsoObjectsTest = class TMXIsoObjectsTest extends TileDemo {
             var x = dict["x"], y = dict["y"];
             var width = dict["width"], height = dict["height"];
 
-            drawNode.drawSegment(cc.p(x, y), cc.p((x + width), y));
-            drawNode.drawSegment(cc.p((x + width), y), cc.p((x + width), (y + height)));
-            drawNode.drawSegment(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
-            drawNode.drawSegment(cc.p(x, (y + height)), cc.p(x, y));
+            drawNode.drawSegment(new cc.Point(x, y), new cc.Point((x + width), y));
+            drawNode.drawSegment(new cc.Point((x + width), y), new cc.Point((x + width), (y + height)));
+            drawNode.drawSegment(new cc.Point((x + width), (y + height)), new cc.Point(x, (y + height)));
+            drawNode.drawSegment(new cc.Point(x, (y + height)), new cc.Point(x, y));
         }
 
         //Automation parameters
@@ -974,7 +974,7 @@ var TMXResizeTest = class TMXResizeTest extends TileDemo {
         var ls = layer.getLayerSize();
         for (var y = 0; y < ls.height; y++) {
             for (var x = 0; x < ls.width; x++) {
-                layer.setTileGID(1, cc.p(x, y));
+                layer.setTileGID(1, new cc.Point(x, y));
             }
         }
     }
@@ -1027,7 +1027,7 @@ var TMXIsoZorder = class TMXIsoZorder extends TileDemo {
         this.tamara.anchorX = 0.5;
         this.tamara.anchorY = 0;
 
-        var move = cc.moveBy(5, cc.p(300, 250));
+        var move = cc.moveBy(5, new cc.Point(300, 250));
         var back = move.reverse();
         var delay = cc.delayTime(0.5);
         var seq = cc.sequence(move, delay, back);
@@ -1096,7 +1096,7 @@ var TMXOrthoZorder = class TMXOrthoZorder extends TileDemo {
         this.tamara.anchorX = 0.5;
         this.tamara.anchorY = 0;
 
-        var move = cc.moveBy(5, cc.pMult(cc.p(400, 450), 0.58));
+        var move = cc.moveBy(5, cc.Point.mult(new cc.Point(400, 450), 0.58));
         var back = move.reverse();
         var seq = cc.sequence(move, back);
         this.tamara.runAction(seq.repeatForever());
@@ -1163,9 +1163,9 @@ var TMXIsoVertexZ = class TMXIsoVertexZ extends TMXFixBugLayer {
         // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
         // can use any cc.Sprite and it will work OK.
         var layer = map.getLayer("Trees");
-        this.tamara = layer.getTileAt(cc.p(29, 29));
+        this.tamara = layer.getTileAt(new cc.Point(29, 29));
 
-        var move = cc.moveBy(5, cc.pMult(cc.p(300, 250), 0.75));
+        var move = cc.moveBy(5, cc.Point.mult(new cc.Point(300, 250), 0.75));
         var back = move.reverse();
         var delay = cc.delayTime(0.5);
         var seq = cc.sequence(move, delay, back);
@@ -1240,10 +1240,10 @@ var TMXOrthoVertexZ = class TMXOrthoVertexZ extends TMXFixBugLayer {
         // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
         // can use any cc.Sprite and it will work OK.
         var layer = map.getLayer("trees");
-        this.tamara = layer.getTileAt(cc.p(0, 11));
+        this.tamara = layer.getTileAt(new cc.Point(0, 11));
         this.log("vertexZ: " + this.tamara.vertexZ);
 
-        var move = cc.moveBy(5, cc.pMult(cc.p(400, 450), 0.55));
+        var move = cc.moveBy(5, cc.Point.mult(new cc.Point(400, 450), 0.55));
         var back = move.reverse();
         var delay = cc.delayTime(0.5);
         var seq = cc.sequence(move, delay, back);
@@ -1464,7 +1464,7 @@ var TMXOrthoFlipRunTimeTest = class TMXOrthoFlipRunTimeTest extends TileDemo {
         var layer = map.getLayer("Layer 0");
 
         //blue diamond
-        var tileCoord = cc.p(1, 10);
+        var tileCoord = new cc.Point(1, 10);
         var flags = layer.getTileFlagsAt(tileCoord);
         var GID = layer.getTileGIDAt(tileCoord);
         // Vertical
@@ -1475,7 +1475,7 @@ var TMXOrthoFlipRunTimeTest = class TMXOrthoFlipRunTimeTest extends TileDemo {
         }
         layer.setTileGID(GID, tileCoord, flags);
 
-        tileCoord = cc.p(1, 8);
+        tileCoord = new cc.Point(1, 8);
         flags = layer.getTileFlagsAt(tileCoord);
         GID = layer.getTileGIDAt(tileCoord);
         // Vertical
@@ -1485,7 +1485,7 @@ var TMXOrthoFlipRunTimeTest = class TMXOrthoFlipRunTimeTest extends TileDemo {
             flags = (flags | cc.TMX_TILE_VERTICAL_FLAG) >>> 0;
         layer.setTileGID(GID, tileCoord, flags);
 
-        tileCoord = cc.p(2, 8);
+        tileCoord = new cc.Point(2, 8);
         flags = layer.getTileFlagsAt(tileCoord);
         GID = layer.getTileGIDAt(tileCoord);
         // Horizontal
@@ -1605,7 +1605,7 @@ var TMXBug987 = class TMXBug987 extends TileDemo {
         map.anchorX = 0;
         map.anchorY = 0;
         var layer = map.getLayer("Tile Layer 1");
-        layer.setTileGID(3, cc.p(2, 2));
+        layer.setTileGID(3, new cc.Point(2, 2));
     }
     title() {
         return "TMX Bug 987";
@@ -1702,10 +1702,10 @@ var TMXGIDObjectsTest = class TMXGIDObjectsTest extends TileDemo {
             var width = dict["width"], height = dict["height"];
 
             if (width != 0 && height != 0) {
-                drawNode.drawSegment(cc.p(x, y), cc.p((x + width), y));
-                drawNode.drawSegment(cc.p((x + width), y), cc.p((x + width), (y + height)));
-                drawNode.drawSegment(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
-                drawNode.drawSegment(cc.p(x, (y + height)), cc.p(x, y));
+                drawNode.drawSegment(new cc.Point(x, y), new cc.Point((x + width), y));
+                drawNode.drawSegment(new cc.Point((x + width), y), new cc.Point((x + width), (y + height)));
+                drawNode.drawSegment(new cc.Point((x + width), (y + height)), new cc.Point(x, (y + height)));
+                drawNode.drawSegment(new cc.Point(x, (y + height)), new cc.Point(x, y));
             }
         }
         this.testObjects = array;

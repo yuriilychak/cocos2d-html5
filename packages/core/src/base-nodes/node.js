@@ -48,7 +48,7 @@ import {
   pointApplyAffineTransform
 } from "../cocoa/affine-transform";
 import { rectUnion } from "../cocoa/geometry/rect";
-import { pAdd, pSub } from "../support/point-extension";
+
 import { arrayRemoveObject } from "../platform/macro/utils";
 import { ComponentContainer } from "../components/component-container";
 import { Director } from "../director/index";
@@ -2077,7 +2077,7 @@ export class Node extends NewClass {
    * @return {Point}
    */
   convertToNodeSpaceAR(worldPoint) {
-    return pSub(
+    return Point.sub(
       this.convertToNodeSpace(worldPoint),
       this._renderCmd.getAnchorPointInPoints()
     );
@@ -2092,7 +2092,7 @@ export class Node extends NewClass {
    */
   convertToWorldSpaceAR(nodePoint) {
     nodePoint = nodePoint || new Point(0, 0);
-    var pt = pAdd(nodePoint, this._renderCmd.getAnchorPointInPoints());
+    var pt = Point.add(nodePoint, this._renderCmd.getAnchorPointInPoints());
     return this.convertToWorldSpace(pt);
   }
 

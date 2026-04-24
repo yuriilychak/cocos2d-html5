@@ -227,7 +227,7 @@ cc.EditBox = class EditBox extends cc.Node {
     this._touchListener = null;
     this._touchEnabled = true;
 
-    this._anchorPoint = cc.p(0.5, 0.5);
+    this._anchorPoint = new cc.Point(0.5, 0.5);
     this._textColor = cc.color.WHITE;
     this._placeholderColor = cc.color.GRAY;
 
@@ -577,7 +577,7 @@ cc.EditBox = class EditBox extends cc.Node {
     this.setContentSize(size);
 
     if (this._backgroundSprite && !this._backgroundSprite.parent) {
-      this._backgroundSprite.setAnchorPoint(cc.p(0, 0));
+      this._backgroundSprite.setAnchorPoint(new cc.Point(0, 0));
       this.addChild(this._backgroundSprite);
 
       this._updateBackgroundSpriteSize(size.width, size.height);
@@ -666,7 +666,7 @@ cc.EditBox = class EditBox extends cc.Node {
   var LEFT_PADDING = 2;
 
   function adjustEditBoxPosition(editBox) {
-    var worldPos = editBox.convertToWorldSpace(cc.p(0, 0));
+    var worldPos = editBox.convertToWorldSpace(new cc.Point(0, 0));
     var windowHeight = cc.visibleRect.height;
     var windowWidth = cc.visibleRect.width;
     var factor = 0.5;
@@ -1025,13 +1025,13 @@ cc.EditBox = class EditBox extends cc.Node {
     var editBoxSize = this._editBox.getContentSize();
     if (!this._textLabel) {
       this._textLabel = new cc.LabelTTF();
-      this._textLabel.setAnchorPoint(cc.p(0, 1));
+      this._textLabel.setAnchorPoint(new cc.Point(0, 1));
       this._editBox.addChild(this._textLabel, 100);
     }
 
     if (!this._placeholderLabel) {
       this._placeholderLabel = new cc.LabelTTF();
-      this._placeholderLabel.setAnchorPoint(cc.p(0, 1));
+      this._placeholderLabel.setAnchorPoint(new cc.Point(0, 1));
       this._placeholderLabel.setColor(cc.color.GRAY);
       this._editBox.addChild(this._placeholderLabel, 100);
     }

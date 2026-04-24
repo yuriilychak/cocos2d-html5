@@ -122,7 +122,7 @@ cc.ControlSwitch = class ControlSwitch extends cc.Control {
 
     onTouchMoved(touch, event) {
         var location = this.locationFromTouch(touch);
-        location = cc.p(location.x - this._initialTouchXPosition, 0);
+        location = new cc.Point(location.x - this._initialTouchXPosition, 0);
 
         this._moved = true;
 

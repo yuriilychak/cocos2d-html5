@@ -194,7 +194,7 @@ cc.ControlPotentiometer = class ControlPotentiometer extends cc.Control {
     }
 
     onTouchEnded(touch, event) {
-        this.potentiometerEnded(cc.p(0, 0));
+        this.potentiometerEnded(new cc.Point(0, 0));
     }
 
     /**

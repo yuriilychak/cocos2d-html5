@@ -349,7 +349,7 @@ var ChipmunkCollisionTest_no_specific_type = class ChipmunkCollisionTest_no_spec
         this.initPhysics();
         this.scheduleUpdate();
 
-        var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini);
+        var sprite1 = this.createPhysicsSprite( new cc.Point(winSize.width/2, winSize.height-20), s_pathGrossini);
         this.addChild( sprite1 );
 
         this.space.setDefaultCollisionHandler(
@@ -449,8 +449,8 @@ var ChipmunkCollisionTest = class ChipmunkCollisionTest extends ChipmunkBaseLaye
         this.initPhysics();
         this.scheduleUpdate();
 
-        var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
-        var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), s_pathSister1, 2);
+        var sprite1 = this.createPhysicsSprite( new cc.Point(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
+        var sprite2 = this.createPhysicsSprite( new cc.Point(winSize.width/2, 50), s_pathSister1, 2);
 
         this.addChild( sprite1 );
         this.addChild( sprite2 );
@@ -593,8 +593,8 @@ var ChipmunkCollisionTestB = class ChipmunkCollisionTestB extends ChipmunkBaseLa
         this.initPhysics();
         this.scheduleUpdate();
 
-        var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
-        var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), s_pathSister1, 2);
+        var sprite1 = this.createPhysicsSprite( new cc.Point(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
+        var sprite2 = this.createPhysicsSprite( new cc.Point(winSize.width/2, 50), s_pathSister1, 2);
 
         this.addChild( sprite1 );
         this.addChild( sprite2 );
@@ -1774,7 +1774,7 @@ var Query = class Query extends ChipmunkDemo {
     }
 
     drawBB(bb, fillColor, lineColor){
-        this.drawNode.drawRect(cc.p(bb.l, bb.b), cc.p(bb.r, bb.t), fillColor, 1, lineColor);
+        this.drawNode.drawRect(new cc.Point(bb.l, bb.b), new cc.Point(bb.r, bb.t), fillColor, 1, lineColor);
     }
 
     drawQuery(touch, event){
@@ -1782,7 +1782,7 @@ var Query = class Query extends ChipmunkDemo {
         var drawNode = target.drawNode;
         drawNode.clear();
 
-        var start = cc.p(320, 240);
+        var start = new cc.Point(320, 240);
         var end = touch.getLocation();
         var radius = 10;
         drawNode.drawSegment(start, end, 1, cc.color(0, 255, 0, 255));

@@ -222,14 +222,14 @@ var ActionManual = class ActionManual extends ActionsDemo {
   getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.scaleX);
-    ret.push(cc.p(this._tamara.x, this._tamara.y));
+    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
     ret.push(this._tamara.opacity);
 
     ret.push(this._grossini.rotation);
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.color);
 
-    ret.push(cc.p(this._kathia.x, this._kathia.y));
+    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
     ret.push(this._kathia.color);
 
     return JSON.stringify(ret);
@@ -249,7 +249,7 @@ var ActionMove = class ActionMove extends ActionsDemo {
     }
 
       get _code() { 
-        return "a =cc.moveBy( time, cc.p(x,y) );\n" + "a = cc.moveTo( time, cc.p(x,y) );";
+        return "a =cc.moveBy( time, new cc.Point(x,y) );\n" + "a = cc.moveTo( time, new cc.Point(x,y) );";
       }
 
   onEnter() {
@@ -259,14 +259,14 @@ var ActionMove = class ActionMove extends ActionsDemo {
     this.centerSprites(3);
     var s = director.getWinSize();
 
-    var actionTo = cc.moveTo(2, cc.p(s.width - 40, s.height - 40));
+    var actionTo = cc.moveTo(2, new cc.Point(s.width - 40, s.height - 40));
 
-    var actionBy = cc.moveBy(1, cc.p(80, 80));
+    var actionBy = cc.moveBy(1, new cc.Point(80, 80));
     var actionByBack = actionBy.reverse();
 
     this._tamara.runAction(actionTo);
     this._grossini.runAction(cc.sequence(actionBy, actionByBack));
-    this._kathia.runAction(cc.moveTo(1, cc.p(40, 40)));
+    this._kathia.runAction(cc.moveTo(1, new cc.Point(40, 40)));
     //----end1----
   }
   title() {
@@ -287,9 +287,9 @@ var ActionMove = class ActionMove extends ActionsDemo {
 
   getCurrentResult() {
     var ret = [];
-    ret.push(cc.p(this._tamara.x, this._tamara.y));
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
-    ret.push(cc.p(this._kathia.x, this._kathia.y));
+    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
 
     return JSON.stringify(ret);
   }
@@ -649,9 +649,9 @@ var ActionJump = class ActionJump extends ActionsDemo {
     super.onEnter();
     this.centerSprites(3);
 
-    var actionTo = cc.jumpTo(2, cc.p(300, 300), 50, 4);
-    var actionBy = cc.jumpBy(2, cc.p(300, 0), 50, 4);
-    var actionUp = cc.jumpBy(2, cc.p(0, 0), 80, 4);
+    var actionTo = cc.jumpTo(2, new cc.Point(300, 300), 50, 4);
+    var actionBy = cc.jumpBy(2, new cc.Point(300, 0), 50, 4);
+    var actionUp = cc.jumpBy(2, new cc.Point(0, 0), 80, 4);
     var actionByBack = actionBy.reverse();
 
     var delay = cc.delayTime(0.25);
@@ -684,9 +684,9 @@ var ActionJump = class ActionJump extends ActionsDemo {
 
   getCurrentResult() {
     var ret = [];
-    ret.push(cc.p(this._tamara.x, this._tamara.y));
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
-    ret.push(cc.p(this._kathia.x, this._kathia.y));
+    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
 
     return JSON.stringify(ret);
   }
@@ -721,7 +721,7 @@ var ActionBezier = class ActionBezier extends ActionsDemo {
     var delay = cc.delayTime(0.25);
 
     // 3 and only 3 control points should be used for Bezier actions.
-    var controlPoints = [cc.p(0, 374), cc.p(300, -374), cc.p(300, 100)];
+    var controlPoints = [new cc.Point(0, 374), new cc.Point(300, -374), new cc.Point(300, 100)];
 
     var bezierForward = cc.bezierBy(2, controlPoints);
     var rep = cc
@@ -734,9 +734,9 @@ var ActionBezier = class ActionBezier extends ActionsDemo {
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints2 = [
-      cc.p(100, s.height / 2),
-      cc.p(200, -s.height / 2),
-      cc.p(240, 160)
+      new cc.Point(100, s.height / 2),
+      new cc.Point(200, -s.height / 2),
+      new cc.Point(240, 160)
     ];
     var bezierTo1 = cc.bezierTo(2, controlPoints2);
 
@@ -762,7 +762,7 @@ var ActionBezier = class ActionBezier extends ActionsDemo {
     this.scheduleOnce(this.checkControl2, 1.33333);
   }
   checkControl1(dt) {
-    this.control1 = cc.p(this._grossini.x, this._grossini.y);
+    this.control1 = new cc.Point(this._grossini.x, this._grossini.y);
   }
   verifyControl1(dt) {
     var x = Math.abs(this.control1.x - 77 - winSize.width / 2);
@@ -771,7 +771,7 @@ var ActionBezier = class ActionBezier extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl2(dt) {
-    this.control2 = cc.p(this._grossini.x, this._grossini.y);
+    this.control2 = new cc.Point(this._grossini.x, this._grossini.y);
   }
   verifyControl2(dt) {
     var x = Math.abs(this.control2.x - 222 - winSize.width / 2);
@@ -793,7 +793,7 @@ var ActionBezier = class ActionBezier extends ActionsDemo {
     var ret = [];
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
 
     return JSON.stringify(ret);
   }
@@ -823,9 +823,9 @@ var ActionBezierToCopy = class ActionBezierToCopy extends ActionsDemo {
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints2 = [
-      cc.p(100, winSize.height / 2),
-      cc.p(200, -winSize.height / 2),
-      cc.p(240, 160)
+      new cc.Point(100, winSize.height / 2),
+      new cc.Point(200, -winSize.height / 2),
+      new cc.Point(240, 160)
     ];
     var bezierTo1 = cc.bezierTo(2, controlPoints2);
 
@@ -869,8 +869,8 @@ var Issue1008 = class Issue1008 extends ActionsDemo {
     this._grossini.y = 279;
 
     // 3 and only 3 control points should be used for Bezier actions.
-    var controlPoints1 = [cc.p(428, 279), cc.p(100, 100), cc.p(100, 100)];
-    var controlPoints2 = [cc.p(100, 100), cc.p(428, 279), cc.p(428, 279)];
+    var controlPoints1 = [new cc.Point(428, 279), new cc.Point(100, 100), new cc.Point(100, 100)];
+    var controlPoints2 = [new cc.Point(100, 100), new cc.Point(428, 279), new cc.Point(428, 279)];
 
     var bz1 = cc.bezierTo(1.5, controlPoints1);
     var bz2 = cc.bezierTo(1.5, controlPoints2);
@@ -885,7 +885,7 @@ var Issue1008 = class Issue1008 extends ActionsDemo {
     //this._grossini.runAction(cc.sequence(bz1, bz2, trace,delay));
   }
   onTrace(sender) {
-    var pos = cc.p(sender.x, sender.y);
+    var pos = new cc.Point(sender.x, sender.y);
     cc.log("Position x: " + pos.x + " y:" + pos.y);
     if (Math.round(pos.x) != 428 || Math.round(pos.y) != 279)
       this.log("Error: Issue 1008 is still open");
@@ -1139,7 +1139,7 @@ var ActionSequence = class ActionSequence extends ActionsDemo {
     this.alignSpritesLeft(1);
 
     var action = cc.sequence(
-      cc.moveBy(1.5, cc.p(240, 0)),
+      cc.moveBy(1.5, new cc.Point(240, 0)),
       cc.rotateBy(1.5, 540)
     );
 
@@ -1158,7 +1158,7 @@ var ActionSequence = class ActionSequence extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }
@@ -1181,9 +1181,9 @@ var ActionSequence2 = class ActionSequence2 extends ActionsDemo {
     this.centerSprites(1);
     this._grossini.visible = false;
     var action = cc.sequence(
-      cc.place(cc.p(200, 200)),
+      cc.place(new cc.Point(200, 200)),
       cc.show(),
-      cc.moveBy(1, cc.p(100, 0)),
+      cc.moveBy(1, new cc.Point(100, 0)),
       cc.callFunc(this.onCallback1, this),
       cc.callFunc(this.onCallback2.bind(this)),
       cc.callFunc(this.onCallback3, this)
@@ -1236,7 +1236,7 @@ var ActionSequence2 = class ActionSequence2 extends ActionsDemo {
     ret.push(this.called2);
     ret.push(this.called3);
     ret.push(this._grossini.visible);
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
 
@@ -1264,7 +1264,7 @@ var ActionCallFunc1 = class ActionCallFunc1 extends ActionsDemo {
 
     // Testing different ways to pass "this"
     var action = cc.sequence(
-      cc.moveBy(2, cc.p(200, 0)),
+      cc.moveBy(2, new cc.Point(200, 0)),
       cc.callFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
     );
 
@@ -1353,7 +1353,7 @@ var ActionCallFunc2 = class ActionCallFunc2 extends ActionsDemo {
     this.centerSprites(1);
 
     var action = cc.sequence(
-      cc.moveBy(2.0, cc.p(200, 0)),
+      cc.moveBy(2.0, new cc.Point(200, 0)),
       cc.callFunc(this.removeFromParentAndCleanup, this._grossini, true)
     );
 
@@ -1457,7 +1457,7 @@ var ActionSpawn = class ActionSpawn extends ActionsDemo {
     this.alignSpritesLeft(1);
 
     var action = cc.spawn(
-      cc.jumpBy(2, cc.p(300, 0), 50, 4),
+      cc.jumpBy(2, new cc.Point(300, 0), 50, 4),
       cc.rotateBy(2, 720)
     );
 
@@ -1476,7 +1476,7 @@ var ActionSpawn = class ActionSpawn extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }
@@ -1624,7 +1624,7 @@ var ActionReverse = class ActionReverse extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var jump = cc.jumpBy(2, cc.p(300, 0), 50, 4);
+    var jump = cc.jumpBy(2, new cc.Point(300, 0), 50, 4);
     var delay = cc.delayTime(0.25);
     var action = cc.sequence(jump, delay, jump.reverse());
 
@@ -1642,7 +1642,7 @@ var ActionReverse = class ActionReverse extends ActionsDemo {
     this.scheduleOnce(this.checkControl1, 2.1);
   }
   checkControl1(dt) {
-    this.control1 = cc.p(this._grossini.x, this._grossini.y);
+    this.control1 = new cc.Point(this._grossini.x, this._grossini.y);
   }
   getExpectedResult() {
     var ret = [
@@ -1654,7 +1654,7 @@ var ActionReverse = class ActionReverse extends ActionsDemo {
   getCurrentResult() {
     var ret = [];
     ret.push(this.control1);
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
 
@@ -1677,7 +1677,7 @@ var ActionDelayTime = class ActionDelayTime extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move = cc.moveBy(1, cc.p(150, 0));
+    var move = cc.moveBy(1, new cc.Point(150, 0));
     var action = cc.sequence(move, cc.delayTime(2), move.clone());
 
     this._grossini.runAction(action);
@@ -1695,7 +1695,7 @@ var ActionDelayTime = class ActionDelayTime extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(cc.p(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
 
@@ -1711,8 +1711,8 @@ var ActionReverseSequence = class ActionReverseSequence extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move1 = cc.moveBy(1, cc.p(250, 0));
-    var move2 = cc.moveBy(1, cc.p(0, 50));
+    var move1 = cc.moveBy(1, new cc.Point(250, 0));
+    var move2 = cc.moveBy(1, new cc.Point(0, 50));
     var seq = cc.sequence(move1, move2, move1.reverse());
     var action = cc.sequence(seq, seq.reverse());
 
@@ -1737,8 +1737,8 @@ var ActionReverseSequence2 = class ActionReverseSequence2 extends ActionsDemo {
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-    var move1 = cc.moveBy(3, cc.p(250, 0));
-    var move2 = cc.moveBy(3, cc.p(0, 50));
+    var move1 = cc.moveBy(3, new cc.Point(250, 0));
+    var move2 = cc.moveBy(3, new cc.Point(0, 50));
     var tog1 = cc.toggleVisibility();
     var tog2 = cc.toggleVisibility();
     var seq = cc.sequence(move1, tog1, move2, tog2, move1.reverse());
@@ -1749,8 +1749,8 @@ var ActionReverseSequence2 = class ActionReverseSequence2 extends ActionsDemo {
     //   Also test that the reverse of Hide is Show, and vice-versa
     this._kathia.runAction(action);
 
-    var move_tamara = cc.moveBy(1, cc.p(100, 0));
-    var move_tamara2 = cc.moveBy(1, cc.p(50, 0));
+    var move_tamara = cc.moveBy(1, new cc.Point(100, 0));
+    var move_tamara2 = cc.moveBy(1, new cc.Point(50, 0));
     var hide = cc.hide();
     var seq_tamara = cc.sequence(move_tamara, hide, move_tamara2);
     var seq_back = seq_tamara.reverse();
@@ -1778,9 +1778,9 @@ var ActionRepeat = class ActionRepeat extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(2);
 
-    var a1 = cc.moveBy(1, cc.p(150, 0));
+    var a1 = cc.moveBy(1, new cc.Point(150, 0));
 
-    var action1 = cc.sequence(cc.place(cc.p(60, 60)), a1).repeat(3);
+    var action1 = cc.sequence(cc.place(new cc.Point(60, 60)), a1).repeat(3);
     var action2 = cc
       .sequence(a1.clone(), a1.reverse(), cc.delayTime(0.25))
       .repeatForever();
@@ -1804,8 +1804,8 @@ var ActionRepeat = class ActionRepeat extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(cc.p(this._kathia.x, this._kathia.y));
-    ret.push(cc.p(this._tamara.x, this._tamara.y));
+    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
+    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
     return JSON.stringify(ret);
   }
 
@@ -1824,7 +1824,7 @@ var ActionFollow = class ActionFollow extends ActionsDemo {
 
     this._grossini.x = -(s.width / 2);
     this._grossini.y = s.height / 2;
-    var move = cc.moveBy(2, cc.p(s.width * 3, 0));
+    var move = cc.moveBy(2, new cc.Point(s.width * 3, 0));
     var move_back = move.reverse();
     var seq = cc.sequence(move, move_back);
 
@@ -1895,11 +1895,11 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     var delay = cc.delayTime(0.25);
 
     var array = [
-      cc.p(0, 0),
-      cc.p(winSize.width / 2 - 30, 0),
-      cc.p(winSize.width / 2 - 30, winSize.height - 80),
-      cc.p(0, winSize.height - 80),
-      cc.p(0, 0)
+      new cc.Point(0, 0),
+      new cc.Point(winSize.width / 2 - 30, 0),
+      new cc.Point(winSize.width / 2 - 30, winSize.height - 80),
+      new cc.Point(0, winSize.height - 80),
+      new cc.Point(0, 0)
     ];
 
     //
@@ -1948,7 +1948,7 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     this.scheduleOnce(this.checkControl3, 1.5);
   }
   checkControl1(dt) {
-    this.control1 = cc.p(this._tamara.x, this._tamara.y);
+    this.control1 = new cc.Point(this._tamara.x, this._tamara.y);
   }
   verifyControl1(dt) {
     var x = Math.abs(50 + winSize.width / 2 - 30 - this.control1.x);
@@ -1957,7 +1957,7 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl2(dt) {
-    this.control2 = cc.p(this._tamara.x, this._tamara.y);
+    this.control2 = new cc.Point(this._tamara.x, this._tamara.y);
   }
   verifyControl2(dt) {
     var x = Math.abs(50 + winSize.width / 2 - 30 - this.control2.x);
@@ -1966,7 +1966,7 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl3(dt) {
-    this.control3 = cc.p(this._tamara.x, this._tamara.y);
+    this.control3 = new cc.Point(this._tamara.x, this._tamara.y);
   }
   verifyControl3(dt) {
     var x = Math.abs(50 - this.control3.x);
@@ -1985,7 +1985,7 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
     ret.push(this.verifyControl3());
-    ret.push(cc.p(this._tamara.x, this._tamara.y));
+    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
 
     return JSON.stringify(ret);
   }
@@ -2045,13 +2045,13 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
     this._tamara.y = 50;
 
     var array = [
-      cc.p(0, 0),
-      cc.p(80, 80),
-      cc.p(winSize.width - 80, 80),
-      cc.p(winSize.width - 80, winSize.height - 80),
-      cc.p(80, winSize.height - 80),
-      cc.p(80, 80),
-      cc.p(winSize.width / 2, winSize.height / 2)
+      new cc.Point(0, 0),
+      new cc.Point(80, 80),
+      new cc.Point(winSize.width - 80, 80),
+      new cc.Point(winSize.width - 80, winSize.height - 80),
+      new cc.Point(80, winSize.height - 80),
+      new cc.Point(80, 80),
+      new cc.Point(winSize.width / 2, winSize.height / 2)
     ];
 
     var action1 = cc.catmullRomBy(3, array);
@@ -2067,11 +2067,11 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
     // The initial position will be the 1st point of the Catmull Rom path
     //
     var array2 = [
-      cc.p(winSize.width / 2, 30),
-      cc.p(winSize.width - 80, 30),
-      cc.p(winSize.width - 80, winSize.height - 80),
-      cc.p(winSize.width / 2, winSize.height - 80),
-      cc.p(winSize.width / 2, 30)
+      new cc.Point(winSize.width / 2, 30),
+      new cc.Point(winSize.width - 80, 30),
+      new cc.Point(winSize.width - 80, winSize.height - 80),
+      new cc.Point(winSize.width / 2, winSize.height - 80),
+      new cc.Point(winSize.width / 2, 30)
     ];
 
     var action2 = cc.catmullRomTo(3, array2);
@@ -2100,7 +2100,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
     this.scheduleOnce(this.checkControl3, (3 / 4) * 2);
   }
   checkControl1(dt) {
-    this.control1 = cc.p(this._kathia.x, this._kathia.y);
+    this.control1 = new cc.Point(this._kathia.x, this._kathia.y);
   }
   verifyControl1(dt) {
     var x = Math.abs(winSize.width / 2 - this.control1.x);
@@ -2109,7 +2109,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl2(dt) {
-    this.control2 = cc.p(this._kathia.x, this._kathia.y);
+    this.control2 = new cc.Point(this._kathia.x, this._kathia.y);
   }
   verifyControl2(dt) {
     var x = Math.abs(winSize.width - 80 - this.control2.x);
@@ -2118,7 +2118,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl3(dt) {
-    this.control3 = cc.p(this._kathia.x, this._kathia.y);
+    this.control3 = new cc.Point(this._kathia.x, this._kathia.y);
   }
   verifyControl3(dt) {
     var x = Math.abs(winSize.width - 80 - this.control3.x);
@@ -2137,7 +2137,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
     ret.push(this.verifyControl3());
-    ret.push(cc.p(this._kathia.x, this._kathia.y));
+    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
 
     return JSON.stringify(ret);
   }
@@ -2161,7 +2161,7 @@ var ActionTargeted = class ActionTargeted extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var jump1 = cc.jumpBy(2, cc.p(0, 0), 100, 3);
+    var jump1 = cc.jumpBy(2, new cc.Point(0, 0), 100, 3);
     var jump2 = jump1.clone();
     var rot1 = cc.rotateBy(1, 360);
     var rot2 = rot1.clone();
@@ -2196,7 +2196,7 @@ var ActionTargetedCopy = class ActionTargetedCopy extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var jump1 = cc.jumpBy(2, cc.p(0, 0), 100, 3);
+    var jump1 = cc.jumpBy(2, new cc.Point(0, 0), 100, 3);
     var jump2 = jump1.clone();
 
     var t1 = cc.targetedAction(this._kathia, jump2);
@@ -2236,7 +2236,7 @@ var ActionStackableMove = class ActionStackableMove extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = cc.moveBy(0.2, cc.p(0, 50));
+    var move = cc.moveBy(0.2, new cc.Point(0, 50));
     var move_back = move.reverse();
     var delay = cc.delayTime(0.25);
     var move_seq = cc.sequence(move, move_back);
@@ -2244,7 +2244,7 @@ var ActionStackableMove = class ActionStackableMove extends ActionsDemo {
     this._grossini.runAction(move_rep);
 
     // move
-    var action = cc.moveBy(2, cc.p(winSize.width - 80, 0));
+    var action = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
     var back = action.reverse();
     var seq = cc.sequence(action, back);
     var repeat = seq.repeatForever();
@@ -2296,14 +2296,14 @@ var ActionStackableJump = class ActionStackableJump extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = cc.moveBy(0.05, cc.p(8, 8));
+    var move = cc.moveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 
     // jump
-    var action = cc.jumpBy(2, cc.p(winSize.width - 80, 0), 90, 5);
+    var action = cc.jumpBy(2, new cc.Point(winSize.width - 80, 0), 90, 5);
     var back = action.reverse();
     var seq = cc.sequence(action, back);
     var repeat = seq.repeatForever();
@@ -2334,7 +2334,7 @@ var ActionStackableBezier = class ActionStackableBezier extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = cc.moveBy(0.05, cc.p(8, 8));
+    var move = cc.moveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
@@ -2342,9 +2342,9 @@ var ActionStackableBezier = class ActionStackableBezier extends ActionsDemo {
 
     // Bezier
     var controlPoints = [
-      cc.p(0, winSize.height / 2),
-      cc.p(winSize.width - 80, -winSize.height / 2),
-      cc.p(winSize.width - 80, 100)
+      new cc.Point(0, winSize.height / 2),
+      new cc.Point(winSize.width - 80, -winSize.height / 2),
+      new cc.Point(winSize.width - 80, 100)
     ];
 
     var bezierForward = cc.bezierBy(3, controlPoints);
@@ -2378,7 +2378,7 @@ var ActionStackableCatmullRom = class ActionStackableCatmullRom extends ActionsD
     this._grossini.y = 40;
 
     // shake
-    var move = cc.moveBy(0.05, cc.p(8, 8));
+    var move = cc.moveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
@@ -2386,13 +2386,13 @@ var ActionStackableCatmullRom = class ActionStackableCatmullRom extends ActionsD
 
     // CatmullRom
     var array = [
-      cc.p(0, 0),
-      cc.p(80, 80),
-      cc.p(winSize.width - 80, 80),
-      cc.p(winSize.width - 80, winSize.height - 80),
-      cc.p(80, winSize.height - 80),
-      cc.p(80, 80),
-      cc.p(winSize.width / 2, winSize.height / 2)
+      new cc.Point(0, 0),
+      new cc.Point(80, 80),
+      new cc.Point(winSize.width - 80, 80),
+      new cc.Point(winSize.width - 80, winSize.height - 80),
+      new cc.Point(80, winSize.height - 80),
+      new cc.Point(80, 80),
+      new cc.Point(winSize.width / 2, winSize.height / 2)
     ];
 
     var action1 = cc.catmullRomBy(6, array);
@@ -2426,7 +2426,7 @@ var ActionStackableCardinalSpline = class ActionStackableCardinalSpline extends 
     this._grossini.y = 40;
 
     // shake
-    var move = cc.moveBy(0.05, cc.p(8, 8));
+    var move = cc.moveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
@@ -2434,13 +2434,13 @@ var ActionStackableCardinalSpline = class ActionStackableCardinalSpline extends 
 
     // CardinalSpline
     var array = [
-      cc.p(0, 0),
-      cc.p(80, 80),
-      cc.p(winSize.width - 80, 80),
-      cc.p(winSize.width - 80, winSize.height - 80),
-      cc.p(80, winSize.height - 80),
-      cc.p(80, 80),
-      cc.p(winSize.width / 2, winSize.height / 2)
+      new cc.Point(0, 0),
+      new cc.Point(80, 80),
+      new cc.Point(winSize.width - 80, 80),
+      new cc.Point(winSize.width - 80, winSize.height - 80),
+      new cc.Point(80, winSize.height - 80),
+      new cc.Point(80, 80),
+      new cc.Point(winSize.width / 2, winSize.height / 2)
     ];
 
     var action1 = cc.cardinalSplineBy(6, array, 0.9);
@@ -2573,14 +2573,14 @@ var Issue1305_2 = class Issue1305_2 extends ActionsDemo {
     spr.y = 200;
     this.addChild(spr);
 
-    var act1 = cc.moveBy(2, cc.p(0, 100));
+    var act1 = cc.moveBy(2, new cc.Point(0, 100));
 
     var act2 = cc.callFunc(this.onLog1);
-    var act3 = cc.moveBy(2, cc.p(0, -100));
+    var act3 = cc.moveBy(2, new cc.Point(0, -100));
     var act4 = cc.callFunc(this.onLog2, this);
-    var act5 = cc.moveBy(2, cc.p(100, -100));
+    var act5 = cc.moveBy(2, new cc.Point(100, -100));
     var act6 = cc.callFunc(this.onLog3.bind(this));
-    var act7 = cc.moveBy(2, cc.p(-100, 0));
+    var act7 = cc.moveBy(2, new cc.Point(-100, 0));
     var act8 = cc.callFunc(this.onLog4, this);
 
     var actF = cc.sequence(act1, act2, act3, act4, act5, act6, act7, act8);
@@ -2626,7 +2626,7 @@ var Issue1288 = class Issue1288 extends ActionsDemo {
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = cc.moveBy(0.5, cc.p(100, 0));
+    var act1 = cc.moveBy(0.5, new cc.Point(100, 0));
     var act2 = act1.reverse();
     var act3 = cc.sequence(act1, act2);
     var act4 = act3.repeat(2);
@@ -2659,7 +2659,7 @@ var Issue1288_2 = class Issue1288_2 extends ActionsDemo {
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = cc.moveBy(0.5, cc.p(100, 0));
+    var act1 = cc.moveBy(0.5, new cc.Point(100, 0));
     spr.runAction(act1.repeat(1));
     //----end42----
   }
@@ -2835,7 +2835,7 @@ var SequenceRepeatTest = class SequenceRepeatTest extends ActionsDemo {
       cc.repeat(cc.sequence(cc.blink(2, 3), cc.delayTime(2)), 3)
     );
 
-    var move = cc.moveBy(1, cc.p(50, 0));
+    var move = cc.moveBy(1, new cc.Point(50, 0));
     var move_back = move.reverse();
     var move_seq = cc.sequence(
       move,
@@ -2916,13 +2916,13 @@ var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
     );
     var buttonTemp = new cc.Menu(label1, label2);
     buttonTemp.alignItemsVerticallyWithPadding(10);
-    buttonTemp.setPosition(cc.p(100, cc.winSize.height / 2 + 100));
+    buttonTemp.setPosition(new cc.Point(100, cc.winSize.height / 2 + 100));
     this.addChild(buttonTemp);
 
     this.createActionInterval();
   }
   initActionProperty() {
-    this._spritePos = cc.p(25, 50);
+    this._spritePos = new cc.Point(25, 50);
     this._layer.removeAllChildren();
   }
   createActionInstant() {
@@ -2972,21 +2972,21 @@ var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
      * group 1
      */
     var spriteTemp = this.addandCreateSpriteTemp("cc.MoveBy");
-    var move = new CustomMoveBy(5, cc.p(50, 0));
+    var move = new CustomMoveBy(5, new cc.Point(50, 0));
     spriteTemp.runAction(move);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.MoveTo");
     var customMoveTo = new (createCustomAction(cc.MoveTo))(
       5,
-      cc.p(spriteTemp.getPosition().x + 50, spriteTemp.getPosition().y)
+      new cc.Point(spriteTemp.getPosition().x + 50, spriteTemp.getPosition().y)
     );
     spriteTemp.runAction(customMoveTo);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.sequence");
     var moveSeq = cc.sequence(
-      new (createCustomAction(cc.MoveBy))(5, cc.p(50, 0)),
+      new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
       cc.delayTime(1),
-      new (createCustomAction(cc.MoveBy))(5, cc.p(50, 0)),
+      new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
       cc.delayTime(1)
     );
     spriteTemp.runAction(moveSeq);
@@ -2995,7 +2995,7 @@ var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
      */
     spriteTemp = this.addandCreateSpriteTemp("cc.repeat");
     var moveRepeat = cc.repeat(
-      new (createCustomAction(cc.MoveBy))(5, cc.p(50, 0)),
+      new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
       2
     );
     spriteTemp.runAction(moveRepeat);
@@ -3003,15 +3003,15 @@ var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("cc.repeatForever");
     var moveRepeatForever = cc.repeatForever(
       cc.sequence(
-        new (createCustomAction(cc.MoveBy))(5, cc.p(50, 0)),
-        new (createCustomAction(cc.MoveBy))(5, cc.p(-50, 0))
+        new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
+        new (createCustomAction(cc.MoveBy))(5, new cc.Point(-50, 0))
       )
     );
     spriteTemp.runAction(moveRepeatForever);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.spawn");
     var moveRoationSpawn = cc.spawn(
-      new (createCustomAction(cc.MoveBy))(5, cc.p(50, 0)),
+      new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
       new (createCustomAction(cc.RotateBy))(5, 360)
     );
     spriteTemp.runAction(moveRoationSpawn);
@@ -3062,17 +3062,17 @@ var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("cc.BezierBy");
     var bezierBy = new (createCustomAction(cc.BezierBy))(5, [
       spriteTemp.getPosition(),
-      cc.p(0, spriteTemp.getPosition().y),
-      cc.p(cc.winSize.x, spriteTemp.getPosition().y),
+      new cc.Point(0, spriteTemp.getPosition().y),
+      new cc.Point(cc.winSize.x, spriteTemp.getPosition().y),
       spriteTemp.getPosition()
     ]);
     spriteTemp.runAction(bezierBy);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.BezierTo");
     var bezierTo = new (createCustomAction(cc.BezierTo))(5, [
-      cc.p(0, cc.winSize.height / 2),
-      cc.p(300, -cc.winSize.height / 2),
-      cc.p(300, 100)
+      new cc.Point(0, cc.winSize.height / 2),
+      new cc.Point(300, -cc.winSize.height / 2),
+      new cc.Point(300, 100)
     ]);
     spriteTemp.runAction(bezierTo);
 
@@ -3174,7 +3174,7 @@ var ActionIssue13605 = class ActionIssue13605 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var move = new CustomMoveBy(2, cc.p(50, 0));
+    var move = new CustomMoveBy(2, new cc.Point(50, 0));
     var move_back = move.reverse();
     var move_seq = cc.sequence(
       move,

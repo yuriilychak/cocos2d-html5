@@ -144,7 +144,7 @@ import {
 // ======================================================================
 // Cocoa — Geometry & Transforms
 // ======================================================================
-import { Point, p, pointEqualToPoint } from "./cocoa/geometry/point";
+import { Point, pointEqualToPoint } from "./cocoa/geometry/point";
 import { Size, size, sizeEqualToSize } from "./cocoa/geometry/size";
 import {
   Rect,
@@ -186,48 +186,7 @@ import {
 // ======================================================================
 // Support
 // ======================================================================
-import {
-  POINT_EPSILON,
-  pNeg,
-  pAdd,
-  pSub,
-  pMult,
-  pMidpoint,
-  pDot,
-  pCross,
-  pPerp,
-  pRPerp,
-  pProject,
-  pRotate,
-  pUnrotate,
-  pLengthSQ,
-  pDistanceSQ,
-  pLength,
-  pDistance,
-  pNormalize,
-  pForAngle,
-  pToAngle,
-  clampf,
-  pClamp,
-  pFromSize,
-  pCompOp,
-  pLerp,
-  pFuzzyEqual,
-  pCompMult,
-  pAngleSigned,
-  pAngle,
-  pRotateByAngle,
-  pLineIntersect,
-  pSegmentIntersect,
-  pIntersectPoint,
-  pSameAs,
-  pZeroIn,
-  pIn,
-  pMultIn,
-  pSubIn,
-  pAddIn,
-  pNormalizeIn
-} from "./support/point-extension";
+
 import {
   vertexLineToPolygon,
   vertexLineIntersect,
@@ -401,11 +360,7 @@ import {
 // Director, Scheduler, ActionManager
 // ======================================================================
 import { Configuration } from "./configuration";
-import {
-  Director,
-  DisplayLinkDirector,
-  defaultFPS
-} from "./director/director";
+import { Director, DisplayLinkDirector, defaultFPS } from "./director/director";
 import { DirectorDelegate } from "./director/director-webgl";
 import { Scheduler } from "./scheduler";
 import { PI2, DrawingPrimitiveCanvas } from "./drawing-primitives-canvas";
@@ -658,7 +613,6 @@ cc.DENSITYDPI_LOW = DENSITYDPI_LOW;
 
 // Cocoa — Geometry
 cc.Point = Point;
-cc.p = p;
 cc.pointEqualToPoint = pointEqualToPoint;
 cc.Size = Size;
 cc.size = size;
@@ -699,46 +653,6 @@ cc.affineTransformInvert = affineTransformInvert;
 cc.affineTransformInvertOut = affineTransformInvertOut;
 
 // Support
-cc.POINT_EPSILON = POINT_EPSILON;
-cc.pNeg = pNeg;
-cc.pAdd = pAdd;
-cc.pSub = pSub;
-cc.pMult = pMult;
-cc.pMidpoint = pMidpoint;
-cc.pDot = pDot;
-cc.pCross = pCross;
-cc.pPerp = pPerp;
-cc.pRPerp = pRPerp;
-cc.pProject = pProject;
-cc.pRotate = pRotate;
-cc.pUnrotate = pUnrotate;
-cc.pLengthSQ = pLengthSQ;
-cc.pDistanceSQ = pDistanceSQ;
-cc.pLength = pLength;
-cc.pDistance = pDistance;
-cc.pNormalize = pNormalize;
-cc.pForAngle = pForAngle;
-cc.pToAngle = pToAngle;
-cc.clampf = clampf;
-cc.pClamp = pClamp;
-cc.pFromSize = pFromSize;
-cc.pCompOp = pCompOp;
-cc.pLerp = pLerp;
-cc.pFuzzyEqual = pFuzzyEqual;
-cc.pCompMult = pCompMult;
-cc.pAngleSigned = pAngleSigned;
-cc.pAngle = pAngle;
-cc.pRotateByAngle = pRotateByAngle;
-cc.pLineIntersect = pLineIntersect;
-cc.pSegmentIntersect = pSegmentIntersect;
-cc.pIntersectPoint = pIntersectPoint;
-cc.pSameAs = pSameAs;
-cc.pZeroIn = pZeroIn;
-cc.pIn = pIn;
-cc.pMultIn = pMultIn;
-cc.pSubIn = pSubIn;
-cc.pAddIn = pAddIn;
-cc.pNormalizeIn = pNormalizeIn;
 cc.vertexLineToPolygon = vertexLineToPolygon;
 cc.vertexLineIntersect = vertexLineIntersect;
 cc.vertexListIsClockwise = vertexListIsClockwise;

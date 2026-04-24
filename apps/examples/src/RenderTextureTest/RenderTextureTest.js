@@ -125,7 +125,7 @@ var RenderTextureSave = class RenderTextureSave extends RenderTextureBaseLayer {
 
         this._target = target;
 
-        this._lastLocation = cc.p(winSize.width / 2, winSize.height / 2);
+        this._lastLocation = new cc.Point(winSize.width / 2, winSize.height / 2);
     }
 
     onExit() {
@@ -153,7 +153,7 @@ var RenderTextureSave = class RenderTextureSave extends RenderTextureBaseLayer {
     }
 
     drawInLocation(location) {
-        var distance = cc.pDistance(location, this._lastLocation);
+        var distance = cc.Point.distance(location, this._lastLocation);
 
         if (distance > 1) {
             var locLastLocation = this._lastLocation, i;

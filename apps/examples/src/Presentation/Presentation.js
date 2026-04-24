@@ -25,7 +25,7 @@
 
 
 var presentationSceneIdx = -1;
-var centerPos = cc.p(0,0); // will be updated later
+var centerPos = new cc.Point(0,0); // will be updated later
 var images_path = 'Presentation/';
 
 //------------------------------------------------------------------
@@ -688,7 +688,7 @@ var ThanksPage = class ThanksPage extends PresentationBaseLayer {
 var PresentationScene = class PresentationScene extends TestScene {
     runThisTest() {
         presentationSceneIdx = -1;
-        centerPos = cc.p(winSize.width/2, winSize.height/2);
+        centerPos = new cc.Point(winSize.width/2, winSize.height/2);
         var layer = nextPresentationSlide();
         this.addChild(layer);
         director.runScene(this);

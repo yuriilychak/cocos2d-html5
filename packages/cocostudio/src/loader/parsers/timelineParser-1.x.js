@@ -80,7 +80,7 @@
         var visible = options["visible"] != null ? options["visible"] : true;
 
         if (x != 0 || y != 0)
-            node.setPosition(cc.p(x, y));
+            node.setPosition(new cc.Point(x, y));
         if (scalex != 1)
             node.setScaleX(scalex);
         if (scaley != 1)
@@ -96,7 +96,7 @@
         if (skewy != 0)
             node.setSkewY(skewy);
         if (anchorx != 0.5 || anchory != 0.5)
-            node.setAnchorPoint(cc.p(anchorx, anchory));
+            node.setAnchorPoint(new cc.Point(anchorx, anchory));
         if (width != 0 || height != 0)
             node.setContentSize(cc.size(width, height));
         if (zorder != 0)
@@ -144,11 +144,11 @@
                             if (child.getPositionType() === ccui.Widget.POSITION_PERCENT) {
                                 var position = child.getPositionPercent();
                                 var anchor = widget.getAnchorPoint();
-                                child.setPositionPercent(cc.p(position.x + anchor.x, position.y + anchor.y));
+                                child.setPositionPercent(new cc.Point(position.x + anchor.x, position.y + anchor.y));
                             }
                             //To make up for the studio positioning error problem
                             var AnchorPointIn = widget.getAnchorPointInPoints();
-                            child.setPosition(cc.p(child.getPositionX() + AnchorPointIn.x, child.getPositionY() + AnchorPointIn.y));
+                            child.setPosition(new cc.Point(child.getPositionX() + AnchorPointIn.x, child.getPositionY() + AnchorPointIn.y));
                         }
                         widget.addChild(child);
                     }

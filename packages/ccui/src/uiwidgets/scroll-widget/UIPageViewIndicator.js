@@ -118,10 +118,10 @@ ccui.PageViewIndicator = class PageViewIndicator extends ccui.ProtectedNode {
         for (var i = 0; i < this._indexNodes.length; ++i) {
             var position;
             if (horizontal) {
-                position = cc.p(posValue, indexNodeSize.height / 2.0);
+                position = new cc.Point(posValue, indexNodeSize.height / 2.0);
             }
             else {
-                position = cc.p(indexNodeSize.width / 2.0, -posValue);
+                position = new cc.Point(indexNodeSize.width / 2.0, -posValue);
             }
             this._indexNodes[i].setPosition(position);
             posValue += sizeValue + this._spaceBetweenIndexNodes;

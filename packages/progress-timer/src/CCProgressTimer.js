@@ -34,10 +34,10 @@
  *                                          If you're using radials type then the midpoint changes the center point<br/>
  *                                          If you're using bar type the the midpoint changes the bar growth<br/>
  *                                              it expands from the center but clamps to the sprites edge so:<br/>
- *                                              you want a left to right then set the midpoint all the way to cc.p(0,y)<br/>
- *                                              you want a right to left then set the midpoint all the way to cc.p(1,y)<br/>
- *                                              you want a bottom to top then set the midpoint all the way to cc.p(x,0)<br/>
- *                                              you want a top to bottom then set the midpoint all the way to cc.p(x,1)</p>
+ *                                              you want a left to right then set the midpoint all the way to new cc.Point(0,y)<br/>
+ *                                              you want a right to left then set the midpoint all the way to new cc.Point(1,y)<br/>
+ *                                              you want a bottom to top then set the midpoint all the way to new cc.Point(x,0)<br/>
+ *                                              you want a top to bottom then set the midpoint all the way to new cc.Point(x,1)</p>
  * @property {cc.Point}     barChangeRate   - This allows the bar type to move the component at a specific rate.
  * @property {enum}         type            - Type of the progress timer: cc.ProgressTimer.TYPE_RADIAL|cc.ProgressTimer.TYPE_BAR.
  * @property {Number}       percentage      - Percentage to change progress, from 0 to 100.
@@ -65,8 +65,8 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
 
         this._type = cc.ProgressTimer.TYPE_RADIAL;
         this._percentage = 0.0;
-        this._midPoint = cc.p(0, 0);
-        this._barChangeRate = cc.p(0, 0);
+        this._midPoint = new cc.Point(0, 0);
+        this._barChangeRate = new cc.Point(0, 0);
         this._reverseDirection = false;
         this._sprite = null;
 
@@ -107,14 +107,14 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
      *    If you're using radials type then the midpoint changes the center point
      *    If you're using bar type the the midpoint changes the bar growth
      *        it expands from the center but clamps to the sprites edge so:
-     *        you want a left to right then set the midpoint all the way to cc.p(0,y)
-     *        you want a right to left then set the midpoint all the way to cc.p(1,y)
-     *        you want a bottom to top then set the midpoint all the way to cc.p(x,0)
-     *        you want a top to bottom then set the midpoint all the way to cc.p(x,1)
+     *        you want a left to right then set the midpoint all the way to new cc.Point(0,y)
+     *        you want a right to left then set the midpoint all the way to new cc.Point(1,y)
+     *        you want a bottom to top then set the midpoint all the way to new cc.Point(x,0)
+     *        you want a top to bottom then set the midpoint all the way to new cc.Point(x,1)
      *  @return {cc.Point}
      */
     getMidpoint() {
-        return cc.p(this._midPoint.x, this._midPoint.y);
+        return new cc.Point(this._midPoint.x, this._midPoint.y);
     }
 
     /**
@@ -122,25 +122,25 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
      * @param {cc.Point} mpoint
      */
     setMidpoint(mpoint) {
-        this._midPoint = cc.pClamp(mpoint, cc.p(0, 0), cc.p(1, 1));
+        this._midPoint = cc.Point.clamp(mpoint, new cc.Point(0, 0), new cc.Point(1, 1));
     }
 
     /**
      *    This allows the bar type to move the component at a specific rate
      *    Set the component to 0 to make sure it stays at 100%.
      *    For example you want a left to right bar but not have the height stay 100%
-     *    Set the rate to be cc.p(0,1); and set the midpoint to = cc.p(0,.5f);
+     *    Set the rate to be new cc.Point(0,1); and set the midpoint to = new cc.Point(0,.5f);
      *  @return {cc.Point}
      */
     getBarChangeRate() {
-        return cc.p(this._barChangeRate.x, this._barChangeRate.y);
+        return new cc.Point(this._barChangeRate.x, this._barChangeRate.y);
     }
 
     /**
      * @param {cc.Point} barChangeRate
      */
     setBarChangeRate(barChangeRate) {
-        this._barChangeRate = cc.pClamp(barChangeRate, cc.p(0, 0), cc.p(1, 1));
+        this._barChangeRate = cc.Point.clamp(barChangeRate, new cc.Point(0, 0), new cc.Point(1, 1));
     }
 
     /**
@@ -173,7 +173,7 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
      */
     setPercentage(percentage) {
         if (this._percentage !== percentage) {
-            this._percentage = cc.clampf(percentage, 0, 100);
+            this._percentage = cc.Point.clampf(percentage, 0, 100);
             this._renderCmd._updateProgress();
         }
     }
@@ -303,8 +303,8 @@ cc.ProgressTimer = class ProgressTimer extends cc.Node {
 
         this._type = cc.ProgressTimer.TYPE_RADIAL;
         this._reverseDirection = false;
-        this.midPoint = cc.p(0.5, 0.5);
-        this.barChangeRate = cc.p(1, 1);
+        this.midPoint = new cc.Point(0.5, 0.5);
+        this.barChangeRate = new cc.Point(1, 1);
         this.setSprite(sprite);
         this._renderCmd.resetVertexData();
         return true;

@@ -110,17 +110,17 @@ cc.ControlColourPicker = class ControlColourPicker extends cc.Control {
             this._hsv = new cc.HSV(0, 0, 0);
 
             // Add image
-            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, cc.p(0,0), cc.p(0.5, 0.5));
+            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, new cc.Point(0,0), new cc.Point(0.5, 0.5));
 
-            var backgroundPointZero = cc.pSub(this._background.getPosition(),
-                cc.p(this._background.getContentSize().width / 2, this._background.getContentSize().height / 2));
+            var backgroundPointZero = cc.Point.sub(this._background.getPosition(),
+                new cc.Point(this._background.getContentSize().width / 2, this._background.getContentSize().height / 2));
 
             // Setup panels . currently hard-coded...
             var hueShift = 8;
             var colourShift = 28;
 
-            this._huePicker = new cc.ControlHuePicker(spriteSheet, cc.p(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
-            this._colourPicker = new cc.ControlSaturationBrightnessPicker(spriteSheet, cc.p(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
+            this._huePicker = new cc.ControlHuePicker(spriteSheet, new cc.Point(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
+            this._colourPicker = new cc.ControlSaturationBrightnessPicker(spriteSheet, new cc.Point(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
 
             // Setup events
             this._huePicker.addTargetWithActionForControlEvents(this, this.hueSliderValueChanged, cc.CONTROL_EVENT_VALUECHANGED);

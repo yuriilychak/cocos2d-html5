@@ -435,7 +435,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
 
     _getHowMuchOutOfBoundary(addition) {
         if (addition === undefined)
-            addition = cc.p(0, 0);
+            addition = new cc.Point(0, 0);
 
         if (!this._magneticAllowedOutOfBoundary || this._items.length === 0) {
             return super._getHowMuchOutOfBoundary(addition);
@@ -455,8 +455,8 @@ ccui.ListView = class ListView extends ccui.ScrollView {
 
         var lastItemIndex = this._items.length - 1;
         var contentSize = this.getContentSize();
-        var firstItemAdjustment = cc.p(0, 0);
-        var lastItemAdjustment = cc.p(0, 0);
+        var firstItemAdjustment = new cc.Point(0, 0);
+        var lastItemAdjustment = new cc.Point(0, 0);
 
         switch (this._magneticType) {
             case  ccui.ListView.MAGNETIC_CENTER:
@@ -486,7 +486,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
 
 
         // Calculate the actual amount
-        var outOfBoundaryAmount = cc.p(0, 0);
+        var outOfBoundaryAmount = new cc.Point(0, 0);
 
         if (this._innerContainer.getLeftBoundary() + addition.x > leftBoundary) {
             outOfBoundaryAmount.x = leftBoundary - (this._innerContainer.getLeftBoundary() + addition.x);
@@ -510,10 +510,10 @@ ccui.ListView = class ListView extends ccui.ScrollView {
     }
 
     _calculateItemPositionWithAnchor(item, itemAnchorPoint) {
-        var origin = cc.p(item.getLeftBoundary(), item.getBottomBoundary());
+        var origin = new cc.Point(item.getLeftBoundary(), item.getBottomBoundary());
         var size = item.getContentSize();
 
-        return cc.p(origin.x + size.width * itemAnchorPoint.x, origin.y + size.height * itemAnchorPoint.y);
+        return new cc.Point(origin.x + size.width * itemAnchorPoint.x, origin.y + size.height * itemAnchorPoint.y);
     }
 
     _findClosestItem(targetPosition, items, itemAnchorPoint, firstIndex, distanceFromFirst, lastIndex, distanceFromLast) {
@@ -533,7 +533,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
         // Binary search
         var midIndex = Math.floor((firstIndex + lastIndex) / 2);
         var itemPosition = this._calculateItemPositionWithAnchor(items[midIndex], itemAnchorPoint);
-        var distanceFromMid = cc.pLength(cc.pSub(targetPosition, itemPosition));
+        var distanceFromMid = cc.Point.length(cc.Point.sub(targetPosition, itemPosition));
 
         if (distanceFromFirst <= distanceFromLast) {
             // Left half
@@ -560,18 +560,18 @@ ccui.ListView = class ListView extends ccui.ScrollView {
         // Find the closest item through binary search
         var firstIndex = 0;
         var firstPosition = this._calculateItemPositionWithAnchor(this._items[firstIndex], itemAnchorPoint);
-        var distanceFromFirst = cc.pLength(cc.pSub(targetPosition, firstPosition));
+        var distanceFromFirst = cc.Point.length(cc.Point.sub(targetPosition, firstPosition));
 
         var lastIndex = this._items.length - 1;
         var lastPosition = this._calculateItemPositionWithAnchor(this._items[lastIndex], itemAnchorPoint);
-        var distanceFromLast = cc.pLength(cc.pSub(targetPosition, lastPosition));
+        var distanceFromLast = cc.Point.length(cc.Point.sub(targetPosition, lastPosition));
 
         return this._findClosestItem(targetPosition, this._items, itemAnchorPoint, firstIndex, distanceFromFirst, lastIndex, distanceFromLast);
     }
 
     /**
      * Query the closest item to a specific position in current view.<br/>
-     * For instance, to find the item in the center of view, call 'getClosestItemToPositionInCurrentView(cc.p(0.5, 0.5), cc.p(0.5, 0.5))'.
+     * For instance, to find the item in the center of view, call 'getClosestItemToPositionInCurrentView(new cc.Point(0.5, 0.5), new cc.Point(0.5, 0.5))'.
      *
      * @param {cc.Point} positionRatioInView Specifies the target position with ratio in list view's content size.
      * @param {cc.Point} itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
@@ -581,7 +581,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
     getClosestItemToPositionInCurrentView(positionRatioInView, itemAnchorPoint) {
         // Calculate the target position
         var contentSize = this.getContentSize();
-        var targetPosition = cc.pMult(this._innerContainer.getPosition(), -1);
+        var targetPosition = cc.Point.mult(this._innerContainer.getPosition(), -1);
         targetPosition.x += contentSize.width * positionRatioInView.x;
         targetPosition.y += contentSize.height * positionRatioInView.y;
 
@@ -593,7 +593,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
      * @returns {?ccui.Widget} A item instance.
      */
     getCenterItemInCurrentView() {
-        return this.getClosestItemToPositionInCurrentView(cc.p(0.5, 0.5), cc.p(0.5, 0.5));
+        return this.getClosestItemToPositionInCurrentView(new cc.Point(0.5, 0.5), new cc.Point(0.5, 0.5));
     }
 
     /**
@@ -602,7 +602,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
      */
     getLeftmostItemInCurrentView() {
         if (this._direction === ccui.ScrollView.DIR_HORIZONTAL) {
-            return this.getClosestItemToPositionInCurrentView(cc.p(0, 0.5), cc.p(0.5, 0.5));
+            return this.getClosestItemToPositionInCurrentView(new cc.Point(0, 0.5), new cc.Point(0.5, 0.5));
         }
 
         return null;
@@ -614,7 +614,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
      */
     getRightmostItemInCurrentView() {
         if (this._direction === ccui.ScrollView.DIR_HORIZONTAL) {
-            return this.getClosestItemToPositionInCurrentView(cc.p(1, 0.5), cc.p(0.5, 0.5));
+            return this.getClosestItemToPositionInCurrentView(new cc.Point(1, 0.5), new cc.Point(0.5, 0.5));
         }
 
         return null;
@@ -626,7 +626,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
      */
     getTopmostItemInCurrentView() {
         if (this._direction === ccui.ScrollView.DIR_VERTICAL) {
-            return this.getClosestItemToPositionInCurrentView(cc.p(0.5, 1), cc.p(0.5, 0.5));
+            return this.getClosestItemToPositionInCurrentView(new cc.Point(0.5, 1), new cc.Point(0.5, 0.5));
         }
 
         return null;
@@ -638,7 +638,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
      */
     getBottommostItemInCurrentView() {
         if (this._direction === ccui.ScrollView.DIR_VERTICAL) {
-            return this.getClosestItemToPositionInCurrentView(cc.p(0.5, 0), cc.p(0.5, 0.5));
+            return this.getClosestItemToPositionInCurrentView(new cc.Point(0.5, 0), new cc.Point(0.5, 0.5));
         }
 
         return null;
@@ -646,12 +646,12 @@ ccui.ListView = class ListView extends ccui.ScrollView {
 
     _calculateItemDestination(positionRatioInView, item, itemAnchorPoint) {
         var contentSize = this.getContentSize();
-        var positionInView = cc.p(0, 0);
+        var positionInView = new cc.Point(0, 0);
         positionInView.x += contentSize.width * positionRatioInView.x;
         positionInView.y += contentSize.height * positionRatioInView.y;
 
         var itemPosition = this._calculateItemPositionWithAnchor(item, itemAnchorPoint);
-        return cc.pMult(cc.pSub(itemPosition, positionInView), -1);
+        return cc.Point.mult(cc.Point.sub(itemPosition, positionInView), -1);
     }
 
     jumpToBottom() {
@@ -726,7 +726,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
         var destination = this._calculateItemDestination(positionRatioInView, item, itemAnchorPoint);
 
         if (!this.bounceEnabled) {
-            var delta = cc.pSub(destination, this._innerContainer.getPosition());
+            var delta = cc.Point.sub(destination, this._innerContainer.getPosition());
             var outOfBoundary = this._getHowMuchOutOfBoundary(delta);
             destination.x += outOfBoundary.x;
             destination.y += outOfBoundary.y;
@@ -919,13 +919,13 @@ ccui.ListView = class ListView extends ccui.ScrollView {
 
                 // Adjust the delta move amount according to the magnetic type
                 var magneticAnchorPoint = this._getAnchorPointByMagneticType(magType);
-                var magneticPosition = cc.pMult(this._innerContainer.getPosition(), -1);
+                var magneticPosition = cc.Point.mult(this._innerContainer.getPosition(), -1);
                 magneticPosition.x += this.width * magneticAnchorPoint.x;
                 magneticPosition.y += this.height * magneticAnchorPoint.y;
 
-                var pTargetItem = this.getClosestItemToPosition(cc.pSub(magneticPosition, adjustedDeltaMove), magneticAnchorPoint);
+                var pTargetItem = this.getClosestItemToPosition(cc.Point.sub(magneticPosition, adjustedDeltaMove), magneticAnchorPoint);
                 var itemPosition = this._calculateItemPositionWithAnchor(pTargetItem, magneticAnchorPoint);
-                adjustedDeltaMove = cc.pSub(magneticPosition, itemPosition);
+                adjustedDeltaMove = cc.Point.sub(magneticPosition, itemPosition);
             }
         }
         super._startAttenuatingAutoScroll(adjustedDeltaMove, initialVelocity);
@@ -934,22 +934,22 @@ ccui.ListView = class ListView extends ccui.ScrollView {
     _getAnchorPointByMagneticType(magneticType) {
         switch (magneticType) {
             case ccui.ListView.MAGNETIC_NONE:
-                return cc.p(0, 0);
+                return new cc.Point(0, 0);
             case ccui.ListView.MAGNETIC_BOTH_END:
-                return cc.p(0, 1);
+                return new cc.Point(0, 1);
             case ccui.ListView.MAGNETIC_CENTER:
-                return cc.p(0.5, 0.5);
+                return new cc.Point(0.5, 0.5);
             case ccui.ListView.MAGNETIC_LEFT:
-                return cc.p(0, 0.5);
+                return new cc.Point(0, 0.5);
             case ccui.ListView.MAGNETIC_RIGHT:
-                return cc.p(1, 0.5);
+                return new cc.Point(1, 0.5);
             case ccui.ListView.MAGNETIC_TOP:
-                return cc.p(0.5, 1);
+                return new cc.Point(0.5, 1);
             case ccui.ListView.MAGNETIC_BOTTOM:
-                return cc.p(0.5, 0);
+                return new cc.Point(0.5, 0);
         }
 
-        return cc.p(0, 0);
+        return new cc.Point(0, 0);
     }
 
     _startMagneticScroll() {
@@ -959,7 +959,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
 
         // Find the closest item
         var magneticAnchorPoint = this._getAnchorPointByMagneticType(this._magneticType);
-        var magneticPosition = cc.pMult(this._innerContainer.getPosition(), -1);
+        var magneticPosition = cc.Point.mult(this._innerContainer.getPosition(), -1);
         magneticPosition.x += this.width * magneticAnchorPoint.x;
         magneticPosition.y += this.height * magneticAnchorPoint.y;
 

@@ -44,7 +44,7 @@ cc.TMXObjectGroup = class TMXObjectGroup extends cc.NewClass {
         this._objects = null;
 
         this.groupName = "";
-        this._positionOffset = cc.p(0,0);
+        this._positionOffset = new cc.Point(0,0);
         this.properties = [];
         this._objects = [];
     }
@@ -54,7 +54,7 @@ cc.TMXObjectGroup = class TMXObjectGroup extends cc.NewClass {
      * @return {cc.Point}
      */
     getPositionOffset() {
-        return cc.p(this._positionOffset);
+        return new cc.Point(this._positionOffset);
     }
 
     /**

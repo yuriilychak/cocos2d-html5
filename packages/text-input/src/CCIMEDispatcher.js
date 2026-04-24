@@ -145,7 +145,7 @@ cc.IMEDispatcher = class IMEDispatcher extends cc.NewClass {
     constructor() {
         super();
         this.impl = new cc.IMEDispatcher.Impl();
-        this._lastClickPosition = cc.p(0, 0);
+        this._lastClickPosition = new cc.Point(0, 0);
     }
 
     init() {

@@ -123,8 +123,8 @@ cc.ControlHuePicker = class ControlHuePicker extends cc.Control {
     initWithTargetAndPos(target, pos) {
         if (super.init()) {
             // Add background and slider sprites
-            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, cc.p(0.0, 0.0));
-            this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, cc.p(0.5, 0.5));
+            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, new cc.Point(0.0, 0.0));
+            this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, new cc.Point(0.5, 0.5));
 
             this._slider.setPosition(pos.x, pos.y + this._background.getBoundingBox().height * 0.5);
             this._startPos = pos;

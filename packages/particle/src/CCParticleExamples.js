@@ -55,7 +55,7 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
 
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, 0));
+            this.setGravity(new cc.Point(0, 0));
 
             // Gravity Mode: radial acceleration
             this.setRadialAccel(0);
@@ -72,7 +72,7 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, 60);
-            this.setPosVar(cc.p(40, 20));
+            this.setPosVar(new cc.Point(40, 20));
 
             // life of particles
             this.setLife(3);
@@ -132,7 +132,7 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, -90));
+            this.setGravity(new cc.Point(0, -90));
 
             // Gravity Mode:  radial
             this.setRadialAccel(0);
@@ -210,7 +210,7 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, 0));
+            this.setGravity(new cc.Point(0, 0));
 
             // Gravity mode: radial acceleration
             this.setRadialAccel(0);
@@ -227,7 +227,7 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(cc.p(0,0));
+            this.setPosVar(new cc.Point(0,0));
 
             // life of particles
             this.setLife(1);
@@ -285,7 +285,7 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, 0));
+            this.setGravity(new cc.Point(0, 0));
 
             // Gravity Mode: speed of particles
             this.setSpeed(60);
@@ -306,7 +306,7 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(cc.p(0,0));
+            this.setPosVar(new cc.Point(0,0));
 
             // life of particles
             this.setLife(4);
@@ -364,7 +364,7 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, 0));
+            this.setGravity(new cc.Point(0, 0));
 
             // Gravity Mode: speed of particles
             this.setSpeed(80);
@@ -385,7 +385,7 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(cc.p(0,0));
+            this.setPosVar(new cc.Point(0,0));
 
             // life of particles
             this.setLife(4);
@@ -445,7 +445,7 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(-200, 200));
+            this.setGravity(new cc.Point(-200, 200));
 
             // Gravity Mode: speed of particles
             this.setSpeed(15);
@@ -466,7 +466,7 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(cc.p(0,0));
+            this.setPosVar(new cc.Point(0,0));
 
             // life of particles
             this.setLife(2);
@@ -526,7 +526,7 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, 0));
+            this.setGravity(new cc.Point(0, 0));
 
             // Gravity Mode: speed of particles
             this.setSpeed(150);
@@ -547,7 +547,7 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(cc.p(0,0));
+            this.setPosVar(new cc.Point(0,0));
 
             // life of particles
             this.setLife(12);
@@ -605,7 +605,7 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, 0));
+            this.setGravity(new cc.Point(0, 0));
 
             // Gravity Mode: speed of particles
             this.setSpeed(70);
@@ -626,7 +626,7 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(cc.p(0,0));
+            this.setPosVar(new cc.Point(0,0));
 
             // life of particles
             this.setLife(5.0);
@@ -686,7 +686,7 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, 0));
+            this.setGravity(new cc.Point(0, 0));
 
             // Gravity Mode: radial acceleration
             this.setRadialAccel(0);
@@ -703,7 +703,7 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, 0);
-            this.setPosVar(cc.p(20, 0));
+            this.setPosVar(new cc.Point(20, 0));
 
             // life of particles
             this.setLife(4);
@@ -763,7 +763,7 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(0, -1));
+            this.setGravity(new cc.Point(0, -1));
 
             // Gravity Mode: speed of particles
             this.setSpeed(5);
@@ -780,7 +780,7 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height + 10);
-            this.setPosVar(cc.p(winSize.width / 2, 0));
+            this.setPosVar(new cc.Point(winSize.width / 2, 0));
 
             // angle
             this.setAngle(-90);
@@ -844,7 +844,7 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(cc.p(10, -10));
+            this.setGravity(new cc.Point(10, -10));
 
             // Gravity Mode: radial
             this.setRadialAccel(0);
@@ -866,7 +866,7 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height);
-            this.setPosVar(cc.p(winSize.width / 2, 0));
+            this.setPosVar(new cc.Point(winSize.width / 2, 0));
 
             // life of particles
             this.setLife(4.5);

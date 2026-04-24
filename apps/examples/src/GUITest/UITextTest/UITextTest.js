@@ -34,7 +34,7 @@ var UITextTest = class UITextTest extends UIMainLayer {
 
             // Create the text
             var text = new ccui.Text("Text", "AmericanTypewriter", 30);
-            text.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + text.height / 4));
+            text.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + text.height / 4));
             this._mainNode.addChild(text);
 
             return true;
@@ -95,7 +95,7 @@ var UILabelTest_Effect = class UILabelTest_Effect extends UIMainLayer {
             // create the shadow only label
             var shadow_label = new ccui.Text();
 
-            shadow_label.enableShadow(cc.color.GRAY, cc.p(10, -10));
+            shadow_label.enableShadow(cc.color.GRAY, new cc.Point(10, -10));
             shadow_label.setString("Shadow");
             shadow_label.setPosition(widgetSize.width / 2, widgetSize.height / 2 + shadow_label.height);
 
@@ -152,7 +152,7 @@ var UITextTest_IgnoreContentSize = class UITextTest_IgnoreContentSize extends UI
             this._bottomDisplayLabel.setString("");
 
             var leftText = new ccui.Text("ignore content", "Marker Felt", 10);
-            leftText.setPosition(cc.p(widgetSize.width / 2 - 50,
+            leftText.setPosition(new cc.Point(widgetSize.width / 2 - 50,
                 widgetSize.height / 2));
             leftText.ignoreContentAdaptWithSize(false);
             leftText.setTextAreaSize(cc.size(60,60));
@@ -162,7 +162,7 @@ var UITextTest_IgnoreContentSize = class UITextTest_IgnoreContentSize extends UI
             this._mainNode.addChild(leftText);
 
             var rightText = new ccui.Text("ignore content", "Marker Felt", 10);
-            rightText.setPosition(cc.p(widgetSize.width / 2 + 50,
+            rightText.setPosition(new cc.Point(widgetSize.width / 2 + 50,
                 widgetSize.height / 2));
             rightText.setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
             //note: setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
@@ -176,7 +176,7 @@ var UITextTest_IgnoreContentSize = class UITextTest_IgnoreContentSize extends UI
                 leftText.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_RIGHT);
                 rightText.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_RIGHT);
             });
-            halighButton.setPosition(cc.p(widgetSize.width/2 - 50,
+            halighButton.setPosition(new cc.Point(widgetSize.width/2 - 50,
                     widgetSize.height/2 - 50));
             this._mainNode.addChild(halighButton);
 
