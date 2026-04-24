@@ -43,7 +43,7 @@ export class GridBase extends cc.NewClass {
     this._active = false;
     this._reuseGrid = 0;
     this._gridSize = null;
-    this._gridRect = new new cc.Rect();
+    this._gridRect = new cc.Rect();
     this._texture = null;
     this._step = new cc.Point(0, 0);
     this._grabber = null;
@@ -208,7 +208,7 @@ export class GridBase extends cc.NewClass {
     this._isTextureFlipped = flipped;
     if (rect === undefined || cc.Rect.equalToZero(rect)) {
       const size = this._texture.getContentSize();
-      rect = new new cc.Rect(0, 0, size.width, size.height);
+      rect = new cc.Rect(0, 0, size.width, size.height);
     }
 
     this._gridRect = rect;
