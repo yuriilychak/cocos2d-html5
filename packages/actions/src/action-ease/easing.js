@@ -103,7 +103,7 @@ export const _easeElasticOutObj = {
 
 export const _easeBounceInObj = {
   easing: function (dt) {
-    return 1 - cc._bounceTime(1 - dt);
+    return 1 - bounceTime(1 - dt);
   },
   reverse: function () {
     return _easeBounceOutObj;
@@ -112,7 +112,7 @@ export const _easeBounceInObj = {
 
 export const _easeBounceOutObj = {
   easing: function (dt) {
-    return cc._bounceTime(dt);
+    return bounceTime(dt);
   },
   reverse: function () {
     return _easeBounceInObj;
@@ -124,9 +124,9 @@ export const _easeBounceInOutObj = {
     var newT;
     if (time1 < 0.5) {
       time1 = time1 * 2;
-      newT = (1 - cc._bounceTime(1 - time1)) * 0.5;
+      newT = (1 - bounceTime(1 - time1)) * 0.5;
     } else {
-      newT = cc._bounceTime(time1 * 2 - 1) * 0.5 + 0.5;
+      newT = bounceTime(time1 * 2 - 1) * 0.5 + 0.5;
     }
     return newT;
   },

@@ -128,7 +128,7 @@ export default class Follow extends Action {
 
     this._boundaryFullyCovered = false;
 
-    const winSize = cc.director.getWinSize();
+    const winSize = cc.Director.getInstance().getWinSize();
     this._fullScreenSize = new cc.Point(winSize.width, winSize.height);
     this._halfScreenSize = cc.Point.mult(this._fullScreenSize, 0.5);
 
