@@ -149,7 +149,7 @@ var Sprite1 = class Sprite1 extends SpriteTestDemo {
         var idx = 0 | (Math.random() * 14);
         var x = (idx % 5) * 85;
         var y = (0 | (idx / 5)) * 121;
-        var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(x, y, 85, 121));
         this.addChild(sprite);
         sprite.x = p.x;
         sprite.y = p.y;
@@ -180,7 +180,7 @@ var Sprite1 = class Sprite1 extends SpriteTestDemo {
     //
     setupAutomation() {
         var fun = function () {
-            var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
+            var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 0, 85, 121));
             this.addChild(sprite, 999);
             sprite.x = winSize.width / 2;
             sprite.y = winSize.height / 2;
@@ -266,7 +266,7 @@ var SpriteBatchNode1 = class SpriteBatchNode1 extends SpriteTestDemo {
         var x = (idx % 5) * 85;
         var y = (0 | (idx / 5)) * 121;
 
-        var sprite = new cc.Sprite(batchNode.texture, cc.rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(batchNode.texture, new cc.Rect(x, y, 85, 121));
         batchNode.addChild(sprite);
 
         sprite.x = p.x;
@@ -300,7 +300,7 @@ var SpriteBatchNode1 = class SpriteBatchNode1 extends SpriteTestDemo {
     //
     setupAutomation() {
         var fun = function () {
-            var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
+            var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 0, 85, 121));
             this.addChild(sprite, 999);
             sprite.x = winSize.width / 2;
             sprite.y = winSize.height / 2;
@@ -354,15 +354,15 @@ var SpriteColorOpacity = class SpriteColorOpacity extends SpriteTestDemo {
 
 
         this.pixel4 = {"0":255, "1":204, "2":153, "3":255};
-        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 121, 85, 121));
-        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
-        var sprite3 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * 2, 121, 85, 121));
-        var sprite4 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * 3, 121, 85, 121));
+        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 121, 85, 121));
+        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
+        var sprite3 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 2, 121, 85, 121));
+        var sprite4 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 3, 121, 85, 121));
 
-        var sprite5 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 121, 85, 121));
-        var sprite6 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
-        var sprite7 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * 2, 121, 85, 121));
-        var sprite8 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * 3, 121, 85, 121));
+        var sprite5 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 121, 85, 121));
+        var sprite6 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
+        var sprite7 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 2, 121, 85, 121));
+        var sprite8 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 3, 121, 85, 121));
 
         sprite1.x = (winSize.width / 5);
 
@@ -488,15 +488,15 @@ var SpriteBatchNodeColorOpacity = class SpriteBatchNodeColorOpacity extends Spri
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        var sprite1 = new cc.Sprite(batch.texture, cc.rect(0, 121, 85, 121));
-        var sprite2 = new cc.Sprite(batch.texture, cc.rect(85, 121, 85, 121));
-        var sprite3 = new cc.Sprite(batch.texture, cc.rect(85 * 2, 121, 85, 121));
-        var sprite4 = new cc.Sprite(batch.texture, cc.rect(85 * 3, 121, 85, 121));
+        var sprite1 = new cc.Sprite(batch.texture, new cc.Rect(0, 121, 85, 121));
+        var sprite2 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
+        var sprite3 = new cc.Sprite(batch.texture, new cc.Rect(85 * 2, 121, 85, 121));
+        var sprite4 = new cc.Sprite(batch.texture, new cc.Rect(85 * 3, 121, 85, 121));
 
-        var sprite5 = new cc.Sprite(batch.texture, cc.rect(0, 121, 85, 121));
-        var sprite6 = new cc.Sprite(batch.texture, cc.rect(85, 121, 85, 121));
-        var sprite7 = new cc.Sprite(batch.texture, cc.rect(85 * 2, 121, 85, 121));
-        var sprite8 = new cc.Sprite(batch.texture, cc.rect(85 * 3, 121, 85, 121));
+        var sprite5 = new cc.Sprite(batch.texture, new cc.Rect(0, 121, 85, 121));
+        var sprite6 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
+        var sprite7 = new cc.Sprite(batch.texture, new cc.Rect(85 * 2, 121, 85, 121));
+        var sprite8 = new cc.Sprite(batch.texture, new cc.Rect(85 * 3, 121, 85, 121));
 
 
         sprite1.x = (winSize.width / 5) * 1;
@@ -605,20 +605,20 @@ var SpriteZOrder = class SpriteZOrder extends SpriteTestDemo {
         var sprite;
         var step = winSize.width / 11;
         for (var i = 0; i < 5; i++) {
-            sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * 0, 121 * 1, 85, 121));
+            sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 0, 121 * 1, 85, 121));
             sprite.x = (i + 1) * step;
             sprite.y = winSize.height / 2;
             this.addChild(sprite, i);
         }
 
         for (i = 5; i < 10; i++) {
-            sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * 1, 121 * 0, 85, 121));
+            sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 1, 121 * 0, 85, 121));
             sprite.x = (i + 1) * step;
             sprite.y = winSize.height / 2;
             this.addChild(sprite, 14 - i);
         }
 
-        sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * 3, 121 * 0, 85, 121));
+        sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 3, 121 * 0, 85, 121));
         this.addChild(sprite, -1, TAG_SPRITE1);
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2 - 20;
@@ -683,20 +683,20 @@ var SpriteBatchNodeZOrder = class SpriteBatchNodeZOrder extends SpriteTestDemo {
         var sprite;
         var step = winSize.width / 11;
         for (var i = 0; i < 5; i++) {
-            sprite = new cc.Sprite(batch.texture, cc.rect(85 * 0, 121 * 1, 85, 121));
+            sprite = new cc.Sprite(batch.texture, new cc.Rect(85 * 0, 121 * 1, 85, 121));
             sprite.x = (i + 1) * step;
             sprite.y = winSize.height / 2;
             batch.addChild(sprite, i);
         }
 
         for (i = 5; i < 10; i++) {
-            sprite = new cc.Sprite(batch.texture, cc.rect(85 * 1, 121 * 0, 85, 121));
+            sprite = new cc.Sprite(batch.texture, new cc.Rect(85 * 1, 121 * 0, 85, 121));
             sprite.x = (i + 1) * step;
             sprite.y = winSize.height / 2;
             batch.addChild(sprite, 14 - i);
         }
 
-        sprite = new cc.Sprite(batch.texture, cc.rect(85 * 3, 121 * 0, 85, 121));
+        sprite = new cc.Sprite(batch.texture, new cc.Rect(85 * 3, 121 * 0, 85, 121));
         batch.addChild(sprite, -1, TAG_SPRITE1);
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2 - 20;
@@ -762,7 +762,7 @@ var SpriteBatchNodeReorderIssue744 = class SpriteBatchNodeReorderIssue744 extend
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 15);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        var sprite = new cc.Sprite(batch.texture, cc.rect(0, 0, 85, 121));
+        var sprite = new cc.Sprite(batch.texture, new cc.Rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         batch.addChild(sprite, 3);
@@ -858,15 +858,15 @@ var SpriteBatchNodeReorderIssue766 = class SpriteBatchNodeReorderIssue766 extend
     }
     makeSpriteZ(aZ) {
         //----start17----makeSpriteZ
-        var sprite = new cc.Sprite(this._batchNode.texture, cc.rect(128, 0, 64, 64));
+        var sprite = new cc.Sprite(this._batchNode.texture, new cc.Rect(128, 0, 64, 64));
         this._batchNode.addChild(sprite, aZ + 1, 0);
 
         //children
-        var spriteShadow = new cc.Sprite(this._batchNode.texture, cc.rect(0, 0, 64, 64));
+        var spriteShadow = new cc.Sprite(this._batchNode.texture, new cc.Rect(0, 0, 64, 64));
         spriteShadow.opacity = 128;
         sprite.addChild(spriteShadow, aZ, 3);
 
-        var spriteTop = new cc.Sprite(this._batchNode.texture, cc.rect(64, 0, 64, 64));
+        var spriteTop = new cc.Sprite(this._batchNode.texture, new cc.Rect(64, 0, 64, 64));
         sprite.addChild(spriteTop, aZ + 2, 3);
 
         return sprite;
@@ -1043,7 +1043,7 @@ var SpriteAnchorPoint = class SpriteAnchorPoint extends SpriteTestDemo {
         for (var i = 0; i < 3; i++) {
             var rotate = cc.rotateBy(10, 360);
             var action = rotate.repeatForever();
-            var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * i, 121, 85, 121));
+            var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * i, 121, 85, 121));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -1122,7 +1122,7 @@ var SpriteBatchNodeAnchorPoint = class SpriteBatchNodeAnchorPoint extends Sprite
         for (var i = 0; i < 3; i++) {
             var rotate = cc.rotateBy(10, 360);
             var action = rotate.repeatForever();
-            var sprite = new cc.Sprite(batch.texture, cc.rect(85 * i, 121, 85, 121));
+            var sprite = new cc.Sprite(batch.texture, new cc.Rect(85 * i, 121, 85, 121));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -1215,7 +1215,7 @@ var Sprite6 = class Sprite6 extends SpriteTestDemo {
         var scale_forever = scale_seq.repeatForever();
 
         for (var i = 0; i < 3; i++) {
-            var sprite = new cc.Sprite(batch.texture, cc.rect(85 * i, 121, 85, 121));
+            var sprite = new cc.Sprite(batch.texture, new cc.Rect(85 * i, 121, 85, 121));
             switch (i) {
                 case 0:
                     sprite.x = winSize.width / 2 - 100;
@@ -1286,12 +1286,12 @@ var SpriteFlip = class SpriteFlip extends SpriteTestDemo {
 
 
         this.pixel4 = null;
-        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
+        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         this.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
+        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);
@@ -1368,12 +1368,12 @@ var SpriteBatchNodeFlip = class SpriteBatchNodeFlip extends SpriteTestDemo {
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 10);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        var sprite1 = new cc.Sprite(batch.texture, cc.rect(85, 121, 85, 121));
+        var sprite1 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         batch.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new cc.Sprite(batch.texture, cc.rect(85, 121, 85, 121));
+        var sprite2 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         batch.addChild(sprite2, 0, TAG_SPRITE2);
@@ -1433,12 +1433,12 @@ var SpriteAliased = class SpriteAliased extends SpriteTestDemo {
 
 
         this._subtitle = "You should see pixelated sprites";
-        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
+        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         this.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 121, 85, 121));
+        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);
@@ -1508,12 +1508,12 @@ var SpriteBatchNodeAliased = class SpriteBatchNodeAliased extends SpriteTestDemo
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 10);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        var sprite1 = new cc.Sprite(batch.texture, cc.rect(85, 121, 85, 121));
+        var sprite1 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         batch.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new cc.Sprite(batch.texture, cc.rect(85, 121, 85, 121));
+        var sprite2 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         batch.addChild(sprite2, 0, TAG_SPRITE2);
@@ -1632,7 +1632,7 @@ var SpriteNewTexture = class SpriteNewTexture extends SpriteTestDemo {
 
 
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-        var sprite = new cc.Sprite(this._texture1, cc.rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(this._texture1, new cc.Rect(x, y, 85, 121));
         node.addChild(sprite);
 
         sprite.x = p.x;
@@ -1693,7 +1693,7 @@ var SpriteNewTexture = class SpriteNewTexture extends SpriteTestDemo {
     }
     addTestSprite() {
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-        var sprite = new cc.Sprite(this._texture1, cc.rect(0, 0, 85, 121));
+        var sprite = new cc.Sprite(this._texture1, new cc.Rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         node.addChild(sprite);
@@ -1773,7 +1773,7 @@ var SpriteBatchNodeNewTexture = class SpriteBatchNodeNewTexture extends SpriteTe
         var x = (idx % 5) * 85;
         var y = (0 | (idx / 5)) * 121;
 
-        var sprite = new cc.Sprite(batch.texture, cc.rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(batch.texture, new cc.Rect(x, y, 85, 121));
         batch.addChild(sprite);
 
         sprite.x = p.x;
@@ -1818,7 +1818,7 @@ var SpriteBatchNodeNewTexture = class SpriteBatchNodeNewTexture extends SpriteTe
     }
     addTestSprite() {
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-        var sprite = new cc.Sprite(this._texture1, cc.rect(0, 0, 85, 121));
+        var sprite = new cc.Sprite(this._texture1, new cc.Rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         node.addChild(sprite);
@@ -3109,12 +3109,12 @@ var SpriteAnimationSplit = class SpriteAnimationSplit extends SpriteTestDemo {
         var texture = cc.textureCache.addImage(s_dragon_animation);
 
         // manually add frames to the frame cache
-        var frame0 = new cc.SpriteFrame(texture, cc.rect(132 * 0, 132 * 0, 132, 132));
-        var frame1 = new cc.SpriteFrame(texture, cc.rect(132 * 1, 132 * 0, 132, 132));
-        var frame2 = new cc.SpriteFrame(texture, cc.rect(132 * 2, 132 * 0, 132, 132));
-        var frame3 = new cc.SpriteFrame(texture, cc.rect(132 * 3, 132 * 0, 132, 132));
-        var frame4 = new cc.SpriteFrame(texture, cc.rect(132 * 0, 132 * 1, 132, 132));
-        var frame5 = new cc.SpriteFrame(texture, cc.rect(132 * 1, 132 * 1, 132, 132));
+        var frame0 = new cc.SpriteFrame(texture, new cc.Rect(132 * 0, 132 * 0, 132, 132));
+        var frame1 = new cc.SpriteFrame(texture, new cc.Rect(132 * 1, 132 * 0, 132, 132));
+        var frame2 = new cc.SpriteFrame(texture, new cc.Rect(132 * 2, 132 * 0, 132, 132));
+        var frame3 = new cc.SpriteFrame(texture, new cc.Rect(132 * 3, 132 * 0, 132, 132));
+        var frame4 = new cc.SpriteFrame(texture, new cc.Rect(132 * 0, 132 * 1, 132, 132));
+        var frame5 = new cc.SpriteFrame(texture, new cc.Rect(132 * 1, 132 * 1, 132, 132));
 
         //
         // Animation using Sprite BatchNode
@@ -4684,27 +4684,27 @@ var NodeSort = class NodeSort extends SpriteTestDemo {
         this._node = new cc.Node();
         this.addChild(this._node, 0, 0);
 
-        this._sprite1 = new cc.Sprite(s_piece, cc.rect(128, 0, 64, 64));
+        this._sprite1 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
         this._sprite1.x = 100;
         this._sprite1.y = 160;
         this._node.addChild(this._sprite1, -6, 1);
 
-        this._sprite2 = new cc.Sprite(s_piece, cc.rect(128, 0, 64, 64));
+        this._sprite2 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
         this._sprite2.x = 164;
         this._sprite2.y = 160;
         this._node.addChild(this._sprite2, -6, 2);
 
-        this._sprite4 = new cc.Sprite(s_piece, cc.rect(128, 0, 64, 64));
+        this._sprite4 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
         this._sprite4.x = 292;
         this._sprite4.y = 160;
         this._node.addChild(this._sprite4, -3, 4);
 
-        this._sprite3 = new cc.Sprite(s_piece, cc.rect(128, 0, 64, 64));
+        this._sprite3 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
         this._sprite3.x = 228;
         this._sprite3.y = 160;
         this._node.addChild(this._sprite3, -4, 3);
 
-        this._sprite5 = new cc.Sprite(s_piece, cc.rect(128, 0, 64, 64));
+        this._sprite5 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
         this._sprite5.x = 356;
         this._sprite5.y = 160;
         this._node.addChild(this._sprite5, -3, 5);
@@ -5023,7 +5023,7 @@ var DoubleSprite = class DoubleSprite extends cc.Sprite {
     }
 
     setContentSize(size) {
-        var newSize = cc.size(size.width, size.height);
+        var newSize = new cc.Size(size.width, size.height);
         // If Retina Display and Texture is in HD then scale the vertex rect
         if (cc.contentScaleFactor() == 2 && !this.HD) {
             newSize.width *= 2;
@@ -5277,9 +5277,9 @@ var SpriteBatchBug1217 = class SpriteBatchBug1217 extends SpriteTestDemo {
         this.pixel3 = {"0":0, "1":0, "2":51, "3":255};
         var bn = new cc.SpriteBatchNode(s_grossini_dance_atlas, 15);
 
-        var s1 = new cc.Sprite(bn.texture, cc.rect(0, 0, 57, 57));
-        var s2 = new cc.Sprite(bn.texture, cc.rect(0, 0, 57, 57));
-        var s3 = new cc.Sprite(bn.texture, cc.rect(0, 0, 57, 57));
+        var s1 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
+        var s2 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
+        var s3 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
 
         s1.color = cc.color(255, 0, 0);
         s2.color = cc.color(0, 255, 0);
@@ -5478,7 +5478,7 @@ var TextureRotatedSpriteFrame = class TextureRotatedSpriteFrame extends SpriteTe
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        block.setTextureRect(cc.rect(32, 32, 32, 32), true, cc.rect(32, 32, 32, 32));
+        block.setTextureRect(new cc.Rect(32, 32, 32, 32), true, new cc.Rect(32, 32, 32, 32));
 
         block.x = x;
 
@@ -5520,7 +5520,7 @@ var SpriteWithRepeatingTexture = class SpriteWithRepeatingTexture extends Sprite
         var x = winSize.width / 2;
         var y = (winSize.height / 2);
 
-        block.setTextureRect(cc.rect(0,0, 320,240));
+        block.setTextureRect(new cc.Rect(0,0, 320,240));
         block.setPosition(x, y);
         block.getTexture().setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);
         this.addChild(block);
@@ -5563,7 +5563,7 @@ var SpriteBlendFuncTest = class SpriteBlendFuncTest extends SpriteTestDemo {
             var info = new cc.LabelTTF("support is not complete on canvas", "Arial", 18);
             info.x = 680;
             info.y = 250;
-            info.setDimensions(cc.size(200, 200));
+            info.setDimensions(new cc.Size(200, 200));
             this.addChild(info);
         }
 

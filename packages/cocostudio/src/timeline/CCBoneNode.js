@@ -274,17 +274,17 @@ ccs.BoneNode = (function () {
                     continue;
 
                 if (first) {
-                    minx = cc.rectGetMinX(r);
-                    miny = cc.rectGetMinY(r);
-                    maxx = cc.rectGetMaxX(r);
-                    maxy = cc.rectGetMaxY(r);
+                    minx = cc.Rect.getMinX(r);
+                    miny = cc.Rect.getMinY(r);
+                    maxx = cc.Rect.getMaxX(r);
+                    maxy = cc.Rect.getMaxY(r);
 
                     first = false;
                 } else {
-                    minx = Math.min(cc.rectGetMinX(r), minx);
-                    miny = Math.min(cc.rectGetMinY(r), miny);
-                    maxx = Math.max(cc.rectGetMaxX(r), maxx);
-                    maxy = Math.max(cc.rectGetMaxY(r), maxy);
+                    minx = Math.min(cc.Rect.getMinX(r), minx);
+                    miny = Math.min(cc.Rect.getMinY(r), miny);
+                    maxx = Math.max(cc.Rect.getMaxX(r), maxx);
+                    maxy = Math.max(cc.Rect.getMaxY(r), maxy);
                 }
                 displayRect.setRect(minx, miny, maxx - minx, maxy - miny);
             }
@@ -293,7 +293,7 @@ ccs.BoneNode = (function () {
 
         getBoundingBox() {
             var boundingBox = this.getVisibleSkinsRect();
-            return cc.rectApplyAffineTransform(boundingBox, this.getNodeToParentAffineTransform());
+            return cc.AffineTransform.applyToRect(boundingBox, this.getNodeToParentAffineTransform());
         }
 
         batchBoneDrawToSkeleton(bone) {

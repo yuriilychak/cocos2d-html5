@@ -121,7 +121,7 @@ ccui.RichElementImage = class RichElementImage extends ccui.RichElement {
         this._textureType = 0;
         this._type = ccui.RichElement.IMAGE;
         this._filePath = filePath || "";
-        this._textureRect = cc.rect(0, 0, 0, 0);
+        this._textureRect = new cc.Rect(0, 0, 0, 0);
         this._textureType = 0;
     }
 

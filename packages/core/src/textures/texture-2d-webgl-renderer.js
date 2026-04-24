@@ -2,6 +2,9 @@ import { RendererConfig } from "../renderer/renderer-config";
 import { Size } from "../cocoa/geometry/size";
 import Game from "../boot/game";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import { glBindTexture2D } from "../shaders/CCGLStateCache";
+import ShaderCache from "../shaders/CCShaderCache";
+import { NextPOT } from "../platform/macro/utils";
 import {
   SHADER_POSITION_TEXTURE,
   VERTEX_ATTRIB_POSITION,
@@ -24,7 +27,8 @@ export default class WebGLTextureRenderer {
   initWithElement(element) {
     if (!element) return;
     var t = this._texture;
-    this._webTextureObj = RendererConfig.getInstance().renderContext.createTexture();
+    this._webTextureObj =
+      RendererConfig.getInstance().renderContext.createTexture();
     t._htmlElementObj = element;
     t._pixelsWide = t._contentSize.width = element.width;
     t._pixelsHigh = t._contentSize.height = element.height;
@@ -42,7 +46,7 @@ export default class WebGLTextureRenderer {
 
     var gl = RendererConfig.getInstance().renderContext;
 
-    cc.glBindTexture2D(t);
+    glBindTexture2D(t);
 
     gl.pixelStorei(gl.UNPACK_ALIGNMENT, 4);
     if (premultiplied) gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
@@ -61,10 +65,10 @@ export default class WebGLTextureRenderer {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-    this._shaderProgram = cc.shaderCache.programForKey(
+    this._shaderProgram = ShaderCache.getInstance().programForKey(
       SHADER_POSITION_TEXTURE
     );
-    cc.glBindTexture2D(null);
+    glBindTexture2D(null);
     if (premultiplied) gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
 
     var pixelsWide = t._htmlElementObj.width;
@@ -88,7 +92,9 @@ export default class WebGLTextureRenderer {
   releaseTexture() {
     var t = this._texture;
     if (this._webTextureObj)
-      RendererConfig.getInstance().renderContext.deleteTexture(this._webTextureObj);
+      RendererConfig.getInstance().renderContext.deleteTexture(
+        this._webTextureObj
+      );
     t._htmlElementObj = null;
   }
 
@@ -170,7 +176,7 @@ export default class WebGLTextureRenderer {
     }
 
     this._webTextureObj = gl.createTexture();
-    cc.glBindTexture2D(t);
+    glBindTexture2D(t);
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -227,7 +233,7 @@ export default class WebGLTextureRenderer {
 
     this._hasPremultipliedAlpha = false;
     this._hasMipmaps = false;
-    this._shaderProgram = cc.shaderCache.programForKey(
+    this._shaderProgram = ShaderCache.getInstance().programForKey(
       SHADER_POSITION_TEXTURE
     );
 
@@ -271,7 +277,7 @@ export default class WebGLTextureRenderer {
     t._glProgramState.apply();
     t._glProgramState._glprogram.setUniformsForBuiltins();
 
-    cc.glBindTexture2D(t);
+    glBindTexture2D(t);
 
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
@@ -322,7 +328,7 @@ export default class WebGLTextureRenderer {
     t._glProgramState.apply();
     t._glProgramState._glprogram.setUniformsForBuiltins();
 
-    cc.glBindTexture2D(t);
+    glBindTexture2D(t);
 
     var gl = RendererConfig.getInstance().renderContext;
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
@@ -394,14 +400,14 @@ export default class WebGLTextureRenderer {
       };
 
     assert(
-      (t._pixelsWide === cc.NextPOT(t._pixelsWide) &&
-        t._pixelsHigh === cc.NextPOT(t._pixelsHigh)) ||
+      (t._pixelsWide === NextPOT(t._pixelsWide) &&
+        t._pixelsHigh === NextPOT(t._pixelsHigh)) ||
         (texParams.wrapS === gl.CLAMP_TO_EDGE &&
           texParams.wrapT === gl.CLAMP_TO_EDGE),
       "WebGLRenderingContext.CLAMP_TO_EDGE should be used in NPOT textures"
     );
 
-    cc.glBindTexture2D(t);
+    glBindTexture2D(t);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, texParams.minFilter);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, texParams.magFilter);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, texParams.wrapS);
@@ -412,7 +418,7 @@ export default class WebGLTextureRenderer {
     var gl = RendererConfig.getInstance().renderContext;
     var t = this._texture;
 
-    cc.glBindTexture2D(t);
+    glBindTexture2D(t);
     if (!this._hasMipmaps)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     else
@@ -428,7 +434,7 @@ export default class WebGLTextureRenderer {
     var gl = RendererConfig.getInstance().renderContext;
     var t = this._texture;
 
-    cc.glBindTexture2D(t);
+    glBindTexture2D(t);
     if (!this._hasMipmaps)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     else
@@ -443,12 +449,12 @@ export default class WebGLTextureRenderer {
   generateMipmap() {
     var t = this._texture;
     assert(
-      t._pixelsWide === cc.NextPOT(t._pixelsWide) &&
-        t._pixelsHigh === cc.NextPOT(t._pixelsHigh),
+      t._pixelsWide === NextPOT(t._pixelsWide) &&
+        t._pixelsHigh === NextPOT(t._pixelsHigh),
       "Mimpap texture only works in POT textures"
     );
 
-    cc.glBindTexture2D(t);
+    glBindTexture2D(t);
     RendererConfig.getInstance().renderContext.generateMipmap(
       RendererConfig.getInstance().renderContext.TEXTURE_2D
     );

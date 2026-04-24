@@ -25,6 +25,7 @@
 import { RendererConfig } from "../../renderer/renderer-config";
 import LayerCanvasRenderer from "./layer-canvas-renderer";
 import { Rect } from "../../cocoa/geometry/rect";
+import { AffineTransform } from "../../cocoa/affine-transform";
 
 /**
  * LayerColor's Canvas render command
@@ -138,7 +139,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
       node._contentSize.height
     );
     const trans = node.getNodeToWorldTransform();
-    rect = cc.rectApplyAffineTransform(rect, node.getNodeToWorldTransform());
+    rect = AffineTransform.applyToRect(rect, node.getNodeToWorldTransform());
 
     if (!node._children || node._children.length === 0) return rect;
 
@@ -147,7 +148,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
       const child = locChildren[i];
       if (child && child._visible) {
         const childRect = child._getBoundingBoxToCurrentNode(trans);
-        rect = cc.rectUnion(rect, childRect);
+        rect = cc.Rect.union(rect, childRect);
       }
     }
     return rect;

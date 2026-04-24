@@ -55,12 +55,12 @@ var Ball = class Ball extends cc.Sprite {
         paddleRect.x += paddle.x;
         paddleRect.y += paddle.y;
 
-        var lowY = cc.rectGetMinY(paddleRect);
-        var midY = cc.rectGetMidY(paddleRect);
-        var highY = cc.rectGetMaxY(paddleRect);
+        var lowY = cc.Rect.getMinY(paddleRect);
+        var midY = cc.Rect.getMidY(paddleRect);
+        var highY = cc.Rect.getMaxY(paddleRect);
 
-        var leftX = cc.rectGetMinX(paddleRect);
-        var rightX = cc.rectGetMaxX(paddleRect);
+        var leftX = cc.Rect.getMinX(paddleRect);
+        var rightX = cc.Rect.getMaxX(paddleRect);
 
         if ((this.x > leftX) && (this.x < rightX)) {
             var hit = false;

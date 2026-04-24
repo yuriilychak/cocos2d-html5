@@ -126,7 +126,7 @@ var Box2DTestLayer = class Box2DTestLayer extends cc.LayerColor {
         //just randomly picking one of the images
         var idx = (Math.random() > .5 ? 0 : 1);
         var idy = (Math.random() > .5 ? 0 : 1);
-        var sprite = new cc.Sprite(batch.texture, cc.rect(32 * idx, 32 * idy, 32, 32));
+        var sprite = new cc.Sprite(batch.texture, new cc.Rect(32 * idx, 32 * idy, 32, 32));
         batch.addChild(sprite);
 
         sprite.x = p.x;

@@ -43,7 +43,7 @@
         widgetFromJsonFile: function (file) {
             var json = cc.loader.getRes(file);
             if (json)
-                this._fileDesignSizes[file] = cc.size(json["designWidth"] || 0, json["designHeight"] || 0);
+                this._fileDesignSizes[file] = new cc.Size(json["designWidth"] || 0, json["designHeight"] || 0);
 
             var version = json["Version"] || json["version"];
             var versionNum = ccs.uiReader.getVersionInteger(version);

@@ -33,7 +33,7 @@
  * listView.setBounceEnabled(true);
  * listView.setBackGroundImage("res/cocosui/green_edit.png");
  * listView.setBackGroundImageScale9Enabled(true);
- * listView.setContentSize(cc.size(240, 130));
+ * listView.setContentSize(new cc.Size(240, 130));
  * this.addChild(listView);
  */
 ccui.ListView = class ListView extends ccui.ScrollView {
@@ -101,7 +101,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
                 for (i = 0; i < length; i++) {
                     totalHeight += locItems[i].getContentSize().height;
                 }
-                this.setInnerContainerSize(cc.size(this._contentSize.width, totalHeight));
+                this.setInnerContainerSize(new cc.Size(this._contentSize.width, totalHeight));
                 break;
             case ccui.ScrollView.DIR_HORIZONTAL:
                 length = locItems.length;
@@ -109,7 +109,7 @@ ccui.ListView = class ListView extends ccui.ScrollView {
                 for (i = 0; i < length; i++) {
                     totalWidth += locItems[i].getContentSize().width;
                 }
-                this.setInnerContainerSize(cc.size(totalWidth, this._contentSize.height));
+                this.setInnerContainerSize(new cc.Size(totalWidth, this._contentSize.height));
                 break;
             default:
                 break;

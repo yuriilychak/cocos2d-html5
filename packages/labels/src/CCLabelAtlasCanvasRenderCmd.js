@@ -49,7 +49,7 @@
                 const col = parseInt(a / node._itemsPerRow, 10);
                 if(row < 0 || col < 0)
                     continue;
-                const rect = cc.rect(row * locItemWidth, col * locItemHeight, locItemWidth, locItemHeight);
+                const rect = new cc.Rect(row * locItemWidth, col * locItemHeight, locItemWidth, locItemHeight);
                 const textureContent = texture._contentSize;
                 if(rect.x < 0 || rect.y < 0 || rect.x + rect.width > textureContent.width || rect.y + rect.height > textureContent.height)
                     continue;
@@ -61,7 +61,7 @@
                     fontChar = new cc.Sprite();
                     if (c === 32) {
                         fontChar.init();
-                        fontChar.setTextureRect(cc.rect(0, 0, 10, 10), false, cc.size(0, 0));
+                        fontChar.setTextureRect(new cc.Rect(0, 0, 10, 10), false, new cc.Size(0, 0));
                     } else
                         fontChar.initWithTexture(texture, rect);
 
@@ -69,7 +69,7 @@
                 } else {
                     if (c === 32) {
                         fontChar.init();
-                        fontChar.setTextureRect(cc.rect(0, 0, 10, 10), false, cc.size(0, 0));
+                        fontChar.setTextureRect(new cc.Rect(0, 0, 10, 10), false, new cc.Size(0, 0));
                     } else {
                         // reusing fonts
                         fontChar.initWithTexture(texture, rect);

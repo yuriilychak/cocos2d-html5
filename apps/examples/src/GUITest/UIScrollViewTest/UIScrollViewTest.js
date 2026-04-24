@@ -42,7 +42,7 @@ var UIScrollViewTest_Vertical = class UIScrollViewTest_Vertical extends UIMainLa
             var scrollView = new ccui.ScrollView();
             scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
             scrollView.setTouchEnabled(true);
-            scrollView.setContentSize(cc.size(280, 150));
+            scrollView.setContentSize(new cc.Size(280, 150));
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollView.width) / 2;
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollView.height) / 2;
@@ -54,7 +54,7 @@ var UIScrollViewTest_Vertical = class UIScrollViewTest_Vertical extends UIMainLa
             var innerWidth = scrollView.width;
             var innerHeight = scrollView.height + imageView.height;
 
-            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+            scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
             var button = new ccui.Button();
             button.setTouchEnabled(true);
@@ -110,9 +110,9 @@ var UIScrollViewTest_Horizontal = class UIScrollViewTest_Horizontal extends UIMa
             var scrollView = new ccui.ScrollView();
             scrollView.setDirection(ccui.ScrollView.DIR_HORIZONTAL);
             scrollView.setTouchEnabled(true);
-            scrollView.setContentSize(cc.size(280, 150));
+            scrollView.setContentSize(new cc.Size(280, 150));
             var scrollViewRect = scrollView.getContentSize();
-            scrollView.setInnerContainerSize(cc.size(scrollViewRect.width,scrollViewRect.height));
+            scrollView.setInnerContainerSize(new cc.Size(scrollViewRect.width,scrollViewRect.height));
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewRect.width) / 2;
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollViewRect.height) / 2;
@@ -124,7 +124,7 @@ var UIScrollViewTest_Horizontal = class UIScrollViewTest_Horizontal extends UIMa
             var innerWidth = scrollViewRect.width + imageView.getContentSize().width;
             var innerHeight = scrollViewRect.height;
 
-            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+            scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
             var button = new ccui.Button();
             button.setTouchEnabled(true);
@@ -183,7 +183,7 @@ var UIScrollViewTest_Both = class UIScrollViewTest_Both extends UIMainLayer {
             scrollView.setBounceEnabled(true);
             scrollView.setBackGroundImageScale9Enabled(true);
             scrollView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
-            scrollView.setContentSize(cc.size(210, 122));
+            scrollView.setContentSize(new cc.Size(210, 122));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
@@ -194,7 +194,7 @@ var UIScrollViewTest_Both = class UIScrollViewTest_Both extends UIMainLayer {
             imageView.loadTexture("ccs-res/cocosui/b11.png");
             scrollView.addChild(imageView);
 
-            scrollView.setInnerContainerSize(cc.size(imageView.width, imageView.height));
+            scrollView.setInnerContainerSize(new cc.Size(imageView.width, imageView.height));
             imageView.x = imageView.width/2;
             imageView.y = imageView.height/2;
 
@@ -223,8 +223,8 @@ var UIScrollViewTest_ScrollToPercentBothDirection = class UIScrollViewTest_Scrol
             scrollView.setBackGroundColor(cc.color.GREEN);
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
-            scrollView.setInnerContainerSize(cc.size(480, 320));
-            scrollView.setContentSize(cc.size(100, 100));
+            scrollView.setInnerContainerSize(new cc.Size(480, 320));
+            scrollView.setContentSize(new cc.Size(100, 100));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
@@ -265,8 +265,8 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = class UIScrollViewTes
             scrollView.setBackGroundColor(cc.color.GREEN);
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
-            scrollView.setInnerContainerSize(cc.size(480, 320));
-            scrollView.setContentSize(cc.size(100, 100));
+            scrollView.setInnerContainerSize(new cc.Size(480, 320));
+            scrollView.setContentSize(new cc.Size(100, 100));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
@@ -307,7 +307,7 @@ var UIScrollViewNestTest = class UIScrollViewNestTest extends UIMainLayer {
 
             // Create the scrollview by vertical
             var scrollView = new ccui.ScrollView();
-            scrollView.setContentSize(cc.size(280.0, 150.0));
+            scrollView.setContentSize(new cc.Size(280.0, 150.0));
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             var backgroundSize = background.getContentSize();
             scrollView.setPosition(new cc.Point((widgetSize.width - backgroundSize.width) / 2.0 +
@@ -321,7 +321,7 @@ var UIScrollViewNestTest = class UIScrollViewNestTest extends UIMainLayer {
             var innerWidth = scrollView.getContentSize().width;
             var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
 
-            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+            scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
             var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button.setPosition(new cc.Point(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
@@ -334,7 +334,7 @@ var UIScrollViewNestTest = class UIScrollViewNestTest extends UIMainLayer {
 
             var button_scale9 = new ccui.Button("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png");
             button_scale9.setScale9Enabled(true);
-            button_scale9.setContentSize(cc.size(100.0, button_scale9.getVirtualRendererSize().height));
+            button_scale9.setContentSize(new cc.Size(100.0, button_scale9.getVirtualRendererSize().height));
             button_scale9.setPosition(new cc.Point(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));
             scrollView.addChild(button_scale9);
 
@@ -347,8 +347,8 @@ var UIScrollViewNestTest = class UIScrollViewNestTest extends UIMainLayer {
             sc.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             sc.setBounceEnabled(true);
             sc.setDirection(ccui.ScrollView.DIR_BOTH);
-            sc.setInnerContainerSize(cc.size(480, 320));
-            sc.setContentSize(cc.size(100,100));
+            sc.setInnerContainerSize(new cc.Size(480, 320));
+            sc.setContentSize(new cc.Size(100,100));
             sc.setPropagateTouchEvents(false);
             sc.setPosition(new cc.Point(180,100));
             sc.scrollToPercentBothDirection(new cc.Point(50, 50), 1, true);
@@ -382,7 +382,7 @@ var UIScrollViewRotated = class UIScrollViewRotated extends UIMainLayer {
 
             // Create the scrollview by vertical
             var scrollView = new ccui.ScrollView();
-            scrollView.setContentSize(cc.size(280.0, 150.0));
+            scrollView.setContentSize(new cc.Size(280.0, 150.0));
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             var backgroundSize = background.getContentSize();
             scrollView.setPosition(new cc.Point((widgetSize.width - backgroundSize.width) / 2.0 +
@@ -396,7 +396,7 @@ var UIScrollViewRotated = class UIScrollViewRotated extends UIMainLayer {
 
             var innerWidth = scrollView.getContentSize().width;
             var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
-            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+            scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
             var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button.setPosition(new cc.Point(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
@@ -409,7 +409,7 @@ var UIScrollViewRotated = class UIScrollViewRotated extends UIMainLayer {
 
             var button_scale9 = new ccui.Button("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png");
             button_scale9.setScale9Enabled(true);
-            button_scale9.setContentSize(cc.size(100.0, button_scale9.getVirtualRendererSize().height));
+            button_scale9.setContentSize(new cc.Size(100.0, button_scale9.getVirtualRendererSize().height));
             button_scale9.setPosition(new cc.Point(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));
             scrollView.addChild(button_scale9);
 
@@ -439,7 +439,7 @@ var UIScrollViewDisableTest = class UIScrollViewDisableTest extends UIMainLayer 
             var backgroundSize = background.getContentSize();
 
             var scrollView = new ccui.ScrollView();
-            scrollView.setContentSize(cc.size(280, 150));
+            scrollView.setContentSize(new cc.Size(280, 150));
             scrollView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - scrollView.width) / 2;
             scrollView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - scrollView.height) / 2;
             scrollView.setTouchEnabled(false);
@@ -452,7 +452,7 @@ var UIScrollViewDisableTest = class UIScrollViewDisableTest extends UIMainLayer 
             var innerWidth = scrollView.width;
             var innerHeight = scrollView.height + imageView.height;
 
-            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+            scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
             var button = new ccui.Button();
             button.setTouchEnabled(true);
@@ -514,7 +514,7 @@ var UIScrollViewTest_Vertical_Multiple = class UIScrollViewTest_Vertical_Multipl
             var scrollView = this._scrollView = new ccui.ScrollView();
             scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
             scrollView.setTouchEnabled(true);
-            scrollView.setContentSize(cc.size(280, 150));
+            scrollView.setContentSize(new cc.Size(280, 150));
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollView.width) / 2;
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollView.height) / 2;
@@ -549,7 +549,7 @@ var UIScrollViewTest_Vertical_Multiple = class UIScrollViewTest_Vertical_Multipl
         var start = new ccui.Text("---start---", "Thonburi", 10);
         var innerWidth = scrollView.width;
         var innerHeight = n * start.height;
-        scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+        scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
         start.x = innerWidth / 2;
         start.y = scrollView.getInnerContainerSize().height - start.height / 2;
@@ -579,7 +579,7 @@ var UIScrollViewTest_Vertical_Multiple = class UIScrollViewTest_Vertical_Multipl
             button.x = innerWidth / 2;
             if(j===0) {
                 var innerHeight = n * button.height;
-                scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+                scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
                 button.y =scrollView.getInnerContainerSize().height - button.height / 2;
             }
             else
@@ -607,7 +607,7 @@ var UIScrollViewTest_Vertical_Multiple = class UIScrollViewTest_Vertical_Multipl
             button_scale9.x = innerWidth / 2;
             if(j === 0) {
                 var innerHeight = n * 32;
-                scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+                scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
                 button_scale9.y = scrollView.getInnerContainerSize().height - button_scale9.height / 2;
             }
             else
@@ -642,8 +642,8 @@ var UIScrollViewTest_ScrollBar = class UIScrollViewTest_ScrollBar extends UIMain
             scrollView.setBackGroundColor(cc.color.GREEN);
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
-            scrollView.setInnerContainerSize(cc.size(480, 320));
-            scrollView.setContentSize(cc.size(100, 100));
+            scrollView.setInnerContainerSize(new cc.Size(480, 320));
+            scrollView.setContentSize(new cc.Size(100, 100));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;

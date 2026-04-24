@@ -321,10 +321,10 @@ var HoleDemo = class HoleDemo extends BaseClippingNodeTest {
         stencil.drawPoly(rectangle, cc.color(255, 0, 0, 255), 0, cc.color(255, 255, 255, 0));
 
         this._outerClipper = new cc.ClippingNode();
-        var transform = cc.affineTransformMakeIdentity();
-        transform = cc.affineTransformScale(transform, target.scale, target.scale);
+        var transform = cc.AffineTransform.makeIdentity();
+        transform = cc.AffineTransform.scale(transform, target.scale, target.scale);
 
-	    var ocsize = cc.sizeApplyAffineTransform(cc.size(target.width, target.height), transform);
+	    var ocsize = cc.AffineTransform.applyToSize(new cc.Size(target.width, target.height), transform);
         this._outerClipper.width = ocsize.width;
 	    this._outerClipper.height = ocsize.height;
         this._outerClipper.anchorX = 0.5;
@@ -357,8 +357,8 @@ var HoleDemo = class HoleDemo extends BaseClippingNodeTest {
                 var target = event.getCurrentTarget();
                 var touch = touches[0];
                 var point = target._outerClipper.convertToNodeSpace(touch.getLocation());
-                var rect = cc.rect(0, 0, target._outerClipper.width, target._outerClipper.height);
-                if (!cc.rectContainsPoint(rect,point))
+                var rect = new cc.Rect(0, 0, target._outerClipper.width, target._outerClipper.height);
+                if (!cc.Rect.containsPoint(rect,point))
                     return;
                 target.pokeHoleAtPoint(point);
             }
@@ -457,8 +457,8 @@ var ScrollViewDemo = class ScrollViewDemo extends BaseClippingNodeTest {
                 var touch = touches[0];
                 var clipper = target.getChildByTag(TAG_CLIPPERNODE);
                 var point = clipper.convertToNodeSpace(touch.getLocation());
-                var rect = cc.rect(0, 0, clipper.width, clipper.height);
-                target._scrolling = cc.rectContainsPoint(rect, point);
+                var rect = new cc.Rect(0, 0, clipper.width, clipper.height);
+                target._scrolling = cc.Rect.containsPoint(rect, point);
                 target._lastPoint = point;
             },
 

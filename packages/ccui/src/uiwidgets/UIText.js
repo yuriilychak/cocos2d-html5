@@ -52,7 +52,7 @@ ccui.Text = class Text extends ccui.Widget {
     constructor(textContent, fontName, fontSize) {
         super();
         this._type = ccui.Text.Type.SYSTEM;
-        this._textAreaSize = cc.size(0, 0);
+        this._textAreaSize = new cc.Size(0, 0);
         this._touchScaleChangeEnabled = false;
         this._normalScaleValueX = 1;
         this._normalScaleValueY = 1;
@@ -375,7 +375,7 @@ ccui.Text = class Text extends ccui.Widget {
             this._labelRenderer.setScale(1.0);
             this._normalScaleValueX = this._normalScaleValueY = 1;
         } else {
-            this._labelRenderer.setDimensions(cc.size(locContentSize.width, locContentSize.height));
+            this._labelRenderer.setDimensions(new cc.Size(locContentSize.width, locContentSize.height));
             var textureSize = this._labelRenderer.getContentSize();
             if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
                 this._labelRenderer.setScale(1.0);

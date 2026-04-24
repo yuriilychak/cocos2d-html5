@@ -89,7 +89,7 @@ var UILayoutTestBase = class UILayoutTestBase extends UIMainLayer {
     }
     createLayout() {
         var layout = new ccui.Layout();
-        layout.setContentSize(cc.size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     setLayoutParameter() {
@@ -100,7 +100,7 @@ var UILayoutTestBase = class UILayoutTestBase extends UIMainLayer {
 var UILayoutTest = class UILayoutTest extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
-        layout.setContentSize(cc.size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     getText() {
@@ -113,7 +113,7 @@ var UILayoutTest_Color = class UILayoutTest_Color extends UILayoutTestBase {
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color(128, 128, 128));
-        layout.setContentSize(cc.size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     getText() {
@@ -126,7 +126,7 @@ var UILayoutTest_Gradient = class UILayoutTest_Gradient extends UILayoutTestBase
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
         layout.setBackGroundColor(cc.color(64, 64, 64), cc.color(192, 192, 192));
-        layout.setContentSize(cc.size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     getText() {
@@ -139,7 +139,7 @@ var UILayoutTest_BackGroundImage = class UILayoutTest_BackGroundImage extends UI
         var layout = new ccui.Layout();
         layout.setClippingEnabled(true);
         layout.setBackGroundImage("ccs-res/cocosui/Hello.png");
-        layout.setContentSize(cc.size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     getText() {
@@ -153,7 +153,7 @@ var UILayoutTest_BackGroundImage_Scale9 = class UILayoutTest_BackGroundImage_Sca
         var layout = new ccui.Layout();
         layout.setBackGroundImageScale9Enabled(true);
         layout.setBackGroundImage("ccs-res/cocosui/green_edit.png");
-        layout.setContentSize(cc.size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     getText() {
@@ -165,7 +165,7 @@ var UILayoutTest_Layout_Linear_Vertical = class UILayoutTest_Layout_Linear_Verti
     createLayout() {
         var layout = new ccui.Layout();
         layout.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
-        layout.setContentSize(cc.size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     getText() {
@@ -194,7 +194,7 @@ var UILayoutTest_Layout_Linear_Horizontal = class UILayoutTest_Layout_Linear_Hor
         var layout = new ccui.Layout();
         layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
         layout.setClippingEnabled(true);
-        layout.setContentSize(cc.size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     getText() {
@@ -226,7 +226,7 @@ var UILayoutTest_Layout_Relative = class UILayoutTest_Layout_Relative extends UI
         layout.setLayoutType(ccui.Layout.RELATIVE);
         layout.sizeType = ccui.Widget.SIZE_PERCENT;
         layout.setSizePercent(new cc.Point(0.5, 0.5));
-        //layout.setContentSize(cc.size(280, 150));
+        //layout.setContentSize(new cc.Size(280, 150));
         layout.setPositionType(ccui.Widget.POSITION_PERCENT);
         layout.setPositionPercent(new cc.Point(0.25, 0.25));
         //layout.setPosition(new cc.Point(cc.winSize.width/2, cc.winSize.height/2));

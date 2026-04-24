@@ -41,7 +41,7 @@ cc.GridAction = class GridAction extends cc.ActionInterval {
   constructor(duration, gridSize) {
     cc.sys._checkWebGLRenderMode();
     super();
-    this._gridSize = cc.size(0, 0);
+    this._gridSize = new cc.Size(0, 0);
 
     gridSize && this.initWithDuration(duration, gridSize);
   }
@@ -61,7 +61,7 @@ cc.GridAction = class GridAction extends cc.ActionInterval {
     const locGridSize = this._gridSize;
     action.initWithDuration(
       this._duration,
-      cc.size(locGridSize.width, locGridSize.height)
+      new cc.Size(locGridSize.width, locGridSize.height)
     );
     return action;
   }

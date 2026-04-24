@@ -97,10 +97,10 @@ ccs.displayFactory = {
                     helpTransform.d = displayTransform.d;
                     helpTransform.tx = displayTransform.tx;
                     helpTransform.ty = displayTransform.ty;
-                    var anchorPoint = cc.pointApplyAffineTransform(node.getAnchorPointInPoints(), helpTransform);
+                    var anchorPoint = cc.AffineTransform.applyToPoint(node.getAnchorPointInPoints(), helpTransform);
                     helpTransform.tx = anchorPoint.x;
                     helpTransform.ty = anchorPoint.y;
-                    var t = cc.affineTransformConcat(helpTransform, bone.getArmature().getNodeToParentTransform());
+                    var t = cc.AffineTransform.concat(helpTransform, bone.getArmature().getNodeToParentTransform());
                     detector.updateTransform(t);
                 }
             }

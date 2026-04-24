@@ -40,10 +40,10 @@ ccui.Slider = class Slider extends ccui.Widget {
      */
     constructor(barTextureName, normalBallTextureName, resType) {
         super();
-        this._barTextureSize = cc.size(0, 0);
-        this._progressBarTextureSize = cc.size(0, 0);
-        this._capInsetsBarRenderer = cc.rect(0, 0, 0, 0);
-        this._capInsetsProgressBarRenderer = cc.rect(0, 0, 0, 0);
+        this._barTextureSize = new cc.Size(0, 0);
+        this._progressBarTextureSize = new cc.Size(0, 0);
+        this._capInsetsBarRenderer = new cc.Rect(0, 0, 0, 0);
+        this._capInsetsProgressBarRenderer = new cc.Rect(0, 0, 0, 0);
 
         this._barLength = 0;
         this._percent = 0;
@@ -282,7 +282,7 @@ ccui.Slider = class Slider extends ccui.Widget {
      * @returns {cc.Rect}
      */
     getCapInsetsBarRenderer() {
-        return cc.rect(this._capInsetsBarRenderer);
+        return new cc.Rect(this._capInsetsBarRenderer);
     }
 
     /**
@@ -307,7 +307,7 @@ ccui.Slider = class Slider extends ccui.Widget {
      * @returns {cc.Rect}
      */
     getCapInsetsProgressBarRenderer() {
-        return cc.rect(this._capInsetsProgressBarRenderer);
+        return new cc.Rect(this._capInsetsProgressBarRenderer);
     }
 
     /**
@@ -445,12 +445,12 @@ ccui.Slider = class Slider extends ccui.Widget {
         var dis = this._barLength * res;
         this._slidBallRenderer.setPosition(dis, this._contentSize.height / 2);
         if (this._scale9Enabled)
-            this._progressBarRenderer.setPreferredSize(cc.size(dis, this._contentSize.height));
+            this._progressBarRenderer.setPreferredSize(new cc.Size(dis, this._contentSize.height));
         else {
             var spriteRenderer = this._progressBarRenderer;
             var rect = spriteRenderer.getTextureRect();
             spriteRenderer.setTextureRect(
-                cc.rect(rect.x, rect.y, dis / spriteRenderer._scaleX, rect.height),
+                new cc.Rect(rect.x, rect.y, dis / spriteRenderer._scaleX, rect.height),
                 spriteRenderer.isTextureRectRotated()
             );
         }
@@ -465,7 +465,7 @@ ccui.Slider = class Slider extends ccui.Widget {
     hitTest(pt) {
         var nsp = this._slidBallNormalRenderer.convertToNodeSpace(pt);
         var ballSize = this._slidBallNormalRenderer.getContentSize();
-        var ballRect = cc.rect(0, 0, ballSize.width, ballSize.height);
+        var ballRect = new cc.Rect(0, 0, ballSize.width, ballSize.height);
         return (nsp.x >= ballRect.x &&
             nsp.x <= (ballRect.x + ballRect.width) &&
             nsp.y >= ballRect.y &&

@@ -113,7 +113,7 @@
             }
             else {
                 this._clippingOldRect = cc.view.getScissorRect();
-                if (!cc.rectEqualToRect(this._clippingOldRect, clippingRect))
+                if (!cc.Rect.equalTo(this._clippingOldRect, clippingRect))
                     cc.view.setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
             }
         }
@@ -121,7 +121,7 @@
         _onAfterVisitScissor(ctx) {
             var gl = ctx || cc.rendererConfig.renderContext;
             if (this._scissorOldState) {
-                if (!cc.rectEqualToRect(this._clippingOldRect, this._node._clippingRect)) {
+                if (!cc.Rect.equalTo(this._clippingOldRect, this._node._clippingRect)) {
                     cc.view.setScissorInPoints(this._clippingOldRect.x,
                         this._clippingOldRect.y,
                         this._clippingOldRect.width,

@@ -59,8 +59,8 @@ ccui.Button = class Button extends ccui.Widget {
      */
     constructor(normalImage, selectedImage, disableImage, texType) {
         super();
-        this._capInsetsNormal = cc.rect(0, 0, 0, 0);
-        this._normalTextureSize = cc.size(0, 0);
+        this._capInsetsNormal = new cc.Rect(0, 0, 0, 0);
+        this._normalTextureSize = new cc.Size(0, 0);
         this._buttonNormalSpriteFrame = null;
         this._buttonClickedSpriteFrame = null;
         this._buttonDisableSpriteFrame = null;
@@ -197,7 +197,7 @@ ccui.Button = class Button extends ccui.Widget {
                 return this._titleRenderer.getContentSize();
             }
         }
-        return cc.size(this._normalTextureSize);
+        return new cc.Size(this._normalTextureSize);
     }
 
     /**
@@ -223,7 +223,7 @@ ccui.Button = class Button extends ccui.Widget {
         }
 
         var textureSize = texture.getContentSize();
-        var rect = cc.rect(0, 0, textureSize.width, textureSize.height);
+        var rect = new cc.Rect(0, 0, textureSize.width, textureSize.height);
         return new cc.SpriteFrame(texture, rect);
     }
 
@@ -284,7 +284,7 @@ ccui.Button = class Button extends ccui.Widget {
         }
 
         // FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
-        if(!this._ignoreSize &&  cc.sizeEqualToSize(this._customSize, cc.size(0, 0))) {
+        if(!this._ignoreSize &&  cc.Size.equalTo(this._customSize, new cc.Size(0, 0))) {
             this._customSize = this._buttonScale9Renderer.getContentSize();
         }
 
@@ -433,7 +433,7 @@ ccui.Button = class Button extends ccui.Widget {
      * @returns {cc.Rect}
      */
     getCapInsetsNormalRenderer(){
-        return cc.rect(this._capInsetsNormal);
+        return new cc.Rect(this._capInsetsNormal);
     }
 
     /**
@@ -449,7 +449,7 @@ ccui.Button = class Button extends ccui.Widget {
      * @returns {cc.Rect}
      */
     getCapInsetsPressedRenderer() {
-        return cc.rect(this._capInsetsNormal);
+        return new cc.Rect(this._capInsetsNormal);
     }
 
     /**
@@ -465,7 +465,7 @@ ccui.Button = class Button extends ccui.Widget {
      * @returns {cc.Rect}
      */
     getCapInsetsDisabledRenderer() {
-        return cc.rect(this._capInsetsNormal);
+        return new cc.Rect(this._capInsetsNormal);
     }
 
     _onPressStateChangedToNormal() {
@@ -790,7 +790,7 @@ ccui.Button = class Button extends ccui.Widget {
         var width = titleSize.width > imageSize.width ? titleSize.width : imageSize.width;
         var height = titleSize.height > imageSize.height ? titleSize.height : imageSize.height;
 
-        return cc.size(width,height);
+        return new cc.Size(width,height);
     }
 
 };

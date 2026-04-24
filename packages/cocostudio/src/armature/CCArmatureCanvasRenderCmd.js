@@ -77,7 +77,7 @@
                         var cmd = selNode._renderCmd;
                         cmd.transform(null);
                         if (boneType !== ccs.DISPLAY_TYPE_ARMATURE && boneType !== ccs.DISPLAY_TYPE_SPRITE) {
-                            cc.affineTransformConcatIn(cmd._worldTransform, selBone._worldTransform);
+                            cc.AffineTransform.concatIn(cmd._worldTransform, selBone._worldTransform);
                         }
 
                         var flags = cc.Node._dirtyFlags, locFlag = cmd._dirtyFlag, boneFlag = boneCmd._dirtyFlag;

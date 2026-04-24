@@ -374,8 +374,8 @@ cc.EditBox = class EditBox extends cc.Node {
       return;
     }
     var touchPoint = touch.getLocation();
-    var bb = cc.rect(0, 0, this._contentSize.width, this._contentSize.height);
-    var hitted = cc.rectContainsPoint(bb, this.convertToNodeSpace(touchPoint));
+    var bb = new cc.Rect(0, 0, this._contentSize.width, this._contentSize.height);
+    var hitted = cc.Rect.containsPoint(bb, this.convertToNodeSpace(touchPoint));
     if (hitted) {
       return true;
     } else {
@@ -1049,7 +1049,7 @@ cc.EditBox = class EditBox extends cc.Node {
   proto._updateLabelPosition = function (editBoxSize) {
     if (!this._textLabel || !this._placeholderLabel) return;
 
-    var labelContentSize = cc.size(
+    var labelContentSize = new cc.Size(
       editBoxSize.width - LEFT_PADDING,
       editBoxSize.height
     );
@@ -1338,7 +1338,7 @@ cc.EditBox = class EditBox extends cc.Node {
     editboxDomNode.style["width"] = newWidth + "px";
     editboxDomNode.style["height"] = newHeight + "px";
 
-    this._updateLabelPosition(cc.size(newWidth, newHeight));
+    this._updateLabelPosition(new cc.Size(newWidth, newHeight));
   };
 
   proto._addDomToGameContainer = function () {

@@ -39,7 +39,7 @@
             if (EGLViewer.isScissorEnabled()) {
                 node._scissorRestored = true;
                 node._parentScissorRect = EGLViewer.getScissorRect();
-                if (cc.rectIntersection(frame, node._parentScissorRect)) {
+                if (cc.Rect.intersection(frame, node._parentScissorRect)) {
                     var locPSRect = node._parentScissorRect;
                     var x = Math.max(frame.x, locPSRect.x);
                     var y = Math.max(frame.y, locPSRect.y);

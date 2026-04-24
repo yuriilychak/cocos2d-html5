@@ -48,14 +48,14 @@ var MenuLayerMainMenu = class MenuLayerMainMenu extends cc.Layer {
         this._touchListener = null;
 
         // Font Item
-        var spriteNormal = new cc.Sprite(s_menuItem, cc.rect(0,23*2,115,23));
-        var spriteSelected = new cc.Sprite(s_menuItem, cc.rect(0,23,115,23));
-        var spriteDisabled = new cc.Sprite(s_menuItem, cc.rect(0,0,115,23));
+        var spriteNormal = new cc.Sprite(s_menuItem, new cc.Rect(0,23*2,115,23));
+        var spriteSelected = new cc.Sprite(s_menuItem, new cc.Rect(0,23,115,23));
+        var spriteDisabled = new cc.Sprite(s_menuItem, new cc.Rect(0,0,115,23));
 
         var item1 = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, this.onMenuCallback, this);
 
         // Image Item
-        var sendScoreSF = new cc.SpriteFrame(s_sendScore, cc.rect(0, 0, 145, 26));
+        var sendScoreSF = new cc.SpriteFrame(s_sendScore, new cc.Rect(0, 0, 145, 26));
         cc.spriteFrameCache.addSpriteFrame(sendScoreSF, "send_score_sf");
         var item2 = new cc.MenuItemImage("#send_score_sf", s_pressSendScore, this.onMenuCallback2, this);
 
@@ -303,9 +303,9 @@ var MenuLayer3 = class MenuLayer3 extends cc.Layer {
             this.parent.switchTo(0, false);
         }, this);
 
-        var spriteNormal = new cc.Sprite(s_menuItem, cc.rect(0, 23 * 2, 115, 23));
-        var spriteSelected = new cc.Sprite(s_menuItem, cc.rect(0, 23, 115, 23));
-        var spriteDisabled = new cc.Sprite(s_menuItem, cc.rect(0, 0, 115, 23));
+        var spriteNormal = new cc.Sprite(s_menuItem, new cc.Rect(0, 23 * 2, 115, 23));
+        var spriteSelected = new cc.Sprite(s_menuItem, new cc.Rect(0, 23, 115, 23));
+        var spriteDisabled = new cc.Sprite(s_menuItem, new cc.Rect(0, 0, 115, 23));
 
         var item3 = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, function(sender){
             cc.log("sprite clicked!");

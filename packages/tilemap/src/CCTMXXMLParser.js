@@ -188,8 +188,8 @@ cc.TMXTilesetInfo = class TMXTilesetInfo extends cc.NewClass {
         //Size in pixels of the image
         this.imageSize = null;
 
-        this._tileSize = cc.size(0, 0);
-        this.imageSize = cc.size(0, 0);
+        this._tileSize = new cc.Size(0, 0);
+        this.imageSize = new cc.Size(0, 0);
     }
 
     /**
@@ -198,7 +198,7 @@ cc.TMXTilesetInfo = class TMXTilesetInfo extends cc.NewClass {
      * @return {cc.Rect}
      */
     rectForGID(gid, result) {
-        var rect = result || cc.rect(0, 0, 0, 0);
+        var rect = result || new cc.Rect(0, 0, 0, 0);
         rect.width = this._tileSize.width;
         rect.height = this._tileSize.height;
         gid &= cc.TMX_TILE_FLIPPED_MASK;
@@ -316,8 +316,8 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
         this._resources = "";
         this._currentFirstGID = 0;
 
-        this._mapSize = cc.size(0, 0);
-        this._tileSize = cc.size(0, 0);
+        this._mapSize = new cc.Size(0, 0);
+        this._tileSize = new cc.Size(0, 0);
         this._layers = [];
         this._tilesets = [];
         this._objectGroups = [];
@@ -364,7 +364,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
      * @return {cc.Size}
      */
     getMapSize() {
-        return cc.size(this._mapSize.width,this._mapSize.height);
+        return new cc.Size(this._mapSize.width,this._mapSize.height);
     }
 
     /**
@@ -394,7 +394,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
      * @return {cc.Size}
      */
     getTileSize() {
-        return cc.size(this._tileSize.width, this._tileSize.height);
+        return new cc.Size(this._tileSize.width, this._tileSize.height);
     }
 
     /**
@@ -600,12 +600,12 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
             else if (orientationStr !== null)
                 cc.log("cocos2d: TMXFomat: Unsupported orientation:" + orientationStr);
 
-            var mapSize = cc.size(0, 0);
+            var mapSize = new cc.Size(0, 0);
             mapSize.width = parseFloat(map.getAttribute('width'));
             mapSize.height = parseFloat(map.getAttribute('height'));
             this.setMapSize(mapSize);
 
-            mapSize = cc.size(0, 0);
+            mapSize = new cc.Size(0, 0);
             mapSize.width = parseFloat(map.getAttribute('tilewidth'));
             mapSize.height = parseFloat(map.getAttribute('tileheight'));
             this.setTileSize(mapSize);
@@ -650,7 +650,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
                 tileset.spacing = parseInt(selTileset.getAttribute('spacing')) || 0;
                 tileset.margin = parseInt(selTileset.getAttribute('margin')) || 0;
 
-                var tilesetSize = cc.size(0, 0);
+                var tilesetSize = new cc.Size(0, 0);
                 tilesetSize.width = parseFloat(selTileset.getAttribute('tilewidth'));
                 tilesetSize.height = parseFloat(selTileset.getAttribute('tileheight'));
                 tileset._tileSize = tilesetSize;
@@ -698,7 +698,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
                 var layer = new cc.TMXLayerInfo();
                 layer.name = selLayer.getAttribute('name');
 
-                var layerSize = cc.size(0, 0);
+                var layerSize = new cc.Size(0, 0);
                 layerSize.width = parseFloat(selLayer.getAttribute('width'));
                 layerSize.height = parseFloat(selLayer.getAttribute('height'));
                 layer._layerSize = layerSize;

@@ -43,8 +43,8 @@ ccui.LoadingBar = class LoadingBar extends ccui.Widget {
     constructor(textureName, percentage) {
         super();
         this._direction = ccui.LoadingBar.TYPE_LEFT;
-        this._barRendererTextureSize = cc.size(0, 0);
-        this._capInsets = cc.rect(0, 0, 0, 0);
+        this._barRendererTextureSize = new cc.Size(0, 0);
+        this._capInsets = new cc.Rect(0, 0, 0, 0);
 
         this._percent = 100;
         this._totalLength = 0;
@@ -225,7 +225,7 @@ ccui.LoadingBar = class LoadingBar extends ccui.Widget {
      * @returns {cc.Rect}
      */
     getCapInsets() {
-        return cc.rect(this._capInsets);
+        return new cc.Rect(this._capInsets);
     }
 
     /**
@@ -258,7 +258,7 @@ ccui.LoadingBar = class LoadingBar extends ccui.Widget {
             rect = spriteRenderer.getTextureRect();
             rect.width = spriteTextureRect.width * res;
             spriteRenderer.setTextureRect(
-                cc.rect(
+                new cc.Rect(
                     rect.x,
                     rect.y,
                     spriteTextureRect.width * res,
@@ -317,7 +317,7 @@ ccui.LoadingBar = class LoadingBar extends ccui.Widget {
      * @returns {cc.Size|*}
      */
     getVirtualRendererSize() {
-        return cc.size(this._barRendererTextureSize);
+        return new cc.Size(this._barRendererTextureSize);
     }
 
     /**
@@ -370,7 +370,7 @@ ccui.LoadingBar = class LoadingBar extends ccui.Widget {
 
     _setScale9Scale() {
         var width = (this._percent) / 100 * this._totalLength;
-        this._barRenderer.setPreferredSize(cc.size(width, this._contentSize.height));
+        this._barRenderer.setPreferredSize(new cc.Size(width, this._contentSize.height));
     }
 
     /**

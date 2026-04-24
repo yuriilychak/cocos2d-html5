@@ -1100,7 +1100,7 @@ var LabelTTFStrokeShadowTest = class LabelTTFStrokeShadowTest extends AtlasDemo 
 
     updateLabels() {
         //----start26----updateLabels
-        var blockSize = cc.size(400, 100);
+        var blockSize = new cc.Size(400, 100);
         var s = director.getWinSize();
 
         // colors
@@ -1205,7 +1205,7 @@ var LabelTTFTest = class LabelTTFTest extends AtlasDemo {
         this._horizAlign = null;
 
         this._vertAlign = null;
-        var blockSize = cc.size(200, 160);
+        var blockSize = new cc.Size(200, 160);
         var s = director.getWinSize();
 
         var colorLayer = new cc.LayerColor(cc.color(100, 100, 100, 255), blockSize.width, blockSize.height);
@@ -1244,7 +1244,7 @@ var LabelTTFTest = class LabelTTFTest extends AtlasDemo {
     }
     updateAlignment() {
         //----start19----updateAlignment
-        var blockSize = cc.size(200, 160);
+        var blockSize = new cc.Size(200, 160);
         var s = director.getWinSize();
 
         if (this._label) {
@@ -1334,7 +1334,7 @@ var LabelTTFMultiline = class LabelTTFMultiline extends AtlasDemo {
 
         // cc.LabelBMFont
         var center = new cc.LabelTTF("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
-            "Arial", 32, cc.size(s.width / 2, 200), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+            "Arial", 32, new cc.Size(s.width / 2, 200), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         center.setDimensions(s.width / 2, 200);
         center.x = s.width / 2;
         center.y = 150;
@@ -1669,7 +1669,7 @@ var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends At
         var touch = touches[0];
         var location = touch.getLocation();
 
-        if (cc.rectContainsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
+        if (cc.Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
             this.arrowsBarShouldRetain.visible = true;
         }
     }
@@ -1690,7 +1690,7 @@ var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends At
     onMouseDown(event) {
         var location = event.getLocation();
 
-        if (cc.rectContainsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
+        if (cc.Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
             this.arrowsBarShouldRetain.visible = true;
         }
     }
@@ -1865,21 +1865,21 @@ var LabelTTFAlignment = class LabelTTFAlignment extends AtlasDemo {
         //----start24----ctor
         super();
         var s = director.getWinSize();
-        var ttf0 = new cc.LabelTTF("Alignment 0\nnew line", "Arial", 12, cc.size(256, 32), cc.TEXT_ALIGNMENT_LEFT);
+        var ttf0 = new cc.LabelTTF("Alignment 0\nnew line", "Arial", 12, new cc.Size(256, 32), cc.TEXT_ALIGNMENT_LEFT);
         ttf0.x = s.width / 2;
         ttf0.y = (s.height / 6) * 2;
         ttf0.anchorX = 0.5;
         ttf0.anchorY = 0.5;
         this.addChild(ttf0);
 
-        var ttf1 = new cc.LabelTTF("Alignment 1\nnew line", "Arial", 12, cc.size(256, 32), cc.TEXT_ALIGNMENT_CENTER);
+        var ttf1 = new cc.LabelTTF("Alignment 1\nnew line", "Arial", 12, new cc.Size(256, 32), cc.TEXT_ALIGNMENT_CENTER);
         ttf1.x = s.width / 2;
         ttf1.y = (s.height / 6) * 3;
         ttf1.anchorX = 0.5;
         ttf1.anchorY = 0.5;
         this.addChild(ttf1);
 
-        var ttf2 = new cc.LabelTTF("Alignment 2\nnew line", "Arial", 12, cc.size(256, 32), cc.TEXT_ALIGNMENT_RIGHT);
+        var ttf2 = new cc.LabelTTF("Alignment 2\nnew line", "Arial", 12, new cc.Size(256, 32), cc.TEXT_ALIGNMENT_RIGHT);
         ttf2.x = s.width / 2;
         ttf2.y = (s.height / 6) * 4;
         ttf2.anchorX = 0.5;

@@ -129,7 +129,7 @@ var S9BatchNodeBasic = class S9BatchNodeBasic extends S9SpriteTestDemo {
         var blocks = new cc.Scale9Sprite();
         cc.log("... created");
 
-        blocks.updateWithBatchNode(batchNode, cc.rect(0, 0, 96, 96), false, cc.rect(0, 0, 96, 96));
+        blocks.updateWithBatchNode(batchNode, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(0, 0, 96, 96));
         cc.log("... updateWithBatchNode");
 
         blocks.x = x;
@@ -251,7 +251,7 @@ var S9BatchNodeScaledNoInsets = class S9BatchNodeScaledNoInsets extends S9Sprite
 
         var blocks_scaled = new cc.Scale9Sprite();
         cc.log("... created");
-        blocks_scaled.updateWithBatchNode(batchNode_scaled, cc.rect(0, 0, 96, 96), false, cc.rect(0, 0, 96, 96));
+        blocks_scaled.updateWithBatchNode(batchNode_scaled, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(0, 0, 96, 96));
         cc.log("... updateWithBatchNode");
 
         blocks_scaled.x = x;
@@ -378,7 +378,7 @@ var S9BatchNodeScaleWithCapInsets = class S9BatchNodeScaleWithCapInsets extends 
         var blocks_scaled_with_insets = new cc.Scale9Sprite();
         cc.log("... created");
 
-        blocks_scaled_with_insets.updateWithBatchNode(batchNode_scaled_with_insets, cc.rect(0, 0, 96, 96), false, cc.rect(32, 32, 32, 32));
+        blocks_scaled_with_insets.updateWithBatchNode(batchNode_scaled_with_insets, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(32, 32, 32, 32));
         cc.log("... updateWithBatchNode");
 
         blocks_scaled_with_insets.width = 96 * 4.5;
@@ -418,7 +418,7 @@ var S9FrameNameSpriteSheetInsets = class S9FrameNameSpriteSheetInsets extends S9
 
         cc.log("S9FrameNameSpriteSheetInsets ...");
 
-        var blocks_with_insets = new cc.Scale9Sprite('blocks9.png', cc.rect(32, 32, 32, 32));
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9.png', new cc.Rect(32, 32, 32, 32));
         cc.log("... created");
 
         blocks_with_insets.x = x;
@@ -454,7 +454,7 @@ var S9FrameNameSpriteSheetInsetsScaled = class S9FrameNameSpriteSheetInsetsScale
 
         cc.log("S9FrameNameSpriteSheetInsetsScaled ...");
 
-        var blocks_scaled_with_insets = new cc.Scale9Sprite('blocks9.png', cc.rect(32, 32, 32, 32));
+        var blocks_scaled_with_insets = new cc.Scale9Sprite('blocks9.png', new cc.Rect(32, 32, 32, 32));
         cc.log("... created");
 
         blocks_scaled_with_insets.width = 96 * 4.5;
@@ -494,7 +494,7 @@ var S9FrameNameSpriteSheetRotatedInsets = class S9FrameNameSpriteSheetRotatedIns
 
         cc.log("S9FrameNameSpriteSheetRotatedInsets ...");
 
-        var blocks_with_insets = new cc.Scale9Sprite('blocks9r.png', cc.rect(32, 32, 32, 32));
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9r.png', new cc.Rect(32, 32, 32, 32));
         cc.log("... created");
 
         blocks_with_insets.x = x;
@@ -589,7 +589,7 @@ var S9FrameNameSpriteSheetRotatedInsetsScaled = class S9FrameNameSpriteSheetRota
 
         cc.log("S9FrameNameSpriteSheetRotatedInsetsScaled ...");
 
-        var blocks_scaled_with_insets = new cc.Scale9Sprite('blocks9.png', cc.rect(32, 32, 32, 32));
+        var blocks_scaled_with_insets = new cc.Scale9Sprite('blocks9.png', new cc.Rect(32, 32, 32, 32));
         cc.log("... created");
 
         blocks_scaled_with_insets.width = 96 * 4.5;
@@ -665,7 +665,7 @@ var S9SpriteColorOpacityTest = class S9SpriteColorOpacityTest extends S9SpriteTe
 
         var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
         var blocks2 = new cc.Scale9Sprite();
-        blocks2.updateWithBatchNode(batchNode, cc.rect(0, 0, 96, 96), false, cc.rect(0, 0, 96, 96));
+        blocks2.updateWithBatchNode(batchNode, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(0, 0, 96, 96));
         blocks2.x = winSize.width / 2 + 100;
         blocks2.y = winSize.height / 2;
         this.addChild(blocks2);

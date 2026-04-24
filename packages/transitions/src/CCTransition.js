@@ -942,7 +942,7 @@ cc.TransitionTurnOffTiles = class TransitionTurnOffTiles extends cc.TransitionSc
         var aspect = winSize.width / winSize.height;
         var x = 0 | (12 * aspect);
         var y = 12;
-        var toff = cc.turnOffTiles(this._duration, cc.size(x, y));
+        var toff = cc.turnOffTiles(this._duration, new cc.Size(x, y));
         var action = this.easeActionWithAction(toff);
         this._gridProxy.runAction(cc.sequence(action, cc.callFunc(this.finish, this), cc.stopGrid()));
     }
@@ -1095,7 +1095,7 @@ cc.TransitionFadeTR = class TransitionFadeTR extends cc.TransitionScene {
         var x = 0 | (12 * aspect);
         var y = 12;
 
-        var action = this.actionWithSize(cc.size(x, y));
+        var action = this.actionWithSize(new cc.Size(x, y));
         this._gridProxy.runAction(
             cc.sequence(this.easeActionWithAction(action), cc.callFunc(this.finish, this), cc.stopGrid())
         );

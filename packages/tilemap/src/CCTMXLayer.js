@@ -93,8 +93,8 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
 
         this._descendants = [];
 
-        this._layerSize = cc.size(0, 0);
-        this._mapTileSize = cc.size(0, 0);
+        this._layerSize = new cc.Size(0, 0);
+        this._mapTileSize = new cc.Size(0, 0);
         this._spriteTiles = {};
 
         if(mapInfo !== undefined)
@@ -222,7 +222,7 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
         // Parse cocos2d properties
         this._parseInternalProperties();
 
-        this.setContentSize(cc.sizePixelsToPoints(cc.size(this._layerSize.width * this._mapTileSize.width,
+        this.setContentSize(cc.sizePixelsToPoints(new cc.Size(this._layerSize.width * this._mapTileSize.width,
             this._layerSize.height * this._mapTileSize.height)));
         this._useAutomaticVertexZ = false;
         this._vertexZvalue = 0;
@@ -234,7 +234,7 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
      * @return {cc.Size}
      */
     getLayerSize() {
-        return cc.size(this._layerSize.width, this._layerSize.height);
+        return new cc.Size(this._layerSize.width, this._layerSize.height);
     }
 
     /**
@@ -264,7 +264,7 @@ cc.TMXLayer = class TMXLayer extends cc.SpriteBatchNode {
      * @return {cc.Size}
      */
     getMapTileSize() {
-        return cc.size(this._mapTileSize.width,this._mapTileSize.height);
+        return new cc.Size(this._mapTileSize.width,this._mapTileSize.height);
     }
 
     /**

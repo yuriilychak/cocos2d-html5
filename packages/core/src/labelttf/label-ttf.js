@@ -33,6 +33,13 @@ import { FontDefinition } from "../platform/types/font-definition";
 import { Size } from "../cocoa/geometry/size";
 import { log, _LogInfos } from "../boot/debugger";
 import { RendererConfig } from "../renderer/renderer-config";
+import {
+  TEXT_ALIGNMENT_LEFT,
+  TEXT_ALIGNMENT_CENTER,
+  VERTICAL_TEXT_ALIGNMENT_TOP
+} from "../platform/types/color";
+import { EGLView } from "../platform/egl-view/egl-view";
+import { contentScaleFactor } from "../platform/macro/utils";
 
 /**
  * <p>LabelTTF is a subclass of TextureNode that knows how to render text labels with system font or a ttf font file<br/>
@@ -97,8 +104,8 @@ export class LabelTTF extends Sprite {
 
     fontSize = fontSize || 16;
     dimensions = dimensions || new Size(0, 0 /*fontSize*/);
-    hAlignment = hAlignment || cc.TEXT_ALIGNMENT_LEFT;
-    vAlignment = vAlignment || cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    hAlignment = hAlignment || TEXT_ALIGNMENT_LEFT;
+    vAlignment = vAlignment || VERTICAL_TEXT_ALIGNMENT_TOP;
 
     this._opacityModifyRGB = false;
     this._dimensions = new Size(dimensions.width, dimensions.height);
@@ -121,7 +128,8 @@ export class LabelTTF extends Sprite {
     // Needed for high dpi text.
     // In order to render it crisp, we request devicePixelRatio times the
     // font size and scale it down 1/devicePixelRatio.
-    this._scaleX = this._scaleY = 1 / cc.view.getDevicePixelRatio();
+    this._scaleX = this._scaleY =
+      1 / EGLView.getInstance().getDevicePixelRatio();
     return true;
   }
   _setUpdateTextureDirty() {
@@ -133,8 +141,8 @@ export class LabelTTF extends Sprite {
 
     // Property defaults (from ES5 prototype)
     this._dimensions = null;
-    this._hAlignment = cc.TEXT_ALIGNMENT_CENTER;
-    this._vAlignment = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    this._hAlignment = TEXT_ALIGNMENT_CENTER;
+    this._vAlignment = VERTICAL_TEXT_ALIGNMENT_TOP;
     this._fontName = null;
     this._fontSize = 0.0;
     this._string = "";
@@ -159,8 +167,8 @@ export class LabelTTF extends Sprite {
     this._lineHeight = "normal";
 
     this._dimensions = new Size(0, 0);
-    this._hAlignment = cc.TEXT_ALIGNMENT_LEFT;
-    this._vAlignment = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    this._hAlignment = TEXT_ALIGNMENT_LEFT;
+    this._vAlignment = VERTICAL_TEXT_ALIGNMENT_TOP;
     this._opacityModifyRGB = false;
     this._fontName = "Arial";
 
@@ -201,7 +209,7 @@ export class LabelTTF extends Sprite {
   }
   description() {
     return (
-      "<cc.LabelTTF | FontName =" +
+      "<LabelTTF | FontName =" +
       this._fontName +
       " FontSize = " +
       this._fontSize.toFixed(1) +
@@ -547,8 +555,8 @@ export class LabelTTF extends Sprite {
 
     if (adjustForResolution) {
       texDef.fontSize = this._fontSize;
-      texDef.boundingWidth = cc.contentScaleFactor() * this._dimensions.width;
-      texDef.boundingHeight = cc.contentScaleFactor() * this._dimensions.height;
+      texDef.boundingWidth = contentScaleFactor() * this._dimensions.width;
+      texDef.boundingHeight = contentScaleFactor() * this._dimensions.height;
     } else {
       texDef.fontSize = this._fontSize;
       texDef.boundingWidth = this._dimensions.width;
@@ -578,11 +586,9 @@ export class LabelTTF extends Sprite {
       texDef.shadowOpacity = this._shadowOpacity;
 
       texDef.shadowOffsetX =
-        (adjustForResolution ? cc.contentScaleFactor() : 1) *
-        this._shadowOffset.x;
+        (adjustForResolution ? contentScaleFactor() : 1) * this._shadowOffset.x;
       texDef.shadowOffsetY =
-        (adjustForResolution ? cc.contentScaleFactor() : 1) *
-        this._shadowOffset.y;
+        (adjustForResolution ? contentScaleFactor() : 1) * this._shadowOffset.y;
     } else texDef._shadowEnabled = false;
 
     // text tint
@@ -610,7 +616,7 @@ export class LabelTTF extends Sprite {
    */
   getScale() {
     if (this._scaleX !== this._scaleY) log(_LogInfos.Node_getScale);
-    return this._scaleX * cc.view.getDevicePixelRatio();
+    return this._scaleX * EGLView.getInstance().getDevicePixelRatio();
   }
   /**
    * Sets the scale factor of the node. 1.0 is the default scale factor. This function can modify the X and Y scale at the same time.
@@ -619,7 +625,7 @@ export class LabelTTF extends Sprite {
    * @param {Number} [scaleY=]
    */
   setScale(scale, scaleY) {
-    var ratio = cc.view.getDevicePixelRatio();
+    var ratio = EGLView.getInstance().getDevicePixelRatio();
     this._scaleX = scale / ratio;
     this._scaleY = (scaleY || scaleY === 0 ? scaleY : scale) / ratio;
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
@@ -630,7 +636,7 @@ export class LabelTTF extends Sprite {
    * @return {Number} The scale factor on X axis.
    */
   getScaleX() {
-    return this._scaleX * cc.view.getDevicePixelRatio();
+    return this._scaleX * EGLView.getInstance().getDevicePixelRatio();
   }
   /**
    * <p>
@@ -641,7 +647,7 @@ export class LabelTTF extends Sprite {
    * @param {Number} newScaleX The scale factor on X axis.
    */
   setScaleX(newScaleX) {
-    this._scaleX = newScaleX / cc.view.getDevicePixelRatio();
+    this._scaleX = newScaleX / EGLView.getInstance().getDevicePixelRatio();
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /**
@@ -650,7 +656,7 @@ export class LabelTTF extends Sprite {
    * @return {Number} The scale factor on Y axis.
    */
   getScaleY() {
-    return this._scaleY * cc.view.getDevicePixelRatio();
+    return this._scaleY * EGLView.getInstance().getDevicePixelRatio();
   }
   /**
    * <p>
@@ -661,7 +667,7 @@ export class LabelTTF extends Sprite {
    * @param {Number} newScaleY The scale factor on Y axis.
    */
   setScaleY(newScaleY) {
-    this._scaleY = newScaleY / cc.view.getDevicePixelRatio();
+    this._scaleY = newScaleY / EGLView.getInstance().getDevicePixelRatio();
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /*
@@ -820,7 +826,7 @@ export class LabelTTF extends Sprite {
    */
   getContentSize() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
-    var ratio = cc.view.getDevicePixelRatio();
+    var ratio = EGLView.getInstance().getDevicePixelRatio();
     return new Size(
       this._contentSize.width / ratio,
       this._contentSize.height / ratio
@@ -828,11 +834,15 @@ export class LabelTTF extends Sprite {
   }
   _getWidth() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
-    return this._contentSize.width / cc.view.getDevicePixelRatio();
+    return (
+      this._contentSize.width / EGLView.getInstance().getDevicePixelRatio()
+    );
   }
   _getHeight() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
-    return this._contentSize.height / cc.view.getDevicePixelRatio();
+    return (
+      this._contentSize.height / EGLView.getInstance().getDevicePixelRatio()
+    );
   }
   setTextureRect(rect, rotated, untrimmedSize) {
     var _t = this;

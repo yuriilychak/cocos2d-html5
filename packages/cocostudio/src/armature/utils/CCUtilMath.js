@@ -43,7 +43,7 @@ ccs.isSpriteContainPoint = function (sprite, point, outPoint) {
         outPoint.y = p.y;
     }
     var s = sprite.getContentSize();
-    return cc.rectContainsPoint(cc.rect(0, 0, s.width, s.height), p);
+    return cc.Rect.containsPoint(new cc.Rect(0, 0, s.width, s.height), p);
 };
 ccs.SPRITE_CONTAIN_POINT = ccs.isSpriteContainPoint;
 ccs.SPRITE_CONTAIN_POINT_WITH_RETURN = ccs.isSpriteContainPoint;

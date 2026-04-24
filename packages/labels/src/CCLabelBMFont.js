@@ -295,7 +295,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
 
         var nextFontPositionX = 0;
 
-        var tmpSize = cc.size(0, 0);
+        var tmpSize = new cc.Size(0, 0);
 
         var longestLine = 0;
 
@@ -342,7 +342,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
                 };
             }
 
-            var rect = cc.rect(fontDef.rect.x, fontDef.rect.y, fontDef.rect.width, fontDef.rect.height);
+            var rect = new cc.Rect(fontDef.rect.x, fontDef.rect.y, fontDef.rect.width, fontDef.rect.height);
             rect = cc.rectPixelsToPoints(rect);
             rect.x += self._imageOffset.x;
             rect.y += self._imageOffset.y;

@@ -34,7 +34,7 @@
             this._drawMode = cc.ParticleSystem.TEXTURE_MODE;
             this._shapeType = cc.ParticleSystem.BALL_SHAPE;
 
-            this._pointRect = cc.rect(0, 0, 0, 0);
+            this._pointRect = new cc.Rect(0, 0, 0, 0);
             this._tintCache = null;
         }
 

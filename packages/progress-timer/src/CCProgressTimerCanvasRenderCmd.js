@@ -32,7 +32,7 @@
             this._needDraw = true;
 
             this._PI180 = Math.PI / 180;
-            this._barRect = cc.rect(0, 0, 0, 0);
+            this._barRect = new cc.Rect(0, 0, 0, 0);
             this._origin = new cc.Point(0, 0);
             this._radius = 0;
             this._startAngle = 270;
@@ -154,9 +154,9 @@
                 const percentageF = node._percentage / 100;
                 const locBarRect = this._barRect;
 
-                const drewSize = cc.size((sw * (1 - locBarChangeRate.x)), (sh * (1 - locBarChangeRate.y)));
-                const drawingSize = cc.size((sw - drewSize.width) * percentageF, (sh - drewSize.height) * percentageF);
-                const currentDrawSize = cc.size(drewSize.width + drawingSize.width, drewSize.height + drawingSize.height);
+                const drewSize = new cc.Size((sw * (1 - locBarChangeRate.x)), (sh * (1 - locBarChangeRate.y)));
+                const drawingSize = new cc.Size((sw - drewSize.width) * percentageF, (sh - drewSize.height) * percentageF);
+                const currentDrawSize = new cc.Size(drewSize.width + drawingSize.width, drewSize.height + drawingSize.height);
 
                 const startPoint = new cc.Point(sw * locMidPoint.x, sh * locMidPoint.y);
 

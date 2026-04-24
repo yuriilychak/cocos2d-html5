@@ -31,6 +31,11 @@ import {
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION
 } from "../../platform/macro/constants";
+import { AffineTransform } from "../../cocoa/affine-transform";
+import { radiansToDegrees } from "../../platform/macro/utils";
+import Matrix4 from "../../kazmath/mat4";
+import { EGLView } from "../../platform/egl-view/egl-view";
+import { glBlendFunc } from "../../shaders/CCGLStateCache";
 
 /**
  * LayerGradient's WebGL render command
@@ -91,9 +96,9 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
     const angle =
         Math.PI + Point.angleSigned(new Point(0, -1), node._alongVector),
       locAnchor = new Point(contentSize.width / 2, contentSize.height / 2);
-    const degrees = Math.round(cc.radiansToDegrees(angle));
-    let transMat = cc.affineTransformMake(1, 0, 0, 1, locAnchor.x, locAnchor.y);
-    transMat = cc.affineTransformRotate(transMat, angle);
+    const degrees = Math.round(radiansToDegrees(angle));
+    let transMat = AffineTransform.make(1, 0, 0, 1, locAnchor.x, locAnchor.y);
+    transMat = AffineTransform.rotate(transMat, angle);
     let a, b;
     if (degrees < 90) {
       a = new Point(-locAnchor.x, locAnchor.y);
@@ -113,12 +118,12 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
       cos = Math.cos(angle);
     const tx = Math.abs((a.x * cos - a.y * sin) / locAnchor.x),
       ty = Math.abs((b.x * sin + b.y * cos) / locAnchor.y);
-    transMat = cc.affineTransformScale(transMat, tx, ty);
+    transMat = AffineTransform.scale(transMat, tx, ty);
     const pos = this._positionView;
     for (i = 0; i < stopsLen; i++) {
       const stop = stops[i],
         y = stop.p * contentSize.height;
-      const p0 = cc.pointApplyAffineTransform(
+      const p0 = AffineTransform.applyToPoint(
         -locAnchor.x,
         y - locAnchor.y,
         transMat
@@ -127,7 +132,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
       pos[offset] = p0.x;
       pos[offset + 1] = p0.y;
       pos[offset + 2] = node._vertexZ;
-      const p1 = cc.pointApplyAffineTransform(
+      const p1 = AffineTransform.applyToPoint(
         contentSize.width - locAnchor.x,
         y - locAnchor.y,
         transMat
@@ -171,13 +176,13 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
       node = this._node;
 
     if (!this._matrix) {
-      this._matrix = new cc.math.Matrix4();
+      this._matrix = new Matrix4();
       this._matrix.identity();
     }
 
     const clippingRect = this._getClippingRect();
     context.enable(context.SCISSOR_TEST);
-    cc.view.setScissorInPoints(
+    EGLView.getInstance().setScissorInPoints(
       clippingRect.x,
       clippingRect.y,
       clippingRect.width,
@@ -202,7 +207,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
     }
 
     this._glProgramState.apply(this._matrix);
-    cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+    glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
@@ -233,7 +238,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
         node._contentSize.height
       );
       const trans = node.getNodeToWorldTransform();
-      this._clipRect = cc._rectApplyAffineTransformIn(rect, trans);
+      this._clipRect = AffineTransform._applyToRectIn(rect, trans);
     }
     return this._clipRect;
   }

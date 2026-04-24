@@ -54,16 +54,16 @@ var UITextTest_LineWrap = class UITextTest_LineWrap extends UIMainLayer {
             // Create the line wrap
             var text = new ccui.Text("TextArea Widget can line wrap","AmericanTypewriter",32);
             text.ignoreContentAdaptWithSize(false);
-            text.setContentSize(cc.size(280, 150));
+            text.setContentSize(new cc.Size(280, 150));
             text.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
             text.setTouchScaleChangeEnabled(true);
             text.setTouchEnabled(true);
             text.addTouchEventListener(function(sender, type){
                 if (type == ccui.Widget.TOUCH_ENDED){
                     if (text.width == 280){
-                        text.setContentSize(cc.size(380,100));
+                        text.setContentSize(new cc.Size(380,100));
                     }else {
-                        text.setContentSize(cc.size(280, 150));
+                        text.setContentSize(new cc.Size(280, 150));
                     }
                 }
             });
@@ -155,7 +155,7 @@ var UITextTest_IgnoreContentSize = class UITextTest_IgnoreContentSize extends UI
             leftText.setPosition(new cc.Point(widgetSize.width / 2 - 50,
                 widgetSize.height / 2));
             leftText.ignoreContentAdaptWithSize(false);
-            leftText.setTextAreaSize(cc.size(60,60));
+            leftText.setTextAreaSize(new cc.Size(60,60));
             leftText.setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
             leftText.setTouchScaleChangeEnabled(true);
             leftText.setTouchEnabled(true);
@@ -166,7 +166,7 @@ var UITextTest_IgnoreContentSize = class UITextTest_IgnoreContentSize extends UI
                 widgetSize.height / 2));
             rightText.setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
             //note: setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
-            rightText.setTextAreaSize(cc.size(100,30));
+            rightText.setTextAreaSize(new cc.Size(100,30));
             rightText.ignoreContentAdaptWithSize(false);
             this._mainNode.addChild(rightText);
 

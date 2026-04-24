@@ -98,7 +98,7 @@ var UICheckBoxDefaultBehaviorTest = class UICheckBoxDefaultBehaviorTest extends 
             checkBox2.setPosition(new cc.Point(widgetSize.width / 2 - 150, widgetSize.height / 2));
             checkBox2.ignoreContentAdaptWithSize(false);
             checkBox2.setZoomScale(0.5);
-            checkBox2.setContentSize(cc.size(80,80));
+            checkBox2.setContentSize(new cc.Size(80,80));
             checkBox2.setName("bigCheckBox");
             this._mainNode.addChild(checkBox2);
 

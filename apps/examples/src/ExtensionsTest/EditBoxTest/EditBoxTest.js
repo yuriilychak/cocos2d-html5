@@ -46,7 +46,7 @@ var EditBoxTestLayer = class EditBoxTestLayer extends cc.Layer {
     }
 
     init() {
-        this._box1 = new cc.EditBox(cc.size(170, 50), new cc.Scale9Sprite("extensions/green_edit.png"), new cc.Scale9Sprite("extensions/orange_edit.png"));
+        this._box1 = new cc.EditBox(new cc.Size(170, 50), new cc.Scale9Sprite("extensions/green_edit.png"), new cc.Scale9Sprite("extensions/orange_edit.png"));
         this._box1.setString("EditBoxs");
         this._box1.x = 220;
         this._box1.y = 50;
@@ -54,7 +54,7 @@ var EditBoxTestLayer = class EditBoxTestLayer extends cc.Layer {
         this._box1.setDelegate(this);
         this.addChild(this._box1);
 
-        this._box2 = new cc.EditBox(cc.size(130, 50), new cc.Scale9Sprite("extensions/green_edit.png"));
+        this._box2 = new cc.EditBox(new cc.Size(130, 50), new cc.Scale9Sprite("extensions/green_edit.png"));
         this._box2.setString("EditBox Sample");
         this._box2.x = 220;
         this._box2.y = 190;
@@ -65,7 +65,7 @@ var EditBoxTestLayer = class EditBoxTestLayer extends cc.Layer {
         this._box2.setDelegate(this);
         this.addChild(this._box2);
 
-        this._box3 = new cc.EditBox(cc.size(65, 50), new cc.Scale9Sprite("extensions/orange_edit.png"));
+        this._box3 = new cc.EditBox(new cc.Size(65, 50), new cc.Scale9Sprite("extensions/orange_edit.png"));
         this._box3.setString("Image");
         this._box3.x = 220;
         this._box3.y = 250;
@@ -75,7 +75,7 @@ var EditBoxTestLayer = class EditBoxTestLayer extends cc.Layer {
         this._box3.setTouchEnabled(true);
         this.addChild(this._box3);
 
-        this._box4 = new cc.EditBox(cc.size(180, 50), new cc.Scale9Sprite("extensions/yellow_edit.png"));
+        this._box4 = new cc.EditBox(new cc.Size(180, 50), new cc.Scale9Sprite("extensions/yellow_edit.png"));
         this._box4.setPlaceholderFontColor(cc.color(255, 0, 0));
         this._box4.setPlaceHolder("This editBox can't be touched!");
         this._box4.x = 40;

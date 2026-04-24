@@ -1,5 +1,6 @@
 import { RendererConfig } from "../renderer/renderer-config";
 import { TEXTURE_ATLAS_USE_TRIANGLE_STRIP } from "../platform/config";
+import { glBindTexture2D } from "../shaders/CCGLStateCache";
 import {
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION,
@@ -56,7 +57,7 @@ export default class TextureAtlasWebGLRenderer {
       return;
 
     var gl = RendererConfig.getInstance().renderContext;
-    cc.glBindTexture2D(textureAtlas.texture);
+    glBindTexture2D(textureAtlas.texture);
 
     //
     // Using VBO without VAO
@@ -79,14 +80,7 @@ export default class TextureAtlasWebGLRenderer {
     gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
 
-    gl.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
-      3,
-      gl.FLOAT,
-      false,
-      24,
-      0
-    ); // vertices
+    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 24, 0); // vertices
     gl.vertexAttribPointer(
       VERTEX_ATTRIB_COLOR,
       4,

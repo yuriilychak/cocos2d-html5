@@ -47,16 +47,16 @@ var Paddle = class Paddle extends cc.Sprite {
     }
 
     rect() {
-        return cc.rect(-this._rect.width / 2, -this._rect.height / 2, this._rect.width, this._rect.height);
+        return new cc.Rect(-this._rect.width / 2, -this._rect.height / 2, this._rect.width, this._rect.height);
     }
     initWithTexture(aTexture) {
         if (super.initWithTexture(aTexture)) {
             this._state = PADDLE_STATE_UNGRABBED;
         }
         if (aTexture instanceof cc.Texture2D) {
-            this._rect = cc.rect(0, 0, aTexture.width, aTexture.height);
+            this._rect = new cc.Rect(0, 0, aTexture.width, aTexture.height);
         } else if ((aTexture instanceof HTMLImageElement) || (aTexture instanceof HTMLCanvasElement)) {
-            this._rect = cc.rect(0, 0, aTexture.width, aTexture.height);
+            this._rect = new cc.Rect(0, 0, aTexture.width, aTexture.height);
         }
         return true;
     }
@@ -67,7 +67,7 @@ var Paddle = class Paddle extends cc.Sprite {
 
         myRect.x += this.x;
         myRect.y += this.y;
-        return cc.rectContainsPoint(myRect, getPoint);//this.convertTouchToNodeSpaceAR(touch));
+        return cc.Rect.containsPoint(myRect, getPoint);//this.convertTouchToNodeSpaceAR(touch));
     }
 
     onTouchBegan(touch, event) {

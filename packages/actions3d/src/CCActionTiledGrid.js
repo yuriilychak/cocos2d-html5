@@ -295,7 +295,7 @@ cc.ShuffleTiles = class ShuffleTiles extends cc.TiledGrid3DAction {
   getDelta(pos) {
     const locGridSize = this._gridSize;
     const idx = pos.width * locGridSize.height + pos.height;
-    return cc.size(
+    return new cc.Size(
       this._tilesOrder[idx] / locGridSize.height - pos.width,
       (this._tilesOrder[idx] % locGridSize.height) - pos.height
     );
@@ -348,7 +348,7 @@ cc.ShuffleTiles = class ShuffleTiles extends cc.TiledGrid3DAction {
     const locTiles = this._tiles;
     locTiles.length = 0;
     let tileIndex = 0;
-    const tempSize = cc.size(0, 0);
+    const tempSize = new cc.Size(0, 0);
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locTiles[tileIndex] = new cc.Tile();
@@ -599,10 +599,10 @@ cc.fadeOutDownTiles = (duration, gridSize) =>
  * @param {Number|Null} [seed=0]
  * @example
  * // turnOffTiles without seed
- * var toff = new cc.TurnOffTiles(this._duration, cc.size(x, y));
+ * var toff = new cc.TurnOffTiles(this._duration, new cc.Size(x, y));
  *
  * // turnOffTiles with seed
- * var toff = new cc.TurnOffTiles(this._duration, cc.size(x, y), 0);
+ * var toff = new cc.TurnOffTiles(this._duration, new cc.Size(x, y), 0);
  */
 cc.TurnOffTiles = class TurnOffTiles extends cc.TiledGrid3DAction {
   _seed = null;
@@ -713,10 +713,10 @@ cc.TurnOffTiles = class TurnOffTiles extends cc.TiledGrid3DAction {
  * @example
  * // example
  * // turnOffTiles without seed
- * var toff = cc.turnOffTiles(this._duration, cc.size(x, y));
+ * var toff = cc.turnOffTiles(this._duration, new cc.Size(x, y));
  *
  * // turnOffTiles with seed
- * var toff = cc.turnOffTiles(this._duration, cc.size(x, y), 0);
+ * var toff = cc.turnOffTiles(this._duration, new cc.Size(x, y), 0);
  */
 cc.turnOffTiles = (duration, gridSize, seed) =>
   new cc.TurnOffTiles(duration, gridSize, seed);
@@ -1002,7 +1002,7 @@ cc.SplitRows = class SplitRows extends cc.TiledGrid3DAction {
    */
   initWithDuration(duration, rows) {
     this._rows = rows;
-    return super.initWithDuration(duration, cc.size(1, rows));
+    return super.initWithDuration(duration, new cc.Size(1, rows));
   }
 
   /**
@@ -1078,7 +1078,7 @@ cc.SplitCols = class SplitCols extends cc.TiledGrid3DAction {
    */
   initWithDuration(duration, cols) {
     this._cols = cols;
-    return super.initWithDuration(duration, cc.size(cols, 1));
+    return super.initWithDuration(duration, new cc.Size(cols, 1));
   }
 
   /**

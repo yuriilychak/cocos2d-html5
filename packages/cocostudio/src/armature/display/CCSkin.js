@@ -41,7 +41,7 @@ ccs.Skin = class Skin extends ccs.Sprite {
         this._skinData = null;
         this.bone = null;
         this._displayName = "";
-        this._skinTransform = cc.affineTransformMakeIdentity();
+        this._skinTransform = cc.AffineTransform.makeIdentity();
         this._armature = null;
 
         if (fileName == null || fileName === "") {

@@ -155,7 +155,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
         this._touchMovePosition = new cc.Point(0, 0);
         this._touchEndPosition = new cc.Point(0, 0);
         this._widgetType = ccui.Widget.TYPE_WIDGET;
-        this._customSize = cc.size(0, 0);
+        this._customSize = new cc.Size(0, 0);
         this._layoutParameterDictionary = {};
         this._sizeType = ccui.Widget.SIZE_ABSOLUTE;
         this._sizePercent = new cc.Point(0, 0);
@@ -524,7 +524,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
                 this._sizePercent.y = (parentSize.height > 0) ? this._customSize.height / parentSize.height : 0;
                 break;
             case ccui.Widget.SIZE_PERCENT:
-                var cSize = cc.size(parentSize.width * this._sizePercent.x, parentSize.height * this._sizePercent.y);
+                var cSize = new cc.Size(parentSize.width * this._sizePercent.x, parentSize.height * this._sizePercent.y);
                 if (this._ignoreSize)
                     this.setContentSize(this.getVirtualRendererSize());
                 else
@@ -606,14 +606,14 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
      * @returns {cc.Size}
      */
     getCustomSize() {
-        return cc.size(this._customSize);
+        return new cc.Size(this._customSize);
     }
     /**
      * Gets layout size of ccui.Widget.
      * @returns {cc.Size}
      */
     getLayoutSize() {
-        return cc.size(this._contentSize);
+        return new cc.Size(this._contentSize);
     }
     /**
      * Returns size percent of ccui.Widget
@@ -650,7 +650,7 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
      * Gets the content size of widget.  Content size is widget's texture size.
      */
     getVirtualRendererSize() {
-        return cc.size(this._contentSize);
+        return new cc.Size(this._contentSize);
     }
     /**
      * call back function called when size changed.
@@ -1056,8 +1056,8 @@ ccui.Widget = class Widget extends ccui.ProtectedNode {
      * @returns {boolean} true if the point is in widget's space, false otherwise.
      */
     hitTest(pt) {
-        var bb = cc.rect(0, 0, this._contentSize.width, this._contentSize.height);
-        return cc.rectContainsPoint(bb, this.convertToNodeSpace(pt));
+        var bb = new cc.Rect(0, 0, this._contentSize.width, this._contentSize.height);
+        return cc.Rect.containsPoint(bb, this.convertToNodeSpace(pt));
     }
     /**
      * returns whether clipping parent widget contains point.

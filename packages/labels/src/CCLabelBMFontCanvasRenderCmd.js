@@ -38,7 +38,7 @@
 
         _updateCharTexture(fontChar, rect, key) {
             if (key === 32) {
-                fontChar.setTextureRect(rect, false, cc.size(0, 0));
+                fontChar.setTextureRect(rect, false, new cc.Size(0, 0));
             } else {
                 // updating previous sprite
                 fontChar.setTextureRect(rect, false);
@@ -79,7 +79,7 @@
             const oTexture = node._texture,
                 oElement = oTexture.getHtmlElementObj();
             const disColor = this._displayedColor;
-            const textureRect = cc.rect(0, 0, oElement.width, oElement.height);
+            const textureRect = new cc.Rect(0, 0, oElement.width, oElement.height);
             if (texture && contentSize.width > 0) {
                 if (!oElement)
                     return;

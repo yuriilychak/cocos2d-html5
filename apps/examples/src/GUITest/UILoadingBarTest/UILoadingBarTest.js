@@ -130,8 +130,8 @@ var UILoadingBarTest_Left_Scale9 = class UILoadingBarTest_Left_Scale9 extends UI
         loadingBar.setName("LoadingBar");
         loadingBar.setScale9Enabled(true);
         loadingBar.loadTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
-        loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setContentSize(cc.size(300, 30));
+        loadingBar.setCapInsets(new cc.Rect(0, 0, 0, 0));
+        loadingBar.setContentSize(new cc.Size(300, 30));
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
@@ -148,8 +148,8 @@ var UILoadingBarTest_Right_Scale9 = class UILoadingBarTest_Right_Scale9 extends 
         loadingBar.setName("LoadingBar");
         loadingBar.setScale9Enabled(true);
         loadingBar.loadTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
-        loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setContentSize(cc.size(300, 30));
+        loadingBar.setCapInsets(new cc.Rect(0, 0, 0, 0));
+        loadingBar.setContentSize(new cc.Size(300, 30));
         loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
@@ -168,8 +168,8 @@ var UILoadingBarTest_Fix_Scale9 = class UILoadingBarTest_Fix_Scale9 extends UILo
         loadingBar.setScale9Enabled(true);
         loadingBar.loadTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
         loadingBar.setPercent(40);
-        loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setContentSize(cc.size(300, 30));
+        loadingBar.setCapInsets(new cc.Rect(0, 0, 0, 0));
+        loadingBar.setContentSize(new cc.Size(300, 30));
         loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;

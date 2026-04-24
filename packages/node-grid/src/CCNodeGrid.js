@@ -40,7 +40,7 @@ cc.NodeGrid = class NodeGrid extends cc.Node {
 
     constructor(rect) {
         super();
-        if(rect === undefined) rect = cc.rect();
+        if(rect === undefined) rect = new cc.Rect();
         this._gridRect = rect;
     }
 

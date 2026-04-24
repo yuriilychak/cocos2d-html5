@@ -44,7 +44,7 @@
 
             if (dirty || pt) {
                 this.originTransform();
-                cc.affineTransformConcatIn(this._transform, node.bone.getNodeToArmatureTransform());
+                cc.AffineTransform.concatIn(this._transform, node.bone.getNodeToArmatureTransform());
                 this._dirtyFlag &= ~cc.Node._dirtyFlags.transformDirty;
             }
 
@@ -82,20 +82,20 @@
             var rwtm = this._realWorldTM;
             if (rwtm) {
                 rwtm.a = t.a; rwtm.b = t.b; rwtm.c = t.c; rwtm.d = t.d; rwtm.tx = t.tx; rwtm.ty = t.ty;
-                cc.affineTransformConcatIn(rwtm, this._node.bone.getArmature()._renderCmd._worldTransform);
+                cc.AffineTransform.concatIn(rwtm, this._node.bone.getArmature()._renderCmd._worldTransform);
             }
         }
 
         getNodeToWorldTransform() {
-            return cc.affineTransformConcat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
+            return cc.AffineTransform.concat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
         }
 
         getNodeToWorldTransformAR() {
             var displayTransform = this._transform, node = this._node;
-            this._anchorPointInPoints = cc.pointApplyAffineTransform(this._anchorPointInPoints, displayTransform);
+            this._anchorPointInPoints = cc.AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
             displayTransform.ty = this._anchorPointInPoints.y;
-            return cc.affineTransformConcat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
+            return cc.AffineTransform.concat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
         }
 
         _updateCurrentRegions() {
@@ -128,7 +128,7 @@
 
             if (dirty || pt) {
                 this.originTransform();
-                cc.affineTransformConcatIn(this._transform, node.bone.getNodeToArmatureTransform());
+                cc.AffineTransform.concatIn(this._transform, node.bone.getNodeToArmatureTransform());
                 this._dirtyFlag &= ~cc.Node._dirtyFlags.transformDirty;
             }
 
@@ -166,15 +166,15 @@
         }
 
         getNodeToWorldTransform() {
-            return cc.affineTransformConcat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
+            return cc.AffineTransform.concat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
         }
 
         getNodeToWorldTransformAR() {
             var displayTransform = this._transform, node = this._node;
-            this._anchorPointInPoints = cc.pointApplyAffineTransform(this._anchorPointInPoints, displayTransform);
+            this._anchorPointInPoints = cc.AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
             displayTransform.ty = this._anchorPointInPoints.y;
-            return cc.affineTransformConcat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
+            return cc.AffineTransform.concat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
         }
     };
 })();

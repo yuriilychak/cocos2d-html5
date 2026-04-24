@@ -98,7 +98,7 @@
         if (anchorx != 0.5 || anchory != 0.5)
             node.setAnchorPoint(new cc.Point(anchorx, anchory));
         if (width != 0 || height != 0)
-            node.setContentSize(cc.size(width, height));
+            node.setContentSize(new cc.Size(width, height));
         if (zorder != 0)
             node.setLocalZOrder(zorder);
         if (visible != true)

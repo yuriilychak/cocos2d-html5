@@ -38,16 +38,7 @@ import {
   REPEAT_FOREVER,
   ACTION_TAG_INVALID
 } from "../platform/macro/constants";
-import {
-  affineTransformConcat,
-  affineTransformConcatIn,
-  affineTransformInvert,
-  affineTransformMakeIdentity,
-  rectApplyAffineTransform,
-  _rectApplyAffineTransformIn,
-  pointApplyAffineTransform
-} from "../cocoa/affine-transform";
-import { rectUnion } from "../cocoa/geometry/rect";
+import { AffineTransform } from "../cocoa/affine-transform";
 
 import { arrayRemoveObject } from "../platform/macro/utils";
 import { ComponentContainer } from "../components/component-container";
@@ -215,7 +206,7 @@ export class Node extends NewClass {
     _t._normalizedPosition = new Point(0, 0);
     _t._children = [];
 
-    _t._additionalTransform = affineTransformMakeIdentity();
+    _t._additionalTransform = AffineTransform.makeIdentity();
     if (ComponentContainer) {
       _t._componentContainer = new ComponentContainer(_t);
     }
@@ -1281,7 +1272,10 @@ export class Node extends NewClass {
       this._contentSize.width,
       this._contentSize.height
     );
-    return _rectApplyAffineTransformIn(rect, this.getNodeToParentTransform());
+    return AffineTransform._applyToRectIn(
+      rect,
+      this.getNodeToParentTransform()
+    );
   }
 
   /**
@@ -2032,7 +2026,7 @@ export class Node extends NewClass {
   getNodeToWorldTransform() {
     var t = this.getNodeToParentTransform();
     for (var p = this._parent; p !== null; p = p.parent)
-      t = affineTransformConcat(t, p.getNodeToParentTransform());
+      t = AffineTransform.concat(t, p.getNodeToParentTransform());
     return t;
   }
 
@@ -2042,7 +2036,7 @@ export class Node extends NewClass {
    * @return {AffineTransform}
    */
   getWorldToNodeTransform() {
-    return affineTransformInvert(this.getNodeToWorldTransform());
+    return AffineTransform.invert(this.getNodeToWorldTransform());
   }
 
   /**
@@ -2052,7 +2046,7 @@ export class Node extends NewClass {
    * @return {Point}
    */
   convertToNodeSpace(worldPoint) {
-    return pointApplyAffineTransform(
+    return AffineTransform.applyToPoint(
       worldPoint,
       this.getWorldToNodeTransform()
     );
@@ -2066,7 +2060,10 @@ export class Node extends NewClass {
    */
   convertToWorldSpace(nodePoint) {
     nodePoint = nodePoint || new Point(0, 0);
-    return pointApplyAffineTransform(nodePoint, this.getNodeToWorldTransform());
+    return AffineTransform.applyToPoint(
+      nodePoint,
+      this.getNodeToWorldTransform()
+    );
   }
 
   /**
@@ -2264,7 +2261,7 @@ export class Node extends NewClass {
         p != null && p != ancestor;
         p = p.getParent()
       ) {
-        affineTransformConcatIn(T, p.getNodeToParentTransform());
+        AffineTransform.concatIn(T, p.getNodeToParentTransform());
       }
       return T;
     } else {
@@ -2322,7 +2319,7 @@ export class Node extends NewClass {
       this._contentSize.height
     );
     var trans = this.getNodeToWorldTransform();
-    rect = rectApplyAffineTransform(rect, trans);
+    rect = AffineTransform.applyToRect(rect, trans);
 
     //query child's BoundingBox
     if (!this._children) return rect;
@@ -2332,7 +2329,7 @@ export class Node extends NewClass {
       var child = locChildren[i];
       if (child && child._visible) {
         var childRect = child._getBoundingBoxToCurrentNode(trans);
-        if (childRect) rect = rectUnion(rect, childRect);
+        if (childRect) rect = Rect.union(rect, childRect);
       }
     }
     return rect;
@@ -2348,11 +2345,11 @@ export class Node extends NewClass {
     var trans =
       parentTransform === undefined
         ? this.getNodeToParentTransform()
-        : affineTransformConcat(
+        : AffineTransform.concat(
             this.getNodeToParentTransform(),
             parentTransform
           );
-    rect = rectApplyAffineTransform(rect, trans);
+    rect = AffineTransform.applyToRect(rect, trans);
 
     //query child's BoundingBox
     if (!this._children) return rect;
@@ -2362,7 +2359,7 @@ export class Node extends NewClass {
       var child = locChildren[i];
       if (child && child._visible) {
         var childRect = child._getBoundingBoxToCurrentNode(trans);
-        if (childRect) rect = rectUnion(rect, childRect);
+        if (childRect) rect = Rect.union(rect, childRect);
       }
     }
     return rect;

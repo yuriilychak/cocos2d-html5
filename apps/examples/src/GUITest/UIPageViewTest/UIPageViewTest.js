@@ -41,20 +41,20 @@ var UIPageViewTest = class UIPageViewTest extends UIMainLayer {
             // Create the page view
             var pageView = new ccui.PageView();
             pageView.setTouchEnabled(true);
-            pageView.setContentSize(cc.size(240, 130));
+            pageView.setContentSize(new cc.Size(240, 130));
             pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
 
             for (var i = 0; i < 3; ++i) {
                 var layout = new ccui.Layout();
-                layout.setContentSize(cc.size(240, 130));
+                layout.setContentSize(new cc.Size(240, 130));
                 var layoutRect = layout.getContentSize();
 
                 var imageView = new ccui.ImageView();
                 imageView.setTouchEnabled(true);
                 imageView.setScale9Enabled(true);
                 imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
-                imageView.setContentSize(cc.size(240, 130));
+                imageView.setContentSize(new cc.Size(240, 130));
                 imageView.x = layoutRect.width / 2;
                 imageView.y = layoutRect.height / 2;
                 layout.addChild(imageView);
@@ -115,7 +115,7 @@ var UIPageViewButtonTest = class UIPageViewButtonTest extends UIMainLayer {
 
             // Create the page view
             var pageView = new ccui.PageView();
-            pageView.setContentSize(cc.size(240.0, 130.0));
+            pageView.setContentSize(new cc.Size(240.0, 130.0));
             var backgroundSize = background.getContentSize();
             pageView.setPosition(new cc.Point((widgetSize.width - backgroundSize.width) / 2.0 +
                 (backgroundSize.width - pageView.getContentSize().width) / 2.0,
@@ -127,7 +127,7 @@ var UIPageViewButtonTest = class UIPageViewButtonTest extends UIMainLayer {
             var pageCount = 4;
             for (var i = 0; i < pageCount; ++i){
                 var outerBox = new ccui.HBox();
-                outerBox.setContentSize(cc.size(240.0, 130.0));
+                outerBox.setContentSize(new cc.Size(240.0, 130.0));
 
                 for (var k = 0; k < 2; ++k) {
                     var innerBox = new ccui.VBox();
@@ -192,7 +192,7 @@ var UIPageViewCustomScrollThreshold = class UIPageViewCustomScrollThreshold exte
 
             // Create the page view
             var pageView = new ccui.PageView();
-            pageView.setContentSize(cc.size(240.0, 100.0));
+            pageView.setContentSize(new cc.Size(240.0, 100.0));
             var backgroundSize = background.getContentSize();
             pageView.setPosition(new cc.Point((widgetSize.width - backgroundSize.width) / 2.0 +
                 (backgroundSize.width - pageView.getContentSize().width) / 2.0,
@@ -202,11 +202,11 @@ var UIPageViewCustomScrollThreshold = class UIPageViewCustomScrollThreshold exte
             var pageCount = 4;
             for (var i = 0; i < pageCount; ++i) {
                 var layout = new ccui.Layout();
-                layout.setContentSize(cc.size(240.0, 130.0));
+                layout.setContentSize(new cc.Size(240.0, 130.0));
 
                 var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 imageView.setScale9Enabled(true);
-                imageView.setContentSize(cc.size(240, 130));
+                imageView.setContentSize(new cc.Size(240, 130));
                 imageView.setPosition(new cc.Point(layout.getContentSize().width / 2.0, layout.getContentSize().height / 2.0));
                 layout.addChild(imageView);
 
@@ -268,7 +268,7 @@ var UIPageViewTouchPropagationTest = class UIPageViewTouchPropagationTest extend
 
             // Create the page view
             var pageView = new ccui.PageView();
-            pageView.setContentSize(cc.size(240.0, 130.0));
+            pageView.setContentSize(new cc.Size(240.0, 130.0));
             pageView.setAnchorPoint(new cc.Point(0.5,0.5));
             var backgroundSize = background.getContentSize();
             pageView.setPosition(new cc.Point(widgetSize.width / 2.0 ,widgetSize.height / 2.0));
@@ -278,7 +278,7 @@ var UIPageViewTouchPropagationTest = class UIPageViewTouchPropagationTest extend
             var pageCount = 4;
             for (var i = 0; i < pageCount; ++i) {
                 var outerBox = new ccui.HBox();
-                outerBox.setContentSize(cc.size(240.0, 130.0));
+                outerBox.setContentSize(new cc.Size(240.0, 130.0));
 
                 for (var k = 0; k < 2; ++k) {
                     var innerBox = new ccui.VBox();
@@ -426,7 +426,7 @@ var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest 
 
             // Create the page view
             var pageView = new ccui.PageView();
-            pageView.setContentSize(cc.size(240.0, 130.0));
+            pageView.setContentSize(new cc.Size(240.0, 130.0));
             pageView.setAnchorPoint(new cc.Point(0.5,0.5));
             var backgroundSize = background.getContentSize();
             pageView.setPosition(new cc.Point(widgetSize.width / 2.0 ,widgetSize.height / 2.0));
@@ -436,7 +436,7 @@ var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest 
             var pageCount = 4;
             for (var i = 0; i < pageCount; ++i){
                 var outerBox = new ccui.HBox();
-                outerBox.setContentSize(cc.size(240.0, 130.0));
+                outerBox.setContentSize(new cc.Size(240.0, 130.0));
 
                 for (var k = 0; k < 2; ++k){
                     var innerBox = new ccui.VBox();
@@ -471,7 +471,7 @@ var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest 
             button.setTitleColor(cc.color.RED);
             button.addClickEventListener(function(sender){
                 var outerBox = new ccui.HBox();
-                outerBox.setContentSize(cc.size(240.0, 130.0));
+                outerBox.setContentSize(new cc.Size(240.0, 130.0));
 
                 for (var k = 0; k < 2; ++k){
                     var innerBox = new ccui.VBox();
@@ -560,7 +560,7 @@ var UIPageViewDisableTouchTest = class UIPageViewDisableTouchTest extends UIMain
             var backgroundSize = background.getContentSize();
 
             var pageView = new ccui.PageView();
-            pageView.setContentSize(cc.size(240, 130));
+            pageView.setContentSize(new cc.Size(240, 130));
             pageView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - pageView.height) / 2;
             pageView.setTouchEnabled(false);
@@ -569,12 +569,12 @@ var UIPageViewDisableTouchTest = class UIPageViewDisableTouchTest extends UIMain
             var pageCount = 4;
             for(var i = 0; i < pageCount; i++){
                 var layout = new ccui.Layout();
-                layout.setContentSize(cc.size(240, 130));
+                layout.setContentSize(new cc.Size(240, 130));
 
                 var imageView = new ccui.ImageView();
                 imageView.setScale9Enabled(true);
                 imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
-                imageView.setContentSize(cc.size(240, 130));
+                imageView.setContentSize(new cc.Size(240, 130));
                 imageView.x = layout.getContentSize().width / 2;
                 imageView.y = layout.getContentSize().height / 2;
                 layout.addChild(imageView);
@@ -612,7 +612,7 @@ var UIPageViewJumpToPageTest = class UIPageViewJumpToPageTest extends UIMainLaye
             // Create the page view
             var pageView = new ccui.PageView();
             pageView.setTouchEnabled(true);
-            pageView.setContentSize(cc.size(240, 130));
+            pageView.setContentSize(new cc.Size(240, 130));
             pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
             pageView.setIndicatorEnabled(true);
@@ -622,11 +622,11 @@ var UIPageViewJumpToPageTest = class UIPageViewJumpToPageTest extends UIMainLaye
             for (var i = 0; i < pageCount; ++i)
             {
                 var layout = new ccui.Layout();
-                layout.setContentSize(cc.size(240.0, 130.0));
+                layout.setContentSize(new cc.Size(240.0, 130.0));
 
                 var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 imageView.setScale9Enabled(true);
-                imageView.setContentSize(cc.size(240, 130));
+                imageView.setContentSize(new cc.Size(240, 130));
                 imageView.setPosition(new cc.Point(layout.width / 2.0, layout.height / 2.0));
                 layout.addChild(imageView);
 
@@ -700,7 +700,7 @@ var UIPageViewChildSizeTest = class UIPageViewChildSizeTest extends UIMainLayer 
             // Create the page view
             var pageView = new ccui.PageView();
             pageView.setTouchEnabled(true);
-            pageView.setContentSize(cc.size(240, 130));
+            pageView.setContentSize(new cc.Size(240, 130));
             pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
             pageView.setIndicatorEnabled(true);
@@ -760,7 +760,7 @@ var UIPageViewIndicatorTest = class UIPageViewIndicatorTest extends UIMainLayer 
             var backgroundSize = background.getContentSize();
 
             var pageView = new ccui.PageView();
-            pageView.setContentSize(cc.size(240, 130));
+            pageView.setContentSize(new cc.Size(240, 130));
             pageView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - pageView.height) / 2;
             pageView.removeAllPages();
@@ -774,12 +774,12 @@ var UIPageViewIndicatorTest = class UIPageViewIndicatorTest extends UIMainLayer 
             var pageCount = 4;
             for(var i = 0; i < pageCount; i++){
                 var layout = new ccui.Layout();
-                layout.setContentSize(cc.size(240, 130));
+                layout.setContentSize(new cc.Size(240, 130));
 
                 var imageView = new ccui.ImageView();
                 imageView.setScale9Enabled(true);
                 imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
-                imageView.setContentSize(cc.size(240, 130));
+                imageView.setContentSize(new cc.Size(240, 130));
                 imageView.x = layout.getContentSize().width / 2;
                 imageView.y = layout.getContentSize().height / 2;
                 layout.addChild(imageView);

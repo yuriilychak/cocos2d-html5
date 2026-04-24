@@ -31,6 +31,7 @@ import {
   VERTEX_ATTRIB_POSITION,
   VERTEX_ATTRIB_TEX_COORDS
 } from "../platform/macro/constants";
+import { glBlendFunc, glBindTexture2DN } from "../shaders/CCGLStateCache";
 
 // Internal variables
 // Batching general informations
@@ -399,8 +400,8 @@ var rendererWebGL = {
       glProgramState.getGLProgram()._updateProjectionUniform();
     }
 
-    cc.glBlendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
-    cc.glBindTexture2DN(0, texture); // = glBindTexture2D(texture);
+    glBlendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
+    glBindTexture2DN(0, texture); // = glBindTexture2D(texture);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer);
     // upload the vertex data to the gl buffer

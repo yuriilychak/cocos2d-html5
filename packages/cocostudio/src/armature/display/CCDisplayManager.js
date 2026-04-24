@@ -410,13 +410,13 @@ ccs.DisplayManager = class DisplayManager extends cc.NewClass {
 
     getContentSize() {
         if (!this._displayRenderNode)
-            return cc.size(0, 0);
+            return new cc.Size(0, 0);
         return this._displayRenderNode.getContentSize();
     }
 
     getBoundingBox() {
         if (!this._displayRenderNode)
-            return cc.rect(0, 0, 0, 0);
+            return new cc.Rect(0, 0, 0, 0);
         return this._displayRenderNode.getBoundingBox();
     }
 

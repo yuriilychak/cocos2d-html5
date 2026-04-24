@@ -33,6 +33,7 @@ import { Size } from "../cocoa/geometry/size";
 import { error, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import { RendererConfig } from "../renderer/renderer-config";
+import { rectPixelsToPoints } from "../platform/macro/utils";
 
 /**
  * <p>
@@ -126,7 +127,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
     this._rectInPixels.y = rectInPixels.y;
     this._rectInPixels.width = rectInPixels.width;
     this._rectInPixels.height = rectInPixels.height;
-    this._rect = cc.rectPixelsToPoints(rectInPixels);
+    this._rect = rectPixelsToPoints(rectInPixels);
   }
 
   /**
@@ -372,7 +373,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
     texture = this.getTexture();
 
     this._rectInPixels = rect;
-    this._rect = cc.rectPixelsToPoints(rect);
+    this._rect = rectPixelsToPoints(rect);
 
     if (texture && texture.url && texture.isLoaded()) {
       var _x, _y;
@@ -412,7 +413,7 @@ SpriteFrame._frameWithTextureForCanvas = function (
   var spriteFrame = new SpriteFrame();
   spriteFrame._texture = texture;
   spriteFrame._rectInPixels = rect;
-  spriteFrame._rect = cc.rectPixelsToPoints(rect);
+  spriteFrame._rect = rectPixelsToPoints(rect);
   spriteFrame._offsetInPixels.x = offset.x;
   spriteFrame._offsetInPixels.y = offset.y;
   cc._pointPixelsToPointsOut(spriteFrame._offsetInPixels, spriteFrame._offset);

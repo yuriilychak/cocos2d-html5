@@ -310,7 +310,7 @@ ccs.ColliderDetector = class ColliderDetector extends cc.NewClass {
             for (var j = 0; j < vs.length; j++) {
                 locHelpPoint.x = vs[j].x;
                 locHelpPoint.y = vs[j].y;
-                locHelpPoint = cc.pointApplyAffineTransform(locHelpPoint, t);
+                locHelpPoint = cc.AffineTransform.applyToPoint(locHelpPoint, t);
 
                 if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
                     var v = new cc.Point(0, 0);

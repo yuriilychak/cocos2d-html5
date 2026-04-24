@@ -95,7 +95,7 @@ cc.TextFieldDelegate = class TextFieldDelegate extends cc.NewClass {
  * @example
  * //example
  * // When five parameters
- * var textField = new cc.TextFieldTTF("<click here for input>", cc.size(100,50), cc.TEXT_ALIGNMENT_LEFT,"Arial", 32);
+ * var textField = new cc.TextFieldTTF("<click here for input>", new cc.Size(100,50), cc.TEXT_ALIGNMENT_LEFT,"Arial", 32);
  * // When three parameters
  * var textField = new cc.TextFieldTTF("<click here for input>", "Arial", 32);
  */
@@ -220,7 +220,7 @@ cc.TextFieldTTF = class TextFieldTTF extends cc.LabelTTF {
      * //example
      * var  textField = new cc.TextFieldTTF();
      * // When five parameters
-     * textField.initWithPlaceHolder("<click here for input>", cc.size(100,50), cc.TEXT_ALIGNMENT_LEFT,"Arial", 32);
+     * textField.initWithPlaceHolder("<click here for input>", new cc.Size(100,50), cc.TEXT_ALIGNMENT_LEFT,"Arial", 32);
      * // When three parameters
      * textField.initWithPlaceHolder("<click here for input>", "Arial", 32);
      */

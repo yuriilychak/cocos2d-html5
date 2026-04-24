@@ -77,8 +77,8 @@ var UISliderTest_Scale9 = class UISliderTest_Scale9 extends UIMainLayer {
             slider.loadBarTexture("ccs-res/cocosui/sliderTrack2.png");
             slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
             slider.loadProgressBarTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
-            slider.setCapInsets(cc.rect(0, 0, 0, 0));
-            slider.setContentSize(cc.size(250, 10));
+            slider.setCapInsets(new cc.Rect(0, 0, 0, 0));
+            slider.setContentSize(new cc.Size(250, 10));
             slider.x = widgetSize.width / 2.0;
             slider.y = widgetSize.height / 2.0;
             slider.addEventListener(this.sliderEvent, this);
@@ -126,9 +126,9 @@ var UISliderNormalDefaultTest = class UISliderNormalDefaultTest extends UIMainLa
 
             var sliderScale9 = new ccui.Slider("ccs-res/cocosui/sliderTrack2.png", "ccs-res/cocosui/sliderThumb.png");
             sliderScale9.setScale9Enabled(true);
-            sliderScale9.setCapInsets(cc.rect(0, 0, 0, 0));
+            sliderScale9.setCapInsets(new cc.Rect(0, 0, 0, 0));
             sliderScale9.setZoomScale(1);
-            sliderScale9.setContentSize(cc.size(250, 19));
+            sliderScale9.setContentSize(new cc.Size(250, 19));
             sliderScale9.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - 20));
             this._mainNode.addChild(sliderScale9);
 
@@ -167,8 +167,8 @@ var UISliderDisabledDefaultTest = class UISliderDisabledDefaultTest extends UIMa
             sliderScale9.setScale9Enabled(true);
             sliderScale9.setEnabled(false);
             sliderScale9.setBright(false);
-            sliderScale9.setCapInsets(cc.rect(0, 0, 0, 0));
-            sliderScale9.setContentSize(cc.size(250, 10));
+            sliderScale9.setCapInsets(new cc.Rect(0, 0, 0, 0));
+            sliderScale9.setContentSize(new cc.Size(250, 10));
             sliderScale9.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - 20));
             this._mainNode.addChild(sliderScale9);
 

@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { Point } from "../cocoa/geometry/point";
-import { Rect, rectContainsPoint } from "../cocoa/geometry/rect";
+import { Rect } from "../cocoa/geometry/rect";
 import EventManager from "../event-manager/event-manager";
 import Sys from "../boot/sys";
 import { log, _LogInfos } from "../boot/debugger";
@@ -477,7 +477,7 @@ export const inputManager = {
           var pos = selfPointer.getHTMLElementPosition(element);
           var location = selfPointer.getPointByEvent(event, pos);
           if (
-            !rectContainsPoint(
+            !Rect.containsPoint(
               new Rect(pos.left, pos.top, pos.width, pos.height),
               location
             )

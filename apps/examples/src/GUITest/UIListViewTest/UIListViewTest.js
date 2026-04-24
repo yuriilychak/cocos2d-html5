@@ -60,7 +60,7 @@ var UIListViewTest_Vertical = class UIListViewTest_Vertical extends UIMainLayer 
             this.listView.setBounceEnabled(true);
             this.listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             this.listView.setBackGroundImageScale9Enabled(true);
-            this.listView.setContentSize(cc.size(240, 130));
+            this.listView.setContentSize(new cc.Size(240, 130));
             this.listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - this.listView.width) / 2;
             this.listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - this.listView.height) / 2;
             this.listView.addEventListener(this.selectedItemEvent, this);
@@ -111,7 +111,7 @@ var UIListViewTest_Vertical = class UIListViewTest_Vertical extends UIMainLayer 
         //we must call foreceDoLayout in onEnter method in h5.
         this.listView.forceDoLayout();
         var totalHeight = this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
-        this.listView.getInnerContainer().setContentSize(cc.size(this.listView.getInnerContainerSize().width, totalHeight));
+        this.listView.getInnerContainer().setContentSize(new cc.Size(this.listView.getInnerContainerSize().width, totalHeight));
         this.listView.jumpToTop();
     }
 
@@ -204,7 +204,7 @@ var UIListViewTest_Horizontal = class UIListViewTest_Horizontal extends UIMainLa
             listView.setBounceEnabled(true);
             listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             listView.setBackGroundImageScale9Enabled(true);
-            listView.setContentSize(cc.size(240, 130));
+            listView.setContentSize(new cc.Size(240, 130));
             listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
             listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;
             listView.addEventListener(this.selectedItemEvent, this);
@@ -332,7 +332,7 @@ var UIListViewTest_TouchIntercept = class UIListViewTest_TouchIntercept extends 
             listView.setTouchEnabled(false);
             listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             listView.setBackGroundImageScale9Enabled(true);
-            listView.setContentSize(cc.size(240, 130));
+            listView.setContentSize(new cc.Size(240, 130));
             listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
             listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;
             this._mainNode.addChild(listView);

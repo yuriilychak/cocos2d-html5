@@ -26,7 +26,6 @@ import { RendererConfig } from "../renderer/renderer-config";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
 import { Node } from "../base-nodes/node";
 import { Rect } from "../cocoa/geometry/rect";
-import { rectEqualToRect } from "../cocoa/geometry/rect";
 import { error, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 
@@ -69,7 +68,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   isFrameDisplayed(frame) {
     const node = this._node;
     if (frame.getTexture() !== node._texture) return false;
-    return rectEqualToRect(frame.getRect(), node._rect);
+    return Rect.equalTo(frame.getRect(), node._rect);
   }
 
   updateBlendFunc(blendFunc) {
@@ -254,7 +253,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     const locRenderCmd = this._renderCmd;
     if (!locRect) {
       locRect = new Rect(0, 0, sender.width, sender.height);
-    } else if (cc._rectEqualToZero(locRect)) {
+    } else if (cc.Rect.equalToZero(locRect)) {
       locRect.width = sender.width;
       locRect.height = sender.height;
     }

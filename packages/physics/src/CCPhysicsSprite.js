@@ -48,7 +48,7 @@
      *
      * 1.Create a sprite with image path and rect
      * var physicsSprite1 = new cc.PhysicsSprite("res/HelloHTML5World.png");
-     * var physicsSprite2 = new cc.PhysicsSprite("res/HelloHTML5World.png",cc.rect(0,0,480,320));
+     * var physicsSprite2 = new cc.PhysicsSprite("res/HelloHTML5World.png",new cc.Rect(0,0,480,320));
      *
      * 2.Create a sprite with a sprite frame name. Must add "#" before frame name.
      * var physicsSprite = new cc.PhysicsSprite('#grossini_dance_01.png');
@@ -61,7 +61,7 @@
      *      After creation, the rect will be the size of the texture, and the offset will be (0,0).
      * var texture = cc.textureCache.addImage("HelloHTML5World.png");
      * var physicsSprite1 = new cc.PhysicsSprite(texture);
-     * var physicsSprite2 = new cc.PhysicsSprite(texture, cc.rect(0,0,480,320));
+     * var physicsSprite2 = new cc.PhysicsSprite(texture, new cc.Rect(0,0,480,320));
      *
      */
     constructor(fileName, rect) {

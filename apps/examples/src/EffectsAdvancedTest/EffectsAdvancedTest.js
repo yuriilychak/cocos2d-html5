@@ -172,8 +172,8 @@ var Effect1 = class Effect1 extends EffectAdvanceTextLayer {
         //     Lens3D is Grid3D and it's size is (15,10)
         //     Waves3D is Grid3D and it's size is (15,10)
         var size = cc.director.getWinSize();
-        var lens = cc.lens3D(0.0, cc.size(15, 10), new cc.Point(size.width / 2, size.height / 2), 240);
-        var waves = cc.waves3D(10, cc.size(15, 10), 18, 15);
+        var lens = cc.lens3D(0.0, new cc.Size(15, 10), new cc.Point(size.width / 2, size.height / 2), 240);
+        var waves = cc.waves3D(10, new cc.Size(15, 10), 18, 15);
 
         var reuse = cc.reuseGrid(1);
         var delay = cc.delayTime(8);
@@ -197,9 +197,9 @@ var Effect2 = class Effect2 extends EffectAdvanceTextLayer {
         //     ShakyTiles is TiledGrid3D and it's size is (15,10)
         //     Shuffletiles is TiledGrid3D and it's size is (15,10)
         //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-        var shaky = cc.shakyTiles3D(5, cc.size(15, 10), 4, false);
-        var shuffle = cc.shuffleTiles(0, cc.size(15, 10), 3);
-        var turnoff = cc.turnOffTiles(0, cc.size(15, 10), 3);
+        var shaky = cc.shakyTiles3D(5, new cc.Size(15, 10), 4, false);
+        var shuffle = cc.shuffleTiles(0, new cc.Size(15, 10), 3);
+        var turnoff = cc.turnOffTiles(0, new cc.Size(15, 10), 3);
         var turnon = turnoff.reverse();
 
         // reuse 2 times:
@@ -226,8 +226,8 @@ var Effect3 = class Effect3 extends EffectAdvanceTextLayer {
         var target1 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE1);
         var target2 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE2);
 
-        var waves = cc.waves(5, cc.size(15, 10), 5, 20, true, false);
-        var shaky = cc.shaky3D(5, cc.size(15, 10), 4, false);
+        var waves = cc.waves(5, new cc.Size(15, 10), 5, 20, true, false);
+        var shaky = cc.shaky3D(5, new cc.Size(15, 10), 4, false);
 
 	    target1.runAction(waves.repeatForever());
 	    target2.runAction(shaky.repeatForever());
@@ -280,7 +280,7 @@ var Effect4 = class Effect4 extends EffectAdvanceTextLayer {
         super.onEnter();
 
         var bgNodeGrid = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        var lens = cc.lens3D(10, cc.size(32, 24), new cc.Point(100, 180), 150);
+        var lens = cc.lens3D(10, new cc.Size(32, 24), new cc.Point(100, 180), 150);
         var move = cc.jumpBy(5, new cc.Point(380, 0), 100, 4);
         var move_back = move.reverse();
         var seq = cc.sequence(move, move_back);
@@ -313,7 +313,7 @@ var Effect5 = class Effect5 extends EffectAdvanceTextLayer {
     onEnter() {
         super.onEnter();
 
-        var effect = cc.liquid(2, cc.size(32, 24), 1, 20);
+        var effect = cc.liquid(2, new cc.Size(32, 24), 1, 20);
         var stopEffect = cc.sequence(effect, cc.delayTime(2), cc.stopGrid());
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
@@ -334,7 +334,7 @@ var Issue631 = class Issue631 extends EffectAdvanceTextLayer {
     onEnter() {
         super.onEnter();
 
-        var effect = cc.sequence(cc.delayTime(2.0), cc.shaky3D(5.0, cc.size(5, 5), 16, false));
+        var effect = cc.sequence(cc.delayTime(2.0), cc.shaky3D(5.0, new cc.Size(5, 5), 16, false));
 
         // cleanup
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);

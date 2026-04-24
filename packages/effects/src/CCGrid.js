@@ -43,7 +43,7 @@ export class GridBase extends cc.NewClass {
     this._active = false;
     this._reuseGrid = 0;
     this._gridSize = null;
-    this._gridRect = new cc.rect();
+    this._gridRect = new new cc.Rect();
     this._texture = null;
     this._step = new cc.Point(0, 0);
     this._grabber = null;
@@ -98,7 +98,7 @@ export class GridBase extends cc.NewClass {
    * @return {cc.Size}
    */
   getGridSize() {
-    return cc.size(this._gridSize.width, this._gridSize.height);
+    return new cc.Size(this._gridSize.width, this._gridSize.height);
   }
 
   /**
@@ -206,9 +206,9 @@ export class GridBase extends cc.NewClass {
     this._gridSize = gridSize;
     this._texture = texture;
     this._isTextureFlipped = flipped;
-    if (rect === undefined || cc._rectEqualToZero(rect)) {
+    if (rect === undefined || cc.Rect.equalToZero(rect)) {
       const size = this._texture.getContentSize();
-      rect = new cc.rect(0, 0, size.width, size.height);
+      rect = new new cc.Rect(0, 0, size.width, size.height);
     }
 
     this._gridRect = rect;

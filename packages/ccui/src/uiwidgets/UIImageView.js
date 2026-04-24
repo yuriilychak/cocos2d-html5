@@ -39,8 +39,8 @@ ccui.ImageView = class ImageView extends ccui.Widget {
      */
     constructor(imageFileName, texType) {
         super();
-        this._capInsets = cc.rect(0,0,0,0);
-        this._imageTextureSize = cc.size(this._capInsets.width, this._capInsets.height);
+        this._capInsets = new cc.Rect(0,0,0,0);
+        this._imageTextureSize = new cc.Size(this._capInsets.width, this._capInsets.height);
         this._scale9Enabled = false;
         this._prevIgnoreSize = true;
         this._textureFile = "";
@@ -105,7 +105,7 @@ ccui.ImageView = class ImageView extends ccui.Widget {
             var handleTextureLoadedEvent = function(){
                 imageRenderer.removeEventListener("load", handleTextureLoadedEvent);
 
-                if(!self._ignoreSize && cc.sizeEqualToSize(self._customSize, cc.size(0, 0))) {
+                if(!self._ignoreSize && cc.Size.equalTo(self._customSize, new cc.Size(0, 0))) {
                     self._customSize = self._imageRenderer.getContentSize();
                 }
 
@@ -119,7 +119,7 @@ ccui.ImageView = class ImageView extends ccui.Widget {
             imageRenderer.addEventListener("load", handleTextureLoadedEvent);
         }
 
-        if(!this._ignoreSize && cc.sizeEqualToSize(this._customSize, cc.size(0, 0))) {
+        if(!this._ignoreSize && cc.Size.equalTo(this._customSize, new cc.Size(0, 0))) {
             this._customSize = this._imageRenderer.getContentSize();
         }
 
@@ -209,7 +209,7 @@ ccui.ImageView = class ImageView extends ccui.Widget {
      * @returns {cc.Rect}
      */
     getCapInsets(){
-        return cc.rect(this._capInsets);
+        return new cc.Rect(this._capInsets);
     }
 
     _onSizeChanged() {
@@ -229,7 +229,7 @@ ccui.ImageView = class ImageView extends ccui.Widget {
      * @returns {cc.Size}
      */
     getVirtualRendererSize(){
-        return cc.size(this._imageTextureSize);
+        return new cc.Size(this._imageTextureSize);
     }
 
     /**
@@ -276,7 +276,7 @@ ccui.ImageView = class ImageView extends ccui.Widget {
      */
     setContentSize(contentSize, height){
         if (height) {
-            contentSize = cc.size(contentSize, height);
+            contentSize = new cc.Size(contentSize, height);
         }
 
         super.setContentSize(contentSize);

@@ -57,7 +57,7 @@ var UIImageViewTest_Scale9 = class UIImageViewTest_Scale9 extends UIMainLayer {
             var imageView = new ccui.ImageView();
             imageView.setScale9Enabled(true);
             imageView.loadTexture("ccs-res/cocosui/buttonHighlighted.png");
-            imageView.setContentSize(cc.size(200, 85));
+            imageView.setContentSize(new cc.Size(200, 85));
             imageView.x = widgetSize.width / 2;
 	        imageView.y = widgetSize.height / 2 + imageView.getContentSize().height / 4;
             this._mainNode.addChild(imageView);
@@ -90,7 +90,7 @@ var UIImageViewTest_ContentSize = class UIImageViewTest_ContentSize extends UIMa
             // Create the imageview
             var imageView = new ccui.ImageView("ccs-res/cocosui/buttonHighlighted.png");
             imageView.setScale9Enabled(true);
-            imageView.setContentSize(cc.size(200, 80));
+            imageView.setContentSize(new cc.Size(200, 80));
             imageView.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
 
             var imageViewChild = new ccui.ImageView("ccs-res/cocosui/buttonHighlighted.png");
@@ -117,7 +117,7 @@ var UIImageViewTest_ContentSize = class UIImageViewTest_ContentSize extends UIMa
                 if (type == ccui.Widget.TOUCH_ENDED) {
                     var width = (Math.random() * 200 | 0) + 50;
                     var height = (Math.random() * 80 | 0) + 30;
-                    imageView.setContentSize(cc.size(width, height));
+                    imageView.setContentSize(new cc.Size(width, height));
 
                     imageViewChild.setPositionPercent(new cc.Point(Math.random().toFixed(2), Math.random().toFixed(2)));
                     status.setString("child ImageView position percent: "+imageViewChild.getPositionPercent().x+", "+imageViewChild.getPositionPercent().y);
@@ -142,7 +142,7 @@ var UIImageViewFlipTest = class UIImageViewFlipTest extends UIMainLayer {
             // Create the imageview
             var imageView = new ccui.ImageView("blocks9r.png", ccui.Widget.PLIST_TEXTURE);
             imageView.setScale9Enabled(true);
-            imageView.setContentSize(cc.size(250, 115));
+            imageView.setContentSize(new cc.Size(250, 115));
             imageView.setFlippedX(true);
             imageView.setScale(0.5);
             imageView.ignoreContentAdaptWithSize(false);
@@ -167,7 +167,7 @@ var UIImageViewFlipTest = class UIImageViewFlipTest extends UIMainLayer {
             toggleScale9.addClickEventListener(function(){
                 imageView.setScale9Enabled(!imageView.isScale9Enabled());
                 //after switching scale9, you must call setContentSize to keep the size not change
-                imageView.setContentSize(cc.size(250, 115));
+                imageView.setContentSize(new cc.Size(250, 115));
             });
             return true;
         }

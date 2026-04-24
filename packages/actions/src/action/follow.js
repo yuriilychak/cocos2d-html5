@@ -124,7 +124,7 @@ export default class Follow extends Action {
     this._followedNode = followedNode;
     this._worldRect = rect;
 
-    this._boundarySet = !cc._rectEqualToZero(rect);
+    this._boundarySet = !cc.Rect.equalToZero(rect);
 
     this._boundaryFullyCovered = false;
 

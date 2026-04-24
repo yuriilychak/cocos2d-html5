@@ -254,7 +254,7 @@
         this.parseComponents(node, options["components"], resourcePath);
         var size = options["CanvasSize"];
         if (size)
-            node.setContentSize(cc.size(size["_width"], size["_height"]));
+            node.setContentSize(new cc.Size(size["_width"], size["_height"]));
 
         return node;
     });

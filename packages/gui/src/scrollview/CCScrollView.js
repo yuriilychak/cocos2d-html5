@@ -129,19 +129,19 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         this._scrollDistance = new cc.Point(0, 0);
         this._touchPoint = new cc.Point(0, 0);
         this._touches = [];
-        this._viewSize = cc.size(0, 0);
+        this._viewSize = new cc.Size(0, 0);
         this._parentScissorRect = new cc.Rect(0, 0, 0, 0);
         this._tmpViewRect = new cc.Rect(0, 0, 0, 0);
 
         if (container != undefined)
             this.initWithViewSize(size, container);
         else
-            this.initWithViewSize(cc.size(200, 200), null);
+            this.initWithViewSize(new cc.Size(200, 200), null);
 
     }
 
     init() {
-        return this.initWithViewSize(cc.size(200, 200), null);
+        return this.initWithViewSize(new cc.Size(200, 200), null);
     }
 
     /**
@@ -342,9 +342,9 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         var size = this.getViewSize();
         var scale = this.getZoomScale();
 
-        var viewRect = cc.rect(-offset.x / scale, -offset.y / scale, size.width / scale, size.height / scale);
+        var viewRect = new cc.Rect(-offset.x / scale, -offset.y / scale, size.width / scale, size.height / scale);
 
-        return cc.rectIntersectsRect(viewRect, node.getBoundingBox());
+        return cc.Rect.intersects(viewRect, node.getBoundingBox());
     }
 
     /**
@@ -445,14 +445,14 @@ cc.ScrollView = class ScrollView extends cc.Layer {
                 return false;
         }
         //var frameOriginal = this.getParent().convertToWorldSpace(this.getPosition());
-        //var frame = cc.rect(frameOriginal.x, frameOriginal.y, this._viewSize.width, this._viewSize.height);
+        //var frame = new cc.Rect(frameOriginal.x, frameOriginal.y, this._viewSize.width, this._viewSize.height);
         var frame = this._getViewRect();
 
         //dispatcher does not know about clipping. reject touches outside visible bounds.
         var locContainer = this._container;
         var locPoint = locContainer.convertToWorldSpace(locContainer.convertTouchToNodeSpace(touch));
         var locTouches = this._touches;
-        if (locTouches.length > 2 || this._touchMoved || !cc.rectContainsPoint(frame, locPoint))
+        if (locTouches.length > 2 || this._touchMoved || !cc.Rect.containsPoint(frame, locPoint))
             return false;
 
         locTouches.push(touch);
@@ -484,7 +484,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         if (this._touches.length === 1 && this._dragging) { // scrolling
             this._touchMoved = true;
             //var frameOriginal = this.getParent().convertToWorldSpace(this.getPosition());
-            //var frame = cc.rect(frameOriginal.x, frameOriginal.y, this._viewSize.width, this._viewSize.height);
+            //var frame = new cc.Rect(frameOriginal.x, frameOriginal.y, this._viewSize.width, this._viewSize.height);
             var frame = this._getViewRect();
 
             //var newPoint = this.convertTouchToNodeSpace(this._touches[0]);
@@ -603,7 +603,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     getContentSize() {
         if (this._container)
             return this._container.getContentSize();
-        return cc.size(0, 0);
+        return new cc.Size(0, 0);
     }
 
     updateInset() {

@@ -144,7 +144,7 @@ var AnalyticsTestLayer = class AnalyticsTestLayer extends PluginXTest {
         var strName = g_pAnalytics.getPluginName();
         var strVer = g_pAnalytics.getPluginVersion();
         var ret = "Plugin : "+strName+", Ver : "+ strVer;
-        var pLabel = new cc.LabelTTF(ret, "Arial", 24, cc.size(size.width, 0), cc.TEXT_ALIGNMENT_CENTER);
+        var pLabel = new cc.LabelTTF(ret, "Arial", 24, new cc.Size(size.width, 0), cc.TEXT_ALIGNMENT_CENTER);
         pLabel.setPosition(new cc.Point(size.width / 2, yPos - 100));
         this.addChild(pLabel);
 

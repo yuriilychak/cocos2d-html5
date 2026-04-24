@@ -4,6 +4,7 @@ import Matrix3 from "./mat3";
 import Plane from "./plane";
 import Quaternion from "./quaternion";
 import { log } from "../boot/debugger";
+import { degreesToRadians } from "../platform/macro/utils";
 
 export default class Matrix4 {
   constructor(mat4) {
@@ -499,7 +500,7 @@ export default class Matrix4 {
   }
 
   static createPerspectiveProjection(fovY, aspect, zNear, zFar) {
-    const r = cc.degreesToRadians(fovY / 2),
+    const r = degreesToRadians(fovY / 2),
       deltaZ = zFar - zNear;
     const s = Math.sin(r);
     if (deltaZ === 0 || s === 0 || aspect === 0) return null;
@@ -806,7 +807,7 @@ export function kmMat4Translation(pOut, x, y, z) {
 }
 
 export function kmMat4PerspectiveProjection(pOut, fovY, aspect, zNear, zFar) {
-  const r = cc.degreesToRadians(fovY / 2);
+  const r = degreesToRadians(fovY / 2);
   const deltaZ = zFar - zNear;
   const s = Math.sin(r);
   if (deltaZ === 0 || s === 0 || aspect === 0) return null;

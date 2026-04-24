@@ -233,7 +233,7 @@
             const texture = node.texture;
             const scaleFactor = cc.contentScaleFactor();
             // convert to pixels coords
-            const rect = cc.rect(
+            const rect = new cc.Rect(
                 pointRect.x * scaleFactor,
                 pointRect.y * scaleFactor,
                 pointRect.width * scaleFactor,
@@ -331,7 +331,7 @@
 
                 //set the texture coord
                 if (node._texture) {
-                    this.initTexCoordsWithRect(cc.rect(0, 0, node._texture.width, node._texture.height));
+                    this.initTexCoordsWithRect(new cc.Rect(0, 0, node._texture.width, node._texture.height));
                 }
             } else
                 node._totalParticles = tp;

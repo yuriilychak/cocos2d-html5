@@ -99,9 +99,9 @@ var TouchableSpriteTest = class TouchableSpriteTest extends EventDispatcherTestD
 
                 var locationInNode = target.convertToNodeSpace(touch.getLocation());
                 var s = target.getContentSize();
-                var rect = cc.rect(0, 0, s.width, s.height);
+                var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (cc.rectContainsPoint(rect, locationInNode)) {
+                if (cc.Rect.containsPoint(rect, locationInNode)) {
                     cc.log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
                     target.opacity = 180;
                     return true;
@@ -207,9 +207,9 @@ var TouchableSprite = class TouchableSprite extends cc.Sprite {
             onTouchBegan: function (touch, event) {
                 var locationInNode = selfPointer.convertToNodeSpace(touch.getLocation());
                 var s = selfPointer.getContentSize();
-                var rect = cc.rect(0, 0, s.width, s.height);
+                var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (cc.rectContainsPoint(rect, locationInNode)) {
+                if (cc.Rect.containsPoint(rect, locationInNode)) {
                     selfPointer.setColor(cc.color.RED);
                     return true;
                 }
@@ -318,9 +318,9 @@ var RemoveListenerWhenDispatching = class RemoveListenerWhenDispatching extends 
             onTouchBegan: function (touch, event) {
                 var locationInNode = sprite1.convertToNodeSpace(touch.getLocation());
                 var s = sprite1.getContentSize();
-                var rect = cc.rect(0, 0, s.width, s.height);
+                var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (cc.rectContainsPoint(rect, locationInNode)) {
+                if (cc.Rect.containsPoint(rect, locationInNode)) {
                     sprite1.setColor(cc.color.RED);
                     return true;
                 }
@@ -616,9 +616,9 @@ var RemoveAndRetainNodeTest = class RemoveAndRetainNodeTest extends EventDispatc
 
                 var locationInNode = target.convertToNodeSpace(touch.getLocation());
                 var s = target.getContentSize();
-                var rect = cc.rect(0, 0, s.width, s.height);
+                var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (cc.rectContainsPoint(rect, locationInNode)) {
+                if (cc.Rect.containsPoint(rect, locationInNode)) {
                     cc.log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
                     target.opacity = 180;
                     return true;
@@ -882,9 +882,9 @@ var GlobalZTouchTest = class GlobalZTouchTest extends EventDispatcherTestDemo {
 
                 var locationInNode = target.convertToNodeSpace(touch.getLocation());
                 var s = target.getContentSize();
-                var rect = cc.rect(0, 0, s.width, s.height);
+                var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (cc.rectContainsPoint(rect, locationInNode)) {
+                if (cc.Rect.containsPoint(rect, locationInNode)) {
                     cc.log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
                     target.setOpacity(180);
                     return true;
@@ -1060,7 +1060,7 @@ var StopPropagationTest = class StopPropagationTest extends EventDispatcherTestD
     _isPointInNode(pt, node) {
         //----start9----_isPointInNode
         var s = node.getContentSize();
-        return cc.rectContainsPoint(cc.rect(0, 0, s.width, s.height), node.convertToNodeSpace(pt));
+        return cc.Rect.containsPoint(new cc.Rect(0, 0, s.width, s.height), node.convertToNodeSpace(pt));
         //----end9----
     }
 

@@ -101,7 +101,7 @@ var UIButtonTest_Scale9 = class UIButtonTest_Scale9 extends UIMainLayer {
             button.loadTextures("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png", "");
             button.x = this._widget.width / 2.0;
             button.y = this._widget.height / 2.0;
-            button.setContentSize(cc.size(150, 48));
+            button.setContentSize(new cc.Size(150, 48));
             button.addTouchEventListener(this.touchEvent ,this);
             this._mainNode.addChild(button);
 
@@ -461,7 +461,7 @@ var UIButtonTitleEffectTest = class UIButtonTitleEffectTest extends UIMainLayer 
             button.setPressedActionEnabled(true);
             var title = button.getTitleRenderer();
             button.setTitleColor(cc.color.RED);
-            title.enableShadow(cc.color.BLACK, cc.size(2,-2));
+            title.enableShadow(cc.color.BLACK, new cc.Size(2,-2));
             this.addChild(button);
 
             // Create the button

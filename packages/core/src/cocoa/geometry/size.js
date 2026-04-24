@@ -42,31 +42,14 @@ export class Size {
       this.height = height;
     }
   }
-}
 
-/**
- * Helper function that creates a Size.
- * @function
- * @param {Number|Size} [w] width or a size object
- * @param {Number} [h] height
- * @return {Size}
- */
-export function size(w, h) {
-  return new Size(w, h);
-}
-
-/**
- * Check whether a point's value equals to another
- * @function
- * @param {Size} size1
- * @param {Size} size2
- * @return {Boolean}
- */
-export function sizeEqualToSize(size1, size2) {
-  return (
-    size1 &&
-    size2 &&
-    size1.width === size2.width &&
-    size1.height === size2.height
-  );
+  /** Check whether a size's value equals to another. */
+  static equalTo(size1, size2) {
+    return (
+      size1 != null &&
+      size2 != null &&
+      size1.width === size2.width &&
+      size1.height === size2.height
+    );
+  }
 }

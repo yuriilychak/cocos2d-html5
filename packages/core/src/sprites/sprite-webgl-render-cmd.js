@@ -24,6 +24,7 @@
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-render-cmd";
 import { Rect } from "../cocoa/geometry/rect";
+import { Point } from "../cocoa/geometry/point";
 import { log, error, _LogInfos } from "../boot/debugger";
 import ShaderCache from "../shaders/CCShaderCache";
 import { RendererConfig } from "../renderer/renderer-config";
@@ -103,9 +104,9 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
   isFrameDisplayed(frame) {
     const node = this._node;
     return (
-      cc.rectEqualToRect(frame.getRect(), node._rect) &&
+      Rect.equalTo(frame.getRect(), node._rect) &&
       frame.getTexture().getName() === node._texture.getName() &&
-      cc.pointEqualToPoint(
+      Point.equalTo(
         frame.getOffset(),
         node._unflippedOffsetPositionFromCenter
       )
@@ -119,7 +120,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     let locRect = this._rect;
     if (!locRect) {
       locRect = new Rect(0, 0, sender.width, sender.height);
-    } else if (cc._rectEqualToZero(locRect)) {
+    } else if (cc.Rect.equalToZero(locRect)) {
       locRect.width = sender.width;
       locRect.height = sender.height;
     }

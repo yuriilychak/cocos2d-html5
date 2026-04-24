@@ -103,7 +103,7 @@ cc.TransitionPageTurn = class TransitionPageTurn extends cc.TransitionScene {
             y = 16;
         }
 
-        var action = this.actionWithSize(cc.size(x, y)), gridProxy = this._gridProxy;
+        var action = this.actionWithSize(new cc.Size(x, y)), gridProxy = this._gridProxy;
 
         if (!this._back) {
             gridProxy.setTarget(this._outScene);

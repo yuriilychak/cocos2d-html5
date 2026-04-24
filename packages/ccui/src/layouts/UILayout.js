@@ -89,19 +89,19 @@ ccui.Layout = class Layout extends ccui.Widget {
         this._colorType = ccui.Layout.BG_COLOR_NONE;
 
         this.ignoreContentAdaptWithSize(false);
-        this.setContentSize(cc.size(0, 0));
+        this.setContentSize(new cc.Size(0, 0));
         this.setAnchorPoint(0, 0);
         this.onPassFocusToChild = this._findNearestChildWidgetIndex.bind(this);
 
-        this._backGroundImageCapInsets = cc.rect(0, 0, 0, 0);
+        this._backGroundImageCapInsets = new cc.Rect(0, 0, 0, 0);
 
         this._color = cc.color(255, 255, 255, 255);
         this._startColor = cc.color(255, 255, 255, 255);
         this._endColor = cc.color(255, 255, 255, 255);
         this._alongVector = new cc.Point(0, -1);
-        this._backGroundImageTextureSize = cc.size(0, 0);
+        this._backGroundImageTextureSize = new cc.Size(0, 0);
 
-        this._clippingRect = cc.rect(0, 0, 0, 0);
+        this._clippingRect = new cc.Rect(0, 0, 0, 0);
         this._backGroundImageColor = cc.color(255, 255, 255, 255);
     }
 
@@ -570,7 +570,7 @@ ccui.Layout = class Layout extends ccui.Widget {
      * @returns {cc.Rect}
      */
     getBackGroundImageCapInsets() {
-        return cc.rect(this._backGroundImageCapInsets);
+        return new cc.Rect(this._backGroundImageCapInsets);
     }
 
     _supplyTheLayoutParameterLackToChild(locChild) {
@@ -909,7 +909,7 @@ ccui.Layout = class Layout extends ccui.Widget {
      */
     _getLayoutAccumulatedSize() {
         var children = this.getChildren();
-        var layoutSize = cc.size(0, 0);
+        var layoutSize = new cc.Size(0, 0);
         var widgetCount = 0, locSize;
         for (var i = 0, len = children.length; i < len; i++) {
             var layout = children[i];

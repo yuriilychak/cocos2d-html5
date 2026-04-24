@@ -120,7 +120,7 @@ var Shaky3DTest = class Shaky3DTest extends EffectsBaseLayer {
         return "a = cc.shaky3D(duration, gridSize, range, shakeZ)";
     }
     getEffect(duration) {
-        return cc.shaky3D( duration, cc.size(15,10), 5, false );
+        return cc.shaky3D( duration, new cc.Size(15,10), 5, false );
     }
 
 };
@@ -133,7 +133,7 @@ var Waves3DTest = class Waves3DTest extends EffectsBaseLayer {
         return "a = cc.waves3D(duration, gridSize, range, shakeZ)";
     }
     getEffect(duration) {
-        return cc.waves3D(duration, cc.size(15,10), 5, 40 );
+        return cc.waves3D(duration, new cc.Size(15,10), 5, 40 );
     }
 
 };
@@ -178,7 +178,7 @@ var Lens3DTest = class Lens3DTest extends EffectsBaseLayer {
         return "a = cc.lens3D(duration, gridSize, position, radius)";
     }
     getEffect(duration) {
-        return cc.lens3D( duration, cc.size(15,10), new cc.Point(winSize.width/2, winSize.height/2), 240);
+        return cc.lens3D( duration, new cc.Size(15,10), new cc.Point(winSize.width/2, winSize.height/2), 240);
     }
 
 };
@@ -191,7 +191,7 @@ var Ripple3DTest = class Ripple3DTest extends EffectsBaseLayer {
         return "a = cc.ripple3D(duration, gridSize, position, radius, waves, amplitude)";
     }
     getEffect(duration) {
-        return cc.ripple3D( duration, cc.size(32,24), new cc.Point(winSize.width/2, winSize.height/2), 240, 4, 160);
+        return cc.ripple3D( duration, new cc.Size(32,24), new cc.Point(winSize.width/2, winSize.height/2), 240, 4, 160);
     }
 
 };
@@ -204,7 +204,7 @@ var LiquidTest = class LiquidTest extends EffectsBaseLayer {
         return "a = cc.liquid(duration, gridSize, waves, amplitude)";
     }
     getEffect(duration) {
-        return cc.liquid( duration, cc.size(16,12), 4, 20);
+        return cc.liquid( duration, new cc.Size(16,12), 4, 20);
     }
 
 };
@@ -217,7 +217,7 @@ var WavesTest = class WavesTest extends EffectsBaseLayer {
         return "a = cc.waves(duration, gridSize, waves, amplitude, horizontal, vertical)";
     }
     getEffect(duration) {
-        return cc.waves( duration, cc.size(16,12), 4, 20, true, true);
+        return cc.waves( duration, new cc.Size(16,12), 4, 20, true, true);
     }
 
 };
@@ -230,7 +230,7 @@ var TwirlTest = class TwirlTest extends EffectsBaseLayer {
         return "a = cc.twirl(duration, gridSize, position, twirls, amplitude)";
     }
     getEffect(duration) {
-        return cc.twirl( duration, cc.size(12,8), new cc.Point(winSize.width/2, winSize.height/2), 1, 2.5);
+        return cc.twirl( duration, new cc.Size(12,8), new cc.Point(winSize.width/2, winSize.height/2), 1, 2.5);
     }
 
 };
@@ -243,7 +243,7 @@ var ShakyTiles3DTest = class ShakyTiles3DTest extends EffectsBaseLayer {
         return "a = cc.shakyTiles3D(duration, gridSize, range, shakeZ)";
     }
     getEffect(duration) {
-        return cc.shakyTiles3D( duration, cc.size(16,12), 5, false);
+        return cc.shakyTiles3D( duration, new cc.Size(16,12), 5, false);
     }
 
 };
@@ -256,7 +256,7 @@ var ShatteredTiles3DTest = class ShatteredTiles3DTest extends EffectsBaseLayer {
         return "a = cc.shatteredTiles3D(duration, gridSize, range, shatterZ)";
     }
     getEffect(duration) {
-        return cc.shatteredTiles3D( duration, cc.size(16,12), 5, false);
+        return cc.shatteredTiles3D( duration, new cc.Size(16,12), 5, false);
     }
 
 };
@@ -269,7 +269,7 @@ var ShuffleTilesTest = class ShuffleTilesTest extends EffectsBaseLayer {
         return "a = cc.shuffleTiles(duration, gridSize, seed)";
     }
     getEffect(duration) {
-        var action = cc.shuffleTiles( duration, cc.size(16,12), 25);
+        var action = cc.shuffleTiles( duration, new cc.Size(16,12), 25);
         var delay = cc.delayTime(2);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
@@ -286,7 +286,7 @@ var FadeOutTRTilesTest = class FadeOutTRTilesTest extends EffectsBaseLayer {
         return "a = cc.fadeOutTRTiles(duration, gridSize)";
     }
     getEffect(duration) {
-        var action = cc.fadeOutTRTiles( duration, cc.size(16,12));
+        var action = cc.fadeOutTRTiles( duration, new cc.Size(16,12));
         var delay = cc.delayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
@@ -303,7 +303,7 @@ var FadeOutBLTilesTest = class FadeOutBLTilesTest extends EffectsBaseLayer {
         return "a = cc.fadeOutBLTiles(duration, gridSize)";
     }
     getEffect(duration) {
-        var action = cc.fadeOutBLTiles( duration, cc.size(16,12));
+        var action = cc.fadeOutBLTiles( duration, new cc.Size(16,12));
         var delay = cc.delayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
@@ -320,7 +320,7 @@ var FadeOutUpTilesTest = class FadeOutUpTilesTest extends EffectsBaseLayer {
         return "a = cc.fadeOutUpTiles(duration, gridSize)";
     }
     getEffect(duration) {
-        var action = cc.fadeOutUpTiles( duration, cc.size(16,12));
+        var action = cc.fadeOutUpTiles( duration, new cc.Size(16,12));
         var delay = cc.delayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
@@ -337,7 +337,7 @@ var FadeOutDownTilesTest = class FadeOutDownTilesTest extends EffectsBaseLayer {
         return "a = cc.fadeOutDownTiles(duration, gridSize)";
     }
     getEffect(duration) {
-        var action = cc.fadeOutDownTiles( duration, cc.size(16,12));
+        var action = cc.fadeOutDownTiles( duration, new cc.Size(16,12));
         var delay = cc.delayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
@@ -354,7 +354,7 @@ var TurnOffTilesTest = class TurnOffTilesTest extends EffectsBaseLayer {
         return "a = cc.turnOffTiles(duration, gridSize, seed)";
     }
     getEffect(duration) {
-        var action = cc.turnOffTiles( duration, cc.size(48,32), 25);
+        var action = cc.turnOffTiles( duration, new cc.Size(48,32), 25);
         var delay = cc.delayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
@@ -371,7 +371,7 @@ var WavesTiles3DTest = class WavesTiles3DTest extends EffectsBaseLayer {
         return "a = cc.wavesTiles3D(duration, gridSize, waves, amplitude)";
     }
     getEffect(duration) {
-        var action = cc.wavesTiles3D( duration, cc.size(16,12), 4, 120);
+        var action = cc.wavesTiles3D( duration, new cc.Size(16,12), 4, 120);
         return action;
     }
 
@@ -386,7 +386,7 @@ var JumpTiles3DTest = class JumpTiles3DTest extends EffectsBaseLayer {
         return "a = cc.jumpTiles3D(duration, gridSize, jumps, amplitude)";
     }
     getEffect(duration) {
-        var action = cc.jumpTiles3D(duration, cc.size(16,12), 2, 30);
+        var action = cc.jumpTiles3D(duration, new cc.Size(16,12), 2, 30);
         return action;
     }
 
@@ -434,7 +434,7 @@ var PageTurn3DTest = class PageTurn3DTest extends EffectsBaseLayer {
         return "a = cc.pageTurn3D(duration, gridSize)";
     }
     getEffect(duration) {
-        var action = cc.pageTurn3D(duration, cc.size(15,10));
+        var action = cc.pageTurn3D(duration, new cc.Size(15,10));
         return action;
     }
 
@@ -468,7 +468,7 @@ var PageTurn3DInRectTest = class PageTurn3DInRectTest extends BaseTestLayer {
 
         //var node = new cc.Node();
         var visiableSize = director.getVisibleSize();
-        var gridRect = cc.rect(visiableSize.width*0.1,
+        var gridRect = new cc.Rect(visiableSize.width*0.1,
             visiableSize.height*0.1,
             visiableSize.width*0.4,
             visiableSize.height*0.4);
@@ -507,7 +507,7 @@ var PageTurn3DInRectTest = class PageTurn3DInRectTest extends BaseTestLayer {
     }
 
     getEffect(duration) {
-        var action = cc.pageTurn3D(duration, cc.size(15,10));
+        var action = cc.pageTurn3D(duration, new cc.Size(15,10));
         return action;
     }
 

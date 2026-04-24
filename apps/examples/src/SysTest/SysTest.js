@@ -79,7 +79,7 @@ var setClearColorTest = class setClearColorTest extends SysTestBase {
         super();
 
         this._title = "Set clearColor to red with alpha = 0 ";
-        var bg = new cc.Sprite(s_back,cc.rect(0,0, 200, 200));
+        var bg = new cc.Sprite(s_back,new cc.Rect(0,0, 200, 200));
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         this.addChild(bg);

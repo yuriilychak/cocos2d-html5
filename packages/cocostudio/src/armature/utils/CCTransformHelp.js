@@ -29,8 +29,8 @@
  */
 ccs.TransformHelp = class TransformHelp extends cc.NewClass {};
 
-ccs.TransformHelp.helpMatrix1 = cc.affineTransformMake(1, 0, 0, 1, 0, 0);
-ccs.TransformHelp.helpMatrix2 = cc.affineTransformMake(1, 0, 0, 1, 0, 0);
+ccs.TransformHelp.helpMatrix1 = cc.AffineTransform.make(1, 0, 0, 1, 0, 0);
+ccs.TransformHelp.helpMatrix2 = cc.AffineTransform.make(1, 0, 0, 1, 0, 0);
 ccs.TransformHelp.helpPoint1 = new cc.Point(0, 0);
 ccs.TransformHelp.helpPoint2 = new cc.Point(0, 0);
 ccs.TransformHelp.helpParentNode = {};
@@ -46,8 +46,8 @@ ccs.TransformHelp.transformFromParent = function (bone, parentNode) {
     this.nodeToMatrix(bone, this.helpMatrix1);
     this.nodeToMatrix(parentNode, this.helpMatrix2);
 
-    this.helpMatrix2 = cc.affineTransformInvert(this.helpMatrix2);
-    this.helpMatrix1 = cc.affineTransformConcat(this.helpMatrix1, this.helpMatrix2);
+    this.helpMatrix2 = cc.AffineTransform.invert(this.helpMatrix2);
+    this.helpMatrix1 = cc.AffineTransform.concat(this.helpMatrix1, this.helpMatrix2);
 
     this.matrixToNode(this.helpMatrix1, bone);
 };
@@ -56,7 +56,7 @@ ccs.TransformHelp.transformToParent = function(node, parentNode){
     this.nodeToMatrix(node, this.helpMatrix1);
     this.nodeToMatrix(parentNode, this.helpMatrix2);
 
-    this.helpMatrix1 = cc.affineTransformConcat(this.helpMatrix1, this.helpMatrix2);
+    this.helpMatrix1 = cc.AffineTransform.concat(this.helpMatrix1, this.helpMatrix2);
 
     this.matrixToNode(this.helpMatrix1, node);
 };
@@ -73,8 +73,8 @@ ccs.TransformHelp.transformFromParentWithoutScale = function(node, parentNode){
     this.nodeToMatrix(node, this.helpMatrix1);
     this.nodeToMatrix(this.helpParentNode, this.helpMatrix2);
 
-    this.helpMatrix2 = cc.affineTransformInvert(this.helpMatrix2);
-    this.helpMatrix1 = cc.affineTransformConcat(this.helpMatrix1, this.helpMatrix2);
+    this.helpMatrix2 = cc.AffineTransform.invert(this.helpMatrix2);
+    this.helpMatrix1 = cc.AffineTransform.concat(this.helpMatrix1, this.helpMatrix2);
 
     this.matrixToNode(this.helpMatrix1, node);
 };
@@ -89,7 +89,7 @@ ccs.TransformHelp.transformToParentWithoutScale = function(node, parentNode){
     this.nodeToMatrix(node, this.helpMatrix1);
     this.nodeToMatrix(this.helpParentNode, this.helpMatrix2);
 
-    this.helpMatrix1 = cc.affineTransformConcat(this.helpMatrix1, this.helpMatrix2);
+    this.helpMatrix1 = cc.AffineTransform.concat(this.helpMatrix1, this.helpMatrix2);
 
     this.matrixToNode(this.helpMatrix1, node);
 
@@ -132,13 +132,13 @@ ccs.TransformHelp.matrixToNode = function (matrix, node) {
      */
     this.helpPoint1.x = 0;
     this.helpPoint1.y = 1;
-    this.helpPoint1 = cc.pointApplyAffineTransform(this.helpPoint1, matrix);
+    this.helpPoint1 = cc.AffineTransform.applyToPoint(this.helpPoint1, matrix);
     this.helpPoint1.x -= matrix.tx;
     this.helpPoint1.y -= matrix.ty;
 
     this.helpPoint2.x = 1;
     this.helpPoint2.y = 0;
-    this.helpPoint2 = cc.pointApplyAffineTransform(this.helpPoint2, matrix);
+    this.helpPoint2 = cc.AffineTransform.applyToPoint(this.helpPoint2, matrix);
     this.helpPoint2.x -= matrix.tx;
     this.helpPoint2.y -= matrix.ty;
 

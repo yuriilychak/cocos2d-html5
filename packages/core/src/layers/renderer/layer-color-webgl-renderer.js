@@ -29,6 +29,7 @@ import {
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION
 } from "../../platform/macro/constants";
+import ShaderCache from "../../shaders/CCShaderCache";
 
 /**
  * LayerColor's WebGL render command
@@ -46,7 +47,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     this._color = new Uint32Array(1);
     this._vertexBuffer = null;
 
-    this._shaderProgram = cc.shaderCache.programForKey(
+    this._shaderProgram = ShaderCache.getInstance().programForKey(
       SHADER_POSITION_COLOR
     );
   }
@@ -127,14 +128,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
 
-    gl.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
-      3,
-      gl.FLOAT,
-      false,
-      16,
-      0
-    );
+    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 16, 0);
     gl.vertexAttribPointer(
       VERTEX_ATTRIB_COLOR,
       4,

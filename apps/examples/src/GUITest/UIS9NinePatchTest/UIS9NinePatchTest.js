@@ -37,7 +37,7 @@ var UIS9NinePatchTest = class UIS9NinePatchTest extends UIMainLayer {
             var x = winSize.width / 2;
             var y = 0 + (winSize.height / 2 + 50);
     
-            var preferedSize = cc.size(99,99);
+            var preferedSize = new cc.Size(99,99);
     
             //9-patch sprite with filename
             var playerSprite = new cc.Scale9Sprite("ccs-res/cocosui/player.9.png");
@@ -63,7 +63,7 @@ var UIS9NinePatchTest = class UIS9NinePatchTest extends UIMainLayer {
     
             var spriteFrame = cc.spriteFrameCache.getSpriteFrame("buttonnormal.9.png");
             var buttonScale9Sprite = new cc.Scale9Sprite(spriteFrame);
-            buttonScale9Sprite.setContentSize(cc.size(150,80));
+            buttonScale9Sprite.setContentSize(new cc.Size(150,80));
             buttonScale9Sprite.setPosition(new cc.Point(100,200));
             this.addChild(buttonScale9Sprite);
 

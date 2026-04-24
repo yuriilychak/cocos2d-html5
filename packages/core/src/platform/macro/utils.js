@@ -269,6 +269,21 @@ export function rectPointsToPixels(point) {
 }
 
 /**
+ * Returns the next power of two value for the given integer
+ * @param {Number} x
+ * @return {Number}
+ */
+export function NextPOT(x) {
+  x = x - 1;
+  x = x | (x >> 1);
+  x = x | (x >> 2);
+  x = x | (x >> 4);
+  x = x | (x >> 8);
+  x = x | (x >> 16);
+  return x + 1;
+}
+
+/**
  * Check webgl error.Error will be shown in console if exists.
  * @function
  */

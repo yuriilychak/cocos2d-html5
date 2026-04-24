@@ -139,8 +139,8 @@ cc.TMXTiledMap = class TMXTiledMap extends cc.Node {
         this._tileProperties = null;
         this._className = "TMXTiledMap";
 
-        this._mapSize = cc.size(0, 0);
-        this._tileSize = cc.size(0, 0);
+        this._mapSize = new cc.Size(0, 0);
+        this._tileSize = new cc.Size(0, 0);
 
         if(resourcePath !== undefined){
             this.initWithXML(tmxFile,resourcePath);
@@ -164,7 +164,7 @@ cc.TMXTiledMap = class TMXTiledMap extends cc.Node {
     set tileHeight(v) { this._setTileHeight(v); }
 
     getMapSize() {
-        return cc.size(this._mapSize.width, this._mapSize.height);
+        return new cc.Size(this._mapSize.width, this._mapSize.height);
     }
 
     /**
@@ -194,7 +194,7 @@ cc.TMXTiledMap = class TMXTiledMap extends cc.Node {
      * @return {cc.Size}
      */
     getTileSize() {
-        return cc.size(this._tileSize.width, this._tileSize.height);
+        return new cc.Size(this._tileSize.width, this._tileSize.height);
     }
 
     /**

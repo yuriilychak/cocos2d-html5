@@ -158,7 +158,7 @@ export default class Game extends EventHelper(NewClass) {
    * Run the game frame by frame.
    */
   step() {
-    cc.director.mainLoop();
+    Director.getInstance().mainLoop();
   }
 
   /**
@@ -197,7 +197,7 @@ export default class Game extends EventHelper(NewClass) {
    * Restart game.
    */
   restart() {
-    cc.director.popToSceneStackLevel(0);
+    Director.getInstance().popToSceneStackLevel(0);
     cc.audioEngine && cc.audioEngine.end();
     this.onStart();
   }
@@ -238,8 +238,8 @@ export default class Game extends EventHelper(NewClass) {
 
       cc.view = EGLView.getInstance();
       cc.director = Director.getInstance();
-      if (cc.director.setOpenGLView) cc.director.setOpenGLView(cc.view);
-      cc.winSize = cc.director.getWinSize();
+      if (Director.getInstance().setOpenGLView) Director.getInstance().setOpenGLView(cc.view);
+      cc.winSize = Director.getInstance().getWinSize();
 
       this._initEvents();
 
@@ -337,7 +337,7 @@ export default class Game extends EventHelper(NewClass) {
   _runMainLoop() {
     var config = this.config,
       CONFIG_KEY = Game.CONFIG_KEY,
-      director = cc.director,
+      director = Director.getInstance(),
       skip = true,
       frameRate = config[CONFIG_KEY.frameRate];
 

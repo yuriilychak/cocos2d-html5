@@ -259,7 +259,7 @@ cc.Control = class Control extends cc.Layer {
     isTouchInside(touch) {
         var touchLocation = touch.getLocation(); // Get the touch position
         touchLocation = this.getParent().convertToNodeSpace(touchLocation);
-        return cc.rectContainsPoint(this.getBoundingBox(), touchLocation);
+        return cc.Rect.containsPoint(this.getBoundingBox(), touchLocation);
     }
 
     /**

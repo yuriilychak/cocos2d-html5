@@ -1266,7 +1266,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
       if (texture.isLoaded()) {
         this.setTextureWithRect(
           texture,
-          cc.rect(0, 0, texture.width, texture.height)
+          new cc.Rect(0, 0, texture.width, texture.height)
         );
       } else {
         this._textureLoaded = false;
@@ -1276,7 +1276,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
             this._textureLoaded = true;
             this.setTextureWithRect(
               sender,
-              cc.rect(0, 0, sender.width, sender.height)
+              new cc.Rect(0, 0, sender.width, sender.height)
             );
           },
           this
@@ -1449,7 +1449,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
      * @return {cc.Rect}
      */
     getBoundingBoxToWorld() {
-      return cc.rect(0, 0, cc._canvas.width, cc._canvas.height);
+      return new cc.Rect(0, 0, cc._canvas.width, cc._canvas.height);
     }
 
     /**
@@ -2300,7 +2300,7 @@ cc.ParticleSystem = class ParticleSystem extends cc.Node {
             var size = texture.getContentSize();
             retParticle.setTextureWithRect(
               texture,
-              cc.rect(0, 0, size.width, size.height)
+              new cc.Rect(0, 0, size.width, size.height)
             );
           }
         }

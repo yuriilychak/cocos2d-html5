@@ -149,7 +149,7 @@ cc.FlipX3D = class FlipX3D extends cc.Grid3DAction {
    * @param {Number} duration
    */
   constructor(duration) {
-    if (duration !== undefined) super(duration, cc.size(1, 1));
+    if (duration !== undefined) super(duration, new cc.Size(1, 1));
     else super();
   }
 
@@ -159,7 +159,7 @@ cc.FlipX3D = class FlipX3D extends cc.Grid3DAction {
    * @return {Boolean}
    */
   initWithDuration(duration) {
-    return super.initWithDuration(duration, cc.size(1, 1));
+    return super.initWithDuration(duration, new cc.Size(1, 1));
   }
 
   /**

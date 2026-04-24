@@ -355,7 +355,7 @@ ccs.Armature = class Armature extends ccs.Node {
         var minX, minY, maxX, maxY = 0;
         var first = true;
 
-        var boundingBox = cc.rect(0, 0, 0, 0), locChildren = this._children;
+        var boundingBox = new cc.Rect(0, 0, 0, 0), locChildren = this._children;
 
         var len = locChildren.length;
         for (var i = 0; i < len; i++) {
@@ -386,7 +386,7 @@ ccs.Armature = class Armature extends ccs.Node {
                 boundingBox.height = maxY - minY;
             }
         }
-        return cc.rectApplyAffineTransform(boundingBox, this.getNodeToParentTransform());
+        return cc.AffineTransform.applyToRect(boundingBox, this.getNodeToParentTransform());
     }
 
     /**

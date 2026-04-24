@@ -147,7 +147,7 @@ class Dialog extends cc.Layer {
     this.messageLabel.setDimensions(
       config.messageLabel.dimensions
         ? config.messageLabel.dimensions
-        : cc.size(
+        : new cc.Size(
             this.backgroundSprite.width - 30,
             this.backgroundSprite.height - this.menuItemConfirm.y - 10
           )
@@ -205,7 +205,7 @@ class Dialog extends cc.Layer {
   _setScale(s9Sprite) {
     if (this._scaleFactor > 1) {
       s9Sprite.setContentSize(
-        cc.size(
+        new cc.Size(
           this._scaleFactor * s9Sprite.width,
           this._scaleFactor * s9Sprite.height
         )
@@ -574,7 +574,7 @@ class LoaderLayer extends cc.Layer {
       }
       if (config.progressBar.barBackgroundRes == null) {
         this.progressBackgroundSprite.setTextureRect(
-          cc.rect(
+          new cc.Rect(
             0,
             0,
             this.progressBarSprite.width,
@@ -643,7 +643,7 @@ class LoaderLayer extends cc.Layer {
       percent < 1 ? percent : 1;
       var width = percent * this._progressOriginalWidth;
       this.progressBarSprite.setTextureRect(
-        cc.rect(0, 0, width, this.progressBarSprite.height)
+        new cc.Rect(0, 0, width, this.progressBarSprite.height)
       );
       if (cc.LoaderLayer._isDefaultProgress) {
         this._barPoint.setPosition(

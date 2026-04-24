@@ -24,7 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { log } from '../boot/debugger';
+import { log } from "../boot/debugger";
+import { glBindTexture2DN } from "./CCGLStateCache";
 
 const types = {
   GL_FLOAT: 0,
@@ -151,12 +152,12 @@ export class UniformValue {
           this._uniform._location,
           this._value
         );
-        cc.glBindTexture2DN(this._value, this._textureId);
+        glBindTexture2DN(this._value, this._textureId);
         break;
       default:
     }
   }
-};
+}
 
 export class GLProgramState {
   static _cache = {};
@@ -332,4 +333,4 @@ export class GLProgramState {
       }
     }
   }
-};
+}

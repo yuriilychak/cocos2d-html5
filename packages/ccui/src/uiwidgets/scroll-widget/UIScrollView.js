@@ -242,7 +242,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         this._topBoundary = locSize.height;
         this._rightBoundary = locSize.width;
         var innerSize = this._innerContainer.getContentSize();
-        this._innerContainer.setContentSize(cc.size(Math.max(innerSize.width, locSize.width), Math.max(innerSize.height, locSize.height)));
+        this._innerContainer.setContentSize(new cc.Size(Math.max(innerSize.width, locSize.width), Math.max(innerSize.height, locSize.height)));
         this._innerContainer.setPosition(0, locSize.height - this._innerContainer.getContentSize().height);
 
         if(this._verticalScrollBar)
@@ -272,7 +272,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         else
             innerSizeHeight = size.height;
 
-        innerContainer.setContentSize(cc.size(innerSizeWidth, innerSizeHeight));
+        innerContainer.setContentSize(new cc.Size(innerSizeWidth, innerSizeHeight));
 
         var pos = this._innerContainer.getPosition();
         var contAP = this._innerContainer.getAnchorPoint();

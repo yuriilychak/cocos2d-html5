@@ -145,43 +145,9 @@ import {
 // Cocoa — Geometry & Transforms
 // ======================================================================
 import { Point, pointEqualToPoint } from "./cocoa/geometry/point";
-import { Size, size, sizeEqualToSize } from "./cocoa/geometry/size";
-import {
-  Rect,
-  rect,
-  rectEqualToRect,
-  _rectEqualToZero,
-  rectContainsRect,
-  rectGetMaxX,
-  rectGetMidX,
-  rectGetMinX,
-  rectGetMaxY,
-  rectGetMidY,
-  rectGetMinY,
-  rectContainsPoint,
-  rectIntersectsRect,
-  rectOverlapsRect,
-  rectUnion,
-  rectIntersection
-} from "./cocoa/geometry/rect";
-import {
-  AffineTransform,
-  affineTransformMake,
-  pointApplyAffineTransform,
-  _pointApplyAffineTransform,
-  sizeApplyAffineTransform,
-  affineTransformMakeIdentity,
-  rectApplyAffineTransform,
-  _rectApplyAffineTransformIn,
-  affineTransformTranslate,
-  affineTransformScale,
-  affineTransformRotate,
-  affineTransformConcat,
-  affineTransformConcatIn,
-  affineTransformEqualToTransform,
-  affineTransformInvert,
-  affineTransformInvertOut
-} from "./cocoa/affine-transform";
+import { Size } from "./cocoa/geometry/size";
+import { Rect } from "./cocoa/geometry/rect";
+import { AffineTransform } from "./cocoa/affine-transform";
 
 // ======================================================================
 // Support
@@ -615,42 +581,10 @@ cc.DENSITYDPI_LOW = DENSITYDPI_LOW;
 cc.Point = Point;
 cc.pointEqualToPoint = pointEqualToPoint;
 cc.Size = Size;
-cc.size = size;
-cc.sizeEqualToSize = sizeEqualToSize;
 cc.Rect = Rect;
-cc.rect = rect;
-cc.rectEqualToRect = rectEqualToRect;
-cc._rectEqualToZero = _rectEqualToZero;
-cc.rectContainsRect = rectContainsRect;
-cc.rectGetMaxX = rectGetMaxX;
-cc.rectGetMidX = rectGetMidX;
-cc.rectGetMinX = rectGetMinX;
-cc.rectGetMaxY = rectGetMaxY;
-cc.rectGetMidY = rectGetMidY;
-cc.rectGetMinY = rectGetMinY;
-cc.rectContainsPoint = rectContainsPoint;
-cc.rectIntersectsRect = rectIntersectsRect;
-cc.rectOverlapsRect = rectOverlapsRect;
-cc.rectUnion = rectUnion;
-cc.rectIntersection = rectIntersection;
 
 // Cocoa — AffineTransform
 cc.AffineTransform = AffineTransform;
-cc.affineTransformMake = affineTransformMake;
-cc.pointApplyAffineTransform = pointApplyAffineTransform;
-cc._pointApplyAffineTransform = _pointApplyAffineTransform;
-cc.sizeApplyAffineTransform = sizeApplyAffineTransform;
-cc.affineTransformMakeIdentity = affineTransformMakeIdentity;
-cc.rectApplyAffineTransform = rectApplyAffineTransform;
-cc._rectApplyAffineTransformIn = _rectApplyAffineTransformIn;
-cc.affineTransformTranslate = affineTransformTranslate;
-cc.affineTransformScale = affineTransformScale;
-cc.affineTransformRotate = affineTransformRotate;
-cc.affineTransformConcat = affineTransformConcat;
-cc.affineTransformConcatIn = affineTransformConcatIn;
-cc.affineTransformEqualToTransform = affineTransformEqualToTransform;
-cc.affineTransformInvert = affineTransformInvert;
-cc.affineTransformInvertOut = affineTransformInvertOut;
 
 // Support
 cc.vertexLineToPolygon = vertexLineToPolygon;

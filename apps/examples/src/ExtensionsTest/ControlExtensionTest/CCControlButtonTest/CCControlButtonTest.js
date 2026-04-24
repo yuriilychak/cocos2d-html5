@@ -263,9 +263,9 @@ var ControlButtonTest_Styling = class ControlButtonTest_Styling extends ControlS
     standardButtonWithTitle(title) {
         /** Creates and return a button with a default background and title color. */
         var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-        backgroundButton.setPreferredSize(cc.size(45, 45));  // Set the prefered size
+        backgroundButton.setPreferredSize(new cc.Size(45, 45));  // Set the prefered size
         var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
-        backgroundHighlightedButton.setPreferredSize(cc.size(45, 45));  // Set the prefered size
+        backgroundHighlightedButton.setPreferredSize(new cc.Size(45, 45));  // Set the prefered size
 
         var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 

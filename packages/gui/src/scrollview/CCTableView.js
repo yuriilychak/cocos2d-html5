@@ -143,7 +143,7 @@ cc.TableViewDataSource = class TableViewDataSource extends cc.NewClass {
      * @return {cc.Size} cell size
      */
     cellSizeForTable(table) {
-        return cc.size(0, 0);
+        return new cc.Size(0, 0);
     }
 
     /**
@@ -308,7 +308,7 @@ cc.TableView = class TableView extends cc.ScrollView {
     }
 
     _updateContentSize() {
-        var size = cc.size(0, 0);
+        var size = new cc.Size(0, 0);
 
         var cellsCount = this._dataSource.numberOfCellsInTableView(this);
 
@@ -316,10 +316,10 @@ cc.TableView = class TableView extends cc.ScrollView {
             var maxPosition = this._cellsPositions[cellsCount];
             switch (this.getDirection()) {
                 case cc.SCROLLVIEW_DIRECTION_HORIZONTAL:
-                    size = cc.size(maxPosition, this._viewSize.height);
+                    size = new cc.Size(maxPosition, this._viewSize.height);
                     break;
                 default:
-                    size = cc.size(this._viewSize.width, maxPosition);
+                    size = new cc.Size(this._viewSize.width, maxPosition);
                     break;
             }
         }
@@ -633,7 +633,7 @@ cc.TableView = class TableView extends cc.ScrollView {
             bb.x = tmpOrigin.x;
             bb.y = tmpOrigin.y;
             var locTableViewDelegate = this._tableViewDelegate;
-            if (cc.rectContainsPoint(bb, touch.getLocation()) && locTableViewDelegate !== null) {
+            if (cc.Rect.containsPoint(bb, touch.getLocation()) && locTableViewDelegate !== null) {
                 if (locTableViewDelegate.tableCellUnhighlight)
                     locTableViewDelegate.tableCellUnhighlight(this, this._touchedCell);
                 if (locTableViewDelegate.tableCellTouched)

@@ -31,7 +31,7 @@ var TEXT_INPUT_FONT_SIZE = 36;
 var sceneIdx = -1;
 
 var textInputGetRect = function (node) {
-    var rc = cc.rect(node.x, node.y, node.width, node.height);
+    var rc = new cc.Rect(node.x, node.y, node.width, node.height);
     rc.x -= rc.width / 2;
     rc.y -= rc.height / 2;
     return rc;
@@ -155,11 +155,11 @@ var KeyboardNotificationLayer = class KeyboardNotificationLayer extends TextInpu
             + ", size:" + info.end.width + "," + info.end.height + ")");
 
         // if the keyboard area doesn't intersect with the tracking node area, nothing need to do.
-        if (!cc.rectIntersectsRect(rectTracked, info.end))
+        if (!cc.Rect.intersects(rectTracked, info.end))
             return;
 
         // assume keyboard at the bottom of screen, calculate the vertical adjustment.
-        var adjustVert = cc.rectGetMaxY(info.end) - cc.rectGetMinY(rectTracked);
+        var adjustVert = cc.Rect.getMaxY(info.end) - cc.Rect.getMinY(rectTracked);
         cc.log("TextInputTest:needAdjustVerticalPosition(" + adjustVert + ")");
 
         // move all the children node of KeyboardNotificationLayer
@@ -189,7 +189,7 @@ var KeyboardNotificationLayer = class KeyboardNotificationLayer extends TextInpu
         cc.log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
             + ", size:" + rect.width + "," + rect.height + ")");
 
-        target.onClickTrackNode(cc.rectContainsPoint(rect, point));
+        target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
         cc.log("----------------------------------");
     }
 
@@ -207,7 +207,7 @@ var KeyboardNotificationLayer = class KeyboardNotificationLayer extends TextInpu
         cc.log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
             + ", size:" + rect.width + "," + rect.height + ")");
 
-        target.onClickTrackNode(cc.rectContainsPoint(rect, point));
+        target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
         cc.log("----------------------------------");
     }
 

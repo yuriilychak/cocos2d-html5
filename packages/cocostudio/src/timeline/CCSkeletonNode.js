@@ -109,38 +109,38 @@ ccs.SkeletonNode = (function () {
             var boundingBox = this.getVisibleSkinsRect();
             var first = true;
             if (boundingBox.x !== 0 || boundingBox.y !== 0 || boundingBox.width !== 0 || boundingBox.height !== 0) {
-                minx = cc.rectGetMinX(boundingBox);
-                miny = cc.rectGetMinY(boundingBox);
-                maxx = cc.rectGetMaxX(boundingBox);
-                maxy = cc.rectGetMaxY(boundingBox);
+                minx = cc.Rect.getMinX(boundingBox);
+                miny = cc.Rect.getMinY(boundingBox);
+                maxx = cc.Rect.getMaxX(boundingBox);
+                maxy = cc.Rect.getMaxY(boundingBox);
                 first = false;
             }
             var allBones = this.getAllSubBones();
             for (var bone, i = 0; i < allBones.length; i++) {
                 bone = allBones[i];
-                var r = cc.rectApplyAffineTransform(bone.getVisibleSkinsRect(), bone.getNodeToParentTransform(bone.getRootSkeletonNode()));
+                var r = cc.AffineTransform.applyToRect(bone.getVisibleSkinsRect(), bone.getNodeToParentTransform(bone.getRootSkeletonNode()));
                 if (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0)
                     continue;
 
                 if (first) {
-                    minx = cc.rectGetMinX(r);
-                    miny = cc.rectGetMinY(r);
-                    maxx = cc.rectGetMaxX(r);
-                    maxy = cc.rectGetMaxY(r);
+                    minx = cc.Rect.getMinX(r);
+                    miny = cc.Rect.getMinY(r);
+                    maxx = cc.Rect.getMaxX(r);
+                    maxy = cc.Rect.getMaxY(r);
 
                     first = false;
                 } else {
-                    minx = Math.min(cc.rectGetMinX(r), minx);
-                    miny = Math.min(cc.rectGetMinY(r), miny);
-                    maxx = Math.max(cc.rectGetMaxX(r), maxx);
-                    maxy = Math.max(cc.rectGetMaxY(r), maxy);
+                    minx = Math.min(cc.Rect.getMinX(r), minx);
+                    miny = Math.min(cc.Rect.getMinY(r), miny);
+                    maxx = Math.max(cc.Rect.getMaxX(r), maxx);
+                    maxy = Math.max(cc.Rect.getMaxY(r), maxy);
                 }
             }
             boundingBox.x = minx;
             boundingBox.y = miny;
             boundingBox.width = maxx - minx;
             boundingBox.height = maxy - miny;
-            return cc.rectApplyAffineTransform(boundingBox, this.getNodeToParentTransform());
+            return cc.AffineTransform.applyToRect(boundingBox, this.getNodeToParentTransform());
         }
 
         _visit(parentCmd) {

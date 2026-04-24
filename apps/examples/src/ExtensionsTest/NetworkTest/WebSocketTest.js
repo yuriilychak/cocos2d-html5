@@ -78,7 +78,7 @@ var WebSocketTestLayer = class WebSocketTestLayer extends cc.Layer {
         
 
         // Send Text Status Label
-        this._sendTextStatus = new cc.LabelTTF("Send Text WS is waiting...", "Arial", 14, cc.size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        this._sendTextStatus = new cc.LabelTTF("Send Text WS is waiting...", "Arial", 14, new cc.Size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         this._sendTextStatus.anchorX = 0;
         this._sendTextStatus.anchorY = 0;
         this._sendTextStatus.x = 0;
@@ -86,7 +86,7 @@ var WebSocketTestLayer = class WebSocketTestLayer extends cc.Layer {
         this.addChild(this._sendTextStatus);
         
         // Send Binary Status Label
-        this._sendBinaryStatus = new cc.LabelTTF("Send Binary WS is waiting...", "Arial", 14, cc.size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        this._sendBinaryStatus = new cc.LabelTTF("Send Binary WS is waiting...", "Arial", 14, new cc.Size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         this._sendBinaryStatus.anchorX = 0;
         this._sendBinaryStatus.anchorY = 0;
         this._sendBinaryStatus.x = 160;
@@ -94,7 +94,7 @@ var WebSocketTestLayer = class WebSocketTestLayer extends cc.Layer {
         this.addChild(this._sendBinaryStatus);
         
         // Error Label
-        this._errorStatus = new cc.LabelTTF("Error WS is waiting...", "Arial", 14, cc.size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        this._errorStatus = new cc.LabelTTF("Error WS is waiting...", "Arial", 14, new cc.Size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         this._errorStatus.anchorX = 0;
         this._errorStatus.anchorY = 0;
         this._errorStatus.x = 320;

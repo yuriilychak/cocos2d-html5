@@ -242,7 +242,7 @@
             w = options["width"] || 0;
             h = options["height"] || 0;
         }
-        widget.setSize(cc.size(w, h));
+        widget.setSize(new cc.Size(w, h));
 
         widget.setClippingEnabled(options["clipAble"]);
 
@@ -285,7 +285,7 @@
             var cy = options["capInsetsY"] || 0;
             var cw = isNaN(options["capInsetsWidth"]) ? 1 : options["capInsetsWidth"];
             var ch = isNaN(options["capInsetsHeight"]) ? 1 : options["capInsetsHeight"];
-            widget.setBackGroundImageCapInsets(cc.rect(cx, cy, cw, ch));
+            widget.setBackGroundImageCapInsets(new cc.Rect(cx, cy, cw, ch));
         }
         if (options["layoutType"]) {
             widget.setLayoutType(options["layoutType"]);
@@ -317,11 +317,11 @@
             var cw = isNaN(options["capInsetsWidth"]) ? 1 : options["capInsetsWidth"];
             var ch = isNaN(options["capInsetsHeight"]) ? 1 : options["capInsetsHeight"];
 
-            button.setCapInsets(cc.rect(cx, cy, cw, ch));
+            button.setCapInsets(new cc.Rect(cx, cy, cw, ch));
             var sw = options["scale9Width"] || 0;
             var sh = options["scale9Height"] || 0;
             if (sw != null && sh != null)
-                button.setSize(cc.size(sw, sh));
+                button.setSize(new cc.Size(sw, sh));
         }
         var text = options["text"] || "";
         if (text) {
@@ -410,7 +410,7 @@
             if (sw && sh) {
                 var swf = options["scale9Width"] || 0;
                 var shf = options["scale9Height"] || 0;
-                widget.setSize(cc.size(swf, shf));
+                widget.setSize(new cc.Size(swf, shf));
             }
 
             var cx = options["capInsetsX"] || 0;
@@ -418,7 +418,7 @@
             var cw = isNaN(options["capInsetsWidth"]) ? 1 : options["capInsetsWidth"];
             var ch = isNaN(options["capInsetsHeight"]) ? 1 : options["capInsetsHeight"];
 
-            widget.setCapInsets(cc.rect(cx, cy, cw, ch));
+            widget.setCapInsets(new cc.Rect(cx, cy, cw, ch));
 
         }
     };
@@ -503,7 +503,7 @@
         var aw = options["areaWidth"] || 0;
         var ah = options["areaHeight"] || 0;
         if (aw && ah) {
-            var size = cc.size(options["areaWidth"], options["areaHeight"]);
+            var size = new cc.Size(options["areaWidth"], options["areaHeight"]);
             widget._setTextAreaSize(size);
         }
         var ha = options["hAlignment"] || 0;
@@ -546,11 +546,11 @@
             var cw = isNaN(options["capInsetsWidth"]) ? 1 : options["capInsetsWidth"];
             var ch = isNaN(options["capInsetsHeight"]) ? 1 : options["capInsetsHeight"];
 
-            widget.setCapInsets(cc.rect(cx, cy, cw, ch));
+            widget.setCapInsets(new cc.Rect(cx, cy, cw, ch));
 
             var width = options["width"] || 0;
             var height = options["height"] || 0;
-            widget.setSize(cc.size(width, height));
+            widget.setSize(new cc.Size(width, height));
         }
 
         widget.setDirection(options["direction"] || 0);
@@ -567,7 +567,7 @@
         parser.LayoutAttributes(widget, options, resoutcePath);
         var innerWidth = options["innerWidth"] != null ? options["innerWidth"] : 200;
         var innerHeight = options["innerHeight"] != null ? options["innerHeight"] : 200;
-        widget.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+        widget.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
         var direction = options["direction"] != null ? options["direction"] : 1;
         widget.setDirection(direction);
@@ -594,7 +594,7 @@
                 getPath(resourcePath, imageFileType, imageFileName, function (path, type) {
                     slider.loadBarTexture(path, type);
                 });
-                slider.setSize(cc.size(barLength, slider.getContentSize().height));
+                slider.setSize(new cc.Size(barLength, slider.getContentSize().height));
             }
         } else {
             getPath(resourcePath, imageFileType, imageFileName, function (path, type) {
@@ -657,7 +657,7 @@
         var dw = options["width"] || 0;
         var dh = options["height"] || 0;
         if (dw > 0 || dh > 0) {
-            //textField.setSize(cc.size(dw, dh));
+            //textField.setSize(new cc.Size(dw, dh));
         }
         var maxLengthEnable = options["maxLengthEnable"];
         widget.setMaxLengthEnabled(maxLengthEnable);
@@ -674,7 +674,7 @@
         var aw = options["areaWidth"] || 0;
         var ah = options["areaHeight"] || 0;
         if (aw && ah) {
-            var size = cc.size(aw, ah);
+            var size = new cc.Size(aw, ah);
             widget.setTextAreaSize(size);
         }
         var ha = options["hAlignment"] || 0;

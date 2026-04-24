@@ -212,7 +212,7 @@ sp.Skeleton = class Skeleton extends cc.Node {
             maxY = Math.max(maxY, vertices[VERTEX.OY1] * scaleY, vertices[VERTEX.OY4] * scaleY, vertices[VERTEX.OY2] * scaleY, vertices[VERTEX.OY3] * scaleY);
         }
         var position = this.getPosition();
-        return cc.rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+        return new cc.Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
     }
 
     /**

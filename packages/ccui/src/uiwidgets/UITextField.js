@@ -314,7 +314,7 @@ ccui.TextField = class TextField extends ccui.Widget {
     hitTest(pt){
         if (this._useTouchArea) {
             var nsp = this.convertToNodeSpace(pt);
-            var bb = cc.rect(
+            var bb = new cc.Rect(
                 -this._touchWidth * this._anchorPoint.x,
                 -this._touchHeight * this._anchorPoint.y,
                 this._touchWidth, this._touchHeight
@@ -331,7 +331,7 @@ ccui.TextField = class TextField extends ccui.Widget {
      * @returns {cc.Size}
      */
     getTouchSize() {
-        return cc.size(this._touchWidth, this._touchHeight);
+        return new cc.Size(this._touchWidth, this._touchHeight);
     }
 
     /**

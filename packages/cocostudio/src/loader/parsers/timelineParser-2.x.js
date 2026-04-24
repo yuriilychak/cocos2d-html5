@@ -499,7 +499,7 @@
             var scale9Width = json["Scale9Width"] || 0;
             var scale9Height = json["Scale9Height"] || 0;
 
-            widget.setBackGroundImageCapInsets(cc.rect(
+            widget.setBackGroundImageCapInsets(new cc.Rect(
                 scale9OriginX, scale9OriginY, scale9Width, scale9Height
             ));
 
@@ -545,7 +545,7 @@
         var areaWidth = json["AreaWidth"];
         var areaHeight = json["areaHeight"];
         if (areaWidth && areaHeight)
-            widget.setTextAreaSize(cc.size(areaWidth, areaHeight));
+            widget.setTextAreaSize(new cc.Size(areaWidth, areaHeight));
 
         var h_alignment = json["HorizontalAlignmentType"] || "HT_Left";
         switch (h_alignment) {
@@ -596,7 +596,7 @@
         if (json["ShadowEnabled"] && json["ShadowColor"] && widget.enableShadow)
             widget.enableShadow(
                 getColor(json["ShadowColor"]),
-                cc.size(getParam(json["ShadowOffsetX"], 2), getParam(json["ShadowOffsetY"], -2)),
+                new cc.Size(getParam(json["ShadowOffsetX"], 2), getParam(json["ShadowOffsetY"], -2)),
                 json["ShadowBlurRadius"] || 0
             );
 
@@ -678,7 +678,7 @@
         if (label && json["ShadowEnabled"] && json["ShadowColor"] && label.enableShadow) {
             label.enableShadow(
                 getColor(json["ShadowColor"]),
-                cc.size(getParam(json["ShadowOffsetX"], 2), getParam(json["ShadowOffsetY"], -2)),
+                new cc.Size(getParam(json["ShadowOffsetX"], 2), getParam(json["ShadowOffsetY"], -2)),
                 json["ShadowBlurRadius"] || 0
             );
         }
@@ -690,7 +690,7 @@
         if (scale9Enabled) {
             widget.setUnifySizeEnabled(false);
             widget.ignoreContentAdaptWithSize(false);
-            var capInsets = cc.rect(
+            var capInsets = new cc.Rect(
                 json["Scale9OriginX"] || 0,
                 json["Scale9OriginY"] || 0,
                 json["Scale9Width"] || 0,
@@ -774,7 +774,7 @@
             var scale9OriginY = json["Scale9OriginY"] || 0;
             var scale9Width = json["Scale9Width"] || 0;
             var scale9Height = json["Scale9Height"] || 0;
-            widget.setBackGroundImageCapInsets(cc.rect(
+            widget.setBackGroundImageCapInsets(new cc.Rect(
                 scale9OriginX, scale9OriginY, scale9Width, scale9Height
             ));
             setContentSize(widget, json["Size"]);
@@ -786,7 +786,7 @@
         setLayoutBackgroundVector(widget, json["ColorVector"]);
 
         var innerNodeSize = json["InnerNodeSize"];
-        var innerSize = cc.size(
+        var innerSize = new cc.Size(
             innerNodeSize["Width"] || 0,
             innerNodeSize["Height"] || 0
         );
@@ -830,7 +830,7 @@
             var scale9OriginY = json["Scale9OriginY"] || 0;
             var scale9Width = json["Scale9Width"] || 0;
             var scale9Height = json["Scale9Height"] || 0;
-            widget.setCapInsets(cc.rect(
+            widget.setCapInsets(new cc.Rect(
                 scale9OriginX,
                 scale9OriginY,
                 scale9Width,
@@ -934,7 +934,7 @@
             var scale9OriginY = json["Scale9OriginY"] || 0;
             var scale9Width = json["Scale9Width"] || 0;
             var scale9Height = json["Scale9Height"] || 0;
-            widget.setBackGroundImageCapInsets(cc.rect(
+            widget.setBackGroundImageCapInsets(new cc.Rect(
                 scale9OriginX,
                 scale9OriginY,
                 scale9Width,
@@ -989,7 +989,7 @@
             var scale9OriginY = json["Scale9OriginY"] || 0;
             var scale9Width = json["Scale9Width"] || 0;
             var scale9Height = json["Scale9Height"] || 0;
-            widget.setBackGroundImageCapInsets(cc.rect(
+            widget.setBackGroundImageCapInsets(new cc.Rect(
                 scale9OriginX,
                 scale9OriginY,
                 scale9Width,
@@ -1028,7 +1028,7 @@
         var innerSize = json["InnerNodeSize"];
         //Width
         if (innerSize != null)
-            widget.setInnerContainerSize(cc.size(innerSize["Widget"] || 0, innerSize["Height"] || 0));
+            widget.setInnerContainerSize(new cc.Size(innerSize["Widget"] || 0, innerSize["Height"] || 0));
 
         setLayoutBackground(widget, json["SingleColor"], json["FirstColor"], json["EndColor"]);
         setLayoutBackgroundVector(widget, json["ColorVector"]);
@@ -1361,7 +1361,7 @@
         var x = size["X"] || 0;
         var y = size["Y"] || 0;
         if (size)
-            node.setContentSize(cc.size(x, y));
+            node.setContentSize(new cc.Size(x, y));
     };
 
     var register = [

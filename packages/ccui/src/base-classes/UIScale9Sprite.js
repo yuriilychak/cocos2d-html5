@@ -439,7 +439,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
     }
 
     getCapInsets() {
-        return cc.rect(this._capInsetsInternal);
+        return new cc.Rect(this._capInsetsInternal);
     }
 
     _asyncSetCapInsets() {
@@ -463,9 +463,9 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
     }
 
     _updateCapInsets(rect, capInsets) {
-        if(!capInsets || !rect || cc._rectEqualToZero(capInsets)) {
+        if(!capInsets || !rect || cc.Rect.equalToZero(capInsets)) {
             rect = rect || {x:0, y:0, width: this._contentSize.width, height: this._contentSize.height};
-            this._capInsetsInternal = cc.rect(rect.width /3,
+            this._capInsetsInternal = new cc.Rect(rect.width /3,
                                               rect.height /3,
                                               rect.width /3,
                                               rect.height /3);
@@ -473,7 +473,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
             this._capInsetsInternal = capInsets;
         }
 
-        if(!cc._rectEqualToZero(rect)) {
+        if(!cc.Rect.equalToZero(rect)) {
             this._insetLeft = this._capInsetsInternal.x;
             this._insetTop = this._capInsetsInternal.y;
             this._insetRight = rect.width - this._insetLeft - this._capInsetsInternal.width;
@@ -486,10 +486,10 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
         if (file instanceof cc.Rect) {
             file = arguments[1];
             capInsets = arguments[0];
-            rect = cc.rect(0, 0, 0, 0);
+            rect = new cc.Rect(0, 0, 0, 0);
         } else {
-            rect = rect || cc.rect(0, 0, 0, 0);
-            capInsets = capInsets || cc.rect(0, 0, 0, 0);
+            rect = rect || new cc.Rect(0, 0, 0, 0);
+            capInsets = capInsets || new cc.Rect(0, 0, 0, 0);
         }
 
         if(!file)
@@ -512,9 +512,9 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
         }
 
         //in this function, the texture already make sure is loaded.
-        if( cc._rectEqualToZero(rect)) {
+        if( cc.Rect.equalToZero(rect)) {
             var textureSize = texture.getContentSize();
-            rect = cc.rect(0, 0, textureSize.width, textureSize.height);
+            rect = new cc.Rect(0, 0, textureSize.width, textureSize.height);
         }
         this.setTexture(texture, rect);
         this._updateCapInsets(rect, capInsets);
@@ -551,7 +551,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
     initWithSpriteFrame(spriteFrame, capInsets) {
         this.setSpriteFrame(spriteFrame);
 
-        capInsets = capInsets || cc.rect(0, 0, 0, 0);
+        capInsets = capInsets || new cc.Rect(0, 0, 0, 0);
 
         this._updateCapInsets(spriteFrame._rect, capInsets);
     }
@@ -559,7 +559,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
     initWithSpriteFrameName(spriteFrameName, capInsets) {
         if(!spriteFrameName)
             throw new Error("ccui.Scale9Sprite.initWithSpriteFrameName(): spriteFrameName should be non-null");
-        capInsets = capInsets || cc.rect(0, 0, 0, 0);
+        capInsets = capInsets || new cc.Rect(0, 0, 0, 0);
 
         var frame = cc.spriteFrameCache.getSpriteFrame(spriteFrameName);
         if (frame == null) {
@@ -568,7 +568,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
         }
         this.setSpriteFrame(frame);
 
-        capInsets = capInsets || cc.rect(0, 0, 0, 0);
+        capInsets = capInsets || new cc.Rect(0, 0, 0, 0);
 
         this._updateCapInsets(frame._rect, capInsets);
     }
@@ -630,7 +630,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
             this._uvsDirty = true;
             var self = this;
             var onResourceDataLoaded = function () {
-                if (cc.sizeEqualToSize(self._contentSize, cc.size(0, 0))) {
+                if (cc.Size.equalTo(self._contentSize, new cc.Size(0, 0))) {
                     self.setContentSize(self._spriteFrame._rect);
                 }
                 self._textureLoaded = true;
@@ -677,7 +677,7 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
     }
 
     setPreferredSize(preferredSize) {
-        if (!preferredSize || cc.sizeEqualToSize(this._contentSize, preferredSize)) return;
+        if (!preferredSize || cc.Size.equalTo(this._contentSize, preferredSize)) return;
         this.setContentSize(preferredSize);
     }
 
@@ -704,9 +704,9 @@ cc.Scale9Sprite = class Scale9Sprite extends cc.EventHelper(cc.Node) {
             if(this._spriteFrame) {
                 return this._spriteFrame._originalSize;
             }
-            return cc.size(this._contentSize);
+            return new cc.Size(this._contentSize);
         } else {
-            return cc.size(this._contentSize);
+            return new cc.Size(this._contentSize);
         }
     }
 

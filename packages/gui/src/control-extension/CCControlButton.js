@@ -69,7 +69,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
 
     constructor(label, backgroundSprite, fontSize) {
         super();
-        this._preferredSize = cc.size(0, 0);
+        this._preferredSize = new cc.Size(0, 0);
         this._labelAnchorPoint = new cc.Point(0, 0);
         this._currentTitle = "";
         this._currentTitleColor = cc.color.WHITE;
@@ -130,7 +130,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
             locBackgroundSprite.setPosition(locContentSize.width / 2, locContentSize.height / 2);
 
         // Get the title label size
-        var titleLabelSize = cc.size(0, 0);
+        var titleLabelSize = new cc.Size(0, 0);
         if (label) {
             var boundingBox = label.getBoundingBox();
             titleLabelSize.width = boundingBox.width;
@@ -145,7 +145,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
             //TODO: should this also have margins if one of the preferred sizes is relaxed?
             if (locBackgroundSprite) {
                 var preferredSize = locBackgroundSprite.getPreferredSize();
-                preferredSize = cc.size(preferredSize.width, preferredSize.height);
+                preferredSize = new cc.Size(preferredSize.width, preferredSize.height);
                 if (preferredSize.width <= 0)
                     preferredSize.width = titleLabelSize.width;
                 if (preferredSize.height <= 0)
@@ -156,9 +156,9 @@ cc.ControlButton = class ControlButton extends cc.Control {
         }
 
         // Set the content size
-        var rectTitle = label ? label.getBoundingBox() : cc.rect(0, 0, 0, 0);
-        var rectBackground = locBackgroundSprite ? locBackgroundSprite.getBoundingBox() : cc.rect(0, 0, 0, 0);
-        var maxRect = cc.rectUnion(rectTitle, rectBackground);
+        var rectTitle = label ? label.getBoundingBox() : new cc.Rect(0, 0, 0, 0);
+        var rectBackground = locBackgroundSprite ? locBackgroundSprite.getBoundingBox() : new cc.Rect(0, 0, 0, 0);
+        var maxRect = cc.Rect.union(rectTitle, rectBackground);
         this.setContentSize(maxRect.width, maxRect.height);
         locContentSize = this.getContentSize();
         if (label) {
@@ -192,7 +192,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
 
             // Adjust the background image by default
             this.setAdjustBackgroundImage(true);
-            this.setPreferredSize(cc.size(0, 0));
+            this.setPreferredSize(new cc.Size(0, 0));
 
             // Zooming button by default
             this.zoomOnTouchDown = true;
@@ -225,7 +225,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
 
             this._labelAnchorPoint = new cc.Point(0.5, 0.5);
 
-            this.setPreferredSize(cc.size(0, 0));
+            this.setPreferredSize(new cc.Size(0, 0));
 
             // Layout update
             this.needsLayout();

@@ -158,7 +158,7 @@ ccui.helper = {
             y = 0.0;
             height = 0.0;
         }
-        return cc.rect(x, y, width, height);
+        return new cc.Rect(x, y, width, height);
     },
 
     _createSpriteFromBase64: function (base64String, key) {

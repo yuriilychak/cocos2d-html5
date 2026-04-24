@@ -42,7 +42,7 @@ var TableViewTestLayer = class TableViewTestLayer extends cc.Layer {
     init() {
         var winSize = cc.director.getWinSize();
 
-        var tableView = new cc.TableView(this, cc.size(600, 60));
+        var tableView = new cc.TableView(this, new cc.Size(600, 60));
         tableView.setDirection(cc.SCROLLVIEW_DIRECTION_HORIZONTAL);
         tableView.x = 20;
         tableView.y = winSize.height / 2 - 150;
@@ -50,7 +50,7 @@ var TableViewTestLayer = class TableViewTestLayer extends cc.Layer {
         this.addChild(tableView);
         tableView.reloadData();
 
-        tableView = new cc.TableView(this, cc.size(60, 350));
+        tableView = new cc.TableView(this, new cc.Size(60, 350));
         tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL);
         tableView.x = winSize.width - 150;
         tableView.y = winSize.height / 2 - 150;
@@ -90,9 +90,9 @@ var TableViewTestLayer = class TableViewTestLayer extends cc.Layer {
 
     tableCellSizeForIndex(table, idx) {
         if (idx == 2) {
-            return cc.size(100, 100);
+            return new cc.Size(100, 100);
         }
-        return cc.size(60, 60);
+        return new cc.Size(60, 60);
     }
 
     tableCellAtIndex(table, idx) {

@@ -58,7 +58,7 @@ ccs.Bone = class Bone extends ccs.Node {
         this._displayManager = null;
         this.ignoreMovementBoneData = false;
 
-        this._worldTransform = cc.affineTransformMake(1, 0, 0, 1, 0, 0);
+        this._worldTransform = cc.AffineTransform.make(1, 0, 0, 1, 0, 0);
         this._boneTransformDirty = true;
         this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
         this.blendDirty = false;
@@ -191,7 +191,7 @@ ccs.Bone = class Bone extends ccs.Node {
 
             ccs.TransformHelp.nodeToMatrix(locWorldInfo, this._worldTransform);
             if (this._armatureParentBone)
-                cc.affineTransformConcatIn(this._worldTransform, this._armature.getNodeToParentTransform());            //TODO TransformConcat
+                cc.AffineTransform.concatIn(this._worldTransform, this._armature.getNodeToParentTransform());            //TODO TransformConcat
         }
 
         ccs.displayFactory.updateDisplay(this, delta, this._boneTransformDirty || this._armature.getArmatureTransformDirty());
@@ -377,7 +377,7 @@ ccs.Bone = class Bone extends ccs.Node {
      * @returns {cc.AffineTransform}
      */
     getNodeToWorldTransform() {
-        return cc.affineTransformConcat(this._worldTransform, this._armature.getNodeToWorldTransform());
+        return cc.AffineTransform.concat(this._worldTransform, this._armature.getNodeToWorldTransform());
     }
 
     /**
@@ -674,7 +674,7 @@ ccs.Bone = class Bone extends ccs.Node {
 
             if (pt) {
                 this.originTransform();
-                cc.affineTransformConcatIn(t, node._worldTransform);
+                cc.AffineTransform.concatIn(t, node._worldTransform);
             }
 
             if (pt) {
@@ -732,7 +732,7 @@ ccs.Bone = class Bone extends ccs.Node {
 
             if (pt) {
                 this.originTransform();
-                cc.affineTransformConcatIn(t, node._worldTransform);
+                cc.AffineTransform.concatIn(t, node._worldTransform);
             }
 
             if (pt) {

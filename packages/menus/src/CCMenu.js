@@ -572,7 +572,7 @@ cc.Menu = class Menu extends cc.Layer {
                     var r = locItemChild.rect();
                     r.x = 0;
                     r.y = 0;
-                    if (cc.rectContainsPoint(r, local))
+                    if (cc.Rect.containsPoint(r, local))
                         return locItemChild;
                 }
             }

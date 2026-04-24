@@ -26,6 +26,8 @@
  ****************************************************************************/
 
 import { Point } from "../cocoa/geometry/point";
+import { degreesToRadians } from "../platform/macro/utils";
+import { vertex2 } from "../platform/types/vertex";
 
 /**
  * converts a line to a polygon
@@ -75,9 +77,9 @@ export function vertexLineToPolygon(
       // Calculate angle between vectors
       var angle = Math.acos(Point.dot(p2p1, p0p1));
 
-      if (angle < cc.degreesToRadians(70))
+      if (angle < degreesToRadians(70))
         perpVector = Point.perp(Point.normalize(Point.midpoint(p2p1, p0p1)));
-      else if (angle < cc.degreesToRadians(170))
+      else if (angle < degreesToRadians(170))
         perpVector = Point.normalize(Point.midpoint(p2p1, p0p1));
       else perpVector = Point.perp(Point.normalize(Point.sub(p2, p0)));
     }
@@ -95,10 +97,10 @@ export function vertexLineToPolygon(
     idx = i * 2;
     var idx1 = idx + 2;
 
-    var v1 = cc.vertex2(vertices[idx * 2], vertices[idx * 2 + 1]);
-    var v2 = cc.vertex2(vertices[(idx + 1) * 2], vertices[(idx + 1) * 2 + 1]);
-    var v3 = cc.vertex2(vertices[idx1 * 2], vertices[idx1 * 2]);
-    var v4 = cc.vertex2(vertices[(idx1 + 1) * 2], vertices[(idx1 + 1) * 2 + 1]);
+    var v1 = vertex2(vertices[idx * 2], vertices[idx * 2 + 1]);
+    var v2 = vertex2(vertices[(idx + 1) * 2], vertices[(idx + 1) * 2 + 1]);
+    var v3 = vertex2(vertices[idx1 * 2], vertices[idx1 * 2]);
+    var v4 = vertex2(vertices[(idx1 + 1) * 2], vertices[(idx1 + 1) * 2 + 1]);
 
     //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
     var fixVertexResult = !vertexLineIntersect(

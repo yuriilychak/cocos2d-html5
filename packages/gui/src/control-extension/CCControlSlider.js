@@ -130,7 +130,7 @@ cc.ControlSlider = class ControlSlider extends cc.Control {
         rect.width += this._thumbSprite.getContentSize().width;
         rect.x -= this._thumbSprite.getContentSize().width / 2;
 
-        return cc.rectContainsPoint(rect, touchLocation);
+        return cc.Rect.containsPoint(rect, touchLocation);
     }
     locationFromTouch(touch) {
         var touchLocation = touch.getLocation();                      // Get the touch position
@@ -268,7 +268,7 @@ cc.ControlSlider = class ControlSlider extends cc.Control {
 
         // Stretches content proportional to newLevel
         var textureRect = this._progressSprite.getTextureRect();
-        textureRect = cc.rect(textureRect.x, textureRect.y, this._thumbSprite.getPositionX(), textureRect.height);
+        textureRect = new cc.Rect(textureRect.x, textureRect.y, this._thumbSprite.getPositionX(), textureRect.height);
         this._progressSprite.setTextureRect(textureRect, this._progressSprite.isTextureRectRotated());
         this._thumbSprite._renderCmd.transform(this._renderCmd);
     }

@@ -1833,7 +1833,7 @@ var ActionFollow = class ActionFollow extends ActionsDemo {
     this._grossini.runAction(rep);
 
     this.runAction(
-      cc.follow(this._grossini, cc.rect(0, 0, s.width * 2 - 100, s.height))
+      cc.follow(this._grossini, new cc.Rect(0, 0, s.width * 2 - 100, s.height))
     );
     //----end30----
   }

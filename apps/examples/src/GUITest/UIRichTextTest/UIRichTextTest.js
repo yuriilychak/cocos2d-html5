@@ -87,7 +87,7 @@ var UIRichTextTest = class UIRichTextTest extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -141,7 +141,7 @@ var UIRichTextXMLBasic = class UIRichTextXMLBasic extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -195,7 +195,7 @@ var UIRichTextXMLSmallBig = class UIRichTextXMLSmallBig extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -249,7 +249,7 @@ var UIRichTextXMLColor = class UIRichTextXMLColor extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -303,7 +303,7 @@ var UIRichTextXMLSUIB = class UIRichTextXMLSUIB extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -357,7 +357,7 @@ var UIRichTextXMLSUIB2 = class UIRichTextXMLSUIB2 extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -411,7 +411,7 @@ var UIRichTextXMLSUIB3 = class UIRichTextXMLSUIB3 extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -465,7 +465,7 @@ var UIRichTextXMLImg = class UIRichTextXMLImg extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -519,7 +519,7 @@ var UIRichTextXMLUrl = class UIRichTextXMLUrl extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -573,7 +573,7 @@ var UIRichTextXMLFace = class UIRichTextXMLFace extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -627,7 +627,7 @@ var UIRichTextXMLBR = class UIRichTextXMLBR extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
@@ -681,7 +681,7 @@ var UIRichTextXMLInvalid = class UIRichTextXMLInvalid extends UIMainLayer {
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(cc.size(120, 100));
+                this._richText.setContentSize(new cc.Size(120, 100));
             } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
