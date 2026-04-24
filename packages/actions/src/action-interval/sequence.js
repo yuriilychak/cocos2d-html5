@@ -1,4 +1,5 @@
 import ActionInterval from "./action-interval";
+import { log } from "@aspect/core/src/boot/debugger";
 
 /**
  * Runs actions sequentially, one after another.
@@ -27,7 +28,7 @@ export default class Sequence extends ActionInterval {
     var paramArray = tempArray instanceof Array ? tempArray : arguments;
     var last = paramArray.length - 1;
     if (last >= 0 && paramArray[last] == null)
-      cc.log("parameters should not be ending with null in Javascript");
+      log("parameters should not be ending with null in Javascript");
 
     if (last >= 0) {
       var prev = paramArray[0],

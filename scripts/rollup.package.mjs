@@ -9,16 +9,16 @@
  *
  * Usage (in each package.json): "build": "rollup -c ../../scripts/rollup.package.mjs"
  */
-import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
-import MagicString, { Bundle } from 'magic-string';
-import resolve from '@rollup/plugin-node-resolve';
+import { readFileSync, existsSync } from "fs";
+import { join } from "path";
+import MagicString, { Bundle } from "magic-string";
+import resolve from "@rollup/plugin-node-resolve";
 
 const PKG_DIR = process.cwd();
 
 function stripExportsPlugin() {
   return {
-    name: 'strip-exports',
+    name: "strip-exports",
     renderChunk(code) {
       const s = new MagicString(code);
       const regex = /^export\s*\{[^}]*\}\s*;?/gm;
@@ -37,14 +37,43 @@ function stripExportsPlugin() {
   };
 }
 
+function stripWorkspaceImportsPlugin() {
+  return {
+    name: "strip-workspace-imports",
+    renderChunk(code) {
+      const s = new MagicString(code);
+      // Strip import statements that reference @aspect/* packages;
+      // their symbols are already available from earlier concat'd dist files.
+      const regex =
+        /^import\s*\{[^}]*\}\s*from\s*['"]@aspect\/[^'"]*['"]\s*;?[ \t]*\n?/gm;
+      let match;
+
+      while ((match = regex.exec(code)) !== null) {
+        s.remove(match.index, match.index + match[0].length);
+      }
+
+      if (s.hasChanged()) {
+        return { code: s.toString(), map: s.generateMap({ hires: true }) };
+      }
+
+      return null;
+    }
+  };
+}
+
 function createModernConfig() {
   return {
-    input: join(PKG_DIR, 'src', 'index.js'),
+    input: join(PKG_DIR, "src", "index.js"),
     treeshake: false,
-    plugins: [resolve({ extensions: ['.js'] }), stripExportsPlugin()],
+    external: (id) => id.startsWith("@aspect/"),
+    plugins: [
+      resolve({ extensions: [".js"] }),
+      stripExportsPlugin(),
+      stripWorkspaceImportsPlugin()
+    ],
     output: {
-      file: 'dist/index.js',
-      format: 'es',
+      file: "dist/index.js",
+      format: "es",
       strict: false,
       sourcemap: true
     }
@@ -52,15 +81,15 @@ function createModernConfig() {
 }
 
 async function createLegacyConfig() {
-  const VIRTUAL_ENTRY_ID = 'concat-entry';
-  const filesModule = await import(join(PKG_DIR, 'files.mjs'));
+  const VIRTUAL_ENTRY_ID = "concat-entry";
+  const filesModule = await import(join(PKG_DIR, "files.mjs"));
   const files = filesModule.default;
 
   return {
     input: VIRTUAL_ENTRY_ID,
     plugins: [
       {
-        name: 'concat',
+        name: "concat",
         resolveId(id) {
           if (id === VIRTUAL_ENTRY_ID) return VIRTUAL_ENTRY_ID;
           return null;
@@ -71,20 +100,20 @@ async function createLegacyConfig() {
           const bundle = new Bundle();
 
           for (const relPath of files) {
-            const absPath = join(PKG_DIR, 'src', relPath);
-            const code = readFileSync(absPath, 'utf-8');
+            const absPath = join(PKG_DIR, "src", relPath);
+            const code = readFileSync(absPath, "utf-8");
             const s = new MagicString(code, { filename: relPath });
             bundle.addSource({
               filename: relPath,
               content: s,
-              separator: '\n'
+              separator: "\n"
             });
           }
 
           const map = bundle.generateMap({
-            file: 'index.js',
+            file: "index.js",
             includeContent: true,
-            hires: 'boundary'
+            hires: "boundary"
           });
 
           return {
@@ -101,8 +130,8 @@ async function createLegacyConfig() {
       }
     ],
     output: {
-      file: 'dist/index.js',
-      format: 'es',
+      file: "dist/index.js",
+      format: "es",
       strict: false,
       sourcemap: true
     }
@@ -110,7 +139,7 @@ async function createLegacyConfig() {
 }
 
 export default async () => {
-  if (existsSync(join(PKG_DIR, 'src', 'index.js'))) {
+  if (existsSync(join(PKG_DIR, "src", "index.js"))) {
     return createModernConfig();
   }
 

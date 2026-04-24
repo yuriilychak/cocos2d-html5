@@ -1,4 +1,5 @@
 import ActionInterval from "./action-interval";
+import { log } from "@aspect/core/src/boot/debugger";
 
 /**
  * Rotates a Node object to a certain angle by modifying it's.
@@ -90,7 +91,7 @@ export default class RotateTo extends ActionInterval {
    * @returns {Action}
    */
   reverse() {
-    cc.log("RotateTo.reverse(): it should be overridden in subclass.");
+    log("RotateTo.reverse(): it should be overridden in subclass.");
   }
 
   /**

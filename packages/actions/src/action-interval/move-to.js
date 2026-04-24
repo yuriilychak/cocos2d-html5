@@ -1,4 +1,5 @@
 import MoveBy from "./move-by";
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
 
 /**
  * Moves a Node object to the position x,y. x and y are absolute coordinates by modifying it's position attribute. <br/>
@@ -21,7 +22,7 @@ export default class MoveTo extends MoveBy {
    */
   constructor(duration, position, y) {
     super();
-    this._endPosition = new cc.Point(0, 0);
+    this._endPosition = new Point(0, 0);
 
     position !== undefined && this.initWithDuration(duration, position, y);
   }

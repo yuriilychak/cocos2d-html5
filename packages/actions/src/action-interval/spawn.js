@@ -1,6 +1,7 @@
 import ActionInterval from "./action-interval";
 import Sequence from "./sequence";
 import DelayTime from "./delay-time";
+import { log } from "@aspect/core/src/boot/debugger";
 
 const delayTime = (d) => new DelayTime(d);
 
@@ -30,7 +31,7 @@ export default class Spawn extends ActionInterval {
     }
     last = paramArray.length - 1;
     if (last >= 0 && paramArray[last] == null)
-      cc.log("parameters should not be ending with null in Javascript");
+      log("parameters should not be ending with null in Javascript");
 
     if (last >= 0) {
       var prev = paramArray[0],
@@ -121,10 +122,7 @@ export default class Spawn extends ActionInterval {
    * @return {Spawn}
    */
   reverse() {
-    var action = Spawn._actionOneTwo(
-      this._one.reverse(),
-      this._two.reverse()
-    );
+    var action = Spawn._actionOneTwo(this._one.reverse(), this._two.reverse());
     this._cloneDecoration(action);
     this._reverseEaseList(action);
     return action;

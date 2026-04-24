@@ -1,4 +1,6 @@
 import FiniteTimeAction from "../action/finite-time-action";
+import { FLT_EPSILON } from "@aspect/core/src/platform/macro/constants";
+import { log } from "@aspect/core/src/boot/debugger";
 
 /**
  * <p> An interval action is an action that takes place within a certain period of time. <br/>
@@ -57,7 +59,7 @@ export default class ActionInterval extends FiniteTimeAction {
    * @return {Boolean}
    */
   initWithDuration(d) {
-    this._duration = d === 0 ? cc.FLT_EPSILON : d;
+    this._duration = d === 0 ? FLT_EPSILON : d;
     // prevent division by 0
     // This comparison could be in step:, but it might decrease the performance
     // by 3% in heavy based action games.
@@ -184,7 +186,7 @@ export default class ActionInterval extends FiniteTimeAction {
    * @return {?Action}
    */
   reverse() {
-    cc.log("IntervalAction: reverse not implemented.");
+    log("IntervalAction: reverse not implemented.");
     return null;
   }
 
@@ -195,7 +197,7 @@ export default class ActionInterval extends FiniteTimeAction {
    */
   setAmplitudeRate(amp) {
     // Abstract class needs implementation
-    cc.log(
+    log(
       "ActionInterval.setAmplitudeRate(): it should be overridden in subclass."
     );
   }
@@ -207,7 +209,7 @@ export default class ActionInterval extends FiniteTimeAction {
    */
   getAmplitudeRate() {
     // Abstract class needs implementation
-    cc.log(
+    log(
       "ActionInterval.getAmplitudeRate(): it should be overridden in subclass."
     );
     return 0;
@@ -223,7 +225,7 @@ export default class ActionInterval extends FiniteTimeAction {
    */
   speed(speed) {
     if (speed <= 0) {
-      cc.log("The speed parameter error");
+      log("The speed parameter error");
       return this;
     }
 
@@ -259,7 +261,7 @@ export default class ActionInterval extends FiniteTimeAction {
   repeat(times) {
     times = Math.round(times);
     if (isNaN(times) || times < 1) {
-      cc.log("The repeat parameter error");
+      log("The repeat parameter error");
       return this;
     }
     this._repeatMethod = true; //Compatible with repeat class, Discard after can be deleted

@@ -1,4 +1,7 @@
 import Action from "./action";
+import { Rect } from "@aspect/core/src/cocoa/geometry/rect";
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { Director } from "@aspect/core/src/director/director";
 
 /**
  * Follow is an action that "follows" a node.
@@ -64,7 +67,7 @@ export default class Follow extends Action {
     this.rightBoundary = 0.0;
     this.topBoundary = 0.0;
     this.bottomBoundary = 0.0;
-    this._worldRect = new cc.Rect(0, 0, 0, 0);
+    this._worldRect = new Rect(0, 0, 0, 0);
 
     if (followedNode)
       rect
@@ -81,12 +84,7 @@ export default class Follow extends Action {
   clone() {
     const action = new Follow();
     const locRect = this._worldRect;
-    const rect = new cc.Rect(
-      locRect.x,
-      locRect.y,
-      locRect.width,
-      locRect.height
-    );
+    const rect = new Rect(locRect.x, locRect.y, locRect.width, locRect.height);
     action.initWithTarget(this._followedNode, rect);
     return action;
   }
@@ -120,17 +118,17 @@ export default class Follow extends Action {
     if (!followedNode)
       throw new Error("Follow.initWithAction(): followedNode must be non nil");
 
-    rect = rect || new cc.Rect(0, 0, 0, 0);
+    rect = rect || new Rect(0, 0, 0, 0);
     this._followedNode = followedNode;
     this._worldRect = rect;
 
-    this._boundarySet = !cc.Rect.equalToZero(rect);
+    this._boundarySet = !Rect.equalToZero(rect);
 
     this._boundaryFullyCovered = false;
 
-    const winSize = cc.Director.getInstance().getWinSize();
-    this._fullScreenSize = new cc.Point(winSize.width, winSize.height);
-    this._halfScreenSize = cc.Point.mult(this._fullScreenSize, 0.5);
+    const winSize = Director.getInstance().getWinSize();
+    this._fullScreenSize = new Point(winSize.width, winSize.height);
+    this._halfScreenSize = Point.mult(this._fullScreenSize, 0.5);
 
     if (this._boundarySet) {
       this.leftBoundary = -(rect.x + rect.width - this._fullScreenSize.x);
@@ -178,8 +176,8 @@ export default class Follow extends Action {
       if (this._boundaryFullyCovered) return;
 
       this.target.setPosition(
-        cc.Point.clampf(tempPosX, this.leftBoundary, this.rightBoundary),
-        cc.Point.clampf(tempPosY, this.bottomBoundary, this.topBoundary)
+        Point.clampf(tempPosX, this.leftBoundary, this.rightBoundary),
+        Point.clampf(tempPosY, this.bottomBoundary, this.topBoundary)
       );
     } else {
       this.target.setPosition(tempPosX, tempPosY);

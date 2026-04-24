@@ -1,4 +1,6 @@
 import ActionInterval from "./action-interval";
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { ENABLE_STACKABLE_ACTIONS } from "@aspect/core/src/platform/config";
 
 /**
  * <p>
@@ -27,9 +29,9 @@ export default class MoveBy extends ActionInterval {
   constructor(duration, deltaPos, deltaY) {
     super();
 
-    this._positionDelta = new cc.Point(0, 0);
-    this._startPosition = new cc.Point(0, 0);
-    this._previousPosition = new cc.Point(0, 0);
+    this._positionDelta = new Point(0, 0);
+    this._startPosition = new Point(0, 0);
+    this._previousPosition = new Point(0, 0);
 
     deltaPos !== undefined && this.initWithDuration(duration, deltaPos, deltaY);
   }
@@ -90,7 +92,7 @@ export default class MoveBy extends ActionInterval {
       var x = this._positionDelta.x * dt;
       var y = this._positionDelta.y * dt;
       var locStartPosition = this._startPosition;
-      if (cc.ENABLE_STACKABLE_ACTIONS) {
+      if (ENABLE_STACKABLE_ACTIONS) {
         var targetX = this.target.getPositionX();
         var targetY = this.target.getPositionY();
         var locPreviousPosition = this._previousPosition;
@@ -117,7 +119,7 @@ export default class MoveBy extends ActionInterval {
   reverse() {
     var action = new MoveBy(
       this._duration,
-      new cc.Point(-this._positionDelta.x, -this._positionDelta.y)
+      new Point(-this._positionDelta.x, -this._positionDelta.y)
     );
     this._cloneDecoration(action);
     this._reverseEaseList(action);

@@ -1,4 +1,5 @@
 import ActionEase from "./action-ease";
+import { log } from "@aspect/core/src/boot/debugger";
 
 /**
  * Ease Elastic abstract class.
@@ -54,7 +55,7 @@ export default class EaseElastic extends ActionEase {
    * @return {?Action}
    */
   reverse() {
-    cc.log("EaseElastic.reverse(): it should be overridden in subclass.");
+    log("EaseElastic.reverse(): it should be overridden in subclass.");
     return null;
   }
 

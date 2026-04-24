@@ -1,4 +1,5 @@
 import ActionInterval from "./action-interval";
+import { Color } from "@aspect/core/src/platform/types/color";
 
 /** Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
  * @warning This action doesn't support "reverse"
@@ -22,8 +23,8 @@ export default class TintTo extends ActionInterval {
    */
   constructor(duration, red, green, blue) {
     super();
-    this._to = new cc.Color(0, 0, 0);
-    this._from = new cc.Color(0, 0, 0);
+    this._to = new Color(0, 0, 0);
+    this._from = new Color(0, 0, 0);
 
     blue !== undefined && this.initWithDuration(duration, red, green, blue);
   }
@@ -38,7 +39,7 @@ export default class TintTo extends ActionInterval {
    */
   initWithDuration(duration, red, green, blue) {
     if (super.initWithDuration(duration)) {
-      this._to = new cc.Color(red, green, blue);
+      this._to = new Color(red, green, blue);
       return true;
     }
     return false;
@@ -76,7 +77,7 @@ export default class TintTo extends ActionInterval {
       locTo = this._to;
     if (locFrom) {
       this.target.setColor(
-        new cc.Color(
+        new Color(
           locFrom.r + (locTo.r - locFrom.r) * dt,
           locFrom.g + (locTo.g - locFrom.g) * dt,
           locFrom.b + (locTo.b - locFrom.b) * dt

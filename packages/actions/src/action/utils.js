@@ -1,3 +1,5 @@
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
+
 /**
  * @function
  * @param {Number} a
@@ -55,7 +57,7 @@ export function cardinalSplineAt(
   p3,
   tension,
   t,
-  out = new cc.Point(0, 0)
+  out = new Point(0, 0)
 ) {
   const t2 = t * t;
   const t3 = t2 * t;
@@ -82,7 +84,7 @@ export function cardinalSplineAt(
 export function reverseControlPoints(controlPoints) {
   const result = [];
   for (let i = controlPoints.length - 1; i >= 0; i--) {
-    result.push(new cc.Point(controlPoints[i].x, controlPoints[i].y));
+    result.push(new Point(controlPoints[i].x, controlPoints[i].y));
   }
   return result;
 }
@@ -96,7 +98,7 @@ export function reverseControlPoints(controlPoints) {
 export function cloneControlPoints(controlPoints) {
   const result = [];
   for (let i = 0; i < controlPoints.length; i++)
-    result.push(new cc.Point(controlPoints[i].x, controlPoints[i].y));
+    result.push(new Point(controlPoints[i].x, controlPoints[i].y));
   return result;
 }
 

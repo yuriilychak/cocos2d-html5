@@ -1,4 +1,5 @@
 import ActionInterval from "./action-interval";
+import { Color } from "@aspect/core/src/platform/types/color";
 
 /**  Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
  * Relative to their own color change.
@@ -85,7 +86,7 @@ export default class TintBy extends ActionInterval {
   update(dt) {
     dt = this._computeEaseTime(dt);
 
-    this.target.color = new cc.Color(
+    this.target.color = new Color(
       this._fromR + this._deltaR * dt,
       this._fromG + this._deltaG * dt,
       this._fromB + this._deltaB * dt

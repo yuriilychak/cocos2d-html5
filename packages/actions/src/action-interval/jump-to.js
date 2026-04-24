@@ -1,4 +1,5 @@
 import JumpBy from "./jump-by";
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
 
 /**
  * Moves a Node object to a parabolic position simulating a jump movement by modifying it's position attribute. <br />
@@ -25,7 +26,7 @@ export default class JumpTo extends JumpBy {
    */
   constructor(duration, position, y, height, jumps) {
     super();
-    this._endPosition = new cc.Point(0, 0);
+    this._endPosition = new Point(0, 0);
 
     height !== undefined &&
       this.initWithDuration(duration, position, y, height, jumps);

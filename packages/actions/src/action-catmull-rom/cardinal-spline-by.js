@@ -1,5 +1,7 @@
 import CardinalSplineTo from "./cardinal-spline-to";
 import { reverseControlPoints, cloneControlPoints } from "../action/utils";
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { ENABLE_STACKABLE_ACTIONS } from "@aspect/core/src/platform/config";
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
@@ -25,7 +27,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
    */
   constructor(duration, points, tension) {
     super();
-    this._startPosition = new cc.Point(0, 0);
+    this._startPosition = new Point(0, 0);
 
     tension !== undefined && this.initWithDuration(duration, points, tension);
   }
@@ -55,7 +57,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
     let p = copyConfig[0];
     for (let i = 1; i < copyConfig.length; ++i) {
       current = copyConfig[i];
-      copyConfig[i] = cc.Point.sub(current, p);
+      copyConfig[i] = Point.sub(current, p);
       p = current;
     }
 
@@ -79,7 +81,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
       reverseArray[i] = current;
       p = current;
     }
-    return cc.cardinalSplineBy(this._duration, reverseArray, this._tension);
+    return new CardinalSplineBy(this._duration, reverseArray, this._tension);
   }
 
   /**

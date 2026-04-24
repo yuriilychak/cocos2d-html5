@@ -1,4 +1,6 @@
 import ActionInterval from "./action-interval";
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { ENABLE_STACKABLE_ACTIONS } from "@aspect/core/src/platform/config";
 
 /**
  * Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.
@@ -29,9 +31,9 @@ export default class JumpBy extends ActionInterval {
    */
   constructor(duration, position, y, height, jumps) {
     super();
-    this._startPosition = new cc.Point(0, 0);
-    this._previousPosition = new cc.Point(0, 0);
-    this._delta = new cc.Point(0, 0);
+    this._startPosition = new Point(0, 0);
+    this._previousPosition = new Point(0, 0);
+    this._delta = new Point(0, 0);
 
     height !== undefined &&
       this.initWithDuration(duration, position, y, height, jumps);
@@ -108,7 +110,7 @@ export default class JumpBy extends ActionInterval {
 
       var x = this._delta.x * dt;
       var locStartPosition = this._startPosition;
-      if (cc.ENABLE_STACKABLE_ACTIONS) {
+      if (ENABLE_STACKABLE_ACTIONS) {
         var targetX = this.target.getPositionX();
         var targetY = this.target.getPositionY();
         var locPreviousPosition = this._previousPosition;
@@ -135,7 +137,7 @@ export default class JumpBy extends ActionInterval {
   reverse() {
     var action = new JumpBy(
       this._duration,
-      new cc.Point(-this._delta.x, -this._delta.y),
+      new Point(-this._delta.x, -this._delta.y),
       this._height,
       this._jumps
     );

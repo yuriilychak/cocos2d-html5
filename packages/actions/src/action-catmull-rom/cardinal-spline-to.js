@@ -5,6 +5,8 @@ import {
   cloneControlPoints,
   reverseControlPoints
 } from "../action/utils";
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { ENABLE_STACKABLE_ACTIONS } from "@aspect/core/src/platform/config";
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
@@ -87,11 +89,11 @@ export default class CardinalSplineTo extends ActionInterval {
     super.startWithTarget(target);
     // Issue #1441 from cocos2d-iphone
     this._deltaT = 1 / (this._points.length - 1);
-    this._previousPosition = new cc.Point(
+    this._previousPosition = new Point(
       this.target.getPositionX(),
       this.target.getPositionY()
     );
-    this._accumulatedDiff = new cc.Point(0, 0);
+    this._accumulatedDiff = new Point(0, 0);
   }
 
   /**
@@ -125,7 +127,7 @@ export default class CardinalSplineTo extends ActionInterval {
       lt
     );
 
-    if (cc.ENABLE_STACKABLE_ACTIONS) {
+    if (ENABLE_STACKABLE_ACTIONS) {
       let tempX, tempY;
       tempX = this.target.getPositionX() - this._previousPosition.x;
       tempY = this.target.getPositionY() - this._previousPosition.y;
@@ -150,7 +152,7 @@ export default class CardinalSplineTo extends ActionInterval {
    */
   reverse() {
     const reversePoints = reverseControlPoints(this._points);
-    return cc.cardinalSplineTo(this._duration, reversePoints, this._tension);
+    return new CardinalSplineTo(this._duration, reversePoints, this._tension);
   }
 
   /**

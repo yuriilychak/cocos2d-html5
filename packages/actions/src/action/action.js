@@ -6,11 +6,15 @@
  * @property {Node}  originalTarget  - The original target of the action.
  * @property {Number}   tag             - The tag of the action, can be used to find the action.
  */
-export default class Action extends cc.NewClass {
+import { NewClass } from "@aspect/core/src/platform/class";
+import { ACTION_TAG_INVALID } from "@aspect/core/src/platform/macro/constants";
+import { log } from "@aspect/core/src/boot/debugger";
+
+export default class Action extends NewClass {
   //***********variables*************
   originalTarget = null;
   target = null;
-  tag = cc.ACTION_TAG_INVALID;
+  tag = ACTION_TAG_INVALID;
 
   //**************Public Functions***********
 
@@ -21,7 +25,7 @@ export default class Action extends cc.NewClass {
     super();
     this.originalTarget = null;
     this.target = null;
-    this.tag = cc.ACTION_TAG_INVALID;
+    this.tag = ACTION_TAG_INVALID;
   }
 
   /**
@@ -68,7 +72,7 @@ export default class Action extends cc.NewClass {
    * @param {Number} dt
    */
   step(dt) {
-    cc.log("[Action step]. override me");
+    log("[Action step]. override me");
   }
 
   /**
@@ -77,7 +81,7 @@ export default class Action extends cc.NewClass {
    * @param {Number}  dt
    */
   update(dt) {
-    cc.log("[Action update]. override me");
+    log("[Action update]. override me");
   }
 
   /**

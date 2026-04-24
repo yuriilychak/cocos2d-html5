@@ -1,5 +1,7 @@
 import ActionInterval from "./action-interval";
 import { bezierAt } from "../action/utils";
+import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { ENABLE_STACKABLE_ACTIONS } from "@aspect/core/src/platform/config";
 
 /** An action that moves the target with a cubic Bezier curve by a certain distance.
  * Relative to its movement.
@@ -22,8 +24,8 @@ export default class BezierBy extends ActionInterval {
   constructor(t, c) {
     super();
     this._config = [];
-    this._startPosition = new cc.Point(0, 0);
-    this._previousPosition = new cc.Point(0, 0);
+    this._startPosition = new Point(0, 0);
+    this._previousPosition = new Point(0, 0);
 
     c && this.initWithDuration(t, c);
   }
@@ -52,7 +54,7 @@ export default class BezierBy extends ActionInterval {
     var newConfigs = [];
     for (var i = 0; i < this._config.length; i++) {
       var selConf = this._config[i];
-      newConfigs.push(new cc.Point(selConf.x, selConf.y));
+      newConfigs.push(new Point(selConf.x, selConf.y));
     }
     action.initWithDuration(this._duration, newConfigs);
     return action;
@@ -94,7 +96,7 @@ export default class BezierBy extends ActionInterval {
       var y = bezierAt(ya, yb, yc, yd, dt);
 
       var locStartPosition = this._startPosition;
-      if (cc.ENABLE_STACKABLE_ACTIONS) {
+      if (ENABLE_STACKABLE_ACTIONS) {
         var targetX = this.target.getPositionX();
         var targetY = this.target.getPositionY();
         var locPreviousPosition = this._previousPosition;
@@ -121,9 +123,9 @@ export default class BezierBy extends ActionInterval {
   reverse() {
     var locConfig = this._config;
     var r = [
-      cc.Point.add(locConfig[1], cc.Point.neg(locConfig[2])),
-      cc.Point.add(locConfig[0], cc.Point.neg(locConfig[2])),
-      cc.Point.neg(locConfig[2])
+      Point.add(locConfig[1], Point.neg(locConfig[2])),
+      Point.add(locConfig[0], Point.neg(locConfig[2])),
+      Point.neg(locConfig[2])
     ];
     var action = new BezierBy(this._duration, r);
     this._cloneDecoration(action);

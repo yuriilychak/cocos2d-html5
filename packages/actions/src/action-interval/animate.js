@@ -1,4 +1,7 @@
 import ActionInterval from "./action-interval";
+import { Animation } from "@aspect/core/src/sprites/animation/animation";
+import { AnimationFrame } from "@aspect/core/src/sprites/animation/animation-frame";
+import { arrayVerifyType } from "@aspect/core/src/platform/macro/utils";
 
 /**  Animates a sprite given the name of an Animation
  * @param {Animation} animation
@@ -55,7 +58,7 @@ export default class Animate extends ActionInterval {
   initWithAnimation(animation) {
     if (!animation)
       throw new Error(
-        "cc.Animate.initWithAnimation(): animation must be non-NULL"
+        "Animate.initWithAnimation(): animation must be non-NULL"
       );
     var singleDuration = animation.getDuration();
     if (this.initWithDuration(singleDuration * animation.getLoops())) {
@@ -71,7 +74,7 @@ export default class Animate extends ActionInterval {
       var newUnitOfTimeValue = singleDuration / animation.getTotalDelayUnits();
 
       var frames = animation.getFrames();
-      cc.arrayVerifyType(frames, cc.AnimationFrame);
+      arrayVerifyType(frames, AnimationFrame);
 
       for (var i = 0; i < frames.length; i++) {
         var frame = frames[i];
@@ -153,7 +156,7 @@ export default class Animate extends ActionInterval {
     var locAnimation = this._animation;
     var oldArray = locAnimation.getFrames();
     var newArray = [];
-    cc.arrayVerifyType(oldArray, cc.AnimationFrame);
+    arrayVerifyType(oldArray, AnimationFrame);
     if (oldArray.length > 0) {
       for (var i = oldArray.length - 1; i >= 0; i--) {
         var element = oldArray[i];
@@ -161,7 +164,7 @@ export default class Animate extends ActionInterval {
         newArray.push(element.clone());
       }
     }
-    var newAnim = new cc.Animation(
+    var newAnim = new Animation(
       newArray,
       locAnimation.getDelayPerUnit(),
       locAnimation.getLoops()
