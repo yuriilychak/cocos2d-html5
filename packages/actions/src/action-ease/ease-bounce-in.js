@@ -20,11 +20,16 @@ export default class EaseBounceIn extends EaseBounce {
   }
 
   /**
+   * @type {EaseBounceOut}
+   */
+  static ReversedAction = null;
+
+  /**
    * Create a action. Opposite with the original motion trajectory.
    * @return {EaseBounceOut}
    */
   reverse() {
-    return new cc.EaseBounceOut(this._inner.reverse());
+    return new EaseBounceIn.ReversedAction(this._inner.reverse());
   }
 
   /**

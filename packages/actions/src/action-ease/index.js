@@ -1,7 +1,7 @@
-export { default as ActionEase } from './action-ease';
-export { default as EaseRateAction } from './ease-rate-action';
 export { default as EaseIn } from './ease-in';
 export { default as EaseOut } from './ease-out';
+export { default as ActionEase } from './action-ease';
+export { default as EaseRateAction } from './ease-rate-action';
 export { default as EaseInOut } from './ease-in-out';
 export { default as EaseExponentialIn } from './ease-exponential-in';
 export { default as EaseExponentialOut } from './ease-exponential-out';

@@ -25,7 +25,7 @@ export default class EaseBackIn extends ActionEase {
    * @return {EaseBackOut}
    */
   reverse() {
-    return new cc.EaseBackOut(this._inner.reverse());
+    return new EaseBackIn.ReversedAction(this._inner.reverse());
   }
 
   /**
@@ -39,4 +39,9 @@ export default class EaseBackIn extends ActionEase {
     action.initWithAction(this._inner.clone());
     return action;
   }
+
+  /**
+   * @type {EaseBackOut}
+   */
+  static ReversedAction = null;
 }

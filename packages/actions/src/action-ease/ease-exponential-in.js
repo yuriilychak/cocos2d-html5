@@ -19,11 +19,16 @@ export default class EaseExponentialIn extends ActionEase {
   }
 
   /**
+   * @type {EaseExponentialOut}
+   */
+  static ReversedAction = null;
+
+  /**
    * Create a EaseExponentialOut action. Opposite with the original motion trajectory.
    * @return {EaseExponentialOut}
    */
   reverse() {
-    return new cc.EaseExponentialOut(this._inner.reverse());
+    return new EaseExponentialIn.ReversedAction(this._inner.reverse());
   }
 
   /**

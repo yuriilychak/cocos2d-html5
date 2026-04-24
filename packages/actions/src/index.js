@@ -54,6 +54,18 @@ import {
 import { CardinalSplineTo, CardinalSplineBy, CatmullRomTo, CatmullRomBy } from './action-catmull-rom';
 import { ActionTweenDelegate, ActionTween } from './action-tween';
 
+EaseBackIn.ReversedAction = EaseBackOut;
+EaseBackOut.ReversedAction = EaseBackIn;
+EaseBounceIn.ReversedAction = EaseBounceOut;
+EaseBounceOut.ReversedAction = EaseBounceIn;
+EaseElasticIn.ReversedAction = EaseElasticOut;
+EaseElasticOut.ReversedAction = EaseElasticIn;
+EaseExponentialIn.ReversedAction = EaseExponentialOut;
+EaseExponentialOut.ReversedAction = EaseExponentialIn;
+EaseSineIn.ReversedAction = EaseSineOut;
+EaseSineOut.ReversedAction = EaseSineIn;
+
+
 // ─── Utils ────────────────────────────────────────────
 cc.bezierAt = bezierAt;
 cc._bounceTime = bounceTime;

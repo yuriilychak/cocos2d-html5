@@ -30,11 +30,19 @@ export default class EaseElasticIn extends EaseElastic {
   }
 
   /**
+   * @type {EaseElasticOut}
+   */
+  static ReversedAction = null;
+
+  /**
    * Create a action. Opposite with the original motion trajectory.
    * @return {EaseElasticOut}
    */
   reverse() {
-    return new cc.EaseElasticOut(this._inner.reverse(), this._period);
+    return new EaseElasticIn.ReversedAction(
+      this._inner.reverse(),
+      this._period
+    );
   }
 
   /**

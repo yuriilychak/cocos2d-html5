@@ -29,7 +29,7 @@ export default class RepeatForever extends ActionInterval {
   initWithAction(action) {
     if (!action)
       throw new Error(
-        "cc.RepeatForever.initWithAction(): action must be non null"
+        "RepeatForever.initWithAction(): action must be non null"
       );
 
     this._innerAction = action;

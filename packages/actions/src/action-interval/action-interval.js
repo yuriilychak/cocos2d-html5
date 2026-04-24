@@ -184,7 +184,7 @@ export default class ActionInterval extends FiniteTimeAction {
    * @return {?Action}
    */
   reverse() {
-    cc.log("cc.IntervalAction: reverse not implemented.");
+    cc.log("IntervalAction: reverse not implemented.");
     return null;
   }
 
@@ -196,7 +196,7 @@ export default class ActionInterval extends FiniteTimeAction {
   setAmplitudeRate(amp) {
     // Abstract class needs implementation
     cc.log(
-      "cc.ActionInterval.setAmplitudeRate(): it should be overridden in subclass."
+      "ActionInterval.setAmplitudeRate(): it should be overridden in subclass."
     );
   }
 
@@ -208,7 +208,7 @@ export default class ActionInterval extends FiniteTimeAction {
   getAmplitudeRate() {
     // Abstract class needs implementation
     cc.log(
-      "cc.ActionInterval.getAmplitudeRate(): it should be overridden in subclass."
+      "ActionInterval.getAmplitudeRate(): it should be overridden in subclass."
     );
     return 0;
   }

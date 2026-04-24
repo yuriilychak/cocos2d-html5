@@ -1,4 +1,5 @@
 import CardinalSplineBy from "./cardinal-spline-by";
+import CardinalSplineTo from "./cardinal-spline-to";
 import { cloneControlPoints } from "../action/utils";
 
 /**
@@ -33,7 +34,7 @@ export default class CatmullRomBy extends CardinalSplineBy {
    * @param {Array} points
    */
   initWithDuration(dt, points) {
-    return cc.CardinalSplineTo.prototype.initWithDuration.call(
+    return CardinalSplineTo.prototype.initWithDuration.call(
       this,
       dt,
       points,
