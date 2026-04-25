@@ -28,6 +28,7 @@ import { Node } from "../base-nodes/node";
 import { Rect } from "../cocoa/geometry/rect";
 import { error, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
+import { Color } from "../platform/types/color";
 
 export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   constructor(renderable) {
@@ -125,7 +126,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
       // Some call sites pass rects in points. Accept those by checking scaled coordinates.
       if (exceedsWidth || exceedsHeight) {
-        var scale = cc.contentScaleFactor ? cc.contentScaleFactor() : 1;
+        var scale = cc.contentScaleFactor();
         if (scale > 1) {
           var scaledX = _x * scale,
             scaledY = _y * scale;
@@ -207,7 +208,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
       if (locTextureCoord.validRect) {
         const curColor = this._displayedColor;
         wrapper.setFillStyle(
-          "rgba(" + curColor.r + "," + curColor.g + "," + curColor.b + ",1)"
+          Color.toRgba(curColor.r, curColor.g, curColor.b)
         );
         context.fillRect(
           x,
@@ -253,7 +254,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     const locRenderCmd = this._renderCmd;
     if (!locRect) {
       locRect = new Rect(0, 0, sender.width, sender.height);
-    } else if (cc.Rect.equalToZero(locRect)) {
+    } else if (Rect.equalToZero(locRect)) {
       locRect.width = sender.width;
       locRect.height = sender.height;
     }
@@ -272,8 +273,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     node.dispatchEvent("load");
   }
 
-  _setTextureCoords(rect, needConvert) {
-    if (needConvert === undefined) needConvert = true;
+  _setTextureCoords(rect, needConvert = true) {
     const locTextureRect = this._textureCoord,
       scaleFactor = needConvert ? cc.contentScaleFactor() : 1;
     locTextureRect.renderX = locTextureRect.x = 0 | (rect.x * scaleFactor);

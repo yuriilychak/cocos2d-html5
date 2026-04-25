@@ -95,9 +95,6 @@ import { initInputExtension } from "./platform/input-extension";
 import {
   Color,
   color,
-  colorEqual,
-  hexToColor,
-  colorToHex,
   Acceleration,
   TEXT_ALIGNMENT_LEFT,
   TEXT_ALIGNMENT_CENTER,
@@ -535,9 +532,9 @@ cc.inputManager = inputManager;
 // Platform — Types
 cc.Color = Color;
 cc.color = color;
-cc.colorEqual = colorEqual;
-cc.hexToColor = hexToColor;
-cc.colorToHex = colorToHex;
+cc.colorEqual = Color.equal;
+cc.hexToColor = Color.fromHex;
+cc.colorToHex = Color.toHex;
 cc.Acceleration = Acceleration;
 cc.TEXT_ALIGNMENT_LEFT = TEXT_ALIGNMENT_LEFT;
 cc.TEXT_ALIGNMENT_CENTER = TEXT_ALIGNMENT_CENTER;

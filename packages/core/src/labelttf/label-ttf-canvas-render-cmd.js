@@ -29,6 +29,7 @@ import { FontDefinition } from "../platform/types/font-definition";
 import { Texture2D } from "../textures/texture-2d";
 import { RendererConfig } from "../renderer/renderer-config";
 import {
+  Color,
   TEXT_ALIGNMENT_CENTER,
   TEXT_ALIGNMENT_RIGHT,
   VERTICAL_TEXT_ALIGNMENT_TOP,
@@ -75,9 +76,9 @@ export const LabelRenderMixin = (Base) =>
       super(renderable);
       this._fontClientHeight = 18;
       this._fontStyleStr = "";
-      this._shadowColorStr = "rgba(128, 128, 128, 0.5)";
+      this._shadowColorStr = cc.Color.toRgba(128, 128, 128, 128);
       this._strokeColorStr = "";
-      this._fillColorStr = "rgba(255,255,255,1)";
+      this._fillColorStr = cc.Color.toRgba();
 
       this._labelCanvas = null;
       this._labelContext = null;
@@ -136,32 +137,22 @@ export const LabelRenderMixin = (Base) =>
         dg = locDisplayColor.g / 255,
         db = locDisplayColor.b / 255;
 
-      this._shadowColorStr =
-        "rgba(" +
-        (0 | (dr * locShadowColor.r)) +
-        "," +
-        (0 | (dg * locShadowColor.g)) +
-        "," +
-        (0 | (db * locShadowColor.b)) +
-        "," +
-        node._shadowOpacity +
-        ")";
-      this._fillColorStr =
-        "rgba(" +
-        (0 | (dr * locFontFillColor.r)) +
-        "," +
-        (0 | (dg * locFontFillColor.g)) +
-        "," +
-        (0 | (db * locFontFillColor.b)) +
-        ", 1)";
-      this._strokeColorStr =
-        "rgba(" +
-        (0 | (dr * locStrokeColor.r)) +
-        "," +
-        (0 | (dg * locStrokeColor.g)) +
-        "," +
-        (0 | (db * locStrokeColor.b)) +
-        ", 1)";
+      this._shadowColorStr = Color.toRgba(
+        0 | (dr * locShadowColor.r),
+        0 | (dg * locShadowColor.g),
+        0 | (db * locShadowColor.b),
+        node._shadowOpacity * 255
+      );
+      this._fillColorStr = Color.toRgba(
+        0 | (dr * locFontFillColor.r),
+        0 | (dg * locFontFillColor.g),
+        0 | (db * locFontFillColor.b)
+      );
+      this._strokeColorStr = Color.toRgba(
+        0 | (dr * locStrokeColor.r),
+        0 | (dg * locStrokeColor.g),
+        0 | (db * locStrokeColor.b)
+      );
     }
 
     getLocalBB() {

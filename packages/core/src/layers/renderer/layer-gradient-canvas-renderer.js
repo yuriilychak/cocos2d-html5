@@ -117,26 +117,18 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
       locEndColor = node._endColor;
     const startOpacity = node._startOpacity / 255,
       endOpacity = node._endOpacity / 255;
-    this._startStopStr =
-      "rgba(" +
-      Math.round(locStartColor.r) +
-      "," +
-      Math.round(locStartColor.g) +
-      "," +
-      Math.round(locStartColor.b) +
-      "," +
-      startOpacity.toFixed(4) +
-      ")";
-    this._endStopStr =
-      "rgba(" +
-      Math.round(locEndColor.r) +
-      "," +
-      Math.round(locEndColor.g) +
-      "," +
-      Math.round(locEndColor.b) +
-      "," +
-      endOpacity.toFixed(4) +
-      ")";
+    this._startStopStr = cc.Color.toRgba(
+      Math.round(locStartColor.r),
+      Math.round(locStartColor.g),
+      Math.round(locStartColor.b),
+      startOpacity.toFixed(4) * 255
+      );
+    this._endStopStr = cc.Color.toRgba(
+      Math.round(locEndColor.r),
+      Math.round(locEndColor.g),
+      Math.round(locEndColor.b),
+      endOpacity.toFixed(4) * 255
+    );
 
     if (node._colorStops) {
       this._startOpacity = 0;

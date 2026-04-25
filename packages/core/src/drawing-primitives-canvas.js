@@ -27,6 +27,7 @@
 import { RendererConfig } from "./renderer/renderer-config";
 import { NewClass } from "./platform/class";
 import { Point } from "./cocoa/geometry/point";
+import { Color } from "./platform/types/color";
 
 export const PI2 = Math.PI * 2;
 
@@ -204,7 +205,7 @@ export class DrawingPrimitiveCanvas extends NewClass {
 
   drawCardinalSpline(config, tension, segments) {
     RendererConfig.getInstance().renderContext.setStrokeStyle(
-      "rgba(255,255,255,1)"
+      cc.Color.toRgba()
     );
     var points = this._cacheArray;
     points.length = 0;
@@ -273,9 +274,9 @@ export class DrawingPrimitiveCanvas extends NewClass {
   drawStar(ctx, radius, color) {
     var wrapper = ctx || this._renderContext;
     var context = wrapper.getContext();
-    var colorStr =
-      "rgba(" + (0 | color.r) + "," + (0 | color.g) + "," + (0 | color.b);
-    wrapper.setFillStyle(colorStr + ",1)");
+    wrapper.setFillStyle(
+      cc.Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b)
+    );
     var subRadius = radius / 10;
 
     context.beginPath();
@@ -292,9 +293,15 @@ export class DrawingPrimitiveCanvas extends NewClass {
     context.fill();
 
     var rg = context.createRadialGradient(0, 0, subRadius, 0, 0, radius);
-    rg.addColorStop(0, colorStr + ", 1)");
-    rg.addColorStop(0.3, colorStr + ", 0.8)");
-    rg.addColorStop(1.0, colorStr + ", 0.0)");
+    rg.addColorStop(0, cc.Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b));
+    rg.addColorStop(
+      0.3,
+      cc.Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 200)
+    );
+    rg.addColorStop(
+      1.0,
+      cc.Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 0)
+    );
     wrapper.setFillStyle(rg);
     context.beginPath();
     var startAngle_1 = 0;
@@ -307,15 +314,19 @@ export class DrawingPrimitiveCanvas extends NewClass {
   drawColorBall(ctx, radius, color) {
     var wrapper = ctx || this._renderContext;
     var context = wrapper.getContext();
-    var colorStr =
-      "rgba(" + (0 | color.r) + "," + (0 | color.g) + "," + (0 | color.b);
     var subRadius = radius / 10;
 
     var g1 = context.createRadialGradient(0, 0, subRadius, 0, 0, radius);
-    g1.addColorStop(0, colorStr + ", 1)");
-    g1.addColorStop(0.3, colorStr + ", 0.8)");
-    g1.addColorStop(0.6, colorStr + ", 0.4)");
-    g1.addColorStop(1.0, colorStr + ", 0.0)");
+    g1.addColorStop(0, cc.Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b));
+    g1.addColorStop(
+      0.3,
+      cc.Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 200)
+    );
+    g1.addColorStop(
+      0.6,
+      cc.Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 100)
+    );
+    g1.addColorStop(1.0, cc.Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 0));
     wrapper.setFillStyle(g1);
     context.beginPath();
     var startAngle_1 = 0;
@@ -330,12 +341,8 @@ export class DrawingPrimitiveCanvas extends NewClass {
   }
 
   setDrawColor(r, g, b, a) {
-    this._renderContext.setFillStyle(
-      "rgba(" + r + "," + g + "," + b + "," + a / 255 + ")"
-    );
-    this._renderContext.setStrokeStyle(
-      "rgba(" + r + "," + g + "," + b + "," + a / 255 + ")"
-    );
+    this._renderContext.setFillStyle(Color.toRgba(r, g, b, a));
+    this._renderContext.setStrokeStyle(Color.toRgba(r, g, b, a));
   }
 
   setPointSize(pointSize) {}

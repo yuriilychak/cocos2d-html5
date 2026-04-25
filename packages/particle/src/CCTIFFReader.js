@@ -445,7 +445,7 @@ cc.tiffReader = {
             var ctx = this.canvas.getContext("2d");
 
             // Set a default fill style.
-            ctx.fillStyle = "rgba(255, 255, 255, 0)";
+            ctx.fillStyle = cc.Color.toRgba(255, 255, 255, 0);
 
             // If RowsPerStrip is missing, the whole image is in one strip.
             var rowsPerStrip = fileDirectory['RowsPerStrip'] ? fileDirectory['RowsPerStrip'].values[0] : imageLength;
@@ -550,7 +550,7 @@ cc.tiffReader = {
                                 break;
                         }
 
-                        ctx.fillStyle = "rgba(" + red + ", " + green + ", " + blue + ", " + opacity + ")";
+                        ctx.fillStyle = cc.Color.toRgba(red, green, blue, opacity * 255);
                         ctx.fillRect(x, yPadding + y, 1, 1);
                     }
                 }

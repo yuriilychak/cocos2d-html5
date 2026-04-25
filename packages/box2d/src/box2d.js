@@ -10729,7 +10729,7 @@ Box2D.postDefs = [];
         };
     };
     b2DebugDraw.prototype._color = function (color, alpha) {
-        return "rgba(" + ((color & 0xFF0000) >> 16) + "," + ((color & 0xFF00) >> 8) + "," + (color & 0xFF) + "," + alpha + ")";
+        return cc.Color.toRgba((color & 0xFF0000) >> 16, (color & 0xFF00) >> 8, color & 0xFF, alpha * 255);
     };
     b2DebugDraw.prototype.b2DebugDraw = function () {
         this.m_drawFlags = 0;

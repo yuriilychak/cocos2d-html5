@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import {
+  Color,
   Node,
   CanvasContextWrapper,
   contentScaleFactor,
@@ -40,7 +41,7 @@ export class RenderTextureCanvasRenderCmd extends NodeCanvasRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = false;
-    this._clearColorStr = "rgba(255,255,255,1)";
+    this._clearColorStr = Color.toRgba();
 
     this._cacheCanvas = document.createElement("canvas");
     this._cacheContext = new CanvasContextWrapper(
@@ -58,16 +59,7 @@ export class RenderTextureCanvasRenderCmd extends NodeCanvasRenderCmd {
   setVirtualViewport(rtBegin, fullRect, fullViewport) {}
 
   updateClearColor(clearColor) {
-    this._clearColorStr =
-      "rgba(" +
-      (0 | clearColor.r) +
-      "," +
-      (0 | clearColor.g) +
-      "," +
-      (0 | clearColor.b) +
-      "," +
-      clearColor.a / 255 +
-      ")";
+    this._clearColorStr = Color.toRgba(clearColor);
   }
 
   initWithWidthAndHeight(width, height, format, depthStencilFormat) {
@@ -101,9 +93,7 @@ export class RenderTextureCanvasRenderCmd extends NodeCanvasRenderCmd {
     const context = this._cacheContext.getContext();
     const locCanvas = this._cacheCanvas;
     context.setTransform(1, 0, 0, 1, 0, 0);
-    this._cacheContext.setFillStyle(
-      "rgba(" + (0 | r) + "," + (0 | g) + "," + (0 | b) + "," + a / 255 + ")"
-    );
+    this._cacheContext.setFillStyle(Color.toRgba(0 | r, 0 | g, 0 | b, a));
     context.clearRect(0, 0, locCanvas.width, locCanvas.height);
     context.fillRect(0, 0, locCanvas.width, locCanvas.height);
   }

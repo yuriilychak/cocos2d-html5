@@ -26,6 +26,7 @@ import { RendererConfig } from "../../renderer/renderer-config";
 import LayerCanvasRenderer from "./layer-canvas-renderer";
 import { Rect } from "../../cocoa/geometry/rect";
 import { AffineTransform } from "../../cocoa/affine-transform";
+import { Color } from "../../platform/types/color";
 
 /**
  * LayerColor's Canvas render command
@@ -57,13 +58,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     wrapper.setCompositeOperation(this._blendFuncStr);
     wrapper.setGlobalAlpha(opacity);
     wrapper.setFillStyle(
-      "rgba(" +
-        (0 | curColor.r) +
-        "," +
-        (0 | curColor.g) +
-        "," +
-        (0 | curColor.b) +
-        ", 1)"
+      Color.toRgba(0 | curColor.r, 0 | curColor.g, 0 | curColor.b)
     );
 
     wrapper.setTransform(this._worldTransform, scaleX, scaleY);
@@ -148,7 +143,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
       const child = locChildren[i];
       if (child && child._visible) {
         const childRect = child._getBoundingBoxToCurrentNode(trans);
-        rect = cc.Rect.union(rect, childRect);
+        rect = Rect.union(rect, childRect);
       }
     }
     return rect;
