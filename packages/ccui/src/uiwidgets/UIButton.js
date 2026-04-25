@@ -482,7 +482,7 @@ ccui.Button = class Button extends ccui.Widget {
                     this._titleRenderer.stopAllActions();
 
                     if (this._unifySize){
-                        var zoomTitleAction = cc.scaleTo(ccui.Button.ZOOM_ACTION_TIME_STEP, 1, 1);
+                        var zoomTitleAction = new cc.ScaleTo(ccui.Button.ZOOM_ACTION_TIME_STEP, 1, 1);
                         this._titleRenderer.runAction(zoomTitleAction);
                     }else{
                         this._titleRenderer.setScaleX(1);
@@ -517,14 +517,14 @@ ccui.Button = class Button extends ccui.Widget {
             if (this.pressedActionEnabled) {
                 this._buttonScale9Renderer.stopAllActions();
 
-                var zoomAction = cc.scaleTo(ccui.Button.ZOOM_ACTION_TIME_STEP,
+                var zoomAction = new cc.ScaleTo(ccui.Button.ZOOM_ACTION_TIME_STEP,
                                             1.0 + this._zoomScale,
                                             1.0 + this._zoomScale);
                 this._buttonScale9Renderer.runAction(zoomAction);
 
                 if(this._titleRenderer) {
                     this._titleRenderer.stopAllActions();
-                    this._titleRenderer.runAction(cc.scaleTo(ccui.Button.ZOOM_ACTION_TIME_STEP,
+                    this._titleRenderer.runAction(new cc.ScaleTo(ccui.Button.ZOOM_ACTION_TIME_STEP,
                                                              1 + this._zoomScale,
                                                              1 + this._zoomScale));
                 }

@@ -82,7 +82,7 @@ var EffectAdvanceTextLayer = class EffectAdvanceTextLayer extends cc.Layer {
 	    this.rootNode.addChild(grossiniGrid, 1, EffectsAdvancedTest.TAG_SPRITE1);
         grossini.x = winSize.width / 3;
         grossini.y = winSize.height / 2;
-        var sc = cc.scaleBy(2, 5);
+        var sc = new cc.ScaleBy(2, 5);
         var sc_back = sc.reverse();
         grossini.runAction(cc.sequence(sc, sc_back).repeatForever());
 
@@ -92,7 +92,7 @@ var EffectAdvanceTextLayer = class EffectAdvanceTextLayer extends cc.Layer {
 	    this.rootNode.addChild(tamaraGrid, 1, EffectsAdvancedTest.TAG_SPRITE2);
         tamara.x = winSize.width * 2 / 3;
         tamara.y = winSize.height / 2;
-        var sc2 = cc.scaleBy(2, 5);
+        var sc2 = new cc.ScaleBy(2, 5);
         var sc2_back = sc2.reverse();
         tamara.runAction(cc.sequence(sc2, sc2_back).repeatForever());
 
@@ -176,7 +176,7 @@ var Effect1 = class Effect1 extends EffectAdvanceTextLayer {
         var waves = cc.waves3D(10, new cc.Size(15, 10), 18, 15);
 
         var reuse = cc.reuseGrid(1);
-        var delay = cc.delayTime(8);
+        var delay = new cc.DelayTime(8);
 
         target.runAction(cc.sequence(lens, delay, reuse, waves));
     }
@@ -207,7 +207,7 @@ var Effect2 = class Effect2 extends EffectAdvanceTextLayer {
         //   2 for turn off
         //   turnon tiles will use a new grid
         var reuse = cc.reuseGrid(2);
-        var delay = cc.delayTime(1);
+        var delay = new cc.DelayTime(1);
 
         target.runAction(cc.sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon));
     }
@@ -233,7 +233,7 @@ var Effect3 = class Effect3 extends EffectAdvanceTextLayer {
 	    target2.runAction(shaky.repeatForever());
 
         // moving background. Testing issue #244
-        var move = cc.moveBy(3, new cc.Point(200, 0));
+        var move = new cc.MoveBy(3, new cc.Point(200, 0));
         bg.runAction(cc.sequence(move, move.reverse()).repeatForever());
     }
 
@@ -281,7 +281,7 @@ var Effect4 = class Effect4 extends EffectAdvanceTextLayer {
 
         var bgNodeGrid = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
         var lens = cc.lens3D(10, new cc.Size(32, 24), new cc.Point(100, 180), 150);
-        var move = cc.jumpBy(5, new cc.Point(380, 0), 100, 4);
+        var move = new cc.JumpBy(5, new cc.Point(380, 0), 100, 4);
         var move_back = move.reverse();
         var seq = cc.sequence(move, move_back);
 
@@ -296,7 +296,7 @@ var Effect4 = class Effect4 extends EffectAdvanceTextLayer {
         this.addChild(target);
 
         director.getActionManager().addAction(seq, target, false);
-        bgNodeGrid.runAction(cc.sequence(lens, cc.callFunc(
+        bgNodeGrid.runAction(cc.sequence(lens, new cc.CallFunc(
             function(sender) {
                 sender.removeChild(target, true);
             }
@@ -314,7 +314,7 @@ var Effect5 = class Effect5 extends EffectAdvanceTextLayer {
         super.onEnter();
 
         var effect = cc.liquid(2, new cc.Size(32, 24), 1, 20);
-        var stopEffect = cc.sequence(effect, cc.delayTime(2), cc.stopGrid());
+        var stopEffect = cc.sequence(effect, new cc.DelayTime(2), cc.stopGrid());
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
         bg.runAction(stopEffect);
@@ -334,7 +334,7 @@ var Issue631 = class Issue631 extends EffectAdvanceTextLayer {
     onEnter() {
         super.onEnter();
 
-        var effect = cc.sequence(cc.delayTime(2.0), cc.shaky3D(5.0, new cc.Size(5, 5), 16, false));
+        var effect = cc.sequence(new cc.DelayTime(2.0), cc.shaky3D(5.0, new cc.Size(5, 5), 16, false));
 
         // cleanup
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);

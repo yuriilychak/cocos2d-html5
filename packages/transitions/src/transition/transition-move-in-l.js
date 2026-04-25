@@ -1,5 +1,5 @@
 import { Director, Point } from "@aspect/core";
-import { EaseOut } from "@aspect/actions";
+import { EaseOut, sequence, MoveTo, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
 export class TransitionMoveInL extends TransitionScene {
@@ -14,9 +14,9 @@ export class TransitionMoveInL extends TransitionScene {
 
     var action = this.action();
     this._inScene.runAction(
-      cc.sequence(
+      sequence(
         this.easeActionWithAction(action),
-        cc.callFunc(this.finish, this)
+        new CallFunc(this.finish, this)
       )
     );
   }
@@ -26,7 +26,7 @@ export class TransitionMoveInL extends TransitionScene {
   }
 
   action() {
-    return cc.moveTo(this._duration, new Point(0, 0));
+    return new MoveTo(this._duration, new Point(0, 0));
   }
 
   easeActionWithAction(action) {

@@ -267,12 +267,12 @@ var SpriteProgressBarTintAndFade = class SpriteProgressBarTintAndFade extends Sp
 
         var to = cc.progressFromTo(6, 0, 100);
         var tint = cc.sequence(
-            cc.tintTo(1, 255, 0, 0),
-            cc.tintTo(1, 0, 255, 0),
-            cc.tintTo(1, 0, 0, 255)
+            new cc.TintTo(1, 255, 0, 0),
+            new cc.TintTo(1, 0, 255, 0),
+            new cc.TintTo(1, 0, 0, 255)
         );
 
-        var fade = cc.sequence(cc.fadeTo(1.0, 0), cc.fadeTo(1.0, 255));
+        var fade = cc.sequence(new cc.FadeTo(1.0, 0), new cc.FadeTo(1.0, 255));
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;

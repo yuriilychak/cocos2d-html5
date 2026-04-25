@@ -92,7 +92,7 @@ var MenuLayerMainMenu = class MenuLayerMainMenu extends cc.Layer {
 
         var item9 = new cc.MenuItemFont("Remove menu item when moving", this.onMenuMovingCallback, this);
 
-        var color_action = cc.tintBy(0.5, 0, -255, -255);
+        var color_action = new cc.TintBy(0.5, 0, -255, -255);
         var color_back = color_action.reverse();
         var seq = cc.sequence(color_action, color_back);
         item8.runAction(seq.repeatForever());
@@ -116,7 +116,7 @@ var MenuLayerMainMenu = class MenuLayerMainMenu extends cc.Layer {
 
                 selChild.x = dstPoint.x + offset;
                 selChild.y = dstPoint.y;
-                selChild.runAction(cc.moveBy(2, new cc.Point(dstPoint.x - offset,0)).easing(cc.easeElasticOut(0.35)));
+                selChild.runAction(new cc.MoveBy(2, new cc.Point(dstPoint.x - offset,0)).easing(cc.easeElasticOut(0.35)));
             }
         }
         this._disabledItem = item3;
@@ -326,9 +326,9 @@ var MenuLayer3 = class MenuLayer3 extends cc.Layer {
         item3.x = s.width / 2;
         item3.y = s.height / 2 - 100;
 
-        var jump = cc.jumpBy(3, new cc.Point(400, 0), 50, 4);
+        var jump = new cc.JumpBy(3, new cc.Point(400, 0), 50, 4);
         item2.runAction(cc.sequence(jump, jump.reverse()).repeatForever());
-        var spin1 = cc.rotateBy(3, 360);
+        var spin1 = new cc.RotateBy(3, 360);
         var spin2 = spin1.clone();
         var spin3 = spin1.clone();
 

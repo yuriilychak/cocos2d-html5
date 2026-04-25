@@ -132,9 +132,9 @@ var Parallax1 = class Parallax1 extends ParallaxDemo {
         // now create some actions that will move the '_parent' node
         // and the children of the '_parent' node will move at different
         // speed, thus, simulation the 3D environment
-        var goUp = cc.moveBy(2, new cc.Point(0, 100));
-        var goRight = cc.moveBy(2, new cc.Point(200, 0));
-        var delay = cc.delayTime(2.0);
+        var goUp = new cc.MoveBy(2, new cc.Point(0, 100));
+        var goRight = new cc.MoveBy(2, new cc.Point(200, 0));
+        var delay = new cc.DelayTime(2.0);
         var goDown = goUp.reverse();
         var goLeft = goRight.reverse();
         var seq = cc.sequence(goUp, goRight, delay, goDown, goLeft);

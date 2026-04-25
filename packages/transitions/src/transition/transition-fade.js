@@ -1,4 +1,5 @@
 import { LayerColor, Color } from "@aspect/core";
+import { sequence, FadeIn, FadeOut, CallFunc } from "@aspect/actions";
 import { SCENE_FADE } from "./constants";
 import { TransitionScene } from "./transition-scene";
 
@@ -7,7 +8,7 @@ export class TransitionFade extends TransitionScene {
 
   constructor(t, scene, color) {
     super();
-    this._color = cc.color();
+    this._color = new Color();
     scene && this.initWithDuration(t, scene, color);
   }
 
@@ -20,11 +21,11 @@ export class TransitionFade extends TransitionScene {
     this.addChild(l, 2, SCENE_FADE);
     var f = this.getChildByTag(SCENE_FADE);
 
-    var a = cc.sequence(
-      cc.fadeIn(this._duration / 2),
-      cc.callFunc(this.hideOutShowIn, this),
-      cc.fadeOut(this._duration / 2),
-      cc.callFunc(this.finish, this)
+    var a = sequence(
+      new FadeIn(this._duration / 2),
+      new CallFunc(this.hideOutShowIn, this),
+      new FadeOut(this._duration / 2),
+      new CallFunc(this.finish, this)
     );
     f.runAction(a);
   }

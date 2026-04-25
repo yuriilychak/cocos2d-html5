@@ -141,7 +141,7 @@ var S9BatchNodeBasic = class S9BatchNodeBasic extends S9SpriteTestDemo {
 
         cc.log("... S9BatchNodeBasic done.");
 
-        var moveBy = cc.moveBy(1, new cc.Point(80, 80));
+        var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
         var moveByBack = moveBy.reverse();
         blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
@@ -181,7 +181,7 @@ var S9FrameNameSpriteSheet = class S9FrameNameSpriteSheet extends S9SpriteTestDe
 
         cc.log("... S9FrameNameSpriteSheet done.");
 
-        var moveBy = cc.moveBy(1, new cc.Point(80, 80));
+        var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
         var moveByBack = moveBy.reverse();
         blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
@@ -627,15 +627,15 @@ var S9SpriteActionTest = class S9SpriteActionTest extends S9SpriteTestDemo {
 
         this.addChild(blocks_with_insets);
 
-        var delay = cc.delayTime(0.25);
+        var delay = new cc.DelayTime(0.25);
 
-        var rotateBy = cc.rotateBy(2, 360);
+        var rotateBy = new cc.RotateBy(2, 360);
         var rotateByBack = rotateBy.reverse();
 
-        var ScaleTo = cc.scaleTo(2, -0.44, 0.47);
-        var ScaleToBack = cc.scaleTo(2, 1.0, 1.0);
+        var ScaleTo = new cc.ScaleTo(2, -0.44, 0.47);
+        var ScaleToBack = new cc.ScaleTo(2, 1.0, 1.0);
 
-        var moveBy = cc.moveBy(1, new cc.Point(80, 80));
+        var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
         var moveByBack = moveBy.reverse();
 
         blocks_with_insets.runAction(cc.sequence(rotateBy, delay, rotateByBack));
@@ -694,10 +694,10 @@ var S9SpriteOpacityWithFadeActionsTest = class S9SpriteOpacityWithFadeActionsTes
 
         colorLayer.addChild(blocks);
 
-        var fadeToAction = cc.fadeTo(1, 144);
-        var delay = cc.delayTime(0.5);
-        var fadeOutAction = cc.fadeOut(0.8);
-        var fadeInAction = cc.fadeIn(0.8);
+        var fadeToAction = new cc.FadeTo(1, 144);
+        var delay = new cc.DelayTime(0.5);
+        var fadeOutAction = new cc.FadeOut(0.8);
+        var fadeInAction = new cc.FadeIn(0.8);
 
         colorLayer.runAction(cc.sequence(fadeToAction, delay, fadeOutAction, delay.clone(), fadeInAction));
 

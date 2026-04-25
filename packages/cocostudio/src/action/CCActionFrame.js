@@ -317,7 +317,7 @@ ccs.ActionMoveFrame = class ActionMoveFrame extends ccs.ActionFrame {
      * @returns {cc.MoveTo}
      */
     getAction(duration) {
-        return this._getEasingAction(cc.moveTo(duration, this._position));
+        return this._getEasingAction(new cc.MoveTo(duration, this._position));
     }
 
 };
@@ -374,7 +374,7 @@ ccs.ActionScaleFrame = class ActionScaleFrame extends ccs.ActionFrame {
      * @returns {cc.ScaleTo}
      */
     getAction(duration) {
-        return this._getEasingAction(cc.scaleTo(duration, this._scaleX, this._scaleY));
+        return this._getEasingAction(new cc.ScaleTo(duration, this._scaleX, this._scaleY));
     }
 
 };
@@ -416,13 +416,13 @@ ccs.ActionRotationFrame = class ActionRotationFrame extends ccs.ActionFrame {
      */
     getAction(duration, srcFrame) {
         if(srcFrame === undefined)
-            return this._getEasingAction(cc.rotateTo(duration, this._rotation));
+            return this._getEasingAction(new cc.RotateTo(duration, this._rotation));
         else {
             if (!(srcFrame instanceof cc.ActionRotationFrame))
                 return this.getAction(duration);
             else{
                 var diffRotation = this._rotation - srcFrame._rotation;
-                return this._getEasingAction(cc.rotateBy(duration,diffRotation));
+                return this._getEasingAction(new cc.RotateBy(duration,diffRotation));
             }
         }
     }
@@ -464,7 +464,7 @@ ccs.ActionFadeFrame = class ActionFadeFrame extends ccs.ActionFrame {
      * @returns {cc.FadeTo}
      */
     getAction(duration) {
-        return this._getEasingAction(cc.fadeTo(duration, this._opacity));
+        return this._getEasingAction(new cc.FadeTo(duration, this._opacity));
     }
 
 };
@@ -508,7 +508,7 @@ ccs.ActionTintFrame = class ActionTintFrame extends ccs.ActionFrame {
      * @returns {cc.TintTo}
      */
     getAction(duration) {
-        return this._getEasingAction(cc.tintTo(duration, this._color.r, this._color.g, this._color.b));
+        return this._getEasingAction(new cc.TintTo(duration, this._color.r, this._color.g, this._color.b));
     }
 
 };

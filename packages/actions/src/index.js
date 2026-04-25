@@ -228,50 +228,8 @@ cc.CatmullRomBy = CatmullRomBy;
 cc.ActionTweenDelegate = ActionTweenDelegate;
 cc.ActionTween = ActionTween;
 
-// ─── Factory Functions ───────────────────────────────
-cc.action = () => new Action();
-cc.speed = (action, speed) => new Speed(action, speed);
-cc.follow = (followedNode, rect) => new Follow(followedNode, rect);
-cc.actionInterval = (d) => new ActionInterval(d);
-cc.repeat = (action, times) => new Repeat(action, times);
-cc.repeatForever = (action) => new RepeatForever(action);
-cc.rotateTo = (duration, deltaAngleX, deltaAngleY) => new RotateTo(duration, deltaAngleX, deltaAngleY);
-cc.rotateBy = (duration, deltaAngleX, deltaAngleY) => new RotateBy(duration, deltaAngleX, deltaAngleY);
-cc.moveBy = (duration, deltaPos, deltaY) => new MoveBy(duration, deltaPos, deltaY);
-cc.moveTo = (duration, position, y) => new MoveTo(duration, position, y);
-cc.skewTo = (t, sx, sy) => new SkewTo(t, sx, sy);
-cc.skewBy = (t, sx, sy) => new SkewBy(t, sx, sy);
-cc.jumpBy = (duration, position, y, height, jumps) => new JumpBy(duration, position, y, height, jumps);
-cc.jumpTo = (duration, position, y, height, jumps) => new JumpTo(duration, position, y, height, jumps);
-cc.bezierBy = (t, c) => new BezierBy(t, c);
-cc.bezierTo = (t, c) => new BezierTo(t, c);
-cc.scaleTo = (duration, sx, sy) => new ScaleTo(duration, sx, sy);
-cc.scaleBy = (duration, sx, sy) => new ScaleBy(duration, sx, sy);
-cc.blink = (duration, blinks) => new Blink(duration, blinks);
-cc.fadeTo = (duration, opacity) => new FadeTo(duration, opacity);
-cc.fadeIn = (duration) => new FadeIn(duration);
-cc.fadeOut = (d) => new FadeOut(d);
-cc.tintTo = (duration, red, green, blue) => new TintTo(duration, red, green, blue);
-cc.tintBy = (duration, deltaRed, deltaGreen, deltaBlue) => new TintBy(duration, deltaRed, deltaGreen, deltaBlue);
-cc.delayTime = (d) => new DelayTime(d);
-cc.reverseTime = (action) => new ReverseTime(action);
-cc.animate = (animation) => new Animate(animation);
-cc.targetedAction = (target, action) => new TargetedAction(target, action);
-cc.show = () => new Show();
-cc.hide = () => new Hide();
-cc.toggleVisibility = () => new ToggleVisibility();
-cc.removeSelf = (isNeedCleanUp) => new RemoveSelf(isNeedCleanUp);
-cc.flipX = (flip) => new FlipX(flip);
-cc.flipY = (flip) => new FlipY(flip);
-cc.place = (pos, y) => new Place(pos, y);
-cc.callFunc = (selector, selectorTarget, data) => new CallFunc(selector, selectorTarget, data);
-cc.cardinalSplineTo = (duration, points, tension) => new CardinalSplineTo(duration, points, tension);
-cc.cardinalSplineBy = (duration, points, tension) => new CardinalSplineBy(duration, points, tension);
-cc.catmullRomTo = (dt, points) => new CatmullRomTo(dt, points);
-cc.catmullRomBy = (dt, points) => new CatmullRomBy(dt, points);
-cc.actionTween = (duration, key, from, to) => new ActionTween(duration, key, from, to);
-
-cc.sequence = function (tempArray) {
+// ─── Sequence & Spawn ────────────────────────────────
+function sequence(tempArray) {
   var paramArray = tempArray instanceof Array ? tempArray : arguments;
   if (paramArray.length > 0 && paramArray[paramArray.length - 1] == null)
     cc.log("parameters should not be ending with null in Javascript");
@@ -295,7 +253,7 @@ cc.sequence = function (tempArray) {
   }
 
   return result;
-};
+}
 
 Sequence._actionOneTwo = function (actionOne, actionTwo) {
   var sequence = new Sequence();
@@ -303,7 +261,9 @@ Sequence._actionOneTwo = function (actionOne, actionTwo) {
   return sequence;
 };
 
-cc.spawn = function (tempArray) {
+cc.sequence = sequence;
+
+function spawn(tempArray) {
   var paramArray = tempArray instanceof Array ? tempArray : arguments;
   if (paramArray.length > 0 && paramArray[paramArray.length - 1] == null)
     cc.log("parameters should not be ending with null in Javascript");
@@ -314,7 +274,7 @@ cc.spawn = function (tempArray) {
       prev = Spawn._actionOneTwo(prev, paramArray[i]);
   }
   return prev;
-};
+}
 
 Spawn._actionOneTwo = function (action1, action2) {
   var pSpawn = new Spawn();
@@ -322,7 +282,10 @@ Spawn._actionOneTwo = function (action1, action2) {
   return pSpawn;
 };
 
+cc.spawn = spawn;
+
 // ─── Re-exports ─────────────────────────────────────
+export { sequence, spawn };
 export {
   bezierAt, bounceTime,
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,

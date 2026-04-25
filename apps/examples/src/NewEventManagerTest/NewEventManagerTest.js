@@ -639,13 +639,13 @@ var RemoveAndRetainNodeTest = class RemoveAndRetainNodeTest extends EventDispatc
         });
         cc.eventManager.addListener(listener1, this._sprite);
 
-        this.runAction(cc.sequence(cc.delayTime(5.0),
-            cc.callFunc(function () {
+        this.runAction(cc.sequence(new cc.DelayTime(5.0),
+            new cc.CallFunc(function () {
                 this._spriteSaved = true;
                 this._sprite.removeFromParent(false);
             }, this),
-            cc.delayTime(5.0),
-            cc.callFunc(function () {
+            new cc.DelayTime(5.0),
+            new cc.CallFunc(function () {
                 this._spriteSaved = false;
                 this.addChild(this._sprite);
                 if(!cc.sys.isNative)

@@ -99,16 +99,16 @@ var CrashTest = class CrashTest extends ActionManagerTest {
         this.addChild(child, 1);
 
         //Sum of all action's duration is 1.5 second.
-        child.runAction(cc.rotateBy(1.5, 90));
+        child.runAction(new cc.RotateBy(1.5, 90));
         // child.runAction(cc.sequence(
-        //     cc.delayTime(1.4),
-        //     cc.fadeOut(1.1))
+        //     new cc.DelayTime(1.4),
+        //     new cc.FadeOut(1.1))
         // );
 
         //After 1.5 second, self will be removed.
         this.runAction(cc.sequence(
-           cc.delayTime(1.4),
-           cc.callFunc(this.onRemoveThis, this))
+           new cc.DelayTime(1.4),
+           new cc.CallFunc(this.onRemoveThis, this))
         );
         //----end0----
     }
@@ -161,8 +161,8 @@ var LogicTest = class LogicTest extends ActionManagerTest {
 	    grossini.y = 200;
 
         grossini.runAction(cc.sequence(
-            cc.moveBy(1, new cc.Point(150, 0)),
-            cc.callFunc(this.onBugMe, this))
+            new cc.MoveBy(1, new cc.Point(150, 0)),
+            new cc.CallFunc(this.onBugMe, this))
         );
 
 
@@ -177,7 +177,7 @@ var LogicTest = class LogicTest extends ActionManagerTest {
     onBugMe(node) {
         //----start1----onBugMe
         node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
-        node.runAction(cc.scaleTo(2, 2));
+        node.runAction(new cc.ScaleTo(2, 2));
         //----end1----
     }
 
@@ -232,7 +232,7 @@ var PauseTest = class PauseTest extends ActionManagerTest {
 	    grossini.y = 200;
 
 
-        var action = cc.moveBy(1, new cc.Point(150, 0));
+        var action = new cc.MoveBy(1, new cc.Point(150, 0));
 
         director.getActionManager().addAction(action, grossini, true);
 
@@ -301,8 +301,8 @@ var RemoveTest = class RemoveTest extends ActionManagerTest {
         l.x = s.width / 2;
 	    l.y = 245;
 
-        var move = cc.moveBy(2, new cc.Point(200, 0));
-        var callback = cc.callFunc(this.stopAction, this);
+        var move = new cc.MoveBy(2, new cc.Point(200, 0));
+        var callback = new cc.CallFunc(this.stopAction, this);
         var sequence = cc.sequence(move, callback);
         sequence.tag = TAG_SEQUENCE;
 
@@ -364,10 +364,10 @@ var ResumeTest = class ResumeTest extends ActionManagerTest {
         grossini.x = s.width / 2;
 	    grossini.y = s.height / 2;
 
-        grossini.runAction(cc.scaleBy(2, 2));
+        grossini.runAction(new cc.ScaleBy(2, 2));
 
         director.getActionManager().pauseTarget(grossini);
-        grossini.runAction(cc.rotateBy(2, 360));
+        grossini.runAction(new cc.RotateBy(2, 360));
 
         this.schedule(this.resumeGrossini, 3.0);
         //----end4----

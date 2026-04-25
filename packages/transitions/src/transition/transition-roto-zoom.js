@@ -1,3 +1,4 @@
+import { sequence, spawn, ScaleBy, RotateBy, DelayTime, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
 export class TransitionRotoZoom extends TransitionScene {
@@ -20,17 +21,17 @@ export class TransitionRotoZoom extends TransitionScene {
       anchorY: 0.5
     });
 
-    var rotoZoom = cc.sequence(
-      cc.spawn(
-        cc.scaleBy(this._duration / 2, 0.001),
-        cc.rotateBy(this._duration / 2, 360 * 2)
+    var rotoZoom = sequence(
+      spawn(
+        new ScaleBy(this._duration / 2, 0.001),
+        new RotateBy(this._duration / 2, 360 * 2)
       ),
-      cc.delayTime(this._duration / 2)
+      new DelayTime(this._duration / 2)
     );
 
     this._outScene.runAction(rotoZoom);
     this._inScene.runAction(
-      cc.sequence(rotoZoom.reverse(), cc.callFunc(this.finish, this))
+      sequence(rotoZoom.reverse(), new CallFunc(this.finish, this))
     );
   }
 }

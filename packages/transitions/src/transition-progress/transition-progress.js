@@ -1,6 +1,7 @@
-import { Director } from "@aspect/core";
+import { Director, log } from "@aspect/core";
 import { RenderTexture } from "@aspect/render-texture";
 import { ProgressFromTo } from "@aspect/progress-timer";
+import { sequence, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "../transition/transition-scene";
 import { SCENE_RADIAL } from "./constants";
 
@@ -45,9 +46,9 @@ export class TransitionProgress extends TransitionScene {
 
     var pNode = this._progressTimerNodeWithRenderTexture(texture);
 
-    var layerAction = cc.sequence(
+    var layerAction = sequence(
       new ProgressFromTo(this._duration, this._from, this._to),
-      cc.callFunc(this.finish, this));
+      new CallFunc(this.finish, this));
     pNode.runAction(layerAction);
 
     this.addChild(pNode, 2, SCENE_RADIAL);
@@ -65,7 +66,7 @@ export class TransitionProgress extends TransitionScene {
   }
 
   _progressTimerNodeWithRenderTexture(texture) {
-    cc.log("cc.TransitionProgress._progressTimerNodeWithRenderTexture(): should be overridden in subclass");
+    log("TransitionProgress._progressTimerNodeWithRenderTexture(): should be overridden in subclass");
     return null;
   }
 

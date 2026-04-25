@@ -321,7 +321,7 @@ var ParticleDemo = class ParticleDemo extends BaseTestLayer {
         this._background.x = s.width / 2;
         this._background.y = s.height - 180;
 
-        var move = cc.moveBy(4, new cc.Point(300, 0));
+        var move = new cc.MoveBy(4, new cc.Point(300, 0));
         var move_back = move.reverse();
 
         var seq = cc.sequence(move, move_back);
@@ -910,7 +910,7 @@ var ParallaxParticle = class ParallaxParticle extends ParticleDemo {
         p2.addChild(par, 10);
         par.texture = cc.textureCache.addImage(s_fire);
 
-        var move = cc.moveBy(4, new cc.Point(300, 0));
+        var move = new cc.MoveBy(4, new cc.Point(300, 0));
         var move_back = move.reverse();
         var seq = cc.sequence(move, move_back);
         p.runAction(seq.repeatForever());
@@ -1172,7 +1172,7 @@ var Issue704 = class Issue704 extends ParticleDemo {
         // additive
         this._emitter.setBlendAdditive(false);
 
-        var rot = cc.rotateBy(16, 360);
+        var rot = new cc.RotateBy(16, 360);
         this._emitter.runAction(rot.repeatForever());
     }
     title() {

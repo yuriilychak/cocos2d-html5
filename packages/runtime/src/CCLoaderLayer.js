@@ -169,10 +169,10 @@ class Dialog extends cc.Layer {
     if (!config.action) {
       var action = cc.sequence(
         cc.EaseIn.create(
-          cc.scaleTo(0.1, this.backgroundSprite.scale + 0.02),
+          new cc.ScaleTo(0.1, this.backgroundSprite.scale + 0.02),
           0.4
         ),
-        cc.EaseOut.create(cc.scaleTo(0.1, this.backgroundSprite.scale), 0.3)
+        cc.EaseOut.create(new cc.ScaleTo(0.1, this.backgroundSprite.scale), 0.3)
       );
       this.backgroundSprite.runAction(action);
     } else {
@@ -1062,9 +1062,9 @@ class LoaderLayer extends cc.Layer {
 
         if (typeof config.logo.action == "undefined" && LoaderLayer._useDefaultSource) {
             config.logo.action = cc.sequence(
-                cc.spawn(cc.moveBy(0.4, new cc.Point(0, 40)).easing(cc.easeIn(0.5)), cc.scaleTo(0.4, 0.95, 1.05).easing(cc.easeIn(0.5))),
-                cc.delayTime(0.08),
-                cc.spawn(cc.moveBy(0.4, new cc.Point(0, -40)).easing(cc.easeOut(0.5)), cc.scaleTo(0.4, 1.05, 0.95).easing(cc.easeOut(0.5)))
+                cc.spawn(new cc.MoveBy(0.4, new cc.Point(0, 40)).easing(cc.easeIn(0.5)), new cc.ScaleTo(0.4, 0.95, 1.05).easing(cc.easeIn(0.5))),
+                new cc.DelayTime(0.08),
+                cc.spawn(new cc.MoveBy(0.4, new cc.Point(0, -40)).easing(cc.easeOut(0.5)), new cc.ScaleTo(0.4, 1.05, 0.95).easing(cc.easeOut(0.5)))
             ).repeatForever();
             config.logo.action.retain();
         }

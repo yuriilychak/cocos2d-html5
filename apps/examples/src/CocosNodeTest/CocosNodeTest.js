@@ -130,9 +130,9 @@ var CCNodeTest2 = class CCNodeTest2 extends TestNodeDemo {
         sp1.addChild(sp3);
         sp2.addChild(sp4);
 
-        var a1 = cc.rotateBy(2, 360);
-        var a2 = cc.scaleBy(2, 2);
-        var delay = cc.delayTime(0.2);
+        var a1 = new cc.RotateBy(2, 360);
+        var a2 = new cc.ScaleBy(2, 2);
+        var delay = new cc.DelayTime(0.2);
 
         var action1 = cc.sequence(a1, a2, delay, a2.reverse()).repeatForever();
         var action2 = cc.sequence(a1.clone(), a2.clone(), delay.clone(), a2.reverse()).repeatForever();
@@ -192,7 +192,7 @@ var CCNodeTest4 = class CCNodeTest4 extends TestNodeDemo {
     delay2(dt) {
         //----start1----delay2
         var node = this.getChildByTag(2);
-        var action1 = cc.rotateBy(1, 360);
+        var action1 = new cc.RotateBy(1, 360);
         node.runAction(action1);
         //----end1----
     }
@@ -239,7 +239,7 @@ var CCNodeTest5 = class CCNodeTest5 extends TestNodeDemo {
         sp2.x = winSize.width - 150;
         sp2.y = winSize.height / 2;
 
-        var rot = cc.rotateBy(2, 360);
+        var rot = new cc.RotateBy(2, 360);
         var rot_back = rot.reverse();
         var forever = cc.sequence(rot, rot_back).repeatForever();
         var forever2 = forever.clone();
@@ -308,7 +308,7 @@ var CCNodeTest6 = class CCNodeTest6 extends TestNodeDemo {
         sp2.x = winSize.width - 150;
         sp2.y = winSize.height / 2;
 
-        var rot = cc.rotateBy(2, 360);
+        var rot = new cc.RotateBy(2, 360);
         var rot_back = rot.reverse();
         var forever1 = cc.sequence(rot, rot_back).repeatForever();
         var forever11 = forever1.clone();
@@ -395,8 +395,8 @@ var StressTest1 = class StressTest1 extends TestNodeDemo {
 
         this.runAction(
             cc.sequence(
-                cc.rotateBy(2, 360),
-                cc.callFunc(this.onRemoveMe, this)
+                new cc.RotateBy(2, 360),
+                new cc.CallFunc(this.onRemoveMe, this)
             )
         );
 
@@ -441,7 +441,7 @@ var StressTest2 = class StressTest2 extends TestNodeDemo {
         sp1.x = 80;
         sp1.y = winSize.height / 2;
 
-        var move = cc.moveBy(3, new cc.Point(350, 0));
+        var move = new cc.MoveBy(3, new cc.Point(350, 0));
         var move_ease_inout3 = move.clone().easing(cc.easeInOut(2.0));
         var move_ease_inout_back3 = move_ease_inout3.reverse();
         var seq3 = cc.sequence(move_ease_inout3, move_ease_inout_back3);
@@ -497,12 +497,12 @@ var NodeToWorld = class NodeToWorld extends TestNodeDemo {
         menu.y = back.height / 2;
         back.addChild(menu);
 
-        var rot = cc.rotateBy(3, 360);
-        var delay = cc.delayTime(0.3);
+        var rot = new cc.RotateBy(3, 360);
+        var delay = new cc.DelayTime(0.3);
         var fe = cc.sequence(rot, delay).repeatForever();
         item.runAction(fe);
 
-        var move = cc.moveBy(3, new cc.Point(200, 0));
+        var move = new cc.MoveBy(3, new cc.Point(200, 0));
         var move_back = move.reverse();
         var seq = cc.sequence(move, delay.clone(), move_back);
         var fe2 = seq.repeatForever();
@@ -575,7 +575,7 @@ var ConvertToNode = class ConvertToNode extends TestNodeDemo {
                 }
             }, this);
 
-        var rotate = cc.rotateBy(10, 360);
+        var rotate = new cc.RotateBy(10, 360);
         var action = rotate.repeatForever();
         for (var i = 0; i < 3; i++) {
             var sprite = new cc.Sprite(s_pathGrossini);

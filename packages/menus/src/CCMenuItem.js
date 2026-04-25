@@ -362,7 +362,7 @@ cc.MenuItemLabel = class MenuItemLabel extends cc.MenuItem {
             else
                 this._originalScale = this.scale;
 
-            var zoomAction = cc.scaleTo(0.1, this._originalScale * 1.2);
+            var zoomAction = new cc.ScaleTo(0.1, this._originalScale * 1.2);
             zoomAction.setTag(cc.ZOOM_ACTION_TAG);
             this.runAction(zoomAction);
         }
@@ -375,7 +375,7 @@ cc.MenuItemLabel = class MenuItemLabel extends cc.MenuItem {
         if (this._enabled) {
             super.unselected();
             this.stopActionByTag(cc.ZOOM_ACTION_TAG);
-            var zoomAction = cc.scaleTo(0.1, this._originalScale);
+            var zoomAction = new cc.ScaleTo(0.1, this._originalScale);
             zoomAction.setTag(cc.ZOOM_ACTION_TAG);
             this.runAction(zoomAction);
         }

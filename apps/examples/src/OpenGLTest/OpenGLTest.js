@@ -927,7 +927,7 @@ var ShaderOutlineEffect = class ShaderOutlineEffect extends OpenGLTestLayer {
                 x: winSize.width / 2,
                 y: winSize.height / 2
             });
-            this.sprite.runAction(cc.sequence(cc.rotateTo(1.0, 10), cc.rotateTo(1.0, -10)).repeatForever());
+            this.sprite.runAction(cc.sequence(new cc.RotateTo(1.0, 10), new cc.RotateTo(1.0, -10)).repeatForever());
 
             if(cc.sys.isNative){
                 var glProgram_state = cc.GLProgramState.getOrCreateWithGLProgram(this.shader);

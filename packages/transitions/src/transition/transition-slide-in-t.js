@@ -1,4 +1,5 @@
 import { Director, Point } from "@aspect/core";
+import { MoveBy } from "@aspect/actions";
 import { ADJUST_FACTOR } from "./constants";
 import { TransitionSlideInL } from "./transition-slide-in-l";
 
@@ -20,7 +21,7 @@ export class TransitionSlideInT extends TransitionSlideInL {
   }
 
   action() {
-    return cc.moveBy(
+    return new MoveBy(
       this._duration,
       new Point(
         0,

@@ -1,5 +1,5 @@
 import { Director, Point } from "@aspect/core";
-import { EaseInOut } from "@aspect/actions";
+import { EaseInOut, sequence, MoveBy, CallFunc } from "@aspect/actions";
 import { ADJUST_FACTOR } from "./constants";
 import { TransitionScene } from "./transition-scene";
 
@@ -20,9 +20,9 @@ export class TransitionSlideInL extends TransitionScene {
     var inA = this.action();
     var outA = this.action();
 
-    var inAction = cc.sequence(
+    var inAction = sequence(
       this.easeActionWithAction(inA),
-      cc.callFunc(this.finish, this)
+      new CallFunc(this.finish, this)
     );
     var outAction = this.easeActionWithAction(outA);
     this._inScene.runAction(inAction);
@@ -37,7 +37,7 @@ export class TransitionSlideInL extends TransitionScene {
   }
 
   action() {
-    return cc.moveBy(
+    return new MoveBy(
       this._duration,
       new Point(Director.getInstance().getWinSize().width - ADJUST_FACTOR, 0)
     );

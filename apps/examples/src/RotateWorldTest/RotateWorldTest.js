@@ -29,7 +29,7 @@ var RotateWorldTestScene = class RotateWorldTestScene extends TestScene {
     runThisTest() {
         var layer = new RotateWorldMainLayer();
         this.addChild(layer);
-        this.runAction(cc.rotateBy(4, -360));
+        this.runAction(new cc.RotateBy(4, -360));
         director.runScene(this);
     }
 
@@ -65,7 +65,7 @@ var SpriteLayer = class SpriteLayer extends cc.Layer {
         spriteSister2.x = x - 40;
         spriteSister2.y = y / 2;
 
-        var rot = cc.rotateBy(16, -3600);
+        var rot = new cc.RotateBy(16, -3600);
 
         this.addChild(sprite);
         this.addChild(spriteSister1);
@@ -73,10 +73,10 @@ var SpriteLayer = class SpriteLayer extends cc.Layer {
 
         sprite.runAction(rot);
 
-        var jump1 = cc.jumpBy(4, new cc.Point(-400, 0), 100, 4);
+        var jump1 = new cc.JumpBy(4, new cc.Point(-400, 0), 100, 4);
         var jump2 = jump1.reverse();
 
-        var rot1 = cc.rotateBy(4, 360 * 2);
+        var rot1 = new cc.RotateBy(4, 360 * 2);
         var rot2 = rot1.reverse();
 
         spriteSister1.runAction(cc.sequence(jump2, jump1).repeat(5));
@@ -158,7 +158,7 @@ var RotateWorldMainLayer = class RotateWorldMainLayer extends cc.Layer {
         this.addChild(green);
         this.addChild(red);
 
-        var rot = cc.rotateBy(8, 720);
+        var rot = new cc.RotateBy(8, 720);
 
         blue.runAction(rot);
         red.runAction(rot.clone());

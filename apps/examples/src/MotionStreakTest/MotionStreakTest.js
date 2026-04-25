@@ -146,21 +146,21 @@ var MotionStreakTest1 = class MotionStreakTest1 extends MotionStreakTest {
         // schedule an update on each frame so we can synchronize the streak with the target
         this.schedule(this.onUpdate);
 
-        var a1 = cc.rotateBy(2, 360);
+        var a1 = new cc.RotateBy(2, 360);
 
         var action1 = a1.repeatForever();
-        var motion = cc.moveBy(2, new cc.Point(100, 0));
+        var motion = new cc.MoveBy(2, new cc.Point(100, 0));
         this._root.runAction(cc.sequence(motion, motion.reverse()).repeatForever());
         this._root.runAction(action1);
 
         var colorAction = cc.sequence(
-            cc.tintTo(0.2, 255, 0, 0),
-            cc.tintTo(0.2, 0, 255, 0),
-            cc.tintTo(0.2, 0, 0, 255),
-            cc.tintTo(0.2, 0, 255, 255),
-            cc.tintTo(0.2, 255, 255, 0),
-            cc.tintTo(0.2, 255, 0, 255),
-            cc.tintTo(0.2, 255, 255, 255)
+            new cc.TintTo(0.2, 255, 0, 0),
+            new cc.TintTo(0.2, 0, 255, 0),
+            new cc.TintTo(0.2, 0, 0, 255),
+            new cc.TintTo(0.2, 0, 255, 255),
+            new cc.TintTo(0.2, 255, 255, 0),
+            new cc.TintTo(0.2, 255, 0, 255),
+            new cc.TintTo(0.2, 255, 255, 255)
         ).repeatForever();
 
         this._streak.runAction(colorAction);

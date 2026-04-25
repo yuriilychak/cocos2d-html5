@@ -299,8 +299,8 @@ var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotifi
 
         this._charLimit = 20;
         this._textFieldAction = cc.sequence(
-            cc.fadeOut(0.25),
-            cc.fadeIn(0.25)
+            new cc.FadeOut(0.25),
+            new cc.FadeIn(0.25)
         ).repeatForever();
         this._action = false;
 
@@ -364,10 +364,10 @@ var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotifi
 
         var seq = cc.sequence(
             cc.spawn(
-                cc.moveTo(duration, new cc.Point(endX, endY)),
-                cc.scaleTo(duration, 1),
-                cc.fadeOut(duration)),
-            cc.callFunc(this.callbackRemoveNodeWhenDidAction, this));
+                new cc.MoveTo(duration, new cc.Point(endX, endY)),
+                new cc.ScaleTo(duration, 1),
+                new cc.FadeOut(duration)),
+            new cc.CallFunc(this.callbackRemoveNodeWhenDidAction, this));
         label.runAction(seq);
         return false;
     }
@@ -392,10 +392,10 @@ var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotifi
 
         var seq = cc.sequence(
             cc.spawn(
-                cc.moveTo(duration, endPos),
-                cc.rotateBy(rotateDuration, (Math.random() % 2) ? 360 : -360).repeat(repeatTime),
-                cc.fadeOut(duration)),
-            cc.callFunc(this.callbackRemoveNodeWhenDidAction, this));
+                new cc.MoveTo(duration, endPos),
+                new cc.RotateBy(rotateDuration, (Math.random() % 2) ? 360 : -360).repeat(repeatTime),
+                new cc.FadeOut(duration)),
+            new cc.CallFunc(this.callbackRemoveNodeWhenDidAction, this));
         label.runAction(seq);
         return false;
     }

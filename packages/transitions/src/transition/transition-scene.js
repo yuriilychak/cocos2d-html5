@@ -64,7 +64,7 @@ export class TransitionScene extends Scene {
   initWithDuration(t, scene) {
     if (!scene)
       throw new Error(
-        "cc.TransitionScene.initWithDuration(): Argument scene must be non-nil"
+        "TransitionScene.initWithDuration(): Argument scene must be non-nil"
       );
 
     if (this.init()) {
@@ -84,7 +84,7 @@ export class TransitionScene extends Scene {
 
       if (this._inScene === this._outScene)
         throw new Error(
-          "cc.TransitionScene.initWithDuration(): Incoming scene must be different from the outgoing scene"
+          "TransitionScene.initWithDuration(): Incoming scene must be different from the outgoing scene"
         );
 
       this._sceneOrder();

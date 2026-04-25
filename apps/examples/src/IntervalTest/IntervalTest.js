@@ -132,7 +132,7 @@ var IntervalLayer = class IntervalLayer extends cc.LayerGradient {
         sprite.x = 40;
         sprite.y = 50;
 
-        var jump = cc.jumpBy(3, new cc.Point(s.width - 80, 0), 50, 4);
+        var jump = new cc.JumpBy(3, new cc.Point(s.width - 80, 0), 50, 4);
 
         this.addChild(sprite);
         sprite.runAction(cc.sequence(jump, jump.reverse()).repeatForever());

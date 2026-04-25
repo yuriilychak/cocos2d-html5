@@ -357,15 +357,15 @@ var LayerTest2 = class LayerTest2 extends LayerTest {
         layer2.ignoreAnchorPointForPosition(false);
         this.addChild(layer2, 2, LAYERTEST2_LAYER2_TAG);
 
-        var actionTint = cc.tintBy(2, -255, -127, 0);
+        var actionTint = new cc.TintBy(2, -255, -127, 0);
         var actionTintBack = actionTint.reverse();
 
-        var actionFade = cc.fadeOut(2.0);
+        var actionFade = new cc.FadeOut(2.0);
         var actionFadeBack = actionFade.reverse();
 
         if (autoTestEnabled) {
-            var seq1 = cc.sequence(actionTint, cc.delayTime(0.25), actionTintBack);
-            var seq2 = cc.sequence(actionFade, cc.delayTime(0.25), actionFadeBack);
+            var seq1 = cc.sequence(actionTint, new cc.DelayTime(0.25), actionTintBack);
+            var seq2 = cc.sequence(actionFade, new cc.DelayTime(0.25), actionFadeBack);
         } else {
             var seq1 = cc.sequence(actionTint, actionTintBack);
             var seq2 = cc.sequence(actionFade, actionFadeBack);

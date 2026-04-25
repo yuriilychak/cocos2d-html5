@@ -1,4 +1,4 @@
-import { EaseOut } from "@aspect/actions";
+import { EaseOut, sequence, ScaleTo, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
 export class TransitionShrinkGrow extends TransitionScene {
@@ -21,13 +21,13 @@ export class TransitionShrinkGrow extends TransitionScene {
       anchorY: 0.5
     });
 
-    var scaleOut = cc.scaleTo(this._duration, 0.01);
-    var scaleIn = cc.scaleTo(this._duration, 1.0);
+    var scaleOut = new ScaleTo(this._duration, 0.01);
+    var scaleIn = new ScaleTo(this._duration, 1.0);
 
     this._inScene.runAction(
-      cc.sequence(
+      sequence(
         this.easeActionWithAction(scaleIn),
-        cc.callFunc(this.finish, this)
+        new CallFunc(this.finish, this)
       )
     );
     this._outScene.runAction(this.easeActionWithAction(scaleOut));

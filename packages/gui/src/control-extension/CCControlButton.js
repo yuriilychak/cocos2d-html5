@@ -385,7 +385,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
         //this.needsLayout();// needn't
         if (this.zoomOnTouchDown) {
             var scaleValue = (this.isHighlighted() && this.isEnabled() && !this.isSelected()) ? 1.1 : 1.0;
-            var zoomAction = cc.scaleTo(0.05, scaleValue);
+            var zoomAction = new cc.ScaleTo(0.05, scaleValue);
             zoomAction.setTag(cc.CONTROL_ZOOM_ACTION_TAG);
             this.runAction(zoomAction);
         }

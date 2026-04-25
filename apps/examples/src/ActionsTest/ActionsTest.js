@@ -249,7 +249,7 @@ var ActionMove = class ActionMove extends ActionsDemo {
     }
 
       get _code() { 
-        return "a =cc.moveBy( time, new cc.Point(x,y) );\n" + "a = cc.moveTo( time, new cc.Point(x,y) );";
+        return "a =new cc.MoveBy( time, new cc.Point(x,y) );\n" + "a = new cc.MoveTo( time, new cc.Point(x,y) );";
       }
 
   onEnter() {
@@ -259,14 +259,14 @@ var ActionMove = class ActionMove extends ActionsDemo {
     this.centerSprites(3);
     var s = director.getWinSize();
 
-    var actionTo = cc.moveTo(2, new cc.Point(s.width - 40, s.height - 40));
+    var actionTo = new cc.MoveTo(2, new cc.Point(s.width - 40, s.height - 40));
 
-    var actionBy = cc.moveBy(1, new cc.Point(80, 80));
+    var actionBy = new cc.MoveBy(1, new cc.Point(80, 80));
     var actionByBack = actionBy.reverse();
 
     this._tamara.runAction(actionTo);
     this._grossini.runAction(cc.sequence(actionBy, actionByBack));
-    this._kathia.runAction(cc.moveTo(1, new cc.Point(40, 40)));
+    this._kathia.runAction(new cc.MoveTo(1, new cc.Point(40, 40)));
     //----end1----
   }
   title() {
@@ -308,7 +308,7 @@ var ActionScale = class ActionScale extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = cc.scaleBy( time, scale );\na = cc.scaleTo( time, scaleX, scaleY );";
+        return "a = new cc.ScaleBy( time, scale );\na = new cc.ScaleTo( time, scaleX, scaleY );";
       }
 
   onEnter() {
@@ -317,16 +317,16 @@ var ActionScale = class ActionScale extends ActionsDemo {
 
     this.centerSprites(3);
 
-    var actionTo = cc.scaleTo(2, 0.5);
-    var actionBy = cc.scaleBy(2, 2);
-    var actionBy2 = cc.scaleBy(2, 0.25, 4.5);
+    var actionTo = new cc.ScaleTo(2, 0.5);
+    var actionBy = new cc.ScaleBy(2, 2);
+    var actionBy2 = new cc.ScaleBy(2, 0.25, 4.5);
 
     this._tamara.runAction(actionTo);
     this._kathia.runAction(
-      cc.sequence(actionBy2, cc.delayTime(0.25), actionBy2.reverse())
+      cc.sequence(actionBy2, new cc.DelayTime(0.25), actionBy2.reverse())
     );
     this._grossini.runAction(
-      cc.sequence(actionBy, cc.delayTime(0.25), actionBy.reverse())
+      cc.sequence(actionBy, new cc.DelayTime(0.25), actionBy.reverse())
     );
 
     //----end2----
@@ -367,28 +367,28 @@ var ActionRotate = class ActionRotate extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = cc.rotateBy( time, degrees );\n" + "a = cc.rotateTo( time, degrees );";
+        return "a = new cc.RotateBy( time, degrees );\n" + "a = new cc.RotateTo( time, degrees );";
       }
 
   onEnter() {
     //----start3----onEnter
     super.onEnter();
     this.centerSprites(3);
-    var actionTo = cc.rotateTo(2, 45);
-    var actionTo2 = cc.rotateTo(2, -45);
-    var actionTo0 = cc.rotateTo(2, 0);
+    var actionTo = new cc.RotateTo(2, 45);
+    var actionTo2 = new cc.RotateTo(2, -45);
+    var actionTo0 = new cc.RotateTo(2, 0);
     this._tamara.runAction(
-      cc.sequence(actionTo, cc.delayTime(0.25), actionTo0)
+      cc.sequence(actionTo, new cc.DelayTime(0.25), actionTo0)
     );
 
-    var actionBy = cc.rotateBy(2, 360);
+    var actionBy = new cc.RotateBy(2, 360);
     var actionByBack = actionBy.reverse();
     this._grossini.runAction(
-      cc.sequence(actionBy, cc.delayTime(0.25), actionByBack)
+      cc.sequence(actionBy, new cc.DelayTime(0.25), actionByBack)
     );
 
     this._kathia.runAction(
-      cc.sequence(actionTo2, cc.delayTime(0.25), actionTo0.clone())
+      cc.sequence(actionTo2, new cc.DelayTime(0.25), actionTo0.clone())
     );
 
     //----end3----
@@ -430,12 +430,12 @@ var ActionRotateXY = class ActionRotateXY extends ActionsDemo {
     //----start4----onEnter
     super.onEnter();
     this.centerSprites(3);
-    var actionTo = cc.rotateTo(2, 37.2, -37.2);
-    var actionToBack = cc.rotateTo(2, 0, 0);
-    var actionBy = cc.rotateBy(2, 0, -90);
-    var actionBy2 = cc.rotateBy(2, 45.0, 45.0);
+    var actionTo = new cc.RotateTo(2, 37.2, -37.2);
+    var actionToBack = new cc.RotateTo(2, 0, 0);
+    var actionBy = new cc.RotateBy(2, 0, -90);
+    var actionBy2 = new cc.RotateBy(2, 45.0, 45.0);
 
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
     this._tamara.runAction(cc.sequence(actionTo, delay, actionToBack));
     this._grossini.runAction(
@@ -495,19 +495,19 @@ var ActionSkew = class ActionSkew extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = cc.skewBy( time, skew );\n" + "a = cc.skewTo( time, skewX, skewY );";
+        return "a = new cc.SkewBy( time, skew );\n" + "a = new cc.SkewTo( time, skewX, skewY );";
       }
 
   onEnter() {
     //----start5----onEnter
     super.onEnter();
     this.centerSprites(3);
-    var actionTo = cc.skewTo(2, 37.2, -37.2);
-    var actionToBack = cc.skewTo(2, 0, 0);
-    var actionBy = cc.skewBy(2, 0, -90);
-    var actionBy2 = cc.skewBy(2, 45.0, 45.0);
+    var actionTo = new cc.SkewTo(2, 37.2, -37.2);
+    var actionToBack = new cc.SkewTo(2, 0, 0);
+    var actionBy = new cc.SkewBy(2, 0, -90);
+    var actionBy2 = new cc.SkewBy(2, 45.0, 45.0);
 
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
     this._tamara.runAction(cc.sequence(actionTo, delay, actionToBack));
     this._grossini.runAction(
@@ -587,15 +587,15 @@ var ActionSkewRotateScale = class ActionSkewRotateScale extends ActionsDemo {
     uR.anchorY = 0;
 
     this.addChild(box);
-    var actionTo = cc.skewTo(2, 0, 2);
-    var rotateTo = cc.rotateTo(2, 61.0);
-    var actionScaleTo = cc.scaleTo(2, -0.44, 0.47);
+    var actionTo = new cc.SkewTo(2, 0, 2);
+    var rotateTo = new cc.RotateTo(2, 61.0);
+    var actionScaleTo = new cc.ScaleTo(2, -0.44, 0.47);
 
-    var actionScaleToBack = cc.scaleTo(2, 1.0, 1.0);
-    var rotateToBack = cc.rotateTo(2, 0);
-    var actionToBack = cc.skewTo(2, 0, 0);
+    var actionScaleToBack = new cc.ScaleTo(2, 1.0, 1.0);
+    var rotateToBack = new cc.RotateTo(2, 0);
+    var actionToBack = new cc.SkewTo(2, 0, 0);
 
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
     box.runAction(cc.sequence(actionTo, delay, actionToBack));
     box.runAction(cc.sequence(rotateTo, delay.clone(), rotateToBack));
@@ -640,8 +640,8 @@ var ActionJump = class ActionJump extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = cc.jumpBy( time, point, height, #_of_jumps );\n" +
-        "a = cc.jumpTo( time, point, height, #_of_jumps );";
+        return "a = new cc.JumpBy( time, point, height, #_of_jumps );\n" +
+        "a = new cc.JumpTo( time, point, height, #_of_jumps );";
       }
 
   onEnter() {
@@ -649,12 +649,12 @@ var ActionJump = class ActionJump extends ActionsDemo {
     super.onEnter();
     this.centerSprites(3);
 
-    var actionTo = cc.jumpTo(2, new cc.Point(300, 300), 50, 4);
-    var actionBy = cc.jumpBy(2, new cc.Point(300, 0), 50, 4);
-    var actionUp = cc.jumpBy(2, new cc.Point(0, 0), 80, 4);
+    var actionTo = new cc.JumpTo(2, new cc.Point(300, 300), 50, 4);
+    var actionBy = new cc.JumpBy(2, new cc.Point(300, 0), 50, 4);
+    var actionUp = new cc.JumpBy(2, new cc.Point(0, 0), 80, 4);
     var actionByBack = actionBy.reverse();
 
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
     this._tamara.runAction(actionTo);
     this._grossini.runAction(cc.sequence(actionBy, delay, actionByBack));
@@ -718,12 +718,12 @@ var ActionBezier = class ActionBezier extends ActionsDemo {
 
     // sprite 1
 
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints = [new cc.Point(0, 374), new cc.Point(300, -374), new cc.Point(300, 100)];
 
-    var bezierForward = cc.bezierBy(2, controlPoints);
+    var bezierForward = new cc.BezierBy(2, controlPoints);
     var rep = cc
       .sequence(bezierForward, delay, bezierForward.reverse(), delay.clone())
       .repeatForever();
@@ -738,13 +738,13 @@ var ActionBezier = class ActionBezier extends ActionsDemo {
       new cc.Point(200, -s.height / 2),
       new cc.Point(240, 160)
     ];
-    var bezierTo1 = cc.bezierTo(2, controlPoints2);
+    var bezierTo1 = new cc.BezierTo(2, controlPoints2);
 
     // // sprite 3
     var controlPoints3 = controlPoints2.slice();
     this._kathia.x = 400;
     this._kathia.y = 160;
-    var bezierTo2 = cc.bezierTo(2, controlPoints3);
+    var bezierTo2 = new cc.BezierTo(2, controlPoints3);
 
     this._grossini.runAction(rep);
     this._tamara.runAction(bezierTo1);
@@ -827,7 +827,7 @@ var ActionBezierToCopy = class ActionBezierToCopy extends ActionsDemo {
       new cc.Point(200, -winSize.height / 2),
       new cc.Point(240, 160)
     ];
-    var bezierTo1 = cc.bezierTo(2, controlPoints2);
+    var bezierTo1 = new cc.BezierTo(2, controlPoints2);
 
     // sprite 2
     this._kathia.x = 80;
@@ -872,10 +872,10 @@ var Issue1008 = class Issue1008 extends ActionsDemo {
     var controlPoints1 = [new cc.Point(428, 279), new cc.Point(100, 100), new cc.Point(100, 100)];
     var controlPoints2 = [new cc.Point(100, 100), new cc.Point(428, 279), new cc.Point(428, 279)];
 
-    var bz1 = cc.bezierTo(1.5, controlPoints1);
-    var bz2 = cc.bezierTo(1.5, controlPoints2);
-    var trace = cc.callFunc(this.onTrace, this);
-    var delay = cc.delayTime(0.25);
+    var bz1 = new cc.BezierTo(1.5, controlPoints1);
+    var bz2 = new cc.BezierTo(1.5, controlPoints2);
+    var trace = new cc.CallFunc(this.onTrace, this);
+    var delay = new cc.DelayTime(0.25);
 
     var rep = cc.sequence(bz1, bz2, trace, delay).repeatForever();
     this._grossini.runAction(rep);
@@ -919,7 +919,7 @@ var Issue1008 = class Issue1008 extends ActionsDemo {
 var ActionBlink = class ActionBlink extends ActionsDemo {
     constructor() {
         super();
-        this._code = "a = cc.blink( time, #_of_blinks );";
+        this._code = "a = new cc.Blink( time, #_of_blinks );";
         this.testDuration = 2.1;
     }
 
@@ -929,8 +929,8 @@ var ActionBlink = class ActionBlink extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var action1 = cc.blink(2, 10);
-    var action2 = cc.blink(2, 5);
+    var action1 = new cc.Blink(2, 10);
+    var action2 = new cc.Blink(2, 5);
 
     this._tamara.runAction(action1);
     this._kathia.runAction(action2);
@@ -969,7 +969,7 @@ var ActionBlink = class ActionBlink extends ActionsDemo {
 var ActionFade = class ActionFade extends ActionsDemo {
     constructor() {
         super();
-        this._code = "a = cc.fadeIn( time );\n" + "a = cc.fadeOut( time );";
+        this._code = "a = new cc.FadeIn( time );\n" + "a = new cc.FadeOut( time );";
         this.testDuration = 1.1;
     }
 
@@ -978,12 +978,12 @@ var ActionFade = class ActionFade extends ActionsDemo {
     //----start14----onEnter
     super.onEnter();
     this.centerSprites(2);
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
     this._tamara.opacity = 0;
-    var action1 = cc.fadeIn(1.0);
+    var action1 = new cc.FadeIn(1.0);
     var action1Back = action1.reverse();
 
-    var action2 = cc.fadeOut(1.0);
+    var action2 = new cc.FadeOut(1.0);
     var action2Back = action2.reverse();
 
     this._tamara.runAction(cc.sequence(action1, delay, action1Back));
@@ -1020,8 +1020,8 @@ var ActionTint = class ActionTint extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = cc.tintBy( time, red, green, blue );\n" +
-        "a = cc.tintTo( time, red, green, blue );";
+        return "a = new cc.TintBy( time, red, green, blue );\n" +
+        "a = new cc.TintTo( time, red, green, blue );";
       }
 
   onEnter() {
@@ -1029,13 +1029,13 @@ var ActionTint = class ActionTint extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var action1 = cc.tintTo(2, 255, 0, 255);
-    var action2 = cc.tintBy(2, -127, -255, -127);
+    var action1 = new cc.TintTo(2, 255, 0, 255);
+    var action2 = new cc.TintBy(2, -127, -255, -127);
     var action2Back = action2.reverse();
 
     this._tamara.runAction(action1);
     this._kathia.runAction(
-      cc.sequence(action2, cc.delayTime(0.25), action2Back)
+      cc.sequence(action2, new cc.DelayTime(0.25), action2Back)
     );
     //----end15----
   }
@@ -1084,7 +1084,7 @@ var ActionAnimate = class ActionAnimate extends ActionsDemo {
     animation.setDelayPerUnit(2.8 / 14);
     animation.setRestoreOriginalFrame(true);
 
-    var action = cc.animate(animation);
+    var action = new cc.Animate(animation);
     this._grossini.runAction(cc.sequence(action, action.reverse()));
 
     //
@@ -1096,7 +1096,7 @@ var ActionAnimate = class ActionAnimate extends ActionsDemo {
     animCache.addAnimations(s_animations2Plist);
     var animation2 = animCache.getAnimation("dance_1");
 
-    var action2 = cc.animate(animation2);
+    var action2 = new cc.Animate(animation2);
     this._tamara.runAction(cc.sequence(action2, action2.reverse()));
 
     //
@@ -1106,7 +1106,7 @@ var ActionAnimate = class ActionAnimate extends ActionsDemo {
     var animation3 = animation2.clone();
     animation3.setLoops(4);
 
-    var action3 = cc.animate(animation3);
+    var action3 = new cc.Animate(animation3);
     this._kathia.runAction(action3);
     //----end44----
   }
@@ -1139,8 +1139,8 @@ var ActionSequence = class ActionSequence extends ActionsDemo {
     this.alignSpritesLeft(1);
 
     var action = cc.sequence(
-      cc.moveBy(1.5, new cc.Point(240, 0)),
-      cc.rotateBy(1.5, 540)
+      new cc.MoveBy(1.5, new cc.Point(240, 0)),
+      new cc.RotateBy(1.5, 540)
     );
 
     this._grossini.runAction(action);
@@ -1181,12 +1181,12 @@ var ActionSequence2 = class ActionSequence2 extends ActionsDemo {
     this.centerSprites(1);
     this._grossini.visible = false;
     var action = cc.sequence(
-      cc.place(new cc.Point(200, 200)),
-      cc.show(),
-      cc.moveBy(1, new cc.Point(100, 0)),
-      cc.callFunc(this.onCallback1, this),
-      cc.callFunc(this.onCallback2.bind(this)),
-      cc.callFunc(this.onCallback3, this)
+      new cc.Place(new cc.Point(200, 200)),
+      new cc.Show(),
+      new cc.MoveBy(1, new cc.Point(100, 0)),
+      new cc.CallFunc(this.onCallback1, this),
+      new cc.CallFunc(this.onCallback2.bind(this)),
+      new cc.CallFunc(this.onCallback3, this)
     );
     this._grossini.runAction(action);
 
@@ -1253,8 +1253,8 @@ var ActionCallFunc1 = class ActionCallFunc1 extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = cc.callFunc( this.callback );\n" +
-        "a = cc.callFunc( this.callback, this, optional_arg );";
+        return "a = new cc.CallFunc( this.callback );\n" +
+        "a = new cc.CallFunc( this.callback, this, optional_arg );";
       }
 
   onEnter() {
@@ -1264,20 +1264,20 @@ var ActionCallFunc1 = class ActionCallFunc1 extends ActionsDemo {
 
     // Testing different ways to pass "this"
     var action = cc.sequence(
-      cc.moveBy(2, new cc.Point(200, 0)),
-      cc.callFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
+      new cc.MoveBy(2, new cc.Point(200, 0)),
+      new cc.CallFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
     );
 
     var action2 = cc.sequence(
-      cc.scaleBy(2, 2),
-      cc.fadeOut(2),
-      cc.callFunc(this.onCallback2, this) // 'this' is passed as 2nd argument.
+      new cc.ScaleBy(2, 2),
+      new cc.FadeOut(2),
+      new cc.CallFunc(this.onCallback2, this) // 'this' is passed as 2nd argument.
     );
 
     var action3 = cc.sequence(
-      cc.rotateBy(3, 360),
-      cc.fadeOut(2),
-      cc.callFunc(this.onCallback3, this, "Hi!") // If you want to pass a optional value, like "Hi!", then you should pass 'this' too
+      new cc.RotateBy(3, 360),
+      new cc.FadeOut(2),
+      new cc.CallFunc(this.onCallback3, this, "Hi!") // If you want to pass a optional value, like "Hi!", then you should pass 'this' too
     );
 
     this._grossini.runAction(action);
@@ -1353,8 +1353,8 @@ var ActionCallFunc2 = class ActionCallFunc2 extends ActionsDemo {
     this.centerSprites(1);
 
     var action = cc.sequence(
-      cc.moveBy(2.0, new cc.Point(200, 0)),
-      cc.callFunc(this.removeFromParentAndCleanup, this._grossini, true)
+      new cc.MoveBy(2.0, new cc.Point(200, 0)),
+      new cc.CallFunc(this.removeFromParentAndCleanup, this._grossini, true)
     );
 
     this._grossini.runAction(action);
@@ -1403,7 +1403,7 @@ var ActionCallFunc3 = class ActionCallFunc3 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
 
-    var action = cc.callFunc(
+    var action = new cc.CallFunc(
       function (nodeExecutingAction, value) {
         this.control1 = "Value is: " + value;
         this.log("Object:" + nodeExecutingAction + ". " + this.control1);
@@ -1457,8 +1457,8 @@ var ActionSpawn = class ActionSpawn extends ActionsDemo {
     this.alignSpritesLeft(1);
 
     var action = cc.spawn(
-      cc.jumpBy(2, new cc.Point(300, 0), 50, 4),
-      cc.rotateBy(2, 720)
+      new cc.JumpBy(2, new cc.Point(300, 0), 50, 4),
+      new cc.RotateBy(2, 720)
     );
 
     this._grossini.runAction(action);
@@ -1499,7 +1499,7 @@ var ActionRepeatForever = class ActionRepeatForever extends ActionsDemo {
     //----start22----onEnter
     super.onEnter();
     this.centerSprites(1);
-    var action = cc.sequence(cc.delayTime(1), cc.callFunc(this.repeatForever)); // not passing 'this' since it is not used by the callback func
+    var action = cc.sequence(new cc.DelayTime(1), new cc.CallFunc(this.repeatForever)); // not passing 'this' since it is not used by the callback func
 
     this._grossini.runAction(action);
     //----end22----
@@ -1508,8 +1508,8 @@ var ActionRepeatForever = class ActionRepeatForever extends ActionsDemo {
     sender.runAction(
       cc
         .sequence(
-          cc.rotateBy(2, 90).easing(cc.easeElasticInOut(0.5)),
-          cc.rotateBy(0.5, 90)
+          new cc.RotateBy(2, 90).easing(cc.easeElasticInOut(0.5)),
+          new cc.RotateBy(0.5, 90)
         )
         .repeatForever()
     );
@@ -1553,8 +1553,8 @@ var ActionRotateToRepeat = class ActionRotateToRepeat extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var act1 = cc.rotateTo(0.5, 90);
-    var act2 = cc.rotateTo(0.5, 0);
+    var act1 = new cc.RotateTo(0.5, 90);
+    var act2 = new cc.RotateTo(0.5, 0);
     var seq = cc.sequence(act1, act2);
     var seq2 = seq.clone();
 
@@ -1593,7 +1593,7 @@ var ActionRotateJerk = class ActionRotateJerk extends ActionsDemo {
     //----start24----onEnter
     super.onEnter();
     this.centerSprites(2);
-    var seq = cc.sequence(cc.rotateTo(0.5, -20), cc.rotateTo(0.5, 20));
+    var seq = cc.sequence(new cc.RotateTo(0.5, -20), new cc.RotateTo(0.5, 20));
 
     var rep1 = seq.repeat(10);
     var rep2 = seq.clone().repeatForever();
@@ -1624,8 +1624,8 @@ var ActionReverse = class ActionReverse extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var jump = cc.jumpBy(2, new cc.Point(300, 0), 50, 4);
-    var delay = cc.delayTime(0.25);
+    var jump = new cc.JumpBy(2, new cc.Point(300, 0), 50, 4);
+    var delay = new cc.DelayTime(0.25);
     var action = cc.sequence(jump, delay, jump.reverse());
 
     this._grossini.runAction(action);
@@ -1667,7 +1667,7 @@ var ActionReverse = class ActionReverse extends ActionsDemo {
 var ActionDelayTime = class ActionDelayTime extends ActionsDemo {
     constructor() {
         super();
-        this._code = "a = cc.delayTime( time );";
+        this._code = "a = new cc.DelayTime( time );";
         this.testDuration = 2.9;
     }
 
@@ -1677,8 +1677,8 @@ var ActionDelayTime = class ActionDelayTime extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move = cc.moveBy(1, new cc.Point(150, 0));
-    var action = cc.sequence(move, cc.delayTime(2), move.clone());
+    var move = new cc.MoveBy(1, new cc.Point(150, 0));
+    var action = cc.sequence(move, new cc.DelayTime(2), move.clone());
 
     this._grossini.runAction(action);
     //----end20----
@@ -1711,8 +1711,8 @@ var ActionReverseSequence = class ActionReverseSequence extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move1 = cc.moveBy(1, new cc.Point(250, 0));
-    var move2 = cc.moveBy(1, new cc.Point(0, 50));
+    var move1 = new cc.MoveBy(1, new cc.Point(250, 0));
+    var move2 = new cc.MoveBy(1, new cc.Point(0, 50));
     var seq = cc.sequence(move1, move2, move1.reverse());
     var action = cc.sequence(seq, seq.reverse());
 
@@ -1737,10 +1737,10 @@ var ActionReverseSequence2 = class ActionReverseSequence2 extends ActionsDemo {
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-    var move1 = cc.moveBy(3, new cc.Point(250, 0));
-    var move2 = cc.moveBy(3, new cc.Point(0, 50));
-    var tog1 = cc.toggleVisibility();
-    var tog2 = cc.toggleVisibility();
+    var move1 = new cc.MoveBy(3, new cc.Point(250, 0));
+    var move2 = new cc.MoveBy(3, new cc.Point(0, 50));
+    var tog1 = new cc.ToggleVisibility();
+    var tog2 = new cc.ToggleVisibility();
     var seq = cc.sequence(move1, tog1, move2, tog2, move1.reverse());
 
     var action = cc.sequence(seq, seq.reverse()).repeat(3);
@@ -1749,9 +1749,9 @@ var ActionReverseSequence2 = class ActionReverseSequence2 extends ActionsDemo {
     //   Also test that the reverse of Hide is Show, and vice-versa
     this._kathia.runAction(action);
 
-    var move_tamara = cc.moveBy(1, new cc.Point(100, 0));
-    var move_tamara2 = cc.moveBy(1, new cc.Point(50, 0));
-    var hide = cc.hide();
+    var move_tamara = new cc.MoveBy(1, new cc.Point(100, 0));
+    var move_tamara2 = new cc.MoveBy(1, new cc.Point(50, 0));
+    var hide = new cc.Hide();
     var seq_tamara = cc.sequence(move_tamara, hide, move_tamara2);
     var seq_back = seq_tamara.reverse();
     this._tamara.runAction(cc.sequence(seq_tamara, seq_back));
@@ -1778,11 +1778,11 @@ var ActionRepeat = class ActionRepeat extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(2);
 
-    var a1 = cc.moveBy(1, new cc.Point(150, 0));
+    var a1 = new cc.MoveBy(1, new cc.Point(150, 0));
 
-    var action1 = cc.sequence(cc.place(new cc.Point(60, 60)), a1).repeat(3);
+    var action1 = cc.sequence(new cc.Place(new cc.Point(60, 60)), a1).repeat(3);
     var action2 = cc
-      .sequence(a1.clone(), a1.reverse(), cc.delayTime(0.25))
+      .sequence(a1.clone(), a1.reverse(), new cc.DelayTime(0.25))
       .repeatForever();
 
     this._kathia.runAction(action1);
@@ -1824,7 +1824,7 @@ var ActionFollow = class ActionFollow extends ActionsDemo {
 
     this._grossini.x = -(s.width / 2);
     this._grossini.y = s.height / 2;
-    var move = cc.moveBy(2, new cc.Point(s.width * 3, 0));
+    var move = new cc.MoveBy(2, new cc.Point(s.width * 3, 0));
     var move_back = move.reverse();
     var seq = cc.sequence(move, move_back);
 
@@ -1833,7 +1833,7 @@ var ActionFollow = class ActionFollow extends ActionsDemo {
     this._grossini.runAction(rep);
 
     this.runAction(
-      cc.follow(this._grossini, new cc.Rect(0, 0, s.width * 2 - 100, s.height))
+      new cc.Follow(this._grossini, new cc.Rect(0, 0, s.width * 2 - 100, s.height))
     );
     //----end30----
   }
@@ -1892,7 +1892,7 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     var winSize = cc.director.getWinSize();
     this.centerSprites(2);
 
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
     var array = [
       new cc.Point(0, 0),
@@ -1907,7 +1907,7 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     //
     // Spline with no tension (tension==0)
     //
-    var action1 = cc.cardinalSplineBy(2, array, 0);
+    var action1 = new cc.CardinalSplineBy(2, array, 0);
     var reverse1 = action1.reverse();
     var seq = cc.sequence(action1, delay, reverse1, delay.clone());
 
@@ -1920,7 +1920,7 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     //
     // Spline with high tension (tension==1)
     //
-    var action2 = cc.cardinalSplineBy(2, array, 1);
+    var action2 = new cc.CardinalSplineBy(2, array, 1);
     var reverse2 = action2.reverse();
     var seq2 = cc.sequence(action2, delay.clone(), reverse2, delay.clone());
 
@@ -2000,8 +2000,8 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
 var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
 
       get _code() { 
-        return "a = cc.catmullRomBy( time, array_of_points );\n" +
-        " a = cc.catmullRomTo( time, array_of_points );";
+        return "a = new cc.CatmullRomBy( time, array_of_points );\n" +
+        " a = new cc.CatmullRomTo( time, array_of_points );";
       }
 
   constructor() {
@@ -2033,7 +2033,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
 
     this.centerSprites(2);
 
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
     //
     // sprite 1 (By)
@@ -2054,7 +2054,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
       new cc.Point(winSize.width / 2, winSize.height / 2)
     ];
 
-    var action1 = cc.catmullRomBy(3, array);
+    var action1 = new cc.CatmullRomBy(3, array);
     var reverse1 = action1.reverse();
     var seq1 = cc.sequence(action1, delay, reverse1);
 
@@ -2074,7 +2074,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
       new cc.Point(winSize.width / 2, 30)
     ];
 
-    var action2 = cc.catmullRomTo(3, array2);
+    var action2 = new cc.CatmullRomTo(3, array2);
     var reverse2 = action2.reverse();
 
     var seq2 = cc.sequence(action2, delay.clone(), reverse2);
@@ -2152,7 +2152,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
 var ActionTargeted = class ActionTargeted extends ActionsDemo {
     constructor() {
         super();
-        this._code = "a = cc.targetedAction( target, action );";
+        this._code = "a = new cc.TargetedAction( target, action );";
     }
 
 
@@ -2161,13 +2161,13 @@ var ActionTargeted = class ActionTargeted extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var jump1 = cc.jumpBy(2, new cc.Point(0, 0), 100, 3);
+    var jump1 = new cc.JumpBy(2, new cc.Point(0, 0), 100, 3);
     var jump2 = jump1.clone();
-    var rot1 = cc.rotateBy(1, 360);
+    var rot1 = new cc.RotateBy(1, 360);
     var rot2 = rot1.clone();
 
-    var t1 = cc.targetedAction(this._kathia, jump2);
-    var t2 = cc.targetedAction(this._kathia, rot2);
+    var t1 = new cc.TargetedAction(this._kathia, jump2);
+    var t2 = new cc.TargetedAction(this._kathia, rot2);
 
     var seq = cc.sequence(jump1, t1, rot1, t2);
 
@@ -2196,10 +2196,10 @@ var ActionTargetedCopy = class ActionTargetedCopy extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var jump1 = cc.jumpBy(2, new cc.Point(0, 0), 100, 3);
+    var jump1 = new cc.JumpBy(2, new cc.Point(0, 0), 100, 3);
     var jump2 = jump1.clone();
 
-    var t1 = cc.targetedAction(this._kathia, jump2);
+    var t1 = new cc.TargetedAction(this._kathia, jump2);
     var t_copy = t1.clone();
 
     var seq = cc.sequence(jump1, t_copy);
@@ -2236,15 +2236,15 @@ var ActionStackableMove = class ActionStackableMove extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = cc.moveBy(0.2, new cc.Point(0, 50));
+    var move = new cc.MoveBy(0.2, new cc.Point(0, 50));
     var move_back = move.reverse();
-    var delay = cc.delayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 
     // move
-    var action = cc.moveBy(2, new cc.Point(winSize.width - 80, 0));
+    var action = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
     var back = action.reverse();
     var seq = cc.sequence(action, back);
     var repeat = seq.repeatForever();
@@ -2296,14 +2296,14 @@ var ActionStackableJump = class ActionStackableJump extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = cc.moveBy(0.05, new cc.Point(8, 8));
+    var move = new cc.MoveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 
     // jump
-    var action = cc.jumpBy(2, new cc.Point(winSize.width - 80, 0), 90, 5);
+    var action = new cc.JumpBy(2, new cc.Point(winSize.width - 80, 0), 90, 5);
     var back = action.reverse();
     var seq = cc.sequence(action, back);
     var repeat = seq.repeatForever();
@@ -2334,7 +2334,7 @@ var ActionStackableBezier = class ActionStackableBezier extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = cc.moveBy(0.05, new cc.Point(8, 8));
+    var move = new cc.MoveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
@@ -2347,7 +2347,7 @@ var ActionStackableBezier = class ActionStackableBezier extends ActionsDemo {
       new cc.Point(winSize.width - 80, 100)
     ];
 
-    var bezierForward = cc.bezierBy(3, controlPoints);
+    var bezierForward = new cc.BezierBy(3, controlPoints);
     var repeat = cc
       .sequence(bezierForward, bezierForward.reverse())
       .repeatForever();
@@ -2378,7 +2378,7 @@ var ActionStackableCatmullRom = class ActionStackableCatmullRom extends ActionsD
     this._grossini.y = 40;
 
     // shake
-    var move = cc.moveBy(0.05, new cc.Point(8, 8));
+    var move = new cc.MoveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
@@ -2395,7 +2395,7 @@ var ActionStackableCatmullRom = class ActionStackableCatmullRom extends ActionsD
       new cc.Point(winSize.width / 2, winSize.height / 2)
     ];
 
-    var action1 = cc.catmullRomBy(6, array);
+    var action1 = new cc.CatmullRomBy(6, array);
     var reverse1 = action1.reverse();
     var seq1 = cc.sequence(action1, reverse1);
     var repeat = seq1.repeatForever();
@@ -2426,7 +2426,7 @@ var ActionStackableCardinalSpline = class ActionStackableCardinalSpline extends 
     this._grossini.y = 40;
 
     // shake
-    var move = cc.moveBy(0.05, new cc.Point(8, 8));
+    var move = new cc.MoveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
     var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
@@ -2443,7 +2443,7 @@ var ActionStackableCardinalSpline = class ActionStackableCardinalSpline extends 
       new cc.Point(winSize.width / 2, winSize.height / 2)
     ];
 
-    var action1 = cc.cardinalSplineBy(6, array, 0.9);
+    var action1 = new cc.CardinalSplineBy(6, array, 0.9);
     var reverse1 = action1.reverse();
     var seq1 = cc.sequence(action1, reverse1);
     var repeat = seq1.repeatForever();
@@ -2475,9 +2475,9 @@ var PauseResumeActions = class PauseResumeActions extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    this._tamara.runAction(cc.rotateBy(3, 360).repeatForever());
-    this._grossini.runAction(cc.rotateBy(3, -360).repeatForever());
-    this._kathia.runAction(cc.rotateBy(3, 360).repeatForever());
+    this._tamara.runAction(new cc.RotateBy(3, 360).repeatForever());
+    this._grossini.runAction(new cc.RotateBy(3, -360).repeatForever());
+    this._kathia.runAction(new cc.RotateBy(3, 360).repeatForever());
 
     this.schedule(this.pause, 3, false, 0);
     this.schedule(this.resume, 5, false, 0);
@@ -2525,7 +2525,7 @@ var Issue1305 = class Issue1305 extends ActionsDemo {
          }] ];
          */
 
-    this._spriteTmp.runAction(cc.callFunc(this.onLog, this));
+    this._spriteTmp.runAction(new cc.CallFunc(this.onLog, this));
     this.scheduleOnce(this.onAddSprite, 2);
     //----end39----
   }
@@ -2573,15 +2573,15 @@ var Issue1305_2 = class Issue1305_2 extends ActionsDemo {
     spr.y = 200;
     this.addChild(spr);
 
-    var act1 = cc.moveBy(2, new cc.Point(0, 100));
+    var act1 = new cc.MoveBy(2, new cc.Point(0, 100));
 
-    var act2 = cc.callFunc(this.onLog1);
-    var act3 = cc.moveBy(2, new cc.Point(0, -100));
-    var act4 = cc.callFunc(this.onLog2, this);
-    var act5 = cc.moveBy(2, new cc.Point(100, -100));
-    var act6 = cc.callFunc(this.onLog3.bind(this));
-    var act7 = cc.moveBy(2, new cc.Point(-100, 0));
-    var act8 = cc.callFunc(this.onLog4, this);
+    var act2 = new cc.CallFunc(this.onLog1);
+    var act3 = new cc.MoveBy(2, new cc.Point(0, -100));
+    var act4 = new cc.CallFunc(this.onLog2, this);
+    var act5 = new cc.MoveBy(2, new cc.Point(100, -100));
+    var act6 = new cc.CallFunc(this.onLog3.bind(this));
+    var act7 = new cc.MoveBy(2, new cc.Point(-100, 0));
+    var act8 = new cc.CallFunc(this.onLog4, this);
 
     var actF = cc.sequence(act1, act2, act3, act4, act5, act6, act7, act8);
 
@@ -2626,7 +2626,7 @@ var Issue1288 = class Issue1288 extends ActionsDemo {
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = cc.moveBy(0.5, new cc.Point(100, 0));
+    var act1 = new cc.MoveBy(0.5, new cc.Point(100, 0));
     var act2 = act1.reverse();
     var act3 = cc.sequence(act1, act2);
     var act4 = act3.repeat(2);
@@ -2659,7 +2659,7 @@ var Issue1288_2 = class Issue1288_2 extends ActionsDemo {
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = cc.moveBy(0.5, new cc.Point(100, 0));
+    var act1 = new cc.MoveBy(0.5, new cc.Point(100, 0));
     spr.runAction(act1.repeat(1));
     //----end42----
   }
@@ -2688,15 +2688,15 @@ var Issue1327 = class Issue1327 extends ActionsDemo {
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = cc.callFunc(this.onLogSprRotation);
-    var act2 = cc.rotateBy(0.25, 45);
-    var act3 = cc.callFunc(this.onLogSprRotation, this);
-    var act4 = cc.rotateBy(0.25, 45);
-    var act5 = cc.callFunc(this.onLogSprRotation.bind(this));
-    var act6 = cc.rotateBy(0.25, 45);
-    var act7 = cc.callFunc(this.onLogSprRotation);
-    var act8 = cc.rotateBy(0.25, 45);
-    var act9 = cc.callFunc(this.onLogSprRotation);
+    var act1 = new cc.CallFunc(this.onLogSprRotation);
+    var act2 = new cc.RotateBy(0.25, 45);
+    var act3 = new cc.CallFunc(this.onLogSprRotation, this);
+    var act4 = new cc.RotateBy(0.25, 45);
+    var act5 = new cc.CallFunc(this.onLogSprRotation.bind(this));
+    var act6 = new cc.RotateBy(0.25, 45);
+    var act7 = new cc.CallFunc(this.onLogSprRotation);
+    var act8 = new cc.RotateBy(0.25, 45);
+    var act9 = new cc.CallFunc(this.onLogSprRotation);
 
     var actF = cc.sequence(
       act1,
@@ -2752,7 +2752,7 @@ var Issue1438 = class Issue1438 extends ActionsDemo {
     animation.setDelayPerUnit(1 / 60);
     animation.setRestoreOriginalFrame(true);
 
-    var action = cc.animate(animation);
+    var action = new cc.Animate(animation);
     this._kathia.runAction(action);
 
     //
@@ -2763,7 +2763,7 @@ var Issue1438 = class Issue1438 extends ActionsDemo {
     var animation2 = animCache.getAnimation("dance_1");
     animation2.setDelayPerUnit(1 / 60);
 
-    var action2 = cc.animate(animation2);
+    var action2 = new cc.Animate(animation2);
     this._tamara.runAction(cc.sequence(action2, action2.reverse()));
     //----end45----
   }
@@ -2804,8 +2804,8 @@ var Issue1446 = class Issue1446 extends ActionsDemo {
 
     this.addChild(label);
 
-    this.backwardsFade = cc.speed(
-      cc.sequence(cc.delayTime(2), cc.fadeTo(1, 255), cc.delayTime(2)),
+    this.backwardsFade = new cc.Speed(
+      cc.sequence(new cc.DelayTime(2), new cc.FadeTo(1, 255), new cc.DelayTime(2)),
       1
     );
     label.runAction(this.backwardsFade);
@@ -2832,16 +2832,16 @@ var SequenceRepeatTest = class SequenceRepeatTest extends ActionsDemo {
     this.centerSprites(2);
 
     this._kathia.runAction(
-      cc.repeat(cc.sequence(cc.blink(2, 3), cc.delayTime(2)), 3)
+      new cc.Repeat(cc.sequence(new cc.Blink(2, 3), new cc.DelayTime(2)), 3)
     );
 
-    var move = cc.moveBy(1, new cc.Point(50, 0));
+    var move = new cc.MoveBy(1, new cc.Point(50, 0));
     var move_back = move.reverse();
     var move_seq = cc.sequence(
       move,
-      cc.delayTime(1),
+      new cc.DelayTime(1),
       move_back,
-      cc.delayTime(1)
+      new cc.DelayTime(1)
     );
     this._tamara.runAction(move_seq.repeat(3));
     //----end47----
@@ -2985,23 +2985,23 @@ var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("cc.sequence");
     var moveSeq = cc.sequence(
       new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
-      cc.delayTime(1),
+      new cc.DelayTime(1),
       new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
-      cc.delayTime(1)
+      new cc.DelayTime(1)
     );
     spriteTemp.runAction(moveSeq);
     /**
      * group 2
      */
     spriteTemp = this.addandCreateSpriteTemp("cc.repeat");
-    var moveRepeat = cc.repeat(
+    var moveRepeat = new cc.Repeat(
       new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
       2
     );
     spriteTemp.runAction(moveRepeat);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.repeatForever");
-    var moveRepeatForever = cc.repeatForever(
+    var moveRepeatForever = new cc.RepeatForever(
       cc.sequence(
         new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
         new (createCustomAction(cc.MoveBy))(5, new cc.Point(-50, 0))
@@ -3178,9 +3178,9 @@ var ActionIssue13605 = class ActionIssue13605 extends ActionsDemo {
     var move_back = move.reverse();
     var move_seq = cc.sequence(
       move,
-      cc.delayTime(1),
+      new cc.DelayTime(1),
       move_back,
-      cc.delayTime(1)
+      new cc.DelayTime(1)
     );
     this._kathia.runAction(move_seq.repeat(2));
 
@@ -3188,9 +3188,9 @@ var ActionIssue13605 = class ActionIssue13605 extends ActionsDemo {
     var moveCloneBack = moveClone.reverse();
     var moveCloneSeq = cc.sequence(
       moveClone,
-      cc.delayTime(1),
+      new cc.DelayTime(1),
       moveCloneBack,
-      cc.delayTime(1)
+      new cc.DelayTime(1)
     );
     this._tamara.runAction(moveCloneSeq.repeat(2));
     //----end47----

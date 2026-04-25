@@ -250,8 +250,8 @@ cc.ScrollView = class ScrollView extends cc.Layer {
      * @param {Number} dt animation duration
      */
     setContentOffsetInDuration(offset, dt) {
-        var scroll = cc.moveTo(dt, offset);
-        var expire = cc.callFunc(this._stoppedAnimatedScroll, this);
+        var scroll = new cc.MoveTo(dt, offset);
+        var expire = new cc.CallFunc(this._stoppedAnimatedScroll, this);
         this._container.runAction(cc.sequence(scroll, expire));
         this.schedule(this._performedAnimatedScroll);
     }
@@ -305,7 +305,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         if (dt > 0) {
             var locScale = this._container.getScale();
             if (locScale !== s) {
-                var scaleAction = cc.actionTween(dt, "zoomScale", locScale, s);
+                var scaleAction = new cc.ActionTween(dt, "zoomScale", locScale, s);
                 this.runAction(scaleAction);
             }
         } else {

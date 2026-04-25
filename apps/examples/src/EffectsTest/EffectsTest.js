@@ -81,7 +81,7 @@ var EffectsBaseLayer = class EffectsBaseLayer extends BaseTestLayer {
         sister2.y = winSize.height/2;
         node.addChild( sister2, 1 );
 
-        var sc = cc.scaleBy(2, 5);
+        var sc = new cc.ScaleBy(2, 5);
         var sc_back = sc.reverse();
         var seq = cc.sequence( sc, sc_back );
         var repeat = seq.repeatForever();
@@ -92,7 +92,7 @@ var EffectsBaseLayer = class EffectsBaseLayer extends BaseTestLayer {
 
     getEffect(duration) {
         // override me
-        return cc.moveBy(2, new cc.Point(10,10) );
+        return new cc.MoveBy(2, new cc.Point(10,10) );
     }
 
     // automation
@@ -147,7 +147,7 @@ var FlipXTest = class FlipXTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var a = cc.flipX3D(duration);
-        var delay = cc.delayTime(2);
+        var delay = new cc.DelayTime(2);
         var r = a.reverse();
         return cc.sequence( a, delay, r );
     }
@@ -163,7 +163,7 @@ var FlipYTest = class FlipYTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var a = cc.flipY3D(duration );
-        var delay = cc.delayTime(2);
+        var delay = new cc.DelayTime(2);
         var r = a.reverse();
         return cc.sequence( a, delay, r );
     }
@@ -270,7 +270,7 @@ var ShuffleTilesTest = class ShuffleTilesTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var action = cc.shuffleTiles( duration, new cc.Size(16,12), 25);
-        var delay = cc.delayTime(2);
+        var delay = new cc.DelayTime(2);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
         return seq;
@@ -287,7 +287,7 @@ var FadeOutTRTilesTest = class FadeOutTRTilesTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var action = cc.fadeOutTRTiles( duration, new cc.Size(16,12));
-        var delay = cc.delayTime(0.5);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
         return seq;
@@ -304,7 +304,7 @@ var FadeOutBLTilesTest = class FadeOutBLTilesTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var action = cc.fadeOutBLTiles( duration, new cc.Size(16,12));
-        var delay = cc.delayTime(0.5);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
         return seq;
@@ -321,7 +321,7 @@ var FadeOutUpTilesTest = class FadeOutUpTilesTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var action = cc.fadeOutUpTiles( duration, new cc.Size(16,12));
-        var delay = cc.delayTime(0.5);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
         return seq;
@@ -338,7 +338,7 @@ var FadeOutDownTilesTest = class FadeOutDownTilesTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var action = cc.fadeOutDownTiles( duration, new cc.Size(16,12));
-        var delay = cc.delayTime(0.5);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
         return seq;
@@ -355,7 +355,7 @@ var TurnOffTilesTest = class TurnOffTilesTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var action = cc.turnOffTiles( duration, new cc.Size(48,32), 25);
-        var delay = cc.delayTime(0.5);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
         return seq;
@@ -401,7 +401,7 @@ var SplitRowsTest = class SplitRowsTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var action = cc.splitRows(duration, 9);
-        var delay = cc.delayTime(0.5);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
         return seq;
@@ -418,7 +418,7 @@ var SplitColsTest = class SplitColsTest extends EffectsBaseLayer {
     }
     getEffect(duration) {
         var action = cc.splitCols(duration, 9);
-        var delay = cc.delayTime(0.5);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
         var seq = cc.sequence( action, delay, back);
         return seq;
@@ -497,7 +497,7 @@ var PageTurn3DInRectTest = class PageTurn3DInRectTest extends BaseTestLayer {
         sister2.y = winSize.height/2;
         gridNodeTarget.addChild( sister2, 1 );
 
-        var sc = cc.scaleBy(2, 5);
+        var sc = new cc.ScaleBy(2, 5);
         var sc_back = sc.reverse();
         var seq = cc.sequence( sc, sc_back );
         var repeat = seq.repeatForever();

@@ -50,7 +50,7 @@ var SceneTestLayer1 = class SceneTestLayer1 extends cc.Layer {
             sprite.setPosition(new cc.Point(winSize.width/2,winSize.height/2));
             layerTemp.addChild(sprite);
             cc.director.setNotificationNode(layerTemp);
-            var rotation = cc.rotateBy(2,360);
+            var rotation = new cc.RotateBy(2,360);
             sprite.runAction(rotation.repeatForever());
             cc.log("setNotificationNode!");
         }, this);
@@ -67,7 +67,7 @@ var SceneTestLayer1 = class SceneTestLayer1 extends cc.Layer {
         this.addChild(sprite);
         sprite.x = s.width - 40;
         sprite.y = s.height / 2;
-        var rotate = cc.rotateBy(2, 360);
+        var rotate = new cc.RotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
@@ -142,7 +142,7 @@ var SceneTestLayer2 = class SceneTestLayer2 extends cc.Layer {
 
         sprite.x = s.width - 40;
         sprite.y = s.height / 2;
-        var rotate = cc.rotateBy(2, 360);
+        var rotate = new cc.RotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
@@ -197,7 +197,7 @@ var SceneTestLayer3 = class SceneTestLayer3 extends cc.LayerColor {
         sprite.x = s.width - 40;
 
         sprite.y = s.height / 2;
-        var rotate = cc.rotateBy(2, 360);
+        var rotate = new cc.RotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
