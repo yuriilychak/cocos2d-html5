@@ -854,7 +854,7 @@ cc.lazyInitialize();
 // ======================================================================
 export { Point, pointEqualToPoint } from "./cocoa/geometry/point";
 export { Size } from "./cocoa/geometry/size";
-export { Vertex3F, Quad3 } from "./platform/types/vertex";
+export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
 export {
   rand,
   NextPOT,
@@ -896,8 +896,10 @@ export {
 export {
   ACTION_TAG_INVALID,
   FLT_EPSILON,
+  FLT_MAX,
   ONE,
-  ONE_MINUS_SRC_ALPHA
+  ONE_MINUS_SRC_ALPHA,
+  SHADER_SPRITE_POSITION_TEXTURECOLOR
 } from "./platform/macro/constants";
 export {
   ENABLE_STACKABLE_ACTIONS,
