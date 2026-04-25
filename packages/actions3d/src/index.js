@@ -1,3 +1,4 @@
+import { ReverseTime } from "@aspect/actions";
 import { GridAction } from "./action-grid";
 import { Grid3DAction } from "./action-grid";
 import { TiledGrid3DAction } from "./action-grid";
@@ -114,3 +115,46 @@ cc.jumpTiles3D = (duration, gridSize, numberOfJumps, amplitude) =>
   new JumpTiles3D(duration, gridSize, numberOfJumps, amplitude);
 cc.splitRows = (duration, rows) => new SplitRows(duration, rows);
 cc.splitCols = (duration, cols) => new SplitCols(duration, cols);
+
+export {
+  GridAction,
+  Grid3DAction,
+  TiledGrid3DAction,
+  StopGrid,
+  ReuseGrid,
+  Waves3D,
+  FlipX3D,
+  FlipY3D,
+  Lens3D,
+  Ripple3D,
+  Shaky3D,
+  Liquid,
+  Waves,
+  Twirl,
+  PageTurn3D,
+  ShakyTiles3D,
+  ShatteredTiles3D,
+  Tile,
+  ShuffleTiles,
+  FadeOutTRTiles,
+  FadeOutBLTiles,
+  FadeOutUpTiles,
+  FadeOutDownTiles,
+  TurnOffTiles,
+  WavesTiles3D,
+  JumpTiles3D,
+  SplitRows,
+  SplitCols,
+};
+
+export const stopGrid = () => new StopGrid();
+export const reuseGrid = (times) => new ReuseGrid(times);
+export const pageTurn3D = (duration, gridSize) => new PageTurn3D(duration, gridSize);
+export const fadeOutTRTiles = (duration, gridSize) => new FadeOutTRTiles(duration, gridSize);
+export const fadeOutBLTiles = (duration, gridSize) => new FadeOutBLTiles(duration, gridSize);
+export const fadeOutUpTiles = (duration, gridSize) => new FadeOutUpTiles(duration, gridSize);
+export const fadeOutDownTiles = (duration, gridSize) => new FadeOutDownTiles(duration, gridSize);
+export const turnOffTiles = (duration, gridSize, seed) => new TurnOffTiles(duration, gridSize, seed);
+export const splitRows = (duration, rows) => new SplitRows(duration, rows);
+export const splitCols = (duration, cols) => new SplitCols(duration, cols);
+export const reverseTime = (action) => new ReverseTime(action);

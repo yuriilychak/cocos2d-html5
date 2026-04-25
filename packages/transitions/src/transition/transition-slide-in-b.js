@@ -1,0 +1,31 @@
+import { Director, Point } from "@aspect/core";
+import { ADJUST_FACTOR } from "./constants";
+import { TransitionSlideInL } from "./transition-slide-in-l";
+
+export class TransitionSlideInB extends TransitionSlideInL {
+  constructor(t, scene) {
+    super();
+    scene && this.initWithDuration(t, scene);
+  }
+
+  _sceneOrder() {
+    this._isInSceneOnTop = false;
+  }
+
+  initScenes() {
+    this._inScene.setPosition(
+      0,
+      -(Director.getInstance().getWinSize().height - ADJUST_FACTOR)
+    );
+  }
+
+  action() {
+    return cc.moveBy(
+      this._duration,
+      new Point(
+        0,
+        Director.getInstance().getWinSize().height - ADJUST_FACTOR
+      )
+    );
+  }
+}
