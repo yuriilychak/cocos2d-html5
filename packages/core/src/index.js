@@ -866,7 +866,7 @@ export { log } from "./boot/debugger";
 export { RendererConfig } from "./renderer/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./boot";
-export { NewClass } from "./platform/class";
+export { NewClass, classManager } from "./platform/class";
 export { Rect } from "./cocoa/geometry/rect";
 export {
   VERTEX_ATTRIB_POSITION,

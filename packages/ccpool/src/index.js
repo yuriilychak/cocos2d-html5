@@ -1,5 +1,5 @@
-import { pool } from './CCPool.js';
+import { Pool } from "./CCPool";
 
-cc.pool = pool;
+cc.pool = Pool.getInstance();
 
-export { pool };
+export { Pool };
