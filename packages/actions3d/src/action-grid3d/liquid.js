@@ -1,10 +1,11 @@
 import Grid3DAction from "../action-grid/grid3d-action";
+import { Point } from "@aspect/core";
 
 /**
- * cc.Liquid action.
+ * Liquid action.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
- * @param {cc.Size} gridSize
+ * @param {Size} gridSize
  * @param {Number} waves
  * @param {Number} amplitude
  */
@@ -16,7 +17,7 @@ export default class Liquid extends Grid3DAction {
   /**
    * Create a liquid action with amplitude, a grid and duration.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number} waves
    * @param {Number} amplitude
    */
@@ -42,7 +43,7 @@ export default class Liquid extends Grid3DAction {
   /**
    * initializes the action with amplitude, a grid and duration
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number} waves
    * @param {Number} amplitude
    * @return {Boolean}
@@ -64,7 +65,7 @@ export default class Liquid extends Grid3DAction {
   update(dt) {
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;

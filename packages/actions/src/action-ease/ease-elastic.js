@@ -1,5 +1,5 @@
 import ActionEase from "./action-ease";
-import { log } from "@aspect/core/src/boot/debugger";
+import { log } from "@aspect/core";
 
 /**
  * Ease Elastic abstract class.

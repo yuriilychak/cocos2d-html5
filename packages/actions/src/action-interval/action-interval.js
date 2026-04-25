@@ -1,6 +1,5 @@
 import FiniteTimeAction from "../action/finite-time-action";
-import { FLT_EPSILON } from "@aspect/core/src/platform/macro/constants";
-import { log } from "@aspect/core/src/boot/debugger";
+import { FLT_EPSILON, log } from "@aspect/core";
 
 /**
  * <p> An interval action is an action that takes place within a certain period of time. <br/>

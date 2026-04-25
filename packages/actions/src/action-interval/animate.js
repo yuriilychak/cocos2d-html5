@@ -1,7 +1,5 @@
 import ActionInterval from "./action-interval";
-import { Animation } from "@aspect/core/src/sprites/animation/animation";
-import { AnimationFrame } from "@aspect/core/src/sprites/animation/animation-frame";
-import { arrayVerifyType } from "@aspect/core/src/platform/macro/utils";
+import { Animation, AnimationFrame, arrayVerifyType } from "@aspect/core";
 
 /**  Animates a sprite given the name of an Animation
  * @param {Animation} animation

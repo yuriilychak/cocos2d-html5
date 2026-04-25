@@ -1,10 +1,11 @@
 import TiledGrid3DAction from "../action-grid/tiled-grid3d-action";
+import { Point } from "@aspect/core";
 
 /**
- * cc.WavesTiles3D action.
+ * WavesTiles3D action.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
- * @param {cc.Size} gridSize
+ * @param {Size} gridSize
  * @param {Number} waves
  * @param {Number} amplitude
  */
@@ -16,7 +17,7 @@ export default class WavesTiles3D extends TiledGrid3DAction {
   /**
    * creates the action with a number of waves, the waves amplitude, the grid size and the duration.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number} waves
    * @param {Number} amplitude
    */
@@ -54,7 +55,7 @@ export default class WavesTiles3D extends TiledGrid3DAction {
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     let coords;
     for (let i = 0; i < locGridSize.width; i++) {
       for (let j = 0; j < locGridSize.height; j++) {

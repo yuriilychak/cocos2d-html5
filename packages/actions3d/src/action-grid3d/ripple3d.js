@@ -1,11 +1,12 @@
 import Grid3DAction from "../action-grid/grid3d-action";
+import { Point } from "@aspect/core";
 
 /**
- * cc.Ripple3D action.
+ * Ripple3D action.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {cc.Point} position
+ * @param {Size} gridSize
+ * @param {Point} position
  * @param {Number} radius
  * @param {Number} waves
  * @param {Number} amplitude
@@ -20,15 +21,15 @@ export default class Ripple3D extends Grid3DAction {
   /**
    * creates a ripple 3d action with radius, number of waves, amplitude.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
-   * @param {cc.Point} position
+   * @param {Size} gridSize
+   * @param {Point} position
    * @param {Number} radius
    * @param {Number} waves
    * @param {Number} amplitude
    */
   constructor(duration, gridSize, position, radius, waves, amplitude) {
     super();
-    this._position = new cc.Point(0, 0);
+    this._position = new Point(0, 0);
     amplitude !== undefined &&
       this.initWithDuration(
         duration,
@@ -63,8 +64,8 @@ export default class Ripple3D extends Grid3DAction {
   /**
    * initializes the action with radius, number of waves, amplitude, a grid size and duration
    * @param {Number} duration
-   * @param {cc.Size} gridSize
-   * @param {cc.Point} position
+   * @param {Size} gridSize
+   * @param {Point} position
    * @param {Number} radius
    * @param {Number} waves
    * @param {Number} amplitude
@@ -89,13 +90,13 @@ export default class Ripple3D extends Grid3DAction {
   update(dt) {
     const locGridSizeWidth = this._gridSize.width;
     const locGridSizeHeight = this._gridSize.height;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     const locRadius = this._radius;
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;
     let v, r;
-    const tempPos = new cc.Point(0, 0);
+    const tempPos = new Point(0, 0);
     for (let i = 0; i < locGridSizeWidth + 1; ++i) {
       for (let j = 0; j < locGridSizeHeight + 1; ++j) {
         locPos.x = i;
@@ -104,7 +105,7 @@ export default class Ripple3D extends Grid3DAction {
 
         tempPos.x = this._position.x - v.x;
         tempPos.y = this._position.y - v.y;
-        r = cc.Point.length(tempPos);
+        r = Point.length(tempPos);
 
         if (r < locRadius) {
           r = locRadius - r;

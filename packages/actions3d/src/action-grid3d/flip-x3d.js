@@ -1,7 +1,8 @@
 import Grid3DAction from "../action-grid/grid3d-action";
+import { Size, Vertex3F, Point, log } from "@aspect/core";
 
 /**
- * cc.FlipX3D action.
+ * FlipX3D action.
  * Flip around.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
@@ -12,7 +13,7 @@ export default class FlipX3D extends Grid3DAction {
    * @param {Number} duration
    */
   constructor(duration) {
-    if (duration !== undefined) super(duration, new cc.Size(1, 1));
+    if (duration !== undefined) super(duration, new Size(1, 1));
     else super();
   }
 
@@ -22,18 +23,18 @@ export default class FlipX3D extends Grid3DAction {
    * @return {Boolean}
    */
   initWithDuration(duration) {
-    return super.initWithDuration(duration, new cc.Size(1, 1));
+    return super.initWithDuration(duration, new Size(1, 1));
   }
 
   /**
    * initializes the action with gridSize and duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number} duration
    * @return {Boolean}
    */
   initWithSize(gridSize, duration) {
     if (gridSize.width !== 1 || gridSize.height !== 1) {
-      cc.log("Grid size must be (1,1)");
+      log("Grid size must be (1,1)");
       return false;
     }
     return super.initWithDuration(duration, gridSize);
@@ -49,8 +50,8 @@ export default class FlipX3D extends Grid3DAction {
     angle = angle / 2.0; // x calculates degrees from 0 to 90
     const mx = Math.cos(angle);
 
-    const diff = new cc.Vertex3F();
-    const tempVer = new cc.Point(0, 0);
+    const diff = new Vertex3F();
+    const tempVer = new Point(0, 0);
     tempVer.x = tempVer.y = 1;
     const v0 = this.getOriginalVertex(tempVer);
     tempVer.x = tempVer.y = 0;
@@ -62,17 +63,17 @@ export default class FlipX3D extends Grid3DAction {
 
     if (x0 > x1) {
       // Normal Grid
-      a = new cc.Point(0, 0);
-      b = new cc.Point(0, 1);
-      c = new cc.Point(1, 0);
-      d = new cc.Point(1, 1);
+      a = new Point(0, 0);
+      b = new Point(0, 1);
+      c = new Point(1, 0);
+      d = new Point(1, 1);
       x = x0;
     } else {
       // Reversed Grid
-      c = new cc.Point(0, 0);
-      d = new cc.Point(0, 1);
-      a = new cc.Point(1, 0);
-      b = new cc.Point(1, 1);
+      c = new Point(0, 0);
+      d = new Point(0, 1);
+      a = new Point(1, 0);
+      b = new Point(1, 1);
       x = x1;
     }
 

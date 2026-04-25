@@ -1,7 +1,5 @@
 import Action from "./action";
-import { Rect } from "@aspect/core/src/cocoa/geometry/rect";
-import { Point } from "@aspect/core/src/cocoa/geometry/point";
-import { Director } from "@aspect/core/src/director/director";
+import { Rect, Point, Director } from "@aspect/core";
 
 /**
  * Follow is an action that "follows" a node.

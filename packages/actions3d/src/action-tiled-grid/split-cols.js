@@ -1,7 +1,8 @@
 import TiledGrid3DAction from "../action-grid/tiled-grid3d-action";
+import { Size, Point, Director, RendererConfig } from "@aspect/core";
 
 /**
- * cc.SplitCols action.
+ * SplitCols action.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
  * @param {Number} cols
@@ -22,14 +23,14 @@ export default class SplitCols extends TiledGrid3DAction {
 
   initWithDuration(duration, cols) {
     this._cols = cols;
-    return super.initWithDuration(duration, new cc.Size(cols, 1));
+    return super.initWithDuration(duration, new Size(cols, 1));
   }
 
   update(dt) {
     const locGridSizeWidth = this._gridSize.width;
     const locWinSizeHeight = this._winSize.height;
     let coords, direction;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     for (let i = 0; i < locGridSizeWidth; ++i) {
       locPos.x = i;
       coords = this.getOriginalTile(locPos);
@@ -44,11 +45,11 @@ export default class SplitCols extends TiledGrid3DAction {
 
       this.setTile(locPos, coords);
     }
-    cc.rendererConfig.renderer.childrenOrderDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
   }
 
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._winSize = cc.director.getWinSizeInPixels();
+    this._winSize = Director.getInstance().getWinSizeInPixels();
   }
 }

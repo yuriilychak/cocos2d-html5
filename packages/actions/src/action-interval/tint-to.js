@@ -1,5 +1,5 @@
 import ActionInterval from "./action-interval";
-import { Color } from "@aspect/core/src/platform/types/color";
+import { Color } from "@aspect/core";
 
 /** Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
  * @warning This action doesn't support "reverse"

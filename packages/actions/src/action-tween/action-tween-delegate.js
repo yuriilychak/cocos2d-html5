@@ -1,7 +1,7 @@
 /**
  *
  */
-import { NewClass } from "@aspect/core/src/platform/class";
+import { NewClass } from "@aspect/core";
 
 export default class ActionTweenDelegate extends NewClass {
   /**

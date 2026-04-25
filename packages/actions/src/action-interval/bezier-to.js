@@ -1,5 +1,5 @@
 import BezierBy from "./bezier-by";
-import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { Point } from "@aspect/core";
 
 /** An action that moves the target with a cubic Bezier curve to a destination point.
  * @param {Number} t

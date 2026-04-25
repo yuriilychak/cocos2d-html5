@@ -1,11 +1,13 @@
+import { Point } from "@aspect/core";
+
 /**
  * A Tile composed of position, startPosition and delta.
- * @param {cc.Point} [position]
- * @param {cc.Point} [startPosition]
- * @param {cc.Size} [delta]
+ * @param {Point} [position]
+ * @param {Point} [startPosition]
+ * @param {Size} [delta]
  */
 export default function Tile(position, startPosition, delta) {
-  this.position = position || new cc.Point(0, 0);
-  this.startPosition = startPosition || new cc.Point(0, 0);
-  this.delta = delta || new cc.Point(0, 0);
+  this.position = position || new Point(0, 0);
+  this.startPosition = startPosition || new Point(0, 0);
+  this.delta = delta || new Point(0, 0);
 }

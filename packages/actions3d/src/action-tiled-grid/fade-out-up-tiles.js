@@ -1,7 +1,7 @@
 import FadeOutTRTiles from "./fade-out-tr-tiles";
 
 /**
- * cc.FadeOutUpTiles action. Fades out the tiles in upwards direction.
+ * FadeOutUpTiles action. Fades out the tiles in upwards direction.
  * Reference the test cases (Effects Test)
  */
 export default class FadeOutUpTiles extends FadeOutTRTiles {

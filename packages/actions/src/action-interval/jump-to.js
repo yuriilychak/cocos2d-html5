@@ -1,5 +1,5 @@
 import JumpBy from "./jump-by";
-import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { Point } from "@aspect/core";
 
 /**
  * Moves a Node object to a parabolic position simulating a jump movement by modifying it's position attribute. <br />

@@ -1,11 +1,12 @@
 import TiledGrid3DAction from "../action-grid/tiled-grid3d-action";
+import { Point, rand, Quad3 } from "@aspect/core";
 
 /**
- * cc.TurnOffTiles action.
+ * TurnOffTiles action.
  * Turn off the tiles in random order.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
- * @param {cc.Size} gridSize
+ * @param {Size} gridSize
  * @param {Number|Null} [seed=0]
  */
 export default class TurnOffTiles extends TiledGrid3DAction {
@@ -16,7 +17,7 @@ export default class TurnOffTiles extends TiledGrid3DAction {
   /**
    * Creates the action with a random seed, the grid size and the duration.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number|Null} [seed=0]
    */
   constructor(duration, gridSize, seed) {
@@ -37,7 +38,7 @@ export default class TurnOffTiles extends TiledGrid3DAction {
 
   shuffle(array, len) {
     for (let i = len - 1; i >= 0; i--) {
-      const j = 0 | (cc.rand() % (i + 1));
+      const j = 0 | (rand() % (i + 1));
       const v = array[i];
       array[i] = array[j];
       array[j] = v;
@@ -49,7 +50,7 @@ export default class TurnOffTiles extends TiledGrid3DAction {
   }
 
   turnOffTile(pos) {
-    this.setTile(pos, new cc.Quad3());
+    this.setTile(pos, new Quad3());
   }
 
   startWithTarget(target) {
@@ -66,7 +67,7 @@ export default class TurnOffTiles extends TiledGrid3DAction {
     const l = 0 | (dt * this._tilesCount);
     const locGridSize = this._gridSize;
     let t;
-    const tilePos = new cc.Point(0, 0);
+    const tilePos = new Point(0, 0);
     const locTilesOrder = this._tilesOrder;
     for (let i = 0; i < this._tilesCount; i++) {
       t = locTilesOrder[i];

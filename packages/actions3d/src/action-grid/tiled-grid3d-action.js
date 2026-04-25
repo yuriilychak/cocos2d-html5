@@ -1,13 +1,14 @@
 import GridAction from "./grid-action";
+import { TiledGrid3D } from "@aspect/effects";
 
 /**
- * Base class for cc.TiledGrid3D actions.
+ * Base class for TiledGrid3D actions.
  */
 export default class TiledGrid3DAction extends GridAction {
   /**
    * returns the tile that belongs to a certain position of the grid
-   * @param {cc.Point} position
-   * @return {cc.Quad3}
+   * @param {Point} position
+   * @return {Quad3}
    */
   getTile(position) {
     return this.target.grid.getTile(position);
@@ -15,8 +16,8 @@ export default class TiledGrid3DAction extends GridAction {
 
   /**
    * returns the non-transformed tile that belongs to a certain position of the grid
-   * @param {cc.Point} position
-   * @return {cc.Quad3}
+   * @param {Point} position
+   * @return {Quad3}
    */
   getOriginalTile(position) {
     return this.target.grid.getOriginalTile(position);
@@ -24,8 +25,8 @@ export default class TiledGrid3DAction extends GridAction {
 
   /**
    * sets a new tile to a certain position of the grid
-   * @param {cc.Point} position
-   * @param {cc.Quad3} coords
+   * @param {Point} position
+   * @param {Quad3} coords
    */
   setTile(position, coords) {
     this.target.grid.setTile(position, coords);
@@ -33,10 +34,10 @@ export default class TiledGrid3DAction extends GridAction {
 
   /**
    * returns the grid
-   * @return {cc.TiledGrid3D}
+   * @return {TiledGrid3D}
    */
   getGrid() {
-    return new cc.TiledGrid3D(
+    return new TiledGrid3D(
       this._gridSize,
       undefined,
       undefined,

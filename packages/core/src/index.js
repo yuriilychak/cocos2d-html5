@@ -851,3 +851,60 @@ cc.SHADEREX_SWITCHMASK_FRAG = SHADEREX_SWITCHMASK_FRAG;
 initInputExtension(inputManager);
 initBinaryLoader();
 cc.lazyInitialize();
+
+// ======================================================================
+// Named re-exports for direct imports from other packages
+// ======================================================================
+export { Point, pointEqualToPoint } from "./cocoa/geometry/point";
+export { Size } from "./cocoa/geometry/size";
+export { Vertex3F, Quad3 } from "./platform/types/vertex";
+export {
+  rand,
+  NextPOT,
+  incrementGLDraws,
+  arrayVerifyType,
+  contentScaleFactor
+} from "./platform/macro/utils";
+export { log } from "./boot/debugger";
+export { RendererConfig } from "./renderer/renderer-config";
+export { Director, DisplayLinkDirector } from "./director/director";
+export { Sys } from "./boot";
+export { NewClass } from "./platform/class";
+export { Rect } from "./cocoa/geometry/rect";
+export {
+  VERTEX_ATTRIB_POSITION,
+  VERTEX_ATTRIB_TEX_COORDS,
+  SHADER_POSITION_TEXTURE
+} from "./platform/macro/constants";
+export { Texture2D } from "./textures/texture-2d";
+export { GLProgramState, ShaderCache } from "./shaders";
+export {
+  glBindTexture2D,
+  setProjectionMatrixDirty
+} from "./shaders/CCGLStateCache";
+export {
+  Matrix4,
+  KM_GL_MODELVIEW,
+  KM_GL_PROJECTION,
+  kmGLMatrixMode,
+  kmGLLoadIdentity,
+  kmGLMultMatrix,
+  kmGLPushMatrix,
+  kmGLPopMatrix
+} from "./kazmath";
+export {
+  ACTION_TAG_INVALID,
+  FLT_EPSILON,
+  ONE,
+  ONE_MINUS_SRC_ALPHA
+} from "./platform/macro/constants";
+export { ENABLE_STACKABLE_ACTIONS } from "./platform/config";
+export { Color } from "./platform/types/color";
+export { Animation } from "./sprites/animation/animation";
+export { AnimationFrame } from "./sprites/animation/animation-frame";
+export { Node } from "./base-nodes/node";
+export { CanvasRenderCmd as NodeCanvasRenderCmd } from "./base-nodes/node-canvas-render-cmd";
+export { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
+export { CanvasContextWrapper } from "./renderer/renderer-canvas";
+export { Sprite } from "./sprites/sprite";
+export { Configuration } from "./configuration";

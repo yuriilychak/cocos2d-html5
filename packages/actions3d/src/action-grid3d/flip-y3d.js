@@ -1,7 +1,8 @@
 import FlipX3D from "./flip-x3d";
+import { Vertex3F, Point } from "@aspect/core";
 
 /**
- * cc.FlipY3D action.
+ * FlipY3D action.
  * Upside down.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
@@ -25,9 +26,9 @@ export default class FlipY3D extends FlipX3D {
     angle = angle / 2.0; // x calculates degrees from 0 to 90
     const my = Math.cos(angle);
 
-    const diff = new cc.Vertex3F();
+    const diff = new Vertex3F();
 
-    const tempP = new cc.Point(0, 0);
+    const tempP = new Point(0, 0);
     tempP.x = tempP.y = 1;
     const v0 = this.getOriginalVertex(tempP);
     tempP.x = tempP.y = 0;
@@ -39,17 +40,17 @@ export default class FlipY3D extends FlipX3D {
 
     if (y0 > y1) {
       // Normal Grid
-      a = new cc.Point(0, 0);
-      b = new cc.Point(0, 1);
-      c = new cc.Point(1, 0);
-      d = new cc.Point(1, 1);
+      a = new Point(0, 0);
+      b = new Point(0, 1);
+      c = new Point(1, 0);
+      d = new Point(1, 1);
       y = y0;
     } else {
       // Reversed Grid
-      b = new cc.Point(0, 0);
-      a = new cc.Point(0, 1);
-      d = new cc.Point(1, 0);
-      c = new cc.Point(1, 1);
+      b = new Point(0, 0);
+      a = new Point(0, 1);
+      d = new Point(1, 0);
+      c = new Point(1, 1);
       y = y1;
     }
 

@@ -1,7 +1,8 @@
 import TiledGrid3DAction from "../action-grid/tiled-grid3d-action";
+import { Size, Point, Director } from "@aspect/core";
 
 /**
- * cc.SplitRows action.
+ * SplitRows action.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
  * @param {Number} rows
@@ -22,14 +23,14 @@ export default class SplitRows extends TiledGrid3DAction {
 
   initWithDuration(duration, rows) {
     this._rows = rows;
-    return super.initWithDuration(duration, new cc.Size(1, rows));
+    return super.initWithDuration(duration, new Size(1, rows));
   }
 
   update(dt) {
     const locGridSize = this._gridSize;
     const locWinSizeWidth = this._winSize.width;
     let coords, direction;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     for (let j = 0; j < locGridSize.height; ++j) {
       locPos.y = j;
       coords = this.getOriginalTile(locPos);
@@ -48,6 +49,6 @@ export default class SplitRows extends TiledGrid3DAction {
 
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._winSize = cc.director.getWinSizeInPixels();
+    this._winSize = Director.getInstance().getWinSizeInPixels();
   }
 }

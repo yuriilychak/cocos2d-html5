@@ -1,5 +1,5 @@
 import ActionInterval from "./action-interval";
-import { log } from "@aspect/core/src/boot/debugger";
+import { log } from "@aspect/core";
 
 /**
  * Runs actions sequentially, one after another.

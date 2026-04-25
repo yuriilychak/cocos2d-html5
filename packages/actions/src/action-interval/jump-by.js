@@ -1,6 +1,5 @@
 import ActionInterval from "./action-interval";
-import { Point } from "@aspect/core/src/cocoa/geometry/point";
-import { ENABLE_STACKABLE_ACTIONS } from "@aspect/core/src/platform/config";
+import { Point, ENABLE_STACKABLE_ACTIONS } from "@aspect/core";
 
 /**
  * Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.

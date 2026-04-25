@@ -1,14 +1,11 @@
 /**
  * Base class for Action objects.
  *
- *
  * @property {Node}  target          - The target will be set with the 'startWithTarget' method. When the 'stop' method is called, target will be set to nil.
  * @property {Node}  originalTarget  - The original target of the action.
  * @property {Number}   tag             - The tag of the action, can be used to find the action.
  */
-import { NewClass } from "@aspect/core/src/platform/class";
-import { ACTION_TAG_INVALID } from "@aspect/core/src/platform/macro/constants";
-import { log } from "@aspect/core/src/boot/debugger";
+import { NewClass, ACTION_TAG_INVALID, log } from "@aspect/core";
 
 export default class Action extends NewClass {
   //***********variables*************

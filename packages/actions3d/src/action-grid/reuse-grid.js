@@ -1,7 +1,8 @@
 import { ActionInstant } from "@aspect/actions";
+import { RendererConfig } from "@aspect/core";
 
 /**
- * cc.ReuseGrid action
+ * ReuseGrid action
  * @param {Number} times
  */
 export default class ReuseGrid extends ActionInstant {
@@ -28,11 +29,11 @@ export default class ReuseGrid extends ActionInstant {
 
   /**
    * called before the action start. It will also set the target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    cc.rendererConfig.renderer.childrenOrderDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
     if (this.target.grid && this.target.grid.isActive())
       this.target.grid.setReuseGrid(
         this.target.grid.getReuseGrid() + this._times

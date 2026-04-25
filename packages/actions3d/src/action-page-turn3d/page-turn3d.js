@@ -1,4 +1,6 @@
 import Grid3DAction from "../action-grid/grid3d-action";
+import { Point } from "@aspect/core";
+import { Grid3D } from "@aspect/effects";
 
 /**
  * This action simulates a page turn from the bottom right hand corner of the screen.
@@ -9,7 +11,7 @@ import Grid3DAction from "../action-grid/grid3d-action";
  */
 export default class PageTurn3D extends Grid3DAction {
   getGrid() {
-    const result = new cc.Grid3D(
+    const result = new Grid3D(
       this._gridSize,
       undefined,
       undefined,
@@ -46,7 +48,7 @@ export default class PageTurn3D extends Grid3DAction {
     const cosTheta = Math.cos(theta);
 
     const locGridSize = this._gridSize;
-    const locVer = new cc.Point(0, 0);
+    const locVer = new Point(0, 0);
     for (let i = 0; i <= locGridSize.width; ++i) {
       for (let j = 0; j <= locGridSize.height; ++j) {
         locVer.x = i;

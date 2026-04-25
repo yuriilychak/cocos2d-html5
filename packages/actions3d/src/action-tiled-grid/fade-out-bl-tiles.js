@@ -1,7 +1,7 @@
 import FadeOutTRTiles from "./fade-out-tr-tiles";
 
 /**
- * cc.FadeOutBLTiles action. Fades out the tiles in a Bottom-Left direction.
+ * FadeOutBLTiles action. Fades out the tiles in a Bottom-Left direction.
  * Reference the test cases (Effects Test)
  */
 export default class FadeOutBLTiles extends FadeOutTRTiles {

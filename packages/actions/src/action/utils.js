@@ -1,4 +1,4 @@
-import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { Point } from "@aspect/core";
 
 /**
  * @function

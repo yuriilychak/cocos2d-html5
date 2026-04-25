@@ -1,10 +1,11 @@
 import Grid3DAction from "../action-grid/grid3d-action";
+import { Point } from "@aspect/core";
 
 /**
- * cc.Waves3D action.
+ * Waves3D action.
  * Reference the test cases (Effects Advanced Test)
  * @param {Number} duration
- * @param {cc.Size} gridSize
+ * @param {Size} gridSize
  * @param {Number} waves
  * @param {Number} amplitude
  */
@@ -16,7 +17,7 @@ export default class Waves3D extends Grid3DAction {
   /**
    * Create a wave 3d action with duration, grid size, waves and amplitude.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number} waves
    * @param {Number} amplitude
    */
@@ -42,7 +43,7 @@ export default class Waves3D extends Grid3DAction {
   /**
    * initializes an action with duration, grid size, waves and amplitude
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number} waves
    * @param {Number} amplitude
    * @return {Boolean}
@@ -64,7 +65,7 @@ export default class Waves3D extends Grid3DAction {
   update(dt) {
     const locGridSize = this._gridSize;
     const locAmplitude = this._amplitude;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     const locAmplitudeRate = this._amplitudeRate;
     const locWaves = this._waves;
     for (let i = 0; i < locGridSize.width + 1; ++i) {

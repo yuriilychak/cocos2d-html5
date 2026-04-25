@@ -1,7 +1,7 @@
 import ActionInterval from "./action-interval";
 import Sequence from "./sequence";
 import DelayTime from "./delay-time";
-import { log } from "@aspect/core/src/boot/debugger";
+import { log } from "@aspect/core";
 
 const delayTime = (d) => new DelayTime(d);
 

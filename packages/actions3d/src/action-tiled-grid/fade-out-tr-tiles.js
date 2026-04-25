@@ -1,7 +1,8 @@
 import TiledGrid3DAction from "../action-grid/tiled-grid3d-action";
+import { Point, Quad3 } from "@aspect/core";
 
 /**
- * cc.FadeOutTRTiles action. Fades out the tiles in a Top-Right direction.
+ * FadeOutTRTiles action. Fades out the tiles in a Top-Right direction.
  * Reference the test cases (Effects Test)
  */
 export default class FadeOutTRTiles extends TiledGrid3DAction {
@@ -19,7 +20,7 @@ export default class FadeOutTRTiles extends TiledGrid3DAction {
   }
 
   turnOffTile(pos) {
-    this.setTile(pos, new cc.Quad3());
+    this.setTile(pos, new Quad3());
   }
 
   transformTile(pos, distance) {
@@ -43,7 +44,7 @@ export default class FadeOutTRTiles extends TiledGrid3DAction {
 
   update(dt) {
     const locGridSize = this._gridSize;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     let distance;
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {

@@ -1,11 +1,12 @@
 import Grid3DAction from "../action-grid/grid3d-action";
+import { Point } from "@aspect/core";
 
 /**
- * cc.Twirl action.
+ * Twirl action.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
- * @param {cc.Size} gridSize
- * @param {cc.Point} position
+ * @param {Size} gridSize
+ * @param {Point} position
  * @param {Number} twirls
  * @param {Number} amplitude
  */
@@ -18,14 +19,14 @@ export default class Twirl extends Grid3DAction {
   /**
    * Create a grid 3d action with center position, number of twirls, amplitude, a grid size and duration.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
-   * @param {cc.Point} position
+   * @param {Size} gridSize
+   * @param {Point} position
    * @param {Number} twirls
    * @param {Number} amplitude
    */
   constructor(duration, gridSize, position, twirls, amplitude) {
     super();
-    this._position = new cc.Point(0, 0);
+    this._position = new Point(0, 0);
     amplitude !== undefined &&
       this.initWithDuration(duration, gridSize, position, twirls, amplitude);
   }
@@ -70,11 +71,11 @@ export default class Twirl extends Grid3DAction {
     const c = this._position;
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     const amp = 0.1 * this._amplitude * this._amplitudeRate;
     const locTwirls = this._twirls;
     let v, a, dX, dY;
-    const avg = new cc.Point(0, 0);
+    const avg = new Point(0, 0);
     for (let i = 0; i < locSizeWidth + 1; ++i) {
       for (let j = 0; j < locSizeHeight + 1; ++j) {
         locPos.x = i;
@@ -85,7 +86,7 @@ export default class Twirl extends Grid3DAction {
         avg.y = j - locSizeHeight / 2.0;
 
         a =
-          cc.Point.length(avg) *
+          Point.length(avg) *
           Math.cos(Math.PI / 2.0 + dt * Math.PI * locTwirls * 2) *
           amp;
 

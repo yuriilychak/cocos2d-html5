@@ -24,17 +24,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { NewClass, Sys, RendererConfig, log } from "@aspect/core";
+
 /**
  * FBO class that grabs the the contents of the screen
  */
-export class Grabber extends cc.NewClass {
+export class Grabber extends NewClass {
   /**
-   * constructor of cc.Grabber
+   * constructor of Grabber
    */
   constructor() {
-    cc.sys._checkWebGLRenderMode();
+    Sys.getInstance()._checkWebGLRenderMode();
     super();
-    this._gl = cc.rendererConfig.renderContext;
+    this._gl = RendererConfig.getInstance().renderContext;
     this._oldClearColor = [0, 0, 0, 0];
     this._oldFBO = null;
     // generate FBO
@@ -43,7 +45,7 @@ export class Grabber extends cc.NewClass {
 
   /**
    * grab
-   * @param {cc.Texture2D} texture
+   * @param {Texture2D} texture
    */
   grab(texture) {
     const locGL = this._gl;
@@ -62,13 +64,13 @@ export class Grabber extends cc.NewClass {
     // check if it worked (probably worth doing :) )
     const status = locGL.checkFramebufferStatus(locGL.FRAMEBUFFER);
     if (status !== locGL.FRAMEBUFFER_COMPLETE)
-      cc.log("Frame Grabber: could not attach texture to frmaebuffer");
+      log("Frame Grabber: could not attach texture to frmaebuffer");
     locGL.bindFramebuffer(locGL.FRAMEBUFFER, this._oldFBO);
   }
 
   /**
    * should be invoked before drawing
-   * @param {cc.Texture2D} texture
+   * @param {Texture2D} texture
    */
   beforeRender(texture) {
     const locGL = this._gl;
@@ -92,7 +94,7 @@ export class Grabber extends cc.NewClass {
 
   /**
    * should be invoked after drawing
-   * @param {cc.Texture2D} texture
+   * @param {Texture2D} texture
    */
   afterRender(texture) {
     const locGL = this._gl;
@@ -106,4 +108,4 @@ export class Grabber extends cc.NewClass {
   destroy() {
     this._gl.deleteFramebuffer(this._FBO);
   }
-};
+}

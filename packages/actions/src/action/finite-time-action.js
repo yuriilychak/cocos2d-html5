@@ -1,5 +1,5 @@
 import Action from "./action";
-import { log } from "@aspect/core/src/boot/debugger";
+import { log } from "@aspect/core";
 
 /**
  * Base class actions that do have a finite time duration. <br/>

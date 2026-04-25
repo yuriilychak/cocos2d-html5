@@ -1,9 +1,10 @@
-import { ActionInterval } from "@aspect/actions";
+import { ActionInterval, ReverseTime } from "@aspect/actions";
+import { Size, RendererConfig, Sys, log } from "@aspect/core";
 
 /**
  * Base class for Grid actions
  * @param {Number} duration
- * @param {cc.Size} gridSize
+ * @param {Size} gridSize
  */
 export default class GridAction extends ActionInterval {
   _gridSize = null;
@@ -12,12 +13,12 @@ export default class GridAction extends ActionInterval {
   /**
    * Constructor function
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    */
   constructor(duration, gridSize) {
-    cc.sys._checkWebGLRenderMode();
+    Sys.getInstance()._checkWebGLRenderMode();
     super();
-    this._gridSize = new cc.Size(0, 0);
+    this._gridSize = new Size(0, 0);
 
     gridSize && this.initWithDuration(duration, gridSize);
   }
@@ -36,18 +37,18 @@ export default class GridAction extends ActionInterval {
     const locGridSize = this._gridSize;
     action.initWithDuration(
       this._duration,
-      new cc.Size(locGridSize.width, locGridSize.height)
+      new Size(locGridSize.width, locGridSize.height)
     );
     return action;
   }
 
   /**
    * called before the action start. It will also set the target.
-   * @param {cc.Node} target
+   * @param {Node} target
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    cc.rendererConfig.renderer.childrenOrderDirty = true;
+    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
     this._cacheTargetAsGridNode(target);
 
     const newGrid = this.getGrid();
@@ -69,17 +70,17 @@ export default class GridAction extends ActionInterval {
   }
 
   /**
-   * Create a cc.ReverseTime action. Opposite with the original motion trajectory.
-   * @return {cc.ReverseTime}
+   * Create a ReverseTime action. Opposite with the original motion trajectory.
+   * @return {ReverseTime}
    */
   reverse() {
-    return new cc.ReverseTime(this);
+    return new ReverseTime(this);
   }
 
   /**
    * Initializes the action with size and duration.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @return {Boolean}
    */
   initWithDuration(duration, gridSize) {
@@ -93,10 +94,10 @@ export default class GridAction extends ActionInterval {
 
   /**
    * Returns the grid.
-   * @return {cc.GridBase}
+   * @return {GridBase}
    */
   getGrid() {
     // Abstract class needs implementation
-    cc.log("cc.GridAction.getGrid(): it should be overridden in subclass.");
+    log("GridAction.getGrid(): it should be overridden in subclass.");
   }
 }

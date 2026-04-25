@@ -1,5 +1,5 @@
 import MoveBy from "./move-by";
-import { Point } from "@aspect/core/src/cocoa/geometry/point";
+import { Point } from "@aspect/core";
 
 /**
  * Moves a Node object to the position x,y. x and y are absolute coordinates by modifying it's position attribute. <br/>

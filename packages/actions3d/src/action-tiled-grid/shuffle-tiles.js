@@ -1,11 +1,12 @@
 import TiledGrid3DAction from "../action-grid/tiled-grid3d-action";
 import Tile from "./tile";
+import { Point, Size, rand } from "@aspect/core";
 
 /**
- * cc.ShuffleTiles action. Shuffle the tiles in random order.
+ * ShuffleTiles action. Shuffle the tiles in random order.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
- * @param {cc.Size} gridSize
+ * @param {Size} gridSize
  * @param {Number} seed
  */
 export default class ShuffleTiles extends TiledGrid3DAction {
@@ -17,7 +18,7 @@ export default class ShuffleTiles extends TiledGrid3DAction {
   /**
    * Creates the action with a random seed, the grid size and the duration.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number} seed
    */
   constructor(duration, gridSize, seed) {
@@ -40,7 +41,7 @@ export default class ShuffleTiles extends TiledGrid3DAction {
 
   shuffle(array, len) {
     for (let i = len - 1; i >= 0; i--) {
-      const j = 0 | (cc.rand() % (i + 1));
+      const j = 0 | (rand() % (i + 1));
       const v = array[i];
       array[i] = array[j];
       array[j] = v;
@@ -50,7 +51,7 @@ export default class ShuffleTiles extends TiledGrid3DAction {
   getDelta(pos) {
     const locGridSize = this._gridSize;
     const idx = pos.width * locGridSize.height + pos.height;
-    return new cc.Size(
+    return new Size(
       this._tilesOrder[idx] / locGridSize.height - pos.width,
       (this._tilesOrder[idx] % locGridSize.height) - pos.height
     );
@@ -90,12 +91,12 @@ export default class ShuffleTiles extends TiledGrid3DAction {
     const locTiles = this._tiles;
     locTiles.length = 0;
     let tileIndex = 0;
-    const tempSize = new cc.Size(0, 0);
+    const tempSize = new Size(0, 0);
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locTiles[tileIndex] = new Tile();
-        locTiles[tileIndex].position = new cc.Point(i, j);
-        locTiles[tileIndex].startPosition = new cc.Point(i, j);
+        locTiles[tileIndex].position = new Point(i, j);
+        locTiles[tileIndex].startPosition = new Point(i, j);
         tempSize.width = i;
         tempSize.height = j;
         locTiles[tileIndex].delta = this.getDelta(tempSize);
@@ -109,7 +110,7 @@ export default class ShuffleTiles extends TiledGrid3DAction {
     const locGridSize = this._gridSize;
     const locTiles = this._tiles;
     let selTile;
-    const locPos = new cc.Point(0, 0);
+    const locPos = new Point(0, 0);
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locPos.x = i;

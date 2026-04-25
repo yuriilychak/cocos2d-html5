@@ -1,7 +1,6 @@
 import ActionInterval from "./action-interval";
 import { bezierAt } from "../action/utils";
-import { Point } from "@aspect/core/src/cocoa/geometry/point";
-import { ENABLE_STACKABLE_ACTIONS } from "@aspect/core/src/platform/config";
+import { Point, ENABLE_STACKABLE_ACTIONS } from "@aspect/core";
 
 /** An action that moves the target with a cubic Bezier curve by a certain distance.
  * Relative to its movement.

@@ -1,10 +1,11 @@
 import Grid3DAction from "../action-grid/grid3d-action";
+import { Point, rand } from "@aspect/core";
 
 /**
- * cc.Shaky3D action.
+ * Shaky3D action.
  * Reference the test cases (Effects Test)
  * @param {Number} duration
- * @param {cc.Size} gridSize
+ * @param {Size} gridSize
  * @param {Number} range
  * @param {Boolean} shakeZ
  */
@@ -15,7 +16,7 @@ export default class Shaky3D extends Grid3DAction {
   /**
    * Create a shaky3d action with a range, shake Z vertices.
    * @param {Number} duration
-   * @param {cc.Size} gridSize
+   * @param {Size} gridSize
    * @param {Number} range
    * @param {Boolean} shakeZ
    */
@@ -43,16 +44,16 @@ export default class Shaky3D extends Grid3DAction {
     const locGridSizeHeight = this._gridSize.height;
     const locRandRange = this._randRange;
     const locShakeZ = this._shakeZ;
-    const locP = new cc.Point(0, 0);
+    const locP = new Point(0, 0);
     let v;
     for (let i = 0; i < locGridSizeWidth + 1; ++i) {
       for (let j = 0; j < locGridSizeHeight + 1; ++j) {
         locP.x = i;
         locP.y = j;
         v = this.getOriginalVertex(locP);
-        v.x += (cc.rand() % (locRandRange * 2)) - locRandRange;
-        v.y += (cc.rand() % (locRandRange * 2)) - locRandRange;
-        if (locShakeZ) v.z += (cc.rand() % (locRandRange * 2)) - locRandRange;
+        v.x += (rand() % (locRandRange * 2)) - locRandRange;
+        v.y += (rand() % (locRandRange * 2)) - locRandRange;
+        if (locShakeZ) v.z += (rand() % (locRandRange * 2)) - locRandRange;
         this.setVertex(locP, v);
       }
     }

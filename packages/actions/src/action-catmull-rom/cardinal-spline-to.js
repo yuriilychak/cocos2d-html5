@@ -5,8 +5,7 @@ import {
   cloneControlPoints,
   reverseControlPoints
 } from "../action/utils";
-import { Point } from "@aspect/core/src/cocoa/geometry/point";
-import { ENABLE_STACKABLE_ACTIONS } from "@aspect/core/src/platform/config";
+import { Point, ENABLE_STACKABLE_ACTIONS } from "@aspect/core";
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
