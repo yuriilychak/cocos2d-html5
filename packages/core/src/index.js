@@ -862,7 +862,7 @@ export {
   arrayVerifyType,
   contentScaleFactor
 } from "./platform/macro/utils";
-export { log } from "./boot/debugger";
+export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./renderer/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./boot";
@@ -870,12 +870,16 @@ export { NewClass, classManager } from "./platform/class";
 export { Rect } from "./cocoa/geometry/rect";
 export {
   VERTEX_ATTRIB_POSITION,
+  VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_TEX_COORDS,
-  SHADER_POSITION_TEXTURE
+  SHADER_POSITION_TEXTURE,
+  SHADER_POSITION_LENGTHTEXTURECOLOR,
+  SRC_ALPHA
 } from "./platform/macro/constants";
 export { Texture2D } from "./textures/texture-2d";
 export { GLProgramState, ShaderCache } from "./shaders";
 export {
+  glBlendFunc,
   glBindTexture2D,
   setProjectionMatrixDirty
 } from "./shaders/CCGLStateCache";
@@ -895,8 +899,13 @@ export {
   ONE,
   ONE_MINUS_SRC_ALPHA
 } from "./platform/macro/constants";
-export { ENABLE_STACKABLE_ACTIONS } from "./platform/config";
-export { Color } from "./platform/types/color";
+export {
+  ENABLE_STACKABLE_ACTIONS,
+  DRAWNODE_TOTAL_VERTICES
+} from "./platform/config";
+export { Color, color } from "./platform/types/color";
+export { BlendFunc } from "./platform/types/blend-func";
+export { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
 export { Animation } from "./sprites/animation/animation";
 export { AnimationFrame } from "./sprites/animation/animation-frame";
 export { Node } from "./base-nodes/node";
