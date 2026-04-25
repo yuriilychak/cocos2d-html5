@@ -911,8 +911,15 @@ export { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
 export { Animation } from "./sprites/animation/animation";
 export { AnimationFrame } from "./sprites/animation/animation-frame";
 export { Node } from "./base-nodes/node";
-export { CanvasRenderCmd as NodeCanvasRenderCmd } from "./base-nodes/node-canvas-render-cmd";
+export { CanvasRenderCmd as NodeCanvasRenderCmd, CustomRenderCmd } from "./base-nodes/node-canvas-render-cmd";
 export { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
 export { CanvasContextWrapper } from "./renderer/renderer-canvas";
 export { Sprite } from "./sprites/sprite";
 export { Configuration } from "./configuration";
+export { glUseProgram } from "./shaders/CCGLStateCache";
+export { setProgramForNode } from "./shaders/utils";
+export {
+  SHADER_POSITION_TEXTURECOLORALPHATEST,
+  UNIFORM_ALPHA_TEST_VALUE_S,
+  UNIFORM_MVMATRIX_S
+} from "./platform/macro/constants";
