@@ -1,84 +1,12 @@
-/****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+import {
+    EventHelper, SpriteBatchNode, RendererConfig, Node,
+    Point, Rect, Size, Sprite, Texture2D, color, log,
+    contentScaleFactor, rectPixelsToPoints, pointPixelsToPoints, sizePixelsToPoints,
+    TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_RIGHT,
+    LabelTTF
+} from "@aspect/core";
 
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
-
- Use any of these editors to generate BMFonts:
- http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
- http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
- http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
- http://www.angelcode.com/products/bmfont/ (Free, Windows only)
- ****************************************************************************/
-
-/**
- * <p>cc.LabelBMFont is a subclass of cc.SpriteBatchNode.</p>
- *
- * <p>Features:<br/>
- * <ul><li>- Treats each character like a cc.Sprite. This means that each individual character can be:</li>
- * <li>- rotated</li>
- * <li>- scaled</li>
- * <li>- translated</li>
- * <li>- tinted</li>
- * <li>- change the opacity</li>
- * <li>- It can be used as part of a menu item.</li>
- * <li>- anchorPoint can be used to align the "label"</li>
- * <li>- Supports AngelCode text format</li></ul></p>
- *
- * <p>Limitations:<br/>
- * - All inner characters are using an anchorPoint of (0.5, 0.5) and it is not recommend to change it
- * because it might affect the rendering</p>
- *
- * <p>cc.LabelBMFont implements the protocol cc.LabelProtocol, like cc.Label and cc.LabelAtlas.<br/>
- * cc.LabelBMFont has the flexibility of cc.Label, the speed of cc.LabelAtlas and all the features of cc.Sprite.<br/>
- * If in doubt, use cc.LabelBMFont instead of cc.LabelAtlas / cc.Label.</p>
- *
- * <p>Supported editors:<br/>
- * http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)<br/>
- * http://www.n4te.com/hiero/hiero.jnlp (Free, Java)<br/>
- * http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)<br/>
- * http://www.angelcode.com/products/bmfont/ (Free, Windows only)</p>
- *
- * @property {String}   string          - Content string of label
- * @property {Number}   textAlign       - Horizontal Alignment of label, cc.TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT
- * @property {Number}   boundingWidth   - Width of the bounding box of label, the real content width is limited by boundingWidth
- *
- * @param {String} str
- * @param {String} fntFile
- * @param {Number} [width=-1]
- * @param {Number} [alignment=cc.TEXT_ALIGNMENT_LEFT]
- * @param {cc.Point} [imageOffset=new cc.Point(0,0)]
- *
- * @example
- * // Example 01
- * var label1 = new cc.LabelBMFont("Test case", "test.fnt");
- *
- * // Example 02
- * var label2 = new cc.LabelBMFont("test case", "test.fnt", 200, cc.TEXT_ALIGNMENT_LEFT);
- *
- * // Example 03
- * var label3 = new cc.LabelBMFont("This is a \n test case", "test.fnt", 200, cc.TEXT_ALIGNMENT_LEFT, new cc.Point(0,0));
- */
-cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
+export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     //property string is Getter and Setter.
     //property textAlign is Getter and Setter.
     //property boundingWidth is Getter and Setter.
@@ -94,7 +22,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
     _initialString = "";
 
     // alignment of all lines
-    _alignment = cc.TEXT_ALIGNMENT_CENTER;
+    _alignment = TEXT_ALIGNMENT_CENTER;
 
     // max width until a line break is added
     _width = -1;
@@ -105,12 +33,11 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
     _className = "LabelBMFont";
 
     _createRenderCmd() {
-        if (cc.rendererConfig.isWebGL)
-            return new cc.LabelBMFont.WebGLRenderCmd(this);
+        if (RendererConfig.isWebGL)
+            return new LabelBMFont.WebGLRenderCmd(this);
         else
-            return new cc.LabelBMFont.CanvasRenderCmd(this);
+            return new LabelBMFont.CanvasRenderCmd(this);
     }
-
 
     get string() { return this.getString(); }
     set string(v) { this._setStringForSetter(v); }
@@ -156,7 +83,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
      */
     constructor(str, fntFile, width, alignment, imageOffset) {
         super();
-        this._imageOffset = new cc.Point(0, 0);
+        this._imageOffset = new Point(0, 0);
         this._cascadeColorEnabled = true;
         this._cascadeOpacityEnabled = true;
         if (str !== undefined && fntFile !== undefined)
@@ -200,8 +127,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
     }
 
     /**
-     * Initialization of the node, please do not call this function by yourself, you should pass the parameters to constructor to initialize it
-.
+     * Initialization of the node, please do not call this function by yourself, you should pass the parameters to constructor to initialize it.
      */
     init() {
         return this.initWithString(null, null, null, null, null);
@@ -220,15 +146,15 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
         var self = this, theString = str || "";
 
         if (self._config)
-            cc.log("cc.LabelBMFont.initWithString(): re-init is no longer supported");
+            log("cc.LabelBMFont.initWithString(): re-init is no longer supported");
 
         var texture;
         if (fntFile) {
             var newConf = cc.loader.getRes(fntFile);
             if (!newConf) {
-                newConf = cc.FntFrameCache[fntFile] || cc.FntFrameCache[cc.path.basename(fntFile)];
+                newConf = FntFrameCache[fntFile] || FntFrameCache[cc.path.basename(fntFile)];
                 if(!newConf) {
-                    cc.log("cc.LabelBMFont.initWithString(): Impossible to create font. Please check file");
+                    log("cc.LabelBMFont.initWithString(): Impossible to create font. Please check file");
                     return false;
                 }
             }
@@ -256,19 +182,19 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
                 }, self);
             }
         } else {
-            texture = new cc.Texture2D();
+            texture = new Texture2D();
             var image = new Image();
             texture.initWithElement(image);
             self._textureLoaded = false;
         }
 
         if (self.initWithTexture(texture, theString.length)) {
-            self._alignment = alignment || cc.TEXT_ALIGNMENT_LEFT;
-            self._imageOffset = imageOffset || new cc.Point(0, 0);
+            self._alignment = alignment || TEXT_ALIGNMENT_LEFT;
+            self._imageOffset = imageOffset || new Point(0, 0);
             self._width = (width === undefined) ? -1 : width;
 
             self._realOpacity = 255;
-            self._realColor = cc.color(255, 255, 255, 255);
+            self._realColor = color(255, 255, 255, 255);
 
             self._contentSize.width = 0;
             self._contentSize.height = 0;
@@ -295,12 +221,11 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
 
         var nextFontPositionX = 0;
 
-        var tmpSize = new cc.Size(0, 0);
+        var tmpSize = new Size(0, 0);
 
         var longestLine = 0;
 
         var quantityOfLines = 1;
-
 
         var i, locCfg = self._config, locKerningDict = locCfg.kerningDict,
             locCommonH = locCfg.commonHeight, locFontDict = locCfg.fontDefDictionary;
@@ -327,7 +252,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             var kerningAmount = locKerningDict[(prev << 16) | (key & 0xffff)] || 0;
             fontDef = locFontDict[key];
             if (!fontDef) {
-                cc.log("cocos2d: LabelBMFont: character not found " + locStr[i]);
+                log("cocos2d: LabelBMFont: character not found " + locStr[i]);
 
                 fontDef = {
                     rect: {
@@ -342,8 +267,8 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
                 };
             }
 
-            var rect = new cc.Rect(fontDef.rect.x, fontDef.rect.y, fontDef.rect.width, fontDef.rect.height);
-            rect = cc.rectPixelsToPoints(rect);
+            var rect = new Rect(fontDef.rect.x, fontDef.rect.y, fontDef.rect.width, fontDef.rect.height);
+            rect = rectPixelsToPoints(rect);
             rect.x += self._imageOffset.x;
             rect.y += self._imageOffset.y;
 
@@ -365,7 +290,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             var fontChar = self.getChildByTag(i);
 
             if (!fontChar) {
-                fontChar = new cc.Sprite();
+                fontChar = new Sprite();
                 fontChar.initWithTexture(locTexture, rect, isRotated);
                 fontChar._newTextureWhenChangeColor = true;
                 this.addChild(fontChar, 0, i);
@@ -378,9 +303,9 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             cmd._updateCharColorAndOpacity(fontChar);
 
             var yOffset = locCfg.commonHeight - fontDef.yOffset;
-            var fontPos = new cc.Point(nextFontPositionX + fontDef.xOffset + fontDef.rect.width * 0.5 + kerningAmount,
-                nextFontPositionY + yOffset - rect.height * 0.5 * cc.contentScaleFactor());
-            fontChar.setPosition(cc.pointPixelsToPoints(fontPos));
+            var fontPos = new Point(nextFontPositionX + fontDef.xOffset + fontDef.rect.width * 0.5 + kerningAmount,
+                nextFontPositionY + yOffset - rect.height * 0.5 * contentScaleFactor());
+            fontChar.setPosition(pointPixelsToPoints(fontPos));
 
             // update kerning
             nextFontPositionX += fontDef.xAdvance + kerningAmount;
@@ -397,7 +322,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
         else
             tmpSize.width = longestLine;
         tmpSize.height = totalHeight;
-        self.setContentSize(cc.sizePixelsToPoints(tmpSize));
+        self.setContentSize(sizePixelsToPoints(tmpSize));
     }
 
     /**
@@ -498,7 +423,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             //Find the truncation point
             while (width < maxWidth && checkWhile++ < 100) {
                 if (tmpText) {
-                    var exec = cc.LabelTTF._wordRex.exec(tmpText);
+                    var exec = LabelTTF._wordRex.exec(tmpText);
                     pushNum = exec ? exec[0].length : 1;
                     sLine = tmpText;
                 }
@@ -519,9 +444,9 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             var sText = text.substr(0, fuzzyLen), result;
 
             //symbol in the first
-            if (cc.LabelTTF.wrapInspection) {
-                if (cc.LabelTTF._symbolRex.test(sLine || tmpText)) {
-                    result = cc.LabelTTF._lastWordRex.exec(sText);
+            if (LabelTTF.wrapInspection) {
+                if (LabelTTF._symbolRex.test(sLine || tmpText)) {
+                    result = LabelTTF._lastWordRex.exec(sText);
                     pushNum = result ? result[0].length : 0;
                     if (self._lineBreakWithoutSpaces) {
                         pushNum = 0;
@@ -534,8 +459,8 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             }
 
             //To judge whether a English words are truncated
-            if (cc.LabelTTF._firsrEnglish.test(sLine)) {
-                result = cc.LabelTTF._lastEnglish.exec(sText);
+            if (LabelTTF._firsrEnglish.test(sLine)) {
+                result = LabelTTF._lastEnglish.exec(sText);
                 if (result && sText !== result[0]) {
                     pushNum = result[0].length;
                     if (self._lineBreakWithoutSpaces) {
@@ -582,7 +507,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             self._setString(wrapString, false);
         }
         // Step 2: Make alignment
-        if (self._alignment !== cc.TEXT_ALIGNMENT_LEFT) {
+        if (self._alignment !== TEXT_ALIGNMENT_LEFT) {
             i = 0;
 
             var lineNumber = 0;
@@ -608,10 +533,10 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
 
                     var shift = 0;
                     switch (self._alignment) {
-                        case cc.TEXT_ALIGNMENT_CENTER:
+                        case TEXT_ALIGNMENT_CENTER:
                             shift = self.width / 2 - lineWidth / 2;
                             break;
-                        case cc.TEXT_ALIGNMENT_RIGHT:
+                        case TEXT_ALIGNMENT_RIGHT:
                             shift = self.width - lineWidth;
                             break;
                         default:
@@ -683,7 +608,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
      * @param {Number} [scaleY=null] default is scale
      */
     setScale(scale, scaleY) {
-        cc.Node.prototype.setScale.call(this, scale, scaleY);
+        Node.prototype.setScale.call(this, scale, scaleY);
         this.updateLabel();
     }
 
@@ -694,7 +619,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
      * @param {Number} scaleX
      */
     setScaleX(scaleX) {
-        cc.Node.prototype.setScaleX.call(this, scaleX);
+        Node.prototype.setScaleX.call(this, scaleX);
         this.updateLabel();
     }
 
@@ -705,7 +630,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
      * @param {Number} scaleY
      */
     setScaleY(scaleY) {
-        cc.Node.prototype.setScaleY.call(this, scaleY);
+        Node.prototype.setScaleY.call(this, scaleY);
         this.updateLabel();
     }
 
@@ -720,7 +645,7 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             var newConf = cc.loader.getRes(fntFile);
 
             if (!newConf) {
-                cc.log("cc.LabelBMFont.setFntFile() : Impossible to create font. Please check file");
+                log("cc.LabelBMFont.setFntFile() : Impossible to create font. Please check file");
                 return;
             }
 
@@ -774,17 +699,17 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
      * @param {Number} [y] The anchor point.y of labelBMFont.
      */
     setAnchorPoint(point, y) {
-        cc.Node.prototype.setAnchorPoint.call(this, point, y);
+        Node.prototype.setAnchorPoint.call(this, point, y);
         this.updateLabel();
     }
 
     _setAnchorX(x) {
-        cc.Node.prototype._setAnchorX.call(this, x);
+        Node.prototype._setAnchorX.call(this, x);
         this.updateLabel();
     }
 
     _setAnchorY(y) {
-        cc.Node.prototype._setAnchorY.call(this, y);
+        Node.prototype._setAnchorY.call(this, y);
         this.updateLabel();
     }
 
@@ -848,11 +773,11 @@ cc.LabelBMFont = class LabelBMFont extends cc.EventHelper(cc.SpriteBatchNode) {
             return;
         str.splice(index, len);
     }
-};
+}
 
-cc.FntFrameCache = {};
+export const FntFrameCache = {};
 
-var _fntLoader = {
+const _fntLoader = {
     FNT_HEAD: /fntframes [^\n]*(\n|$)/gi,
     FNT_FRAME_NAME: /fntframe [^\n]*(\n|$)/gi,
     INFO_EXP: /info [^\n]*(\n|$)/gi,
@@ -885,16 +810,16 @@ var _fntLoader = {
         //common
         var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
         fnt.commonHeight = commonObj["lineHeight"];
-        if (cc.rendererConfig.isWebGL) {
+        if (RendererConfig.isWebGL) {
             var texSize = cc.configuration.getMaxTextureSize();
             if (commonObj["scaleW"] > texSize.width || commonObj["scaleH"] > texSize.height)
-                cc.log("cc.LabelBMFont._parseCommonArguments(): page can't be larger than supported");
+                log("cc.LabelBMFont._parseCommonArguments(): page can't be larger than supported");
         }
-        if (commonObj["pages"] !== 1) cc.log("cc.LabelBMFont._parseCommonArguments(): only supports 1 page");
+        if (commonObj["pages"] !== 1) log("cc.LabelBMFont._parseCommonArguments(): only supports 1 page");
 
         //page
         var pageObj = self._parseStrToObj(fntStr.match(self.PAGE_EXP)[0]);
-        if (pageObj["id"] !== 0) cc.log("cc.LabelBMFont._parseImageFileName() : file could not be found");
+        if (pageObj["id"] !== 0) log("cc.LabelBMFont._parseImageFileName() : file could not be found");
         if(!useAtlas) {
             fnt.atlasName = cc.path.changeBasename(url, pageObj["file"]);
         } else {
@@ -950,7 +875,7 @@ var _fntLoader = {
                         if(frameName && frameName.name) {
                             fnt = {};
                             var realFntPathKey = cc.path.join(cc.path.dirname(url), frameName.name);
-                            cc.FntFrameCache[realFntPathKey] = this._parseFntContent(fnt, contentString.substr(frameNameStr[0].length), url, {path: frameName.name});
+                            FntFrameCache[realFntPathKey] = this._parseFntContent(fnt, contentString.substr(frameNameStr[0].length), url, {path: frameName.name});
                         }
                     }
                 }
@@ -981,8 +906,8 @@ cc.loader.register(["fnt"], _fntLoader);
 /**
  * cc.Label compatibility shim (matches cocos2d-x v3 API)
  */
-cc.Label = {
+export const Label = {
     createWithBMFont: function(fntFile, text, alignment, maxLineWidth, imageOffset) {
-        return new cc.LabelBMFont(String(text != null ? text : ""), fntFile, maxLineWidth, alignment, imageOffset);
+        return new LabelBMFont(String(text != null ? text : ""), fntFile, maxLineWidth, alignment, imageOffset);
     }
 };

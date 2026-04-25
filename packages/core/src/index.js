@@ -926,3 +926,12 @@ export {
   UNIFORM_ALPHA_TEST_VALUE_S,
   UNIFORM_MVMATRIX_S
 } from "./platform/macro/constants";
+export { isUndefined } from "./boot";
+export { KEY } from "./platform/common";
+export { arrayRemoveObject, pointPixelsToPoints, sizePixelsToPoints, rectPixelsToPoints } from "./platform/macro/utils";
+export { LabelTTF } from "./labelttf/label-ttf";
+export { AtlasNode } from "./base-nodes/atlas-node";
+export { SpriteBatchNode } from "./sprites/sprite-batch-node";
+export { default as EventHelper } from "./event-manager/event-helper";
+export { TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_RIGHT } from "./platform/types/color";
+export { FIX_ARTIFACTS_BY_STRECHING_TEXEL, LABELATLAS_DEBUG_DRAW } from "./platform/config";
