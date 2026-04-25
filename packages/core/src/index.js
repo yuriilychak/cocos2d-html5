@@ -928,7 +928,7 @@ export {
 } from "./platform/macro/constants";
 export { isUndefined } from "./boot";
 export { KEY } from "./platform/common";
-export { arrayRemoveObject, pointPixelsToPoints, sizePixelsToPoints, rectPixelsToPoints } from "./platform/macro/utils";
+export { arrayRemoveObject, pointPixelsToPoints, sizePixelsToPoints, rectPixelsToPoints, lerp, radiansToDegrees, degreesToRadians } from "./platform/macro/utils";
 export { LabelTTF } from "./labelttf/label-ttf";
 export { AtlasNode } from "./base-nodes/atlas-node";
 export { SpriteBatchNode } from "./sprites/sprite-batch-node";
