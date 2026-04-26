@@ -28,175 +28,177 @@ var TAG_SPRITE_MANAGER = 1;
 var PTM_RATIO = 32;
 
 var Box2DTestLayer = class Box2DTestLayer extends cc.LayerColor {
-    //GLESDebugDraw *m_debugDraw;
+  constructor() {
+    if (window.sideIndexBar) {
+      window.sideIndexBar.changeTest(0, 2);
+    }
+    //----start0----ctor
+    super(cc.color(0, 0, 0, 255));
 
-    constructor() {
+    this.world = null;
+    // External map from body pointer -> cc.Sprite (box2d-wasm doesn't support userData)
+    this._bodyToSprite = {};
 
-        if(window.sideIndexBar){
-            window.sideIndexBar.changeTest(0, 2);
+    cc.eventManager.addListener(
+      cc.EventListener.create({
+        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        onTouchesEnded: function (touches, event) {
+          var touch = touches[0];
+          var location = touch.getLocation();
+          event.getCurrentTarget().addNewSpriteWithCoords(location);
         }
-        //----start0----ctor
-        super(cc.color(0, 0, 0, 255));
+      }),
+      this
+    );
 
+    var label = new cc.LabelTTF("Tap screen", "Marker Felt", 32);
+    this.addChild(label, 0);
+    label.color = cc.color(0, 0, 255);
+    label.x = cc.director.getWinSize().width / 2;
+    label.y = cc.director.getWinSize().height - 50;
 
-        this.world = null;
+    // Defer physics setup until box2d-wasm WASM has finished loading
+    window.Box2DReady.then(
+      function (box2D) {
+        this._initPhysics(box2D);
+      }.bind(this)
+    );
 
-        cc.eventManager.addListener(cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-            onTouchesEnded: function(touches, event){
-                //Add a new body/atlas sprite at the touched location
-                var touch = touches[0];
-                var location = touch.getLocation();
-                event.getCurrentTarget().addNewSpriteWithCoords(location);
-            }
-        }), this);
+    this.scheduleUpdate();
+    //----end0----
+  }
 
-        var b2Vec2 = Box2D.Common.Math.b2Vec2
-            , b2BodyDef = Box2D.Dynamics.b2BodyDef
-            , b2Body = Box2D.Dynamics.b2Body
-            , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
-            , b2World = Box2D.Dynamics.b2World
-            , b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+  _initPhysics(box2D) {
+    var b2Vec2 = box2D.b2Vec2;
+    var b2BodyDef = box2D.b2BodyDef;
+    var b2_staticBody = box2D.b2_staticBody;
+    var b2FixtureDef = box2D.b2FixtureDef;
+    var b2World = box2D.b2World;
+    var b2PolygonShape = box2D.b2PolygonShape;
+    this._box2D = box2D;
 
-        var screenSize = cc.director.getWinSize();
-        //UXLog(L"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
+    var screenSize = cc.director.getWinSize();
 
-        // Construct a world object, which will hold and simulate the rigid bodies.
-        this.world = new b2World(new b2Vec2(0, -10), true);
-        this.world.SetContinuousPhysics(true);
+    // Construct a world object
+    var gravity = new b2Vec2(0, -10);
+    this.world = new b2World(gravity);
 
-        // Define the ground body.
-        //var groundBodyDef = new b2BodyDef(); // TODO
-        //groundBodyDef.position.Set(screenSize.width / 2 / PTM_RATIO, screenSize.height / 2 / PTM_RATIO); // bottom-left corner
+    var fixDef = new b2FixtureDef();
+    fixDef.set_density(1.0);
+    fixDef.set_friction(0.5);
+    fixDef.set_restitution(0.2);
 
-        // Call the body factory which allocates memory for the ground body
-        // from a pool and creates the ground box shape (also from a pool).
-        // The body is also added to the world.
-        //var groundBody = this.world.CreateBody(groundBodyDef);
+    var bodyDef = new b2BodyDef();
+    bodyDef.set_type(b2_staticBody);
 
-        var fixDef = new b2FixtureDef;
-        fixDef.density = 1.0;
-        fixDef.friction = 0.5;
-        fixDef.restitution = 0.2;
+    // create ground walls
+    var groundShape = new b2PolygonShape();
+    groundShape.SetAsBox(20, 2);
+    fixDef.set_shape(groundShape);
+    // upper
+    bodyDef.set_position(new b2Vec2(10, screenSize.height / PTM_RATIO + 1.8));
+    this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+    // bottom
+    bodyDef.set_position(new b2Vec2(10, -1.8));
+    this.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        var bodyDef = new b2BodyDef;
+    var wallShape = new b2PolygonShape();
+    wallShape.SetAsBox(2, 14);
+    fixDef.set_shape(wallShape);
+    // left
+    bodyDef.set_position(new b2Vec2(-1.8, 13));
+    this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+    // right
+    bodyDef.set_position(new b2Vec2(26.8, 13));
+    this.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        //create ground
-        bodyDef.type = b2Body.b2_staticBody;
-        fixDef.shape = new b2PolygonShape;
-        fixDef.shape.SetAsBox(20, 2);
-        // upper
-        bodyDef.position.Set(10, screenSize.height / PTM_RATIO + 1.8);
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef);
-        // bottom
-        bodyDef.position.Set(10, -1.8);
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+    // Set up sprite batch
+    var mgr = new cc.SpriteBatchNode(s_pathBlock, 150);
+    this.addChild(mgr, 0, TAG_SPRITE_MANAGER);
 
-        fixDef.shape.SetAsBox(2, 14);
-        // left
-        bodyDef.position.Set(-1.8, 13);
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef);
-        // right
-        bodyDef.position.Set(26.8, 13);
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+    this.addNewSpriteWithCoords(
+      new cc.Point(screenSize.width / 2, screenSize.height / 2)
+    );
+  }
 
-        //Set up sprite
+  addNewSpriteWithCoords(p) {
+    //----start0----addNewSpriteWithCoords
+    if (!this.world || !this._box2D) return;
 
-        var mgr = new cc.SpriteBatchNode(s_pathBlock, 150);
-        this.addChild(mgr, 0, TAG_SPRITE_MANAGER);
+    var box2D = this._box2D;
+    var b2Vec2 = box2D.b2Vec2;
+    var b2BodyDef = box2D.b2BodyDef;
+    var b2_dynamicBody = box2D.b2_dynamicBody;
+    var b2FixtureDef = box2D.b2FixtureDef;
+    var b2PolygonShape = box2D.b2PolygonShape;
+    var getPointer = box2D.getPointer;
 
-        this.addNewSpriteWithCoords(new cc.Point(screenSize.width / 2, screenSize.height / 2));
+    var batch = this.getChildByTag(TAG_SPRITE_MANAGER);
+    if (!batch) return;
 
-        var label = new cc.LabelTTF("Tap screen", "Marker Felt", 32);
-        this.addChild(label, 0);
-        label.color = cc.color(0, 0, 255);
-        label.x = screenSize.width / 2;
-        label.y = screenSize.height - 50;
+    var idx = Math.random() > 0.5 ? 0 : 1;
+    var idy = Math.random() > 0.5 ? 0 : 1;
+    var sprite = new cc.Sprite(
+      batch.texture,
+      new cc.Rect(32 * idx, 32 * idy, 32, 32)
+    );
+    batch.addChild(sprite);
+    sprite.x = p.x;
+    sprite.y = p.y;
 
-        this.scheduleUpdate();
-        //----end0----
+    var bodyDef = new b2BodyDef();
+    bodyDef.set_type(b2_dynamicBody);
+    bodyDef.set_position(new b2Vec2(p.x / PTM_RATIO, p.y / PTM_RATIO));
+    var body = this.world.CreateBody(bodyDef);
+
+    var dynamicBox = new b2PolygonShape();
+    dynamicBox.SetAsBox(0.5, 0.5);
+
+    var fixtureDef = new b2FixtureDef();
+    fixtureDef.set_shape(dynamicBox);
+    fixtureDef.set_density(1.0);
+    fixtureDef.set_friction(0.3);
+    body.CreateFixture(fixtureDef);
+
+    // Associate the sprite with the body via its pointer (box2d-wasm has no userData)
+    this._bodyToSprite[getPointer(body)] = sprite;
+    //----end0----
+  }
+
+  update(dt) {
+    //----start0----update
+    if (!this.world || !this._box2D) return;
+
+    var velocityIterations = 8;
+    var positionIterations = 1;
+    this.world.Step(dt, velocityIterations, positionIterations);
+
+    var getPointer = this._box2D.getPointer;
+    var NULL = this._box2D.NULL;
+    var nullPtr = getPointer(NULL);
+
+    for (
+      var b = this.world.GetBodyList();
+      getPointer(b) !== nullPtr;
+      b = b.GetNext()
+    ) {
+      var sprite = this._bodyToSprite[getPointer(b)];
+      if (sprite) {
+        sprite.x = b.GetPosition().x * PTM_RATIO;
+        sprite.y = b.GetPosition().y * PTM_RATIO;
+        sprite.rotation = -1 * cc.radiansToDegrees(b.GetAngle());
+      }
     }
-
-    addNewSpriteWithCoords(p) {
-        //----start0----addNewSpriteWithCoords
-        //UXLog(L"Add sprite %0.2f x %02.f",p.x,p.y);
-        var batch = this.getChildByTag(TAG_SPRITE_MANAGER);
-
-        //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
-        //just randomly picking one of the images
-        var idx = (Math.random() > .5 ? 0 : 1);
-        var idy = (Math.random() > .5 ? 0 : 1);
-        var sprite = new cc.Sprite(batch.texture, new cc.Rect(32 * idx, 32 * idy, 32, 32));
-        batch.addChild(sprite);
-
-        sprite.x = p.x;
-        sprite.y = p.y;
-
-        // Define the dynamic body.
-        //Set up a 1m squared box in the physics world
-        var b2BodyDef = Box2D.Dynamics.b2BodyDef
-            , b2Body = Box2D.Dynamics.b2Body
-            , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
-            , b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-
-        var bodyDef = new b2BodyDef();
-        bodyDef.type = b2Body.b2_dynamicBody;
-        bodyDef.position.Set(p.x / PTM_RATIO, p.y / PTM_RATIO);
-        bodyDef.userData = sprite;
-        var body = this.world.CreateBody(bodyDef);
-
-        // Define another box shape for our dynamic body.
-        var dynamicBox = new b2PolygonShape();
-        dynamicBox.SetAsBox(0.5, 0.5);//These are mid points for our 1m box
-
-        // Define the dynamic body fixture.
-        var fixtureDef = new b2FixtureDef();
-        fixtureDef.shape = dynamicBox;
-        fixtureDef.density = 1.0;
-        fixtureDef.friction = 0.3;
-        body.CreateFixture(fixtureDef);
-        //----end0----
-    }
-    update(dt) {
-        //----start0----update
-        //It is recommended that a fixed time step is used with Box2D for stability
-        //of the simulation, however, we are using a variable time step here.
-        //You need to make an informed choice, the following URL is useful
-        //http://gafferongames.com/game-physics/fix-your-timestep/
-
-        var velocityIterations = 8;
-        var positionIterations = 1;
-
-        // Instruct the world to perform a single step of simulation. It is
-        // generally best to keep the time step and iterations fixed.
-        this.world.Step(dt, velocityIterations, positionIterations);
-
-        //Iterate over the bodies in the physics world
-        for (var b = this.world.GetBodyList(); b; b = b.GetNext()) {
-            if (b.GetUserData() != null) {
-                //Synchronize the AtlasSprites position and rotation with the corresponding body
-                var myActor = b.GetUserData();
-                myActor.x = b.GetPosition().x * PTM_RATIO;
-                myActor.y = b.GetPosition().y * PTM_RATIO;
-                myActor.rotation = -1 * cc.radiansToDegrees(b.GetAngle());
-            }
-        }
-        //----end0----
-    }
-    //CREATE_NODE(Box2DTestLayer);
-
+    //----end0----
+  }
 };
 
 var Box2DTestScene = class Box2DTestScene extends TestScene {
-    runThisTest() {
-        var layer = new Box2DTestLayer();
-        this.addChild(layer);
-
-        cc.director.runScene(this);
-    }
-
+  runThisTest() {
+    var layer = new Box2DTestLayer();
+    this.addChild(layer);
+    cc.director.runScene(this);
+  }
 };
 
-var arrayOfBox2DTest = [
-    Box2DTestLayer
-];
+var arrayOfBox2DTest = [Box2DTestLayer];

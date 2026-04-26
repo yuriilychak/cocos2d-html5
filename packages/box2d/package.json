@@ -8,10 +8,11 @@
     "src/"
   ],
   "scripts": {
-    "build": "rollup -c ../../scripts/rollup.package.mjs"
+    "build": "rollup -c rollup.config.mjs"
   },
   "dependencies": {
     "@aspect/core": "*",
-    "@aspect/physics": "*"
+    "@aspect/physics": "*",
+    "box2d-wasm": "^7.0.0"
   }
 }
