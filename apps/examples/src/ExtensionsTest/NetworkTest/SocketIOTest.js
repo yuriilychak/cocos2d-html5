@@ -26,7 +26,12 @@
 /** @expose */
 window.io;
 
-var SocketIO = SocketIO || window.io;
+// SocketIO is now provided by the socketio package
+// If it's not available, handle gracefully
+
+if (!window.SocketIO && !cc.SocketIO) {
+    console.warn('Socket.IO not available for SocketIOTest');
+}
 
 var SocketIOTestLayer = class SocketIOTestLayer extends cc.Layer {
 
@@ -167,6 +172,13 @@ var SocketIOTestLayer = class SocketIOTestLayer extends cc.Layer {
     }
     // Menu Callbacks
     onMenuSIOClientClicked(sender) {
+        
+        // Check if SocketIO is available
+        if (!SocketIO) {
+            cc.log("Socket.IO not available. Please include socket.io-client library.");
+            this._sioClientStatus.setString("Socket.IO not available!");
+            return;
+        }
 
         //create a client by using this static method, url does not need to contain the protocol
         var sioclient = SocketIO.connect("ws://tools.itharbors.com:4000", {"force new connection" : true});
@@ -207,6 +219,29 @@ var SocketIOTestLayer = class SocketIOTestLayer extends cc.Layer {
     }
 
     onMenuSIOEndpointClicked(sender) {
+        // Check if SocketIO is available, load if needed
+        if (!window.SocketIO) {
+            cc.log("Socket.IO not available. Please include socket.io-client library.");
+            this._sioClientStatus.setString("Socket.IO not available!");
+            return;
+        }
+        
+        // If socket.io isn't loaded yet, load it from CDN first
+        if (!window.io) {
+            this._sioClientStatus.setString("Loading Socket.IO from CDN...");
+            SocketIO.loadAsync().then(() => {
+                this._doSocketIOEndpointConnection();
+            }).catch((error) => {
+                cc.log("Failed to load Socket.IO: " + error.message);
+                this._sioClientStatus.setString("Failed to load Socket.IO!");
+            });
+            return;
+        }
+        
+        this._doSocketIOEndpointConnection();
+    }
+    
+    _doSocketIOEndpointConnection() {
 
         //repeat the same connection steps for the namespace "testpoint"
         var sioendpoint = SocketIO.connect("ws://tools.itharbors.com:4000/testpoint", {"force new connection" : true});

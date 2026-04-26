@@ -9,5 +9,13 @@
   ],
   "scripts": {
     "build": "rollup -c ../../scripts/rollup.package.mjs"
+  },
+  "peerDependencies": {
+    "socket.io-client": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "socket.io-client": {
+      "optional": true
+    }
   }
 }
