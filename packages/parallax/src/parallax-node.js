@@ -24,91 +24,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-/**
- * Parallax Object. <br />
- * Parallax required attributes are stored.
- */
-cc.PointObject = class PointObject extends cc.NewClass {
-    _ratio = null;
-    _offset = null;
-    _child = null;
-
-    constructor(ratio, offset) {
-        super();
-        this.initWithCCPoint(ratio, offset);
-    }
-
-    /**
-     * Gets the ratio.
-     * @return  {cc.Point} Not point, this is ratio.
-     */
-    getRatio() {
-        return this._ratio;
-    }
-
-    /**
-     * Set the ratio.
-     * @param  {cc.Point} value
-     */
-    setRatio(value) {
-        this._ratio = value;
-    }
-
-    /**
-     * Gets the offset.
-     * @return  {cc.Point}
-     */
-    getOffset() {
-        return this._offset;
-    }
-
-    /**
-     * Set the offset.
-     * @param {cc.Point} value
-     */
-    setOffset(value) {
-        this._offset = value;
-    }
-
-    /**
-     * Gets the child.
-     * @return {cc.Node}
-     */
-    getChild() {
-        return this._child;
-    }
-
-    /**
-     * Set the child.
-     * @param  {cc.Node} value
-     */
-    setChild(value) {
-        this._child = value;
-    }
-
-    /**
-     * initializes cc.PointObject
-     * @param  {cc.Point} ratio Not point, this is a ratio.
-     * @param  {cc.Point} offset
-     * @return {Boolean}
-     */
-    initWithCCPoint(ratio, offset) {
-        this._ratio = ratio;
-        this._offset = offset;
-        this._child = null;
-        return true;
-    }
-};
-
+import { Node, Point, pointEqualToPoint, RendererConfig } from "@aspect/core";
+import { PointObject } from "./point-object";
 
 /**
- * <p>cc.ParallaxNode: A node that simulates a parallax scroller<br />
+ * <p>ParallaxNode: A node that simulates a parallax scroller<br />
  * The children will be moved faster / slower than the parent according the the parallax ratio. </p>
  *
  * @property {Array}    parallaxArray   - Parallax nodes array
  */
-cc.ParallaxNode = class ParallaxNode extends cc.Node {
-	parallaxArray = null;
+export class ParallaxNode extends Node {
+    parallaxArray = null;
 
     _lastPosition = null;
     _className = "ParallaxNode";
@@ -135,19 +61,19 @@ cc.ParallaxNode = class ParallaxNode extends cc.Node {
     constructor() {
         super();
         this.parallaxArray = [];
-        this._lastPosition = new cc.Point(-100, -100);
+        this._lastPosition = new Point(-100, -100);
     }
 
     /**
      * Adds a child to the container with a z-order, a parallax ratio and a position offset
      * It returns self, so you can chain several addChilds.
-     * @param {cc.Node} child
+     * @param {Node} child
      * @param {Number} z
-     * @param {cc.Point} ratio
-     * @param {cc.Point} offset
+     * @param {Point} ratio
+     * @param {Point} offset
      * @example
      * //example
-     * voidNode.addChild(background, -1, new cc.Point(0.4, 0.5), new cc.Point(0,0));
+     * voidNode.addChild(background, -1, new Point(0.4, 0.5), new Point(0,0));
      */
     addChild(child, z, ratio, offset) {
         if (arguments.length === 3) {
@@ -155,19 +81,19 @@ cc.ParallaxNode = class ParallaxNode extends cc.Node {
             return;
         }
         if(!child)
-            throw new Error("cc.ParallaxNode.addChild(): child should be non-null");
-        var obj = new cc.PointObject(ratio, offset);
+            throw new Error("ParallaxNode.addChild(): child should be non-null");
+        var obj = new PointObject(ratio, offset);
         obj.setChild(child);
         this.parallaxArray.push(obj);
 
-	    child.setPosition(this._position.x * ratio.x + offset.x, this._position.y * ratio.y + offset.y);
+        child.setPosition(this._position.x * ratio.x + offset.x, this._position.y * ratio.y + offset.y);
 
         super.addChild(child, z, child.tag);
     }
 
     /**
      *  Remove Child
-     * @param {cc.Node} child
+     * @param {Node} child
      * @param {Boolean} cleanup
      * @example
      * //example
@@ -196,7 +122,7 @@ cc.ParallaxNode = class ParallaxNode extends cc.Node {
 
     _updateParallaxPosition() {
         var pos = this._absolutePosition();
-        if (!cc.pointEqualToPoint(pos, this._lastPosition)) {
+        if (!pointEqualToPoint(pos, this._lastPosition)) {
             var locParallaxArray = this.parallaxArray;
             for (var i = 0, len = locParallaxArray.length; i < len; i++) {
                 var point = locParallaxArray[i];
@@ -213,16 +139,15 @@ cc.ParallaxNode = class ParallaxNode extends cc.Node {
         var cn = this;
         while (cn.parent !== null) {
             cn = cn.parent;
-            ret = cc.Point.add(ret, cn.getPosition());
+            ret = Point.add(ret, cn.getPosition());
         }
         return ret;
     }
 
     _createRenderCmd() {
-        if(cc.rendererConfig.isCanvas)
-            return new cc.ParallaxNode.CanvasRenderCmd(this);
+        if(RendererConfig.getInstance().isCanvas)
+            return new this.constructor.CanvasRenderCmd(this);
         else
-            return new cc.ParallaxNode.WebGLRenderCmd(this);
+            return new this.constructor.WebGLRenderCmd(this);
     }
-};
-
+}

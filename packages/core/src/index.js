@@ -864,6 +864,8 @@ export {
 } from "./platform/macro/utils";
 export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./renderer/renderer-config";
+// Export rendererConfig singleton instance
+export const rendererConfig = RendererConfig.getInstance();
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./boot";
 export { NewClass, classManager } from "./platform/class";
@@ -877,6 +879,9 @@ export {
   SRC_ALPHA
 } from "./platform/macro/constants";
 export { Texture2D } from "./textures/texture-2d";
+// Export TextureCache class and singleton instance
+export { default as TextureCache } from "./textures/texture-cache";
+export const textureCache = TextureCache.getInstance();
 export { GLProgramState, ShaderCache } from "./shaders";
 export {
   glBlendFunc,
