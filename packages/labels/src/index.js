@@ -12,3 +12,5 @@ cc.LabelBMFont.WebGLRenderCmd = LabelBMFontWebGLRenderCmd;
 cc.LabelAtlas = LabelAtlas;
 cc.LabelAtlas.CanvasRenderCmd = LabelAtlasCanvasRenderCmd;
 cc.LabelAtlas.WebGLRenderCmd = LabelAtlasWebGLRenderCmd;
+
+export { LabelBMFont, LabelAtlas };

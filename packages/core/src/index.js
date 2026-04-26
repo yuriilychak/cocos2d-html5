@@ -914,7 +914,10 @@ export { Node } from "./base-nodes/node";
 export { Scene } from "./scenes/scene";
 export { LayerColor } from "./layers/layer-color";
 export { default as EventManager } from "./event-manager/event-manager";
-export { CanvasRenderCmd as NodeCanvasRenderCmd, CustomRenderCmd } from "./base-nodes/node-canvas-render-cmd";
+export {
+  CanvasRenderCmd as NodeCanvasRenderCmd,
+  CustomRenderCmd
+} from "./base-nodes/node-canvas-render-cmd";
 export { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
 export { CanvasContextWrapper } from "./renderer/renderer-canvas";
 export { Sprite } from "./sprites/sprite";
@@ -928,10 +931,37 @@ export {
 } from "./platform/macro/constants";
 export { isUndefined } from "./boot";
 export { KEY } from "./platform/common";
-export { arrayRemoveObject, pointPixelsToPoints, sizePixelsToPoints, rectPixelsToPoints, lerp, radiansToDegrees, degreesToRadians } from "./platform/macro/utils";
+export {
+  arrayRemoveObject,
+  pointPixelsToPoints,
+  sizePixelsToPoints,
+  rectPixelsToPoints,
+  lerp,
+  radiansToDegrees,
+  degreesToRadians
+} from "./platform/macro/utils";
 export { LabelTTF } from "./labelttf/label-ttf";
 export { AtlasNode } from "./base-nodes/atlas-node";
 export { SpriteBatchNode } from "./sprites/sprite-batch-node";
 export { default as EventHelper } from "./event-manager/event-helper";
-export { TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_RIGHT } from "./platform/types/color";
-export { FIX_ARTIFACTS_BY_STRECHING_TEXEL, LABELATLAS_DEBUG_DRAW } from "./platform/config";
+export {
+  TEXT_ALIGNMENT_LEFT,
+  TEXT_ALIGNMENT_CENTER,
+  TEXT_ALIGNMENT_RIGHT
+} from "./platform/types/color";
+export {
+  FIX_ARTIFACTS_BY_STRECHING_TEXEL,
+  LABELATLAS_DEBUG_DRAW
+} from "./platform/config";
+export { Layer } from "./layers/layer";
+export { default as EventListener } from "./event-manager/event-listener/event-listener";
+export { isFunction, isString } from "./boot/utils";
+export {
+  ITEM_SIZE,
+  CURRENT_ITEM,
+  ZOOM_ACTION_TAG,
+  NORMAL_TAG,
+  SELECTED_TAG,
+  DISABLE_TAG,
+  UINT_MAX
+} from "./platform/macro/constants";
