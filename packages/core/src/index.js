@@ -970,3 +970,5 @@ export {
   DISABLE_TAG,
   UINT_MAX
 } from "./platform/macro/constants";
+export { visibleRect } from "./platform/visible-rect";
+export { ResolutionPolicy } from "./platform/egl-view/resolution-policy";

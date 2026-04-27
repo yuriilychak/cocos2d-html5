@@ -8,8 +8,8 @@ cc.LoaderLayer = LoaderLayer;
 cc._NetworkErrorDialog = NetworkErrorDialog.create.bind(NetworkErrorDialog);
 cc._NetworkErrorDialog._show = NetworkErrorDialog.show.bind(NetworkErrorDialog);
 cc._NetworkErrorDialog._setConfig = NetworkErrorDialog.setConfig.bind(NetworkErrorDialog);
-cc.runtime = cc.runtime || runtime;
-cc.network = cc.network || network;
+cc.runtime = runtime;
+cc.network = network;
 
 export { 
   Dialog, 

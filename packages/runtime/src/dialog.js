@@ -6,7 +6,7 @@ import {
   Menu, 
   LabelTTF, 
   Size, 
-  color, 
+  Color, 
   sequence, 
   EaseIn, 
   EaseOut, 
@@ -137,7 +137,7 @@ export class Dialog extends Layer {
     this.messageLabel.setColor(
       config.messageLabel.color
         ? config.messageLabel.color
-        : color(255, 255, 255)
+        : new Color(255, 255, 255)
     );
 
     this.messageLabel.setPosition(
@@ -151,11 +151,11 @@ export class Dialog extends Layer {
 
     if (config.messageLabel.action) {
       var action = sequence(
-        EaseIn.create(
+        new EaseIn(
           new ScaleTo(0.1, this.backgroundSprite.scale + 0.02),
           0.3
         ),
-        EaseOut.create(new ScaleTo(0.1, this.backgroundSprite.scale), 0.3)
+        new EaseOut(new ScaleTo(0.1, this.backgroundSprite.scale), 0.3)
       );
       action.retain();
       this.messageLabel.runAction(action);
@@ -260,13 +260,13 @@ export class Dialog extends Layer {
 
     if (config.cancelBtn) {
       if (!config.cancelBtn.textColor) {
-        config.cancelBtn.textColor = color(255, 255, 255);
+        config.cancelBtn.textColor = new Color(255, 255, 255);
       }
     }
 
     if (config.confirmBtn) {
       if (!config.confirmBtn.textColor) {
-        config.confirmBtn.textColor = color(255, 255, 255);
+        config.confirmBtn.textColor = new Color(255, 255, 255);
       }
     }
   }

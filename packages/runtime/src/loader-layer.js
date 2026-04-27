@@ -1,12 +1,22 @@
-import { 
-  Layer, 
-  director, 
-  Point, 
-  LabelTTF, 
-  color, 
+import {
+  Loader,
+  Layer,
+  director,
+  Point,
+  LabelTTF,
+  Color,
   Scene,
-  log 
+  Sprite,
+  Sys,
+  isArray,
+  log,
+  visibleRect,
+  EGLView,
+  Scale9Sprite,
+  ResolutionPolicy
 } from "@aspect/core";
+import { MoveBy, ScaleTo, DelayTime, easeIn, easeOut } from "@aspect/actions";
+import { runtime } from "./network-utils";
 
 const INT_MAX = Number.MAX_VALUE;
 const GROUP_JSON_PATH = "group.json";
@@ -66,20 +76,23 @@ export class LoaderLayer extends Layer {
     }
 
     if (config.bg.res) {
-      this._backgroundSprite = new cc.Sprite(config.bg.res);
-      this._backgroundSprite.setPosition(cc.visibleRect.center);
+      this._backgroundSprite = new Sprite(config.bg.res);
+      this._backgroundSprite.setPosition(visibleRect.center);
       this._contentLayer.addChild(this._backgroundSprite, 0);
     }
 
     // Set title
     if (config.title.res) {
-      this._titleSprite = new cc.Sprite(config.title.res);
+      this._titleSprite = new Sprite(config.title.res);
       this._titleSprite.setPosition(
         config.title.position ||
-          cc.visibleRect.top ||
-          cc.Point.add(
-            cc.visibleRect.center,
-            new Point(0, this._scaleFactor < 1 ? 0 : this._isLandScape ? -80 : 30)
+          visibleRect.top ||
+          Point.add(
+            visibleRect.center,
+            new Point(
+              0,
+              this._scaleFactor < 1 ? 0 : this._isLandScape ? -80 : 30
+            )
           )
       );
       this._contentLayer.addChild(this._titleSprite, 1);
@@ -87,11 +100,11 @@ export class LoaderLayer extends Layer {
 
     // Set logo
     if (config.logo.res) {
-      this._logoSprite = new cc.Sprite(config.logo.res);
+      this._logoSprite = new Sprite(config.logo.res);
       this._logoSprite.setPosition(
         config.logo.position ||
-          cc.Point.add(
-            cc.visibleRect.center,
+          Point.add(
+            visibleRect.center,
             new Point(
               this._scaleFactor < 1 ? 0 : this._isLandScape ? 0 : 0,
               this._scaleFactor < 1 ? 0 : this._isLandScape ? 0 : -100
@@ -103,19 +116,24 @@ export class LoaderLayer extends Layer {
 
     // Set progress bar background
     if (config.progressBarBg.res) {
-      this._progressBackgroundSprite = new cc.Scale9Sprite(config.progressBarBg.res);
+      this._progressBackgroundSprite = new Scale9Sprite(
+        config.progressBarBg.res
+      );
       this._progressBackgroundSprite.setPosition(
         config.progressBarBg.position ||
-          cc.Point.add(cc.visibleRect.center, new Point(0, -this._isLandScape ? 120 : 140))
+          Point.add(
+            visibleRect.center,
+            new Point(0, -this._isLandScape ? 120 : 140)
+          )
       );
       this._contentLayer.addChild(this._progressBackgroundSprite, 1);
     }
 
     // Set progress bar
     if (config.progressBar.res) {
-      this.progressBarSprite = new cc.Sprite(config.progressBar.res);
+      this.progressBarSprite = new Sprite(config.progressBar.res);
       this._progressOriginalWidth = this.progressBarSprite.width;
-      
+
       if (!config.progressBar.offset) {
         config.progressBar.offset = new Point(
           config.progressBarBg.res ? 0 : 0,
@@ -125,9 +143,12 @@ export class LoaderLayer extends Layer {
 
       this.progressBarSprite.setPosition(
         config.progressBar.position ||
-          cc.Point.add(
-            cc.visibleRect.center,
-            new Point(0, this.progressBarSprite.height / 2 + this._isLandScape ? 60 : 80)
+          Point.add(
+            visibleRect.center,
+            new Point(
+              0,
+              this.progressBarSprite.height / 2 + this._isLandScape ? 60 : 80
+            )
           )
       );
       this.progressBarSprite.setAnchorPoint(new Point(0, 0.5));
@@ -138,24 +159,27 @@ export class LoaderLayer extends Layer {
     if (config.tips) {
       this.tipsLabel = new LabelTTF("100%", "Arial", config.tips.fontSize);
       this.tipsLabel.setColor(
-        config.tips.color ? config.tips.color : color(255, 255, 255)
+        config.tips.color ? config.tips.color : new Color(255, 255, 255)
       );
       this.tipsLabel.setPosition(
         config.tips.position
           ? config.tips.position
-          : cc.Point.add(cc.visibleRect.bottom, new Point(0, 100))
+          : Point.add(visibleRect.bottom, new Point(0, 100))
       );
       this._contentLayer.addChild(this.tipsLabel, 1);
     }
 
     // Auto adjust position
     this._contentLayer.setPosition(
-      cc.Point.add(this._contentLayer.getPosition(), new Point(0, -50))
+      Point.add(this._contentLayer.getPosition(), new Point(0, -50))
     );
     this.progressBarSprite.setPosition(
-      cc.Point.add(
+      Point.add(
         this.progressBarSprite.getPosition(),
-        new Point(this.progressBarSprite.width, this.progressBarSprite.height / 2)
+        new Point(
+          this.progressBarSprite.width,
+          this.progressBarSprite.height / 2
+        )
       )
     );
     this.addChild(this._contentLayer);
@@ -177,8 +201,8 @@ export class LoaderLayer extends Layer {
     this._selector = selector;
     this._callback = callback;
     this._preloadCount++;
-    
-    if (cc.sys && cc.sys.isNative) {
+
+    if (Sys && Sys.isNative) {
       this._preload_native();
     } else {
       this._preload_web();
@@ -189,16 +213,16 @@ export class LoaderLayer extends Layer {
     var self = this;
     var config = LoaderLayer._finalConfig;
     var groupIndex = [];
-    var groups = cc.loader._config.groups;
+    var groups = Loader.getInstance()._config.groups;
     var res = [];
-    
+
     if (typeof this._groupname == "string") {
       res = groups[this._groupname];
       if (!res || !res.length) {
         log("LoaderLayer: group '" + this._groupname + "' not found");
         return;
       }
-    } else if (cc.isArray(this._groupname)) {
+    } else if (isArray(this._groupname)) {
       res = [];
       for (var i = 0; i < this._groupname.length; i++) {
         var group = groups[this._groupname[i]];
@@ -208,9 +232,9 @@ export class LoaderLayer extends Layer {
         res = res.concat(files);
       }
     }
-    
+
     var self = this;
-    cc.loader.load(
+    Loader.getInstance().load(
       res,
       function (result, count, loadedCount) {
         var checkGroupName = function (loadedCount) {
@@ -272,15 +296,15 @@ export class LoaderLayer extends Layer {
       if (this._preloadCount == 0 && !this._isPreloadFromFailed) {
         this.removeFromParent();
         if (LoaderLayer._useDefaultSource) {
-          var _config = cc.runtime.config.design_resolution || {
+          var _config = runtime.config.design_resolution || {
             width: 480,
             height: 720,
             policy: "SHOW_ALL"
           };
-          cc.view.setDesignResolutionSize(
+          EGLView.getInstance().setDesignResolutionSize(
             _config.width,
             _config.height,
-            cc.ResolutionPolicy[_config.policy]
+            ResolutionPolicy[_config.policy]
           );
         }
       }
@@ -292,12 +316,12 @@ export class LoaderLayer extends Layer {
 
   _addToScene() {
     if (this._preloadCount == 0 && !this._isPreloadFromFailed) {
-      if (cc.sys.isNative && LoaderLayer._useDefaultSource) {
-        var config = cc.runtime.config.design_resolution;
+      if (Sys.isNative && LoaderLayer._useDefaultSource) {
+        var config = runtime.config.design_resolution;
         var isLandscape = false;
         var isLargeThanResource = false;
         if (config) {
-          var orientation = cc.runtime.config.orientation;
+          var orientation = runtime.config.orientation;
           log("_addToScene orientation is " + orientation);
           if (orientation == "landscape") {
             isLandscape = true;
@@ -305,14 +329,18 @@ export class LoaderLayer extends Layer {
           var designWidth = config.width;
           var designHeight = config.height;
           var policy = config.policy;
-          var size = cc.view.getFrameSize();
+          var size = EGLView.getInstance().getFrameSize();
           var isLargeThanResource = false;
           if (size.width > designWidth && size.height > designHeight) {
             isLargeThanResource = true;
             log("isLargeThanResource is " + isLargeThanResource);
           }
           if (!isLargeThanResource) {
-            cc.view.setDesignResolutionSize(designWidth, designHeight, cc.ResolutionPolicy[policy]);
+            EGLView.getInstance().setDesignResolutionSize(
+              designWidth,
+              designHeight,
+              ResolutionPolicy[policy]
+            );
           }
         }
         this._isLandScape = isLandscape;
@@ -337,13 +365,17 @@ export class LoaderLayer extends Layer {
     var finalConfig = LoaderLayer._finalConfig;
 
     // Default configurations
-    finalConfig.onEnter = config.onEnter || function (target) {
-      log("LoaderLayer onEnter");
-    };
+    finalConfig.onEnter =
+      config.onEnter ||
+      function (target) {
+        log("LoaderLayer onEnter");
+      };
 
-    finalConfig.onExit = config.onExit || function (target) {
-      log("LoaderLayer onExit");
-    };
+    finalConfig.onExit =
+      config.onExit ||
+      function (target) {
+        log("LoaderLayer onExit");
+      };
 
     finalConfig.bg = config.bg || {};
     finalConfig.title = config.title || {};
@@ -357,7 +389,7 @@ export class LoaderLayer extends Layer {
       finalConfig.tips.fontSize = 24;
     }
     if (!finalConfig.tips.color) {
-      finalConfig.tips.color = color(255, 255, 255);
+      finalConfig.tips.color = new Color(255, 255, 255);
     }
   }
 
@@ -384,8 +416,8 @@ export class LoaderLayer extends Layer {
 
     loaderLayer._addToScene();
 
-    if (cc.sys.isNative) {
-      cc.runtime.preload(loaderLayer._groupname, function (status) {
+    if (Sys.isNative) {
+      runtime.preload(loaderLayer._groupname, function (status) {
         loaderLayer._preload_native(status);
       });
     } else {
@@ -410,10 +442,16 @@ export class LoaderLayer extends Layer {
       logo: {
         res: null,
         position: null,
-        action: cc.sequence(
-          cc.spawn(new cc.MoveBy(0.4, new Point(0, 40)).easing(cc.easeIn(0.5)), new cc.ScaleTo(0.4, 0.95, 1.05).easing(cc.easeIn(0.5))),
-          cc.delayTime(0.2),
-          cc.spawn(new cc.MoveBy(0.4, new Point(0, -40)).easing(cc.easeOut(0.5)), new cc.ScaleTo(0.4, 1.05, 0.95).easing(cc.easeOut(0.5)))
+        action: new Sequence(
+          new Spawn(
+            new MoveBy(0.4, new Point(0, 40)).easing(easeIn(0.5)),
+            new ScaleTo(0.4, 0.95, 1.05).easing(EaseIn(0.5))
+          ),
+          DelayTime.create(0.2),
+          new Spawn(
+            new MoveBy(0.4, new Point(0, -40)).easing(easeOut(0.5)),
+            new ScaleTo(0.4, 1.05, 0.95).easing(easeOut(0.5))
+          )
         ).repeatForever()
       },
       title: {
@@ -431,7 +469,7 @@ export class LoaderLayer extends Layer {
       },
       tips: {
         fontSize: 24,
-        color: color(255, 255, 255),
+        color: new Color(255, 255, 255),
         position: null,
         tipsProgress: function (status, loaderLayer) {
           if (loaderLayer.tipsLabel) {
