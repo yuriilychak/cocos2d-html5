@@ -26,6 +26,7 @@
         "src/TileMapTest/TileMapTest.js",
         "src/TransitionsTest/TransitionsTest.js",
         "src/DrawPrimitivesTest/DrawPrimitivesTest.js",
+        "src/ParticleTest/ParticleExamples.js",
         "src/ParticleTest/ParticleTest.js",
         "src/ProgressActionsTest/ProgressActionsTest.js",
         "src/LayerTest/LayerTest.js",

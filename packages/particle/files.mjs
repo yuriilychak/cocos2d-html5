@@ -4,7 +4,6 @@ export default [
   'CCParticleSystem.js',
   'CCParticleSystemCanvasRenderCmd.js',
   'CCParticleSystemWebGLRenderCmd.js',
-  'CCParticleExamples.js',
   'CCParticleBatchNode.js',
   'CCParticleBatchNodeCanvasRenderCmd.js',
   'CCParticleBatchNodeWebGLRenderCmd.js'
