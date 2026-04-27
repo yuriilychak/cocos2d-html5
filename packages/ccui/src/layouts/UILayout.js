@@ -95,14 +95,14 @@ ccui.Layout = class Layout extends ccui.Widget {
 
         this._backGroundImageCapInsets = new cc.Rect(0, 0, 0, 0);
 
-        this._color = cc.color(255, 255, 255, 255);
-        this._startColor = cc.color(255, 255, 255, 255);
-        this._endColor = cc.color(255, 255, 255, 255);
+        this._color = new cc.Color(255, 255, 255, 255);
+        this._startColor = new cc.Color(255, 255, 255, 255);
+        this._endColor = new cc.Color(255, 255, 255, 255);
         this._alongVector = new cc.Point(0, -1);
         this._backGroundImageTextureSize = new cc.Size(0, 0);
 
         this._clippingRect = new cc.Rect(0, 0, 0, 0);
-        this._backGroundImageColor = cc.color(255, 255, 255, 255);
+        this._backGroundImageColor = new cc.Color(255, 255, 255, 255);
     }
 
     get clippingEnabled() { return this.isClippingEnabled(); }
@@ -429,7 +429,7 @@ ccui.Layout = class Layout extends ccui.Widget {
             rect[1] = new cc.Point(size.width, 0);
             rect[2] = new cc.Point(size.width, size.height);
             rect[3] = new cc.Point(0, size.height);
-            var green = cc.color.GREEN;
+            var green = cc.Color.GREEN;
             this._clippingStencil.clear();
             this._clippingStencil.setLocalBB && this._clippingStencil.setLocalBB(0, 0, size.width, size.height);
             this._clippingStencil.drawPoly(rect, green, 0, green);
@@ -665,7 +665,7 @@ ccui.Layout = class Layout extends ccui.Widget {
                 this.addProtectedChild(this._colorRender, ccui.Layout.BACKGROUND_RENDERER_ZORDER, -1);
                 break;
             case ccui.Layout.BG_COLOR_GRADIENT:
-                this._gradientRender = new cc.LayerGradient(cc.color(255, 0, 0, 255), cc.color(0, 255, 0, 255));
+                this._gradientRender = new cc.LayerGradient(new cc.Color(255, 0, 0, 255), new cc.Color(0, 255, 0, 255));
                 this._gradientRender.setContentSize(this._contentSize);
                 this._gradientRender.setOpacity(this._opacity);
                 this._gradientRender.setStartColor(this._startColor);
@@ -719,7 +719,7 @@ ccui.Layout = class Layout extends ccui.Widget {
      */
     getBackGroundColor() {
         var tmpColor = this._color;
-        return cc.color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
+        return new cc.Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
     }
 
     /**
@@ -728,7 +728,7 @@ ccui.Layout = class Layout extends ccui.Widget {
      */
     getBackGroundStartColor() {
         var tmpColor = this._startColor;
-        return cc.color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
+        return new cc.Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
     }
 
     /**
@@ -737,7 +737,7 @@ ccui.Layout = class Layout extends ccui.Widget {
      */
     getBackGroundEndColor() {
         var tmpColor = this._endColor;
-        return cc.color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
+        return new cc.Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
     }
 
     /**
@@ -815,7 +815,7 @@ ccui.Layout = class Layout extends ccui.Widget {
      */
     getBackGroundImageColor() {
         var color = this._backGroundImageColor;
-        return cc.color(color.r, color.g, color.b, color.a);
+        return new cc.Color(color.r, color.g, color.b, color.a);
     }
 
     /**

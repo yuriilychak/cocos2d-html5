@@ -403,7 +403,7 @@ ccui.PageView = class PageView extends ccui.ListView {
             this._indicator = new ccui.PageViewIndicator();
             this._indicator.setDirection(this.getDirection());
             this.addProtectedChild(this._indicator, 10000);
-            this.setIndicatorSelectedIndexColor(cc.color(100, 100, 255));
+            this.setIndicatorSelectedIndexColor(new cc.Color(100, 100, 255));
             this._refreshIndicatorPosition();
         }
     }

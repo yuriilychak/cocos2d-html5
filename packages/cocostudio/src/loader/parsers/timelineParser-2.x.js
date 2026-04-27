@@ -1354,7 +1354,7 @@
         var g = json["G"] != null ? json["G"] : 255;
         var b = json["B"] != null ? json["B"] : 255;
         var a = json["A"] != null ? json["A"] : 255;
-        return cc.color(r, g, b, a);
+        return new cc.Color(r, g, b, a);
     };
 
     var setContentSize = function (node, size) {

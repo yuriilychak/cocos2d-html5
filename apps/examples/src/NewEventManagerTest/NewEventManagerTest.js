@@ -29,7 +29,7 @@ var eventDispatcherSceneIdx = -1;
 
 var EventDispatcherTestDemo = class EventDispatcherTestDemo extends BaseTestLayer {
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(160,32,32,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(160,32,32,255));
     }
 
     title() {
@@ -210,7 +210,7 @@ var TouchableSprite = class TouchableSprite extends cc.Sprite {
                 var rect = new cc.Rect(0, 0, s.width, s.height);
 
                 if (cc.Rect.containsPoint(rect, locationInNode)) {
-                    selfPointer.setColor(cc.color.RED);
+                    selfPointer.setColor(cc.Color.RED);
                     return true;
                 }
                 return false;
@@ -219,7 +219,7 @@ var TouchableSprite = class TouchableSprite extends cc.Sprite {
                 //this.setPosition(this.getPosition() + touch.getDelta());
             },
             onTouchEnded: function (touch, event) {
-                selfPointer.setColor(cc.color.WHITE);
+                selfPointer.setColor(cc.Color.WHITE);
                 if(selfPointer._removeListenerOnTouchEnded) {
                     cc.eventManager.removeListener(selfPointer._listener);
                     selfPointer._listener = null;
@@ -321,13 +321,13 @@ var RemoveListenerWhenDispatching = class RemoveListenerWhenDispatching extends 
                 var rect = new cc.Rect(0, 0, s.width, s.height);
 
                 if (cc.Rect.containsPoint(rect, locationInNode)) {
-                    sprite1.setColor(cc.color.RED);
+                    sprite1.setColor(cc.Color.RED);
                     return true;
                 }
                 return false;
             },
             onTouchEnded: function (touch, event) {
-                sprite1.setColor(cc.color.WHITE);
+                sprite1.setColor(cc.Color.WHITE);
             }
         });
         this.setUserObject(listener1);
@@ -1163,7 +1163,7 @@ var PauseResumeTargetTest = class PauseResumeTargetTest extends EventDispatcherT
         var popup = new cc.MenuItemFont("Popup", function(sender){
             sprite3.getListener().setEnabled(false);
             cc.eventManager.pauseTarget(_this, true);
-            var colorLayer = new cc.LayerColor(cc.color(0, 0, 255, 100));
+            var colorLayer = new cc.LayerColor(new cc.Color(0, 0, 255, 100));
             _this.addChild(colorLayer, 999); //set colorLayer to top
 
             // Add the button
@@ -1171,11 +1171,11 @@ var PauseResumeTargetTest = class PauseResumeTargetTest extends EventDispatcherT
             var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
 
             var titleButton = new cc.LabelTTF("Close Dialog", "Marker Felt", 26);
-            titleButton.color = cc.color(159, 168, 176);
+            titleButton.color = new cc.Color(159, 168, 176);
 
             var controlButton = new cc.ControlButton(titleButton, backgroundButton);
             controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-            controlButton.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+            controlButton.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
             controlButton.anchorX = 0.5;
             controlButton.anchorY = 1;

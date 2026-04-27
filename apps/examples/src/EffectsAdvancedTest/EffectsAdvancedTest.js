@@ -65,7 +65,7 @@ var EffectAdvanceTextLayer = class EffectAdvanceTextLayer extends cc.Layer {
         super.onEnter();
 
         // back gradient
-        this.rootNode = new cc.LayerGradient(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
+        this.rootNode = new cc.LayerGradient(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 	    var nodeGrid = new cc.NodeGrid();
 	    nodeGrid.addChild(this.rootNode);
         this.addChild(nodeGrid, 0, EffectsAdvancedTest.TAG_BACKGROUND);
@@ -341,7 +341,7 @@ var Issue631 = class Issue631 extends EffectAdvanceTextLayer {
         this.removeChild(bg, true);
 
         // background
-        var layer = new cc.LayerColor(cc.color(255, 0, 0, 255));
+        var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
         this.addChild(layer, -10);
         var sprite = new cc.Sprite(s_pathGrossini);
         sprite.x = 50;
@@ -349,7 +349,7 @@ var Issue631 = class Issue631 extends EffectAdvanceTextLayer {
         layer.addChild(sprite, 10);
 
         // foreground
-        var layer2 = new cc.LayerColor(cc.color(0, 255, 0, 255));
+        var layer2 = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
         var fog = new cc.Sprite(s_pathFog);
 
         fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);

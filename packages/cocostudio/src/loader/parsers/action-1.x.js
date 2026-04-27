@@ -156,7 +156,7 @@
                 var red   = options["red"];
                 var green = options["green"];
                 var blue  = options["blue"];
-                frame.setColor(cc.color(red, green, blue));
+                frame.setColor(new cc.Color(red, green, blue));
                 var alphaFrame = new ccs.AlphaFrame();
                 var alpha = options["alpha"];
                 alphaFrame.setAlpha(alpha);

@@ -232,7 +232,7 @@ cc.ControlPotentiometer = class ControlPotentiometer extends cc.Control {
 
     potentiometerBegan(location) {
         this.setSelected(true);
-        this.getThumbSprite().setColor(cc.color.GRAY);
+        this.getThumbSprite().setColor(cc.Color.GRAY);
     }
 
     potentiometerMoved(location) {
@@ -252,7 +252,7 @@ cc.ControlPotentiometer = class ControlPotentiometer extends cc.Control {
     }
 
     potentiometerEnded(location) {
-        this.getThumbSprite().setColor(cc.color.WHITE);
+        this.getThumbSprite().setColor(cc.Color.WHITE);
         this.setSelected(false);
     }
     setThumbSprite(sprite) {

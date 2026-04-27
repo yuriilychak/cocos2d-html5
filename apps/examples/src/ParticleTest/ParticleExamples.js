@@ -88,10 +88,10 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.color(194,64,31,255));
-            this.setStartColorVar(cc.color(0,0,0,0));
-            this.setEndColor(cc.color(0,0,0,255));
-            this.setEndColorVar(cc.color(0,0,0,0));
+            this.setStartColor(new cc.Color(194,64,31,255));
+            this.setStartColorVar(new cc.Color(0,0,0,0));
+            this.setEndColor(new cc.Color(0,0,0,255));
+            this.setEndColorVar(new cc.Color(0,0,0,0));
 
             // additive
             this.setBlendAdditive(true);
@@ -158,10 +158,10 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.color(128,128,128,255));
-            this.setStartColorVar(cc.color(128,128,128,255));
-            this.setEndColor(cc.color(26,26,26,51));
-            this.setEndColorVar(cc.color(26,26,26,51));
+            this.setStartColor(new cc.Color(128,128,128,255));
+            this.setStartColorVar(new cc.Color(128,128,128,255));
+            this.setEndColor(new cc.Color(26,26,26,51));
+            this.setEndColorVar(new cc.Color(26,26,26,51));
 
             // size, in pixels
             this.setStartSize(8.0);
@@ -242,10 +242,10 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.color(194, 64, 31, 255));
-            this.setStartColorVar(cc.color(0, 0, 0, 0));
-            this.setEndColor(cc.color(0, 0, 0, 255));
-            this.setEndColorVar(cc.color(0, 0, 0, 0));
+            this.setStartColor(new cc.Color(194, 64, 31, 255));
+            this.setStartColorVar(new cc.Color(0, 0, 0, 0));
+            this.setEndColor(new cc.Color(0, 0, 0, 255));
+            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
 
             return true;
         }
@@ -321,10 +321,10 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.color(31, 64, 194, 255));
-            this.setStartColorVar(cc.color(0, 0, 0, 0));
-            this.setEndColor(cc.color(0, 0, 0, 255));
-            this.setEndColorVar(cc.color(0, 0, 0, 0));
+            this.setStartColor(new cc.Color(31, 64, 194, 255));
+            this.setStartColorVar(new cc.Color(0, 0, 0, 0));
+            this.setEndColor(new cc.Color(0, 0, 0, 255));
+            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -400,10 +400,10 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.color(128, 128, 128, 255));
-            this.setStartColorVar(cc.color(128, 128, 128, 128));
-            this.setEndColor(cc.color(0, 0, 0, 255));
-            this.setEndColorVar(cc.color(0, 0, 0, 0));
+            this.setStartColor(new cc.Color(128, 128, 128, 255));
+            this.setStartColorVar(new cc.Color(128, 128, 128, 128));
+            this.setEndColor(new cc.Color(0, 0, 0, 255));
+            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -481,10 +481,10 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.color(51, 102, 179));
-            this.setStartColorVar(cc.color(0, 0, 51, 26));
-            this.setEndColor(cc.color(0, 0, 0, 255));
-            this.setEndColorVar(cc.color(0, 0, 0, 0));
+            this.setStartColor(new cc.Color(51, 102, 179));
+            this.setStartColorVar(new cc.Color(0, 0, 51, 26));
+            this.setEndColor(new cc.Color(0, 0, 0, 255));
+            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -562,10 +562,10 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.color(128,128,128,255));
-            this.setStartColorVar(cc.color(128,128,128,0));
-            this.setEndColor(cc.color(128,128,128,255));
-            this.setEndColorVar(cc.color(128,128,128,0));
+            this.setStartColor(new cc.Color(128,128,128,255));
+            this.setStartColorVar(new cc.Color(128,128,128,0));
+            this.setEndColor(new cc.Color(128,128,128,255));
+            this.setEndColorVar(new cc.Color(128,128,128,0));
 
             // additive
             this.setBlendAdditive(false);
@@ -641,10 +641,10 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getDuration());
 
             // color of particles
-            this.setStartColor(cc.color(179, 26, 51, 255));
-            this.setStartColorVar(cc.color(128, 128, 128, 0));
-            this.setEndColor(cc.color(128, 128, 128, 0));
-            this.setEndColorVar(cc.color(128, 128, 128, 0));
+            this.setStartColor(new cc.Color(179, 26, 51, 255));
+            this.setStartColorVar(new cc.Color(128, 128, 128, 0));
+            this.setEndColor(new cc.Color(128, 128, 128, 0));
+            this.setEndColorVar(new cc.Color(128, 128, 128, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -718,10 +718,10 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.color(204, 204, 204, 255));
-            this.setStartColorVar(cc.color(5, 5, 5, 0));
-            this.setEndColor(cc.color(0, 0, 0, 255));
-            this.setEndColorVar(cc.color(0, 0, 0, 0));
+            this.setStartColor(new cc.Color(204, 204, 204, 255));
+            this.setStartColorVar(new cc.Color(5, 5, 5, 0));
+            this.setEndColor(new cc.Color(0, 0, 0, 255));
+            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -799,10 +799,10 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
             this.setEmissionRate(10);
 
             // color of particles
-            this.setStartColor(cc.color(255, 255, 255, 255));
-            this.setStartColorVar(cc.color(0, 0, 0, 0));
-            this.setEndColor(cc.color(255, 255, 255, 0));
-            this.setEndColorVar(cc.color(0, 0, 0, 0));
+            this.setStartColor(new cc.Color(255, 255, 255, 255));
+            this.setStartColorVar(new cc.Color(0, 0, 0, 0));
+            this.setEndColor(new cc.Color(255, 255, 255, 0));
+            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -881,10 +881,10 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
             this.setEmissionRate(20);
 
             // color of particles
-            this.setStartColor(cc.color(179, 204, 255, 255));
-            this.setStartColorVar(cc.color(0, 0, 0, 0));
-            this.setEndColor(cc.color(179, 204, 255, 128));
-            this.setEndColorVar(cc.color(0, 0, 0, 0));
+            this.setStartColor(new cc.Color(179, 204, 255, 255));
+            this.setStartColorVar(new cc.Color(0, 0, 0, 0));
+            this.setEndColor(new cc.Color(179, 204, 255, 128));
+            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);

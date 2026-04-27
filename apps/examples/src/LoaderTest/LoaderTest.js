@@ -31,7 +31,7 @@
 var LoaderTestLayer = class LoaderTestLayer extends BaseTestLayer {
 
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
         var self = this;
 
 
@@ -117,10 +117,10 @@ var LoaderCycleLayer = class LoaderCycleLayer extends BaseTestLayer {
 
         var cb = function(num){
             if(num === 1) {
-                resultTTF.setColor(cc.color.GREEN);
+                resultTTF.setColor(cc.Color.GREEN);
                 resultTTF.setString("result: success");
             } else {
-                resultTTF.setColor(cc.color.RED);
+                resultTTF.setColor(cc.Color.RED);
                 resultTTF.setString("result: failed");
             }
         };

@@ -53,7 +53,7 @@ cc.ControlColourPicker = class ControlColourPicker extends cc.Control {
 
         // Update the value
         var rgb = cc.ControlUtils.RGBfromHSV(this._hsv);
-        super.setColor(cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
+        super.setColor(new cc.Color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
 
         // Send Control callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
@@ -67,7 +67,7 @@ cc.ControlColourPicker = class ControlColourPicker extends cc.Control {
 
         // Update the value
         var rgb = cc.ControlUtils.RGBfromHSV(this._hsv);
-        super.setColor(cc.color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
+        super.setColor(new cc.Color(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
 
         // Send Control callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);

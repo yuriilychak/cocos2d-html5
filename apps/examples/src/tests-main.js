@@ -91,7 +91,7 @@ var curPos = new cc.Point(0,0);
 var TestController = class TestController extends cc.LayerGradient {
 
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(0x46,0x82,0xB4,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(0x46,0x82,0xB4,255));
 
 
         this._itemMenu = null;

@@ -42,8 +42,8 @@ var BaseTestLayer = class BaseTestLayer extends cc.LayerGradient {
     constructor(colorA, colorB ) {
 
         // default gradient colors
-        var a = cc.color(98,99,117,255);
-        var b = cc.color(0,0,0,255);
+        var a = new cc.Color(98,99,117,255);
+        var b = new cc.Color(0,0,0,255);
 
         if( arguments.length >= 1 )
             a = colorA;
@@ -52,8 +52,8 @@ var BaseTestLayer = class BaseTestLayer extends cc.LayerGradient {
 
         // for automation, no gradient. helps for grabbing the screen if needed
         if( autoTestEnabled ) {
-            a = cc.color(0,0,0,255);
-            b = cc.color(0,0,0,255);
+            a = new cc.Color(0,0,0,255);
+            b = new cc.Color(0,0,0,255);
         }
 
         super( a, b );

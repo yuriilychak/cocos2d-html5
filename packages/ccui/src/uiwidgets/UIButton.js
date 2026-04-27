@@ -115,7 +115,7 @@ ccui.Button = class Button extends ccui.Widget {
         if(!this._titleRenderer) {
             this._titleRenderer = new cc.LabelTTF("");
             this._titleRenderer.setAnchorPoint(0.5, 0.5);
-            this._titleColor = cc.color.WHITE;
+            this._titleColor = cc.Color.WHITE;
             this._titleRenderer.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
             this.addProtectedChild(this._titleRenderer, ccui.Button.TITLE_RENDERER_ZORDER, -1);
         }
@@ -496,7 +496,7 @@ ccui.Button = class Button extends ccui.Widget {
             this._buttonScale9Renderer.setScale(1.0);
 
             if (this._scale9Enabled) {
-                this._buttonScale9Renderer.setColor(cc.color.WHITE);
+                this._buttonScale9Renderer.setColor(cc.Color.WHITE);
             }
 
             if(this._titleRenderer) {
@@ -658,7 +658,7 @@ ccui.Button = class Button extends ccui.Widget {
         if (this._titleRenderer) {
             return this._titleRenderer._getFillStyle();
         }
-        return cc.color.WHITE;
+        return cc.Color.WHITE;
     }
 
     /**

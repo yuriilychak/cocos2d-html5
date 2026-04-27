@@ -324,7 +324,7 @@ ccui.ScrollViewBar = class ScrollViewBar extends ccui.ProtectedNode {
 /**
  * @ignore
  */
-ccui.ScrollViewBar.DEFAULT_COLOR = cc.color(52, 65, 87);
+ccui.ScrollViewBar.DEFAULT_COLOR = new cc.Color(52, 65, 87);
 ccui.ScrollViewBar.DEFAULT_MARGIN = 20;
 ccui.ScrollViewBar.DEFAULT_AUTO_HIDE_TIME = 0.2;
 ccui.ScrollViewBar.DEFAULT_SCROLLBAR_OPACITY = 0.4;

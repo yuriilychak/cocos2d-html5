@@ -181,12 +181,12 @@ var TransitionBase = class TransitionBase extends BaseTestLayer {
 
         var title = new cc.LabelTTF(this.title(), "Thonburi", 32);
         this.addChild(title);
-        title.color = cc.color(255, 32, 32);
+        title.color = new cc.Color(255, 32, 32);
         title.x = x / 2;
         title.y = y - 100;
 
         var label = new cc.LabelTTF(this.sceneName, "Marker Felt", 38);
-        label.color = cc.color(16, 16, 255);
+        label.color = new cc.Color(16, 16, 255);
         label.x = x / 2;
         label.y = y / 2;
         this.addChild(label);
@@ -264,7 +264,7 @@ var TransitionBase = class TransitionBase extends BaseTestLayer {
 };
 var TestLayer1 = class TestLayer1 extends TransitionBase {
     constructor() {
-        super(s_back1, "Scene 1", cc.color(0,0,0,255), cc.color(160,99,117,255));
+        super(s_back1, "Scene 1", new cc.Color(0,0,0,255), new cc.Color(160,99,117,255));
     }
 
     createNextScene() {
@@ -275,7 +275,7 @@ var TestLayer1 = class TestLayer1 extends TransitionBase {
 
 var TestLayer2 = class TestLayer2 extends TransitionBase {
     constructor() {
-        super(s_back2, "Scene 2", cc.color(0,0,0,255), cc.color(99,160,117,255));
+        super(s_back2, "Scene 2", new cc.Color(0,0,0,255), new cc.Color(99,160,117,255));
     }
 
     createNextScene() {
@@ -292,7 +292,7 @@ var FadeTransition = function (t, s) {
 };
 
 var FadeWhiteTransition = function (t, s) {
-    return new cc.TransitionFade(t, s, cc.color(255, 255, 255));
+    return new cc.TransitionFade(t, s, new cc.Color(255, 255, 255));
 };
 
 var FlipXLeftOver = function (t, s) {

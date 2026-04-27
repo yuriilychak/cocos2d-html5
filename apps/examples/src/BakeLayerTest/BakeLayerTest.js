@@ -261,7 +261,7 @@ var BakeLayerColorTest = class BakeLayerColorTest extends BakeLayerBaseTest {
         this.addChild(rootLayer);
 
 
-        var bakeLayer = new cc.LayerGradient(cc.color(128,0, 128, 255), cc.color(0, 0, 128, 255));
+        var bakeLayer = new cc.LayerGradient(new cc.Color(128,0, 128, 255), new cc.Color(0, 0, 128, 255));
         bakeLayer.setPosition(60, 80);
         bakeLayer.setContentSize(700, 300);
         bakeLayer.setRotation(30);

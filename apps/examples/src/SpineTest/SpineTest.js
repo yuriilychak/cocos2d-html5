@@ -86,7 +86,7 @@ var customSkeletonAnimation = class customSkeletonAnimation extends sp.SkeletonA
 
 var SpineTestLayerNormal = class SpineTestLayerNormal extends SpineTestLayer {
     constructor(idx) {
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
         this._spineboy = null;
 
@@ -223,7 +223,7 @@ var SpineTestLayerNormal = class SpineTestLayerNormal extends SpineTestLayer {
 
 var SpineTestLayerFFD = class SpineTestLayerFFD extends SpineTestLayer {
     constructor(){
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
         var skeletonNode = new sp.SkeletonAnimation("spine/goblins-pro.json", "spine/goblins.atlas", 1.5);
         skeletonNode.setAnimation(0, "walk", true);
@@ -263,7 +263,7 @@ var SpineTestLayerFFD = class SpineTestLayerFFD extends SpineTestLayer {
 
 var SpineTestPerformanceLayer = class SpineTestPerformanceLayer extends SpineTestLayer {
     constructor(){
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
         var self = this;
         var listener = cc.EventListener.create({

@@ -348,7 +348,7 @@ var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotifi
         // create a insert text sprite and do some action
         var label = new cc.LabelTTF(text, TEXT_INPUT_FONT_NAME, TEXT_INPUT_FONT_SIZE);
         this.addChild(label);
-        var color = cc.color(226, 121, 7);
+        var color = new cc.Color(226, 121, 7);
         label.color = color;
 
         // move the sprite from top to position

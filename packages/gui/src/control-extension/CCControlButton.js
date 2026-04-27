@@ -72,7 +72,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
         this._preferredSize = new cc.Size(0, 0);
         this._labelAnchorPoint = new cc.Point(0, 0);
         this._currentTitle = "";
-        this._currentTitleColor = cc.color.WHITE;
+        this._currentTitleColor = cc.Color.WHITE;
         this._titleDispatchTable = {};
         this._titleColorDispatchTable = {};
         this._titleLabelDispatchTable = {};
@@ -336,7 +336,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
 
     getColor() {
         var locRealColor = this._realColor;
-        return cc.color(locRealColor.r, locRealColor.g, locRealColor.b, locRealColor.a);
+        return new cc.Color(locRealColor.r, locRealColor.g, locRealColor.b, locRealColor.a);
     }
 
 
@@ -483,7 +483,7 @@ cc.ControlButton = class ControlButton extends cc.Control {
         colorObject = this._titleColorDispatchTable[cc.CONTROL_STATE_NORMAL];
         if (colorObject)
             return colorObject;
-        return cc.color.WHITE;
+        return cc.Color.WHITE;
     }
 
     /**

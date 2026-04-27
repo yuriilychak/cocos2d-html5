@@ -133,7 +133,7 @@ ccs.ActionNode = class ActionNode extends cc.NewClass {
                 actionFrame.frameIndex = frameIndex;
                 actionFrame.setEasingType(frameTweenType);
                 actionFrame.setEasingParameter(frameTweenParameter);
-                actionFrame.setColor(cc.color(colorR, colorG, colorB));
+                actionFrame.setColor(new cc.Color(colorR, colorG, colorB));
                 actionArray = this._frameArray[ccs.FRAME_TYPE_TINT];
                 actionArray.push(actionFrame);
             }

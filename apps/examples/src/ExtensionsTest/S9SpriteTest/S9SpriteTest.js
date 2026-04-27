@@ -36,7 +36,7 @@ var sceneIdx = -1;
 var S9SpriteTestDemo = class S9SpriteTestDemo extends cc.LayerGradient {
 
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
 
         this._title = "";
@@ -656,7 +656,7 @@ var S9SpriteColorOpacityTest = class S9SpriteColorOpacityTest extends S9SpriteTe
         this.setCascadeColorEnabled(true);
         this.setCascadeOpacityEnabled(true);
         this.setOpacity(128);
-        this.setColor(cc.color(255, 0, 0));
+        this.setColor(new cc.Color(255, 0, 0));
 
         var blocks = new cc.Scale9Sprite('blocks9.png');
         blocks.x = winSize.width / 2 - 100;
@@ -681,7 +681,7 @@ var S9SpriteOpacityWithFadeActionsTest = class S9SpriteOpacityWithFadeActionsTes
 
         this._title = "Test opacity cascade for Scale9Sprite with fade actions\n(fade to opacity 144, then fadeOut, then fadeIn)";
 
-        var colorLayer = new cc.LayerColor(cc.color(144,144,144));
+        var colorLayer = new cc.LayerColor(new cc.Color(144,144,144));
         colorLayer.setContentSize(winSize.width / 2, winSize.height / 2);
         colorLayer.x = winSize.width / 4;
         colorLayer.y = winSize.height / 4;

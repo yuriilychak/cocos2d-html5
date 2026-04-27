@@ -108,7 +108,7 @@
             node.setOpacity(alpha);
         }
         if (red != 255 || green != 255 || blue != 255) {
-            node.setColor(cc.color(red, green, blue));
+            node.setColor(new cc.Color(red, green, blue));
         }
 
 

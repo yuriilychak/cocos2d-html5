@@ -213,7 +213,7 @@
         var colorR = options["colorR"];
         var colorG = options["colorG"];
         var colorB = options["colorB"];
-        widget.setColor(cc.color((colorR == null) ? 255 : colorR, (colorG == null) ? 255 : colorG, (colorB == null) ? 255 : colorB));
+        widget.setColor(new cc.Color((colorR == null) ? 255 : colorR, (colorG == null) ? 255 : colorG, (colorB == null) ? 255 : colorB));
 
         widget.setFlippedX(options["flipX"]);
         widget.setFlippedY(options["flipY"]);
@@ -268,8 +268,8 @@
 
         var colorType = options["colorType"] || 0;
         widget.setBackGroundColorType(colorType/*ui.LayoutBackGroundColorType(colorType)*/);
-        widget.setBackGroundColor(cc.color(scr, scg, scb), cc.color(ecr, ecg, ecb));
-        widget.setBackGroundColor(cc.color(cr, cg, cb));
+        widget.setBackGroundColor(new cc.Color(scr, scg, scb), new cc.Color(ecr, ecg, ecb));
+        widget.setBackGroundColor(new cc.Color(cr, cg, cb));
         widget.setBackGroundColorOpacity(co);
 
 
@@ -334,7 +334,7 @@
             var cgi = (cg !== null) ? options["textColorG"] : 255;
             var cbi = (cb !== null) ? options["textColorB"] : 255;
 
-            button.setTitleColor(cc.color(cri, cgi, cbi));
+            button.setTitleColor(new cc.Color(cri, cgi, cbi));
             var fs = options["fontSize"];
             if (fs != null)
                 button.setTitleFontSize(options["fontSize"]);
@@ -687,7 +687,7 @@
         var r = isNaN(options["colorR"]) ? 255 : options["colorR"];
         var g = isNaN(options["colorG"]) ? 255 : options["colorG"];
         var b = isNaN(options["colorB"]) ? 255 : options["colorB"];
-        widget.setTextColor(cc.color(r, g, b));
+        widget.setTextColor(new cc.Color(r, g, b));
     };
 
     parser.parsers = {

@@ -230,7 +230,7 @@ sp.Skeleton.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
             //hack for sprite
             selSprite._renderCmd._displayedOpacity = 0 | (opacity * slot.color.a);
             var r = 0 | (color.r * slot.color.r), g = 0 | (color.g * slot.color.g), b = 0 | (color.b * slot.color.b);
-            selSprite.setColor(cc.color(r, g, b));
+            selSprite.setColor(new cc.Color(r, g, b));
             selSprite._renderCmd._updateColor();
         } else if (attachment instanceof spine.MeshAttachment) {
             // Can not render mesh

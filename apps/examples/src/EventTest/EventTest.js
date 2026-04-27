@@ -124,7 +124,7 @@ var TouchOneByOneTest = class TouchOneByOneTest extends EventTest {
             sprite.x = 0;
             sprite.y = 0;
             sprite.scale = 1;
-            sprite.color = cc.color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
+            sprite.color = new cc.Color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
             this.unused_sprites.push(sprite);
         }
     }
@@ -213,7 +213,7 @@ var TouchAllAtOnce = class TouchAllAtOnce extends EventTest {
             sprite.x = 0;
             sprite.y = 0;
             sprite.scale = 1;
-            sprite.color = cc.color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
+            sprite.color = new cc.Color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
             this.unused_sprites.push(sprite);
         }
     }
@@ -374,7 +374,7 @@ var MouseTest = class MouseTest extends EventTest {
         sprite.x = 0;
         sprite.y = 0;
         sprite.scale = 1;
-        sprite.color = cc.color(Math.random()*200+55, Math.random()*200+55, Math.random()*200+55);
+        sprite.color = new cc.Color(Math.random()*200+55, Math.random()*200+55, Math.random()*200+55);
 
         if( 'mouse' in cc.sys.capabilities ) {
             cc.eventManager.addListener({

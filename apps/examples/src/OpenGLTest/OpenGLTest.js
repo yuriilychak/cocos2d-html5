@@ -72,7 +72,7 @@ cc.GLNode = cc.GLNode || class GLNode extends cc.Node {
 var OpenGLTestLayer = class OpenGLTestLayer extends BaseTestLayer {
 
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );
 
 
         this._grossini = null;
@@ -134,10 +134,10 @@ var GLReadPixelsTest = class GLReadPixelsTest extends OpenGLTestLayer {
             var x = winSize.width;
             var y = winSize.height;
 
-            var blue = new cc.LayerColor(cc.color(0, 0, 255, 255));
-            var red = new cc.LayerColor(cc.color(255, 0, 0, 255));
-            var green = new cc.LayerColor(cc.color(0, 255, 0, 255));
-            var white = new cc.LayerColor(cc.color(255, 255, 255, 255));
+            var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
+            var red = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
+            var green = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
+            var white = new cc.LayerColor(new cc.Color(255, 255, 255, 255));
 
             blue.scale = 0.5;
             blue.x = -x / 4;
@@ -219,7 +219,7 @@ var GLClearTest = class GLClearTest extends OpenGLTestLayer {
 
         if( 'opengl' in cc.sys.capabilities ) {
 
-            var blue = new cc.LayerColor(cc.color(0, 0, 255, 255));
+            var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
             this.addChild( blue, 1 );
 
             var node = new cc.GLNode();

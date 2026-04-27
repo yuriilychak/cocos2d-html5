@@ -45,7 +45,7 @@ var SceneTestLayer1 = class SceneTestLayer1 extends cc.Layer {
             cc.log("quit!");
         }, this);
         var item4 = new cc.MenuItemFont("setNotificationNode", function () {
-            var layerTemp = new cc.LayerColor(cc.color(0, 255, 255, 120));
+            var layerTemp = new cc.LayerColor(new cc.Color(0, 255, 255, 120));
             var sprite = new cc.Sprite(s_pathGrossini);
             sprite.setPosition(new cc.Point(winSize.width/2,winSize.height/2));
             layerTemp.addChild(sprite);
@@ -183,7 +183,7 @@ var SceneTestLayer3 = class SceneTestLayer3 extends cc.LayerColor {
 
         //----start0----Scene3-ctor
         super();
-        this.init( cc.color(0,128,255,255) );
+        this.init( new cc.Color(0,128,255,255) );
 
         var label = new cc.LabelTTF("Touch to popScene", "Arial", 28);
         this.addChild(label);

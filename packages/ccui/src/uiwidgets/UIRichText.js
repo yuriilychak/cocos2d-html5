@@ -38,7 +38,7 @@ ccui.RichElement = class RichElement extends cc.NewClass {
         this._opacity = 0;
         this._type = 0;
         this._tag = tag || 0;
-        this._color = cc.color(255, 255, 255, 255);
+        this._color = new cc.Color(255, 255, 255, 255);
         if (color) {
             this._color.r = color.r;
             this._color.g = color.g;
@@ -64,7 +64,7 @@ ccui.RichElementText = class RichElementText extends ccui.RichElement {
      * Usage Example using FontDefinition:
      *
      * var rtEl  = new ccui.RichElementText("tag", new cc.FontDefinition({
-     *                              fillStyle: cc.color.BLACK,
+     *                              fillStyle: cc.Color.BLACK,
      *                              fontName: "Arial",
      *                              fontSize: 12,
      *                              fontWeight: "bold",

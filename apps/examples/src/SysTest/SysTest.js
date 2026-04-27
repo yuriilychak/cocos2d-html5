@@ -33,7 +33,7 @@ var sysTestSceneIdx = -1;
 var SysTestBase = class SysTestBase extends BaseTestLayer {
 
     constructor() {
-        super(cc.color(0,0,0,0), cc.color(98,99,117,0));
+        super(new cc.Color(0,0,0,0), new cc.Color(98,99,117,0));
 
 
         this._title = "";
@@ -87,12 +87,12 @@ var setClearColorTest = class setClearColorTest extends SysTestBase {
     onEnter()
     {
         super.onEnter();
-        var clearColor = cc.color(255, 0, 0, 0);
+        var clearColor = new cc.Color(255, 0, 0, 0);
         director.setClearColor(clearColor);
     }
     onExit()
     {
-        director.setClearColor(cc.color(0, 0, 0, 255));
+        director.setClearColor(new cc.Color(0, 0, 0, 255));
         super.onExit();
     }
 

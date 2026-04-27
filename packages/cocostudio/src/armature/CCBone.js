@@ -245,7 +245,7 @@ ccs.Bone = class Bone extends ccs.Node {
         if (display !== null) {
             var cmd = this._renderCmd;
             display.setColor(
-                cc.color(
+                new cc.Color(
                     cmd._displayedColor.r * this._tweenData.r / 255,
                     cmd._displayedColor.g * this._tweenData.g / 255,
                     cmd._displayedColor.b * this._tweenData.b / 255));

@@ -62,7 +62,7 @@ var UIPageViewTest = class UIPageViewTest extends UIMainLayer {
                 var text = new ccui.Text();
                 text.string = "page" + (i + 1);
                 text.font = "30px 'Marker Felt'";
-                text.color = cc.color(192, 192, 192);
+                text.color = new cc.Color(192, 192, 192);
                 text.x = layoutRect.width / 2;
                 text.y = layoutRect.height / 2;
                 layout.addChild(text);
@@ -211,7 +211,7 @@ var UIPageViewCustomScrollThreshold = class UIPageViewCustomScrollThreshold exte
                 layout.addChild(imageView);
 
                 var label = new ccui.Text("page " + (i+1) , "Marker Felt", 30);
-                label.setColor(cc.color(192, 192, 192));
+                label.setColor(new cc.Color(192, 192, 192));
                 label.setPosition(new cc.Point(layout.getContentSize().width / 2.0, layout.getContentSize().height / 2.0));
                 layout.addChild(label);
 
@@ -272,7 +272,7 @@ var UIPageViewTouchPropagationTest = class UIPageViewTouchPropagationTest extend
             pageView.setAnchorPoint(new cc.Point(0.5,0.5));
             var backgroundSize = background.getContentSize();
             pageView.setPosition(new cc.Point(widgetSize.width / 2.0 ,widgetSize.height / 2.0));
-            pageView.setBackGroundColor(cc.color.GREEN);
+            pageView.setBackGroundColor(cc.Color.GREEN);
             pageView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
 
             var pageCount = 4;
@@ -316,13 +316,13 @@ var UIPageViewTouchPropagationTest = class UIPageViewTouchPropagationTest extend
 
             var propagationText = new ccui.Text("Allow Propagation", "Arial", 10);
             propagationText.setAnchorPoint(new cc.Point(0,0.5));
-            propagationText.setTextColor(cc.color.RED);
+            propagationText.setTextColor(cc.Color.RED);
             propagationText.setPosition(new cc.Point(20, pageView.getPosition().y + 50));
             this._mainNode.addChild(propagationText);
 
             var swallowTouchText = new ccui.Text("Swallow Touches", "Arial", 10);
             swallowTouchText.setAnchorPoint(new cc.Point(0,0.5));
-            swallowTouchText.setTextColor(cc.color.RED);
+            swallowTouchText.setTextColor(cc.Color.RED);
             swallowTouchText.setPosition(new cc.Point(20, pageView.getPosition().y));
             this._mainNode.addChild(swallowTouchText);
 
@@ -430,7 +430,7 @@ var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest 
             pageView.setAnchorPoint(new cc.Point(0.5,0.5));
             var backgroundSize = background.getContentSize();
             pageView.setPosition(new cc.Point(widgetSize.width / 2.0 ,widgetSize.height / 2.0));
-            pageView.setBackGroundColor(cc.color.GREEN);
+            pageView.setBackGroundColor(cc.Color.GREEN);
             pageView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
 
             var pageCount = 4;
@@ -468,7 +468,7 @@ var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest 
             button.setTitleText("Add A Page");
             button.setZoomScale(0.3);
             button.setPressedActionEnabled(true);
-            button.setTitleColor(cc.color.RED);
+            button.setTitleColor(cc.Color.RED);
             button.addClickEventListener(function(sender){
                 var outerBox = new ccui.HBox();
                 outerBox.setContentSize(new cc.Size(240.0, 130.0));
@@ -501,7 +501,7 @@ var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest 
             button2.setTitleText("Remove A Page");
             button2.setZoomScale(0.3);
             button2.setPressedActionEnabled(true);
-            button2.setTitleColor(cc.color.RED);
+            button2.setTitleColor(cc.Color.RED);
             button2.addClickEventListener(function(sender){
                 if (pageView.getPages().length > 0){
                     pageView.removePageAtIndex(pageView.getPages().length-1);
@@ -520,7 +520,7 @@ var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest 
             button3.setTitleText("Remove All Pages");
             button3.setZoomScale(0.3);
             button3.setPressedActionEnabled(true);
-            button3.setTitleColor(cc.color.RED);
+            button3.setTitleColor(cc.Color.RED);
             button3.addClickEventListener(function(sender){
                 pageView.removeAllPages();
                 self._topDisplayLabel.setString("page count = " + pageView.getPages().length);
@@ -580,7 +580,7 @@ var UIPageViewDisableTouchTest = class UIPageViewDisableTouchTest extends UIMain
                 layout.addChild(imageView);
                 var pageNumber = i+1;
                 var label = new ccui.Text("page" + pageNumber, "Marker Felt",30);
-                label.setColor(cc.color(192, 192, 192));
+                label.setColor(new cc.Color(192, 192, 192));
                 label.setPosition(new cc.Point(layout.getContentSize().width / 2, layout.getContentSize().height / 2));
                 layout.addChild(label);
 
@@ -631,7 +631,7 @@ var UIPageViewJumpToPageTest = class UIPageViewJumpToPageTest extends UIMainLaye
                 layout.addChild(imageView);
 
                 var label = new ccui.Text("page " + (i+1), "Arial", 30);
-                label.setColor(cc.color(192, 192, 192));
+                label.setColor(new cc.Color(192, 192, 192));
                 label.setPosition(new cc.Point(layout.width / 2.0, layout.height / 2.0));
                 layout.addChild(label);
 
@@ -713,7 +713,7 @@ var UIPageViewChildSizeTest = class UIPageViewChildSizeTest extends UIMainLayer 
                 var label = new ccui.Text("page " + (i + 1), "Arial", 30);
 
                 imageView.setScale9Enabled(true);
-                label.setColor(cc.color(192, 192, 192));
+                label.setColor(new cc.Color(192, 192, 192));
                 label.setAnchorPoint(new cc.Point(0,0));
                 imageView.addChild(label);
 
@@ -769,7 +769,7 @@ var UIPageViewIndicatorTest = class UIPageViewIndicatorTest extends UIMainLayer 
             pageView.setIndicatorSpaceBetweenIndexNodes(5);
             pageView.setIndicatorIndexNodesScale(0.5);
             pageView.setIndicatorIndexNodesTexture("ccs-res/cocosui/green_edit.png");
-            pageView.setIndicatorIndexNodesColor(cc.color.RED);
+            pageView.setIndicatorIndexNodesColor(cc.Color.RED);
 
             var pageCount = 4;
             for(var i = 0; i < pageCount; i++){
@@ -785,7 +785,7 @@ var UIPageViewIndicatorTest = class UIPageViewIndicatorTest extends UIMainLayer 
                 layout.addChild(imageView);
                 var pageNumber = i+1;
                 var label = new ccui.Text("page" + pageNumber, "Marker Felt",30);
-                label.setColor(cc.color(192, 192, 192));
+                label.setColor(new cc.Color(192, 192, 192));
                 label.setPosition(new cc.Point(layout.getContentSize().width / 2, layout.getContentSize().height / 2));
                 layout.addChild(label);
 

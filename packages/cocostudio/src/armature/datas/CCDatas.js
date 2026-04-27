@@ -229,7 +229,7 @@ ccs.BaseData = class BaseData extends cc.NewClass {
      * @returns {cc.Color}
      */
     getColor(){
-        return cc.color(this.r, this.g, this.b, this.a);
+        return new cc.Color(this.r, this.g, this.b, this.a);
     }
 
     /**

@@ -177,7 +177,7 @@ var ParticleDemo = class ParticleDemo extends BaseTestLayer {
     }
 
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
 
         this._emitter = null;
@@ -559,10 +559,10 @@ var DemoBigFlower = class DemoBigFlower extends ParticleDemo {
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        this._emitter.startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
+        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
+        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 80.0;
@@ -631,10 +631,10 @@ var DemoRotFlower = class DemoRotFlower extends ParticleDemo {
         this._emitter.endSpin = 0;
         this._emitter.endSpinVar = 2000;
 
-        this._emitter.startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
+        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
+        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 30.0;
@@ -831,10 +831,10 @@ var DemoModernArt = class DemoModernArt extends ParticleDemo {
         this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;
 
         // color of particles
-        this._emitter.startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
+        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
+        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 1.0;
@@ -930,7 +930,7 @@ var DemoParticleFromFile = class DemoParticleFromFile extends ParticleDemo {
     }
     onEnter() {
         super.onEnter();
-        this.setColor(cc.color(0, 0, 0));
+        this.setColor(new cc.Color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
 
@@ -967,7 +967,7 @@ var RadiusMode1 = class RadiusMode1 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.setColor(cc.color(0, 0, 0));
+        this.setColor(new cc.Color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
 
@@ -1013,10 +1013,10 @@ var RadiusMode1 = class RadiusMode1 extends ParticleDemo {
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        this._emitter.startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
+        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
+        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 32;
@@ -1039,7 +1039,7 @@ var RadiusMode2 = class RadiusMode2 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.color = cc.color(0, 0, 0);
+        this.color = new cc.Color(0, 0, 0);
         this.removeChild(this._background, true);
         this._background = null;
 
@@ -1084,10 +1084,10 @@ var RadiusMode2 = class RadiusMode2 extends ParticleDemo {
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        this._emitter.startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
+        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
+        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 32;
@@ -1110,7 +1110,7 @@ var Issue704 = class Issue704 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.color = cc.color(0, 0, 0);
+        this.color = new cc.Color(0, 0, 0);
         this.removeChild(this._background, true);
         this._background = null;
 
@@ -1156,10 +1156,10 @@ var Issue704 = class Issue704 extends ParticleDemo {
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        this._emitter.startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
+        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
+        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 16;
@@ -1193,7 +1193,7 @@ var Issue870 = class Issue870 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.setColor(cc.color(0, 0, 0));
+        this.setColor(new cc.Color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
 
@@ -1231,11 +1231,11 @@ var ParticleBatchTest = class ParticleBatchTest extends ParticleDemo {
         super.onEnter();
 
         var emitter1 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
-        emitter1.startColor = cc.color(255, 0, 0, 255);
+        emitter1.startColor = new cc.Color(255, 0, 0, 255);
         var emitter2 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
-        emitter2.startColor = cc.color(0, 255, 0, 255);
+        emitter2.startColor = new cc.Color(0, 255, 0, 255);
         var emitter3 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
-        emitter3.startColor = cc.color(0, 0, 255, 255);
+        emitter3.startColor = new cc.Color(0, 0, 255, 255);
 
         emitter1.x = winSize.width / 1.25;
 

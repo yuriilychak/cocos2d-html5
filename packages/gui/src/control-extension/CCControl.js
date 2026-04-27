@@ -150,7 +150,7 @@ cc.Control = class Control extends cc.Layer {
     constructor() {
         super();
         this._dispatchTable = {};
-        this._color = cc.color.WHITE;
+        this._color = cc.Color.WHITE;
     }
 
     init() {

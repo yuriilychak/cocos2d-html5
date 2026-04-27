@@ -523,7 +523,7 @@ var TMXHexTest = class TMXHexTest extends TileDemo {
         this.pixel1 = {"0":250, "1":202, "2":73, "3":255};
 
         this.pixel2 = {"0":150, "1":219, "2":10, "3":255};
-        var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
+        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/hexa-test.tmx");
@@ -560,7 +560,7 @@ var TMXIsoTest = class TMXIsoTest extends TileDemo {
         super();
 
         this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
+        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test.tmx");
@@ -607,7 +607,7 @@ var TMXIsoTest1 = class TMXIsoTest1 extends TileDemo {
         super();
 
         this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
+        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test1.tmx");
@@ -653,7 +653,7 @@ var TMXIsoTest2 = class TMXIsoTest2 extends TileDemo {
         this.testDuration = 1.2;
 
         this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
+        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test2.tmx");
@@ -701,7 +701,7 @@ var TMXUncompressedTest = class TMXUncompressedTest extends TileDemo {
         this.testDuration = 1.2;
 
         this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        var color = new cc.LayerColor(cc.color(64, 64, 64, 255));
+        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test2-uncompressed.tmx");
@@ -811,7 +811,7 @@ var TMXOrthoObjectsTest = class TMXOrthoObjectsTest extends TileDemo {
         this.testObjects = null;
         var drawNode = new cc.DrawNode();
         drawNode.setLineWidth(3);
-        drawNode.setDrawColor(cc.color(255,255,255,255));
+        drawNode.setDrawColor(new cc.Color(255,255,255,255));
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-objects.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
@@ -887,7 +887,7 @@ var TMXIsoObjectsTest = class TMXIsoObjectsTest extends TileDemo {
 
         var drawNode = new cc.DrawNode();
         drawNode.setLineWidth(3);
-        drawNode.setDrawColor(cc.color(255,255,255,255));
+        drawNode.setDrawColor(new cc.Color(255,255,255,255));
         this.addChild(drawNode);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-objectgroup.tmx");
@@ -1678,7 +1678,7 @@ var TMXGIDObjectsTest = class TMXGIDObjectsTest extends TileDemo {
 
         var drawNode = new cc.DrawNode();
         drawNode.setLineWidth(3);
-        drawNode.setDrawColor(cc.color(255,255,255,255));
+        drawNode.setDrawColor(new cc.Color(255,255,255,255));
         this.addChild(drawNode);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/test-object-layer.tmx");

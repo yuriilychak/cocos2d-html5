@@ -56,12 +56,12 @@ export class LayerGradient extends LayerColor {
 
     if (stops && stops instanceof Array) {
       this._colorStops = stops;
-      stops.splice(0, 0, { p: 0, color: start || cc.color.BLACK });
-      stops.push({ p: 1, color: end || cc.color.BLACK });
+      stops.splice(0, 0, { p: 0, color: start || Color.BLACK });
+      stops.push({ p: 1, color: end || Color.BLACK });
     } else
       this._colorStops = [
-        { p: 0, color: start || cc.color.BLACK },
-        { p: 1, color: end || cc.color.BLACK }
+        { p: 0, color: start || Color.BLACK },
+        { p: 1, color: end || Color.BLACK }
       ];
 
     LayerGradient.prototype.init.call(this, start, end, v, stops);

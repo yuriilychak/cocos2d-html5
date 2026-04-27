@@ -112,7 +112,7 @@ var UIMainLayer = class UIMainLayer extends cc.Layer {
             string: "INIT",
             fontName: "Marker Felt",
             fontSize: 30,
-            color: cc.color(159, 168, 176),
+            color: new cc.Color(159, 168, 176),
             x: widgetSize.width / 2.0
         });
         bottomDisplayText.y = widgetSize.height / 2.0 - bottomDisplayText.height * 1.75;

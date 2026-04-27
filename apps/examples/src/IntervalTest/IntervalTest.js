@@ -32,7 +32,7 @@ var IntervalLayer = class IntervalLayer extends cc.LayerGradient {
 
 
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
 
 

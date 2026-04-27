@@ -46,7 +46,7 @@ var ActionsTestScene = class ActionsTestScene extends TestScene {
 var ActionsDemo = class ActionsDemo extends BaseTestLayer {
 
   constructor() {
-    super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
 
       this._grossini = null;
@@ -186,12 +186,12 @@ var ActionManual = class ActionManual extends ActionsDemo {
       x: winSize.width / 2,
       y: winSize.height / 2,
       rotation: 120,
-      color: cc.color(255, 0, 0)
+      color: new cc.Color(255, 0, 0)
     });
 
     this._kathia.x = winSize.width - 100;
     this._kathia.y = winSize.height / 2;
-    this._kathia.color = cc.color(0, 0, 255);
+    this._kathia.color = new cc.Color(0, 0, 255);
     //----end0----
   }
 
@@ -559,7 +559,7 @@ var ActionSkewRotateScale = class ActionSkewRotateScale extends ActionsDemo {
 
     var boxW = 100,
       boxH = 100;
-    var box = new cc.LayerColor(cc.color(255, 255, 0, 255));
+    var box = new cc.LayerColor(new cc.Color(255, 255, 0, 255));
     box.anchorX = 0;
     box.anchorY = 0;
     box.x = (winSize.width - boxW) / 2;
@@ -568,7 +568,7 @@ var ActionSkewRotateScale = class ActionSkewRotateScale extends ActionsDemo {
     box.height = boxH;
 
     var markrside = 10.0;
-    var uL = new cc.LayerColor(cc.color(255, 0, 0, 255));
+    var uL = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
     box.addChild(uL);
     uL.width = markrside;
     uL.height = markrside;
@@ -577,7 +577,7 @@ var ActionSkewRotateScale = class ActionSkewRotateScale extends ActionsDemo {
     uL.anchorX = 0;
     uL.anchorY = 0;
 
-    var uR = new cc.LayerColor(cc.color(0, 0, 255, 255));
+    var uR = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
     box.addChild(uR);
     uR.width = markrside;
     uR.height = markrside;
@@ -1877,13 +1877,13 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
     this.addChild(this._drawNode1);
     this._drawNode1.x = 50;
     this._drawNode1.y = 50;
-    this._drawNode1.setDrawColor(cc.color(255, 255, 255, 255));
+    this._drawNode1.setDrawColor(new cc.Color(255, 255, 255, 255));
 
     this._drawNode2 = new cc.DrawNode();
     this.addChild(this._drawNode2);
     this._drawNode2.x = winSize.width * 0.5;
     this._drawNode2.y = 50;
-    this._drawNode2.setDrawColor(cc.color(255, 255, 255, 255));
+    this._drawNode2.setDrawColor(new cc.Color(255, 255, 255, 255));
   }
 
   onEnter() {
@@ -2019,11 +2019,11 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
     this._drawNode1 = new cc.DrawNode();
     this._drawNode1.x = 50;
     this._drawNode1.y = 50;
-    this._drawNode1.setDrawColor(cc.color(255, 255, 255, 255));
+    this._drawNode1.setDrawColor(new cc.Color(255, 255, 255, 255));
     this.addChild(this._drawNode1);
 
     this._drawNode2 = new cc.DrawNode();
-    this._drawNode2.setDrawColor(cc.color(255, 255, 255, 255));
+    this._drawNode2.setDrawColor(new cc.Color(255, 255, 255, 255));
     this.addChild(this._drawNode2);
   }
 
@@ -2865,7 +2865,7 @@ class CustomMoveBy extends cc.MoveBy {
     if (this.getTarget()) {
       // rand color
       this.getTarget().setColor(
-        cc.color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
+        new cc.Color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
       );
     }
   }
@@ -2879,7 +2879,7 @@ var createCustomAction = function (ActionObject) {
       if (this.getTarget()) {
         // rand color
         this.getTarget().setColor(
-          cc.color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
+          new cc.Color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
         );
       }
     }

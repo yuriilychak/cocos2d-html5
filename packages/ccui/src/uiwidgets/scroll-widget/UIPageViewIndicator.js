@@ -51,7 +51,7 @@ ccui.PageViewIndicator = class PageViewIndicator extends ccui.ProtectedNode {
         this._direction = ccui.ScrollView.DIR_HORIZONTAL;
         this._indexNodes = [];
         this._spaceBetweenIndexNodes = ccui.PageViewIndicator.SPACE_BETWEEN_INDEX_NODES_DEFAULT;
-        this._indexNodesColor = cc.color.WHITE;
+        this._indexNodesColor = cc.Color.WHITE;
 
         this._currentIndexNode = ccui.helper._createSpriteFromBase64(ccui.PageViewIndicator.CIRCLE_IMAGE, ccui.PageViewIndicator.CIRCLE_IMAGE_KEY);
         this._currentIndexNode.setVisible(false);
@@ -182,7 +182,7 @@ ccui.PageViewIndicator = class PageViewIndicator extends ccui.ProtectedNode {
      */
     getIndexNodesColor() {
         var locRealColor = this._indexNodesColor;
-        return cc.color(locRealColor.r, locRealColor.g, locRealColor.b, locRealColor.a);
+        return new cc.Color(locRealColor.r, locRealColor.g, locRealColor.b, locRealColor.a);
     }
 
     /**

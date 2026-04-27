@@ -231,7 +231,7 @@ var UIButtonTestRemoveSelf = class UIButtonTestRemoveSelf extends UIMainLayer {
 
             var layout = new ccui.Layout();
             layout.setContentSize(widgetSize.width * 0.6, widgetSize.height * 0.6);
-            layout.setBackGroundColor(cc.color.GREEN);
+            layout.setBackGroundColor(cc.Color.GREEN);
             layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             layout.setBackGroundColorOpacity(100);
             layout.setPosition(widgetSize.width/2, widgetSize.height/2);
@@ -460,8 +460,8 @@ var UIButtonTitleEffectTest = class UIButtonTitleEffectTest extends UIMainLayer 
             button.setScale(2.0);
             button.setPressedActionEnabled(true);
             var title = button.getTitleRenderer();
-            button.setTitleColor(cc.color.RED);
-            title.enableShadow(cc.color.BLACK, new cc.Size(2,-2));
+            button.setTitleColor(cc.Color.RED);
+            title.enableShadow(cc.Color.BLACK, new cc.Size(2,-2));
             this.addChild(button);
 
             // Create the button
@@ -469,7 +469,7 @@ var UIButtonTitleEffectTest = class UIButtonTitleEffectTest extends UIMainLayer 
             button2.setNormalizedPosition(0.8, 0.5);
             button2.setTitleText("PLAY GAME");
             var title2 = button2.getTitleRenderer();
-            title2.enableStroke(cc.color.GREEN, 3);
+            title2.enableStroke(cc.Color.GREEN, 3);
             this.addChild(button2);
             return true;
         }
@@ -529,7 +529,7 @@ var UIButtonNormalDefaultTest = class UIButtonNormalDefaultTest extends UIMainLa
 
             // Add the alert
             var alert = new ccui.Text("Button should scale when clicked","Arial",20);
-            alert.setColor(cc.color(159, 168, 176));
+            alert.setColor(new cc.Color(159, 168, 176));
             alert.setPosition(widgetSize.width / 2.0,
                     widgetSize.height / 2.0 - alert.height * 1.75);
             this._mainNode.addChild(alert);
@@ -566,7 +566,7 @@ var UIButtonDisableDefaultTest = class UIButtonDisableDefaultTest extends UIMain
 
             // Add the alert
             var alert = new ccui.Text("Left button will turn normal when clicked","Arial",20);
-            alert.setColor(cc.color(159, 168, 176));
+            alert.setColor(new cc.Color(159, 168, 176));
             alert.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.height * 1.75);
             this._mainNode.addChild(alert);
 

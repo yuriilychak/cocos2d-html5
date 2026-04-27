@@ -30,7 +30,7 @@ var parallaxTestSceneIdx = -1;
 
 ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(160,32,32,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(160,32,32,255));
 
         this._atlas = null;
     }

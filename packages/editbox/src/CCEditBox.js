@@ -228,8 +228,8 @@ cc.EditBox = class EditBox extends cc.Node {
     this._touchEnabled = true;
 
     this._anchorPoint = new cc.Point(0.5, 0.5);
-    this._textColor = cc.color.WHITE;
-    this._placeholderColor = cc.color.GRAY;
+    this._textColor = cc.Color.WHITE;
+    this._placeholderColor = cc.Color.GRAY;
 
     this._renderCmd._createLabels();
     this.createDomElementIfNeeded();
@@ -1032,7 +1032,7 @@ cc.EditBox = class EditBox extends cc.Node {
     if (!this._placeholderLabel) {
       this._placeholderLabel = new cc.LabelTTF();
       this._placeholderLabel.setAnchorPoint(new cc.Point(0, 1));
-      this._placeholderLabel.setColor(cc.color.GRAY);
+      this._placeholderLabel.setColor(cc.Color.GRAY);
       this._editBox.addChild(this._placeholderLabel, 100);
     }
 

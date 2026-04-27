@@ -27,7 +27,7 @@ var sceneRenderTextureIdx = -1;
 
 var RenderTextureBaseLayer = class RenderTextureBaseLayer extends BaseTestLayer {
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );
     }
 
     title() {
@@ -168,7 +168,7 @@ var RenderTextureSave = class RenderTextureSave extends RenderTextureBaseLayer {
                     x: location.x + diffX * delta,
                     y: location.y + diffY * delta,
                     rotation: Math.random() * 360,
-                    color: cc.color(Math.random() * 255, 255, 255),
+                    color: new cc.Color(Math.random() * 255, 255, 255),
                     scale: Math.random() + 0.25,
                     opacity: 20
                 });
@@ -205,7 +205,7 @@ var RenderTextureIssue937 = class RenderTextureIssue937 extends RenderTextureBas
          *  B1: non-premulti sprite
          *  B2: non-premulti render
          */
-        var background = new cc.LayerColor(cc.color(200, 200, 200, 255));
+        var background = new cc.LayerColor(new cc.Color(200, 200, 200, 255));
         this.addChild(background);
 
         var spr_premulti = new cc.Sprite(s_fire);
@@ -349,7 +349,7 @@ var RenderTextureZbuffer = class RenderTextureZbuffer extends RenderTextureBaseL
         this.sp9.vertexZ = -400;
 
         this.sp9.scale = 2;
-        this.sp9.color = cc.color.YELLOW;
+        this.sp9.color = cc.Color.YELLOW;
     }
 
     onTouchesBegan(touches, event) {
@@ -439,7 +439,7 @@ var RenderTextureZbuffer = class RenderTextureZbuffer extends RenderTextureBaseL
         sprite.opacity = 182;
         sprite.flippedY = 1;
         this.addChild(sprite, 999999);
-        sprite.color = cc.color.GREEN;
+        sprite.color = cc.Color.GREEN;
 
         sprite.runAction(cc.sequence(new cc.FadeTo(2, 0), new cc.Hide()));
     }
@@ -549,7 +549,7 @@ var RenderTextureTargetNode = class RenderTextureTargetNode extends RenderTextur
          *  B1: non-premulti sprite
          *  B2: non-premulti render
          */
-        var background = new cc.LayerColor(cc.color(40, 40, 40, 255));
+        var background = new cc.LayerColor(new cc.Color(40, 40, 40, 255));
         this.addChild(background);
 
         var winSize = cc.director.getWinSize();
@@ -579,7 +579,7 @@ var RenderTextureTargetNode = class RenderTextureTargetNode extends RenderTextur
         /* add the sprites to the render texture */
         renderTexture.addChild(this._sprite1);
         renderTexture.addChild(this._sprite2);
-        renderTexture.clearColorVal = cc.color(0, 0, 0, 0);
+        renderTexture.clearColorVal = new cc.Color(0, 0, 0, 0);
         renderTexture.clearFlags = cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
 
         /* add the render texture to the scene */
@@ -623,7 +623,7 @@ var RenderTextureTargetNode = class RenderTextureTargetNode extends RenderTextur
             this._renderTexture.clearFlags = cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
         else {
             this._renderTexture.clearFlags = 0;
-            this._renderTexture.clearColorVal = cc.color(Math.random()*255, Math.random()*255, Math.random()*255, 255);
+            this._renderTexture.clearColorVal = new cc.Color(Math.random()*255, Math.random()*255, Math.random()*255, 255);
         }
     }
 

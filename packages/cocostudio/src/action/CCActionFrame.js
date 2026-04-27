@@ -478,7 +478,7 @@ ccs.ActionTintFrame = class ActionTintFrame extends ccs.ActionFrame {
      */
     constructor() {
         super();
-        this._color = cc.color(255, 255, 255, 255);
+        this._color = new cc.Color(255, 255, 255, 255);
         this.frameType = ccs.FRAME_TYPE_TINT;
     }
 
@@ -499,7 +499,7 @@ ccs.ActionTintFrame = class ActionTintFrame extends ccs.ActionFrame {
      */
     getColor() {
         var locColor = this._color;
-        return cc.color(locColor.r, locColor.g, locColor.b, locColor.a);
+        return new cc.Color(locColor.r, locColor.g, locColor.b, locColor.a);
     }
 
     /**

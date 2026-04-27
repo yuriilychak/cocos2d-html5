@@ -182,7 +182,7 @@ var LabelAtlasOpacityColorTest = class LabelAtlasOpacityColorTest extends AtlasD
         this.addChild(label2, 0, TAG_LABEL_SPRITE12);
         label2.x = 10;
         label2.y = 200;
-        label2.color = cc.color(255, 0, 0);
+        label2.color = new cc.Color(255, 0, 0);
 
         var fade = new cc.FadeOut(1.0);
         var fade_in = fade.reverse();
@@ -308,7 +308,7 @@ var BMFontOpacityColorAlignmentTest = class BMFontOpacityColorAlignmentTest exte
         this.time = 0;
 
         this.testDuration = 1.1;
-        var col = new cc.LayerColor(cc.color(128, 128, 128, 255));
+        var col = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
         this.addChild(col, -10);
 
         var label1 = new cc.LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
@@ -331,7 +331,7 @@ var BMFontOpacityColorAlignmentTest = class BMFontOpacityColorAlignmentTest exte
         // testing anchors
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
-        label2.color = cc.color.RED;
+        label2.color = cc.Color.RED;
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.runAction(repeat.clone());
 
@@ -419,7 +419,7 @@ var BMFontSubSpriteTest = class BMFontSubSpriteTest extends AtlasDemo {
 
         var drawNode = new cc.DrawNode();
         this.addChild(drawNode);
-        drawNode.setDrawColor(cc.color(255,0,0,128));
+        drawNode.setDrawColor(new cc.Color(255,0,0,128));
         drawNode.drawSegment(new cc.Point(0, s.height / 2), new cc.Point(s.width, s.height / 2), 2);
         drawNode.drawSegment(new cc.Point(s.width / 2, 0), new cc.Point(s.width / 2, s.height), 2);
 
@@ -655,7 +655,7 @@ var BMFontTintTest = class BMFontTintTest extends AtlasDemo {
 
         var label = null;
         label = new cc.LabelBMFont("Blue", s_resprefix + "fonts/bitmapFontTest5.fnt");
-        label.color = cc.color(0, 0, 255);
+        label.color = new cc.Color(0, 0, 255);
         this.addChild(label);
         label.x = s.width / 2;
         label.y = s.height / 4;
@@ -668,7 +668,7 @@ var BMFontTintTest = class BMFontTintTest extends AtlasDemo {
         label.y = 2 * s.height / 4;
         label.anchorX = 0.5;
         label.anchorY = 0.5;
-        label.color = cc.color(255, 0, 0);
+        label.color = new cc.Color(255, 0, 0);
 
         label = new cc.LabelBMFont("G", s_resprefix + "fonts/bitmapFontTest5.fnt");
         this.addChild(label);
@@ -676,7 +676,7 @@ var BMFontTintTest = class BMFontTintTest extends AtlasDemo {
         label.y = 3 * s.height / 4;
         label.anchorX = 0.5;
         label.anchorY = 0.5;
-        label.color = cc.color(0, 255, 0);
+        label.color = new cc.Color(0, 255, 0);
         label.setString("Green");
         //----end7----
     }
@@ -1032,7 +1032,7 @@ var BMFontGlyphDesignerTest = class BMFontGlyphDesignerTest extends AtlasDemo {
         this.pixel = {"0": 240, "1": 201, "2": 108, "3": 255};
         var s = director.getWinSize();
 
-        var layer = new cc.LayerColor(cc.color(128, 128, 128, 255));
+        var layer = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
         this.addChild(layer, -10);
 
         // cc.LabelBMFont
@@ -1104,9 +1104,9 @@ var LabelTTFStrokeShadowTest = class LabelTTFStrokeShadowTest extends AtlasDemo 
         var s = director.getWinSize();
 
         // colors
-        var redColor = cc.color(255, 0, 0);
-        var yellowColor = cc.color(255, 255, 0);
-        var blueColor = cc.color(0, 0, 255);
+        var redColor = new cc.Color(255, 0, 0);
+        var yellowColor = new cc.Color(255, 255, 0);
+        var blueColor = new cc.Color(0, 0, 255);
 
         // shadow offset
         var shadowOffset = new cc.Point(12, -12);
@@ -1208,7 +1208,7 @@ var LabelTTFTest = class LabelTTFTest extends AtlasDemo {
         var blockSize = new cc.Size(200, 160);
         var s = director.getWinSize();
 
-        var colorLayer = new cc.LayerColor(cc.color(100, 100, 100, 255), blockSize.width, blockSize.height);
+        var colorLayer = new cc.LayerColor(new cc.Color(100, 100, 100, 255), blockSize.width, blockSize.height);
         colorLayer.anchorX = 0;
         colorLayer.anchorY = 0;
         colorLayer.x = (s.width - blockSize.width) / 2;
@@ -1528,7 +1528,7 @@ var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends At
         lineBreakMenu.y = winSize.height / 2;
         lineBreakMenu.alignItemsVertically();
 
-        longSentences.color = cc.color(255, 0, 0);
+        longSentences.color = new cc.Color(255, 0, 0);
         this.lastSentenceItem = longSentences;
         longSentences.tag = LongSentences;
         lineBreaks.tag = LineBreaks;
@@ -1545,7 +1545,7 @@ var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends At
         var alignmentMenu = new cc.Menu(left, center, right);
         alignmentMenu.alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
-        center.color = cc.color(255, 0, 0);
+        center.color = new cc.Color(255, 0, 0);
         this.lastAlignmentItem = center;
         left.tag = LeftAlign;
         center.tag = CenterAlign;
@@ -1608,8 +1608,8 @@ var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends At
         this.labelShouldRetain.setLineBreakWithoutSpace(this.lineBreakFlag);
     }
     onStringChanged(sender) {
-        this.lastSentenceItem.color = cc.color(255, 255, 255);
-        sender.color = cc.color(255, 0, 0);
+        this.lastSentenceItem.color = new cc.Color(255, 255, 255);
+        sender.color = new cc.Color(255, 0, 0);
         this.lastSentenceItem = sender;
 
         switch (sender.tag) {
@@ -1645,8 +1645,8 @@ var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends At
     }
     onAlignmentChanged(sender) {
         var item = sender;
-        this.lastAlignmentItem.color = cc.color(255, 255, 255);
-        item.color = cc.color(255, 0, 0);
+        this.lastAlignmentItem.color = new cc.Color(255, 255, 255);
+        item.color = new cc.Color(255, 0, 0);
         this.lastAlignmentItem = item;
 
         switch (item.tag) {
@@ -1724,13 +1724,13 @@ var LabelTTFA8Test = class LabelTTFA8Test extends AtlasDemo {
         super();
         var s = director.getWinSize();
 
-        var layer = new cc.LayerColor(cc.color(128, 128, 128, 255));
+        var layer = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
         this.addChild(layer, -10);
 
         // cc.LabelBMFont
         var label1 = new cc.LabelTTF("Testing A8 Format", "Arial", 48);
         this.addChild(label1);
-        label1.color = cc.color(255, 0, 0);
+        label1.color = new cc.Color(255, 0, 0);
         label1.x = s.width / 2;
         label1.y = s.height / 2;
 
@@ -1925,19 +1925,19 @@ var BMFontColorParentChild = class BMFontColorParentChild extends AtlasDemo {
         this.addChild(this.label);
         this.label.x = winSize.width / 2;
         this.label.y = winSize.height / 2;
-        this.label.color = cc.color.YELLOW;
+        this.label.color = cc.Color.YELLOW;
 
         // R
         var letter = this.label.getChildByTag(1);
-        letter.color = cc.color.RED;
+        letter.color = cc.Color.RED;
 
         // G
         letter = this.label.getChildByTag(2);
-        letter.color = cc.color.GREEN;
+        letter.color = cc.Color.GREEN;
 
         // B
         letter = this.label.getChildByTag(3);
-        letter.color = cc.color.BLUE;
+        letter.color = cc.Color.BLUE;
 
         this.scheduleUpdate();
 
@@ -2006,7 +2006,7 @@ var WrapAlgorithmTest = class WrapAlgorithmTest extends AtlasDemo {
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 120;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
+            LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
             if (cc.sys.os === cc.sys.OS_WP8)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
             else if(cc.sys.os === cc.sys.OS_WINRT)
@@ -2032,7 +2032,7 @@ var WrapAlgorithmTest = class WrapAlgorithmTest extends AtlasDemo {
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 13;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
+            LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
             if (cc.sys.os === cc.sys.OS_WP8)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
             else if(cc.sys.os === cc.sys.OS_WINRT)
@@ -2054,7 +2054,7 @@ var WrapAlgorithmTest = class WrapAlgorithmTest extends AtlasDemo {
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 90;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
+            LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
             if (cc.sys.os === cc.sys.OS_WP8)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
             else if(cc.sys.os === cc.sys.OS_WINRT)

@@ -36,7 +36,7 @@ var clippingNodeTestSceneIdx = -1;
 var BaseClippingNodeTest = class BaseClippingNodeTest extends BaseTestLayer {
 
     constructor() {
-        super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
 
         this._title = "";
@@ -123,7 +123,7 @@ var BasicTest = class BasicTest extends BaseClippingNodeTest {
         var shape = new cc.DrawNode();
         var triangle = [new cc.Point(-100, -100),new cc.Point(100, -100), new cc.Point(0, 100)];
 
-        var green = cc.color(0, 255, 0, 255);
+        var green = new cc.Color(0, 255, 0, 255);
         shape.drawPoly(triangle, green, 3, green);
         return shape;
     }
@@ -318,7 +318,7 @@ var HoleDemo = class HoleDemo extends BaseClippingNodeTest {
         var rectangle = [new cc.Point(0, 0),new cc.Point(target.width*scale, 0),
             new cc.Point(target.width*scale, target.height*scale),
             new cc.Point(0, target.height*scale)];
-        stencil.drawPoly(rectangle, cc.color(255, 0, 0, 255), 0, cc.color(255, 255, 255, 0));
+        stencil.drawPoly(rectangle, new cc.Color(255, 0, 0, 255), 0, new cc.Color(255, 255, 255, 0));
 
         this._outerClipper = new cc.ClippingNode();
         var transform = cc.AffineTransform.makeIdentity();
@@ -434,7 +434,7 @@ var ScrollViewDemo = class ScrollViewDemo extends BaseClippingNodeTest {
             new cc.Point(clipper.width, clipper.height),
             new cc.Point(0, clipper.height)];
 
-        var white = cc.color(255, 255, 255, 255);
+        var white = new cc.Color(255, 255, 255, 255);
         stencil.drawPoly(rectangle, white, 1, white);
         clipper.stencil = stencil;
 
@@ -493,14 +493,14 @@ var _alphaThreshold = 0.05;
 var _PLANE_COUNT = 8;
 
 var _planeColor = [
-    cc.color(0, 0, 0, 166),
-    cc.color(179, 0, 0, 153),
-    cc.color(0, 179, 0, 140),
-    cc.color(0, 0, 179, 128),
-    cc.color(179, 179, 0, 115),
-    cc.color(0, 179, 179, 102),
-    cc.color(179, 0, 179, 89),
-    cc.color(179, 179, 179, 77)
+    new cc.Color(0, 0, 0, 166),
+    new cc.Color(179, 0, 0, 153),
+    new cc.Color(0, 179, 0, 140),
+    new cc.Color(0, 0, 179, 128),
+    new cc.Color(179, 179, 0, 115),
+    new cc.Color(0, 179, 179, 102),
+    new cc.Color(179, 0, 179, 89),
+    new cc.Color(179, 179, 179, 77)
 ];
 
 var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTest {
@@ -553,7 +553,7 @@ var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTe
             this.setupStencilForClippingOnPlane(i);
             //cc.checkGLErrorDebug();
 
-            cc._drawingUtil.drawSolidRect(new cc.Point(0, 0), stencilPoint, cc.color(255, 255, 255, 255));
+            cc._drawingUtil.drawSolidRect(new cc.Point(0, 0), stencilPoint, new cc.Color(255, 255, 255, 255));
 
             cc.kmGLPushMatrix();
             this.transform();
@@ -700,7 +700,7 @@ var RawStencilBufferTest6 = class RawStencilBufferTest6 extends RawStencilBuffer
         gl.stencilMask(planeMask);
         gl.stencilFunc(gl.NEVER, 0, planeMask);
         gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
-        cc._drawingUtil.drawSolidRect(new cc.Point(0, 0), cc.Point.fromSize(cc.director.getWinSize()), cc.color(255, 255, 255, 255));
+        cc._drawingUtil.drawSolidRect(new cc.Point(0, 0), cc.Point.fromSize(cc.director.getWinSize()), new cc.Color(255, 255, 255, 255));
         gl.stencilFunc(gl.NEVER, planeMask, planeMask);
         gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
         gl.disable(gl.DEPTH_TEST);

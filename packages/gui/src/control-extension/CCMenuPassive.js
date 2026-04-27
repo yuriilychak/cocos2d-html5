@@ -59,7 +59,7 @@ cc.MenuPassive = class MenuPassive extends cc.Layer {
     /** Color: conforms with RGBAProtocol protocol */
     getColor() {
         var locColor = this._color;
-        return cc.color(locColor.r, locColor.g, locColor.b, locColor.a);
+        return new cc.Color(locColor.r, locColor.g, locColor.b, locColor.a);
     }
     setColor(color) {
         var locColor = this._color;

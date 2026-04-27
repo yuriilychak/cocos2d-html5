@@ -35,7 +35,7 @@ var UITextFieldTest = class UITextFieldTest extends UIMainLayer {
 
             this._bottomDisplayLabel.setString("TextField");
             this._bottomDisplayLabel.setPosition(new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.getContentSize().height * 3.4));
-            this._bottomDisplayLabel.setColor(cc.color(255, 255, 255, 255));
+            this._bottomDisplayLabel.setColor(new cc.Color(255, 255, 255, 255));
 
             // Create the textfield
             var textField = new ccui.TextField("PlaceHolder", "Marker Felt", 30);
@@ -194,7 +194,7 @@ var UITextFieldTest_LineWrap = class UITextFieldTest_LineWrap extends UIMainLaye
 
             // Add the alert
             var alert = new ccui.Text("TextField line wrap","Marker Felt",30);
-            alert.setColor(cc.color(159, 168, 176));
+            alert.setColor(new cc.Color(159, 168, 176));
             alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.075));
             this._mainNode.addChild(alert);
 
@@ -311,8 +311,8 @@ var UITextFieldTest_PlaceHolderColor = class UITextFieldTest_PlaceHolderColor ex
             // Create the textfield
             var textField = new ccui.TextField("input words here","Arial",30);
             textField.setPlaceHolder("input text here");
-            textField.setPlaceHolderColor(cc.color.GREEN);
-            textField.setTextColor(cc.color.RED);
+            textField.setPlaceHolderColor(cc.Color.GREEN);
+            textField.setTextColor(cc.Color.RED);
             textField.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
             textField.addEventListener(this.textFieldEvent, this);
             this._mainNode.addChild(textField);

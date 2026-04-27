@@ -221,7 +221,7 @@ cc.ControlSlider = class ControlSlider extends cc.Control {
 
     sliderBegan(location) {
         this.setSelected(true);
-        this._thumbSprite.setColor(cc.color.GRAY);
+        this._thumbSprite.setColor(cc.Color.GRAY);
         this.setValue(this.valueForLocation(location));
     }
     sliderMoved(location) {
@@ -231,7 +231,7 @@ cc.ControlSlider = class ControlSlider extends cc.Control {
         if (this.isSelected()) {
             this.setValue(this.valueForLocation(this._thumbSprite.getPosition()));
         }
-        this._thumbSprite.setColor(cc.color.WHITE);
+        this._thumbSprite.setColor(cc.Color.WHITE);
         this.setSelected(false);
     }
 

@@ -70,7 +70,7 @@ ccs.BoneNode = (function () {
                     {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}
                 ];
 
-            this._rackColor = cc.color.WHITE;
+            this._rackColor = cc.Color.WHITE;
             this._blendFunc = BlendFunc.ALPHA_NON_PREMULTIPLIED;
 
             this._childBones = [];
@@ -520,7 +520,7 @@ ccs.BoneNode = (function () {
         constructor(node) {
             super(node);
             this._debug = false;
-            this._color = cc.color.WHITE;
+            this._color = cc.Color.WHITE;
             this._drawNode = new cc.DrawNode();
         }
 
@@ -542,7 +542,7 @@ ccs.BoneNode = (function () {
         constructor(node) {
             super(node);
             this._debug = false;
-            this._color = cc.color.WHITE;
+            this._color = cc.Color.WHITE;
             this._drawNode = new cc.DrawNode();
         }
 

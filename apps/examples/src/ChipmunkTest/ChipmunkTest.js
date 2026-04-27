@@ -72,7 +72,7 @@ var ChipmunkBaseLayer = class ChipmunkBaseLayer extends BaseTestLayer {
         // Only subclasses of a native classes MUST call cc.associateWithNative
         // Failure to do so, it will crash.
         //
-        super( cc.color(0,0,0,255), cc.color(98*0.5,99*0.5,117*0.5,255) );
+        super( new cc.Color(0,0,0,255), new cc.Color(98*0.5,99*0.5,117*0.5,255) );
 
         this._title =  "No title";
         this._subtitle = "No Subtitle";
@@ -1785,25 +1785,25 @@ var Query = class Query extends ChipmunkDemo {
         var start = new cc.Point(320, 240);
         var end = touch.getLocation();
         var radius = 10;
-        drawNode.drawSegment(start, end, 1, cc.color(0, 255, 0, 255));
+        drawNode.drawSegment(start, end, 1, new cc.Color(0, 255, 0, 255));
 
         // WARNING: API changed in Chipmunk v7.0
         var info = target.space.segmentQueryFirst(start, end, radius, cp.SHAPE_FILTER_ALL);
         if(info) {
 
             // Draw blue over the occluded part of the query
-            drawNode.drawSegment(cp.v.lerp(start, end, info.alpha), end, 1, cc.color(0,0,255,255));
+            drawNode.drawSegment(cp.v.lerp(start, end, info.alpha), end, 1, new cc.Color(0,0,255,255));
             
             // Draw a little red surface normal
-            drawNode.drawSegment(info.point, cp.v.add(info.point, cp.v.mult(info.normal, 16)), 1, cc.color(255,0,0,255));
+            drawNode.drawSegment(info.point, cp.v.add(info.point, cp.v.mult(info.normal, 16)), 1, new cc.Color(255,0,0,255));
         
             // Draw a little red dot on the hit point.
-            drawNode.drawDot(info.point, 3, cc.color(255,0,0,255));
+            drawNode.drawDot(info.point, 3, new cc.Color(255,0,0,255));
 
             cc.log("Segment Query: Dist(" + info.alpha * cp.v.dist(start,end) + ") Normal:(" + info.normal.x + "," + info.normal.y + ")");
 
             // Draw a fat green line over the unoccluded part of the query
-            // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, cc.color(0,255,0,255));
+            // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, new cc.Color(0,255,0,255));
         } else {
             cc.log("Segment Query (None)");
         }
@@ -1811,8 +1811,8 @@ var Query = class Query extends ChipmunkDemo {
         var nearestInfo = target.space.pointQueryNearest(touch.getLocation(), 100.0, cp.SHAPE_FILTER_ALL);
         if(nearestInfo){
             // Draw a grey line to the closest shape.
-            drawNode.drawDot(touch.getLocation(), 3, cc.color(128, 128, 128, 255));
-            drawNode.drawSegment(touch.getLocation(), nearestInfo.p, 1, cc.color(128, 128, 128, 255));
+            drawNode.drawDot(touch.getLocation(), 3, new cc.Color(128, 128, 128, 255));
+            drawNode.drawSegment(touch.getLocation(), nearestInfo.p, 1, new cc.Color(128, 128, 128, 255));
             
             // Draw a red bounding box around the shape under the mouse.
 //            if(nearestInfo.d < 0)

@@ -77,13 +77,13 @@ var UIImageViewTest_ContentSize = class UIImageViewTest_ContentSize extends UIMa
 
             this._bottomDisplayLabel.setString("");
             var alert = new ccui.Text("ImageView ContentSize Change", "Marker Felt", 26);
-            alert.setColor(cc.color(159, 168, 176));
+            alert.setColor(new cc.Color(159, 168, 176));
             alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
 
             this._mainNode.addChild(alert);
 
             var status = new ccui.Text("child ImageView position percent", "Marker Felt", 16);
-            status.setColor(cc.color.RED);
+            status.setColor(cc.Color.RED);
             status.setPosition(new cc.Point(widgetSize.width/2, widgetSize.height/2 + 80));
             this._mainNode.addChild(status,20);
 

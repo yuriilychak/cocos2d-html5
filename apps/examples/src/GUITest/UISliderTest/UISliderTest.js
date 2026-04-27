@@ -113,7 +113,7 @@ var UISliderNormalDefaultTest = class UISliderNormalDefaultTest extends UIMainLa
 
             // Add the alert
             var alert = new ccui.Text("when pressed, the slider ball should scale","Marker Felt",20);
-            alert.setColor(cc.color(159, 168, 176));
+            alert.setColor(new cc.Color(159, 168, 176));
             alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
             this._mainNode.addChild(alert);
 
@@ -150,7 +150,7 @@ var UISliderDisabledDefaultTest = class UISliderDisabledDefaultTest extends UIMa
 
             // Add the alert
             var alert = new ccui.Text("slider ball should be gray.","Marker Felt",20);
-            alert.setColor(cc.color(159, 168, 176));
+            alert.setColor(new cc.Color(159, 168, 176));
             alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
             this._mainNode.addChild(alert);
 

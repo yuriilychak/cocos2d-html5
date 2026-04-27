@@ -42,7 +42,7 @@ var PresentationBaseLayer = class PresentationBaseLayer extends BaseTestLayer {
 	// Only subclasses of a native classes MUST call __associateObjectWithNative
 	// Failure to do so, it will crash.
 	//
-		super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+		super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
 	this._title =  "No title";
 	this._subtitle = "No Subtitle";

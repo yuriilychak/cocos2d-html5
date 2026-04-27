@@ -62,7 +62,7 @@ var EffectsBaseLayer = class EffectsBaseLayer extends BaseTestLayer {
         this.addChild( nodeGrid );
 
         // back gradient
-        var gradient = new cc.LayerGradient( cc.color(255,0,0,255), cc.color(255,255,0,255));
+        var gradient = new cc.LayerGradient( new cc.Color(255,0,0,255), new cc.Color(255,255,0,255));
         node.addChild( gradient );
 
         // back image
@@ -478,7 +478,7 @@ var PageTurn3DInRectTest = class PageTurn3DInRectTest extends BaseTestLayer {
         this.addChild( gridNodeTarget );
 
         // back gradient
-        var background = new cc.LayerGradient( cc.color(255,0,0,255), cc.color(255,255,0,255));
+        var background = new cc.LayerGradient( new cc.Color(255,0,0,255), new cc.Color(255,255,0,255));
         gridNodeTarget.addChild( background );
 
         // back image

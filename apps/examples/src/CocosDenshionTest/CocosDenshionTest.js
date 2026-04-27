@@ -152,7 +152,7 @@ var DenshionTests = [
 
 var CocosDenshionTest = class CocosDenshionTest extends cc.LayerGradient {
     constructor() {
-        super(cc.color(0, 0, 0, 255), cc.color(148, 80, 120, 255));
+        super(new cc.Color(0, 0, 0, 255), new cc.Color(148, 80, 120, 255));
 
         this._itemMenu = null;
 

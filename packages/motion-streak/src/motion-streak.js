@@ -7,6 +7,7 @@ import {
   isString,
   vertexLineToPolygon,
   RendererConfig,
+  Color,
   log
 } from "@aspect/core";
 
@@ -16,7 +17,7 @@ import {
  * @property {Boolean}   fastMode                        - Indicate whether use fast mode.
  * @property {Boolean}   startingPositionInitialized     - Indicate whether starting position initialized.
  * @example
- * new MotionStreak(2, 3, 32, cc.color.GREEN, s_streak);
+ * new MotionStreak(2, 3, 32, Color.GREEN, s_streak);
  */
 export class MotionStreak extends Node {
   texture = null;

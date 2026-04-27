@@ -220,7 +220,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection = class UIScrollViewTest_Scrol
             // Create the scrollview
             var scrollView = new ccui.ScrollView();
             scrollView.setTouchEnabled(true);
-            scrollView.setBackGroundColor(cc.color.GREEN);
+            scrollView.setBackGroundColor(cc.Color.GREEN);
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             scrollView.setInnerContainerSize(new cc.Size(480, 320));
@@ -262,7 +262,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = class UIScrollViewTes
             var scrollView = new ccui.ScrollView();
             scrollView.setTouchEnabled(true);
             scrollView.setBounceEnabled(true);
-            scrollView.setBackGroundColor(cc.color.GREEN);
+            scrollView.setBackGroundColor(cc.Color.GREEN);
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             scrollView.setInnerContainerSize(new cc.Size(480, 320));
@@ -343,7 +343,7 @@ var UIScrollViewNestTest = class UIScrollViewNestTest extends UIMainLayer {
 
             // Create the scrollview by horizontal
             var sc = new ccui.ScrollView();
-            sc.setBackGroundColor(cc.color.GREEN);
+            sc.setBackGroundColor(cc.Color.GREEN);
             sc.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             sc.setBounceEnabled(true);
             sc.setDirection(ccui.ScrollView.DIR_BOTH);
@@ -639,7 +639,7 @@ var UIScrollViewTest_ScrollBar = class UIScrollViewTest_ScrollBar extends UIMain
             var scrollView = new ccui.ScrollView();
             scrollView.setTouchEnabled(true);
             scrollView.setBounceEnabled(true);
-            scrollView.setBackGroundColor(cc.color.GREEN);
+            scrollView.setBackGroundColor(cc.Color.GREEN);
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             scrollView.setInnerContainerSize(new cc.Size(480, 320));
@@ -652,7 +652,7 @@ var UIScrollViewTest_ScrollBar = class UIScrollViewTest_ScrollBar extends UIMain
             this._mainNode.addChild(scrollView);
 
             scrollView.setScrollBarAutoHideTime(5);
-            scrollView.setScrollBarColor(cc.color.RED);
+            scrollView.setScrollBarColor(cc.Color.RED);
             scrollView.setScrollBarOpacity(255 * 0.65);
             scrollView.setScrollBarWidth(5);
 

@@ -65,7 +65,7 @@ var UIFocusTestBase = class UIFocusTestBase extends UIMainLayer {
             this._btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
             this._btn.setTitleText("Toggle Loop");
             this._btn.setPosition(60, winSize.height - 50);
-            this._btn.setTitleColor(cc.color.RED);
+            this._btn.setTitleColor(cc.Color.RED);
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);
             this._btn.setFocusEnabled(false);
             this.addChild(this._btn);
@@ -101,10 +101,10 @@ var UIFocusTestBase = class UIFocusTestBase extends UIMainLayer {
     }
     onFocusChanged(widgetLostFocus, widgetGetFocus){
         if (widgetGetFocus && widgetGetFocus.isFocusEnabled())
-            widgetGetFocus.setColor(cc.color.RED);
+            widgetGetFocus.setColor(cc.Color.RED);
 
         if (widgetLostFocus && widgetLostFocus.isFocusEnabled())
-            widgetLostFocus.setColor(cc.color.WHITE);
+            widgetLostFocus.setColor(cc.Color.WHITE);
 
         if (widgetLostFocus && widgetGetFocus)
             cc.log("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus.getTag(),  widgetLostFocus.getTag());
@@ -114,10 +114,10 @@ var UIFocusTestBase = class UIFocusTestBase extends UIMainLayer {
         if (touchType == ccui.Widget.TOUCH_ENDED) {
             if (widget.isFocusEnabled()) {
                 widget.setFocusEnabled(false);
-                widget.setColor(cc.color.YELLOW);
+                widget.setColor(cc.Color.YELLOW);
             }else{
                 widget.setFocusEnabled(true);
-                widget.setColor(cc.color.WHITE);
+                widget.setColor(cc.Color.WHITE);
             }
         }
     }
@@ -160,7 +160,7 @@ var UIFocusTestHorizontal = class UIFocusTestHorizontal extends UIFocusTestBase 
 
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);
             this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
-            this._loopText.setColor(cc.color.GREEN);
+            this._loopText.setColor(cc.Color.GREEN);
             this.addChild(this._loopText);
 
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);
@@ -215,7 +215,7 @@ var UIFocusTestVertical = class UIFocusTestVertical extends UIFocusTestBase {
 
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);
             this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.color.GREEN);
+            this._loopText.setColor(cc.Color.GREEN);
             this.addChild(this._loopText);
 
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);
@@ -301,7 +301,7 @@ var UIFocusTestNestedLayout1 = class UIFocusTestNestedLayout1 extends UIFocusTes
             }
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);
             this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.color.GREEN);
+            this._loopText.setColor(cc.Color.GREEN);
             this.addChild(this._loopText);
 
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);
@@ -388,7 +388,7 @@ var UIFocusTestNestedLayout2 = class UIFocusTestNestedLayout2 extends UIFocusTes
 
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);
             this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.color.GREEN);
+            this._loopText.setColor(cc.Color.GREEN);
             this.addChild(this._loopText);
 
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);
@@ -480,7 +480,7 @@ var UIFocusTestNestedLayout3 = class UIFocusTestNestedLayout3 extends UIFocusTes
 
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);
             this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.color.GREEN);
+            this._loopText.setColor(cc.Color.GREEN);
             this.addChild(this._loopText);
 
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);
@@ -548,7 +548,7 @@ var UIFocusTestListView = class UIFocusTestListView extends UIFocusTestBase {
             }
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);
             this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.color.GREEN);
+            this._loopText.setColor(cc.Color.GREEN);
             this.addChild(this._loopText);
 
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);

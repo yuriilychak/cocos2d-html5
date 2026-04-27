@@ -55,7 +55,7 @@ var SpriteTestDemo = class SpriteTestDemo extends BaseTestLayer {
 
     constructor() {
         if (arguments.length === 0) {
-            super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
+            super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
         } else {
             super(...arguments);
         }
@@ -623,7 +623,7 @@ var SpriteZOrder = class SpriteZOrder extends SpriteTestDemo {
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2 - 20;
         sprite.scaleX = 10;
-        sprite.color = cc.color.RED;
+        sprite.color = cc.Color.RED;
 
         this.schedule(this.reorderSprite, 1);
         //----end13----
@@ -701,7 +701,7 @@ var SpriteBatchNodeZOrder = class SpriteBatchNodeZOrder extends SpriteTestDemo {
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2 - 20;
         sprite.scaleX = 10;
-        sprite.color = cc.color.RED;
+        sprite.color = cc.Color.RED;
         this.schedule(this.reorderSprite, 1);
         //----end14----
     }
@@ -5281,9 +5281,9 @@ var SpriteBatchBug1217 = class SpriteBatchBug1217 extends SpriteTestDemo {
         var s2 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
         var s3 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
 
-        s1.color = cc.color(255, 0, 0);
-        s2.color = cc.color(0, 255, 0);
-        s3.color = cc.color(0, 0, 255);
+        s1.color = new cc.Color(255, 0, 0);
+        s2.color = new cc.Color(0, 255, 0);
+        s3.color = new cc.Color(0, 0, 255);
 
         s1.x = 20;
 
@@ -5359,8 +5359,8 @@ var TextureColorCacheIssue = class TextureColorCacheIssue extends SpriteTestDemo
         this.addChild(grossini);
         this.addChild(sister);
 
-        grossini.color = cc.color(1, 255, 1);
-        sister.color = cc.color(1, 1, 255);
+        grossini.color = new cc.Color(1, 255, 1);
+        sister.color = new cc.Color(1, 1, 255);
         //----end55----
     }
     onExit() {
@@ -5422,8 +5422,8 @@ var TextureColorCacheIssue2 = class TextureColorCacheIssue2 extends SpriteTestDe
         this.addChild(grossini);
         this.addChild(sister);
 
-        grossini.color = cc.color(255, 255, 0);
-        sister.color = cc.color(255, 0, 255);
+        grossini.color = new cc.Color(255, 255, 0);
+        sister.color = new cc.Color(255, 0, 255);
         //----end56----
     }
     onExit() {

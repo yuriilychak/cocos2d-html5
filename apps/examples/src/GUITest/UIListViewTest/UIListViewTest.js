@@ -404,12 +404,12 @@ var UIListViewTest_ScrollToItem = class UIListViewTest_ScrollToItem extends UIMa
                 if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
                 {
                     var halfY = 110;
-                    pNode.drawSegment(new cc.Point(center.x, center.y - halfY), new cc.Point(center.x, center.y + halfY), 2, cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(new cc.Point(center.x, center.y - halfY), new cc.Point(center.x, center.y + halfY), 2, new cc.Color(0, 0, 0, 255));
                 }
                 else
                 {
                     var halfX = 150;
-                    pNode.drawSegment(new cc.Point(center.x - halfX, center.y), new cc.Point(center.x + halfX, center.y), 2, cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(new cc.Point(center.x - halfX, center.y), new cc.Point(center.x + halfX, center.y), 2, new cc.Color(0, 0, 0, 255));
                 }
                 pNode.setContentSize(listView.getContentSize());
                 this._mainNode.addChild(pNode);
@@ -527,12 +527,12 @@ var UIListViewTest_Magnetic = class UIListViewTest_Magnetic extends UIMainLayer 
                 if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
                 {
                     var halfY = 110;
-                    pNode.drawSegment(new cc.Point(center.x, center.y - halfY), new cc.Point(center.x, center.y + halfY), 1, cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(new cc.Point(center.x, center.y - halfY), new cc.Point(center.x, center.y + halfY), 1, new cc.Color(0, 0, 0, 255));
                 }
                 else
                 {
                     var halfX = 150;
-                    pNode.drawSegment(new cc.Point(center.x - halfX, center.y), new cc.Point(center.x + halfX, center.y), 1, cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(new cc.Point(center.x - halfX, center.y), new cc.Point(center.x + halfX, center.y), 1, new cc.Color(0, 0, 0, 255));
                 }
                 pNode.setContentSize(this._listView.getContentSize());
                 this._mainNode.addChild(pNode);

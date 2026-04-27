@@ -33,7 +33,7 @@ var Box2DTestLayer = class Box2DTestLayer extends cc.LayerColor {
       window.sideIndexBar.changeTest(0, 2);
     }
     //----start0----ctor
-    super(cc.color(0, 0, 0, 255));
+    super(new cc.Color(0, 0, 0, 255));
 
     this.world = null;
     // External map from body pointer -> cc.Sprite (box2d-wasm doesn't support userData)
@@ -53,7 +53,7 @@ var Box2DTestLayer = class Box2DTestLayer extends cc.LayerColor {
 
     var label = new cc.LabelTTF("Tap screen", "Marker Felt", 32);
     this.addChild(label, 0);
-    label.color = cc.color(0, 0, 255);
+    label.color = new cc.Color(0, 0, 255);
     label.x = cc.director.getWinSize().width / 2;
     label.y = cc.director.getWinSize().height - 50;
 

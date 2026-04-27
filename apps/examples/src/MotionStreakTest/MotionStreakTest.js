@@ -141,7 +141,7 @@ var MotionStreakTest1 = class MotionStreakTest1 extends MotionStreakTest {
         this._target.y = 0;
 
         // create the streak object and add it to the scene
-        this._streak = new cc.MotionStreak(2, 3, 32, cc.color.GREEN, s_streak);
+        this._streak = new cc.MotionStreak(2, 3, 32, cc.Color.GREEN, s_streak);
         this.addChild(this._streak);
         // schedule an update on each frame so we can synchronize the streak with the target
         this.schedule(this.onUpdate);
@@ -204,7 +204,7 @@ var MotionStreakTest2 = class MotionStreakTest2 extends MotionStreakTest {
         }, this);
         var winSize = cc.director.getWinSize();
         // create the streak object and add it to the scene
-        this._streak = new cc.MotionStreak(3, 3, 64, cc.color.WHITE, s_streak);
+        this._streak = new cc.MotionStreak(3, 3, 64, cc.Color.WHITE, s_streak);
         this.addChild(this._streak);
         this._streak.x = winSize.width / 2;
         this._streak.y = winSize.height / 2;
@@ -237,7 +237,7 @@ var Issue1358 = class Issue1358 extends MotionStreakTest {
 
         // ask director the the window size
         var size = cc.director.getWinSize();
-        this._streak = new cc.MotionStreak(2.0, 1.0, 50.0, cc.color(255, 255, 0), s_image_icon);
+        this._streak = new cc.MotionStreak(2.0, 1.0, 50.0, new cc.Color(255, 255, 0), s_image_icon);
         this.addChild(this._streak);
 
         this._center = new cc.Point(size.width / 2, size.height / 2);

@@ -51,8 +51,8 @@ var CCPoolTest = class CCPoolTest extends cc.Layer {
     initUI() {
         var createLabel = new cc.LabelTTF("click me to create\n 150 sprites directly", "Arial", 23);
         var reCreateLabel = new cc.LabelTTF("click me to create\n 150 sprites use pool", "Arial", 23);
-        reCreateLabel.color = cc.color(255, 255, 255, 255);
-        createLabel.color = cc.color(255, 255, 255, 255);
+        reCreateLabel.color = new cc.Color(255, 255, 255, 255);
+        createLabel.color = new cc.Color(255, 255, 255, 255);
         var menuItem1 = new cc.MenuItemLabel(createLabel, this.addSpriteByCreate, this);
         var menuItem2 = new cc.MenuItemLabel(reCreateLabel, this.addSpriteByPool, this);
         var menu = new cc.Menu(menuItem1, menuItem2);

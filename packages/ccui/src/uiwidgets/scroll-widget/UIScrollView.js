@@ -218,7 +218,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         super._initRenderer();
 
         this._innerContainer = new ccui.Layout();
-        this._innerContainer.setColor(cc.color(255, 255, 255));
+        this._innerContainer.setColor(new cc.Color(255, 255, 255));
         this._innerContainer.setOpacity(255);
         this._innerContainer.setCascadeColorEnabled(true);
         this._innerContainer.setCascadeOpacityEnabled(true);
@@ -1505,7 +1505,7 @@ ccui.ScrollView = class ScrollView extends ccui.Layout {
         {
             this._horizontalScrollBar.getColor();
         }
-        return cc.color.WHITE;
+        return cc.Color.WHITE;
     }
 
     /**

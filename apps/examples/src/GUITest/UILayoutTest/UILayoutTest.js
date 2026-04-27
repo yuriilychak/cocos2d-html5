@@ -112,7 +112,7 @@ var UILayoutTest_Color = class UILayoutTest_Color extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
-        layout.setBackGroundColor(cc.color(128, 128, 128));
+        layout.setBackGroundColor(new cc.Color(128, 128, 128));
         layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
@@ -125,7 +125,7 @@ var UILayoutTest_Gradient = class UILayoutTest_Gradient extends UILayoutTestBase
     createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
-        layout.setBackGroundColor(cc.color(64, 64, 64), cc.color(192, 192, 192));
+        layout.setBackGroundColor(new cc.Color(64, 64, 64), new cc.Color(192, 192, 192));
         layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
@@ -231,7 +231,7 @@ var UILayoutTest_Layout_Relative = class UILayoutTest_Layout_Relative extends UI
         layout.setPositionPercent(new cc.Point(0.25, 0.25));
         //layout.setPosition(new cc.Point(cc.winSize.width/2, cc.winSize.height/2));
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
-        layout.setBackGroundColor(cc.color.GREEN);
+        layout.setBackGroundColor(cc.Color.GREEN);
         return layout;
     }
     getText() {
@@ -260,7 +260,7 @@ var UILayoutTest_Layout_Relative_Align_Parent = class UILayoutTest_Layout_Relati
 
              // Add the alert
              var alert = new ccui.Text("Layout Relative Align Parent", "Arial", 20);
-             alert.setColor(cc.color(159, 168, 176));
+             alert.setColor(new cc.Color(159, 168, 176));
              alert.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 4.5);
              this._mainNode.addChild(alert);
 
@@ -272,7 +272,7 @@ var UILayoutTest_Layout_Relative_Align_Parent = class UILayoutTest_Layout_Relati
              layout.setLayoutType(ccui.Layout.RELATIVE);
              layout.setContentSize(280, 150);
              layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
-             layout.setBackGroundColor(cc.color.GREEN);
+             layout.setBackGroundColor(cc.Color.GREEN);
              var backgroundSize = background.getContentSize();
              layout.setPosition((widgetSize.width - backgroundSize.width) / 2.0 + (backgroundSize.width - layout.width) / 2.0,
                      (widgetSize.height - backgroundSize.height) / 2.0 + (backgroundSize.height - layout.height) / 2.0);
@@ -359,7 +359,7 @@ var UILayoutTest_Layout_Relative_Location = class UILayoutTest_Layout_Relative_L
 
              // Add the alert
              var alert = new ccui.Text("Layout Relative Location", "Marker Felt", 20);
-             alert.setColor(cc.color(159, 168, 176));
+             alert.setColor(new cc.Color(159, 168, 176));
              alert.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.height * 4.5);
              this._mainNode.addChild(alert);
 
@@ -429,7 +429,7 @@ var UILayoutTest_Layout_Scaled_Widget = class UILayoutTest_Layout_Scaled_Widget 
 
             // Add the alert
             var alert = new ccui.Text("Layout Scaled Widget", "Marker Felt", 20);
-            alert.setColor(cc.color(159, 168, 176));
+            alert.setColor(new cc.Color(159, 168, 176));
             alert.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.height * 4.5);
             this._mainNode.addChild(alert);
 
@@ -476,7 +476,7 @@ var UILayoutComponentTest = class UILayoutComponentTest extends UIMainLayer {
             var widgetSize = this._widget.getContentSize();
 
             this._baseLayer = new cc.LayerColor();
-            this._baseLayer.setColor(cc.color(50, 100, 0));
+            this._baseLayer.setColor(new cc.Color(50, 100, 0));
             this._baseLayer.setOpacity(100);
             this._baseLayer.setContentSize(200, 200);
             this._mainNode.addChild(this._baseLayer);

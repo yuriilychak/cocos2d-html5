@@ -62,8 +62,8 @@ var MenuLayerMainMenu = class MenuLayerMainMenu extends cc.Layer {
         // Label Item (LabelAtlas)
         var labelAtlas = new cc.LabelAtlas("0123456789", s_fpsImages, 12, 32, '.');
         var item3 = new cc.MenuItemLabel(labelAtlas, this.onMenuCallbackDisabled, this );
-        item3.setDisabledColor( cc.color(32,32,64) );
-        item3.color = cc.color(200,200,255);
+        item3.setDisabledColor( new cc.Color(32,32,64) );
+        item3.color = new cc.Color(200,200,255);
         cc.log("test MenuItemLabel getString()" + item3.getString());
 
         // Font Item

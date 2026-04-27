@@ -45,17 +45,17 @@ var ControlButtonTest_HelloVariableSize = class ControlButtonTest_HelloVariableS
                 if (i == 0) {
                     button.opacity = 50;
                     //todo setColor not work in canvas
-                    //button.color = cc.color(0, 255, 0);
+                    //button.color = new cc.Color(0, 255, 0);
                 }
                 else if (i == 1) {
                     button.opacity = 200;
                     //todo setColor not work in canvas
-                    //button.color = cc.color(0, 255, 0);
+                    //button.color = new cc.Color(0, 255, 0);
                 }
                 else if (i == 2) {
                     button.opacity = 100;
                     //todo setColor not work in canvas
-                    //button.color = cc.color(0, 0, 255);
+                    //button.color = new cc.Color(0, 0, 255);
                 }
 
                 button.x = total_width + button.width / 2;
@@ -93,11 +93,11 @@ var ControlButtonTest_HelloVariableSize = class ControlButtonTest_HelloVariableS
 
         var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
-        titleButton.color = cc.color(159, 168, 176);
+        titleButton.color = new cc.Color(159, 168, 176);
 
         var button = new cc.ControlButton(titleButton, backgroundButton);
         button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-        button.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+        button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
         return button;
     }
@@ -138,11 +138,11 @@ var ControlButtonTest_Event = class ControlButtonTest_Event extends ControlScene
             this.addChild(this._displayValueLabel, 10);
 
             var titleButton = new cc.LabelTTF("Touch Me!", "Marker Felt", 30);
-            titleButton.color = cc.color(159, 168, 176);
+            titleButton.color = new cc.Color(159, 168, 176);
 
             var controlButton = new cc.ControlButton(titleButton, backgroundButton);
             controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-            controlButton.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+            controlButton.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
             controlButton.anchorX = 0.5;
             controlButton.anchorY = 1;
@@ -269,11 +269,11 @@ var ControlButtonTest_Styling = class ControlButtonTest_Styling extends ControlS
 
         var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
-        titleButton.color = cc.color(159, 168, 176);
+        titleButton.color = new cc.Color(159, 168, 176);
 
         var button = new cc.ControlButton(titleButton, backgroundButton, null, null, false);
         button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-        button.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+        button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
         return button;
     }

@@ -90,7 +90,7 @@ var UIVideoPlayerTest = class UIVideoPlayerTest extends UIMainLayer {
             i+1 !== list.length ? button.setScale(1.3) : button.setScale(1);
             button.setPosition( 140 + (i / 5 | 0) * 530, 320 - (i % 5) * 50);
             button.setTitleText(item.name);
-            button.setTitleColor(cc.color.YELLOW);
+            button.setTitleColor(cc.Color.YELLOW);
             button.setZoomScale(0.3);
             button.setPressedActionEnabled(true);
             button.addClickEventListener(item.func);
