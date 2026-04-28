@@ -972,3 +972,5 @@ export {
 } from "./platform/macro/constants";
 export { visibleRect } from "./platform/visible-rect";
 export { ResolutionPolicy } from "./platform/egl-view/resolution-policy";
+export { SpriteFrame } from "./sprites/sprite-frame";
+export { Component } from "./components/component";
