@@ -59,20 +59,49 @@ export class MyClass extends Node { ... }
 
 | `cc.*` usage | Import |
 |---|---|
-| `cc.Node`, `cc.Sprite`, etc. | `Node`, `Sprite` from `"@aspect/core"` |
+| `cc.Node`, `cc.Sprite`, `cc.LabelTTF`, etc. | `Node`, `Sprite`, `LabelTTF` from `"@aspect/core"` |
 | `cc.DrawNode` | `DrawNode` from `"@aspect/shape-nodes"` |
 | `cc.rendererConfig.renderer` | `RendererConfig.getInstance().renderer` |
 | `cc.rendererConfig.isCanvas` | `RendererConfig.getInstance().isCanvas` |
 | `cc.rendererConfig.renderContext` | `RendererConfig.getInstance().renderContext` |
 | `cc.director` | `Director.getInstance()` |
 | `cc.shaderCache.programForKey(k)` | `ShaderCache.getInstance().programForKey(k)` |
+| `cc.textureCache` | `TextureCache.getInstance()` from `"@aspect/core"` |
+| `cc.spriteFrameCache` | `SpriteFrameCache.getInstance()` from `"@aspect/core"` |
+| `cc.view` | `EGLView.getInstance()` from `"@aspect/core"` |
+| `cc.game.container` / `cc.container` | `Game.getInstance().container` from `"@aspect/core"` |
+| `cc.game.EVENT_RESIZE` / `EVENT_HIDE` / `EVENT_SHOW` | `Game.EVENT_RESIZE` etc. from `"@aspect/core"` |
+| `cc.sys.os`, `cc.sys.browserType`, `cc.sys.OS_IOS`, etc. | `Sys.os`, `Sys.browserType` from `"@aspect/core"` |
+| `cc.screen.requestFullScreen(el)` | `screen.requestFullScreen(el)` from `"@aspect/core"` |
+| `cc.loader.resPath` | `Loader.getInstance().resPath` from `"@aspect/core"` |
+| `cc.path.join(...)` / `cc.path.extname(...)` | `Path.join(...)` / `Path.extname(...)` from `"@aspect/core"` |
 | `cc.glUseProgram(p)` | `glUseProgram(p)` from `"@aspect/core"` |
 | `cc.setProgram(n, p)` | `setProgramForNode(n, p)` from `"@aspect/core"` |
 | `cc.Node._dirtyFlags` | `Node._dirtyFlags` |
 | `cc.Node._stateCallbackType` | `Node._stateCallbackType` |
+| `cc.Node.WebGLRenderCmd` / `cc.Node.CanvasRenderCmd` | `Node.WebGLRenderCmd` / `Node.CanvasRenderCmd` |
 | `cc.CustomRenderCmd` | `CustomRenderCmd` from `"@aspect/core"` |
 | `cc.SHADER_*`, `cc.UNIFORM_*` | named constants from `"@aspect/core"` |
+| `cc.BLEND_SRC`, `cc.BLEND_DST`, `cc.ONE`, `cc.SRC_ALPHA` | named constants from `"@aspect/core"` |
+| `cc.TEXT_ALIGNMENT_*` | `TEXT_ALIGNMENT_LEFT/CENTER/RIGHT` from `"@aspect/core"` |
+| `cc.VERTICAL_TEXT_ALIGNMENT_*` | `VERTICAL_TEXT_ALIGNMENT_TOP/CENTER/BOTTOM` from `"@aspect/core"` |
+| `cc.s_globalOrderOfArrival++` | `setGlobalOrderOfArrival(s_globalOrderOfArrival + 1)` — see note below |
 | `cc.incrementGLDraws(n)` | `incrementGLDraws(n)` from `"@aspect/core"` |
+| `cc.log(...)` / `cc.warn(...)` / `cc.error(...)` / `cc.assert(...)` | `log`, `warn`, `error`, `assert` from `"@aspect/core"` |
+| `cc.isNumber(x)` | `isNumber(x)` from `"@aspect/core"` |
+| `cc.arrayRemoveObject(arr, obj)` | `arrayRemoveObject(arr, obj)` from `"@aspect/core"` |
+| `cc.FontDefinition` | `FontDefinition` from `"@aspect/core"` |
+| `cc.FLT_MAX` | `FLT_MAX` from `"@aspect/core"` |
+| `cc.Point.add(a, b)` / `cc.Point.sub(a, b)` / `cc.Point.mult(a, s)` / `cc.Point.length(p)` | `Point.add`, `Point.sub`, `Point.mult`, `Point.length` — static methods on imported `Point` |
+
+> **`cc.s_globalOrderOfArrival` note**: This module-level counter cannot be mutated from outside
+> its source module. Import both `s_globalOrderOfArrival` (current value) and
+> `setGlobalOrderOfArrival` (setter) from `"@aspect/core"`, then replace
+> `node.setOrderOfArrival(cc.s_globalOrderOfArrival++)` with:
+> ```js
+> node.setOrderOfArrival(s_globalOrderOfArrival);
+> setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
+> ```
 
 ### Static properties after class body
 ```js
@@ -155,3 +184,37 @@ npm run build
 ```
 
 Expect all tasks to succeed (e.g. `32 successful, 32 total`). Fix any import/export errors before removing legacy files.
+
+---
+
+## Step 9 — Audit for remaining `cc.*` globals
+
+Even after a package is in ES module mode, internal files may still reference `cc.*` globals
+instead of importing the symbol directly. Always run this audit after migration — and again
+whenever new files are added:
+
+```sh
+# List every non-comment cc.* reference in the package
+grep -rn 'cc\.' packages/<name>/src/ --include="*.js" | grep -v '^\s*//' | grep -v '//.*cc\.'
+```
+
+**Acceptable remaining `cc.*` references:**
+- `cc.X = X;` — backward-compat assignments in `src/index.js`
+- `cc.ccui.X = X;` — namespace assignments in `src/index.js`
+
+**Must be replaced with direct imports:**
+- Any `cc.X(...)` constructor or function call
+- Any `cc.X.Y` constant / static access
+- Any `instanceof cc.X` check
+
+### Circular dependency exceptions
+
+Some `cc.*` globals must be kept when a direct import would create a circular dependency:
+
+| Pattern | Why it's circular | Keep as |
+|---|---|---|
+| Class A imports Class B that **extends** A | B extends A → A must be defined first | `cc.ccui.B` in A |
+| Class A imports Class B that **transitively extends** A | same reason | `cc.ccui.B` in A |
+
+Example: `widget.js` cannot import `Layout` or `ImageView` because both extend `Widget`.
+It may import `LayoutComponent` because that class does **not** extend `Widget`.
