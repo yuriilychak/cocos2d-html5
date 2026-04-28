@@ -70,9 +70,11 @@ export class MyClass extends Node { ... }
 | `cc.spriteFrameCache` | `SpriteFrameCache.getInstance()` from `"@aspect/core"` |
 | `cc.view` | `EGLView.getInstance()` from `"@aspect/core"` |
 | `cc.game.container` / `cc.container` | `Game.getInstance().container` from `"@aspect/core"` |
+| `cc._canvas` / `cc.game.canvas` | `Game.getInstance().canvas` from `"@aspect/core"` |
 | `cc.game.EVENT_RESIZE` / `EVENT_HIDE` / `EVENT_SHOW` | `Game.EVENT_RESIZE` etc. from `"@aspect/core"` |
-| `cc.sys.os`, `cc.sys.browserType`, `cc.sys.OS_IOS`, etc. | `Sys.os`, `Sys.browserType` from `"@aspect/core"` |
-| `cc.screen.requestFullScreen(el)` | `screen.requestFullScreen(el)` from `"@aspect/core"` |
+| `cc.sys.os`, `cc.sys.isMobile`, `cc.sys.browserType`, `cc.sys.OS_ANDROID`, etc. | `Sys.getInstance().os`, `Sys.getInstance().isMobile` from `"@aspect/core"` |
+| `cc.screen.requestFullScreen(el)` / `cc.screen.exitFullScreen()` | `screen.requestFullScreen(el)` / `screen.exitFullScreen()` from `"@aspect/core"` |
+| `cc.visibleRect.width` / `cc.visibleRect.height` / `cc.visibleRect.topLeft` etc. | `visibleRect.width` / `visibleRect.height` from `"@aspect/core"` |
 | `cc.loader.resPath` | `Loader.getInstance().resPath` from `"@aspect/core"` |
 | `cc.path.join(...)` / `cc.path.extname(...)` | `Path.join(...)` / `Path.extname(...)` from `"@aspect/core"` |
 | `cc.glUseProgram(p)` | `glUseProgram(p)` from `"@aspect/core"` |
