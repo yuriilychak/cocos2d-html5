@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@aspect/core": "*",
-    "@aspect/actions": "*"
+    "@aspect/actions": "*",
+    "@aspect/menus": "*"
   }
 }

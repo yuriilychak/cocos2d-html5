@@ -3,8 +3,8 @@ import { ProtectedNode } from './protected-node.js';
 import { WidgetCanvasRenderCmd, WidgetWebGLRenderCmd } from './widget-render-cmd.js';
 import { LayoutParameter } from '../layouts/layout-parameter';
 import { LayoutComponent } from '../layouts/layout-component';
-import { Layout } from '../layouts/layout.js';
-import { ImageView } from '../uiwidgets/image-view.js';
+// Layout and ImageView are wired via Widget.LayoutClass / Widget.ImageViewClass in src/index.js
+// to break circular dependencies (layout.js and image-view.js both import Widget)
 
 export class FocusNavigationController extends NewClass {
     constructor() {
@@ -458,7 +458,7 @@ export class Widget extends ProtectedNode {
             default:
                 break;
         }
-        if (this._parent instanceof ImageView) {
+        if (this._parent instanceof Widget.ImageViewClass) {
             var renderer = this._parent._imageRenderer;
             if (renderer && !renderer._textureLoaded)
                 return;
@@ -605,10 +605,10 @@ export class Widget extends ProtectedNode {
 
     findNextFocusedWidget(direction, current) {
         if (null === this.onNextFocusedWidget || null == this.onNextFocusedWidget(direction)) {
-            var isLayout = current instanceof Layout;
+            var isLayout = current instanceof Widget.LayoutClass;
             if (this.isFocused() || isLayout) {
                 var layout = this.getParent();
-                if (null === layout || !(layout instanceof Layout)) {
+                if (null === layout || !(layout instanceof Widget.LayoutClass)) {
                     if (isLayout)
                         return current.findNextFocusedWidget(direction, current);
                     return current;
@@ -812,7 +812,7 @@ export class Widget extends ProtectedNode {
         var parent = this.getParent();
         var clippingParent = null;
         while (parent) {
-            if (parent instanceof Layout) {
+            if (parent instanceof Widget.LayoutClass) {
                 if (parent.isClippingEnabled()) {
                     this._affectByClipping = true;
                     clippingParent = parent;

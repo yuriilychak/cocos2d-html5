@@ -3,17 +3,13 @@ import {
   director, 
   Scale9Sprite, 
   Point, 
-  Menu, 
   LabelTTF, 
   Size, 
   Color, 
-  sequence, 
-  EaseIn, 
-  EaseOut, 
-  ScaleTo, 
-  MenuItemSprite, 
   log 
 } from "@aspect/core";
+import { EaseIn, EaseOut, ScaleTo, sequence } from "@aspect/actions";
+import { Menu, MenuItemSprite } from "@aspect/menus";
 
 const INT_MAX = Number.MAX_VALUE;
 

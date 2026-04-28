@@ -68,6 +68,14 @@ ProtectedNode.WebGLRenderCmd = ProtectedNodeWebGLRenderCmd;
 Scale9Sprite.CanvasRenderCmd = Scale9SpriteCanvasRenderCmd;
 Scale9Sprite.WebGLRenderCmd = Scale9SpriteWebGLRenderCmd;
 
+// Break circular dependency: widget.js cannot directly import Layout/ImageView
+Widget.LayoutClass = Layout;
+Widget.ImageViewClass = ImageView;
+
+// Break circular dependency: layout-component.js cannot directly import Widget/PageView
+LayoutComponent.WidgetClass = Widget;
+LayoutComponent.PageViewClass = PageView;
+
 // cc globals (backward compatibility)
 cc.ProtectedNode = ProtectedNode;
 cc.Scale9Sprite = Scale9Sprite;

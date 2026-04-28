@@ -1,7 +1,7 @@
 import { Component, Point } from '@aspect/core';
-import { Widget } from '../base-classes/widget';
 import { helper } from '../system/helper';
-import { PageView } from '../uiwidgets/scroll-widget/page-view';
+// Widget and PageView are wired via LayoutComponent.WidgetClass / LayoutComponent.PageViewClass in src/index.js
+// to break circular dependencies
 
 export const LayoutComponent_ReferencePoint = {
     BOTTOM_LEFT: 0,
@@ -534,7 +534,7 @@ export class LayoutComponent extends Component {
         locOwner.setPosition(ownerPosition);
         locOwner.setContentSize(ownerSize);
 
-        if (locOwner instanceof PageView) {
+        if (locOwner instanceof LayoutComponent.PageViewClass) {
             locOwner.forceDoLayout();
 
             var layoutVector = locOwner.getPages();
@@ -588,7 +588,7 @@ LayoutComponent.bindLayoutComponent = function (node) {
     layout = new LayoutComponent();
     layout.init();
     node.addComponent(layout);
-    if (!(node instanceof Widget)) {
+    if (!(node instanceof LayoutComponent.WidgetClass)) {
         node.addEventListener && node.addEventListener("load", function () {
             layout.refreshLayout();
         }, this);

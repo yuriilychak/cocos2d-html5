@@ -445,7 +445,7 @@ export class LoaderLayer extends Layer {
         action: new Sequence(
           new Spawn(
             new MoveBy(0.4, new Point(0, 40)).easing(easeIn(0.5)),
-            new ScaleTo(0.4, 0.95, 1.05).easing(EaseIn(0.5))
+            new ScaleTo(0.4, 0.95, 1.05).easing(easeIn(0.5))
           ),
           DelayTime.create(0.2),
           new Spawn(

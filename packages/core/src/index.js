@@ -989,6 +989,7 @@ export { screen } from "./platform/screen";
 export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
 export { LayerGradient } from "./layers/layer-gradient";
 export { BLEND_SRC, BLEND_DST, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from "./platform/macro/constants";
+export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
 export { rectPointsToPixels } from "./platform/macro/utils";
 export { Path, Game, Loader } from "./boot";
 export { EGLView } from "./platform/egl-view/egl-view";

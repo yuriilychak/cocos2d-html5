@@ -1,4 +1,4 @@
-import { RendererConfig, Size, Rect, Color, Point, Sprite, LayerColor, LayerGradient, assert, log, FLT_MAX } from '@aspect/core';
+import { Node, RendererConfig, Size, Rect, Color, Point, Sprite, LayerColor, LayerGradient, assert, log, FLT_MAX } from '@aspect/core';
 import { DrawNode } from '@aspect/shape-nodes';
 import { Widget } from '../base-classes/widget';
 import { Scale9Sprite } from '../base-classes/scale9-sprite';

@@ -1,80 +1,38 @@
-/****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
- Copyright (c) 2010 Sangwoo Im
+import {
+    Layer, Node, NewClass, Point, Size, Rect,
+    EventListener, EventManager, RendererConfig, EGLView
+} from "@aspect/core";
+import { MoveTo, CallFunc, sequence, ActionTween } from "@aspect/actions";
 
- http://www.cocos2d-x.org
+export const SCROLLVIEW_DIRECTION_NONE = -1;
+export const SCROLLVIEW_DIRECTION_HORIZONTAL = 0;
+export const SCROLLVIEW_DIRECTION_VERTICAL = 1;
+export const SCROLLVIEW_DIRECTION_BOTH = 2;
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
+const SCROLL_DEACCEL_RATE = 0.95;
+const SCROLL_DEACCEL_DIST = 1.0;
+const BOUNCE_DURATION = 0.15;
+const INSET_RATIO = 0.2;
+const MOVE_INCH = 7.0 / 160.0;
+const BOUNCE_BACK_FACTOR = 0.35;
 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
-/**
- * @ignore
- */
-cc.SCROLLVIEW_DIRECTION_NONE = -1;
-
-cc.SCROLLVIEW_DIRECTION_HORIZONTAL = 0;
-
-cc.SCROLLVIEW_DIRECTION_VERTICAL = 1;
-
-cc.SCROLLVIEW_DIRECTION_BOTH = 2;
-
-var SCROLL_DEACCEL_RATE = 0.95;
-var SCROLL_DEACCEL_DIST = 1.0;
-var BOUNCE_DURATION = 0.15;
-var INSET_RATIO = 0.2;
-var MOVE_INCH = 7.0 / 160.0;
-var BOUNCE_BACK_FACTOR = 0.35;
-
-cc.convertDistanceFromPointToInch = function (pointDis) {
-    var eglViewer = cc.view;
+export function convertDistanceFromPointToInch(pointDis) {
+    var eglViewer = EGLView.getInstance();
     var factor = (eglViewer.getScaleX() + eglViewer.getScaleY()) / 2;
-    return (pointDis * factor) / 160;               // Device::getDPI() default value
-};
+    return (pointDis * factor) / 160;
+}
 
-cc.ScrollViewDelegate = class ScrollViewDelegate extends cc.NewClass {
-    scrollViewDidScroll(view) {
-    }
-    scrollViewDidZoom(view) {
-    }
-};
+export class ScrollViewDelegate extends NewClass {
+    scrollViewDidScroll(view) {}
+    scrollViewDidZoom(view) {}
+}
 
-/**
- * ScrollView support for cocos2d -x.
- * It provides scroll view functionalities to cocos2d projects natively.
- *
- * @property {cc.Point}                 minOffset   - <@readonly> The current container's minimum offset
- * @property {cc.Point}                 maxOffset   - <@readonly> The current container's maximum offset
- * @property {Boolean}                  bounceable  - Indicate whether the scroll view is bounceable
- * @property {cc.Size}                  viewSize    - The size of the scroll view
- * @property {cc.Layer}                 container   - The inside container of the scroll view
- * @property {Number}                   direction   - The direction allowed to scroll: cc.SCROLLVIEW_DIRECTION_BOTH by default, or cc.SCROLLVIEW_DIRECTION_NONE | cc.SCROLLVIEW_DIRECTION_HORIZONTAL | cc.SCROLLVIEW_DIRECTION_VERTICAL
- * @property {cc.ScrollViewDelegate}    delegate    - The inside container of the scroll view
- * @property {Boolean}           clippingToBounds   - Indicate whether the scroll view clips its children
- */
-cc.ScrollView = class ScrollView extends cc.Layer {
+export class GScrollView extends Layer {
     _zoomScale = 0;
     _minZoomScale = 0;
     _maxZoomScale = 0;
     _delegate = null;
-    _direction = cc.SCROLLVIEW_DIRECTION_BOTH;
+    _direction = SCROLLVIEW_DIRECTION_BOTH;
     _dragging = false;
     _contentOffset = null;
     _container = null;
@@ -91,21 +49,13 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     _minScale = 0;
     _maxScale = 0;
 
-    //scissor rect for parent, just for restoring GL_SCISSOR_BOX
     _parentScissorRect = null;
     _scissorRestored = false;
 
-    // cache object
     _tmpViewRect = null;
     _touchListener = null;
     _className = "ScrollView";
 
-    /**
-     * @contructor
-     * @param size
-     * @param container
-     * @returns {ScrollView}
-     */
     get minOffset() { return this.minContainerOffset(); }
     get maxOffset() { return this.maxContainerOffset(); }
     get bounceable() { return this.isBounceable(); }
@@ -123,38 +73,31 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
     constructor(size, container) {
         super();
-        this._contentOffset = new cc.Point(0, 0);
-        this._maxInset = new cc.Point(0, 0);
-        this._minInset = new cc.Point(0, 0);
-        this._scrollDistance = new cc.Point(0, 0);
-        this._touchPoint = new cc.Point(0, 0);
+        this._contentOffset = new Point(0, 0);
+        this._maxInset = new Point(0, 0);
+        this._minInset = new Point(0, 0);
+        this._scrollDistance = new Point(0, 0);
+        this._touchPoint = new Point(0, 0);
         this._touches = [];
-        this._viewSize = new cc.Size(0, 0);
-        this._parentScissorRect = new cc.Rect(0, 0, 0, 0);
-        this._tmpViewRect = new cc.Rect(0, 0, 0, 0);
+        this._viewSize = new Size(0, 0);
+        this._parentScissorRect = new Rect(0, 0, 0, 0);
+        this._tmpViewRect = new Rect(0, 0, 0, 0);
 
-        if (container != undefined)
+        if (container !== undefined)
             this.initWithViewSize(size, container);
         else
-            this.initWithViewSize(new cc.Size(200, 200), null);
-
+            this.initWithViewSize(new Size(200, 200), null);
     }
 
     init() {
-        return this.initWithViewSize(new cc.Size(200, 200), null);
+        return this.initWithViewSize(new Size(200, 200), null);
     }
 
-    /**
-     * initialized whether success or fail
-     * @param {cc.Size} size
-     * @param {cc.Node} container
-     * @return {Boolean}
-     */
     initWithViewSize(size, container) {
-        var pZero = new cc.Point(0, 0);
+        var pZero = new Point(0, 0);
         if (super.init()) {
             if (!container && !this._container) {
-                container = new cc.Layer();
+                container = new Layer();
             }
             if (container) {
                 this.setContainer(container);
@@ -167,8 +110,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             this._bounceable = true;
             this._clippingToBounds = true;
 
-            //this._container.setContentSize(SizeZero);
-            this._direction = cc.SCROLLVIEW_DIRECTION_BOTH;
+            this._direction = SCROLLVIEW_DIRECTION_BOTH;
             this._container.setPosition(pZero);
             this._touchLength = 0.0;
 
@@ -181,13 +123,12 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     visit(parent) {
         var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
 
-        // quick return if not visible
         if (!this._visible) {
             cmd._propagateFlagsDown(parentCmd);
             return;
         }
 
-        var renderer = cc.rendererConfig.renderer;
+        var renderer = RendererConfig.getInstance().renderer;
         cmd.visit(parentCmd);
 
         if (this._clippingToBounds) {
@@ -210,14 +151,8 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         cmd._dirtyFlag = 0;
     }
 
-    /**
-     * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
-     *
-     * @param {cc.Point} offset new offset
-     * @param {Number} [animated=] If true, the view will scroll to the new offset
-     */
     setContentOffset(offset, animated) {
-        if (animated) { //animate scrolling
+        if (animated) {
             this.setContentOffsetInDuration(offset, BOUNCE_DURATION);
             return;
         }
@@ -234,34 +169,20 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         if (locDelegate != null && locDelegate.scrollViewDidScroll) {
             locDelegate.scrollViewDidScroll(this);
         }
-
     }
 
     getContentOffset() {
         var locPos = this._container.getPosition();
-        return new cc.Point(locPos.x, locPos.y);
+        return new Point(locPos.x, locPos.y);
     }
 
-    /**
-     * <p>Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView) <br/>
-     * You can override the animation duration with this method.
-     * </p>
-     * @param {cc.Point} offset new offset
-     * @param {Number} dt animation duration
-     */
     setContentOffsetInDuration(offset, dt) {
-        var scroll = new cc.MoveTo(dt, offset);
-        var expire = new cc.CallFunc(this._stoppedAnimatedScroll, this);
-        this._container.runAction(cc.sequence(scroll, expire));
+        var scroll = new MoveTo(dt, offset);
+        var expire = new CallFunc(this._stoppedAnimatedScroll, this);
+        this._container.runAction(sequence(scroll, expire));
         this.schedule(this._performedAnimatedScroll);
     }
 
-    /**
-     * Sets a new scale and does that for a predefined duration.
-     *
-     * @param {Number} scale a new scale vale
-     * @param {Boolean} [animated=null] if YES, scaling is animated
-     */
     setZoomScale(scale, animated) {
         if (animated) {
             this.setZoomScaleInDuration(scale, BOUNCE_DURATION);
@@ -275,7 +196,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
             if (this._touchLength === 0.0) {
                 var locViewSize = this._viewSize;
-                center = new cc.Point(locViewSize.width * 0.5, locViewSize.height * 0.5);
+                center = new Point(locViewSize.width * 0.5, locViewSize.height * 0.5);
                 center = this.convertToWorldSpace(center);
             } else
                 center = this._touchPoint;
@@ -284,10 +205,10 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             locContainer.setScale(Math.max(this._minScale, Math.min(this._maxScale, scale)));
             newCenter = locContainer.convertToWorldSpace(oldCenter);
 
-            var offset = cc.Point.sub(center, newCenter);
+            var offset = Point.sub(center, newCenter);
             if (this._delegate && this._delegate.scrollViewDidZoom)
                 this._delegate.scrollViewDidZoom(this);
-            this.setContentOffset(cc.Point.add(locContainer.getPosition(), offset));
+            this.setContentOffset(Point.add(locContainer.getPosition(), offset));
         }
     }
 
@@ -295,17 +216,11 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         return this._container.getScale();
     }
 
-    /**
-     * Sets a new scale for container in a given duration.
-     *
-     * @param {Number} s a new scale value
-     * @param {Number} dt animation duration
-     */
     setZoomScaleInDuration(s, dt) {
         if (dt > 0) {
             var locScale = this._container.getScale();
             if (locScale !== s) {
-                var scaleAction = new cc.ActionTween(dt, "zoomScale", locScale, s);
+                var scaleAction = new ActionTween(dt, "zoomScale", locScale, s);
                 this.runAction(scaleAction);
             }
         } else {
@@ -313,43 +228,27 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         }
     }
 
-    /**
-     * Returns the current container's minimum offset. You may want this while you animate scrolling by yourself
-     * @return {cc.Point} Returns the current container's minimum offset.
-     */
     minContainerOffset() {
         var locContainer = this._container;
         var locContentSize = locContainer.getContentSize(), locViewSize = this._viewSize;
-        return new cc.Point(locViewSize.width - locContentSize.width * locContainer.getScaleX(),
+        return new Point(locViewSize.width - locContentSize.width * locContainer.getScaleX(),
             locViewSize.height - locContentSize.height * locContainer.getScaleY());
     }
 
-    /**
-     * Returns the current container's maximum offset. You may want this while you animate scrolling by yourself
-     * @return {cc.Point} Returns the current container's maximum offset.
-     */
     maxContainerOffset() {
-        return new cc.Point(0.0, 0.0);
+        return new Point(0.0, 0.0);
     }
 
-    /**
-     * Determines if a given node's bounding box is in visible bounds
-     * @param {cc.Node} node
-     * @return {Boolean} YES if it is in visible bounds
-     */
     isNodeVisible(node) {
         var offset = this.getContentOffset();
         var size = this.getViewSize();
         var scale = this.getZoomScale();
 
-        var viewRect = new cc.Rect(-offset.x / scale, -offset.y / scale, size.width / scale, size.height / scale);
+        var viewRect = new Rect(-offset.x / scale, -offset.y / scale, size.width / scale, size.height / scale);
 
-        return cc.Rect.intersects(viewRect, node.getBoundingBox());
+        return Rect.intersects(viewRect, node.getBoundingBox());
     }
 
-    /**
-     * Provided to make scroll view compatible with SWLayer's pause method
-     */
     pause(sender) {
         this._container.pause();
         var selChildren = this._container.getChildren();
@@ -359,9 +258,6 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         super.pause();
     }
 
-    /**
-     * Provided to make scroll view compatible with SWLayer's resume method
-     */
     resume(sender) {
         var selChildren = this._container.getChildren();
         for (var i = 0, len = selChildren.length; i < len; i++) {
@@ -371,42 +267,21 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         super.resume();
     }
 
-    isDragging() {
-        return this._dragging;
-    }
-    isTouchMoved() {
-        return this._touchMoved;
-    }
-    isBounceable() {
-        return this._bounceable;
-    }
-    setBounceable(bounceable) {
-        this._bounceable = bounceable;
-    }
+    isDragging() { return this._dragging; }
+    isTouchMoved() { return this._touchMoved; }
+    isBounceable() { return this._bounceable; }
+    setBounceable(bounceable) { this._bounceable = bounceable; }
 
-    /**
-     * <p>
-     * size to clip. Node boundingBox uses contentSize directly.                   <br/>
-     * It's semantically different what it actually means to common scroll views.    <br/>
-     * Hence, this scroll view will use a separate size property.
-     * </p>
-     */
-    getViewSize() {
-        return this._viewSize;
-    }
+    getViewSize() { return this._viewSize; }
 
     setViewSize(size) {
         this._viewSize = size;
-        cc.Node.prototype.setContentSize.call(this, size);
+        Node.prototype.setContentSize.call(this, size);
     }
 
-    getContainer() {
-        return this._container;
-    }
+    getContainer() { return this._container; }
 
     setContainer(container) {
-        // Make sure that 'm_pContainer' has a non-NULL value since there are
-        // lots of logic that use 'm_pContainer'.
         if (!container)
             return;
 
@@ -420,55 +295,39 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         this.setViewSize(this._viewSize);
     }
 
-    /**
-     * direction allowed to scroll. ScrollViewDirectionBoth by default.
-     */
-    getDirection() {
-        return this._direction;
-    }
-    setDirection(direction) {
-        this._direction = direction;
-    }
+    getDirection() { return this._direction; }
+    setDirection(direction) { this._direction = direction; }
 
-    getDelegate() {
-        return this._delegate;
-    }
-    setDelegate(delegate) {
-        this._delegate = delegate;
-    }
+    getDelegate() { return this._delegate; }
+    setDelegate(delegate) { this._delegate = delegate; }
 
-    /** override functions */
-    // optional
     onTouchBegan(touch, event) {
         for (var c = this; c != null; c = c.parent) {
             if (!c.isVisible())
                 return false;
         }
-        //var frameOriginal = this.getParent().convertToWorldSpace(this.getPosition());
-        //var frame = new cc.Rect(frameOriginal.x, frameOriginal.y, this._viewSize.width, this._viewSize.height);
+
         var frame = this._getViewRect();
 
-        //dispatcher does not know about clipping. reject touches outside visible bounds.
         var locContainer = this._container;
         var locPoint = locContainer.convertToWorldSpace(locContainer.convertTouchToNodeSpace(touch));
         var locTouches = this._touches;
-        if (locTouches.length > 2 || this._touchMoved || !cc.Rect.containsPoint(frame, locPoint))
+        if (locTouches.length > 2 || this._touchMoved || !Rect.containsPoint(frame, locPoint))
             return false;
 
         locTouches.push(touch);
-        //}
 
-        if (locTouches.length === 1) { // scrolling
+        if (locTouches.length === 1) {
             this._touchPoint = this.convertTouchToNodeSpace(touch);
             this._touchMoved = false;
-            this._dragging = true; //dragging started
+            this._dragging = true;
             this._scrollDistance.x = 0;
             this._scrollDistance.y = 0;
             this._touchLength = 0.0;
         } else if (locTouches.length === 2) {
-            this._touchPoint = cc.Point.midpoint(this.convertTouchToNodeSpace(locTouches[0]),
+            this._touchPoint = Point.midpoint(this.convertTouchToNodeSpace(locTouches[0]),
                 this.convertTouchToNodeSpace(locTouches[1]));
-            this._touchLength = cc.Point.distance(locContainer.convertTouchToNodeSpace(locTouches[0]),
+            this._touchLength = Point.distance(locContainer.convertTouchToNodeSpace(locTouches[0]),
                 locContainer.convertTouchToNodeSpace(locTouches[1]));
             this._dragging = false;
         }
@@ -481,23 +340,20 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
         this.setNodeDirty();
 
-        if (this._touches.length === 1 && this._dragging) { // scrolling
+        if (this._touches.length === 1 && this._dragging) {
             this._touchMoved = true;
-            //var frameOriginal = this.getParent().convertToWorldSpace(this.getPosition());
-            //var frame = new cc.Rect(frameOriginal.x, frameOriginal.y, this._viewSize.width, this._viewSize.height);
             var frame = this._getViewRect();
 
-            //var newPoint = this.convertTouchToNodeSpace(this._touches[0]);
             var newPoint = this.convertTouchToNodeSpace(touch);
-            var moveDistance = cc.Point.sub(newPoint, this._touchPoint);
+            var moveDistance = Point.sub(newPoint, this._touchPoint);
 
             var dis = 0.0, locDirection = this._direction, pos;
-            if (locDirection === cc.SCROLLVIEW_DIRECTION_VERTICAL) {
+            if (locDirection === SCROLLVIEW_DIRECTION_VERTICAL) {
                 dis = moveDistance.y;
                 pos = this._container.getPositionY();
                 if (!(this.minContainerOffset().y <= pos && pos <= this.maxContainerOffset().y))
                     moveDistance.y *= BOUNCE_BACK_FACTOR;
-            } else if (locDirection === cc.SCROLLVIEW_DIRECTION_HORIZONTAL) {
+            } else if (locDirection === SCROLLVIEW_DIRECTION_HORIZONTAL) {
                 dis = moveDistance.x;
                 pos = this._container.getPositionX();
                 if (!(this.minContainerOffset().x <= pos && pos <= this.maxContainerOffset().x))
@@ -515,8 +371,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
                     moveDistance.x *= BOUNCE_BACK_FACTOR;
             }
 
-            if (!this._touchMoved && Math.abs(cc.convertDistanceFromPointToInch(dis)) < MOVE_INCH) {
-                //LOG("Invalid movement, distance = [%f, %f], disInch = %f", moveDistance.x, moveDistance.y);
+            if (!this._touchMoved && Math.abs(convertDistanceFromPointToInch(dis)) < MOVE_INCH) {
                 return;
             }
 
@@ -530,10 +385,10 @@ cc.ScrollView = class ScrollView extends cc.Layer {
 
             if (this._dragging) {
                 switch (locDirection) {
-                    case cc.SCROLLVIEW_DIRECTION_VERTICAL:
+                    case SCROLLVIEW_DIRECTION_VERTICAL:
                         moveDistance.x = 0.0;
                         break;
-                    case cc.SCROLLVIEW_DIRECTION_HORIZONTAL:
+                    case SCROLLVIEW_DIRECTION_HORIZONTAL:
                         moveDistance.y = 0.0;
                         break;
                     default:
@@ -545,10 +400,10 @@ cc.ScrollView = class ScrollView extends cc.Layer {
                 var newY = locPosition.y + moveDistance.y;
 
                 this._scrollDistance = moveDistance;
-                this.setContentOffset(new cc.Point(newX, newY));
+                this.setContentOffset(new Point(newX, newY));
             }
         } else if (this._touches.length === 2 && !this._dragging) {
-            var len = cc.Point.distance(this._container.convertTouchToNodeSpace(this._touches[0]),
+            var len = Point.distance(this._container.convertTouchToNodeSpace(this._touches[0]),
                 this._container.convertTouchToNodeSpace(this._touches[1]));
             this.setZoomScale(this.getZoomScale() * len / this._touchLength);
         }
@@ -585,6 +440,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             this.updateInset();
         }
     }
+
     _setWidth(value) {
         var container = this.getContainer();
         if (container) {
@@ -592,6 +448,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             this.updateInset();
         }
     }
+
     _setHeight(value) {
         var container = this.getContainer();
         if (container) {
@@ -603,7 +460,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     getContentSize() {
         if (this._container)
             return this._container.getContentSize();
-        return new cc.Size(0, 0);
+        return new Size(0, 0);
     }
 
     updateInset() {
@@ -618,16 +475,8 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         }
     }
 
-    /**
-     * Determines whether it clips its children or not.
-     */
-    isClippingToBounds() {
-        return this._clippingToBounds;
-    }
-
-    setClippingToBounds(clippingToBounds) {
-        this._clippingToBounds = clippingToBounds;
-    }
+    isClippingToBounds() { return this._clippingToBounds; }
+    setClippingToBounds(clippingToBounds) { this._clippingToBounds = clippingToBounds; }
 
     addChild(child, zOrder, tag) {
         if (!child)
@@ -636,8 +485,6 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         zOrder = zOrder || child.getLocalZOrder();
         tag = tag || child.getTag();
 
-        //child.ignoreAnchorPointForPosition(false);
-        //child.setAnchorPoint(0, 0);
         if (this._container !== child) {
             this._container.addChild(child, zOrder, tag);
         } else {
@@ -645,21 +492,19 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         }
     }
 
-    isTouchEnabled() {
-        return this._touchListener !== null;
-    }
+    isTouchEnabled() { return this._touchListener !== null; }
 
     setTouchEnabled(e) {
         if (this._touchListener)
-            cc.eventManager.removeListener(this._touchListener);
+            EventManager.getInstance().removeListener(this._touchListener);
         this._touchListener = null;
         if (!e) {
             this._dragging = false;
             this._touchMoved = false;
             this._touches.length = 0;
         } else {
-            var listener = cc.EventListener.create({
-                event: cc.EventListener.TOUCH_ONE_BY_ONE
+            var listener = EventListener.create({
+                event: EventListener.TOUCH_ONE_BY_ONE
             });
             if (this.onTouchBegan)
                 listener.onTouchBegan = this.onTouchBegan.bind(this);
@@ -670,25 +515,14 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             if (this.onTouchCancelled)
                 listener.onTouchCancelled = this.onTouchCancelled.bind(this);
             this._touchListener = listener;
-            cc.eventManager.addListener(listener, this);
+            EventManager.getInstance().addListener(listener, this);
         }
     }
 
-    /**
-     * Init this object with a given size to clip its content.
-     *
-     * @param size view size
-     * @return initialized scroll view object
-     */
     _initWithViewSize(size) {
         return null;
     }
 
-    /**
-     * Relocates the container at the proper offset, in bounds of max/min offsets.
-     *
-     * @param animated If YES, relocation is animated
-     */
     _relocateContainer(animated) {
         var min = this.minContainerOffset();
         var max = this.maxContainerOffset();
@@ -697,26 +531,21 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         var oldPoint = this._container.getPosition();
         var newX = oldPoint.x;
         var newY = oldPoint.y;
-        if (locDirection === cc.SCROLLVIEW_DIRECTION_BOTH || locDirection === cc.SCROLLVIEW_DIRECTION_HORIZONTAL) {
+        if (locDirection === SCROLLVIEW_DIRECTION_BOTH || locDirection === SCROLLVIEW_DIRECTION_HORIZONTAL) {
             newX = Math.max(newX, min.x);
             newX = Math.min(newX, max.x);
         }
 
-        if (locDirection === cc.SCROLLVIEW_DIRECTION_BOTH || locDirection === cc.SCROLLVIEW_DIRECTION_VERTICAL) {
+        if (locDirection === SCROLLVIEW_DIRECTION_BOTH || locDirection === SCROLLVIEW_DIRECTION_VERTICAL) {
             newY = Math.min(newY, max.y);
             newY = Math.max(newY, min.y);
         }
 
         if (newY !== oldPoint.y || newX !== oldPoint.x) {
-            this.setContentOffset(new cc.Point(newX, newY), animated);
+            this.setContentOffset(new Point(newX, newY), animated);
         }
     }
-    /**
-     * implements auto-scrolling behavior. change SCROLL_DEACCEL_RATE as needed to choose    <br/>
-     * deacceleration speed. it must be less than 1.0.
-     *
-     * @param {Number} dt delta
-     */
+
     _deaccelerateScrolling(dt) {
         if (this._dragging) {
             this.unschedule(this._deaccelerateScrolling);
@@ -735,14 +564,13 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             minInset = this.minContainerOffset();
         }
 
-        //check to see if offset lies within the inset bounds
         var newX = this._container.getPositionX();
         var newY = this._container.getPositionY();
-        
+
         locScrollDistance.x = locScrollDistance.x * SCROLL_DEACCEL_RATE;
         locScrollDistance.y = locScrollDistance.y * SCROLL_DEACCEL_RATE;
 
-        this.setContentOffset(new cc.Point(newX, newY));
+        this.setContentOffset(new Point(newX, newY));
 
         if ((Math.abs(locScrollDistance.x) <= SCROLL_DEACCEL_DIST &&
             Math.abs(locScrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
@@ -754,9 +582,7 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             this._relocateContainer(true);
         }
     }
-    /**
-     * This method makes sure auto scrolling causes delegate to invoke its method
-     */
+
     _performedAnimatedScroll(dt) {
         if (this._dragging) {
             this.unschedule(this._performedAnimatedScroll);
@@ -766,25 +592,18 @@ cc.ScrollView = class ScrollView extends cc.Layer {
         if (this._delegate && this._delegate.scrollViewDidScroll)
             this._delegate.scrollViewDidScroll(this);
     }
-    /**
-     * Expire animated scroll delegate calls
-     */
+
     _stoppedAnimatedScroll(node) {
         this.unschedule(this._performedAnimatedScroll);
-        // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
         if (this._delegate && this._delegate.scrollViewDidScroll) {
             this._delegate.scrollViewDidScroll(this);
         }
     }
 
-    /**
-     * Zoom handling
-     */
-    _handleZoom() {
-    }
+    _handleZoom() {}
 
     _getViewRect() {
-        var screenPos = this.convertToWorldSpace(new cc.Point(0, 0));
+        var screenPos = this.convertToWorldSpace(new Point(0, 0));
         var locViewSize = this._viewSize;
 
         var scaleX = this.getScaleX();
@@ -795,9 +614,6 @@ cc.ScrollView = class ScrollView extends cc.Layer {
             scaleY *= p.getScaleY();
         }
 
-        // Support negative scaling. Not doing so causes intersectsRect calls
-        // (eg: to check if the touch was within the bounds) to return false.
-        // Note, Node::getScale will assert if X and Y scales are different.
         if (scaleX < 0) {
             screenPos.x += locViewSize.width * scaleX;
             scaleX = -scaleX;
@@ -816,10 +632,10 @@ cc.ScrollView = class ScrollView extends cc.Layer {
     }
 
     _createRenderCmd() {
-        if (cc.rendererConfig.isCanvas) {
-            return new cc.ScrollView.CanvasRenderCmd(this);
+        if (RendererConfig.getInstance().isCanvas) {
+            return new this.constructor.CanvasRenderCmd(this);
         } else {
-            return new cc.ScrollView.WebGLRenderCmd(this);
+            return new this.constructor.WebGLRenderCmd(this);
         }
     }
-};
+}
