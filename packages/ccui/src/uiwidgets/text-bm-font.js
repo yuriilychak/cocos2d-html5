@@ -23,8 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { LabelBMFont } from '@aspect/labels';
-import { Widget } from '../base-classes/widget';
+import { LabelBMFont } from "@aspect/labels";
+import { Sprite, log } from "@aspect/core";
+import { Widget } from "../base-classes/widget";
 
 /**
  * The TextBMFont control of Cocos UI, it rendered by LabelBMFont.
@@ -32,169 +33,183 @@ import { Widget } from '../base-classes/widget';
  * @property {String}   string  - Content string of the label
  */
 export class TextBMFont extends Widget {
-    /**
-     * Allocates and initializes a TextBMFont.                <br/>
-     * Constructor of TextBMFont. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-     * @param {String} text
-     * @param {String} filename
-     */
-    constructor(text, filename) {
-        super();
-        this._fntFileHasInit = false;
-        this._fntFileName = "";
-        this._stringValue = "";
-        this._className = "TextBMFont";
-        this._labelBMFontRendererAdaptDirty = true;
-        this._loader = new cc.Sprite.LoadManager();
+  /**
+   * Allocates and initializes a TextBMFont.                <br/>
+   * Constructor of TextBMFont. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * @param {String} text
+   * @param {String} filename
+   */
+  constructor(text, filename) {
+    super();
+    this._fntFileHasInit = false;
+    this._fntFileName = "";
+    this._stringValue = "";
+    this._className = "TextBMFont";
+    this._labelBMFontRendererAdaptDirty = true;
+    this._loader = new Sprite.LoadManager();
 
-        if (filename !== undefined) {
-            this.setFntFile(filename);
-            this.setString(text);
-        }
+    if (filename !== undefined) {
+      this.setFntFile(filename);
+      this.setString(text);
     }
+  }
 
-    get string() { return this.getString(); }
-    set string(v) { this.setString(v); }
+  get string() {
+    return this.getString();
+  }
+  set string(v) {
+    this.setString(v);
+  }
 
+  _initRenderer() {
+    this._labelBMFontRenderer = new LabelBMFont();
+    this.addProtectedChild(
+      this._labelBMFontRenderer,
+      TextBMFont.RENDERER_ZORDER,
+      -1
+    );
+  }
 
-    _initRenderer() {
-        this._labelBMFontRenderer = new LabelBMFont();
-        this.addProtectedChild(this._labelBMFontRenderer, TextBMFont.RENDERER_ZORDER, -1);
+  /**
+   * Initializes a bitmap font atlas with an initial string and the FNT file
+   * @param {String} fileName
+   */
+  setFntFile(fileName) {
+    if (!fileName) return;
+    this._fntFileName = fileName;
+
+    this._fntFileHasInit = true;
+    this._labelBMFontRenderer.initWithString(this._stringValue, fileName);
+    this._updateContentSizeWithTextureSize(
+      this._labelBMFontRenderer.getContentSize()
+    );
+    this._labelBMFontRendererAdaptDirty = true;
+
+    var _self = this;
+    var locRenderer = _self._labelBMFontRenderer;
+    if (!locRenderer._textureLoaded) {
+      locRenderer.addEventListener("load", function () {
+        _self.setFntFile(_self._fntFileName);
+      });
     }
+  }
 
-    /**
-     * Initializes a bitmap font atlas with an initial string and the FNT file
-     * @param {String} fileName
-     */
-    setFntFile(fileName) {
-        if (!fileName)
-            return;
-        this._fntFileName = fileName;
+  /**
+   * Sets string value for TextBMFont
+   * @deprecated since v3.0, please use setString instead.
+   * @param {String} value
+   */
+  setText(value) {
+    log("Please use the setString");
+    this.setString(value);
+  }
 
-        this._fntFileHasInit = true;
-        this._labelBMFontRenderer.initWithString(this._stringValue, fileName);
-        this._updateContentSizeWithTextureSize(this._labelBMFontRenderer.getContentSize());
-        this._labelBMFontRendererAdaptDirty = true;
-
-        var _self = this;
-        var locRenderer = _self._labelBMFontRenderer;
-        if (!locRenderer._textureLoaded) {
-            locRenderer.addEventListener("load", function () {
-                _self.setFntFile(_self._fntFileName);
-            });
-        }
+  /**
+   * Sets string value for TextBMFont
+   * @param {String} value
+   */
+  setString(value) {
+    this._loader.clear();
+    if (!this._labelBMFontRenderer._textureLoaded) {
+      this._loader.add(
+        this._labelBMFontRenderer,
+        function () {
+          this.setString(value);
+        },
+        this
+      );
+      return;
     }
+    if (value === this._labelBMFontRenderer.getString()) return;
+    this._stringValue = value;
+    this._labelBMFontRenderer.setString(value);
+    if (!this._fntFileHasInit) return;
+    this._updateContentSizeWithTextureSize(
+      this._labelBMFontRenderer.getContentSize()
+    );
+    this._labelBMFontRendererAdaptDirty = true;
+  }
 
-    /**
-     * Sets string value for TextBMFont
-     * @deprecated since v3.0, please use setString instead.
-     * @param {String} value
-     */
-    setText(value) {
-        cc.log("Please use the setString");
-        this.setString(value);
-    }
+  /**
+   * Returns string value for TextBMFont.
+   * @returns {String}
+   */
+  getString() {
+    return this._stringValue;
+  }
 
-    /**
-     * Sets string value for TextBMFont
-     * @param {String} value
-     */
-    setString(value) {
-        this._loader.clear();
-        if (!this._labelBMFontRenderer._textureLoaded) {
-            this._loader.add(this._labelBMFontRenderer, function () {
-                this.setString(value);
-            }, this);
-            return;
-        }
-        if (value === this._labelBMFontRenderer.getString())
-            return;
-        this._stringValue = value;
-        this._labelBMFontRenderer.setString(value);
-        if (!this._fntFileHasInit)
-            return;
-        this._updateContentSizeWithTextureSize(this._labelBMFontRenderer.getContentSize());
-        this._labelBMFontRendererAdaptDirty = true;
-    }
+  /**
+   * Returns the length of TextBMFont's string.
+   * @returns {Number}
+   */
+  getStringLength() {
+    return this._labelBMFontRenderer.getStringLength();
+  }
 
-    /**
-     * Returns string value for TextBMFont.
-     * @returns {String}
-     */
-    getString() {
-        return this._stringValue;
-    }
+  _onSizeChanged() {
+    super._onSizeChanged();
+    this._labelBMFontRendererAdaptDirty = true;
+  }
 
-    /**
-     * Returns the length of TextBMFont's string.
-     * @returns {Number}
-     */
-    getStringLength() {
-        return this._labelBMFontRenderer.getStringLength();
+  _adaptRenderers() {
+    if (this._labelBMFontRendererAdaptDirty) {
+      this._labelBMFontScaleChangedWithSize();
+      this._labelBMFontRendererAdaptDirty = false;
     }
+  }
 
-    _onSizeChanged() {
-        super._onSizeChanged();
-        this._labelBMFontRendererAdaptDirty = true;
-    }
+  /**
+   * Returns TextBMFont's content size
+   * @override
+   * @returns {Size}
+   */
+  getVirtualRendererSize() {
+    return this._labelBMFontRenderer.getContentSize();
+  }
 
-    _adaptRenderers() {
-        if (this._labelBMFontRendererAdaptDirty) {
-            this._labelBMFontScaleChangedWithSize();
-            this._labelBMFontRendererAdaptDirty = false;
-        }
-    }
+  /**
+   * Returns the renderer of TextBMFont
+   * @override
+   * @returns {Node}
+   */
+  getVirtualRenderer() {
+    return this._labelBMFontRenderer;
+  }
 
-    /**
-     * Returns TextBMFont's content size
-     * @override
-     * @returns {cc.Size}
-     */
-    getVirtualRendererSize() {
-        return this._labelBMFontRenderer.getContentSize();
+  _labelBMFontScaleChangedWithSize() {
+    var locRenderer = this._labelBMFontRenderer;
+    if (this._ignoreSize) locRenderer.setScale(1.0);
+    else {
+      var textureSize = locRenderer.getContentSize();
+      if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
+        locRenderer.setScale(1.0);
+        return;
+      }
+      locRenderer.setScaleX(this._contentSize.width / textureSize.width);
+      locRenderer.setScaleY(this._contentSize.height / textureSize.height);
     }
+    locRenderer.setPosition(
+      this._contentSize.width / 2.0,
+      this._contentSize.height / 2.0
+    );
+  }
 
-    /**
-     * Returns the renderer of TextBMFont
-     * @override
-     * @returns {cc.Node}
-     */
-    getVirtualRenderer() {
-        return this._labelBMFontRenderer;
-    }
+  /**
+   * Returns the "class name" of TextBMFont.
+   * @returns {string}
+   */
+  getDescription() {
+    return "TextBMFont";
+  }
 
-    _labelBMFontScaleChangedWithSize() {
-        var locRenderer = this._labelBMFontRenderer;
-        if (this._ignoreSize)
-            locRenderer.setScale(1.0);
-        else {
-            var textureSize = locRenderer.getContentSize();
-            if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-                locRenderer.setScale(1.0);
-                return;
-            }
-            locRenderer.setScaleX(this._contentSize.width / textureSize.width);
-            locRenderer.setScaleY(this._contentSize.height / textureSize.height);
-        }
-        locRenderer.setPosition(this._contentSize.width / 2.0, this._contentSize.height / 2.0);
-    }
+  _createCloneInstance() {
+    return new TextBMFont();
+  }
 
-    /**
-     * Returns the "class name" of TextBMFont.
-     * @returns {string}
-     */
-    getDescription() {
-        return "TextBMFont";
-    }
-
-    _createCloneInstance() {
-        return new TextBMFont();
-    }
-
-    _copySpecialProperties(labelBMFont) {
-        this.setFntFile(labelBMFont._fntFileName);
-        this.setString(labelBMFont._stringValue);
-    }
+  _copySpecialProperties(labelBMFont) {
+    this.setFntFile(labelBMFont._fntFileName);
+    this.setString(labelBMFont._stringValue);
+  }
 }
 
 /**

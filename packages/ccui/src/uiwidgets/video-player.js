@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventManager, RendererConfig } from '@aspect/core';
+import { EventManager, RendererConfig, Node, EGLView, log, screen, Sys, Game, Loader, Path } from '@aspect/core';
 import { Widget } from '../base-classes/widget';
 
 /**
@@ -52,12 +52,12 @@ export class VideoPlayer extends Widget {
     visit() {
         var cmd = this._renderCmd,
             div = cmd._div,
-            container = cc.container,
+            container = Game.getInstance().container,
             eventManager = EventManager.getInstance();
         if (this._visible) {
             container.appendChild(cmd._video);
             if (this._listener === null)
-                this._listener = EventManager.getInstance().addCustomListener(cc.game.EVENT_RESIZE, function () {
+                this._listener = EventManager.getInstance().addCustomListener(Game.EVENT_RESIZE, function () {
                     cmd.resize();
                 });
         } else {
@@ -189,7 +189,7 @@ export class VideoPlayer extends Widget {
      * Whether to keep the aspect ratio
      */
     setKeepAspectRatioEnabled(enable) {
-        cc.log("On the web is always keep the aspect ratio");
+        log("On the web is always keep the aspect ratio");
     }
     isKeepAspectRatioEnabled() {
         return false;
@@ -204,9 +204,9 @@ export class VideoPlayer extends Widget {
         var video = this._renderCmd._video;
         if (video) {
             if (enable)
-                cc.screen.requestFullScreen(video);
+                screen.requestFullScreen(video);
             else
-                cc.screen.exitFullScreen(video);
+                screen.exitFullScreen(video);
         }
     }
 
@@ -214,7 +214,7 @@ export class VideoPlayer extends Widget {
      * Determine whether already full screen
      */
     isFullScreenEnabled() {
-        cc.log("Can't know status");
+        log("Can't know status");
     }
 
     /**
@@ -286,7 +286,7 @@ export class VideoPlayer extends Widget {
 VideoPlayer.elements = [];
 VideoPlayer.pauseElements = [];
 
-EventManager.getInstance().addCustomListener(cc.game.EVENT_HIDE, function () {
+EventManager.getInstance().addCustomListener(Game.EVENT_HIDE, function () {
     var list = VideoPlayer.elements;
     for (var node, i = 0; i < list.length; i++) {
         node = list[i];
@@ -296,7 +296,7 @@ EventManager.getInstance().addCustomListener(cc.game.EVENT_HIDE, function () {
         }
     }
 });
-EventManager.getInstance().addCustomListener(cc.game.EVENT_SHOW, function () {
+EventManager.getInstance().addCustomListener(Game.EVENT_SHOW, function () {
     var list = VideoPlayer.pauseElements;
     var node = list.pop();
     while (node) {
@@ -344,11 +344,11 @@ VideoPlayer._polyfill = {
         VideoPlayer._polyfill.canPlayType.push(".webm");
 })();
 
-if (cc.sys.OS_IOS === cc.sys.os) {
+if (Sys.OS_IOS === Sys.os) {
     VideoPlayer._polyfill.devicePixelRatio = true;
     VideoPlayer._polyfill.event = "progress";
 }
-if (cc.sys.browserType === cc.sys.BROWSER_TYPE_FIREFOX) {
+if (Sys.browserType === Sys.BROWSER_TYPE_FIREFOX) {
     VideoPlayer._polyfill.autoplayAfterOperation = true;
 }
 
@@ -360,7 +360,7 @@ document.head.appendChild(style);
 
 {
     const polyfill = VideoPlayer._polyfill;
-    const RenderCmd = RendererConfig.getInstance().isWebGL ? cc.Node.WebGLRenderCmd : cc.Node.CanvasRenderCmd;
+    const RenderCmd = RendererConfig.getInstance().isWebGL ? Node.WebGLRenderCmd : Node.CanvasRenderCmd;
     VideoPlayer.RenderCmd = class extends RenderCmd {
         constructor(node) {
             super(node);
@@ -371,16 +371,16 @@ document.head.appendChild(style);
 
         transform(parentCmd, recursive) {
             this.originTransform(parentCmd, recursive);
-            this.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
+            this.updateMatrix(this._worldTransform, EGLView.getInstance()._scaleX, EGLView.getInstance()._scaleY);
         }
 
         updateStatus() {
-            polyfill.devicePixelRatio = cc.view.isRetinaEnabled();
-            var flags = cc.Node._dirtyFlags, locFlag = this._dirtyFlag;
+            polyfill.devicePixelRatio = EGLView.getInstance().isRetinaEnabled();
+            var flags = Node._dirtyFlags, locFlag = this._dirtyFlag;
             if (locFlag & flags.transformDirty) {
                 this.transform(this.getParentRenderCmd(), true);
-                this.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
-                this._dirtyFlag = this._dirtyFlag & cc.Node._dirtyFlags.transformDirty ^ this._dirtyFlag;
+                this.updateMatrix(this._worldTransform, EGLView.getInstance()._scaleX, EGLView.getInstance()._scaleY);
+                this._dirtyFlag = this._dirtyFlag & Node._dirtyFlags.transformDirty ^ this._dirtyFlag;
             }
 
             if (locFlag & flags.orderDirty) {
@@ -389,7 +389,7 @@ document.head.appendChild(style);
         }
 
         resize(view) {
-            view = view || cc.view;
+            view = view || EGLView.getInstance();
             var node = this._node,
                 eventManager = EventManager.getInstance();
             if (node._parent && node._visible)
@@ -403,12 +403,12 @@ document.head.appendChild(style);
         updateMatrix(t, scaleX, scaleY) {
             var node = this._node;
             if (polyfill.devicePixelRatio) {
-                var dpr = cc.view.getDevicePixelRatio();
+                var dpr = EGLView.getInstance().getDevicePixelRatio();
                 scaleX = scaleX / dpr;
                 scaleY = scaleY / dpr;
             }
             if (this._loaded === false) return;
-            var containerStyle = cc.game.container.style,
+            var containerStyle = Game.getInstance().container.style,
                 offsetX = parseInt(containerStyle.paddingLeft),
                 offsetY = parseInt(containerStyle.paddingBottom),
                 cw = node._contentSize.width,
@@ -433,11 +433,11 @@ document.head.appendChild(style);
 
             this._url = path;
 
-            if (cc.loader.resPath && !/^http/.test(path))
-                path = cc.path.join(cc.loader.resPath, path);
+            if (Loader.getInstance().resPath && !/^http/.test(path))
+                path = Path.join(Loader.getInstance().resPath, path);
 
             hasChild = false;
-            container = cc.container;
+            container = Game.getInstance().container;
             if ('contains' in container) {
                 hasChild = container.contains(this._video);
             } else {
@@ -455,7 +455,7 @@ document.head.appendChild(style);
                     return;
                 this._loaded = true;
                 this.changeSize();
-                this.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+                this.setDirtyFlag(Node._dirtyFlags.transformDirty);
                 video.removeEventListener(polyfill.event, cb);
                 video.currentTime = 0;
                 video.style["visibility"] = "visible";
@@ -480,7 +480,7 @@ document.head.appendChild(style);
             source.src = path;
             video.appendChild(source);
 
-            extname = cc.path.extname(path);
+            extname = Path.extname(path);
             for (var i = 0; i < polyfill.canPlayType.length; i++) {
                 if (extname !== polyfill.canPlayType[i]) {
                     source = document.createElement("source");
@@ -494,7 +494,7 @@ document.head.appendChild(style);
             var node = this._node,
                 video = this._video;
             video.addEventListener("ended", () => {
-                node._renderCmd.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
+                node._renderCmd.updateMatrix(this._worldTransform, EGLView.getInstance()._scaleX, EGLView.getInstance()._scaleY);
                 node._playing = false;
                 node._dispatchEvent(VideoPlayer.EventType.COMPLETED);
             });
@@ -532,13 +532,13 @@ document.head.appendChild(style);
             var video = this._video;
             if (video) {
                 var hasChild = false;
-                if ('contains' in cc.container) {
-                    hasChild = cc.container.contains(video);
+                if ('contains' in Game.getInstance().container) {
+                    hasChild = Game.getInstance().container.contains(video);
                 } else {
-                    hasChild = cc.container.compareDocumentPosition(video) % 16;
+                    hasChild = Game.getInstance().container.compareDocumentPosition(video) % 16;
                 }
                 if (hasChild)
-                    cc.container.removeChild(video);
+                    Game.getInstance().container.removeChild(video);
             }
         }
     };

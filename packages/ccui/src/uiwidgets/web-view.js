@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventManager, RendererConfig } from '@aspect/core';
+import { EventManager, RendererConfig, Node, EGLView, log, Sys, Game } from '@aspect/core';
 import { Widget } from '../base-classes/widget';
 
 /**
@@ -45,12 +45,12 @@ export class WebView extends Widget {
     visit() {
         var cmd = this._renderCmd,
             div = cmd._div,
-            container = cc.container,
+            container = Game.getInstance().container,
             eventManager = EventManager.getInstance();
         if (this._visible) {
             container.appendChild(div);
             if (this._listener === null)
-                this._listener = eventManager.addCustomListener(cc.game.EVENT_RESIZE, function () {
+                this._listener = eventManager.addCustomListener(Game.EVENT_RESIZE, function () {
                     cmd.resize();
                 });
         } else {
@@ -62,12 +62,12 @@ export class WebView extends Widget {
             }
             if (hasChild)
                 container.removeChild(div);
-            var list = eventManager._listenersMap[cc.game.EVENT_RESIZE].getFixedPriorityListeners();
+            var list = eventManager._listenersMap[Game.EVENT_RESIZE].getFixedPriorityListeners();
             eventManager._removeListenerInVector(list, cmd._listener);
             cmd._listener = null;
         }
         cmd.updateStatus();
-        cmd.resize(cc.view);
+        cmd.resize(EGLView.getInstance());
     }
 
     setJavascriptInterfaceScheme(scheme) {
@@ -91,7 +91,7 @@ export class WebView extends Widget {
      * Stop loading
      */
     stopLoading() {
-        cc.log("Web does not support loading");
+        log("Web does not support loading");
     }
 
     /**
@@ -110,7 +110,7 @@ export class WebView extends Widget {
      * Determine whether to go back
      */
     canGoBack() {
-        cc.log("Web does not support query history");
+        log("Web does not support query history");
         return true;
     }
 
@@ -118,7 +118,7 @@ export class WebView extends Widget {
      * Determine whether to go forward
      */
     canGoForward() {
-        cc.log("Web does not support query history");
+        log("Web does not support query history");
         return true;
     }
 
@@ -128,7 +128,7 @@ export class WebView extends Widget {
     goBack() {
         try {
             if (WebView._polyfill.closeHistory)
-                return cc.log("The current browser does not support the GoBack");
+                return log("The current browser does not support the GoBack");
             var iframe = this._renderCmd._iframe;
             if (iframe) {
                 var win = iframe.contentWindow;
@@ -140,7 +140,7 @@ export class WebView extends Widget {
                     }
             }
         } catch (err) {
-            cc.log(err);
+            log(err);
         }
     }
 
@@ -150,7 +150,7 @@ export class WebView extends Widget {
     goForward() {
         try {
             if (WebView._polyfill.closeHistory)
-                return cc.log("The current browser does not support the GoForward");
+                return log("The current browser does not support the GoForward");
             var iframe = this._renderCmd._iframe;
             if (iframe) {
                 var win = iframe.contentWindow;
@@ -162,7 +162,7 @@ export class WebView extends Widget {
                     }
             }
         } catch (err) {
-            cc.log(err);
+            log(err);
         }
     }
 
@@ -187,7 +187,7 @@ export class WebView extends Widget {
      * Limited scale
      */
     setScalesPageToFit() {
-        cc.log("Web does not support zoom");
+        log("Web does not support zoom");
     }
 
     /**
@@ -257,22 +257,22 @@ const _polyfill = WebView._polyfill = {
     enableDiv: false
 };
 
-if (cc.sys.os === cc.sys.OS_IOS)
+if (Sys.os === Sys.OS_IOS)
     _polyfill.enableDiv = true;
 
-if (cc.sys.isMobile) {
-    if (cc.sys.browserType === cc.sys.BROWSER_TYPE_FIREFOX) {
+if (Sys.isMobile) {
+    if (Sys.browserType === Sys.BROWSER_TYPE_FIREFOX) {
         _polyfill.enableBG = true;
     }
 } else {
-    if (cc.sys.browserType === cc.sys.BROWSER_TYPE_IE) {
+    if (Sys.browserType === Sys.BROWSER_TYPE_IE) {
         _polyfill.closeHistory = true;
     }
 }
 
 {
     const polyfill = WebView._polyfill;
-    const RenderCmd = RendererConfig.getInstance().isWebGL ? cc.Node.WebGLRenderCmd : cc.Node.CanvasRenderCmd;
+    const RenderCmd = RendererConfig.getInstance().isWebGL ? Node.WebGLRenderCmd : Node.CanvasRenderCmd;
     WebView.RenderCmd = class extends RenderCmd {
         constructor(node) {
             super(node);
@@ -312,16 +312,16 @@ if (cc.sys.isMobile) {
 
         transform(parentCmd, recursive) {
             this.originTransform(parentCmd, recursive);
-            this.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
+            this.updateMatrix(this._worldTransform, EGLView.getInstance()._scaleX, EGLView.getInstance()._scaleY);
         }
 
         updateStatus() {
-            polyfill.devicePixelRatio = cc.view.isRetinaEnabled();
-            var flags = cc.Node._dirtyFlags, locFlag = this._dirtyFlag;
+            polyfill.devicePixelRatio = EGLView.getInstance().isRetinaEnabled();
+            var flags = Node._dirtyFlags, locFlag = this._dirtyFlag;
             if (locFlag & flags.transformDirty) {
                 this.transform(this.getParentRenderCmd(), true);
-                this.updateMatrix(this._worldTransform, cc.view._scaleX, cc.view._scaleY);
-                this._dirtyFlag = this._dirtyFlag & cc.Node._dirtyFlags.transformDirty ^ this._dirtyFlag;
+                this.updateMatrix(this._worldTransform, EGLView.getInstance()._scaleX, EGLView.getInstance()._scaleY);
+                this._dirtyFlag = this._dirtyFlag & Node._dirtyFlags.transformDirty ^ this._dirtyFlag;
             }
 
             if (locFlag & flags.orderDirty) {
@@ -330,13 +330,13 @@ if (cc.sys.isMobile) {
         }
 
         resize(view) {
-            view = view || cc.view;
+            view = view || EGLView.getInstance();
             var node = this._node,
                 eventManager = EventManager.getInstance();
             if (node._parent && node._visible)
                 this.updateMatrix(this._worldTransform, view._scaleX, view._scaleY);
             else {
-                var list = eventManager._listenersMap[cc.game.EVENT_RESIZE].getFixedPriorityListeners();
+                var list = eventManager._listenersMap[Game.EVENT_RESIZE].getFixedPriorityListeners();
                 eventManager._removeListenerInVector(list, this._listener);
                 this._listener = null;
             }
@@ -345,12 +345,12 @@ if (cc.sys.isMobile) {
         updateMatrix(t, scaleX, scaleY) {
             var node = this._node;
             if (polyfill.devicePixelRatio) {
-                var dpr = cc.view.getDevicePixelRatio();
+                var dpr = EGLView.getInstance().getDevicePixelRatio();
                 scaleX = scaleX / dpr;
                 scaleY = scaleY / dpr;
             }
             if (this._loaded === false) return;
-            var containerStyle = cc.game.container.style,
+            var containerStyle = Game.getInstance().container.style,
                 offsetX = parseInt(containerStyle.paddingLeft),
                 offsetY = parseInt(containerStyle.paddingBottom),
                 cw = node._contentSize.width,
@@ -396,13 +396,13 @@ if (cc.sys.isMobile) {
             var div = this._div;
             if (div) {
                 var hasChild = false;
-                if ('contains' in cc.container) {
-                    hasChild = cc.container.contains(div);
+                if ('contains' in Game.getInstance().container) {
+                    hasChild = Game.getInstance().container.contains(div);
                 } else {
-                    hasChild = cc.container.compareDocumentPosition(div) % 16;
+                    hasChild = Game.getInstance().container.compareDocumentPosition(div) % 16;
                 }
                 if (hasChild)
-                    cc.container.removeChild(div);
+                    Game.getInstance().container.removeChild(div);
             }
         }
     };

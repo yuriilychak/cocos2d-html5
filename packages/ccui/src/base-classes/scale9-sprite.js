@@ -1,4 +1,9 @@
-import { Node, EventHelper, SpriteFrame, RendererConfig } from '@aspect/core';
+import {
+    Node, EventHelper, SpriteFrame, RendererConfig,
+    Rect, Size, Point, Color, Sprite, BlendFunc, TextureCache, SpriteFrameCache,
+    rectPointsToPixels, contentScaleFactor, FIX_ARTIFACTS_BY_STRECHING_TEXEL,
+    BLEND_SRC, BLEND_DST, ONE, SRC_ALPHA, log, error
+} from '@aspect/core';
 
 const dataPool = {
     _pool: {},
@@ -105,7 +110,7 @@ var simpleQuadGenerator = {
         var atlasWidth = spriteFrame._texture._pixelsWide;
         var atlasHeight = spriteFrame._texture._pixelsHigh;
         var textureRect = spriteFrame._rect;
-        textureRect = cc.rectPointsToPixels(textureRect);
+        textureRect = rectPointsToPixels(textureRect);
 
         if (uvs.length < 8) {
             dataPool.put(uvs);
@@ -114,7 +119,7 @@ var simpleQuadGenerator = {
         }
 
         var l, b, r, t;
-        var texelCorrect = cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL ? 0.5 : 0;
+        var texelCorrect = FIX_ARTIFACTS_BY_STRECHING_TEXEL ? 0.5 : 0;
 
         if (spriteFrame._rotated) {
             l = (textureRect.x + texelCorrect) / atlasWidth;
@@ -220,9 +225,9 @@ var scale9QuadGenerator = {
         var leftWidth, centerWidth, rightWidth;
         var topHeight, centerHeight, bottomHeight;
         var textureRect = spriteFrame._rect;
-        textureRect = cc.rectPointsToPixels(textureRect);
-        rect = cc.rectPointsToPixels(rect);
-        var scale = cc.contentScaleFactor();
+        textureRect = rectPointsToPixels(textureRect);
+        rect = rectPointsToPixels(rect);
+        var scale = contentScaleFactor();
 
         leftWidth = insetLeft * scale;
         rightWidth = insetRight * scale;
@@ -239,7 +244,7 @@ var scale9QuadGenerator = {
 
         var u = this.x;
         var v = this.y;
-        var texelCorrect = cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL ? 0.5 : 0;
+        var texelCorrect = FIX_ARTIFACTS_BY_STRECHING_TEXEL ? 0.5 : 0;
         var offset = 0, row, col;
 
         if (spriteFrame._rotated) {
@@ -313,11 +318,11 @@ export class Scale9Sprite extends EventHelper(Node) {
         this._flippedY = false;
         this._className = "Scale9Sprite";
 
-        this._loader = new cc.Sprite.LoadManager();
+        this._loader = new Sprite.LoadManager();
 
         this._renderCmd.setState(this._brightState);
-        this._blendFunc = cc.BlendFunc.ALPHA_PREMULTIPLIED;
-        this.setAnchorPoint(new cc.Point(0.5, 0.5));
+        this._blendFunc = BlendFunc.ALPHA_PREMULTIPLIED;
+        this.setAnchorPoint(new Point(0.5, 0.5));
         this._rawVerts = null;
         this._rawUvs = null;
         this._vertices = dataPool.get(8) || new Float32Array(8);
@@ -327,7 +332,7 @@ export class Scale9Sprite extends EventHelper(Node) {
             if (file instanceof SpriteFrame)
                 this.initWithSpriteFrame(file, rectOrCapInsets);
             else {
-                var frame = cc.spriteFrameCache.getSpriteFrame(file);
+                var frame = SpriteFrameCache.getInstance().getSpriteFrame(file);
                 if (frame)
                     this.initWithSpriteFrame(frame, rectOrCapInsets);
                 else
@@ -364,7 +369,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     }
 
     getCapInsets() {
-        return new cc.Rect(this._capInsetsInternal);
+        return new Rect(this._capInsetsInternal);
     }
 
     _asyncSetCapInsets() {
@@ -386,9 +391,9 @@ export class Scale9Sprite extends EventHelper(Node) {
     }
 
     _updateCapInsets(rect, capInsets) {
-        if(!capInsets || !rect || cc.Rect.equalToZero(capInsets)) {
+        if(!capInsets || !rect || Rect.equalToZero(capInsets)) {
             rect = rect || {x:0, y:0, width: this._contentSize.width, height: this._contentSize.height};
-            this._capInsetsInternal = new cc.Rect(rect.width /3,
+            this._capInsetsInternal = new Rect(rect.width /3,
                                               rect.height /3,
                                               rect.width /3,
                                               rect.height /3);
@@ -396,7 +401,7 @@ export class Scale9Sprite extends EventHelper(Node) {
             this._capInsetsInternal = capInsets;
         }
 
-        if(!cc.Rect.equalToZero(rect)) {
+        if(!Rect.equalToZero(rect)) {
             this._insetLeft = this._capInsetsInternal.x;
             this._insetTop = this._capInsetsInternal.y;
             this._insetRight = rect.width - this._insetLeft - this._capInsetsInternal.width;
@@ -406,21 +411,21 @@ export class Scale9Sprite extends EventHelper(Node) {
 
 
     initWithFile(file, rect, capInsets) {
-        if (file instanceof cc.Rect) {
+        if (file instanceof Rect) {
             file = arguments[1];
             capInsets = arguments[0];
-            rect = new cc.Rect(0, 0, 0, 0);
+            rect = new Rect(0, 0, 0, 0);
         } else {
-            rect = rect || new cc.Rect(0, 0, 0, 0);
-            capInsets = capInsets || new cc.Rect(0, 0, 0, 0);
+            rect = rect || new Rect(0, 0, 0, 0);
+            capInsets = capInsets || new Rect(0, 0, 0, 0);
         }
 
         if(!file)
             throw new Error("ccui.Scale9Sprite.initWithFile(): file should be non-null");
 
-        var texture = cc.textureCache.getTextureForKey(file);
+        var texture = TextureCache.getInstance().getTextureForKey(file);
         if (!texture) {
-            texture = cc.textureCache.addImage(file);
+            texture = TextureCache.getInstance().addImage(file);
         }
 
         var locLoaded = texture.isLoaded();
@@ -434,9 +439,9 @@ export class Scale9Sprite extends EventHelper(Node) {
             return false;
         }
 
-        if( cc.Rect.equalToZero(rect)) {
+        if( Rect.equalToZero(rect)) {
             var textureSize = texture.getContentSize();
-            rect = new cc.Rect(0, 0, textureSize.width, textureSize.height);
+            rect = new Rect(0, 0, textureSize.width, textureSize.height);
         }
         this.setTexture(texture, rect);
         this._updateCapInsets(rect, capInsets);
@@ -469,7 +474,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     initWithSpriteFrame(spriteFrame, capInsets) {
         this.setSpriteFrame(spriteFrame);
 
-        capInsets = capInsets || new cc.Rect(0, 0, 0, 0);
+        capInsets = capInsets || new Rect(0, 0, 0, 0);
 
         this._updateCapInsets(spriteFrame._rect, capInsets);
     }
@@ -477,16 +482,16 @@ export class Scale9Sprite extends EventHelper(Node) {
     initWithSpriteFrameName(spriteFrameName, capInsets) {
         if(!spriteFrameName)
             throw new Error("ccui.Scale9Sprite.initWithSpriteFrameName(): spriteFrameName should be non-null");
-        capInsets = capInsets || new cc.Rect(0, 0, 0, 0);
+        capInsets = capInsets || new Rect(0, 0, 0, 0);
 
-        var frame = cc.spriteFrameCache.getSpriteFrame(spriteFrameName);
+        var frame = SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameName);
         if (frame == null) {
-            cc.log("ccui.Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName");
+            log("ccui.Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName");
             return false;
         }
         this.setSpriteFrame(frame);
 
-        capInsets = capInsets || new cc.Rect(0, 0, 0, 0);
+        capInsets = capInsets || new Rect(0, 0, 0, 0);
 
         this._updateCapInsets(frame._rect, capInsets);
     }
@@ -507,13 +512,13 @@ export class Scale9Sprite extends EventHelper(Node) {
     _updateBlendFunc() {
         var blendFunc = this._blendFunc;
         if (!this._spriteFrame || !this._spriteFrame._texture.hasPremultipliedAlpha()) {
-            if (blendFunc.src === cc.ONE && blendFunc.dst === cc.BLEND_DST) {
-                blendFunc.src = cc.SRC_ALPHA;
+            if (blendFunc.src === ONE && blendFunc.dst === BLEND_DST) {
+                blendFunc.src = SRC_ALPHA;
             }
             this._opacityModifyRGB = false;
         } else {
-            if (blendFunc.src === cc.SRC_ALPHA && blendFunc.dst === cc.BLEND_DST) {
-                blendFunc.src = cc.ONE;
+            if (blendFunc.src === SRC_ALPHA && blendFunc.dst === BLEND_DST) {
+                blendFunc.src = ONE;
             }
             this._opacityModifyRGB = true;
         }
@@ -537,7 +542,7 @@ export class Scale9Sprite extends EventHelper(Node) {
             this._uvsDirty = true;
             var self = this;
             var onResourceDataLoaded = function () {
-                if (cc.Size.equalTo(self._contentSize, new cc.Size(0, 0))) {
+                if (Size.equalTo(self._contentSize, new Size(0, 0))) {
                     self.setContentSize(self._spriteFrame._rect);
                 }
                 self._textureLoaded = true;
@@ -559,22 +564,22 @@ export class Scale9Sprite extends EventHelper(Node) {
 
     setBlendFunc(blendFunc, dst) {
         if (dst === undefined) {
-            this._blendFunc.src = blendFunc.src || cc.BLEND_SRC;
-            this._blendFunc.dst = blendFunc.dst || cc.BLEND_DST;
+            this._blendFunc.src = blendFunc.src || BLEND_SRC;
+            this._blendFunc.dst = blendFunc.dst || BLEND_DST;
         }
         else {
-            this._blendFunc.src = blendFunc || cc.BLEND_SRC;
-            this._blendFunc.dst = dst || cc.BLEND_DST;
+            this._blendFunc.src = blendFunc || BLEND_SRC;
+            this._blendFunc.dst = dst || BLEND_DST;
         }
         this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
     }
 
     getBlendFunc() {
-        return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
+        return new BlendFunc(this._blendFunc.src, this._blendFunc.dst);
     }
 
     setPreferredSize(preferredSize) {
-        if (!preferredSize || cc.Size.equalTo(this._contentSize, preferredSize)) return;
+        if (!preferredSize || Size.equalTo(this._contentSize, preferredSize)) return;
         this.setContentSize(preferredSize);
     }
 
@@ -600,9 +605,9 @@ export class Scale9Sprite extends EventHelper(Node) {
             if(this._spriteFrame) {
                 return this._spriteFrame._originalSize;
             }
-            return new cc.Size(this._contentSize);
+            return new Size(this._contentSize);
         } else {
-            return new cc.Size(this._contentSize);
+            return new Size(this._contentSize);
         }
     }
 
@@ -701,7 +706,7 @@ export class Scale9Sprite extends EventHelper(Node) {
           default:
               this._quadsDirty = false;
               this._uvsDirty = false;
-              cc.error('Can not generate quad');
+              error('Can not generate quad');
               return;
         }
 

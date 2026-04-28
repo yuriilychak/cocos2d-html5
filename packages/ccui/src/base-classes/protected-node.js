@@ -1,4 +1,4 @@
-import { Node, RendererConfig } from '@aspect/core';
+import { Node, RendererConfig, assert, log, NODE_TAG_INVALID, s_globalOrderOfArrival, setGlobalOrderOfArrival } from '@aspect/core';
 
 export class ProtectedNode extends Node {
     _insertProtectedChild(child, z) {
@@ -74,15 +74,15 @@ export class ProtectedNode extends Node {
     }
 
     addProtectedChild(child, localZOrder, tag) {
-      cc.assert(child != null, "child must be non-nil");
-      cc.assert(!child.parent, "child already added. It can't be added again");
+      assert(child != null, "child must be non-nil");
+      assert(!child.parent, "child already added. It can't be added again");
 
       localZOrder = localZOrder || child.getLocalZOrder();
       if (tag) child.setTag(tag);
 
       this._insertProtectedChild(child, localZOrder);
       child.setParent(this);
-      child.setOrderOfArrival(cc.s_globalOrderOfArrival);
+      child.setOrderOfArrival(s_globalOrderOfArrival);
 
       if (this._running) {
         child._performRecursive(Node._stateCallbackType.onEnter);
@@ -98,8 +98,7 @@ export class ProtectedNode extends Node {
     }
 
     getProtectedChildByTag(tag) {
-      cc.assert(tag !== cc.NODE_TAG_INVALID, "Invalid tag");
-      var locChildren = this._protectedChildren;
+      assert(tag !== NODE_TAG_INVALID, "Invalid tag");
       for (var i = 0, len = locChildren.length; i < len; i++)
         if (locChildren.getTag() === tag) return locChildren[i];
       return null;
@@ -127,14 +126,12 @@ export class ProtectedNode extends Node {
     }
 
     removeProtectedChildByTag(tag, cleanup) {
-      cc.assert(tag !== cc.NODE_TAG_INVALID, "Invalid tag");
-
-      if (cleanup == null) cleanup = true;
+      assert(tag !== NODE_TAG_INVALID, "Invalid tag");
 
       var child = this.getProtectedChildByTag(tag);
 
       if (child == null)
-        cc.log("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
+        log("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
       else this.removeProtectedChild(child, cleanup);
     }
 
@@ -162,10 +159,10 @@ export class ProtectedNode extends Node {
     }
 
     reorderProtectedChild(child, localZOrder) {
-      cc.assert(child != null, "Child must be non-nil");
+      assert(child != null, "Child must be non-nil");
       this._reorderProtectedChildDirty = true;
-      child.setOrderOfArrival(cc.s_globalOrderOfArrival++);
-      child._setLocalZOrder(localZOrder);
+      child.setOrderOfArrival(s_globalOrderOfArrival);
+      setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
     }
 
     sortAllProtectedChildren() {

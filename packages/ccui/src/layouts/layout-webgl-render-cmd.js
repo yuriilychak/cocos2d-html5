@@ -1,4 +1,4 @@
-import { CustomRenderCmd, RendererConfig } from '@aspect/core';
+import { CustomRenderCmd, RendererConfig, Node, Rect, log, EGLView } from '@aspect/core';
 import { ClippingNode } from '@aspect/clipping-nodes';
 import { ProtectedNodeWebGLRenderCmd } from '../base-classes/protected-node-webgl-render-cmd';
 
@@ -23,7 +23,7 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
     _syncStatus(parentCmd) {
         this._originSyncStatus(parentCmd);
 
-        if (parentCmd && (parentCmd._dirtyFlag & cc.Node._dirtyFlags.transformDirty))
+        if (parentCmd && (parentCmd._dirtyFlag & Node._dirtyFlags.transformDirty))
             this._node._clippingRectDirty = true;
     }
 
@@ -85,20 +85,20 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
 
         if (!this._scissorOldState) {
             gl.enable(gl.SCISSOR_TEST);
-            cc.view.setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
+            EGLView.getInstance().setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
         }
         else {
-            this._clippingOldRect = cc.view.getScissorRect();
-            if (!cc.Rect.equalTo(this._clippingOldRect, clippingRect))
-                cc.view.setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
+            this._clippingOldRect = EGLView.getInstance().getScissorRect();
+            if (!Rect.equalTo(this._clippingOldRect, clippingRect))
+                EGLView.getInstance().setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
         }
     }
 
     _onAfterVisitScissor(ctx) {
         var gl = ctx || RendererConfig.getInstance().renderContext;
         if (this._scissorOldState) {
-            if (!cc.Rect.equalTo(this._clippingOldRect, this._node._clippingRect)) {
-                cc.view.setScissorInPoints(this._clippingOldRect.x,
+            if (!Rect.equalTo(this._clippingOldRect, this._node._clippingRect)) {
+                EGLView.getInstance().setScissorInPoints(this._clippingOldRect.x,
                     this._clippingOldRect.y,
                     this._clippingOldRect.width,
                     this._clippingOldRect.height);
@@ -127,7 +127,7 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
         if (LayoutWebGLRenderCmd._layer + 1 === ClippingNode.stencilBits) {
             LayoutWebGLRenderCmd._visit_once = true;
             if (LayoutWebGLRenderCmd._visit_once) {
-                cc.log("Nesting more than " + ClippingNode.stencilBits + "stencils is not supported. Everything will be drawn without stencil for this node and its childs.");
+                log("Nesting more than " + ClippingNode.stencilBits + "stencils is not supported. Everything will be drawn without stencil for this node and its childs.");
                 LayoutWebGLRenderCmd._visit_once = false;
             }
             return;

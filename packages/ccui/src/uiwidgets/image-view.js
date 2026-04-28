@@ -23,6 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Rect, Size, warn } from '@aspect/core';
 import { Widget } from '../base-classes/widget';
 import { Scale9Sprite } from '../base-classes/scale9-sprite';
 
@@ -33,8 +34,8 @@ export class ImageView extends Widget {
 
     constructor(imageFileName, texType) {
         super();
-        this._capInsets = new cc.Rect(0,0,0,0);
-        this._imageTextureSize = new cc.Size(this._capInsets.width, this._capInsets.height);
+        this._capInsets = new Rect(0,0,0,0);
+        this._imageTextureSize = new Size(this._capInsets.width, this._capInsets.height);
         this._scale9Enabled = false;
         this._prevIgnoreSize = true;
         this._textureFile = "";
@@ -92,7 +93,7 @@ export class ImageView extends Widget {
             var handleTextureLoadedEvent = function(){
                 imageRenderer.removeEventListener("load", handleTextureLoadedEvent);
 
-                if(!self._ignoreSize && cc.Size.equalTo(self._customSize, new cc.Size(0, 0))) {
+                if(!self._ignoreSize && Size.equalTo(self._customSize, new Size(0, 0))) {
                     self._customSize = self._imageRenderer.getContentSize();
                 }
 
@@ -106,7 +107,7 @@ export class ImageView extends Widget {
             imageRenderer.addEventListener("load", handleTextureLoadedEvent);
         }
 
-        if(!this._ignoreSize && cc.Size.equalTo(this._customSize, new cc.Size(0, 0))) {
+        if(!this._ignoreSize && Size.equalTo(this._customSize, new Size(0, 0))) {
             this._customSize = this._imageRenderer.getContentSize();
         }
 
@@ -121,7 +122,7 @@ export class ImageView extends Widget {
     }
 
     setTextureRect() {
-        cc.warn('ImageView.setTextureRect  is deprecated!');
+        warn('ImageView.setTextureRect  is deprecated!');
     }
 
     setScale9Enabled(able) {
@@ -171,7 +172,7 @@ export class ImageView extends Widget {
     }
 
     getCapInsets(){
-        return new cc.Rect(this._capInsets);
+        return new Rect(this._capInsets);
     }
 
     _onSizeChanged() {
@@ -187,7 +188,7 @@ export class ImageView extends Widget {
     }
 
     getVirtualRendererSize(){
-        return new cc.Size(this._imageTextureSize);
+        return new Size(this._imageTextureSize);
     }
 
     getVirtualRenderer() {
@@ -218,7 +219,7 @@ export class ImageView extends Widget {
 
     setContentSize(contentSize, height){
         if (height) {
-            contentSize = new cc.Size(contentSize, height);
+            contentSize = new Size(contentSize, height);
         }
 
         super.setContentSize(contentSize);

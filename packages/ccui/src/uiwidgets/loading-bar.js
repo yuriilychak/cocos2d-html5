@@ -23,6 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Rect, Size, Sprite } from '@aspect/core';
 import { Widget } from '../base-classes/widget';
 import { Scale9Sprite } from '../base-classes/scale9-sprite';
 
@@ -31,8 +32,8 @@ export class LoadingBar extends Widget {
     constructor(textureName, percentage) {
         super();
         this._direction = LoadingBar.TYPE_LEFT;
-        this._barRendererTextureSize = new cc.Size(0, 0);
-        this._capInsets = new cc.Rect(0, 0, 0, 0);
+        this._barRendererTextureSize = new Size(0, 0);
+        this._capInsets = new Rect(0, 0, 0, 0);
 
         this._percent = 100;
         this._totalLength = 0;
@@ -57,7 +58,7 @@ export class LoadingBar extends Widget {
 
 
     _initRenderer() {
-        this._barRenderer = new cc.Sprite();
+        this._barRenderer = new Sprite();
         this.addProtectedChild(this._barRenderer, LoadingBar.RENDERER_ZORDER, -1);
         this._barRenderer.setAnchorPoint(0.0, 0.5);
     }
@@ -147,7 +148,7 @@ export class LoadingBar extends Widget {
         this._scale9Enabled = enabled;
         this.removeProtectedChild(this._barRenderer);
 
-        this._barRenderer = this._scale9Enabled ? new Scale9Sprite() : new cc.Sprite();
+        this._barRenderer = this._scale9Enabled ? new Scale9Sprite() : new Sprite();
 
         this.loadTexture(this._textureFile, this._renderBarTexType);
         this.addProtectedChild(this._barRenderer, LoadingBar.RENDERER_ZORDER, -1);
@@ -180,7 +181,7 @@ export class LoadingBar extends Widget {
     }
 
     getCapInsets() {
-        return new cc.Rect(this._capInsets);
+        return new Rect(this._capInsets);
     }
 
     setPercent(percent) {
@@ -209,7 +210,7 @@ export class LoadingBar extends Widget {
             rect = spriteRenderer.getTextureRect();
             rect.width = spriteTextureRect.width * res;
             spriteRenderer.setTextureRect(
-                new cc.Rect(
+                new Rect(
                     rect.x,
                     rect.y,
                     spriteTextureRect.width * res,
@@ -249,7 +250,7 @@ export class LoadingBar extends Widget {
     }
 
     getVirtualRendererSize() {
-        return new cc.Size(this._barRendererTextureSize);
+        return new Size(this._barRendererTextureSize);
     }
 
     getVirtualRenderer() {
@@ -297,7 +298,7 @@ export class LoadingBar extends Widget {
 
     _setScale9Scale() {
         var width = (this._percent) / 100 * this._totalLength;
-        this._barRenderer.setPreferredSize(new cc.Size(width, this._contentSize.height));
+        this._barRenderer.setPreferredSize(new Size(width, this._contentSize.height));
     }
 
     getDescription() {

@@ -974,3 +974,21 @@ export { visibleRect } from "./platform/visible-rect";
 export { ResolutionPolicy } from "./platform/egl-view/resolution-policy";
 export { SpriteFrame } from "./sprites/sprite-frame";
 export { Component } from "./components/component";
+export { assert, error } from "./boot";
+export { isNumber } from "./boot/utils";
+export {
+  VERTICAL_TEXT_ALIGNMENT_TOP,
+  VERTICAL_TEXT_ALIGNMENT_CENTER,
+  VERTICAL_TEXT_ALIGNMENT_BOTTOM
+} from "./platform/types/color";
+export { FontDefinition } from "./platform/types/font-definition";
+export { default as Touch } from "./event-manager/touch";
+export { default as EventFocus } from "./event-manager/event/event-focus";
+export { NODE_TAG_INVALID, s_globalOrderOfArrival, setGlobalOrderOfArrival } from "./base-nodes/node";
+export { screen } from "./platform/screen";
+export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
+export { LayerGradient } from "./layers/layer-gradient";
+export { BLEND_SRC, BLEND_DST, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from "./platform/macro/constants";
+export { rectPointsToPixels } from "./platform/macro/utils";
+export { Path, Game, Loader } from "./boot";
+export { EGLView } from "./platform/egl-view/egl-view";

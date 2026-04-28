@@ -1,7 +1,10 @@
-import { NewClass, EventListener, EventManager, KEY, Point, Size, Rect, Node, RendererConfig, ShaderCache } from '@aspect/core';
+import { NewClass, EventListener, EventManager, KEY, Point, Size, Rect, Node, RendererConfig, ShaderCache, log, arrayRemoveObject, EventFocus, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from '@aspect/core';
 import { ProtectedNode } from './protected-node.js';
 import { WidgetCanvasRenderCmd, WidgetWebGLRenderCmd } from './widget-render-cmd.js';
 import { LayoutParameter } from '../layouts/layout-parameter';
+import { LayoutComponent } from '../layouts/layout-component';
+import { Layout } from '../layouts/layout.js';
+import { ImageView } from '../uiwidgets/image-view.js';
 
 export class FocusNavigationController extends NewClass {
     constructor() {
@@ -195,7 +198,7 @@ export class Widget extends ProtectedNode {
     _getOrCreateLayoutComponent(){
         var layoutComponent = this.getComponent(LAYOUT_COMPONENT_NAME);
         if (null == layoutComponent){
-            layoutComponent = new cc.LayoutComponent();
+            layoutComponent = new LayoutComponent();
             this.addComponent(layoutComponent);
         }
         return layoutComponent;
@@ -455,7 +458,7 @@ export class Widget extends ProtectedNode {
             default:
                 break;
         }
-        if (this._parent instanceof cc.ccui.ImageView) {
+        if (this._parent instanceof ImageView) {
             var renderer = this._parent._imageRenderer;
             if (renderer && !renderer._textureLoaded)
                 return;
@@ -467,7 +470,7 @@ export class Widget extends ProtectedNode {
         this._sizeType = type;
         if (this._usingLayoutComponent) {
             var component = this._getOrCreateLayoutComponent();
-            component.setUsingPercentContentSize(this._sizeType === cc.SIZE_PERCENT);
+            component.setUsingPercentContentSize(this._sizeType === Widget.SIZE_PERCENT);
         }
     }
 
@@ -602,10 +605,10 @@ export class Widget extends ProtectedNode {
 
     findNextFocusedWidget(direction, current) {
         if (null === this.onNextFocusedWidget || null == this.onNextFocusedWidget(direction)) {
-            var isLayout = current instanceof cc.ccui.Layout;
+            var isLayout = current instanceof Layout;
             if (this.isFocused() || isLayout) {
                 var layout = this.getParent();
-                if (null === layout || !(layout instanceof cc.ccui.Layout)) {
+                if (null === layout || !(layout instanceof Layout)) {
                     if (isLayout)
                         return current.findNextFocusedWidget(direction, current);
                     return current;
@@ -652,7 +655,7 @@ export class Widget extends ProtectedNode {
                 widgetGetFocus.onFocusChanged(widgetLostFocus, widgetGetFocus);
             if (widgetLostFocus && widgetGetFocus.onFocusChanged)
                 widgetLostFocus.onFocusChanged(widgetLostFocus, widgetGetFocus);
-            EventManager.getInstance().dispatchEvent(new cc.EventFocus(widgetLostFocus, widgetGetFocus));
+            EventManager.getInstance().dispatchEvent(new EventFocus(widgetLostFocus, widgetGetFocus));
         }
     }
 
@@ -809,7 +812,7 @@ export class Widget extends ProtectedNode {
         var parent = this.getParent();
         var clippingParent = null;
         while (parent) {
-            if (parent instanceof cc.ccui.Layout) {
+            if (parent instanceof Layout) {
                 if (parent.isClippingEnabled()) {
                     this._affectByClipping = true;
                     clippingParent = parent;
@@ -950,7 +953,7 @@ export class Widget extends ProtectedNode {
         this._positionType = type;
         if(this._usingLayoutComponent){
             var component = this._getOrCreateLayoutComponent();
-            if (type === cc.POSITION_ABSOLUTE){
+            if (type === Widget.POSITION_ABSOLUTE){
                 component.setPositionPercentXEnabled(false);
                 component.setPositionPercentYEnabled(false);
             } else {
@@ -1121,42 +1124,42 @@ export class Widget extends ProtectedNode {
     }
 
     getLeftInParent() {
-        cc.log("getLeftInParent is deprecated. Please use getLeftBoundary instead.");
+        log("getLeftInParent is deprecated. Please use getLeftBoundary instead.");
         return this.getLeftBoundary();
     }
 
     getBottomInParent() {
-        cc.log("getBottomInParent is deprecated. Please use getBottomBoundary instead.");
+        log("getBottomInParent is deprecated. Please use getBottomBoundary instead.");
         return this.getBottomBoundary();
     }
 
     getRightInParent() {
-        cc.log("getRightInParent is deprecated. Please use getRightBoundary instead.");
+        log("getRightInParent is deprecated. Please use getRightBoundary instead.");
         return this.getRightBoundary();
     }
 
     getTopInParent() {
-        cc.log("getTopInParent is deprecated. Please use getTopBoundary instead.");
+        log("getTopInParent is deprecated. Please use getTopBoundary instead.");
         return this.getTopBoundary();
     }
 
     getTouchEndPos() {
-        cc.log("getTouchEndPos is deprecated. Please use getTouchEndPosition instead.");
+        log("getTouchEndPos is deprecated. Please use getTouchEndPosition instead.");
         return this.getTouchEndPosition();
     }
 
     getTouchMovePos() {
-        cc.log("getTouchMovePos is deprecated. Please use getTouchMovePosition instead.");
+        log("getTouchMovePos is deprecated. Please use getTouchMovePosition instead.");
         return this.getTouchMovePosition();
     }
 
     clippingParentAreaContainPoint(pt) {
-        cc.log("clippingParentAreaContainPoint is deprecated. Please use isClippingParentContainsPoint instead.");
+        log("clippingParentAreaContainPoint is deprecated. Please use isClippingParentContainsPoint instead.");
         this.isClippingParentContainsPoint(pt);
     }
 
     getTouchStartPos() {
-        cc.log("getTouchStartPos is deprecated. Please use getTouchBeganPosition instead.");
+        log("getTouchStartPos is deprecated. Please use getTouchBeganPosition instead.");
         return this.getTouchBeganPosition();
     }
 
@@ -1170,7 +1173,7 @@ export class Widget extends ProtectedNode {
 
     addNode(node, zOrder, tag) {
         if (node instanceof Widget) {
-            cc.log("Please use addChild to add a Widget.");
+            log("Please use addChild to add a Widget.");
             return;
         }
         Node.prototype.addChild.call(this, node, zOrder, tag);
@@ -1194,19 +1197,19 @@ export class Widget extends ProtectedNode {
 
     removeNode(node, cleanup) {
         Node.prototype.removeChild.call(this, node, cleanup);
-        cc.arrayRemoveObject(this._nodes, node);
+        arrayRemoveObject(this._nodes, node);
     }
     _getNormalGLProgram() {
-        return ShaderCache.getInstance().programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR);
+        return ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
     }
     _getGrayGLProgram() {
-        return ShaderCache.getInstance().programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
+        return ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
     }
 
     removeNodeByTag(tag, cleanup) {
         var node = this.getChildByTag(tag);
         if (!node)
-            cc.log("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
+            log("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
         else
             this.removeChild(node, cleanup);
     }
@@ -1272,7 +1275,7 @@ export class Widget extends ProtectedNode {
     }
     getScale() {
         if (this.getScaleX() !== this.getScaleY())
-            cc.log("Widget#scale. ScaleX != ScaleY. Don't know which one to return");
+            log("Widget#scale. ScaleX != ScaleY. Don't know which one to return");
         return this.getScaleX();
     }
 

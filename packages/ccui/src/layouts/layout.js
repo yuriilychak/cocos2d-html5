@@ -1,9 +1,11 @@
-import { RendererConfig } from '@aspect/core';
+import { RendererConfig, Size, Rect, Color, Point, Sprite, LayerColor, LayerGradient, assert, log, FLT_MAX } from '@aspect/core';
+import { DrawNode } from '@aspect/shape-nodes';
 import { Widget } from '../base-classes/widget';
 import { Scale9Sprite } from '../base-classes/scale9-sprite';
 import { LayoutParameter, LinearLayoutParameter, RelativeLayoutParameter } from './layout-parameter';
 import { LayoutCanvasRenderCmd } from './layout-canvas-render-cmd';
 import { LayoutWebGLRenderCmd } from './layout-webgl-render-cmd';
+import { getLayoutManager } from './layout-manager';
 
 export class Layout extends Widget {
     constructor() {
@@ -41,20 +43,20 @@ export class Layout extends Widget {
         this._colorType = Layout.BG_COLOR_NONE;
 
         this.ignoreContentAdaptWithSize(false);
-        this.setContentSize(new cc.Size(0, 0));
+        this.setContentSize(new Size(0, 0));
         this.setAnchorPoint(0, 0);
         this.onPassFocusToChild = this._findNearestChildWidgetIndex.bind(this);
 
-        this._backGroundImageCapInsets = new cc.Rect(0, 0, 0, 0);
+        this._backGroundImageCapInsets = new Rect(0, 0, 0, 0);
 
-        this._color = new cc.Color(255, 255, 255, 255);
-        this._startColor = new cc.Color(255, 255, 255, 255);
-        this._endColor = new cc.Color(255, 255, 255, 255);
-        this._alongVector = new cc.Point(0, -1);
-        this._backGroundImageTextureSize = new cc.Size(0, 0);
+        this._color = new Color(255, 255, 255, 255);
+        this._startColor = new Color(255, 255, 255, 255);
+        this._endColor = new Color(255, 255, 255, 255);
+        this._alongVector = new Point(0, -1);
+        this._backGroundImageTextureSize = new Size(0, 0);
 
-        this._clippingRect = new cc.Rect(0, 0, 0, 0);
-        this._backGroundImageColor = new cc.Color(255, 255, 255, 255);
+        this._clippingRect = new Rect(0, 0, 0, 0);
+        this._backGroundImageColor = new Color(255, 255, 255, 255);
     }
 
     get clippingEnabled() { return this.isClippingEnabled(); }
@@ -68,7 +70,7 @@ export class Layout extends Widget {
     onEnter() {
         super.onEnter();
         if (this._clippingStencil)
-            this._clippingStencil._performRecursive(cc.Node._stateCallbackType.onEnter);
+            this._clippingStencil._performRecursive(Node._stateCallbackType.onEnter);
         this._doLayoutDirty = true;
         this._clippingRectDirty = true;
     }
@@ -76,7 +78,7 @@ export class Layout extends Widget {
     onExit() {
         super.onExit();
         if (this._clippingStencil)
-            this._clippingStencil._performRecursive(cc.Node._stateCallbackType.onExit);
+            this._clippingStencil._performRecursive(Node._stateCallbackType.onExit);
     }
 
     visit(parent) {
@@ -192,7 +194,7 @@ export class Layout extends Widget {
                             return super.findNextFocusedWidget(direction, this);
                         }
                     default:
-                        cc.assert(0, "Invalid Focus Direction");
+                        assert(0, "Invalid Focus Direction");
                         return current;
                 }
             } else if (this._layoutType === Layout.LINEAR_VERTICAL) {
@@ -211,11 +213,11 @@ export class Layout extends Widget {
                     case Widget.UP:
                         return this._getPreviousFocusedWidget(direction, current);
                     default:
-                        cc.assert(0, "Invalid Focus Direction");
+                        assert(0, "Invalid Focus Direction");
                         return current;
                 }
             } else {
-                cc.assert(0, "Un Supported Layout type, please use VBox and HBox instead!!!");
+                assert(0, "Un Supported Layout type, please use VBox and HBox instead!!!");
                 return current;
             }
         } else
@@ -257,14 +259,14 @@ export class Layout extends Widget {
             case Layout.CLIPPING_SCISSOR:
             case Layout.CLIPPING_STENCIL:
                 if (able) {
-                    this._clippingStencil = new cc.DrawNode();
+                    this._clippingStencil = new DrawNode();
                     this._renderCmd.rebindStencilRendering(this._clippingStencil);
                     if (this._running)
-                        this._clippingStencil._performRecursive(cc.Node._stateCallbackType.onEnter);
+                        this._clippingStencil._performRecursive(Node._stateCallbackType.onEnter);
                     this._setStencilClippingSize(this._contentSize);
                 } else {
                     if (this._running && this._clippingStencil)
-                        this._clippingStencil._performRecursive(cc.Node._stateCallbackType.onExit);
+                        this._clippingStencil._performRecursive(Node._stateCallbackType.onExit);
                     this._clippingStencil = null;
                 }
                 break;
@@ -289,11 +291,11 @@ export class Layout extends Widget {
     _setStencilClippingSize(size) {
         if (this._clippingEnabled && this._clippingType === Layout.CLIPPING_STENCIL) {
             var rect = [];
-            rect[0] = new cc.Point(0, 0);
-            rect[1] = new cc.Point(size.width, 0);
-            rect[2] = new cc.Point(size.width, size.height);
-            rect[3] = new cc.Point(0, size.height);
-            var green = cc.Color.GREEN;
+            rect[0] = new Point(0, 0);
+            rect[1] = new Point(size.width, 0);
+            rect[2] = new Point(size.width, size.height);
+            rect[3] = new Point(0, size.height);
+            var green = Color.GREEN;
             this._clippingStencil.clear();
             this._clippingStencil.setLocalBB && this._clippingStencil.setLocalBB(0, 0, size.width, size.height);
             this._clippingStencil.drawPoly(rect, green, 0, green);
@@ -302,7 +304,7 @@ export class Layout extends Widget {
 
     _getClippingRect() {
         if (this._clippingRectDirty) {
-            var worldPos = this.convertToWorldSpace(new cc.Point(0, 0));
+            var worldPos = this.convertToWorldSpace(new Point(0, 0));
             var t = this.getNodeToWorldTransform();
             var scissorWidth = this._contentSize.width * t.a;
             var scissorHeight = this._contentSize.height * t.d;
@@ -413,7 +415,7 @@ export class Layout extends Widget {
     }
 
     getBackGroundImageCapInsets() {
-        return new cc.Rect(this._backGroundImageCapInsets);
+        return new Rect(this._backGroundImageCapInsets);
     }
 
     _supplyTheLayoutParameterLackToChild(locChild) {
@@ -445,7 +447,7 @@ export class Layout extends Widget {
             this._backGroundImage = new Scale9Sprite();
             this._backGroundImage.setPreferredSize(contentSize);
         } else
-            this._backGroundImage = new cc.Sprite();
+            this._backGroundImage = new Sprite();
         this.addProtectedChild(this._backGroundImage, Layout.BACKGROUND_IMAGE_ZORDER, -1);
         this._backGroundImage.setPosition(contentSize.width * 0.5, contentSize.height * 0.5);
     }
@@ -494,14 +496,14 @@ export class Layout extends Widget {
             case Layout.BG_COLOR_NONE:
                 break;
             case Layout.BG_COLOR_SOLID:
-                this._colorRender = new cc.LayerColor();
+                this._colorRender = new LayerColor();
                 this._colorRender.setContentSize(this._contentSize);
                 this._colorRender.setOpacity(this._opacity);
                 this._colorRender.setColor(this._color);
                 this.addProtectedChild(this._colorRender, Layout.BACKGROUND_RENDERER_ZORDER, -1);
                 break;
             case Layout.BG_COLOR_GRADIENT:
-                this._gradientRender = new cc.LayerGradient(new cc.Color(255, 0, 0, 255), new cc.Color(0, 255, 0, 255));
+                this._gradientRender = new LayerGradient(new Color(255, 0, 0, 255), new Color(0, 255, 0, 255));
                 this._gradientRender.setContentSize(this._contentSize);
                 this._gradientRender.setOpacity(this._opacity);
                 this._gradientRender.setStartColor(this._startColor);
@@ -542,17 +544,17 @@ export class Layout extends Widget {
 
     getBackGroundColor() {
         var tmpColor = this._color;
-        return new cc.Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
+        return new Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
     }
 
     getBackGroundStartColor() {
         var tmpColor = this._startColor;
-        return new cc.Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
+        return new Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
     }
 
     getBackGroundEndColor() {
         var tmpColor = this._endColor;
-        return new cc.Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
+        return new Color(tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.a);
     }
 
     setBackGroundColorOpacity(opacity) {
@@ -602,7 +604,7 @@ export class Layout extends Widget {
 
     getBackGroundImageColor() {
         var color = this._backGroundImageColor;
-        return new cc.Color(color.r, color.g, color.b, color.a);
+        return new Color(color.r, color.g, color.b, color.a);
     }
 
     getBackGroundImageOpacity() {
@@ -644,7 +646,7 @@ export class Layout extends Widget {
 
         this.sortAllChildren();
 
-        var executant = cc.ccui.getLayoutManager(this._layoutType);
+        var executant = getLayoutManager(this._layoutType);
         if (executant)
             executant._doLayout(this);
         this._doLayoutDirty = false;
@@ -672,7 +674,7 @@ export class Layout extends Widget {
 
     _getLayoutAccumulatedSize() {
         var children = this.getChildren();
-        var layoutSize = new cc.Size(0, 0);
+        var layoutSize = new Size(0, 0);
         var widgetCount = 0, locSize;
         for (var i = 0, len = children.length; i < len; i++) {
             var layout = children[i];
@@ -707,14 +709,14 @@ export class Layout extends Widget {
         var index = 0, locChildren = this.getChildren();
         var count = locChildren.length, widgetPosition;
 
-        var distance = cc.FLT_MAX, found = 0;
+        var distance = FLT_MAX, found = 0;
         if (direction === Widget.LEFT || direction === Widget.RIGHT || direction === Widget.DOWN || direction === Widget.UP) {
             widgetPosition = this._getWorldCenterPoint(baseWidget);
             while (index < count) {
                 var w = locChildren[index];
                 if (w && w instanceof Widget && w.isFocusEnabled()) {
                     var length = (w instanceof Layout) ? w._calculateNearestDistance(baseWidget)
-                        : cc.Point.length(cc.Point.sub(this._getWorldCenterPoint(w), widgetPosition));
+                        : Point.length(Point.sub(this._getWorldCenterPoint(w), widgetPosition));
                     if (length < distance) {
                         found = index;
                         distance = length;
@@ -724,7 +726,7 @@ export class Layout extends Widget {
             }
             return found;
         }
-        cc.log("invalid focus direction!");
+        log("invalid focus direction!");
         return 0;
     }
 
@@ -735,14 +737,14 @@ export class Layout extends Widget {
         var index = 0, locChildren = this.getChildren();
         var count = locChildren.length;
 
-        var distance = -cc.FLT_MAX, found = 0;
+        var distance = -FLT_MAX, found = 0;
         if (direction === Widget.LEFT || direction === Widget.RIGHT || direction === Widget.DOWN || direction === Widget.UP) {
             var widgetPosition = this._getWorldCenterPoint(baseWidget);
             while (index < count) {
                 var w = locChildren[index];
                 if (w && w instanceof Widget && w.isFocusEnabled()) {
                     var length = (w instanceof Layout) ? w._calculateFarthestDistance(baseWidget)
-                        : cc.Point.length(cc.Point.sub(this._getWorldCenterPoint(w), widgetPosition));
+                        : Point.length(Point.sub(this._getWorldCenterPoint(w), widgetPosition));
                     if (length > distance) {
                         found = index;
                         distance = length;
@@ -752,12 +754,12 @@ export class Layout extends Widget {
             }
             return found;
         }
-        cc.log("invalid focus direction!!!");
+        log("invalid focus direction!!!");
         return 0;
     }
 
     _calculateNearestDistance(baseWidget) {
-        var distance = cc.FLT_MAX;
+        var distance = FLT_MAX;
         var widgetPosition = this._getWorldCenterPoint(baseWidget);
         var locChildren = this._children;
 
@@ -767,7 +769,7 @@ export class Layout extends Widget {
                 length = widget._calculateNearestDistance(baseWidget);
             else {
                 if (widget instanceof Widget && widget.isFocusEnabled())
-                    length = cc.Point.length(cc.Point.sub(this._getWorldCenterPoint(widget), widgetPosition));
+                    length = Point.length(Point.sub(this._getWorldCenterPoint(widget), widgetPosition));
                 else
                     continue;
             }
@@ -778,7 +780,7 @@ export class Layout extends Widget {
     }
 
     _calculateFarthestDistance(baseWidget) {
-        var distance = -cc.FLT_MAX;
+        var distance = -FLT_MAX;
         var widgetPosition = this._getWorldCenterPoint(baseWidget);
         var locChildren = this._children;
 
@@ -790,7 +792,7 @@ export class Layout extends Widget {
             else {
                 if (layout instanceof Widget && layout.isFocusEnabled()) {
                     var wPosition = this._getWorldCenterPoint(layout);
-                    length = cc.Point.length(cc.Point.sub(wPosition, widgetPosition));
+                    length = Point.length(Point.sub(wPosition, widgetPosition));
                 } else
                     continue;
             }
@@ -820,7 +822,7 @@ export class Layout extends Widget {
             this.onPassFocusToChild = (previousWidgetPosition.y < widgetPosition.y) ? this._findNearestChildWidgetIndex
                 : this._findFarthestChildWidgetIndex;
         } else
-            cc.log("invalid direction!");
+            log("invalid direction!");
     }
 
     _findFirstNonLayoutWidget() {
@@ -864,7 +866,7 @@ export class Layout extends Widget {
 
     _getWorldCenterPoint(widget) {
         var widgetSize = widget instanceof Layout ? widget._getLayoutAccumulatedSize() : widget.getContentSize();
-        return widget.convertToWorldSpace(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
+        return widget.convertToWorldSpace(new Point(widgetSize.width / 2, widgetSize.height / 2));
     }
 
     _getNextFocusedWidget(direction, current) {
@@ -1023,7 +1025,7 @@ export class Layout extends Widget {
             if (direction === Widget.RIGHT)
                 return this._isLastWidgetInContainer(parent, direction);
         } else {
-            cc.log("invalid layout Type");
+            log("invalid layout Type");
             return false;
         }
     }
@@ -1046,7 +1048,7 @@ export class Layout extends Widget {
                 else
                     return this._isWidgetAncestorSupportLoopFocus(parent, direction);
             } else {
-                cc.assert(0, "invalid layout type");
+                assert(0, "invalid layout type");
                 return false;
             }
         } else

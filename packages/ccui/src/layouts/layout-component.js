@@ -1,6 +1,7 @@
-import { Component } from '@aspect/core';
+import { Component, Point } from '@aspect/core';
 import { Widget } from '../base-classes/widget';
 import { helper } from '../system/helper';
+import { PageView } from '../uiwidgets/scroll-widget/page-view';
 
 export const LayoutComponent_ReferencePoint = {
     BOTTOM_LEFT: 0,
@@ -64,7 +65,7 @@ export class LayoutComponent extends Component {
     }
 
     getPercentContentSize() {
-        return new cc.Point(this._percentWidth, this._percentHeight);
+        return new Point(this._percentWidth, this._percentHeight);
     }
 
     setPercentContentSize(percent) {
@@ -533,7 +534,7 @@ export class LayoutComponent extends Component {
         locOwner.setPosition(ownerPosition);
         locOwner.setContentSize(ownerSize);
 
-        if (locOwner instanceof cc.ccui.PageView) {
+        if (locOwner instanceof PageView) {
             locOwner.forceDoLayout();
 
             var layoutVector = locOwner.getPages();

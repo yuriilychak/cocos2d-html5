@@ -23,9 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { LabelTTF } from '@aspect/core';
-import { Widget } from '../base-classes/widget';
-import { ProtectedNode } from '../base-classes/protected-node';
+import { LabelTTF, Size, log } from "@aspect/core";
+import { Widget } from "../base-classes/widget";
+import { ProtectedNode } from "../base-classes/protected-node";
 
 /**
  * The text control of Cocos UI.
@@ -37,457 +37,512 @@ import { ProtectedNode } from '../base-classes/protected-node';
  * @property {String}   font                - The label font with a style string: e.g. "18px Verdana"
  * @property {String}   fontName            - The label font name
  * @property {Number}   fontSize            - The label font size
- * @property {Number}   textAlign           - Horizontal Alignment of label, cc.TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT
- * @property {Number}   verticalAlign       - Vertical Alignment of label: cc.VERTICAL_TEXT_ALIGNMENT_TOP|cc.VERTICAL_TEXT_ALIGNMENT_CENTER|cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM
+ * @property {Number}   textAlign           - Horizontal Alignment of label, TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT
+ * @property {Number}   verticalAlign       - Vertical Alignment of label: VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM
  * @property {Boolean}  touchScaleEnabled   - Indicate whether the label will scale when touching
  */
 export class Text extends Widget {
-
-    /**
-     * Constructor of Text. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-     * @param {String} textContent
-     * @param {String} fontName
-     * @param {Number} fontSize
-     */
-    constructor(textContent, fontName, fontSize) {
-        super();
-        this._type = Text.Type.SYSTEM;
-        this._textAreaSize = new cc.Size(0, 0);
-        this._touchScaleChangeEnabled = false;
-        this._normalScaleValueX = 1;
-        this._normalScaleValueY = 1;
-        this._fontName = "Arial";
-        this._fontSize = 16;
-        this._onSelectedScaleOffset = 0.5;
-        this._textVerticalAlignment = 0;
-        this._textHorizontalAlignment = 0;
-        this._className = "Text";
-        this._labelRendererAdaptDirty = true;
-        if (fontSize !== undefined) {
-            this.setFontName(fontName);
-            this.setFontSize(fontSize);
-            this.setString(textContent);
-        } else {
-            this.setFontName(this._fontName);
-        }
+  /**
+   * Constructor of Text. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * @param {String} textContent
+   * @param {String} fontName
+   * @param {Number} fontSize
+   */
+  constructor(textContent, fontName, fontSize) {
+    super();
+    this._type = Text.Type.SYSTEM;
+    this._textAreaSize = new Size(0, 0);
+    this._touchScaleChangeEnabled = false;
+    this._normalScaleValueX = 1;
+    this._normalScaleValueY = 1;
+    this._fontName = "Arial";
+    this._fontSize = 16;
+    this._onSelectedScaleOffset = 0.5;
+    this._textVerticalAlignment = 0;
+    this._textHorizontalAlignment = 0;
+    this._className = "Text";
+    this._labelRendererAdaptDirty = true;
+    if (fontSize !== undefined) {
+      this.setFontName(fontName);
+      this.setFontSize(fontSize);
+      this.setString(textContent);
+    } else {
+      this.setFontName(this._fontName);
     }
+  }
 
-    get boundingWidth() { return this._getBoundingWidth(); }
-    set boundingWidth(v) { this._setBoundingWidth(v); }
+  get boundingWidth() {
+    return this._getBoundingWidth();
+  }
+  set boundingWidth(v) {
+    this._setBoundingWidth(v);
+  }
 
-    get boundingHeight() { return this._getBoundingHeight(); }
-    set boundingHeight(v) { this._setBoundingHeight(v); }
+  get boundingHeight() {
+    return this._getBoundingHeight();
+  }
+  set boundingHeight(v) {
+    this._setBoundingHeight(v);
+  }
 
-    get string() { return this.getString(); }
-    set string(v) { this.setString(v); }
+  get string() {
+    return this.getString();
+  }
+  set string(v) {
+    this.setString(v);
+  }
 
-    get stringLength() { return this.getStringLength(); }
+  get stringLength() {
+    return this.getStringLength();
+  }
 
-    get font() { return this._getFont(); }
-    set font(v) { this._setFont(v); }
+  get font() {
+    return this._getFont();
+  }
+  set font(v) {
+    this._setFont(v);
+  }
 
-    get fontSize() { return this.getFontSize(); }
-    set fontSize(v) { this.setFontSize(v); }
+  get fontSize() {
+    return this.getFontSize();
+  }
+  set fontSize(v) {
+    this.setFontSize(v);
+  }
 
-    get fontName() { return this.getFontName(); }
-    set fontName(v) { this.setFontName(v); }
+  get fontName() {
+    return this.getFontName();
+  }
+  set fontName(v) {
+    this.setFontName(v);
+  }
 
-    get textAlign() { return this.getTextHorizontalAlignment(); }
-    set textAlign(v) { this.setTextHorizontalAlignment(v); }
+  get textAlign() {
+    return this.getTextHorizontalAlignment();
+  }
+  set textAlign(v) {
+    this.setTextHorizontalAlignment(v);
+  }
 
-    get verticalAlign() { return this.getTextVerticalAlignment(); }
-    set verticalAlign(v) { this.setTextVerticalAlignment(v); }
+  get verticalAlign() {
+    return this.getTextVerticalAlignment();
+  }
+  set verticalAlign(v) {
+    this.setTextVerticalAlignment(v);
+  }
 
+  _initRenderer() {
+    this._labelRenderer = new LabelTTF();
+    this.addProtectedChild(this._labelRenderer, Text.RENDERER_ZORDER, -1);
+  }
 
-    _initRenderer() {
-        this._labelRenderer = new LabelTTF();
-        this.addProtectedChild(this._labelRenderer, Text.RENDERER_ZORDER, -1);
+  /**
+   * Changes the value of Text.
+   * @deprecated since v3.0, please use setString() instead.
+   * @param {String} text
+   */
+  setText(text) {
+    log("Please use the setString");
+    this.setString(text);
+  }
+
+  /**
+   * Changes the value of Text.
+   * @param {String} text
+   */
+  setString(text) {
+    if (text === this._labelRenderer.getString()) return;
+    this._setString(text);
+
+    this._updateContentSizeWithTextureSize(
+      this._labelRenderer.getContentSize()
+    );
+  }
+
+  _setString(text) {
+    this._labelRenderer.setString(text);
+    this._labelRendererAdaptDirty = true;
+  }
+
+  /**
+   * Gets the string value of Text.
+   * @deprecated since v3.0, please use getString instead.
+   * @returns {String}
+   */
+  getStringValue() {
+    log("Please use the getString");
+    return this._labelRenderer.getString();
+  }
+
+  /**
+   * Gets the string value of Text.
+   * @returns {String}
+   */
+  getString() {
+    return this._labelRenderer.getString();
+  }
+
+  /**
+   * Gets the string length of Text.
+   * @returns {Number}
+   */
+  getStringLength() {
+    return this._labelRenderer.getStringLength();
+  }
+
+  /**
+   * Sets fontSize
+   * @param {Number} size
+   */
+  setFontSize(size) {
+    this._setFontSize(size);
+    this._updateContentSizeWithTextureSize(
+      this._labelRenderer.getContentSize()
+    );
+  }
+
+  _setFontSize(size) {
+    this._labelRenderer.setFontSize(size);
+    this._fontSize = size;
+    this._labelRendererAdaptDirty = true;
+  }
+
+  /**
+   * Returns font Size of Text
+   * @returns {Number}
+   */
+  getFontSize() {
+    return this._fontSize;
+  }
+
+  /**
+   * Sets font name
+   * @return {String} name
+   */
+  setFontName(name) {
+    this._setFontName(name);
+    this._updateContentSizeWithTextureSize(
+      this._labelRenderer.getContentSize()
+    );
+  }
+
+  _setFontName(name) {
+    this._fontName = name;
+    this._labelRenderer.setFontName(name);
+    this._labelRendererAdaptDirty = true;
+  }
+
+  _updateUITextContentSize() {
+    this._updateContentSizeWithTextureSize(
+      this._labelRenderer.getContentSize()
+    );
+  }
+
+  /**
+   * Returns font name of Text.
+   * @returns {string}
+   */
+  getFontName() {
+    return this._fontName;
+  }
+
+  _setFont(font) {
+    var res = LabelTTF._fontStyleRE.exec(font);
+    if (res) {
+      this._fontSize = parseInt(res[1]);
+      this._fontName = res[2];
+      this._labelRenderer._setFont(font);
+      this._labelScaleChangedWithSize();
     }
+  }
+  _getFont() {
+    return this._labelRenderer._getFont();
+  }
 
-    /**
-     * Changes the value of Text.
-     * @deprecated since v3.0, please use setString() instead.
-     * @param {String} text
-     */
-    setText(text) {
-        cc.log("Please use the setString");
-        this.setString(text);
-    }
+  /**
+   * Returns the type of Text.
+   * @returns {null}
+   */
+  getType() {
+    return this._type;
+  }
 
-    /**
-     * Changes the value of Text.
-     * @param {String} text
-     */
-    setString(text) {
-        if(text === this._labelRenderer.getString()) return;
-        this._setString(text);
+  /**
+   * Sets text Area Size
+   * @param {Size} size
+   */
+  setTextAreaSize(size) {
+    this._setTextAreaSize(size);
+    this._updateContentSizeWithTextureSize(
+      this._labelRenderer.getContentSize()
+    );
+  }
 
-        this._updateContentSizeWithTextureSize(this._labelRenderer.getContentSize());
+  _setTextAreaSize(size) {
+    this._labelRenderer.setDimensions(size);
+    if (!this._ignoreSize) {
+      this._customSize = size;
     }
+    this._labelRendererAdaptDirty = true;
+  }
 
-    _setString(text) {
-        this._labelRenderer.setString(text);
-        this._labelRendererAdaptDirty = true;
-    }
+  /**
+   * Returns renderer's dimension.
+   * @returns {Size}
+   */
+  getTextAreaSize() {
+    return this._labelRenderer.getDimensions();
+  }
 
-    /**
-     * Gets the string value of Text.
-     * @deprecated since v3.0, please use getString instead.
-     * @returns {String}
-     */
-    getStringValue() {
-        cc.log("Please use the getString");
-        return this._labelRenderer.getString();
-    }
+  /**
+   * Sets Horizontal Alignment of LabelTTF
+   * @param {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT} alignment Horizontal Alignment
+   */
+  setTextHorizontalAlignment(alignment) {
+    this._setTextHorizontalAlignment(alignment);
+    this._updateContentSizeWithTextureSize(
+      this._labelRenderer.getContentSize()
+    );
+  }
 
-    /**
-     * Gets the string value of Text.
-     * @returns {String}
-     */
-    getString() {
-        return this._labelRenderer.getString();
-    }
+  _setTextHorizontalAlignment(alignment) {
+    this._labelRenderer.setHorizontalAlignment(alignment);
+    this._labelRendererAdaptDirty = true;
+  }
 
-    /**
-     * Gets the string length of Text.
-     * @returns {Number}
-     */
-    getStringLength() {
-        return this._labelRenderer.getStringLength();
-    }
+  /**
+   * Returns Horizontal Alignment of label
+   * @returns {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT}
+   */
+  getTextHorizontalAlignment() {
+    return this._labelRenderer.getHorizontalAlignment();
+  }
 
-    /**
-     * Sets fontSize
-     * @param {Number} size
-     */
-    setFontSize(size) {
-        this._setFontSize(size);
-        this._updateContentSizeWithTextureSize(this._labelRenderer.getContentSize());
-    }
+  /**
+   * Sets Vertical Alignment of label
+   * @param {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM} alignment
+   */
+  setTextVerticalAlignment(alignment) {
+    this._setTextVerticalAlignment(alignment);
+    this._updateContentSizeWithTextureSize(
+      this._labelRenderer.getContentSize()
+    );
+  }
 
-    _setFontSize(size) {
-        this._labelRenderer.setFontSize(size);
-        this._fontSize = size;
-        this._labelRendererAdaptDirty = true;
-    }
+  _setTextVerticalAlignment(alignment) {
+    this._labelRenderer.setVerticalAlignment(alignment);
+    this._labelRendererAdaptDirty = true;
+  }
 
-    /**
-     * Returns font Size of Text
-     * @returns {Number}
-     */
-    getFontSize() {
-        return this._fontSize;
-    }
+  /**
+   * Gets text vertical alignment.
+   * @returns {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM}
+   */
+  getTextVerticalAlignment() {
+    return this._labelRenderer.getVerticalAlignment();
+  }
 
-    /**
-     * Sets font name
-     * @return {String} name
-     */
-    setFontName(name) {
-        this._setFontName(name);
-        this._updateContentSizeWithTextureSize(this._labelRenderer.getContentSize());
-    }
+  /**
+   * Sets the touch scale enabled of label.
+   * @param {Boolean} enable
+   */
+  setTouchScaleChangeEnabled(enable) {
+    this._touchScaleChangeEnabled = enable;
+  }
 
-    _setFontName(name) {
-        this._fontName = name;
-        this._labelRenderer.setFontName(name);
-        this._labelRendererAdaptDirty = true;
-    }
+  /**
+   * Gets the touch scale enabled of label.
+   * @returns {Boolean}
+   */
+  isTouchScaleChangeEnabled() {
+    return this._touchScaleChangeEnabled;
+  }
 
-    _updateUITextContentSize() {
-        this._updateContentSizeWithTextureSize(this._labelRenderer.getContentSize());
-    }
+  _onPressStateChangedToNormal() {
+    if (!this._touchScaleChangeEnabled) return;
+    this._labelRenderer.setScaleX(this._normalScaleValueX);
+    this._labelRenderer.setScaleY(this._normalScaleValueY);
+  }
 
-    /**
-     * Returns font name of Text.
-     * @returns {string}
-     */
-    getFontName() {
-        return this._fontName;
-    }
+  _onPressStateChangedToPressed() {
+    if (!this._touchScaleChangeEnabled) return;
+    this._labelRenderer.setScaleX(
+      this._normalScaleValueX + this._onSelectedScaleOffset
+    );
+    this._labelRenderer.setScaleY(
+      this._normalScaleValueY + this._onSelectedScaleOffset
+    );
+  }
 
-    _setFont(font) {
-        var res = LabelTTF._fontStyleRE.exec(font);
-        if (res) {
-            this._fontSize = parseInt(res[1]);
-            this._fontName = res[2];
-            this._labelRenderer._setFont(font);
-            this._labelScaleChangedWithSize();
-        }
-    }
-    _getFont() {
-        return this._labelRenderer._getFont();
-    }
+  _onPressStateChangedToDisabled() {}
 
-    /**
-     * Returns the type of Text.
-     * @returns {null}
-     */
-    getType() {
-        return this._type;
-    }
+  _onSizeChanged() {
+    super._onSizeChanged();
+    this._labelRendererAdaptDirty = true;
+  }
 
-    /**
-     * Sets text Area Size
-     * @param {cc.Size} size
-     */
-    setTextAreaSize(size) {
-        this._setTextAreaSize(size);
-        this._updateContentSizeWithTextureSize(this._labelRenderer.getContentSize());
+  _adaptRenderers() {
+    if (this._labelRendererAdaptDirty) {
+      this._labelScaleChangedWithSize();
+      this._labelRendererAdaptDirty = false;
     }
+  }
 
-    _setTextAreaSize(size) {
-        this._labelRenderer.setDimensions(size);
-        if (!this._ignoreSize){
-            this._customSize = size;
-        }
-        this._labelRendererAdaptDirty = true;
-    }
+  /**
+   * Returns the renderer's content size.
+   * @override
+   * @returns {Size}
+   */
+  getVirtualRendererSize() {
+    return this._labelRenderer.getContentSize();
+  }
 
-    /**
-     * Returns renderer's dimension.
-     * @returns {cc.Size}
-     */
-    getTextAreaSize() {
-        return this._labelRenderer.getDimensions();
-    }
+  /**
+   * Returns the renderer of Text.
+   * @returns {Node}
+   */
+  getVirtualRenderer() {
+    return this._labelRenderer;
+  }
 
-    /**
-     * Sets Horizontal Alignment of LabelTTF
-     * @param {cc.TEXT_ALIGNMENT_LEFT|cc.TEXT_ALIGNMENT_CENTER|cc.TEXT_ALIGNMENT_RIGHT} alignment Horizontal Alignment
-     */
-    setTextHorizontalAlignment(alignment) {
-        this._setTextHorizontalAlignment(alignment);
-        this._updateContentSizeWithTextureSize(this._labelRenderer.getContentSize());
+  //@since v3.3
+  getAutoRenderSize() {
+    var virtualSize = this._labelRenderer.getContentSize();
+    if (!this._ignoreSize) {
+      this._labelRenderer.setDimensions(0, 0);
+      virtualSize = this._labelRenderer.getContentSize();
+      this._labelRenderer.setDimensions(
+        this._contentSize.width,
+        this._contentSize.height
+      );
     }
+    return virtualSize;
+  }
 
+  _labelScaleChangedWithSize() {
+    var locContentSize = this._contentSize;
+    if (this._ignoreSize) {
+      this._labelRenderer.setScale(1.0);
+      this._normalScaleValueX = this._normalScaleValueY = 1;
+    } else {
+      this._labelRenderer.setDimensions(
+        new Size(locContentSize.width, locContentSize.height)
+      );
+      var textureSize = this._labelRenderer.getContentSize();
+      if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
+        this._labelRenderer.setScale(1.0);
+        return;
+      }
+      var scaleX = locContentSize.width / textureSize.width;
+      var scaleY = locContentSize.height / textureSize.height;
+      this._labelRenderer.setScaleX(scaleX);
+      this._labelRenderer.setScaleY(scaleY);
+      this._normalScaleValueX = scaleX;
+      this._normalScaleValueY = scaleY;
+    }
+    this._labelRenderer.setPosition(
+      locContentSize.width / 2.0,
+      locContentSize.height / 2.0
+    );
+  }
 
-    _setTextHorizontalAlignment(alignment) {
-        this._labelRenderer.setHorizontalAlignment(alignment);
-        this._labelRendererAdaptDirty = true;
-    }
+  /**
+   * Returns the "class name" of Text.
+   * @returns {string}
+   */
+  getDescription() {
+    return "Label";
+  }
 
-    /**
-     * Returns Horizontal Alignment of label
-     * @returns {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT}
-     */
-    getTextHorizontalAlignment() {
-        return this._labelRenderer.getHorizontalAlignment();
-    }
+  /**
+   * Enables shadow style and sets color, offset and blur radius styles.
+   * @param {Color} shadowColor
+   * @param {Size} offset
+   * @param {Number} blurRadius
+   */
+  enableShadow(shadowColor, offset, blurRadius) {
+    this._labelRenderer.enableShadow(shadowColor, offset, blurRadius);
+  }
 
-    /**
-     * Sets Vertical Alignment of label
-     * @param {cc.VERTICAL_TEXT_ALIGNMENT_TOP|cc.VERTICAL_TEXT_ALIGNMENT_CENTER|cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM} alignment
-     */
-    setTextVerticalAlignment(alignment) {
-        this._setTextVerticalAlignment(alignment);
-        this._updateContentSizeWithTextureSize(this._labelRenderer.getContentSize());
-    }
+  /**
+   * Enables outline style and sets outline's color and size.
+   * @param {Color} outlineColor
+   * @param {Size} outlineSize
+   */
+  enableOutline(outlineColor, outlineSize) {
+    this._labelRenderer.enableStroke(outlineColor, outlineSize);
+  }
 
-    _setTextVerticalAlignment(alignment) {
-        this._labelRenderer.setVerticalAlignment(alignment);
-        this._labelRendererAdaptDirty = true;
-    }
+  /**
+   * Enables glow color
+   * @param glowColor
+   */
+  enableGlow(glowColor) {
+    if (this._type === Text.Type.TTF) this._labelRenderer.enableGlow(glowColor);
+  }
 
-    /**
-     * Gets text vertical alignment.
-     * @returns {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM}
-     */
-    getTextVerticalAlignment() {
-        return this._labelRenderer.getVerticalAlignment();
-    }
+  /**
+   * Disables renderer's effect.
+   */
+  disableEffect() {
+    if (this._labelRenderer.disableEffect) this._labelRenderer.disableEffect();
+  }
 
-    /**
-     * Sets the touch scale enabled of label.
-     * @param {Boolean} enable
-     */
-    setTouchScaleChangeEnabled(enable) {
-        this._touchScaleChangeEnabled = enable;
-    }
+  _createCloneInstance() {
+    return new Text();
+  }
 
-    /**
-     * Gets the touch scale enabled of label.
-     * @returns {Boolean}
-     */
-    isTouchScaleChangeEnabled() {
-        return this._touchScaleChangeEnabled;
+  _copySpecialProperties(uiLabel) {
+    if (uiLabel instanceof Text) {
+      this.setFontName(uiLabel._fontName);
+      this.setFontSize(uiLabel.getFontSize());
+      this.setString(uiLabel.getString());
+      this.setTouchScaleChangeEnabled(uiLabel.touchScaleEnabled);
+      this.setTextAreaSize(uiLabel._textAreaSize);
+      this.setTextHorizontalAlignment(
+        uiLabel._labelRenderer.getHorizontalAlignment()
+      );
+      this.setTextVerticalAlignment(
+        uiLabel._labelRenderer.getVerticalAlignment()
+      );
+      this.setContentSize(uiLabel.getContentSize());
+      this.setTextColor(uiLabel.getTextColor());
     }
+  }
 
-    _onPressStateChangedToNormal() {
-        if (!this._touchScaleChangeEnabled)
-            return;
-        this._labelRenderer.setScaleX(this._normalScaleValueX);
-        this._labelRenderer.setScaleY(this._normalScaleValueY);
-    }
+  _setBoundingWidth(value) {
+    this._textAreaSize.width = value;
+    this._labelRenderer._setBoundingWidth(value);
+    this._labelScaleChangedWithSize();
+  }
+  _setBoundingHeight(value) {
+    this._textAreaSize.height = value;
+    this._labelRenderer._setBoundingHeight(value);
+    this._labelScaleChangedWithSize();
+  }
+  _getBoundingWidth() {
+    return this._textAreaSize.width;
+  }
+  _getBoundingHeight() {
+    return this._textAreaSize.height;
+  }
 
-    _onPressStateChangedToPressed() {
-        if (!this._touchScaleChangeEnabled)
-            return;
-        this._labelRenderer.setScaleX(this._normalScaleValueX + this._onSelectedScaleOffset);
-        this._labelRenderer.setScaleY(this._normalScaleValueY + this._onSelectedScaleOffset);
-    }
+  _changePosition() {
+    this._adaptRenderers();
+  }
 
-    _onPressStateChangedToDisabled() {
-    }
+  setColor(color) {
+    ProtectedNode.prototype.setColor.call(this, color);
+    this._labelRenderer.setColor(color);
+  }
 
-    _onSizeChanged() {
-        super._onSizeChanged();
-        this._labelRendererAdaptDirty = true;
-    }
+  setTextColor(color) {
+    this._labelRenderer.setFontFillColor(color);
+  }
 
-    _adaptRenderers() {
-        if (this._labelRendererAdaptDirty) {
-            this._labelScaleChangedWithSize();
-            this._labelRendererAdaptDirty = false;
-        }
-    }
-
-    /**
-     * Returns the renderer's content size.
-     * @override
-     * @returns {cc.Size}
-     */
-    getVirtualRendererSize() {
-        return this._labelRenderer.getContentSize();
-    }
-
-    /**
-     * Returns the renderer of Text.
-     * @returns {cc.Node}
-     */
-    getVirtualRenderer() {
-        return this._labelRenderer;
-    }
-
-    //@since v3.3
-    getAutoRenderSize() {
-        var virtualSize = this._labelRenderer.getContentSize();
-        if (!this._ignoreSize) {
-            this._labelRenderer.setDimensions(0, 0);
-            virtualSize = this._labelRenderer.getContentSize();
-            this._labelRenderer.setDimensions(this._contentSize.width, this._contentSize.height);
-        }
-        return virtualSize;
-    }
-
-    _labelScaleChangedWithSize() {
-        var locContentSize = this._contentSize;
-        if (this._ignoreSize) {
-            this._labelRenderer.setScale(1.0);
-            this._normalScaleValueX = this._normalScaleValueY = 1;
-        } else {
-            this._labelRenderer.setDimensions(new cc.Size(locContentSize.width, locContentSize.height));
-            var textureSize = this._labelRenderer.getContentSize();
-            if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-                this._labelRenderer.setScale(1.0);
-                return;
-            }
-            var scaleX = locContentSize.width / textureSize.width;
-            var scaleY = locContentSize.height / textureSize.height;
-            this._labelRenderer.setScaleX(scaleX);
-            this._labelRenderer.setScaleY(scaleY);
-            this._normalScaleValueX = scaleX;
-            this._normalScaleValueY = scaleY;
-        }
-        this._labelRenderer.setPosition(locContentSize.width / 2.0, locContentSize.height / 2.0);
-    }
-
-    /**
-     * Returns the "class name" of Text.
-     * @returns {string}
-     */
-    getDescription() {
-        return "Label";
-    }
-
-    /**
-     * Enables shadow style and sets color, offset and blur radius styles.
-     * @param {cc.Color} shadowColor
-     * @param {cc.Size} offset
-     * @param {Number} blurRadius
-     */
-    enableShadow(shadowColor, offset, blurRadius) {
-        this._labelRenderer.enableShadow(shadowColor, offset, blurRadius);
-    }
-
-    /**
-     * Enables outline style and sets outline's color and size.
-     * @param {cc.Color} outlineColor
-     * @param {cc.Size} outlineSize
-     */
-    enableOutline(outlineColor, outlineSize) {
-        this._labelRenderer.enableStroke(outlineColor, outlineSize);
-    }
-
-    /**
-     * Enables glow color
-     * @param glowColor
-     */
-    enableGlow(glowColor) {
-        if (this._type === Text.Type.TTF)
-            this._labelRenderer.enableGlow(glowColor);
-    }
-
-    /**
-     * Disables renderer's effect.
-     */
-    disableEffect() {
-        if (this._labelRenderer.disableEffect)
-            this._labelRenderer.disableEffect();
-    }
-
-    _createCloneInstance() {
-        return new Text();
-    }
-
-    _copySpecialProperties(uiLabel) {
-        if (uiLabel instanceof Text) {
-            this.setFontName(uiLabel._fontName);
-            this.setFontSize(uiLabel.getFontSize());
-            this.setString(uiLabel.getString());
-            this.setTouchScaleChangeEnabled(uiLabel.touchScaleEnabled);
-            this.setTextAreaSize(uiLabel._textAreaSize);
-            this.setTextHorizontalAlignment(uiLabel._labelRenderer.getHorizontalAlignment());
-            this.setTextVerticalAlignment(uiLabel._labelRenderer.getVerticalAlignment());
-            this.setContentSize(uiLabel.getContentSize());
-            this.setTextColor(uiLabel.getTextColor());
-        }
-    }
-
-    _setBoundingWidth(value) {
-        this._textAreaSize.width = value;
-        this._labelRenderer._setBoundingWidth(value);
-        this._labelScaleChangedWithSize();
-    }
-    _setBoundingHeight(value) {
-        this._textAreaSize.height = value;
-        this._labelRenderer._setBoundingHeight(value);
-        this._labelScaleChangedWithSize();
-    }
-    _getBoundingWidth() {
-        return this._textAreaSize.width;
-    }
-    _getBoundingHeight() {
-        return this._textAreaSize.height;
-    }
-
-    _changePosition() {
-        this._adaptRenderers();
-    }
-
-    setColor(color) {
-        ProtectedNode.prototype.setColor.call(this, color);
-        this._labelRenderer.setColor(color);
-    }
-
-    setTextColor(color) {
-        this._labelRenderer.setFontFillColor(color);
-    }
-
-    getTextColor() {
-        return this._labelRenderer._getFillStyle();
-    }
-
+  getTextColor() {
+    return this._labelRenderer._getFillStyle();
+  }
 }
 
 /**
@@ -501,6 +556,6 @@ Text.RENDERER_ZORDER = -1;
  * @ignore
  */
 Text.Type = {
-    SYSTEM: 0,
-    TTF: 1
+  SYSTEM: 0,
+  TTF: 1
 };

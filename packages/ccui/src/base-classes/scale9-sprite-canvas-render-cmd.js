@@ -51,7 +51,7 @@ export class Scale9SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
                 this._textureToRender = this._textureToRender._generateColorTexture(color.r,color.g,color.b);
         }
 
-        var wrapper = ctx || cc.rendererConfig.renderContext, context = wrapper.getContext();
+        var wrapper = ctx || RendererConfig.getInstance().renderContext, context = wrapper.getContext();
         wrapper.setTransform(this._worldTransform, scaleX, scaleY);
         wrapper.setCompositeOperation(NodeCanvasRenderCmd._getCompositeOperationByBlendFunc(node._blendFunc));
         wrapper.setGlobalAlpha(alpha);

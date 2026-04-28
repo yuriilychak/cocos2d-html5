@@ -1,4 +1,4 @@
-import { NodeWebGLRenderCmd, Node, ShaderCache } from '@aspect/core';
+import { NodeWebGLRenderCmd, Node, ShaderCache, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from '@aspect/core';
 import { Scale9Sprite } from './scale9-sprite';
 
 export class Scale9SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -7,7 +7,7 @@ export class Scale9SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
         this._needDraw = true;
         this._color = new Uint32Array(1);
         this._dirty = false;
-        this._shaderProgram = ShaderCache.getInstance().programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR);
+        this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
     }
 
     needDraw() {
@@ -114,9 +114,9 @@ export class Scale9SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     setState(state) {
         if (state === Scale9Sprite.state.NORMAL) {
-            this._shaderProgram = ShaderCache.getInstance().programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR);
+            this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
         } else if (state === Scale9Sprite.state.GRAY) {
-            this._shaderProgram = ShaderCache.getInstance().programForKey(cc.SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
+            this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
         }
     }
 }

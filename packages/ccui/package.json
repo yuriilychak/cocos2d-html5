@@ -15,6 +15,7 @@
     "@aspect/actions": "*",
     "@aspect/labels": "*",
     "@aspect/text-input": "*",
-    "@aspect/clipping-nodes": "*"
+    "@aspect/clipping-nodes": "*",
+    "@aspect/shape-nodes": "*"
   }
 }

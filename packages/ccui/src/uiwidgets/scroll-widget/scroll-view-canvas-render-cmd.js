@@ -1,4 +1,4 @@
-import { RendererConfig } from '@aspect/core';
+import { RendererConfig, EGLView } from '@aspect/core';
 import { LayoutCanvasRenderCmd } from '../../layouts/layout-canvas-render-cmd';
 
 export class ScrollViewCanvasRenderCmd extends LayoutCanvasRenderCmd {
@@ -10,8 +10,8 @@ export class ScrollViewCanvasRenderCmd extends LayoutCanvasRenderCmd {
     rendering(ctx) {
         var currentID = this._node.__instanceId;
         var i, locCmds = RendererConfig.getInstance().renderer._cacheToCanvasCmds[currentID], len,
-            scaleX = cc.view.getScaleX(),
-            scaleY = cc.view.getScaleY();
+            scaleX = EGLView.getInstance().getScaleX(),
+            scaleY = EGLView.getInstance().getScaleY();
         var context = ctx || RendererConfig.getInstance().renderContext;
         context.computeRealOffsetY();
 

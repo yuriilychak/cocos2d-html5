@@ -243,14 +243,14 @@ export class PageView extends ListView {
         var touchMoveVelocity = this._flattenVectorByDirection(this._calculateTouchMoveVelocity());
 
         var INERTIA_THRESHOLD = 500;
-        if (cc.Point.length(touchMoveVelocity) < INERTIA_THRESHOLD) {
+        if (Point.length(touchMoveVelocity) < INERTIA_THRESHOLD) {
             this._startMagneticScroll();
         }
         else {
             // Handle paging by inertia force.
             var currentPage = this.getItem(this._curPageIdx);
             var destination = this._calculateItemDestination(new Point(0.5, 0.5), currentPage, new Point(0.5, 0.5));
-            var deltaToCurrentPage = cc.Point.sub(destination, this.getInnerContainerPosition());
+            var deltaToCurrentPage = Point.sub(destination, this.getInnerContainerPosition());
             deltaToCurrentPage = this._flattenVectorByDirection(deltaToCurrentPage);
 
             // If the direction of displacement to current page and the direction of touch are same, just start magnetic scroll to the current page.

@@ -23,8 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { LabelAtlas } from '@aspect/labels';
-import { Widget } from '../base-classes/widget';
+import { LabelAtlas } from "@aspect/labels";
+import { Point, log } from "@aspect/core";
+import { Widget } from "../base-classes/widget";
 
 /**
  * The text atlas control of Cocos UI.
@@ -32,182 +33,213 @@ import { Widget } from '../base-classes/widget';
  * @property {String}   string  - Content string of the label
  */
 export class TextAtlas extends Widget {
-    /**
-     * Allocates and initializes a UILabelAtlas.                  <br/>
-     * Constructor of TextAtlas, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-     * @param {String} stringValue
-     * @param {String} charMapFile
-     * @param {number} itemWidth
-     * @param {number} itemHeight
-     * @param {String} startCharMap
-     */
-    constructor(stringValue, charMapFile, itemWidth, itemHeight, startCharMap) {
-        super();
-        this._stringValue = "";
-        this._charMapFileName = "";
-        this._itemWidth = 0;
-        this._itemHeight = 0;
-        this._startCharMap = "";
-        this._className = "TextAtlas";
-        this._labelAtlasRendererAdaptDirty = null;
-        if (startCharMap !== undefined) {
-            this.setProperty(stringValue, charMapFile, itemWidth, itemHeight, startCharMap);
-        }
+  /**
+   * Allocates and initializes a UILabelAtlas.                  <br/>
+   * Constructor of TextAtlas, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * @param {String} stringValue
+   * @param {String} charMapFile
+   * @param {number} itemWidth
+   * @param {number} itemHeight
+   * @param {String} startCharMap
+   */
+  constructor(stringValue, charMapFile, itemWidth, itemHeight, startCharMap) {
+    super();
+    this._stringValue = "";
+    this._charMapFileName = "";
+    this._itemWidth = 0;
+    this._itemHeight = 0;
+    this._startCharMap = "";
+    this._className = "TextAtlas";
+    this._labelAtlasRendererAdaptDirty = null;
+    if (startCharMap !== undefined) {
+      this.setProperty(
+        stringValue,
+        charMapFile,
+        itemWidth,
+        itemHeight,
+        startCharMap
+      );
     }
+  }
 
-    get string() { return this.getString(); }
-    set string(v) { this.setString(v); }
+  get string() {
+    return this.getString();
+  }
+  set string(v) {
+    this.setString(v);
+  }
 
+  _initRenderer() {
+    this._labelAtlasRenderer = new LabelAtlas();
+    this._labelAtlasRenderer.setAnchorPoint(new Point(0.5, 0.5));
+    this.addProtectedChild(
+      this._labelAtlasRenderer,
+      TextAtlas.RENDERER_ZORDER,
+      -1
+    );
 
-    _initRenderer() {
-        this._labelAtlasRenderer = new LabelAtlas();
-        this._labelAtlasRenderer.setAnchorPoint(new cc.Point(0.5, 0.5));
-        this.addProtectedChild(this._labelAtlasRenderer, TextAtlas.RENDERER_ZORDER, -1);
-
-        this._labelAtlasRenderer.addEventListener('load', function () {
-            this._updateContentSizeWithTextureSize(this._labelAtlasRenderer.getContentSize());
-            this._findLayout();
-        }, this);
-    }
-
-    /**
-     * initializes the UILabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas
-     * @param {String} stringValue
-     * @param {String} charMapFile
-     * @param {number} itemWidth
-     * @param {number} itemHeight
-     * @param {String} startCharMap
-     */
-    setProperty(stringValue, charMapFile, itemWidth, itemHeight, startCharMap) {
-        this._stringValue = stringValue;
-        this._charMapFileName = charMapFile;
-        this._itemWidth = itemWidth;
-        this._itemHeight = itemHeight;
-        this._startCharMap = startCharMap;
-
-        this._labelAtlasRenderer.initWithString(
-            stringValue,
-            this._charMapFileName,
-            this._itemWidth,
-            this._itemHeight,
-            this._startCharMap[0]
+    this._labelAtlasRenderer.addEventListener(
+      "load",
+      function () {
+        this._updateContentSizeWithTextureSize(
+          this._labelAtlasRenderer.getContentSize()
         );
+        this._findLayout();
+      },
+      this
+    );
+  }
 
-        this._updateContentSizeWithTextureSize(this._labelAtlasRenderer.getContentSize());
-        this._labelAtlasRendererAdaptDirty = true;
-    }
+  /**
+   * initializes the UILabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas
+   * @param {String} stringValue
+   * @param {String} charMapFile
+   * @param {number} itemWidth
+   * @param {number} itemHeight
+   * @param {String} startCharMap
+   */
+  setProperty(stringValue, charMapFile, itemWidth, itemHeight, startCharMap) {
+    this._stringValue = stringValue;
+    this._charMapFileName = charMapFile;
+    this._itemWidth = itemWidth;
+    this._itemHeight = itemHeight;
+    this._startCharMap = startCharMap;
 
-    /**
-     * Sets string value for ui text atlas.
-     * @param {String} value
-     */
-    setString(value) {
-        if (value === this._labelAtlasRenderer.getString())
-            return;
-        this._stringValue = value;
-        this._labelAtlasRenderer.setString(value);
-        this._updateContentSizeWithTextureSize(this._labelAtlasRenderer.getContentSize());
-        this._labelAtlasRendererAdaptDirty = true;
-    }
+    this._labelAtlasRenderer.initWithString(
+      stringValue,
+      this._charMapFileName,
+      this._itemWidth,
+      this._itemHeight,
+      this._startCharMap[0]
+    );
 
-    /**
-     * Sets string value for text atlas.
-     * @deprecated since v3.0, please use setString instead.
-     * @param {String} value
-     */
-    setStringValue(value) {
-        cc.log("Please use the setString");
-        this.setString(value);
-    }
+    this._updateContentSizeWithTextureSize(
+      this._labelAtlasRenderer.getContentSize()
+    );
+    this._labelAtlasRendererAdaptDirty = true;
+  }
 
-    /**
-     * get string value for text atlas.
-     * @deprecated since v3.0, please use getString instead.
-     * @returns {String}
-     */
-    getStringValue() {
-        cc.log("Please use the getString");
-        return this.getString();
-    }
+  /**
+   * Sets string value for ui text atlas.
+   * @param {String} value
+   */
+  setString(value) {
+    if (value === this._labelAtlasRenderer.getString()) return;
+    this._stringValue = value;
+    this._labelAtlasRenderer.setString(value);
+    this._updateContentSizeWithTextureSize(
+      this._labelAtlasRenderer.getContentSize()
+    );
+    this._labelAtlasRendererAdaptDirty = true;
+  }
 
-    /**
-     * get string value for ui text atlas.
-     * @returns {String}
-     */
-    getString() {
-        return this._labelAtlasRenderer.getString();
-    }
+  /**
+   * Sets string value for text atlas.
+   * @deprecated since v3.0, please use setString instead.
+   * @param {String} value
+   */
+  setStringValue(value) {
+    log("Please use the setString");
+    this.setString(value);
+  }
 
-    /**
-     * Returns the length of string.
-     * @returns {*|Number|long|int}
-     */
-    getStringLength() {
-        return this._labelAtlasRenderer.getStringLength();
-    }
+  /**
+   * get string value for text atlas.
+   * @deprecated since v3.0, please use getString instead.
+   * @returns {String}
+   */
+  getStringValue() {
+    log("Please use the getString");
+    return this.getString();
+  }
 
-    _onSizeChanged() {
-        super._onSizeChanged();
-        this._labelAtlasRendererAdaptDirty = true;
-    }
+  /**
+   * get string value for ui text atlas.
+   * @returns {String}
+   */
+  getString() {
+    return this._labelAtlasRenderer.getString();
+  }
 
-    _adaptRenderers() {
-        if (this._labelAtlasRendererAdaptDirty) {
-            this._labelAtlasScaleChangedWithSize();
-            this._labelAtlasRendererAdaptDirty = false;
-        }
-    }
+  /**
+   * Returns the length of string.
+   * @returns {*|Number|long|int}
+   */
+  getStringLength() {
+    return this._labelAtlasRenderer.getStringLength();
+  }
 
-    /**
-     * Returns the renderer's content size
-     * @overrider
-     * @returns {cc.Size}
-     */
-    getVirtualRendererSize() {
-        return this._labelAtlasRenderer.getContentSize();
-    }
+  _onSizeChanged() {
+    super._onSizeChanged();
+    this._labelAtlasRendererAdaptDirty = true;
+  }
 
-    /**
-     * Returns the renderer of TextAtlas.
-     * @returns {cc.Node}
-     */
-    getVirtualRenderer() {
-        return this._labelAtlasRenderer;
+  _adaptRenderers() {
+    if (this._labelAtlasRendererAdaptDirty) {
+      this._labelAtlasScaleChangedWithSize();
+      this._labelAtlasRendererAdaptDirty = false;
     }
+  }
 
-    _labelAtlasScaleChangedWithSize() {
-        var locRenderer = this._labelAtlasRenderer;
-        if (this._ignoreSize) {
-            locRenderer.setScale(1.0);
-        } else {
-            var textureSize = locRenderer.getContentSize();
-            if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-                locRenderer.setScale(1.0);
-                return;
-            }
-            locRenderer.setScaleX(this._contentSize.width / textureSize.width);
-            locRenderer.setScaleY(this._contentSize.height / textureSize.height);
-        }
-        locRenderer.setPosition(this._contentSize.width / 2.0, this._contentSize.height / 2.0);
-    }
+  /**
+   * Returns the renderer's content size
+   * @overrider
+   * @returns {Size}
+   */
+  getVirtualRendererSize() {
+    return this._labelAtlasRenderer.getContentSize();
+  }
 
-    /**
-     * Returns the "class name" of TextAtlas.
-     * @returns {string}
-     */
-    getDescription() {
-        return "LabelAtlas";
-    }
+  /**
+   * Returns the renderer of TextAtlas.
+   * @returns {Node}
+   */
+  getVirtualRenderer() {
+    return this._labelAtlasRenderer;
+  }
 
-    _copySpecialProperties(labelAtlas) {
-        if (labelAtlas) {
-            this.setProperty(labelAtlas._stringValue, labelAtlas._charMapFileName, labelAtlas._itemWidth, labelAtlas._itemHeight, labelAtlas._startCharMap);
-        }
+  _labelAtlasScaleChangedWithSize() {
+    var locRenderer = this._labelAtlasRenderer;
+    if (this._ignoreSize) {
+      locRenderer.setScale(1.0);
+    } else {
+      var textureSize = locRenderer.getContentSize();
+      if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
+        locRenderer.setScale(1.0);
+        return;
+      }
+      locRenderer.setScaleX(this._contentSize.width / textureSize.width);
+      locRenderer.setScaleY(this._contentSize.height / textureSize.height);
     }
+    locRenderer.setPosition(
+      this._contentSize.width / 2.0,
+      this._contentSize.height / 2.0
+    );
+  }
 
-    _createCloneInstance() {
-        return new TextAtlas();
+  /**
+   * Returns the "class name" of TextAtlas.
+   * @returns {string}
+   */
+  getDescription() {
+    return "LabelAtlas";
+  }
+
+  _copySpecialProperties(labelAtlas) {
+    if (labelAtlas) {
+      this.setProperty(
+        labelAtlas._stringValue,
+        labelAtlas._charMapFileName,
+        labelAtlas._itemWidth,
+        labelAtlas._itemHeight,
+        labelAtlas._startCharMap
+      );
     }
+  }
+
+  _createCloneInstance() {
+    return new TextAtlas();
+  }
 }
 
 /**
