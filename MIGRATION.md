@@ -123,6 +123,33 @@ Remove `cc.` prefix from all class name mentions in comments and JSDoc:
 // after:  /** @class ProgressTimer ... @property {Point} midPoint */
 ```
 
+Typical replacements in JSDoc tags:
+
+| Before | After |
+|---|---|
+| `@class cc.Foo` | `@class Foo` |
+| `@extends cc.Node` | `@extends Node` |
+| `@param {cc.Sprite} sprite` | `@param {Sprite} sprite` |
+| `@returns {cc.Color}` | `@returns {Color}` |
+| `@type {cc.Size}` | `@type {Size}` |
+| `@property {cc.Point} midPoint` | `@property {Point} midPoint` |
+| `@name cc.Foo` | `@name Foo` |
+| `@namespace cc.Foo` | `@namespace Foo` |
+
+Also strip `cc.` from inline code in `@example` blocks and free-text descriptions:
+```js
+// before: * cc.audioEngine.setEffectsVolume(0.5);
+// after:  * audioEngine.setEffectsVolume(0.5);
+
+// before: * cc.RenderTexture is a generic rendering target.
+// after:  * RenderTexture is a generic rendering target.
+```
+
+Audit command — finds `cc.` in comment lines only:
+```sh
+grep -rn 'cc\.' packages/<name>/src/ --include="*.js" | grep -E '\*\s.*cc\.|//.*cc\.'
+```
+
 ---
 
 ## Step 4 — Handle the render cmd ↔ node circular dependency
