@@ -1,3 +1,5 @@
+import { Loader, Path, log } from "@aspect/core";
+import { Audio } from "./audio.js";
 import { audioSupport } from "./audio-support.js";
 
 // Detect which audio formats the browser supports
@@ -18,7 +20,7 @@ const supportedFormats = [];
   }
 })();
 
-// Create Web Audio context and attach to cc.Audio
+// Create Web Audio context and attach to Audio
 try {
   if (audioSupport.WEB_AUDIO) {
     let context = new (
@@ -26,7 +28,7 @@ try {
       window.webkitAudioContext ||
       window.mozAudioContext
     )();
-    cc.Audio._context = context;
+    Audio._context = context;
     // check context integrity
     if (
       !context["createBufferSource"] ||
@@ -43,13 +45,13 @@ try {
           window.webkitAudioContext ||
           window.mozAudioContext
         )();
-        cc.Audio._context = context;
+        Audio._context = context;
       }, 0);
     }
   }
 } catch (error) {
   audioSupport.WEB_AUDIO = false;
-  cc.log("browser don't support web audio");
+  log("browser don't support web audio");
 }
 
 class AudioLoader {
@@ -61,7 +63,7 @@ class AudioLoader {
   loadBuffer(url, cb) {
     if (!audioSupport.WEB_AUDIO) return; // WebAudio Buffer
 
-    const request = cc.loader.getXMLHttpRequest();
+    const request = Loader.getInstance().getXMLHttpRequest();
     request.open("GET", url, true);
     request.responseType = "arraybuffer";
 
@@ -70,7 +72,7 @@ class AudioLoader {
       if (request._timeoutId >= 0) {
         clearTimeout(request._timeoutId);
       }
-      cc.Audio._context["decodeAudioData"](
+      Audio._context["decodeAudioData"](
         request.response,
         //success
         (buffer) => cb(null, buffer),
@@ -97,13 +99,13 @@ class AudioLoader {
   load(realUrl, url, res, cb) {
     if (supportedFormats.length === 0) return cb("can not support audio!");
 
-    let audio = cc.loader.getRes(url);
+    let audio = Loader.getInstance().getRes(url);
     if (audio) return cb(null, audio);
 
-    if (cc.loader.audioPath)
-      realUrl = cc.path.join(cc.loader.audioPath, realUrl);
+    if (Loader.getInstance().audioPath)
+      realUrl = Path.join(Loader.getInstance().audioPath, realUrl);
 
-    const extname = cc.path.extname(realUrl);
+    const extname = Path.extname(realUrl);
 
     const typeList = [extname];
     for (let i = 0; i < supportedFormats.length; i++) {
@@ -112,8 +114,8 @@ class AudioLoader {
       }
     }
 
-    audio = new cc.Audio(realUrl);
-    cc.loader.cache[url] = audio;
+    audio = new Audio(realUrl);
+    Loader.getInstance().cache[url] = audio;
     this.loadAudioFromExtList(realUrl, typeList, audio, cb);
     return audio;
   }
@@ -131,7 +133,7 @@ class AudioLoader {
 
     if (audioSupport.WEB_AUDIO && this.useWebAudio) {
       this.loadBuffer(realUrl, function (error, buffer) {
-        if (error) cc.log(error);
+        if (error) log(error);
 
         if (buffer) audio.setBuffer(buffer);
 
@@ -146,7 +148,7 @@ class AudioLoader {
     const dom = document.createElement("audio");
     for (let i = 0; i < num; i++) {
       const source = document.createElement("source");
-      source.src = cc.path.changeExtname(realUrl, typeList[i]);
+      source.src = Path.changeExtname(realUrl, typeList[i]);
       dom.appendChild(source);
     }
 
@@ -170,7 +172,7 @@ class AudioLoader {
       cb(null, audio);
     };
     const failure = function () {
-      cc.log("load audio failure - " + realUrl);
+      log("load audio failure - " + realUrl);
       success();
     };
     dom.addEventListener("canplaythrough", success, false);
@@ -181,4 +183,4 @@ class AudioLoader {
 }
 
 export const loader = new AudioLoader();
-cc.loader.register(["mp3", "ogg", "wav", "mp4", "m4a"], loader);
+Loader.getInstance().register(["mp3", "ogg", "wav", "mp4", "m4a"], loader);

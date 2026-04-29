@@ -1,10 +1,9 @@
-/**
- * WebAudio backend — wraps the Web Audio API to look like an <audio> element.
- */
+import { Audio } from "./audio.js";
+
 export class WebAudio {
   constructor(buffer) {
     this.buffer = buffer;
-    this.context = cc.Audio._context;
+    this.context = Audio._context;
 
     const volume = this.context["createGain"]();
     volume["gain"].value = 1;
@@ -92,7 +91,7 @@ export class WebAudio {
       clearTimeout(this._currextTimer);
       this._currextTimer = setTimeout(() => {
         if (this.context.currentTime === 0) {
-          cc.Audio.touchPlayList.push({ offset, audio: this });
+          Audio.touchPlayList.push({ offset, audio: this });
         }
       }, 10);
     }

@@ -55,8 +55,8 @@ cc.PARTICLE_DEFAULT_CAPACITY = 500;
  * @param {String|cc.Texture2D} fileImage
  * @param {Number} capacity
  *
- * @property {cc.Texture2D|HTMLImageElement|HTMLCanvasElement}  texture         - The used texture
- * @property {cc.TextureAtlas}                                  textureAtlas    - The texture atlas used for drawing the quads
+ * @property {Texture2D|HTMLImageElement|HTMLCanvasElement}  texture         - The used texture
+ * @property {TextureAtlas}                                  textureAtlas    - The texture atlas used for drawing the quads
  *
  * @example
  * 1.
@@ -69,456 +69,506 @@ cc.PARTICLE_DEFAULT_CAPACITY = 500;
  * var particleBatchNode = new cc.ParticleBatchNode(texture, 30);
  */
 cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
-    textureAtlas = null;
-    //the blend function used for drawing the quads
-    _blendFunc = null;
-    _className = "ParticleBatchNode";
+  textureAtlas = null;
+  //the blend function used for drawing the quads
+  _blendFunc = null;
+  _className = "ParticleBatchNode";
 
-    /**
-     * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
-     * Constructor of cc.ParticleBatchNode
-     * @param {String|cc.Texture2D} fileImage
-     * @param {Number} capacity
-     * @example
-     * 1.
-     * //Create a cc.ParticleBatchNode with image path  and capacity
-     * var particleBatchNode = new cc.ParticleBatchNode("res/grossini_dance.png",30);
-     *
-     * 2.
-     * //Create a cc.ParticleBatchNode with a texture and capacity
-     * var texture = cc.TextureCache.getInstance().addImage("res/grossini_dance.png");
-     * var particleBatchNode = new cc.ParticleBatchNode(texture, 30);
-     */
-    constructor(fileImage, capacity) {
-        super();
-        this._blendFunc = {src: cc.BLEND_SRC, dst: cc.BLEND_DST};
-        if (cc.isString(fileImage)) {
-            this.init(fileImage, capacity);
-        } else if (fileImage instanceof cc.Texture2D) {
-            this.initWithTexture(fileImage, capacity);
-        }
+  /**
+   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
+   * Constructor of cc.ParticleBatchNode
+   * @param {String|cc.Texture2D} fileImage
+   * @param {Number} capacity
+   * @example
+   * 1.
+   * //Create a cc.ParticleBatchNode with image path  and capacity
+   * var particleBatchNode = new cc.ParticleBatchNode("res/grossini_dance.png",30);
+   *
+   * 2.
+   * //Create a cc.ParticleBatchNode with a texture and capacity
+   * var texture = cc.TextureCache.getInstance().addImage("res/grossini_dance.png");
+   * var particleBatchNode = new cc.ParticleBatchNode(texture, 30);
+   */
+  constructor(fileImage, capacity) {
+    super();
+    this._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
+    if (cc.isString(fileImage)) {
+      this.init(fileImage, capacity);
+    } else if (fileImage instanceof cc.Texture2D) {
+      this.initWithTexture(fileImage, capacity);
+    }
+  }
+
+  get texture() {
+    return this.getTexture();
+  }
+  set texture(v) {
+    this.setTexture(v);
+  }
+
+  _createRenderCmd() {
+    if (cc.rendererConfig.isCanvas)
+      return new cc.ParticleBatchNode.CanvasRenderCmd(this);
+    else return new cc.ParticleBatchNode.WebGLRenderCmd(this);
+  }
+
+  /**
+   * initializes the particle system with cc.Texture2D, a capacity of particles
+   * @param {Texture2D|HTMLImageElement|HTMLCanvasElement} texture
+   * @param {Number} capacity
+   * @return {Boolean}
+   */
+  initWithTexture(texture, capacity) {
+    this.textureAtlas = new cc.TextureAtlas();
+    this.textureAtlas.initWithTexture(texture, capacity);
+
+    // no lazy alloc in this node
+    this._children.length = 0;
+
+    this._renderCmd._initWithTexture();
+    return true;
+  }
+
+  /**
+   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
+   * @param {String} fileImage
+   * @param {Number} capacity
+   * @return {Boolean}
+   */
+  initWithFile(fileImage, capacity) {
+    var tex = cc.textureCache.addImage(fileImage);
+    return this.initWithTexture(tex, capacity);
+  }
+
+  /**
+   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
+   * @param {String} fileImage
+   * @param {Number} capacity
+   * @return {Boolean}
+   */
+  init(fileImage, capacity) {
+    var tex = cc.textureCache.addImage(fileImage);
+    return this.initWithTexture(tex, capacity);
+  }
+
+  visit(parent) {
+    var cmd = this._renderCmd,
+      parentCmd = parent ? parent._renderCmd : null;
+
+    // quick return if not visible
+    if (!this._visible) {
+      cmd._propagateFlagsDown(parentCmd);
+      return;
     }
 
+    cmd.visit(parentCmd);
+    cc.rendererConfig.renderer.pushRenderCommand(cmd);
+    cmd._dirtyFlag = 0;
+  }
 
-    get texture() { return this.getTexture(); }
-    set texture(v) { this.setTexture(v); }
+  /**
+   * Add a child into the cc.ParticleBatchNode
+   * @param {ParticleSystem} child
+   * @param {Number} zOrder
+   * @param {Number} tag
+   */
+  addChild(child, zOrder, tag) {
+    if (!child)
+      throw new Error(
+        "cc.ParticleBatchNode.addChild() : child should be non-null"
+      );
+    if (!(child instanceof cc.ParticleSystem))
+      throw new Error(
+        "cc.ParticleBatchNode.addChild() : only supports cc.ParticleSystem as children"
+      );
+    zOrder = zOrder == null ? child.zIndex : zOrder;
+    tag = tag == null ? child.tag : tag;
 
-    _createRenderCmd() {
-        if (cc.rendererConfig.isCanvas)
-            return new cc.ParticleBatchNode.CanvasRenderCmd(this);
-        else
-            return new cc.ParticleBatchNode.WebGLRenderCmd(this);
+    if (child.getTexture() !== this.textureAtlas.texture)
+      throw new Error(
+        "cc.ParticleSystem.addChild() : the child is not using the same texture id"
+      );
+
+    // If this is the 1st children, then copy blending function
+    var childBlendFunc = child.getBlendFunc();
+    if (this._children.length === 0) this.setBlendFunc(childBlendFunc);
+    else {
+      if (
+        childBlendFunc.src !== this._blendFunc.src ||
+        childBlendFunc.dst !== this._blendFunc.dst
+      ) {
+        cc.log(
+          "cc.ParticleSystem.addChild() : Can't add a ParticleSystem that uses a different blending function"
+        );
+        return;
+      }
     }
 
-    /**
-     * initializes the particle system with cc.Texture2D, a capacity of particles
-     * @param {cc.Texture2D|HTMLImageElement|HTMLCanvasElement} texture
-     * @param {Number} capacity
-     * @return {Boolean}
-     */
-    initWithTexture(texture, capacity) {
-        this.textureAtlas = new cc.TextureAtlas();
-        this.textureAtlas.initWithTexture(texture, capacity);
+    //no lazy sorting, so don't call super addChild, call helper instead
+    var pos = this._addChildHelper(child, zOrder, tag);
 
-        // no lazy alloc in this node
-        this._children.length = 0;
+    //get new atlasIndex
+    var atlasIndex = 0;
 
-        this._renderCmd._initWithTexture();
-        return true;
+    if (pos !== 0) {
+      var p = this._children[pos - 1];
+      atlasIndex = p.getAtlasIndex() + p.getTotalParticles();
+    } else atlasIndex = 0;
+
+    this.insertChild(child, atlasIndex);
+
+    // update quad info
+    child.setBatchNode(this);
+  }
+
+  /**
+   * Inserts a child into the cc.ParticleBatchNode
+   * @param {ParticleSystem} pSystem
+   * @param {Number} index
+   */
+  insertChild(pSystem, index) {
+    var totalParticles = pSystem.getTotalParticles();
+    var locTextureAtlas = this.textureAtlas;
+    var totalQuads = locTextureAtlas.totalQuads;
+    pSystem.setAtlasIndex(index);
+    if (totalQuads + totalParticles > locTextureAtlas.getCapacity()) {
+      this._increaseAtlasCapacityTo(totalQuads + totalParticles);
+      // after a realloc empty quads of textureAtlas can be filled with gibberish (realloc doesn't perform calloc), insert empty quads to prevent it
+      locTextureAtlas.fillWithEmptyQuadsFromIndex(
+        locTextureAtlas.getCapacity() - totalParticles,
+        totalParticles
+      );
     }
 
-    /**
-     * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
-     * @param {String} fileImage
-     * @param {Number} capacity
-     * @return {Boolean}
-     */
-    initWithFile(fileImage, capacity) {
-        var tex = cc.textureCache.addImage(fileImage);
-        return this.initWithTexture(tex, capacity);
+    // make room for quads, not necessary for last child
+    if (pSystem.getAtlasIndex() + totalParticles !== totalQuads)
+      locTextureAtlas.moveQuadsFromIndex(index, index + totalParticles);
+
+    // increase totalParticles here for new particles, update method of particlesystem will fill the quads
+    locTextureAtlas.increaseTotalQuadsWith(totalParticles);
+    this._updateAllAtlasIndexes();
+  }
+
+  /**
+   * @param {ParticleSystem} child
+   * @param {Boolean} cleanup
+   */
+  removeChild(child, cleanup) {
+    // explicit nil handling
+    if (child == null) return;
+
+    if (!(child instanceof cc.ParticleSystem))
+      throw new Error(
+        "cc.ParticleBatchNode.removeChild(): only supports cc.ParticleSystem as children"
+      );
+    if (this._children.indexOf(child) === -1) {
+      cc.log(
+        "cc.ParticleBatchNode.removeChild(): doesn't contain the sprite. Can't remove it"
+      );
+      return;
     }
 
-    /**
-     * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
-     * @param {String} fileImage
-     * @param {Number} capacity
-     * @return {Boolean}
-     */
-    init(fileImage, capacity) {
-        var tex = cc.textureCache.addImage(fileImage);
-        return this.initWithTexture(tex, capacity);
+    super.removeChild(child, cleanup);
+
+    var locTextureAtlas = this.textureAtlas;
+    // remove child helper
+    locTextureAtlas.removeQuadsAtIndex(
+      child.getAtlasIndex(),
+      child.getTotalParticles()
+    );
+
+    // after memmove of data, empty the quads at the end of array
+    locTextureAtlas.fillWithEmptyQuadsFromIndex(
+      locTextureAtlas.totalQuads,
+      child.getTotalParticles()
+    );
+
+    // paticle could be reused for self rendering
+    child.setBatchNode(null);
+
+    this._updateAllAtlasIndexes();
+  }
+
+  /**
+   * Reorder will be done in this function, no "lazy" reorder to particles
+   * @param {ParticleSystem} child
+   * @param {Number} zOrder
+   */
+  reorderChild(child, zOrder) {
+    if (!child)
+      throw new Error(
+        "cc.ParticleBatchNode.reorderChild(): child should be non-null"
+      );
+    if (!(child instanceof cc.ParticleSystem))
+      throw new Error(
+        "cc.ParticleBatchNode.reorderChild(): only supports cc.QuadParticleSystems as children"
+      );
+    if (this._children.indexOf(child) === -1) {
+      cc.log(
+        "cc.ParticleBatchNode.reorderChild(): Child doesn't belong to batch"
+      );
+      return;
     }
 
-    visit(parent) {
-        var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
+    // no reordering if only 1 child
+    if (this._children.length > 1) {
+      var getIndexes = this._getCurrentIndex(child, zOrder);
 
-        // quick return if not visible
-        if (!this._visible) {
-            cmd._propagateFlagsDown(parentCmd);
-            return;
-        }
+      if (getIndexes.oldIndex !== getIndexes.newIndex) {
+        // reorder m_pChildren.array
+        this._children.splice(getIndexes.oldIndex, 1);
+        this._children.splice(getIndexes.newIndex, 0, child);
 
-        cmd.visit(parentCmd);
-        cc.rendererConfig.renderer.pushRenderCommand(cmd);
-        cmd._dirtyFlag = 0;
-    }
+        // save old altasIndex
+        var oldAtlasIndex = child.getAtlasIndex();
 
-    /**
-     * Add a child into the cc.ParticleBatchNode
-     * @param {cc.ParticleSystem} child
-     * @param {Number} zOrder
-     * @param {Number} tag
-     */
-    addChild(child, zOrder, tag) {
-        if (!child)
-            throw new Error("cc.ParticleBatchNode.addChild() : child should be non-null");
-        if (!(child instanceof cc.ParticleSystem))
-            throw new Error("cc.ParticleBatchNode.addChild() : only supports cc.ParticleSystem as children");
-        zOrder = (zOrder == null) ? child.zIndex : zOrder;
-        tag = (tag == null) ? child.tag : tag;
-
-        if (child.getTexture() !== this.textureAtlas.texture)
-            throw new Error("cc.ParticleSystem.addChild() : the child is not using the same texture id");
-
-        // If this is the 1st children, then copy blending function
-        var childBlendFunc = child.getBlendFunc();
-        if (this._children.length === 0)
-            this.setBlendFunc(childBlendFunc);
-        else {
-            if ((childBlendFunc.src !== this._blendFunc.src) || (childBlendFunc.dst !== this._blendFunc.dst)) {
-                cc.log("cc.ParticleSystem.addChild() : Can't add a ParticleSystem that uses a different blending function");
-                return;
-            }
-        }
-
-        //no lazy sorting, so don't call super addChild, call helper instead
-        var pos = this._addChildHelper(child, zOrder, tag);
-
-        //get new atlasIndex
-        var atlasIndex = 0;
-
-        if (pos !== 0) {
-            var p = this._children[pos - 1];
-            atlasIndex = p.getAtlasIndex() + p.getTotalParticles();
-        } else
-            atlasIndex = 0;
-
-        this.insertChild(child, atlasIndex);
-
-        // update quad info
-        child.setBatchNode(this);
-    }
-
-    /**
-     * Inserts a child into the cc.ParticleBatchNode
-     * @param {cc.ParticleSystem} pSystem
-     * @param {Number} index
-     */
-    insertChild(pSystem, index) {
-        var totalParticles = pSystem.getTotalParticles();
-        var locTextureAtlas = this.textureAtlas;
-        var totalQuads = locTextureAtlas.totalQuads;
-        pSystem.setAtlasIndex(index);
-        if (totalQuads + totalParticles > locTextureAtlas.getCapacity()) {
-            this._increaseAtlasCapacityTo(totalQuads + totalParticles);
-            // after a realloc empty quads of textureAtlas can be filled with gibberish (realloc doesn't perform calloc), insert empty quads to prevent it
-            locTextureAtlas.fillWithEmptyQuadsFromIndex(locTextureAtlas.getCapacity() - totalParticles, totalParticles);
-        }
-
-        // make room for quads, not necessary for last child
-        if (pSystem.getAtlasIndex() + totalParticles !== totalQuads)
-            locTextureAtlas.moveQuadsFromIndex(index, index + totalParticles);
-
-        // increase totalParticles here for new particles, update method of particlesystem will fill the quads
-        locTextureAtlas.increaseTotalQuadsWith(totalParticles);
+        // update atlas index
         this._updateAllAtlasIndexes();
-    }
 
-    /**
-     * @param {cc.ParticleSystem} child
-     * @param {Boolean} cleanup
-     */
-    removeChild(child, cleanup) {
-        // explicit nil handling
-        if (child == null)
-            return;
-
-        if (!(child instanceof cc.ParticleSystem))
-            throw new Error("cc.ParticleBatchNode.removeChild(): only supports cc.ParticleSystem as children");
-        if (this._children.indexOf(child) === -1) {
-            cc.log("cc.ParticleBatchNode.removeChild(): doesn't contain the sprite. Can't remove it");
-            return;
-        }
-
-        super.removeChild(child, cleanup);
-
-        var locTextureAtlas = this.textureAtlas;
-        // remove child helper
-        locTextureAtlas.removeQuadsAtIndex(child.getAtlasIndex(), child.getTotalParticles());
-
-        // after memmove of data, empty the quads at the end of array
-        locTextureAtlas.fillWithEmptyQuadsFromIndex(locTextureAtlas.totalQuads, child.getTotalParticles());
-
-        // paticle could be reused for self rendering
-        child.setBatchNode(null);
-
-        this._updateAllAtlasIndexes();
-    }
-
-    /**
-     * Reorder will be done in this function, no "lazy" reorder to particles
-     * @param {cc.ParticleSystem} child
-     * @param {Number} zOrder
-     */
-    reorderChild(child, zOrder) {
-        if (!child)
-            throw new Error("cc.ParticleBatchNode.reorderChild(): child should be non-null");
-        if (!(child instanceof cc.ParticleSystem))
-            throw new Error("cc.ParticleBatchNode.reorderChild(): only supports cc.QuadParticleSystems as children");
-        if (this._children.indexOf(child) === -1) {
-            cc.log("cc.ParticleBatchNode.reorderChild(): Child doesn't belong to batch");
-            return;
-        }
-
-        // no reordering if only 1 child
-        if (this._children.length > 1) {
-            var getIndexes = this._getCurrentIndex(child, zOrder);
-
-            if (getIndexes.oldIndex !== getIndexes.newIndex) {
-                // reorder m_pChildren.array
-                this._children.splice(getIndexes.oldIndex, 1)
-                this._children.splice(getIndexes.newIndex, 0, child);
-
-                // save old altasIndex
-                var oldAtlasIndex = child.getAtlasIndex();
-
-                // update atlas index
-                this._updateAllAtlasIndexes();
-
-                // Find new AtlasIndex
-                var newAtlasIndex = 0;
-                var locChildren = this._children;
-                for (var i = 0; i < locChildren.length; i++) {
-                    var pNode = locChildren[i];
-                    if (pNode === child) {
-                        newAtlasIndex = child.getAtlasIndex();
-                        break;
-                    }
-                }
-
-                // reorder textureAtlas quads
-                this.textureAtlas.moveQuadsFromIndex(oldAtlasIndex, child.getTotalParticles(), newAtlasIndex);
-
-                child.updateWithNoTime();
-            }
-        }
-        child._setLocalZOrder(zOrder);
-    }
-
-    /**
-     * @param {Number} index
-     * @param {Boolean} doCleanup
-     */
-    removeChildAtIndex(index, doCleanup) {
-        this.removeChild(this._children[i], doCleanup);
-    }
-
-    /**
-     * @param {Boolean} [doCleanup=true]
-     */
-    removeAllChildren(doCleanup) {
+        // Find new AtlasIndex
+        var newAtlasIndex = 0;
         var locChildren = this._children;
         for (var i = 0; i < locChildren.length; i++) {
-            locChildren[i].setBatchNode(null);
-        }
-        super.removeAllChildren(doCleanup);
-        this.textureAtlas.removeAllQuads();
-    }
-
-    /**
-     * disables a particle by inserting a 0'd quad into the texture atlas
-     * @param {Number} particleIndex
-     */
-    disableParticle(particleIndex) {
-        var quad = this.textureAtlas.quads[particleIndex];
-        quad.br.vertices.x = quad.br.vertices.y = quad.tr.vertices.x = quad.tr.vertices.y =
-            quad.tl.vertices.x = quad.tl.vertices.y = quad.bl.vertices.x = quad.bl.vertices.y = 0.0;
-        this.textureAtlas._setDirty(true);
-    }
-
-    /**
-     * returns the used texture
-     * @return {cc.Texture2D}
-     */
-    getTexture() {
-        return this.textureAtlas.texture;
-    }
-
-    /**
-     * sets a new texture. it will be retained
-     * @param {cc.Texture2D} texture
-     */
-    setTexture(texture) {
-        this.textureAtlas.texture = texture;
-
-        // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-        var locBlendFunc = this._blendFunc;
-        if (texture && !texture.hasPremultipliedAlpha() && ( locBlendFunc.src === cc.BLEND_SRC && locBlendFunc.dst === cc.BLEND_DST )) {
-            locBlendFunc.src = cc.SRC_ALPHA;
-            locBlendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
-        }
-    }
-
-    /**
-     * set the blending function used for the texture
-     * @param {Number|Object} src
-     * @param {Number} dst
-     */
-    setBlendFunc(src, dst) {
-        if (dst === undefined) {
-            this._blendFunc.src = src.src;
-            this._blendFunc.dst = src.dst;
-        } else {
-            this._blendFunc.src = src;
-            this._blendFunc.src = dst;
-        }
-    }
-
-    /**
-     * returns the blending function used for the texture
-     * @return {cc.BlendFunc}
-     */
-    getBlendFunc() {
-        return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
-    }
-
-    _updateAllAtlasIndexes() {
-        var index = 0;
-        var locChildren = this._children;
-        for (var i = 0; i < locChildren.length; i++) {
-            var child = locChildren[i];
-            child.setAtlasIndex(index);
-            index += child.getTotalParticles();
-        }
-    }
-
-    _increaseAtlasCapacityTo(quantity) {
-        cc.log("cocos2d: cc.ParticleBatchNode: resizing TextureAtlas capacity from [" + this.textureAtlas.getCapacity()
-            + "] to [" + quantity + "].");
-
-        if (!this.textureAtlas.resizeCapacity(quantity)) {
-            // serious problems
-            cc.log("cc.ParticleBatchNode._increaseAtlasCapacityTo() : WARNING: Not enough memory to resize the atlas");
-        }
-    }
-
-    _searchNewPositionInChildrenForZ(z) {
-        var locChildren = this._children;
-        var count = locChildren.length;
-        for (var i = 0; i < count; i++) {
-            if (locChildren[i].zIndex > z)
-                return i;
-        }
-        return count;
-    }
-
-    _getCurrentIndex(child, z) {
-        var foundCurrentIdx = false;
-        var foundNewIdx = false;
-
-        var newIndex = 0;
-        var oldIndex = 0;
-
-        var minusOne = 0, locChildren = this._children;
-        var count = locChildren.length;
-        for (var i = 0; i < count; i++) {
-            var pNode = locChildren[i];
-            // new index
-            if (pNode.zIndex > z && !foundNewIdx) {
-                newIndex = i;
-                foundNewIdx = true;
-
-                if (foundCurrentIdx && foundNewIdx)
-                    break;
-            }
-            // current index
-            if (child === pNode) {
-                oldIndex = i;
-                foundCurrentIdx = true;
-                if (!foundNewIdx)
-                    minusOne = -1;
-                if (foundCurrentIdx && foundNewIdx)
-                    break;
-            }
-        }
-        if (!foundNewIdx)
-            newIndex = count;
-        newIndex += minusOne;
-        return {newIndex: newIndex, oldIndex: oldIndex};
-    }
-
-    //
-    // <p>
-    //     don't use lazy sorting, reordering the particle systems quads afterwards would be too complex                                    <br/>
-    //     XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster           <br/>
-    //     XXX or possibly using vertexZ for reordering, that would be fastest                                                              <br/>
-    //     this helper is almost equivalent to Node's addChild, but doesn't make use of the lazy sorting                                  <br/>
-    // </p>
-    // @param {cc.ParticleSystem} child
-    // @param {Number} z
-    // @param {Number} aTag
-    // @return {Number}
-    // @private
-    //
-    _addChildHelper(child, z, aTag) {
-        if (!child)
-            throw new Error("cc.ParticleBatchNode._addChildHelper(): child should be non-null");
-        if (child.parent) {
-            cc.log("cc.ParticleBatchNode._addChildHelper(): child already added. It can't be added again");
-            return null;
+          var pNode = locChildren[i];
+          if (pNode === child) {
+            newAtlasIndex = child.getAtlasIndex();
+            break;
+          }
         }
 
+        // reorder textureAtlas quads
+        this.textureAtlas.moveQuadsFromIndex(
+          oldAtlasIndex,
+          child.getTotalParticles(),
+          newAtlasIndex
+        );
 
-        if (!this._children)
-            this._children = [];
+        child.updateWithNoTime();
+      }
+    }
+    child._setLocalZOrder(zOrder);
+  }
 
-        //don't use a lazy insert
-        var pos = this._searchNewPositionInChildrenForZ(z);
+  /**
+   * @param {Number} index
+   * @param {Boolean} doCleanup
+   */
+  removeChildAtIndex(index, doCleanup) {
+    this.removeChild(this._children[i], doCleanup);
+  }
 
-        this._children.splice(pos, 0, child);
-        child.tag = aTag;
-        child._setLocalZOrder(z);
-        child.parent = this;
-        if (this._running) {
-            child._performRecursive(cc.Node._stateCallbackType.onEnter);
-            child._performRecursive(cc.Node._stateCallbackType.onEnterTransitionDidFinish);
-        }
-        return pos;
+  /**
+   * @param {Boolean} [doCleanup=true]
+   */
+  removeAllChildren(doCleanup) {
+    var locChildren = this._children;
+    for (var i = 0; i < locChildren.length; i++) {
+      locChildren[i].setBatchNode(null);
+    }
+    super.removeAllChildren(doCleanup);
+    this.textureAtlas.removeAllQuads();
+  }
+
+  /**
+   * disables a particle by inserting a 0'd quad into the texture atlas
+   * @param {Number} particleIndex
+   */
+  disableParticle(particleIndex) {
+    var quad = this.textureAtlas.quads[particleIndex];
+    quad.br.vertices.x =
+      quad.br.vertices.y =
+      quad.tr.vertices.x =
+      quad.tr.vertices.y =
+      quad.tl.vertices.x =
+      quad.tl.vertices.y =
+      quad.bl.vertices.x =
+      quad.bl.vertices.y =
+        0.0;
+    this.textureAtlas._setDirty(true);
+  }
+
+  /**
+   * returns the used texture
+   * @return {Texture2D}
+   */
+  getTexture() {
+    return this.textureAtlas.texture;
+  }
+
+  /**
+   * sets a new texture. it will be retained
+   * @param {Texture2D} texture
+   */
+  setTexture(texture) {
+    this.textureAtlas.texture = texture;
+
+    // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
+    var locBlendFunc = this._blendFunc;
+    if (
+      texture &&
+      !texture.hasPremultipliedAlpha() &&
+      locBlendFunc.src === cc.BLEND_SRC &&
+      locBlendFunc.dst === cc.BLEND_DST
+    ) {
+      locBlendFunc.src = cc.SRC_ALPHA;
+      locBlendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
+    }
+  }
+
+  /**
+   * set the blending function used for the texture
+   * @param {Number|Object} src
+   * @param {Number} dst
+   */
+  setBlendFunc(src, dst) {
+    if (dst === undefined) {
+      this._blendFunc.src = src.src;
+      this._blendFunc.dst = src.dst;
+    } else {
+      this._blendFunc.src = src;
+      this._blendFunc.src = dst;
+    }
+  }
+
+  /**
+   * returns the blending function used for the texture
+   * @return {BlendFunc}
+   */
+  getBlendFunc() {
+    return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
+  }
+
+  _updateAllAtlasIndexes() {
+    var index = 0;
+    var locChildren = this._children;
+    for (var i = 0; i < locChildren.length; i++) {
+      var child = locChildren[i];
+      child.setAtlasIndex(index);
+      index += child.getTotalParticles();
+    }
+  }
+
+  _increaseAtlasCapacityTo(quantity) {
+    cc.log(
+      "cocos2d: cc.ParticleBatchNode: resizing TextureAtlas capacity from [" +
+        this.textureAtlas.getCapacity() +
+        "] to [" +
+        quantity +
+        "]."
+    );
+
+    if (!this.textureAtlas.resizeCapacity(quantity)) {
+      // serious problems
+      cc.log(
+        "cc.ParticleBatchNode._increaseAtlasCapacityTo() : WARNING: Not enough memory to resize the atlas"
+      );
+    }
+  }
+
+  _searchNewPositionInChildrenForZ(z) {
+    var locChildren = this._children;
+    var count = locChildren.length;
+    for (var i = 0; i < count; i++) {
+      if (locChildren[i].zIndex > z) return i;
+    }
+    return count;
+  }
+
+  _getCurrentIndex(child, z) {
+    var foundCurrentIdx = false;
+    var foundNewIdx = false;
+
+    var newIndex = 0;
+    var oldIndex = 0;
+
+    var minusOne = 0,
+      locChildren = this._children;
+    var count = locChildren.length;
+    for (var i = 0; i < count; i++) {
+      var pNode = locChildren[i];
+      // new index
+      if (pNode.zIndex > z && !foundNewIdx) {
+        newIndex = i;
+        foundNewIdx = true;
+
+        if (foundCurrentIdx && foundNewIdx) break;
+      }
+      // current index
+      if (child === pNode) {
+        oldIndex = i;
+        foundCurrentIdx = true;
+        if (!foundNewIdx) minusOne = -1;
+        if (foundCurrentIdx && foundNewIdx) break;
+      }
+    }
+    if (!foundNewIdx) newIndex = count;
+    newIndex += minusOne;
+    return { newIndex: newIndex, oldIndex: oldIndex };
+  }
+
+  //
+  // <p>
+  //     don't use lazy sorting, reordering the particle systems quads afterwards would be too complex                                    <br/>
+  //     XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster           <br/>
+  //     XXX or possibly using vertexZ for reordering, that would be fastest                                                              <br/>
+  //     this helper is almost equivalent to Node's addChild, but doesn't make use of the lazy sorting                                  <br/>
+  // </p>
+  // @param {ParticleSystem} child
+  // @param {Number} z
+  // @param {Number} aTag
+  // @return {Number}
+  // @private
+  //
+  _addChildHelper(child, z, aTag) {
+    if (!child)
+      throw new Error(
+        "cc.ParticleBatchNode._addChildHelper(): child should be non-null"
+      );
+    if (child.parent) {
+      cc.log(
+        "cc.ParticleBatchNode._addChildHelper(): child already added. It can't be added again"
+      );
+      return null;
     }
 
-    _updateBlendFunc() {
-        if (!this.textureAtlas.texture.hasPremultipliedAlpha()) {
-            this._blendFunc.src = cc.SRC_ALPHA;
-            this._blendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
-        }
-    }
+    if (!this._children) this._children = [];
 
-    /**
-     * return the texture atlas used for drawing the quads
-     * @return {cc.TextureAtlas}
-     */
-    getTextureAtlas() {
-        return this.textureAtlas;
-    }
+    //don't use a lazy insert
+    var pos = this._searchNewPositionInChildrenForZ(z);
 
-    /**
-     * set the texture atlas used for drawing the quads
-     * @param {cc.TextureAtlas} textureAtlas
-     */
-    setTextureAtlas(textureAtlas) {
-        this.textureAtlas = textureAtlas;
+    this._children.splice(pos, 0, child);
+    child.tag = aTag;
+    child._setLocalZOrder(z);
+    child.parent = this;
+    if (this._running) {
+      child._performRecursive(cc.Node._stateCallbackType.onEnter);
+      child._performRecursive(
+        cc.Node._stateCallbackType.onEnterTransitionDidFinish
+      );
     }
+    return pos;
+  }
+
+  _updateBlendFunc() {
+    if (!this.textureAtlas.texture.hasPremultipliedAlpha()) {
+      this._blendFunc.src = cc.SRC_ALPHA;
+      this._blendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
+    }
+  }
+
+  /**
+   * return the texture atlas used for drawing the quads
+   * @return {TextureAtlas}
+   */
+  getTextureAtlas() {
+    return this.textureAtlas;
+  }
+
+  /**
+   * set the texture atlas used for drawing the quads
+   * @param {TextureAtlas} textureAtlas
+   */
+  setTextureAtlas(textureAtlas) {
+    this.textureAtlas = textureAtlas;
+  }
 };
-
-
-

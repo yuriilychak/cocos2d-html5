@@ -15,7 +15,7 @@ export class TextFieldTTF extends LabelTTF {
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
    * creates a TextFieldTTF from a fontName, alignment, dimension and font size.
    * @param {String} placeholder
-   * @param {cc.Size} dimensions
+   * @param {Size} dimensions
    * @param {Number} alignment
    * @param {String} fontName
    * @param {Number} fontSize
@@ -56,7 +56,7 @@ export class TextFieldTTF extends LabelTTF {
 
   /**
    * Gets the delegate.
-   * @return {cc.Node}
+   * @return {Node}
    */
   getDelegate() {
     return this.delegate;
@@ -64,7 +64,7 @@ export class TextFieldTTF extends LabelTTF {
 
   /**
    * Set the delegate.
-   * @param {cc.Node} value
+   * @param {Node} value
    */
   setDelegate(value) {
     this.delegate = value;
@@ -80,7 +80,7 @@ export class TextFieldTTF extends LabelTTF {
 
   /**
    * Returns the color of space holder.
-   * @return {cc.Color}
+   * @return {Color}
    */
   getColorSpaceHolder() {
     return color(this.colorSpaceHolder);
@@ -88,7 +88,7 @@ export class TextFieldTTF extends LabelTTF {
 
   /**
    * Sets the color of space holder.
-   * @param {cc.Color} value
+   * @param {Color} value
    */
   setColorSpaceHolder(value) {
     this.colorSpaceHolder.r = value.r;
@@ -100,7 +100,7 @@ export class TextFieldTTF extends LabelTTF {
 
   /**
    * Sets the color of TextFieldTTF's text.
-   * @param {cc.Color} textColor
+   * @param {Color} textColor
    */
   setTextColor(textColor) {
     this._colorText.r = textColor.r;
@@ -113,7 +113,7 @@ export class TextFieldTTF extends LabelTTF {
   /**
    * Initializes the TextFieldTTF with a font name, alignment, dimension and font size
    * @param {String} placeholder
-   * @param {cc.Size} dimensions
+   * @param {Size} dimensions
    * @param {Number} alignment
    * @param {String} fontName
    * @param {Number} fontSize
@@ -358,5 +358,4 @@ export class TextFieldTTF extends LabelTTF {
   getContentText() {
     return this._inputText;
   }
-
 }

@@ -167,7 +167,7 @@ cc.TMXLayerInfo = class TMXLayerInfo extends cc.NewClass {
  * @property {number} spacing - Spacing
  * @property {number} margin - Margin
  * @property {string} sourceImage - Filename containing the tiles (should be sprite sheet / texture atlas)
- * @property {cc.Size|null} imageSize - Size in pixels of the image
+ * @property {Size|null} imageSize - Size in pixels of the image
  */
 cc.TMXTilesetInfo = class TMXTilesetInfo extends cc.NewClass {
   constructor() {
@@ -198,7 +198,7 @@ cc.TMXTilesetInfo = class TMXTilesetInfo extends cc.NewClass {
   /**
    * Return rect
    * @param {Number} gid
-   * @return {cc.Rect}
+   * @return {Rect}
    */
   rectForGID(gid, result) {
     var rect = result || new cc.Rect(0, 0, 0, 0);
@@ -391,7 +391,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
 
   /**
    * Map width & height
-   * @return {cc.Size}
+   * @return {Size}
    */
   getMapSize() {
     return new cc.Size(this._mapSize.width, this._mapSize.height);
@@ -399,7 +399,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
 
   /**
    * Map width & height
-   * @param {cc.Size} value
+   * @param {Size} value
    */
   setMapSize(value) {
     this._mapSize.width = value.width;
@@ -421,7 +421,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
 
   /**
    * Tiles width & height
-   * @return {cc.Size}
+   * @return {Size}
    */
   getTileSize() {
     return new cc.Size(this._tileSize.width, this._tileSize.height);
@@ -429,7 +429,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
 
   /**
    * Tiles width & height
-   * @param {cc.Size} value
+   * @param {Size} value
    */
   setTileSize(value) {
     this._tileSize.width = value.width;
@@ -459,7 +459,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
 
   /**
    * Layers
-   * @param {cc.TMXLayerInfo} value
+   * @param {TMXLayerInfo} value
    */
   setLayers(value) {
     this._layers.push(value);
@@ -475,7 +475,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
 
   /**
    * tilesets
-   * @param {cc.TMXTilesetInfo} value
+   * @param {TMXTilesetInfo} value
    */
   setTilesets(value) {
     this._tilesets.push(value);
@@ -491,7 +491,7 @@ cc.TMXMapInfo = class TMXMapInfo extends cc.SAXParser {
 
   /**
    * ObjectGroups
-   * @param {cc.TMXObjectGroup} value
+   * @param {TMXObjectGroup} value
    */
   setObjectGroups(value) {
     this._objectGroups.push(value);

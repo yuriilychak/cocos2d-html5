@@ -12,7 +12,9 @@
  * May be modifications for a few browser version
  */
 
-const sys = cc.sys;
+import { Sys } from "@aspect/core";
+
+const sys = Sys.getInstance();
 
 // check if browser supports Web Audio
 const supportWebAudio = !!(

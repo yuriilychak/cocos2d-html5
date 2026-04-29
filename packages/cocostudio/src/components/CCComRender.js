@@ -27,51 +27,49 @@
  * The render component for Cocostudio.
  */
 ccs.ComRender = class ComRender extends ccs.Component {
+  /**
+   * Construction of ccs.ComRender
+   * @param {Node} node
+   * @param {String} comName
+   */
+  constructor(node, comName) {
+    super();
+    this._render = node;
+    this._name = comName;
+    this.isRenderer = true;
+    this.init();
+  }
 
-    /**
-     * Construction of ccs.ComRender
-     * @param {cc.Node} node
-     * @param {String} comName
-     */
-    constructor (node, comName) {
-        super();
-        this._render = node;
-        this._name = comName;
-        this.isRenderer = true;
-        this.init();
-    }
+  /**
+   * The callback calls when a render component enter stage.
+   */
+  onEnter() {
+    if (this._owner) this._owner.addChild(this._render);
+  }
 
-    /**
-     * The callback calls when a render component enter stage.
-     */
-    onEnter () {
-        if (this._owner)
-            this._owner.addChild(this._render);
+  /**
+   * The callback calls when a render component exit stage.
+   */
+  onExit() {
+    if (this._owner) {
+      this._owner.removeChild(this._render, true);
+      this._render = null;
     }
+  }
 
-    /**
-     * The callback calls when a render component exit stage.
-     */
-    onExit () {
-        if (this._owner) {
-            this._owner.removeChild(this._render, true);
-            this._render = null;
-        }
-    }
+  /**
+   * Returns a render node
+   * @returns {Node}
+   */
+  getNode() {
+    return this._render;
+  }
 
-    /**
-     * Returns a render node
-     * @returns {cc.Node}
-     */
-    getNode () {
-        return this._render;
-    }
-
-    /**
-     * Sets a render node to component.
-     * @param {cc.Node} node
-     */
-    setNode (node) {
-        this._render = node;
-    }
+  /**
+   * Sets a render node to component.
+   * @param {Node} node
+   */
+  setNode(node) {
+    this._render = node;
+  }
 };

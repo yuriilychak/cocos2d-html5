@@ -27,130 +27,133 @@
  * The component container for Cocostudio, it has some components.
  */
 cc.ComponentContainer = class extends cc.NewClass {
-    _components = null;
-    _owner = null;
+  _components = null;
+  _owner = null;
 
-    /**
-     * Construction of cc.ComponentContainer
-     * @param node
-     */
-    constructor(node) {
-        super();
-        this._components = null;
-        this._owner = node;
+  /**
+   * Construction of cc.ComponentContainer
+   * @param node
+   */
+  constructor(node) {
+    super();
+    this._components = null;
+    this._owner = node;
+  }
+
+  /**
+   * Gets component by name.
+   * @param name
+   * @returns {*}
+   */
+  getComponent(name) {
+    if (!name)
+      throw new Error(
+        "cc.ComponentContainer.getComponent(): name should be non-null"
+      );
+    name = name.trim();
+    if (!this._components) {
+      this._components = {};
+    }
+    return this._components[name];
+  }
+
+  /**
+   * Adds a component to container
+   * @param {Component} component
+   * @returns {boolean}
+   */
+  add(component) {
+    if (!component)
+      throw new Error(
+        "cc.ComponentContainer.add(): component should be non-null"
+      );
+    if (component.getOwner()) {
+      cc.log(
+        "cc.ComponentContainer.add(): Component already added. It can't be added again"
+      );
+      return false;
     }
 
-    /**
-     * Gets component by name.
-     * @param name
-     * @returns {*}
-     */
-    getComponent(name) {
-        if(!name)
-            throw new Error("cc.ComponentContainer.getComponent(): name should be non-null");
-        name = name.trim();
-        if(!this._components){
-            this._components = {};
-        }
-        return this._components[name];
+    if (this._components == null) {
+      this._components = {};
+      this._owner.scheduleUpdate();
     }
-
-    /**
-     * Adds a component to container
-     * @param {cc.Component} component
-     * @returns {boolean}
-     */
-    add(component) {
-        if(!component)
-             throw new Error("cc.ComponentContainer.add(): component should be non-null");
-        if(component.getOwner()){
-            cc.log("cc.ComponentContainer.add(): Component already added. It can't be added again");
-            return false;
-        }
-
-        if(this._components == null){
-            this._components = {};
-            this._owner.scheduleUpdate();
-        }
-        var oldComponent = this._components[component.getName()];
-        if(oldComponent){
-            cc.log("cc.ComponentContainer.add(): Component already added. It can't be added again");
-            return false;
-        }
-        component.setOwner(this._owner);
-        this._components[component.getName()] = component;
-        component.onEnter();
-        return true;
+    var oldComponent = this._components[component.getName()];
+    if (oldComponent) {
+      cc.log(
+        "cc.ComponentContainer.add(): Component already added. It can't be added again"
+      );
+      return false;
     }
+    component.setOwner(this._owner);
+    this._components[component.getName()] = component;
+    component.onEnter();
+    return true;
+  }
 
-    /**
-     * Removes component from container by name or component object.
-     * @param {String|cc.Component} name component name or component object.
-     * @returns {boolean}
-     */
-    remove(name) {
-        if(!name)
-            throw new Error("cc.ComponentContainer.remove(): name should be non-null");
-        if(!this._components)
-            return false;
-        if(name instanceof cc.Component)
-            return this._removeByComponent(name);
-        else {
-            name = name.trim();
-            return this._removeByComponent(this._components[name]);
-        }
+  /**
+   * Removes component from container by name or component object.
+   * @param {String|cc.Component} name component name or component object.
+   * @returns {boolean}
+   */
+  remove(name) {
+    if (!name)
+      throw new Error(
+        "cc.ComponentContainer.remove(): name should be non-null"
+      );
+    if (!this._components) return false;
+    if (name instanceof cc.Component) return this._removeByComponent(name);
+    else {
+      name = name.trim();
+      return this._removeByComponent(this._components[name]);
     }
+  }
 
-    _removeByComponent(component) {
-        if(!component)
-            return false;
-        component.onExit();
-        component.setOwner(null);
-        delete this._components[component.getName()];
-        return true;
+  _removeByComponent(component) {
+    if (!component) return false;
+    component.onExit();
+    component.setOwner(null);
+    delete this._components[component.getName()];
+    return true;
+  }
+
+  /**
+   * Removes all components of container.
+   */
+  removeAll() {
+    if (!this._components) return;
+    var locComponents = this._components;
+    for (var selKey in locComponents) {
+      var selComponent = locComponents[selKey];
+      selComponent.onExit();
+      selComponent.setOwner(null);
+      delete locComponents[selKey];
     }
+    this._owner.unscheduleUpdate();
+    this._components = null;
+  }
 
-    /**
-     * Removes all components of container.
-     */
-    removeAll() {
-        if(!this._components)
-            return;
-        var locComponents = this._components;
-        for(var selKey in locComponents){
-            var selComponent = locComponents[selKey];
-            selComponent.onExit();
-            selComponent.setOwner(null);
-            delete locComponents[selKey];
-        }
-        this._owner.unscheduleUpdate();
-        this._components = null;
-    }
+  _alloc() {
+    this._components = {};
+  }
 
-    _alloc() {
-        this._components = {};
-    }
+  /**
+   * Visit callback by director. it calls every frame.
+   * @param {Number} delta
+   */
+  visit(delta) {
+    if (!this._components) return;
 
-    /**
-     * Visit callback by director. it calls every frame.
-     * @param {Number} delta
-     */
-    visit(delta) {
-        if(!this._components)
-            return;
+    var locComponents = this._components;
+    for (var selKey in locComponents) locComponents[selKey].update(delta);
+  }
 
-        var locComponents = this._components;
-        for(var selKey in locComponents)
-             locComponents[selKey].update(delta);
-    }
-
-    /**
-     * Returns the container whether is empty.
-     * @returns {boolean}
-     */
-    isEmpty() {
-        if (!this._components)
-            return true;
-        return this._components.length === 0;
-    }
+  /**
+   * Returns the container whether is empty.
+   * @returns {boolean}
+   */
+  isEmpty() {
+    if (!this._components) return true;
+    return this._components.length === 0;
+  }
 };

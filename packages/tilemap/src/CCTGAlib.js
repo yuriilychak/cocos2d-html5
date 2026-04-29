@@ -93,7 +93,7 @@ cc.ImageTGA = function (
  * load the image header field from stream. We only keep those that matter!
  * @param {Array} buffer
  * @param {Number} bufSize
- * @param {cc.ImageTGA} psInfo
+ * @param {ImageTGA} psInfo
  * @return {Boolean}
  */
 cc.tgaLoadHeader = function (buffer, bufSize, psInfo) {
@@ -125,7 +125,7 @@ cc.tgaLoadHeader = function (buffer, bufSize, psInfo) {
  * loads the image pixels. You shouldn't call this function directly.
  * @param {Array} buffer
  * @param {Number} bufSize
- * @param {cc.ImageTGA} psInfo
+ * @param {ImageTGA} psInfo
  * @return {Boolean}
  */
 cc.tgaLoadImageData = function (buffer, bufSize, psInfo) {
@@ -155,7 +155,7 @@ cc.tgaLoadImageData = function (buffer, bufSize, psInfo) {
 
 /**
  * converts RGB to grayscale
- * @param {cc.ImageTGA} psInfo
+ * @param {ImageTGA} psInfo
  */
 cc.tgaRGBtogreyscale = function (psInfo) {
   let i, j;
@@ -186,7 +186,7 @@ cc.tgaRGBtogreyscale = function (psInfo) {
 
 /**
  * releases the memory used for the image
- * @param {cc.ImageTGA} psInfo
+ * @param {ImageTGA} psInfo
  */
 cc.tgaDestroy = function (psInfo) {
   if (!psInfo) return;
@@ -264,7 +264,7 @@ cc.tgaLoadRLEImageData = function (buffer, bufSize, psInfo) {
 
 /**
  * ImageTGA Flip
- * @param {cc.ImageTGA} psInfo
+ * @param {ImageTGA} psInfo
  */
 cc.tgaFlipImage = function (psInfo) {
   // mode equal the number of components for each pixel

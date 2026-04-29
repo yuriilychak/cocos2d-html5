@@ -22,7 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
 /**
  * ActionTimelineData
  * @name ccs.ActionTimelineData
@@ -30,70 +29,66 @@
  *
  */
 ccs.ActionTimelineData = class ActionTimelineData extends cc.NewClass {
+  _actionTag = 0;
 
-    _actionTag = 0;
+  constructor(actionTag) {
+    super();
+    this._init(actionTag);
+  }
 
-    constructor(actionTag) {
-        super();
-        this._init(actionTag);
-    }
+  _init(actionTag) {
+    this._actionTag = actionTag;
+    return true;
+  }
 
-    _init(actionTag) {
-        this._actionTag = actionTag;
-        return true;
-    }
+  /**
+   * Set the action tag.
+   * @param {number} actionTag
+   */
+  setActionTag(actionTag) {
+    this._actionTag = actionTag;
+  }
 
-    /**
-     * Set the action tag.
-     * @param {number} actionTag
-     */
-    setActionTag(actionTag) {
-        this._actionTag = actionTag;
-    }
-
-    /**
-     * Gets the action tag.
-     */
-    getActionTag() {
-        return this._actionTag;
-    }
-
+  /**
+   * Gets the action tag.
+   */
+  getActionTag() {
+    return this._actionTag;
+  }
 };
 
 ccs.AnimationInfo = function (name, start, end) {
-    this.name = name;
-    this.startIndex = start;
-    this.endIndex = end;
+  this.name = name;
+  this.startIndex = start;
+  this.endIndex = end;
 };
 
 ccs.ComExtensionData = class ComExtensionData extends ccs.Component {
+  _customProperty = null;
+  _timelineData = null;
+  _name = "ComExtensionData";
 
-    _customProperty = null;
-    _timelineData = null;
-    _name = "ComExtensionData";
+  constructor() {
+    super();
+    this._customProperty = "";
+    this._timelineData = new ccs.ActionTimelineData(0);
+  }
 
-    constructor(){
-        super();
-        this._customProperty = "";
-        this._timelineData = new ccs.ActionTimelineData(0);
-    }
+  setActionTag(actionTag) {
+    this._timelineData.setActionTag(actionTag);
+  }
 
-    setActionTag(actionTag){
-        this._timelineData.setActionTag(actionTag);
-    }
+  getActionTag() {
+    return this._timelineData.getActionTag();
+  }
 
-    getActionTag(){
-        return this._timelineData.getActionTag();
-    }
+  setCustomProperty(customProperty) {
+    this._customProperty = customProperty;
+  }
 
-    setCustomProperty(customProperty){
-        this._customProperty = customProperty;
-    }
-
-    getCustomProperty(){
-        return this._customProperty;
-    }
-
+  getCustomProperty() {
+    return this._customProperty;
+  }
 };
 
 /**
@@ -104,401 +99,398 @@ ccs.ComExtensionData = class ComExtensionData extends ccs.Component {
  * @property gotoFrameAndPause
  */
 ccs.ActionTimeline = class ActionTimeline extends cc.Action {
+  _timelineMap = null;
+  _timelineList = null;
+  _duration = 0;
+  _time = null;
+  _timeSpeed = 1;
+  _frameInternal = 1 / 60;
+  _playing = false;
+  _currentFrame = 0;
+  _startFrame = 0;
+  _endFrame = 0;
+  _loop = null;
+  _frameEventListener = null;
+  _animationInfos = null;
+  _lastFrameListener = null;
 
-    _timelineMap = null;
-    _timelineList = null;
-    _duration = 0;
-    _time = null;
-    _timeSpeed = 1;
-    _frameInternal = 1 / 60;
-    _playing = false;
-    _currentFrame = 0;
-    _startFrame = 0;
-    _endFrame = 0;
-    _loop = null;
-    _frameEventListener = null;
-    _animationInfos = null;
-    _lastFrameListener = null;
+  constructor() {
+    super();
+    this._timelineMap = {};
+    this._timelineList = [];
+    this._animationInfos = {};
+    this.init();
+  }
 
-    constructor() {
-        super();
-        this._timelineMap = {};
-        this._timelineList = [];
-        this._animationInfos = {};
-        this.init();
+  _gotoFrame(frameIndex) {
+    var size = this._timelineList.length;
+    for (var i = 0; i < size; i++) {
+      this._timelineList[i]._gotoFrame(frameIndex);
+    }
+  }
+
+  _stepToFrame(frameIndex) {
+    var size = this._timelineList.length;
+    for (var i = 0; i < size; i++) {
+      this._timelineList[i]._stepToFrame(frameIndex);
+    }
+  }
+
+  //emit frame event, call it when enter a frame
+  _emitFrameEvent(frame) {
+    if (this._frameEventListener) {
+      this._frameEventListener(frame);
+    }
+  }
+
+  init() {
+    return true;
+  }
+
+  /**
+   * Goto the specified frame index, and start playing from this index.
+   * @param startIndex The animation will play from this index.
+   * @param [endIndex=] The animation will end at this index.
+   * @param [currentFrameIndex=] set current frame index.
+   * @param [loop=] Whether or not the animation need loop.
+   */
+  gotoFrameAndPlay(startIndex, endIndex, currentFrameIndex, loop) {
+    //Consolidation parameters
+    var i = 0,
+      argLen = arguments.length;
+    var num = [],
+      bool;
+    for (i; i < argLen; i++) {
+      if (typeof arguments[i] === "boolean") {
+        bool = arguments[i];
+      } else {
+        num.push(arguments[i]);
+      }
+    }
+    startIndex = num[0];
+    endIndex = num[1] !== undefined ? num[1] : this._duration;
+    currentFrameIndex = num[2] || startIndex;
+    loop = bool != null ? bool : true;
+
+    this._startFrame = startIndex;
+    this._endFrame = endIndex;
+    this._currentFrame = currentFrameIndex;
+    this._loop = loop;
+    this._time = this._currentFrame * this._frameInternal;
+
+    this.resume();
+    this._gotoFrame(this._currentFrame);
+  }
+
+  /**
+   * Goto the specified frame index, and pause at this index.
+   * @param startIndex The animation will pause at this index.
+   */
+  gotoFrameAndPause(startIndex) {
+    this._startFrame = this._currentFrame = startIndex;
+    this._time = this._currentFrame * this._frameInternal;
+
+    this.pause();
+    this._gotoFrame(this._currentFrame);
+  }
+
+  /**
+   * Pause the animation.
+   */
+  pause() {
+    this._playing = false;
+  }
+
+  /**
+   * Resume the animation.
+   */
+  resume() {
+    this._playing = true;
+  }
+
+  /**
+   * Whether or not Action is playing.
+   */
+  isPlaying() {
+    return this._playing;
+  }
+
+  /**
+   * Set the animation speed, this will speed up or slow down the speed.
+   * @param {number} speed
+   */
+  setTimeSpeed(speed) {
+    this._timeSpeed = speed;
+  }
+
+  /**
+   * Get current animation speed.
+   * @returns {number}
+   */
+  getTimeSpeed() {
+    return this._timeSpeed;
+  }
+
+  /**
+   * duration of the whole action
+   * @param {number} duration
+   */
+  setDuration(duration) {
+    this._duration = duration;
+  }
+
+  /**
+   * Get current animation duration.
+   * @returns {number}
+   */
+  getDuration() {
+    return this._duration;
+  }
+
+  /**
+   * Start frame index of this action
+   * @returns {number}
+   */
+  getStartFrame() {
+    return this._startFrame;
+  }
+
+  /**
+   * End frame of this action.
+   * When action play to this frame, if action is not loop, then it will stop,
+   * or it will play from start frame again.
+   * @returns {number}
+   */
+  getEndFrame() {
+    return this._endFrame;
+  }
+
+  /**
+   * Set current frame index, this will cause action plays to this frame.
+   */
+  setCurrentFrame(frameIndex) {
+    if (frameIndex >= this._startFrame && frameIndex <= this._endFrame) {
+      this._currentFrame = frameIndex;
+      this._time = this._currentFrame * this._frameInternal;
+    } else {
+      cc.log("frame index is not between start frame and end frame");
+    }
+  }
+
+  /**
+   * Get current frame.
+   * @returns {number}
+   */
+  getCurrentFrame() {
+    return this._currentFrame;
+  }
+
+  /**
+   * add Timeline to ActionTimeline
+   * @param {ccs.Timeline} timeline
+   */
+  addTimeline(timeline) {
+    var tag = timeline.getActionTag();
+    if (!this._timelineMap[tag]) {
+      this._timelineMap[tag] = [];
     }
 
-    _gotoFrame(frameIndex) {
-        var size = this._timelineList.length;
-        for (var i = 0; i < size; i++) {
-            this._timelineList[i]._gotoFrame(frameIndex);
+    if (this._timelineMap[tag].indexOf(timeline) === -1) {
+      this._timelineList.push(timeline);
+      this._timelineMap[tag].push(timeline);
+      timeline.setActionTimeline(this);
+    }
+  }
+
+  /**
+   * remove Timeline to ActionTimeline
+   * @param {ccs.Timeline} timeline
+   */
+  removeTimeline(timeline) {
+    var tag = timeline.getActionTag();
+    if (this._timelineMap[tag]) {
+      if (
+        this._timelineMap[tag].some(function (item) {
+          if (item === timeline) return true;
+        })
+      ) {
+        cc.arrayRemoveObject(this._timelineMap[tag], timeline);
+        cc.arrayRemoveObject(this._timelineList, timeline);
+        timeline.setActionTimeline(null);
+      }
+    }
+  }
+
+  /**
+   * Gets the timeline list
+   * @returns {array | null}
+   */
+  getTimelines() {
+    return this._timelineList;
+  }
+
+  /**
+   * Set the Frame event
+   * @param {function} listener
+   */
+  setFrameEventCallFunc(listener) {
+    this._frameEventListener = listener;
+  }
+
+  /**
+   * remove event
+   */
+  clearFrameEventCallFunc() {
+    this._frameEventListener = null;
+  }
+
+  /**
+   * Clone this timeline
+   * @returns {ccs.ActionTimeline}
+   */
+  clone() {
+    var newAction = new ccs.ActionTimeline();
+    newAction.setDuration(this._duration);
+    newAction.setTimeSpeed(this._timeSpeed);
+
+    for (var a in this._timelineMap) {
+      var timelines = this._timelineMap[a];
+      for (var b in timelines) {
+        var timeline = timelines[b];
+        var newTimeline = timeline.clone();
+        newAction.addTimeline(newTimeline);
+      }
+    }
+
+    return newAction;
+  }
+
+  /**
+   * Reverse is not defined;
+   * @returns {null}
+   */
+  reverse() {
+    return null;
+  }
+
+  /**
+   * Stepping of this time line.
+   * @param {number} delta
+   */
+  step(delta) {
+    if (
+      !this._playing ||
+      this._timelineMap.length === 0 ||
+      this._duration === 0
+    ) {
+      return;
+    }
+
+    this._time += delta * this._timeSpeed;
+    var endoffset = this._time - this._endFrame * this._frameInternal;
+
+    if (endoffset < this._frameInternal) {
+      this._currentFrame = Math.floor(this._time / this._frameInternal);
+      this._stepToFrame(this._currentFrame);
+      if (endoffset >= 0 && this._lastFrameListener) this._lastFrameListener();
+    } else {
+      this._playing = this._loop;
+      if (!this._playing) {
+        this._time = this._endFrame * this._frameInternal;
+        if (this._currentFrame != this._endFrame) {
+          this._currentFrame = this._endFrame;
+          this._stepToFrame(this._currentFrame);
+          if (this._lastFrameListener) this._lastFrameListener();
         }
+      } else
+        this.gotoFrameAndPlay(this._startFrame, this._endFrame, this._loop);
     }
+  }
 
-    _stepToFrame(frameIndex) {
-        var size = this._timelineList.length;
-        for (var i = 0; i < size; i++) {
-            this._timelineList[i]._stepToFrame(frameIndex);
+  _foreachNodeDescendant(parent, callback) {
+    callback(parent);
+
+    var children = parent.getChildren();
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      this._foreachNodeDescendant(child, callback);
+    }
+  }
+
+  /**
+   * start with node.
+   * @param {Node} target
+   */
+  startWithTarget(target) {
+    super.startWithTarget(target);
+
+    var self = this;
+    var callback = function (child) {
+      var data = child.getComponent("ComExtensionData");
+
+      if (data) {
+        var actionTag = data.getActionTag();
+        if (self._timelineMap[actionTag]) {
+          var timelines = self._timelineMap[actionTag];
+          for (var i = 0; i < timelines.length; i++) {
+            var timeline = timelines[i];
+            timeline.setNode(child);
+          }
         }
-    }
+      }
+    };
 
-    //emit frame event, call it when enter a frame
-    _emitFrameEvent(frame) {
-        if (this._frameEventListener) {
-            this._frameEventListener(frame);
-        }
-    }
+    this._foreachNodeDescendant(target, callback);
+  }
 
-    init() {
-        return true;
-    }
+  /**
+   * Whether or not complete
+   * @returns {boolean}
+   */
+  isDone() {
+    return false;
+  }
 
-    /**
-     * Goto the specified frame index, and start playing from this index.
-     * @param startIndex The animation will play from this index.
-     * @param [endIndex=] The animation will end at this index.
-     * @param [currentFrameIndex=] set current frame index.
-     * @param [loop=] Whether or not the animation need loop.
-     */
-    gotoFrameAndPlay(startIndex, endIndex, currentFrameIndex, loop) {
-        //Consolidation parameters
-        var i = 0,
-            argLen = arguments.length;
-        var num = [],
-            bool;
-        for (i; i < argLen; i++) {
-            if (typeof arguments[i] === "boolean") {
-                bool = arguments[i];
-            } else {
-                num.push(arguments[i]);
-            }
-        }
-        startIndex = num[0];
-        endIndex = num[1] !== undefined ? num[1] : this._duration;
-        currentFrameIndex = num[2] || startIndex;
-        loop = bool != null ? bool : true;
+  /**
+   * @param {String} name
+   * @param {Boolean} loop
+   */
+  play(name, loop) {
+    var info = this._animationInfos[name];
+    if (!info) return cc.log("Can't find animation info for %s", name);
 
-        this._startFrame = startIndex;
-        this._endFrame = endIndex;
-        this._currentFrame = currentFrameIndex;
-        this._loop = loop;
-        this._time = this._currentFrame * this._frameInternal;
+    this.gotoFrameAndPlay(info.startIndex, info.endIndex, loop);
+  }
 
-        this.resume();
-        this._gotoFrame(this._currentFrame);
-    }
+  /**
+   * Add animationInfo
+   * @param {Object} info
+   */
+  addAnimationInfo(info) {
+    this._animationInfos[info.name] = info;
+  }
 
-    /**
-     * Goto the specified frame index, and pause at this index.
-     * @param startIndex The animation will pause at this index.
-     */
-    gotoFrameAndPause(startIndex) {
-        this._startFrame = this._currentFrame = startIndex;
-        this._time = this._currentFrame * this._frameInternal;
+  /**
+   * Remove animationInfo
+   * @param {String} name
+   */
+  removeAnimationInfo(name) {
+    delete this._animationInfos[name];
+  }
 
-        this.pause();
-        this._gotoFrame(this._currentFrame);
-    }
+  isAnimationInfoExists(name) {
+    return this._animationInfos[name];
+  }
 
-    /**
-     * Pause the animation.
-     */
-    pause() {
-        this._playing = false;
-    }
+  getAnimationInfo(name) {
+    return this._animationInfos[name];
+  }
 
-    /**
-     * Resume the animation.
-     */
-    resume() {
-        this._playing = true;
-    }
+  setLastFrameCallFunc(listener) {
+    this._lastFrameListener = listener;
+  }
 
-    /**
-     * Whether or not Action is playing.
-     */
-    isPlaying() {
-        return this._playing;
-    }
-
-    /**
-     * Set the animation speed, this will speed up or slow down the speed.
-     * @param {number} speed
-     */
-    setTimeSpeed(speed) {
-        this._timeSpeed = speed;
-    }
-
-    /**
-     * Get current animation speed.
-     * @returns {number}
-     */
-    getTimeSpeed() {
-        return this._timeSpeed;
-    }
-
-    /**
-     * duration of the whole action
-     * @param {number} duration
-     */
-    setDuration(duration) {
-        this._duration = duration;
-    }
-
-    /**
-     * Get current animation duration.
-     * @returns {number}
-     */
-    getDuration() {
-        return this._duration;
-    }
-
-    /**
-     * Start frame index of this action
-     * @returns {number}
-     */
-    getStartFrame() {
-        return this._startFrame;
-    }
-
-    /**
-     * End frame of this action.
-     * When action play to this frame, if action is not loop, then it will stop,
-     * or it will play from start frame again.
-     * @returns {number}
-     */
-    getEndFrame() {
-        return this._endFrame;
-    }
-
-    /**
-     * Set current frame index, this will cause action plays to this frame.
-     */
-    setCurrentFrame(frameIndex) {
-        if (frameIndex >= this._startFrame && frameIndex <= this._endFrame) {
-            this._currentFrame = frameIndex;
-            this._time = this._currentFrame * this._frameInternal;
-        } else {
-            cc.log("frame index is not between start frame and end frame");
-        }
-
-    }
-
-    /**
-     * Get current frame.
-     * @returns {number}
-     */
-    getCurrentFrame() {
-        return this._currentFrame;
-    }
-
-    /**
-     * add Timeline to ActionTimeline
-     * @param {ccs.Timeline} timeline
-     */
-    addTimeline(timeline) {
-        var tag = timeline.getActionTag();
-        if (!this._timelineMap[tag]) {
-            this._timelineMap[tag] = [];
-        }
-
-        if (this._timelineMap[tag].indexOf(timeline) === -1) {
-            this._timelineList.push(timeline);
-            this._timelineMap[tag].push(timeline);
-            timeline.setActionTimeline(this);
-        }
-
-    }
-
-    /**
-     * remove Timeline to ActionTimeline
-     * @param {ccs.Timeline} timeline
-     */
-    removeTimeline(timeline) {
-        var tag = timeline.getActionTag();
-        if (this._timelineMap[tag]) {
-            if (this._timelineMap[tag].some(function (item) {
-                    if (item === timeline)
-                        return true;
-                })) {
-                cc.arrayRemoveObject(this._timelineMap[tag], timeline);
-                cc.arrayRemoveObject(this._timelineList, timeline);
-                timeline.setActionTimeline(null);
-            }
-        }
-    }
-
-    /**
-     * Gets the timeline list
-     * @returns {array | null}
-     */
-    getTimelines() {
-        return this._timelineList;
-    }
-
-    /**
-     * Set the Frame event
-     * @param {function} listener
-     */
-    setFrameEventCallFunc(listener) {
-        this._frameEventListener = listener;
-    }
-
-    /**
-     * remove event
-     */
-    clearFrameEventCallFunc() {
-        this._frameEventListener = null;
-    }
-
-    /**
-     * Clone this timeline
-     * @returns {ccs.ActionTimeline}
-     */
-    clone() {
-        var newAction = new ccs.ActionTimeline();
-        newAction.setDuration(this._duration);
-        newAction.setTimeSpeed(this._timeSpeed);
-
-        for (var a in this._timelineMap) {
-            var timelines = this._timelineMap[a];
-            for (var b in timelines) {
-                var timeline = timelines[b];
-                var newTimeline = timeline.clone();
-                newAction.addTimeline(newTimeline);
-            }
-        }
-
-        return newAction;
-
-    }
-
-    /**
-     * Reverse is not defined;
-     * @returns {null}
-     */
-    reverse() {
-        return null;
-    }
-
-    /**
-     * Stepping of this time line.
-     * @param {number} delta
-     */
-    step(delta) {
-        if (!this._playing || this._timelineMap.length === 0 || this._duration === 0) {
-            return;
-        }
-
-        this._time += delta * this._timeSpeed;
-        var endoffset = this._time - this._endFrame * this._frameInternal;
-
-        if (endoffset < this._frameInternal) {
-            this._currentFrame = Math.floor(this._time / this._frameInternal);
-            this._stepToFrame(this._currentFrame);
-            if (endoffset >= 0 && this._lastFrameListener)
-                this._lastFrameListener();
-        } else {
-            this._playing = this._loop;
-            if (!this._playing) {
-                this._time = this._endFrame * this._frameInternal;
-                if (this._currentFrame != this._endFrame) {
-                    this._currentFrame = this._endFrame;
-                    this._stepToFrame(this._currentFrame);
-                    if (this._lastFrameListener)
-                        this._lastFrameListener();
-                }
-            } else
-                this.gotoFrameAndPlay(this._startFrame, this._endFrame, this._loop);
-        }
-
-    }
-
-    _foreachNodeDescendant(parent, callback) {
-        callback(parent);
-
-        var children = parent.getChildren();
-        for (var i = 0; i < children.length; i++) {
-            var child = children[i];
-            this._foreachNodeDescendant(child, callback);
-        }
-    }
-
-    /**
-     * start with node.
-     * @param {cc.Node} target
-     */
-    startWithTarget(target){
-        super.startWithTarget(target);
-
-        var self = this;
-        var callback = function(child){
-            var data = child.getComponent("ComExtensionData");
-
-            if(data) {
-                var actionTag = data.getActionTag();
-                if(self._timelineMap[actionTag]) {
-                    var timelines = self._timelineMap[actionTag];
-                    for (var i=0; i<timelines.length; i++) {
-                        var timeline = timelines[i];
-                        timeline.setNode(child);
-                    }
-                }
-            }
-        };
-
-        this._foreachNodeDescendant(target, callback);
-    }
-
-    /**
-     * Whether or not complete
-     * @returns {boolean}
-     */
-    isDone() {
-        return false;
-    }
-
-    /**
-     * @param {String} name
-     * @param {Boolean} loop
-     */
-    play(name, loop) {
-        var info = this._animationInfos[name];
-        if (!info)
-            return cc.log("Can't find animation info for %s", name);
-
-        this.gotoFrameAndPlay(info.startIndex, info.endIndex, loop);
-    }
-
-    /**
-     * Add animationInfo
-     * @param {Object} info
-     */
-    addAnimationInfo(info) {
-        this._animationInfos[info.name] = info;
-    }
-
-    /**
-     * Remove animationInfo
-     * @param {String} name
-     */
-    removeAnimationInfo(name) {
-        delete this._animationInfos[name];
-    }
-
-    isAnimationInfoExists(name) {
-        return this._animationInfos[name];
-    }
-
-    getAnimationInfo(name) {
-        return this._animationInfos[name];
-    }
-
-    setLastFrameCallFunc(listener) {
-        this._lastFrameListener = listener;
-    }
-
-    clearLastFrameCallFunc() {
-        this._lastFrameListener = null;
-    }
+  clearLastFrameCallFunc() {
+    this._lastFrameListener = null;
+  }
 };

@@ -31,114 +31,113 @@
  * @property {String}   groupName   - Name of the group
  */
 cc.TMXObjectGroup = class TMXObjectGroup extends cc.NewClass {
-    /**
-     * <p>The cc.TMXObjectGroup's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.TMXObjectGroup()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super();
-        this.properties = null;
-        this.groupName = "";
-        this._positionOffset = null;
-        this._objects = null;
+  /**
+   * <p>The cc.TMXObjectGroup's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new cc.TMXObjectGroup()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super();
+    this.properties = null;
+    this.groupName = "";
+    this._positionOffset = null;
+    this._objects = null;
 
-        this.groupName = "";
-        this._positionOffset = new cc.Point(0,0);
-        this.properties = [];
-        this._objects = [];
-    }
+    this.groupName = "";
+    this._positionOffset = new cc.Point(0, 0);
+    this.properties = [];
+    this._objects = [];
+  }
 
-    /**
-     * Offset position of child objects
-     * @return {cc.Point}
-     */
-    getPositionOffset() {
-        return new cc.Point(this._positionOffset);
-    }
+  /**
+   * Offset position of child objects
+   * @return {Point}
+   */
+  getPositionOffset() {
+    return new cc.Point(this._positionOffset);
+  }
 
-    /**
-     * Offset position of child objects
-     * @param {cc.Point} offset
-     */
-    setPositionOffset(offset) {
-        this._positionOffset.x = offset.x;
-        this._positionOffset.y = offset.y;
-    }
+  /**
+   * Offset position of child objects
+   * @param {Point} offset
+   */
+  setPositionOffset(offset) {
+    this._positionOffset.x = offset.x;
+    this._positionOffset.y = offset.y;
+  }
 
-    /**
-     * List of properties stored in a dictionary
-     * @return {Array}
-     */
-    getProperties() {
-        return this.properties;
-    }
+  /**
+   * List of properties stored in a dictionary
+   * @return {Array}
+   */
+  getProperties() {
+    return this.properties;
+  }
 
-    /**
-     * List of properties stored in a dictionary
-     * @param {object} Var
-     */
-    setProperties(Var) {
-        this.properties.push(Var);
-    }
+  /**
+   * List of properties stored in a dictionary
+   * @param {object} Var
+   */
+  setProperties(Var) {
+    this.properties.push(Var);
+  }
 
-    /**
-     * Gets the Group name.
-     * @return {String}
-     */
-    getGroupName() {
-        return this.groupName.toString();
-    }
+  /**
+   * Gets the Group name.
+   * @return {String}
+   */
+  getGroupName() {
+    return this.groupName.toString();
+  }
 
-    /**
-     * Set the Group name
-     * @param {String} groupName
-     */
-    setGroupName(groupName) {
-        this.groupName = groupName;
-    }
+  /**
+   * Set the Group name
+   * @param {String} groupName
+   */
+  setGroupName(groupName) {
+    this.groupName = groupName;
+  }
 
-    /**
-     * Return the value for the specific property name
-     * @param {String} propertyName
-     * @return {object}
-     */
-    propertyNamed(propertyName) {
-        return this.properties[propertyName];
-    }
+  /**
+   * Return the value for the specific property name
+   * @param {String} propertyName
+   * @return {object}
+   */
+  propertyNamed(propertyName) {
+    return this.properties[propertyName];
+  }
 
-    /**
-     * <p>Return the dictionary for the specific object name. <br />
-     * It will return the 1st object found on the array for the given name.</p>
-     * @param {String} objectName
-     * @return {object|Null}
-     */
-    getObject(objectName) {
-        if (this._objects && this._objects.length > 0) {
-            var locObjects = this._objects;
-            for (var i = 0, len = locObjects.length; i < len; i++) {
-                var name = locObjects[i]["name"];
-                if (name && name === objectName)
-                    return locObjects[i];
-            }
-        }
-        // object not found
-        return null;
+  /**
+   * <p>Return the dictionary for the specific object name. <br />
+   * It will return the 1st object found on the array for the given name.</p>
+   * @param {String} objectName
+   * @return {object|Null}
+   */
+  getObject(objectName) {
+    if (this._objects && this._objects.length > 0) {
+      var locObjects = this._objects;
+      for (var i = 0, len = locObjects.length; i < len; i++) {
+        var name = locObjects[i]["name"];
+        if (name && name === objectName) return locObjects[i];
+      }
     }
+    // object not found
+    return null;
+  }
 
-    /**
-     * Gets the objects.
-     * @return {Array}
-     */
-    getObjects() {
-        return this._objects;
-    }
+  /**
+   * Gets the objects.
+   * @return {Array}
+   */
+  getObjects() {
+    return this._objects;
+  }
 
-    /**
-     * Set the objects.
-     * @param {object} objects
-     */
-    setObjects(objects) {
-        this._objects.push(objects);
-    }
+  /**
+   * Set the objects.
+   * @param {object} objects
+   */
+  setObjects(objects) {
+    this._objects.push(objects);
+  }
 };

@@ -120,330 +120,353 @@ cc.TMX_ORIENTATION_ISO = 2;
  * var tmxTiledMap = new cc.TMXTiledMap(xmlStr, resources);
  */
 cc.TMXTiledMap = class TMXTiledMap extends cc.Node {
-    /**
-     * Creates a TMX Tiled Map with a TMX file  or content string. <br/>
-     * Constructor of cc.TMXTiledMap
-     * @param {String} tmxFile tmxFile fileName or content string
-     * @param {String} resourcePath   If tmxFile is a file name ,it is not required.If tmxFile is content string ,it is must required.
-     */
-    constructor(tmxFile,resourcePath) {
-        super();
-        this.properties = null;
-        this.mapOrientation = null;
-        this.objectGroups = null;
+  /**
+   * Creates a TMX Tiled Map with a TMX file  or content string. <br/>
+   * Constructor of cc.TMXTiledMap
+   * @param {String} tmxFile tmxFile fileName or content string
+   * @param {String} resourcePath   If tmxFile is a file name ,it is not required.If tmxFile is content string ,it is must required.
+   */
+  constructor(tmxFile, resourcePath) {
+    super();
+    this.properties = null;
+    this.mapOrientation = null;
+    this.objectGroups = null;
 
-        //the map's size property measured in tiles
-        this._mapSize = null;
-        this._tileSize = null;
-        //tile properties
-        this._tileProperties = null;
-        this._className = "TMXTiledMap";
+    //the map's size property measured in tiles
+    this._mapSize = null;
+    this._tileSize = null;
+    //tile properties
+    this._tileProperties = null;
+    this._className = "TMXTiledMap";
 
-        this._mapSize = new cc.Size(0, 0);
-        this._tileSize = new cc.Size(0, 0);
+    this._mapSize = new cc.Size(0, 0);
+    this._tileSize = new cc.Size(0, 0);
 
-        if(resourcePath !== undefined){
-            this.initWithXML(tmxFile,resourcePath);
-        }else if(tmxFile !== undefined){
-            this.initWithTMXFile(tmxFile);
+    if (resourcePath !== undefined) {
+      this.initWithXML(tmxFile, resourcePath);
+    } else if (tmxFile !== undefined) {
+      this.initWithTMXFile(tmxFile);
+    }
+  }
+
+  /**
+   * Gets the map size.
+   * @return {Size}
+   */
+
+  get mapWidth() {
+    return this._getMapWidth();
+  }
+  set mapWidth(v) {
+    this._setMapWidth(v);
+  }
+  get mapHeight() {
+    return this._getMapHeight();
+  }
+  set mapHeight(v) {
+    this._setMapHeight(v);
+  }
+  get tileWidth() {
+    return this._getTileWidth();
+  }
+  set tileWidth(v) {
+    this._setTileWidth(v);
+  }
+  get tileHeight() {
+    return this._getTileHeight();
+  }
+  set tileHeight(v) {
+    this._setTileHeight(v);
+  }
+
+  getMapSize() {
+    return new cc.Size(this._mapSize.width, this._mapSize.height);
+  }
+
+  /**
+   * Set the map size.
+   * @param {Size} Var
+   */
+  setMapSize(Var) {
+    this._mapSize.width = Var.width;
+    this._mapSize.height = Var.height;
+  }
+
+  _getMapWidth() {
+    return this._mapSize.width;
+  }
+  _setMapWidth(width) {
+    this._mapSize.width = width;
+  }
+  _getMapHeight() {
+    return this._mapSize.height;
+  }
+  _setMapHeight(height) {
+    this._mapSize.height = height;
+  }
+
+  /**
+   * Gets the tile size.
+   * @return {Size}
+   */
+  getTileSize() {
+    return new cc.Size(this._tileSize.width, this._tileSize.height);
+  }
+
+  /**
+   * Set the tile size
+   * @param {Size} Var
+   */
+  setTileSize(Var) {
+    this._tileSize.width = Var.width;
+    this._tileSize.height = Var.height;
+  }
+
+  _getTileWidth() {
+    return this._tileSize.width;
+  }
+  _setTileWidth(width) {
+    this._tileSize.width = width;
+  }
+  _getTileHeight() {
+    return this._tileSize.height;
+  }
+  _setTileHeight(height) {
+    this._tileSize.height = height;
+  }
+
+  /**
+   * map orientation
+   * @return {Number}
+   */
+  getMapOrientation() {
+    return this.mapOrientation;
+  }
+
+  /**
+   * map orientation
+   * @param {Number} Var
+   */
+  setMapOrientation(Var) {
+    this.mapOrientation = Var;
+  }
+
+  /**
+   * object groups
+   * @return {Array}
+   */
+  getObjectGroups() {
+    return this.objectGroups;
+  }
+
+  /**
+   * object groups
+   * @param {Array} Var
+   */
+  setObjectGroups(Var) {
+    this.objectGroups = Var;
+  }
+
+  /**
+   * Gets the properties
+   * @return {object}
+   */
+  getProperties() {
+    return this.properties;
+  }
+
+  /**
+   * Set the properties
+   * @param {object} Var
+   */
+  setProperties(Var) {
+    this.properties = Var;
+  }
+
+  /**
+   * Initializes the instance of cc.TMXTiledMap with tmxFile
+   * @param {String} tmxFile
+   * @return {Boolean} Whether the initialization was successful.
+   * @example
+   * //example
+   * var map = new cc.TMXTiledMap()
+   * map.initWithTMXFile("hello.tmx");
+   */
+  initWithTMXFile(tmxFile) {
+    if (!tmxFile || tmxFile.length === 0)
+      throw new Error(
+        "cc.TMXTiledMap.initWithTMXFile(): tmxFile should be non-null or non-empty string."
+      );
+    this.width = 0;
+    this.height = 0;
+    var mapInfo = new cc.TMXMapInfo(tmxFile);
+    if (!mapInfo) return false;
+
+    var locTilesets = mapInfo.getTilesets();
+    if (!locTilesets || locTilesets.length === 0)
+      cc.log(
+        "cc.TMXTiledMap.initWithTMXFile(): Map not found. Please check the filename."
+      );
+    this._buildWithMapInfo(mapInfo);
+    return true;
+  }
+
+  /**
+   * Initializes the instance of cc.TMXTiledMap with tmxString
+   * @param {String} tmxString
+   * @param {String} resourcePath
+   * @return {Boolean} Whether the initialization was successful.
+   */
+  initWithXML(tmxString, resourcePath) {
+    this.width = 0;
+    this.height = 0;
+
+    var mapInfo = new cc.TMXMapInfo(tmxString, resourcePath);
+    var locTilesets = mapInfo.getTilesets();
+    if (!locTilesets || locTilesets.length === 0)
+      cc.log(
+        "cc.TMXTiledMap.initWithXML(): Map not found. Please check the filename."
+      );
+    this._buildWithMapInfo(mapInfo);
+    return true;
+  }
+
+  _buildWithMapInfo(mapInfo) {
+    this._mapSize = mapInfo.getMapSize();
+    this._tileSize = mapInfo.getTileSize();
+    this.mapOrientation = mapInfo.orientation;
+    this.objectGroups = mapInfo.getObjectGroups();
+    this.properties = mapInfo.properties;
+    this._tileProperties = mapInfo.getTileProperties();
+
+    var idx = 0;
+    var layers = mapInfo.getLayers();
+    if (layers) {
+      var layerInfo = null;
+      for (var i = 0, len = layers.length; i < len; i++) {
+        layerInfo = layers[i];
+        if (layerInfo && layerInfo.visible) {
+          var child = this._parseLayer(layerInfo, mapInfo);
+          this.addChild(child, idx, idx);
+          // update content size with the max size
+          this.width = Math.max(this.width, child.width);
+          this.height = Math.max(this.height, child.height);
+          idx++;
         }
+      }
     }
+  }
 
-    /**
-     * Gets the map size.
-     * @return {cc.Size}
-     */
-
-    get mapWidth() { return this._getMapWidth(); }
-    set mapWidth(v) { this._setMapWidth(v); }
-    get mapHeight() { return this._getMapHeight(); }
-    set mapHeight(v) { this._setMapHeight(v); }
-    get tileWidth() { return this._getTileWidth(); }
-    set tileWidth(v) { this._setTileWidth(v); }
-    get tileHeight() { return this._getTileHeight(); }
-    set tileHeight(v) { this._setTileHeight(v); }
-
-    getMapSize() {
-        return new cc.Size(this._mapSize.width, this._mapSize.height);
+  /**
+   * Return All layers array.
+   * @returns {Array}
+   */
+  allLayers() {
+    var retArr = [],
+      locChildren = this._children;
+    for (var i = 0, len = locChildren.length; i < len; i++) {
+      var layer = locChildren[i];
+      if (layer && layer instanceof cc.TMXLayer) retArr.push(layer);
     }
+    return retArr;
+  }
 
-    /**
-     * Set the map size.
-     * @param {cc.Size} Var
-     */
-    setMapSize(Var) {
-        this._mapSize.width = Var.width;
-        this._mapSize.height = Var.height;
+  /**
+   * return the TMXLayer for the specific layer
+   * @param {String} layerName
+   * @return {TMXLayer}
+   */
+  getLayer(layerName) {
+    if (!layerName || layerName.length === 0)
+      throw new Error(
+        "cc.TMXTiledMap.getLayer(): layerName should be non-null or non-empty string."
+      );
+    var locChildren = this._children;
+    for (var i = 0; i < locChildren.length; i++) {
+      var layer = locChildren[i];
+      if (layer && layer.layerName === layerName) return layer;
     }
+    // layer not found
+    return null;
+  }
 
-	_getMapWidth() {
-		return this._mapSize.width;
-	}
-	_setMapWidth(width) {
-		this._mapSize.width = width;
-	}
-	_getMapHeight() {
-		return this._mapSize.height;
-	}
-	_setMapHeight(height) {
-		this._mapSize.height = height;
-	}
-
-    /**
-     * Gets the tile size.
-     * @return {cc.Size}
-     */
-    getTileSize() {
-        return new cc.Size(this._tileSize.width, this._tileSize.height);
+  /**
+   * Return the TMXObjectGroup for the specific group
+   * @param {String} groupName
+   * @return {TMXObjectGroup}
+   */
+  getObjectGroup(groupName) {
+    if (!groupName || groupName.length === 0)
+      throw new Error(
+        "cc.TMXTiledMap.getObjectGroup(): groupName should be non-null or non-empty string."
+      );
+    if (this.objectGroups) {
+      for (var i = 0; i < this.objectGroups.length; i++) {
+        var objectGroup = this.objectGroups[i];
+        if (objectGroup && objectGroup.groupName === groupName) {
+          return objectGroup;
+        }
+      }
     }
+    // objectGroup not found
+    return null;
+  }
 
-    /**
-     * Set the tile size
-     * @param {cc.Size} Var
-     */
-    setTileSize(Var) {
-        this._tileSize.width = Var.width;
-        this._tileSize.height = Var.height;
-    }
+  /**
+   * Return the value for the specific property name
+   * @param {String} propertyName
+   * @return {String}
+   */
+  getProperty(propertyName) {
+    return this.properties[propertyName.toString()];
+  }
 
-	_getTileWidth() {
-		return this._tileSize.width;
-	}
-	_setTileWidth(width) {
-		this._tileSize.width = width;
-	}
-	_getTileHeight() {
-		return this._tileSize.height;
-	}
-	_setTileHeight(height) {
-		this._tileSize.height = height;
-	}
+  /**
+   * Return properties dictionary for tile GID
+   * @param {Number} GID
+   * @return {object}
+   */
+  getPropertiesForGID(GID) {
+    return this._tileProperties[GID];
+  }
 
-    /**
-     * map orientation
-     * @return {Number}
-     */
-    getMapOrientation() {
-        return this.mapOrientation;
-    }
+  _parseLayer(layerInfo, mapInfo) {
+    var tileset = this._tilesetForLayer(layerInfo, mapInfo);
+    var layer = new cc.TMXLayer(tileset, layerInfo, mapInfo);
+    // tell the layerinfo to release the ownership of the tiles map.
+    layerInfo.ownTiles = false;
+    return layer;
+  }
 
-    /**
-     * map orientation
-     * @param {Number} Var
-     */
-    setMapOrientation(Var) {
-        this.mapOrientation = Var;
-    }
-
-    /**
-     * object groups
-     * @return {Array}
-     */
-    getObjectGroups() {
-        return this.objectGroups;
-    }
-
-    /**
-     * object groups
-     * @param {Array} Var
-     */
-    setObjectGroups(Var) {
-        this.objectGroups = Var;
-    }
-
-    /**
-     * Gets the properties
-     * @return {object}
-     */
-    getProperties() {
-        return this.properties;
-    }
-
-    /**
-     * Set the properties
-     * @param {object} Var
-     */
-    setProperties(Var) {
-        this.properties = Var;
-    }
-
-    /**
-     * Initializes the instance of cc.TMXTiledMap with tmxFile
-     * @param {String} tmxFile
-     * @return {Boolean} Whether the initialization was successful.
-     * @example
-     * //example
-     * var map = new cc.TMXTiledMap()
-     * map.initWithTMXFile("hello.tmx");
-     */
-    initWithTMXFile(tmxFile) {
-        if(!tmxFile || tmxFile.length === 0)
-            throw new Error("cc.TMXTiledMap.initWithTMXFile(): tmxFile should be non-null or non-empty string.");
-	    this.width = 0;
-	    this.height = 0;
-        var mapInfo = new cc.TMXMapInfo(tmxFile);
-        if (!mapInfo)
-            return false;
-
-        var locTilesets = mapInfo.getTilesets();
-        if(!locTilesets || locTilesets.length === 0)
-            cc.log("cc.TMXTiledMap.initWithTMXFile(): Map not found. Please check the filename.");
-        this._buildWithMapInfo(mapInfo);
-        return true;
-    }
-
-    /**
-     * Initializes the instance of cc.TMXTiledMap with tmxString
-     * @param {String} tmxString
-     * @param {String} resourcePath
-     * @return {Boolean} Whether the initialization was successful.
-     */
-    initWithXML(tmxString, resourcePath) {
-        this.width = 0;
-	    this.height = 0;
-
-        var mapInfo = new cc.TMXMapInfo(tmxString, resourcePath);
-        var locTilesets = mapInfo.getTilesets();
-        if(!locTilesets || locTilesets.length === 0)
-            cc.log("cc.TMXTiledMap.initWithXML(): Map not found. Please check the filename.");
-        this._buildWithMapInfo(mapInfo);
-        return true;
-    }
-
-    _buildWithMapInfo(mapInfo) {
-        this._mapSize = mapInfo.getMapSize();
-        this._tileSize = mapInfo.getTileSize();
-        this.mapOrientation = mapInfo.orientation;
-        this.objectGroups = mapInfo.getObjectGroups();
-        this.properties = mapInfo.properties;
-        this._tileProperties = mapInfo.getTileProperties();
-
-        var idx = 0;
-        var layers = mapInfo.getLayers();
-        if (layers) {
-            var layerInfo = null;
-            for (var i = 0, len = layers.length; i < len; i++) {
-                layerInfo = layers[i];
-                if (layerInfo && layerInfo.visible) {
-                    var child = this._parseLayer(layerInfo, mapInfo);
-                    this.addChild(child, idx, idx);
-                    // update content size with the max size
-	                this.width = Math.max(this.width, child.width);
-	                this.height = Math.max(this.height, child.height);
-                    idx++;
+  _tilesetForLayer(layerInfo, mapInfo) {
+    var size = layerInfo._layerSize;
+    var tilesets = mapInfo.getTilesets();
+    if (tilesets) {
+      for (var i = tilesets.length - 1; i >= 0; i--) {
+        var tileset = tilesets[i];
+        if (tileset) {
+          for (var y = 0; y < size.height; y++) {
+            for (var x = 0; x < size.width; x++) {
+              var pos = x + size.width * y;
+              var gid = layerInfo._tiles[pos];
+              if (gid !== 0) {
+                // Optimization: quick return
+                // if the layer is invalid (more than 1 tileset per layer) an cc.assert will be thrown later
+                if (
+                  (gid & cc.TMX_TILE_FLIPPED_MASK) >>> 0 >=
+                  tileset.firstGid
+                ) {
+                  return tileset;
                 }
+              }
             }
+          }
         }
+      }
     }
 
-    /**
-     * Return All layers array.
-     * @returns {Array}
-     */
-    allLayers() {
-        var retArr = [], locChildren = this._children;
-        for(var i = 0, len = locChildren.length;i< len;i++){
-            var layer = locChildren[i];
-            if(layer && layer instanceof cc.TMXLayer)
-                retArr.push(layer);
-        }
-        return retArr;
-    }
-
-    /**
-     * return the TMXLayer for the specific layer
-     * @param {String} layerName
-     * @return {cc.TMXLayer}
-     */
-    getLayer(layerName) {
-        if(!layerName || layerName.length === 0)
-            throw new Error("cc.TMXTiledMap.getLayer(): layerName should be non-null or non-empty string.");
-        var locChildren = this._children;
-        for (var i = 0; i < locChildren.length; i++) {
-            var layer = locChildren[i];
-            if (layer && layer.layerName === layerName)
-                return layer;
-        }
-        // layer not found
-        return null;
-    }
-
-    /**
-     * Return the TMXObjectGroup for the specific group
-     * @param {String} groupName
-     * @return {cc.TMXObjectGroup}
-     */
-    getObjectGroup(groupName) {
-        if(!groupName || groupName.length === 0)
-            throw new Error("cc.TMXTiledMap.getObjectGroup(): groupName should be non-null or non-empty string.");
-        if (this.objectGroups) {
-            for (var i = 0; i < this.objectGroups.length; i++) {
-                var objectGroup = this.objectGroups[i];
-                if (objectGroup && objectGroup.groupName === groupName) {
-                    return objectGroup;
-                }
-            }
-        }
-        // objectGroup not found
-        return null;
-    }
-
-    /**
-     * Return the value for the specific property name
-     * @param {String} propertyName
-     * @return {String}
-     */
-    getProperty(propertyName) {
-        return this.properties[propertyName.toString()];
-    }
-
-    /**
-     * Return properties dictionary for tile GID
-     * @param {Number} GID
-     * @return {object}
-     */
-    getPropertiesForGID(GID) {
-        return this._tileProperties[GID];
-    }
-
-    _parseLayer(layerInfo, mapInfo) {
-        var tileset = this._tilesetForLayer(layerInfo, mapInfo);
-        var layer = new cc.TMXLayer(tileset, layerInfo, mapInfo);
-        // tell the layerinfo to release the ownership of the tiles map.
-        layerInfo.ownTiles = false;
-        return layer;
-    }
-
-    _tilesetForLayer(layerInfo, mapInfo) {
-        var size = layerInfo._layerSize;
-        var tilesets = mapInfo.getTilesets();
-        if (tilesets) {
-            for (var i = tilesets.length - 1; i >= 0; i--) {
-                var tileset = tilesets[i];
-                if (tileset) {
-                    for (var y = 0; y < size.height; y++) {
-                        for (var x = 0; x < size.width; x++) {
-                            var pos = x + size.width * y;
-                            var gid = layerInfo._tiles[pos];
-                            if (gid !== 0) {
-                                // Optimization: quick return
-                                // if the layer is invalid (more than 1 tileset per layer) an cc.assert will be thrown later
-                                if (((gid & cc.TMX_TILE_FLIPPED_MASK)>>>0) >= tileset.firstGid) {
-                                    return tileset;
-                                }
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-
-        // If all the tiles are 0, return empty tileset
-        cc.log("cocos2d: Warning: TMX Layer " + layerInfo.name + " has no tiles");
-        return null;
-    }
+    // If all the tiles are 0, return empty tileset
+    cc.log("cocos2d: Warning: TMX Layer " + layerInfo.name + " has no tiles");
+    return null;
+  }
 };
-
-
-

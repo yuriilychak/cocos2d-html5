@@ -27,7 +27,7 @@
  * ccs.Bone uses ccs.Skin to displays on screen.
  *
  * @param {String} [fileName]
- * @param {cc.Rect} [rect]
+ * @param {Rect} [rect]
  *
  * @property {Object}   skinData    - The data of the skin
  * @property {ccs.Bone} bone        - The bone of the skin
@@ -35,140 +35,141 @@
  *
  */
 ccs.Skin = class Skin extends ccs.Sprite {
+  constructor(fileName, rect) {
+    super();
+    this._skinData = null;
+    this.bone = null;
+    this._displayName = "";
+    this._skinTransform = cc.AffineTransform.makeIdentity();
+    this._armature = null;
 
-    constructor(fileName, rect) {
-        super();
-        this._skinData = null;
-        this.bone = null;
-        this._displayName = "";
-        this._skinTransform = cc.AffineTransform.makeIdentity();
-        this._armature = null;
-
-        if (fileName == null || fileName === "") {
-            this.init();
-        } else {
-            if(fileName[0] === "#"){
-                this.initWithSpriteFrameName(fileName.substr(1));
-            } else {
-                this.initWithFile(fileName, rect);
-            }
-        }
+    if (fileName == null || fileName === "") {
+      this.init();
+    } else {
+      if (fileName[0] === "#") {
+        this.initWithSpriteFrameName(fileName.substr(1));
+      } else {
+        this.initWithFile(fileName, rect);
+      }
     }
+  }
 
-    get skinData() { return this.getSkinData(); }
-    set skinData(v) { this.setSkinData(v); }
+  get skinData() {
+    return this.getSkinData();
+  }
+  set skinData(v) {
+    this.setSkinData(v);
+  }
 
-    get displayName() { return this.getDisplayName(); }
+  get displayName() {
+    return this.getDisplayName();
+  }
 
-    /**
-     * Initializes with sprite frame name
-     * @param {String} spriteFrameName
-     * @returns {Boolean}
-     */
-    initWithSpriteFrameName(spriteFrameName) {
-        if(spriteFrameName === "")
-            return false;
-        var pFrame = cc.spriteFrameCache.getSpriteFrame(spriteFrameName);
-        var ret = true;
-        if(pFrame)
-            this.initWithSpriteFrame(pFrame);
-        else{
-            cc.log("Can't find CCSpriteFrame with %s. Please check your .plist file", spriteFrameName);
-            ret = false;
-        }
-        this._displayName = spriteFrameName;
-        return ret;
+  /**
+   * Initializes with sprite frame name
+   * @param {String} spriteFrameName
+   * @returns {Boolean}
+   */
+  initWithSpriteFrameName(spriteFrameName) {
+    if (spriteFrameName === "") return false;
+    var pFrame = cc.spriteFrameCache.getSpriteFrame(spriteFrameName);
+    var ret = true;
+    if (pFrame) this.initWithSpriteFrame(pFrame);
+    else {
+      cc.log(
+        "Can't find CCSpriteFrame with %s. Please check your .plist file",
+        spriteFrameName
+      );
+      ret = false;
     }
+    this._displayName = spriteFrameName;
+    return ret;
+  }
 
-    /**
-     * Initializes with texture file name.
-     * @param {String} fileName
-     * @param {cc.Rect} rect
-     * @returns {Boolean}
-     */
-    initWithFile(fileName, rect) {
-        var ret = rect ? super.initWithFile(fileName, rect)
-                       : super.initWithFile(fileName);
-        this._displayName = fileName;
-        return ret;
-    }
+  /**
+   * Initializes with texture file name.
+   * @param {String} fileName
+   * @param {Rect} rect
+   * @returns {Boolean}
+   */
+  initWithFile(fileName, rect) {
+    var ret = rect
+      ? super.initWithFile(fileName, rect)
+      : super.initWithFile(fileName);
+    this._displayName = fileName;
+    return ret;
+  }
 
-    /**
-     * Sets skin data to ccs.Skin.
-     * @param {ccs.BaseData} skinData
-     */
-    setSkinData(skinData) {
-        this._skinData = skinData;
-        this.setScaleX(skinData.scaleX);
-        this.setScaleY(skinData.scaleY);
-        this.setRotationX(cc.radiansToDegrees(skinData.skewX));
-        this.setRotationY(cc.radiansToDegrees(-skinData.skewY));
-        this.setPosition(skinData.x, skinData.y);
+  /**
+   * Sets skin data to ccs.Skin.
+   * @param {ccs.BaseData} skinData
+   */
+  setSkinData(skinData) {
+    this._skinData = skinData;
+    this.setScaleX(skinData.scaleX);
+    this.setScaleY(skinData.scaleY);
+    this.setRotationX(cc.radiansToDegrees(skinData.skewX));
+    this.setRotationY(cc.radiansToDegrees(-skinData.skewY));
+    this.setPosition(skinData.x, skinData.y);
 
-        this._renderCmd.transform();
-    }
+    this._renderCmd.transform();
+  }
 
-    /**
-     * Returns skin date of ccs.Skin.
-     * @returns {ccs.BaseData}
-     */
-    getSkinData() {
-        return this._skinData;
-    }
+  /**
+   * Returns skin date of ccs.Skin.
+   * @returns {ccs.BaseData}
+   */
+  getSkinData() {
+    return this._skinData;
+  }
 
-    /**
-     * Updates armature skin's transform with skin transform and bone's transform.
-     */
-    updateArmatureTransform() {
-        this._renderCmd.transform();
-    }
+  /**
+   * Updates armature skin's transform with skin transform and bone's transform.
+   */
+  updateArmatureTransform() {
+    this._renderCmd.transform();
+  }
 
-    /**
-     * Returns skin's world transform.
-     * @returns {cc.AffineTransform}
-     */
-    getNodeToWorldTransform(){
-        return this._renderCmd.getNodeToWorldTransform();
-    }
+  /**
+   * Returns skin's world transform.
+   * @returns {AffineTransform}
+   */
+  getNodeToWorldTransform() {
+    return this._renderCmd.getNodeToWorldTransform();
+  }
 
-    getNodeToWorldTransformAR(){
-        return this._renderCmd.getNodeToWorldTransformAR();
-    }
+  getNodeToWorldTransformAR() {
+    return this._renderCmd.getNodeToWorldTransformAR();
+  }
 
-    /**
-     * Sets the bone reference to ccs.Skin.
-     * @param bone
-     */
-    setBone(bone) {
-        this.bone = bone;
-        var armature = this.bone.getArmature();
-        if(armature)
-            this._armature = armature;
-    }
+  /**
+   * Sets the bone reference to ccs.Skin.
+   * @param bone
+   */
+  setBone(bone) {
+    this.bone = bone;
+    var armature = this.bone.getArmature();
+    if (armature) this._armature = armature;
+  }
 
-    /**
-     * Returns the bone reference of ccs.Skin.
-     * @returns {null}
-     */
-    getBone() {
-        return this.bone;
-    }
+  /**
+   * Returns the bone reference of ccs.Skin.
+   * @returns {null}
+   */
+  getBone() {
+    return this.bone;
+  }
 
-    /**
-     * display name getter
-     * @returns {String}
-     */
-    getDisplayName() {
-        return this._displayName;
-    }
+  /**
+   * display name getter
+   * @returns {String}
+   */
+  getDisplayName() {
+    return this._displayName;
+  }
 
-    _createRenderCmd(){
-        if(cc.rendererConfig.isCanvas)
-            return new ccs.Skin.CanvasRenderCmd(this);
-        else
-            return new ccs.Skin.WebGLRenderCmd(this);
-    }
-
+  _createRenderCmd() {
+    if (cc.rendererConfig.isCanvas) return new ccs.Skin.CanvasRenderCmd(this);
+    else return new ccs.Skin.WebGLRenderCmd(this);
+  }
 };
-
-

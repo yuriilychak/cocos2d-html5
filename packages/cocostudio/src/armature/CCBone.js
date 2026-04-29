@@ -46,711 +46,745 @@
  *
  */
 ccs.Bone = class Bone extends ccs.Node {
+  constructor(name) {
+    super();
+    this._tweenData = null;
+    this._parentBone = null;
+    this._armature = null;
+    this._childArmature = null;
+    this._boneData = null;
+    this._tween = null;
+    this._displayManager = null;
+    this.ignoreMovementBoneData = false;
 
-    constructor(name) {
-        super();
-        this._tweenData = null;
-        this._parentBone = null;
-        this._armature = null;
-        this._childArmature = null;
-        this._boneData = null;
-        this._tween = null;
-        this._displayManager = null;
-        this.ignoreMovementBoneData = false;
+    this._worldTransform = cc.AffineTransform.make(1, 0, 0, 1, 0, 0);
+    this._boneTransformDirty = true;
+    this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
+    this.blendDirty = false;
+    this._worldInfo = null;
 
-        this._worldTransform = cc.AffineTransform.make(1, 0, 0, 1, 0, 0);
-        this._boneTransformDirty = true;
-        this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
-        this.blendDirty = false;
-        this._worldInfo = null;
+    this._armatureParentBone = null;
+    this._dataVersion = 0;
 
-        this._armatureParentBone = null;
-        this._dataVersion = 0;
+    this.init(name);
+  }
 
-        this.init(name);
+  get boneData() {
+    return this.getBoneData();
+  }
+  set boneData(v) {
+    this.setBoneData(v);
+  }
+
+  get armature() {
+    return this.getArmature();
+  }
+  set armature(v) {
+    this.setArmature(v);
+  }
+
+  get childArmature() {
+    return this.getChildArmature();
+  }
+  set childArmature(v) {
+    this.setChildArmature(v);
+  }
+
+  get childrenBone() {
+    return this.getChildrenBone();
+  }
+
+  get tween() {
+    return this.getTween();
+  }
+
+  get tweenData() {
+    return this.getTweenData();
+  }
+
+  get colliderFilter() {
+    return this.getColliderFilter();
+  }
+  set colliderFilter(v) {
+    this.setColliderFilter(v);
+  }
+
+  /**
+   * Initializes a ccs.Bone with the specified name
+   * @param {String} name bone name
+   * @return {Boolean}
+   */
+  init(name) {
+    //        super.init();
+    if (name) this._name = name;
+    this._tweenData = new ccs.FrameData();
+
+    this._tween = new ccs.Tween(this);
+
+    this._displayManager = new ccs.DisplayManager(this);
+
+    this._worldInfo = new ccs.BaseData();
+    this._boneData = new ccs.BaseData();
+
+    return true;
+  }
+
+  /**
+   * Sets the boneData to ccs.Bone.
+   * @param {ccs.BoneData} boneData
+   */
+  setBoneData(boneData) {
+    cc.assert(boneData, "_boneData must not be null");
+
+    if (this._boneData !== boneData) this._boneData = boneData;
+
+    this.setName(this._boneData.name);
+    this._localZOrder = this._boneData.zOrder;
+    this._displayManager.initDisplayList(boneData);
+  }
+
+  /**
+   * Returns boneData of ccs.Bone.
+   * @return {ccs.BoneData}
+   */
+  getBoneData() {
+    return this._boneData;
+  }
+
+  /**
+   * Sets the armature reference to ccs.Bone.
+   * @param {ccs.Armature} armature
+   */
+  setArmature(armature) {
+    this._armature = armature;
+    if (armature) {
+      this._tween.setAnimation(this._armature.getAnimation());
+      this._dataVersion = this._armature.getArmatureData().dataVersion;
+      this._armatureParentBone = this._armature.getParentBone();
+    } else this._armatureParentBone = null;
+  }
+
+  /**
+   * Returns the armature reference of ccs.Bone.
+   * @return {ccs.Armature}
+   */
+  getArmature() {
+    return this._armature;
+  }
+
+  /**
+   * Updates worldTransform by tween data and updates display state
+   * @param {Number} delta
+   */
+  update(delta) {
+    if (this._parentBone)
+      this._boneTransformDirty =
+        this._boneTransformDirty || this._parentBone.isTransformDirty();
+
+    if (this._armatureParentBone && !this._boneTransformDirty)
+      this._boneTransformDirty = this._armatureParentBone.isTransformDirty();
+
+    if (this._boneTransformDirty) {
+      var locTweenData = this._tweenData;
+      if (this._dataVersion >= ccs.CONST_VERSION_COMBINED) {
+        ccs.TransformHelp.nodeConcat(locTweenData, this._boneData);
+        locTweenData.scaleX -= 1;
+        locTweenData.scaleY -= 1;
+      }
+
+      var locWorldInfo = this._worldInfo;
+      locWorldInfo.copy(locTweenData);
+      locWorldInfo.x = locTweenData.x + this._position.x;
+      locWorldInfo.y = locTweenData.y + this._position.y;
+      locWorldInfo.scaleX = locTweenData.scaleX * this._scaleX;
+      locWorldInfo.scaleY = locTweenData.scaleY * this._scaleY;
+      locWorldInfo.skewX =
+        locTweenData.skewX + this._skewX + cc.degreesToRadians(this._rotationX);
+      locWorldInfo.skewY =
+        locTweenData.skewY + this._skewY - cc.degreesToRadians(this._rotationY);
+
+      if (this._parentBone) this._applyParentTransform(this._parentBone);
+      else {
+        if (this._armatureParentBone)
+          this._applyParentTransform(this._armatureParentBone);
+      }
+
+      ccs.TransformHelp.nodeToMatrix(locWorldInfo, this._worldTransform);
+      if (this._armatureParentBone)
+        cc.AffineTransform.concatIn(
+          this._worldTransform,
+          this._armature.getNodeToParentTransform()
+        ); //TODO TransformConcat
     }
 
-    get boneData() { return this.getBoneData(); }
-    set boneData(v) { this.setBoneData(v); }
-
-    get armature() { return this.getArmature(); }
-    set armature(v) { this.setArmature(v); }
-
-    get childArmature() { return this.getChildArmature(); }
-    set childArmature(v) { this.setChildArmature(v); }
-
-    get childrenBone() { return this.getChildrenBone(); }
-
-    get tween() { return this.getTween(); }
-
-    get tweenData() { return this.getTweenData(); }
-
-    get colliderFilter() { return this.getColliderFilter(); }
-    set colliderFilter(v) { this.setColliderFilter(v); }
-
-    /**
-     * Initializes a ccs.Bone with the specified name
-     * @param {String} name bone name
-     * @return {Boolean}
-     */
-    init(name) {
-//        super.init();
-        if (name)
-            this._name = name;
-        this._tweenData = new ccs.FrameData();
-
-        this._tween = new ccs.Tween(this);
-
-        this._displayManager = new ccs.DisplayManager(this);
-
-        this._worldInfo = new ccs.BaseData();
-        this._boneData = new ccs.BaseData();
-
-        return true;
+    ccs.displayFactory.updateDisplay(
+      this,
+      delta,
+      this._boneTransformDirty || this._armature.getArmatureTransformDirty()
+    );
+    for (var i = 0; i < this._children.length; i++) {
+      var childBone = this._children[i];
+      childBone.update(delta);
     }
+    this._boneTransformDirty = false;
+  }
 
-    /**
-     * Sets the boneData to ccs.Bone.
-     * @param {ccs.BoneData} boneData
-     */
-    setBoneData(boneData) {
-        cc.assert(boneData, "_boneData must not be null");
+  _applyParentTransform(parent) {
+    var locWorldInfo = this._worldInfo;
+    var locParentWorldTransform = parent._worldTransform;
+    var locParentWorldInfo = parent._worldInfo;
+    var x = locWorldInfo.x;
+    var y = locWorldInfo.y;
+    locWorldInfo.x =
+      x * locParentWorldTransform.a +
+      y * locParentWorldTransform.c +
+      locParentWorldInfo.x;
+    locWorldInfo.y =
+      x * locParentWorldTransform.b +
+      y * locParentWorldTransform.d +
+      locParentWorldInfo.y;
+    locWorldInfo.scaleX = locWorldInfo.scaleX * locParentWorldInfo.scaleX;
+    locWorldInfo.scaleY = locWorldInfo.scaleY * locParentWorldInfo.scaleY;
+    locWorldInfo.skewX = locWorldInfo.skewX + locParentWorldInfo.skewX;
+    locWorldInfo.skewY = locWorldInfo.skewY + locParentWorldInfo.skewY;
+  }
 
-        if (this._boneData !== boneData)
-            this._boneData = boneData;
-
-        this.setName(this._boneData.name);
-        this._localZOrder = this._boneData.zOrder;
-        this._displayManager.initDisplayList(boneData);
+  /**
+   * Sets BlendFunc to ccs.Bone.
+   * @param {BlendFunc|Number} blendFunc blendFunc or src of blendFunc
+   * @param {Number} [dst] dst of blendFunc
+   */
+  setBlendFunc(blendFunc, dst) {
+    var locBlendFunc = this._blendFunc,
+      srcValue,
+      dstValue;
+    if (dst === undefined) {
+      srcValue = blendFunc.src;
+      dstValue = blendFunc.dst;
+    } else {
+      srcValue = blendFunc;
+      dstValue = dst;
     }
-
-    /**
-     * Returns boneData of ccs.Bone.
-     * @return {ccs.BoneData}
-     */
-    getBoneData() {
-        return this._boneData;
+    if (locBlendFunc.src !== srcValue || locBlendFunc.dst !== dstValue) {
+      locBlendFunc.src = srcValue;
+      locBlendFunc.dst = dstValue;
+      this.blendDirty = true;
     }
+  }
 
-    /**
-     * Sets the armature reference to ccs.Bone.
-     * @param {ccs.Armature} armature
-     */
-    setArmature(armature) {
-        this._armature = armature;
-        if (armature) {
-            this._tween.setAnimation(this._armature.getAnimation());
-            this._dataVersion = this._armature.getArmatureData().dataVersion;
-            this._armatureParentBone = this._armature.getParentBone();
-        } else
-            this._armatureParentBone = null;
+  /**
+   * Updates display color
+   */
+  updateColor() {
+    var display = this._displayManager.getDisplayRenderNode();
+    if (display !== null) {
+      var cmd = this._renderCmd;
+      display.setColor(
+        new cc.Color(
+          (cmd._displayedColor.r * this._tweenData.r) / 255,
+          (cmd._displayedColor.g * this._tweenData.g) / 255,
+          (cmd._displayedColor.b * this._tweenData.b) / 255
+        )
+      );
+      display.setOpacity((cmd._displayedOpacity * this._tweenData.a) / 255);
     }
+  }
 
-    /**
-     * Returns the armature reference of ccs.Bone.
-     * @return {ccs.Armature}
-     */
-    getArmature() {
-        return this._armature;
+  /**
+   * Updates display zOrder
+   */
+  updateZOrder() {
+    if (
+      this._armature.getArmatureData().dataVersion >= ccs.CONST_VERSION_COMBINED
+    ) {
+      this.setLocalZOrder(this._tweenData.zOrder + this._boneData.zOrder);
+    } else {
+      this.setLocalZOrder(this._tweenData.zOrder);
     }
+  }
 
-    /**
-     * Updates worldTransform by tween data and updates display state
-     * @param {Number} delta
-     */
-    update(delta) {
-        if (this._parentBone)
-            this._boneTransformDirty = this._boneTransformDirty || this._parentBone.isTransformDirty();
+  /**
+   * Adds a child to this bone, and it will let this child call setParent(ccs.Bone) function to set self to it's parent
+   * @param {ccs.Bone} child
+   */
+  addChildBone(child) {
+    cc.assert(child, "Argument must be non-nil");
+    cc.assert(
+      !child.parentBone,
+      "child already added. It can't be added again"
+    );
 
-        if (this._armatureParentBone && !this._boneTransformDirty)
-            this._boneTransformDirty = this._armatureParentBone.isTransformDirty();
+    if (this._children.indexOf(child) < 0) {
+      this._children.push(child);
+      child.setParentBone(this);
+    }
+  }
 
-        if (this._boneTransformDirty) {
-            var locTweenData = this._tweenData;
-            if (this._dataVersion >= ccs.CONST_VERSION_COMBINED) {
-                ccs.TransformHelp.nodeConcat(locTweenData, this._boneData);
-                locTweenData.scaleX -= 1;
-                locTweenData.scaleY -= 1;
-            }
-
-            var locWorldInfo = this._worldInfo;
-            locWorldInfo.copy(locTweenData);
-            locWorldInfo.x = locTweenData.x + this._position.x;
-            locWorldInfo.y = locTweenData.y + this._position.y;
-            locWorldInfo.scaleX = locTweenData.scaleX * this._scaleX;
-            locWorldInfo.scaleY = locTweenData.scaleY * this._scaleY;
-            locWorldInfo.skewX = locTweenData.skewX + this._skewX + cc.degreesToRadians(this._rotationX);
-            locWorldInfo.skewY = locTweenData.skewY + this._skewY - cc.degreesToRadians(this._rotationY);
-
-            if (this._parentBone)
-                this._applyParentTransform(this._parentBone);
-            else {
-                if (this._armatureParentBone)
-                    this._applyParentTransform(this._armatureParentBone);
-            }
-
-            ccs.TransformHelp.nodeToMatrix(locWorldInfo, this._worldTransform);
-            if (this._armatureParentBone)
-                cc.AffineTransform.concatIn(this._worldTransform, this._armature.getNodeToParentTransform());            //TODO TransformConcat
+  /**
+   * Removes a child bone
+   * @param {ccs.Bone} bone
+   * @param {Boolean} recursion
+   */
+  removeChildBone(bone, recursion) {
+    if (this._children.length > 0 && this._children.getIndex(bone) !== -1) {
+      if (recursion) {
+        var ccbones = bone._children;
+        for (var i = 0; i < ccbones.length; i++) {
+          var ccBone = ccbones[i];
+          bone.removeChildBone(ccBone, recursion);
         }
+      }
 
-        ccs.displayFactory.updateDisplay(this, delta, this._boneTransformDirty || this._armature.getArmatureTransformDirty());
-        for (var i = 0; i < this._children.length; i++) {
-            var childBone = this._children[i];
-            childBone.update(delta);
-        }
-        this._boneTransformDirty = false;
+      bone.setParentBone(null);
+      bone.getDisplayManager().setCurrentDecorativeDisplay(null);
+      cc.arrayRemoveObject(this._children, bone);
     }
+  }
 
-    _applyParentTransform(parent) {
-        var locWorldInfo = this._worldInfo;
-        var locParentWorldTransform = parent._worldTransform;
-        var locParentWorldInfo = parent._worldInfo;
-        var x = locWorldInfo.x;
-        var y = locWorldInfo.y;
-        locWorldInfo.x = x * locParentWorldTransform.a + y * locParentWorldTransform.c + locParentWorldInfo.x;
-        locWorldInfo.y = x * locParentWorldTransform.b + y * locParentWorldTransform.d + locParentWorldInfo.y;
-        locWorldInfo.scaleX = locWorldInfo.scaleX * locParentWorldInfo.scaleX;
-        locWorldInfo.scaleY = locWorldInfo.scaleY * locParentWorldInfo.scaleY;
-        locWorldInfo.skewX = locWorldInfo.skewX + locParentWorldInfo.skewX;
-        locWorldInfo.skewY = locWorldInfo.skewY + locParentWorldInfo.skewY;
+  /**
+   * Removes itself from its parent ccs.Bone.
+   * @param {Boolean} recursion
+   */
+  removeFromParent(recursion) {
+    if (this._parentBone) this._parentBone.removeChildBone(this, recursion);
+  }
+
+  /**
+   * Sets parent bone to ccs.Bone.
+   * If _parent is NUll, then also remove this bone from armature.
+   * It will not set the ccs.Armature, if you want to add the bone to a ccs.Armature, you should use ccs.Armature.addBone(bone, parentName).
+   * @param {ccs.Bone}  parent  the parent bone.
+   */
+  setParentBone(parent) {
+    this._parentBone = parent;
+  }
+
+  /**
+   * Returns the parent bone of ccs.Bone.
+   * @returns {ccs.Bone}
+   */
+  getParentBone() {
+    return this._parentBone;
+  }
+
+  /**
+   * Sets ccs.Bone's child armature
+   * @param {ccs.Armature} armature
+   */
+  setChildArmature(armature) {
+    if (this._childArmature !== armature) {
+      if (armature == null && this._childArmature)
+        this._childArmature.setParentBone(null);
+      this._childArmature = armature;
     }
+  }
 
-    /**
-     * Sets BlendFunc to ccs.Bone.
-     * @param {cc.BlendFunc|Number} blendFunc blendFunc or src of blendFunc
-     * @param {Number} [dst] dst of blendFunc
-     */
-    setBlendFunc(blendFunc, dst) {
-        var locBlendFunc = this._blendFunc, srcValue, dstValue;
-        if (dst === undefined) {
-            srcValue = blendFunc.src;
-            dstValue = blendFunc.dst;
-        } else {
-            srcValue = blendFunc;
-            dstValue = dst;
-        }
-        if (locBlendFunc.src !== srcValue || locBlendFunc.dst !== dstValue) {
-            locBlendFunc.src = srcValue;
-            locBlendFunc.dst = dstValue;
-            this.blendDirty = true;
-        }
+  /**
+   * Returns ccs.Bone's child armature.
+   * @return {ccs.Armature}
+   */
+  getChildArmature() {
+    return this._childArmature;
+  }
+
+  /**
+   * Return the tween of ccs.Bone
+   * @return {ccs.Tween}
+   */
+  getTween() {
+    return this._tween;
+  }
+
+  /**
+   * Sets the local zOrder to ccs.Bone.
+   * @param {Number} zOrder
+   */
+  setLocalZOrder(zOrder) {
+    if (this._localZOrder !== zOrder) super.setLocalZOrder(zOrder);
+  }
+
+  /**
+   * Return the worldTransform of ccs.Bone.
+   * @returns {AffineTransform}
+   */
+  getNodeToArmatureTransform() {
+    return this._worldTransform;
+  }
+
+  /**
+   * Returns the world transform of ccs.Bone.
+   * @override
+   * @returns {AffineTransform}
+   */
+  getNodeToWorldTransform() {
+    return cc.AffineTransform.concat(
+      this._worldTransform,
+      this._armature.getNodeToWorldTransform()
+    );
+  }
+
+  /**
+   * Returns the display render node.
+   * @returns {Node}
+   */
+  getDisplayRenderNode() {
+    return this._displayManager.getDisplayRenderNode();
+  }
+
+  /**
+   * Returns the type of display render node
+   * @returns {Number}
+   */
+  getDisplayRenderNodeType() {
+    return this._displayManager.getDisplayRenderNodeType();
+  }
+
+  /**
+   * Add display and use  _displayData init the display.
+   * If index already have a display, then replace it.
+   * If index is current display index, then also change display to _index
+   * @param {ccs.DisplayData} displayData it include the display information, like DisplayType.
+   *          If you want to create a sprite display, then create a SpriteDisplayData param
+   *@param {Number}    index the index of the display you want to replace or add to
+   *          -1 : append display from back
+   */
+  addDisplay(displayData, index) {
+    index = index || 0;
+    return this._displayManager.addDisplay(displayData, index);
+  }
+
+  /**
+   * Removes display by index.
+   * @param {Number} index display renderer's index
+   */
+  removeDisplay(index) {
+    this._displayManager.removeDisplay(index);
+  }
+
+  /**
+   * Changes display by index
+   * @deprecated since v3.0, please use changeDisplayWithIndex instead.
+   * @param {Number} index
+   * @param {Boolean} force
+   */
+  changeDisplayByIndex(index, force) {
+    cc.log(
+      "changeDisplayByIndex is deprecated. Use changeDisplayWithIndex instead."
+    );
+    this.changeDisplayWithIndex(index, force);
+  }
+
+  /**
+   * Changes display by name
+   * @deprecated since v3.0, please use changeDisplayWithName instead.
+   * @param {String} name
+   * @param {Boolean} force
+   */
+  changeDisplayByName(name, force) {
+    cc.log(
+      "changeDisplayByName is deprecated. Use changeDisplayWithName instead."
+    );
+    this.changeDisplayWithName(name, force);
+  }
+
+  /**
+   * Changes display with index
+   * @param {Number} index
+   * @param {Boolean} force
+   */
+  changeDisplayWithIndex(index, force) {
+    this._displayManager.changeDisplayWithIndex(index, force);
+  }
+
+  /**
+   * Changes display with name
+   * @param {String} name
+   * @param {Boolean} force
+   */
+  changeDisplayWithName(name, force) {
+    this._displayManager.changeDisplayWithName(name, force);
+  }
+
+  /**
+   * Returns the collide detector of ccs.Bone.
+   * @returns {*}
+   */
+  getColliderDetector() {
+    var decoDisplay = this._displayManager.getCurrentDecorativeDisplay();
+    if (decoDisplay) {
+      var detector = decoDisplay.getColliderDetector();
+      if (detector) return detector;
     }
+    return null;
+  }
 
-    /**
-     * Updates display color
-     */
-    updateColor() {
-        var display = this._displayManager.getDisplayRenderNode();
-        if (display !== null) {
-            var cmd = this._renderCmd;
-            display.setColor(
-                new cc.Color(
-                    cmd._displayedColor.r * this._tweenData.r / 255,
-                    cmd._displayedColor.g * this._tweenData.g / 255,
-                    cmd._displayedColor.b * this._tweenData.b / 255));
-            display.setOpacity(cmd._displayedOpacity * this._tweenData.a / 255);
-        }
+  /**
+   * Sets collider filter to ccs.Bone.
+   * @param {ccs.ColliderFilter} filter
+   */
+  setColliderFilter(filter) {
+    var displayList = this._displayManager.getDecorativeDisplayList();
+    for (var i = 0; i < displayList.length; i++) {
+      var locDecoDisplay = displayList[i];
+      var locDetector = locDecoDisplay.getColliderDetector();
+      if (locDetector) locDetector.setColliderFilter(filter);
     }
+  }
 
-    /**
-     * Updates display zOrder
-     */
-    updateZOrder() {
-        if (this._armature.getArmatureData().dataVersion >= ccs.CONST_VERSION_COMBINED) {
-            this.setLocalZOrder(this._tweenData.zOrder + this._boneData.zOrder);
-        } else {
-            this.setLocalZOrder(this._tweenData.zOrder);
-        }
+  /**
+   * Returns collider filter of ccs.Bone.
+   * @returns {ColliderFilter}
+   */
+  getColliderFilter() {
+    var decoDisplay = this.displayManager.getCurrentDecorativeDisplay();
+    if (decoDisplay) {
+      var detector = decoDisplay.getColliderDetector();
+      if (detector) return detector.getColliderFilter();
     }
+    return null;
+  }
 
-    /**
-     * Adds a child to this bone, and it will let this child call setParent(ccs.Bone) function to set self to it's parent
-     * @param {ccs.Bone} child
-     */
-    addChildBone(child) {
-        cc.assert(child, "Argument must be non-nil");
-        cc.assert(!child.parentBone, "child already added. It can't be added again");
+  /**
+   * Sets ccs.Bone's transform dirty flag.
+   * @param {Boolean} dirty
+   */
+  setTransformDirty(dirty) {
+    this._boneTransformDirty = dirty;
+  }
 
-        if (this._children.indexOf(child) < 0) {
-            this._children.push(child);
-            child.setParentBone(this);
-        }
-    }
+  /**
+   * Returns ccs.Bone's transform dirty flag whether is dirty.
+   * @return {Boolean}
+   */
+  isTransformDirty() {
+    return this._boneTransformDirty;
+  }
 
-    /**
-     * Removes a child bone
-     * @param {ccs.Bone} bone
-     * @param {Boolean} recursion
-     */
-    removeChildBone(bone, recursion) {
-        if (this._children.length > 0 && this._children.getIndex(bone) !== -1) {
-            if (recursion) {
-                var ccbones = bone._children;
-                for (var i = 0; i < ccbones.length; i++) {
-                    var ccBone = ccbones[i];
-                    bone.removeChildBone(ccBone, recursion);
-                }
-            }
+  /**
+   * displayManager dirty getter
+   * @return {ccs.DisplayManager}
+   */
+  getDisplayManager() {
+    return this._displayManager;
+  }
 
-            bone.setParentBone(null);
-            bone.getDisplayManager().setCurrentDecorativeDisplay(null);
-            cc.arrayRemoveObject(this._children, bone);
-        }
-    }
+  /**
+   *    When Armature play a animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will hide.   <br/>
+   *    Set IgnoreMovementBoneData to true, then this bone will also show.
+   * @param {Boolean} bool
+   */
+  setIgnoreMovementBoneData(bool) {
+    this._ignoreMovementBoneData = bool;
+  }
 
-    /**
-     * Removes itself from its parent ccs.Bone.
-     * @param {Boolean} recursion
-     */
-    removeFromParent(recursion) {
-        if (this._parentBone)
-            this._parentBone.removeChildBone(this, recursion);
-    }
+  /**
+   * Returns whether is ignore movement bone data.
+   * @returns {Boolean}
+   */
+  isIgnoreMovementBoneData() {
+    return this._ignoreMovementBoneData;
+  }
 
-    /**
-     * Sets parent bone to ccs.Bone.
-     * If _parent is NUll, then also remove this bone from armature.
-     * It will not set the ccs.Armature, if you want to add the bone to a ccs.Armature, you should use ccs.Armature.addBone(bone, parentName).
-     * @param {ccs.Bone}  parent  the parent bone.
-     */
-    setParentBone(parent) {
-        this._parentBone = parent;
-    }
+  /**
+   * Returns the blendFunc of ccs.Bone.
+   * @return {BlendFunc}
+   */
+  getBlendFunc() {
+    return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
+  }
 
-    /**
-     * Returns the parent bone of ccs.Bone.
-     * @returns {ccs.Bone}
-     */
-    getParentBone() {
-        return this._parentBone;
-    }
+  /**
+   * Sets blend dirty flag
+   * @param {Boolean} dirty
+   */
+  setBlendDirty(dirty) {
+    this._blendDirty = dirty;
+  }
 
-    /**
-     * Sets ccs.Bone's child armature
-     * @param {ccs.Armature} armature
-     */
-    setChildArmature(armature) {
-        if (this._childArmature !== armature) {
-            if (armature == null && this._childArmature)
-                this._childArmature.setParentBone(null);
-            this._childArmature = armature;
-        }
-    }
+  /**
+   * Returns the blend dirty flag whether is dirty.
+   * @returns {Boolean|*|ccs.Bone._blendDirty}
+   */
+  isBlendDirty() {
+    return this._blendDirty;
+  }
 
-    /**
-     * Returns ccs.Bone's child armature.
-     * @return {ccs.Armature}
-     */
-    getChildArmature() {
-        return this._childArmature;
-    }
+  /**
+   * Returns the tweenData of ccs.Bone.
+   * @return {ccs.FrameData}
+   */
+  getTweenData() {
+    return this._tweenData;
+  }
 
-    /**
-     * Return the tween of ccs.Bone
-     * @return {ccs.Tween}
-     */
-    getTween() {
-        return this._tween;
-    }
+  /**
+   * Returns the world information of ccs.Bone.
+   * @returns {ccs.BaseData}
+   */
+  getWorldInfo() {
+    return this._worldInfo;
+  }
 
-    /**
-     * Sets the local zOrder to ccs.Bone.
-     * @param {Number} zOrder
-     */
-    setLocalZOrder(zOrder) {
-        if (this._localZOrder !== zOrder)
-            super.setLocalZOrder(zOrder);
-    }
+  /**
+   * Returns the children of ccs.Bone
+   * @return {Array}
+   * @deprecated since v3.0, please use getChildren instead.
+   */
+  getChildrenBone() {
+    return this._children;
+  }
 
-    /**
-     * Return the worldTransform of ccs.Bone.
-     * @returns {cc.AffineTransform}
-     */
-    getNodeToArmatureTransform() {
-        return this._worldTransform;
-    }
+  /**
+   * Returns the worldTransform of ccs.Bone.
+   * @return {AffineTransform}
+   * @deprecated since v3.0, please use getNodeToArmatureTransform instead.
+   */
+  nodeToArmatureTransform() {
+    return this.getNodeToArmatureTransform();
+  }
 
-    /**
-     * Returns the world transform of ccs.Bone.
-     * @override
-     * @returns {cc.AffineTransform}
-     */
-    getNodeToWorldTransform() {
-        return cc.AffineTransform.concat(this._worldTransform, this._armature.getNodeToWorldTransform());
-    }
+  /**
+   * @deprecated
+   * Returns the world affine transform matrix. The matrix is in Pixels.
+   * @returns {AffineTransform}
+   */
+  nodeToWorldTransform() {
+    return this.getNodeToWorldTransform();
+  }
 
-    /**
-     * Returns the display render node.
-     * @returns {cc.Node}
-     */
-    getDisplayRenderNode() {
-        return this._displayManager.getDisplayRenderNode();
-    }
+  /**
+   * Returns the collider body list in this bone.
+   * @returns {Array|null}
+   * @deprecated since v3.0, please use getColliderDetector to get a delector, and calls its getColliderBodyList instead.
+   */
+  getColliderBodyList() {
+    var detector = this.getColliderDetector();
+    if (detector) return detector.getColliderBodyList();
+    return null;
+  }
 
-    /**
-     * Returns the type of display render node
-     * @returns {Number}
-     */
-    getDisplayRenderNodeType() {
-        return this._displayManager.getDisplayRenderNodeType();
-    }
+  /**
+   * Returns whether is ignore movement bone data.
+   * @return {Boolean}
+   * @deprecated since v3.0, please isIgnoreMovementBoneData instead.
+   */
+  getIgnoreMovementBoneData() {
+    return this.isIgnoreMovementBoneData();
+  }
 
-    /**
-     * Add display and use  _displayData init the display.
-     * If index already have a display, then replace it.
-     * If index is current display index, then also change display to _index
-     * @param {ccs.DisplayData} displayData it include the display information, like DisplayType.
-     *          If you want to create a sprite display, then create a SpriteDisplayData param
-     *@param {Number}    index the index of the display you want to replace or add to
-     *          -1 : append display from back
-     */
-    addDisplay(displayData, index) {
-        index = index || 0;
-        return this._displayManager.addDisplay(displayData, index);
-    }
-
-    /**
-     * Removes display by index.
-     * @param {Number} index display renderer's index
-     */
-    removeDisplay(index) {
-        this._displayManager.removeDisplay(index);
-    }
-
-    /**
-     * Changes display by index
-     * @deprecated since v3.0, please use changeDisplayWithIndex instead.
-     * @param {Number} index
-     * @param {Boolean} force
-     */
-    changeDisplayByIndex(index, force) {
-        cc.log("changeDisplayByIndex is deprecated. Use changeDisplayWithIndex instead.");
-        this.changeDisplayWithIndex(index, force);
-    }
-
-    /**
-     * Changes display by name
-     * @deprecated since v3.0, please use changeDisplayWithName instead.
-     * @param {String} name
-     * @param {Boolean} force
-     */
-    changeDisplayByName(name, force) {
-        cc.log("changeDisplayByName is deprecated. Use changeDisplayWithName instead.");
-        this.changeDisplayWithName(name, force);
-    }
-
-    /**
-     * Changes display with index
-     * @param {Number} index
-     * @param {Boolean} force
-     */
-    changeDisplayWithIndex(index, force) {
-        this._displayManager.changeDisplayWithIndex(index, force);
-    }
-
-    /**
-     * Changes display with name
-     * @param {String} name
-     * @param {Boolean} force
-     */
-    changeDisplayWithName(name, force) {
-        this._displayManager.changeDisplayWithName(name, force);
-    }
-
-    /**
-     * Returns the collide detector of ccs.Bone.
-     * @returns {*}
-     */
-    getColliderDetector() {
-        var decoDisplay = this._displayManager.getCurrentDecorativeDisplay();
-        if (decoDisplay) {
-            var detector = decoDisplay.getColliderDetector();
-            if (detector)
-                return detector;
-        }
-        return null;
-    }
-
-    /**
-     * Sets collider filter to ccs.Bone.
-     * @param {ccs.ColliderFilter} filter
-     */
-    setColliderFilter(filter) {
-        var displayList = this._displayManager.getDecorativeDisplayList();
-        for (var i = 0; i < displayList.length; i++) {
-            var locDecoDisplay = displayList[i];
-            var locDetector = locDecoDisplay.getColliderDetector();
-            if (locDetector)
-                locDetector.setColliderFilter(filter);
-        }
-    }
-
-    /**
-     * Returns collider filter of ccs.Bone.
-     * @returns {cc.ColliderFilter}
-     */
-    getColliderFilter() {
-        var decoDisplay = this.displayManager.getCurrentDecorativeDisplay();
-        if (decoDisplay) {
-            var detector = decoDisplay.getColliderDetector();
-            if (detector)
-                return detector.getColliderFilter();
-        }
-        return null;
-    }
-
-    /**
-     * Sets ccs.Bone's transform dirty flag.
-     * @param {Boolean} dirty
-     */
-    setTransformDirty(dirty) {
-        this._boneTransformDirty = dirty;
-    }
-
-    /**
-     * Returns ccs.Bone's transform dirty flag whether is dirty.
-     * @return {Boolean}
-     */
-    isTransformDirty() {
-        return this._boneTransformDirty;
-    }
-
-    /**
-     * displayManager dirty getter
-     * @return {ccs.DisplayManager}
-     */
-    getDisplayManager() {
-        return this._displayManager;
-    }
-
-    /**
-     *    When Armature play a animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will hide.   <br/>
-     *    Set IgnoreMovementBoneData to true, then this bone will also show.
-     * @param {Boolean} bool
-     */
-    setIgnoreMovementBoneData(bool) {
-        this._ignoreMovementBoneData = bool;
-    }
-
-    /**
-     * Returns whether is ignore movement bone data.
-     * @returns {Boolean}
-     */
-    isIgnoreMovementBoneData() {
-        return this._ignoreMovementBoneData;
-    }
-
-    /**
-     * Returns the blendFunc of ccs.Bone.
-     * @return {cc.BlendFunc}
-     */
-    getBlendFunc() {
-        return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
-    }
-
-    /**
-     * Sets blend dirty flag
-     * @param {Boolean} dirty
-     */
-    setBlendDirty(dirty) {
-        this._blendDirty = dirty;
-    }
-
-    /**
-     * Returns the blend dirty flag whether is dirty.
-     * @returns {Boolean|*|ccs.Bone._blendDirty}
-     */
-    isBlendDirty() {
-        return this._blendDirty;
-    }
-
-    /**
-     * Returns the tweenData of ccs.Bone.
-     * @return {ccs.FrameData}
-     */
-    getTweenData() {
-        return this._tweenData;
-    }
-
-    /**
-     * Returns the world information of ccs.Bone.
-     * @returns {ccs.BaseData}
-     */
-    getWorldInfo() {
-        return this._worldInfo;
-    }
-
-    /**
-     * Returns the children of ccs.Bone
-     * @return {Array}
-     * @deprecated since v3.0, please use getChildren instead.
-     */
-    getChildrenBone() {
-        return this._children;
-    }
-
-    /**
-     * Returns the worldTransform of ccs.Bone.
-     * @return {cc.AffineTransform}
-     * @deprecated since v3.0, please use getNodeToArmatureTransform instead.
-     */
-    nodeToArmatureTransform() {
-        return this.getNodeToArmatureTransform();
-    }
-
-    /**
-     * @deprecated
-     * Returns the world affine transform matrix. The matrix is in Pixels.
-     * @returns {cc.AffineTransform}
-     */
-    nodeToWorldTransform() {
-        return this.getNodeToWorldTransform();
-    }
-
-    /**
-     * Returns the collider body list in this bone.
-     * @returns {Array|null}
-     * @deprecated since v3.0, please use getColliderDetector to get a delector, and calls its getColliderBodyList instead.
-     */
-    getColliderBodyList() {
-        var detector = this.getColliderDetector();
-        if (detector)
-            return detector.getColliderBodyList();
-        return null;
-    }
-
-    /**
-     * Returns whether is ignore movement bone data.
-     * @return {Boolean}
-     * @deprecated since v3.0, please isIgnoreMovementBoneData instead.
-     */
-    getIgnoreMovementBoneData() {
-        return this.isIgnoreMovementBoneData();
-    }
-
-    _createRenderCmd() {
-        if (cc.rendererConfig.isCanvas)
-            return new ccs.Bone.CanvasRenderCmd(this);
-        else
-            return new ccs.Bone.WebGLRenderCmd(this);
-    }
-
+  _createRenderCmd() {
+    if (cc.rendererConfig.isCanvas) return new ccs.Bone.CanvasRenderCmd(this);
+    else return new ccs.Bone.WebGLRenderCmd(this);
+  }
 };
 
-
-
-
 (function () {
-    ccs.Bone.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
-        constructor(renderable) {
-            super(renderable);
-            this._needDraw = false;
-        }
+  ccs.Bone.CanvasRenderCmd = class extends cc.Node.CanvasRenderCmd {
+    constructor(renderable) {
+      super(renderable);
+      this._needDraw = false;
+    }
 
-        _updateColor() {
-            var node = this._node;
-            var display = node._displayManager.getDisplayRenderNode();
-            if (display !== null) {
-                var displayCmd = display._renderCmd;
-                display.setColor(this._displayedColor);
-                display.setOpacity(this._displayedOpacity);
-                displayCmd._syncDisplayColor(node._tweenData);
-                displayCmd._syncDisplayOpacity(node._tweenData.a);
-                displayCmd._updateColor();
-            }
-        }
+    _updateColor() {
+      var node = this._node;
+      var display = node._displayManager.getDisplayRenderNode();
+      if (display !== null) {
+        var displayCmd = display._renderCmd;
+        display.setColor(this._displayedColor);
+        display.setOpacity(this._displayedOpacity);
+        displayCmd._syncDisplayColor(node._tweenData);
+        displayCmd._syncDisplayOpacity(node._tweenData.a);
+        displayCmd._updateColor();
+      }
+    }
 
-        transform(parentCmd, recursive) {
-            if (!this._transform) {
-                this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-                this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-            }
+    transform(parentCmd, recursive) {
+      if (!this._transform) {
+        this._transform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+        this._worldTransform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+      }
 
-            var node = this._node,
-                t = this._transform,
-                wt = this._worldTransform,
-                pt = parentCmd ? parentCmd._worldTransform : null;
+      var node = this._node,
+        t = this._transform,
+        wt = this._worldTransform,
+        pt = parentCmd ? parentCmd._worldTransform : null;
 
-            if (pt) {
-                this.originTransform();
-                cc.AffineTransform.concatIn(t, node._worldTransform);
-            }
+      if (pt) {
+        this.originTransform();
+        cc.AffineTransform.concatIn(t, node._worldTransform);
+      }
 
-            if (pt) {
-                wt.a = t.a * pt.a + t.b * pt.c;
-                wt.b = t.a * pt.b + t.b * pt.d;
-                wt.c = t.c * pt.a + t.d * pt.c;
-                wt.d = t.c * pt.b + t.d * pt.d;
-                wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
-                wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
-            }
-            else {
-                wt.a = t.a;
-                wt.b = t.b;
-                wt.c = t.c;
-                wt.d = t.d;
-                wt.tx = t.tx;
-                wt.ty = t.ty;
-            }
-        }
-    };
+      if (pt) {
+        wt.a = t.a * pt.a + t.b * pt.c;
+        wt.b = t.a * pt.b + t.b * pt.d;
+        wt.c = t.c * pt.a + t.d * pt.c;
+        wt.d = t.c * pt.b + t.d * pt.d;
+        wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
+        wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
+      } else {
+        wt.a = t.a;
+        wt.b = t.b;
+        wt.c = t.c;
+        wt.d = t.d;
+        wt.tx = t.tx;
+        wt.ty = t.ty;
+      }
+    }
+  };
 })();
 
 (function () {
-    if (!cc.Node.WebGLRenderCmd)
-        return;
-    ccs.Bone.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
-        constructor(renderable) {
-            super(renderable);
-            this._needDraw = false;
-        }
+  if (!cc.Node.WebGLRenderCmd) return;
+  ccs.Bone.WebGLRenderCmd = class extends cc.Node.WebGLRenderCmd {
+    constructor(renderable) {
+      super(renderable);
+      this._needDraw = false;
+    }
 
-        _updateColor() {
-            var node = this._node;
-            var display = node._displayManager.getDisplayRenderNode();
-            if (display !== null) {
-                var displayCmd = display._renderCmd;
-                display.setColor(this._displayedColor);
-                display.setOpacity(this._displayedOpacity);
-                displayCmd._syncDisplayColor(node._tweenData);
-                displayCmd._syncDisplayOpacity(node._tweenData.a);
-                displayCmd._updateColor();
-            }
-        }
+    _updateColor() {
+      var node = this._node;
+      var display = node._displayManager.getDisplayRenderNode();
+      if (display !== null) {
+        var displayCmd = display._renderCmd;
+        display.setColor(this._displayedColor);
+        display.setOpacity(this._displayedOpacity);
+        displayCmd._syncDisplayColor(node._tweenData);
+        displayCmd._syncDisplayOpacity(node._tweenData.a);
+        displayCmd._updateColor();
+      }
+    }
 
-        transform(parentCmd, recursive) {
-            if (!this._transform) {
-                this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-                this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-            }
+    transform(parentCmd, recursive) {
+      if (!this._transform) {
+        this._transform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+        this._worldTransform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+      }
 
-            var node = this._node,
-                t = this._transform,
-                wt = this._worldTransform,
-                pt = parentCmd ? parentCmd._worldTransform : null;
+      var node = this._node,
+        t = this._transform,
+        wt = this._worldTransform,
+        pt = parentCmd ? parentCmd._worldTransform : null;
 
-            if (pt) {
-                this.originTransform();
-                cc.AffineTransform.concatIn(t, node._worldTransform);
-            }
+      if (pt) {
+        this.originTransform();
+        cc.AffineTransform.concatIn(t, node._worldTransform);
+      }
 
-            if (pt) {
-                wt.a = t.a * pt.a + t.b * pt.c;
-                wt.b = t.a * pt.b + t.b * pt.d;
-                wt.c = t.c * pt.a + t.d * pt.c;
-                wt.d = t.c * pt.b + t.d * pt.d;
-                wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
-                wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
-            }
-            else {
-                wt.a = t.a;
-                wt.b = t.b;
-                wt.c = t.c;
-                wt.d = t.d;
-                wt.tx = t.tx;
-                wt.ty = t.ty;
-            }
-        }
-    };
+      if (pt) {
+        wt.a = t.a * pt.a + t.b * pt.c;
+        wt.b = t.a * pt.b + t.b * pt.d;
+        wt.c = t.c * pt.a + t.d * pt.c;
+        wt.d = t.c * pt.b + t.d * pt.d;
+        wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
+        wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
+      } else {
+        wt.a = t.a;
+        wt.b = t.b;
+        wt.c = t.c;
+        wt.d = t.d;
+        wt.tx = t.tx;
+        wt.ty = t.ty;
+      }
+    }
+  };
 })();

@@ -67,53 +67,52 @@ ccs.FRAME_TYPE_MAX = 5;
  * @type {Object}
  */
 ccs.FrameEaseType = {
-    CUSTOM : -1,
+  CUSTOM: -1,
 
-    LINEAR : 0,
+  LINEAR: 0,
 
-    SINE_EASEIN : 1,
-    SINE_EASEOUT : 2,
-    SINE_EASEINOUT : 3,
+  SINE_EASEIN: 1,
+  SINE_EASEOUT: 2,
+  SINE_EASEINOUT: 3,
 
-    QUAD_EASEIN : 4,
-    QUAD_EASEOUT : 5,
-    QUAD_EASEINOUT : 6,
+  QUAD_EASEIN: 4,
+  QUAD_EASEOUT: 5,
+  QUAD_EASEINOUT: 6,
 
-    CUBIC_EASEIN : 7,
-    CUBIC_EASEOUT : 8,
-    CUBIC_EASEINOUT : 9,
+  CUBIC_EASEIN: 7,
+  CUBIC_EASEOUT: 8,
+  CUBIC_EASEINOUT: 9,
 
-    QUART_EASEIN : 10,
-    QUART_EASEOUT : 11,
-    QUART_EASEINOUT : 12,
+  QUART_EASEIN: 10,
+  QUART_EASEOUT: 11,
+  QUART_EASEINOUT: 12,
 
-    QUINT_EASEIN : 13,
-    QUINT_EASEOUT : 14,
-    QUINT_EASEINOUT : 15,
+  QUINT_EASEIN: 13,
+  QUINT_EASEOUT: 14,
+  QUINT_EASEINOUT: 15,
 
-    EXPO_EASEIN : 16,
-    EXPO_EASEOUT : 17,
-    EXPO_EASEINOUT : 18,
+  EXPO_EASEIN: 16,
+  EXPO_EASEOUT: 17,
+  EXPO_EASEINOUT: 18,
 
-    CIRC_EASEIN : 19,
-    CIRC_EASEOUT : 20,
-    CIRC_EASEINOUT : 21,
+  CIRC_EASEIN: 19,
+  CIRC_EASEOUT: 20,
+  CIRC_EASEINOUT: 21,
 
-    ELASTIC_EASEIN : 22,
-    ELASTIC_EASEOUT : 23,
-    ELASTIC_EASEINOUT : 24,
+  ELASTIC_EASEIN: 22,
+  ELASTIC_EASEOUT: 23,
+  ELASTIC_EASEINOUT: 24,
 
-    BACK_EASEIN : 25,
-    BACK_EASEOUT : 26,
-    BACK_EASEINOUT : 27,
+  BACK_EASEIN: 25,
+  BACK_EASEOUT: 26,
+  BACK_EASEINOUT: 27,
 
-    BOUNCE_EASEIN : 28,
-    BOUNCE_EASEOUT : 29,
-    BOUNCE_EASEINOUT : 30,
+  BOUNCE_EASEIN: 28,
+  BOUNCE_EASEOUT: 29,
+  BOUNCE_EASEINOUT: 30,
 
-    TWEEN_EASING_MAX: 1000
+  TWEEN_EASING_MAX: 1000
 };
-
 
 /**
  * The action frame of Cocostudio. It's the base class of ccs.ActionMoveFrame, ccs.ActionScaleFrame etc.
@@ -124,391 +123,388 @@ ccs.FrameEaseType = {
  * @property {Number}               time                    - time of ccs.ActionFrame
  */
 ccs.ActionFrame = class ActionFrame extends cc.NewClass {
+  /**
+   * The constructor of cc.ActionFrame.
+   */
+  constructor() {
+    super();
+    this.frameType = 0;
+    this.easingType = ccs.FrameEaseType.LINEAR;
+    this.frameIndex = 0;
+    this.time = 0;
+  }
 
-    /**
-     * The constructor of cc.ActionFrame.
-     */
-    constructor() {
-        super();
-        this.frameType = 0;
-        this.easingType = ccs.FrameEaseType.LINEAR;
-        this.frameIndex = 0;
-        this.time = 0;
+  /**
+   * Returns the action of ActionFrame. its subClass need override it.
+   * @param {number} duration the duration time of ActionFrame
+   * @param {ccs.ActionFrame} srcFrame source frame.
+   * @returns {null}
+   */
+  getAction(duration, srcFrame) {
+    cc.log("Need a definition of <getAction> for ActionFrame");
+    return null;
+  }
+
+  _getEasingAction(action) {
+    if (action === null) {
+      console.error("Action cannot be null!");
+      return null;
     }
 
-    /**
-     * Returns the action of ActionFrame. its subClass need override it.
-     * @param {number} duration the duration time of ActionFrame
-     * @param {ccs.ActionFrame} srcFrame source frame.
-     * @returns {null}
-     */
-    getAction(duration, srcFrame) {
-        cc.log("Need a definition of <getAction> for ActionFrame");
-        return null;
+    var resultAction;
+    switch (this.easingType) {
+      case ccs.FrameEaseType.CUSTOM:
+        break;
+      case ccs.FrameEaseType.LINEAR:
+        resultAction = action;
+        break;
+      case ccs.FrameEaseType.SINE_EASEIN:
+        resultAction = action.easing(cc.easeSineIn());
+        break;
+      case ccs.FrameEaseType.SINE_EASEOUT:
+        resultAction = action.easing(cc.easeSineOut());
+        break;
+      case ccs.FrameEaseType.SINE_EASEINOUT:
+        resultAction = action.easing(cc.easeSineInOut());
+        break;
+      case ccs.FrameEaseType.QUAD_EASEIN:
+        resultAction = action.easing(cc.easeQuadraticActionIn());
+        break;
+      case ccs.FrameEaseType.QUAD_EASEOUT:
+        resultAction = action.easing(cc.easeQuadraticActionOut());
+        break;
+      case ccs.FrameEaseType.QUAD_EASEINOUT:
+        resultAction = action.easing(cc.easeQuadraticActionInOut());
+        break;
+      case ccs.FrameEaseType.CUBIC_EASEIN:
+        resultAction = action.easing(cc.easeCubicActionIn());
+        break;
+      case ccs.FrameEaseType.CUBIC_EASEOUT:
+        resultAction = action.easing(cc.easeCubicActionOut());
+        break;
+      case ccs.FrameEaseType.CUBIC_EASEINOUT:
+        resultAction = action.easing(cc.easeCubicActionInOut());
+        break;
+      case ccs.FrameEaseType.QUART_EASEIN:
+        resultAction = action.easing(cc.easeQuarticActionIn());
+        break;
+      case ccs.FrameEaseType.QUART_EASEOUT:
+        resultAction = action.easing(cc.easeQuarticActionOut());
+        break;
+      case ccs.FrameEaseType.QUART_EASEINOUT:
+        resultAction = action.easing(cc.easeQuarticActionInOut());
+        break;
+      case ccs.FrameEaseType.QUINT_EASEIN:
+        resultAction = action.easing(cc.easeQuinticActionIn());
+        break;
+      case ccs.FrameEaseType.QUINT_EASEOUT:
+        resultAction = action.easing(cc.easeQuinticActionOut());
+        break;
+      case ccs.FrameEaseType.QUINT_EASEINOUT:
+        resultAction = action.easing(cc.easeQuinticActionInOut());
+        break;
+      case ccs.FrameEaseType.EXPO_EASEIN:
+        resultAction = action.easing(cc.easeExponentialIn());
+        break;
+      case ccs.FrameEaseType.EXPO_EASEOUT:
+        resultAction = action.easing(cc.easeExponentialOut());
+        break;
+      case ccs.FrameEaseType.EXPO_EASEINOUT:
+        resultAction = action.easing(cc.easeExponentialInOut());
+        break;
+      case ccs.FrameEaseType.CIRC_EASEIN:
+        resultAction = action.easing(cc.easeCircleActionIn());
+        break;
+      case ccs.FrameEaseType.CIRC_EASEOUT:
+        resultAction = action.easing(cc.easeCircleActionOut());
+        break;
+      case ccs.FrameEaseType.CIRC_EASEINOUT:
+        resultAction = action.easing(cc.easeCircleActionInOut());
+        break;
+      case ccs.FrameEaseType.ELASTIC_EASEIN:
+        resultAction = action.easing(cc.easeElasticIn());
+        break;
+      case ccs.FrameEaseType.ELASTIC_EASEOUT:
+        resultAction = action.easing(cc.easeElasticOut());
+        break;
+      case ccs.FrameEaseType.ELASTIC_EASEINOUT:
+        resultAction = action.easing(cc.easeElasticInOut());
+        break;
+      case ccs.FrameEaseType.BACK_EASEIN:
+        resultAction = action.easing(cc.easeBackIn());
+        break;
+      case ccs.FrameEaseType.BACK_EASEOUT:
+        resultAction = action.easing(cc.easeBackOut());
+        break;
+      case ccs.FrameEaseType.BACK_EASEINOUT:
+        resultAction = action.easing(cc.easeBackInOut());
+        break;
+      case ccs.FrameEaseType.BOUNCE_EASEIN:
+        resultAction = action.easing(cc.easeBounceIn());
+        break;
+      case ccs.FrameEaseType.BOUNCE_EASEOUT:
+        resultAction = action.easing(cc.easeBounceOut());
+        break;
+      case ccs.FrameEaseType.BOUNCE_EASEINOUT:
+        resultAction = action.easing(cc.easeBounceInOut());
+        break;
     }
 
-    _getEasingAction(action) {
-        if (action === null) {
-            console.error("Action cannot be null!");
-            return null;
-        }
+    return resultAction;
+  }
 
-        var resultAction;
-        switch (this.easingType) {
-            case ccs.FrameEaseType.CUSTOM:
-                break;
-            case ccs.FrameEaseType.LINEAR:
-                resultAction = action;
-                break;
-            case ccs.FrameEaseType.SINE_EASEIN:
-                resultAction = action.easing(cc.easeSineIn());
-                break;
-            case ccs.FrameEaseType.SINE_EASEOUT:
-                resultAction = action.easing(cc.easeSineOut());
-                break;
-            case ccs.FrameEaseType.SINE_EASEINOUT:
-                resultAction = action.easing(cc.easeSineInOut());
-                break;
-            case ccs.FrameEaseType.QUAD_EASEIN:
-                resultAction = action.easing(cc.easeQuadraticActionIn());
-                break;
-            case ccs.FrameEaseType.QUAD_EASEOUT:
-                resultAction = action.easing(cc.easeQuadraticActionOut());
-                break;
-            case ccs.FrameEaseType.QUAD_EASEINOUT:
-                resultAction = action.easing(cc.easeQuadraticActionInOut());
-                break;
-            case ccs.FrameEaseType.CUBIC_EASEIN:
-                resultAction = action.easing(cc.easeCubicActionIn());
-                break;
-            case ccs.FrameEaseType.CUBIC_EASEOUT:
-                resultAction = action.easing(cc.easeCubicActionOut());
-                break;
-            case ccs.FrameEaseType.CUBIC_EASEINOUT:
-                resultAction = action.easing(cc.easeCubicActionInOut());
-                break;
-            case ccs.FrameEaseType.QUART_EASEIN:
-                resultAction = action.easing(cc.easeQuarticActionIn());
-                break;
-            case ccs.FrameEaseType.QUART_EASEOUT:
-                resultAction = action.easing(cc.easeQuarticActionOut());
-                break;
-            case ccs.FrameEaseType.QUART_EASEINOUT:
-                resultAction = action.easing(cc.easeQuarticActionInOut());
-                break;
-            case ccs.FrameEaseType.QUINT_EASEIN:
-                resultAction = action.easing(cc.easeQuinticActionIn());
-                break;
-            case ccs.FrameEaseType.QUINT_EASEOUT:
-                resultAction = action.easing(cc.easeQuinticActionOut());
-                break;
-            case ccs.FrameEaseType.QUINT_EASEINOUT:
-                resultAction = action.easing(cc.easeQuinticActionInOut());
-                break;
-            case ccs.FrameEaseType.EXPO_EASEIN:
-                resultAction = action.easing(cc.easeExponentialIn());
-                break;
-            case ccs.FrameEaseType.EXPO_EASEOUT:
-                resultAction = action.easing(cc.easeExponentialOut());
-                break;
-            case ccs.FrameEaseType.EXPO_EASEINOUT:
-                resultAction = action.easing(cc.easeExponentialInOut());
-                break;
-            case ccs.FrameEaseType.CIRC_EASEIN:
-                resultAction = action.easing(cc.easeCircleActionIn());
-                break;
-            case ccs.FrameEaseType.CIRC_EASEOUT:
-                resultAction = action.easing(cc.easeCircleActionOut());
-                break;
-            case ccs.FrameEaseType.CIRC_EASEINOUT:
-                resultAction = action.easing(cc.easeCircleActionInOut());
-                break;
-            case ccs.FrameEaseType.ELASTIC_EASEIN:
-                resultAction = action.easing(cc.easeElasticIn());
-                break;
-            case ccs.FrameEaseType.ELASTIC_EASEOUT:
-                resultAction = action.easing(cc.easeElasticOut());
-                break;
-            case ccs.FrameEaseType.ELASTIC_EASEINOUT:
-                resultAction = action.easing(cc.easeElasticInOut());
-                break;
-            case ccs.FrameEaseType.BACK_EASEIN:
-                resultAction = action.easing(cc.easeBackIn());
-                break;
-            case ccs.FrameEaseType.BACK_EASEOUT:
-                resultAction = action.easing(cc.easeBackOut());
-                break;
-            case ccs.FrameEaseType.BACK_EASEINOUT:
-                resultAction = action.easing(cc.easeBackInOut());
-                break;
-            case ccs.FrameEaseType.BOUNCE_EASEIN:
-                resultAction = action.easing(cc.easeBounceIn());
-                break;
-            case ccs.FrameEaseType.BOUNCE_EASEOUT:
-                resultAction = action.easing(cc.easeBounceOut());
-                break;
-            case ccs.FrameEaseType.BOUNCE_EASEINOUT:
-                resultAction = action.easing(cc.easeBounceInOut());
-                break;
-        }
+  /**
+   * Sets the easing parameter to action frame.
+   * @param {Array} parameter
+   */
+  setEasingParameter(parameter) {
+    this._Parameter = [];
+    for (var i = 0; i < parameter.length; i++)
+      this._Parameter.push(parameter[i]);
+  }
 
-        return resultAction;
-    }
-
-    /**
-     * Sets the easing parameter to action frame.
-     * @param {Array} parameter
-     */
-    setEasingParameter(parameter){
-        this._Parameter = [];
-        for(var i=0;i<parameter.length;i++)
-            this._Parameter.push(parameter[i]);
-    }
-
-    /**
-     * Sets the easing type to ccs.ActionFrame
-     * @param {Number} easingType
-     */
-    setEasingType(easingType){
-        this.easingType = easingType;
-    }
-
+  /**
+   * Sets the easing type to ccs.ActionFrame
+   * @param {Number} easingType
+   */
+  setEasingType(easingType) {
+    this.easingType = easingType;
+  }
 };
 
 /**
  * The Cocostudio's move action frame.
  */
 ccs.ActionMoveFrame = class ActionMoveFrame extends ccs.ActionFrame {
-    /**
-     * Construction of ccs.ActionMoveFrame
-     */
-    constructor() {
-        super();
-        this._position = new cc.Point(0, 0);
-        this.frameType = ccs.FRAME_TYPE_MOVE;
-    }
+  /**
+   * Construction of ccs.ActionMoveFrame
+   */
+  constructor() {
+    super();
+    this._position = new cc.Point(0, 0);
+    this.frameType = ccs.FRAME_TYPE_MOVE;
+  }
 
-    /**
-     * Changes the move action position.
-     * @param {cc.Point|Number} pos
-     * @param {Number} y
-     */
-    setPosition(pos, y) {
-        if (y === undefined) {
-            this._position.x = pos.x;
-            this._position.y = pos.y;
-        } else {
-            this._position.x = pos;
-            this._position.y = y;
-        }
+  /**
+   * Changes the move action position.
+   * @param {Point|Number} pos
+   * @param {Number} y
+   */
+  setPosition(pos, y) {
+    if (y === undefined) {
+      this._position.x = pos.x;
+      this._position.y = pos.y;
+    } else {
+      this._position.x = pos;
+      this._position.y = y;
     }
+  }
 
-    /**
-     * Returns the move action position.
-     * @returns {cc.Point}
-     */
-    getPosition() {
-        return this._position;
-    }
+  /**
+   * Returns the move action position.
+   * @returns {Point}
+   */
+  getPosition() {
+    return this._position;
+  }
 
-    /**
-     * Returns the Action of ActionFrame.
-     * @param {number} duration
-     * @returns {cc.MoveTo}
-     */
-    getAction(duration) {
-        return this._getEasingAction(new cc.MoveTo(duration, this._position));
-    }
-
+  /**
+   * Returns the Action of ActionFrame.
+   * @param {number} duration
+   * @returns {MoveTo}
+   */
+  getAction(duration) {
+    return this._getEasingAction(new cc.MoveTo(duration, this._position));
+  }
 };
 
 /**
  * The Cocostudio's scale action frame
  */
 ccs.ActionScaleFrame = class ActionScaleFrame extends ccs.ActionFrame {
-    /**
-     * Construction of ccs.ActionScaleFrame
-     */
-    constructor() {
-        super();
-        this._scaleX = 1;
-        this._scaleY = 1;
-        this.frameType = ccs.FRAME_TYPE_SCALE;
-    }
+  /**
+   * Construction of ccs.ActionScaleFrame
+   */
+  constructor() {
+    super();
+    this._scaleX = 1;
+    this._scaleY = 1;
+    this.frameType = ccs.FRAME_TYPE_SCALE;
+  }
 
-    /**
-     * Changes the scale action scaleX.
-     * @param {number} scaleX
-     */
-    setScaleX(scaleX) {
-        this._scaleX = scaleX;
-    }
+  /**
+   * Changes the scale action scaleX.
+   * @param {number} scaleX
+   */
+  setScaleX(scaleX) {
+    this._scaleX = scaleX;
+  }
 
-    /**
-     * Returns the scale action scaleX.
-     * @returns {number}
-     */
-    getScaleX() {
-        return this._scaleX;
-    }
+  /**
+   * Returns the scale action scaleX.
+   * @returns {number}
+   */
+  getScaleX() {
+    return this._scaleX;
+  }
 
-    /**
-     * Changes the scale action scaleY.
-     * @param {number} scaleY
-     */
-    setScaleY(scaleY) {
-        this._scaleY = scaleY;
-    }
+  /**
+   * Changes the scale action scaleY.
+   * @param {number} scaleY
+   */
+  setScaleY(scaleY) {
+    this._scaleY = scaleY;
+  }
 
-    /**
-     * Returns the scale action scaleY.
-     * @returns {number}
-     */
-    getScaleY() {
-        return this._scaleY;
-    }
+  /**
+   * Returns the scale action scaleY.
+   * @returns {number}
+   */
+  getScaleY() {
+    return this._scaleY;
+  }
 
-    /**
-     * Returns the action of ActionFrame.
-     * @param {number} duration
-     * @returns {cc.ScaleTo}
-     */
-    getAction(duration) {
-        return this._getEasingAction(new cc.ScaleTo(duration, this._scaleX, this._scaleY));
-    }
-
+  /**
+   * Returns the action of ActionFrame.
+   * @param {number} duration
+   * @returns {ScaleTo}
+   */
+  getAction(duration) {
+    return this._getEasingAction(
+      new cc.ScaleTo(duration, this._scaleX, this._scaleY)
+    );
+  }
 };
 
 /**
  * The Cocostudio's rotation action frame.
  */
 ccs.ActionRotationFrame = class ActionRotationFrame extends ccs.ActionFrame {
-    /**
-     * Construction of ccs.ActionRotationFrame
-     */
-    constructor() {
-        super();
-        this._rotation = 0;
-        this.frameType = ccs.FRAME_TYPE_ROTATE;
-    }
+  /**
+   * Construction of ccs.ActionRotationFrame
+   */
+  constructor() {
+    super();
+    this._rotation = 0;
+    this.frameType = ccs.FRAME_TYPE_ROTATE;
+  }
 
-    /**
-     * Changes rotate action rotation.
-     * @param {number} rotation
-     */
-    setRotation(rotation) {
-        this._rotation = rotation;
-    }
+  /**
+   * Changes rotate action rotation.
+   * @param {number} rotation
+   */
+  setRotation(rotation) {
+    this._rotation = rotation;
+  }
 
-    /**
-     * Returns the rotate action rotation.
-     * @returns {number}
-     */
-    getRotation() {
-        return this._rotation;
-    }
+  /**
+   * Returns the rotate action rotation.
+   * @returns {number}
+   */
+  getRotation() {
+    return this._rotation;
+  }
 
-    /**
-     * Returns the Action of ActionFrame.
-     * @param {number} duration
-     * @param {cc.ActionFrame} [srcFrame]
-     * @returns {cc.RotateTo}
-     */
-    getAction(duration, srcFrame) {
-        if(srcFrame === undefined)
-            return this._getEasingAction(new cc.RotateTo(duration, this._rotation));
-        else {
-            if (!(srcFrame instanceof cc.ActionRotationFrame))
-                return this.getAction(duration);
-            else{
-                var diffRotation = this._rotation - srcFrame._rotation;
-                return this._getEasingAction(new cc.RotateBy(duration,diffRotation));
-            }
-        }
+  /**
+   * Returns the Action of ActionFrame.
+   * @param {number} duration
+   * @param {ActionFrame} [srcFrame]
+   * @returns {RotateTo}
+   */
+  getAction(duration, srcFrame) {
+    if (srcFrame === undefined)
+      return this._getEasingAction(new cc.RotateTo(duration, this._rotation));
+    else {
+      if (!(srcFrame instanceof cc.ActionRotationFrame))
+        return this.getAction(duration);
+      else {
+        var diffRotation = this._rotation - srcFrame._rotation;
+        return this._getEasingAction(new cc.RotateBy(duration, diffRotation));
+      }
     }
-
+  }
 };
 
 /**
  * The Cocostudio's fade action frame.
  */
 ccs.ActionFadeFrame = class ActionFadeFrame extends ccs.ActionFrame {
-    /**
-     * Construction of ccs.ActionFadeFrame
-     */
-    constructor() {
-        super();
-        this._opacity = 255;
-        this.frameType = ccs.FRAME_TYPE_FADE;
-    }
+  /**
+   * Construction of ccs.ActionFadeFrame
+   */
+  constructor() {
+    super();
+    this._opacity = 255;
+    this.frameType = ccs.FRAME_TYPE_FADE;
+  }
 
-    /**
-     * Changes the fade action opacity.
-     * @param {number} opacity
-     */
-    setOpacity(opacity) {
-        this._opacity = opacity;
-    }
+  /**
+   * Changes the fade action opacity.
+   * @param {number} opacity
+   */
+  setOpacity(opacity) {
+    this._opacity = opacity;
+  }
 
-    /**
-     * Returns the fade action opacity.
-     * @returns {number}
-     */
-    getOpacity() {
-        return this._opacity;
-    }
+  /**
+   * Returns the fade action opacity.
+   * @returns {number}
+   */
+  getOpacity() {
+    return this._opacity;
+  }
 
-    /**
-     * Returns a fade action with easing.
-     * @param {Number} duration
-     * @returns {cc.FadeTo}
-     */
-    getAction(duration) {
-        return this._getEasingAction(new cc.FadeTo(duration, this._opacity));
-    }
-
+  /**
+   * Returns a fade action with easing.
+   * @param {Number} duration
+   * @returns {FadeTo}
+   */
+  getAction(duration) {
+    return this._getEasingAction(new cc.FadeTo(duration, this._opacity));
+  }
 };
 
 /**
  * The Cocostudio's tint action frame.
  */
 ccs.ActionTintFrame = class ActionTintFrame extends ccs.ActionFrame {
-    /**
-     * Construction of ccs.ActionTintFrame
-     */
-    constructor() {
-        super();
-        this._color = new cc.Color(255, 255, 255, 255);
-        this.frameType = ccs.FRAME_TYPE_TINT;
-    }
+  /**
+   * Construction of ccs.ActionTintFrame
+   */
+  constructor() {
+    super();
+    this._color = new cc.Color(255, 255, 255, 255);
+    this.frameType = ccs.FRAME_TYPE_TINT;
+  }
 
-    /**
-     * Changes the tint action color.
-     * @param {cc.Color} color
-     */
-    setColor(color) {
-        var locColor = this._color;
-        locColor.r = color.r;
-        locColor.g = color.g;
-        locColor.b = color.b;
-    }
+  /**
+   * Changes the tint action color.
+   * @param {Color} color
+   */
+  setColor(color) {
+    var locColor = this._color;
+    locColor.r = color.r;
+    locColor.g = color.g;
+    locColor.b = color.b;
+  }
 
-    /**
-     * Returns the color of tint action.
-     * @returns {cc.Color}
-     */
-    getColor() {
-        var locColor = this._color;
-        return new cc.Color(locColor.r, locColor.g, locColor.b, locColor.a);
-    }
+  /**
+   * Returns the color of tint action.
+   * @returns {Color}
+   */
+  getColor() {
+    var locColor = this._color;
+    return new cc.Color(locColor.r, locColor.g, locColor.b, locColor.a);
+  }
 
-    /**
-     * Returns a tint action with easing.
-     * @param duration
-     * @returns {cc.TintTo}
-     */
-    getAction(duration) {
-        return this._getEasingAction(new cc.TintTo(duration, this._color.r, this._color.g, this._color.b));
-    }
-
+  /**
+   * Returns a tint action with easing.
+   * @param duration
+   * @returns {TintTo}
+   */
+  getAction(duration) {
+    return this._getEasingAction(
+      new cc.TintTo(duration, this._color.r, this._color.g, this._color.b)
+    );
+  }
 };

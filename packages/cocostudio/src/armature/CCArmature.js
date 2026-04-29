@@ -30,7 +30,7 @@
  * @property {ccs.ArmatureAnimation}    animation       - The animation
  * @property {ccs.ArmatureData}         armatureData    - The armature data
  * @property {String}                   name            - The name of the armature
- * @property {cc.SpriteBatchNode}       batchNode       - The batch node of the armature
+ * @property {SpriteBatchNode}       batchNode       - The batch node of the armature
  * @property {Number}                   version         - The version
  * @property {Object}                   body            - The body of the armature
  * @property {ccs.ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
@@ -363,7 +363,7 @@ ccs.Armature = class Armature extends ccs.Node {
 
   /**
    * This boundingBox will calculate all bones' boundingBox every time
-   * @returns {cc.Rect}
+   * @returns {Rect}
    */
   getBoundingBox() {
     var minX,
@@ -504,7 +504,7 @@ ccs.Armature = class Armature extends ccs.Node {
 
   /**
    * Sets the blendFunc to ccs.Armature
-   * @param {cc.BlendFunc|Number} blendFunc
+   * @param {BlendFunc|Number} blendFunc
    * @param {Number} [dst]
    */
   setBlendFunc(blendFunc, dst) {
@@ -519,7 +519,7 @@ ccs.Armature = class Armature extends ccs.Node {
 
   /**
    * Returns the blendFunc of ccs.Armature
-   * @returns {cc.BlendFunc}
+   * @returns {BlendFunc}
    */
   getBlendFunc() {
     return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);

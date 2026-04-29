@@ -1,8 +1,10 @@
+import { Loader, log } from "@aspect/core";
+import { Audio } from "./audio.js";
 import { audioSupport } from "./audio-support.js";
 import { loader } from "./audio-loader.js";
 
 /**
- * cc.audioEngine is the singleton object, it provide simple audio APIs.
+ * audioEngine is the singleton object, it provide simple audio APIs.
  * @namespace
  */
 export class AudioEngine {
@@ -29,8 +31,8 @@ export class AudioEngine {
    * @param {String} url The path of the music file without filename extension.
    * @param {Boolean} loop Whether the music loop or not.
    * @example
-   * //example
-   * cc.audioEngine.playMusic(path, false);
+
+   * audioEngine.playMusic(path, false);
    */
   playMusic(url, loop) {
     const bgMusic = this._currMusic;
@@ -38,15 +40,15 @@ export class AudioEngine {
       bgMusic.stop();
     }
     const musicVolume = this._musicVolume;
-    let audio = cc.loader.getRes(url);
+    let audio = Loader.getInstance().getRes(url);
     if (!audio) {
-      cc.loader.load(url, function () {
+      Loader.getInstance().load(url, function () {
         if (!audio.getPlaying() && !audio.interruptPlay) {
           audio.setVolume(musicVolume);
           audio.play(0, loop || false);
         }
       });
-      audio = cc.loader.getRes(url);
+      audio = Loader.getInstance().getRes(url);
     }
     audio.setVolume(musicVolume);
     audio.play(0, loop || false);
@@ -58,28 +60,27 @@ export class AudioEngine {
    * Stop playing music.
    * @param {Boolean} [releaseData] If release the music data or not.As default value is false.
    * @example
-   * //example
-   * cc.audioEngine.stopMusic();
+
+   * audioEngine.stopMusic();
    */
   stopMusic(releaseData) {
     const audio = this._currMusic;
     if (audio) {
-      const list = cc.Audio.touchPlayList;
+      const list = Audio.touchPlayList;
       for (let i = list.length - 1; i >= 0; --i) {
         if (this[i] && this[i].audio === audio._element) list.splice(i, 1);
       }
 
       audio.stop();
       this._currMusic = null;
-      if (releaseData) cc.loader.release(audio.src);
+      if (releaseData) Loader.getInstance().release(audio.src);
     }
   }
 
   /**
    * Pause playing music.
    * @example
-   * //example
-   * cc.audioEngine.pauseMusic();
+   * audioEngine.pauseMusic();
    */
   pauseMusic() {
     const audio = this._currMusic;
@@ -89,8 +90,7 @@ export class AudioEngine {
   /**
    * Resume playing music.
    * @example
-   * //example
-   * cc.audioEngine.resumeMusic();
+   * audioEngine.resumeMusic();
    */
   resumeMusic() {
     const audio = this._currMusic;
@@ -100,8 +100,7 @@ export class AudioEngine {
   /**
    * Rewind playing music.
    * @example
-   * //example
-   * cc.audioEngine.rewindMusic();
+   * audioEngine.rewindMusic();
    */
   rewindMusic() {
     const audio = this._currMusic;
@@ -115,8 +114,8 @@ export class AudioEngine {
    * The volume of the music max value is 1.0,the min value is 0.0 .
    * @return {Number}
    * @example
-   * //example
-   * var volume = cc.audioEngine.getMusicVolume();
+
+   * var volume = audioEngine.getMusicVolume();
    */
   getMusicVolume() {
     return this._musicVolume;
@@ -126,8 +125,8 @@ export class AudioEngine {
    * Set the volume of music.
    * @param {Number} volume Volume must be in 0.0~1.0 .
    * @example
-   * //example
-   * cc.audioEngine.setMusicVolume(0.5);
+
+   * audioEngine.setMusicVolume(0.5);
    */
   setMusicVolume(volume) {
     volume = volume - 0;
@@ -146,12 +145,11 @@ export class AudioEngine {
    * Whether the music is playing.
    * @return {Boolean} If is playing return true,or return false.
    * @example
-   * //example
-   *  if (cc.audioEngine.isMusicPlaying()) {
-   *      cc.log("music is playing");
+   *  if (audioEngine.isMusicPlaying()) {
+   *      log("music is playing");
    *  }
    *  else {
-   *      cc.log("music is not playing");
+   *      log("music is not playing");
    *  }
    */
   isMusicPlaying() {
@@ -169,8 +167,7 @@ export class AudioEngine {
    * @param {Boolean} loop Whether to loop the effect playing, default value is false
    * @return {Number|null} the audio id
    * @example
-   * //example
-   * var soundId = cc.audioEngine.playEffect(path);
+   * var soundId = audioEngine.playEffect(path);
    */
   playEffect(url, loop) {
     if (
@@ -178,7 +175,7 @@ export class AudioEngine {
       this._currMusic &&
       this._currMusic.getPlaying()
     ) {
-      cc.log("Browser is only allowed to play one audio");
+      log("Browser is only allowed to play one audio");
       return null;
     }
 
@@ -208,10 +205,10 @@ export class AudioEngine {
       return audio;
     }
 
-    audio = cc.loader.getRes(url);
+    audio = Loader.getInstance().getRes(url);
 
     if (audio && audioSupport.WEB_AUDIO && audio._AUDIO_TYPE === "AUDIO") {
-      cc.loader.release(url);
+      Loader.getInstance().release(url);
       audio = null;
     }
 
@@ -219,7 +216,7 @@ export class AudioEngine {
       if (audioSupport.WEB_AUDIO && audio._AUDIO_TYPE === "AUDIO") {
         loader.loadBuffer(url, function (error, buffer) {
           audio.setBuffer(buffer);
-          audio.setVolume(cc.audioEngine._effectVolume);
+          audio.setVolume(this._effectVolume);
           if (!audio.getPlaying()) audio.play(0, loop || false);
         });
       } else {
@@ -233,10 +230,10 @@ export class AudioEngine {
 
     const cache = loader.useWebAudio;
     loader.useWebAudio = true;
-    cc.loader.load(url, function (audio) {
-      audio = cc.loader.getRes(url);
+    Loader.getInstance().load(url, (audio) => {
+      audio = Loader.getInstance().getRes(url);
       audio = audio.cloneNode();
-      audio.setVolume(cc.audioEngine._effectVolume);
+      audio.setVolume(this._effectVolume);
       audio.play(0, loop || false);
       effectList.push(audio);
     });
@@ -249,8 +246,7 @@ export class AudioEngine {
    * Set the volume of sound effects.
    * @param {Number} volume Volume must be in 0.0~1.0 .
    * @example
-   * //example
-   * cc.audioEngine.setEffectsVolume(0.5);
+   * audioEngine.setEffectsVolume(0.5);
    */
   setEffectsVolume(volume) {
     volume = volume - 0;
@@ -273,8 +269,7 @@ export class AudioEngine {
    * The volume of the effects max value is 1.0,the min value is 0.0 .
    * @return {Number}
    * @example
-   * //example
-   * var effectVolume = cc.audioEngine.getEffectsVolume();
+   * var effectVolume = audioEngine.getEffectsVolume();
    */
   getEffectsVolume() {
     return this._effectVolume;
@@ -284,8 +279,7 @@ export class AudioEngine {
    * Pause playing sound effect.
    * @param {Number} audio The return value of function playEffect.
    * @example
-   * //example
-   * cc.audioEngine.pauseEffect(audioID);
+   * audioEngine.pauseEffect(audioID);
    */
   pauseEffect(audio) {
     if (audio) {
@@ -296,8 +290,7 @@ export class AudioEngine {
   /**
    * Pause all playing sound effect.
    * @example
-   * //example
-   * cc.audioEngine.pauseAllEffects();
+   * audioEngine.pauseAllEffects();
    */
   pauseAllEffects() {
     const ap = this._audioPool;
@@ -315,8 +308,7 @@ export class AudioEngine {
    * Resume playing sound effect.
    * @param {Number} audio The return value of function playEffect.
    * @audioID
-   * //example
-   * cc.audioEngine.resumeEffect(audioID);
+   * audioEngine.resumeEffect(audioID);
    */
   resumeEffect(audio) {
     if (audio) audio.resume();
@@ -325,8 +317,7 @@ export class AudioEngine {
   /**
    * Resume all playing sound effect
    * @example
-   * //example
-   * cc.audioEngine.resumeAllEffects();
+   * audioEngine.resumeAllEffects();
    */
   resumeAllEffects() {
     const ap = this._audioPool;
@@ -342,8 +333,7 @@ export class AudioEngine {
    * Stop playing sound effect.
    * @param {Number} audio The return value of function playEffect.
    * @example
-   * //example
-   * cc.audioEngine.stopEffect(audioID);
+   * audioEngine.stopEffect(audioID);
    */
   stopEffect(audio) {
     if (audio) {
@@ -354,8 +344,7 @@ export class AudioEngine {
   /**
    * Stop all playing sound effects.
    * @example
-   * //example
-   * cc.audioEngine.stopAllEffects();
+   * audioEngine.stopAllEffects();
    */
   stopAllEffects() {
     const ap = this._audioPool;
@@ -373,15 +362,14 @@ export class AudioEngine {
    * Unload the preloaded effect from internal buffer
    * @param {String} url
    * @example
-   * //example
-   * cc.audioEngine.unloadEffect(EFFECT_FILE);
+   * audioEngine.unloadEffect(EFFECT_FILE);
    */
   unloadEffect(url) {
     if (!url) {
       return;
     }
 
-    cc.loader.release(url);
+    Loader.getInstance().release(url);
     const pool = this._audioPool[url];
     if (pool) {
       for (let i = 0; i < pool.length; i++) {

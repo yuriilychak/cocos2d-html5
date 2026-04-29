@@ -28,7 +28,7 @@ import { classManager, Director, Sys } from "@aspect/core";
 
 /**
  * <p>
- *  cc.pool is a singleton object serves as an object cache pool.<br/>
+ *  pool is a singleton object serves as an object cache pool.<br/>
  *  It can helps you to improve your game performance for objects which need frequent release and recreate operations<br/>
  *  Some common use case is :
  *      1. Bullets in game (die very soon, massive creation and recreation, no side effect on other objects)
@@ -37,12 +37,12 @@ import { classManager, Director, Sys } from "@aspect/core";
  * </p>
  *
  * @example
- * var sp = new cc.Sprite("a.png");
+ * var sp = new Sprite("a.png");
  * this.addChild(sp);
- * cc.pool.putInPool(sp);
+ * pool.putInPool(sp);
  *
- * cc.pool.getFromPool(cc.Sprite, "a.png");
- * @name cc.pool
+ * pool.getFromPool(Sprite, "a.png");
+ * @name pool
  */
 export class Pool {
   static getInstance() {

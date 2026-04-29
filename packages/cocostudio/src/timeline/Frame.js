@@ -27,221 +27,225 @@
  * base class
  */
 ccs.Frame = class Frame extends cc.NewClass {
+  constructor() {
+    super();
+    this._frameIndex = 0;
+    this._tween = true;
+    this._timeline = null;
+    this._node = null;
+    this._enterWhenPassed = false;
+    this._easingParam = [];
+  }
 
-    constructor () {
-        super();
-        this._frameIndex = 0;
-        this._tween = true;
-        this._timeline = null;
-        this._node = null;
-        this._enterWhenPassed = false;
-        this._easingParam = [];
+  _emitEvent() {
+    if (this._timeline) {
+      this._timeline.getActionTimeline()._emitFrameEvent(this);
     }
+  }
 
-    _emitEvent () {
-        if (this._timeline) {
-            this._timeline.getActionTimeline()._emitFrameEvent(this);
-        }
+  _cloneProperty(frame) {
+    this._frameIndex = frame.getFrameIndex();
+    this._tween = frame.isTween();
+    this._tweenType = frame.getTweenType();
+    this.setEasingParams(frame.getEasingParams());
+  }
+
+  /**
+   * Set the frame index
+   * @param {number} frameIndex
+   */
+  setFrameIndex(frameIndex) {
+    this._frameIndex = frameIndex;
+  }
+
+  /**
+   * Get the frame index
+   * @returns {null}
+   */
+  getFrameIndex() {
+    return this._frameIndex;
+  }
+
+  /**
+   * Set timeline
+   * @param timeline
+   */
+  setTimeline(timeline) {
+    this._timeline = timeline;
+  }
+
+  /**
+   * Get timeline
+   * @param timeline
+   * @returns {ccs.timeline}
+   */
+  getTimeline(timeline) {
+    return this._timeline;
+  }
+
+  /**
+   * Set Node
+   * @param {Node} node
+   */
+  setNode(node) {
+    this._node = node;
+  }
+
+  /**
+   * gets the Node
+   * @return node
+   */
+  getNode() {
+    return this._node;
+  }
+
+  /**
+   * set tween
+   * @param tween
+   */
+  setTween(tween) {
+    this._tween = tween;
+  }
+
+  /**
+   * Gets the tween
+   * @returns {boolean | null}
+   */
+  isTween() {
+    return this._tween;
+  }
+
+  /**
+   * the execution of the callback
+   * @override
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    // = 0
+  }
+
+  /**
+   * Each frame logic
+   * @override
+   * @param {number} percent
+   */
+  apply(percent) {
+    if (!this._tween) return;
+    if (
+      this._tweenType !== ccs.FrameEaseType.TWEEN_EASING_MAX &&
+      this._tweenType !== ccs.FrameEaseType.LINEAR
+    )
+      percent = this.tweenPercent(percent);
+    this._onApply(percent);
+  }
+
+  _onApply(percent) {}
+
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @override
+   * @return {ccs.Frame}
+   */
+  clone() {
+    // = 0
+  }
+
+  tweenPercent(percent) {
+    var func = ccs.Frame.tweenToMap[this._tweenType];
+    if (func) return func(percent, this._easingParam);
+    else return percent;
+  }
+
+  setEasingParams(easingParams) {
+    if (easingParams) {
+      this._easingParam.length = 0;
+      for (var i = 0; i < easingParams.length; i++)
+        this._easingParam[i] = easingParams[i];
     }
+  }
 
-    _cloneProperty (frame) {
-        this._frameIndex = frame.getFrameIndex();
-        this._tween = frame.isTween();
-        this._tweenType = frame.getTweenType();
-        this.setEasingParams(frame.getEasingParams());
-    }
+  getEasingParams() {
+    return this._easingParam;
+  }
 
-    /**
-     * Set the frame index
-     * @param {number} frameIndex
-     */
-    setFrameIndex (frameIndex) {
-        this._frameIndex = frameIndex;
-    }
+  setTweenType(tweenType) {
+    this._tweenType = tweenType;
+  }
 
-    /**
-     * Get the frame index
-     * @returns {null}
-     */
-    getFrameIndex () {
-        return this._frameIndex;
-    }
+  getTweenType() {
+    return this._tweenType;
+  }
 
-    /**
-     * Set timeline
-     * @param timeline
-     */
-    setTimeline (timeline) {
-        this._timeline = timeline;
-    }
-
-    /**
-     * Get timeline
-     * @param timeline
-     * @returns {ccs.timeline}
-     */
-    getTimeline (timeline) {
-        return this._timeline;
-    }
-
-    /**
-     * Set Node
-     * @param {cc.Node} node
-     */
-    setNode (node) {
-        this._node = node;
-    }
-
-    /**
-     * gets the Node
-     * @return node
-     */
-    getNode () {
-        return this._node;
-    }
-
-    /**
-     * set tween
-     * @param tween
-     */
-    setTween (tween) {
-        this._tween = tween;
-    }
-
-    /**
-     * Gets the tween
-     * @returns {boolean | null}
-     */
-    isTween () {
-        return this._tween;
-    }
-
-    /**
-     * the execution of the callback
-     * @override
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) { // = 0
-    }
-
-    /**
-     * Each frame logic
-     * @override
-     * @param {number} percent
-     */
-    apply (percent) {
-        if (!this._tween)
-            return;
-        if (this._tweenType !== ccs.FrameEaseType.TWEEN_EASING_MAX && this._tweenType !== ccs.FrameEaseType.LINEAR)
-            percent = this.tweenPercent(percent);
-        this._onApply(percent);
-    }
-
-    _onApply (percent) {
-
-    }
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @override
-     * @return {ccs.Frame}
-     */
-    clone () { // = 0
-    }
-
-    tweenPercent (percent) {
-        var func = ccs.Frame.tweenToMap[this._tweenType];
-        if (func)
-            return func(percent, this._easingParam);
-        else
-            return percent;
-    }
-
-    setEasingParams (easingParams) {
-        if (easingParams) {
-            this._easingParam.length = 0;
-            for (var i = 0; i < easingParams.length; i++)
-                this._easingParam[i] = easingParams[i];
-        }
-    }
-
-    getEasingParams () {
-        return this._easingParam;
-    }
-
-    setTweenType (tweenType) {
-        this._tweenType = tweenType;
-    }
-
-    getTweenType () {
-        return this._tweenType;
-    }
-
-    isEnterWhenPassed () {
-        return this._enterWhenPassed;
-    }
+  isEnterWhenPassed() {
+    return this._enterWhenPassed;
+  }
 };
 
 ccs.Frame.tweenToMap = {
-    "-1": function (time, easingParam) {
-        if (easingParam) {
-            var tt = 1 - time;
-            return easingParam[1] * tt * tt * tt + 3 * easingParam[3] * time * tt * tt + 3 * easingParam[5] * time * time * tt + easingParam[7] * time * time * time;
-        }
-        return time;
-    },
-    1: cc._easeSineInObj.easing,//Sine_EaseIn
-    2: cc._easeSineOutObj.easing,//Sine_EaseOut
-    3: cc._easeSineInOutObj.easing,//Sine_EaseInOut
+  "-1": function (time, easingParam) {
+    if (easingParam) {
+      var tt = 1 - time;
+      return (
+        easingParam[1] * tt * tt * tt +
+        3 * easingParam[3] * time * tt * tt +
+        3 * easingParam[5] * time * time * tt +
+        easingParam[7] * time * time * time
+      );
+    }
+    return time;
+  },
+  1: cc._easeSineInObj.easing, //Sine_EaseIn
+  2: cc._easeSineOutObj.easing, //Sine_EaseOut
+  3: cc._easeSineInOutObj.easing, //Sine_EaseInOut
 
-    4: cc._easeQuadraticActionIn.easing,//Quad_EaseIn
-    5: cc._easeQuadraticActionOut.easing,//Quad_EaseOut
-    6: cc._easeQuadraticActionInOut.easing,//Quad_EaseInOut
+  4: cc._easeQuadraticActionIn.easing, //Quad_EaseIn
+  5: cc._easeQuadraticActionOut.easing, //Quad_EaseOut
+  6: cc._easeQuadraticActionInOut.easing, //Quad_EaseInOut
 
-    7: cc._easeCubicActionIn.easing, //Cubic_EaseIn
-    8: cc._easeCubicActionOut.easing,//Cubic_EaseOut
-    9: cc._easeCubicActionInOut.easing,//Cubic_EaseInOut
+  7: cc._easeCubicActionIn.easing, //Cubic_EaseIn
+  8: cc._easeCubicActionOut.easing, //Cubic_EaseOut
+  9: cc._easeCubicActionInOut.easing, //Cubic_EaseInOut
 
-    10: cc._easeCubicActionIn.easing,//Cubic_EaseIn
-    11: cc._easeCubicActionOut.easing,//Cubic_EaseOut
-    12: cc._easeCubicActionInOut.easing,//Cubic_EaseInOut
+  10: cc._easeCubicActionIn.easing, //Cubic_EaseIn
+  11: cc._easeCubicActionOut.easing, //Cubic_EaseOut
+  12: cc._easeCubicActionInOut.easing, //Cubic_EaseInOut
 
-    13: cc._easeQuinticActionIn.easing,//Quint_EaseIn
-    14: cc._easeQuinticActionOut.easing,//Quint_EaseOut
-    15: cc._easeQuinticActionInOut.easing,//Quint_EaseInOut
+  13: cc._easeQuinticActionIn.easing, //Quint_EaseIn
+  14: cc._easeQuinticActionOut.easing, //Quint_EaseOut
+  15: cc._easeQuinticActionInOut.easing, //Quint_EaseInOut
 
-    16: cc._easeExponentialInObj.easing,//Expo_EaseIn
-    17: cc._easeExponentialOutObj.easing,//Expo_EaseOut
-    18: cc._easeExponentialInOutObj.easing,//Expo_EaseInOut
+  16: cc._easeExponentialInObj.easing, //Expo_EaseIn
+  17: cc._easeExponentialOutObj.easing, //Expo_EaseOut
+  18: cc._easeExponentialInOutObj.easing, //Expo_EaseInOut
 
-    19: cc._easeCircleActionIn.easing,//Circ_EaseIn
-    20: cc._easeCircleActionOut.easing,//Circ_EaseOut
-    21: cc._easeCircleActionInOut.easing,//Circ_EaseInOut
+  19: cc._easeCircleActionIn.easing, //Circ_EaseIn
+  20: cc._easeCircleActionOut.easing, //Circ_EaseOut
+  21: cc._easeCircleActionInOut.easing, //Circ_EaseInOut
 
-    22: function (time, easingParam) {
-        var period = 0.3;
-        easingParam != null && ( period = easingParam[0] );
-        return cc.easeElasticIn(period).easing(time);
-    },//Elastic_EaesIn
-    23: function (time, easingParam) {
-        var period = 0.3;
-        easingParam != null && ( period = easingParam[0] );
-        return cc.easeElasticOut(period).easing(time);
-    },//Elastic_EaesOut
-    24: function (time, easingParam) {
-        var period = 0.3;
-        easingParam != null && ( period = easingParam[0] );
-        return cc.easeElasticInOut(period).easing(time);
-    },//Elastic_EaesInOut
+  22: function (time, easingParam) {
+    var period = 0.3;
+    easingParam != null && (period = easingParam[0]);
+    return cc.easeElasticIn(period).easing(time);
+  }, //Elastic_EaesIn
+  23: function (time, easingParam) {
+    var period = 0.3;
+    easingParam != null && (period = easingParam[0]);
+    return cc.easeElasticOut(period).easing(time);
+  }, //Elastic_EaesOut
+  24: function (time, easingParam) {
+    var period = 0.3;
+    easingParam != null && (period = easingParam[0]);
+    return cc.easeElasticInOut(period).easing(time);
+  }, //Elastic_EaesInOut
 
-    25: cc._easeBackInObj.easing, //Back_EaseIn
-    26: cc._easeBackOutObj.easing, //Back_EaseOut
-    27: cc._easeBackInOutObj.easing, //Back_EaseInOut
+  25: cc._easeBackInObj.easing, //Back_EaseIn
+  26: cc._easeBackOutObj.easing, //Back_EaseOut
+  27: cc._easeBackInOutObj.easing, //Back_EaseInOut
 
-    28: cc._easeBounceInObj.easing, //Bounce_EaseIn
-    29: cc._easeBounceOutObj.easing, //Bounce_EaseOut
-    30: cc._easeBounceInOutObj.easing //Bounce_EaseInOut
+  28: cc._easeBounceInObj.easing, //Bounce_EaseIn
+  29: cc._easeBounceOutObj.easing, //Bounce_EaseOut
+  30: cc._easeBounceInOutObj.easing //Bounce_EaseInOut
 };
 
 /**
@@ -250,51 +254,48 @@ ccs.Frame.tweenToMap = {
  * @extend ccs.Frame
  */
 ccs.VisibleFrame = class VisibleFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._visible = true;
+  }
 
-    constructor () {
-        super();
-        this._visible = true;
-    }
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (this._node) this._node.setVisible(this._visible);
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (this._node)
-            this._node.setVisible(this._visible);
-    }
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.VisibleFrame}
+   */
+  clone() {
+    var frame = new ccs.VisibleFrame();
+    frame.setVisible(this._visible);
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.VisibleFrame}
-     */
-    clone () {
-        var frame = new ccs.VisibleFrame();
-        frame.setVisible(this._visible);
+    frame._cloneProperty(this);
 
-        frame._cloneProperty(this);
+    return frame;
+  }
 
-        return frame;
-    }
+  /**
+   * Set display state
+   * @param {Boolean} visible
+   */
+  setVisible(visible) {
+    this._visible = visible;
+  }
 
-    /**
-     * Set display state
-     * @param {Boolean} visible
-     */
-    setVisible (visible) {
-        this._visible = visible;
-    }
-
-    /**
-     * Get the display state
-     * @returns {Boolean}
-     */
-    isVisible () {
-        return this._visible;
-    }
-
+  /**
+   * Get the display state
+   * @returns {Boolean}
+   */
+  isVisible() {
+    return this._visible;
+  }
 };
 
 /**
@@ -302,69 +303,64 @@ ccs.VisibleFrame = class VisibleFrame extends ccs.Frame {
  * @extend ccs.Frame
  */
 ccs.TextureFrame = class TextureFrame extends ccs.Frame {
+  constructor() {
+    super();
 
-    constructor () {
-        super();
+    this._textureName = "";
+  }
 
-        this._textureName = "";
+  /**
+   * Set the node element to draw texture
+   * @param {Node} node
+   */
+  setNode(node) {
+    super.setNode(node);
+    this._sprite = node;
+  }
+
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (this._sprite) {
+      var spriteBlendFunc = this._sprite.getBlendFunc();
+      var spriteFrame = cc.spriteFrameCache._spriteFrames[this._textureName];
+      if (spriteFrame != null) this._sprite.setSpriteFrame(spriteFrame);
+      else this._sprite.setTexture(this._textureName);
+
+      if (this._sprite.getBlendFunc() !== spriteBlendFunc)
+        this._sprite.setBlendFunc(spriteBlendFunc);
     }
+  }
 
-    /**
-     * Set the node element to draw texture
-     * @param {cc.Node} node
-     */
-    setNode (node) {
-        super.setNode(node);
-        this._sprite = node;
-    }
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.TextureFrame}
+   */
+  clone() {
+    var frame = new ccs.TextureFrame();
+    frame.setTextureName(this._textureName);
+    frame._cloneProperty(this);
+    return frame;
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (this._sprite) {
-            var spriteBlendFunc = this._sprite.getBlendFunc();
-            var spriteFrame = cc.spriteFrameCache._spriteFrames[this._textureName];
-            if (spriteFrame != null)
-                this._sprite.setSpriteFrame(spriteFrame);
-            else
-                this._sprite.setTexture(this._textureName);
+  /**
+   * Set the texture name
+   * @param {string} textureName
+   */
+  setTextureName(textureName) {
+    this._textureName = textureName;
+  }
 
-            if (this._sprite.getBlendFunc() !== spriteBlendFunc)
-                this._sprite.setBlendFunc(spriteBlendFunc);
-        }
-
-    }
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.TextureFrame}
-     */
-    clone () {
-        var frame = new ccs.TextureFrame();
-        frame.setTextureName(this._textureName);
-        frame._cloneProperty(this);
-        return frame;
-    }
-
-    /**
-     * Set the texture name
-     * @param {string} textureName
-     */
-    setTextureName (textureName) {
-        this._textureName = textureName;
-    }
-
-    /**
-     * Gets the Texture name
-     * @returns {null}
-     */
-    getTextureName () {
-        return this._textureName;
-    }
-
+  /**
+   * Gets the Texture name
+   * @returns {null}
+   */
+  getTextureName() {
+    return this._textureName;
+  }
 };
 
 /**
@@ -372,67 +368,64 @@ ccs.TextureFrame = class TextureFrame extends ccs.Frame {
  * @extend ccs.Frame
  */
 ccs.RotationFrame = class RotationFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._rotation = 0;
+  }
 
-    constructor () {
-        super();
-        this._rotation = 0;
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (!this._node) return;
+    this._node.setRotation(this._rotation);
+
+    if (this._tween) {
+      this._betwennRotation = nextFrame._rotation - this._rotation;
     }
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (!this._node)
-            return;
-        this._node.setRotation(this._rotation);
-
-        if (this._tween) {
-            this._betwennRotation = nextFrame._rotation - this._rotation;
-        }
+  /**
+   * Each frame logic
+   * @param {number} percent
+   */
+  _onApply(percent) {
+    if (this._betwennRotation !== 0) {
+      var rotation = this._rotation + percent * this._betwennRotation;
+      this._node.setRotation(rotation);
     }
+  }
 
-    /**
-     * Each frame logic
-     * @param {number} percent
-     */
-    _onApply (percent) {
-        if (this._betwennRotation !== 0) {
-            var rotation = this._rotation + percent * this._betwennRotation;
-            this._node.setRotation(rotation);
-        }
-    }
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.RotationFrame}
+   */
+  clone() {
+    var frame = new ccs.RotationFrame();
+    frame.setRotation(this._rotation);
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.RotationFrame}
-     */
-    clone () {
-        var frame = new ccs.RotationFrame();
-        frame.setRotation(this._rotation);
+    frame._cloneProperty(this);
 
-        frame._cloneProperty(this);
+    return frame;
+  }
 
-        return frame;
-    }
+  /**
+   * Set the rotation
+   * @param {Number} rotation
+   */
+  setRotation(rotation) {
+    this._rotation = rotation;
+  }
 
-    /**
-     * Set the rotation
-     * @param {Number} rotation
-     */
-    setRotation (rotation) {
-        this._rotation = rotation;
-    }
-
-    /**
-     * Gets the rotation
-     * @returns {Number}
-     */
-    getRotation () {
-        return this._rotation;
-    }
-
+  /**
+   * Gets the rotation
+   * @returns {Number}
+   */
+  getRotation() {
+    return this._rotation;
+  }
 };
 
 /**
@@ -440,91 +433,87 @@ ccs.RotationFrame = class RotationFrame extends ccs.Frame {
  * @extend ccs.Frame
  */
 ccs.SkewFrame = class SkewFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._skewX = 0;
+    this._skewY = 0;
+  }
 
-    constructor () {
-        super();
-        this._skewX = 0;
-        this._skewY = 0;
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (!this._node) return;
+    this._node.setSkewX(this._skewX);
+    this._node.setSkewY(this._skewY);
+
+    if (this._tween) {
+      this._betweenSkewX = nextFrame._skewX - this._skewX;
+      this._betweenSkewY = nextFrame._skewY - this._skewY;
     }
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (!this._node)
-            return;
-        this._node.setSkewX(this._skewX);
-        this._node.setSkewY(this._skewY);
+  /**
+   * Each frame logic
+   * @param {number} percent
+   */
+  _onApply(percent) {
+    if (this._betweenSkewX !== 0 || this._betweenSkewY !== 0) {
+      var skewx = this._skewX + percent * this._betweenSkewX;
+      var skewy = this._skewY + percent * this._betweenSkewY;
 
-        if (this._tween) {
-            this._betweenSkewX = nextFrame._skewX - this._skewX;
-            this._betweenSkewY = nextFrame._skewY - this._skewY;
-        }
-
+      this._node.setSkewX(skewx);
+      this._node.setSkewY(skewy);
     }
+  }
 
-    /**
-     * Each frame logic
-     * @param {number} percent
-     */
-    _onApply (percent) {
-        if (this._betweenSkewX !== 0 || this._betweenSkewY !== 0) {
-            var skewx = this._skewX + percent * this._betweenSkewX;
-            var skewy = this._skewY + percent * this._betweenSkewY;
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.SkewFrame}
+   */
+  clone() {
+    var frame = new ccs.SkewFrame();
+    frame.setSkewX(this._skewX);
+    frame.setSkewY(this._skewY);
 
-            this._node.setSkewX(skewx);
-            this._node.setSkewY(skewy);
-        }
-    }
+    frame._cloneProperty(this);
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.SkewFrame}
-     */
-    clone () {
-        var frame = new ccs.SkewFrame();
-        frame.setSkewX(this._skewX);
-        frame.setSkewY(this._skewY);
+    return frame;
+  }
 
-        frame._cloneProperty(this);
+  /**
+   * Set the skew x
+   * @param {Number} skewx
+   */
+  setSkewX(skewx) {
+    this._skewX = skewx;
+  }
 
-        return frame;
-    }
+  /**
+   * Gets the skew x
+   * @returns {Number}
+   */
+  getSkewX() {
+    return this._skewX;
+  }
 
-    /**
-     * Set the skew x
-     * @param {Number} skewx
-     */
-    setSkewX (skewx) {
-        this._skewX = skewx;
-    }
+  /**
+   * Set the skew y
+   * @param {Number} skewy
+   */
+  setSkewY(skewy) {
+    this._skewY = skewy;
+  }
 
-    /**
-     * Gets the skew x
-     * @returns {Number}
-     */
-    getSkewX () {
-        return this._skewX;
-    }
-
-    /**
-     * Set the skew y
-     * @param {Number} skewy
-     */
-    setSkewY (skewy) {
-        this._skewY = skewy;
-    }
-
-    /**
-     * Gets the skew y
-     * @returns {Number}
-     */
-    getSkewY () {
-        return this._skewY;
-    }
-
+  /**
+   * Gets the skew y
+   * @returns {Number}
+   */
+  getSkewY() {
+    return this._skewY;
+  }
 };
 
 /**
@@ -532,55 +521,49 @@ ccs.SkewFrame = class SkewFrame extends ccs.Frame {
  * @extend ccs.SkewFrame
  */
 ccs.RotationSkewFrame = class RotationSkewFrame extends ccs.SkewFrame {
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (!this._node) return;
+    this._node.setRotationX(this._skewX);
+    this._node.setRotationY(this._skewY);
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (!this._node)
-            return;
-        this._node.setRotationX(this._skewX);
-        this._node.setRotationY(this._skewY);
-
-        if (this._tween) {
-            this._betweenSkewX = nextFrame._skewX - this._skewX;
-            this._betweenSkewY = nextFrame._skewY - this._skewY;
-        }
-
+    if (this._tween) {
+      this._betweenSkewX = nextFrame._skewX - this._skewX;
+      this._betweenSkewY = nextFrame._skewY - this._skewY;
     }
+  }
 
-    /**
-     * Each frame logic
-     * @param {number} percent
-     */
-    _onApply (percent) {
-        if (this._node && (this._betweenSkewX !== 0 || this._betweenSkewY !== 0)) {
-            var skewx = this._skewX + percent * this._betweenSkewX;
-            var skewy = this._skewY + percent * this._betweenSkewY;
+  /**
+   * Each frame logic
+   * @param {number} percent
+   */
+  _onApply(percent) {
+    if (this._node && (this._betweenSkewX !== 0 || this._betweenSkewY !== 0)) {
+      var skewx = this._skewX + percent * this._betweenSkewX;
+      var skewy = this._skewY + percent * this._betweenSkewY;
 
-            this._node.setRotationX(skewx);
-            this._node.setRotationY(skewy);
-        }
-
+      this._node.setRotationX(skewx);
+      this._node.setRotationY(skewy);
     }
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.RotationSkewFrame}
-     */
-    clone () {
-        var frame = new ccs.RotationSkewFrame();
-        frame.setSkewX(this._skewX);
-        frame.setSkewY(this._skewY);
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.RotationSkewFrame}
+   */
+  clone() {
+    var frame = new ccs.RotationSkewFrame();
+    frame.setSkewX(this._skewX);
+    frame.setSkewY(this._skewY);
 
-        frame._cloneProperty(this);
+    frame._cloneProperty(this);
 
-        return frame;
-
-    }
-
+    return frame;
+  }
 };
 
 /**
@@ -588,104 +571,101 @@ ccs.RotationSkewFrame = class RotationSkewFrame extends ccs.SkewFrame {
  * @extend ccs.Frame
  */
 ccs.PositionFrame = class PositionFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._position = new cc.Point(0, 0);
+  }
 
-    constructor () {
-        super();
-        this._position = new cc.Point(0, 0);
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (!this._node) return;
+
+    this._node.setPosition(this._position);
+
+    if (this._tween) {
+      this._betweenX = nextFrame._position.x - this._position.x;
+      this._betweenY = nextFrame._position.y - this._position.y;
     }
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (!this._node)
-            return;
+  /**
+   * Each frame logic
+   * @param {number} percent
+   */
+  _onApply(percent) {
+    if (this._node && (this._betweenX !== 0 || this._betweenY !== 0)) {
+      var p = new cc.Point(0, 0);
+      p.x = this._position.x + this._betweenX * percent;
+      p.y = this._position.y + this._betweenY * percent;
 
-        this._node.setPosition(this._position);
-
-        if (this._tween) {
-            this._betweenX = nextFrame._position.x - this._position.x;
-            this._betweenY = nextFrame._position.y - this._position.y;
-        }
+      this._node.setPosition(p);
     }
+  }
 
-    /**
-     * Each frame logic
-     * @param {number} percent
-     */
-    _onApply (percent) {
-        if (this._node && (this._betweenX !== 0 || this._betweenY !== 0)) {
-            var p = new cc.Point(0, 0);
-            p.x = this._position.x + this._betweenX * percent;
-            p.y = this._position.y + this._betweenY * percent;
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.PositionFrame}
+   */
+  clone() {
+    var frame = new ccs.PositionFrame();
+    frame.setPosition(this._position);
 
-            this._node.setPosition(p);
-        }
-    }
+    frame._cloneProperty(this);
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.PositionFrame}
-     */
-    clone () {
-        var frame = new ccs.PositionFrame();
-        frame.setPosition(this._position);
+    return frame;
+  }
 
-        frame._cloneProperty(this);
+  /**
+   * Set the position
+   * @param {p} position
+   */
+  setPosition(position) {
+    this._position = position;
+  }
 
-        return frame;
-    }
+  /**
+   * gets the position
+   * @returns {p}
+   */
+  getPosition() {
+    return this._position;
+  }
 
-    /**
-     * Set the position
-     * @param {cc.p} position
-     */
-    setPosition (position) {
-        this._position = position;
-    }
+  /**
+   * Set the position x
+   * @param {Number} x
+   */
+  setX(x) {
+    this._position.x = x;
+  }
 
-    /**
-     * gets the position
-     * @returns {cc.p}
-     */
-    getPosition () {
-        return this._position;
-    }
+  /**
+   * Gets the position x
+   * @returns {Number}
+   */
+  getX() {
+    return this._position.x;
+  }
 
-    /**
-     * Set the position x
-     * @param {Number} x
-     */
-    setX (x) {
-        this._position.x = x;
-    }
+  /**
+   * Set the position y
+   * @param {Number} y
+   */
+  setY(y) {
+    this._position.y = y;
+  }
 
-    /**
-     * Gets the position x
-     * @returns {Number}
-     */
-    getX () {
-        return this._position.x;
-    }
-
-    /**
-     * Set the position y
-     * @param {Number} y
-     */
-    setY (y) {
-        this._position.y = y;
-    }
-
-    /**
-     * Gets the position y
-     * @returns {Number}
-     */
-    getY () {
-        return this._position.y;
-    }
-
+  /**
+   * Gets the position y
+   * @returns {Number}
+   */
+  getY() {
+    return this._position.y;
+  }
 };
 
 /**
@@ -693,101 +673,99 @@ ccs.PositionFrame = class PositionFrame extends ccs.Frame {
  * @xtend ccs.Frame
  */
 ccs.ScaleFrame = class ScaleFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._scaleX = 1;
+    this._scaleY = 1;
+  }
 
-    constructor () {
-        super();
-        this._scaleX = 1;
-        this._scaleY = 1;
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (!this._node) return;
+    this._node.setScaleX(this._scaleX);
+    this._node.setScaleY(this._scaleY);
+
+    if (this._tween) {
+      this._betweenScaleX = nextFrame._scaleX - this._scaleX;
+      this._betweenScaleY = nextFrame._scaleY - this._scaleY;
     }
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (!this._node)
-            return;
-        this._node.setScaleX(this._scaleX);
-        this._node.setScaleY(this._scaleY);
+  /**
+   * Each frame logic
+   * @param {number} percent
+   */
+  _onApply(percent) {
+    if (
+      this._node &&
+      (this._betweenScaleX !== 0 || this._betweenScaleY !== 0)
+    ) {
+      var scaleX = this._scaleX + this._betweenScaleX * percent;
+      var scaleY = this._scaleY + this._betweenScaleY * percent;
 
-        if (this._tween) {
-            this._betweenScaleX = nextFrame._scaleX - this._scaleX;
-            this._betweenScaleY = nextFrame._scaleY - this._scaleY;
-        }
-
+      this._node.setScaleX(scaleX);
+      this._node.setScaleY(scaleY);
     }
+  }
 
-    /**
-     * Each frame logic
-     * @param {number} percent
-     */
-    _onApply (percent) {
-        if (this._node && (this._betweenScaleX !== 0 || this._betweenScaleY !== 0)) {
-            var scaleX = this._scaleX + this._betweenScaleX * percent;
-            var scaleY = this._scaleY + this._betweenScaleY * percent;
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.ScaleFrame}
+   */
+  clone() {
+    var frame = new ccs.ScaleFrame();
+    frame.setScaleX(this._scaleX);
+    frame.setScaleY(this._scaleY);
 
-            this._node.setScaleX(scaleX);
-            this._node.setScaleY(scaleY);
-        }
-    }
+    frame._cloneProperty(this);
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.ScaleFrame}
-     */
-    clone () {
-        var frame = new ccs.ScaleFrame();
-        frame.setScaleX(this._scaleX);
-        frame.setScaleY(this._scaleY);
+    return frame;
+  }
 
-        frame._cloneProperty(this);
+  /**
+   * Set the scale
+   * @param {Number} scale
+   */
+  setScale(scale) {
+    this._scaleX = scale;
+    this._scaleY = scale;
+  }
 
-        return frame;
+  /**
+   * Set the scale x
+   * @param {Number} scaleX
+   */
+  setScaleX(scaleX) {
+    this._scaleX = scaleX;
+  }
 
-    }
+  /**
+   * Gets the scale x
+   * @returns {Number}
+   */
+  getScaleX() {
+    return this._scaleX;
+  }
 
-    /**
-     * Set the scale
-     * @param {Number} scale
-     */
-    setScale (scale) {
-        this._scaleX = scale;
-        this._scaleY = scale;
-    }
+  /**
+   * Set the scale y
+   * @param {Number} scaleY
+   */
+  setScaleY(scaleY) {
+    this._scaleY = scaleY;
+  }
 
-    /**
-     * Set the scale x
-     * @param {Number} scaleX
-     */
-    setScaleX (scaleX) {
-        this._scaleX = scaleX;
-    }
-
-    /**
-     * Gets the scale x
-     * @returns {Number}
-     */
-    getScaleX () {
-        return this._scaleX;
-    }
-
-    /**
-     * Set the scale y
-     * @param {Number} scaleY
-     */
-    setScaleY (scaleY) {
-        this._scaleY = scaleY;
-    }
-
-    /**
-     * Gets the scale y
-     * @returns {Number}
-     */
-    getScaleY () {
-        return this._scaleY;
-    }
-
+  /**
+   * Gets the scale y
+   * @returns {Number}
+   */
+  getScaleY() {
+    return this._scaleY;
+  }
 };
 
 /**
@@ -795,51 +773,48 @@ ccs.ScaleFrame = class ScaleFrame extends ccs.Frame {
  * @extend ccs.Frame
  */
 ccs.AnchorPointFrame = class AnchorPointFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._anchorPoint = new cc.Point(0, 0);
+  }
 
-    constructor () {
-        super();
-        this._anchorPoint = new cc.Point(0, 0);
-    }
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (this._node) this._node.setAnchorPoint(this._anchorPoint);
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (this._node)
-            this._node.setAnchorPoint(this._anchorPoint);
-    }
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.AnchorPointFrame}
+   */
+  clone() {
+    var frame = new ccs.AnchorPointFrame();
+    frame.setAnchorPoint(this._anchorPoint);
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.AnchorPointFrame}
-     */
-    clone () {
-        var frame = new ccs.AnchorPointFrame();
-        frame.setAnchorPoint(this._anchorPoint);
+    frame._cloneProperty(this);
 
-        frame._cloneProperty(this);
+    return frame;
+  }
 
-        return frame;
-    }
+  /**
+   * Set the anchor point
+   * @param {p} point
+   */
+  setAnchorPoint(point) {
+    this._anchorPoint = point;
+  }
 
-    /**
-     * Set the anchor point
-     * @param {cc.p} point
-     */
-    setAnchorPoint (point) {
-        this._anchorPoint = point;
-    }
-
-    /**
-     * Gets the anchor point
-     * @returns {cc.p}
-     */
-    getAnchorPoint () {
-        return this._anchorPoint;
-    }
-
+  /**
+   * Gets the anchor point
+   * @returns {p}
+   */
+  getAnchorPoint() {
+    return this._anchorPoint;
+  }
 };
 
 /**
@@ -847,9 +822,9 @@ ccs.AnchorPointFrame = class AnchorPointFrame extends ccs.Frame {
  * @namespace
  */
 ccs.InnerActionType = {
-    LoopAction: 0,
-    NoLoopAction: 1,
-    SingleFrame: 2
+  LoopAction: 0,
+  NoLoopAction: 1,
+  SingleFrame: 2
 };
 
 /**
@@ -857,130 +832,129 @@ ccs.InnerActionType = {
  * @extend ccs.Frame
  */
 ccs.InnerActionFrame = class InnerActionFrame extends ccs.Frame {
+  constructor() {
+    super();
 
-    constructor () {
-        super();
+    this._endFrameIndex = 0;
+    this._singleFrameIndex = 0;
+    this._animationName = "";
+    this._enterWithName = false;
+    this._innerActionType = ccs.InnerActionType.LoopAction;
+    this._startFrameIndex = 0;
+  }
 
-        this._endFrameIndex = 0;
-        this._singleFrameIndex = 0;
-        this._animationName = "";
-        this._enterWithName = false;
-        this._innerActionType = ccs.InnerActionType.LoopAction;
-        this._startFrameIndex = 0;
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (!this._node) return;
+    var innerActiontimeline = this._node.getActionByTag(this._node.getTag());
+    if (!innerActiontimeline) return;
+    if (ccs.InnerActionType.SingleFrame === this._innerActionType) {
+      innerActiontimeline.gotoFrameAndPause(this._singleFrameIndex);
+      return;
     }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (!this._node)  return;
-        var innerActiontimeline = this._node.getActionByTag(this._node.getTag());
-        if (!innerActiontimeline) return;
-        if (ccs.InnerActionType.SingleFrame === this._innerActionType) {
-            innerActiontimeline.gotoFrameAndPause(this._singleFrameIndex);
-            return;
-        }
-
-        var innerStart = this._startFrameIndex;
-        var innerEnd = this._endFrameIndex;
-        if (this._enterWithName) {
-            if (this._animationName === "-- ALL --") {
-                innerStart = 0;
-                innerEnd = innerActiontimeline.getDuration();
-            } else if (innerActiontimeline.isAnimationInfoExists(this._animationName)) {
-                var info = innerActiontimeline.getAnimationInfo(this._animationName);
-                innerStart = info.startIndex;
-                innerEnd = info.endIndex;
-            } else {
-                cc.log("Animation %s not exists!", this._animationName);
-            }
-        }
-
-        var duration = this._timeline.getActionTimeline().getDuration();
-        var odddiff = duration - this._frameIndex - innerEnd + innerStart;
-        if (odddiff < 0) {
-            innerEnd += odddiff;
-        }
-
-        if (ccs.InnerActionType.NoLoopAction === this._innerActionType) {
-            innerActiontimeline.gotoFrameAndPlay(innerStart, innerEnd, false);
-        } else if (ccs.InnerActionType.LoopAction === this._innerActionType) {
-            innerActiontimeline.gotoFrameAndPlay(innerStart, innerEnd, true);
-        }
+    var innerStart = this._startFrameIndex;
+    var innerEnd = this._endFrameIndex;
+    if (this._enterWithName) {
+      if (this._animationName === "-- ALL --") {
+        innerStart = 0;
+        innerEnd = innerActiontimeline.getDuration();
+      } else if (
+        innerActiontimeline.isAnimationInfoExists(this._animationName)
+      ) {
+        var info = innerActiontimeline.getAnimationInfo(this._animationName);
+        innerStart = info.startIndex;
+        innerEnd = info.endIndex;
+      } else {
+        cc.log("Animation %s not exists!", this._animationName);
+      }
     }
 
-    setAnimationName (animationName) {
-        this._animationName = animationName;
+    var duration = this._timeline.getActionTimeline().getDuration();
+    var odddiff = duration - this._frameIndex - innerEnd + innerStart;
+    if (odddiff < 0) {
+      innerEnd += odddiff;
     }
 
-    setSingleFrameIndex (frameIndex) {
-        this._singleFrameIndex = frameIndex;
+    if (ccs.InnerActionType.NoLoopAction === this._innerActionType) {
+      innerActiontimeline.gotoFrameAndPlay(innerStart, innerEnd, false);
+    } else if (ccs.InnerActionType.LoopAction === this._innerActionType) {
+      innerActiontimeline.gotoFrameAndPlay(innerStart, innerEnd, true);
     }
+  }
 
-    getSingleFrameIndex () {
-        return this._startFrameIndex;
-    }
+  setAnimationName(animationName) {
+    this._animationName = animationName;
+  }
 
-    setEnterWithName (isEnterWithName) {
-        this._enterWithName = isEnterWithName;
-    }
+  setSingleFrameIndex(frameIndex) {
+    this._singleFrameIndex = frameIndex;
+  }
 
-    getEnterWithName () {
-        return this._enterWithName;
-    }
+  getSingleFrameIndex() {
+    return this._startFrameIndex;
+  }
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.InnerActionFrame}
-     */
-    clone () {
-        var frame = new ccs.InnerActionFrame();
-        frame.setInnerActionType(this._innerActionType);
-        frame.setStartFrameIndex(this._startFrameIndex);
-        frame.setEnterWithName(this._enterWithName);
-        frame.setAnimationName(this._animationName);
-        frame.setSingleFrameIndex(this._singleFrameIndex);
+  setEnterWithName(isEnterWithName) {
+    this._enterWithName = isEnterWithName;
+  }
 
-        frame._cloneProperty(this);
+  getEnterWithName() {
+    return this._enterWithName;
+  }
 
-        return frame;
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.InnerActionFrame}
+   */
+  clone() {
+    var frame = new ccs.InnerActionFrame();
+    frame.setInnerActionType(this._innerActionType);
+    frame.setStartFrameIndex(this._startFrameIndex);
+    frame.setEnterWithName(this._enterWithName);
+    frame.setAnimationName(this._animationName);
+    frame.setSingleFrameIndex(this._singleFrameIndex);
 
-    }
+    frame._cloneProperty(this);
 
-    /**
-     * Set the inner action type
-     * @param {ccs.InnerActionType} type
-     */
-    setInnerActionType (type) {
-        this._innerActionType = type;
-    }
+    return frame;
+  }
 
-    /**
-     * Gets the inner action type
-     * @returns {ccs.InnerActionType}
-     */
-    getInnerActionType () {
-        return this._innerActionType;
-    }
+  /**
+   * Set the inner action type
+   * @param {ccs.InnerActionType} type
+   */
+  setInnerActionType(type) {
+    this._innerActionType = type;
+  }
 
-    /**
-     * Set the start frame index
-     * @param {Number} frameIndex
-     */
-    setStartFrameIndex (frameIndex) {
-        this._startFrameIndex = frameIndex;
-    }
+  /**
+   * Gets the inner action type
+   * @returns {ccs.InnerActionType}
+   */
+  getInnerActionType() {
+    return this._innerActionType;
+  }
 
-    /**
-     * Get the start frame index
-     * @returns {Number}
-     */
-    getStartFrameIndex () {
-        return this._startFrameIndex;
-    }
+  /**
+   * Set the start frame index
+   * @param {Number} frameIndex
+   */
+  setStartFrameIndex(frameIndex) {
+    this._startFrameIndex = frameIndex;
+  }
 
+  /**
+   * Get the start frame index
+   * @returns {Number}
+   */
+  getStartFrameIndex() {
+    return this._startFrameIndex;
+  }
 };
 
 /**
@@ -988,78 +962,79 @@ ccs.InnerActionFrame = class InnerActionFrame extends ccs.Frame {
  * @extend ccs.Frame
  */
 ccs.ColorFrame = class ColorFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._color = new cc.Color(255, 255, 255);
+  }
 
-    constructor () {
-        super();
-        this._color = new cc.Color(255, 255, 255);
+  /**
+   * the execution of the callback
+   * @param {ccs.ColorFrame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (!this._node) return;
+    this._node.setColor(this._color);
+    if (this._tween) {
+      var color = nextFrame._color;
+      this._betweenRed = color.r - this._color.r;
+      this._betweenGreen = color.g - this._color.g;
+      this._betweenBlue = color.b - this._color.b;
     }
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.ColorFrame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (!this._node)
-            return;
-        this._node.setColor(this._color);
-        if (this._tween) {
-            var color = nextFrame._color;
-            this._betweenRed = color.r - this._color.r;
-            this._betweenGreen = color.g - this._color.g;
-            this._betweenBlue = color.b - this._color.b;
-        }
+  /**
+   * Each frame logic
+   * @param {number} percent
+   */
+  _onApply(percent) {
+    if (
+      this._node &&
+      this._tween &&
+      (this._betweenAlpha !== 0 ||
+        this._betweenRed !== 0 ||
+        this._betweenGreen !== 0 ||
+        this._betweenBlue !== 0)
+    ) {
+      var color = new cc.Color(255, 255, 255);
+      color.r = this._color.r + this._betweenRed * percent;
+      color.g = this._color.g + this._betweenGreen * percent;
+      color.b = this._color.b + this._betweenBlue * percent;
 
+      this._node.setColor(color);
+      if (this._alpha !== null) {
+        var alpha = this._alpha + this._betweenAlpha * percent;
+        this._node.setOpacity(alpha);
+      }
     }
+  }
 
-    /**
-     * Each frame logic
-     * @param {number} percent
-     */
-    _onApply (percent) {
-        if (this._node && this._tween && (this._betweenAlpha !== 0 || this._betweenRed !== 0 || this._betweenGreen !== 0 || this._betweenBlue !== 0)) {
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.ColorFrame}
+   */
+  clone() {
+    var frame = new ccs.ColorFrame();
+    frame.setColor(this._color);
+    frame._cloneProperty(this);
+    return frame;
+  }
 
-            var color = new cc.Color(255, 255, 255);
-            color.r = this._color.r + this._betweenRed * percent;
-            color.g = this._color.g + this._betweenGreen * percent;
-            color.b = this._color.b + this._betweenBlue * percent;
+  /**
+   * Set the color
+   * @param {color} color
+   */
+  setColor(color) {
+    this._color = color;
+  }
 
-            this._node.setColor(color);
-            if (this._alpha !== null) {
-                var alpha = this._alpha + this._betweenAlpha * percent;
-                this._node.setOpacity(alpha);
-            }
-
-        }
-    }
-
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.ColorFrame}
-     */
-    clone () {
-        var frame = new ccs.ColorFrame();
-        frame.setColor(this._color);
-        frame._cloneProperty(this);
-        return frame;
-    }
-
-    /**
-     * Set the color
-     * @param {cc.color} color
-     */
-    setColor (color) {
-        this._color = color;
-    }
-
-    /**
-     * Gets the color
-     * @returns {cc.color}
-     */
-    getColor () {
-        return this._color;
-    }
-
+  /**
+   * Gets the color
+   * @returns {color}
+   */
+  getColor() {
+    return this._color;
+  }
 };
 
 /**
@@ -1067,50 +1042,47 @@ ccs.ColorFrame = class ColorFrame extends ccs.Frame {
  * @extend ccs.Frame
  */
 ccs.AlphaFrame = class AlphaFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._alpha = 255;
+  }
 
-    constructor () {
-        super();
-        this._alpha = 255;
+  onEnter(nextFrame) {
+    if (!this._node) return;
+    this._node.setOpacity(this._alpha);
+    if (this._tween) {
+      this._betweenAlpha = nextFrame._alpha - this._alpha;
     }
+  }
 
-    onEnter (nextFrame) {
-        if (!this._node)
-            return;
-        this._node.setOpacity(this._alpha);
-        if (this._tween) {
-            this._betweenAlpha = nextFrame._alpha - this._alpha;
-        }
-    }
+  _onApply(percent) {
+    if (!this._node) return;
+    var alpha = this._alpha + this._betweenAlpha * percent;
+    this._node.setOpacity(alpha);
+  }
 
-    _onApply (percent) {
-        if (!this._node)
-            return;
-        var alpha = this._alpha + this._betweenAlpha * percent;
-        this._node.setOpacity(alpha);
-    }
+  /**
+   * Set the alpha
+   * @param {Number} alpha
+   */
+  setAlpha(alpha) {
+    this._alpha = alpha;
+  }
 
-    /**
-     * Set the alpha
-     * @param {Number} alpha
-     */
-    setAlpha (alpha) {
-        this._alpha = alpha;
-    }
+  /**
+   * Gets the alpha
+   * @returns {Number}
+   */
+  getAlpha() {
+    return this._alpha;
+  }
 
-    /**
-     * Gets the alpha
-     * @returns {Number}
-     */
-    getAlpha () {
-        return this._alpha;
-    }
-
-    clone () {
-        var frame = new ccs.AlphaFrame();
-        frame.setAlpha(this._alpha);
-        frame._cloneProperty(this);
-        return frame;
-    }
+  clone() {
+    var frame = new ccs.AlphaFrame();
+    frame.setAlpha(this._alpha);
+    frame._cloneProperty(this);
+    return frame;
+  }
 };
 
 /**
@@ -1118,51 +1090,49 @@ ccs.AlphaFrame = class AlphaFrame extends ccs.Frame {
  * @extend ccs.Frame
  */
 ccs.EventFrame = class EventFrame extends ccs.Frame {
+  constructor() {
+    super();
+    this._event = "";
+    this._enterWhenPassed = true;
+  }
 
-    constructor () {
-        super();
-        this._event = "";
-        this._enterWhenPassed = true;
-    }
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    this._emitEvent();
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        this._emitEvent();
-    }
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.EventFrame}
+   */
+  clone() {
+    var frame = new ccs.EventFrame();
+    frame.setEvent(this._event);
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.EventFrame}
-     */
-    clone () {
-        var frame = new ccs.EventFrame();
-        frame.setEvent(this._event);
+    frame._cloneProperty(this);
 
-        frame._cloneProperty(this);
+    return frame;
+  }
 
-        return frame;
-    }
+  /**
+   * Set the event
+   * @param event
+   */
+  setEvent(event) {
+    this._event = event;
+  }
 
-    /**
-     * Set the event
-     * @param event
-     */
-    setEvent (event) {
-        this._event = event;
-    }
-
-    /**
-     * Gets the event
-     * @returns {null}
-     */
-    getEvent () {
-        return this._event;
-    }
-
+  /**
+   * Gets the event
+   * @returns {null}
+   */
+  getEvent() {
+    return this._event;
+  }
 };
 
 /**
@@ -1170,72 +1140,68 @@ ccs.EventFrame = class EventFrame extends ccs.Frame {
  * @extend ccs.Frame
  */
 ccs.ZOrderFrame = class ZOrderFrame extends ccs.Frame {
+  /**
+   * the execution of the callback
+   * @param {ccs.Frame} nextFrame
+   */
+  onEnter(nextFrame) {
+    if (this._node) this._node.setLocalZOrder(this._zorder);
+  }
 
-    /**
-     * the execution of the callback
-     * @param {ccs.Frame} nextFrame
-     */
-    onEnter (nextFrame) {
-        if (this._node)
-            this._node.setLocalZOrder(this._zorder);
-    }
+  /**
+   * to copy object with deep copy.
+   * returns a clone of action.
+   * @return {ccs.ZOrderFrame}
+   */
+  clone() {
+    var frame = new ccs.ZOrderFrame();
+    frame.setZOrder(this._zorder);
 
-    /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     * @return {ccs.ZOrderFrame}
-     */
-    clone () {
-        var frame = new ccs.ZOrderFrame();
-        frame.setZOrder(this._zorder);
+    frame._cloneProperty(this);
 
-        frame._cloneProperty(this);
+    return frame;
+  }
 
-        return frame;
-    }
+  /**
+   * Set the zOrder
+   * @param {Number} zorder
+   */
+  setZOrder(zorder) {
+    this._zorder = zorder;
+  }
 
-    /**
-     * Set the zOrder
-     * @param {Number} zorder
-     */
-    setZOrder (zorder) {
-        this._zorder = zorder;
-    }
-
-    /**
-     * Gets the zOrder
-     * @returns {Number}
-     */
-    getZOrder () {
-        return this._zorder;
-    }
-
+  /**
+   * Gets the zOrder
+   * @returns {Number}
+   */
+  getZOrder() {
+    return this._zorder;
+  }
 };
 
 ccs.BlendFuncFrame = class BlendFuncFrame extends ccs.Frame {
-    constructor () {
-        super();
-        this._blendFunc = null;
-    }
+  constructor() {
+    super();
+    this._blendFunc = null;
+  }
 
-    onEnter (nextFrame, currentFrameIndex) {
-        if (this._node && this._blendFunc)
-            this._node.setBlendFunc(this._blendFunc);
-    }
+  onEnter(nextFrame, currentFrameIndex) {
+    if (this._node && this._blendFunc) this._node.setBlendFunc(this._blendFunc);
+  }
 
-    clone () {
-        var frame = new ccs.BlendFuncFrame();
-        frame.setBlendFunc(this._blendFunc);
-        frame._cloneProperty(this);
-        return frame;
-    }
+  clone() {
+    var frame = new ccs.BlendFuncFrame();
+    frame.setBlendFunc(this._blendFunc);
+    frame._cloneProperty(this);
+    return frame;
+  }
 
-    setBlendFunc (blendFunc) {
-        if (blendFunc && blendFunc.src && blendFunc.dst)
-            this._blendFunc = blendFunc;
-    }
+  setBlendFunc(blendFunc) {
+    if (blendFunc && blendFunc.src && blendFunc.dst)
+      this._blendFunc = blendFunc;
+  }
 
-    getBlendFunc () {
-        return this._blendFunc;
-    }
+  getBlendFunc() {
+    return this._blendFunc;
+  }
 };

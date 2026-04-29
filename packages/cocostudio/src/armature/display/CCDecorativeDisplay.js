@@ -27,80 +27,78 @@
  * Decorative a display node for Cocos Armature
  */
 ccs.DecorativeDisplay = class DecorativeDisplay extends cc.NewClass {
+  constructor() {
+    super();
+    this._display = null;
+    this._colliderDetector = null;
+    this._displayData = null;
 
-    constructor() {
-        super();
-        this._display = null;
-        this._colliderDetector = null;
-        this._displayData = null;
+    //this.init();
+  }
 
-        //this.init();
+  /**
+   * Initializes a ccs.DecorativeDisplay
+   * @returns {boolean}
+   */
+  init() {
+    return true;
+  }
+
+  /**
+   * Sets display node to decorative
+   * @param {Node} display
+   */
+  setDisplay(display) {
+    if (display._parent) {
+      display._parent.removeChild(display);
+      delete display._parent;
     }
+    this._display = display;
+  }
 
-    /**
-     * Initializes a ccs.DecorativeDisplay
-     * @returns {boolean}
-     */
-    init() {
-        return true;
-    }
+  /**
+   * Returns the display node
+   * @returns {Node}
+   */
+  getDisplay() {
+    return this._display;
+  }
 
-    /**
-     * Sets display node to decorative
-     * @param {cc.Node} display
-     */
-    setDisplay(display) {
-        if(display._parent){
-            display._parent.removeChild(display);
-            delete display._parent;
-        }
-        this._display = display;
-    }
+  /**
+   * Sets collide detector
+   * @param {ccs.ColliderDetector} colliderDetector
+   */
+  setColliderDetector(colliderDetector) {
+    this._colliderDetector = colliderDetector;
+  }
 
-    /**
-     * Returns the display node
-     * @returns {cc.Node}
-     */
-    getDisplay() {
-        return this._display;
-    }
+  /**
+   * Returns collide detector
+   * @returns {ccs.ColliderDetector}
+   */
+  getColliderDetector() {
+    return this._colliderDetector;
+  }
 
-    /**
-     * Sets collide detector
-     * @param {ccs.ColliderDetector} colliderDetector
-     */
-    setColliderDetector(colliderDetector) {
-        this._colliderDetector = colliderDetector;
-    }
+  /**
+   * Sets display data
+   * @param {ccs.DisplayData} displayData
+   */
+  setDisplayData(displayData) {
+    this._displayData = displayData;
+  }
 
-    /**
-     * Returns collide detector
-     * @returns {ccs.ColliderDetector}
-     */
-    getColliderDetector() {
-        return this._colliderDetector;
-    }
+  /**
+   * Returns display data
+   * @returns {ccs.DisplayData}
+   */
+  getDisplayData() {
+    return this._displayData;
+  }
 
-    /**
-     * Sets display data
-     * @param {ccs.DisplayData} displayData
-     */
-    setDisplayData(displayData) {
-        this._displayData = displayData;
-    }
-
-    /**
-     * Returns display data
-     * @returns {ccs.DisplayData}
-     */
-    getDisplayData() {
-        return this._displayData;
-    }
-
-    release() {
-        this._display = null;
-        this._displayData = null;
-        this._colliderDetector = null;
-    }
-
+  release() {
+    this._display = null;
+    this._displayData = null;
+    this._colliderDetector = null;
+  }
 };
