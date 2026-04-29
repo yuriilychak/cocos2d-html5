@@ -139,6 +139,8 @@ export default class Game extends EventHelper(NewClass) {
    */
   onStop = null;
 
+  drawingUtil = null;
+
   /**
    * Set frameRate of game.
    * @param frameRate
@@ -483,7 +485,7 @@ export default class Game extends EventHelper(NewClass) {
       win.gl = this._renderContext;
       RendererConfig.getInstance().setRenderer(rendererWebGL);
       RendererConfig.getInstance().renderer.init();
-      cc._drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
+      this.drawingUtil = cc._drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
       cc.glExt = {};
       cc.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
       cc.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
@@ -494,7 +496,7 @@ export default class Game extends EventHelper(NewClass) {
         localCanvas.getContext("2d")
       );
       RendererConfig.getInstance().initRenderContext(this._renderContext);
-      cc._drawingUtil = DrawingPrimitiveCanvas
+      this.drawingUtil = cc._drawingUtil = DrawingPrimitiveCanvas
         ? new DrawingPrimitiveCanvas(this._renderContext)
         : null;
     }

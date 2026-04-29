@@ -988,7 +988,8 @@ export { NODE_TAG_INVALID, s_globalOrderOfArrival, setGlobalOrderOfArrival } fro
 export { screen } from "./platform/screen";
 export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
 export { LayerGradient } from "./layers/layer-gradient";
-export { BLEND_SRC, BLEND_DST, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from "./platform/macro/constants";
+export { BLEND_SRC, BLEND_DST, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY, DST_COLOR, ONE_MINUS_SRC_COLOR, FLT_MIN, BATCH_VERTEX_COUNT } from "./platform/macro/constants";
+export { OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA } from "./platform/config";
 export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
 export { rectPointsToPixels } from "./platform/macro/utils";
 export { Path, Game, Loader } from "./boot";
