@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ScriptTestTempLayer = class ScriptTestTempLayer extends cc.Layer {
+export class ScriptTestTempLayer extends cc.Layer {
     constructor() {
         super();
 

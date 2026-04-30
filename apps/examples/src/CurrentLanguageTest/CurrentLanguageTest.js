@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var CurrentLanguageTest = class CurrentLanguageTest extends cc.Layer {
+export class CurrentLanguageTest extends cc.Layer {
     constructor() {
         super();
 
@@ -69,7 +69,7 @@ var CurrentLanguageTest = class CurrentLanguageTest extends cc.Layer {
 
 };
 
-var CurrentLanguageTestScene = class CurrentLanguageTestScene extends TestScene {
+export class CurrentLanguageTestScene extends TestScene {
     runThisTest() {
         if(window.sideIndexBar){
             window.sideIndexBar.changeTest(0, 8);

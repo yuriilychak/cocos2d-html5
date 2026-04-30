@@ -28,7 +28,7 @@
  ****************************************************************************/
 
 
-var CCPoolTest = class CCPoolTest extends cc.Layer {
+export class CCPoolTest extends cc.Layer {
     constructor() {
         super();
         this.timeList = null;
@@ -159,7 +159,7 @@ var runCCPoolTest = function () {
     pScene.addChild(pLayer);
     cc.director.runScene(pScene);
 };
-var MySprite = class MySprite extends cc.Sprite {
+export class MySprite extends cc.Sprite {
     constructor(f1, f2, f3) {
         super(s_grossini);
 

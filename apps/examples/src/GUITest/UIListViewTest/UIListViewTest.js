@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIListViewTest_Vertical = class UIListViewTest_Vertical extends UIMainLayer {
+export class UIListViewTest_Vertical extends UIMainLayer {
     constructor() {
         super();
         this._spawnCount = 8;
@@ -177,7 +177,7 @@ var UIListViewTest_Vertical = class UIListViewTest_Vertical extends UIMainLayer 
 
 };
 
-var UIListViewTest_Horizontal = class UIListViewTest_Horizontal extends UIMainLayer {
+export class UIListViewTest_Horizontal extends UIMainLayer {
     constructor() {
         super();
         this._array = null;
@@ -310,7 +310,7 @@ var UIListViewTest_Horizontal = class UIListViewTest_Horizontal extends UIMainLa
 
 };
 
-var UIListViewTest_TouchIntercept = class UIListViewTest_TouchIntercept extends UIMainLayer {
+export class UIListViewTest_TouchIntercept extends UIMainLayer {
     init() {
         if(super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -363,7 +363,7 @@ var UIListViewTest_TouchIntercept = class UIListViewTest_TouchIntercept extends 
 
 };
 
-var UIListViewTest_ScrollToItem = class UIListViewTest_ScrollToItem extends UIMainLayer {
+export class UIListViewTest_ScrollToItem extends UIMainLayer {
     constructor() {
         super();
         this._nextIndex = 0;
@@ -464,7 +464,7 @@ var UIListViewTest_ScrollToItem = class UIListViewTest_ScrollToItem extends UIMa
 
 };
 
-var UIListViewTest_ScrollToItemVertical = class UIListViewTest_ScrollToItemVertical extends UIListViewTest_ScrollToItem {
+export class UIListViewTest_ScrollToItemVertical extends UIListViewTest_ScrollToItem {
     _getListViewDirection()
     {
         return ccui.ScrollView.DIR_VERTICAL;
@@ -472,7 +472,7 @@ var UIListViewTest_ScrollToItemVertical = class UIListViewTest_ScrollToItemVerti
 
 };
 
-var UIListViewTest_ScrollToItemHorizontal = class UIListViewTest_ScrollToItemHorizontal extends UIListViewTest_ScrollToItem {
+export class UIListViewTest_ScrollToItemHorizontal extends UIListViewTest_ScrollToItem {
     _getListViewDirection()
     {
         return ccui.ScrollView.DIR_HORIZONTAL;
@@ -480,7 +480,7 @@ var UIListViewTest_ScrollToItemHorizontal = class UIListViewTest_ScrollToItemHor
 
 };
 
-var UIListViewTest_Magnetic = class UIListViewTest_Magnetic extends UIMainLayer {
+export class UIListViewTest_Magnetic extends UIMainLayer {
     constructor() {
         super();
         this._listView = null;
@@ -624,7 +624,7 @@ var UIListViewTest_Magnetic = class UIListViewTest_Magnetic extends UIMainLayer 
 
 };
 
-var UIListViewTest_MagneticVertical = class UIListViewTest_MagneticVertical extends UIListViewTest_Magnetic {
+export class UIListViewTest_MagneticVertical extends UIListViewTest_Magnetic {
     _getListViewDirection()
     {
         return ccui.ScrollView.DIR_VERTICAL;
@@ -632,7 +632,7 @@ var UIListViewTest_MagneticVertical = class UIListViewTest_MagneticVertical exte
 
 };
 
-var UIListViewTest_MagneticHorizontal = class UIListViewTest_MagneticHorizontal extends UIListViewTest_Magnetic {
+export class UIListViewTest_MagneticHorizontal extends UIListViewTest_Magnetic {
     _getListViewDirection()
     {
         return ccui.ScrollView.DIR_HORIZONTAL;

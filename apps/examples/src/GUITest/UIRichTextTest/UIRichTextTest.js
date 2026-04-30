@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIRichTextTest = class UIRichTextTest extends UIMainLayer {
+export class UIRichTextTest extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -99,7 +99,7 @@ var UIRichTextTest = class UIRichTextTest extends UIMainLayer {
 //
 // UIRichTextXMLBasic
 //
-var UIRichTextXMLBasic = class UIRichTextXMLBasic extends UIMainLayer {
+export class UIRichTextXMLBasic extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -153,7 +153,7 @@ var UIRichTextXMLBasic = class UIRichTextXMLBasic extends UIMainLayer {
 //
 // UIRichTextXMLSmallBig
 //
-var UIRichTextXMLSmallBig = class UIRichTextXMLSmallBig extends UIMainLayer {
+export class UIRichTextXMLSmallBig extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -207,7 +207,7 @@ var UIRichTextXMLSmallBig = class UIRichTextXMLSmallBig extends UIMainLayer {
 //
 // UIRichTextXMLColor
 //
-var UIRichTextXMLColor = class UIRichTextXMLColor extends UIMainLayer {
+export class UIRichTextXMLColor extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -261,7 +261,7 @@ var UIRichTextXMLColor = class UIRichTextXMLColor extends UIMainLayer {
 //
 // UIRichTextXMLSUIB
 //
-var UIRichTextXMLSUIB = class UIRichTextXMLSUIB extends UIMainLayer {
+export class UIRichTextXMLSUIB extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -315,7 +315,7 @@ var UIRichTextXMLSUIB = class UIRichTextXMLSUIB extends UIMainLayer {
 //
 // UIRichTextXMLSUIB2
 //
-var UIRichTextXMLSUIB2 = class UIRichTextXMLSUIB2 extends UIMainLayer {
+export class UIRichTextXMLSUIB2 extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -369,7 +369,7 @@ var UIRichTextXMLSUIB2 = class UIRichTextXMLSUIB2 extends UIMainLayer {
 //
 // UIRichTextXMLSUIB3
 //
-var UIRichTextXMLSUIB3 = class UIRichTextXMLSUIB3 extends UIMainLayer {
+export class UIRichTextXMLSUIB3 extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -423,7 +423,7 @@ var UIRichTextXMLSUIB3 = class UIRichTextXMLSUIB3 extends UIMainLayer {
 //
 // UIRichTextXMLImg
 //
-var UIRichTextXMLImg = class UIRichTextXMLImg extends UIMainLayer {
+export class UIRichTextXMLImg extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -477,7 +477,7 @@ var UIRichTextXMLImg = class UIRichTextXMLImg extends UIMainLayer {
 //
 // UIRichTextXMLUrl
 //
-var UIRichTextXMLUrl = class UIRichTextXMLUrl extends UIMainLayer {
+export class UIRichTextXMLUrl extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -531,7 +531,7 @@ var UIRichTextXMLUrl = class UIRichTextXMLUrl extends UIMainLayer {
 //
 // UIRichTextXMLFace
 //
-var UIRichTextXMLFace = class UIRichTextXMLFace extends UIMainLayer {
+export class UIRichTextXMLFace extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -585,7 +585,7 @@ var UIRichTextXMLFace = class UIRichTextXMLFace extends UIMainLayer {
 //
 // UIRichTextXMLBR
 //
-var UIRichTextXMLBR = class UIRichTextXMLBR extends UIMainLayer {
+export class UIRichTextXMLBR extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;
@@ -639,7 +639,7 @@ var UIRichTextXMLBR = class UIRichTextXMLBR extends UIMainLayer {
 //
 // UIRichTextXMLInvalid
 //
-var UIRichTextXMLInvalid = class UIRichTextXMLInvalid extends UIMainLayer {
+export class UIRichTextXMLInvalid extends UIMainLayer {
     constructor() {
         super();
         this._richText = null;

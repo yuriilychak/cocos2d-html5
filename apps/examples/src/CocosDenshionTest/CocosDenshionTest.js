@@ -148,7 +148,7 @@ var DenshionTests = [
     }
 ];
 
-var CocosDenshionTest = class CocosDenshionTest extends cc.LayerGradient {
+export class CocosDenshionTest extends cc.LayerGradient {
     constructor() {
         super(new cc.Color(0, 0, 0, 255), new cc.Color(148, 80, 120, 255));
 
@@ -220,7 +220,7 @@ var CocosDenshionTest = class CocosDenshionTest extends cc.LayerGradient {
 
 };
 
-var CocosDenshionTestScene = class CocosDenshionTestScene extends TestScene {
+export class CocosDenshionTestScene extends TestScene {
     runThisTest() {
 
         var layer = new CocosDenshionTest();

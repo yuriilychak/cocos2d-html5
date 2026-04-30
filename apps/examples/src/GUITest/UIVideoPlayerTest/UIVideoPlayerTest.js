@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIVideoPlayerTest = class UIVideoPlayerTest extends UIMainLayer {
+export class UIVideoPlayerTest extends UIMainLayer {
 
     onEnter(){
         super.onEnter();

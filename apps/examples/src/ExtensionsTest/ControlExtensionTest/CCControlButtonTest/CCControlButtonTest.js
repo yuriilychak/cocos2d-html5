@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlButtonTest_HelloVariableSize = class ControlButtonTest_HelloVariableSize extends ControlScene {
+export class ControlButtonTest_HelloVariableSize extends ControlScene {
     init() {
         if (super.init()) {
             var screenSize = cc.director.getWinSize();
@@ -114,7 +114,7 @@ ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
     return scene;
 };
 
-var ControlButtonTest_Event = class ControlButtonTest_Event extends ControlScene {
+export class ControlButtonTest_Event extends ControlScene {
     constructor() {
         super();
         this._displayValueLabel = null;
@@ -216,7 +216,7 @@ ControlButtonTest_Event.create = function (sceneTitle) {
     return scene;
 };
 
-var ControlButtonTest_Styling = class ControlButtonTest_Styling extends ControlScene {
+export class ControlButtonTest_Styling extends ControlScene {
     init() {
         if (super.init()) {
             var screenSize = cc.director.getWinSize();

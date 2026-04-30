@@ -38,7 +38,7 @@ var NOT_CRASHED_CONST = "NOT_CRASHED";
 // ActionManagerTest
 //
 //------------------------------------------------------------------
-var ActionManagerTest = class ActionManagerTest extends BaseTestLayer {
+export class ActionManagerTest extends BaseTestLayer {
     constructor() {
         super();
         this._atlas = null;
@@ -85,7 +85,7 @@ var ActionManagerTest = class ActionManagerTest extends BaseTestLayer {
 // Test1
 //
 //------------------------------------------------------------------
-var CrashTest = class CrashTest extends ActionManagerTest {
+export class CrashTest extends ActionManagerTest {
     title() {
         return "Test 1. Should not crash";
     }
@@ -142,7 +142,7 @@ var CrashTest = class CrashTest extends ActionManagerTest {
 // Test2
 //
 //------------------------------------------------------------------
-var LogicTest = class LogicTest extends ActionManagerTest {
+export class LogicTest extends ActionManagerTest {
     constructor() {
         super();
         this.testDuration = 4.0;
@@ -200,7 +200,7 @@ var LogicTest = class LogicTest extends ActionManagerTest {
 // PauseTest
 //
 //------------------------------------------------------------------
-var PauseTest = class PauseTest extends ActionManagerTest {
+export class PauseTest extends ActionManagerTest {
     constructor() {
         super();
         this.testDuration = 5.5;
@@ -282,7 +282,7 @@ var PauseTest = class PauseTest extends ActionManagerTest {
 // RemoveTest
 //
 //------------------------------------------------------------------
-var RemoveTest = class RemoveTest extends ActionManagerTest {
+export class RemoveTest extends ActionManagerTest {
     constructor() {
         super();
         this.testDuration = 3.5;
@@ -339,7 +339,7 @@ var RemoveTest = class RemoveTest extends ActionManagerTest {
 // ResumeTest
 //
 //------------------------------------------------------------------
-var ResumeTest = class ResumeTest extends ActionManagerTest {
+export class ResumeTest extends ActionManagerTest {
     constructor() {
         super();
         this.testDuration = 6.0;
@@ -410,7 +410,7 @@ var ResumeTest = class ResumeTest extends ActionManagerTest {
 
 };
 
-var ActionManagerTestScene = class ActionManagerTestScene extends TestScene {
+export class ActionManagerTestScene extends TestScene {
     runThisTest(num) {
         ActionMgrTestIdx = (num || 0) - 1;
         this.addChild(nextActionMgrTest());

@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIScrollViewTest_Vertical = class UIScrollViewTest_Vertical extends UIMainLayer {
+export class UIScrollViewTest_Vertical extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -92,7 +92,7 @@ var UIScrollViewTest_Vertical = class UIScrollViewTest_Vertical extends UIMainLa
 
 };
 
-var UIScrollViewTest_Horizontal = class UIScrollViewTest_Horizontal extends UIMainLayer {
+export class UIScrollViewTest_Horizontal extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -162,7 +162,7 @@ var UIScrollViewTest_Horizontal = class UIScrollViewTest_Horizontal extends UIMa
 
 };
 
-var UIScrollViewTest_Both = class UIScrollViewTest_Both extends UIMainLayer {
+export class UIScrollViewTest_Both extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -205,7 +205,7 @@ var UIScrollViewTest_Both = class UIScrollViewTest_Both extends UIMainLayer {
 
 };
 
-var UIScrollViewTest_ScrollToPercentBothDirection = class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
+export class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -246,7 +246,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection = class UIScrollViewTest_Scrol
 
 };
 
-var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = class UIScrollViewTest_ScrollToPercentBothDirection_Bounce extends UIMainLayer {
+export class UIScrollViewTest_ScrollToPercentBothDirection_Bounce extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -289,7 +289,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = class UIScrollViewTes
 };
 
 //2015-01-14
-var UIScrollViewNestTest = class UIScrollViewNestTest extends UIMainLayer {
+export class UIScrollViewNestTest extends UIMainLayer {
     init(){
         if(super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -365,7 +365,7 @@ var UIScrollViewNestTest = class UIScrollViewNestTest extends UIMainLayer {
 };
 
 //2015-01-14
-var UIScrollViewRotated = class UIScrollViewRotated extends UIMainLayer {
+export class UIScrollViewRotated extends UIMainLayer {
     init(){
         if(super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -422,7 +422,7 @@ var UIScrollViewRotated = class UIScrollViewRotated extends UIMainLayer {
 
 };
 
-var UIScrollViewDisableTest = class UIScrollViewDisableTest extends UIMainLayer {
+export class UIScrollViewDisableTest extends UIMainLayer {
     init() {
         if (super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -489,7 +489,7 @@ var UIScrollViewDisableTest = class UIScrollViewDisableTest extends UIMainLayer 
 
 };
 
-var UIScrollViewTest_Vertical_Multiple = class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
+export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
     constructor() {
         super();
         this._scrollView = null;
@@ -619,7 +619,7 @@ var UIScrollViewTest_Vertical_Multiple = class UIScrollViewTest_Vertical_Multipl
 
 };
 
-var UIScrollViewTest_ScrollBar = class UIScrollViewTest_ScrollBar extends UIMainLayer {
+export class UIScrollViewTest_ScrollBar extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();

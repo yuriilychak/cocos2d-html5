@@ -28,7 +28,7 @@ var OpenGLTestIdx = -1;
 // the class inherit from TestScene
 // every Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-var OpenGLTestScene = class OpenGLTestScene extends TestScene {
+export class OpenGLTestScene extends TestScene {
     runThisTest(num) {
         OpenGLTestIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextOpenGLTest());
@@ -69,7 +69,7 @@ cc.GLNode = cc.GLNode || class GLNode extends cc.Node {
     }
 };
 
-var OpenGLTestLayer = class OpenGLTestLayer extends BaseTestLayer {
+export class OpenGLTestLayer extends BaseTestLayer {
 
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );
@@ -125,7 +125,7 @@ var OpenGLTestLayer = class OpenGLTestLayer extends BaseTestLayer {
 // ReadPixelsTest
 //
 //------------------------------------------------------------------
-var GLReadPixelsTest = class GLReadPixelsTest extends OpenGLTestLayer {
+export class GLReadPixelsTest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -212,7 +212,7 @@ var GLReadPixelsTest = class GLReadPixelsTest extends OpenGLTestLayer {
 // GLClearTest
 //
 //------------------------------------------------------------------
-var GLClearTest = class GLClearTest extends OpenGLTestLayer {
+export class GLClearTest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -262,7 +262,7 @@ var GLClearTest = class GLClearTest extends OpenGLTestLayer {
 // GLNodeWebGLAPITest
 //
 //------------------------------------------------------------------
-var GLNodeWebGLAPITest = class GLNodeWebGLAPITest extends OpenGLTestLayer {
+export class GLNodeWebGLAPITest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -463,7 +463,7 @@ var GLNodeWebGLAPITest = class GLNodeWebGLAPITest extends OpenGLTestLayer {
 // GLNodeCCAPITest
 //
 //------------------------------------------------------------------
-var GLNodeCCAPITest = class GLNodeCCAPITest extends OpenGLTestLayer {
+export class GLNodeCCAPITest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -587,7 +587,7 @@ var GLNodeCCAPITest = class GLNodeCCAPITest extends OpenGLTestLayer {
 // ShaderNode
 //
 //------------------------------------------------------------------
-var ShaderNode = class ShaderNode extends cc.GLNode {
+export class ShaderNode extends cc.GLNode {
     constructor(vertexShader, framentShader) {
         super();
         this.init();
@@ -665,7 +665,7 @@ var ShaderNode = class ShaderNode extends cc.GLNode {
 // ShaderHeartTest
 //
 //------------------------------------------------------------------
-var ShaderHeartTest = class ShaderHeartTest extends OpenGLTestLayer {
+export class ShaderHeartTest extends OpenGLTestLayer {
     constructor() {
         super();
 
@@ -706,7 +706,7 @@ var ShaderHeartTest = class ShaderHeartTest extends OpenGLTestLayer {
 // ShaderMandelbrotTest
 //
 //------------------------------------------------------------------
-var ShaderMandelbrotTest = class ShaderMandelbrotTest extends OpenGLTestLayer {
+export class ShaderMandelbrotTest extends OpenGLTestLayer {
     constructor() {
         super();
 
@@ -742,7 +742,7 @@ var ShaderMandelbrotTest = class ShaderMandelbrotTest extends OpenGLTestLayer {
 // ShaderMonjoriTest
 //
 //------------------------------------------------------------------
-var ShaderMonjoriTest = class ShaderMonjoriTest extends OpenGLTestLayer {
+export class ShaderMonjoriTest extends OpenGLTestLayer {
     constructor() {
         super();
 
@@ -778,7 +778,7 @@ var ShaderMonjoriTest = class ShaderMonjoriTest extends OpenGLTestLayer {
 // ShaderPlasmaTest
 //
 //------------------------------------------------------------------
-var ShaderPlasmaTest = class ShaderPlasmaTest extends OpenGLTestLayer {
+export class ShaderPlasmaTest extends OpenGLTestLayer {
     constructor() {
         super();
 
@@ -816,7 +816,7 @@ var ShaderPlasmaTest = class ShaderPlasmaTest extends OpenGLTestLayer {
 // ShaderFlowerTest
 //
 //------------------------------------------------------------------
-var ShaderFlowerTest = class ShaderFlowerTest extends OpenGLTestLayer {
+export class ShaderFlowerTest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -856,7 +856,7 @@ var ShaderFlowerTest = class ShaderFlowerTest extends OpenGLTestLayer {
 // ShaderJuliaTest
 //
 //------------------------------------------------------------------
-var ShaderJuliaTest = class ShaderJuliaTest extends OpenGLTestLayer {
+export class ShaderJuliaTest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -899,7 +899,7 @@ var ShaderJuliaTest = class ShaderJuliaTest extends OpenGLTestLayer {
 //FIX ME:
 //The renderers of webgl and opengl is quite different now, so we have to use different shader and different js code
 //This is a bug, need to be fixed in the future
-var ShaderOutlineEffect = class ShaderOutlineEffect extends OpenGLTestLayer {
+export class ShaderOutlineEffect extends OpenGLTestLayer {
     constructor() {
         super();
 
@@ -977,7 +977,7 @@ var ShaderOutlineEffect = class ShaderOutlineEffect extends OpenGLTestLayer {
 // The implemetation of LabelBMFont is quite defferent between html5 and native
 // That is why we use 'if (cc.sys.isNative){...}else{...}' in this test case
 // It should be fixed in the future.
-var ShaderRetroEffect = class ShaderRetroEffect extends OpenGLTestLayer {
+export class ShaderRetroEffect extends OpenGLTestLayer {
     constructor() {
         super();
 
@@ -1047,7 +1047,7 @@ var ShaderRetroEffect = class ShaderRetroEffect extends OpenGLTestLayer {
 // GLGetActiveTest
 //
 //------------------------------------------------------------------
-var GLGetActiveTest = class GLGetActiveTest extends OpenGLTestLayer {
+export class GLGetActiveTest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -1098,7 +1098,7 @@ var GLGetActiveTest = class GLGetActiveTest extends OpenGLTestLayer {
 // TexImage2DTest
 //
 //------------------------------------------------------------------
-var TexImage2DTest = class TexImage2DTest extends OpenGLTestLayer {
+export class TexImage2DTest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -1210,7 +1210,7 @@ var TexImage2DTest = class TexImage2DTest extends OpenGLTestLayer {
 // GetSupportedExtensionsTest
 //
 //------------------------------------------------------------------
-var GetSupportedExtensionsTest = class GetSupportedExtensionsTest extends OpenGLTestLayer {
+export class GetSupportedExtensionsTest extends OpenGLTestLayer {
     constructor() {
         super();
 
@@ -1254,7 +1254,7 @@ var GetSupportedExtensionsTest = class GetSupportedExtensionsTest extends OpenGL
 // GLTexParamterTest
 //
 //------------------------------------------------------------------
-var GLTexParamterTest = class GLTexParamterTest extends OpenGLTestLayer {
+export class GLTexParamterTest extends OpenGLTestLayer {
 
     constructor() {
         super();
@@ -1314,7 +1314,7 @@ var GLTexParamterTest = class GLTexParamterTest extends OpenGLTestLayer {
 // GLGetUniformTest
 //
 //------------------------------------------------------------------
-var GLGetUniformTest = class GLGetUniformTest extends OpenGLTestLayer {
+export class GLGetUniformTest extends OpenGLTestLayer {
 
     constructor() {
         super();

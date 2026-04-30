@@ -33,7 +33,7 @@ if (!window.SocketIO && !cc.SocketIO) {
     console.warn('Socket.IO not available for SocketIOTest');
 }
 
-var SocketIOTestLayer = class SocketIOTestLayer extends cc.Layer {
+export class SocketIOTestLayer extends cc.Layer {
 
 
     constructor() {

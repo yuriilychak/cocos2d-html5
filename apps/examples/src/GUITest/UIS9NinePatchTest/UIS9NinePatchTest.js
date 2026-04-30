@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIS9NinePatchTest = class UIS9NinePatchTest extends UIMainLayer {
+export class UIS9NinePatchTest extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text

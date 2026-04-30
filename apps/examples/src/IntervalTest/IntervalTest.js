@@ -27,7 +27,7 @@
 
 
 
-var IntervalLayer = class IntervalLayer extends cc.LayerGradient {
+export class IntervalLayer extends cc.LayerGradient {
 
 
 
@@ -188,7 +188,7 @@ var IntervalLayer = class IntervalLayer extends cc.LayerGradient {
 
 };
 
-var IntervalTestScene = class IntervalTestScene extends TestScene {
+export class IntervalTestScene extends TestScene {
 
     runThisTest() {
         var layer = new IntervalLayer();

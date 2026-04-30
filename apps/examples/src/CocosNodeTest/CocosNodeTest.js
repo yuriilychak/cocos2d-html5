@@ -33,7 +33,7 @@ var TAG_SLIDER = 4;
 var nodeTestSceneIdx = -1;
 var MAX_LAYER = 9;
 
-var TestNodeDemo = class TestNodeDemo extends cc.Layer {
+export class TestNodeDemo extends cc.Layer {
     constructor() {
         super();
         this.init();
@@ -100,7 +100,7 @@ var TestNodeDemo = class TestNodeDemo extends cc.Layer {
 
 };
 
-var CCNodeTest2 = class CCNodeTest2 extends TestNodeDemo {
+export class CCNodeTest2 extends TestNodeDemo {
     constructor() {
         super();
         this.testDuration = 4.1;
@@ -166,7 +166,7 @@ var CCNodeTest2 = class CCNodeTest2 extends TestNodeDemo {
 
 var SID_DELAY2 = 1;
 var SID_DELAY4 = 2;
-var CCNodeTest4 = class CCNodeTest4 extends TestNodeDemo {
+export class CCNodeTest4 extends TestNodeDemo {
     constructor() {
         //----start1----ctor
         super();
@@ -218,7 +218,7 @@ var CCNodeTest4 = class CCNodeTest4 extends TestNodeDemo {
 
 };
 
-var CCNodeTest5 = class CCNodeTest5 extends TestNodeDemo {
+export class CCNodeTest5 extends TestNodeDemo {
     constructor() {
         //----start2----ctor
         super();
@@ -291,7 +291,7 @@ var CCNodeTest5 = class CCNodeTest5 extends TestNodeDemo {
 
 };
 
-var CCNodeTest6 = class CCNodeTest6 extends TestNodeDemo {
+export class CCNodeTest6 extends TestNodeDemo {
     constructor() {
         //----start3----ctor
         super();
@@ -362,7 +362,7 @@ var CCNodeTest6 = class CCNodeTest6 extends TestNodeDemo {
 
 };
 
-var StressTest1 = class StressTest1 extends TestNodeDemo {
+export class StressTest1 extends TestNodeDemo {
     constructor() {
         //----start4----ctor
         super();
@@ -430,7 +430,7 @@ var StressTest1 = class StressTest1 extends TestNodeDemo {
 
 };
 
-var StressTest2 = class StressTest2 extends TestNodeDemo {
+export class StressTest2 extends TestNodeDemo {
     constructor() {
         //----start5----ctor
         super();
@@ -476,7 +476,7 @@ var StressTest2 = class StressTest2 extends TestNodeDemo {
 
 };
 
-var NodeToWorld = class NodeToWorld extends TestNodeDemo {
+export class NodeToWorld extends TestNodeDemo {
     constructor() {
         //----start6----ctor
         // This code tests that nodeToParent works OK:
@@ -541,7 +541,7 @@ var NodeToWorld = class NodeToWorld extends TestNodeDemo {
 //
 // ConvertToNode
 //
-var ConvertToNode = class ConvertToNode extends TestNodeDemo {
+export class ConvertToNode extends TestNodeDemo {
     constructor() {
         //----start9----ctor
         super();
@@ -661,7 +661,7 @@ var ConvertToNode = class ConvertToNode extends TestNodeDemo {
 //
 // BoundingBox Test
 //
-var BoundingBoxTest = class BoundingBoxTest extends TestNodeDemo {
+export class BoundingBoxTest extends TestNodeDemo {
     constructor() {
         //----start8----ctor
         super();
@@ -703,7 +703,7 @@ var BoundingBoxTest = class BoundingBoxTest extends TestNodeDemo {
 
 };
 
-var SchedulerTest1 = class SchedulerTest1 extends TestNodeDemo {
+export class SchedulerTest1 extends TestNodeDemo {
     constructor() {
         //----start7----ctor
         super();
@@ -750,7 +750,7 @@ var SchedulerTest1 = class SchedulerTest1 extends TestNodeDemo {
 
 };
 
-var NodeOpaqueTest = class NodeOpaqueTest extends TestNodeDemo {
+export class NodeOpaqueTest extends TestNodeDemo {
     constructor() {
         //----start13----ctor
         super();
@@ -776,7 +776,7 @@ var NodeOpaqueTest = class NodeOpaqueTest extends TestNodeDemo {
 
 };
 
-var NodeNonOpaqueTest = class NodeNonOpaqueTest extends TestNodeDemo {
+export class NodeNonOpaqueTest extends TestNodeDemo {
     constructor() {
         //----start14----ctor
         super();
@@ -804,7 +804,7 @@ var NodeNonOpaqueTest = class NodeNonOpaqueTest extends TestNodeDemo {
 //
 // MAIN ENTRY POINT
 //
-var NodeTestScene = class NodeTestScene extends TestScene {
+export class NodeTestScene extends TestScene {
     runThisTest(num) {
         nodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         MAX_LAYER = 9;

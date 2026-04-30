@@ -44,7 +44,7 @@ var PLATFROM_APPLE = PLATFROM_IOS | PLATFORM_MAC;
 var autoTestEnabled = autoTestEnabled || false;
 var autoTestCurrentTestName = autoTestCurrentTestName || "N/A";
 
-var TestScene = class TestScene extends cc.Scene {
+export class TestScene extends cc.Scene {
     constructor(bPortrait) {
         super();
 
@@ -88,7 +88,7 @@ var TestScene = class TestScene extends cc.Scene {
 var LINE_SPACE = 40;
 var curPos = new cc.Point(0,0);
 
-var TestController = class TestController extends cc.LayerGradient {
+export class TestController extends cc.LayerGradient {
 
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(0x46,0x82,0xB4,255));

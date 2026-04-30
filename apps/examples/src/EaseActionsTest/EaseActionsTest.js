@@ -34,7 +34,7 @@ var easeActionsTestIdx = -1;
 // the class inherit from TestScene
 // every .Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-var EaseActionsTestScene = class EaseActionsTestScene extends TestScene {
+export class EaseActionsTestScene extends TestScene {
     runThisTest(num) {
         easeActionsTestIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextEaseActionsTest());
@@ -44,7 +44,7 @@ var EaseActionsTestScene = class EaseActionsTestScene extends TestScene {
 };
 
 
-var EaseSpriteDemo = class EaseSpriteDemo extends BaseTestLayer {
+export class EaseSpriteDemo extends BaseTestLayer {
 
     constructor() {
         super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
@@ -154,7 +154,7 @@ var EaseSpriteDemo = class EaseSpriteDemo extends BaseTestLayer {
 // SpriteEase
 //
 //------------------------------------------------------------------
-var SpriteEase = class SpriteEase extends EaseSpriteDemo {
+export class SpriteEase extends EaseSpriteDemo {
     constructor() {
         super();
         this.testDuration = 4.2;
@@ -226,7 +226,7 @@ var SpriteEase = class SpriteEase extends EaseSpriteDemo {
 // SpriteEaseInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseInOut = class SpriteEaseInOut extends EaseSpriteDemo {
+export class SpriteEaseInOut extends EaseSpriteDemo {
 
     onEnter() {
         //----start1----onEnter
@@ -265,7 +265,7 @@ var SpriteEaseInOut = class SpriteEaseInOut extends EaseSpriteDemo {
 // SpriteEaseExponential
 //
 //------------------------------------------------------------------
-var SpriteEaseExponential = class SpriteEaseExponential extends EaseSpriteDemo {
+export class SpriteEaseExponential extends EaseSpriteDemo {
 
     onEnter() {
         //----start2----onEnter
@@ -303,7 +303,7 @@ var SpriteEaseExponential = class SpriteEaseExponential extends EaseSpriteDemo {
 // SpriteEaseExponentialInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseExponentialInOut = class SpriteEaseExponentialInOut extends EaseSpriteDemo {
+export class SpriteEaseExponentialInOut extends EaseSpriteDemo {
     onEnter() {
         //----start3----onEnter
         super.onEnter();
@@ -336,7 +336,7 @@ var SpriteEaseExponentialInOut = class SpriteEaseExponentialInOut extends EaseSp
 // SpriteEaseSine
 //
 //------------------------------------------------------------------
-var SpriteEaseSine = class SpriteEaseSine extends EaseSpriteDemo {
+export class SpriteEaseSine extends EaseSpriteDemo {
     onEnter() {
         //----start4----onEnter
         super.onEnter();
@@ -373,7 +373,7 @@ var SpriteEaseSine = class SpriteEaseSine extends EaseSpriteDemo {
 // SpriteEaseSineInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseSineInOut = class SpriteEaseSineInOut extends EaseSpriteDemo {
+export class SpriteEaseSineInOut extends EaseSpriteDemo {
     onEnter() {
         //----start5----onEnter
         super.onEnter();
@@ -409,7 +409,7 @@ var SpriteEaseSineInOut = class SpriteEaseSineInOut extends EaseSpriteDemo {
 // SpriteEaseElastic
 //
 //------------------------------------------------------------------
-var SpriteEaseElastic = class SpriteEaseElastic extends EaseSpriteDemo {
+export class SpriteEaseElastic extends EaseSpriteDemo {
     onEnter() {
         //----start6----onEnter
         super.onEnter();
@@ -445,7 +445,7 @@ var SpriteEaseElastic = class SpriteEaseElastic extends EaseSpriteDemo {
 // SpriteEaseElasticInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseElasticInOut = class SpriteEaseElasticInOut extends EaseSpriteDemo {
+export class SpriteEaseElasticInOut extends EaseSpriteDemo {
     onEnter() {
         //----start7----onEnter
         super.onEnter();
@@ -483,7 +483,7 @@ var SpriteEaseElasticInOut = class SpriteEaseElasticInOut extends EaseSpriteDemo
 // SpriteEaseBounce
 //
 //------------------------------------------------------------------
-var SpriteEaseBounce = class SpriteEaseBounce extends EaseSpriteDemo {
+export class SpriteEaseBounce extends EaseSpriteDemo {
     onEnter() {
         //----start8----onEnter
         super.onEnter();
@@ -519,7 +519,7 @@ var SpriteEaseBounce = class SpriteEaseBounce extends EaseSpriteDemo {
 // SpriteEaseBounceInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseBounceInOut = class SpriteEaseBounceInOut extends EaseSpriteDemo {
+export class SpriteEaseBounceInOut extends EaseSpriteDemo {
     onEnter() {
         //----start9----onEnter
         super.onEnter();
@@ -552,7 +552,7 @@ var SpriteEaseBounceInOut = class SpriteEaseBounceInOut extends EaseSpriteDemo {
 // SpriteEaseBack
 //
 //------------------------------------------------------------------
-var SpriteEaseBack = class SpriteEaseBack extends EaseSpriteDemo {
+export class SpriteEaseBack extends EaseSpriteDemo {
     onEnter() {
         //----start10----onEnter
         super.onEnter();
@@ -588,7 +588,7 @@ var SpriteEaseBack = class SpriteEaseBack extends EaseSpriteDemo {
 // SpriteEaseBackInOut
 //
 //------------------------------------------------------------------
-var SpriteEaseBackInOut = class SpriteEaseBackInOut extends EaseSpriteDemo {
+export class SpriteEaseBackInOut extends EaseSpriteDemo {
     onEnter() {
         //----start11----onEnter
         super.onEnter();
@@ -616,7 +616,7 @@ var SpriteEaseBackInOut = class SpriteEaseBackInOut extends EaseSpriteDemo {
 
 };
 
-var SpeedTest = class SpeedTest extends EaseSpriteDemo {
+export class SpeedTest extends EaseSpriteDemo {
     constructor() {
         super();
         this.testDuration = 0.1;
@@ -682,7 +682,7 @@ var SpeedTest = class SpeedTest extends EaseSpriteDemo {
 // SchedulerTest
 //
 //------------------------------------------------------------------
-var SchedulerTest = class SchedulerTest extends EaseSpriteDemo {
+export class SchedulerTest extends EaseSpriteDemo {
     constructor() {
         super();
         this.testDuration = 0.1;
@@ -738,7 +738,7 @@ var SchedulerTest = class SchedulerTest extends EaseSpriteDemo {
 //
 // SpriteEaseBezier action
 //
-var SpriteEaseBezierTest = class SpriteEaseBezierTest extends EaseSpriteDemo {
+export class SpriteEaseBezierTest extends EaseSpriteDemo {
 
     onEnter(){
         super.onEnter();
@@ -799,7 +799,7 @@ var SpriteEaseBezierTest = class SpriteEaseBezierTest extends EaseSpriteDemo {
 //
 // SpriteEaseQuadratic
 //
-var SpriteEaseQuadraticTest = class SpriteEaseQuadraticTest extends EaseSpriteDemo {
+export class SpriteEaseQuadraticTest extends EaseSpriteDemo {
 
     onEnter(){
         super.onEnter();
@@ -835,7 +835,7 @@ var SpriteEaseQuadraticTest = class SpriteEaseQuadraticTest extends EaseSpriteDe
 //
 // SpriteEaseQuadraticInOut
 //
-var SpriteEaseQuadraticInOutTest = class SpriteEaseQuadraticInOutTest extends EaseSpriteDemo {
+export class SpriteEaseQuadraticInOutTest extends EaseSpriteDemo {
 
     onEnter(){
         super.onEnter();
@@ -867,7 +867,7 @@ var SpriteEaseQuadraticInOutTest = class SpriteEaseQuadraticInOutTest extends Ea
 //
 // SpriteEaseQuartic
 //
-var SpriteEaseQuarticTest = class SpriteEaseQuarticTest extends EaseSpriteDemo {
+export class SpriteEaseQuarticTest extends EaseSpriteDemo {
 
     onEnter(){
         super.onEnter();
@@ -902,7 +902,7 @@ var SpriteEaseQuarticTest = class SpriteEaseQuarticTest extends EaseSpriteDemo {
 //
 // SpriteEaseQuarticInOut
 //
-var SpriteEaseQuarticInOutTest = class SpriteEaseQuarticInOutTest extends EaseSpriteDemo {
+export class SpriteEaseQuarticInOutTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();
         //----start18----onEnter
@@ -934,7 +934,7 @@ var SpriteEaseQuarticInOutTest = class SpriteEaseQuarticInOutTest extends EaseSp
 //
 // SpriteEaseQuintic
 //
-var SpriteEaseQuinticTest = class SpriteEaseQuinticTest extends EaseSpriteDemo {
+export class SpriteEaseQuinticTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();
         //----start19----onEnter
@@ -970,7 +970,7 @@ var SpriteEaseQuinticTest = class SpriteEaseQuinticTest extends EaseSpriteDemo {
 //
 // SpriteEaseQuinticInOut
 //
-var SpriteEaseQuinticInOutTest = class SpriteEaseQuinticInOutTest extends EaseSpriteDemo {
+export class SpriteEaseQuinticInOutTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();
         //----start20----onEnter
@@ -1002,7 +1002,7 @@ var SpriteEaseQuinticInOutTest = class SpriteEaseQuinticInOutTest extends EaseSp
 //
 // SpriteEaseCircle
 //
-var SpriteEaseCircleTest = class SpriteEaseCircleTest extends EaseSpriteDemo {
+export class SpriteEaseCircleTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();
         //----start21----onEnter
@@ -1037,7 +1037,7 @@ var SpriteEaseCircleTest = class SpriteEaseCircleTest extends EaseSpriteDemo {
 //
 // SpriteEaseCircleInOut
 //
-var SpriteEaseCircleInOutTest = class SpriteEaseCircleInOutTest extends EaseSpriteDemo {
+export class SpriteEaseCircleInOutTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();
         //----start22----onEnter
@@ -1069,7 +1069,7 @@ var SpriteEaseCircleInOutTest = class SpriteEaseCircleInOutTest extends EaseSpri
 //
 // SpriteEaseCubic
 //
-var SpriteEaseCubicTest = class SpriteEaseCubicTest extends EaseSpriteDemo {
+export class SpriteEaseCubicTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();
         //----start23----onEnter
@@ -1105,7 +1105,7 @@ var SpriteEaseCubicTest = class SpriteEaseCubicTest extends EaseSpriteDemo {
 //
 // SpriteEaseCubicInOut
 //
-var SpriteEaseCubicInOutTest = class SpriteEaseCubicInOutTest extends EaseSpriteDemo {
+export class SpriteEaseCubicInOutTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();
         //----start24----onEnter

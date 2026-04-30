@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var EditBoxTestLayer = class EditBoxTestLayer extends cc.Layer {
+export class EditBoxTestLayer extends cc.Layer {
 
     constructor() {
         super();

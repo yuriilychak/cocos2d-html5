@@ -113,7 +113,7 @@ var s_EventMenuItem = [
     {id: "MakeMeCrash", tag: TAG_MAKE_ME_CRASH}
 ];
 
-var AnalyticsTestLayer = class AnalyticsTestLayer extends PluginXTest {
+export class AnalyticsTestLayer extends PluginXTest {
     constructor() {
         super();
         this._title = "Plugin-x Test";

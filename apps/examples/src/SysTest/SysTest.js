@@ -30,7 +30,7 @@ var sysTestSceneIdx = -1;
 // SysTestBase
 //
 //------------------------------------------------------------------
-var SysTestBase = class SysTestBase extends BaseTestLayer {
+export class SysTestBase extends BaseTestLayer {
 
     constructor() {
         super(new cc.Color(0,0,0,0), new cc.Color(98,99,117,0));
@@ -103,7 +103,7 @@ var setClearColorTest = class setClearColorTest extends SysTestBase {
 // LocalStorageTest
 //
 //------------------------------------------------------------------
-var LocalStorageTest = class LocalStorageTest extends SysTestBase {
+export class LocalStorageTest extends SysTestBase {
 
     constructor() {
         super();
@@ -157,7 +157,7 @@ var LocalStorageTest = class LocalStorageTest extends SysTestBase {
 // CapabilitiesTest
 //
 //------------------------------------------------------------------
-var CapabilitiesTest = class CapabilitiesTest extends SysTestBase {
+export class CapabilitiesTest extends SysTestBase {
 
     constructor() {
         super();
@@ -176,7 +176,7 @@ var CapabilitiesTest = class CapabilitiesTest extends SysTestBase {
 
 };
 
-var SysTestScene = class SysTestScene extends TestScene {
+export class SysTestScene extends TestScene {
     runThisTest(num) {
         sysTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextSysTest();
@@ -192,7 +192,7 @@ var SysTestScene = class SysTestScene extends TestScene {
 //
 //------------------------------------------------------------------
 var tempJSFileName = "ScriptTestTempFile.js";
-var ScriptTestLayer = class ScriptTestLayer extends SysTestBase {
+export class ScriptTestLayer extends SysTestBase {
     startDownload() {
         if (!cc.sys.isNative)
         {
@@ -306,7 +306,7 @@ var ScriptTestLayer = class ScriptTestLayer extends SysTestBase {
 // Restart game test
 //
 //------------------------------------------------------------------
-var RestartGameLayerTest = class RestartGameLayerTest extends SysTestBase {
+export class RestartGameLayerTest extends SysTestBase {
     getTitle() {
         return "RestartGameTest only used in native";
     }
@@ -328,7 +328,7 @@ var RestartGameLayerTest = class RestartGameLayerTest extends SysTestBase {
 
 };
 
-var OpenURLTest = class OpenURLTest extends SysTestBase {
+export class OpenURLTest extends SysTestBase {
     getTitle(){
         return "Open URL Test";
     }

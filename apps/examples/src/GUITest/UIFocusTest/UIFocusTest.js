@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIFocusTestBase = class UIFocusTestBase extends UIMainLayer {
+export class UIFocusTestBase extends UIMainLayer {
     constructor() {
         super();
         this._dpadMenu = null;
@@ -128,7 +128,7 @@ var UIFocusTestBase = class UIFocusTestBase extends UIMainLayer {
 
 };
 
-var UIFocusTestHorizontal = class UIFocusTestHorizontal extends UIFocusTestBase {
+export class UIFocusTestHorizontal extends UIFocusTestBase {
     constructor() {
         super();
         this._horizontalLayout = null;
@@ -182,7 +182,7 @@ var UIFocusTestHorizontal = class UIFocusTestHorizontal extends UIFocusTestBase 
 
 };
 
-var UIFocusTestVertical = class UIFocusTestVertical extends UIFocusTestBase {
+export class UIFocusTestVertical extends UIFocusTestBase {
     constructor() {
         super();
         this._verticalLayout = null;
@@ -237,7 +237,7 @@ var UIFocusTestVertical = class UIFocusTestVertical extends UIFocusTestBase {
 
 };
 
-var UIFocusTestNestedLayout1 = class UIFocusTestNestedLayout1 extends UIFocusTestBase {
+export class UIFocusTestNestedLayout1 extends UIFocusTestBase {
     constructor() {
         super();
         this._verticalLayout = null;
@@ -323,7 +323,7 @@ var UIFocusTestNestedLayout1 = class UIFocusTestNestedLayout1 extends UIFocusTes
 
 };
 
-var UIFocusTestNestedLayout2 = class UIFocusTestNestedLayout2 extends UIFocusTestBase {
+export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
     constructor() {
         super();
         this._horizontalLayout = null;
@@ -410,7 +410,7 @@ var UIFocusTestNestedLayout2 = class UIFocusTestNestedLayout2 extends UIFocusTes
 
 };
 
-var UIFocusTestNestedLayout3 = class UIFocusTestNestedLayout3 extends UIFocusTestBase {
+export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
     constructor() {
         super();
         this._horizontalLayout = null;
@@ -502,7 +502,7 @@ var UIFocusTestNestedLayout3 = class UIFocusTestNestedLayout3 extends UIFocusTes
 
 };
 
-var UIFocusTestListView = class UIFocusTestListView extends UIFocusTestBase {
+export class UIFocusTestListView extends UIFocusTestBase {
     constructor() {
         super();
         this._listView = null;

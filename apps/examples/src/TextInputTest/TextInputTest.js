@@ -40,7 +40,7 @@ var textInputGetRect = function (node) {
 /**
  @brief    TextInputTest for retain prev, reset, next, main menu buttons.
  */
-var TextInputTest = class TextInputTest extends cc.Layer {
+export class TextInputTest extends cc.Layer {
     constructor() {
         super();
 
@@ -113,7 +113,7 @@ var TextInputTest = class TextInputTest extends cc.Layer {
 //////////////////////////////////////////////////////////////////////////
 // KeyboardNotificationLayer for test IME keyboard notification.
 //////////////////////////////////////////////////////////////////////////
-var KeyboardNotificationLayer = class KeyboardNotificationLayer extends TextInputTest {
+export class KeyboardNotificationLayer extends TextInputTest {
 
     constructor() {
         super();
@@ -216,7 +216,7 @@ var KeyboardNotificationLayer = class KeyboardNotificationLayer extends TextInpu
 //////////////////////////////////////////////////////////////////////////
 // TextFieldTTFDefaultTest for test TextFieldTTF default behavior.
 //////////////////////////////////////////////////////////////////////////
-var TextFieldTTFDefaultTest = class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
+export class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
     subtitle() {
         return "TextFieldTTF with default behavior test";
     }
@@ -254,7 +254,7 @@ var TextFieldTTFDefaultTest = class TextFieldTTFDefaultTest extends KeyboardNoti
 //////////////////////////////////////////////////////////////////////////
 // TextFieldTTFActionTest
 //////////////////////////////////////////////////////////////////////////
-var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotificationLayer {
+export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
     constructor() {
         super();
@@ -405,7 +405,7 @@ var TextFieldTTFActionTest = class TextFieldTTFActionTest extends KeyboardNotifi
 
 };
 
-var TextInputTestScene = class TextInputTestScene extends TestScene {
+export class TextInputTestScene extends TestScene {
     runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTextInputTest();

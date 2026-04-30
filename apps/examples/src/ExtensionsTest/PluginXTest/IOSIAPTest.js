@@ -42,7 +42,7 @@ var s_IAPResultItem = [
     {name: "[ ]", tag: TAG_GETPRODUCTLIST_RESULT},
     {name: "didn't call payFunction yet", tag: TAG_PAYMENT_RESULT}
 ];
-var IAPTestLayer = class IAPTestLayer extends PluginXTest {
+export class IAPTestLayer extends PluginXTest {
     constructor() {
         super();
         this._serverMode = false;

@@ -24,7 +24,7 @@
 
  */
 
-var ControlStepperTest = class ControlStepperTest extends ControlScene {
+export class ControlStepperTest extends ControlScene {
     constructor() {
         super();
         this._displayValueLabel = null;

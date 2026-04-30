@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var RotateWorldTestScene = class RotateWorldTestScene extends TestScene {
+export class RotateWorldTestScene extends TestScene {
     runThisTest() {
         var layer = new RotateWorldMainLayer();
         this.addChild(layer);
@@ -35,7 +35,7 @@ var RotateWorldTestScene = class RotateWorldTestScene extends TestScene {
 
 };
 
-var SpriteLayer = class SpriteLayer extends cc.Layer {
+export class SpriteLayer extends cc.Layer {
     constructor() {
         super();
         this.init();
@@ -88,7 +88,7 @@ var SpriteLayer = class SpriteLayer extends cc.Layer {
 
 };
 
-var TestLayer = class TestLayer extends cc.Layer {
+export class TestLayer extends cc.Layer {
     constructor() {
         super();
         this.init();
@@ -116,7 +116,7 @@ var TestLayer = class TestLayer extends cc.Layer {
 
 };
 
-var RotateWorldMainLayer = class RotateWorldMainLayer extends cc.Layer {
+export class RotateWorldMainLayer extends cc.Layer {
     constructor() {
         super();
         this.init();

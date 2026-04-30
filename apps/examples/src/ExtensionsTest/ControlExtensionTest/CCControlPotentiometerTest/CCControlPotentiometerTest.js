@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlPotentiometerTest = class ControlPotentiometerTest extends ControlScene {
+export class ControlPotentiometerTest extends ControlScene {
     constructor() {
         super();
         this._displayValueLabel = null;

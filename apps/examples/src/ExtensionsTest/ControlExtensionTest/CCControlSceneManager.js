@@ -76,7 +76,7 @@ var controTestItemNames = [
     }
 ];
 
-var ControlSceneManager = class ControlSceneManager extends cc.NewClass {
+export class ControlSceneManager extends cc.NewClass {
 
     constructor() {
 

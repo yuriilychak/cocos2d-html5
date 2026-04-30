@@ -33,7 +33,7 @@ var sceneIdx = -1;
 // S9SpriteTestDemo
 //
 //------------------------------------------------------------------
-var S9SpriteTestDemo = class S9SpriteTestDemo extends cc.LayerGradient {
+export class S9SpriteTestDemo extends cc.LayerGradient {
 
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
@@ -104,7 +104,7 @@ var S9SpriteTestDemo = class S9SpriteTestDemo extends cc.LayerGradient {
 
 // S9BatchNodeBasic
 
-var S9BatchNodeBasic = class S9BatchNodeBasic extends S9SpriteTestDemo {
+export class S9BatchNodeBasic extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -150,7 +150,7 @@ var S9BatchNodeBasic = class S9BatchNodeBasic extends S9SpriteTestDemo {
 
 // S9FrameNameSpriteSheet
 
-var S9FrameNameSpriteSheet = class S9FrameNameSpriteSheet extends S9SpriteTestDemo {
+export class S9FrameNameSpriteSheet extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -190,7 +190,7 @@ var S9FrameNameSpriteSheet = class S9FrameNameSpriteSheet extends S9SpriteTestDe
 
 // S9FrameNameSpriteSheetRotated
 
-var S9FrameNameSpriteSheetRotated = class S9FrameNameSpriteSheetRotated extends S9SpriteTestDemo {
+export class S9FrameNameSpriteSheetRotated extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -226,7 +226,7 @@ var S9FrameNameSpriteSheetRotated = class S9FrameNameSpriteSheetRotated extends 
 
 // S9BatchNodeScaledNoInsets
 
-var S9BatchNodeScaledNoInsets = class S9BatchNodeScaledNoInsets extends S9SpriteTestDemo {
+export class S9BatchNodeScaledNoInsets extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -272,7 +272,7 @@ var S9BatchNodeScaledNoInsets = class S9BatchNodeScaledNoInsets extends S9Sprite
 
 // S9FrameNameSpriteSheetScaledNoInsets
 
-var S9FrameNameSpriteSheetScaledNoInsets = class S9FrameNameSpriteSheetScaledNoInsets extends S9SpriteTestDemo {
+export class S9FrameNameSpriteSheetScaledNoInsets extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -312,7 +312,7 @@ var S9FrameNameSpriteSheetScaledNoInsets = class S9FrameNameSpriteSheetScaledNoI
 
 // S9FrameNameSpriteSheetRotatedScaledNoInsets
 
-var S9FrameNameSpriteSheetRotatedScaledNoInsets = class S9FrameNameSpriteSheetRotatedScaledNoInsets extends S9SpriteTestDemo {
+export class S9FrameNameSpriteSheetRotatedScaledNoInsets extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -353,7 +353,7 @@ var S9FrameNameSpriteSheetRotatedScaledNoInsets = class S9FrameNameSpriteSheetRo
 
 // S9BatchNodeScaleWithCapInsets
 
-var S9BatchNodeScaleWithCapInsets = class S9BatchNodeScaleWithCapInsets extends S9SpriteTestDemo {
+export class S9BatchNodeScaleWithCapInsets extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -399,7 +399,7 @@ var S9BatchNodeScaleWithCapInsets = class S9BatchNodeScaleWithCapInsets extends 
 
 // S9FrameNameSpriteSheetInsets
 
-var S9FrameNameSpriteSheetInsets = class S9FrameNameSpriteSheetInsets extends S9SpriteTestDemo {
+export class S9FrameNameSpriteSheetInsets extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -435,7 +435,7 @@ var S9FrameNameSpriteSheetInsets = class S9FrameNameSpriteSheetInsets extends S9
 
 // S9FrameNameSpriteSheetInsetsScaled
 
-var S9FrameNameSpriteSheetInsetsScaled = class S9FrameNameSpriteSheetInsetsScaled extends S9SpriteTestDemo {
+export class S9FrameNameSpriteSheetInsetsScaled extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -475,7 +475,7 @@ var S9FrameNameSpriteSheetInsetsScaled = class S9FrameNameSpriteSheetInsetsScale
 
 // S9FrameNameSpriteSheetRotatedInsets
 
-var S9FrameNameSpriteSheetRotatedInsets = class S9FrameNameSpriteSheetRotatedInsets extends S9SpriteTestDemo {
+export class S9FrameNameSpriteSheetRotatedInsets extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -511,7 +511,7 @@ var S9FrameNameSpriteSheetRotatedInsets = class S9FrameNameSpriteSheetRotatedIns
 
 // S9_TexturePacker
 
-var S9_TexturePacker = class S9_TexturePacker extends S9SpriteTestDemo {
+export class S9_TexturePacker extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -570,7 +570,7 @@ var S9_TexturePacker = class S9_TexturePacker extends S9SpriteTestDemo {
 
 // S9FrameNameSpriteSheetRotatedInsetsScaled
 
-var S9FrameNameSpriteSheetRotatedInsetsScaled = class S9FrameNameSpriteSheetRotatedInsetsScaled extends S9SpriteTestDemo {
+export class S9FrameNameSpriteSheetRotatedInsetsScaled extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -608,7 +608,7 @@ var S9FrameNameSpriteSheetRotatedInsetsScaled = class S9FrameNameSpriteSheetRota
 
 };
 
-var S9SpriteActionTest = class S9SpriteActionTest extends S9SpriteTestDemo {
+export class S9SpriteActionTest extends S9SpriteTestDemo {
 
 
     constructor() {
@@ -645,7 +645,7 @@ var S9SpriteActionTest = class S9SpriteActionTest extends S9SpriteTestDemo {
 
 };
 
-var S9SpriteColorOpacityTest = class S9SpriteColorOpacityTest extends S9SpriteTestDemo {
+export class S9SpriteColorOpacityTest extends S9SpriteTestDemo {
 
     constructor() {
         super();
@@ -673,7 +673,7 @@ var S9SpriteColorOpacityTest = class S9SpriteColorOpacityTest extends S9SpriteTe
 
 };
 
-var S9SpriteOpacityWithFadeActionsTest = class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
+export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
 
     constructor() {
         super();
@@ -707,7 +707,7 @@ var S9SpriteOpacityWithFadeActionsTest = class S9SpriteOpacityWithFadeActionsTes
 };
 
 
-var S9SpriteRenderingTypeToggleTest = class S9SpriteRenderingTypeToggleTest extends S9SpriteTestDemo {
+export class S9SpriteRenderingTypeToggleTest extends S9SpriteTestDemo {
 
     constructor() {
         super();
@@ -748,7 +748,7 @@ var S9SpriteRenderingTypeToggleTest = class S9SpriteRenderingTypeToggleTest exte
 
 };
 
-var S9SpriteTestScene = class S9SpriteTestScene extends TestScene {
+export class S9SpriteTestScene extends TestScene {
     runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextS9SpriteTest();

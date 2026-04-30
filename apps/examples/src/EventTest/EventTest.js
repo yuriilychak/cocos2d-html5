@@ -31,7 +31,7 @@ var sceneIdx = -1;
 /**
  @brief EventTest for retain prev, reset, next, main menu buttons.
  */
-var EventTest = class EventTest extends cc.Layer {
+export class EventTest extends cc.Layer {
     constructor() {
         super();
         this.init();
@@ -99,7 +99,7 @@ var EventTest = class EventTest extends cc.Layer {
 // OneByOne Touches
 //
 //------------------------------------------------------------------
-var TouchOneByOneTest = class TouchOneByOneTest extends EventTest {
+export class TouchOneByOneTest extends EventTest {
     init() {
         super.init();
         this.ids = {};
@@ -187,7 +187,7 @@ var TouchOneByOneTest = class TouchOneByOneTest extends EventTest {
 // All At Once Touches
 //
 //------------------------------------------------------------------
-var TouchAllAtOnce = class TouchAllAtOnce extends EventTest {
+export class TouchAllAtOnce extends EventTest {
     init() {
         super.init();
 
@@ -293,7 +293,7 @@ var TouchAllAtOnce = class TouchAllAtOnce extends EventTest {
 // Accelerometer test
 //
 //------------------------------------------------------------------
-var AccelerometerTest = class AccelerometerTest extends EventTest {
+export class AccelerometerTest extends EventTest {
     constructor() {
         super();
         this._logIndex = 0;
@@ -366,7 +366,7 @@ var AccelerometerTest = class AccelerometerTest extends EventTest {
 // Mouse test
 //
 //------------------------------------------------------------------
-var MouseTest = class MouseTest extends EventTest {
+export class MouseTest extends EventTest {
     init() {
         super.init();
         var sprite = this.sprite = new cc.Sprite(s_pathR2);
@@ -416,7 +416,7 @@ var MouseTest = class MouseTest extends EventTest {
 // Keyboard test
 //
 //------------------------------------------------------------------
-var KeyboardTest = class KeyboardTest extends EventTest {
+export class KeyboardTest extends EventTest {
     init() {
         super.init();
         var self = this;
@@ -479,7 +479,7 @@ var KeyboardTest = class KeyboardTest extends EventTest {
 };
 
 
-var EventTestScene = class EventTestScene extends TestScene {
+export class EventTestScene extends TestScene {
     runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextEventsTest();

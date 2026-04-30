@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIWidgetAddNodeTest = class UIWidgetAddNodeTest extends UIMainLayer {
+export class UIWidgetAddNodeTest extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();

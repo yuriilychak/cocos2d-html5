@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlSliderTest = class ControlSliderTest extends ControlScene {
+export class ControlSliderTest extends ControlScene {
     constructor() {
         super();
         this._displayValueLabel = null;

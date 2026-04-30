@@ -23,7 +23,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-var UIScene = class UIScene extends TestScene {
+export class UIScene extends TestScene {
     runThisTest(){
         var layer = new UIMainLayer();
         this.addChild(layer);
@@ -31,7 +31,7 @@ var UIScene = class UIScene extends TestScene {
     }
 
 };
-var UIMainLayer = class UIMainLayer extends cc.Layer {
+export class UIMainLayer extends cc.Layer {
 
     constructor() {
         super();

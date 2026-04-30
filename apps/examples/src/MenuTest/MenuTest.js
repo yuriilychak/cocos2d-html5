@@ -35,7 +35,7 @@ var TAG_MENU1 = 77771;
 // LayerMainMenu
 //
 //------------------------------------------------------------------
-var MenuLayerMainMenu = class MenuLayerMainMenu extends cc.Layer {
+export class MenuLayerMainMenu extends cc.Layer {
 
     constructor() {
         //----start0----ctor
@@ -188,7 +188,7 @@ var MenuLayerMainMenu = class MenuLayerMainMenu extends cc.Layer {
 // MenuLayer2
 //
 //------------------------------------------------------------------
-var MenuLayer2 = class MenuLayer2 extends cc.Layer {
+export class MenuLayer2 extends cc.Layer {
 
     constructor() {
         super();
@@ -280,7 +280,7 @@ var MenuLayer2 = class MenuLayer2 extends cc.Layer {
 // MenuLayer3
 //
 //------------------------------------------------------------------
-var MenuLayer3 = class MenuLayer3 extends cc.Layer {
+export class MenuLayer3 extends cc.Layer {
 
     constructor() {
         super();
@@ -343,7 +343,7 @@ var MenuLayer3 = class MenuLayer3 extends cc.Layer {
 
 };
 
-var MenuLayer4 = class MenuLayer4 extends cc.Layer {
+export class MenuLayer4 extends cc.Layer {
     constructor() {
         super();
         this.init();
@@ -439,7 +439,7 @@ var MenuLayer4 = class MenuLayer4 extends cc.Layer {
 
 };
 
-var MenuBugsTest = class MenuBugsTest extends cc.Layer {
+export class MenuBugsTest extends cc.Layer {
      constructor(){
          super();
 
@@ -478,7 +478,7 @@ var MenuBugsTest = class MenuBugsTest extends cc.Layer {
 
 };
 
-var RemoveMenuItemWhenMove = class RemoveMenuItemWhenMove extends cc.Layer {
+export class RemoveMenuItemWhenMove extends cc.Layer {
     constructor(){
         super();
 
@@ -534,7 +534,7 @@ var RemoveMenuItemWhenMove = class RemoveMenuItemWhenMove extends cc.Layer {
 
 };
 
-var MenuTestScene = class MenuTestScene extends TestScene {
+export class MenuTestScene extends TestScene {
     runThisTest() {
         var layer1 = new MenuLayerMainMenu();
         var layer2 = new MenuLayer2();

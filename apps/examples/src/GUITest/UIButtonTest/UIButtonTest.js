@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIButtonTest = class UIButtonTest extends UIMainLayer {
+export class UIButtonTest extends UIMainLayer {
     constructor() {
         super();
         this._button = null;
@@ -87,7 +87,7 @@ var UIButtonTest = class UIButtonTest extends UIMainLayer {
     }
 
 };
-var UIButtonTest_Scale9 = class UIButtonTest_Scale9 extends UIMainLayer {
+export class UIButtonTest_Scale9 extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text
@@ -132,7 +132,7 @@ var UIButtonTest_Scale9 = class UIButtonTest_Scale9 extends UIMainLayer {
 
 };
 
-var UIButtonTest_PressedAction = class UIButtonTest_PressedAction extends UIMainLayer {
+export class UIButtonTest_PressedAction extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text
@@ -175,7 +175,7 @@ var UIButtonTest_PressedAction = class UIButtonTest_PressedAction extends UIMain
 
 };
 
-var UIButtonTest_Title = class UIButtonTest_Title extends UIMainLayer {
+export class UIButtonTest_Title extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -219,7 +219,7 @@ var UIButtonTest_Title = class UIButtonTest_Title extends UIMainLayer {
 
 };
 
-var UIButtonTestRemoveSelf = class UIButtonTestRemoveSelf extends UIMainLayer {
+export class UIButtonTestRemoveSelf extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text
@@ -277,7 +277,7 @@ var UIButtonTestRemoveSelf = class UIButtonTestRemoveSelf extends UIMainLayer {
 
 };
 
-var UIButtonTestSwitchScale9 = class UIButtonTestSwitchScale9 extends UIMainLayer {
+export class UIButtonTestSwitchScale9 extends UIMainLayer {
     init(){
         if (super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -327,7 +327,7 @@ var UIButtonTestSwitchScale9 = class UIButtonTestSwitchScale9 extends UIMainLaye
 
 };
 
-var UIButtonTestZoomScale = class UIButtonTestZoomScale extends UIMainLayer {
+export class UIButtonTestZoomScale extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -372,7 +372,7 @@ var UIButtonTestZoomScale = class UIButtonTestZoomScale extends UIMainLayer {
 
 };
 
-var UIButtonTextOnly = class UIButtonTextOnly extends UIMainLayer {
+export class UIButtonTextOnly extends UIMainLayer {
     init(){
         if (super.init()) {
             // Add a label in which the button events will be displayed
@@ -398,7 +398,7 @@ var UIButtonTextOnly = class UIButtonTextOnly extends UIMainLayer {
 
 };
 
-var UIButtonIgnoreContentSizeTest = class UIButtonIgnoreContentSizeTest extends UIMainLayer {
+export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -442,7 +442,7 @@ var UIButtonIgnoreContentSizeTest = class UIButtonIgnoreContentSizeTest extends 
 
 };
 
-var UIButtonTitleEffectTest = class UIButtonTitleEffectTest extends UIMainLayer {
+export class UIButtonTitleEffectTest extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -478,7 +478,7 @@ var UIButtonTitleEffectTest = class UIButtonTitleEffectTest extends UIMainLayer 
 
 };
 
-var UIButtonFlipTest = class UIButtonFlipTest extends UIMainLayer {
+export class UIButtonFlipTest extends UIMainLayer {
     init(){
         if (super.init()) {
 
@@ -518,7 +518,7 @@ var UIButtonFlipTest = class UIButtonFlipTest extends UIMainLayer {
 
 };
 
-var UIButtonNormalDefaultTest = class UIButtonNormalDefaultTest extends UIMainLayer {
+export class UIButtonNormalDefaultTest extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -556,7 +556,7 @@ var UIButtonNormalDefaultTest = class UIButtonNormalDefaultTest extends UIMainLa
 
 };
 
-var UIButtonDisableDefaultTest = class UIButtonDisableDefaultTest extends UIMainLayer {
+export class UIButtonDisableDefaultTest extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();

@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlSwitchTest = class ControlSwitchTest extends ControlScene {
+export class ControlSwitchTest extends ControlScene {
     init() {
         if (super.init()) {
             var screenSize = cc.director.getWinSize();

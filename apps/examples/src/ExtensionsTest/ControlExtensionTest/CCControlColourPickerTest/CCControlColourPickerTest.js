@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlColourPickerTest = class ControlColourPickerTest extends ControlScene {
+export class ControlColourPickerTest extends ControlScene {
     constructor() {
         super();
         this._colorLabel = null;

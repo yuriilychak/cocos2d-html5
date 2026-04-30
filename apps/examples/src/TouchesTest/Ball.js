@@ -24,7 +24,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-var Ball = class Ball extends cc.Sprite {
+export class Ball extends cc.Sprite {
     constructor() {
         super();
         this._velocity = new cc.Point(0,0);

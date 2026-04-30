@@ -27,7 +27,7 @@
 
 var eventDispatcherSceneIdx = -1;
 
-var EventDispatcherTestDemo = class EventDispatcherTestDemo extends BaseTestLayer {
+export class EventDispatcherTestDemo extends BaseTestLayer {
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(160,32,32,255));
     }
@@ -68,7 +68,7 @@ var EventDispatcherTestDemo = class EventDispatcherTestDemo extends BaseTestLaye
 
 };
 
-var TouchableSpriteTest = class TouchableSpriteTest extends EventDispatcherTestDemo {
+export class TouchableSpriteTest extends EventDispatcherTestDemo {
     onEnter(){
         //----start0----onEnter
         super.onEnter();
@@ -177,7 +177,7 @@ TouchableSpriteTest.create = function(){
     return test;
 };
 
-var TouchableSprite = class TouchableSprite extends cc.Sprite {
+export class TouchableSprite extends cc.Sprite {
 
     constructor(priority){
         super();
@@ -255,7 +255,7 @@ TouchableSprite.create = function(priority){
     return test;
 };
 
-var FixedPriorityTest = class FixedPriorityTest extends EventDispatcherTestDemo {
+export class FixedPriorityTest extends EventDispatcherTestDemo {
     onEnter(){
         //----start1----onEnter
         super.onEnter();
@@ -299,7 +299,7 @@ FixedPriorityTest.create = function(){
     return test;
 };
 
-var RemoveListenerWhenDispatching = class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
+export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     onEnter(){
         //----start2----onEnter
         super.onEnter();
@@ -378,7 +378,7 @@ RemoveListenerWhenDispatching.create = function(){
     return test;
 };
 
-var CustomEventTest = class CustomEventTest extends EventDispatcherTestDemo {
+export class CustomEventTest extends EventDispatcherTestDemo {
     constructor() {
         super();
         this._listener1 = null;
@@ -469,7 +469,7 @@ CustomEventTest.create = function(){
     return test;
 };
 
-var LabelKeyboardEventTest = class LabelKeyboardEventTest extends EventDispatcherTestDemo {
+export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
     onEnter(){
         //----start4----onEnter
         super.onEnter();
@@ -524,7 +524,7 @@ LabelKeyboardEventTest.create = function(){
     return test;
 };
 
-var SpriteAccelerationEventTest = class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
+export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
     onEnter(){
         //----start5----onEnter
         super.onEnter();
@@ -588,7 +588,7 @@ SpriteAccelerationEventTest.create = function(){
     return test;
 };
 
-var RemoveAndRetainNodeTest = class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
+export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     constructor() {
         super();
         this._sprite = null;
@@ -677,7 +677,7 @@ RemoveAndRetainNodeTest.create = function(){
     return test;
 };
 
-var RemoveListenerAfterAddingTest = class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
+export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
     onEnter(){
         //----start7----onEnter
         super.onEnter();
@@ -759,7 +759,7 @@ RemoveListenerAfterAddingTest.create = function(){
     return test;
 };
 
-var DirectorEventTest = class DirectorEventTest extends EventDispatcherTestDemo {
+export class DirectorEventTest extends EventDispatcherTestDemo {
     constructor() {
         super();
         this._count1 = 0;
@@ -863,7 +863,7 @@ DirectorEventTest.create = function(){
     return test;
 };
 
-var GlobalZTouchTest = class GlobalZTouchTest extends EventDispatcherTestDemo {
+export class GlobalZTouchTest extends EventDispatcherTestDemo {
 
     constructor(){
         super();
@@ -947,7 +947,7 @@ GlobalZTouchTest.create = function(){
     return test;
 };
 
-var StopPropagationTest = class StopPropagationTest extends EventDispatcherTestDemo {
+export class StopPropagationTest extends EventDispatcherTestDemo {
     constructor(){
         //----start9----ctor
         super();
@@ -1089,7 +1089,7 @@ StopPropagationTest.create = function(){
     return test;
 };
 
-var Issue4160 = class Issue4160 extends EventDispatcherTestDemo {
+export class Issue4160 extends EventDispatcherTestDemo {
     constructor(){
         //----start10----ctor
         super();
@@ -1133,7 +1133,7 @@ Issue4160.create = function(){
     return test;
 };
 
-var PauseResumeTargetTest = class PauseResumeTargetTest extends EventDispatcherTestDemo {
+export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     constructor() {
         //----start11----ctor
         super();
@@ -1224,7 +1224,7 @@ PauseResumeTargetTest.create = function(){
     return test;
 };
 
-var Issue9898 = class Issue9898 extends EventDispatcherTestDemo {
+export class Issue9898 extends EventDispatcherTestDemo {
 
     title(){
         return "Issue9898";
@@ -1275,7 +1275,7 @@ Issue9898.create = function(){
     return test;
 };
 
-var EventDispatcherTestScene = class EventDispatcherTestScene extends TestScene {
+export class EventDispatcherTestScene extends TestScene {
     runThisTest(num) {
         eventDispatcherSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextDispatcherTest());

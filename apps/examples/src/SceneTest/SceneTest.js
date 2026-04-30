@@ -32,7 +32,7 @@ var MID_runScene = 103;
 var MID_runSceneTRAN = 104;
 var MID_GOBACK = 105;
 
-var SceneTestLayer1 = class SceneTestLayer1 extends cc.Layer {
+export class SceneTestLayer1 extends cc.Layer {
     constructor() {
         //----start0----Scene1-ctor
         super();
@@ -113,7 +113,7 @@ var SceneTestLayer1 = class SceneTestLayer1 extends cc.Layer {
 
 };
 
-var SceneTestLayer2 = class SceneTestLayer2 extends cc.Layer {
+export class SceneTestLayer2 extends cc.Layer {
 
 
     constructor() {
@@ -177,7 +177,7 @@ var SceneTestLayer2 = class SceneTestLayer2 extends cc.Layer {
 
 };
 
-var SceneTestLayer3 = class SceneTestLayer3 extends cc.LayerColor {
+export class SceneTestLayer3 extends cc.LayerColor {
     
     constructor() {
 

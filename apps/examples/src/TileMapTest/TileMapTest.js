@@ -32,7 +32,7 @@ var tileTestSceneIdx = -1;
 //
 //------------------------------------------------------------------
 
-var TileDemo = class TileDemo extends BaseTestLayer {
+export class TileDemo extends BaseTestLayer {
     constructor() {
         super();
 
@@ -94,7 +94,7 @@ var TileDemo = class TileDemo extends BaseTestLayer {
 
 /******************for vertexz bug**************/
 // FixBugBaseTest: cc.Layer with BaseTestLayer methods mixed in
-var FixBugBaseTest = class FixBugBaseTest extends cc.Layer {};
+export class FixBugBaseTest extends cc.Layer {};
 // Copy BaseTestLayer prototype methods (mixin pattern, originally cc.Layer.extend(BaseTestLayerProps))
 Object.getOwnPropertyNames(BaseTestLayer.prototype).forEach(function(name) {
     if (name !== 'constructor' && typeof BaseTestLayer.prototype[name] === 'function') {
@@ -103,7 +103,7 @@ Object.getOwnPropertyNames(BaseTestLayer.prototype).forEach(function(name) {
 });
 
 // TMXFixBugLayer: FixBugBaseTest with TileDemo methods mixed in
-var TMXFixBugLayer = class TMXFixBugLayer extends FixBugBaseTest {};
+export class TMXFixBugLayer extends FixBugBaseTest {};
 Object.getOwnPropertyNames(TileDemo.prototype).forEach(function(name) {
     if (name !== 'constructor' && typeof TileDemo.prototype[name] === 'function') {
         TMXFixBugLayer.prototype[name] = TileDemo.prototype[name];
@@ -111,7 +111,7 @@ Object.getOwnPropertyNames(TileDemo.prototype).forEach(function(name) {
 });
 /***********************************************************/
 
-var TileMapTest = class TileMapTest extends TileDemo {
+export class TileMapTest extends TileDemo {
     constructor() {
         super();
         var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
@@ -140,7 +140,7 @@ var TileMapTest = class TileMapTest extends TileDemo {
 
 };
 
-var TileMapEditTest = class TileMapEditTest extends TileDemo {
+export class TileMapEditTest extends TileDemo {
     constructor() {
         super();
         var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
@@ -190,7 +190,7 @@ var TileMapEditTest = class TileMapEditTest extends TileDemo {
 // TMXOrthoTest
 //
 //------------------------------------------------------------------
-var TMXOrthoTest = class TMXOrthoTest extends TileDemo {
+export class TMXOrthoTest extends TileDemo {
     constructor() {
         super();
 
@@ -232,7 +232,7 @@ var TMXOrthoTest = class TMXOrthoTest extends TileDemo {
 // TMXOrthoTest2
 //
 //------------------------------------------------------------------
-var TMXOrthoTest2 = class TMXOrthoTest2 extends TileDemo {
+export class TMXOrthoTest2 extends TileDemo {
     constructor() {
         super();
 
@@ -276,7 +276,7 @@ var TMXOrthoTest2 = class TMXOrthoTest2 extends TileDemo {
 // TMXOrthoTest3
 //
 //------------------------------------------------------------------
-var TMXOrthoTest3 = class TMXOrthoTest3 extends TileDemo {
+export class TMXOrthoTest3 extends TileDemo {
     constructor() {
         super();
 
@@ -318,7 +318,7 @@ var TMXOrthoTest3 = class TMXOrthoTest3 extends TileDemo {
 // TMXOrthoTest4
 //
 //------------------------------------------------------------------
-var TMXOrthoTest4 = class TMXOrthoTest4 extends TileDemo {
+export class TMXOrthoTest4 extends TileDemo {
     constructor() {
         super();
 
@@ -390,7 +390,7 @@ var TMXOrthoTest4 = class TMXOrthoTest4 extends TileDemo {
 // TMXReadWriteTest
 //
 //------------------------------------------------------------------
-var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
+export class TMXReadWriteTest extends TileDemo {
     constructor() {
         super();
 
@@ -516,7 +516,7 @@ var TMXReadWriteTest = class TMXReadWriteTest extends TileDemo {
 // TMXHexTest
 //
 //------------------------------------------------------------------
-var TMXHexTest = class TMXHexTest extends TileDemo {
+export class TMXHexTest extends TileDemo {
     constructor() {
         super();
 
@@ -555,7 +555,7 @@ var TMXHexTest = class TMXHexTest extends TileDemo {
 // TMXIsoTest
 //
 //------------------------------------------------------------------
-var TMXIsoTest = class TMXIsoTest extends TileDemo {
+export class TMXIsoTest extends TileDemo {
     constructor() {
         super();
 
@@ -602,7 +602,7 @@ var TMXIsoTest = class TMXIsoTest extends TileDemo {
 // TMXIsoTest1
 //
 //------------------------------------------------------------------
-var TMXIsoTest1 = class TMXIsoTest1 extends TileDemo {
+export class TMXIsoTest1 extends TileDemo {
     constructor() {
         super();
 
@@ -646,7 +646,7 @@ var TMXIsoTest1 = class TMXIsoTest1 extends TileDemo {
 // TMXIsoTest2
 //
 //------------------------------------------------------------------
-var TMXIsoTest2 = class TMXIsoTest2 extends TileDemo {
+export class TMXIsoTest2 extends TileDemo {
     constructor() {
         super();
 
@@ -694,7 +694,7 @@ var TMXIsoTest2 = class TMXIsoTest2 extends TileDemo {
 // TMXUncompressedTest
 //
 //------------------------------------------------------------------
-var TMXUncompressedTest = class TMXUncompressedTest extends TileDemo {
+export class TMXUncompressedTest extends TileDemo {
     constructor() {
         super();
 
@@ -753,7 +753,7 @@ var TMXUncompressedTest = class TMXUncompressedTest extends TileDemo {
 // TMXTilesetTest
 //
 //------------------------------------------------------------------
-var TMXTilesetTest = class TMXTilesetTest extends TileDemo {
+export class TMXTilesetTest extends TileDemo {
     constructor() {
         super();
 
@@ -804,7 +804,7 @@ var TMXTilesetTest = class TMXTilesetTest extends TileDemo {
 // TMXOrthoObjectsTest
 //
 //------------------------------------------------------------------
-var TMXOrthoObjectsTest = class TMXOrthoObjectsTest extends TileDemo {
+export class TMXOrthoObjectsTest extends TileDemo {
     constructor() {
         super();
 
@@ -879,7 +879,7 @@ var TMXOrthoObjectsTest = class TMXOrthoObjectsTest extends TileDemo {
 // TMXIsoObjectsTest
 //
 //------------------------------------------------------------------
-var TMXIsoObjectsTest = class TMXIsoObjectsTest extends TileDemo {
+export class TMXIsoObjectsTest extends TileDemo {
     constructor() {
         super();
 
@@ -958,7 +958,7 @@ var TMXIsoObjectsTest = class TMXIsoObjectsTest extends TileDemo {
 // TMXResizeTest
 //
 //------------------------------------------------------------------
-var TMXResizeTest = class TMXResizeTest extends TileDemo {
+export class TMXResizeTest extends TileDemo {
     constructor() {
         super();
 
@@ -1004,7 +1004,7 @@ var TMXResizeTest = class TMXResizeTest extends TileDemo {
 // TMXIsoZorder
 //
 //------------------------------------------------------------------
-var TMXIsoZorder = class TMXIsoZorder extends TileDemo {
+export class TMXIsoZorder extends TileDemo {
     constructor() {
         super();
 
@@ -1077,7 +1077,7 @@ var TMXIsoZorder = class TMXIsoZorder extends TileDemo {
 // TMXOrthoZorder
 //
 //------------------------------------------------------------------
-var TMXOrthoZorder = class TMXOrthoZorder extends TileDemo {
+export class TMXOrthoZorder extends TileDemo {
     constructor() {
         super();
 
@@ -1145,7 +1145,7 @@ var TMXOrthoZorder = class TMXOrthoZorder extends TileDemo {
 // TMXIsoVertexZ
 //
 //------------------------------------------------------------------
-var TMXIsoVertexZ = class TMXIsoVertexZ extends TMXFixBugLayer {
+export class TMXIsoVertexZ extends TMXFixBugLayer {
     constructor() {
         super();
 
@@ -1225,7 +1225,7 @@ var TMXIsoVertexZ = class TMXIsoVertexZ extends TMXFixBugLayer {
 // TMXOrthoVertexZ
 //
 //------------------------------------------------------------------
-var TMXOrthoVertexZ = class TMXOrthoVertexZ extends TMXFixBugLayer {
+export class TMXOrthoVertexZ extends TMXFixBugLayer {
     constructor() {
         super();
 
@@ -1307,7 +1307,7 @@ var TMXOrthoVertexZ = class TMXOrthoVertexZ extends TMXFixBugLayer {
 // TMXIsoMoveLayer
 //
 //------------------------------------------------------------------
-var TMXIsoMoveLayer = class TMXIsoMoveLayer extends TileDemo {
+export class TMXIsoMoveLayer extends TileDemo {
     constructor() {
         super();
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-movelayer.tmx");
@@ -1329,7 +1329,7 @@ var TMXIsoMoveLayer = class TMXIsoMoveLayer extends TileDemo {
 // TMXOrthoMoveLayer
 //
 //------------------------------------------------------------------
-var TMXOrthoMoveLayer = class TMXOrthoMoveLayer extends TileDemo {
+export class TMXOrthoMoveLayer extends TileDemo {
     constructor() {
         super();
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-movelayer.tmx");
@@ -1349,7 +1349,7 @@ var TMXOrthoMoveLayer = class TMXOrthoMoveLayer extends TileDemo {
 // TMXTilePropertyTest
 //
 //------------------------------------------------------------------
-var TMXTilePropertyTest = class TMXTilePropertyTest extends TileDemo {
+export class TMXTilePropertyTest extends TileDemo {
     constructor() {
         super();
 
@@ -1395,7 +1395,7 @@ var TMXTilePropertyTest = class TMXTilePropertyTest extends TileDemo {
 // TMXOrthoFlipTest
 //
 //------------------------------------------------------------------
-var TMXOrthoFlipTest = class TMXOrthoFlipTest extends TileDemo {
+export class TMXOrthoFlipTest extends TileDemo {
     constructor() {
         super();
 
@@ -1434,7 +1434,7 @@ var TMXOrthoFlipTest = class TMXOrthoFlipTest extends TileDemo {
 // TMXOrthoFlipRunTimeTest
 //
 //------------------------------------------------------------------
-var TMXOrthoFlipRunTimeTest = class TMXOrthoFlipRunTimeTest extends TileDemo {
+export class TMXOrthoFlipRunTimeTest extends TileDemo {
     constructor() {
         super();
 
@@ -1522,7 +1522,7 @@ var TMXOrthoFlipRunTimeTest = class TMXOrthoFlipRunTimeTest extends TileDemo {
 // TMXOrthoFromXMLTest
 //
 //------------------------------------------------------------------
-var TMXOrthoFromXMLTest = class TMXOrthoFromXMLTest extends TileDemo {
+export class TMXOrthoFromXMLTest extends TileDemo {
     constructor() {
         super();
 
@@ -1577,7 +1577,7 @@ var TMXOrthoFromXMLTest = class TMXOrthoFromXMLTest extends TileDemo {
 // TMXBug987
 //
 //------------------------------------------------------------------
-var TMXBug987 = class TMXBug987 extends TileDemo {
+export class TMXBug987 extends TileDemo {
     constructor() {
         super();
 
@@ -1637,7 +1637,7 @@ var TMXBug987 = class TMXBug987 extends TileDemo {
 // TMXBug787
 //
 //------------------------------------------------------------------
-var TMXBug787 = class TMXBug787 extends TileDemo {
+export class TMXBug787 extends TileDemo {
     constructor() {
         super();
 
@@ -1670,7 +1670,7 @@ var TMXBug787 = class TMXBug787 extends TileDemo {
 
 };
 
-var TMXGIDObjectsTest = class TMXGIDObjectsTest extends TileDemo {
+export class TMXGIDObjectsTest extends TileDemo {
     constructor() {
         super();
 
@@ -1741,7 +1741,7 @@ var TMXGIDObjectsTest = class TMXGIDObjectsTest extends TileDemo {
 };
 
 
-var TMXIsoOffsetTest = class TMXIsoOffsetTest extends TileDemo {
+export class TMXIsoOffsetTest extends TileDemo {
     constructor() {
         super();
 
@@ -1773,7 +1773,7 @@ var TMXIsoOffsetTest = class TMXIsoOffsetTest extends TileDemo {
 
 };
 
-var TileMapTestScene = class TileMapTestScene extends TestScene {
+export class TileMapTestScene extends TestScene {
     runThisTest(num) {
         tileTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTileMapTest();

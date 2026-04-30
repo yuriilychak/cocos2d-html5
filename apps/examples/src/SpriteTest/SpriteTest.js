@@ -51,7 +51,7 @@ var spriteTestIdx = -1;
 // SpriteTestDemo
 //
 //------------------------------------------------------------------
-var SpriteTestDemo = class SpriteTestDemo extends BaseTestLayer {
+export class SpriteTestDemo extends BaseTestLayer {
 
     constructor() {
         if (arguments.length === 0) {
@@ -97,7 +97,7 @@ var SpriteTestDemo = class SpriteTestDemo extends BaseTestLayer {
 // Sprite1
 //
 //------------------------------------------------------------------
-var Sprite1 = class Sprite1 extends SpriteTestDemo {
+export class Sprite1 extends SpriteTestDemo {
 
     constructor() {
         //----start0----ctor
@@ -204,7 +204,7 @@ var Sprite1 = class Sprite1 extends SpriteTestDemo {
 // SpriteBatchNode1
 //
 //------------------------------------------------------------------
-var SpriteBatchNode1 = class SpriteBatchNode1 extends SpriteTestDemo {
+export class SpriteBatchNode1 extends SpriteTestDemo {
 
 
     constructor() {
@@ -324,7 +324,7 @@ var SpriteBatchNode1 = class SpriteBatchNode1 extends SpriteTestDemo {
 // SpriteColorOpacity
 //
 //------------------------------------------------------------------
-var SpriteColorOpacity = class SpriteColorOpacity extends SpriteTestDemo {
+export class SpriteColorOpacity extends SpriteTestDemo {
 
 
     constructor() {
@@ -453,7 +453,7 @@ var SpriteColorOpacity = class SpriteColorOpacity extends SpriteTestDemo {
 // SpriteBatchNodeColorOpacity
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeColorOpacity = class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
+export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
 
 
     constructor() {
@@ -588,7 +588,7 @@ var SpriteBatchNodeColorOpacity = class SpriteBatchNodeColorOpacity extends Spri
 // SpriteZOrder
 //
 //------------------------------------------------------------------
-var SpriteZOrder = class SpriteZOrder extends SpriteTestDemo {
+export class SpriteZOrder extends SpriteTestDemo {
     constructor() {
         //----start13----ctor
         super();
@@ -661,7 +661,7 @@ var SpriteZOrder = class SpriteZOrder extends SpriteTestDemo {
 // SpriteBatchNodeZOrder
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeZOrder = class SpriteBatchNodeZOrder extends SpriteTestDemo {
+export class SpriteBatchNodeZOrder extends SpriteTestDemo {
     constructor() {
         //----start14----ctor
         super();
@@ -739,7 +739,7 @@ var SpriteBatchNodeZOrder = class SpriteBatchNodeZOrder extends SpriteTestDemo {
 // SpriteBatchNodeReorderIssue744
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeReorderIssue744 = class SpriteBatchNodeReorderIssue744 extends SpriteTestDemo {
+export class SpriteBatchNodeReorderIssue744 extends SpriteTestDemo {
 
     constructor() {
         //----start16----ctor
@@ -789,7 +789,7 @@ var SpriteBatchNodeReorderIssue744 = class SpriteBatchNodeReorderIssue744 extend
 // SpriteBatchNodeReorderIssue766
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeReorderIssue766 = class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
+export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
 
 
     constructor() {
@@ -894,7 +894,7 @@ var SpriteBatchNodeReorderIssue766 = class SpriteBatchNodeReorderIssue766 extend
 // SpriteBatchNodeReorderIssue767
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeReorderIssue767 = class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
+export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
     constructor() {
         //----start18----ctor
@@ -1025,7 +1025,7 @@ var SpriteBatchNodeReorderIssue767 = class SpriteBatchNodeReorderIssue767 extend
 // SpriteAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteAnchorPoint = class SpriteAnchorPoint extends SpriteTestDemo {
+export class SpriteAnchorPoint extends SpriteTestDemo {
 
     constructor() {
         //----start4----ctor
@@ -1100,7 +1100,7 @@ var SpriteAnchorPoint = class SpriteAnchorPoint extends SpriteTestDemo {
 // SpriteBatchNodeAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeAnchorPoint = class SpriteBatchNodeAnchorPoint extends SpriteTestDemo {
+export class SpriteBatchNodeAnchorPoint extends SpriteTestDemo {
 
     constructor() {
         //----start5----ctor
@@ -1177,7 +1177,7 @@ var SpriteBatchNodeAnchorPoint = class SpriteBatchNodeAnchorPoint extends Sprite
 // Sprite6
 //
 //------------------------------------------------------------------
-var Sprite6 = class Sprite6 extends SpriteTestDemo {
+export class Sprite6 extends SpriteTestDemo {
 
     constructor() {
         //----start21----ctor
@@ -1260,7 +1260,7 @@ var Sprite6 = class Sprite6 extends SpriteTestDemo {
 // SpriteFlip
 //
 //------------------------------------------------------------------
-var SpriteFlip = class SpriteFlip extends SpriteTestDemo {
+export class SpriteFlip extends SpriteTestDemo {
 
     constructor() {
         //----start22----ctor
@@ -1339,7 +1339,7 @@ var SpriteFlip = class SpriteFlip extends SpriteTestDemo {
 // SpriteBatchNodeFlip
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeFlip = class SpriteBatchNodeFlip extends SpriteTestDemo {
+export class SpriteBatchNodeFlip extends SpriteTestDemo {
 
     constructor() {
         //----start23----ctor
@@ -1422,7 +1422,7 @@ var SpriteBatchNodeFlip = class SpriteBatchNodeFlip extends SpriteTestDemo {
 // SpriteAliased
 //
 //------------------------------------------------------------------
-var SpriteAliased = class SpriteAliased extends SpriteTestDemo {
+export class SpriteAliased extends SpriteTestDemo {
 
     constructor() {
         //----start24----ctor
@@ -1494,7 +1494,7 @@ var SpriteAliased = class SpriteAliased extends SpriteTestDemo {
 // SpriteBatchNodeAliased
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeAliased = class SpriteBatchNodeAliased extends SpriteTestDemo {
+export class SpriteBatchNodeAliased extends SpriteTestDemo {
 
     constructor() {
         //----start25----ctor
@@ -1569,7 +1569,7 @@ var SpriteBatchNodeAliased = class SpriteBatchNodeAliased extends SpriteTestDemo
 // SpriteNewTexture
 //
 //------------------------------------------------------------------
-var SpriteNewTexture = class SpriteNewTexture extends SpriteTestDemo {
+export class SpriteNewTexture extends SpriteTestDemo {
 
     constructor() {
         //----start26----ctor
@@ -1715,7 +1715,7 @@ var SpriteNewTexture = class SpriteNewTexture extends SpriteTestDemo {
 // SpriteBatchNodeNewTexture
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeNewTexture = class SpriteBatchNodeNewTexture extends SpriteTestDemo {
+export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
 
     constructor() {
         //----start27----ctor
@@ -1840,7 +1840,7 @@ var SpriteBatchNodeNewTexture = class SpriteBatchNodeNewTexture extends SpriteTe
 // SpriteFrameTest
 //
 //------------------------------------------------------------------
-var SpriteFrameTest = class SpriteFrameTest extends SpriteTestDemo {
+export class SpriteFrameTest extends SpriteTestDemo {
     constructor() {
         super();
         this._sprite1 = null;
@@ -1995,7 +1995,7 @@ var SpriteFrameTest = class SpriteFrameTest extends SpriteTestDemo {
 // SpriteFrameAliasNameTest
 //
 //------------------------------------------------------------------
-var SpriteFrameAliasNameTest = class SpriteFrameAliasNameTest extends SpriteTestDemo {
+export class SpriteFrameAliasNameTest extends SpriteTestDemo {
     constructor() {
         super();
         this._title = "SpriteFrame Alias Name";
@@ -2074,7 +2074,7 @@ var SpriteFrameAliasNameTest = class SpriteFrameAliasNameTest extends SpriteTest
 // SpriteOffsetAnchorRotation
 //
 //------------------------------------------------------------------
-var SpriteOffsetAnchorRotation = class SpriteOffsetAnchorRotation extends SpriteTestDemo {
+export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
 
     constructor() {
         //----start6----ctor
@@ -2169,7 +2169,7 @@ var SpriteOffsetAnchorRotation = class SpriteOffsetAnchorRotation extends Sprite
 // SpriteBatchNodeOffsetAnchorRotation
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeOffsetAnchorRotation = class SpriteBatchNodeOffsetAnchorRotation extends SpriteTestDemo {
+export class SpriteBatchNodeOffsetAnchorRotation extends SpriteTestDemo {
 
     constructor() {
         //----start7----ctor
@@ -2264,7 +2264,7 @@ var SpriteBatchNodeOffsetAnchorRotation = class SpriteBatchNodeOffsetAnchorRotat
 // SpriteOffsetAnchorScale
 //
 //------------------------------------------------------------------
-var SpriteOffsetAnchorScale = class SpriteOffsetAnchorScale extends SpriteTestDemo {
+export class SpriteOffsetAnchorScale extends SpriteTestDemo {
 
 
     constructor() {
@@ -2369,7 +2369,7 @@ var SpriteOffsetAnchorScale = class SpriteOffsetAnchorScale extends SpriteTestDe
 // SpriteBatchNodeOffsetAnchorScale
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeOffsetAnchorScale = class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
+export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
 
 
     constructor() {
@@ -2472,7 +2472,7 @@ var SpriteBatchNodeOffsetAnchorScale = class SpriteBatchNodeOffsetAnchorScale ex
 //
 // SpriteOffsetAnchorSkew
 //
-var SpriteOffsetAnchorSkew = class SpriteOffsetAnchorSkew extends SpriteTestDemo {
+export class SpriteOffsetAnchorSkew extends SpriteTestDemo {
 
 
     constructor() {
@@ -2568,7 +2568,7 @@ var SpriteOffsetAnchorSkew = class SpriteOffsetAnchorSkew extends SpriteTestDemo
 //
 // SpriteBatchNodeOffsetAnchorSkew
 //
-var SpriteBatchNodeOffsetAnchorSkew = class SpriteBatchNodeOffsetAnchorSkew extends SpriteTestDemo {
+export class SpriteBatchNodeOffsetAnchorSkew extends SpriteTestDemo {
 
 
     constructor() {
@@ -2669,7 +2669,7 @@ var SpriteBatchNodeOffsetAnchorSkew = class SpriteBatchNodeOffsetAnchorSkew exte
 //
 // SpriteOffsetAnchorSkewScale
 //
-var SpriteOffsetAnchorSkewScale = class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
+export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
 
     constructor() {
         //----start43----ctor
@@ -2772,7 +2772,7 @@ var SpriteOffsetAnchorSkewScale = class SpriteOffsetAnchorSkewScale extends Spri
 //
 // SpriteBatchNodeOffsetAnchorSkewScale
 //
-var SpriteBatchNodeOffsetAnchorSkewScale = class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
+export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
 
 
     constructor() {
@@ -2883,7 +2883,7 @@ var SpriteBatchNodeOffsetAnchorSkewScale = class SpriteBatchNodeOffsetAnchorSkew
 //
 // SpriteOffsetAnchorFlip
 //
-var SpriteOffsetAnchorFlip = class SpriteOffsetAnchorFlip extends SpriteTestDemo {
+export class SpriteOffsetAnchorFlip extends SpriteTestDemo {
 
 
     constructor() {
@@ -2984,7 +2984,7 @@ var SpriteOffsetAnchorFlip = class SpriteOffsetAnchorFlip extends SpriteTestDemo
 //
 // SpriteBatchNodeOffsetAnchorFlip
 //
-var SpriteBatchNodeOffsetAnchorFlip = class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
+export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
 
 
     constructor() {
@@ -3089,7 +3089,7 @@ var SpriteBatchNodeOffsetAnchorFlip = class SpriteBatchNodeOffsetAnchorFlip exte
 // SpriteAnimationSplit
 //
 //------------------------------------------------------------------
-var SpriteAnimationSplit = class SpriteAnimationSplit extends SpriteTestDemo {
+export class SpriteAnimationSplit extends SpriteTestDemo {
 
     constructor() {
         //----start10----ctor
@@ -3169,7 +3169,7 @@ var SpriteAnimationSplit = class SpriteAnimationSplit extends SpriteTestDemo {
 // SpriteHybrid
 //
 //------------------------------------------------------------------
-var SpriteHybrid = class SpriteHybrid extends SpriteTestDemo {
+export class SpriteHybrid extends SpriteTestDemo {
 
     constructor() {
         //----start28----ctor
@@ -3320,7 +3320,7 @@ var SpriteHybrid = class SpriteHybrid extends SpriteTestDemo {
 // SpriteBatchNodeChildren
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildren = class SpriteBatchNodeChildren extends SpriteTestDemo {
+export class SpriteBatchNodeChildren extends SpriteTestDemo {
 
     constructor() {
         //----start29----ctor
@@ -3404,7 +3404,7 @@ var SpriteBatchNodeChildren = class SpriteBatchNodeChildren extends SpriteTestDe
 // SpriteBatchNodeChildrenZ
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildrenZ = class SpriteBatchNodeChildrenZ extends SpriteTestDemo {
+export class SpriteBatchNodeChildrenZ extends SpriteTestDemo {
 
 
     constructor() {
@@ -3540,7 +3540,7 @@ var SpriteBatchNodeChildrenZ = class SpriteBatchNodeChildrenZ extends SpriteTest
 // SpriteChildrenVisibility
 //
 //------------------------------------------------------------------
-var SpriteChildrenVisibility = class SpriteChildrenVisibility extends SpriteTestDemo {
+export class SpriteChildrenVisibility extends SpriteTestDemo {
 
     constructor() {
         //----start31----ctor
@@ -3651,7 +3651,7 @@ var SpriteChildrenVisibility = class SpriteChildrenVisibility extends SpriteTest
 // SpriteChildrenVisibilityIssue665
 //
 //------------------------------------------------------------------
-var SpriteChildrenVisibilityIssue665 = class SpriteChildrenVisibilityIssue665 extends SpriteTestDemo {
+export class SpriteChildrenVisibilityIssue665 extends SpriteTestDemo {
 
 
     constructor() {
@@ -3751,7 +3751,7 @@ var SpriteChildrenVisibilityIssue665 = class SpriteChildrenVisibilityIssue665 ex
 // SpriteChildrenAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteChildrenAnchorPoint = class SpriteChildrenAnchorPoint extends SpriteTestDemo {
+export class SpriteChildrenAnchorPoint extends SpriteTestDemo {
 
 
     constructor() {
@@ -3890,7 +3890,7 @@ var SpriteChildrenAnchorPoint = class SpriteChildrenAnchorPoint extends SpriteTe
 // SpriteBatchNodeChildrenAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildrenAnchorPoint = class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
+export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
 
 
     constructor() {
@@ -4034,7 +4034,7 @@ var SpriteBatchNodeChildrenAnchorPoint = class SpriteBatchNodeChildrenAnchorPoin
 // SpriteBatchNodeChildrenScale
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
+export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
 
 
     constructor() {
@@ -4175,7 +4175,7 @@ var SpriteBatchNodeChildrenScale = class SpriteBatchNodeChildrenScale extends Sp
 // SpriteChildrenChildren
 //
 //------------------------------------------------------------------
-var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo {
+export class SpriteChildrenChildren extends SpriteTestDemo {
 
     constructor() {
         //----start36----ctor
@@ -4287,7 +4287,7 @@ var SpriteChildrenChildren = class SpriteChildrenChildren extends SpriteTestDemo
 // SpriteBatchNodeChildrenChildren
 //
 //------------------------------------------------------------------
-var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
+export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
 
     constructor() {
@@ -4405,7 +4405,7 @@ var SpriteBatchNodeChildrenChildren = class SpriteBatchNodeChildrenChildren exte
 // SpriteSubclass
 //
 //------------------------------------------------------------------
-var MySprite1 = class MySprite1 extends cc.Sprite {
+export class MySprite1 extends cc.Sprite {
 	constructor(spriteFrameName) {
 		super(spriteFrameName);
 
@@ -4414,7 +4414,7 @@ var MySprite1 = class MySprite1 extends cc.Sprite {
 
 };
 
-var MySprite2 = class MySprite2 extends cc.Sprite {
+export class MySprite2 extends cc.Sprite {
 	constructor(name) {
 		super(name);
 
@@ -4423,7 +4423,7 @@ var MySprite2 = class MySprite2 extends cc.Sprite {
 
 };
 
-var SpriteSubclass = class SpriteSubclass extends SpriteTestDemo {
+export class SpriteSubclass extends SpriteTestDemo {
 
     constructor() {
         //----start39----ctor
@@ -4482,7 +4482,7 @@ var SpriteSubclass = class SpriteSubclass extends SpriteTestDemo {
 // AnimationCache
 //
 //------------------------------------------------------------------
-var AnimationCacheTest = class AnimationCacheTest extends SpriteTestDemo {
+export class AnimationCacheTest extends SpriteTestDemo {
 
 
     constructor() {
@@ -4635,7 +4635,7 @@ var AnimationCacheTest = class AnimationCacheTest extends SpriteTestDemo {
 
 };
 
-var NodeSort = class NodeSort extends SpriteTestDemo {
+export class NodeSort extends SpriteTestDemo {
 
 
     constructor() {
@@ -4753,7 +4753,7 @@ var NodeSort = class NodeSort extends SpriteTestDemo {
 
 };
 
-var SpriteBatchNodeReorderOneChild = class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
+export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
 
     constructor() {
         //----start48----ctor
@@ -4867,7 +4867,7 @@ var SpriteBatchNodeReorderOneChild = class SpriteBatchNodeReorderOneChild extend
 
 };
 
-var SpriteBatchNodeSkewNegativeScaleChildren = class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
+export class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
 
     constructor() {
         //----start51----ctor
@@ -4939,7 +4939,7 @@ var SpriteBatchNodeSkewNegativeScaleChildren = class SpriteBatchNodeSkewNegative
 
 };
 
-var SpriteSkewNegativeScaleChildren = class SpriteSkewNegativeScaleChildren extends SpriteTestDemo {
+export class SpriteSkewNegativeScaleChildren extends SpriteTestDemo {
 
     constructor() {
         //----start50----ctor
@@ -5011,7 +5011,7 @@ var SpriteSkewNegativeScaleChildren = class SpriteSkewNegativeScaleChildren exte
 
 };
 
-var DoubleSprite = class DoubleSprite extends cc.Sprite {
+export class DoubleSprite extends cc.Sprite {
 
     constructor(fileName) {
 	    super(fileName);
@@ -5066,7 +5066,7 @@ var DoubleSprite = class DoubleSprite extends cc.Sprite {
 
 };
 
-var SpriteDoubleResolution = class SpriteDoubleResolution extends SpriteTestDemo {
+export class SpriteDoubleResolution extends SpriteTestDemo {
 
 
     constructor() {
@@ -5134,7 +5134,7 @@ var SpriteDoubleResolution = class SpriteDoubleResolution extends SpriteTestDemo
 
 };
 
-var AnimationCacheFile = class AnimationCacheFile extends SpriteTestDemo {
+export class AnimationCacheFile extends SpriteTestDemo {
 
 
     constructor() {
@@ -5245,7 +5245,7 @@ var AnimationCacheFile = class AnimationCacheFile extends SpriteTestDemo {
 
 };
 
-var SpriteBatchBug1217 = class SpriteBatchBug1217 extends SpriteTestDemo {
+export class SpriteBatchBug1217 extends SpriteTestDemo {
 
 
     constructor() {
@@ -5322,7 +5322,7 @@ var SpriteBatchBug1217 = class SpriteBatchBug1217 extends SpriteTestDemo {
 
 };
 
-var TextureColorCacheIssue = class TextureColorCacheIssue extends SpriteTestDemo {
+export class TextureColorCacheIssue extends SpriteTestDemo {
 
 
     constructor() {
@@ -5385,7 +5385,7 @@ var TextureColorCacheIssue = class TextureColorCacheIssue extends SpriteTestDemo
 
 };
 
-var TextureColorCacheIssue2 = class TextureColorCacheIssue2 extends SpriteTestDemo {
+export class TextureColorCacheIssue2 extends SpriteTestDemo {
 
 
     constructor() {
@@ -5448,7 +5448,7 @@ var TextureColorCacheIssue2 = class TextureColorCacheIssue2 extends SpriteTestDe
 
 };
 
-var TextureRotatedSpriteFrame = class TextureRotatedSpriteFrame extends SpriteTestDemo {
+export class TextureRotatedSpriteFrame extends SpriteTestDemo {
 
 
     constructor() {
@@ -5501,7 +5501,7 @@ var TextureRotatedSpriteFrame = class TextureRotatedSpriteFrame extends SpriteTe
 
 };
 
-var SpriteWithRepeatingTexture = class SpriteWithRepeatingTexture extends SpriteTestDemo {
+export class SpriteWithRepeatingTexture extends SpriteTestDemo {
 
 
     constructor() {
@@ -5529,7 +5529,7 @@ var SpriteWithRepeatingTexture = class SpriteWithRepeatingTexture extends Sprite
 
 };
 
-var SpriteBlendFuncTest = class SpriteBlendFuncTest extends SpriteTestDemo {
+export class SpriteBlendFuncTest extends SpriteTestDemo {
     //webgl only
 
     constructor(){
@@ -5609,7 +5609,7 @@ var SpriteBlendFuncTest = class SpriteBlendFuncTest extends SpriteTestDemo {
 
 };
 
-var SpriteTestScene = class SpriteTestScene extends TestScene {
+export class SpriteTestScene extends TestScene {
     runThisTest(num) {
         spriteTestIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextSpriteTest();

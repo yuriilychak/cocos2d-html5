@@ -28,7 +28,7 @@
 // PathTestLayer
 //
 //------------------------------------------------------------------
-var PathTestLayer = class PathTestLayer extends BaseTestLayer {
+export class PathTestLayer extends BaseTestLayer {
 
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
@@ -130,7 +130,7 @@ var PathTestLayer = class PathTestLayer extends BaseTestLayer {
 
 };
 
-var PathTestScene = class PathTestScene extends TestScene {
+export class PathTestScene extends TestScene {
     runThisTest() {
         this.addChild(new PathTestLayer());
         director.runScene(this);

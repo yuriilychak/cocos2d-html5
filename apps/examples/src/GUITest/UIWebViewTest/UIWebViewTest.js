@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 
-var UIWebViewTest = class UIWebViewTest extends UIMainLayer {
+export class UIWebViewTest extends UIMainLayer {
 
     onEnter(){
         super.onEnter();

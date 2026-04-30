@@ -29,7 +29,7 @@ var LOW_PLAYER = 1;
 var STATUS_BAR_HEIGHT = 20.0;
 var SPRITE_TAG = 0;
 
-var TouchesTestScene = class TouchesTestScene extends TestScene {
+export class TouchesTestScene extends TestScene {
     constructor() {
         super(true);
         var pongLayer = new PongLayer();
@@ -44,7 +44,7 @@ var TouchesTestScene = class TouchesTestScene extends TestScene {
 
 };
 
-var PongLayer = class PongLayer extends cc.Layer {
+export class PongLayer extends cc.Layer {
 
     constructor() {
         super();

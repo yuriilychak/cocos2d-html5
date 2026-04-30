@@ -32,7 +32,7 @@ var drawTestSceneIdx = -1;
 // DrawTestDemo
 //
 //------------------------------------------------------------------
-var DrawTestDemo = class DrawTestDemo extends BaseTestLayer {
+export class DrawTestDemo extends BaseTestLayer {
 
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
@@ -76,7 +76,7 @@ var DrawTestDemo = class DrawTestDemo extends BaseTestLayer {
 // Testing cc.DrawNode API 2
 //
 //------------------------------------------------------------------
-var DrawNewAPITest2 = class DrawNewAPITest2 extends DrawTestDemo {
+export class DrawNewAPITest2 extends DrawTestDemo {
     constructor() {
         super();
         this._title = "cc.DrawNode";
@@ -149,7 +149,7 @@ DrawNewAPITest2.prototype.title = function(){
 // Draw New API Test
 //
 //------------------------------------------------------------------
-var DrawNewAPITest = class DrawNewAPITest extends DrawTestDemo {
+export class DrawNewAPITest extends DrawTestDemo {
     constructor() {
         super();
         this._title = "cc.DrawNode";
@@ -216,7 +216,7 @@ DrawNewAPITest.prototype.title = function(){
 
 //
 //
-var DrawPrimitivesTestScene = class DrawPrimitivesTestScene extends TestScene {
+export class DrawPrimitivesTestScene extends TestScene {
     runThisTest(num) {
         drawTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextDrawTest();

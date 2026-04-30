@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var VibrateTest = class VibrateTest extends BaseTestLayer {
+export class VibrateTest extends BaseTestLayer {
     constructor() {
         super();
 
@@ -90,7 +90,7 @@ var VibrateTest = class VibrateTest extends BaseTestLayer {
 
 };
 
-var VibrateTestScene = class VibrateTestScene extends TestScene {
+export class VibrateTestScene extends TestScene {
     runThisTest() {
         var layer = new VibrateTest();
         this.addChild(layer);

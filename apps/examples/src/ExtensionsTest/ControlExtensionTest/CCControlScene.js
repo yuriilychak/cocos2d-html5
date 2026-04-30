@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ControlScene = class ControlScene extends cc.Layer {
+export class ControlScene extends cc.Layer {
     constructor() {
         super();
         this._sceneTitleLabel = null;

@@ -25,7 +25,7 @@
 
 var sceneRenderTextureIdx = -1;
 
-var RenderTextureBaseLayer = class RenderTextureBaseLayer extends BaseTestLayer {
+export class RenderTextureBaseLayer extends BaseTestLayer {
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );
     }
@@ -75,7 +75,7 @@ var RenderTextureBaseLayer = class RenderTextureBaseLayer extends BaseTestLayer 
 // Tests
 //
 //------------------------------------------------------------------
-var RenderTextureSave = class RenderTextureSave extends RenderTextureBaseLayer {
+export class RenderTextureSave extends RenderTextureBaseLayer {
     constructor() {
         super();
         this._brushs = null;
@@ -189,7 +189,7 @@ var RenderTextureSave = class RenderTextureSave extends RenderTextureBaseLayer {
 
 };
 
-var RenderTextureIssue937 = class RenderTextureIssue937 extends RenderTextureBaseLayer {
+export class RenderTextureIssue937 extends RenderTextureBaseLayer {
     constructor() {
         super();
         var winSize = cc.director.getWinSize();
@@ -253,7 +253,7 @@ var RenderTextureIssue937 = class RenderTextureIssue937 extends RenderTextureBas
 
 };
 
-var RenderTextureZbuffer = class RenderTextureZbuffer extends RenderTextureBaseLayer {
+export class RenderTextureZbuffer extends RenderTextureBaseLayer {
 
     constructor() {
         super();
@@ -446,7 +446,7 @@ var RenderTextureZbuffer = class RenderTextureZbuffer extends RenderTextureBaseL
 
 };
 
-var RenderTextureTestDepthStencil = class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
+export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
 
     constructor() {
         super();
@@ -512,7 +512,7 @@ var RenderTextureTestDepthStencil = class RenderTextureTestDepthStencil extends 
 
 };
 
-var RenderTextureTargetNode = class RenderTextureTargetNode extends RenderTextureBaseLayer {
+export class RenderTextureTargetNode extends RenderTextureBaseLayer {
 
 
     constructor() {
@@ -634,7 +634,7 @@ var RenderTextureTargetNode = class RenderTextureTargetNode extends RenderTextur
 // Issue1464
 //
 //------------------------------------------------------------------
-var Issue1464 = class Issue1464 extends RenderTextureBaseLayer {
+export class Issue1464 extends RenderTextureBaseLayer {
 
     constructor() {
         super();
@@ -710,7 +710,7 @@ var Issue1464 = class Issue1464 extends RenderTextureBaseLayer {
 };
 
 
-var RenderTextureTestScene = class RenderTextureTestScene extends TestScene {
+export class RenderTextureTestScene extends TestScene {
     runThisTest(num) {
         sceneRenderTextureIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextRenderTextureTest();

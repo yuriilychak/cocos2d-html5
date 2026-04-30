@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 
-var UILabelBMFontTest = class UILabelBMFontTest extends UIMainLayer {
+export class UILabelBMFontTest extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text

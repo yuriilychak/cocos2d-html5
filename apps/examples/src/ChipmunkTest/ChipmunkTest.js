@@ -64,7 +64,7 @@ function k_scalar_body(body, point, n) {
 // ChipmunkBaseLayer
 //
 //------------------------------------------------------------------
-var ChipmunkBaseLayer = class ChipmunkBaseLayer extends BaseTestLayer {
+export class ChipmunkBaseLayer extends BaseTestLayer {
     constructor() {
         //
         // VERY IMPORTANT
@@ -152,7 +152,7 @@ var ChipmunkBaseLayer = class ChipmunkBaseLayer extends BaseTestLayer {
 // Chipmunk + Sprite
 //
 //------------------------------------------------------------------
-var ChipmunkSprite = class ChipmunkSprite extends ChipmunkBaseLayer {
+export class ChipmunkSprite extends ChipmunkBaseLayer {
 
     constructor() {
         super();
@@ -258,7 +258,7 @@ var ChipmunkSprite = class ChipmunkSprite extends ChipmunkBaseLayer {
 // Chipmunk + Sprite + Batch
 //
 //------------------------------------------------------------------
-var ChipmunkSpriteBatchTest = class ChipmunkSpriteBatchTest extends ChipmunkSprite {
+export class ChipmunkSpriteBatchTest extends ChipmunkSprite {
     constructor() {
         super();
         // cc.base(this);
@@ -298,7 +298,7 @@ var ChipmunkSpriteBatchTest = class ChipmunkSpriteBatchTest extends ChipmunkSpri
  // The default collision handler is invoked for each colliding pair of shapes that isn't explicitly handled by a specific collision handler.
  //
  //------------------------------------------------------------------
-var ChipmunkCollisionTest_no_specific_type = class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
+export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
     constructor() {
         super();
 
@@ -394,7 +394,7 @@ var ChipmunkCollisionTest_no_specific_type = class ChipmunkCollisionTest_no_spec
 // Base your samples on the "Object Oriented" API.
 //
 //------------------------------------------------------------------
-var ChipmunkCollisionTest = class ChipmunkCollisionTest extends ChipmunkBaseLayer {
+export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
 
     constructor() {
         super();
@@ -529,7 +529,7 @@ var ChipmunkCollisionTest = class ChipmunkCollisionTest extends ChipmunkBaseLaye
 // XXX  IT WAS ADDED FOR TESTING PURPOSES ONLY
 //
 //------------------------------------------------------------------
-var ChipmunkCollisionTestB = class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
+export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
 
     constructor() {
         super();
@@ -656,7 +656,7 @@ var ChipmunkCollisionTestB = class ChipmunkCollisionTestB extends ChipmunkBaseLa
 // Chipmunk Collision Memory Leak Test
 //
 //------------------------------------------------------------------
-var ChipmunkCollisionMemoryLeakTest = class ChipmunkCollisionMemoryLeakTest extends ChipmunkBaseLayer {
+export class ChipmunkCollisionMemoryLeakTest extends ChipmunkBaseLayer {
 
     constructor() {
         super();
@@ -714,7 +714,7 @@ var ChipmunkCollisionMemoryLeakTest = class ChipmunkCollisionMemoryLeakTest exte
 // Test Anchor Point with PhysicsSprite
 //
 //------------------------------------------------------------------
-var ChipmunkSpriteAnchorPoint = class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
+export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
 
     constructor() {
         super();
@@ -802,7 +802,7 @@ var ChipmunkSpriteAnchorPoint = class ChipmunkSpriteAnchorPoint extends Chipmunk
 // ChipmunkReleaseTest
 //
 //------------------------------------------------------------------
-var ChipmunkReleaseTest = class ChipmunkReleaseTest extends ChipmunkBaseLayer {
+export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
 
     constructor() {
         super();
@@ -869,7 +869,7 @@ var ctx;
 var GRABABLE_MASK_BIT = 1<<31;
 var NOT_GRABABLE_MASK = ~GRABABLE_MASK_BIT;
 
-var ChipmunkDemo = class ChipmunkDemo extends ChipmunkBaseLayer {
+export class ChipmunkDemo extends ChipmunkBaseLayer {
     constructor() {
         super();
         //cc.base(this);
@@ -914,7 +914,7 @@ var ChipmunkDemo = class ChipmunkDemo extends ChipmunkBaseLayer {
 // Chipmunk Demo: Pyramid Stack
 //
 //------------------------------------------------------------------
-var PyramidStack = class PyramidStack extends ChipmunkDemo {
+export class PyramidStack extends ChipmunkDemo {
 
     constructor() {
         super();
@@ -967,7 +967,7 @@ var PyramidStack = class PyramidStack extends ChipmunkDemo {
 // Chipmunk Demo: Pyramid Topple
 //
 //------------------------------------------------------------------
-var PyramidTopple = class PyramidTopple extends ChipmunkDemo {
+export class PyramidTopple extends ChipmunkDemo {
 
     constructor() {
         super();
@@ -1042,7 +1042,7 @@ var PyramidTopple = class PyramidTopple extends ChipmunkDemo {
 // Chipmunk Demo: Joints
 //
 //------------------------------------------------------------------
-var Joints = class Joints extends ChipmunkDemo {
+export class Joints extends ChipmunkDemo {
     constructor() {
         super();
         // cc.base(this);
@@ -1326,7 +1326,7 @@ var Joints = class Joints extends ChipmunkDemo {
 // Chipmunk Demo: Balls
 //
 //------------------------------------------------------------------
-var Balls = class Balls extends ChipmunkDemo {
+export class Balls extends ChipmunkDemo {
     constructor() {
         super();
         // cc.base(this);
@@ -1398,7 +1398,7 @@ var Balls = class Balls extends ChipmunkDemo {
 var FLUID_DENSITY = 0.00014;
 var FLUID_DRAG = 2.0;
 
-var Buoyancy = class Buoyancy extends ChipmunkDemo {
+export class Buoyancy extends ChipmunkDemo {
     constructor() {
         super();
         // cc.base(this);
@@ -1589,7 +1589,7 @@ var Buoyancy = class Buoyancy extends ChipmunkDemo {
 //
 //------------------------------------------------------------------
 
-var Planet = class Planet extends ChipmunkDemo {
+export class Planet extends ChipmunkDemo {
     constructor() {
         super();
         // cc.base(this);
@@ -1699,7 +1699,7 @@ var Planet = class Planet extends ChipmunkDemo {
 //
 //------------------------------------------------------------------
 
-var Query = class Query extends ChipmunkDemo {
+export class Query extends ChipmunkDemo {
     constructor() {
         super();
 
@@ -1970,7 +1970,7 @@ var LogoSmash = (function(){
 // Entry point
 //
 
-var ChipmunkTestScene = class ChipmunkTestScene extends TestScene {
+export class ChipmunkTestScene extends TestScene {
     runThisTest(num) {
         chipmunkTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextChipmunkTest();
@@ -1983,7 +1983,7 @@ var ChipmunkTestScene = class ChipmunkTestScene extends TestScene {
 // Flow control
 //
 
-var Issue1092 = class Issue1092 extends ChipmunkDemo {
+export class Issue1092 extends ChipmunkDemo {
     constructor(){
         super();
         this._subtitle = 'Chipmunk Demo';
@@ -2024,7 +2024,7 @@ var Issue1092 = class Issue1092 extends ChipmunkDemo {
 
 };
 
-var Issue1073 = class Issue1073 extends ChipmunkDemo {
+export class Issue1073 extends ChipmunkDemo {
     constructor(){
         super();
         this._subtitle = 'Chipmunk Demo';
@@ -2050,7 +2050,7 @@ var Issue1073 = class Issue1073 extends ChipmunkDemo {
 
 };
 
-var Issue1083 = class Issue1083 extends ChipmunkDemo {
+export class Issue1083 extends ChipmunkDemo {
     constructor(){
         super();
         this._subtitle = 'Chipmunk Demo';

@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var PluginXTest = class PluginXTest extends cc.Layer {
+export class PluginXTest extends cc.Layer {
 
     getSceneTitleLabel(){return this._sceneTitleLabel;}
     setSceneTitleLabel(sceneTitleLabel){this._sceneTitleLabel = sceneTitleLabel;}

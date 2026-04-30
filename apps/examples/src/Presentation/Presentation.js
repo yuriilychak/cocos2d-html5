@@ -33,7 +33,7 @@ var images_path = 'Presentation/';
 // PresentationBaseLayer
 //
 //------------------------------------------------------------------
-var PresentationBaseLayer = class PresentationBaseLayer extends BaseTestLayer {
+export class PresentationBaseLayer extends BaseTestLayer {
 	constructor() {
 
 	//
@@ -171,7 +171,7 @@ var PresentationBaseLayer = class PresentationBaseLayer extends BaseTestLayer {
 // Intro Page
 //
 //------------------------------------------------------------------
-var IntroPage = class IntroPage extends PresentationBaseLayer {
+export class IntroPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -186,7 +186,7 @@ var IntroPage = class IntroPage extends PresentationBaseLayer {
 // Goal Page
 //
 //------------------------------------------------------------------
-var GoalPage = class GoalPage extends PresentationBaseLayer {
+export class GoalPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -209,7 +209,7 @@ var GoalPage = class GoalPage extends PresentationBaseLayer {
 // Solutions ?
 //
 //------------------------------------------------------------------
-var SolutionsPage = class SolutionsPage extends PresentationBaseLayer {
+export class SolutionsPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -224,7 +224,7 @@ var SolutionsPage = class SolutionsPage extends PresentationBaseLayer {
 // HTML5 engines ?
 //
 //------------------------------------------------------------------
-var HTML5EnginesPage = class HTML5EnginesPage extends PresentationBaseLayer {
+export class HTML5EnginesPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -247,7 +247,7 @@ var HTML5EnginesPage = class HTML5EnginesPage extends PresentationBaseLayer {
 // Features
 //
 //------------------------------------------------------------------
-var FeaturesHTML5Page = class FeaturesHTML5Page extends PresentationBaseLayer {
+export class FeaturesHTML5Page extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -270,7 +270,7 @@ var FeaturesHTML5Page = class FeaturesHTML5Page extends PresentationBaseLayer {
 // ComparisonPage
 //
 //------------------------------------------------------------------
-var ComparisonPage = class ComparisonPage extends PresentationBaseLayer {
+export class ComparisonPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -288,7 +288,7 @@ var ComparisonPage = class ComparisonPage extends PresentationBaseLayer {
 // WhatWeWantPage
 //
 //------------------------------------------------------------------
-var WhatWeWantPage = class WhatWeWantPage extends PresentationBaseLayer {
+export class WhatWeWantPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -310,7 +310,7 @@ var WhatWeWantPage = class WhatWeWantPage extends PresentationBaseLayer {
 // Chipmunk Page
 //
 //------------------------------------------------------------------
-var ChipmunkPage = class ChipmunkPage extends PresentationBaseLayer {
+export class ChipmunkPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -434,7 +434,7 @@ var ChipmunkPage = class ChipmunkPage extends PresentationBaseLayer {
 // Particles Page
 //
 //------------------------------------------------------------------
-var ParticlesPage = class ParticlesPage extends PresentationBaseLayer {
+export class ParticlesPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -514,7 +514,7 @@ var ParticlesPage = class ParticlesPage extends PresentationBaseLayer {
 // HowToImprovePage
 //
 //------------------------------------------------------------------
-var HowToImprovePage = class HowToImprovePage extends PresentationBaseLayer {
+export class HowToImprovePage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -529,7 +529,7 @@ var HowToImprovePage = class HowToImprovePage extends PresentationBaseLayer {
 // HTML5AcceleratorPage
 //
 //------------------------------------------------------------------
-var HTML5AcceleratorPage = class HTML5AcceleratorPage extends PresentationBaseLayer {
+export class HTML5AcceleratorPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -546,7 +546,7 @@ var HTML5AcceleratorPage = class HTML5AcceleratorPage extends PresentationBaseLa
 // GDKAcceleratorPage
 //
 //------------------------------------------------------------------
-var GDKAcceleratorPage = class GDKAcceleratorPage extends PresentationBaseLayer {
+export class GDKAcceleratorPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -563,7 +563,7 @@ var GDKAcceleratorPage = class GDKAcceleratorPage extends PresentationBaseLayer 
 // GDKComponentsPage
 //
 //------------------------------------------------------------------
-var GDKComponentsPage = class GDKComponentsPage extends PresentationBaseLayer {
+export class GDKComponentsPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -584,7 +584,7 @@ var GDKComponentsPage = class GDKComponentsPage extends PresentationBaseLayer {
 // CocosStatusPage
 //
 //------------------------------------------------------------------
-var CocosStatusPage = class CocosStatusPage extends PresentationBaseLayer {
+export class CocosStatusPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -601,7 +601,7 @@ var CocosStatusPage = class CocosStatusPage extends PresentationBaseLayer {
 // ChipmunkStatusPage
 //
 //------------------------------------------------------------------
-var ChipmunkStatusPage = class ChipmunkStatusPage extends PresentationBaseLayer {
+export class ChipmunkStatusPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -618,7 +618,7 @@ var ChipmunkStatusPage = class ChipmunkStatusPage extends PresentationBaseLayer 
 // CCBStatusPage
 //
 //------------------------------------------------------------------
-var CCBStatusPage = class CCBStatusPage extends PresentationBaseLayer {
+export class CCBStatusPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -635,7 +635,7 @@ var CCBStatusPage = class CCBStatusPage extends PresentationBaseLayer {
 // WhoIsUsingItPage
 //
 //------------------------------------------------------------------
-var WhoIsUsingItPage = class WhoIsUsingItPage extends PresentationBaseLayer {
+export class WhoIsUsingItPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -656,7 +656,7 @@ var WhoIsUsingItPage = class WhoIsUsingItPage extends PresentationBaseLayer {
 // DemoPage
 //
 //------------------------------------------------------------------
-var DemoPage = class DemoPage extends PresentationBaseLayer {
+export class DemoPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -671,7 +671,7 @@ var DemoPage = class DemoPage extends PresentationBaseLayer {
 // Thanks
 //
 //------------------------------------------------------------------
-var ThanksPage = class ThanksPage extends PresentationBaseLayer {
+export class ThanksPage extends PresentationBaseLayer {
 	constructor() {
 
 		super();
@@ -685,7 +685,7 @@ var ThanksPage = class ThanksPage extends PresentationBaseLayer {
 // Entry point
 //
 
-var PresentationScene = class PresentationScene extends TestScene {
+export class PresentationScene extends TestScene {
     runThisTest() {
         presentationSceneIdx = -1;
         centerPos = new cc.Point(winSize.width/2, winSize.height/2);

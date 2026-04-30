@@ -45,7 +45,7 @@ EffectsAdvancedTest.IDC_RESTART = 102;
 
 var sceneIndex = -1;
 
-var EffectAdvanceTextLayer = class EffectAdvanceTextLayer extends cc.Layer {
+export class EffectAdvanceTextLayer extends cc.Layer {
 
     constructor() {
         super();
@@ -157,7 +157,7 @@ var EffectAdvanceTextLayer = class EffectAdvanceTextLayer extends cc.Layer {
 
 };
 
-var Effect1 = class Effect1 extends EffectAdvanceTextLayer {
+export class Effect1 extends EffectAdvanceTextLayer {
     title() {
         return "Lens + Waves3d";
     }
@@ -183,7 +183,7 @@ var Effect1 = class Effect1 extends EffectAdvanceTextLayer {
 
 };
 
-var Effect2 = class Effect2 extends EffectAdvanceTextLayer {
+export class Effect2 extends EffectAdvanceTextLayer {
     title() {
         return "ShakyTiles + ShuffleTiles + TurnOffTiles";
     }
@@ -214,7 +214,7 @@ var Effect2 = class Effect2 extends EffectAdvanceTextLayer {
 
 };
 
-var Effect3 = class Effect3 extends EffectAdvanceTextLayer {
+export class Effect3 extends EffectAdvanceTextLayer {
     title() {
         return "Effects on 2 sprites";
     }
@@ -239,7 +239,7 @@ var Effect3 = class Effect3 extends EffectAdvanceTextLayer {
 
 };
 
-var Lens3DTarget = class Lens3DTarget extends cc.Node {
+export class Lens3DTarget extends cc.Node {
 
     constructor() {
         super();
@@ -271,7 +271,7 @@ Lens3DTarget.create = function (action) {
     return target;
 };
 
-var Effect4 = class Effect4 extends EffectAdvanceTextLayer {
+export class Effect4 extends EffectAdvanceTextLayer {
     title() {
         return "Jumpy Lens3D";
     }
@@ -305,7 +305,7 @@ var Effect4 = class Effect4 extends EffectAdvanceTextLayer {
 
 };
 
-var Effect5 = class Effect5 extends EffectAdvanceTextLayer {
+export class Effect5 extends EffectAdvanceTextLayer {
     title() {
         return "Test Stop-Copy-Restar";
     }
@@ -322,7 +322,7 @@ var Effect5 = class Effect5 extends EffectAdvanceTextLayer {
 
 };
 
-var Issue631 = class Issue631 extends EffectAdvanceTextLayer {
+export class Issue631 extends EffectAdvanceTextLayer {
     title() {
         return "Testing Opacity";
     }
@@ -401,7 +401,7 @@ var restartEffectAdvanceAction = function () {
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 
-var EffectAdvanceScene = class EffectAdvanceScene extends TestScene {
+export class EffectAdvanceScene extends TestScene {
     runThisTest() {
         sceneIndex = -1;
         var pLayer = nextEffectAdvanceAction();

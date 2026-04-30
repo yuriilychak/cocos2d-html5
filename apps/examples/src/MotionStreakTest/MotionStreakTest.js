@@ -32,7 +32,7 @@ var TAG_SPRITE2 = 3;
 
 var sceneIdx = -1;
 
-var MotionStreakTest = class MotionStreakTest extends cc.Layer {
+export class MotionStreakTest extends cc.Layer {
     constructor() {
         super();
         this._streak = null;
@@ -116,7 +116,7 @@ var MotionStreakTest = class MotionStreakTest extends cc.Layer {
 
 };
 
-var MotionStreakTest1 = class MotionStreakTest1 extends MotionStreakTest {
+export class MotionStreakTest1 extends MotionStreakTest {
     constructor() {
         super();
         this._root = null;
@@ -178,7 +178,7 @@ var MotionStreakTest1 = class MotionStreakTest1 extends MotionStreakTest {
 
 };
 
-var MotionStreakTest2 = class MotionStreakTest2 extends MotionStreakTest {
+export class MotionStreakTest2 extends MotionStreakTest {
     constructor() {
         super();
         this._root = null;
@@ -216,7 +216,7 @@ var MotionStreakTest2 = class MotionStreakTest2 extends MotionStreakTest {
 
 };
 
-var Issue1358 = class Issue1358 extends MotionStreakTest {
+export class Issue1358 extends MotionStreakTest {
     constructor() {
         super();
         this._center = null;
@@ -277,7 +277,7 @@ var restartMotionAction = function () {
     return new arrayOfMotionStreakTest[sceneIdx]();
 };
 
-var MotionStreakTestScene = class MotionStreakTestScene extends TestScene {
+export class MotionStreakTestScene extends TestScene {
     runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var pLayer = nextMotionAction();

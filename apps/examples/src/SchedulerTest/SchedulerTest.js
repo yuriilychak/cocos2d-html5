@@ -30,7 +30,7 @@ var schedulerTestSceneIdx = -1;
 /*
     Base Layer
 */
-var SchedulerTestLayer = class SchedulerTestLayer extends BaseTestLayer {
+export class SchedulerTestLayer extends BaseTestLayer {
 
     title() {
         return "No title";
@@ -75,7 +75,7 @@ var SchedulerTestLayer = class SchedulerTestLayer extends BaseTestLayer {
 /*
     SchedulerAutoremove
 */
-var SchedulerAutoremove = class SchedulerAutoremove extends SchedulerTestLayer {
+export class SchedulerAutoremove extends SchedulerTestLayer {
     constructor() {
         super();
         this._accum = 0;
@@ -118,7 +118,7 @@ var SchedulerAutoremove = class SchedulerAutoremove extends SchedulerTestLayer {
 /*
     SchedulerPauseResume
 */
-var SchedulerPauseResume = class SchedulerPauseResume extends SchedulerTestLayer {
+export class SchedulerPauseResume extends SchedulerTestLayer {
     onEnter() {
         //----start1----onEnter
         super.onEnter();
@@ -156,7 +156,7 @@ var SchedulerPauseResume = class SchedulerPauseResume extends SchedulerTestLayer
 /*
     SchedulerUnscheduleAll
 */
-var SchedulerUnscheduleAll = class SchedulerUnscheduleAll extends SchedulerTestLayer {
+export class SchedulerUnscheduleAll extends SchedulerTestLayer {
     onEnter() {
         //----start2----onEnter
         super.onEnter();
@@ -206,7 +206,7 @@ var SchedulerUnscheduleAll = class SchedulerUnscheduleAll extends SchedulerTestL
 /*
     SchedulerUnscheduleAllHard
 */
-var SchedulerUnscheduleAllHard = class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
+export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
     onEnter() {
         //----start3----onEnter
         super.onEnter();
@@ -256,7 +256,7 @@ var SchedulerUnscheduleAllHard = class SchedulerUnscheduleAllHard extends Schedu
 /*
     SchedulerSchedulesAndRemove
 */
-var SchedulerSchedulesAndRemove = class SchedulerSchedulesAndRemove extends SchedulerTestLayer {
+export class SchedulerSchedulesAndRemove extends SchedulerTestLayer {
     onEnter() {
         //----start4----onEnter
         super.onEnter();
@@ -309,7 +309,7 @@ var SchedulerSchedulesAndRemove = class SchedulerSchedulesAndRemove extends Sche
 /*
     SchedulerUpdate
 */
-var TestNode = class TestNode extends cc.Node {
+export class TestNode extends cc.Node {
 
     constructor(str, priority) {
         super();
@@ -326,7 +326,7 @@ var TestNode = class TestNode extends cc.Node {
 
 };
 
-var SchedulerUpdate = class SchedulerUpdate extends SchedulerTestLayer {
+export class SchedulerUpdate extends SchedulerTestLayer {
     onEnter() {
         //----start5----onEnter
         super.onEnter();
@@ -383,7 +383,7 @@ var SchedulerUpdate = class SchedulerUpdate extends SchedulerTestLayer {
 /*
     SchedulerUpdateAndCustom
 */
-var SchedulerUpdateAndCustom = class SchedulerUpdateAndCustom extends SchedulerTestLayer {
+export class SchedulerUpdateAndCustom extends SchedulerTestLayer {
     onEnter() {
         //----start6----onEnter
         super.onEnter();
@@ -421,7 +421,7 @@ var SchedulerUpdateAndCustom = class SchedulerUpdateAndCustom extends SchedulerT
 /*
     SchedulerUpdateFromCustom
 */
-var SchedulerUpdateFromCustom = class SchedulerUpdateFromCustom extends SchedulerTestLayer {
+export class SchedulerUpdateFromCustom extends SchedulerTestLayer {
     onEnter() {
         //----start7----onEnter
         super.onEnter();
@@ -461,7 +461,7 @@ var SchedulerUpdateFromCustom = class SchedulerUpdateFromCustom extends Schedule
 /*
     RescheduleCallback
 */
-var RescheduleCallback = class RescheduleCallback extends SchedulerTestLayer {
+export class RescheduleCallback extends SchedulerTestLayer {
     constructor() {
         super();
         this._interval = 1.0;
@@ -503,7 +503,7 @@ var RescheduleCallback = class RescheduleCallback extends SchedulerTestLayer {
 /*
     ScheduleUsingSchedulerTest
 */
-var ScheduleUsingSchedulerTest = class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
+export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
     constructor() {
         super();
         this._accum = 0;
@@ -567,7 +567,7 @@ var ScheduleUsingSchedulerTest = class ScheduleUsingSchedulerTest extends Schedu
 
 // SchedulerTimeScale
 
-var SchedulerTimeScale = class SchedulerTimeScale extends SchedulerTestLayer {
+export class SchedulerTimeScale extends SchedulerTestLayer {
     constructor() {
         super();
         this._newScheduler = null;
@@ -741,7 +741,7 @@ var unScheduleAndRepeatTest = class unScheduleAndRepeatTest extends SchedulerTes
 /*
     main entry
 */
-var SchedulerTestScene = class SchedulerTestScene extends TestScene {
+export class SchedulerTestScene extends TestScene {
     runThisTest(num) {
         schedulerTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextSchedulerTest();

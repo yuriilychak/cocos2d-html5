@@ -42,7 +42,7 @@ var TAG_LABEL_SPRITE18 = 667;
 
 var labelTestIdx = -1;
 
-var LabelTestScene = class LabelTestScene extends TestScene {
+export class LabelTestScene extends TestScene {
     runThisTest(num) {
         labelTestIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextLabelTest());
@@ -51,7 +51,7 @@ var LabelTestScene = class LabelTestScene extends TestScene {
 
 };
 
-var AtlasDemo = class AtlasDemo extends BaseTestLayer {
+export class AtlasDemo extends BaseTestLayer {
 
     title() {
         return "No title";
@@ -94,7 +94,7 @@ var AtlasDemo = class AtlasDemo extends BaseTestLayer {
 // LabelAtlasOpacityTest
 //
 //------------------------------------------------------------------
-var LabelAtlasOpacityTest = class LabelAtlasOpacityTest extends AtlasDemo {
+export class LabelAtlasOpacityTest extends AtlasDemo {
     constructor() {
         //----start0----ctor
         super();
@@ -164,7 +164,7 @@ var LabelAtlasOpacityTest = class LabelAtlasOpacityTest extends AtlasDemo {
 // LabelAtlasOpacityColorTest
 //
 //------------------------------------------------------------------
-var LabelAtlasOpacityColorTest = class LabelAtlasOpacityColorTest extends AtlasDemo {
+export class LabelAtlasOpacityColorTest extends AtlasDemo {
     constructor() {
         //----start1----ctor
         super();
@@ -243,7 +243,7 @@ var LabelAtlasOpacityColorTest = class LabelAtlasOpacityColorTest extends AtlasD
 // LabelAtlasHD
 //
 //------------------------------------------------------------------
-var LabelAtlasHD = class LabelAtlasHD extends AtlasDemo {
+export class LabelAtlasHD extends AtlasDemo {
     constructor() {
         //----start2----ctor
         super();
@@ -300,7 +300,7 @@ var LabelAtlasHD = class LabelAtlasHD extends AtlasDemo {
 // BMFontOpacityColorAlignmentTest
 //
 //------------------------------------------------------------------
-var BMFontOpacityColorAlignmentTest = class BMFontOpacityColorAlignmentTest extends AtlasDemo {
+export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
     constructor() {
         //----start3----ctor
         super();
@@ -405,7 +405,7 @@ var BMFontOpacityColorAlignmentTest = class BMFontOpacityColorAlignmentTest exte
 // BMFontSubSpriteTest
 //
 //------------------------------------------------------------------
-var BMFontSubSpriteTest = class BMFontSubSpriteTest extends AtlasDemo {
+export class BMFontSubSpriteTest extends AtlasDemo {
     constructor() {
         //----start4----ctor
         super();
@@ -522,7 +522,7 @@ var BMFontSubSpriteTest = class BMFontSubSpriteTest extends AtlasDemo {
 // BMFontPaddingTest
 //
 //------------------------------------------------------------------
-var BMFontPaddingTest = class BMFontPaddingTest extends AtlasDemo {
+export class BMFontPaddingTest extends AtlasDemo {
     constructor() {
         //----start5----
         super();
@@ -574,7 +574,7 @@ var BMFontPaddingTest = class BMFontPaddingTest extends AtlasDemo {
 // BMFontOffsetTest
 //
 //------------------------------------------------------------------
-var BMFontOffsetTest = class BMFontOffsetTest extends AtlasDemo {
+export class BMFontOffsetTest extends AtlasDemo {
     constructor() {
         //----start6----ctor
         super();
@@ -641,7 +641,7 @@ var BMFontOffsetTest = class BMFontOffsetTest extends AtlasDemo {
 // BMFontTintTest
 //
 //------------------------------------------------------------------
-var BMFontTintTest = class BMFontTintTest extends AtlasDemo {
+export class BMFontTintTest extends AtlasDemo {
     constructor() {
         //----start7----ctor
         super();
@@ -715,7 +715,7 @@ var BMFontTintTest = class BMFontTintTest extends AtlasDemo {
 // BMFontSpeedTest
 //
 //------------------------------------------------------------------
-var BMFontSpeedTest = class BMFontSpeedTest extends AtlasDemo {
+export class BMFontSpeedTest extends AtlasDemo {
     constructor() {
         //----start8----ctor
         super();
@@ -748,7 +748,7 @@ var BMFontSpeedTest = class BMFontSpeedTest extends AtlasDemo {
 // BMFontMultiLineTest
 //
 //------------------------------------------------------------------
-var BMFontMultiLineTest = class BMFontMultiLineTest extends AtlasDemo {
+export class BMFontMultiLineTest extends AtlasDemo {
     constructor() {
         //----start9----ctor
         super();
@@ -825,7 +825,7 @@ var BMFontMultiLineTest = class BMFontMultiLineTest extends AtlasDemo {
 // BMFontMultiLine2Test
 //
 //------------------------------------------------------------------
-var BMFontMultiLine2Test = class BMFontMultiLine2Test extends AtlasDemo {
+export class BMFontMultiLine2Test extends AtlasDemo {
     constructor() {
         //----start10----ctor
         super();
@@ -905,7 +905,7 @@ var BMFontMultiLine2Test = class BMFontMultiLine2Test extends AtlasDemo {
 // LabelsEmpty
 //
 //------------------------------------------------------------------
-var LabelsEmpty = class LabelsEmpty extends AtlasDemo {
+export class LabelsEmpty extends AtlasDemo {
     constructor() {
         //----start25----ctor
         super();
@@ -972,7 +972,7 @@ var LabelsEmpty = class LabelsEmpty extends AtlasDemo {
 // BMFontHDTest
 //
 //------------------------------------------------------------------
-var BMFontHDTest = class BMFontHDTest extends AtlasDemo {
+export class BMFontHDTest extends AtlasDemo {
     constructor() {
         //----start16----ctor
         super();
@@ -1024,7 +1024,7 @@ var BMFontHDTest = class BMFontHDTest extends AtlasDemo {
 // BMFontGlyphDesignerTest
 //
 //------------------------------------------------------------------
-var BMFontGlyphDesignerTest = class BMFontGlyphDesignerTest extends AtlasDemo {
+export class BMFontGlyphDesignerTest extends AtlasDemo {
     constructor() {
         //----start17----ctor
         super();
@@ -1080,7 +1080,7 @@ var BMFontGlyphDesignerTest = class BMFontGlyphDesignerTest extends AtlasDemo {
 //
 //------------------------------------------------------------------
 
-var LabelTTFStrokeShadowTest = class LabelTTFStrokeShadowTest extends AtlasDemo {
+export class LabelTTFStrokeShadowTest extends AtlasDemo {
 
     constructor() {
         //----start26----ctor
@@ -1195,7 +1195,7 @@ var LabelTTFStrokeShadowTest = class LabelTTFStrokeShadowTest extends AtlasDemo 
 
 };
 
-var LabelTTFTest = class LabelTTFTest extends AtlasDemo {
+export class LabelTTFTest extends AtlasDemo {
     constructor() {
         //----start19----ctor
         super();
@@ -1324,7 +1324,7 @@ var LabelTTFTest = class LabelTTFTest extends AtlasDemo {
 
 };
 
-var LabelTTFMultiline = class LabelTTFMultiline extends AtlasDemo {
+export class LabelTTFMultiline extends AtlasDemo {
     constructor() {
         //----start20----ctor
         super();
@@ -1374,7 +1374,7 @@ var LabelTTFMultiline = class LabelTTFMultiline extends AtlasDemo {
 
 };
 
-var LabelTTFChinese = class LabelTTFChinese extends AtlasDemo {
+export class LabelTTFChinese extends AtlasDemo {
     constructor() {
         //----start21----ctor
         super();
@@ -1398,7 +1398,7 @@ var LabelTTFChinese = class LabelTTFChinese extends AtlasDemo {
 
 };
 
-var BMFontChineseTest = class BMFontChineseTest extends AtlasDemo {
+export class BMFontChineseTest extends AtlasDemo {
     constructor() {
         //----start18----ctor
         super();
@@ -1464,7 +1464,7 @@ var mixAllLanguage = 5;
 var alignmentItemPadding = 40;
 var menuItemPaddingCenter = 80;
 
-var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends AtlasDemo {
+export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     constructor() {
         //----start11----ctor
         super();
@@ -1718,7 +1718,7 @@ var BMFontMultiLineAlignmentTest = class BMFontMultiLineAlignmentTest extends At
 };
 
 /// LabelTTFA8Test
-var LabelTTFA8Test = class LabelTTFA8Test extends AtlasDemo {
+export class LabelTTFA8Test extends AtlasDemo {
     constructor() {
         //----start22----ctor
         super();
@@ -1751,7 +1751,7 @@ var LabelTTFA8Test = class LabelTTFA8Test extends AtlasDemo {
 };
 
 /// BMFontOneAtlas
-var BMFontOneAtlas = class BMFontOneAtlas extends AtlasDemo {
+export class BMFontOneAtlas extends AtlasDemo {
     constructor() {
         //----start12----ctor
         super();
@@ -1780,7 +1780,7 @@ var BMFontOneAtlas = class BMFontOneAtlas extends AtlasDemo {
 };
 
 /// BMFontUnicode
-var BMFontUnicode = class BMFontUnicode extends AtlasDemo {
+export class BMFontUnicode extends AtlasDemo {
     constructor() {
         //----start13----ctor
         super();
@@ -1814,7 +1814,7 @@ var BMFontUnicode = class BMFontUnicode extends AtlasDemo {
 };
 
 // BMFontInit
-var BMFontInit = class BMFontInit extends AtlasDemo {
+export class BMFontInit extends AtlasDemo {
     constructor() {
         //----start14----ctor
         super();
@@ -1837,7 +1837,7 @@ var BMFontInit = class BMFontInit extends AtlasDemo {
 };
 
 // LabelTTFFontInitTest
-var LabelTTFFontInitTest = class LabelTTFFontInitTest extends AtlasDemo {
+export class LabelTTFFontInitTest extends AtlasDemo {
     constructor() {
         //----start23----ctor
         super();
@@ -1860,7 +1860,7 @@ var LabelTTFFontInitTest = class LabelTTFFontInitTest extends AtlasDemo {
 };
 
 
-var LabelTTFAlignment = class LabelTTFAlignment extends AtlasDemo {
+export class LabelTTFAlignment extends AtlasDemo {
     constructor() {
         //----start24----ctor
         super();
@@ -1916,7 +1916,7 @@ var LabelTTFAlignment = class LabelTTFAlignment extends AtlasDemo {
 
 };
 
-var BMFontColorParentChild = class BMFontColorParentChild extends AtlasDemo {
+export class BMFontColorParentChild extends AtlasDemo {
     constructor() {
         //----start15----ctor
         super();
@@ -1981,7 +1981,7 @@ var BMFontColorParentChild = class BMFontColorParentChild extends AtlasDemo {
 
 };
 
-var WrapAlgorithmTest = class WrapAlgorithmTest extends AtlasDemo {
+export class WrapAlgorithmTest extends AtlasDemo {
     constructor(){
         super();
         var self = this;

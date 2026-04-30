@@ -27,7 +27,7 @@
 var TAG_SPRITE_MANAGER = 1;
 var PTM_RATIO = 32;
 
-var Box2DTestLayer = class Box2DTestLayer extends cc.LayerColor {
+export class Box2DTestLayer extends cc.LayerColor {
   constructor() {
     if (window.sideIndexBar) {
       window.sideIndexBar.changeTest(0, 2);
@@ -193,7 +193,7 @@ var Box2DTestLayer = class Box2DTestLayer extends cc.LayerColor {
   }
 };
 
-var Box2DTestScene = class Box2DTestScene extends TestScene {
+export class Box2DTestScene extends TestScene {
   runThisTest() {
     var layer = new Box2DTestLayer();
     this.addChild(layer);

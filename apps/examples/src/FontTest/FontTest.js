@@ -100,7 +100,7 @@ FontTestScene = class FontTestScene extends TestScene {
 
 };
 
-var FontTest = class FontTest extends BaseTestLayer {
+export class FontTest extends BaseTestLayer {
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 

@@ -143,7 +143,7 @@ var transitionsIdx = 0;
 // the class inherit from TestScene
 // every .Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-var TransitionsTestScene = class TransitionsTestScene extends TestScene {
+export class TransitionsTestScene extends TestScene {
     onEnter() {
         super.onEnter();
         director.setDepthTest(false);
@@ -156,7 +156,7 @@ var TransitionsTestScene = class TransitionsTestScene extends TestScene {
 
 };
 
-var TransitionBase = class TransitionBase extends BaseTestLayer {
+export class TransitionBase extends BaseTestLayer {
 
     title() {
         return arrayOfTransitionsTest[transitionsIdx].title;
@@ -262,7 +262,7 @@ var TransitionBase = class TransitionBase extends BaseTestLayer {
 
 
 };
-var TestLayer1 = class TestLayer1 extends TransitionBase {
+export class TestLayer1 extends TransitionBase {
     constructor() {
         super(s_back1, "Scene 1", new cc.Color(0,0,0,255), new cc.Color(160,99,117,255));
     }
@@ -273,7 +273,7 @@ var TestLayer1 = class TestLayer1 extends TransitionBase {
 
 };
 
-var TestLayer2 = class TestLayer2 extends TransitionBase {
+export class TestLayer2 extends TransitionBase {
     constructor() {
         super(s_back2, "Scene 2", new cc.Color(0,0,0,255), new cc.Color(99,160,117,255));
     }

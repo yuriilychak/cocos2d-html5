@@ -27,7 +27,7 @@
 var PADDLE_STATE_GRABBED = 0;
 var PADDLE_STATE_UNGRABBED = 1;
 
-var Paddle = class Paddle extends cc.Sprite {
+export class Paddle extends cc.Sprite {
 
     constructor(){
         super();

@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 //2015-01-14
-var UITextTest = class UITextTest extends UIMainLayer {
+export class UITextTest extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -44,7 +44,7 @@ var UITextTest = class UITextTest extends UIMainLayer {
 };
 
 //2015-01-14
-var UITextTest_LineWrap = class UITextTest_LineWrap extends UIMainLayer {
+export class UITextTest_LineWrap extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -77,7 +77,7 @@ var UITextTest_LineWrap = class UITextTest_LineWrap extends UIMainLayer {
 };
 
 //2015-01-14
-var UILabelTest_Effect = class UILabelTest_Effect extends UIMainLayer {
+export class UILabelTest_Effect extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -124,7 +124,7 @@ var UILabelTest_Effect = class UILabelTest_Effect extends UIMainLayer {
 };
 
 //2015-01-14
-var UITextTest_TTF = class UITextTest_TTF extends UIMainLayer {
+export class UITextTest_TTF extends UIMainLayer {
     init(){
         if(super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -143,7 +143,7 @@ var UITextTest_TTF = class UITextTest_TTF extends UIMainLayer {
 };
 
 //2015-01-14
-var UITextTest_IgnoreContentSize = class UITextTest_IgnoreContentSize extends UIMainLayer {
+export class UITextTest_IgnoreContentSize extends UIMainLayer {
 
     init(){
         if(super.init()){

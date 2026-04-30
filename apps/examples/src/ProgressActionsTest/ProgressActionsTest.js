@@ -26,7 +26,7 @@
  ****************************************************************************/
 var ProgressTestSceneIdx = -1;
 
-var SpriteDemo = class SpriteDemo extends BaseTestLayer {
+export class SpriteDemo extends BaseTestLayer {
 
     title() {
         return "ProgressActionsTest";
@@ -65,7 +65,7 @@ var SpriteDemo = class SpriteDemo extends BaseTestLayer {
 
 };
 
-var SpriteProgressToRadial = class SpriteProgressToRadial extends SpriteDemo {
+export class SpriteProgressToRadial extends SpriteDemo {
     onEnter() {
         //----start0----onEnter
         super.onEnter();
@@ -96,7 +96,7 @@ var SpriteProgressToRadial = class SpriteProgressToRadial extends SpriteDemo {
 
 };
 
-var SpriteProgressToHorizontal = class SpriteProgressToHorizontal extends SpriteDemo {
+export class SpriteProgressToHorizontal extends SpriteDemo {
     onEnter() {
         //----start1----onEnter
         super.onEnter();
@@ -133,7 +133,7 @@ var SpriteProgressToHorizontal = class SpriteProgressToHorizontal extends Sprite
 
 };
 
-var SpriteProgressToVertical = class SpriteProgressToVertical extends SpriteDemo {
+export class SpriteProgressToVertical extends SpriteDemo {
     onEnter() {
         //----start2----onEnter
         super.onEnter();
@@ -170,7 +170,7 @@ var SpriteProgressToVertical = class SpriteProgressToVertical extends SpriteDemo
 
 };
 
-var SpriteProgressToRadialMidpointChanged = class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
+export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
     onEnter() {
         //----start3----onEnter
         super.onEnter();
@@ -211,7 +211,7 @@ var SpriteProgressToRadialMidpointChanged = class SpriteProgressToRadialMidpoint
 
 };
 
-var SpriteProgressBarVarious = class SpriteProgressBarVarious extends SpriteDemo {
+export class SpriteProgressBarVarious extends SpriteDemo {
     onEnter() {
         //----start4----onEnter
         super.onEnter();
@@ -260,7 +260,7 @@ var SpriteProgressBarVarious = class SpriteProgressBarVarious extends SpriteDemo
 
 };
 
-var SpriteProgressBarTintAndFade = class SpriteProgressBarTintAndFade extends SpriteDemo {
+export class SpriteProgressBarTintAndFade extends SpriteDemo {
     onEnter() {
         //----start5----onEnter
         super.onEnter();
@@ -326,7 +326,7 @@ var SpriteProgressBarTintAndFade = class SpriteProgressBarTintAndFade extends Sp
 
 };
 
-var SpriteProgressWithSpriteFrame = class SpriteProgressWithSpriteFrame extends SpriteDemo {
+export class SpriteProgressWithSpriteFrame extends SpriteDemo {
     onEnter() {
         //----start6----onEnter
         super.onEnter();
@@ -376,7 +376,7 @@ var SpriteProgressWithSpriteFrame = class SpriteProgressWithSpriteFrame extends 
 
 };
 
-var ProgressActionsTestScene = class ProgressActionsTestScene extends TestScene {
+export class ProgressActionsTestScene extends TestScene {
 
     runThisTest(num) {
         ProgressTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

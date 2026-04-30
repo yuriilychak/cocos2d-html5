@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UISliderTest = class UISliderTest extends UIMainLayer {
+export class UISliderTest extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -62,7 +62,7 @@ var UISliderTest = class UISliderTest extends UIMainLayer {
 
 };
 
-var UISliderTest_Scale9 = class UISliderTest_Scale9 extends UIMainLayer {
+export class UISliderTest_Scale9 extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -104,7 +104,7 @@ var UISliderTest_Scale9 = class UISliderTest_Scale9 extends UIMainLayer {
 };
 
 //2015-01-14
-var UISliderNormalDefaultTest = class UISliderNormalDefaultTest extends UIMainLayer {
+export class UISliderNormalDefaultTest extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -141,7 +141,7 @@ var UISliderNormalDefaultTest = class UISliderNormalDefaultTest extends UIMainLa
 };
 
 //2015-01-14
-var UISliderDisabledDefaultTest = class UISliderDisabledDefaultTest extends UIMainLayer {
+export class UISliderDisabledDefaultTest extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();

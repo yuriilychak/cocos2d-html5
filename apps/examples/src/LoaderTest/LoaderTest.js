@@ -28,7 +28,7 @@
 // LoaderTestLayer
 //
 //------------------------------------------------------------------
-var LoaderTestLayer = class LoaderTestLayer extends BaseTestLayer {
+export class LoaderTestLayer extends BaseTestLayer {
 
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
@@ -97,7 +97,7 @@ var LoaderTestLayer = class LoaderTestLayer extends BaseTestLayer {
 
 };
 
-var LoaderCycleLayer = class LoaderCycleLayer extends BaseTestLayer {
+export class LoaderCycleLayer extends BaseTestLayer {
 
     constructor(){
         super();
@@ -209,7 +209,7 @@ var LoaderCycleLayer = class LoaderCycleLayer extends BaseTestLayer {
 
 };
 
-var LoaderTestScene = class LoaderTestScene extends TestScene {
+export class LoaderTestScene extends TestScene {
     runThisTest() {
         this.addChild(new LoaderTestLayer());
         director.runScene(this);

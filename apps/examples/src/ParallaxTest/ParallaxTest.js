@@ -68,7 +68,7 @@ ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
 
 };
 
-var Parallax1 = class Parallax1 extends ParallaxDemo {
+export class Parallax1 extends ParallaxDemo {
 
     constructor() {
         super();
@@ -170,7 +170,7 @@ var Parallax1 = class Parallax1 extends ParallaxDemo {
 
 };
 
-var Parallax2 = class Parallax2 extends ParallaxDemo {
+export class Parallax2 extends ParallaxDemo {
     constructor() {
         super();
 

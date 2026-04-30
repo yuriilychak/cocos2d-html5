@@ -28,7 +28,7 @@ var TAG_LABEL_ATLAS = 1;
 
 var particleSceneIdx = -1;
 
-var ParticleTestScene = class ParticleTestScene extends TestScene {
+export class ParticleTestScene extends TestScene {
     runThisTest(num) {
         particleSceneIdx = (num || num == 0) ? (num - 1) : -1;
 
@@ -171,7 +171,7 @@ var restartParticleAction = function () {
     return particleSceneArr[particleSceneIdx]();
 };
 
-var ParticleDemo = class ParticleDemo extends BaseTestLayer {
+export class ParticleDemo extends BaseTestLayer {
 
     setColor() {
     }
@@ -397,7 +397,7 @@ var ParticleDemo = class ParticleDemo extends BaseTestLayer {
 
 };
 
-var DemoFirework = class DemoFirework extends ParticleDemo {
+export class DemoFirework extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -414,7 +414,7 @@ var DemoFirework = class DemoFirework extends ParticleDemo {
 
 };
 
-var DemoFire = class DemoFire extends ParticleDemo {
+export class DemoFire extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -433,7 +433,7 @@ var DemoFire = class DemoFire extends ParticleDemo {
 
 };
 
-var DemoSun = class DemoSun extends ParticleDemo {
+export class DemoSun extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -451,7 +451,7 @@ var DemoSun = class DemoSun extends ParticleDemo {
 
 };
 
-var DemoPause = class DemoPause extends ParticleDemo {
+export class DemoPause extends ParticleDemo {
     onEnter() {
     super.onEnter();
 
@@ -469,7 +469,7 @@ var DemoPause = class DemoPause extends ParticleDemo {
     
 };
 
-var DemoGalaxy = class DemoGalaxy extends ParticleDemo {
+export class DemoGalaxy extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -487,7 +487,7 @@ var DemoGalaxy = class DemoGalaxy extends ParticleDemo {
 
 };
 
-var DemoFlower = class DemoFlower extends ParticleDemo {
+export class DemoFlower extends ParticleDemo {
     constructor() {
         super();
         this._title = "ParticleFlower";
@@ -512,7 +512,7 @@ var DemoFlower = class DemoFlower extends ParticleDemo {
 
 };
 
-var DemoBigFlower = class DemoBigFlower extends ParticleDemo {
+export class DemoBigFlower extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -583,7 +583,7 @@ var DemoBigFlower = class DemoBigFlower extends ParticleDemo {
 
 };
 
-var DemoRotFlower = class DemoRotFlower extends ParticleDemo {
+export class DemoRotFlower extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -655,7 +655,7 @@ var DemoRotFlower = class DemoRotFlower extends ParticleDemo {
 
 };
 
-var DemoMeteor = class DemoMeteor extends ParticleDemo {
+export class DemoMeteor extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -673,7 +673,7 @@ var DemoMeteor = class DemoMeteor extends ParticleDemo {
 
 };
 
-var DemoSpiral = class DemoSpiral extends ParticleDemo {
+export class DemoSpiral extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -691,7 +691,7 @@ var DemoSpiral = class DemoSpiral extends ParticleDemo {
 
 };
 
-var DemoExplosion = class DemoExplosion extends ParticleDemo {
+export class DemoExplosion extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -714,7 +714,7 @@ var DemoExplosion = class DemoExplosion extends ParticleDemo {
 
 };
 
-var DemoSmoke = class DemoSmoke extends ParticleDemo {
+export class DemoSmoke extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -730,7 +730,7 @@ var DemoSmoke = class DemoSmoke extends ParticleDemo {
 
 };
 
-var DemoSnow = class DemoSnow extends ParticleDemo {
+export class DemoSnow extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -771,7 +771,7 @@ var DemoSnow = class DemoSnow extends ParticleDemo {
 
 };
 
-var DemoRain = class DemoRain extends ParticleDemo {
+export class DemoRain extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -791,7 +791,7 @@ var DemoRain = class DemoRain extends ParticleDemo {
 
 };
 
-var DemoModernArt = class DemoModernArt extends ParticleDemo {
+export class DemoModernArt extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -857,7 +857,7 @@ var DemoModernArt = class DemoModernArt extends ParticleDemo {
 
 };
 
-var DemoRing = class DemoRing extends ParticleDemo {
+export class DemoRing extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -882,7 +882,7 @@ var DemoRing = class DemoRing extends ParticleDemo {
 
 };
 
-var ParallaxParticle = class ParallaxParticle extends ParticleDemo {
+export class ParallaxParticle extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -921,7 +921,7 @@ var ParallaxParticle = class ParallaxParticle extends ParticleDemo {
 
 };
 
-var DemoParticleFromFile = class DemoParticleFromFile extends ParticleDemo {
+export class DemoParticleFromFile extends ParticleDemo {
     constructor(filename) {
         super();
 
@@ -963,7 +963,7 @@ var DemoParticleFromFile = class DemoParticleFromFile extends ParticleDemo {
 
 };
 
-var RadiusMode1 = class RadiusMode1 extends ParticleDemo {
+export class RadiusMode1 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -1035,7 +1035,7 @@ var RadiusMode1 = class RadiusMode1 extends ParticleDemo {
 
 };
 
-var RadiusMode2 = class RadiusMode2 extends ParticleDemo {
+export class RadiusMode2 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -1106,7 +1106,7 @@ var RadiusMode2 = class RadiusMode2 extends ParticleDemo {
 
 };
 
-var Issue704 = class Issue704 extends ParticleDemo {
+export class Issue704 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
@@ -1184,7 +1184,7 @@ var Issue704 = class Issue704 extends ParticleDemo {
 
 };
 
-var Issue870 = class Issue870 extends ParticleDemo {
+export class Issue870 extends ParticleDemo {
     constructor() {
         super();
         this._index = 0;
@@ -1221,7 +1221,7 @@ var Issue870 = class Issue870 extends ParticleDemo {
 
 };
 
-var ParticleBatchTest = class ParticleBatchTest extends ParticleDemo {
+export class ParticleBatchTest extends ParticleDemo {
     constructor() {
         super();
         this._index = 0;
@@ -1267,7 +1267,7 @@ var ParticleBatchTest = class ParticleBatchTest extends ParticleDemo {
 
 };
 
-var ParticleResizeTest = class ParticleResizeTest extends ParticleDemo {
+export class ParticleResizeTest extends ParticleDemo {
     constructor() {
         super();
         this._index = 0;

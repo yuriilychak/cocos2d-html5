@@ -28,7 +28,7 @@
 var sp = sp || {};
 
 var spineSceneIdx = -1;
-var SpineTestScene = class SpineTestScene extends TestScene {
+export class SpineTestScene extends TestScene {
     runThisTest() {
         var layer = SpineTestScene.nextSpineTestLayer();
         this.addChild(layer);
@@ -56,7 +56,7 @@ SpineTestScene.restartSpineTestLayer = function(){
     return new SpineTestScene.testLayers[spineSceneIdx](spineSceneIdx);
 };
 
-var SpineTestLayer = class SpineTestLayer extends BaseTestLayer {
+export class SpineTestLayer extends BaseTestLayer {
     onRestartCallback(sender){
         var s = new SpineTestScene();
         s.addChild(SpineTestScene.restartSpineTestLayer());
@@ -84,7 +84,7 @@ var customSkeletonAnimation = class customSkeletonAnimation extends sp.SkeletonA
 
 };
 
-var SpineTestLayerNormal = class SpineTestLayerNormal extends SpineTestLayer {
+export class SpineTestLayerNormal extends SpineTestLayer {
     constructor(idx) {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
@@ -221,7 +221,7 @@ var SpineTestLayerNormal = class SpineTestLayerNormal extends SpineTestLayer {
 
 };
 
-var SpineTestLayerFFD = class SpineTestLayerFFD extends SpineTestLayer {
+export class SpineTestLayerFFD extends SpineTestLayer {
     constructor(){
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
@@ -261,7 +261,7 @@ var SpineTestLayerFFD = class SpineTestLayerFFD extends SpineTestLayer {
 
 };
 
-var SpineTestPerformanceLayer = class SpineTestPerformanceLayer extends SpineTestLayer {
+export class SpineTestPerformanceLayer extends SpineTestLayer {
     constructor(){
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 

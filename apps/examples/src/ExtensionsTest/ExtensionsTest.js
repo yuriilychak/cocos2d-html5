@@ -77,7 +77,7 @@ if (!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os){
     });
 }
 
-var ExtensionsMainLayer = class ExtensionsMainLayer extends cc.Layer {
+export class ExtensionsMainLayer extends cc.Layer {
     onEnter() {
         super.onEnter();
 
@@ -105,7 +105,7 @@ var ExtensionsMainLayer = class ExtensionsMainLayer extends cc.Layer {
 
 };
 
-var ExtensionsTestScene = class ExtensionsTestScene extends TestScene {
+export class ExtensionsTestScene extends TestScene {
     runThisTest() {
         var pLayer = new ExtensionsMainLayer();
         this.addChild(pLayer);

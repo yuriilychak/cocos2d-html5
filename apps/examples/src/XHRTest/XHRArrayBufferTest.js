@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var XHRArrayBufferTestScene = class XHRArrayBufferTestScene extends TestScene {
+export class XHRArrayBufferTestScene extends TestScene {
     constructor() {
         super(true);
         var xhrLayer = new XHRArrayBufferTestLayer();
@@ -40,7 +40,7 @@ var XHRArrayBufferTestScene = class XHRArrayBufferTestScene extends TestScene {
 
 };
 
-var XHRArrayBufferTestLayer = class XHRArrayBufferTestLayer extends cc.Layer {
+export class XHRArrayBufferTestLayer extends cc.Layer {
     constructor() {
         super();
     }

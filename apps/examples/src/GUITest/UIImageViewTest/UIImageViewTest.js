@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIImageViewTest = class UIImageViewTest extends UIMainLayer {
+export class UIImageViewTest extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text
@@ -45,7 +45,7 @@ var UIImageViewTest = class UIImageViewTest extends UIMainLayer {
 
 };
 
-var UIImageViewTest_Scale9 = class UIImageViewTest_Scale9 extends UIMainLayer {
+export class UIImageViewTest_Scale9 extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -70,7 +70,7 @@ var UIImageViewTest_Scale9 = class UIImageViewTest_Scale9 extends UIMainLayer {
 };
 
 //2015-01-14
-var UIImageViewTest_ContentSize = class UIImageViewTest_ContentSize extends UIMainLayer {
+export class UIImageViewTest_ContentSize extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -131,7 +131,7 @@ var UIImageViewTest_ContentSize = class UIImageViewTest_ContentSize extends UIMa
 };
 
 //2015-01-14
-var UIImageViewFlipTest = class UIImageViewFlipTest extends UIMainLayer {
+export class UIImageViewFlipTest extends UIMainLayer {
     init(){
         if (super.init()) {
             cc.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");

@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UILayoutTestBase = class UILayoutTestBase extends UIMainLayer {
+export class UILayoutTestBase extends UIMainLayer {
     constructor() {
         super();
         this.layout = null;
@@ -97,7 +97,7 @@ var UILayoutTestBase = class UILayoutTestBase extends UIMainLayer {
     }
 
 };
-var UILayoutTest = class UILayoutTest extends UILayoutTestBase {
+export class UILayoutTest extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setContentSize(new cc.Size(280, 150));
@@ -108,7 +108,7 @@ var UILayoutTest = class UILayoutTest extends UILayoutTestBase {
     }
 
 };
-var UILayoutTest_Color = class UILayoutTest_Color extends UILayoutTestBase {
+export class UILayoutTest_Color extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
@@ -121,7 +121,7 @@ var UILayoutTest_Color = class UILayoutTest_Color extends UILayoutTestBase {
     }
 
 };
-var UILayoutTest_Gradient = class UILayoutTest_Gradient extends UILayoutTestBase {
+export class UILayoutTest_Gradient extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
@@ -134,7 +134,7 @@ var UILayoutTest_Gradient = class UILayoutTest_Gradient extends UILayoutTestBase
     }
 
 };
-var UILayoutTest_BackGroundImage = class UILayoutTest_BackGroundImage extends UILayoutTestBase {
+export class UILayoutTest_BackGroundImage extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setClippingEnabled(true);
@@ -148,7 +148,7 @@ var UILayoutTest_BackGroundImage = class UILayoutTest_BackGroundImage extends UI
 
 };
 
-var UILayoutTest_BackGroundImage_Scale9 = class UILayoutTest_BackGroundImage_Scale9 extends UILayoutTestBase {
+export class UILayoutTest_BackGroundImage_Scale9 extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundImageScale9Enabled(true);
@@ -161,7 +161,7 @@ var UILayoutTest_BackGroundImage_Scale9 = class UILayoutTest_BackGroundImage_Sca
     }
 
 };
-var UILayoutTest_Layout_Linear_Vertical = class UILayoutTest_Layout_Linear_Vertical extends UILayoutTestBase {
+export class UILayoutTest_Layout_Linear_Vertical extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
@@ -189,7 +189,7 @@ var UILayoutTest_Layout_Linear_Vertical = class UILayoutTest_Layout_Linear_Verti
     }
 
 };
-var UILayoutTest_Layout_Linear_Horizontal = class UILayoutTest_Layout_Linear_Horizontal extends UILayoutTestBase {
+export class UILayoutTest_Layout_Linear_Horizontal extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
@@ -219,7 +219,7 @@ var UILayoutTest_Layout_Linear_Horizontal = class UILayoutTest_Layout_Linear_Hor
 
 };
 
-var UILayoutTest_Layout_Relative = class UILayoutTest_Layout_Relative extends UILayoutTestBase {
+export class UILayoutTest_Layout_Relative extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.ignoreContentAdaptWithSize(false);
@@ -253,7 +253,7 @@ var UILayoutTest_Layout_Relative = class UILayoutTest_Layout_Relative extends UI
 
 };
 
-var UILayoutTest_Layout_Relative_Align_Parent = class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
+export class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
      init(){
          if (super.init()) {
              var widgetSize = this._widget.getContentSize();
@@ -352,7 +352,7 @@ var UILayoutTest_Layout_Relative_Align_Parent = class UILayoutTest_Layout_Relati
 
 };
 
-var UILayoutTest_Layout_Relative_Location = class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
+export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
      init(){
          if (super.init()) {
              var widgetSize = this._widget.getContentSize();
@@ -422,7 +422,7 @@ var UILayoutTest_Layout_Relative_Location = class UILayoutTest_Layout_Relative_L
 
 };
 
-var UILayoutTest_Layout_Scaled_Widget = class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
+export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -465,7 +465,7 @@ var UILayoutTest_Layout_Scaled_Widget = class UILayoutTest_Layout_Scaled_Widget 
 
 };
 
-var UILayoutComponentTest = class UILayoutComponentTest extends UIMainLayer {
+export class UILayoutComponentTest extends UIMainLayer {
     constructor() {
         super();
         this._baseLayer = null;
@@ -517,7 +517,7 @@ var UILayoutComponentTest = class UILayoutComponentTest extends UIMainLayer {
 
 };
 
-var UILayoutComponent_Berth_Test = class UILayoutComponent_Berth_Test extends UILayoutComponentTest {
+export class UILayoutComponent_Berth_Test extends UILayoutComponentTest {
      init(){
          if (super.init()){
              var leftTopSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
@@ -552,7 +552,7 @@ var UILayoutComponent_Berth_Test = class UILayoutComponent_Berth_Test extends UI
 
 };
 
-var UILayoutComponent_Berth_Stretch_Test = class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest {
+export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest {
     init(){
         if (super.init()) {
             var leftTopSprite = new ccui.ImageView("ccs-res/cocosui/CloseSelected.png");

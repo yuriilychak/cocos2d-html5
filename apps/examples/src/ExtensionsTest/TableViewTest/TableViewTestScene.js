@@ -25,14 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var CustomTableViewCell = class CustomTableViewCell extends cc.TableViewCell {
+export class CustomTableViewCell extends cc.TableViewCell {
     draw(ctx) {
         super.draw(ctx);
     }
 
 };
 
-var TableViewTestLayer = class TableViewTestLayer extends cc.Layer {
+export class TableViewTestLayer extends cc.Layer {
 
     constructor() {
         super();

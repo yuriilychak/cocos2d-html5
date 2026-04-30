@@ -30,7 +30,7 @@ var unitTestSceneIdx = -1;
 // UnitTestBase
 //
 //------------------------------------------------------------------
-var UnitTestBase = class UnitTestBase extends BaseTestLayer {
+export class UnitTestBase extends BaseTestLayer {
     constructor() {
         super();
         this._title = "";
@@ -71,7 +71,7 @@ var UnitTestBase = class UnitTestBase extends BaseTestLayer {
 // RectUnitTest
 //
 //------------------------------------------------------------------
-var RectUnitTest = class RectUnitTest extends UnitTestBase {
+export class RectUnitTest extends UnitTestBase {
     constructor() {
         super();
         this._title = "Rect Unit Test";
@@ -202,7 +202,7 @@ var RectUnitTest = class RectUnitTest extends UnitTestBase {
 // DictionaryToFromTest
 //
 //------------------------------------------------------------------
-var DictionaryToFromTest = class DictionaryToFromTest extends UnitTestBase {
+export class DictionaryToFromTest extends UnitTestBase {
 
     constructor() {
         super();
@@ -262,7 +262,7 @@ var DictionaryToFromTest = class DictionaryToFromTest extends UnitTestBase {
 
 };
 
-var UnitTestScene = class UnitTestScene extends TestScene {
+export class UnitTestScene extends TestScene {
     runThisTest(num) {
         unitTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextUnitTest();

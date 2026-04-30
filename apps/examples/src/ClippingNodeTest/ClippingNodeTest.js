@@ -33,7 +33,7 @@ var TAG_CONTENTNODE = 102;
 
 var clippingNodeTestSceneIdx = -1;
 
-var BaseClippingNodeTest = class BaseClippingNodeTest extends BaseTestLayer {
+export class BaseClippingNodeTest extends BaseTestLayer {
 
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
@@ -75,7 +75,7 @@ var BaseClippingNodeTest = class BaseClippingNodeTest extends BaseTestLayer {
 
 
 
-var BasicTest = class BasicTest extends BaseClippingNodeTest {
+export class BasicTest extends BaseClippingNodeTest {
     title() {
         return "Basic Test";
     }
@@ -148,7 +148,7 @@ var BasicTest = class BasicTest extends BaseClippingNodeTest {
 
 };
 
-var ShapeTest = class ShapeTest extends BasicTest {
+export class ShapeTest extends BasicTest {
     title() {
         return "Shape Basic Test";
     }
@@ -171,7 +171,7 @@ var ShapeTest = class ShapeTest extends BasicTest {
 
 };
 
-var ShapeInvertedTest = class ShapeInvertedTest extends ShapeTest {
+export class ShapeInvertedTest extends ShapeTest {
     title() {
         return "Shape Inverted Basic Test";
     }
@@ -188,7 +188,7 @@ var ShapeInvertedTest = class ShapeInvertedTest extends ShapeTest {
 
 };
 
-var SpriteTest = class SpriteTest extends BasicTest {
+export class SpriteTest extends BasicTest {
     title() {
         return "Sprite Basic Test";
     }
@@ -216,7 +216,7 @@ var SpriteTest = class SpriteTest extends BasicTest {
 
 };
 
-var SpriteNoAlphaTest = class SpriteNoAlphaTest extends SpriteTest {
+export class SpriteNoAlphaTest extends SpriteTest {
     title() {
         return "Sprite No Alpha Basic Test";
     }
@@ -233,7 +233,7 @@ var SpriteNoAlphaTest = class SpriteNoAlphaTest extends SpriteTest {
 
 };
 
-var SpriteInvertedTest = class SpriteInvertedTest extends SpriteTest {
+export class SpriteInvertedTest extends SpriteTest {
     title() {
         return "Sprite Inverted Basic Test";
     }
@@ -251,7 +251,7 @@ var SpriteInvertedTest = class SpriteInvertedTest extends SpriteTest {
 
 };
 
-var NestedTest = class NestedTest extends BaseClippingNodeTest {
+export class NestedTest extends BaseClippingNodeTest {
     title() {
         return "Nested Test";
     }
@@ -300,7 +300,7 @@ var NestedTest = class NestedTest extends BaseClippingNodeTest {
 
 };
 
-var HoleDemo = class HoleDemo extends BaseClippingNodeTest {
+export class HoleDemo extends BaseClippingNodeTest {
     constructor() {
         super();
     }
@@ -401,7 +401,7 @@ var HoleDemo = class HoleDemo extends BaseClippingNodeTest {
 
 };
 
-var ScrollViewDemo = class ScrollViewDemo extends BaseClippingNodeTest {
+export class ScrollViewDemo extends BaseClippingNodeTest {
     constructor() {
         super();
         this._scrolling = false;
@@ -503,7 +503,7 @@ var _planeColor = [
     new cc.Color(179, 179, 179, 77)
 ];
 
-var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTest {
+export class RawStencilBufferTest extends BaseClippingNodeTest {
     constructor() {
         super();
         this._sprite = null;
@@ -596,7 +596,7 @@ var RawStencilBufferTest = class RawStencilBufferTest extends BaseClippingNodeTe
 
 };
 
-var RawStencilBufferTest2 = class RawStencilBufferTest2 extends RawStencilBufferTest {
+export class RawStencilBufferTest2 extends RawStencilBufferTest {
     subtitle() {
         return "2:DepthMask:FALSE";
     }
@@ -613,7 +613,7 @@ var RawStencilBufferTest2 = class RawStencilBufferTest2 extends RawStencilBuffer
 
 };
 
-var RawStencilBufferTest3 = class RawStencilBufferTest3 extends RawStencilBufferTest {
+export class RawStencilBufferTest3 extends RawStencilBufferTest {
     subtitle() {
         return "3:DepthTest:DISABLE,DepthMask:FALSE";
     }
@@ -634,7 +634,7 @@ var RawStencilBufferTest3 = class RawStencilBufferTest3 extends RawStencilBuffer
 
 };
 
-var RawStencilBufferTest4 = class RawStencilBufferTest4 extends RawStencilBufferTest {
+export class RawStencilBufferTest4 extends RawStencilBufferTest {
     subtitle() {
         return "4:DepthMask:FALSE,AlphaTest:ENABLE";
     }
@@ -658,7 +658,7 @@ var RawStencilBufferTest4 = class RawStencilBufferTest4 extends RawStencilBuffer
 
 };
 
-var RawStencilBufferTest5 = class RawStencilBufferTest5 extends RawStencilBufferTest {
+export class RawStencilBufferTest5 extends RawStencilBufferTest {
     subtitle() {
         return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
     }
@@ -684,7 +684,7 @@ var RawStencilBufferTest5 = class RawStencilBufferTest5 extends RawStencilBuffer
 
 };
 
-var RawStencilBufferTest6 = class RawStencilBufferTest6 extends RawStencilBufferTest {
+export class RawStencilBufferTest6 extends RawStencilBufferTest {
     subtitle() {
         return "6:ManualClear,AlphaTest:ENABLE";
     }
@@ -785,7 +785,7 @@ var restartClippingNodeTest = function () {
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 
-var ClippingNodeTestScene = class ClippingNodeTestScene extends TestScene {
+export class ClippingNodeTestScene extends TestScene {
     runThisTest(num) {
         clippingNodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         cc.director.runScene(this);

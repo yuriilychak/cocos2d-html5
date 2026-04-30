@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 
-var UILabelTest = class UILabelTest extends UIMainLayer {
+export class UILabelTest extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text
@@ -49,7 +49,7 @@ var UILabelTest = class UILabelTest extends UIMainLayer {
 
 };
 
-var UILabelTest_LineWrap = class UILabelTest_LineWrap extends UIMainLayer {
+export class UILabelTest_LineWrap extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -78,7 +78,7 @@ var UILabelTest_LineWrap = class UILabelTest_LineWrap extends UIMainLayer {
 };
 
 
-var UILabelTest_TTF = class UILabelTest_TTF extends UIMainLayer {
+export class UILabelTest_TTF extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text

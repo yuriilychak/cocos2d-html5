@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UICheckBoxTest = class UICheckBoxTest extends UIMainLayer {
+export class UICheckBoxTest extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text
@@ -67,7 +67,7 @@ var UICheckBoxTest = class UICheckBoxTest extends UIMainLayer {
 };
 
 //2015-01-14
-var UICheckBoxDefaultBehaviorTest = class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
+export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
 
     init(){
         if(super.init()){

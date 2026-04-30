@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UILoadingBarTest = class UILoadingBarTest extends UIMainLayer {
+export class UILoadingBarTest extends UIMainLayer {
     constructor() {
         super();
 
@@ -76,7 +76,7 @@ var UILoadingBarTest = class UILoadingBarTest extends UIMainLayer {
 
 };
 
-var UILoadingBarTest_Left = class UILoadingBarTest_Left extends UILoadingBarTest {
+export class UILoadingBarTest_Left extends UILoadingBarTest {
     createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
@@ -91,7 +91,7 @@ var UILoadingBarTest_Left = class UILoadingBarTest_Left extends UILoadingBarTest
 
 };
 
-var UILoadingBarTest_Right = class UILoadingBarTest_Right extends UILoadingBarTest {
+export class UILoadingBarTest_Right extends UILoadingBarTest {
     createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
@@ -107,7 +107,7 @@ var UILoadingBarTest_Right = class UILoadingBarTest_Right extends UILoadingBarTe
 
 };
 
-var UILoadingBarTest_Fix = class UILoadingBarTest_Fix extends UILoadingBarTest {
+export class UILoadingBarTest_Fix extends UILoadingBarTest {
     createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
@@ -123,7 +123,7 @@ var UILoadingBarTest_Fix = class UILoadingBarTest_Fix extends UILoadingBarTest {
 
 };
 
-var UILoadingBarTest_Left_Scale9 = class UILoadingBarTest_Left_Scale9 extends UILoadingBarTest {
+export class UILoadingBarTest_Left_Scale9 extends UILoadingBarTest {
     createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
@@ -141,7 +141,7 @@ var UILoadingBarTest_Left_Scale9 = class UILoadingBarTest_Left_Scale9 extends UI
 
 };
 
-var UILoadingBarTest_Right_Scale9 = class UILoadingBarTest_Right_Scale9 extends UILoadingBarTest {
+export class UILoadingBarTest_Right_Scale9 extends UILoadingBarTest {
     createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();
@@ -160,7 +160,7 @@ var UILoadingBarTest_Right_Scale9 = class UILoadingBarTest_Right_Scale9 extends 
 
 };
 
-var UILoadingBarTest_Fix_Scale9 = class UILoadingBarTest_Fix_Scale9 extends UILoadingBarTest {
+export class UILoadingBarTest_Fix_Scale9 extends UILoadingBarTest {
     createLoadingBar() {
         var widgetSize = this._widget.getContentSize();
         var loadingBar = new ccui.LoadingBar();

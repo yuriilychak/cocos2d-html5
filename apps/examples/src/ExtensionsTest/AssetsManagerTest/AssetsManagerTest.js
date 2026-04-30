@@ -33,7 +33,7 @@ var backgroundPaths = ["Images/assetMgrBackground1.jpg", "Images/assetMgrBackgro
 
 var currentScene = 0;
 
-var AssetsManagerTestLayer = class AssetsManagerTestLayer extends BaseTestLayer {
+export class AssetsManagerTestLayer extends BaseTestLayer {
 
     constructor(spritePath) {
         super();
@@ -88,7 +88,7 @@ var AssetsManagerTestLayer = class AssetsManagerTestLayer extends BaseTestLayer 
 
 
 
-var AssetsManagerTestScene = class AssetsManagerTestScene extends TestScene {
+export class AssetsManagerTestScene extends TestScene {
 
     constructor(background) {
         super();
@@ -103,7 +103,7 @@ var AssetsManagerTestScene = class AssetsManagerTestScene extends TestScene {
 
 var __failCount = 0;
 
-var AssetsManagerLoaderScene = class AssetsManagerLoaderScene extends TestScene {
+export class AssetsManagerLoaderScene extends TestScene {
     constructor() {
         super();
         this._am = null;

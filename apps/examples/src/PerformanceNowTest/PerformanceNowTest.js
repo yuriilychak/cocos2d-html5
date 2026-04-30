@@ -24,7 +24,7 @@
 
 var scenePerformanceNowTestIdx = -1;
 
-var PerformanceNowBaseLayer = class PerformanceNowBaseLayer extends BaseTestLayer {
+export class PerformanceNowBaseLayer extends BaseTestLayer {
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );
     }
@@ -74,7 +74,7 @@ var PerformanceNowBaseLayer = class PerformanceNowBaseLayer extends BaseTestLaye
 // Tests
 //
 //------------------------------------------------------------------
-var BasicPerformanceNowTest = class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
+export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
     onEnter() {
         super.onEnter();
         if (performance && typeof performance.now === 'function') {
@@ -105,7 +105,7 @@ var BasicPerformanceNowTest = class BasicPerformanceNowTest extends PerformanceN
 
 };
 
-var MonotonicIncreaseTest = class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
+export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
     constructor() {
         super();
         if (performance && typeof performance.now !== 'function') {
@@ -156,7 +156,7 @@ var MonotonicIncreaseTest = class MonotonicIncreaseTest extends PerformanceNowBa
 
 };
 
-var PerformanceNowTestScene = class PerformanceNowTestScene extends TestScene {
+export class PerformanceNowTestScene extends TestScene {
     runThisTest(num) {
         scenePerformanceNowTestIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextPerformanceNowTest();

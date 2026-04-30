@@ -30,7 +30,7 @@ var layerTestSceneIdx = -1;
 var LAYERTEST2_LAYER1_TAG = 1;
 var LAYERTEST2_LAYER2_TAG = 2;
 
-var LayerTestScene = class LayerTestScene extends TestScene {
+export class LayerTestScene extends TestScene {
     runThisTest(num) {
         layerTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextLayerTest());
@@ -44,7 +44,7 @@ var LayerTestScene = class LayerTestScene extends TestScene {
 // LayerTest
 //
 //------------------------------------------------------------------
-var LayerTest = class LayerTest extends BaseTestLayer {
+export class LayerTest extends BaseTestLayer {
     constructor() {
         super();
         this._title = null;
@@ -94,7 +94,7 @@ var LayerTest = class LayerTest extends BaseTestLayer {
 // LayerTest1
 //
 //------------------------------------------------------------------
-var LayerTest1 = class LayerTest1 extends LayerTest {
+export class LayerTest1 extends LayerTest {
     constructor() {
         super();
         this.pixel = {"0": 190, "1": 0, "2": 0, "3": 128};
@@ -167,7 +167,7 @@ var LayerTest1 = class LayerTest1 extends LayerTest {
 
 };
 
-var IgnoreAnchorpointTest1 = class IgnoreAnchorpointTest1 extends LayerTest {
+export class IgnoreAnchorpointTest1 extends LayerTest {
     constructor() {
         super();
         this.pixel1 = {"0": 100, "1": 150, "2": 100, "3": 200};
@@ -221,7 +221,7 @@ var IgnoreAnchorpointTest1 = class IgnoreAnchorpointTest1 extends LayerTest {
     }
 
 };
-var IgnoreAnchorpointTest2 = class IgnoreAnchorpointTest2 extends LayerTest {
+export class IgnoreAnchorpointTest2 extends LayerTest {
     constructor() {
         super();
         this.pixel1 = {"0": 50, "1": 100, "2": 50, "3": 200};
@@ -276,7 +276,7 @@ var IgnoreAnchorpointTest2 = class IgnoreAnchorpointTest2 extends LayerTest {
 
 };
 
-var IgnoreAnchorpointTest3 = class IgnoreAnchorpointTest3 extends LayerTest {
+export class IgnoreAnchorpointTest3 extends LayerTest {
     onEnter() {
         //----start5----onEnter
         super.onEnter();
@@ -301,7 +301,7 @@ var IgnoreAnchorpointTest3 = class IgnoreAnchorpointTest3 extends LayerTest {
 
 };
 
-var IgnoreAnchorpointTest4 = class IgnoreAnchorpointTest4 extends LayerTest {
+export class IgnoreAnchorpointTest4 extends LayerTest {
     onEnter() {
         //----start6----onEnter
         super.onEnter();
@@ -332,7 +332,7 @@ var IgnoreAnchorpointTest4 = class IgnoreAnchorpointTest4 extends LayerTest {
 // LayerTest2
 //
 //------------------------------------------------------------------
-var LayerTest2 = class LayerTest2 extends LayerTest {
+export class LayerTest2 extends LayerTest {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -417,7 +417,7 @@ var LayerTest2 = class LayerTest2 extends LayerTest {
 // LayerTestBlend
 //
 //------------------------------------------------------------------
-var LayerTestBlend = class LayerTestBlend extends LayerTest {
+export class LayerTestBlend extends LayerTest {
 
     constructor() {
         //----start2----ctor

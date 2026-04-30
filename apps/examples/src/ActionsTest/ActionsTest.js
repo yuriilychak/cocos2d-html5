@@ -34,7 +34,7 @@ var SPRITE_KATHIA_TAG = 3;
 // the class inherit from TestScene
 // every Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-var ActionsTestScene = class ActionsTestScene extends TestScene {
+export class ActionsTestScene extends TestScene {
   runThisTest(num) {
     actionsTestIdx = num || num == 0 ? num - 1 : -1;
     this.addChild(nextActionsTest());
@@ -43,7 +43,7 @@ var ActionsTestScene = class ActionsTestScene extends TestScene {
 
 };
 
-var ActionsDemo = class ActionsDemo extends BaseTestLayer {
+export class ActionsDemo extends BaseTestLayer {
 
   constructor() {
     super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
@@ -160,7 +160,7 @@ var ActionsDemo = class ActionsDemo extends BaseTestLayer {
 // ActionManual
 //
 //------------------------------------------------------------------
-var ActionManual = class ActionManual extends ActionsDemo {
+export class ActionManual extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 0.1;
@@ -242,7 +242,7 @@ var ActionManual = class ActionManual extends ActionsDemo {
 //	ActionMove
 //
 //------------------------------------------------------------------
-var ActionMove = class ActionMove extends ActionsDemo {
+export class ActionMove extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -301,7 +301,7 @@ var ActionMove = class ActionMove extends ActionsDemo {
 // ActionScale
 //
 //------------------------------------------------------------------
-var ActionScale = class ActionScale extends ActionsDemo {
+export class ActionScale extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -360,7 +360,7 @@ var ActionScale = class ActionScale extends ActionsDemo {
 //  ActionRotate
 //
 //------------------------------------------------------------------
-var ActionRotate = class ActionRotate extends ActionsDemo {
+export class ActionRotate extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -420,7 +420,7 @@ var ActionRotate = class ActionRotate extends ActionsDemo {
 //  ActionRotateXY
 //
 //------------------------------------------------------------------
-var ActionRotateXY = class ActionRotateXY extends ActionsDemo {
+export class ActionRotateXY extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -488,7 +488,7 @@ var ActionRotateXY = class ActionRotateXY extends ActionsDemo {
 //	ActionSkew
 //
 //------------------------------------------------------------------
-var ActionSkew = class ActionSkew extends ActionsDemo {
+export class ActionSkew extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -545,7 +545,7 @@ var ActionSkew = class ActionSkew extends ActionsDemo {
 
 };
 
-var ActionSkewRotateScale = class ActionSkewRotateScale extends ActionsDemo {
+export class ActionSkewRotateScale extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -633,7 +633,7 @@ var ActionSkewRotateScale = class ActionSkewRotateScale extends ActionsDemo {
 // ActionJump
 //
 //------------------------------------------------------------------
-var ActionJump = class ActionJump extends ActionsDemo {
+export class ActionJump extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -697,7 +697,7 @@ var ActionJump = class ActionJump extends ActionsDemo {
 // ActionBezier
 //
 //------------------------------------------------------------------
-var ActionBezier = class ActionBezier extends ActionsDemo {
+export class ActionBezier extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -805,7 +805,7 @@ var ActionBezier = class ActionBezier extends ActionsDemo {
 // ActionBezierToCopy
 //
 //------------------------------------------------------------------
-var ActionBezierToCopy = class ActionBezierToCopy extends ActionsDemo {
+export class ActionBezierToCopy extends ActionsDemo {
   onEnter() {
     //----start9----onEnter
     super.onEnter();
@@ -851,7 +851,7 @@ var ActionBezierToCopy = class ActionBezierToCopy extends ActionsDemo {
 // Issue1008
 //
 //------------------------------------------------------------------
-var Issue1008 = class Issue1008 extends ActionsDemo {
+export class Issue1008 extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 3.1;
@@ -916,7 +916,7 @@ var Issue1008 = class Issue1008 extends ActionsDemo {
 // ActionBlink
 //
 //------------------------------------------------------------------
-var ActionBlink = class ActionBlink extends ActionsDemo {
+export class ActionBlink extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = new cc.Blink( time, #_of_blinks );";
@@ -966,7 +966,7 @@ var ActionBlink = class ActionBlink extends ActionsDemo {
 // ActionFade
 //
 //------------------------------------------------------------------
-var ActionFade = class ActionFade extends ActionsDemo {
+export class ActionFade extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = new cc.FadeIn( time );\n" + "a = new cc.FadeOut( time );";
@@ -1013,7 +1013,7 @@ var ActionFade = class ActionFade extends ActionsDemo {
 // ActionTint
 //
 //------------------------------------------------------------------
-var ActionTint = class ActionTint extends ActionsDemo {
+export class ActionTint extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -1066,7 +1066,7 @@ var ActionTint = class ActionTint extends ActionsDemo {
 // ActionAnimate
 //
 //------------------------------------------------------------------
-var ActionAnimate = class ActionAnimate extends ActionsDemo {
+export class ActionAnimate extends ActionsDemo {
   onEnter() {
     //----start44----onEnter
     super.onEnter();
@@ -1125,7 +1125,7 @@ var ActionAnimate = class ActionAnimate extends ActionsDemo {
 //	ActionSequence
 //
 //------------------------------------------------------------------
-var ActionSequence = class ActionSequence extends ActionsDemo {
+export class ActionSequence extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = cc.sequence( a1, a2, a3,..., aN);";
@@ -1169,7 +1169,7 @@ var ActionSequence = class ActionSequence extends ActionsDemo {
 //	ActionSequence2
 //
 //------------------------------------------------------------------
-var ActionSequence2 = class ActionSequence2 extends ActionsDemo {
+export class ActionSequence2 extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 1.1;
@@ -1246,7 +1246,7 @@ var ActionSequence2 = class ActionSequence2 extends ActionsDemo {
 //	ActionCallFunc1
 //
 //------------------------------------------------------------------
-var ActionCallFunc1 = class ActionCallFunc1 extends ActionsDemo {
+export class ActionCallFunc1 extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 5.05;
@@ -1341,7 +1341,7 @@ var ActionCallFunc1 = class ActionCallFunc1 extends ActionsDemo {
 // ActionCallFunc2
 //
 //------------------------------------------------------------------
-var ActionCallFunc2 = class ActionCallFunc2 extends ActionsDemo {
+export class ActionCallFunc2 extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 2.1;
@@ -1392,7 +1392,7 @@ var ActionCallFunc2 = class ActionCallFunc2 extends ActionsDemo {
 // ActionCallFunc3
 //
 //------------------------------------------------------------------
-var ActionCallFunc3 = class ActionCallFunc3 extends ActionsDemo {
+export class ActionCallFunc3 extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 0.1;
@@ -1443,7 +1443,7 @@ var ActionCallFunc3 = class ActionCallFunc3 extends ActionsDemo {
 // ActionSpawn
 //
 //------------------------------------------------------------------
-var ActionSpawn = class ActionSpawn extends ActionsDemo {
+export class ActionSpawn extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = cc.spawn( a1, a2, ..., aN );";
@@ -1487,7 +1487,7 @@ var ActionSpawn = class ActionSpawn extends ActionsDemo {
 // ActionRepeatForever
 //
 //------------------------------------------------------------------
-var ActionRepeatForever = class ActionRepeatForever extends ActionsDemo {
+export class ActionRepeatForever extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = action.repeatForever();";
@@ -1540,7 +1540,7 @@ var ActionRepeatForever = class ActionRepeatForever extends ActionsDemo {
 // ActionRotateToRepeat
 //
 //------------------------------------------------------------------
-var ActionRotateToRepeat = class ActionRotateToRepeat extends ActionsDemo {
+export class ActionRotateToRepeat extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = action_to_repeat.repeat(#_of_times);";
@@ -1588,7 +1588,7 @@ var ActionRotateToRepeat = class ActionRotateToRepeat extends ActionsDemo {
 // ActionRotateJerk
 //
 //------------------------------------------------------------------
-var ActionRotateJerk = class ActionRotateJerk extends ActionsDemo {
+export class ActionRotateJerk extends ActionsDemo {
   onEnter() {
     //----start24----onEnter
     super.onEnter();
@@ -1611,7 +1611,7 @@ var ActionRotateJerk = class ActionRotateJerk extends ActionsDemo {
 // ActionReverse
 //
 //------------------------------------------------------------------
-var ActionReverse = class ActionReverse extends ActionsDemo {
+export class ActionReverse extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = action.reverse();";
@@ -1664,7 +1664,7 @@ var ActionReverse = class ActionReverse extends ActionsDemo {
 // ActionDelayTime
 //
 //------------------------------------------------------------------
-var ActionDelayTime = class ActionDelayTime extends ActionsDemo {
+export class ActionDelayTime extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = new cc.DelayTime( time );";
@@ -1705,7 +1705,7 @@ var ActionDelayTime = class ActionDelayTime extends ActionsDemo {
 // ActionReverseSequence
 //
 //------------------------------------------------------------------
-var ActionReverseSequence = class ActionReverseSequence extends ActionsDemo {
+export class ActionReverseSequence extends ActionsDemo {
   onEnter() {
     //----start28----onEnter
     super.onEnter();
@@ -1729,7 +1729,7 @@ var ActionReverseSequence = class ActionReverseSequence extends ActionsDemo {
 // ActionReverseSequence2
 //
 //------------------------------------------------------------------
-var ActionReverseSequence2 = class ActionReverseSequence2 extends ActionsDemo {
+export class ActionReverseSequence2 extends ActionsDemo {
   onEnter() {
     //----start29----onEnter
     super.onEnter();
@@ -1767,7 +1767,7 @@ var ActionReverseSequence2 = class ActionReverseSequence2 extends ActionsDemo {
 // ActionRepeat
 //
 //------------------------------------------------------------------
-var ActionRepeat = class ActionRepeat extends ActionsDemo {
+export class ActionRepeat extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 4.3;
@@ -1815,7 +1815,7 @@ var ActionRepeat = class ActionRepeat extends ActionsDemo {
 // ActionFollow
 //
 //------------------------------------------------------------------
-var ActionFollow = class ActionFollow extends ActionsDemo {
+export class ActionFollow extends ActionsDemo {
   onEnter() {
     //----start30----onEnter
     super.onEnter();
@@ -1848,7 +1848,7 @@ var ActionFollow = class ActionFollow extends ActionsDemo {
 // ActionCardinalSpline
 //
 //------------------------------------------------------------------
-var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
+export class ActionCardinalSpline extends ActionsDemo {
 
       get _code() { 
         return " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
@@ -1997,7 +1997,7 @@ var ActionCardinalSpline = class ActionCardinalSpline extends ActionsDemo {
 // ActionCatmullRom
 //
 //------------------------------------------------------------------
-var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
+export class ActionCatmullRom extends ActionsDemo {
 
       get _code() { 
         return "a = new cc.CatmullRomBy( time, array_of_points );\n" +
@@ -2149,7 +2149,7 @@ var ActionCatmullRom = class ActionCatmullRom extends ActionsDemo {
 // ActionTargeted
 //
 //------------------------------------------------------------------
-var ActionTargeted = class ActionTargeted extends ActionsDemo {
+export class ActionTargeted extends ActionsDemo {
     constructor() {
         super();
         this._code = "a = new cc.TargetedAction( target, action );";
@@ -2190,7 +2190,7 @@ var ActionTargeted = class ActionTargeted extends ActionsDemo {
 // ActionTargetedCopy
 //
 //------------------------------------------------------------------
-var ActionTargetedCopy = class ActionTargetedCopy extends ActionsDemo {
+export class ActionTargetedCopy extends ActionsDemo {
   onEnter() {
     //----start32----onEnter
     super.onEnter();
@@ -2221,7 +2221,7 @@ var ActionTargetedCopy = class ActionTargetedCopy extends ActionsDemo {
 // ActionStackableMove
 //
 //------------------------------------------------------------------
-var ActionStackableMove = class ActionStackableMove extends ActionsDemo {
+export class ActionStackableMove extends ActionsDemo {
     constructor() {
         super();
         this.testDuration = 0.2;
@@ -2286,7 +2286,7 @@ var ActionStackableMove = class ActionStackableMove extends ActionsDemo {
 // ActionStackableJump
 //
 //------------------------------------------------------------------
-var ActionStackableJump = class ActionStackableJump extends ActionsDemo {
+export class ActionStackableJump extends ActionsDemo {
   onEnter() {
     //----start34----onEnter
     super.onEnter();
@@ -2324,7 +2324,7 @@ var ActionStackableJump = class ActionStackableJump extends ActionsDemo {
 // ActionStackableBezier
 //
 //------------------------------------------------------------------
-var ActionStackableBezier = class ActionStackableBezier extends ActionsDemo {
+export class ActionStackableBezier extends ActionsDemo {
   onEnter() {
     //----start35----onEnter
     super.onEnter();
@@ -2368,7 +2368,7 @@ var ActionStackableBezier = class ActionStackableBezier extends ActionsDemo {
 // ActionStackableCatmullRom
 //
 //------------------------------------------------------------------
-var ActionStackableCatmullRom = class ActionStackableCatmullRom extends ActionsDemo {
+export class ActionStackableCatmullRom extends ActionsDemo {
   onEnter() {
     //----start36----onEnter
     super.onEnter();
@@ -2416,7 +2416,7 @@ var ActionStackableCatmullRom = class ActionStackableCatmullRom extends ActionsD
 // ActionStackableCardinalSpline
 //
 //------------------------------------------------------------------
-var ActionStackableCardinalSpline = class ActionStackableCardinalSpline extends ActionsDemo {
+export class ActionStackableCardinalSpline extends ActionsDemo {
   onEnter() {
     //----start37----onEnter
     super.onEnter();
@@ -2464,7 +2464,7 @@ var ActionStackableCardinalSpline = class ActionStackableCardinalSpline extends 
 // PauseResumeActions
 //
 //------------------------------------------------------------------
-var PauseResumeActions = class PauseResumeActions extends ActionsDemo {
+export class PauseResumeActions extends ActionsDemo {
     constructor() {
         super();
         this._pausedTargets = [];
@@ -2507,7 +2507,7 @@ var PauseResumeActions = class PauseResumeActions extends ActionsDemo {
 // Issue1305
 //
 //------------------------------------------------------------------
-var Issue1305 = class Issue1305 extends ActionsDemo {
+export class Issue1305 extends ActionsDemo {
     constructor() {
         super();
         this._spriteTemp = null;
@@ -2562,7 +2562,7 @@ var Issue1305 = class Issue1305 extends ActionsDemo {
 // Issue1305_2
 //
 //------------------------------------------------------------------
-var Issue1305_2 = class Issue1305_2 extends ActionsDemo {
+export class Issue1305_2 extends ActionsDemo {
   onEnter() {
     //----start40----onEnter
     super.onEnter();
@@ -2615,7 +2615,7 @@ var Issue1305_2 = class Issue1305_2 extends ActionsDemo {
 // Issue1288
 //
 //------------------------------------------------------------------
-var Issue1288 = class Issue1288 extends ActionsDemo {
+export class Issue1288 extends ActionsDemo {
   onEnter() {
     //----start41----onEnter
     super.onEnter();
@@ -2648,7 +2648,7 @@ var Issue1288 = class Issue1288 extends ActionsDemo {
 // Issue1288_2
 //
 //------------------------------------------------------------------
-var Issue1288_2 = class Issue1288_2 extends ActionsDemo {
+export class Issue1288_2 extends ActionsDemo {
   onEnter() {
     //----start42----onEnter
     super.onEnter();
@@ -2677,7 +2677,7 @@ var Issue1288_2 = class Issue1288_2 extends ActionsDemo {
 // Issue1327
 //
 //------------------------------------------------------------------
-var Issue1327 = class Issue1327 extends ActionsDemo {
+export class Issue1327 extends ActionsDemo {
   onEnter() {
     //----start43----onEnter
     super.onEnter();
@@ -2729,7 +2729,7 @@ var Issue1327 = class Issue1327 extends ActionsDemo {
 // Issue1438
 //
 //------------------------------------------------------------------
-var Issue1438 = class Issue1438 extends ActionsDemo {
+export class Issue1438 extends ActionsDemo {
   onEnter() {
     //----start45----onEnter
     super.onEnter();
@@ -2783,7 +2783,7 @@ var Issue1438 = class Issue1438 extends ActionsDemo {
 // Issue1438
 //
 //------------------------------------------------------------------
-var Issue1446 = class Issue1446 extends ActionsDemo {
+export class Issue1446 extends ActionsDemo {
   title() {
     return "Sequence + Speed in 'reverse mode'";
   }
@@ -2825,7 +2825,7 @@ var Issue1446 = class Issue1446 extends ActionsDemo {
 
 };
 
-var SequenceRepeatTest = class SequenceRepeatTest extends ActionsDemo {
+export class SequenceRepeatTest extends ActionsDemo {
   onEnter() {
     //----start47----onEnter
     super.onEnter();
@@ -2888,7 +2888,7 @@ var createCustomAction = function (ActionObject) {
   return CustomAction;
 };
 
-var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
+export class ActionCustomTest extends ActionsDemo {
     constructor() {
         super();
         this._spritePos = null;
@@ -3168,7 +3168,7 @@ var ActionCustomTest = class ActionCustomTest extends ActionsDemo {
 
 };
 
-var ActionIssue13605 = class ActionIssue13605 extends ActionsDemo {
+export class ActionIssue13605 extends ActionsDemo {
   onEnter() {
     //----start47----onEnter
     super.onEnter();

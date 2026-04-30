@@ -28,7 +28,7 @@
 
 var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket; 
 
-var WebSocketTestLayer = class WebSocketTestLayer extends cc.Layer {
+export class WebSocketTestLayer extends cc.Layer {
     constructor() {
         super();
         this._wsiSendText = null;

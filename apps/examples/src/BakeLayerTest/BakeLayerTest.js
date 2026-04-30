@@ -32,7 +32,7 @@ var _bakeLayerTestIdx = -1;
 // ActionManagerTest
 //
 //------------------------------------------------------------------
-var BakeLayerBaseTest = class BakeLayerBaseTest extends BaseTestLayer {
+export class BakeLayerBaseTest extends BaseTestLayer {
     constructor() {
         super();
         this._atlas = null;
@@ -74,7 +74,7 @@ var BakeLayerBaseTest = class BakeLayerBaseTest extends BaseTestLayer {
 
 };
 
-var BakeLayerTest1 = class BakeLayerTest1 extends BakeLayerBaseTest {
+export class BakeLayerTest1 extends BakeLayerBaseTest {
 
     title() {
         return "Test 1. Bake Layer (Canvas only)";
@@ -136,7 +136,7 @@ var BakeLayerTest1 = class BakeLayerTest1 extends BakeLayerBaseTest {
 
 };
 
-var BakeLayerTest2 = class BakeLayerTest2 extends BakeLayerBaseTest {
+export class BakeLayerTest2 extends BakeLayerBaseTest {
 
     title() {
         return "Test 2. Bake Layer with other layer (Canvas only)";
@@ -230,7 +230,7 @@ var BakeLayerTest2 = class BakeLayerTest2 extends BakeLayerBaseTest {
 
 };
 
-var BakeLayerColorTest = class BakeLayerColorTest extends BakeLayerBaseTest {
+export class BakeLayerColorTest extends BakeLayerBaseTest {
 
     title() {
         return "Test 3. Bake Layer Gradient (Canvas only)";
@@ -300,7 +300,7 @@ var BakeLayerColorTest = class BakeLayerColorTest extends BakeLayerBaseTest {
 
 };
 
-var BakeLayerTestScene = class BakeLayerTestScene extends TestScene {
+export class BakeLayerTestScene extends TestScene {
     runThisTest(num) {
         _bakeLayerTestIdx = (num || 0) - 1;
         this.addChild(nextBakeLayerTest());

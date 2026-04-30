@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIPageViewTest = class UIPageViewTest extends UIMainLayer {
+export class UIPageViewTest extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -96,7 +96,7 @@ var UIPageViewTest = class UIPageViewTest extends UIMainLayer {
 };
 
 //2015-01-14
-var UIPageViewButtonTest = class UIPageViewButtonTest extends UIMainLayer {
+export class UIPageViewButtonTest extends UIMainLayer {
     init(){
         if (super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -173,7 +173,7 @@ var UIPageViewButtonTest = class UIPageViewButtonTest extends UIMainLayer {
 };
 
 //2015-01-14
-var UIPageViewCustomScrollThreshold = class UIPageViewCustomScrollThreshold extends UIMainLayer {
+export class UIPageViewCustomScrollThreshold extends UIMainLayer {
     init(){
         if (super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -249,7 +249,7 @@ var UIPageViewCustomScrollThreshold = class UIPageViewCustomScrollThreshold exte
 };
 
 //2015-01-14
-var UIPageViewTouchPropagationTest = class UIPageViewTouchPropagationTest extends UIMainLayer {
+export class UIPageViewTouchPropagationTest extends UIMainLayer {
     init(){
         if (super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -406,7 +406,7 @@ var UIPageViewTouchPropagationTest = class UIPageViewTouchPropagationTest extend
 };
 
 //2015-01-14
-var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
+export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
     init(){
         var self = this;
         if (super.init()){
@@ -543,7 +543,7 @@ var UIPageViewDynamicAddAndRemoveTest = class UIPageViewDynamicAddAndRemoveTest 
 
 };
 
-var UIPageViewDisableTouchTest = class UIPageViewDisableTouchTest extends UIMainLayer {
+export class UIPageViewDisableTouchTest extends UIMainLayer {
     init() {
         if(super.init()){
             var widgetSize = this._widget.getContentSize();
@@ -594,7 +594,7 @@ var UIPageViewDisableTouchTest = class UIPageViewDisableTouchTest extends UIMain
 
 };
 
-var UIPageViewJumpToPageTest = class UIPageViewJumpToPageTest extends UIMainLayer {
+export class UIPageViewJumpToPageTest extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -682,7 +682,7 @@ var UIPageViewJumpToPageTest = class UIPageViewJumpToPageTest extends UIMainLaye
 
 };
 
-var UIPageViewChildSizeTest = class UIPageViewChildSizeTest extends UIMainLayer {
+export class UIPageViewChildSizeTest extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -742,7 +742,7 @@ var UIPageViewChildSizeTest = class UIPageViewChildSizeTest extends UIMainLayer 
 
 };
 
-var UIPageViewIndicatorTest = class UIPageViewIndicatorTest extends UIMainLayer {
+export class UIPageViewIndicatorTest extends UIMainLayer {
     init() {
         if(super.init()){
             var widgetSize = this._widget.getContentSize();

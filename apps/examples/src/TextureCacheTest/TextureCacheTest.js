@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TextureCacheTestBase = class TextureCacheTestBase extends BaseTestLayer {
+export class TextureCacheTestBase extends BaseTestLayer {
 
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
@@ -55,7 +55,7 @@ var TextureCacheTestBase = class TextureCacheTestBase extends BaseTestLayer {
 
 };
 
-var TextureLoadImgTest = class TextureLoadImgTest extends TextureCacheTestBase {
+export class TextureLoadImgTest extends TextureCacheTestBase {
     constructor() {
         super();
 
@@ -132,7 +132,7 @@ var TextureLoadImgTest = class TextureLoadImgTest extends TextureCacheTestBase {
 
 };
 
-var TextureCacheTest = class TextureCacheTest extends TextureCacheTestBase {
+export class TextureCacheTest extends TextureCacheTestBase {
     constructor() {
         super();
 
@@ -277,7 +277,7 @@ var TextureCacheTest = class TextureCacheTest extends TextureCacheTestBase {
 
 };
 
-var RemoteTextureTest = class RemoteTextureTest extends TextureCacheTestBase {
+export class RemoteTextureTest extends TextureCacheTestBase {
     constructor() {
         super();
         this._title = "Remote Texture Test";
@@ -344,7 +344,7 @@ var RemoteTextureTest = class RemoteTextureTest extends TextureCacheTestBase {
 
 var texCacheTestSceneIdx = -1;
 
-var TexCacheTestScene = class TexCacheTestScene extends TestScene {
+export class TexCacheTestScene extends TestScene {
     runThisTest(num) {
         texCacheTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTexCacheTest();

@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UITextFieldTest = class UITextFieldTest extends UIMainLayer {
+export class UITextFieldTest extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -75,7 +75,7 @@ var UITextFieldTest = class UITextFieldTest extends UIMainLayer {
 
 };
 
-var UITextFieldTest_MaxLength = class UITextFieldTest_MaxLength extends UIMainLayer {
+export class UITextFieldTest_MaxLength extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -128,7 +128,7 @@ var UITextFieldTest_MaxLength = class UITextFieldTest_MaxLength extends UIMainLa
 
 };
 
-var UITextFieldTest_Password = class UITextFieldTest_Password extends UIMainLayer {
+export class UITextFieldTest_Password extends UIMainLayer {
     init() {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -181,7 +181,7 @@ var UITextFieldTest_Password = class UITextFieldTest_Password extends UIMainLaye
 };
 
 //2015-01-14
-var UITextFieldTest_LineWrap = class UITextFieldTest_LineWrap extends UIMainLayer {
+export class UITextFieldTest_LineWrap extends UIMainLayer {
 
     init(){
         if (super.init()) {
@@ -243,7 +243,7 @@ var UITextFieldTest_LineWrap = class UITextFieldTest_LineWrap extends UIMainLaye
 };
 
 //2015-01-14
-var UITextFieldTest_TrueTypeFont = class UITextFieldTest_TrueTypeFont extends UIMainLayer {
+export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
@@ -295,7 +295,7 @@ var UITextFieldTest_TrueTypeFont = class UITextFieldTest_TrueTypeFont extends UI
 };
 
 //2015-01-14
-var UITextFieldTest_PlaceHolderColor = class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
+export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
     init(){
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();

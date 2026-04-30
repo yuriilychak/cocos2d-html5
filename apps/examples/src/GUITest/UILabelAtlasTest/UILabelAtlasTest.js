@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 
-var UILabelAtlasTest = class UILabelAtlasTest extends UIMainLayer {
+export class UILabelAtlasTest extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text

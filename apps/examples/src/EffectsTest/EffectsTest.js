@@ -30,7 +30,7 @@ var effectsTestSceneIdx = -1;
 // Base Layer
 //
 
-var EffectsBaseLayer = class EffectsBaseLayer extends BaseTestLayer {
+export class EffectsBaseLayer extends BaseTestLayer {
     code() {
         return "";
     }
@@ -112,7 +112,7 @@ var EffectsBaseLayer = class EffectsBaseLayer extends BaseTestLayer {
 // Tests
 //
 //------------------------------------------------------------------
-var Shaky3DTest = class Shaky3DTest extends EffectsBaseLayer {
+export class Shaky3DTest extends EffectsBaseLayer {
     title() {
         return "Shaky 3D";
     }
@@ -125,7 +125,7 @@ var Shaky3DTest = class Shaky3DTest extends EffectsBaseLayer {
 
 };
 
-var Waves3DTest = class Waves3DTest extends EffectsBaseLayer {
+export class Waves3DTest extends EffectsBaseLayer {
     title() {
         return "Waves 3D";
     }
@@ -138,7 +138,7 @@ var Waves3DTest = class Waves3DTest extends EffectsBaseLayer {
 
 };
 
-var FlipXTest = class FlipXTest extends EffectsBaseLayer {
+export class FlipXTest extends EffectsBaseLayer {
     title() {
         return "FlipX3D";
     }
@@ -154,7 +154,7 @@ var FlipXTest = class FlipXTest extends EffectsBaseLayer {
 
 };
 
-var FlipYTest = class FlipYTest extends EffectsBaseLayer {
+export class FlipYTest extends EffectsBaseLayer {
     title() {
         return "FlipY3D";
     }
@@ -170,7 +170,7 @@ var FlipYTest = class FlipYTest extends EffectsBaseLayer {
 
 };
 
-var Lens3DTest = class Lens3DTest extends EffectsBaseLayer {
+export class Lens3DTest extends EffectsBaseLayer {
     title() {
         return "Lens3D";
     }
@@ -183,7 +183,7 @@ var Lens3DTest = class Lens3DTest extends EffectsBaseLayer {
 
 };
 
-var Ripple3DTest = class Ripple3DTest extends EffectsBaseLayer {
+export class Ripple3DTest extends EffectsBaseLayer {
     title() {
         return "Ripple3D";
     }
@@ -196,7 +196,7 @@ var Ripple3DTest = class Ripple3DTest extends EffectsBaseLayer {
 
 };
 
-var LiquidTest = class LiquidTest extends EffectsBaseLayer {
+export class LiquidTest extends EffectsBaseLayer {
     title() {
         return "Liquid";
     }
@@ -209,7 +209,7 @@ var LiquidTest = class LiquidTest extends EffectsBaseLayer {
 
 };
 
-var WavesTest = class WavesTest extends EffectsBaseLayer {
+export class WavesTest extends EffectsBaseLayer {
     title() {
         return "Waves";
     }
@@ -222,7 +222,7 @@ var WavesTest = class WavesTest extends EffectsBaseLayer {
 
 };
 
-var TwirlTest = class TwirlTest extends EffectsBaseLayer {
+export class TwirlTest extends EffectsBaseLayer {
     title() {
         return "Twirl";
     }
@@ -235,7 +235,7 @@ var TwirlTest = class TwirlTest extends EffectsBaseLayer {
 
 };
 
-var ShakyTiles3DTest = class ShakyTiles3DTest extends EffectsBaseLayer {
+export class ShakyTiles3DTest extends EffectsBaseLayer {
     title() {
         return "ShakyTiles3D";
     }
@@ -248,7 +248,7 @@ var ShakyTiles3DTest = class ShakyTiles3DTest extends EffectsBaseLayer {
 
 };
 
-var ShatteredTiles3DTest = class ShatteredTiles3DTest extends EffectsBaseLayer {
+export class ShatteredTiles3DTest extends EffectsBaseLayer {
     title() {
         return "ShatteredTiles3D";
     }
@@ -261,7 +261,7 @@ var ShatteredTiles3DTest = class ShatteredTiles3DTest extends EffectsBaseLayer {
 
 };
 
-var ShuffleTilesTest = class ShuffleTilesTest extends EffectsBaseLayer {
+export class ShuffleTilesTest extends EffectsBaseLayer {
     title() {
         return "ShuffleTiles";
     }
@@ -278,7 +278,7 @@ var ShuffleTilesTest = class ShuffleTilesTest extends EffectsBaseLayer {
 
 };
 
-var FadeOutTRTilesTest = class FadeOutTRTilesTest extends EffectsBaseLayer {
+export class FadeOutTRTilesTest extends EffectsBaseLayer {
     title() {
         return "FadeOutTRTilesTest";
     }
@@ -295,7 +295,7 @@ var FadeOutTRTilesTest = class FadeOutTRTilesTest extends EffectsBaseLayer {
 
 };
 
-var FadeOutBLTilesTest = class FadeOutBLTilesTest extends EffectsBaseLayer {
+export class FadeOutBLTilesTest extends EffectsBaseLayer {
     title() {
         return "FadeOutBLTilesTest";
     }
@@ -312,7 +312,7 @@ var FadeOutBLTilesTest = class FadeOutBLTilesTest extends EffectsBaseLayer {
 
 };
 
-var FadeOutUpTilesTest = class FadeOutUpTilesTest extends EffectsBaseLayer {
+export class FadeOutUpTilesTest extends EffectsBaseLayer {
     title() {
         return "FadeOutUpTilesTest";
     }
@@ -329,7 +329,7 @@ var FadeOutUpTilesTest = class FadeOutUpTilesTest extends EffectsBaseLayer {
 
 };
 
-var FadeOutDownTilesTest = class FadeOutDownTilesTest extends EffectsBaseLayer {
+export class FadeOutDownTilesTest extends EffectsBaseLayer {
     title() {
         return "FadeOutDownTilesTest";
     }
@@ -346,7 +346,7 @@ var FadeOutDownTilesTest = class FadeOutDownTilesTest extends EffectsBaseLayer {
 
 };
 
-var TurnOffTilesTest = class TurnOffTilesTest extends EffectsBaseLayer {
+export class TurnOffTilesTest extends EffectsBaseLayer {
     title() {
         return "TurnOffTiles";
     }
@@ -363,7 +363,7 @@ var TurnOffTilesTest = class TurnOffTilesTest extends EffectsBaseLayer {
 
 };
 
-var WavesTiles3DTest = class WavesTiles3DTest extends EffectsBaseLayer {
+export class WavesTiles3DTest extends EffectsBaseLayer {
     title() {
         return "WavesTiles3D";
     }
@@ -378,7 +378,7 @@ var WavesTiles3DTest = class WavesTiles3DTest extends EffectsBaseLayer {
 };
 
 
-var JumpTiles3DTest = class JumpTiles3DTest extends EffectsBaseLayer {
+export class JumpTiles3DTest extends EffectsBaseLayer {
     title() {
         return "JumpTiles3D";
     }
@@ -392,7 +392,7 @@ var JumpTiles3DTest = class JumpTiles3DTest extends EffectsBaseLayer {
 
 };
 
-var SplitRowsTest = class SplitRowsTest extends EffectsBaseLayer {
+export class SplitRowsTest extends EffectsBaseLayer {
     title() {
         return "SplitRows";
     }
@@ -409,7 +409,7 @@ var SplitRowsTest = class SplitRowsTest extends EffectsBaseLayer {
 
 };
 
-var SplitColsTest = class SplitColsTest extends EffectsBaseLayer {
+export class SplitColsTest extends EffectsBaseLayer {
     title() {
         return "SplitCols";
     }
@@ -426,7 +426,7 @@ var SplitColsTest = class SplitColsTest extends EffectsBaseLayer {
 
 };
 
-var PageTurn3DTest = class PageTurn3DTest extends EffectsBaseLayer {
+export class PageTurn3DTest extends EffectsBaseLayer {
     title() {
         return "PageTurn3D";
     }
@@ -440,7 +440,7 @@ var PageTurn3DTest = class PageTurn3DTest extends EffectsBaseLayer {
 
 };
 
-var PageTurn3DInRectTest = class PageTurn3DInRectTest extends BaseTestLayer {
+export class PageTurn3DInRectTest extends BaseTestLayer {
     title() {
         return "PageTurn3DInRectTest";
     }
@@ -516,7 +516,7 @@ var PageTurn3DInRectTest = class PageTurn3DInRectTest extends BaseTestLayer {
 //
 // Order of tests
 //
-var EffectsTestScene = class EffectsTestScene extends TestScene {
+export class EffectsTestScene extends TestScene {
     runThisTest(num) {
         effectsTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextEffectsTest();
