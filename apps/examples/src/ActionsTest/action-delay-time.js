@@ -33,7 +33,7 @@
 export class ActionDelayTime extends ActionsDemo {
     constructor() {
         super();
-        this._code = "a = new DelayTime( time );";
+        this._code = "a = new cc.DelayTime( time );";
         this.testDuration = 2.9;
     }
 
@@ -43,8 +43,8 @@ export class ActionDelayTime extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move = new MoveBy(1, new Point(150, 0));
-    var action = sequence(move, new DelayTime(2), move.clone());
+    var move = new cc.MoveBy(1, new cc.Point(150, 0));
+    var action = cc.sequence(move, new cc.DelayTime(2), move.clone());
 
     this._grossini.runAction(action);
     //----end20----
@@ -61,7 +61,7 @@ export class ActionDelayTime extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(new Point(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
 

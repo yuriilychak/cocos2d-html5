@@ -34,16 +34,16 @@ export class SpriteEaseQuadraticInOutTest extends EaseSpriteDemo {
         super.onEnter();
         //----start16----onEnter
 
-        var move = new MoveBy(3, new Point(winSize.width - 130, 0));
+        var move = new cc.MoveBy(3, new cc.Point(winSize.width - 130, 0));
         var move_back = move.reverse();
 
-        var move_ease = move.clone().easing(easeQuadraticActionInOut());
+        var move_ease = move.clone().easing(cc.easeQuadraticActionInOut());
         var move_ease_back = move_ease.reverse();
 
-        var delay = new DelayTime(0.25);
+        var delay = new cc.DelayTime(0.25);
 
-        var seq1 = sequence(move, delay, move_back, delay.clone()).repeatForever();
-        var seq2 = sequence(move_ease, delay.clone(), move_ease_back, delay.clone()).repeatForever();
+        var seq1 = cc.sequence(move, delay, move_back, delay.clone()).repeatForever();
+        var seq2 = cc.sequence(move_ease, delay.clone(), move_ease_back, delay.clone()).repeatForever();
 
         this.positionForTwo();
 

@@ -36,22 +36,22 @@ export class Issue1327 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(0);
 
-    var spr = new Sprite(s_pathGrossini);
+    var spr = new cc.Sprite(s_pathGrossini);
     spr.x = 100;
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = new CallFunc(this.onLogSprRotation);
-    var act2 = new RotateBy(0.25, 45);
-    var act3 = new CallFunc(this.onLogSprRotation, this);
-    var act4 = new RotateBy(0.25, 45);
-    var act5 = new CallFunc(this.onLogSprRotation.bind(this));
-    var act6 = new RotateBy(0.25, 45);
-    var act7 = new CallFunc(this.onLogSprRotation);
-    var act8 = new RotateBy(0.25, 45);
-    var act9 = new CallFunc(this.onLogSprRotation);
+    var act1 = new cc.CallFunc(this.onLogSprRotation);
+    var act2 = new cc.RotateBy(0.25, 45);
+    var act3 = new cc.CallFunc(this.onLogSprRotation, this);
+    var act4 = new cc.RotateBy(0.25, 45);
+    var act5 = new cc.CallFunc(this.onLogSprRotation.bind(this));
+    var act6 = new cc.RotateBy(0.25, 45);
+    var act7 = new cc.CallFunc(this.onLogSprRotation);
+    var act8 = new cc.RotateBy(0.25, 45);
+    var act9 = new cc.CallFunc(this.onLogSprRotation);
 
-    var actF = sequence(
+    var actF = cc.sequence(
       act1,
       act2,
       act3,
@@ -66,7 +66,7 @@ export class Issue1327 extends ActionsDemo {
     //----end43----
   }
   onLogSprRotation(pSender) {
-    log(pSender.rotation);
+    cc.log(pSender.rotation);
   }
   title() {
     return "Issue 1327";

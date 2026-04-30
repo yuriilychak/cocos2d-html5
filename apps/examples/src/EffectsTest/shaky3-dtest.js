@@ -33,10 +33,10 @@ export class Shaky3DTest extends EffectsBaseLayer {
         return "Shaky 3D";
     }
     code() {
-        return "a = shaky3D(duration, gridSize, range, shakeZ)";
+        return "a = cc.shaky3D(duration, gridSize, range, shakeZ)";
     }
     getEffect(duration) {
-        return shaky3D( duration, new Size(15,10), 5, false );
+        return cc.shaky3D( duration, new cc.Size(15,10), 5, false );
     }
 
 }

@@ -55,12 +55,12 @@ export class UITextFieldTest_MaxLength extends UIMainLayer {
         var widgetSize = this._widget.getContentSize();
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(new MoveTo(0.225,
-                    new Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
+                textField.runAction(new cc.MoveTo(0.225,
+                    new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(new MoveTo(0.175, new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)));
+                textField.runAction(new cc.MoveTo(0.175, new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:

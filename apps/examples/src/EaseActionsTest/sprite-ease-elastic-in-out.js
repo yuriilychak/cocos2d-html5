@@ -35,22 +35,22 @@ export class SpriteEaseElasticInOut extends EaseSpriteDemo {
         //----start7----onEnter
         super.onEnter();
 
-        var move = new MoveBy(2, new Point(winSize.width - 80, 0));
+        var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
 
-        var move_ease_inout1 = move.clone().easing(easeElasticInOut(0.3));
+        var move_ease_inout1 = move.clone().easing(cc.easeElasticInOut(0.3));
         var move_ease_inout_back1 = move_ease_inout1.reverse();
 
-        var move_ease_inout2 = move.clone().easing(easeElasticInOut(0.45));
+        var move_ease_inout2 = move.clone().easing(cc.easeElasticInOut(0.45));
         var move_ease_inout_back2 = move_ease_inout2.reverse();
 
-        var move_ease_inout3 = move.clone().easing(easeElasticInOut(0.6));
+        var move_ease_inout3 = move.clone().easing(cc.easeElasticInOut(0.6));
         var move_ease_inout_back3 = move_ease_inout3.reverse();
 
-        var delay = new DelayTime(0.1);
+        var delay = new cc.DelayTime(0.1);
 
-        var seq1 = sequence(move_ease_inout1, delay, move_ease_inout_back1, delay.clone());
-        var seq2 = sequence(move_ease_inout2, delay.clone(), move_ease_inout_back2, delay.clone());
-        var seq3 = sequence(move_ease_inout3, delay.clone(), move_ease_inout_back3, delay.clone());
+        var seq1 = cc.sequence(move_ease_inout1, delay, move_ease_inout_back1, delay.clone());
+        var seq2 = cc.sequence(move_ease_inout2, delay.clone(), move_ease_inout_back2, delay.clone());
+        var seq3 = cc.sequence(move_ease_inout3, delay.clone(), move_ease_inout_back3, delay.clone());
 
         this._tamara.runAction(seq1.repeatForever());
         this._kathia.runAction(seq2.repeatForever());

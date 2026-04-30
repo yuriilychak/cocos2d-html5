@@ -33,7 +33,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
 
     init(){
         if (super.init()) {
-            var winSize = director.getVisibleSize();
+            var winSize = cc.director.getVisibleSize();
 
             this._verticalLayout = new ccui.VBox();
             this._verticalLayout.setPosition(winSize.height / 2 + 80, winSize.height - 150);
@@ -93,7 +93,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
 
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);
             this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(Color.GREEN);
+            this._loopText.setColor(cc.Color.GREEN);
             this.addChild(this._loopText);
 
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);

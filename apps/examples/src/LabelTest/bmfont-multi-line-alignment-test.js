@@ -42,22 +42,22 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
 
         this.lineBreakFlag = false;
 
-        eventManager.addListener({
-            event: EventListener.TOUCH_ALL_AT_ONCE,
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: this.onTouchesBegan.bind(this),
             onTouchesMoved: this.onTouchesMoved.bind(this),
             onTouchesEnded: this.onTouchesEnded.bind(this)
         }, this);
-        if ('touches' in sys.capabilities){
-            eventManager.addListener({
-                event: EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in cc.sys.capabilities){
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesBegan: this.onTouchesBegan.bind(this),
                 onTouchesMoved: this.onTouchesMoved.bind(this),
                 onTouchesEnded: this.onTouchesEnded.bind(this)
             }, this);
-        } else if ('mouse' in sys.capabilities)
-            eventManager.addListener({
-                event: EventListener.MOUSE,
+        } else if ('mouse' in cc.sys.capabilities)
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
                 onMouseDown: this.onMouseDown.bind(this),
                 onMouseMove: this.onMouseMove.bind(this),
                 onMouseUp: this.onMouseUp.bind(this)
@@ -67,29 +67,29 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         var size = director.getWinSize();
 
         // create and initialize a Label
-        this.labelShouldRetain = new LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, TEXT_ALIGNMENT_CENTER, new Point(0, 0));
-        this.arrowsBarShouldRetain = new Sprite(s_resprefix + "Images/arrowsBar.png");
-        this.arrowsShouldRetain = new Sprite(s_resprefix + "Images/arrows.png");
+        this.labelShouldRetain = new cc.LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, new cc.Point(0, 0));
+        this.arrowsBarShouldRetain = new cc.Sprite(s_resprefix + "Images/arrowsBar.png");
+        this.arrowsShouldRetain = new cc.Sprite(s_resprefix + "Images/arrows.png");
 
-        MenuItemFont.setFontSize(20);
-        var longSentences = new MenuItemFont("Long Flowing Sentences", this.onStringChanged, this);
-        var lineBreaks = new MenuItemFont("Short Sentences With Intentional Line Breaks", this.onStringChanged, this);
-        var mixed = new MenuItemFont("Long Sentences Mixed With Intentional Line Breaks", this.onStringChanged.bind(this)); // another way to pass 'this'
-        var changeChineseItem = new MenuItemFont("change chinese", this.onStringChanged, this);
-        var mixEnglishItem = new MenuItemFont("change chinesemixEnglish", this.onStringChanged, this);
-        var mixAllLanItem = new MenuItemFont("change mixAllLan", this.onStringChanged, this);
+        cc.MenuItemFont.setFontSize(20);
+        var longSentences = new cc.MenuItemFont("Long Flowing Sentences", this.onStringChanged, this);
+        var lineBreaks = new cc.MenuItemFont("Short Sentences With Intentional Line Breaks", this.onStringChanged, this);
+        var mixed = new cc.MenuItemFont("Long Sentences Mixed With Intentional Line Breaks", this.onStringChanged.bind(this)); // another way to pass 'this'
+        var changeChineseItem = new cc.MenuItemFont("change chinese", this.onStringChanged, this);
+        var mixEnglishItem = new cc.MenuItemFont("change chinesemixEnglish", this.onStringChanged, this);
+        var mixAllLanItem = new cc.MenuItemFont("change mixAllLan", this.onStringChanged, this);
 
-        var stringMenu = new Menu(longSentences, lineBreaks, mixed, changeChineseItem,mixEnglishItem, mixAllLanItem);
+        var stringMenu = new cc.Menu(longSentences, lineBreaks, mixed, changeChineseItem,mixEnglishItem, mixAllLanItem);
         stringMenu.alignItemsVertically();
 
-        var setLineBreakItem = new MenuItemFont("setLineBreakWithoutSpace", this.onLineBreakChanged, this);
-        var setScale = new MenuItemFont("setScale", this.onScaleChange, this);
-        var lineBreakMenu = new Menu(setLineBreakItem, setScale);
+        var setLineBreakItem = new cc.MenuItemFont("setLineBreakWithoutSpace", this.onLineBreakChanged, this);
+        var setScale = new cc.MenuItemFont("setScale", this.onScaleChange, this);
+        var lineBreakMenu = new cc.Menu(setLineBreakItem, setScale);
         lineBreakMenu.x = 100;
         lineBreakMenu.y = winSize.height / 2;
         lineBreakMenu.alignItemsVertically();
 
-        longSentences.color = new Color(255, 0, 0);
+        longSentences.color = new cc.Color(255, 0, 0);
         this.lastSentenceItem = longSentences;
         longSentences.tag = LongSentences;
         lineBreaks.tag = LineBreaks;
@@ -98,15 +98,15 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         mixEnglishItem.tag = chineseMixEnglish;
         mixAllLanItem.tag = mixAllLanguage;
 
-        MenuItemFont.setFontSize(30);
+        cc.MenuItemFont.setFontSize(30);
 
-        var left = new MenuItemFont("Left", this.onAlignmentChanged, this);
-        var center = new MenuItemFont("Center", this.onAlignmentChanged, this);
-        var right = new MenuItemFont("Right", this.onAlignmentChanged.bind(this));    // another way to pass 'this'
-        var alignmentMenu = new Menu(left, center, right);
+        var left = new cc.MenuItemFont("Left", this.onAlignmentChanged, this);
+        var center = new cc.MenuItemFont("Center", this.onAlignmentChanged, this);
+        var right = new cc.MenuItemFont("Right", this.onAlignmentChanged.bind(this));    // another way to pass 'this'
+        var alignmentMenu = new cc.Menu(left, center, right);
         alignmentMenu.alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
-        center.color = new Color(255, 0, 0);
+        center.color = new cc.Color(255, 0, 0);
         this.lastAlignmentItem = center;
         left.tag = LeftAlign;
         center.tag = CenterAlign;
@@ -169,8 +169,8 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         this.labelShouldRetain.setLineBreakWithoutSpace(this.lineBreakFlag);
     }
     onStringChanged(sender) {
-        this.lastSentenceItem.color = new Color(255, 255, 255);
-        sender.color = new Color(255, 0, 0);
+        this.lastSentenceItem.color = new cc.Color(255, 255, 255);
+        sender.color = new cc.Color(255, 0, 0);
         this.lastSentenceItem = sender;
 
         switch (sender.tag) {
@@ -206,19 +206,19 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     }
     onAlignmentChanged(sender) {
         var item = sender;
-        this.lastAlignmentItem.color = new Color(255, 255, 255);
-        item.color = new Color(255, 0, 0);
+        this.lastAlignmentItem.color = new cc.Color(255, 255, 255);
+        item.color = new cc.Color(255, 0, 0);
         this.lastAlignmentItem = item;
 
         switch (item.tag) {
             case LeftAlign:
-                this.labelShouldRetain.textAlign = TEXT_ALIGNMENT_LEFT;
+                this.labelShouldRetain.textAlign = cc.TEXT_ALIGNMENT_LEFT;
                 break;
             case CenterAlign:
-                this.labelShouldRetain.textAlign = TEXT_ALIGNMENT_CENTER;
+                this.labelShouldRetain.textAlign = cc.TEXT_ALIGNMENT_CENTER;
                 break;
             case RightAlign:
-                this.labelShouldRetain.textAlign = TEXT_ALIGNMENT_RIGHT;
+                this.labelShouldRetain.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
                 break;
             default:
                 break;
@@ -230,7 +230,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         var touch = touches[0];
         var location = touch.getLocation();
 
-        if (Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
+        if (cc.Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
             this.arrowsBarShouldRetain.visible = true;
         }
     }
@@ -251,12 +251,12 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     onMouseDown(event) {
         var location = event.getLocation();
 
-        if (Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
+        if (cc.Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
             this.arrowsBarShouldRetain.visible = true;
         }
     }
     onMouseMove(event) {
-        if(!event.getButton || event.getButton() != EventMouse.BUTTON_LEFT)
+        if(!event.getButton || event.getButton() != cc.EventMouse.BUTTON_LEFT)
             return;
 
         var location = event.getLocation();

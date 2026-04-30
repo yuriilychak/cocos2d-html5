@@ -54,26 +54,26 @@ export class SpriteNewTexture extends SpriteTestDemo {
 
         this.pixel = {"0":51, "1":0, "2":51, "3":255};
 
-        if ('touches' in sys.capabilities){
-            eventManager.addListener({
-                event: EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in cc.sys.capabilities){
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded:function (touches, event) {
                     event.getCurrentTarget().onChangeTexture();
                 }
             }, this);
-        } else if ('mouse' in sys.capabilities)
-            eventManager.addListener({
-                event: EventListener.MOUSE,
+        } else if ('mouse' in cc.sys.capabilities)
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
                 onMouseUp: function(event){
                     event.getCurrentTarget().onChangeTexture();
                 }
             }, this);
 
-        var node = new Node();
+        var node = new cc.Node();
         this.addChild(node, 0, TAG_SPRITE_BATCH_NODE);
 
-        this._texture1 = textureCache.addImage(s_grossini_dance_atlas);
-        this._texture2 = textureCache.addImage(s_grossini_dance_atlas_mono);
+        this._texture1 = cc.textureCache.addImage(s_grossini_dance_atlas);
+        this._texture2 = cc.textureCache.addImage(s_grossini_dance_atlas_mono);
 
         this._usingTexture1 = true;
 
@@ -85,7 +85,7 @@ export class SpriteNewTexture extends SpriteTestDemo {
 
     addNewSprite() {
         //----start26----addNewSprite
-        var p = new Point(Math.random() * winSize.width, Math.random() * winSize.height);
+        var p = new cc.Point(Math.random() * winSize.width, Math.random() * winSize.height);
 
         var idx = 0 | (Math.random() * 14);
         var x = (idx % 5) * 85;
@@ -93,7 +93,7 @@ export class SpriteNewTexture extends SpriteTestDemo {
 
 
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-        var sprite = new Sprite(this._texture1, new Rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(this._texture1, new cc.Rect(x, y, 85, 121));
         node.addChild(sprite);
 
         sprite.x = p.x;
@@ -104,18 +104,18 @@ export class SpriteNewTexture extends SpriteTestDemo {
         var random = Math.random();
 
         if (random < 0.20)
-            action = new ScaleBy(3, 2);
+            action = new cc.ScaleBy(3, 2);
         else if (random < 0.40)
-            action = new RotateBy(3, 360);
+            action = new cc.RotateBy(3, 360);
         else if (random < 0.60)
-            action = new Blink(1, 3);
+            action = new cc.Blink(1, 3);
         // else if (random < 0.8)
-        //     action = new TintBy(2, 0, -255, -255);
+        //     action = new cc.TintBy(2, 0, -255, -255);
         else
-            action = new FadeOut(2);
+            action = new cc.FadeOut(2);
 
         var action_back = action.reverse();
-        var seq = sequence(action, action_back);
+        var seq = cc.sequence(action, action_back);
 
         sprite.runAction(seq.repeatForever());
         //----end26----
@@ -154,7 +154,7 @@ export class SpriteNewTexture extends SpriteTestDemo {
     }
     addTestSprite() {
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-        var sprite = new Sprite(this._texture1, new Rect(0, 0, 85, 121));
+        var sprite = new cc.Sprite(this._texture1, new cc.Rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         node.addChild(sprite);

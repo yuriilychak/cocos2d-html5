@@ -48,28 +48,28 @@ export class TextureColorCacheIssue2 extends SpriteTestDemo {
 
         this.pixel2 = {"0":255, "1":0, "2":153, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
-        spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
+        cc.spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
+        cc.spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
 
-        var grossini = new Sprite('#tcc_grossini_dance_01.png');
+        var grossini = new cc.Sprite('#tcc_grossini_dance_01.png');
         grossini.x = winSize.width / 3;
         grossini.y = winSize.height / 2;
 
-        var sister = new Sprite('#tcc_grossinis_sister1.png');
+        var sister = new cc.Sprite('#tcc_grossinis_sister1.png');
         sister.x = winSize.width / 3 * 2;
         sister.y = winSize.height / 2;
 
         this.addChild(grossini);
         this.addChild(sister);
 
-        grossini.color = new Color(255, 255, 0);
-        sister.color = new Color(255, 0, 255);
+        grossini.color = new cc.Color(255, 255, 0);
+        sister.color = new cc.Color(255, 0, 255);
         //----end56----
     }
     onExit() {
         //----start56----onExit
-        spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
         super.onExit();
         //----end56----
     }

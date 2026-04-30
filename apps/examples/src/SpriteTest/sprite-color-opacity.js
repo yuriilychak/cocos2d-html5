@@ -60,15 +60,15 @@ export class SpriteColorOpacity extends SpriteTestDemo {
 
 
         this.pixel4 = {"0":255, "1":204, "2":153, "3":255};
-        var sprite1 = new Sprite(s_grossini_dance_atlas, new Rect(0, 121, 85, 121));
-        var sprite2 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
-        var sprite3 = new Sprite(s_grossini_dance_atlas, new Rect(85 * 2, 121, 85, 121));
-        var sprite4 = new Sprite(s_grossini_dance_atlas, new Rect(85 * 3, 121, 85, 121));
+        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 121, 85, 121));
+        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
+        var sprite3 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 2, 121, 85, 121));
+        var sprite4 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 3, 121, 85, 121));
 
-        var sprite5 = new Sprite(s_grossini_dance_atlas, new Rect(0, 121, 85, 121));
-        var sprite6 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
-        var sprite7 = new Sprite(s_grossini_dance_atlas, new Rect(85 * 2, 121, 85, 121));
-        var sprite8 = new Sprite(s_grossini_dance_atlas, new Rect(85 * 3, 121, 85, 121));
+        var sprite5 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 121, 85, 121));
+        var sprite6 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
+        var sprite7 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 2, 121, 85, 121));
+        var sprite8 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 3, 121, 85, 121));
 
         sprite1.x = (winSize.width / 5);
 
@@ -88,22 +88,22 @@ export class SpriteColorOpacity extends SpriteTestDemo {
         sprite8.x = (winSize.width / 5) * 4;
         sprite8.y = (winSize.height / 3) * 2;
 
-        var delay = new DelayTime(0.25);
-        var action = new FadeOut(2);
+        var delay = new cc.DelayTime(0.25);
+        var action = new cc.FadeOut(2);
         var action_back = action.reverse();
-        var fade = sequence(action, delay.clone(), action_back).repeatForever();
+        var fade = cc.sequence(action, delay.clone(), action_back).repeatForever();
 
-        var tintRed = new TintBy(2, 0, -255, -255);
+        var tintRed = new cc.TintBy(2, 0, -255, -255);
         var tintRedBack = tintRed.reverse();
-        var red = sequence(tintRed, delay.clone(), tintRedBack).repeatForever();
+        var red = cc.sequence(tintRed, delay.clone(), tintRedBack).repeatForever();
 
-        var tintGreen = new TintBy(2, -255, 0, -255);
+        var tintGreen = new cc.TintBy(2, -255, 0, -255);
         var tintGreenBack = tintGreen.reverse();
-        var green = sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
+        var green = cc.sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
 
-        var tintBlue = new TintBy(2, -255, -255, 0);
+        var tintBlue = new cc.TintBy(2, -255, -255, 0);
         var tintBlueBack = tintBlue.reverse();
-        var blue = sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
+        var blue = cc.sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
 
         // late add: test dirtyColor and dirtyPosition
         this.addChild(sprite1, 0, TAG_SPRITE1);

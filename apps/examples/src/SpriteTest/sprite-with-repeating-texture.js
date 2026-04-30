@@ -38,15 +38,15 @@ export class SpriteWithRepeatingTexture extends SpriteTestDemo {
 
 
 
-        this._subtitle = "aTexture.setTexParameters(LINEAR, LINEAR, REPEAT, REPEAT);";
-        var block = new Sprite(s_pathBlock);
+        this._subtitle = "aTexture.setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);";
+        var block = new cc.Sprite(s_pathBlock);
 
         var x = winSize.width / 2;
         var y = (winSize.height / 2);
 
-        block.setTextureRect(new Rect(0,0, 320,240));
+        block.setTextureRect(new cc.Rect(0,0, 320,240));
         block.setPosition(x, y);
-        block.getTexture().setTexParameters(LINEAR, LINEAR, REPEAT, REPEAT);
+        block.getTexture().setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);
         this.addChild(block);
         //----end58----
     }

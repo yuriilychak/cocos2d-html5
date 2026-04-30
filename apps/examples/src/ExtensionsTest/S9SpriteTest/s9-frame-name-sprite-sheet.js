@@ -44,23 +44,23 @@ export class S9FrameNameSpriteSheet extends S9SpriteTestDemo {
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        log("S9FrameNameSpriteSheet ...");
+        cc.log("S9FrameNameSpriteSheet ...");
 
-        var blocks = new Scale9Sprite('blocks9.png');
-        log("... created");
+        var blocks = new cc.Scale9Sprite('blocks9.png');
+        cc.log("... created");
 
         blocks.x = x;
         blocks.y = y;
-        log("... setPosition");
+        cc.log("... setPosition");
 
         this.addChild(blocks);
-        log("this..addChild");
+        cc.log("this..addChild");
 
-        log("... S9FrameNameSpriteSheet done.");
+        cc.log("... S9FrameNameSpriteSheet done.");
 
-        var moveBy = new MoveBy(1, new Point(80, 80));
+        var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
         var moveByBack = moveBy.reverse();
-        blocks.runAction(sequence(moveBy,moveByBack));
+        blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
 
 }

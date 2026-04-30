@@ -31,21 +31,21 @@ export class RawStencilBufferTest5 extends RawStencilBufferTest {
     }
 
     setupStencilForClippingOnPlane(plane) {
-        var gl = rendererConfig.renderContext;
+        var gl = cc.rendererConfig.renderContext;
         super.setupStencilForClippingOnPlane(plane);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
 
-        var program = shaderCache.programForKey(SHADER_POSITION_TEXTURECOLORALPHATEST);
-        var alphaValueLocation = gl.getUniformLocation(program.getProgram(), UNIFORM_ALPHA_TEST_VALUE_S);
-        glUseProgram(program.getProgram());
+        var program = cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
+        var alphaValueLocation = gl.getUniformLocation(program.getProgram(), cc.UNIFORM_ALPHA_TEST_VALUE_S);
+        cc.glUseProgram(program.getProgram());
         program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         this._sprite.shaderProgram = program;
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        rendererConfig.renderContext.depthMask(true);
-        //rendererConfig.renderContext.enable(rendererConfig.renderContext.DEPTH_TEST);
+        cc.rendererConfig.renderContext.depthMask(true);
+        //cc.rendererConfig.renderContext.enable(cc.rendererConfig.renderContext.DEPTH_TEST);
         super.setupStencilForDrawingOnPlane(plane);
     }
 

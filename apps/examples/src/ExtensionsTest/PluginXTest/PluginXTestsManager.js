@@ -67,7 +67,7 @@ var pluginXSceneManager = {
     },
 
     currentPluginXScene: function () {
-        var scene = new Scene();
+        var scene = new cc.Scene();
         var layer = pluginXTestItemNames[this._currentPluginXSceneId].testLayer();
         scene.addChild(layer);
         return scene;

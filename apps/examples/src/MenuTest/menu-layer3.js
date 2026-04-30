@@ -41,29 +41,29 @@ export class MenuLayer3 extends cc.Layer {
     }
     init() {
         super.init();
-        MenuItemFont.setFontName("Marker Felt");
-        MenuItemFont.setFontSize(28);
+        cc.MenuItemFont.setFontName("Marker Felt");
+        cc.MenuItemFont.setFontSize(28);
 
-        var label = new LabelBMFont("Enable AtlasItem", s_bitmapFontTest3_fnt);
-        var item1 = new MenuItemLabel(label, function(sender){
+        var label = new cc.LabelBMFont("Enable AtlasItem", s_bitmapFontTest3_fnt);
+        var item1 = new cc.MenuItemLabel(label, function(sender){
             this._disabledItem.enabled = !this._disabledItem.enabled;
             this._disabledItem.stopAllActions();
         }, this);
-        var item2 = new MenuItemFont("--- Go Back ---", function(sender){
+        var item2 = new cc.MenuItemFont("--- Go Back ---", function(sender){
             this.parent.switchTo(0, false);
         }, this);
 
-        var spriteNormal = new Sprite(s_menuItem, new Rect(0, 23 * 2, 115, 23));
-        var spriteSelected = new Sprite(s_menuItem, new Rect(0, 23, 115, 23));
-        var spriteDisabled = new Sprite(s_menuItem, new Rect(0, 0, 115, 23));
+        var spriteNormal = new cc.Sprite(s_menuItem, new cc.Rect(0, 23 * 2, 115, 23));
+        var spriteSelected = new cc.Sprite(s_menuItem, new cc.Rect(0, 23, 115, 23));
+        var spriteDisabled = new cc.Sprite(s_menuItem, new cc.Rect(0, 0, 115, 23));
 
-        var item3 = new MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, function(sender){
-            log("sprite clicked!");
+        var item3 = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, function(sender){
+            cc.log("sprite clicked!");
         }, this);
         this._disabledItem = item3;
         this._disabledItem.enabled = false;
 
-        var menu = new Menu(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
         menu.x = 0;
         menu.y = 0;
 
@@ -76,9 +76,9 @@ export class MenuLayer3 extends cc.Layer {
         item3.x = s.width / 2;
         item3.y = s.height / 2 - 100;
 
-        var jump = new JumpBy(3, new Point(400, 0), 50, 4);
-        item2.runAction(sequence(jump, jump.reverse()).repeatForever());
-        var spin1 = new RotateBy(3, 360);
+        var jump = new cc.JumpBy(3, new cc.Point(400, 0), 50, 4);
+        item2.runAction(cc.sequence(jump, jump.reverse()).repeatForever());
+        var spin1 = new cc.RotateBy(3, 360);
         var spin2 = spin1.clone();
         var spin3 = spin1.clone();
 

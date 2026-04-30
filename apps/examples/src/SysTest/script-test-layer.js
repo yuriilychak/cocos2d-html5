@@ -26,14 +26,14 @@
 
 export class ScriptTestLayer extends SysTestBase {
     startDownload() {
-        if (!sys.isNative)
+        if (!cc.sys.isNative)
         {
             return;
         }
         var that = this;
         var manifestPath = "Manifests/ScriptTest/project.manifest";
         var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + "JSBTests/AssetsManagerTest/ScriptTest/");
-        log("Storage path for this test : " + storagePath);
+        cc.log("Storage path for this test : " + storagePath);
 
         if (this._am){
             this._am = null;
@@ -41,44 +41,44 @@ export class ScriptTestLayer extends SysTestBase {
 
         this._am = new jsb.AssetsManager(manifestPath, storagePath);
         if (!this._am.getLocalManifest().isLoaded()){
-            log("Fail to update assets, step skipped.");
+            cc.log("Fail to update assets, step skipped.");
             that.clickMeShowTempLayer();
         }else {
             var listener = new jsb.EventListenerAssetsManager(this._am, function (event) {
                 var scene;
                 switch (event.getEventCode()) {
                     case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
-                        log("No local manifest file found, skip assets update.");
+                        cc.log("No local manifest file found, skip assets update.");
                         that.clickMeShowTempLayer();
                         break;
                     case jsb.EventAssetsManager.UPDATE_PROGRESSION:
-                        log(event.getPercent() + "%");
+                        cc.log(event.getPercent() + "%");
                         break;
                     case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
                     case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
-                        log("Fail to download manifest file, update skipped.");
+                        cc.log("Fail to download manifest file, update skipped.");
                         that.clickMeShowTempLayer();
                         break;
                     case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
                     case jsb.EventAssetsManager.UPDATE_FINISHED:
-                        log("Update finished. " + event.getMessage());
+                        cc.log("Update finished. " + event.getMessage());
                         require(tempJSFileName);
                         that.clickMeShowTempLayer();
                         break;
                     case jsb.EventAssetsManager.UPDATE_FAILED:
-                        log("Update failed. " + event.getMessage());
+                        cc.log("Update failed. " + event.getMessage());
                         break;
                     case jsb.EventAssetsManager.ERROR_UPDATING:
-                        log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
+                        cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
                         break;
                     case jsb.EventAssetsManager.ERROR_DECOMPRESS:
-                        log(event.getMessage());
+                        cc.log(event.getMessage());
                         break;
                     default:
                         break;
                 }
             });
-            eventManager.addListener(listener, 1);
+            cc.eventManager.addListener(listener, 1);
             this._am.update();
         }
     }
@@ -88,8 +88,8 @@ export class ScriptTestLayer extends SysTestBase {
         this.addChild(this._tempLayer, 0, 233);
     }
     clickMeReloadTempLayer(){
-        sys.cleanScript(tempJSFileName);
-        if (!sys.isNative){
+        cc.sys.cleanScript(tempJSFileName);
+        if (!cc.sys.isNative){
             this.clickMeShowTempLayer();
         }else{
             this.startDownload();
@@ -111,19 +111,19 @@ export class ScriptTestLayer extends SysTestBase {
 
         this._am = null;
 
-        var menu = new Menu();
-        menu.setPosition(new Point(0, 0));
+        var menu = new cc.Menu();
+        menu.setPosition(new cc.Point(0, 0));
         menu.width = winSize.width;
         menu.height = winSize.height;
         this.addChild(menu, 1);
-        var item1 = new MenuItemLabel(new LabelTTF("Click me show tempLayer", "Arial", 22), this.clickMeShowTempLayer, this);
+        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("Click me show tempLayer", "Arial", 22), this.clickMeShowTempLayer, this);
         menu.addChild(item1);
 
-        var item2 = new MenuItemLabel(new LabelTTF("Click me reload tempLayer", "Arial", 22), this.clickMeReloadTempLayer, this);
+        var item2 = new cc.MenuItemLabel(new cc.LabelTTF("Click me reload tempLayer", "Arial", 22), this.clickMeReloadTempLayer, this);
         menu.addChild(item2);
 
         menu.alignItemsVerticallyWithPadding(8);
-        menu.setPosition(Point.add(visibleRect.left, new Point(+180, 0)));
+        menu.setPosition(cc.Point.add(cc.visibleRect.left, new cc.Point(+180, 0)));
     }
 
     getTitle() {

@@ -37,8 +37,8 @@ export class MotionStreakTest2 extends MotionStreakTest {
     onEnter() {
         super.onEnter();
 
-        eventManager.addListener({
-            event: EventListener.TOUCH_ALL_AT_ONCE,
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesMoved:function (touches, event) {
                 if (touches.length == 0)
                     return;
@@ -50,9 +50,9 @@ export class MotionStreakTest2 extends MotionStreakTest {
                 streak.y = touchLocation.y;
             }
         }, this);
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
         // create the streak object and add it to the scene
-        this._streak = new MotionStreak(3, 3, 64, Color.WHITE, s_streak);
+        this._streak = new cc.MotionStreak(3, 3, 64, cc.Color.WHITE, s_streak);
         this.addChild(this._streak);
         this._streak.x = winSize.width / 2;
         this._streak.y = winSize.height / 2;

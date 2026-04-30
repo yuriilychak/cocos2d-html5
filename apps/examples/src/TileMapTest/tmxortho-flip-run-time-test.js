@@ -39,12 +39,12 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
         this.pixel = {"0":41, "1":42, "2":54, "3":255};
 
         this.pixel1 = null;
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/ortho-rotation-test.tmx");
+        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-rotation-test.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         this.log("ContentSize:" + map.width + "," + map.height);
 
-        var action = new ScaleBy(2, 0.5);
+        var action = new cc.ScaleBy(2, 0.5);
         map.runAction(action);
 
         this.schedule(this.onFlipIt, 1);
@@ -60,35 +60,35 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
         var layer = map.getLayer("Layer 0");
 
         //blue diamond
-        var tileCoord = new Point(1, 10);
+        var tileCoord = new cc.Point(1, 10);
         var flags = layer.getTileFlagsAt(tileCoord);
         var GID = layer.getTileGIDAt(tileCoord);
         // Vertical
-        if ((flags & TMX_TILE_VERTICAL_FLAG) >>> 0) {
-            flags = (flags & ~TMX_TILE_VERTICAL_FLAG >>> 0) >>> 0;
+        if ((flags & cc.TMX_TILE_VERTICAL_FLAG) >>> 0) {
+            flags = (flags & ~cc.TMX_TILE_VERTICAL_FLAG >>> 0) >>> 0;
         } else {
-            flags = (flags | TMX_TILE_VERTICAL_FLAG) >>> 0;
+            flags = (flags | cc.TMX_TILE_VERTICAL_FLAG) >>> 0;
         }
         layer.setTileGID(GID, tileCoord, flags);
 
-        tileCoord = new Point(1, 8);
+        tileCoord = new cc.Point(1, 8);
         flags = layer.getTileFlagsAt(tileCoord);
         GID = layer.getTileGIDAt(tileCoord);
         // Vertical
-        if ((flags & TMX_TILE_VERTICAL_FLAG) >>> 0)
-            flags = (flags & ~TMX_TILE_VERTICAL_FLAG >>> 0) >>> 0;
+        if ((flags & cc.TMX_TILE_VERTICAL_FLAG) >>> 0)
+            flags = (flags & ~cc.TMX_TILE_VERTICAL_FLAG >>> 0) >>> 0;
         else
-            flags = (flags | TMX_TILE_VERTICAL_FLAG) >>> 0;
+            flags = (flags | cc.TMX_TILE_VERTICAL_FLAG) >>> 0;
         layer.setTileGID(GID, tileCoord, flags);
 
-        tileCoord = new Point(2, 8);
+        tileCoord = new cc.Point(2, 8);
         flags = layer.getTileFlagsAt(tileCoord);
         GID = layer.getTileGIDAt(tileCoord);
         // Horizontal
-        if ((flags & TMX_TILE_HORIZONTAL_FLAG) >>> 0)
-            flags = (flags & ~TMX_TILE_HORIZONTAL_FLAG >>> 0) >>> 0;
+        if ((flags & cc.TMX_TILE_HORIZONTAL_FLAG) >>> 0)
+            flags = (flags & ~cc.TMX_TILE_HORIZONTAL_FLAG >>> 0) >>> 0;
         else
-            flags = (flags | TMX_TILE_HORIZONTAL_FLAG) >>> 0;
+            flags = (flags | cc.TMX_TILE_HORIZONTAL_FLAG) >>> 0;
         layer.setTileGID(GID, tileCoord, flags);
     }
     //

@@ -35,18 +35,18 @@ export class Query extends ChipmunkDemo {
         this._subtitle = 'Chipmunk Demo';
         this._title = 'Query';
 
-        this.drawNode = new DrawNode();
+        this.drawNode = new cc.DrawNode();
         this.addChild(this.drawNode, 10);
 
-        if( 'mouse' in sys.capabilities ) {
-            eventManager.addListener({
-                event: EventListener.MOUSE,
+        if( 'mouse' in cc.sys.capabilities ) {
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
                 onMouseMove: this.drawQuery
             }, this);
         }
-        else if( 'touches' in sys.capabilities ) {
-            eventManager.addListener({
-                event: EventListener.TOUCH_ONE_BY_ONE,
+        else if( 'touches' in cc.sys.capabilities ) {
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 swallowTouches: true,
                 onTouchBegan:function(){
                     return true;
@@ -102,7 +102,7 @@ export class Query extends ChipmunkDemo {
     }
 
     drawBB(bb, fillColor, lineColor){
-        this.drawNode.drawRect(new Point(bb.l, bb.b), new Point(bb.r, bb.t), fillColor, 1, lineColor);
+        this.drawNode.drawRect(new cc.Point(bb.l, bb.b), new cc.Point(bb.r, bb.t), fillColor, 1, lineColor);
     }
 
     drawQuery(touch, event){
@@ -110,37 +110,37 @@ export class Query extends ChipmunkDemo {
         var drawNode = target.drawNode;
         drawNode.clear();
 
-        var start = new Point(320, 240);
+        var start = new cc.Point(320, 240);
         var end = touch.getLocation();
         var radius = 10;
-        drawNode.drawSegment(start, end, 1, new Color(0, 255, 0, 255));
+        drawNode.drawSegment(start, end, 1, new cc.Color(0, 255, 0, 255));
 
         // WARNING: API changed in Chipmunk v7.0
         var info = target.space.segmentQueryFirst(start, end, radius, cp.SHAPE_FILTER_ALL);
         if(info) {
 
             // Draw blue over the occluded part of the query
-            drawNode.drawSegment(cp.v.lerp(start, end, info.alpha), end, 1, new Color(0,0,255,255));
+            drawNode.drawSegment(cp.v.lerp(start, end, info.alpha), end, 1, new cc.Color(0,0,255,255));
             
             // Draw a little red surface normal
-            drawNode.drawSegment(info.point, cp.v.add(info.point, cp.v.mult(info.normal, 16)), 1, new Color(255,0,0,255));
+            drawNode.drawSegment(info.point, cp.v.add(info.point, cp.v.mult(info.normal, 16)), 1, new cc.Color(255,0,0,255));
         
             // Draw a little red dot on the hit point.
-            drawNode.drawDot(info.point, 3, new Color(255,0,0,255));
+            drawNode.drawDot(info.point, 3, new cc.Color(255,0,0,255));
 
-            log("Segment Query: Dist(" + info.alpha * cp.v.dist(start,end) + ") Normal:(" + info.normal.x + "," + info.normal.y + ")");
+            cc.log("Segment Query: Dist(" + info.alpha * cp.v.dist(start,end) + ") Normal:(" + info.normal.x + "," + info.normal.y + ")");
 
             // Draw a fat green line over the unoccluded part of the query
-            // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, new Color(0,255,0,255));
+            // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, new cc.Color(0,255,0,255));
         } else {
-            log("Segment Query (None)");
+            cc.log("Segment Query (None)");
         }
 
         var nearestInfo = target.space.pointQueryNearest(touch.getLocation(), 100.0, cp.SHAPE_FILTER_ALL);
         if(nearestInfo){
             // Draw a grey line to the closest shape.
-            drawNode.drawDot(touch.getLocation(), 3, new Color(128, 128, 128, 255));
-            drawNode.drawSegment(touch.getLocation(), nearestInfo.p, 1, new Color(128, 128, 128, 255));
+            drawNode.drawDot(touch.getLocation(), 3, new cc.Color(128, 128, 128, 255));
+            drawNode.drawSegment(touch.getLocation(), nearestInfo.p, 1, new cc.Color(128, 128, 128, 255));
             
             // Draw a red bounding box around the shape under the mouse.
 //            if(nearestInfo.d < 0)

@@ -28,13 +28,13 @@ export class FlipXTest extends EffectsBaseLayer {
         return "FlipX3D";
     }
     code() {
-        return "a = flipX3D(duration )";
+        return "a = cc.flipX3D(duration )";
     }
     getEffect(duration) {
-        var a = flipX3D(duration);
-        var delay = new DelayTime(2);
+        var a = cc.flipX3D(duration);
+        var delay = new cc.DelayTime(2);
         var r = a.reverse();
-        return sequence( a, delay, r );
+        return cc.sequence( a, delay, r );
     }
 
 }

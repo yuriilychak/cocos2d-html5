@@ -28,7 +28,7 @@
 export class ActionsDemo extends BaseTestLayer {
 
   constructor() {
-    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
 
       this._grossini = null;
@@ -39,9 +39,9 @@ export class ActionsDemo extends BaseTestLayer {
 
       this._kathia = null;
 
-    this._grossini = new Sprite(s_pathGrossini);
-    this._tamara = new Sprite(s_pathSister1);
-    this._kathia = new Sprite(s_pathSister2);
+    this._grossini = new cc.Sprite(s_pathGrossini);
+    this._tamara = new cc.Sprite(s_pathSister1);
+    this._kathia = new cc.Sprite(s_pathSister2);
     this.addChild(this._grossini, SPRITE_GROSSINI_TAG);
     this.addChild(this._tamara, SPRITE_TAMARA_TAG);
     this.addChild(this._kathia, SPRITE_KATHIA_TAG);

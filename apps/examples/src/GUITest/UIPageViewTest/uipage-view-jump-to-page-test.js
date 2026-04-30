@@ -42,7 +42,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
             // Create the page view
             var pageView = new ccui.PageView();
             pageView.setTouchEnabled(true);
-            pageView.setContentSize(new Size(240, 130));
+            pageView.setContentSize(new cc.Size(240, 130));
             pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
             pageView.setIndicatorEnabled(true);
@@ -52,17 +52,17 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
             for (var i = 0; i < pageCount; ++i)
             {
                 var layout = new ccui.Layout();
-                layout.setContentSize(new Size(240.0, 130.0));
+                layout.setContentSize(new cc.Size(240.0, 130.0));
 
                 var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 imageView.setScale9Enabled(true);
-                imageView.setContentSize(new Size(240, 130));
-                imageView.setPosition(new Point(layout.width / 2.0, layout.height / 2.0));
+                imageView.setContentSize(new cc.Size(240, 130));
+                imageView.setPosition(new cc.Point(layout.width / 2.0, layout.height / 2.0));
                 layout.addChild(imageView);
 
                 var label = new ccui.Text("page " + (i+1), "Arial", 30);
-                label.setColor(new Color(192, 192, 192));
-                label.setPosition(new Point(layout.width / 2.0, layout.height / 2.0));
+                label.setColor(new cc.Color(192, 192, 192));
+                label.setPosition(new cc.Point(layout.width / 2.0, layout.height / 2.0));
                 layout.addChild(label);
 
                 pageView.insertCustomItem(layout, i);
@@ -71,7 +71,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
             pageView.setCurrentPageIndex(1);
             //add buttons to jump to specific page
             var button1 = new ccui.Button();
-            button1.setPosition(new Point(pageView.x - 50, pageView.y + pageView.height));
+            button1.setPosition(new cc.Point(pageView.x - 50, pageView.y + pageView.height));
             button1.setTitleText("Jump to Page1");
 
             button1.addClickEventListener(function(){
@@ -81,7 +81,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
             var button2 = button1.clone();
             button2.setTitleText("Jump to Page2");
-            button2.setPosition(new Point(pageView.x - 50, pageView.y + pageView.height - 50));
+            button2.setPosition(new cc.Point(pageView.x - 50, pageView.y + pageView.height - 50));
             button2.addClickEventListener(function(){
                 pageView.setCurrentPageIndex(1);
             });
@@ -89,7 +89,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
             var button3 = button2.clone();
             button3.setTitleText("Jump to Page3");
-            button3.setPosition(new Point(pageView.x + pageView.width + 50, pageView.y + pageView.height));
+            button3.setPosition(new cc.Point(pageView.x + pageView.width + 50, pageView.y + pageView.height));
             button3.addClickEventListener(function(){
                 pageView.setCurrentPageIndex(2);
             });
@@ -97,7 +97,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
             var button4 = button3.clone();
             button4.setTitleText("Jump to Page4");
-            button4.setPosition(new Point(pageView.x + pageView.width + 50, pageView.y + pageView.height - 50));
+            button4.setPosition(new cc.Point(pageView.x + pageView.width + 50, pageView.y + pageView.height - 50));
             button4.addClickEventListener(function(){
                 pageView.setCurrentPageIndex(3);
             });

@@ -33,43 +33,43 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
 
             // Add a label in which the checkbox events will be displayed
             this._displayValueLabel = new ccui.Text("No Event", "Marker Felt", 32);
-            this._displayValueLabel.setAnchorPoint(new Point(0.5, -1));
-            this._displayValueLabel.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2));
+            this._displayValueLabel.setAnchorPoint(new cc.Point(0.5, -1));
+            this._displayValueLabel.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
             this._mainNode.addChild(this._displayValueLabel);
             this._bottomDisplayLabel.setString("");
 
             // Add the alert
             var alert = new ccui.Text("Only left two can be clicked!", "Marker Felt", 20);
-            alert.setColor(new Color(159, 168, 176));
-            alert.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
+            alert.setColor(new cc.Color(159, 168, 176));
+            alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
             this._mainNode.addChild(alert);
 
             // Create the checkbox
             var checkBox = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
-            checkBox.setPosition(new Point(widgetSize.width / 2 - 50, widgetSize.height / 2));
+            checkBox.setPosition(new cc.Point(widgetSize.width / 2 - 50, widgetSize.height / 2));
 
             this._mainNode.addChild(checkBox);
 
 
             // Create the checkbox
             var checkBox2 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
-            checkBox2.setPosition(new Point(widgetSize.width / 2 - 150, widgetSize.height / 2));
+            checkBox2.setPosition(new cc.Point(widgetSize.width / 2 - 150, widgetSize.height / 2));
             checkBox2.ignoreContentAdaptWithSize(false);
             checkBox2.setZoomScale(0.5);
-            checkBox2.setContentSize(new Size(80,80));
+            checkBox2.setContentSize(new cc.Size(80,80));
             checkBox2.setName("bigCheckBox");
             this._mainNode.addChild(checkBox2);
 
 
             // Create the checkbox
             var checkBoxDisabled = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
-            checkBoxDisabled.setPosition(new Point(widgetSize.width / 2 + 20, widgetSize.height / 2));
+            checkBoxDisabled.setPosition(new cc.Point(widgetSize.width / 2 + 20, widgetSize.height / 2));
             checkBoxDisabled.setEnabled(false);
             checkBoxDisabled.setBright(false);
             this._mainNode.addChild(checkBoxDisabled);
 
             var checkBoxDisabled2 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
-            checkBoxDisabled2.setPosition(new Point(widgetSize.width / 2 + 70, widgetSize.height / 2));
+            checkBoxDisabled2.setPosition(new cc.Point(widgetSize.width / 2 + 70, widgetSize.height / 2));
             checkBoxDisabled2.setEnabled(false);
             checkBoxDisabled2.setBright(false);
             checkBoxDisabled2.setSelected(true);

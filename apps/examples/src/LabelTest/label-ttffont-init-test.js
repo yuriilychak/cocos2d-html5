@@ -30,7 +30,7 @@ export class LabelTTFFontInitTest extends AtlasDemo {
     constructor() {
         //----start23----ctor
         super();
-        var font = new LabelTTF();
+        var font = new cc.LabelTTF();
         font.font = "48px 'Courier New'";
         //font.setFontName("Arial");
         font.string = "It is working!";
@@ -40,7 +40,7 @@ export class LabelTTFFontInitTest extends AtlasDemo {
         //----end23----
     }
     title() {
-        return "LabelTTF init";
+        return "cc.LabelTTF init";
     }
     subtitle() {
         return "Test for support of init method without parameters.";

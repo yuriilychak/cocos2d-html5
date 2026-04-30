@@ -2,6 +2,6 @@
 // Test function definition
 export function runSocketIOTest() {
     console.log('SocketIOTest executed');
-    director.runScene(new Scene());
+    cc.director.runScene(new cc.Scene());
 };
 

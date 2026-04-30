@@ -28,13 +28,13 @@ export class ShuffleTilesTest extends EffectsBaseLayer {
         return "ShuffleTiles";
     }
     code() {
-        return "a = shuffleTiles(duration, gridSize, seed)";
+        return "a = cc.shuffleTiles(duration, gridSize, seed)";
     }
     getEffect(duration) {
-        var action = shuffleTiles( duration, new Size(16,12), 25);
-        var delay = new DelayTime(2);
+        var action = cc.shuffleTiles( duration, new cc.Size(16,12), 25);
+        var delay = new cc.DelayTime(2);
         var back = action.reverse();
-        var seq = sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 

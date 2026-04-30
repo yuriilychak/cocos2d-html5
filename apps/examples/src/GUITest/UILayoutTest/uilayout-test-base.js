@@ -89,7 +89,7 @@ export class UILayoutTestBase extends UIMainLayer {
     }
     createLayout() {
         var layout = new ccui.Layout();
-        layout.setContentSize(new Size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     setLayoutParameter() {

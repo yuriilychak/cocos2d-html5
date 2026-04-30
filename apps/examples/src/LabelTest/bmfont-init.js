@@ -31,7 +31,7 @@ export class BMFontInit extends AtlasDemo {
         //----start14----ctor
         super();
 
-        var bmFont = new LabelBMFont();
+        var bmFont = new cc.LabelBMFont();
         bmFont.setFntFile(s_resprefix + "fonts/helvetica-32.fnt");
         bmFont.setString("It is working!");
         this.addChild(bmFont);
@@ -40,7 +40,7 @@ export class BMFontInit extends AtlasDemo {
         //----end14----
     }
     title() {
-        return "LabelBMFont init";
+        return "cc.LabelBMFont init";
     }
     subtitle() {
         return "Test for support of init method without parameters.";

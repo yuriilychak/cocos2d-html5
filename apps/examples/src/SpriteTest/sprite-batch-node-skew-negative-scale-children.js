@@ -46,31 +46,31 @@ export class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
 
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
 
-        var cache = spriteFrameCache;
+        var cache = cc.spriteFrameCache;
         cache.addSpriteFrames(s_grossiniPlist);
         cache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
-        var spritebatch = new SpriteBatchNode(s_grossini);
+        var spritebatch = new cc.SpriteBatchNode(s_grossini);
         this.addChild(spritebatch);
 
         for (var i = 0; i < 2; i++) {
-            var sprite = new Sprite("#grossini_dance_01.png");
+            var sprite = new cc.Sprite("#grossini_dance_01.png");
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
             // Skew
-            var skewX = new SkewBy(2, 45, 0);
+            var skewX = new cc.SkewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new SkewBy(2, 0, 45);
+            var skewY = new cc.SkewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
             if (i === 1)
                 sprite.scale = -1.0;
 
-            var seq_skew = sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
-            var child1 = new Sprite("#grossini_dance_01.png");
+            var child1 = new cc.Sprite("#grossini_dance_01.png");
             child1.x = sprite.width / 2.0;
             child1.y = sprite.height / 2.0;
 

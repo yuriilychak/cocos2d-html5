@@ -33,30 +33,30 @@ export class TableViewTestLayer extends cc.Layer {
     }
 
     init() {
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
 
-        var tableView = new TableView(this, new Size(600, 60));
-        tableView.setDirection(SCROLLVIEW_DIRECTION_HORIZONTAL);
+        var tableView = new cc.TableView(this, new cc.Size(600, 60));
+        tableView.setDirection(cc.SCROLLVIEW_DIRECTION_HORIZONTAL);
         tableView.x = 20;
         tableView.y = winSize.height / 2 - 150;
         tableView.setDelegate(this);
         this.addChild(tableView);
         tableView.reloadData();
 
-        tableView = new TableView(this, new Size(60, 350));
-        tableView.setDirection(SCROLLVIEW_DIRECTION_VERTICAL);
+        tableView = new cc.TableView(this, new cc.Size(60, 350));
+        tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL);
         tableView.x = winSize.width - 150;
         tableView.y = winSize.height / 2 - 150;
         tableView.setDelegate(this);
-        tableView.setVerticalFillOrder(TABLEVIEW_FILL_TOPDOWN);
+        tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN);
         this.addChild(tableView);
         tableView.reloadData();
 
         // Back Menu
-        var itemBack = new MenuItemFont("Back", this.toExtensionsMainLayer, this);
+        var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
         itemBack.x = winSize.width - 50;
         itemBack.y = 25;
-        var menuBack = new Menu(itemBack);
+        var menuBack = new cc.Menu(itemBack);
         menuBack.x = 0;
         menuBack.y = 0;
         this.addChild(menuBack);
@@ -75,17 +75,17 @@ export class TableViewTestLayer extends cc.Layer {
     }
 
     tableCellTouched(table, cell) {
-        log("cell touched at index: " + cell.getIdx());
+        cc.log("cell touched at index: " + cell.getIdx());
     }
     tableCellTouched2() {
-        log("cell touched at index: ");
+        cc.log("cell touched at index: ");
     }
 
     tableCellSizeForIndex(table, idx) {
         if (idx == 2) {
-            return new Size(100, 100);
+            return new cc.Size(100, 100);
         }
-        return new Size(60, 60);
+        return new cc.Size(60, 60);
     }
 
     tableCellAtIndex(table, idx) {
@@ -97,14 +97,14 @@ export class TableViewTestLayer extends cc.Layer {
 
 
 
-            var sprite = new Sprite(s_image_icon);
+            var sprite = new cc.Sprite(s_image_icon);
             sprite.anchorX = 0;
             sprite.anchorY = 0;
             sprite.x = 0;
             sprite.y = 0;
             cell.addChild(sprite);
 
-            label = new LabelTTF(strValue, "Helvetica", 20.0);
+            label = new cc.LabelTTF(strValue, "Helvetica", 20.0);
             label.x = 0;
             label.y = 0;
             label.anchorX = 0;

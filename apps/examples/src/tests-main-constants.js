@@ -26,6 +26,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+// globals
+var director = null;
+
+var winSize = null;
+
 var PLATFORM_JSB = 1 << 0;
 
 var PLATFORM_HTML5 = 1 << 1;

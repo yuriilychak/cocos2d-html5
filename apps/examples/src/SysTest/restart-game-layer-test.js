@@ -35,18 +35,18 @@ export class RestartGameLayerTest extends SysTestBase {
     }
     restartGame()
     {
-        game.restart();
+        cc.game.restart();
     }
     constructor() {
         super();
-        var menu = new Menu();
-        menu.setPosition(new Point(0, 0));
+        var menu = new cc.Menu();
+        menu.setPosition(new cc.Point(0, 0));
         menu.width = winSize.width;
         menu.height = winSize.height;
         this.addChild(menu, 1);
-        var item1 = new MenuItemLabel(new LabelTTF("restartGame", "Arial", 22), this.restartGame, this);
+        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("restartGame", "Arial", 22), this.restartGame, this);
         menu.addChild(item1);
-        menu.setPosition(Point.add(visibleRect.left, new Point(+180, 0)));
+        menu.setPosition(cc.Point.add(cc.visibleRect.left, new cc.Point(+180, 0)));
     }
 
 }

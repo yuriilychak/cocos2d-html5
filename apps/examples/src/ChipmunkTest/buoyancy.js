@@ -25,7 +25,7 @@
 export class Buoyancy extends ChipmunkDemo {
     constructor() {
         super();
-        // base(this);
+        // cc.base(this);
         this._subtitle = 'Chipmunk Demo';
         this._title = 'Buoyancy';
 

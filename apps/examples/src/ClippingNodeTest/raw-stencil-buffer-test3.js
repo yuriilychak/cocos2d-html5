@@ -31,14 +31,14 @@ export class RawStencilBufferTest3 extends RawStencilBufferTest {
     }
 
     setupStencilForClippingOnPlane(plane) {
-        var gl = rendererConfig.renderContext;
+        var gl = cc.rendererConfig.renderContext;
         super.setupStencilForClippingOnPlane(plane);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        var gl = rendererConfig.renderContext;
+        var gl = cc.rendererConfig.renderContext;
         gl.depthMask(true);
         //gl.enable(gl.DEPTH_TEST);
         super.setupStencilForDrawingOnPlane(plane);

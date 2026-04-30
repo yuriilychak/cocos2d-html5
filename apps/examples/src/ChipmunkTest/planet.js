@@ -30,7 +30,7 @@
 export class Planet extends ChipmunkDemo {
     constructor() {
         super();
-        // base(this);
+        // cc.base(this);
         this._subtitle = 'Chipmunk Demo';
         this._title = 'Planet';
 

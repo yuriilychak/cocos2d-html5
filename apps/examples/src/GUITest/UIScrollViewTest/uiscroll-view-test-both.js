@@ -45,7 +45,7 @@ export class UIScrollViewTest_Both extends UIMainLayer {
             scrollView.setBounceEnabled(true);
             scrollView.setBackGroundImageScale9Enabled(true);
             scrollView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
-            scrollView.setContentSize(new Size(210, 122));
+            scrollView.setContentSize(new cc.Size(210, 122));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
@@ -56,7 +56,7 @@ export class UIScrollViewTest_Both extends UIMainLayer {
             imageView.loadTexture("ccs-res/cocosui/b11.png");
             scrollView.addChild(imageView);
 
-            scrollView.setInnerContainerSize(new Size(imageView.width, imageView.height));
+            scrollView.setInnerContainerSize(new cc.Size(imageView.width, imageView.height));
             imageView.x = imageView.width/2;
             imageView.y = imageView.height/2;
 

@@ -49,22 +49,22 @@ export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
 
     onTick1(dt) {
         //----start3----onTick1
-        log("SchedulerUnscheduleAllHard tick1");
+        cc.log("SchedulerUnscheduleAllHard tick1");
         //----end3----
     }
     onTick2(dt) {
         //----start3----onTick2
-        log("SchedulerUnscheduleAllHard tick2");
+        cc.log("SchedulerUnscheduleAllHard tick2");
         //----end3----
     }
     onTick3(dt) {
         //----start3----onTick3
-        log("SchedulerUnscheduleAllHard tick3");
+        cc.log("SchedulerUnscheduleAllHard tick3");
         //----end3----
     }
     onTick4(dt) {
         //----start3----onTick4
-        log("SchedulerUnscheduleAllHard tick4");
+        cc.log("SchedulerUnscheduleAllHard tick4");
         //----end3----
     }
     onUnscheduleAll(dt) {

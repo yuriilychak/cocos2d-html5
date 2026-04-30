@@ -58,11 +58,11 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
         var textField = this._trackNode;
         if (clicked) {
             // TextFieldTTFTest be clicked
-            log("TextFieldTTFActionTest:CCTextFieldTTF attachWithIME");
+            cc.log("TextFieldTTFActionTest:CCTextFieldTTF attachWithIME");
             textField.attachWithIME();
         } else {
             // TextFieldTTFTest not be clicked
-            log("TextFieldTTFActionTest:CCTextFieldTTF detachWithIME");
+            cc.log("TextFieldTTFActionTest:CCTextFieldTTF detachWithIME");
             textField.detachWithIME();
         }
     }
@@ -72,16 +72,16 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
         super.onEnter();
 
         this._charLimit = 20;
-        this._textFieldAction = sequence(
-            new FadeOut(0.25),
-            new FadeIn(0.25)
+        this._textFieldAction = cc.sequence(
+            new cc.FadeOut(0.25),
+            new cc.FadeIn(0.25)
         ).repeatForever();
         this._action = false;
 
         // add CCTextFieldTTF
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
 
-        this._textField = new TextFieldTTF("<click here for input>",
+        this._textField = new cc.TextFieldTTF("<click here for input>",
             TEXT_INPUT_FONT_NAME,
             TEXT_INPUT_FONT_SIZE);
         this.addChild(this._textField);
@@ -120,9 +120,9 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
         }
 
         // create a insert text sprite and do some action
-        var label = new LabelTTF(text, TEXT_INPUT_FONT_NAME, TEXT_INPUT_FONT_SIZE);
+        var label = new cc.LabelTTF(text, TEXT_INPUT_FONT_NAME, TEXT_INPUT_FONT_SIZE);
         this.addChild(label);
-        var color = new Color(226, 121, 7);
+        var color = new cc.Color(226, 121, 7);
         label.color = color;
 
         // move the sprite from top to position
@@ -133,30 +133,30 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
         var duration = 0.5;
         label.x = endX;
-        label.y = director.getWinSize().height - label.height * 2;
+        label.y = cc.director.getWinSize().height - label.height * 2;
         label.scale = 8;
 
-        var seq = sequence(
-            spawn(
-                new MoveTo(duration, new Point(endX, endY)),
-                new ScaleTo(duration, 1),
-                new FadeOut(duration)),
-            new CallFunc(this.callbackRemoveNodeWhenDidAction, this));
+        var seq = cc.sequence(
+            cc.spawn(
+                new cc.MoveTo(duration, new cc.Point(endX, endY)),
+                new cc.ScaleTo(duration, 1),
+                new cc.FadeOut(duration)),
+            new cc.CallFunc(this.callbackRemoveNodeWhenDidAction, this));
         label.runAction(seq);
         return false;
     }
 
     onTextFieldDeleteBackward(sender, delText, len) {
         // create a delete text sprite and do some action
-        var label = new LabelTTF(delText, TEXT_INPUT_FONT_NAME, TEXT_INPUT_FONT_SIZE);
+        var label = new cc.LabelTTF(delText, TEXT_INPUT_FONT_NAME, TEXT_INPUT_FONT_SIZE);
         this.addChild(label);
 
         // move the sprite to fly out
         var beginX = sender.x, beginY = sender.y;
         beginX += (sender.width - label.width) / 2.0;
 
-        var winSize = director.getWinSize();
-        var endPos = new Point(-winSize.width / 4.0, winSize.height * (0.5 + Math.random() / 2.0));
+        var winSize = cc.director.getWinSize();
+        var endPos = new cc.Point(-winSize.width / 4.0, winSize.height * (0.5 + Math.random() / 2.0));
 
         var duration = 1;
         var rotateDuration = 0.2;
@@ -164,12 +164,12 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
         label.x = beginX;
         label.y = beginY;
 
-        var seq = sequence(
-            spawn(
-                new MoveTo(duration, endPos),
-                new RotateBy(rotateDuration, (Math.random() % 2) ? 360 : -360).repeat(repeatTime),
-                new FadeOut(duration)),
-            new CallFunc(this.callbackRemoveNodeWhenDidAction, this));
+        var seq = cc.sequence(
+            cc.spawn(
+                new cc.MoveTo(duration, endPos),
+                new cc.RotateBy(rotateDuration, (Math.random() % 2) ? 360 : -360).repeat(repeatTime),
+                new cc.FadeOut(duration)),
+            new cc.CallFunc(this.callbackRemoveNodeWhenDidAction, this));
         label.runAction(seq);
         return false;
     }

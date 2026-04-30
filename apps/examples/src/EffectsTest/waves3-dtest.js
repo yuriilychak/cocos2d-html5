@@ -28,10 +28,10 @@ export class Waves3DTest extends EffectsBaseLayer {
         return "Waves 3D";
     }
     code() {
-        return "a = waves3D(duration, gridSize, range, shakeZ)";
+        return "a = cc.waves3D(duration, gridSize, range, shakeZ)";
     }
     getEffect(duration) {
-        return waves3D(duration, new Size(15,10), 5, 40 );
+        return cc.waves3D(duration, new cc.Size(15,10), 5, 40 );
     }
 
 }

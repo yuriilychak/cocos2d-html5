@@ -44,16 +44,16 @@ export class WrapAlgorithmTest extends AtlasDemo {
         ];
 
         normalText.forEach(function(text, i){
-            var LabelTTF = new LabelTTF();
+            var LabelTTF = new cc.LabelTTF();
             LabelTTF.setString(text);
             LabelTTF.setPosition(30 + 150 * (i/4|0), 300 - (i%4) * 60);
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 120;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
-            if (sys.os === sys.OS_WP8)
+            LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
+            if (cc.sys.os === cc.sys.OS_WP8)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
-            else if(sys.os === sys.OS_WINRT)
+            else if(cc.sys.os === cc.sys.OS_WINRT)
                 LabelTTF.setFontName("DengXian");
             self.addChild(LabelTTF);
         });
@@ -70,16 +70,16 @@ export class WrapAlgorithmTest extends AtlasDemo {
         ];
 
         extremeText.forEach(function(text, i){
-            var LabelTTF = new LabelTTF();
+            var LabelTTF = new cc.LabelTTF();
             LabelTTF.setString(text);
             LabelTTF.setPosition(480 + i * 25, 300);
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 13;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
-            if (sys.os === sys.OS_WP8)
+            LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
+            if (cc.sys.os === cc.sys.OS_WP8)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
-            else if(sys.os === sys.OS_WINRT)
+            else if(cc.sys.os === cc.sys.OS_WINRT)
                 LabelTTF.setFontName("DengXian");
             self.addChild(LabelTTF);
         });
@@ -92,16 +92,16 @@ export class WrapAlgorithmTest extends AtlasDemo {
         ];
 
         combinatorialText.forEach(function(text, i){
-            var LabelTTF = new LabelTTF();
+            var LabelTTF = new cc.LabelTTF();
             LabelTTF.setString(text);
             LabelTTF.setPosition(480 + 100 * (i/3|0), 240 - (i%3) * 60);
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 90;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
-            if (sys.os === sys.OS_WP8)
+            LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
+            if (cc.sys.os === cc.sys.OS_WP8)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
-            else if(sys.os === sys.OS_WINRT)
+            else if(cc.sys.os === cc.sys.OS_WINRT)
                 LabelTTF.setFontName("DengXian");
             self.addChild(LabelTTF);
         });
@@ -115,11 +115,11 @@ export class WrapAlgorithmTest extends AtlasDemo {
     }
     onEnter(){
         super.onEnter();
-        SPRITE_DEBUG_DRAW = 1;
+        cc.SPRITE_DEBUG_DRAW = 1;
     }
     onExit(){
         super.onExit();
-        SPRITE_DEBUG_DRAW = 0;
+        cc.SPRITE_DEBUG_DRAW = 0;
     }
 
 }

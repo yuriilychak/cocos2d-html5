@@ -37,10 +37,10 @@ export class DemoFlower extends ParticleDemo {
 
         this._emitter = new cc.ParticleFlower();
         this._background.addChild(this._emitter, 10);
-        this._emitter.texture = textureCache.addImage(s_stars1);
+        this._emitter.texture = cc.textureCache.addImage(s_stars1);
 
         if (this._emitter.setShapeType)
-            this._emitter.setShapeType(ParticleSystem.STAR_SHAPE);
+            this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
 
         this.setEmitterPosition();
     }

@@ -56,7 +56,7 @@ export class RescheduleCallback extends SchedulerTestLayer {
         //----start8----onSchedUpdate
         this._ticks++;
 
-        log("schedUpdate: " + dt.toFixed(2));
+        cc.log("schedUpdate: " + dt.toFixed(2));
         if (this._ticks > 3) {
             this._interval += 1.0;
             this.schedule(this.onSchedUpdate, this._interval);

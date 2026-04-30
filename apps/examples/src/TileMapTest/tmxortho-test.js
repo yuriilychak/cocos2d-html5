@@ -41,10 +41,10 @@ export class TMXOrthoTest extends TileDemo {
         this.pixel2 = {"0":193, "1":143, "2":72, "3":255};
 
         this.pixel3 = {"0":200, "1":15, "2":160, "3":255};
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test1.tmx");
+        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test1.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
-        map.runAction(new ScaleBy(2, 0.5));
+        map.runAction(new cc.ScaleBy(2, 0.5));
     }
     title() {
         return "TMX Ortho test";

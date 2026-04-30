@@ -30,38 +30,38 @@ export class SpriteProgressWithSpriteFrame extends SpriteDemo {
         //----start6----onEnter
         super.onEnter();
 
-        var to = progressFromTo(6, 0, 100);
+        var to = cc.progressFromTo(6, 0, 100);
 
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
-        var left = new ProgressTimer(new Sprite("#grossini_dance_01.png"));
-        left.type = ProgressTimer.TYPE_BAR;
+        var left = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_01.png"));
+        left.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        left.midpoint = new Point(0.5, 0.5);
+        left.midpoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        left.barChangeRate = new Point(1, 0);
+        left.barChangeRate = new cc.Point(1, 0);
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
         left.runAction(to.clone().repeatForever());
 
-        var middle = new ProgressTimer(new Sprite("#grossini_dance_02.png"));
-        middle.type = ProgressTimer.TYPE_BAR;
+        var middle = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_02.png"));
+        middle.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        middle.midpoint = new Point(0.5, 0.5);
+        middle.midpoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        middle.barChangeRate = new Point(1, 1);
+        middle.barChangeRate = new cc.Point(1, 1);
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
         middle.runAction(to.clone().repeatForever());
 
-        var right = new ProgressTimer(new Sprite("#grossini_dance_03.png"));
-        right.type = ProgressTimer.TYPE_RADIAL;
+        var right = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_03.png"));
+        right.type = cc.ProgressTimer.TYPE_RADIAL;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        right.midPoint = new Point(0.5, 0.5);
+        right.midPoint = new cc.Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        right.barChangeRate = new Point(0, 1);
+        right.barChangeRate = new cc.Point(0, 1);
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;

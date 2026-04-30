@@ -133,7 +133,7 @@ export function createCustomAction(ActionObject) {
       if (this.getTarget()) {
         // rand color
         this.getTarget().setColor(
-          new Color(rand() % 255, rand() % 255, rand() % 255)
+          new cc.Color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
         );
       }
     }

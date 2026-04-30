@@ -35,10 +35,10 @@ export class TMXIsoTest1 extends TileDemo {
         super();
 
         this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        var color = new LayerColor(new Color(64, 64, 64, 255));
+        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
         this.addChild(color, -1);
 
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test1.tmx");
+        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test1.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         map.anchorX = 0.5;

@@ -33,7 +33,7 @@ export class ShaderFlowerTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
+        if( 'opengl' in cc.sys.capabilities ) {
 
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Flower.vsh", ccbjs + "Shaders/example_Flower.fsh");
             this.addChild(shaderNode,10);

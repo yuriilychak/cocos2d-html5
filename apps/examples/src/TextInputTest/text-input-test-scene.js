@@ -31,7 +31,7 @@ export class TextInputTestScene extends TestScene {
         var layer = nextTextInputTest();
 
         this.addChild(layer);
-        director.runScene(this);
+        cc.director.runScene(this);
     }
 
 }

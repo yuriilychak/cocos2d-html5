@@ -34,14 +34,14 @@ export class UILayoutComponentTest extends UIMainLayer {
         if (super.init()) {
             var widgetSize = this._widget.getContentSize();
 
-            this._baseLayer = new LayerColor();
-            this._baseLayer.setColor(new Color(50, 100, 0));
+            this._baseLayer = new cc.LayerColor();
+            this._baseLayer.setColor(new cc.Color(50, 100, 0));
             this._baseLayer.setOpacity(100);
             this._baseLayer.setContentSize(200, 200);
             this._mainNode.addChild(this._baseLayer);
 
             var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
-            log("content size should be greater than 0:  width = %f, height = %f", button.width, button.height);
+            cc.log("content size should be greater than 0:  width = %f, height = %f", button.width, button.height);
             button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
             button.addTouchEventListener(this.touchEvent, this);
             button.setZoomScale(0.4);

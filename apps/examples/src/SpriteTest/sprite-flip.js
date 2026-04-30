@@ -56,12 +56,12 @@ export class SpriteFlip extends SpriteTestDemo {
 
 
         this.pixel4 = null;
-        var sprite1 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         this.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);

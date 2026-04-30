@@ -58,25 +58,25 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
 
         this.sp9 = null;
 
-        eventManager.addListener({
-            event: EventListener.TOUCH_ALL_AT_ONCE,
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: this.onTouchesBegan.bind(this),
             onTouchesEnded: this.onTouchesEnded.bind(this),
             onTouchesMoved: this.onTouchesMoved.bind(this)
         }, this);
 
-        var size = director.getWinSize();
-        var label = new LabelTTF("vertexZ = 50", "Marker Felt", 64);
+        var size = cc.director.getWinSize();
+        var label = new cc.LabelTTF("vertexZ = 50", "Marker Felt", 64);
         label.x = size.width / 2;
         label.y = size.height * 0.25;
         this.addChild(label);
 
-        var label2 = new LabelTTF("vertexZ = 0", "Marker Felt", 64);
+        var label2 = new cc.LabelTTF("vertexZ = 0", "Marker Felt", 64);
         label2.x = size.width / 2;
         label2.y = size.height * 0.5;
         this.addChild(label2);
 
-        var label3 = new LabelTTF("vertexZ = -50", "Marker Felt", 64);
+        var label3 = new cc.LabelTTF("vertexZ = -50", "Marker Felt", 64);
         label3.x = size.width / 2;
         label3.y = size.height * 0.75;
         this.addChild(label3);
@@ -85,18 +85,18 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
         label2.vertexZ = 0;
         label3.vertexZ = -50;
 
-        spriteFrameCache.addSpriteFrames(s_circle_plist);
-        this.mgr = new SpriteBatchNode(s_circle_png, 9);
+        cc.spriteFrameCache.addSpriteFrames(s_circle_plist);
+        this.mgr = new cc.SpriteBatchNode(s_circle_png, 9);
         this.addChild(this.mgr);
-        this.sp1 = new Sprite("#circle.png");
-        this.sp2 = new Sprite("#circle.png");
-        this.sp3 = new Sprite("#circle.png");
-        this.sp4 = new Sprite("#circle.png");
-        this.sp5 = new Sprite("#circle.png");
-        this.sp6 = new Sprite("#circle.png");
-        this.sp7 = new Sprite("#circle.png");
-        this.sp8 = new Sprite("#circle.png");
-        this.sp9 = new Sprite("#circle.png");
+        this.sp1 = new cc.Sprite("#circle.png");
+        this.sp2 = new cc.Sprite("#circle.png");
+        this.sp3 = new cc.Sprite("#circle.png");
+        this.sp4 = new cc.Sprite("#circle.png");
+        this.sp5 = new cc.Sprite("#circle.png");
+        this.sp6 = new cc.Sprite("#circle.png");
+        this.sp7 = new cc.Sprite("#circle.png");
+        this.sp8 = new cc.Sprite("#circle.png");
+        this.sp9 = new cc.Sprite("#circle.png");
 
         this.mgr.addChild(this.sp1, 9);
         this.mgr.addChild(this.sp2, 8);
@@ -119,7 +119,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
         this.sp9.vertexZ = -400;
 
         this.sp9.scale = 2;
-        this.sp9.color = Color.YELLOW;
+        this.sp9.color = cc.Color.YELLOW;
     }
 
     onTouchesBegan(touches, event) {
@@ -191,8 +191,8 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     }
 
     renderScreenShot() {
-        var winSize = director.getWinSize();
-        var texture = new RenderTexture(winSize.width, winSize.width);
+        var winSize = cc.director.getWinSize();
+        var texture = new cc.RenderTexture(winSize.width, winSize.width);
         if (!texture)
             return;
 
@@ -202,16 +202,16 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
         this.visit();
         texture.end();
 
-        var sprite = new Sprite(texture.getSprite().texture);
+        var sprite = new cc.Sprite(texture.getSprite().texture);
 
         sprite.x = winSize.width/2;
         sprite.y = winSize.width/2;
         sprite.opacity = 182;
         sprite.flippedY = 1;
         this.addChild(sprite, 999999);
-        sprite.color = Color.GREEN;
+        sprite.color = cc.Color.GREEN;
 
-        sprite.runAction(sequence(new FadeTo(2, 0), new Hide()));
+        sprite.runAction(cc.sequence(new cc.FadeTo(2, 0), new cc.Hide()));
     }
 
 }

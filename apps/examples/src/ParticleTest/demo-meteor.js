@@ -32,8 +32,8 @@ export class DemoMeteor extends ParticleDemo {
         this._emitter = new cc.ParticleMeteor();
         this._background.addChild(this._emitter, 10);
 
-        this._emitter.texture = textureCache.addImage(s_fire);
-        this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
+        this._emitter.texture = cc.textureCache.addImage(s_fire);
+        this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
 
         this.setEmitterPosition();
     }

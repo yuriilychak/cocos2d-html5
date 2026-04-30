@@ -38,8 +38,8 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
 
             // Add the alert
             var alert = new ccui.Text("TextField line wrap","Marker Felt",30);
-            alert.setColor(new Color(159, 168, 176));
-            alert.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.075));
+            alert.setColor(new cc.Color(159, 168, 176));
+            alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.075));
             this._mainNode.addChild(alert);
 
             // Create the textfield
@@ -48,8 +48,8 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
             //textField.getVirtualRenderer().setLineBreakWithoutSpace(true);
             textField.setContentSize(240, 120);
             textField.setString("input words here");
-            textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
-            textField.setTextVerticalAlignment(TEXT_ALIGNMENT_CENTER);
+            textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+            textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
             textField.setPosition(widgetSize.width / 2, widgetSize.height / 2);
             textField.addEventListener(this.textFieldEvent, this);
             this._mainNode.addChild(textField);
@@ -61,15 +61,15 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(new MoveTo(0.225, new Point(widgetSize.width / 2, widgetSize.height / 2 + 30)));
-                textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_LEFT);
-                textField.setTextVerticalAlignment(VERTICAL_TEXT_ALIGNMENT_TOP);
+                textField.runAction(new cc.MoveTo(0.225, new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 30)));
+                textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT);
+                textField.setTextVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP);
                 this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(new MoveTo(0.175, new Point(widgetSize.width / 2, widgetSize.height / 2)));
-                textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
-                textField.setTextVerticalAlignment(TEXT_ALIGNMENT_CENTER);
+                textField.runAction(new cc.MoveTo(0.175, new cc.Point(widgetSize.width / 2, widgetSize.height / 2)));
+                textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+                textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
                 this._topDisplayLabel.setString("detach with IME");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:

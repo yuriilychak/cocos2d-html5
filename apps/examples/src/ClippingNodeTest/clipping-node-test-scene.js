@@ -28,7 +28,7 @@
 export class ClippingNodeTestScene extends TestScene {
     runThisTest(num) {
         clippingNodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
-        director.runScene(this);
+        cc.director.runScene(this);
 	    var layer = nextClippingNodeTest();
 	    this.addChild(layer);
     }

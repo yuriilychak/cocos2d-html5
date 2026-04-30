@@ -32,7 +32,7 @@ var TEXT_INPUT_FONT_SIZE = 36;
 var sceneIdx = -1;
 
 export function textInputGetRect(node) {
-    var rc = new Rect(node.x, node.y, node.width, node.height);
+    var rc = new cc.Rect(node.x, node.y, node.width, node.height);
     rc.x -= rc.width / 2;
     rc.y -= rc.height / 2;
     return rc;

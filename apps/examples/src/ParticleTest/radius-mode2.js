@@ -29,24 +29,24 @@ export class RadiusMode2 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.color = new Color(0, 0, 0);
+        this.color = new cc.Color(0, 0, 0);
         this.removeChild(this._background, true);
         this._background = null;
 
-        this._emitter = new ParticleSystem(100);
+        this._emitter = new cc.ParticleSystem(100);
         this.addChild(this._emitter, 10);
-        this._emitter.texture = textureCache.addImage(s_starsGrayscale);
+        this._emitter.texture = cc.textureCache.addImage(s_starsGrayscale);
 
         // duration
-        this._emitter.duration = ParticleSystem.DURATION_INFINITY;
+        this._emitter.duration = cc.ParticleSystem.DURATION_INFINITY;
 
         // radius mode
-        this._emitter.emitterMode = ParticleSystem.MODE_RADIUS;
+        this._emitter.emitterMode = cc.ParticleSystem.MODE_RADIUS;
 
         // radius mode: start and end radius in pixels
         this._emitter.startRadius = 100;
         this._emitter.startRadiusVar = 0;
-        this._emitter.endRadius = ParticleSystem.START_RADIUS_EQUAL_TO_END_RADIUS;
+        this._emitter.endRadius = cc.ParticleSystem.START_RADIUS_EQUAL_TO_END_RADIUS;
         this._emitter.endRadiusVar = 0;
 
         // radius mode: degrees per second
@@ -61,7 +61,7 @@ export class RadiusMode2 extends ParticleDemo {
         var size = director.getWinSize();
         this._emitter.x = size.width / 2;
         this._emitter.y = size.height / 2;
-        this._emitter.posVar = new Point(0, 0);
+        this._emitter.posVar = new cc.Point(0, 0);
 
         // life of particles
         this._emitter.life = 4;
@@ -74,15 +74,15 @@ export class RadiusMode2 extends ParticleDemo {
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        this._emitter.startColor = new Color(128, 128, 128, 255);
-        this._emitter.startColorVar = new Color(128, 128, 128, 255);
-        this._emitter.endColor = new Color(26, 26, 26, 50);
-        this._emitter.endColorVar = new Color(26, 26, 26, 50);
+        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
+        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 32;
         this._emitter.startSizeVar = 0;
-        this._emitter.endSize = ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
+        this._emitter.endSize = cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;

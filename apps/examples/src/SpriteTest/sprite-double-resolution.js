@@ -54,7 +54,7 @@ export class SpriteDoubleResolution extends SpriteTestDemo {
         child1_left.x = -30;
         child1_left.y = 0;
 
-        var child1_right = new Sprite(s_pathGrossini);
+        var child1_right = new cc.Sprite(s_pathGrossini);
         spriteSD.addChild(child1_right);
         child1_left.x = spriteSD.height;
         child1_left.y = 0;
@@ -63,7 +63,7 @@ export class SpriteDoubleResolution extends SpriteTestDemo {
         // RIGHT: HD sprite
         //
         // there is an HD version of grossini.png
-        var spriteHD = new Sprite(s_pathGrossini);
+        var spriteHD = new cc.Sprite(s_pathGrossini);
         this.addChild(spriteHD);
         spriteHD.x = winSize.width / 4 * 3;
         spriteHD.y = winSize.height / 2;
@@ -73,16 +73,16 @@ export class SpriteDoubleResolution extends SpriteTestDemo {
         child2_left.x = -30;
         child2_left.y = 0;
 
-        var child2_right = new Sprite(s_pathGrossini);
+        var child2_right = new cc.Sprite(s_pathGrossini);
         spriteHD.addChild(child2_right);
         child2_left.x = spriteHD.height;
         child2_left.y = 0;
 
 
         // Actions
-        var scale = new ScaleBy(2, 0.5);
+        var scale = new cc.ScaleBy(2, 0.5);
         var scale_back = scale.reverse();
-        var seq = sequence(scale, scale_back);
+        var seq = cc.sequence(scale, scale_back);
 
         var seq_copy = seq.clone();
 

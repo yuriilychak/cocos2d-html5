@@ -28,7 +28,7 @@
 export class TileMapEditTest extends TileDemo {
     constructor() {
         super();
-        var map = new TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
+        var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
         // Create an Aliased Atlas
         map.texture.setAliasTexParameters();
         this.log("ContentSize: " + map.width + " " + map.height);
@@ -58,14 +58,14 @@ export class TileMapEditTest extends TileDemo {
         var tilemap = this.getChildByTag(TAG_TILE_MAP);
 
         // NEW since v0.7
-        var c = tilemap.getTileAt(new Point(13, 21));
+        var c = tilemap.getTileAt(new cc.Point(13, 21));
         c.r++;
         c.r %= 50;
         if (c.r == 0)
             c.r = 1;
 
         // NEW since v0.7
-        tilemap.setTile(c, new Point(13, 21));
+        tilemap.setTile(c, new cc.Point(13, 21));
     }
 
 }

@@ -44,29 +44,29 @@ export class S9BatchNodeScaleWithCapInsets extends S9SpriteTestDemo {
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        log("S9BatchNodeScaleWithCapInsets ...");
+        cc.log("S9BatchNodeScaleWithCapInsets ...");
 
-        var batchNode_scaled_with_insets = new SpriteBatchNode("Images/blocks9.png");
-        log("batchNode_scaled_with_insets created with : " + "Images/blocks9.png");
+        var batchNode_scaled_with_insets = new cc.SpriteBatchNode("Images/blocks9.png");
+        cc.log("batchNode_scaled_with_insets created with : " + "Images/blocks9.png");
 
-        var blocks_scaled_with_insets = new Scale9Sprite();
-        log("... created");
+        var blocks_scaled_with_insets = new cc.Scale9Sprite();
+        cc.log("... created");
 
-        blocks_scaled_with_insets.updateWithBatchNode(batchNode_scaled_with_insets, new Rect(0, 0, 96, 96), false, new Rect(32, 32, 32, 32));
-        log("... updateWithBatchNode");
+        blocks_scaled_with_insets.updateWithBatchNode(batchNode_scaled_with_insets, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(32, 32, 32, 32));
+        cc.log("... updateWithBatchNode");
 
         blocks_scaled_with_insets.width = 96 * 4.5;
         blocks_scaled_with_insets.height = 96 * 2.5;
-        log("... setContentSize");
+        cc.log("... setContentSize");
 
         blocks_scaled_with_insets.x = x;
         blocks_scaled_with_insets.y = y;
-        log("... setPosition");
+        cc.log("... setPosition");
 
         this.addChild(blocks_scaled_with_insets);
-        log("this..addChild");
+        cc.log("this..addChild");
 
-        log("... S9BatchNodeScaleWithCapInsets done.");
+        cc.log("... S9BatchNodeScaleWithCapInsets done.");
     }
 
 }

@@ -51,11 +51,11 @@ export class Sprite1 extends SpriteTestDemo {
 
         this.testSprite = null;
 
-        this.addNewSpriteWithCoords(new Point(winSize.width / 2, winSize.height / 2));
+        this.addNewSpriteWithCoords(new cc.Point(winSize.width / 2, winSize.height / 2));
 
-        if ('touches' in sys.capabilities) {
-            eventManager.addListener({
-                event: EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in cc.sys.capabilities) {
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded: function(touches, event){
                     for (var it = 0; it < touches.length; it++) {
                         var touch = touches[it];
@@ -67,9 +67,9 @@ export class Sprite1 extends SpriteTestDemo {
                     }
                 }
             }, this);
-        } else if ('mouse' in sys.capabilities)
-            eventManager.addListener({
-                event: EventListener.MOUSE,
+        } else if ('mouse' in cc.sys.capabilities)
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
                 onMouseUp: function(event){
                     event.getCurrentTarget().addNewSpriteWithCoords(event.getLocation());
                 }
@@ -82,7 +82,7 @@ export class Sprite1 extends SpriteTestDemo {
         var idx = 0 | (Math.random() * 14);
         var x = (idx % 5) * 85;
         var y = (0 | (idx / 5)) * 121;
-        var sprite = new Sprite(s_grossini_dance_atlas, new Rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(x, y, 85, 121));
         this.addChild(sprite);
         sprite.x = p.x;
         sprite.y = p.y;
@@ -90,19 +90,19 @@ export class Sprite1 extends SpriteTestDemo {
         var action;
         var random = Math.random();
         if (random < 0.20) {
-            action = new ScaleBy(3, 2);
+            action = new cc.ScaleBy(3, 2);
         } else if (random < 0.40) {
-            action = new RotateBy(3, 360);
+            action = new cc.RotateBy(3, 360);
         } else if (random < 0.60) {
-            action = new Blink(1, 3);
+            action = new cc.Blink(1, 3);
         } else if (random < 0.8) {
-            action = new TintBy(2, 0, -255, -255);
+            action = new cc.TintBy(2, 0, -255, -255);
         } else {
-            action = new FadeOut(2);
+            action = new cc.FadeOut(2);
         }
 
         var action_back = action.reverse();
-        var seq = sequence(action, action_back);
+        var seq = cc.sequence(action, action_back);
 
         sprite.runAction(seq.repeatForever());
         this.testSprite = sprite;
@@ -113,7 +113,7 @@ export class Sprite1 extends SpriteTestDemo {
     //
     setupAutomation() {
         var fun = function () {
-            var sprite = new Sprite(s_grossini_dance_atlas, new Rect(0, 0, 85, 121));
+            var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 0, 85, 121));
             this.addChild(sprite, 999);
             sprite.x = winSize.width / 2;
             sprite.y = winSize.height / 2;

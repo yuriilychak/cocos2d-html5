@@ -31,9 +31,9 @@ export class IgnoreAnchorpointTest3 extends LayerTest {
         super.onEnter();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = new LayerColor(new Color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = new cc.LayerColor(new cc.Color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(false);
-        var layer2 = new LayerColor(new Color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = new cc.LayerColor(new cc.Color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(false);
         layer1.addChild(layer2);
         layer1.x = ws.width / 2;

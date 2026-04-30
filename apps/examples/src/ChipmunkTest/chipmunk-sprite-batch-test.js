@@ -30,15 +30,15 @@
 export class ChipmunkSpriteBatchTest extends ChipmunkSprite {
     constructor() {
         super();
-        // base(this);
+        // cc.base(this);
 
         // batch node
-        this.batch = new SpriteBatchNode(s_pathGrossini, 50 );
+        this.batch = new cc.SpriteBatchNode(s_pathGrossini, 50 );
         this.addChild( this.batch );
 
         this.addSprite = function( pos ) {
             var sprite =  this.createPhysicsSprite( pos );
-            var child = new Sprite(s_pathGrossini);
+            var child = new cc.Sprite(s_pathGrossini);
             child.attr({
                 scale: 0.4,
                 anchorX: 0,

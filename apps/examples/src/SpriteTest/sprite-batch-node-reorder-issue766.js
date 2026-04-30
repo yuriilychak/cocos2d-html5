@@ -72,7 +72,7 @@ export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
 
 
         this.pixel2 = {"0":255, "1":255, "2":255, "3":255};
-        this._batchNode = new SpriteBatchNode(s_piece, 15);
+        this._batchNode = new cc.SpriteBatchNode(s_piece, 15);
         this.addChild(this._batchNode, 1, 0);
 
         this._sprite1 = this.makeSpriteZ(2);
@@ -99,15 +99,15 @@ export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
     }
     makeSpriteZ(aZ) {
         //----start17----makeSpriteZ
-        var sprite = new Sprite(this._batchNode.texture, new Rect(128, 0, 64, 64));
+        var sprite = new cc.Sprite(this._batchNode.texture, new cc.Rect(128, 0, 64, 64));
         this._batchNode.addChild(sprite, aZ + 1, 0);
 
         //children
-        var spriteShadow = new Sprite(this._batchNode.texture, new Rect(0, 0, 64, 64));
+        var spriteShadow = new cc.Sprite(this._batchNode.texture, new cc.Rect(0, 0, 64, 64));
         spriteShadow.opacity = 128;
         sprite.addChild(spriteShadow, aZ, 3);
 
-        var spriteTop = new Sprite(this._batchNode.texture, new Rect(64, 0, 64, 64));
+        var spriteTop = new cc.Sprite(this._batchNode.texture, new cc.Rect(64, 0, 64, 64));
         sprite.addChild(spriteTop, aZ + 2, 3);
 
         return sprite;

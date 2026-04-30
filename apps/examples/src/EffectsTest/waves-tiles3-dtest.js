@@ -28,10 +28,10 @@ export class WavesTiles3DTest extends EffectsBaseLayer {
         return "WavesTiles3D";
     }
     code() {
-        return "a = wavesTiles3D(duration, gridSize, waves, amplitude)";
+        return "a = cc.wavesTiles3D(duration, gridSize, waves, amplitude)";
     }
     getEffect(duration) {
-        var action = wavesTiles3D( duration, new Size(16,12), 4, 120);
+        var action = cc.wavesTiles3D( duration, new cc.Size(16,12), 4, 120);
         return action;
     }
 

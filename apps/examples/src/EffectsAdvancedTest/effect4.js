@@ -34,22 +34,23 @@ export class Effect4 extends EffectAdvanceTextLayer {
         super.onEnter();
 
         var bgNodeGrid = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        var lens = lens3D(10, new Size(32, 24), new Point(100, 180), 150);
-        var move = new JumpBy(5, new Point(380, 0), 100, 4);
+        var lens = cc.lens3D(10, new cc.Size(32, 24), new cc.Point(100, 180), 150);
+        var move = new cc.JumpBy(5, new cc.Point(380, 0), 100, 4);
         var move_back = move.reverse();
-        var seq = sequence(move, move_back);
+        var seq = cc.sequence(move, move_back);
 
         /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'CCLens3D' as its target.
          While in cocos2d-x, the target of action only supports CCNode or its subclass,
          so we make an encapsulation for CCLens3D to achieve that.
          */
+        var director = cc.director;
         var target = Lens3DTarget.create(lens);
 
         // Please make sure the target been added to its parent.
         this.addChild(target);
 
         director.getActionManager().addAction(seq, target, false);
-        bgNodeGrid.runAction(sequence(lens, new CallFunc(
+        bgNodeGrid.runAction(cc.sequence(lens, new cc.CallFunc(
             function(sender) {
                 sender.removeChild(target, true);
             }

@@ -30,18 +30,18 @@ export class SpriteProgressToRadial extends SpriteDemo {
         //----start0----onEnter
         super.onEnter();
 
-        var to1 = progressFromTo(2, 0, 100);
-        var to2 = progressFromTo(2, 0, 100);
+        var to1 = cc.progressFromTo(2, 0, 100);
+        var to2 = cc.progressFromTo(2, 0, 100);
 
-        var left = new ProgressTimer(new Sprite(s_pathSister1));
-        left.type = ProgressTimer.TYPE_RADIAL;
+        var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
+        left.type = cc.ProgressTimer.TYPE_RADIAL;
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
         left.runAction(to1.repeatForever());
 
-        var right = new ProgressTimer(new Sprite(s_pathBlock));
-        right.type = ProgressTimer.TYPE_RADIAL;
+        var right = new cc.ProgressTimer(new cc.Sprite(s_pathBlock));
+        right.type = cc.ProgressTimer.TYPE_RADIAL;
         right.setReverseDirection(true);
         this.addChild(right);
         right.x = winSize.width - 200;

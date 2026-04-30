@@ -40,10 +40,10 @@ export class TestLayer extends cc.Layer {
         x = size.width;
         y = size.height;
 
-        //MutableArray *array = [UIFont familyNames];
-        //for( String *s in array )
+        //cc.MutableArray *array = [UIFont familyNames];
+        //for( cc.String *s in array )
         //	NSLog( s );
-        var label = new LabelTTF("cocos2d", "Tahoma", 64);
+        var label = new cc.LabelTTF("cocos2d", "Tahoma", 64);
 
         label.x = x / 2;
         label.y = y / 2;

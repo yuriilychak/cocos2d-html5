@@ -29,7 +29,7 @@ export class ExtensionsTestScene extends TestScene {
     runThisTest() {
         var pLayer = new ExtensionsMainLayer();
         this.addChild(pLayer);
-	    director.runScene(this);
+	    cc.director.runScene(this);
     }
 
 }

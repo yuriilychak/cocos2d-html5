@@ -44,19 +44,19 @@ export class S9FrameNameSpriteSheetRotated extends S9SpriteTestDemo {
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        log("S9FrameNameSpriteSheetRotated ...");
+        cc.log("S9FrameNameSpriteSheetRotated ...");
 
-        var blocks = new Scale9Sprite('blocks9r.png');
-        log("... created");
+        var blocks = new cc.Scale9Sprite('blocks9r.png');
+        cc.log("... created");
 
         blocks.x = x;
         blocks.y = y;
-        log("... setPosition");
+        cc.log("... setPosition");
 
         this.addChild(blocks);
-        log("this..addChild");
+        cc.log("this..addChild");
 
-        log("... S9FrameNameSpriteSheetRotated done.");
+        cc.log("... S9FrameNameSpriteSheetRotated done.");
     }
 
 }

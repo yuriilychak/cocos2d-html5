@@ -36,7 +36,7 @@ export class S9SpriteActionTest extends S9SpriteTestDemo {
 
         this._title = "Test Action for Scale9Sprite : Rotate + Scale + Translate";
 
-        var blocks_with_insets = new Scale9Sprite('blocks9.png');
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9.png');
 
         blocks_with_insets.x = winSize.width / 2;
         blocks_with_insets.y = winSize.height / 2;
@@ -45,20 +45,20 @@ export class S9SpriteActionTest extends S9SpriteTestDemo {
 
         this.addChild(blocks_with_insets);
 
-        var delay = new DelayTime(0.25);
+        var delay = new cc.DelayTime(0.25);
 
-        var rotateBy = new RotateBy(2, 360);
+        var rotateBy = new cc.RotateBy(2, 360);
         var rotateByBack = rotateBy.reverse();
 
-        var ScaleTo = new ScaleTo(2, -0.44, 0.47);
-        var ScaleToBack = new ScaleTo(2, 1.0, 1.0);
+        var ScaleTo = new cc.ScaleTo(2, -0.44, 0.47);
+        var ScaleToBack = new cc.ScaleTo(2, 1.0, 1.0);
 
-        var moveBy = new MoveBy(1, new Point(80, 80));
+        var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
         var moveByBack = moveBy.reverse();
 
-        blocks_with_insets.runAction(sequence(rotateBy, delay, rotateByBack));
-        blocks_with_insets.runAction(sequence(ScaleTo, delay.clone(), ScaleToBack));
-        blocks_with_insets.runAction(sequence(moveBy,moveByBack));
+        blocks_with_insets.runAction(cc.sequence(rotateBy, delay, rotateByBack));
+        blocks_with_insets.runAction(cc.sequence(ScaleTo, delay.clone(), ScaleToBack));
+        blocks_with_insets.runAction(cc.sequence(moveBy,moveByBack));
     }
 
 }

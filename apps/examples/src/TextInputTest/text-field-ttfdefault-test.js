@@ -36,11 +36,11 @@ export class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
         var textField = this._trackNode;
         if (clicked) {
             // TextFieldTTFTest be clicked
-            log("TextFieldTTFDefaultTest:CCTextFieldTTF attachWithIME");
+            cc.log("TextFieldTTFDefaultTest:CCTextFieldTTF attachWithIME");
             textField.attachWithIME();
         } else {
             // TextFieldTTFTest not be clicked
-            log("TextFieldTTFDefaultTest:CCTextFieldTTF detachWithIME");
+            cc.log("TextFieldTTFDefaultTest:CCTextFieldTTF detachWithIME");
             textField.detachWithIME();
         }
     }
@@ -49,9 +49,9 @@ export class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
         super.onEnter();
 
         // add CCTextFieldTTF
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
 
-        var textField = new TextFieldTTF("<click here for input>",
+        var textField = new cc.TextFieldTTF("<click here for input>",
             TEXT_INPUT_FONT_NAME,
             TEXT_INPUT_FONT_SIZE);
         this.addChild(textField);

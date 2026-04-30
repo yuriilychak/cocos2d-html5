@@ -28,12 +28,12 @@
 export class ControlButtonTest_HelloVariableSize extends ControlScene {
     init() {
         if (super.init()) {
-            var screenSize = director.getWinSize();
+            var screenSize = cc.director.getWinSize();
 
             // Defines an array of title to create buttons dynamically
             var stringArray = ["Hello", "Variable", "Size", "!"];
 
-            var layer = new Node();
+            var layer = new cc.Node();
             this.addChild(layer, 1);
 
             var total_width = 0, height = 0;
@@ -45,17 +45,17 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
                 if (i == 0) {
                     button.opacity = 50;
                     //todo setColor not work in canvas
-                    //button.color = new Color(0, 255, 0);
+                    //button.color = new cc.Color(0, 255, 0);
                 }
                 else if (i == 1) {
                     button.opacity = 200;
                     //todo setColor not work in canvas
-                    //button.color = new Color(0, 255, 0);
+                    //button.color = new cc.Color(0, 255, 0);
                 }
                 else if (i == 2) {
                     button.opacity = 100;
                     //todo setColor not work in canvas
-                    //button.color = new Color(0, 0, 255);
+                    //button.color = new cc.Color(0, 0, 255);
                 }
 
                 button.x = total_width + button.width / 2;
@@ -75,7 +75,7 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
             layer.y = screenSize.height / 2.0;
 
             // Add the black background
-            var background = new Scale9Sprite(s_extensions_buttonBackground);
+            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
             background.width = total_width + 14;
             background.height = height + 14;
             background.x = screenSize.width / 2.0;
@@ -88,16 +88,16 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
     // Creates and return a button with a default background and title color.
     standardButtonWithTitle(title) {
         // Creates and return a button with a default background and title color.
-        var backgroundButton = new Scale9Sprite(s_extensions_button);
-        var backgroundHighlightedButton = new Scale9Sprite(s_extensions_buttonHighlighted);
+        var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+        var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
 
-        var titleButton = new LabelTTF(title, "Marker Felt", 30);
+        var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
-        titleButton.color = new Color(159, 168, 176);
+        titleButton.color = new cc.Color(159, 168, 176);
 
-        var button = new ControlButton(titleButton, backgroundButton);
-        button.setBackgroundSpriteForState(backgroundHighlightedButton, CONTROL_STATE_HIGHLIGHTED);
-        button.setTitleColorForState(Color.WHITE, CONTROL_STATE_HIGHLIGHTED);
+        var button = new cc.ControlButton(titleButton, backgroundButton);
+        button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
+        button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
         return button;
     }

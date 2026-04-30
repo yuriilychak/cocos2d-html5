@@ -28,13 +28,13 @@ export class FlipYTest extends EffectsBaseLayer {
         return "FlipY3D";
     }
     code() {
-        return "a = flipY3D(duration )";
+        return "a = cc.flipY3D(duration )";
     }
     getEffect(duration) {
-        var a = flipY3D(duration );
-        var delay = new DelayTime(2);
+        var a = cc.flipY3D(duration );
+        var delay = new cc.DelayTime(2);
         var r = a.reverse();
-        return sequence( a, delay, r );
+        return cc.sequence( a, delay, r );
     }
 
 }

@@ -33,8 +33,8 @@ export class GLGetActiveTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
-            var sprite = this.sprite = new Sprite("Images/grossini.png");
+        if( 'opengl' in cc.sys.capabilities ) {
+            var sprite = this.sprite = new cc.Sprite("Images/grossini.png");
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
             this.addChild( sprite );
@@ -45,7 +45,7 @@ export class GLGetActiveTest extends OpenGLTestLayer {
     }
 
     onTest(dt) {
-        log( this.getCurrentResult() );
+        cc.log( this.getCurrentResult() );
     }
 
     title() {

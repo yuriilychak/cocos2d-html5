@@ -37,8 +37,8 @@ export class Paddle extends cc.Sprite {
 
 
         this._rect = null;
-        eventManager.addListener({
-            event: EventListener.TOUCH_ONE_BY_ONE,
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: this.onTouchBegan,
             onTouchMoved: this.onTouchMoved,
@@ -47,16 +47,16 @@ export class Paddle extends cc.Sprite {
     }
 
     rect() {
-        return new Rect(-this._rect.width / 2, -this._rect.height / 2, this._rect.width, this._rect.height);
+        return new cc.Rect(-this._rect.width / 2, -this._rect.height / 2, this._rect.width, this._rect.height);
     }
     initWithTexture(aTexture) {
         if (super.initWithTexture(aTexture)) {
             this._state = PADDLE_STATE_UNGRABBED;
         }
-        if (aTexture instanceof Texture2D) {
-            this._rect = new Rect(0, 0, aTexture.width, aTexture.height);
+        if (aTexture instanceof cc.Texture2D) {
+            this._rect = new cc.Rect(0, 0, aTexture.width, aTexture.height);
         } else if ((aTexture instanceof HTMLImageElement) || (aTexture instanceof HTMLCanvasElement)) {
-            this._rect = new Rect(0, 0, aTexture.width, aTexture.height);
+            this._rect = new cc.Rect(0, 0, aTexture.width, aTexture.height);
         }
         return true;
     }
@@ -67,7 +67,7 @@ export class Paddle extends cc.Sprite {
 
         myRect.x += this.x;
         myRect.y += this.y;
-        return Rect.containsPoint(myRect, getPoint);//this.convertTouchToNodeSpaceAR(touch));
+        return cc.Rect.containsPoint(myRect, getPoint);//this.convertTouchToNodeSpaceAR(touch));
     }
 
     onTouchBegan(touch, event) {
@@ -84,18 +84,18 @@ export class Paddle extends cc.Sprite {
         // to the touch from touchBegan and check that the current touch is the same
         // as that one.
         // Actually, it would be even more complicated since in the Cocos dispatcher
-        // you get Array instead of 1 Touch, so you'd need to loop through the set
+        // you get Array instead of 1 cc.Touch, so you'd need to loop through the set
         // in each touchXXX method.
-        assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
+        cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
 
         var touchPoint = touch.getLocation();
-        //touchPoint = director.convertToGL( touchPoint );
+        //touchPoint = cc.director.convertToGL( touchPoint );
 
         target.x = touchPoint.x;
     }
     onTouchEnded(touch, event) {
         var target = event.getCurrentTarget();
-        assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
+        cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
         target._state = PADDLE_STATE_UNGRABBED;
     }
     touchDelegateRetain() {

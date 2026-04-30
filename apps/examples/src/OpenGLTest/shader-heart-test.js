@@ -32,7 +32,7 @@ export class ShaderHeartTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
+        if( 'opengl' in cc.sys.capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Heart.vsh", ccbjs + "Shaders/example_Heart.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;

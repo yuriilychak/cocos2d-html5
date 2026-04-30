@@ -33,7 +33,7 @@ export class GLNodeWebGLAPITest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
+        if( 'opengl' in cc.sys.capabilities ) {
 
             // simple shader example taken from:
             // http://learningwebgl.com/blog/?p=134
@@ -192,7 +192,7 @@ export class GLNodeWebGLAPITest extends OpenGLTestLayer {
         gl.shaderSource(shader, source);
         gl.compileShader(shader);
         if( !gl.getShaderParameter(shader, gl.COMPILE_STATUS) ) {
-            log( gl.getShaderInfoLog(shader) );
+            cc.log( gl.getShaderInfoLog(shader) );
             throw("Could not compile " + type + " shader");
         }
         return shader;

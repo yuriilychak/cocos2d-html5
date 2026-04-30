@@ -38,13 +38,13 @@ export class LabelAtlasOpacityTest extends AtlasDemo {
         this.time = null;
         this.time = 0;
 
-        var label1 = new LabelAtlas("123 Test", s_resprefix + "fonts/tuffy_bold_italic-charmap.plist");
+        var label1 = new cc.LabelAtlas("123 Test", s_resprefix + "fonts/tuffy_bold_italic-charmap.plist");
         this.addChild(label1, 0, TAG_LABEL_SPRITE1);
         label1.x = 10;
         label1.y = 100;
         label1.opacity = 200;
 
-        var label2 = new LabelAtlas("0123456789", s_resprefix + "fonts/tuffy_bold_italic-charmap.plist");
+        var label2 = new cc.LabelAtlas("0123456789", s_resprefix + "fonts/tuffy_bold_italic-charmap.plist");
         this.addChild(label2, 0, TAG_LABEL_SPRITE12);
         label2.x = 10;
         label2.y = 200;

@@ -40,23 +40,23 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        this._sprite = new Sprite("Images/CyanSquare.png");
+        this._sprite = new cc.Sprite("Images/CyanSquare.png");
         this._sprite.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(this._sprite, 10);
 
         // Make sprite1 touchable
-        var listener1 = EventListener.create({
-            event: EventListener.TOUCH_ONE_BY_ONE,
+        var listener1 = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
                 var target = event.getCurrentTarget();
 
                 var locationInNode = target.convertToNodeSpace(touch.getLocation());
                 var s = target.getContentSize();
-                var rect = new Rect(0, 0, s.width, s.height);
+                var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (Rect.containsPoint(rect, locationInNode)) {
-                    log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
+                if (cc.Rect.containsPoint(rect, locationInNode)) {
+                    cc.log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
                     target.opacity = 180;
                     return true;
                 }
@@ -70,23 +70,23 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
             },
             onTouchEnded: function (touch, event) {
                 var target = event.getCurrentTarget();
-                log("sprite onTouchesEnded.. ");
+                cc.log("sprite onTouchesEnded.. ");
                 target.opacity = 255;
             }
         });
-        eventManager.addListener(listener1, this._sprite);
+        cc.eventManager.addListener(listener1, this._sprite);
 
-        this.runAction(sequence(new DelayTime(5.0),
-            new CallFunc(function () {
+        this.runAction(cc.sequence(new cc.DelayTime(5.0),
+            new cc.CallFunc(function () {
                 this._spriteSaved = true;
                 this._sprite.removeFromParent(false);
             }, this),
-            new DelayTime(5.0),
-            new CallFunc(function () {
+            new cc.DelayTime(5.0),
+            new cc.CallFunc(function () {
                 this._spriteSaved = false;
                 this.addChild(this._sprite);
-                if(!sys.isNative)
-                    eventManager.addListener(listener1, this._sprite);
+                if(!cc.sys.isNative)
+                    cc.eventManager.addListener(listener1, this._sprite);
             }, this)
         ));
         //----end6----

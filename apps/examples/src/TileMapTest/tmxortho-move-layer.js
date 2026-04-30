@@ -33,7 +33,7 @@
 export class TMXOrthoMoveLayer extends TileDemo {
     constructor() {
         super();
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-movelayer.tmx");
+        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-movelayer.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
     }
     title() {

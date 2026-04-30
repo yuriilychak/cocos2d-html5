@@ -31,7 +31,7 @@ export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
 
     constructor() {
         super();
-        // base(this);
+        // cc.base(this);
 
         this._title = 'AnchorPoint in PhysicsSprite';
         this._subtitle = 'Tests AnchorPoint in PhysicsSprite. See animated sprites';
@@ -39,7 +39,7 @@ export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
 
     onEnter() {
         super.onEnter();
-        // base(this, 'onEnter');
+        // cc.base(this, 'onEnter');
 
         this._debugNode.visible = true ;
 
@@ -57,9 +57,9 @@ export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
         sprite3.anchorY = 1;
 
         // scale sprite
-        var scaledown = new ScaleBy(0.5, 0.5);
+        var scaledown = new cc.ScaleBy(0.5, 0.5);
         var scaleup = scaledown.reverse();
-        var seq = sequence( scaledown, scaleup);
+        var seq = cc.sequence( scaledown, scaleup);
         var repeat = seq.repeatForever();
 
         sprite1.runAction( repeat );
@@ -91,7 +91,7 @@ export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
         this.space.addShape( shape );
 
         // create sprite
-        var sprite = new PhysicsSprite(s_pathGrossini);
+        var sprite = new cc.PhysicsSprite(s_pathGrossini);
 
         // associate sprite with body
         sprite.setBody( body );

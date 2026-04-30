@@ -34,7 +34,7 @@ export class StressTest1 extends TestNodeDemo {
 
         this.testPass = false;
 
-        var sp1 = new Sprite(s_pathSister1);
+        var sp1 = new cc.Sprite(s_pathSister1);
         this.addChild(sp1, 0, TAG_SPRITE1);
         this.width = 0
 	    this.height = 0;
@@ -51,15 +51,15 @@ export class StressTest1 extends TestNodeDemo {
 
         // if the node has timers, it crashes
         var explosion = new cc.ParticleSun();
-        explosion.texture = textureCache.addImage(s_fire);
+        explosion.texture = cc.textureCache.addImage(s_fire);
 
         explosion.x = winSize.width / 2;
         explosion.y = winSize.height / 2;
 
         this.runAction(
-            sequence(
-                new RotateBy(2, 360),
-                new CallFunc(this.onRemoveMe, this)
+            cc.sequence(
+                new cc.RotateBy(2, 360),
+                new cc.CallFunc(this.onRemoveMe, this)
             )
         );
 

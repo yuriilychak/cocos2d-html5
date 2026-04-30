@@ -29,8 +29,8 @@ export class ScriptTestTempLayer extends cc.Layer {
     constructor() {
         super();
 
-        var labelTest = new LabelTTF("this is the ScriptTestTempLayer old file", "Verdana", 32, new Size(winSize.width, 50), TEXT_ALIGNMENT_CENTER);
-        var size = winSize;
+        var labelTest = new cc.LabelTTF("this is the ScriptTestTempLayer old file", "Verdana", 32, new cc.Size(winSize.width, 50), cc.TEXT_ALIGNMENT_CENTER);
+        var size = cc.winSize;
         labelTest.setPosition(size.width / 2, size.height / 4);
         this.addChild(labelTest);
 

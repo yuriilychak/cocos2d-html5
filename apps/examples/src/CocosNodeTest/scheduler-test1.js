@@ -33,7 +33,7 @@ export class SchedulerTest1 extends TestNodeDemo {
         this.testDuration = 0.5;
 
         this.testBool = true;
-        var layer = new Layer();
+        var layer = new cc.Layer();
         //UXLOG("retain count after init is %d", layer->retainCount());
         // 1
 

@@ -50,18 +50,18 @@ export class SpriteOffsetAnchorFlip extends SpriteTestDemo {
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite batch
             //
-            var sprite = new Sprite("#grossini_dance_01.png");
+            var sprite = new cc.Sprite("#grossini_dance_01.png");
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
-            var point = new Sprite(s_pathR1);
+            var point = new cc.Sprite(s_pathR1);
             point.scale = 0.25;
 	        point.x = sprite.x;
 	        point.y = sprite.y;
@@ -89,20 +89,20 @@ export class SpriteOffsetAnchorFlip extends SpriteTestDemo {
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = spriteFrameCache.getSpriteFrame(tmp);
+                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 
-            var animation = new Animation(animFrames, 0.3);
-            sprite.runAction(new Animate(animation).repeatForever());
+            var animation = new cc.Animation(animFrames, 0.3);
+            sprite.runAction(new cc.Animate(animation).repeatForever());
 
             animFrames = null;
 
-            var flip = new FlipY(true);
-            var flip_back = new FlipY(false);
-            var delay = new DelayTime(1);
-            var delay1 = new DelayTime(1);
-            var seq = sequence(delay, flip, delay1, flip_back);
+            var flip = new cc.FlipY(true);
+            var flip_back = new cc.FlipY(false);
+            var delay = new cc.DelayTime(1);
+            var delay1 = new cc.DelayTime(1);
+            var seq = cc.sequence(delay, flip, delay1, flip_back);
             sprite.runAction(seq.repeatForever());
 
             this.addChild(sprite, 0);

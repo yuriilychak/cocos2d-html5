@@ -26,11 +26,11 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
     constructor() {
         super();
         if (performance && typeof performance.now !== 'function') {
-             var errLabel = new LabelTTF("On browser that does not support performance.now");
+             var errLabel = new cc.LabelTTF("On browser that does not support performance.now");
             this.addChild(errLabel);   
             errLabel.attr({
-                x: winSize.width/2,
-                y: winSize.height/2
+                x: cc.winSize.width/2,
+                y: cc.winSize.height/2
             });          
             return;
         }
@@ -46,19 +46,19 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
             monotonicIncrease = performanceValues[i] >= performanceValues[i - 1];
         }
 
-        var label = new LabelTTF("Result that values are montonically increasing : " + monotonicIncrease);
+        var label = new cc.LabelTTF("Result that values are montonically increasing : " + monotonicIncrease);
         label.attr({
-            x: winSize.width/2,
-            y: winSize.height/2 + 50
+            x: cc.winSize.width/2,
+            y: cc.winSize.height/2 + 50
         });
         this.addChild(label);
 
-        var values = new LabelTTF("Result Values : " + JSON.stringify(performanceValues));
+        var values = new cc.LabelTTF("Result Values : " + JSON.stringify(performanceValues));
         values.attr({
-            x: winSize.width/2,
-            y: (winSize.height/2) - 50
+            x: cc.winSize.width/2,
+            y: (cc.winSize.height/2) - 50
         });
-        values.setDimensions(winSize.width/2, 100);
+        values.setDimensions(cc.winSize.width/2, 100);
         this.addChild(values);
 
     }

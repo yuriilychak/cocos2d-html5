@@ -42,7 +42,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
     }
 
     setup() {
-        var clipper = new ClippingNode();
+        var clipper = new cc.ClippingNode();
         clipper.tag = TAG_CLIPPERNODE;
         clipper.width = 200;
 	    clipper.height = 200;
@@ -50,19 +50,19 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
         clipper.anchorY = 0.5;
         clipper.x = this.width / 2;
         clipper.y = this.height / 2;
-        clipper.runAction(new RotateBy(1, 45).repeatForever());
+        clipper.runAction(new cc.RotateBy(1, 45).repeatForever());
         this.addChild(clipper);
 
-        var stencil = new DrawNode();
-        var rectangle = [new Point(0, 0),new Point(clipper.width, 0),
-            new Point(clipper.width, clipper.height),
-            new Point(0, clipper.height)];
+        var stencil = new cc.DrawNode();
+        var rectangle = [new cc.Point(0, 0),new cc.Point(clipper.width, 0),
+            new cc.Point(clipper.width, clipper.height),
+            new cc.Point(0, clipper.height)];
 
-        var white = new Color(255, 255, 255, 255);
+        var white = new cc.Color(255, 255, 255, 255);
         stencil.drawPoly(rectangle, white, 1, white);
         clipper.stencil = stencil;
 
-        var content = new Sprite(s_back2);
+        var content = new cc.Sprite(s_back2);
         content.tag = TAG_CONTENTNODE;
         content.anchorX = 0.5;
         content.anchorY = 0.5;
@@ -71,8 +71,8 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
         clipper.addChild(content);
 
         this._scrolling = false;
-        eventManager.addListener(EventListener.create({
-            event: EventListener.TOUCH_ALL_AT_ONCE,
+        cc.eventManager.addListener(cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: function (touches, event) {
                 if (!touches || touches.length == 0)
                     return;
@@ -81,8 +81,8 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
                 var touch = touches[0];
                 var clipper = target.getChildByTag(TAG_CLIPPERNODE);
                 var point = clipper.convertToNodeSpace(touch.getLocation());
-                var rect = new Rect(0, 0, clipper.width, clipper.height);
-                target._scrolling = Rect.containsPoint(rect, point);
+                var rect = new cc.Rect(0, 0, clipper.width, clipper.height);
+                target._scrolling = cc.Rect.containsPoint(rect, point);
                 target._lastPoint = point;
             },
 
@@ -96,9 +96,9 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
                 var touch = touches[0];
                 var clipper = target.getChildByTag(TAG_CLIPPERNODE);
                 var point = clipper.convertToNodeSpace(touch.getLocation());
-                var diff = Point.sub(point, target._lastPoint);
+                var diff = cc.Point.sub(point, target._lastPoint);
                 var content = clipper.getChildByTag(TAG_CONTENTNODE);
-                content.setPosition(Point.add(content.getPosition(), diff));
+                content.setPosition(cc.Point.add(content.getPosition(), diff));
                 target._lastPoint = point;
             },
 

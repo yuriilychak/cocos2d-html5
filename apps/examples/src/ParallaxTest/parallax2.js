@@ -35,9 +35,9 @@ export class Parallax2 extends ParallaxDemo {
 
         this._streak = null;
 
-        if( 'touches' in sys.capabilities ){
-            eventManager.addListener({
-                event: EventListener.TOUCH_ALL_AT_ONCE,
+        if( 'touches' in cc.sys.capabilities ){
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved:function (touches, event) {
                     var touch = touches[0];
                     var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
@@ -45,11 +45,11 @@ export class Parallax2 extends ParallaxDemo {
                     node.y += touch.getDelta().y;
                 }
             }, this);
-        } else if ('mouse' in sys.capabilities ){
-            eventManager.addListener({
-                event: EventListener.MOUSE,
+        } else if ('mouse' in cc.sys.capabilities ){
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    if(event.getButton() == EventMouse.BUTTON_LEFT){
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT){
                         var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
                         node.x += event.getDeltaX();
                         node.y += event.getDeltaY();
@@ -60,7 +60,7 @@ export class Parallax2 extends ParallaxDemo {
 
 
         // Top Layer, a simple image
-        var cocosImage = new Sprite(s_power);
+        var cocosImage = new cc.Sprite(s_power);
         // scale the image (optional)
         cocosImage.scale = 1.5;
         // change the transform anchor point to 0,0 (optional)
@@ -68,8 +68,8 @@ export class Parallax2 extends ParallaxDemo {
         cocosImage.anchorY = 0;
 
         // Middle layer: a Tile map atlas
-        //var tilemap = TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
-        var tilemap = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
+        //var tilemap = cc.TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
+        var tilemap = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
 
         // change the transform anchor to 0,0 (optional)
         tilemap.anchorX = 0;
@@ -79,7 +79,7 @@ export class Parallax2 extends ParallaxDemo {
         //tilemap.texture.setAntiAliasTexParameters();
 
         // background layer: another image
-        var background = new Sprite(s_back);
+        var background = new cc.Sprite(s_back);
         // scale the image (optional)
         //background.scale = 1.5;
         // change the transform anchor point (optional)
@@ -87,17 +87,17 @@ export class Parallax2 extends ParallaxDemo {
         background.anchorY = 0;
 
         // create a void node, a parent node
-        var voidNode = new ParallaxNode();
+        var voidNode = new cc.ParallaxNode();
         // NOW add the 3 layers to the 'void' node
 
         // background image is moved at a ratio of 0.4x, 0.5y
-        voidNode.addChild(background, -1, new Point(0.4, 0.5), new Point(0,0));
+        voidNode.addChild(background, -1, new cc.Point(0.4, 0.5), new cc.Point(0,0));
 
         // tiles are moved at a ratio of 1.0, 1.0y
-        voidNode.addChild(tilemap, 1, new Point(1.0, 1.0), new Point(0, 0));
+        voidNode.addChild(tilemap, 1, new cc.Point(1.0, 1.0), new cc.Point(0, 0));
 
         // top image is moved at a ratio of 3.0x, 2.5y
-        voidNode.addChild(cocosImage, 2, new Point(3.0, 2.5), new Point(0, 0));
+        voidNode.addChild(cocosImage, 2, new cc.Point(3.0, 2.5), new cc.Point(0, 0));
         this.addChild(voidNode, 0, TAG_NODE);
     }
 

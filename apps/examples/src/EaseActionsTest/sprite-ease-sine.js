@@ -35,20 +35,20 @@ export class SpriteEaseSine extends EaseSpriteDemo {
         //----start4----onEnter
         super.onEnter();
 
-        var move = new MoveBy(2, new Point(winSize.width - 80, 0));
+        var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
-        var move_ease_in = move.clone().easing(easeSineIn());
+        var move_ease_in = move.clone().easing(cc.easeSineIn());
         var move_ease_in_back = move_ease_in.reverse();
 
-        var move_ease_out = move.clone().easing(easeSineOut());
+        var move_ease_out = move.clone().easing(cc.easeSineOut());
         var move_ease_out_back = move_ease_out.reverse();
 
-        var delay = new DelayTime(0.1);
+        var delay = new cc.DelayTime(0.1);
 
-        var seq1 = sequence(move, delay, move_back, delay.clone());
-        var seq2 = sequence(move_ease_in, delay, move_ease_in_back, delay.clone());
-        var seq3 = sequence(move_ease_out, delay, move_ease_out_back, delay.clone());
+        var seq1 = cc.sequence(move, delay, move_back, delay.clone());
+        var seq2 = cc.sequence(move_ease_in, delay, move_ease_in_back, delay.clone());
+        var seq3 = cc.sequence(move_ease_out, delay, move_ease_out_back, delay.clone());
 
 
         this._grossini.runAction(seq1.repeatForever());

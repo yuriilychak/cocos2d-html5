@@ -35,42 +35,42 @@ export class CCPoolTest extends cc.Layer {
 
     init() {
         this.timeList = {};
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
 
         var MARGIN = 40;
-        var label = new LabelTTF("CCPoolTest", "Arial", 28);
-        label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
+        var label = new cc.LabelTTF("CCPoolTest", "Arial", 28);
+        label.setPosition(new cc.Point(winSize.width / 2, winSize.height - MARGIN));
         this.addChild(label, 0);
 
-        var menuRequest = new Menu();
-        menuRequest.setPosition(new Point(0, 0));
+        var menuRequest = new cc.Menu();
+        menuRequest.setPosition(new cc.Point(0, 0));
         this.initUI();
         return true;
     }
     initUI() {
-        var createLabel = new LabelTTF("click me to create\n 150 sprites directly", "Arial", 23);
-        var reCreateLabel = new LabelTTF("click me to create\n 150 sprites use pool", "Arial", 23);
-        reCreateLabel.color = new Color(255, 255, 255, 255);
-        createLabel.color = new Color(255, 255, 255, 255);
-        var menuItem1 = new MenuItemLabel(createLabel, this.addSpriteByCreate, this);
-        var menuItem2 = new MenuItemLabel(reCreateLabel, this.addSpriteByPool, this);
-        var menu = new Menu(menuItem1, menuItem2);
+        var createLabel = new cc.LabelTTF("click me to create\n 150 sprites directly", "Arial", 23);
+        var reCreateLabel = new cc.LabelTTF("click me to create\n 150 sprites use pool", "Arial", 23);
+        reCreateLabel.color = new cc.Color(255, 255, 255, 255);
+        createLabel.color = new cc.Color(255, 255, 255, 255);
+        var menuItem1 = new cc.MenuItemLabel(createLabel, this.addSpriteByCreate, this);
+        var menuItem2 = new cc.MenuItemLabel(reCreateLabel, this.addSpriteByPool, this);
+        var menu = new cc.Menu(menuItem1, menuItem2);
         menu.alignItemsHorizontallyWithPadding(150);
-        this.directLabel = new LabelTTF("create directly cost:", "Arial", 18);
-        this.poolLabel = new LabelTTF("use pool cost:", "Arial", 18);
-        this.directLabel.setPosition(Point.add(visibleRect.center, new Point(-190, -65)));
+        this.directLabel = new cc.LabelTTF("create directly cost:", "Arial", 18);
+        this.poolLabel = new cc.LabelTTF("use pool cost:", "Arial", 18);
+        this.directLabel.setPosition(cc.Point.add(cc.visibleRect.center, new cc.Point(-190, -65)));
         this.directLabel.anchorY = 0;
-        this.poolLabel.setPosition(Point.add(visibleRect.center, new Point(200, -65)));
+        this.poolLabel.setPosition(cc.Point.add(cc.visibleRect.center, new cc.Point(200, -65)));
         this.poolLabel.anchorY = 0;
         this.addChild(this.directLabel);
         this.addChild(this.poolLabel);
         this.addChild(menu, 100);
 
         // Back Menu
-        var itemBack = new MenuItemFont("Back", this.toExtensionsMainLayer, this);
-        itemBack.setPosition(new Point(winSize.width - 50, 25));
-        var menuBack = new Menu(itemBack);
-        menuBack.setPosition(new Point(0, 0));
+        var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
+        itemBack.setPosition(new cc.Point(winSize.width - 50, 25));
+        var menuBack = new cc.Menu(itemBack);
+        menuBack.setPosition(new cc.Point(0, 0));
         this.addChild(menuBack);
     }
     setDirectLabel(time) {
@@ -108,7 +108,7 @@ export class CCPoolTest extends cc.Layer {
         for (var i = 0; i < 150; i++) {
             var sp = MySprite.create(1, 2, 3);
             this.addChild(sp);
-            pool.putInPool(sp);
+            cc.pool.putInPool(sp);
         }
         this.timeStart("use Pool");
         for (var i = 0; i < 150; i++) {
@@ -124,7 +124,7 @@ export class CCPoolTest extends cc.Layer {
                 this.datalist2[i].removeFromParent(true);
             }
             this.datalist2 = [];
-            pool.drainAllPools();
+            cc.pool.drainAllPools();
         }, 0, 1, 0.1);
     }
     timeStart(name) {

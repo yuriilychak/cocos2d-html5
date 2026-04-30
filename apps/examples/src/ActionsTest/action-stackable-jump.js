@@ -40,16 +40,16 @@ export class ActionStackableJump extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = new MoveBy(0.05, new Point(8, 8));
+    var move = new cc.MoveBy(0.05, new cc.Point(8, 8));
     var move_back = move.reverse();
-    var move_seq = sequence(move, move_back);
+    var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 
     // jump
-    var action = new JumpBy(2, new Point(winSize.width - 80, 0), 90, 5);
+    var action = new cc.JumpBy(2, new cc.Point(winSize.width - 80, 0), 90, 5);
     var back = action.reverse();
-    var seq = sequence(action, back);
+    var seq = cc.sequence(action, back);
     var repeat = seq.repeatForever();
     this._grossini.runAction(repeat);
     //----end34----

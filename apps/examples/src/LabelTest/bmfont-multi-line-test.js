@@ -38,26 +38,26 @@ export class BMFontMultiLineTest extends AtlasDemo {
         this.pixel = {"0": 255, "1": 186, "2": 33, "3": 255};
 
         // Left
-        var label1 = new LabelBMFont("Multi line\nLeft", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label1 = new cc.LabelBMFont("Multi line\nLeft", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label1.anchorX = 0;
         label1.anchorY = 0;
         this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
-        log("content size:" + label1.width + "," + label1.height);
+        cc.log("content size:" + label1.width + "," + label1.height);
 
 
         // Center
-        var label2 = new LabelBMFont("Multi line\nCenter", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label2 = new cc.LabelBMFont("Multi line\nCenter", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
-        log("content size:" + label2.width + "," + label2.height);
+        cc.log("content size:" + label2.width + "," + label2.height);
 
         // right
-        var label3 = new LabelBMFont("Multi line\nRight\nThree lines Three", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label3 = new cc.LabelBMFont("Multi line\nRight\nThree lines Three", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label3.anchorX = 1;
         label3.anchorY = 1;
         this.addChild(label3, 0, TAG_BITMAP_ATLAS3);
-        log("content size:" + label3.width + "," + label3.height);
+        cc.log("content size:" + label3.width + "," + label3.height);
 
         var s = director.getWinSize();
         label1.x = 0;
@@ -69,7 +69,7 @@ export class BMFontMultiLineTest extends AtlasDemo {
         //----end9----
     }
     title() {
-        return "LabelBMFont BMFontMultiLineTest";
+        return "cc.LabelBMFont BMFontMultiLineTest";
     }
     subtitle() {
         return "Multiline + anchor point";

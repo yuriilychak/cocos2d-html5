@@ -29,7 +29,7 @@ export class UILayoutTest_BackGroundImage extends UILayoutTestBase {
         var layout = new ccui.Layout();
         layout.setClippingEnabled(true);
         layout.setBackGroundImage("ccs-res/cocosui/Hello.png");
-        layout.setContentSize(new Size(280, 150));
+        layout.setContentSize(new cc.Size(280, 150));
         return layout;
     }
     getText() {

@@ -42,14 +42,14 @@ export class BMFontSubSpriteTest extends AtlasDemo {
 
         var s = director.getWinSize();
 
-        var drawNode = new DrawNode();
+        var drawNode = new cc.DrawNode();
         this.addChild(drawNode);
-        drawNode.setDrawColor(new Color(255,0,0,128));
-        drawNode.drawSegment(new Point(0, s.height / 2), new Point(s.width, s.height / 2), 2);
-        drawNode.drawSegment(new Point(s.width / 2, 0), new Point(s.width / 2, s.height), 2);
+        drawNode.setDrawColor(new cc.Color(255,0,0,128));
+        drawNode.drawSegment(new cc.Point(0, s.height / 2), new cc.Point(s.width, s.height / 2), 2);
+        drawNode.drawSegment(new cc.Point(s.width / 2, 0), new cc.Point(s.width / 2, s.height), 2);
 
         // Upper Label
-        var label = new LabelBMFont("Bitmap Font Atlas", s_resprefix + "fonts/bitmapFontTest.fnt");
+        var label = new cc.LabelBMFont("Bitmap Font Atlas", s_resprefix + "fonts/bitmapFontTest.fnt");
         this.labelObj = label;
         this.addChild(label);
 
@@ -63,29 +63,29 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         var AChar = label.getChildByTag(12);
 
         if(autoTestEnabled) {
-            var jump = new JumpBy(0.5, new Point(0,0), 60, 1);
-            var jump_4ever = sequence(jump, new DelayTime(0.25)).repeatForever();
-            var fade_out = new FadeOut(0.5);
-            var rotate = new RotateBy(0.5, 180);
-            var rot_4ever = sequence(rotate, new DelayTime(0.25), rotate.clone()).repeatForever();
+            var jump = new cc.JumpBy(0.5, new cc.Point(0,0), 60, 1);
+            var jump_4ever = cc.sequence(jump, new cc.DelayTime(0.25)).repeatForever();
+            var fade_out = new cc.FadeOut(0.5);
+            var rotate = new cc.RotateBy(0.5, 180);
+            var rot_4ever = cc.sequence(rotate, new cc.DelayTime(0.25), rotate.clone()).repeatForever();
 
-            var scale = new ScaleBy(0.5, 1.5);
+            var scale = new cc.ScaleBy(0.5, 1.5);
         } else {
-            var jump = new JumpBy(4, new Point(0,0), 60, 1);
+            var jump = new cc.JumpBy(4, new cc.Point(0,0), 60, 1);
             var jump_4ever = jump.repeatForever();
-            var fade_out = new FadeOut(1);
-            var rotate = new RotateBy(2, 360);
+            var fade_out = new cc.FadeOut(1);
+            var rotate = new cc.RotateBy(2, 360);
             var rot_4ever = rotate.repeatForever();
 
-            var scale = new ScaleBy(2, 1.5);
+            var scale = new cc.ScaleBy(2, 1.5);
         }
 
         var scale_back = scale.reverse();
-        var scale_seq = sequence(scale, new DelayTime(0.25), scale_back);
+        var scale_seq = cc.sequence(scale, new cc.DelayTime(0.25), scale_back);
         var scale_4ever = scale_seq.repeatForever();
 
-        var fade_in = new FadeIn(1);
-        var seq = sequence(fade_out, new DelayTime(0.25), fade_in);
+        var fade_in = new cc.FadeIn(1);
+        var seq = cc.sequence(fade_out, new cc.DelayTime(0.25), fade_in);
         var fade_4ever = seq.repeatForever();
 
         BChar.runAction(rot_4ever);
@@ -94,7 +94,7 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         AChar.runAction(fade_4ever);
 
         // Bottom Label
-        var label2 = new LabelBMFont("00.0", s_resprefix + "fonts/bitmapFontTest.fnt");
+        var label2 = new cc.LabelBMFont("00.0", s_resprefix + "fonts/bitmapFontTest.fnt");
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.x = s.width / 2.0;
         label2.y = 80;
@@ -115,10 +115,10 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         //----end4----
     }
     title() {
-        return "LabelBMFont BMFontSubSpriteTest";
+        return "cc.LabelBMFont BMFontSubSpriteTest";
     }
     subtitle() {
-        return "Using fonts as Sprite objects. Some characters should rotate.";
+        return "Using fonts as cc.Sprite objects. Some characters should rotate.";
     }
 
     //

@@ -30,8 +30,8 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         //----start11----ctor
         super();
 
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
+        var origin = cc.director.getVisibleOrigin();
+        var size = cc.director.getVisibleSize();
 
         var sprite1 = TouchableSprite.create();
         sprite1.setTexture("Images/CyanSquare.png");
@@ -52,22 +52,22 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         sprite2.addChild(sprite3, -1);
 
         var _this = this;
-        var popup = new MenuItemFont("Popup", function(sender){
+        var popup = new cc.MenuItemFont("Popup", function(sender){
             sprite3.getListener().setEnabled(false);
-            eventManager.pauseTarget(_this, true);
-            var colorLayer = new LayerColor(new Color(0, 0, 255, 100));
+            cc.eventManager.pauseTarget(_this, true);
+            var colorLayer = new cc.LayerColor(new cc.Color(0, 0, 255, 100));
             _this.addChild(colorLayer, 999); //set colorLayer to top
 
             // Add the button
-            var backgroundButton = new Scale9Sprite(s_extensions_button);
-            var backgroundHighlightedButton = new Scale9Sprite(s_extensions_buttonHighlighted);
+            var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+            var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
 
-            var titleButton = new LabelTTF("Close Dialog", "Marker Felt", 26);
-            titleButton.color = new Color(159, 168, 176);
+            var titleButton = new cc.LabelTTF("Close Dialog", "Marker Felt", 26);
+            titleButton.color = new cc.Color(159, 168, 176);
 
-            var controlButton = new ControlButton(titleButton, backgroundButton);
-            controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, CONTROL_STATE_HIGHLIGHTED);
-            controlButton.setTitleColorForState(Color.WHITE, CONTROL_STATE_HIGHLIGHTED);
+            var controlButton = new cc.ControlButton(titleButton, backgroundButton);
+            controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
+            controlButton.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
             controlButton.anchorX = 0.5;
             controlButton.anchorY = 1;
@@ -76,12 +76,12 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
             colorLayer.addChild(controlButton, 1);
             controlButton.addTargetWithActionForControlEvents(this, function(){
                 colorLayer.removeFromParent();
-                eventManager.resumeTarget(_this, true);
+                cc.eventManager.resumeTarget(_this, true);
                 sprite3.getListener().setEnabled(true);
-            }, CONTROL_EVENT_TOUCH_UP_INSIDE);
+            }, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
 
             // Add the black background
-            var background = new Scale9Sprite(s_extensions_buttonBackground);
+            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
             background.width = 300;
             background.height = 170;
             background.x = size.width / 2.0 + 50;
@@ -90,9 +90,9 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         });
 
         popup.setAnchorPoint(1,0.5);
-        popup.setPosition(visibleRect.right);
+        popup.setPosition(cc.visibleRect.right);
 
-        var menu = new Menu(popup);
+        var menu = new cc.Menu(popup);
         menu.setAnchorPoint(0, 0);
         menu.setPosition(0, 0);
 

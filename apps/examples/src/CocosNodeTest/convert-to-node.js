@@ -42,9 +42,9 @@ export class ConvertToNode extends TestNodeDemo {
         this.testP2 = [];
 
         this.expectedP2 = [];
-        if ('touches' in sys.capabilities){
-            eventManager.addListener(EventListener.create({
-                event: EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in cc.sys.capabilities){
+            cc.eventManager.addListener(cc.EventListener.create({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded:function (touches, event) {
                     var target = event.getCurrentTarget();
                     for (var it = 0; it < touches.length; it++) {
@@ -54,21 +54,21 @@ export class ConvertToNode extends TestNodeDemo {
                     }
                 }
             }), this);
-        } else if ('mouse' in sys.capabilities)
-            eventManager.addListener({
-                event: EventListener.MOUSE,
+        } else if ('mouse' in cc.sys.capabilities)
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
                 onMouseUp: function(event){
                     event.getCurrentTarget().processEvent(event.getLocation());
                 }
             }, this);
 
-        var rotate = new RotateBy(10, 360);
+        var rotate = new cc.RotateBy(10, 360);
         var action = rotate.repeatForever();
         for (var i = 0; i < 3; i++) {
-            var sprite = new Sprite(s_pathGrossini);
+            var sprite = new cc.Sprite(s_pathGrossini);
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
-            var point = new Sprite(s_pathR1);
+            var point = new cc.Sprite(s_pathR1);
             point.scale = 0.25;
 	        point.x = sprite.x;
 	        point.y = sprite.y;
@@ -108,7 +108,7 @@ export class ConvertToNode extends TestNodeDemo {
             var p1 = node.convertToNodeSpaceAR(location);
             var p2 = node.convertToNodeSpace(location);
 
-            log("AR: x=" + p1.x.toFixed(2) + ", y=" + p1.y.toFixed(2) + " -- Not AR: x=" + p2.x.toFixed(2) + ", y=" + p2.y.toFixed(2));
+            cc.log("AR: x=" + p1.x.toFixed(2) + ", y=" + p1.y.toFixed(2) + " -- Not AR: x=" + p2.x.toFixed(2) + ", y=" + p2.y.toFixed(2));
 
             this.testP1.push({"x":p1.x, "y":p1.y});
             this.testP2.push({"x":p2.x, "y":p2.y});
@@ -138,7 +138,7 @@ export class ConvertToNode extends TestNodeDemo {
         return JSON.stringify({"p1":this.expectedP1, "p2":this.expectedP2});
     }
     getCurrentResult() {
-        this.processEvent(new Point(0, 0));
+        this.processEvent(new cc.Point(0, 0));
         var ret = {"p1":this.testP1, "p2":this.testP2};
         return JSON.stringify(ret);
     }

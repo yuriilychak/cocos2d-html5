@@ -41,14 +41,14 @@ export class Issue1305 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(0);
 
-    this._spriteTmp = new Sprite(s_pathGrossini);
+    this._spriteTmp = new cc.Sprite(s_pathGrossini);
     /* c++ can't support block, so we use CCCallFuncN instead.
          [spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
          NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
          }] ];
          */
 
-    this._spriteTmp.runAction(new CallFunc(this.onLog, this));
+    this._spriteTmp.runAction(new cc.CallFunc(this.onLog, this));
     this.scheduleOnce(this.onAddSprite, 2);
     //----end39----
   }
@@ -59,7 +59,7 @@ export class Issue1305 extends ActionsDemo {
     }
   }
   onLog(pSender) {
-    log(
+    cc.log(
       "This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE"
     );
   }

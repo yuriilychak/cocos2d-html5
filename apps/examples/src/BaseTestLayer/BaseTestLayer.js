@@ -42,8 +42,8 @@ export class BaseTestLayer extends cc.LayerGradient {
     constructor(colorA, colorB ) {
 
         // default gradient colors
-        var a = new Color(98,99,117,255);
-        var b = new Color(0,0,0,255);
+        var a = new cc.Color(98,99,117,255);
+        var b = new cc.Color(0,0,0,255);
 
         if( arguments.length >= 1 )
             a = colorA;
@@ -52,8 +52,8 @@ export class BaseTestLayer extends cc.LayerGradient {
 
         // for automation, no gradient. helps for grabbing the screen if needed
         if( autoTestEnabled ) {
-            a = new Color(0,0,0,255);
-            b = new Color(0,0,0,255);
+            a = new cc.Color(0,0,0,255);
+            b = new cc.Color(0,0,0,255);
         }
 
         super( a, b );
@@ -99,7 +99,7 @@ export class BaseTestLayer extends cc.LayerGradient {
     }
     log(str) {
         if( !autoTestEnabled )
-            log(str);
+            cc.log(str);
     }
     //
     // Menu
@@ -107,31 +107,31 @@ export class BaseTestLayer extends cc.LayerGradient {
     onEnter() {
         super.onEnter();
 
-        sys.garbageCollect();
+        cc.sys.garbageCollect();
 
         var t = this.getTitle();
-        var label = new LabelTTF(t, "Arial", 28);
+        var label = new cc.LabelTTF(t, "Arial", 28);
         this.addChild(label, 100, BASE_TEST_TITLE_TAG);
         label.x = winSize.width / 2;
         label.y = winSize.height - 50;
 
         var st = this.getSubtitle();
         if (st) {
-            var l = new LabelTTF(st.toString(), "Thonburi", 16);
+            var l = new cc.LabelTTF(st.toString(), "Thonburi", 16);
             this.addChild(l, 101, BASE_TEST_SUBTITLE_TAG);
             l.x = winSize.width / 2;
             l.y = winSize.height - 80;
         }
 
-        var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
-        var item2 = new MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
-        var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
 
         item1.tag = BASE_TEST_MENUITEM_PREV_TAG;
         item2.tag = BASE_TEST_MENUITEM_RESET_TAG;
         item3.tag = BASE_TEST_MENUITEM_NEXT_TAG;
 
-        var menu = new Menu(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
 
         menu.x = 0;
         menu.y = 0;
@@ -199,13 +199,13 @@ export class BaseTestLayer extends cc.LayerGradient {
         try {
             if( this.tearDown(dt) ) {
                 // Test OK
-                log( autoTestCurrentTestName + " - " + this.getTestNumber() + ": Test '" + title + "':' OK");
+                cc.log( autoTestCurrentTestName + " - " + this.getTestNumber() + ": Test '" + title + "':' OK");
             } else {
                 // Test failed
-                log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + title + "': Error: " + this.errorDescription );
+                cc.log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + title + "': Error: " + this.errorDescription );
             }
         } catch(err) {
-            log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + title + "':'" + err);
+            cc.log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + title + "':'" + err);
         }
 
         this.runNextTest();
@@ -222,7 +222,7 @@ export class BaseTestLayer extends cc.LayerGradient {
 
     runNextTest() {
         if( this.numberOfPendingTests() <= 0 ) {
-            var scene = new Scene();
+            var scene = new cc.Scene();
             var layer = new TestController();
             scene.addChild(layer);
             director.runScene(scene);
@@ -230,7 +230,7 @@ export class BaseTestLayer extends cc.LayerGradient {
             try {
                 this.onNextCallback(this);
             } catch (err) {
-                log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + this.getTitle() + "':'" + err);
+                cc.log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + this.getTitle() + "':'" + err);
                 this.runNextTest();
             }
     }
@@ -262,14 +262,14 @@ export class BaseTestLayer extends cc.LayerGradient {
     }
 
     readPixels(x,y,w,h) {
-        if( 'opengl' in sys.capabilities) {
+        if( 'opengl' in cc.sys.capabilities) {
             var size = 4 * w * h;
             var array = new Uint8Array(size);
             gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, array);
             return array;
         } else {
             // implement a canvas-html5 readpixels
-            return rendererConfig.renderContext.getImageData(x, winSize.height-y-h, w, h).data;
+            return cc.rendererConfig.renderContext.getImageData(x, winSize.height-y-h, w, h).data;
         }
     }
 
@@ -324,9 +324,9 @@ export var FlowControl = function (testArray) {
         },
         start: function() {
             sceneIdx = 0;
-            var s = new Scene();
+            var s = new cc.Scene();
             s.addChild(this.current());
-            director.runScene(s);
+            cc.director.runScene(s);
         }
     }
 };

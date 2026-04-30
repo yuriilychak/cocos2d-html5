@@ -47,22 +47,22 @@ export class SchedulerSchedulesAndRemove extends SchedulerTestLayer {
 
     onTick1(dt) {
         //----start4----onTick1
-        log("SchedulerSchedulesAndRemove tick1");
+        cc.log("SchedulerSchedulesAndRemove tick1");
         //----end4----
     }
     onTick2(dt) {
         //----start4----onTick2
-        log("SchedulerSchedulesAndRemove tick2");
+        cc.log("SchedulerSchedulesAndRemove tick2");
         //----end4----
     }
     onTick3(dt) {
         //----start4----onTick3
-        log("SchedulerSchedulesAndRemove tick3");
+        cc.log("SchedulerSchedulesAndRemove tick3");
         //----end4----
     }
     onTick4(dt) {
         //----start4----onTick4
-        log("SchedulerSchedulesAndRemove tick4");
+        cc.log("SchedulerSchedulesAndRemove tick4");
         //----end4----
     }
     onScheduleAndUnschedule(dt) {

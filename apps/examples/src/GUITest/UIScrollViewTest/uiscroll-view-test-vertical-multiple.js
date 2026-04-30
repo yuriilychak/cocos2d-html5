@@ -49,20 +49,20 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
             var scrollView = this._scrollView = new ccui.ScrollView();
             scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
             scrollView.setTouchEnabled(true);
-            scrollView.setContentSize(new Size(280, 150));
+            scrollView.setContentSize(new cc.Size(280, 150));
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollView.width) / 2;
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollView.height) / 2;
             this._mainNode.addChild(scrollView);
 
-            var labelText = new LabelTTF("Texts", "Arial", 25);
-            var labelButton = new LabelTTF("Buttons", "Arial", 25);
-            var labelS9sprite = new LabelTTF("s9Sprites", "Arial", 25);
+            var labelText = new cc.LabelTTF("Texts", "Arial", 25);
+            var labelButton = new cc.LabelTTF("Buttons", "Arial", 25);
+            var labelS9sprite = new cc.LabelTTF("s9Sprites", "Arial", 25);
 
-            var menuItem1 = new MenuItemLabel(labelText, this.drawTexts, this);
-            var menuItem2 = new MenuItemLabel(labelButton, this.drawButtons, this, false);
-            var menuItem3 = new MenuItemLabel(labelS9sprite, this.drawS9Buttons, this);
-            var menu = new Menu(menuItem1, menuItem2, menuItem3);
+            var menuItem1 = new cc.MenuItemLabel(labelText, this.drawTexts, this);
+            var menuItem2 = new cc.MenuItemLabel(labelButton, this.drawButtons, this, false);
+            var menuItem3 = new cc.MenuItemLabel(labelS9sprite, this.drawS9Buttons, this);
+            var menu = new cc.Menu(menuItem1, menuItem2, menuItem3);
             menu.x = 0;
             menu.y = 0;
             menuItem1.x = menuItem2.x = menuItem3.x = 120;
@@ -84,7 +84,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
         var start = new ccui.Text("---start---", "Thonburi", 10);
         var innerWidth = scrollView.width;
         var innerHeight = n * start.height;
-        scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
+        scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
         start.x = innerWidth / 2;
         start.y = scrollView.getInnerContainerSize().height - start.height / 2;
@@ -114,7 +114,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
             button.x = innerWidth / 2;
             if(j===0) {
                 var innerHeight = n * button.height;
-                scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
+                scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
                 button.y =scrollView.getInnerContainerSize().height - button.height / 2;
             }
             else
@@ -142,7 +142,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
             button_scale9.x = innerWidth / 2;
             if(j === 0) {
                 var innerHeight = n * 32;
-                scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
+                scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
                 button_scale9.y = scrollView.getInnerContainerSize().height - button_scale9.height / 2;
             }
             else

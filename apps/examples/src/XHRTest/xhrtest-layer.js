@@ -32,7 +32,7 @@ export class XHRTestLayer extends cc.Layer {
 
     onEnter() {
         super.onEnter();
-        var l = new LabelTTF("Get infos via XHR", "Thonburi", 16);
+        var l = new cc.LabelTTF("Get infos via XHR", "Thonburi", 16);
         this.addChild(l, 1);
         l.x = winSize.width / 2;
         l.y = winSize.height - 60;
@@ -45,7 +45,7 @@ export class XHRTestLayer extends cc.Layer {
     ensureLeftAligned(label) {
         label.anchorX = 0;
         label.anchorY = 1;
-        label.textAlign = TEXT_ALIGNMENT_LEFT;
+        label.textAlign = cc.TEXT_ALIGNMENT_LEFT;
     }
 
     streamXHREventsToLabel( xhr, label, textbox, method, title ) {
@@ -61,7 +61,7 @@ export class XHRTestLayer extends cc.Layer {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
                 var httpStatus = xhr.statusText;
                 var response = xhr.responseText.substring(0, 100) + "...";
-                log("title:" + title + ", response:\n" + xhr.responseText);
+                cc.log("title:" + title + ", response:\n" + xhr.responseText);
                 textbox.string = method + " Response (100 chars):\n";
                 textbox.string += response;
                 label.string += "\nStatus: Got " + method + " response! " + httpStatus;
@@ -70,7 +70,7 @@ export class XHRTestLayer extends cc.Layer {
     }
 
     sendGetRequest() {
-        var statusGetLabel = new LabelTTF("Status:", "Thonburi", 12);
+        var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusGetLabel, 1);
 
         statusGetLabel.x = 10;
@@ -78,14 +78,14 @@ export class XHRTestLayer extends cc.Layer {
         this.ensureLeftAligned(statusGetLabel);
         statusGetLabel.setString("Status: Send Get Request to httpbin.org");
 
-        var responseLabel = new LabelTTF("", "Thonburi", 16);
+        var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
         this.addChild(responseLabel, 1);
 
         this.ensureLeftAligned(responseLabel);
         responseLabel.x = 10;
         responseLabel.y = winSize.height / 2;
 
-        var xhr = loader.getXMLHttpRequest();
+        var xhr = cc.loader.getXMLHttpRequest();
         this.streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET", "sendGetRequest");
         // 5 seconds for timeout
         xhr.timeout = 5000;
@@ -98,7 +98,7 @@ export class XHRTestLayer extends cc.Layer {
     }
 
     sendPostPlainText() {
-        var statusPostLabel = new LabelTTF("Status:", "Thonburi", 12);
+        var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
         statusPostLabel.x = winSize.width / 10 * 3;
@@ -107,13 +107,13 @@ export class XHRTestLayer extends cc.Layer {
         statusPostLabel.setString("Status: Send Post Request to httpbin.org with plain text");
 
 
-        var responseLabel = new LabelTTF("", "Thonburi", 16);
+        var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
         this.addChild(responseLabel, 1);
         this.ensureLeftAligned(responseLabel);
         responseLabel.x = winSize.width / 10 * 3;
         responseLabel.y = winSize.height / 2;
 
-        var xhr = loader.getXMLHttpRequest();
+        var xhr = cc.loader.getXMLHttpRequest();
         this.streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST", "sendPostPlainText");
 
         xhr.open("POST", "http://httpbin.org/post");
@@ -124,7 +124,7 @@ export class XHRTestLayer extends cc.Layer {
     }
 
     sendPostForms() {
-        var statusPostLabel = new LabelTTF("Status:", "Thonburi", 12);
+        var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
         statusPostLabel.x = winSize.width / 10 * 7;
@@ -132,14 +132,14 @@ export class XHRTestLayer extends cc.Layer {
         this.ensureLeftAligned(statusPostLabel);
         statusPostLabel.setString("Status: Send Post Request to httpbin.org width form data");
 
-        var responseLabel = new LabelTTF("", "Thonburi", 16);
+        var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
         this.addChild(responseLabel, 1);
 
         this.ensureLeftAligned(responseLabel);
         responseLabel.x = winSize.width / 10 * 7;
         responseLabel.y = winSize.height / 2;
 
-        var xhr = loader.getXMLHttpRequest();
+        var xhr = cc.loader.getXMLHttpRequest();
         this.streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST", "sendPostForms");
 
         xhr.open("POST", "http://httpbin.org/post");

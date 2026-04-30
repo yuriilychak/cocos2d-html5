@@ -39,7 +39,7 @@ export class Issue1438 extends ActionsDemo {
     //
     // manual animation
     //
-    var animation = new Animation();
+    var animation = new cc.Animation();
 
     // Add 60 frames
     for (var j = 0; j < 4; j++) {
@@ -53,19 +53,19 @@ export class Issue1438 extends ActionsDemo {
     animation.setDelayPerUnit(1 / 60);
     animation.setRestoreOriginalFrame(true);
 
-    var action = new Animate(animation);
+    var action = new cc.Animate(animation);
     this._kathia.runAction(action);
 
     //
     // File animation
     //
-    var animCache = animationCache;
+    var animCache = cc.animationCache;
     animCache.addAnimations(s_animations2Plist);
     var animation2 = animCache.getAnimation("dance_1");
     animation2.setDelayPerUnit(1 / 60);
 
-    var action2 = new Animate(animation2);
-    this._tamara.runAction(sequence(action2, action2.reverse()));
+    var action2 = new cc.Animate(animation2);
+    this._tamara.runAction(cc.sequence(action2, action2.reverse()));
     //----end45----
   }
 

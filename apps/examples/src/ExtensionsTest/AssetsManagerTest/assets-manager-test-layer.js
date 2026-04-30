@@ -36,7 +36,7 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
 
         this._spritePath = "";
         this._spritePath = spritePath;
-        loader.resPath = "res/";
+        cc.loader.resPath = "res/";
     }
 
     getTitle() {
@@ -45,14 +45,14 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
 
     onEnter() {
         super.onEnter();
-        this._background = new Sprite(this._spritePath);
+        this._background = new cc.Sprite(this._spritePath);
         this.addChild(this._background, 1);
-        this._background.x = winSize.width/2;
-        this._background.y = winSize.height/2;
+        this._background.x = cc.winSize.width/2;
+        this._background.y = cc.winSize.height/2;
     }
 
     onExit(){
-        loader.resPath = "";
+        cc.loader.resPath = "";
         super.onExit();
     }
 

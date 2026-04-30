@@ -33,7 +33,7 @@
 export class ActionSequence extends ActionsDemo {
     constructor() {
         super();
-        this._code = "a = sequence( a1, a2, a3,..., aN);";
+        this._code = "a = cc.sequence( a1, a2, a3,..., aN);";
         this.testDuration = 3.1;
     }
 
@@ -43,16 +43,16 @@ export class ActionSequence extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var action = sequence(
-      new MoveBy(1.5, new Point(240, 0)),
-      new RotateBy(1.5, 540)
+    var action = cc.sequence(
+      new cc.MoveBy(1.5, new cc.Point(240, 0)),
+      new cc.RotateBy(1.5, 540)
     );
 
     this._grossini.runAction(action);
     //----end16----
   }
   title() {
-    return "sequence: Move + Rotate";
+    return "cc.sequence: Move + Rotate";
   }
   //
   // Automation
@@ -63,7 +63,7 @@ export class ActionSequence extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(new Point(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }

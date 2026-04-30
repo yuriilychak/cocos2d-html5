@@ -31,15 +31,15 @@ export class Box2DTestLayer extends cc.LayerColor {
       window.sideIndexBar.changeTest(0, 2);
     }
     //----start0----ctor
-    super(new Color(0, 0, 0, 255));
+    super(new cc.Color(0, 0, 0, 255));
 
     this.world = null;
-    // External map from body pointer -> Sprite (box2d-wasm doesn't support userData)
+    // External map from body pointer -> cc.Sprite (box2d-wasm doesn't support userData)
     this._bodyToSprite = {};
 
-    eventManager.addListener(
-      EventListener.create({
-        event: EventListener.TOUCH_ALL_AT_ONCE,
+    cc.eventManager.addListener(
+      cc.EventListener.create({
+        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesEnded: function (touches, event) {
           var touch = touches[0];
           var location = touch.getLocation();
@@ -49,11 +49,11 @@ export class Box2DTestLayer extends cc.LayerColor {
       this
     );
 
-    var label = new LabelTTF("Tap screen", "Marker Felt", 32);
+    var label = new cc.LabelTTF("Tap screen", "Marker Felt", 32);
     this.addChild(label, 0);
-    label.color = new Color(0, 0, 255);
-    label.x = director.getWinSize().width / 2;
-    label.y = director.getWinSize().height - 50;
+    label.color = new cc.Color(0, 0, 255);
+    label.x = cc.director.getWinSize().width / 2;
+    label.y = cc.director.getWinSize().height - 50;
 
     // Defer physics setup until box2d-wasm WASM has finished loading
     window.Box2DReady.then(
@@ -75,7 +75,7 @@ export class Box2DTestLayer extends cc.LayerColor {
     var b2PolygonShape = box2D.b2PolygonShape;
     this._box2D = box2D;
 
-    var screenSize = director.getWinSize();
+    var screenSize = cc.director.getWinSize();
 
     // Construct a world object
     var gravity = new b2Vec2(0, -10);
@@ -111,11 +111,11 @@ export class Box2DTestLayer extends cc.LayerColor {
     this.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
     // Set up sprite batch
-    var mgr = new SpriteBatchNode(s_pathBlock, 150);
+    var mgr = new cc.SpriteBatchNode(s_pathBlock, 150);
     this.addChild(mgr, 0, TAG_SPRITE_MANAGER);
 
     this.addNewSpriteWithCoords(
-      new Point(screenSize.width / 2, screenSize.height / 2)
+      new cc.Point(screenSize.width / 2, screenSize.height / 2)
     );
   }
 
@@ -136,9 +136,9 @@ export class Box2DTestLayer extends cc.LayerColor {
 
     var idx = Math.random() > 0.5 ? 0 : 1;
     var idy = Math.random() > 0.5 ? 0 : 1;
-    var sprite = new Sprite(
+    var sprite = new cc.Sprite(
       batch.texture,
-      new Rect(32 * idx, 32 * idy, 32, 32)
+      new cc.Rect(32 * idx, 32 * idy, 32, 32)
     );
     batch.addChild(sprite);
     sprite.x = p.x;
@@ -184,7 +184,7 @@ export class Box2DTestLayer extends cc.LayerColor {
       if (sprite) {
         sprite.x = b.GetPosition().x * PTM_RATIO;
         sprite.y = b.GetPosition().y * PTM_RATIO;
-        sprite.rotation = -1 * radiansToDegrees(b.GetAngle());
+        sprite.rotation = -1 * cc.radiansToDegrees(b.GetAngle());
       }
     }
     //----end0----

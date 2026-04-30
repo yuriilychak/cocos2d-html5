@@ -33,9 +33,9 @@ export class ControlPotentiometerTest extends ControlScene {
 
     init() {
         if (super.init()) {
-            var screenSize = director.getWinSize();
+            var screenSize = cc.director.getWinSize();
 
-            var layer = new Node();
+            var layer = new cc.Node();
             layer.x = screenSize.width / 2;
             layer.y = screenSize.height / 2;
             this.addChild(layer, 1);
@@ -43,7 +43,7 @@ export class ControlPotentiometerTest extends ControlScene {
             var layer_width = 0;
 
             // Add the black background for the text
-            var background = new Scale9Sprite("extensions/buttonBackground.png");
+            var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
             background.width = 80;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
@@ -52,21 +52,21 @@ export class ControlPotentiometerTest extends ControlScene {
 
             layer_width += background.width;
 
-            this._displayValueLabel = new LabelTTF("", "HelveticaNeue-Bold", 30);
+            this._displayValueLabel = new cc.LabelTTF("", "HelveticaNeue-Bold", 30);
 
             this._displayValueLabel.x = background.x;
             this._displayValueLabel.y = background.y;
             layer.addChild(this._displayValueLabel);
 
             // Add the slider
-            var potentiometer = new ControlPotentiometer("extensions/potentiometerTrack.png"
+            var potentiometer = new cc.ControlPotentiometer("extensions/potentiometerTrack.png"
                 , "extensions/potentiometerProgress.png"
                 , "extensions/potentiometerButton.png");
             potentiometer.x = layer_width + 10 + potentiometer.width / 2;
             potentiometer.y = 0;
 
             // When the value of the slider will change, the given selector will be call
-            potentiometer.addTargetWithActionForControlEvents(this, this.valueChanged, CONTROL_EVENT_VALUECHANGED);
+            potentiometer.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
 
             layer.addChild(potentiometer);
 
@@ -79,7 +79,7 @@ export class ControlPotentiometerTest extends ControlScene {
 	        layer.anchorY = 0.5;
 
             // Update the value label
-            this.valueChanged(potentiometer, CONTROL_EVENT_VALUECHANGED);
+            this.valueChanged(potentiometer, cc.CONTROL_EVENT_VALUECHANGED);
 
             return true;
         }
@@ -92,7 +92,7 @@ export class ControlPotentiometerTest extends ControlScene {
 
 };
 ControlPotentiometerTest.create = function (sceneTitle) {
-    var scene = new Scene();
+    var scene = new cc.Scene();
     var controlLayer = new ControlPotentiometerTest();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);

@@ -38,22 +38,22 @@ export class LabelAtlasOpacityColorTest extends AtlasDemo {
         this.time = null;
 
         this.testDuration = 1;
-        var label1 = new LabelAtlas("123 Test", s_resprefix + "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+        var label1 = new cc.LabelAtlas("123 Test", s_resprefix + "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
         this.addChild(label1, 0, TAG_LABEL_SPRITE1);
         label1.x = 10;
         label1.y = 100;
         label1.opacity = 200;
 
-        var label2 = new LabelAtlas("0123456789", s_resprefix + "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+        var label2 = new cc.LabelAtlas("0123456789", s_resprefix + "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
         this.addChild(label2, 0, TAG_LABEL_SPRITE12);
         label2.x = 10;
         label2.y = 200;
-        label2.color = new Color(255, 0, 0);
+        label2.color = new cc.Color(255, 0, 0);
 
-        var fade = new FadeOut(1.0);
+        var fade = new cc.FadeOut(1.0);
         var fade_in = fade.reverse();
-        var delay = new DelayTime(0.25);
-        var seq = sequence(fade, delay, fade_in, delay.clone());
+        var delay = new cc.DelayTime(0.25);
+        var seq = cc.sequence(fade, delay, fade_in, delay.clone());
         var repeat = seq.repeatForever();
         label2.runAction(repeat);
 

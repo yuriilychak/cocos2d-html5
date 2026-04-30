@@ -54,25 +54,25 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
 
         this.visible2 = null;
 
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         //
         // SpriteBatchNode
         //
         // parents
-        var aParent = new SpriteBatchNode(s_grossini, 50);
+        var aParent = new cc.SpriteBatchNode(s_grossini, 50);
         aParent.x = winSize.width / 3;
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        var sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        var sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -80,25 +80,25 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
         sprite1.addChild(sprite2, -2);
         sprite1.addChild(sprite3, 2);
 
-        sprite1.runAction(new Blink(5, 10));
+        sprite1.runAction(new cc.Blink(5, 10));
 
         //
         // Sprite
         //
-        aParent = new Node();
+        aParent = new cc.Node();
         aParent.x = 2 * winSize.width / 3;
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -106,7 +106,7 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
         sprite1.addChild(sprite2, -2);
         sprite1.addChild(sprite3, 2);
 
-        sprite1.runAction(new Blink(5, 10));
+        sprite1.runAction(new cc.Blink(5, 10));
         //----end31----
     }
     //

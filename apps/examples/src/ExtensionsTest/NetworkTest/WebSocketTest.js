@@ -47,38 +47,38 @@ export class WebSocketTestLayer extends cc.Layer {
 
     init() {
 
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
         
         var MARGIN = 40;
         var SPACE = 35;
         
-        var label = new LabelTTF("WebSocket Test", "Arial", 28);
+        var label = new cc.LabelTTF("WebSocket Test", "Arial", 28);
         label.x = winSize.width / 2;
         label.y = winSize.height - MARGIN;
         this.addChild(label, 0);
         
-        var menuRequest = new Menu();
+        var menuRequest = new cc.Menu();
         menuRequest.x = 0;
         menuRequest.y = 0;
         this.addChild(menuRequest);
         
         // Send Text
-        var labelSendText = new LabelTTF("Send Text", "Arial", 22);
-        var itemSendText = new MenuItemLabel(labelSendText, this.onMenuSendTextClicked, this);
+        var labelSendText = new cc.LabelTTF("Send Text", "Arial", 22);
+        var itemSendText = new cc.MenuItemLabel(labelSendText, this.onMenuSendTextClicked, this);
         itemSendText.x = winSize.width / 2;
         itemSendText.y = winSize.height - MARGIN - SPACE;
         menuRequest.addChild(itemSendText);
         
         // Send Binary
-        var labelSendBinary = new LabelTTF("Send Binary", "Arial", 22);
-        var itemSendBinary = new MenuItemLabel(labelSendBinary, this.onMenuSendBinaryClicked, this);
+        var labelSendBinary = new cc.LabelTTF("Send Binary", "Arial", 22);
+        var itemSendBinary = new cc.MenuItemLabel(labelSendBinary, this.onMenuSendBinaryClicked, this);
         itemSendBinary.x = winSize.width / 2;
         itemSendBinary.y = winSize.height - MARGIN - 2 * SPACE;
         menuRequest.addChild(itemSendBinary);
         
 
         // Send Text Status Label
-        this._sendTextStatus = new LabelTTF("Send Text WS is waiting...", "Arial", 14, new Size(160, 100), TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP);
+        this._sendTextStatus = new cc.LabelTTF("Send Text WS is waiting...", "Arial", 14, new cc.Size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         this._sendTextStatus.anchorX = 0;
         this._sendTextStatus.anchorY = 0;
         this._sendTextStatus.x = 0;
@@ -86,7 +86,7 @@ export class WebSocketTestLayer extends cc.Layer {
         this.addChild(this._sendTextStatus);
         
         // Send Binary Status Label
-        this._sendBinaryStatus = new LabelTTF("Send Binary WS is waiting...", "Arial", 14, new Size(160, 100), TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP);
+        this._sendBinaryStatus = new cc.LabelTTF("Send Binary WS is waiting...", "Arial", 14, new cc.Size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         this._sendBinaryStatus.anchorX = 0;
         this._sendBinaryStatus.anchorY = 0;
         this._sendBinaryStatus.x = 160;
@@ -94,7 +94,7 @@ export class WebSocketTestLayer extends cc.Layer {
         this.addChild(this._sendBinaryStatus);
         
         // Error Label
-        this._errorStatus = new LabelTTF("Error WS is waiting...", "Arial", 14, new Size(160, 100), TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP);
+        this._errorStatus = new cc.LabelTTF("Error WS is waiting...", "Arial", 14, new cc.Size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         this._errorStatus.anchorX = 0;
         this._errorStatus.anchorY = 0;
         this._errorStatus.x = 320;
@@ -102,10 +102,10 @@ export class WebSocketTestLayer extends cc.Layer {
         this.addChild(this._errorStatus);
         
         // Back Menu
-        var itemBack = new MenuItemFont("Back", this.toExtensionsMainLayer, this);
+        var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
         itemBack.x = winSize.width - 50;
         itemBack.y = 25;
-        var menuBack = new Menu(itemBack);
+        var menuBack = new cc.Menu(itemBack);
         menuBack.x = 0;
         menuBack.y = 0;
         this.addChild(menuBack);
@@ -120,22 +120,22 @@ export class WebSocketTestLayer extends cc.Layer {
         this._wsiSendText.onmessage = function(evt) {
             self._sendTextTimes++;
             var textStr = "response text msg: "+evt.data+", "+self._sendTextTimes;
-            log(textStr);
+            cc.log(textStr);
             
             self._sendTextStatus.setString(textStr);
         };
 
         this._wsiSendText.onerror = function(evt) {
-            log("_wsiSendText Error was fired");
-           if (sys.isObjectValid(self)) {
+            cc.log("_wsiSendText Error was fired");
+           if (cc.sys.isObjectValid(self)) {
                self._errorStatus.setString("an error was fired");
            } else {
-               log("WebSocket test layer was destroyed!");
+               cc.log("WebSocket test layer was destroyed!");
            }
         };
 
         this._wsiSendText.onclose = function(evt) {
-            log("_wsiSendText websocket instance closed.");
+            cc.log("_wsiSendText websocket instance closed.");
             self._wsiSendText = null;
         };
 
@@ -165,21 +165,21 @@ export class WebSocketTestLayer extends cc.Layer {
            }
 
            binaryStr += str + ", " + self._sendBinaryTimes;
-           log(binaryStr);
+           cc.log(binaryStr);
            self._sendBinaryStatus.setString(binaryStr);
        };
 
        this._wsiSendBinary.onerror = function(evt) {
-           log("_wsiSendBinary Error was fired");
-            if (sys.isObjectValid(self)) {
+           cc.log("_wsiSendBinary Error was fired");
+            if (cc.sys.isObjectValid(self)) {
                self._errorStatus.setString("an error was fired");
            } else {
-               log("WebSocket test layer was destroyed!");
+               cc.log("WebSocket test layer was destroyed!");
            }
        };
 
        this._wsiSendBinary.onclose = function(evt) {
-           log("_wsiSendBinary websocket instance closed.");
+           cc.log("_wsiSendBinary websocket instance closed.");
            self._wsiSendBinary = null;
        };
 
@@ -187,15 +187,15 @@ export class WebSocketTestLayer extends cc.Layer {
        this._wsiError.onopen = function(evt) {};
        this._wsiError.onmessage = function(evt) {};
        this._wsiError.onerror = function(evt) {
-           log("_wsiError Error was fired");
-           if (sys.isObjectValid(self)) {
+           cc.log("_wsiError Error was fired");
+           if (cc.sys.isObjectValid(self)) {
                self._errorStatus.setString("an error was fired");
            } else {
-               log("WebSocket test layer was destroyed!");
+               cc.log("WebSocket test layer was destroyed!");
            }
        };
        this._wsiError.onclose = function(evt) {
-           log("_wsiError websocket instance closed.");
+           cc.log("_wsiError websocket instance closed.");
            self._wsiError = null;
        };
 
@@ -225,7 +225,7 @@ export class WebSocketTestLayer extends cc.Layer {
         else
         {
             var warningStr = "send text websocket instance wasn't ready...";
-            log(warningStr);
+            cc.log(warningStr);
             this._sendTextStatus.setString(warningStr);
         }
     }
@@ -255,7 +255,7 @@ export class WebSocketTestLayer extends cc.Layer {
         else
         {
             var warningStr = "send binary websocket instance wasn't ready...";
-            log(warningStr);
+            cc.log(warningStr);
             this._sendBinaryStatus.setString(warningStr);
         }
     }
@@ -277,8 +277,8 @@ WebSocketTestLayer.create = function () {
 
 
 export function runWebSocketTest() {
-    var pScene = new Scene();
+    var pScene = new cc.Scene();
     var pLayer = WebSocketTestLayer.create();
     pScene.addChild(pLayer);
-    director.runScene(pScene);
+    cc.director.runScene(pScene);
 };

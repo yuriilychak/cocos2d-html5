@@ -32,72 +32,72 @@ export class MenuLayer4 extends cc.Layer {
     }
     init() {
         //super.init();
-        MenuItemFont.setFontName("American Typewriter");
-        MenuItemFont.setFontSize(18);
+        cc.MenuItemFont.setFontName("American Typewriter");
+        cc.MenuItemFont.setFontSize(18);
 
-        var title1 = new MenuItemFont("Sound");
+        var title1 = new cc.MenuItemFont("Sound");
         title1.enabled = false;
-        MenuItemFont.setFontName("Marker Felt");
-        MenuItemFont.setFontSize(34);
+        cc.MenuItemFont.setFontName("Marker Felt");
+        cc.MenuItemFont.setFontSize(34);
 
         // you can create a ToggleItem by passing the items
         // and later setting the callback
-        var item1 = new MenuItemToggle(
-            new MenuItemFont("On"),
-            new MenuItemFont("Off"));
+        var item1 = new cc.MenuItemToggle(
+            new cc.MenuItemFont("On"),
+            new cc.MenuItemFont("Off"));
         item1.setCallback(this.onMenuCallback, this);
 
-        MenuItemFont.setFontName("American Typewriter");
-        MenuItemFont.setFontSize(18);
-        var title2 = new MenuItemFont("Music");
+        cc.MenuItemFont.setFontName("American Typewriter");
+        cc.MenuItemFont.setFontSize(18);
+        var title2 = new cc.MenuItemFont("Music");
         title2.enabled = false;
-        MenuItemFont.setFontName("Marker Felt");
-        MenuItemFont.setFontSize(34);
+        cc.MenuItemFont.setFontName("Marker Felt");
+        cc.MenuItemFont.setFontSize(34);
 
         // or you can create a ToggleItem by passing the items
         // an the callback at the last arguments.
-        var item2 = new MenuItemToggle(
-            new MenuItemFont("Off"),
-            new MenuItemFont("On"),
+        var item2 = new cc.MenuItemToggle(
+            new cc.MenuItemFont("Off"),
+            new cc.MenuItemFont("On"),
             this.onMenuCallback.bind(this)
         );
 
-        MenuItemFont.setFontName("American Typewriter");
-        MenuItemFont.setFontSize(18);
-        var title3 = new MenuItemFont("Quality");
+        cc.MenuItemFont.setFontName("American Typewriter");
+        cc.MenuItemFont.setFontSize(18);
+        var title3 = new cc.MenuItemFont("Quality");
         title3.enabled = false;
-        MenuItemFont.setFontName("Marker Felt");
-        MenuItemFont.setFontSize(34);
-        var item3 = new MenuItemToggle(
-            new MenuItemFont("High"),
-            new MenuItemFont("Low"),
+        cc.MenuItemFont.setFontName("Marker Felt");
+        cc.MenuItemFont.setFontSize(34);
+        var item3 = new cc.MenuItemToggle(
+            new cc.MenuItemFont("High"),
+            new cc.MenuItemFont("Low"),
             this.onMenuCallback, this
         );
 
-        MenuItemFont.setFontName("American Typewriter");
-        MenuItemFont.setFontSize(18);
-        var title4 = new MenuItemFont("Orientation");
+        cc.MenuItemFont.setFontName("American Typewriter");
+        cc.MenuItemFont.setFontSize(18);
+        var title4 = new cc.MenuItemFont("Orientation");
         title4.enabled = false;
-        MenuItemFont.setFontName("Marker Felt");
-        MenuItemFont.setFontSize(34);
-        var item4 = new MenuItemToggle(
-            new MenuItemFont("Off"),
-            new MenuItemFont("33%"),
-            new MenuItemFont("66%"),
-            new MenuItemFont("100%"),
+        cc.MenuItemFont.setFontName("Marker Felt");
+        cc.MenuItemFont.setFontSize(34);
+        var item4 = new cc.MenuItemToggle(
+            new cc.MenuItemFont("Off"),
+            new cc.MenuItemFont("33%"),
+            new cc.MenuItemFont("66%"),
+            new cc.MenuItemFont("100%"),
             this.onMenuCallback, this
         );
 
         // you can change the one of the items by doing this
         item4.setSelectedIndex(2);
 
-        MenuItemFont.setFontName("Marker Felt");
-        MenuItemFont.setFontSize(34);
+        cc.MenuItemFont.setFontName("Marker Felt");
+        cc.MenuItemFont.setFontSize(34);
 
-        var label = new LabelBMFont("go back", s_bitmapFontTest3_fnt);
-        var back = new MenuItemLabel(label, this.onBackCallback, this);
+        var label = new cc.LabelBMFont("go back", s_bitmapFontTest3_fnt);
+        var back = new cc.MenuItemLabel(label, this.onBackCallback, this);
 
-        var menu = new Menu(
+        var menu = new cc.Menu(
             title1, title2,
             item1, item2,
             title3, title4,
@@ -113,7 +113,7 @@ export class MenuLayer4 extends cc.Layer {
         menu.y = winSize.height / 2;
     }
     onMenuCallback(sender) {
-        log("Callback called");
+        cc.log("Callback called");
     }
     onBackCallback(sender) {
         this.parent.switchTo(0, false);

@@ -33,10 +33,10 @@ export class GLTexParamterTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
+        if( 'opengl' in cc.sys.capabilities ) {
             if( ! autoTestEnabled ) {
-                log( "[Max, MIN, WRAP_S, WRAP_T]" );
-                log( this.getTexValues() );
+                cc.log( "[Max, MIN, WRAP_S, WRAP_T]" );
+                cc.log( this.getTexValues() );
             }
         }
     }
@@ -48,8 +48,8 @@ export class GLTexParamterTest extends OpenGLTestLayer {
         return "tests texParameter()\n See the Console";
     }
     getTexValues() {
-        if(!sys.isNative){
-            var texture2d = textureCache.getTextureForKey(s_pathGrossini);
+        if(!cc.sys.isNative){
+            var texture2d = cc.textureCache.getTextureForKey(s_pathGrossini);
             gl.bindTexture(gl.TEXTURE_2D, texture2d.getName());
         } else {
             gl.bindTexture(gl.TEXTURE_2D, null);

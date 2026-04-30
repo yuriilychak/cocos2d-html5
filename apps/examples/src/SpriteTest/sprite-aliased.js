@@ -41,24 +41,24 @@ export class SpriteAliased extends SpriteTestDemo {
 
 
         this._subtitle = "You should see pixelated sprites";
-        var sprite1 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         this.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);
 
-        var scale = new ScaleBy(2, 5);
+        var scale = new cc.ScaleBy(2, 5);
         var scale_back = scale.reverse();
-        var seq = sequence(scale, scale_back);
+        var seq = cc.sequence(scale, scale_back);
         var repeat = seq.repeatForever();
 
-        var scale2 = new ScaleBy(2, 5);
+        var scale2 = new cc.ScaleBy(2, 5);
         var scale_back2 = scale2.reverse();
-        var seq2 = sequence(scale2, scale_back2);
+        var seq2 = cc.sequence(scale2, scale_back2);
         var repeat2 = seq2.repeatForever();
 
         sprite1.runAction(repeat);
@@ -73,8 +73,8 @@ export class SpriteAliased extends SpriteTestDemo {
         // This change will affect every sprite that uses the same texture
         // So sprite1 and sprite2 will be affected by this change
         //
-        if (!sys.isNative && !("opengl" in sys.capabilities && rendererConfig.isWebGL)) {
-            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
+        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
+            var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;
@@ -87,7 +87,7 @@ export class SpriteAliased extends SpriteTestDemo {
     }
     onExit() {
         //----start24----onExit
-        if (sys.isNative || ("opengl" in sys.capabilities && rendererConfig.isWebGL)) {
+        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE1);
             sprite.texture.setAntiAliasTexParameters();
         }

@@ -49,16 +49,16 @@ export class TouchableSprite extends cc.Sprite {
         super.onEnter();
 
         var selfPointer = this;
-        var listener = EventListener.create({
-            event: EventListener.TOUCH_ONE_BY_ONE,
+        var listener = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
                 var locationInNode = selfPointer.convertToNodeSpace(touch.getLocation());
                 var s = selfPointer.getContentSize();
-                var rect = new Rect(0, 0, s.width, s.height);
+                var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (Rect.containsPoint(rect, locationInNode)) {
-                    selfPointer.setColor(Color.RED);
+                if (cc.Rect.containsPoint(rect, locationInNode)) {
+                    selfPointer.setColor(cc.Color.RED);
                     return true;
                 }
                 return false;
@@ -67,23 +67,23 @@ export class TouchableSprite extends cc.Sprite {
                 //this.setPosition(this.getPosition() + touch.getDelta());
             },
             onTouchEnded: function (touch, event) {
-                selfPointer.setColor(Color.WHITE);
+                selfPointer.setColor(cc.Color.WHITE);
                 if(selfPointer._removeListenerOnTouchEnded) {
-                    eventManager.removeListener(selfPointer._listener);
+                    cc.eventManager.removeListener(selfPointer._listener);
                     selfPointer._listener = null;
                 }
             }
         });
 
         if(this._fixedPriority != 0)
-            eventManager.addListener(listener, this._fixedPriority);
+            cc.eventManager.addListener(listener, this._fixedPriority);
         else
-            eventManager.addListener(listener, this);
+            cc.eventManager.addListener(listener, this);
         this._listener = listener;
     }
 
     onExit(){
-        this._listener && eventManager.removeListener(this._listener);
+        this._listener && cc.eventManager.removeListener(this._listener);
         super.onExit();
     }
 

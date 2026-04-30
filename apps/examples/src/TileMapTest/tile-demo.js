@@ -34,9 +34,9 @@ export class TileDemo extends BaseTestLayer {
     constructor() {
         super();
 
-        if ('touches' in sys.capabilities){
-            eventManager.addListener({
-                event: EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in cc.sys.capabilities){
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved: function (touches, event) {
                     var touch = touches[0];
                     var delta = touch.getDelta();
@@ -46,11 +46,11 @@ export class TileDemo extends BaseTestLayer {
                     node.y += delta.y;
                 }
             }, this);
-        } else if ('mouse' in sys.capabilities)
-            eventManager.addListener({
-                event: EventListener.MOUSE,
+        } else if ('mouse' in cc.sys.capabilities)
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    if(event.getButton() == EventMouse.BUTTON_LEFT){
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT){
                         var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
                         node.x += event.getDeltaX();
                         node.y += event.getDeltaY();

@@ -37,16 +37,16 @@ export class S9SpriteColorOpacityTest extends S9SpriteTestDemo {
         this.setCascadeColorEnabled(true);
         this.setCascadeOpacityEnabled(true);
         this.setOpacity(128);
-        this.setColor(new Color(255, 0, 0));
+        this.setColor(new cc.Color(255, 0, 0));
 
-        var blocks = new Scale9Sprite('blocks9.png');
+        var blocks = new cc.Scale9Sprite('blocks9.png');
         blocks.x = winSize.width / 2 - 100;
         blocks.y = winSize.height / 2;
         this.addChild(blocks);
 
-        var batchNode = new SpriteBatchNode("Images/blocks9.png");
-        var blocks2 = new Scale9Sprite();
-        blocks2.updateWithBatchNode(batchNode, new Rect(0, 0, 96, 96), false, new Rect(0, 0, 96, 96));
+        var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
+        var blocks2 = new cc.Scale9Sprite();
+        blocks2.updateWithBatchNode(batchNode, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(0, 0, 96, 96));
         blocks2.x = winSize.width / 2 + 100;
         blocks2.y = winSize.height / 2;
         this.addChild(blocks2);

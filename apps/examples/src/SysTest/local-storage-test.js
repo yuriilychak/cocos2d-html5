@@ -41,8 +41,8 @@ export class LocalStorageTest extends SysTestBase {
         this._subtitle = "See the console";
 
         var key = 'key_' + Math.random();
-        var ls = sys.localStorage;
-        log("- Adding items");
+        var ls = cc.sys.localStorage;
+        cc.log("- Adding items");
         ls.setItem(key, "Hello world");
         var key1 = "1" + key;
         ls.setItem(key1, "Hello JavaScript");
@@ -51,28 +51,28 @@ export class LocalStorageTest extends SysTestBase {
         var key3 = "3" + key;
         ls.setItem(key3, "Hello Cocos");
 
-        log("- Getting Hello world");
+        cc.log("- Getting Hello world");
         var r = ls.getItem(key);
-        log(r);
+        cc.log(r);
 
-        log("- Removing Hello world");
+        cc.log("- Removing Hello world");
         ls.removeItem(key);
 
-        log("- Getting Hello world");
+        cc.log("- Getting Hello world");
         r = ls.getItem(key);
-        log(r);
+        cc.log(r);
 
-        log("- Getting other items");
-        log( ls.getItem(key1) );
-        log( ls.getItem(key2) );
-        log( ls.getItem(key3) );
+        cc.log("- Getting other items");
+        cc.log( ls.getItem(key1) );
+        cc.log( ls.getItem(key2) );
+        cc.log( ls.getItem(key3) );
 
-        log("- Clearing local storage");
+        cc.log("- Clearing local storage");
         ls.clear();
-        log("- Getting other items");
-        log( ls.getItem(key1) );
-        log( ls.getItem(key2) );
-        log( ls.getItem(key3) );
+        cc.log("- Getting other items");
+        cc.log( ls.getItem(key1) );
+        cc.log( ls.getItem(key2) );
+        cc.log( ls.getItem(key3) );
     }
 
 

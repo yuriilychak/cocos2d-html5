@@ -32,11 +32,11 @@ export class RawStencilBufferTest2 extends RawStencilBufferTest {
 
     setupStencilForClippingOnPlane(plane) {
         super.setupStencilForClippingOnPlane(plane);
-        rendererConfig.renderContext.depthMask(false);
+        cc.rendererConfig.renderContext.depthMask(false);
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        rendererConfig.renderContext.depthMask(true);
+        cc.rendererConfig.renderContext.depthMask(true);
         super.setupStencilForDrawingOnPlane(plane);
     }
 

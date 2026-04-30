@@ -676,7 +676,7 @@
         ]
     };
 
-    if (sys.isNative) {
+    if (cc.sys.isNative) {
         testingItems["UIS9NinePatchTest"] = [
         {
                 title: "UIS9NinePatchTest",
@@ -697,7 +697,7 @@
         ];
     }
 
-    if (sys.os == sys.OS_ANDROID || sys.os == sys.OS_IOS || !sys.isNative)
+    if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || !cc.sys.isNative)
     {
         testingItems["UIVideoPlayer"] = [
             {
@@ -719,11 +719,11 @@
     }
 
     var guiTestScene = null;
-    global.GUITestScene = class GUITestScene extends NewClass {
+    global.GUITestScene = class GUITestScene extends cc.NewClass {
 
         runThisTest(){
             var guiTestScene = new listScene();
-            director.runScene(guiTestScene);
+            cc.director.runScene(guiTestScene);
         }
 
     
@@ -735,18 +735,18 @@
             super();
 
             global.UISceneManager.getInstance().ctor();
-            var menu = new Menu();
+            var menu = new cc.Menu();
             menu.x = 0;
             menu.y = 0;
             var index = 0;
             for(var p in testingItems){
                 (function(name, list){
-                    var label = new LabelTTF(name, "Arial", 24);
-                    var menuItem = new MenuItemLabel(label, function(){
+                    var label = new cc.LabelTTF(name, "Arial", 24);
+                    var menuItem = new cc.MenuItemLabel(label, function(){
                         currentTestingArray = list;
                         var manager = global.UISceneManager.getInstance();
                         var scene = manager.currentUIScene();
-                        director.runScene(scene);
+                        cc.director.runScene(scene);
                     }, this);
                     menuItem.x = winSize.width / 2;
                     menuItem.y = (winSize.height - (index++ + 1) * 25);
@@ -766,9 +766,9 @@
 
         onEnter(){
             super.onEnter();
-            if ('touches' in sys.capabilities)
-                eventManager.addListener({
-                    event: EventListener.TOUCH_ALL_AT_ONCE,
+            if ('touches' in cc.sys.capabilities)
+                cc.eventManager.addListener({
+                    event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                     onTouchesMoved: function (touches, event) {
                         var target = event.getCurrentTarget();
                         var delta = touches[0].getDelta();
@@ -776,15 +776,15 @@
                         return true;
                     }
                 }, this);
-            else if ('mouse' in sys.capabilities) {
-                eventManager.addListener({
-                    event: EventListener.MOUSE,
+            else if ('mouse' in cc.sys.capabilities) {
+                cc.eventManager.addListener({
+                    event: cc.EventListener.MOUSE,
                     onMouseMove: function (event) {
-                        if (event.getButton() == EventMouse.BUTTON_LEFT)
+                        if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
                             event.getCurrentTarget().moveMenu(event.getDelta());
                     },
                     onMouseScroll: function (event) {
-                        var delta = sys.isNative ? event.getScrollY() * 6 : -event.getScrollY();
+                        var delta = cc.sys.isNative ? event.getScrollY() * 6 : -event.getScrollY();
                         event.getCurrentTarget().moveMenu({y: delta});
                         return true;
                     }

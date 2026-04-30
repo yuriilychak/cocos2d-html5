@@ -62,18 +62,18 @@ export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
         this.pixel4 = {"0":255, "1":204, "2":153, "3":255};
         // small capacity. Testing resizing.
         // Don't use capacity=1 in your real game. It is expensive to resize the capacity
-        var batch = new SpriteBatchNode(s_grossini_dance_atlas, 1);
+        var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        var sprite1 = new Sprite(batch.texture, new Rect(0, 121, 85, 121));
-        var sprite2 = new Sprite(batch.texture, new Rect(85, 121, 85, 121));
-        var sprite3 = new Sprite(batch.texture, new Rect(85 * 2, 121, 85, 121));
-        var sprite4 = new Sprite(batch.texture, new Rect(85 * 3, 121, 85, 121));
+        var sprite1 = new cc.Sprite(batch.texture, new cc.Rect(0, 121, 85, 121));
+        var sprite2 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
+        var sprite3 = new cc.Sprite(batch.texture, new cc.Rect(85 * 2, 121, 85, 121));
+        var sprite4 = new cc.Sprite(batch.texture, new cc.Rect(85 * 3, 121, 85, 121));
 
-        var sprite5 = new Sprite(batch.texture, new Rect(0, 121, 85, 121));
-        var sprite6 = new Sprite(batch.texture, new Rect(85, 121, 85, 121));
-        var sprite7 = new Sprite(batch.texture, new Rect(85 * 2, 121, 85, 121));
-        var sprite8 = new Sprite(batch.texture, new Rect(85 * 3, 121, 85, 121));
+        var sprite5 = new cc.Sprite(batch.texture, new cc.Rect(0, 121, 85, 121));
+        var sprite6 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
+        var sprite7 = new cc.Sprite(batch.texture, new cc.Rect(85 * 2, 121, 85, 121));
+        var sprite8 = new cc.Sprite(batch.texture, new cc.Rect(85 * 3, 121, 85, 121));
 
 
         sprite1.x = (winSize.width / 5) * 1;
@@ -93,21 +93,21 @@ export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
         sprite8.x = (winSize.width / 5) * 4;
         sprite8.y = (winSize.height / 3) * 2;
 
-        var delay = new DelayTime(0.25);
-        var action = new FadeOut(2);
+        var delay = new cc.DelayTime(0.25);
+        var action = new cc.FadeOut(2);
         var action_back = action.reverse();
-        var fade = sequence(action, delay.clone(), action_back).repeatForever();
+        var fade = cc.sequence(action, delay.clone(), action_back).repeatForever();
 
-        var tintRed = new TintBy(2, 0, -255, -255);
-        var red = sequence(tintRed, delay.clone(), tintRed.reverse()).repeatForever();
+        var tintRed = new cc.TintBy(2, 0, -255, -255);
+        var red = cc.sequence(tintRed, delay.clone(), tintRed.reverse()).repeatForever();
 
-        var tintGreen = new TintBy(2, -255, 0, -255);
+        var tintGreen = new cc.TintBy(2, -255, 0, -255);
         var tintGreenBack = tintGreen.reverse();
-        var green = sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
+        var green = cc.sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
 
-        var tintBlue = new TintBy(2, -255, -255, 0);
+        var tintBlue = new cc.TintBy(2, -255, -255, 0);
         var tintBlueBack = tintBlue.reverse();
-        var blue = sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
+        var blue = cc.sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
 
         // late add: test dirtyColor and dirtyPosition
         batch.addChild(sprite1, 0, TAG_SPRITE1);

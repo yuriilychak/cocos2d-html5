@@ -60,28 +60,28 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
          *  B1: non-premulti sprite
          *  B2: non-premulti render
          */
-        var background = new LayerColor(new Color(40, 40, 40, 255));
+        var background = new cc.LayerColor(new cc.Color(40, 40, 40, 255));
         this.addChild(background);
 
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
         this._winSize = winSize;
 
         // sprite 1
-        var sprite1 = new Sprite(s_fire);
+        var sprite1 = new cc.Sprite(s_fire);
         sprite1.x = winSize.width;
         sprite1.y = winSize.height;
         this._sprite1 = sprite1;
 
         // sprite 2
         //todo Images/fire_rgba8888.pvr
-        var sprite2 = new Sprite(s_fire);
+        var sprite2 = new cc.Sprite(s_fire);
         sprite2.x = winSize.width;
         sprite2.y = winSize.height;
         this._sprite2 = sprite2;
 
         /* Create the render texture */
-        //var renderTexture = new RenderTexture(winSize.width, winSize.height, TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
-        var renderTexture = new RenderTexture(winSize.width, winSize.height);
+        //var renderTexture = new cc.RenderTexture(winSize.width, winSize.height, cc.TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
+        var renderTexture = new cc.RenderTexture(winSize.width, winSize.height);
         this._renderTexture = renderTexture;
 
         renderTexture.x = winSize.width / 2;
@@ -90,8 +90,8 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
         /* add the sprites to the render texture */
         renderTexture.addChild(this._sprite1);
         renderTexture.addChild(this._sprite2);
-        renderTexture.clearColorVal = new Color(0, 0, 0, 0);
-        renderTexture.clearFlags = rendererConfig.renderContext.COLOR_BUFFER_BIT;
+        renderTexture.clearColorVal = new cc.Color(0, 0, 0, 0);
+        renderTexture.clearFlags = cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
 
         /* add the render texture to the scene */
         this.addChild(renderTexture);
@@ -101,8 +101,8 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
         this.scheduleUpdate();
 
         // Toggle clear on / off
-        var item = new MenuItemFont("Clear On/Off", this.touched, this);
-        var menu = new Menu(item);
+        var item = new cc.MenuItemFont("Clear On/Off", this.touched, this);
+        var menu = new cc.Menu(item);
         this.addChild(menu);
 
         menu.x = winSize.width / 2;
@@ -131,10 +131,10 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
 
     touched(sender) {
         if (this._renderTexture.clearFlags == 0)
-            this._renderTexture.clearFlags = rendererConfig.renderContext.COLOR_BUFFER_BIT;
+            this._renderTexture.clearFlags = cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
         else {
             this._renderTexture.clearFlags = 0;
-            this._renderTexture.clearColorVal = new Color(Math.random()*255, Math.random()*255, Math.random()*255, 255);
+            this._renderTexture.clearColorVal = new cc.Color(Math.random()*255, Math.random()*255, Math.random()*255, 255);
         }
     }
 

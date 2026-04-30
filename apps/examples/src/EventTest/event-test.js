@@ -57,24 +57,24 @@ export class EventTest extends cc.Layer {
 
         var s = director.getWinSize();
 
-        var label = new LabelTTF(this.title(), "Arial", 24);
+        var label = new cc.LabelTTF(this.title(), "Arial", 24);
         this.addChild(label);
         label.x = s.width / 2;
         label.y = s.height - 50;
 
         var subTitle = this.subtitle();
         if (subTitle && subTitle !== "") {
-            var l = new LabelTTF(subTitle, "Thonburi", 16);
+            var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = s.width / 2;
             l.y = s.height - 80;
         }
 
-        var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
-        var item2 = new MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
 
-        var menu = new Menu(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
         menu.x = 0;
         menu.y = 0;
         item1.x = s.width / 2 - 100;

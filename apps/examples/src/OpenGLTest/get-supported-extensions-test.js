@@ -32,12 +32,12 @@ export class GetSupportedExtensionsTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
+        if( 'opengl' in cc.sys.capabilities ) {
             if( ! autoTestEnabled ) {
                 var array = gl.getSupportedExtensions();
-                log( JSON.stringify( array ) );
+                cc.log( JSON.stringify( array ) );
                 if( array.length > 0 )
-                    log( gl.getExtension( array[0] ) );
+                    cc.log( gl.getExtension( array[0] ) );
             }
         }
     }

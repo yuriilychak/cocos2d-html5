@@ -44,21 +44,21 @@ export class ResumeTest extends ActionManagerTest {
         super.onEnter();
 
         var s = director.getWinSize();
-        var l = new LabelTTF("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
+        var l = new cc.LabelTTF("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
         this.addChild(l);
         l.x = s.width / 2;
 	    l.y = 245;
 
-        var grossini = new Sprite(s_pathGrossini);
+        var grossini = new cc.Sprite(s_pathGrossini);
         this._grossini = grossini;
         this.addChild(grossini, 0, TAG_GROSSINI);
         grossini.x = s.width / 2;
 	    grossini.y = s.height / 2;
 
-        grossini.runAction(new ScaleBy(2, 2));
+        grossini.runAction(new cc.ScaleBy(2, 2));
 
         director.getActionManager().pauseTarget(grossini);
-        grossini.runAction(new RotateBy(2, 360));
+        grossini.runAction(new cc.RotateBy(2, 360));
 
         this.schedule(this.resumeGrossini, 3.0);
         //----end4----

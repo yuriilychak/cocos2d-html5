@@ -46,8 +46,8 @@ export class SpriteSubclass extends SpriteTestDemo {
 
         this.pixel2 = {"0":255, "1":204, "2":153, "3":255};
 
-        spriteFrameCache.addSpriteFrames(s_ghostsPlist);
-		var aParent = new SpriteBatchNode(s_ghosts);
+        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+		var aParent = new cc.SpriteBatchNode(s_ghosts);
 
 		// MySprite1
 		var sprite = new MySprite1("#father.gif");

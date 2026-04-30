@@ -32,8 +32,8 @@ export class UILoadingBarTest_Fix_Scale9 extends UILoadingBarTest {
         loadingBar.setScale9Enabled(true);
         loadingBar.loadTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
         loadingBar.setPercent(40);
-        loadingBar.setCapInsets(new Rect(0, 0, 0, 0));
-        loadingBar.setContentSize(new Size(300, 30));
+        loadingBar.setCapInsets(new cc.Rect(0, 0, 0, 0));
+        loadingBar.setContentSize(new cc.Size(300, 30));
         loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;

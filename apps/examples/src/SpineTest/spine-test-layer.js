@@ -29,19 +29,19 @@ export class SpineTestLayer extends BaseTestLayer {
     onRestartCallback(sender){
         var s = new SpineTestScene();
         s.addChild(SpineTestScene.restartSpineTestLayer());
-        director.runScene(s);
+        cc.director.runScene(s);
     }
 
     onNextCallback(sender){
         var s = new SpineTestScene();
         s.addChild(SpineTestScene.nextSpineTestLayer());
-        director.runScene(s);
+        cc.director.runScene(s);
     }
 
     onBackCallback(sender){
         var s = new SpineTestScene();
         s.addChild(SpineTestScene.backSpineTestLayer());
-        director.runScene(s);
+        cc.director.runScene(s);
     }
 
 }

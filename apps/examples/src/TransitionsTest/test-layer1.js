@@ -27,7 +27,7 @@
 
 export class TestLayer1 extends TransitionBase {
     constructor() {
-        super(s_back1, "Scene 1", new Color(0,0,0,255), new Color(160,99,117,255));
+        super(s_back1, "Scene 1", new cc.Color(0,0,0,255), new cc.Color(160,99,117,255));
     }
 
     createNextScene() {

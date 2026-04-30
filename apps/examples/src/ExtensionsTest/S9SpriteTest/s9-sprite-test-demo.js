@@ -34,36 +34,36 @@
 export class S9SpriteTestDemo extends cc.LayerGradient {
 
     constructor() {
-        super(new Color(0,0,0,255), new Color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
 
         this._title = "";
 
 
         this._subtitle = "";
-        spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
-        log('sprite frames added to sprite frame cache...');
+        cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
+        cc.log('sprite frames added to sprite frame cache...');
     }
     onEnter() {
         super.onEnter();
 
-        var label = new LabelTTF(this._title, "Arial", 28);
+        var label = new cc.LabelTTF(this._title, "Arial", 28);
         this.addChild(label, 1);
         label.x = winSize.width / 2;
         label.y = winSize.height - 50;
 
         if (this._subtitle !== "") {
-            var l = new LabelTTF(this._subtitle, "Thonburi", 16);
+            var l = new cc.LabelTTF(this._subtitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = winSize.width / 2;
             l.y = winSize.height - 80;
         }
 
-        var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
-        var item2 = new MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
-        var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
 
-        var menu = new Menu(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
 
         menu.x = 0;
         menu.y = 0;

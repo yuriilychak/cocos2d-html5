@@ -30,23 +30,23 @@ export class BMFontColorParentChild extends AtlasDemo {
         //----start15----ctor
         super();
 
-        this.label = new LabelBMFont("YRGB", s_resprefix + "fonts/konqa32.fnt");
+        this.label = new cc.LabelBMFont("YRGB", s_resprefix + "fonts/konqa32.fnt");
         this.addChild(this.label);
         this.label.x = winSize.width / 2;
         this.label.y = winSize.height / 2;
-        this.label.color = Color.YELLOW;
+        this.label.color = cc.Color.YELLOW;
 
         // R
         var letter = this.label.getChildByTag(1);
-        letter.color = Color.RED;
+        letter.color = cc.Color.RED;
 
         // G
         letter = this.label.getChildByTag(2);
-        letter.color = Color.GREEN;
+        letter.color = cc.Color.GREEN;
 
         // B
         letter = this.label.getChildByTag(3);
-        letter.color = Color.BLUE;
+        letter.color = cc.Color.BLUE;
 
         this.scheduleUpdate();
 
@@ -63,7 +63,7 @@ export class BMFontColorParentChild extends AtlasDemo {
     }
 
     title() {
-        return "LabelBMFont color parent / child";
+        return "cc.LabelBMFont color parent / child";
     }
     subtitle() {
         return "Yellow Red Green Blue and numbers in Yellow";

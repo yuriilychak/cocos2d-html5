@@ -42,10 +42,10 @@ export class UIScrollViewRotated extends UIMainLayer {
 
             // Create the scrollview by vertical
             var scrollView = new ccui.ScrollView();
-            scrollView.setContentSize(new Size(280.0, 150.0));
+            scrollView.setContentSize(new cc.Size(280.0, 150.0));
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             var backgroundSize = background.getContentSize();
-            scrollView.setPosition(new Point((widgetSize.width - backgroundSize.width) / 2.0 +
+            scrollView.setPosition(new cc.Point((widgetSize.width - backgroundSize.width) / 2.0 +
                 (backgroundSize.width - scrollView.getContentSize().width) / 2.0,
                 (widgetSize.height - backgroundSize.height) / 2.0 +
                 (backgroundSize.height - scrollView.getContentSize().height) / 2.0 + 100) );
@@ -56,24 +56,24 @@ export class UIScrollViewRotated extends UIMainLayer {
 
             var innerWidth = scrollView.getContentSize().width;
             var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
-            scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
+            scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
 
             var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
-            button.setPosition(new Point(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
+            button.setPosition(new cc.Point(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
             scrollView.addChild(button);
 
             var titleButton = new ccui.Button("ccs-res/cocosui/backtotopnormal.png", "ccs-res/cocosui/backtotoppressed.png");
             titleButton.setTitleText("Title Button");
-            titleButton.setPosition(new Point(innerWidth / 2.0, button.getBottomBoundary() - button.getContentSize().height));
+            titleButton.setPosition(new cc.Point(innerWidth / 2.0, button.getBottomBoundary() - button.getContentSize().height));
             scrollView.addChild(titleButton);
 
             var button_scale9 = new ccui.Button("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png");
             button_scale9.setScale9Enabled(true);
-            button_scale9.setContentSize(new Size(100.0, button_scale9.getVirtualRendererSize().height));
-            button_scale9.setPosition(new Point(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));
+            button_scale9.setContentSize(new cc.Size(100.0, button_scale9.getVirtualRendererSize().height));
+            button_scale9.setPosition(new cc.Point(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));
             scrollView.addChild(button_scale9);
 
-            imageView.setPosition(new Point(innerWidth / 2.0, imageView.getContentSize().height / 2.0));
+            imageView.setPosition(new cc.Point(innerWidth / 2.0, imageView.getContentSize().height / 2.0));
             scrollView.addChild(imageView);
 
             return true;

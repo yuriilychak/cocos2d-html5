@@ -37,8 +37,8 @@ export class ActionJump extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = new JumpBy( time, point, height, #_of_jumps );\n" +
-        "a = new JumpTo( time, point, height, #_of_jumps );";
+        return "a = new cc.JumpBy( time, point, height, #_of_jumps );\n" +
+        "a = new cc.JumpTo( time, point, height, #_of_jumps );";
       }
 
   onEnter() {
@@ -46,22 +46,22 @@ export class ActionJump extends ActionsDemo {
     super.onEnter();
     this.centerSprites(3);
 
-    var actionTo = new JumpTo(2, new Point(300, 300), 50, 4);
-    var actionBy = new JumpBy(2, new Point(300, 0), 50, 4);
-    var actionUp = new JumpBy(2, new Point(0, 0), 80, 4);
+    var actionTo = new cc.JumpTo(2, new cc.Point(300, 300), 50, 4);
+    var actionBy = new cc.JumpBy(2, new cc.Point(300, 0), 50, 4);
+    var actionUp = new cc.JumpBy(2, new cc.Point(0, 0), 80, 4);
     var actionByBack = actionBy.reverse();
 
-    var delay = new DelayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
     this._tamara.runAction(actionTo);
-    this._grossini.runAction(sequence(actionBy, delay, actionByBack));
+    this._grossini.runAction(cc.sequence(actionBy, delay, actionByBack));
 
-    var action = sequence(actionUp, delay.clone()).repeatForever();
+    var action = cc.sequence(actionUp, delay.clone()).repeatForever();
     this._kathia.runAction(action);
     //----end7----
   }
   title() {
-    return "jumpTo / jumpBy";
+    return "cc.jumpTo / cc.jumpBy";
   }
   subtitle() {
     return "Actions will stop for 0.25s after 2 seconds";
@@ -81,9 +81,9 @@ export class ActionJump extends ActionsDemo {
 
   getCurrentResult() {
     var ret = [];
-    ret.push(new Point(this._tamara.x, this._tamara.y));
-    ret.push(new Point(this._grossini.x, this._grossini.y));
-    ret.push(new Point(this._kathia.x, this._kathia.y));
+    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
+    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
 
     return JSON.stringify(ret);
   }

@@ -31,7 +31,7 @@ export class MotionStreakTestScene extends TestScene {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var pLayer = nextMotionAction();
         this.addChild(pLayer);
-        director.runScene(this);
+        cc.director.runScene(this);
     }
 
 }

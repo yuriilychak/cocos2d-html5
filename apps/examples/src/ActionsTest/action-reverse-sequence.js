@@ -36,10 +36,10 @@ export class ActionReverseSequence extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move1 = new MoveBy(1, new Point(250, 0));
-    var move2 = new MoveBy(1, new Point(0, 50));
-    var seq = sequence(move1, move2, move1.reverse());
-    var action = sequence(seq, seq.reverse());
+    var move1 = new cc.MoveBy(1, new cc.Point(250, 0));
+    var move2 = new cc.MoveBy(1, new cc.Point(0, 50));
+    var seq = cc.sequence(move1, move2, move1.reverse());
+    var action = cc.sequence(seq, seq.reverse());
 
     this._grossini.runAction(action);
     //----end28----

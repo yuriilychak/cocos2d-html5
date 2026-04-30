@@ -27,19 +27,19 @@
 
 export class SpineTestLayerFFD extends SpineTestLayer {
     constructor(){
-        super(new Color(0,0,0,255), new Color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
         var skeletonNode = new sp.SkeletonAnimation("spine/goblins-pro.json", "spine/goblins.atlas", 1.5);
         skeletonNode.setAnimation(0, "walk", true);
         skeletonNode.setSkin("goblin");
 
         skeletonNode.setScale(0.5);
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
         skeletonNode.setPosition(winSize.width /2, 20);
         this.addChild(skeletonNode);
 
-        var listener = EventListener.create({
-            event: EventListener.TOUCH_ONE_BY_ONE,
+        var listener = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan : function(touch, event){
                 if(!skeletonNode.getDebugBonesEnabled())
                     skeletonNode.setDebugBonesEnabled(true);
@@ -52,7 +52,7 @@ export class SpineTestLayerFFD extends SpineTestLayer {
                 return true;
             }
         });
-        eventManager.addListener(listener, this);
+        cc.eventManager.addListener(listener, this);
     }
 
     title(){

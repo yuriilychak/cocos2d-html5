@@ -29,11 +29,11 @@ export class NodeNonOpaqueTest extends TestNodeDemo {
     constructor() {
         //----start14----ctor
         super();
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
         var background;
         for (var i = 0; i < 50; i++) {
-            background = new Sprite(s_back1);
-            background.setBlendFunc(ONE, ZERO);
+            background = new cc.Sprite(s_back1);
+            background.setBlendFunc(cc.ONE, cc.ZERO);
             background.x = winSize.width / 2;
             background.y = winSize.height / 2;
             this.addChild(background);

@@ -46,7 +46,7 @@ export class UIListViewTest_TouchIntercept extends UIMainLayer {
             listView.setTouchEnabled(false);
             listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             listView.setBackGroundImageScale9Enabled(true);
-            listView.setContentSize(new Size(240, 130));
+            listView.setContentSize(new cc.Size(240, 130));
             listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
             listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;
             this._mainNode.addChild(listView);

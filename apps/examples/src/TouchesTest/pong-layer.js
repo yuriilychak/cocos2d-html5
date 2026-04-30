@@ -41,16 +41,16 @@ export class PongLayer extends cc.Layer {
 
 
         this._winSize = null;
-        this._ballStartingVelocity = new Point(20.0, -100.0);
-        this._winSize = director.getWinSize();
+        this._ballStartingVelocity = new cc.Point(20.0, -100.0);
+        this._winSize = cc.director.getWinSize();
 
-        this._ball = Ball.ballWithTexture(textureCache.addImage(s_ball));
+        this._ball = Ball.ballWithTexture(cc.textureCache.addImage(s_ball));
         this._ball.x = this._winSize.width / 2;
         this._ball.y = this._winSize.height / 2;
         this._ball.setVelocity(this._ballStartingVelocity);
         this.addChild(this._ball);
 
-        var paddleTexture = textureCache.addImage(s_paddle);
+        var paddleTexture = cc.textureCache.addImage(s_paddle);
 
         this._paddles = [];
 
@@ -85,9 +85,9 @@ export class PongLayer extends cc.Layer {
     }
     resetAndScoreBallForPlayer(player) {
         if (Math.abs(this._ball.getVelocity().y) < 300) {
-            this._ballStartingVelocity = Point.mult(this._ballStartingVelocity, -1.1);
+            this._ballStartingVelocity = cc.Point.mult(this._ballStartingVelocity, -1.1);
         } else {
-            this._ballStartingVelocity = Point.mult(this._ballStartingVelocity, -1);
+            this._ballStartingVelocity = cc.Point.mult(this._ballStartingVelocity, -1);
         }
         this._ball.setVelocity(this._ballStartingVelocity);
         this._ball.x = this._winSize.width / 2;

@@ -34,26 +34,26 @@ export class ControlButtonTest_Event extends ControlScene {
 
     init() {
         if (super.init()) {
-            var screenSize = director.getWinSize();
+            var screenSize = cc.director.getWinSize();
 
             // Add the button
-            var backgroundButton = new Scale9Sprite(s_extensions_button);
-            var backgroundHighlightedButton = new Scale9Sprite(s_extensions_buttonHighlighted);
+            var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+            var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
 
             // Add a label in which the button events will be displayed
-            this.setDisplayValueLabel(new LabelTTF("No Event", "Marker Felt", 32));
+            this.setDisplayValueLabel(new cc.LabelTTF("No Event", "Marker Felt", 32));
             this._displayValueLabel.anchorX = 0.5;
             this._displayValueLabel.anchorY = -1;
             this._displayValueLabel.x = screenSize.width / 2.0;
             this._displayValueLabel.y = screenSize.height / 2.0;
             this.addChild(this._displayValueLabel, 10);
 
-            var titleButton = new LabelTTF("Touch Me!", "Marker Felt", 30);
-            titleButton.color = new Color(159, 168, 176);
+            var titleButton = new cc.LabelTTF("Touch Me!", "Marker Felt", 30);
+            titleButton.color = new cc.Color(159, 168, 176);
 
-            var controlButton = new ControlButton(titleButton, backgroundButton);
-            controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, CONTROL_STATE_HIGHLIGHTED);
-            controlButton.setTitleColorForState(Color.WHITE, CONTROL_STATE_HIGHLIGHTED);
+            var controlButton = new cc.ControlButton(titleButton, backgroundButton);
+            controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
+            controlButton.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
             controlButton.anchorX = 0.5;
             controlButton.anchorY = 1;
@@ -62,7 +62,7 @@ export class ControlButtonTest_Event extends ControlScene {
             this.addChild(controlButton, 1);
 
             // Add the black background
-            var background = new Scale9Sprite(s_extensions_buttonBackground);
+            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
             background.width = 300;
             background.height = 170;
             background.x = screenSize.width / 2.0;
@@ -70,14 +70,14 @@ export class ControlButtonTest_Event extends ControlScene {
             this.addChild(background);
 
             // Sets up event handlers
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDownAction, CONTROL_EVENT_TOUCH_DOWN);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDragInsideAction, CONTROL_EVENT_TOUCH_DRAG_INSIDE);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDragOutsideAction, CONTROL_EVENT_TOUCH_DRAG_OUTSIDE);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDragEnterAction, CONTROL_EVENT_TOUCH_DRAG_ENTER);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDragExitAction, CONTROL_EVENT_TOUCH_DRAG_EXIT);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchUpInsideAction, CONTROL_EVENT_TOUCH_UP_INSIDE);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchUpOutsideAction, CONTROL_EVENT_TOUCH_UP_OUTSIDE);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchCancelAction, CONTROL_EVENT_TOUCH_CANCEL);
+            controlButton.addTargetWithActionForControlEvents(this, this.touchDownAction, cc.CONTROL_EVENT_TOUCH_DOWN);
+            controlButton.addTargetWithActionForControlEvents(this, this.touchDragInsideAction, cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE);
+            controlButton.addTargetWithActionForControlEvents(this, this.touchDragOutsideAction, cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE);
+            controlButton.addTargetWithActionForControlEvents(this, this.touchDragEnterAction, cc.CONTROL_EVENT_TOUCH_DRAG_ENTER);
+            controlButton.addTargetWithActionForControlEvents(this, this.touchDragExitAction, cc.CONTROL_EVENT_TOUCH_DRAG_EXIT);
+            controlButton.addTargetWithActionForControlEvents(this, this.touchUpInsideAction, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
+            controlButton.addTargetWithActionForControlEvents(this, this.touchUpOutsideAction, cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE);
+            controlButton.addTargetWithActionForControlEvents(this, this.touchCancelAction, cc.CONTROL_EVENT_TOUCH_CANCEL);
             return true;
         }
         return false;

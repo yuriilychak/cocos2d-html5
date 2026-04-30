@@ -30,15 +30,15 @@ export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
         //----start3----onEnter
         super.onEnter();
 
-        var action = sequence(progressTo(2, 100), progressTo(0, 0));
+        var action = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
 
         /**
          *  Our image on the left should be a radial progress indicator, clockwise
          */
-        var left = new ProgressTimer(new Sprite(s_pathBlock));
-        left.type = ProgressTimer.TYPE_RADIAL;
+        var left = new cc.ProgressTimer(new cc.Sprite(s_pathBlock));
+        left.type = cc.ProgressTimer.TYPE_RADIAL;
         this.addChild(left);
-        left.midPoint = new Point(0.25, 0.75);
+        left.midPoint = new cc.Point(0.25, 0.75);
         left.x = 200;
         left.y = winSize.height / 2;
         left.runAction(action.clone().repeatForever());
@@ -46,9 +46,9 @@ export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
         /**
          *  Our image on the left should be a radial progress indicator, counter clockwise
          */
-        var right = new ProgressTimer(new Sprite(s_pathBlock));
-        right.type = ProgressTimer.TYPE_RADIAL;
-        right.midPoint = new Point(0.75, 0.25);
+        var right = new cc.ProgressTimer(new cc.Sprite(s_pathBlock));
+        right.type = cc.ProgressTimer.TYPE_RADIAL;
+        right.midPoint = new cc.Point(0.75, 0.25);
         /**
          *  Note the reverse property (default=NO) is only added to the right image. That's how
          *  we get a counter clockwise progress.

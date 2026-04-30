@@ -41,7 +41,7 @@ export class TMXBug987 extends TileDemo {
         this.pixel2 = {"0":255, "1":208, "2":148, "3":255};
 
         this.pixel3 = {"0":182, "1":182, "2":146, "3":255};
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test6.tmx");
+        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test6.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         this.log("ContentSize:" + map.width + "," + map.height);
@@ -51,14 +51,14 @@ export class TMXBug987 extends TileDemo {
         for (var i = 0, len = childs.length; i < len; i++) {
             node = childs[i];
             if (!node) break;
-            if ("opengl" in sys.capabilities)
+            if ("opengl" in cc.sys.capabilities)
                 node.texture.setAliasTexParameters();
         }
 
         map.anchorX = 0;
         map.anchorY = 0;
         var layer = map.getLayer("Tile Layer 1");
-        layer.setTileGID(3, new Point(2, 2));
+        layer.setTileGID(3, new cc.Point(2, 2));
     }
     title() {
         return "TMX Bug 987";

@@ -32,7 +32,7 @@ export class ShaderMonjoriTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
+        if( 'opengl' in cc.sys.capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Monjori.vsh", ccbjs + "Shaders/example_Monjori.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;

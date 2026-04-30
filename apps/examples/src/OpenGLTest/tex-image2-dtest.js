@@ -33,7 +33,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
+        if( 'opengl' in cc.sys.capabilities ) {
             var glnode = new cc.GLNode();
             this.addChild(glnode,10);
             this.glnode = glnode;
@@ -44,7 +44,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
             glnode.anchorX = 0.5;
             glnode.anchorY = 0.5;
 
-            this.shader = shaderCache.getProgram("ShaderPositionTexture");
+            this.shader = cc.shaderCache.getProgram("ShaderPositionTexture");
             this.initGL();
 
             glnode.draw = function() {
@@ -52,15 +52,15 @@ export class TexImage2DTest extends OpenGLTestLayer {
                 this.shader.setUniformsForBuiltins();
 
                 gl.bindTexture(gl.TEXTURE_2D, this.my_texture);
-                gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-                gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
+                gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
+                gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
 
                 // Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
-                gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
 
                 gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexTextureBuffer);
-                gl.vertexAttribPointer(VERTEX_ATTRIB_TEX_COORDS, 2, gl.FLOAT, false, 0, 0);
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_TEX_COORDS, 2, gl.FLOAT, false, 0, 0);
 
                 gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 

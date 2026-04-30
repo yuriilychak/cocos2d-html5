@@ -31,7 +31,7 @@ export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
 
     constructor() {
         super();
-        // base(this);
+        // cc.base(this);
 
         this._title = 'Chipmunk Release Test';
         this._subtitle = 'Space finalizer should be called';
@@ -46,19 +46,19 @@ export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
     }
 
     collisionPost( arbiter, space ) {
-        log('collision post');
+        cc.log('collision post');
     }
 
     collisionSeparate( arbiter, space ) {
-        log('collision separate');
+        cc.log('collision separate');
     }
 
     onEnter() {
         super.onEnter();
-        // base(this, 'onEnter');
+        // cc.base(this, 'onEnter');
 
-        log("OnEnter");
-        sys.garbageCollect();
+        cc.log("OnEnter");
+        cc.sys.garbageCollect();
 
         this.space.addCollisionHandler( 10, 11,
             this.collisionBegin.bind(this),
@@ -70,13 +70,13 @@ export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
     }
 
     onExit() {
-        log("OnExit");
+        cc.log("OnExit");
 
         // not calling this on purpose
         this.space.removeCollisionHandler( 10, 11 );
         this.space = null;
 
-        // base(this, 'onExit');
+        // cc.base(this, 'onExit');
         super.onExit();
     }
 

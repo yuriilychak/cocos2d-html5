@@ -44,19 +44,19 @@ export class S9FrameNameSpriteSheetRotatedInsets extends S9SpriteTestDemo {
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        log("S9FrameNameSpriteSheetRotatedInsets ...");
+        cc.log("S9FrameNameSpriteSheetRotatedInsets ...");
 
-        var blocks_with_insets = new Scale9Sprite('blocks9r.png', new Rect(32, 32, 32, 32));
-        log("... created");
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9r.png', new cc.Rect(32, 32, 32, 32));
+        cc.log("... created");
 
         blocks_with_insets.x = x;
         blocks_with_insets.y = y;
-        log("... setPosition");
+        cc.log("... setPosition");
 
         this.addChild(blocks_with_insets);
-        log("this..addChild");
+        cc.log("this..addChild");
 
-        log("... S9FrameNameSpriteSheetRotatedInsets done.");
+        cc.log("... S9FrameNameSpriteSheetRotatedInsets done.");
     }
 
 }

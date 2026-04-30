@@ -27,7 +27,7 @@
 
 export class EventDispatcherTestDemo extends BaseTestLayer {
     constructor() {
-        super(new Color(0,0,0,255), new Color(160,32,32,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(160,32,32,255));
     }
 
     title() {

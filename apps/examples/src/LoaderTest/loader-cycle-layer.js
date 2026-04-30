@@ -34,19 +34,19 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
         this._subtitle = "";
 
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
 
-        var resultTTF = new LabelTTF("result: unknown");
+        var resultTTF = new cc.LabelTTF("result: unknown");
         resultTTF.x = winSize.width / 2;
         resultTTF.y = winSize.height / 2;
         this.addChild(resultTTF);
 
         var cb = function(num){
             if(num === 1) {
-                resultTTF.setColor(Color.GREEN);
+                resultTTF.setColor(cc.Color.GREEN);
                 resultTTF.setString("result: success");
             } else {
-                resultTTF.setColor(Color.RED);
+                resultTTF.setColor(cc.Color.RED);
                 resultTTF.setString("result: failed");
             }
         };
@@ -56,17 +56,17 @@ export class LoaderCycleLayer extends BaseTestLayer {
     }
 
     regLoad(){
-        loader.register(["_test1"], {
+        cc.loader.register(["_test1"], {
             load: function(realUrl, url, res, cb){
-                loader.cache[url] = {};
+                cc.loader.cache[url] = {};
                 setTimeout(function(){
-                    cb && cb(null, loader.cache[url]);
-                    return loader.cache[url];
+                    cb && cb(null, cc.loader.cache[url]);
+                    return cc.loader.cache[url];
                 }, Math.random()*1000);
 
             }
         });
-        loader.register(["_test2"], {
+        cc.loader.register(["_test2"], {
             load: function(realUrl, url, res, cb){
                 cb && cb({}, null);
                 return null;
@@ -85,14 +85,14 @@ export class LoaderCycleLayer extends BaseTestLayer {
     }
 
     createInfo(){
-        var winSize = director.getWinSize();
-        var info1 = new LabelTTF("Load 5 files");
+        var winSize = cc.director.getWinSize();
+        var info1 = new cc.LabelTTF("Load 5 files");
         info1.x = winSize.width / 2;
         info1.y = winSize.height / 2 + 80;
-        var info2 = new LabelTTF("1 file does not exist");
+        var info2 = new cc.LabelTTF("1 file does not exist");
         info2.x = winSize.width / 2;
         info2.y = winSize.height / 2 + 60;
-        var info3 = new LabelTTF("The other 4 files should be loaded.");
+        var info3 = new cc.LabelTTF("The other 4 files should be loaded.");
         info3.x = winSize.width / 2;
         info3.y = winSize.height / 2 + 40;
 
@@ -104,10 +104,10 @@ export class LoaderCycleLayer extends BaseTestLayer {
     test(cb){
         this.clearRes();
         var layer = this;
-        loader.load(layer.list, function(){
+        cc.loader.load(layer.list, function(){
             var num = 0;
             layer.list.forEach(function(item){
-                if(!loader.getRes(item)){
+                if(!cc.loader.getRes(item)){
                     num++;
                 }
             });
@@ -117,7 +117,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
     clearRes(){
         this.list.forEach(function(item){
-            loader.release(item);
+            cc.loader.release(item);
         });
     }
 

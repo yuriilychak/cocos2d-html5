@@ -29,37 +29,37 @@ export class CurrentLanguageTest extends cc.Layer {
     constructor() {
         super();
 
-        var s = director.getWinSize();
-        var label = new LabelTTF("Current language Test", "Arial", 28);
+        var s = cc.director.getWinSize();
+        var label = new cc.LabelTTF("Current language Test", "Arial", 28);
         this.addChild(label, 0);
         label.x = s.width / 2;
 	    label.y = s.height - 50;
 
-        var labelLanguage = new LabelTTF("", "Arial", 20);
+        var labelLanguage = new cc.LabelTTF("", "Arial", 20);
         labelLanguage.x = s.width / 2;
 	    labelLanguage.y = s.height / 2;
 
-        var currentLanguageType = sys.language;
+        var currentLanguageType = cc.sys.language;
         switch (currentLanguageType) {
-            case sys.LANGUAGE_ENGLISH:
+            case cc.sys.LANGUAGE_ENGLISH:
                 labelLanguage.setString("current language is English");
                 break;
-            case sys.LANGUAGE_CHINESE:
+            case cc.sys.LANGUAGE_CHINESE:
                 labelLanguage.setString("current language is Chinese");
                 break;
-            case sys.LANGUAGE_FRENCH:
+            case cc.sys.LANGUAGE_FRENCH:
                 labelLanguage.setString("current language is French");
                 break;
-            case sys.LANGUAGE_GERMAN:
+            case cc.sys.LANGUAGE_GERMAN:
                 labelLanguage.setString("current language is German");
                 break;
-            case sys.LANGUAGE_ITALIAN:
+            case cc.sys.LANGUAGE_ITALIAN:
                 labelLanguage.setString("current language is Italian");
                 break;
-            case sys.LANGUAGE_RUSSIAN:
+            case cc.sys.LANGUAGE_RUSSIAN:
                 labelLanguage.setString("current language is Russian");
                 break;
-            case sys.LANGUAGE_SPANISH:
+            case cc.sys.LANGUAGE_SPANISH:
                 labelLanguage.setString("current language is Spanish");
                 break;
         }

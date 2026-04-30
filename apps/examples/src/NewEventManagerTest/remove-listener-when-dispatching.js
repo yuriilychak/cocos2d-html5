@@ -33,55 +33,55 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        var sprite1 = new Sprite("Images/CyanSquare.png");
+        var sprite1 = new cc.Sprite("Images/CyanSquare.png");
         sprite1.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite1, 10);
 
         // Make sprite1 touchable
-        var listener1 = EventListener.create({
-            event: EventListener.TOUCH_ONE_BY_ONE,
+        var listener1 = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
                 var locationInNode = sprite1.convertToNodeSpace(touch.getLocation());
                 var s = sprite1.getContentSize();
-                var rect = new Rect(0, 0, s.width, s.height);
+                var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (Rect.containsPoint(rect, locationInNode)) {
-                    sprite1.setColor(Color.RED);
+                if (cc.Rect.containsPoint(rect, locationInNode)) {
+                    sprite1.setColor(cc.Color.RED);
                     return true;
                 }
                 return false;
             },
             onTouchEnded: function (touch, event) {
-                sprite1.setColor(Color.WHITE);
+                sprite1.setColor(cc.Color.WHITE);
             }
         });
         this.setUserObject(listener1);
 
-        eventManager.addListener(listener1, sprite1);
+        cc.eventManager.addListener(listener1, sprite1);
 
-        var statusLabel = new LabelTTF("The sprite could be touched!", "", 20);
+        var statusLabel = new cc.LabelTTF("The sprite could be touched!", "", 20);
         statusLabel.setPosition(origin.x + size.width/2, origin.y + size.height-90 );
         this.addChild(statusLabel);
 
         var enable = true;
 
         // Enable/Disable item
-        var toggleItem = new MenuItemToggle(new MenuItemFont("Enabled"), new MenuItemFont("Disabled"),
+        var toggleItem = new cc.MenuItemToggle(new cc.MenuItemFont("Enabled"), new cc.MenuItemFont("Disabled"),
             function (sender) {
                 if (enable) {
-                    eventManager.removeListener(listener1);
+                    cc.eventManager.removeListener(listener1);
                     statusLabel.setString("The sprite could not be touched!");
                     enable = false;
                 } else {
-                    eventManager.addListener(listener1, sprite1);
+                    cc.eventManager.addListener(listener1, sprite1);
                     statusLabel.setString("The sprite could be touched!");
                     enable = true;
                 }
             });
 
         toggleItem.setPosition(origin.x + size.width/2, origin.y + 80);
-        var menu = new Menu(toggleItem);
+        var menu = new cc.Menu(toggleItem);
         menu.setPosition(0, 0);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu, 1);

@@ -43,9 +43,9 @@ export class AssetsManagerLoaderScene extends TestScene {
         switch (event.getEventCode())
         {
             case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
-                log("No local manifest file found, skip assets update.");
+                cc.log("No local manifest file found, skip assets update.");
                 scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                director.runScene(scene);
+                cc.director.runScene(scene);
                 break;
             case jsb.EventAssetsManager.UPDATE_PROGRESSION:
                 this._percent = event.getPercent();
@@ -53,19 +53,19 @@ export class AssetsManagerLoaderScene extends TestScene {
 
                 var msg = event.getMessage();
                 if (msg) {
-                    log(msg);
+                    cc.log(msg);
                 }
-                log(this._percent + "%");
+                cc.log(this._percent + "%");
                 break;
             case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
             case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
-                log("Fail to download manifest file, update skipped.");
+                cc.log("Fail to download manifest file, update skipped.");
                 scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                director.runScene(scene);
+                cc.director.runScene(scene);
                 break;
             case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
             case jsb.EventAssetsManager.UPDATE_FINISHED:
-                log("Update finished. " + event.getMessage());
+                cc.log("Update finished. " + event.getMessage());
 
                 // Restart the game to update scripts in scene 3
                 if (currentScene == 2) {
@@ -74,17 +74,17 @@ export class AssetsManagerLoaderScene extends TestScene {
                     // This value will be retrieved and appended to the default search path during game startup,
                     // please refer to samples/js-tests/main.js for detailed usage.
                     // !!! Re-add the search paths in main.js is very important, otherwise, new scripts won't take effect.
-                    sys.localStorage.setItem("Scene3SearchPaths", JSON.stringify(searchPaths));
+                    cc.sys.localStorage.setItem("Scene3SearchPaths", JSON.stringify(searchPaths));
                     // Restart the game to make all scripts take effect.
-                    game.restart();
+                    cc.game.restart();
                 }
                 else {                                     
                     scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                    director.runScene(scene);
+                    cc.director.runScene(scene);
                 }
                 break;
             case jsb.EventAssetsManager.UPDATE_FAILED:
-                log("Update failed. " + event.getMessage());
+                cc.log("Update failed. " + event.getMessage());
 
                 __failCount ++;
                 if (__failCount < 5)
@@ -93,17 +93,17 @@ export class AssetsManagerLoaderScene extends TestScene {
                 }
                 else
                 {
-                    log("Reach maximum fail count, exit update process");
+                    cc.log("Reach maximum fail count, exit update process");
                     __failCount = 0;
                     scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                    director.runScene(scene);
+                    cc.director.runScene(scene);
                 }
                 break;
             case jsb.EventAssetsManager.ERROR_UPDATING:
-                log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
+                cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
                 break;
             case jsb.EventAssetsManager.ERROR_DECOMPRESS:
-                log(event.getMessage());
+                cc.log(event.getMessage());
                 break;
             default:
                 break;
@@ -113,44 +113,44 @@ export class AssetsManagerLoaderScene extends TestScene {
     runThisTest() {
         var manifestPath = sceneManifests[currentScene];
         var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + storagePaths[currentScene]);
-        log("Storage path for this test : " + storagePath);
+        cc.log("Storage path for this test : " + storagePath);
 
-        var layer = new Layer();
+        var layer = new cc.Layer();
         this.addChild(layer);
 
-        var icon = new Sprite(s_image_icon);
-        icon.x = winSize.width/2;
-        icon.y = winSize.height/2;
+        var icon = new cc.Sprite(s_image_icon);
+        icon.x = cc.winSize.width/2;
+        icon.y = cc.winSize.height/2;
         layer.addChild(icon);
 
         this._loadingBar = new ccui.LoadingBar("ccs-res/cocosui/sliderProgress.png");
-        this._loadingBar.x = visibleRect.center.x;
-        this._loadingBar.y = visibleRect.top.y - 40;
+        this._loadingBar.x = cc.visibleRect.center.x;
+        this._loadingBar.y = cc.visibleRect.top.y - 40;
         layer.addChild(this._loadingBar);
 
         this._fileLoadingBar = new ccui.LoadingBar("ccs-res/cocosui/sliderProgress.png");
-        this._fileLoadingBar.x = visibleRect.center.x;
-        this._fileLoadingBar.y = visibleRect.top.y - 80;
+        this._fileLoadingBar.x = cc.visibleRect.center.x;
+        this._fileLoadingBar.y = cc.visibleRect.top.y - 80;
         layer.addChild(this._fileLoadingBar);
 
         this._am = new jsb.AssetsManager(manifestPath, storagePath);
 
         if (!this._am.getLocalManifest().isLoaded())
         {
-            log("Fail to update assets, step skipped.");
+            cc.log("Fail to update assets, step skipped.");
             var scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-            director.runScene(scene);
+            cc.director.runScene(scene);
         }
         else
         {
             this._callback = this.cb.bind(this);
             var listener = new jsb.EventListenerAssetsManager(this._am, this._callback);
 
-            eventManager.addListener(listener, 1);
+            cc.eventManager.addListener(listener, 1);
 
             this._am.update();
 
-            director.runScene(this);
+            cc.director.runScene(this);
         }
 
         this.schedule(this.updateProgress, 0.5);

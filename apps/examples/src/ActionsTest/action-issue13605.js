@@ -31,23 +31,23 @@ export class ActionIssue13605 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var move = new CustomMoveBy(2, new Point(50, 0));
+    var move = new CustomMoveBy(2, new cc.Point(50, 0));
     var move_back = move.reverse();
-    var move_seq = sequence(
+    var move_seq = cc.sequence(
       move,
-      new DelayTime(1),
+      new cc.DelayTime(1),
       move_back,
-      new DelayTime(1)
+      new cc.DelayTime(1)
     );
     this._kathia.runAction(move_seq.repeat(2));
 
     var moveClone = move.clone();
     var moveCloneBack = moveClone.reverse();
-    var moveCloneSeq = sequence(
+    var moveCloneSeq = cc.sequence(
       moveClone,
-      new DelayTime(1),
+      new cc.DelayTime(1),
       moveCloneBack,
-      new DelayTime(1)
+      new cc.DelayTime(1)
     );
     this._tamara.runAction(moveCloneSeq.repeat(2));
     //----end47----

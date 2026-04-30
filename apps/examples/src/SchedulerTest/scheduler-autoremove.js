@@ -54,16 +54,16 @@ export class SchedulerAutoremove extends SchedulerTestLayer {
     onAutoremove(dt) {
         //----start0----onAutoremove
         this._accum += dt;
-        log("Time: " + this._accum);
+        cc.log("Time: " + this._accum);
 
         if (this._accum > 3) {
             this.unschedule(this.onAutoremove);
-            log("scheduler removed");
+            cc.log("scheduler removed");
         }
         //----end0----
     }
     onTick(dt) {
-        log("This scheduler should not be removed");
+        cc.log("This scheduler should not be removed");
     }
 
 }

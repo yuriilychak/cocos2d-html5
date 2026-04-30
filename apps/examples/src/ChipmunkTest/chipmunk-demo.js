@@ -25,7 +25,7 @@
 export class ChipmunkDemo extends ChipmunkBaseLayer {
     constructor() {
         super();
-        //base(this);
+        //cc.base(this);
 
         this.remainder = 0;
 

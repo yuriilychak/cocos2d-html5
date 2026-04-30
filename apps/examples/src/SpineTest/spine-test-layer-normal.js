@@ -27,7 +27,7 @@
 
 export class SpineTestLayerNormal extends SpineTestLayer {
     constructor(idx) {
-        super(new Color(0,0,0,255), new Color(98,99,117,255));
+        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
 
         this._spineboy = null;
 
@@ -44,7 +44,7 @@ export class SpineTestLayerNormal extends SpineTestLayer {
         // Make Spine's Animated skeleton Node
         // You need 'json + atlas + image' resource files to make it.
         var spineBoy = new sp.SkeletonAnimation('spine/spineboy-pro.json', 'spine/spineboy.atlas', 0.6);
-        spineBoy.setPosition(new Point(size.width / 2, size.height / 2 - 150));
+        spineBoy.setPosition(new cc.Point(size.width / 2, size.height / 2 - 150));
         spineBoy.setMix('walk', 'jump', 0.2);
         spineBoy.setMix('jump', 'run', 0.2);
         spineBoy.setAnimation(0, 'walk', true);
@@ -55,28 +55,28 @@ export class SpineTestLayerNormal extends SpineTestLayer {
         spineBoy.setStartListener(function(trackEntry){
             if(trackEntry){
                 var animationName = trackEntry.animation ? trackEntry.animation.name : "";
-                log("%d start: %s", trackEntry.trackIndex, animationName);
+                cc.log("%d start: %s", trackEntry.trackIndex, animationName);
             }
         });
         spineBoy.setEndListener(function(trackEntry){
-            log("%d end.", trackEntry.trackIndex);
+            cc.log("%d end.", trackEntry.trackIndex);
         });
         spineBoy.setCompleteListener(function(trackEntry){
             var loopCount = Math.floor(trackEntry.trackTime / trackEntry.animationEnd);
-            log("%d complete: %d", trackEntry.trackIndex, loopCount);
+            cc.log("%d complete: %d", trackEntry.trackIndex, loopCount);
         });
         spineBoy.setEventListener(function(trackEntry, event){
-            log( trackEntry.trackIndex + " event: %s, %d, %d, %s",event.data.name, event.intValue, event.floatValue, event.stringValue);
+            cc.log( trackEntry.trackIndex + " event: %s, %d, %d, %s",event.data.name, event.intValue, event.floatValue, event.stringValue);
         });
 
         var jumpEntry = spineBoy.addAnimation(0, "jump", false, 3);
         spineBoy.addAnimation(0, "run", true);
         // spineBoy.setTrackStartListener(jumpEntry, function(traceIndex){
-        //     log("jumped!");
+        //     cc.log("jumped!");
         // });
 
-        eventManager.addListener({
-            event: EventListener.TOUCH_ALL_AT_ONCE,
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: function(touches, event){
                 if(spineBoy.getTimeScale() === 1.0)
                     spineBoy.setTimeScale(0.3);
@@ -85,18 +85,18 @@ export class SpineTestLayerNormal extends SpineTestLayer {
             }
         }, this);
 
-        MenuItemFont.setFontSize(20);
-        var bonesToggle = new MenuItemToggle(
-            new MenuItemFont("Debug Bones: Off"),
-            new MenuItemFont("Debug Bones: On"));
+        cc.MenuItemFont.setFontSize(20);
+        var bonesToggle = new cc.MenuItemToggle(
+            new cc.MenuItemFont("Debug Bones: Off"),
+            new cc.MenuItemFont("Debug Bones: On"));
         bonesToggle.setCallback(this.onDebugBones, this);
         bonesToggle.setPosition(160 - size.width / 2, 120 - size.height / 2);
-        var slotsToggle = new MenuItemToggle(
-            new MenuItemFont("Debug Slots: Off"),
-            new MenuItemFont("Debug Slots: On"));
+        var slotsToggle = new cc.MenuItemToggle(
+            new cc.MenuItemFont("Debug Slots: Off"),
+            new cc.MenuItemFont("Debug Slots: On"));
         slotsToggle.setCallback(this.onDebugSlots, this);
         slotsToggle.setPosition(160 - size.width / 2, 160 - size.height / 2);
-        var menu = new Menu();
+        var menu = new cc.Menu();
         menu.ignoreAnchorPointForPosition(true);
         menu.addChild(bonesToggle);
         menu.addChild(slotsToggle);
@@ -129,16 +129,16 @@ export class SpineTestLayerNormal extends SpineTestLayer {
         var animationName = (entry && entry.animation) ? entry.animation.name : 0;
         switch(type) {
             case sp.ANIMATION_EVENT_TYPE.START:
-                log(trackIndex + " start: " + animationName);
+                cc.log(trackIndex + " start: " + animationName);
                 break;
             case sp.ANIMATION_EVENT_TYPE.END:
-                log(trackIndex + " end:" + animationName);
+                cc.log(trackIndex + " end:" + animationName);
                 break;
             case sp.ANIMATION_EVENT_TYPE.EVENT:
-                log(trackIndex + " event: " + animationName);
+                cc.log(trackIndex + " event: " + animationName);
                 break;
             case sp.ANIMATION_EVENT_TYPE.COMPLETE:
-                log(trackIndex + " complete: " + animationName + "," + loopCount);
+                cc.log(trackIndex + " complete: " + animationName + "," + loopCount);
                 if(this._flipped){
                     this._flipped = false;
                     this._spineboy.setScaleX(0.5);

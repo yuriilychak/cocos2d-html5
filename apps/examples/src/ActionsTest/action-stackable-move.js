@@ -45,17 +45,17 @@ export class ActionStackableMove extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = new MoveBy(0.2, new Point(0, 50));
+    var move = new cc.MoveBy(0.2, new cc.Point(0, 50));
     var move_back = move.reverse();
-    var delay = new DelayTime(0.25);
-    var move_seq = sequence(move, move_back);
+    var delay = new cc.DelayTime(0.25);
+    var move_seq = cc.sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 
     // move
-    var action = new MoveBy(2, new Point(winSize.width - 80, 0));
+    var action = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
     var back = action.reverse();
-    var seq = sequence(action, back);
+    var seq = cc.sequence(action, back);
     var repeat = seq.repeatForever();
     this._grossini.runAction(repeat);
     //----end33----

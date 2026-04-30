@@ -31,7 +31,7 @@ export class ChipmunkCollisionMemoryLeakTest extends ChipmunkBaseLayer {
 
     constructor() {
         super();
-        // base(this);
+        // cc.base(this);
 
         this._title = 'Chipmunk Memory Leak Test';
         this._subtitle = 'Testing possible memory leak on the collision handler. No visual feedback';
@@ -46,16 +46,16 @@ export class ChipmunkCollisionMemoryLeakTest extends ChipmunkBaseLayer {
     }
 
     collisionPost( arbiter, space ) {
-        log('collision post');
+        cc.log('collision post');
     }
 
     collisionSeparate( arbiter, space ) {
-        log('collision separate');
+        cc.log('collision separate');
     }
 
     onEnter() {
         super.onEnter();
-        // base(this, 'onEnter');
+        // cc.base(this, 'onEnter');
 
         for( var i=1 ; i < 100 ; i++ )
             this.space.addCollisionHandler( i, i+1,

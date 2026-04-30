@@ -48,11 +48,11 @@ export class ActionBezierToCopy extends ActionsDemo {
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints2 = [
-      new Point(100, winSize.height / 2),
-      new Point(200, -winSize.height / 2),
-      new Point(240, 160)
+      new cc.Point(100, winSize.height / 2),
+      new cc.Point(200, -winSize.height / 2),
+      new cc.Point(240, 160)
     ];
-    var bezierTo1 = new BezierTo(2, controlPoints2);
+    var bezierTo1 = new cc.BezierTo(2, controlPoints2);
 
     // sprite 2
     this._kathia.x = 80;
@@ -64,7 +64,7 @@ export class ActionBezierToCopy extends ActionsDemo {
     //----end9----
   }
   title() {
-    return "bezierTo copy test";
+    return "cc.bezierTo copy test";
   }
   subtitle() {
     return "Both sprites should move across the same path";

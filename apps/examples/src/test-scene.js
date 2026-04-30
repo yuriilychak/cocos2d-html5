@@ -33,10 +33,10 @@ export class TestScene extends cc.Scene {
         this._mainMenu = null;
         this.init();
 
-        var label = new LabelTTF("Main Menu", "Arial", 20);
-        var menuItem = new MenuItemLabel(label, this.onMainMenuCallback, this);
+        var label = new cc.LabelTTF("Main Menu", "Arial", 20);
+        var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
 
-        var menu = new Menu(menuItem);
+        var menu = new cc.Menu(menuItem);
         this._mainMenu = menu;
         menu.x = 0;
         menu.y = 0;
@@ -52,10 +52,10 @@ export class TestScene extends cc.Scene {
             director.resume();
         } 
         this._mainMenu.enabled = false;
-        var scene = new Scene();
+        var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
-        var transition = new TransitionProgressRadialCCW(0.5,scene);
+        var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
         director.runScene(transition);
     }
 

@@ -41,25 +41,25 @@ export class SceneTestLayer2 extends cc.Layer {
 
         var s = director.getWinSize();
 
-        var item1 = new MenuItemFont("runScene", this.runScene, this);
-        var item2 = new MenuItemFont("runScene w/transition", this.runSceneTran, this);
-        var item3 = new MenuItemFont("Go Back", this.onGoBack, this);
+        var item1 = new cc.MenuItemFont("runScene", this.runScene, this);
+        var item2 = new cc.MenuItemFont("runScene w/transition", this.runSceneTran, this);
+        var item3 = new cc.MenuItemFont("Go Back", this.onGoBack, this);
 
-        var menu = new Menu(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
         menu.alignItemsVertically();
         this.addChild(menu);
 
-        var sprite = new Sprite(s_pathGrossini);
+        var sprite = new cc.Sprite(s_pathGrossini);
         this.addChild(sprite);
 
         sprite.x = s.width - 40;
         sprite.y = s.height / 2;
-        var rotate = new RotateBy(2, 360);
+        var rotate = new cc.RotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
 
-        //schedule(this.testDealloc);
+        //cc.schedule(this.testDealloc);
     }
 
     testDealloc(dt) {
@@ -82,7 +82,7 @@ export class SceneTestLayer2 extends cc.Layer {
         var scene = new SceneTestScene();
         var layer = new SceneTestLayer3();
         scene.addChild(layer, 0);
-        director.runScene(new TransitionSlideInT(2, scene));
+        director.runScene(new cc.TransitionSlideInT(2, scene));
     }
 
     //CREATE_NODE(SceneTestLayer2);

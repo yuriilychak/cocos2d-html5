@@ -47,12 +47,12 @@ export class SchedulerUpdateAndCustom extends SchedulerTestLayer {
 
     update(dt) {
         //----start6----update
-        log("update called:" + dt);
+        cc.log("update called:" + dt);
         //----end6----
     }
     onTick(dt) {
         //----start6----onTick
-        log("custom callback called:" + dt);
+        cc.log("custom callback called:" + dt);
         //----end6----
     }
     onStopCallbacks(dt) {

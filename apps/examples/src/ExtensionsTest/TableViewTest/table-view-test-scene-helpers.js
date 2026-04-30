@@ -30,10 +30,10 @@
 ;
 
 export function runTableViewTest() {
-    var pScene = new Scene();
+    var pScene = new cc.Scene();
     var pLayer = new TableViewTestLayer();
     pScene.addChild(pLayer);
-    director.runScene(pScene);
+    cc.director.runScene(pScene);
 }
 
 ;

@@ -44,7 +44,7 @@ export class TMXOrthoTest2 extends TileDemo {
         //
         // it should not flicker. No artifacts should appear
         //
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
+        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
     }
     title() {

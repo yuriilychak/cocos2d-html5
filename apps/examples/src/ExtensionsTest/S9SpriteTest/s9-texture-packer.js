@@ -40,46 +40,46 @@ export class S9_TexturePacker extends S9SpriteTestDemo {
 
 
         this._subtitle = "createWithSpriteFrameName('button_normal.png');createWithSpriteFrameName('button_actived.png');";
-        spriteFrameCache.addSpriteFrames(s_s9s_ui_plist);
+        cc.spriteFrameCache.addSpriteFrames(s_s9s_ui_plist);
 
         var x = winSize.width / 4;
         var y = 0 + (winSize.height / 2);
 
-        log("S9_TexturePacker ...");
+        cc.log("S9_TexturePacker ...");
 
-        var s = new Scale9Sprite('button_normal.png');
-        log("... created");
+        var s = new cc.Scale9Sprite('button_normal.png');
+        cc.log("... created");
 
         s.x = x;
 
         s.y = y;
-        log("... setPosition");
+        cc.log("... setPosition");
 
         s.width = 21 * 16;
 
         s.height = 13 * 16;
-        log("... setContentSize");
+        cc.log("... setContentSize");
 
         this.addChild(s);
-        log("this..addChild");
+        cc.log("this..addChild");
 
         x = winSize.width * 3/4;
 
-        var s2 = new Scale9Sprite('button_actived.png');
-        log("... created");
+        var s2 = new cc.Scale9Sprite('button_actived.png');
+        cc.log("... created");
 
         s2.x = x;
         s2.y = y;
-        log("... setPosition");
+        cc.log("... setPosition");
 
         s2.width = 21 * 16;
         s2.height = 13 * 16;
-        log("... setContentSize");
+        cc.log("... setContentSize");
 
         this.addChild(s2);
-        log("this..addChild");
+        cc.log("this..addChild");
 
-        log("... S9_TexturePacker done.");
+        cc.log("... S9_TexturePacker done.");
     }
 
 }

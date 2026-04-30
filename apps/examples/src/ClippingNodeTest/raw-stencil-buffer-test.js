@@ -33,7 +33,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
 
 
     _initRendererCmd(){
-        this._rendererCmd = new CustomRenderCmdWebGL(this, this.draw);
+        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, this.draw);
     }
 
     title() {
@@ -45,27 +45,27 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
     }
 
     setup() {
-        _stencilBits = rendererConfig.renderContext.getParameter(rendererConfig.renderContext.STENCIL_BITS);
+        _stencilBits = cc.rendererConfig.renderContext.getParameter(cc.rendererConfig.renderContext.STENCIL_BITS);
         if (_stencilBits < 3)
-            log("Stencil must be enabled for the current CCGLView.");
+            cc.log("Stencil must be enabled for the current CCGLView.");
 
-        this._sprite = new Sprite(s_pathGrossini);
+        this._sprite = new cc.Sprite(s_pathGrossini);
         this._sprite.anchorX = 0.5;
         this._sprite.anchorY = 0;
         this._sprite.scale = 2.5;
-        director.setAlphaBlending(true);
+        cc.director.setAlphaBlending(true);
     }
 
     draw(ctx) {
-        var gl = ctx || rendererConfig.renderContext;
-        var winPoint = Point.fromSize(director.getWinSize());
-        var planeSize = Point.mult(winPoint, 1.0 / _PLANE_COUNT);
+        var gl = ctx || cc.rendererConfig.renderContext;
+        var winPoint = cc.Point.fromSize(cc.director.getWinSize());
+        var planeSize = cc.Point.mult(winPoint, 1.0 / _PLANE_COUNT);
 
         gl.enable(gl.STENCIL_TEST);
-        //checkGLErrorDebug();
+        //cc.checkGLErrorDebug();
 
         for (var i = 0; i < _PLANE_COUNT; i++) {
-            var stencilPoint = Point.mult(planeSize, _PLANE_COUNT - i);
+            var stencilPoint = cc.Point.mult(planeSize, _PLANE_COUNT - i);
             stencilPoint.x = winPoint.x;
 
             var x = planeSize.x / 2 + planeSize.x * i, y = 0;
@@ -73,32 +73,32 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
 	        this._sprite.y = y;
 
             this.setupStencilForClippingOnPlane(i);
-            //checkGLErrorDebug();
+            //cc.checkGLErrorDebug();
 
-            _drawingUtil.drawSolidRect(new Point(0, 0), stencilPoint, new Color(255, 255, 255, 255));
+            cc._drawingUtil.drawSolidRect(new cc.Point(0, 0), stencilPoint, new cc.Color(255, 255, 255, 255));
 
-            kmGLPushMatrix();
+            cc.kmGLPushMatrix();
             this.transform();
             this._sprite.visit();
-            kmGLPopMatrix();
+            cc.kmGLPopMatrix();
 
             this.setupStencilForDrawingOnPlane(i);
-            //checkGLErrorDebug();
+            //cc.checkGLErrorDebug();
 
-            _drawingUtil.drawSolidRect(new Point(0, 0), winPoint, _planeColor[i]);
+            cc._drawingUtil.drawSolidRect(new cc.Point(0, 0), winPoint, _planeColor[i]);
 
-            kmGLPushMatrix();
+            cc.kmGLPushMatrix();
             this.transform();
             this._sprite.visit();
-            kmGLPopMatrix();
+            cc.kmGLPopMatrix();
         }
 
         gl.disable(gl.STENCIL_TEST);
-        //checkGLErrorDebug();
+        //cc.checkGLErrorDebug();
     }
 
     setupStencilForClippingOnPlane(plane) {
-        var gl = rendererConfig.renderContext;
+        var gl = cc.rendererConfig.renderContext;
         var planeMask = 0x1 << plane;
         gl.stencilMask(planeMask);
         gl.clearStencil(0x0);
@@ -109,7 +109,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
     }
 
     setupStencilForDrawingOnPlane(plane) {
-        var gl = rendererConfig.renderContext;
+        var gl = cc.rendererConfig.renderContext;
         var planeMask = 0x1 << plane;
         var equalOrLessPlanesMask = planeMask | (planeMask - 1);
         gl.stencilFunc(gl.EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);

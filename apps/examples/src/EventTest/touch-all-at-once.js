@@ -35,26 +35,26 @@ export class TouchAllAtOnce extends EventTest {
         this.ids = {};
         this.unused_sprites = [];
 
-        if( 'touches' in sys.capabilities ) {
+        if( 'touches' in cc.sys.capabilities ) {
             // this is the default behavior. No need to set it explicitly.
-            eventManager.addListener({
-                event: EventListener.TOUCH_ALL_AT_ONCE,
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesBegan: this.onTouchesBegan,
                 onTouchesMoved: this.onTouchesMoved,
                 onTouchesEnded: this.onTouchesEnded,
                 onTouchesCancelled: this.onTouchesCancelled
             }, this);
         } else {
-            log("TOUCHES not supported");
+            cc.log("TOUCHES not supported");
         }
 
         for( var i=0; i < 5;i++) {
-            var sprite = this.sprite = new Sprite(s_pathR2);
+            var sprite = this.sprite = new cc.Sprite(s_pathR2);
             this.addChild(sprite,i+10);
             sprite.x = 0;
             sprite.y = 0;
             sprite.scale = 1;
-            sprite.color = new Color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
+            sprite.color = new cc.Color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
             this.unused_sprites.push(sprite);
         }
     }
@@ -87,7 +87,7 @@ export class TouchAllAtOnce extends EventTest {
             var touch = touches[i];
             var pos = touch.getLocation();
             var id = touch.getID();
-            log("Touch #" + i + ". onTouchesBegan at: " + pos.x + " " + pos.y + " Id:" + id);
+            cc.log("Touch #" + i + ". onTouchesBegan at: " + pos.x + " " + pos.y + " Id:" + id);
             target.new_id(id,pos);
         }
     }
@@ -102,7 +102,7 @@ export class TouchAllAtOnce extends EventTest {
                 force = touch.getCurrentForce();
                 maxForce = touch.getMaxForce();
             }
-            log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id + " current force:" + force + " maximum postible force:" + maxForce);
+            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id + " current force:" + force + " maximum postible force:" + maxForce);
             target.update_id(id, pos);
         }
     }
@@ -112,7 +112,7 @@ export class TouchAllAtOnce extends EventTest {
             var touch = touches[i];
             var pos = touch.getLocation();
             var id = touch.getID();
-            log("Touch #" + i + ". onTouchesEnded at: " + pos.x + " " + pos.y + " Id:" + id);
+            cc.log("Touch #" + i + ". onTouchesEnded at: " + pos.x + " " + pos.y + " Id:" + id);
             target.release_id(id);
         }
     }
@@ -122,7 +122,7 @@ export class TouchAllAtOnce extends EventTest {
             var touch = touches[i];
             var pos = touch.getLocation();
             var id = touch.getID();
-            log("Touch #" + i + ". onTouchesCancelled at: " + pos.x + " " + pos.y + " Id:" + id);
+            cc.log("Touch #" + i + ". onTouchesCancelled at: " + pos.x + " " + pos.y + " Id:" + id);
             target.release_id(id);
         }
     }

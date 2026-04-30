@@ -30,62 +30,62 @@ export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
         //----start7----onEnter
         super.onEnter();
         var selfPointer = this;
-        var item1 = new MenuItemFont("Click Me 1", function(sender){
-            var listener = EventListener.create({
-                event: EventListener.TOUCH_ONE_BY_ONE,
+        var item1 = new cc.MenuItemFont("Click Me 1", function(sender){
+            var listener = cc.EventListener.create({
+                event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function (touch, event) {
-                    assert(false, "Should not come here!");
+                    cc.assert(false, "Should not come here!");
                     return true;
                 }
             });
-            eventManager.addListener(listener, -1);
-            eventManager.removeListener(listener);
+            cc.eventManager.addListener(listener, -1);
+            cc.eventManager.removeListener(listener);
         });
-        var vCenter = visibleRect.center;
+        var vCenter = cc.visibleRect.center;
         item1.setPosition(vCenter.x, vCenter.y + 80);
 
         var addNextButton = function(){
-            var next = new MenuItemFont("Please Click Me To Reset!", function(sender){
+            var next = new cc.MenuItemFont("Please Click Me To Reset!", function(sender){
                 selfPointer.onRestartCallback();
             });
             next.setPosition(vCenter.x, vCenter.y - 40);
 
-            var menu = new Menu(next);
-            menu.setPosition(visibleRect.bottomLeft);
+            var menu = new cc.Menu(next);
+            menu.setPosition(cc.visibleRect.bottomLeft);
             menu.setAnchorPoint(0,0);
             selfPointer.addChild(menu);
         };
 
-        var item2 = new MenuItemFont("Click Me 2", function(sender){
-            var listener = EventListener.create({
-                event: EventListener.TOUCH_ONE_BY_ONE,
+        var item2 = new cc.MenuItemFont("Click Me 2", function(sender){
+            var listener = cc.EventListener.create({
+                event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
-                    assert("Should not come here!");
+                    cc.assert("Should not come here!");
                     return true;
                 }
             });
-            eventManager.addListener(listener, -1);
-            eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+            cc.eventManager.addListener(listener, -1);
+            cc.eventManager.removeListeners(cc.EventListener.TOUCH_ONE_BY_ONE);
             addNextButton();
         }, this);
         item2.setPosition(vCenter.x, vCenter.y + 40);
 
-        var item3 = new MenuItemFont("Click Me 3", function(sender){
-            var listener = EventListener.create({
-                event: EventListener.TOUCH_ONE_BY_ONE,
+        var item3 = new cc.MenuItemFont("Click Me 3", function(sender){
+            var listener = cc.EventListener.create({
+                event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
-                    assert(false, "Should not come here!");
+                    cc.assert(false, "Should not come here!");
                     return true;
                 }
             });
-            eventManager.addListener(listener, -1);
-            eventManager.removeAllListeners();
+            cc.eventManager.addListener(listener, -1);
+            cc.eventManager.removeAllListeners();
             addNextButton();
         }, this);
-        item3.setPosition(visibleRect.center);
+        item3.setPosition(cc.visibleRect.center);
 
-        var menu = new Menu(item1, item2, item3);
-        menu.setPosition(visibleRect.bottomLeft);
+        var menu = new cc.Menu(item1, item2, item3);
+        menu.setPosition(cc.visibleRect.bottomLeft);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu);
         //----end7----

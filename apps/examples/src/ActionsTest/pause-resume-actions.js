@@ -41,9 +41,9 @@ export class PauseResumeActions extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    this._tamara.runAction(new RotateBy(3, 360).repeatForever());
-    this._grossini.runAction(new RotateBy(3, -360).repeatForever());
-    this._kathia.runAction(new RotateBy(3, 360).repeatForever());
+    this._tamara.runAction(new cc.RotateBy(3, 360).repeatForever());
+    this._grossini.runAction(new cc.RotateBy(3, -360).repeatForever());
+    this._kathia.runAction(new cc.RotateBy(3, 360).repeatForever());
 
     this.schedule(this.pause, 3, false, 0);
     this.schedule(this.resume, 5, false, 0);
@@ -51,11 +51,11 @@ export class PauseResumeActions extends ActionsDemo {
   }
 
   pause() {
-    log("Pausing");
+    cc.log("Pausing");
     this._pausedTargets = director.getActionManager().pauseAllRunningActions();
   }
   resume() {
-    log("Resuming");
+    cc.log("Resuming");
     director.getActionManager().resumeTargets(this._pausedTargets);
   }
 

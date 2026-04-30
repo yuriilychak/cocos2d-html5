@@ -39,23 +39,23 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
         this.testDuration = 5.2;
 
         this.pixel = {"0":119, "1":205, "2":73, "3":255};
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-vertexz.tmx");
+        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-vertexz.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
-        // can use any Sprite and it will work OK.
+        // can use any cc.Sprite and it will work OK.
         var layer = map.getLayer("trees");
-        this.tamara = layer.getTileAt(new Point(0, 11));
+        this.tamara = layer.getTileAt(new cc.Point(0, 11));
         this.log("vertexZ: " + this.tamara.vertexZ);
 
-        var move = new MoveBy(5, Point.mult(new Point(400, 450), 0.55));
+        var move = new cc.MoveBy(5, cc.Point.mult(new cc.Point(400, 450), 0.55));
         var back = move.reverse();
-        var delay = new DelayTime(0.5);
-        var seq = sequence(move, delay, back);
+        var delay = new cc.DelayTime(0.5);
+        var seq = cc.sequence(move, delay, back);
         this.tamara.runAction(seq.repeatForever());
 
-        if (!sys.isNative && !("opengl" in sys.capabilities)) {
-            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
+        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
+            var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;
@@ -73,23 +73,23 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
     }
     onEnter() {
         super.onEnter();
-        director.setProjection(Director.PROJECTION_2D);
+        director.setProjection(cc.Director.PROJECTION_2D);
         director.setDepthTest(true);
     }
     onExit() {
-        director.setProjection(Director.PROJECTION_DEFAULT);
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
         super.onExit();
     }
     repositionSprite(dt) {
-        if (sys.isNative) {
+        if (cc.sys.isNative) {
             this.tamara.vertexZ = -(this.tamara.y + 81) / 81;
         }
         else {
             // tile height is 101x81
             // map size: 12x12
             var layer = this.tamara.parent;
-            this.tamara.vertexZ = layer.vertexZ + renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
+            this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
         }
     }
     //

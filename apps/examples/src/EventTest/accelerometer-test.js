@@ -37,19 +37,19 @@ export class AccelerometerTest extends EventTest {
     init() {
         super.init();
 
-        if( 'accelerometer' in sys.capabilities ) {
+        if( 'accelerometer' in cc.sys.capabilities ) {
             var self = this;
             // call is called 30 times per second
-            inputManager.setAccelerometerInterval(1/30);
-            inputManager.setAccelerometerEnabled(true);
-            eventManager.addListener({
-                event: EventListener.ACCELERATION,
+            cc.inputManager.setAccelerometerInterval(1/30);
+            cc.inputManager.setAccelerometerEnabled(true);
+            cc.eventManager.addListener({
+                event: cc.EventListener.ACCELERATION,
                 callback: function(accelEvent, event){
                     var target = event.getCurrentTarget();
                     self._logIndex++;
                     if (self._logIndex > 20)
                     {
-                        log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );    
+                        cc.log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );    
                         self._logIndex = 0;
                     }
                     
@@ -71,7 +71,7 @@ export class AccelerometerTest extends EventTest {
                 }
             }, this);
 
-            var sprite = this.sprite = new Sprite(s_pathR2);
+            var sprite = this.sprite = new cc.Sprite(s_pathR2);
             this.addChild( sprite );
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
@@ -80,14 +80,14 @@ export class AccelerometerTest extends EventTest {
             this.prevX = 0;
             this.prevY = 0;
         } else {
-            log("ACCELEROMETER not supported");
+            cc.log("ACCELEROMETER not supported");
         }
     }
 
     onExit(){
         super.onExit();
-        if( 'accelerometer' in sys.capabilities )
-            inputManager.setAccelerometerEnabled(false);
+        if( 'accelerometer' in cc.sys.capabilities )
+            cc.inputManager.setAccelerometerEnabled(false);
     }
 
     subtitle() {

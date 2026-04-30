@@ -36,7 +36,7 @@ export class BMFontPaddingTest extends AtlasDemo {
         super();
 
         this.pixel = {"0": 255, "1": 255, "2": 255, "3": 255};
-        var label = new LabelBMFont("abcdefg", s_resprefix + "fonts/bitmapFontTest4.fnt");
+        var label = new cc.LabelBMFont("abcdefg", s_resprefix + "fonts/bitmapFontTest4.fnt");
         this.addChild(label);
 
         var s = director.getWinSize();
@@ -48,7 +48,7 @@ export class BMFontPaddingTest extends AtlasDemo {
         //----end5----
     }
     title() {
-        return "LabelBMFont BMFontPaddingTest";
+        return "cc.LabelBMFont BMFontPaddingTest";
     }
     subtitle() {
         return "Testing padding";

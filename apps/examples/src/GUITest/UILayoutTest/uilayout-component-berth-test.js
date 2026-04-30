@@ -27,25 +27,25 @@
 export class UILayoutComponent_Berth_Test extends UILayoutComponentTest {
      init(){
          if (super.init()){
-             var leftTopSprite = new Sprite("ccs-res/cocosui/CloseSelected.png");
+             var leftTopSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var leftTop = ccui.LayoutComponent.bindLayoutComponent(leftTopSprite);
              leftTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
              leftTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
              this._baseLayer.addChild(leftTopSprite);
 
-             var leftBottomSprite = new Sprite("ccs-res/cocosui/CloseSelected.png");
+             var leftBottomSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var leftBottom = ccui.LayoutComponent.bindLayoutComponent(leftBottomSprite);
              leftBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
              leftBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
              this._baseLayer.addChild(leftBottomSprite);
 
-             var rightTopSprite = new Sprite("ccs-res/cocosui/CloseSelected.png");
+             var rightTopSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var rightTop = ccui.LayoutComponent.bindLayoutComponent(rightTopSprite);
              rightTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
              rightTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
              this._baseLayer.addChild(rightTopSprite);
 
-             var rightBottomSprite = new Sprite("ccs-res/cocosui/CloseSelected.png");
+             var rightBottomSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var rightBottom = ccui.LayoutComponent.bindLayoutComponent(rightBottomSprite);
              rightBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
              rightBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);

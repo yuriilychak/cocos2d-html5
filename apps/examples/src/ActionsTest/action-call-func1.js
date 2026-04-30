@@ -37,8 +37,8 @@ export class ActionCallFunc1 extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = new CallFunc( this.callback );\n" +
-        "a = new CallFunc( this.callback, this, optional_arg );";
+        return "a = new cc.CallFunc( this.callback );\n" +
+        "a = new cc.CallFunc( this.callback, this, optional_arg );";
       }
 
   onEnter() {
@@ -47,21 +47,21 @@ export class ActionCallFunc1 extends ActionsDemo {
     this.centerSprites(3);
 
     // Testing different ways to pass "this"
-    var action = sequence(
-      new MoveBy(2, new Point(200, 0)),
-      new CallFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
+    var action = cc.sequence(
+      new cc.MoveBy(2, new cc.Point(200, 0)),
+      new cc.CallFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
     );
 
-    var action2 = sequence(
-      new ScaleBy(2, 2),
-      new FadeOut(2),
-      new CallFunc(this.onCallback2, this) // 'this' is passed as 2nd argument.
+    var action2 = cc.sequence(
+      new cc.ScaleBy(2, 2),
+      new cc.FadeOut(2),
+      new cc.CallFunc(this.onCallback2, this) // 'this' is passed as 2nd argument.
     );
 
-    var action3 = sequence(
-      new RotateBy(3, 360),
-      new FadeOut(2),
-      new CallFunc(this.onCallback3, this, "Hi!") // If you want to pass a optional value, like "Hi!", then you should pass 'this' too
+    var action3 = cc.sequence(
+      new cc.RotateBy(3, 360),
+      new cc.FadeOut(2),
+      new cc.CallFunc(this.onCallback3, this, "Hi!") // If you want to pass a optional value, like "Hi!", then you should pass 'this' too
     );
 
     this._grossini.runAction(action);
@@ -71,7 +71,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback1(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new LabelTTF("callback 1 called", "Marker Felt", 16);
+    var label = new cc.LabelTTF("callback 1 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 1;
     label.y = s.height / 2;
     this.addChild(label);
@@ -79,7 +79,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback2(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new LabelTTF("callback 2 called", "Marker Felt", 16);
+    var label = new cc.LabelTTF("callback 2 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 2;
     label.y = s.height / 2;
 
@@ -88,7 +88,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback3(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new LabelTTF(
+    var label = new cc.LabelTTF(
       "callback 3 called:" + value,
       "Marker Felt",
       16

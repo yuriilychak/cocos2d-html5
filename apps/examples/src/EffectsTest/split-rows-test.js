@@ -28,13 +28,13 @@ export class SplitRowsTest extends EffectsBaseLayer {
         return "SplitRows";
     }
     code() {
-        return "a = splitRows(duration, rows)";
+        return "a = cc.splitRows(duration, rows)";
     }
     getEffect(duration) {
-        var action = splitRows(duration, 9);
-        var delay = new DelayTime(0.5);
+        var action = cc.splitRows(duration, 9);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 

@@ -41,9 +41,9 @@ export class ActionCallFunc2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
 
-    var action = sequence(
-      new MoveBy(2.0, new Point(200, 0)),
-      new CallFunc(this.removeFromParentAndCleanup, this._grossini, true)
+    var action = cc.sequence(
+      new cc.MoveBy(2.0, new cc.Point(200, 0)),
+      new cc.CallFunc(this.removeFromParentAndCleanup, this._grossini, true)
     );
 
     this._grossini.runAction(action);
@@ -55,10 +55,10 @@ export class ActionCallFunc2 extends ActionsDemo {
   }
 
   title() {
-    return "CallFunc + auto remove";
+    return "cc.CallFunc + auto remove";
   }
   subtitle() {
-    return "CallFunc + removeFromParentAndCleanup. Grossini dissapears in 2s";
+    return "cc.CallFunc + removeFromParentAndCleanup. Grossini dissapears in 2s";
   }
   //
   // Automation

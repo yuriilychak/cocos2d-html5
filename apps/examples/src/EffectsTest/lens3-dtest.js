@@ -28,10 +28,10 @@ export class Lens3DTest extends EffectsBaseLayer {
         return "Lens3D";
     }
     code() {
-        return "a = lens3D(duration, gridSize, position, radius)";
+        return "a = cc.lens3D(duration, gridSize, position, radius)";
     }
     getEffect(duration) {
-        return lens3D( duration, new Size(15,10), new Point(winSize.width/2, winSize.height/2), 240);
+        return cc.lens3D( duration, new cc.Size(15,10), new cc.Point(winSize.width/2, winSize.height/2), 240);
     }
 
 }

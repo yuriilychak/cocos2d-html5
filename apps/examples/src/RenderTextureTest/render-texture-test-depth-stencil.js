@@ -33,9 +33,9 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
 
 
         this._rend = null;
-        var winSize = director.getWinSize();
+        var winSize = cc.director.getWinSize();
 
-        this._spriteDraw = new Sprite(s_fire);
+        this._spriteDraw = new cc.Sprite(s_fire);
         this._spriteDraw.x = winSize.width * 0.25;
         this._spriteDraw.y = 0;
         this._spriteDraw.scale = 10;
@@ -43,12 +43,12 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
         this._spriteDraw.x = this._spriteDraw.x + this._spriteDraw.getContentSize().width * this._spriteDraw.getScale() * 0.5;
         this._spriteDraw.y = this._spriteDraw.y + this._spriteDraw.getContentSize().height * this._spriteDraw.getScale() * 0.5;
 
-        this._rend = new RenderTexture(winSize.width, winSize.height, Texture2D.PIXEL_FORMAT_RGBA4444, gl.DEPTH24_STENCIL8_OES);
+        this._rend = new cc.RenderTexture(winSize.width, winSize.height, cc.Texture2D.PIXEL_FORMAT_RGBA4444, gl.DEPTH24_STENCIL8_OES);
         this._rend.x = winSize.width * 0.5;
         this._rend.y = winSize.height * 0.5;
         this.addChild(this._rend);
-        var item = new MenuItemFont("Click Me", this.maskTest, this);
-        var menu = new Menu(item);
+        var item = new cc.MenuItemFont("Click Me", this.maskTest, this);
+        var menu = new cc.Menu(item);
         menu.x = winSize.width - 90;
         menu.y = winSize.height - 100;
 
@@ -57,7 +57,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     }
 
     releaseMask() {
-        var gl = rendererConfig.renderContext;
+        var gl = cc.rendererConfig.renderContext;
         gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
         gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
         gl.disable(gl.STENCIL_TEST);
@@ -65,13 +65,13 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     }
 
     maskTest(sender) {
-        var gl = rendererConfig.renderContext;
+        var gl = cc.rendererConfig.renderContext;
 
         gl.clear(gl.STENCIL_BUFFER_BIT);
         this._rend.beginWithClear(0, 0, 0, 0, 0, 0);
 
         gl.stencilMask(0xFF);
-        eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+        cc.eventManager.removeListeners(cc.EventListener.TOUCH_ONE_BY_ONE);
         gl.stencilFunc(gl.NEVER, 1, 0xFF);
         gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
         gl.enable(gl.STENCIL_TEST);

@@ -38,7 +38,7 @@ export class UIButtonTest_Scale9 extends UIMainLayer {
             button.loadTextures("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png", "");
             button.x = this._widget.width / 2.0;
             button.y = this._widget.height / 2.0;
-            button.setContentSize(new Size(150, 48));
+            button.setContentSize(new cc.Size(150, 48));
             button.addTouchEventListener(this.touchEvent ,this);
             this._mainNode.addChild(button);
 

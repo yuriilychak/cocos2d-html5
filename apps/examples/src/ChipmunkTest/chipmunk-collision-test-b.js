@@ -34,7 +34,7 @@ export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
 
     constructor() {
         super();
-        // base(this);
+        // cc.base(this);
 
         this.messageDisplayed = false;
 
@@ -82,20 +82,20 @@ export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
         cp.shapeSetCollisionType( shape, collision_type );
         cp.spaceAddShape( this.space, shape );
 
-        var sprite = new PhysicsSprite(file);
+        var sprite = new cc.PhysicsSprite(file);
         sprite.setBody( body );
         return sprite;
     }
 
     onEnter() {
         super.onEnter();
-        // base(this, 'onEnter');
+        // cc.base(this, 'onEnter');
 
         this.initPhysics();
         this.scheduleUpdate();
 
-        var sprite1 = this.createPhysicsSprite( new Point(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
-        var sprite2 = this.createPhysicsSprite( new Point(winSize.width/2, 50), s_pathSister1, 2);
+        var sprite1 = this.createPhysicsSprite( new cc.Point(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
+        var sprite2 = this.createPhysicsSprite( new cc.Point(winSize.width/2, 50), s_pathSister1, 2);
 
         this.addChild( sprite1 );
         this.addChild( sprite2 );
@@ -120,33 +120,33 @@ export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
     collisionBegin( arbiter, space ) {
 
         if( ! this.messageDisplayed ) {
-            var label = new LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
+            var label = new cc.LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
             this.addChild( label );
             label.x = winSize.width/2;
             label.y = winSize.height/2 ;
             this.messageDisplayed = true;
         }
-        log('collision begin');
+        cc.log('collision begin');
         var bodies = cp.arbiterGetBodies( arbiter );
         var shapes = cp.arbiterGetShapes( arbiter );
         var collTypeA = cp.shapeGetCollisionType( shapes[0] );
         var collTypeB = cp.shapeGetCollisionType( shapes[1] );
-        log( 'Collision Type A:' + collTypeA );
-        log( 'Collision Type B:' + collTypeB );
+        cc.log( 'Collision Type A:' + collTypeA );
+        cc.log( 'Collision Type B:' + collTypeB );
         return true;
     }
 
     collisionPre( arbiter, space ) {
-        log('collision pre');
+        cc.log('collision pre');
         return true;
     }
 
     collisionPost( arbiter, space ) {
-        log('collision post');
+        cc.log('collision post');
     }
 
     collisionSeparate( arbiter, space ) {
-        log('collision separate');
+        cc.log('collision separate');
     }
 
 }

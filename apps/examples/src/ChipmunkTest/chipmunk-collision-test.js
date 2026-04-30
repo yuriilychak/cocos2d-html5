@@ -33,7 +33,7 @@ export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
 
     constructor() {
         super();
-        // base(this);
+        // cc.base(this);
 
         this._title = 'Chipmunk Collision test';
         this._subtitle = 'Using Object Oriented API. ** Use this API **';
@@ -72,20 +72,20 @@ export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
         shape.setCollisionType( collision_type );
         this.space.addShape( shape );
 
-        var sprite = new PhysicsSprite(file);
+        var sprite = new cc.PhysicsSprite(file);
         sprite.setBody( body );
         return sprite;
     }
 
     onEnter() {
         super.onEnter();
-        // base(this, 'onEnter');
+        // cc.base(this, 'onEnter');
 
         this.initPhysics();
         this.scheduleUpdate();
 
-        var sprite1 = this.createPhysicsSprite( new Point(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
-        var sprite2 = this.createPhysicsSprite( new Point(winSize.width/2, 50), s_pathSister1, 2);
+        var sprite1 = this.createPhysicsSprite( new cc.Point(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
+        var sprite2 = this.createPhysicsSprite( new cc.Point(winSize.width/2, 50), s_pathSister1, 2);
 
         this.addChild( sprite1 );
         this.addChild( sprite2 );
@@ -110,43 +110,43 @@ export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
     collisionBegin( arbiter, space ) {
 
         if( ! this.messageDisplayed ) {
-            var label = new LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
+            var label = new cc.LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
             this.addChild( label );
             label.x = winSize.width/2;
             label.y = winSize.height/2 ;
             this.messageDisplayed = true;
         }
-        log('collision begin');
+        cc.log('collision begin');
         var shapes = arbiter.getShapes();
         var collTypeA = shapes[0].collision_type;
         var collTypeB = shapes[1].collision_type;
-        log( 'Collision Type A:' + collTypeA );
-        log( 'Collision Type B:' + collTypeB );
+        cc.log( 'Collision Type A:' + collTypeA );
+        cc.log( 'Collision Type B:' + collTypeB );
 
         //test addPostStepCallback
         space.addPostStepCallback(function(){
-            log("post step callback 1");
+            cc.log("post step callback 1");
         });
         space.addPostStepCallback(function(){
-            log("post step callback 2");
+            cc.log("post step callback 2");
         });
         return true;
     }
 
     collisionPre( arbiter, space ) {
-        log('collision pre');
-        log("arbiter e : " + arbiter.e);
-        log("arbiter u : " +arbiter.u);
-        log("arbiter surface_vr : " + arbiter.surface_vr.x + "," + arbiter.surface_vr.y);
+        cc.log('collision pre');
+        cc.log("arbiter e : " + arbiter.e);
+        cc.log("arbiter u : " +arbiter.u);
+        cc.log("arbiter surface_vr : " + arbiter.surface_vr.x + "," + arbiter.surface_vr.y);
         return true;
     }
 
     collisionPost( arbiter, space ) {
-        log('collision post');
+        cc.log('collision post');
     }
 
     collisionSeparate( arbiter, space ) {
-        log('collision separate');
+        cc.log('collision separate');
     }
 
     title(){

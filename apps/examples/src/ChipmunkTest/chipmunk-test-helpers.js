@@ -160,10 +160,10 @@ var LogoSmash = (function(){
             //
             // (... Except the spatial hash isn't implemented in JS)
             // but it is implemented in JSB :)
-            if(sys.isNative)
+            if(cc.sys.isNative)
                 space.useSpatialHash(2.0, 10000);
 
-            var batch = new SpriteBatchNode(s_hole_stencil_png);
+            var batch = new cc.SpriteBatchNode(s_hole_stencil_png);
             this.addChild(batch);
 
             var body;
@@ -183,7 +183,7 @@ var LogoSmash = (function(){
                     space.addBody(shape.getBody());
                     space.addShape(shape);
 
-                    sprite = new Sprite(batch.texture);
+                    sprite = new cc.Sprite(batch.texture);
                     sprite.setPosition(posx, posy);
                     batch.addChild(sprite);
 
@@ -201,7 +201,7 @@ var LogoSmash = (function(){
             shape.setLayers(NOT_GRABABLE_MASK);
             shape.ball = true;
 
-            sprite = new Sprite(batch.texture);
+            sprite = new cc.Sprite(batch.texture);
             sprite.setPosition(posx, posy);
             batch.addChild(sprite);
             shape.sprite = sprite;

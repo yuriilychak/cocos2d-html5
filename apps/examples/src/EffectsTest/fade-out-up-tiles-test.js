@@ -28,13 +28,13 @@ export class FadeOutUpTilesTest extends EffectsBaseLayer {
         return "FadeOutUpTilesTest";
     }
     code() {
-        return "a = fadeOutUpTiles(duration, gridSize)";
+        return "a = cc.fadeOutUpTiles(duration, gridSize)";
     }
     getEffect(duration) {
-        var action = fadeOutUpTiles( duration, new Size(16,12));
-        var delay = new DelayTime(0.5);
+        var action = cc.fadeOutUpTiles( duration, new cc.Size(16,12));
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 

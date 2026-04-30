@@ -34,8 +34,8 @@ export class DemoRain extends ParticleDemo {
 
         this._emitter.life = 4;
 
-        this._emitter.texture = textureCache.addImage(s_fire);
-        this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
+        this._emitter.texture = cc.textureCache.addImage(s_fire);
+        this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
 
         this.setEmitterPosition();
     }

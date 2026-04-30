@@ -26,21 +26,20 @@
  ****************************************************************************/
 
 cc.game.onStart = function(){
-    _initCcAliases();
-    view.enableRetina(true);
-    view.setOrientation(ORIENTATION_LANDSCAPE);
-    view.setDesignResolutionSize(800, 450, ResolutionPolicy.SHOW_ALL);
-    view.resizeWithBrowserSize(true);
+    cc.view.enableRetina(true);
+    cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
+    cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
+    cc.view.resizeWithBrowserSize(true);
 
-    loader.resPath = 'res';
+    cc.loader.resPath = 'res';
 
-    LoaderScene.preload(g_resources, function () {
+    cc.LoaderScene.preload(g_resources, function () {
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();
         }else{
-            var scene = new Scene();
+            var scene = new cc.Scene();
             scene.addChild(new TestController());
-            director.runScene(scene);
+            cc.director.runScene(scene);
         }
     }, this);
 };

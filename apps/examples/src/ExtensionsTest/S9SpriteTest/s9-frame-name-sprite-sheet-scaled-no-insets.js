@@ -44,23 +44,23 @@ export class S9FrameNameSpriteSheetScaledNoInsets extends S9SpriteTestDemo {
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        log("S9FrameNameSpriteSheetScaledNoInsets ...");
+        cc.log("S9FrameNameSpriteSheetScaledNoInsets ...");
 
-        var blocks_scaled = new Scale9Sprite('blocks9.png');
-        log("... created");
+        var blocks_scaled = new cc.Scale9Sprite('blocks9.png');
+        cc.log("... created");
 
         blocks_scaled.x = x;
         blocks_scaled.y = y;
-        log("... setPosition");
+        cc.log("... setPosition");
 
         blocks_scaled.width = 96 * 4;
         blocks_scaled.height = 96*2;
-        log("... setContentSize");
+        cc.log("... setContentSize");
 
         this.addChild(blocks_scaled);
-        log("this..addChild");
+        cc.log("this..addChild");
 
-        log("... S9FrameNameSpriteSheetScaledNoInsets done.");
+        cc.log("... S9FrameNameSpriteSheetScaledNoInsets done.");
     }
 
 }

@@ -29,7 +29,7 @@ var ccbjs = "";
 // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
 // so the respath will modify to res,
 if (!cc.sys.isNative) {
-    if (game.config && game.config[game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+    if (cc.game.config && cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
         ccbjs = "";
     } else {
         ccbjs = "";
@@ -398,7 +398,7 @@ var g_box2d = [
 var g_cocosdeshion = [
     "background.mp3",
     "effect2.mp3"
-    //"background.ogg",                        //one sound only, audio can auto select other format to load if the sound format isn't supported on some browser.
+    //"background.ogg",                        //one sound only, cc.audio can auto select other format to load if the sound format isn't supported on some browser.
     //"effect2.ogg"
 ];
 

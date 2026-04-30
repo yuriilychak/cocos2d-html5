@@ -41,7 +41,7 @@ export class ActionCallFunc3 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
 
-    var action = new CallFunc(
+    var action = new cc.CallFunc(
       function (nodeExecutingAction, value) {
         this.control1 = "Value is: " + value;
         this.log("Object:" + nodeExecutingAction + ". " + this.control1);
@@ -55,10 +55,10 @@ export class ActionCallFunc3 extends ActionsDemo {
   }
 
   title() {
-    return "CallFunc + parameters";
+    return "cc.CallFunc + parameters";
   }
   subtitle() {
-    return "CallFunc + parameters. Take a look at the console";
+    return "cc.CallFunc + parameters. Take a look at the console";
   }
   //
   // Automation

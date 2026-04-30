@@ -35,17 +35,17 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in sys.capabilities ) {
-            if(sys.isNative){
-                this.shader = new GLProgram(ccbjs + "Shaders/example_Outline_noMVP.vsh", ccbjs + "Shaders/example_Outline.fsh");
+        if( 'opengl' in cc.sys.capabilities ) {
+            if(cc.sys.isNative){
+                this.shader = new cc.GLProgram(ccbjs + "Shaders/example_Outline_noMVP.vsh", ccbjs + "Shaders/example_Outline.fsh");
                 this.shader.link();
                 this.shader.updateUniforms();
             }
             else{
-                this.shader = new GLProgram(ccbjs + "Shaders/example_Outline.vsh", ccbjs + "Shaders/example_Outline.fsh");
-                this.shader.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                this.shader.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
-                this.shader.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
+                this.shader = new cc.GLProgram(ccbjs + "Shaders/example_Outline.vsh", ccbjs + "Shaders/example_Outline.fsh");
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_COLOR, cc.VERTEX_ATTRIB_COLOR);
 
                 this.shader.link();
                 this.shader.updateUniforms();
@@ -54,15 +54,15 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
                 this.shader.setUniformLocationWith3f(this.shader.getUniformLocationForName('u_outlineColor'), 0 / 255, 255 / 255, 0 / 255);
             }
 
-            this.sprite = new Sprite('Images/grossini.png');
+            this.sprite = new cc.Sprite('Images/grossini.png');
             this.sprite.attr({
                 x: winSize.width / 2,
                 y: winSize.height / 2
             });
-            this.sprite.runAction(sequence(new RotateTo(1.0, 10), new RotateTo(1.0, -10)).repeatForever());
+            this.sprite.runAction(cc.sequence(new cc.RotateTo(1.0, 10), new cc.RotateTo(1.0, -10)).repeatForever());
 
-            if(sys.isNative){
-                var glProgram_state = GLProgramState.getOrCreateWithGLProgram(this.shader);
+            if(cc.sys.isNative){
+                var glProgram_state = cc.GLProgramState.getOrCreateWithGLProgram(this.shader);
                 glProgram_state.setUniformFloat("u_threshold", 1.75);
                 glProgram_state.setUniformVec3("u_outlineColor", {x: 0/255, y: 255/255, z: 0/255});
                 this.sprite.setGLProgramState(glProgram_state);
@@ -76,8 +76,8 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
         }
     }
     update(dt) {
-        if( 'opengl' in sys.capabilities ) {
-            if(sys.isNative){
+        if( 'opengl' in cc.sys.capabilities ) {
+            if(cc.sys.isNative){
                 this.sprite.getGLProgramState().setUniformFloat("u_radius", Math.abs(this.sprite.getRotation() / 500));
             }else{
                 this.shader.use();

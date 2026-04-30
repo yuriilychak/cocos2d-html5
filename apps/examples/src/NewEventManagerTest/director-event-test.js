@@ -49,30 +49,30 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
         super.onEnter();
         var s = director.getWinSize(), selfPointer = this;
 
-        this._label1 = new LabelTTF("Update: 0", "Arial", 20);
+        this._label1 = new cc.LabelTTF("Update: 0", "Arial", 20);
         this._label1.setPosition(80,s.height/2 + 60);
         this.addChild(this._label1);
 
-        this._label2 = new LabelTTF("Visit: 0", "Arial", 20);
+        this._label2 = new cc.LabelTTF("Visit: 0", "Arial", 20);
         this._label2.setPosition(80,s.height/2 + 20);
         this.addChild(this._label2);
 
-        this._label3 = new LabelTTF("Draw: 0", "Arial", 20);
+        this._label3 = new cc.LabelTTF("Draw: 0", "Arial", 20);
         this._label3.setPosition(80,s.height/2 - 20);
         this.addChild(this._label3);
 
-        this._label4 = new LabelTTF("Projection: 0", "Arial", 20);
+        this._label4 = new cc.LabelTTF("Projection: 0", "Arial", 20);
         this._label4.setPosition(80,s.height/2 - 60);
         this.addChild(this._label4);
 
-        var dispatcher = eventManager;
+        var dispatcher = cc.eventManager;
 
-        this._event1 = dispatcher.addCustomListener(Director.EVENT_AFTER_UPDATE, this.onEvent1.bind(this));
-        this._event2 = dispatcher.addCustomListener(Director.EVENT_AFTER_VISIT, this.onEvent2.bind(this));
-        this._event3 = dispatcher.addCustomListener(Director.EVENT_AFTER_DRAW, function(event) {
+        this._event1 = dispatcher.addCustomListener(cc.Director.EVENT_AFTER_UPDATE, this.onEvent1.bind(this));
+        this._event2 = dispatcher.addCustomListener(cc.Director.EVENT_AFTER_VISIT, this.onEvent2.bind(this));
+        this._event3 = dispatcher.addCustomListener(cc.Director.EVENT_AFTER_DRAW, function(event) {
             selfPointer._label3.setString("Draw: " + selfPointer._count3++);
         });
-        this._event4 = dispatcher.addCustomListener(Director.EVENT_PROJECTION_CHANGED, function(event) {
+        this._event4 = dispatcher.addCustomListener(cc.Director.EVENT_PROJECTION_CHANGED, function(event) {
             selfPointer._label4.setString("Projection: " + selfPointer._count4++);
         });
 
@@ -83,6 +83,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
         //----start8----onExit
         super.onExit();
 
+        var eventManager = cc.eventManager;
         eventManager.removeListener(this._event1);
         eventManager.removeListener(this._event2);
         eventManager.removeListener(this._event3);
@@ -94,7 +95,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
         //----start8----update
         this._time += dt;
         if(this._time > 0.5) {
-            director.setProjection(Director.PROJECTION_2D);
+            cc.director.setProjection(cc.Director.PROJECTION_2D);
             this._time = 0;
         }
         //----end8----

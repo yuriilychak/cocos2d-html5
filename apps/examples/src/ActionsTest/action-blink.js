@@ -33,7 +33,7 @@
 export class ActionBlink extends ActionsDemo {
     constructor() {
         super();
-        this._code = "a = new Blink( time, #_of_blinks );";
+        this._code = "a = new cc.Blink( time, #_of_blinks );";
         this.testDuration = 2.1;
     }
 
@@ -43,15 +43,15 @@ export class ActionBlink extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var action1 = new Blink(2, 10);
-    var action2 = new Blink(2, 5);
+    var action1 = new cc.Blink(2, 10);
+    var action2 = new cc.Blink(2, 5);
 
     this._tamara.runAction(action1);
     this._kathia.runAction(action2);
     //----end13----
   }
   title() {
-    return "blink";
+    return "cc.blink";
   }
   //
   // Automation

@@ -28,10 +28,10 @@ export class ShakyTiles3DTest extends EffectsBaseLayer {
         return "ShakyTiles3D";
     }
     code() {
-        return "a = shakyTiles3D(duration, gridSize, range, shakeZ)";
+        return "a = cc.shakyTiles3D(duration, gridSize, range, shakeZ)";
     }
     getEffect(duration) {
-        return shakyTiles3D( duration, new Size(16,12), 5, false);
+        return cc.shakyTiles3D( duration, new cc.Size(16,12), 5, false);
     }
 
 }

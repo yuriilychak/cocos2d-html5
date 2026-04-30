@@ -32,18 +32,18 @@ export class OpenURLTest extends SysTestBase {
     constructor(){
         super();
         
-        var label = new LabelTTF("Touch the screen to open\nthe cocos2d-x home page", "Arial", 22);
+        var label = new cc.LabelTTF("Touch the screen to open\nthe cocos2d-x home page", "Arial", 22);
         this.addChild(label);
-        label.setPosition(winSize.width/2, winSize.height/2);
+        label.setPosition(cc.winSize.width/2, cc.winSize.height/2);
 
-        eventManager.addListener({
-            event: EventListener.TOUCH_ONE_BY_ONE,
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function(){
                 return true;
             },
             onTouchEnded: function(){
-                sys.openURL("http://www.cocos2d-x.org/");
+                cc.sys.openURL("http://www.cocos2d-x.org/");
             }
         }, this);
 

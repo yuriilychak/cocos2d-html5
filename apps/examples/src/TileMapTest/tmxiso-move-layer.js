@@ -33,7 +33,7 @@
 export class TMXIsoMoveLayer extends TileDemo {
     constructor() {
         super();
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test-movelayer.tmx");
+        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-movelayer.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
         map.x = -700;
         map.y = -50;

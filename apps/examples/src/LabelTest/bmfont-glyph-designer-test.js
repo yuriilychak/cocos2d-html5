@@ -38,11 +38,11 @@ export class BMFontGlyphDesignerTest extends AtlasDemo {
         this.pixel = {"0": 240, "1": 201, "2": 108, "3": 255};
         var s = director.getWinSize();
 
-        var layer = new LayerColor(new Color(128, 128, 128, 255));
+        var layer = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
         this.addChild(layer, -10);
 
-        // LabelBMFont
-        var label1 = new LabelBMFont("Testing Glyph Designer", s_resprefix + "fonts/futura-48.fnt");
+        // cc.LabelBMFont
+        var label1 = new cc.LabelBMFont("Testing Glyph Designer", s_resprefix + "fonts/futura-48.fnt");
         this.addChild(label1);
         label1.x = s.width / 2;
         label1.y = s.height / 2;

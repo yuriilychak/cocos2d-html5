@@ -34,21 +34,21 @@ export class DemoParticleFromFile extends ParticleDemo {
     }
     onEnter() {
         super.onEnter();
-        this.setColor(new Color(0, 0, 0));
+        this.setColor(new cc.Color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
 
-        this._emitter = new ParticleSystem(s_resprefix + "Particles/" + this._title + ".plist");
+        this._emitter = new cc.ParticleSystem(s_resprefix + "Particles/" + this._title + ".plist");
         // test create from a object
         // var plistData = jsb.fileUtils.getValueMapFromFile(s_resprefix + "Particles/" + this._title + ".plist");
-        // this._emitter = new ParticleSystem(plistData);
+        // this._emitter = new cc.ParticleSystem(plistData);
 
         this.addChild(this._emitter, 10);
 
         if (this._title == "Flower") {
-            this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
+            this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
         }//else if( this._title == "Upsidedown"){
-        //   this._emitter.setDrawMode(ParticleSystem.TEXTURE_MODE);
+        //   this._emitter.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
         //}
 
         this.setEmitterPosition();

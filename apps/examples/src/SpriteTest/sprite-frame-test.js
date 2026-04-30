@@ -49,19 +49,19 @@ export class SpriteFrameTest extends SpriteTestDemo {
         super.onEnter();
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-        //     spriteFrameCache.removeUnusedSpriteFrames);
-        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
-        spriteFrameCache.addSpriteFrames(s_grossini_bluePlist, s_grossini_blue);
+        //     cc.spriteFrameCache.removeUnusedSpriteFrames);
+        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        cc.spriteFrameCache.addSpriteFrames(s_grossini_bluePlist, s_grossini_blue);
 
         //
         // Animation using Sprite BatchNode
         //
-        this._sprite1 = new Sprite("#grossini_dance_01.png");
+        this._sprite1 = new cc.Sprite("#grossini_dance_01.png");
         this._sprite1.x = winSize.width / 2 - 80;
         this._sprite1.y = winSize.height / 2;
 
-        var spritebatch = new SpriteBatchNode(s_grossini);
+        var spritebatch = new cc.SpriteBatchNode(s_grossini);
         spritebatch.addChild(this._sprite1);
         this.addChild(spritebatch);
 
@@ -70,12 +70,12 @@ export class SpriteFrameTest extends SpriteTestDemo {
         var frame;
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
-        var animation = new Animation(animFrames, 0.3);
-        this._sprite1.runAction(new Animate(animation).repeatForever());
+        var animation = new cc.Animation(animFrames, 0.3);
+        this._sprite1.runAction(new cc.Animate(animation).repeatForever());
 
         // to test issue #732, uncomment the following line
         this._sprite1.flippedX = false;
@@ -84,7 +84,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
         //
         // Animation using standard Sprite
         //
-        this._sprite2 = new Sprite("#grossini_dance_01.png");
+        this._sprite2 = new cc.Sprite("#grossini_dance_01.png");
         this._sprite2.x = winSize.width / 2 + 80;
         this._sprite2.y = winSize.height / 2;
         this.addChild(this._sprite2);
@@ -92,21 +92,21 @@ export class SpriteFrameTest extends SpriteTestDemo {
         var moreFrames = [];
         for (i = 1; i < 15; i++) {
             str = "grossini_dance_gray_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             moreFrames.push(frame);
         }
 
         for (i = 1; i < 5; i++) {
             str = "grossini_blue_0" + i + ".png";
-            frame = spriteFrameCache.getSpriteFrame(str);
+            frame = cc.spriteFrameCache.getSpriteFrame(str);
             moreFrames.push(frame);
         }
 
         // append frames from another batch
         moreFrames = moreFrames.concat(animFrames);
-        var animMixed = new Animation(moreFrames, 0.3);
+        var animMixed = new cc.Animation(moreFrames, 0.3);
 
-        this._sprite2.runAction(new Animate(animMixed).repeatForever());
+        this._sprite2.runAction(new cc.Animate(animMixed).repeatForever());
 
         // to test issue #732, uncomment the following line
         this._sprite2.flippedX = false;
@@ -119,9 +119,9 @@ export class SpriteFrameTest extends SpriteTestDemo {
     onExit() {
         //----start2----onExit
         super.onExit();
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
-        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_bluePlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_bluePlist);
         //----end2----
     }
     onStartIn05Secs() {
