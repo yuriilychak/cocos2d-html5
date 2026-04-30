@@ -296,4 +296,3 @@ export class Timeline extends NewClass {
   }
 };
 
-ccs.Timeline = Timeline;

@@ -427,4 +427,3 @@ export class Tween extends ProcessBase {
 
 };
 
-ccs.Tween = Tween;

@@ -25,8 +25,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var audioEngine = cc.audioEngine;
-
 var MUSIC_FILE = cc.sys.os == cc.sys.OS_WINRT ? "background.wav" : "background.mp3";
 var EFFECT_FILE = cc.sys.os == cc.sys.OS_WINRT ? "effect1.wav" : "effect2.mp3";
 
@@ -225,7 +223,6 @@ var CocosDenshionTest = class CocosDenshionTest extends cc.LayerGradient {
 var CocosDenshionTestScene = class CocosDenshionTestScene extends TestScene {
     runThisTest() {
 
-        audioEngine = cc.audioEngine;
         var layer = new CocosDenshionTest();
         this.addChild(layer);
         director.runScene(this);

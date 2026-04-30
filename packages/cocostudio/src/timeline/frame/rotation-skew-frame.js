@@ -75,4 +75,3 @@ export class RotationSkewFrame extends SkewFrame {
   }
 };
 
-ccs.RotationSkewFrame = RotationSkewFrame;

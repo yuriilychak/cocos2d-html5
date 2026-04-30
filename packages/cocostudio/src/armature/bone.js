@@ -688,8 +688,7 @@ export class Bone extends Node {
   }
 };
 
-(function () {
-  class BoneCanvasRenderCmd extends Node.CanvasRenderCmd {
+class BoneCanvasRenderCmd extends Node.CanvasRenderCmd {
     constructor(renderable) {
       super(renderable);
       this._needDraw = false;
@@ -741,11 +740,8 @@ export class Bone extends Node {
       }
     }
   };
-})();
 
-(function () {
-  if (!Node.WebGLRenderCmd) return;
-  class BoneWebGLRenderCmd extends Node.WebGLRenderCmd {
+class BoneWebGLRenderCmd extends Node.WebGLRenderCmd {
     constructor(renderable) {
       super(renderable);
       this._needDraw = false;
@@ -797,8 +793,6 @@ export class Bone extends Node {
       }
     }
   };
-})();
 
 Bone.CanvasRenderCmd = BoneCanvasRenderCmd;
 Bone.WebGLRenderCmd = BoneWebGLRenderCmd;
-ccs.Bone = Bone;

@@ -73,4 +73,3 @@ export class AlphaFrame extends Frame {
   }
 };
 
-ccs.AlphaFrame = AlphaFrame;

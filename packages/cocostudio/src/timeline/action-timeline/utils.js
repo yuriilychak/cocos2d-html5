@@ -29,4 +29,3 @@ export function AnimationInfo (name, start, end) {
   this.endIndex = end;
 }
 
-ccs.AnimationInfo = AnimationInfo;

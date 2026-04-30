@@ -92,4 +92,3 @@ export class FrameData extends BaseData {
   }
 };
 
-ccs.FrameData = FrameData;

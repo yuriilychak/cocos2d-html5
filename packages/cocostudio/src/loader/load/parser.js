@@ -52,4 +52,3 @@ export class _parser extends NewClass {
     }
 };
 
-ccs._parser = _parser;

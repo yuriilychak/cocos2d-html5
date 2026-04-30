@@ -69,4 +69,3 @@ export class ZOrderFrame extends Frame {
   }
 };
 
-ccs.ZOrderFrame = ZOrderFrame;

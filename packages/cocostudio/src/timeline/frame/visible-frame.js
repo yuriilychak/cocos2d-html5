@@ -75,4 +75,3 @@ export class VisibleFrame extends Frame {
   }
 };
 
-ccs.VisibleFrame = VisibleFrame;

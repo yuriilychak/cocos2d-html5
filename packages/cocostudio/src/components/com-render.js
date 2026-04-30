@@ -76,4 +76,3 @@ export class ComRender extends Component {
   }
 };
 
-ccs.ComRender = ComRender;

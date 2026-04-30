@@ -4,44 +4,44 @@
  * @constant
  * @type {number}
  */
-export const FRAME_TYPE_MOVE = ccs.FRAME_TYPE_MOVE = 0;
+export const FRAME_TYPE_MOVE = 0;
 /**
  * The flag scale action type of Cocostudio frame.
  * @constant
  * @type {number}
  */
-export const FRAME_TYPE_SCALE = ccs.FRAME_TYPE_SCALE = 1;
+export const FRAME_TYPE_SCALE = 1;
 /**
  * The flag rotate action type of Cocostudio frame.
  * @constant
  * @type {number}
  */
-export const FRAME_TYPE_ROTATE = ccs.FRAME_TYPE_ROTATE = 2;
+export const FRAME_TYPE_ROTATE = 2;
 /**
  * The flag tint action type of Cocostudio frame.
  * @constant
  * @type {number}
  */
-export const FRAME_TYPE_TINT = ccs.FRAME_TYPE_TINT = 3;
+export const FRAME_TYPE_TINT = 3;
 /**
  * The flag fade action type of Cocostudio frame.
  * @constant
  * @type {number}
  */
-export const FRAME_TYPE_FADE = ccs.FRAME_TYPE_FADE = 4;
+export const FRAME_TYPE_FADE = 4;
 /**
  * The max flag of Cocostudio frame.
  * @constant
  * @type {number}
  */
-export const FRAME_TYPE_MAX = ccs.FRAME_TYPE_MAX = 5;
+export const FRAME_TYPE_MAX = 5;
 
 /**
  * The ease type of Cocostudio frame.
  * @constant
  * @type {Object}
  */
-export const FrameEaseType = ccs.FrameEaseType = {
+export const FrameEaseType = {
   CUSTOM: -1,
 
   LINEAR: 0,

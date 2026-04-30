@@ -39,4 +39,3 @@ export class ParticleDisplayData extends DisplayData {
   }
 };
 
-ccs.ParticleDisplayData = ParticleDisplayData;

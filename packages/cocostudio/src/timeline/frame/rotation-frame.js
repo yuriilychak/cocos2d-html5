@@ -90,4 +90,3 @@ export class RotationFrame extends Frame {
   }
 };
 
-ccs.RotationFrame = RotationFrame;

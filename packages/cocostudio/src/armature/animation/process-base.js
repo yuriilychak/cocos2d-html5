@@ -33,43 +33,43 @@ import { NewClass } from "@aspect/core";
 
 import { fmodf } from "../utils/util-math.js";
 import { TweenType } from "./tween-function/constants.js";
-export const ANIMATION_TYPE_SINGLE_FRAME = ccs.ANIMATION_TYPE_SINGLE_FRAME = -4;
+export const ANIMATION_TYPE_SINGLE_FRAME = -4;
 /**
  * The animation isn't loop
  * @constant
  * @type {number}
  */
-export const ANIMATION_TYPE_NO_LOOP = ccs.ANIMATION_TYPE_NO_LOOP = -3;
+export const ANIMATION_TYPE_NO_LOOP = -3;
 /**
  * The animation to loop from front
  * @constant
  * @type {number}
  */
-export const ANIMATION_TYPE_TO_LOOP_FRONT = ccs.ANIMATION_TYPE_TO_LOOP_FRONT = -2;
+export const ANIMATION_TYPE_TO_LOOP_FRONT = -2;
 /**
  * The animation to loop from back
  * @constant
  * @type {number}
  */
-export const ANIMATION_TYPE_TO_LOOP_BACK = ccs.ANIMATION_TYPE_TO_LOOP_BACK = -1;
+export const ANIMATION_TYPE_TO_LOOP_BACK = -1;
 /**
  * The animation loop from front
  * @constant
  * @type {number}
  */
-export const ANIMATION_TYPE_LOOP_FRONT = ccs.ANIMATION_TYPE_LOOP_FRONT = 0;
+export const ANIMATION_TYPE_LOOP_FRONT = 0;
 /**
  * The animation loop from back
  * @constant
  * @type {number}
  */
-export const ANIMATION_TYPE_LOOP_BACK = ccs.ANIMATION_TYPE_LOOP_BACK = 1;
+export const ANIMATION_TYPE_LOOP_BACK = 1;
 /**
  * The animation max
  * @constant
  * @type {number}
  */
-export const ANIMATION_TYPE_MAX = ccs.ANIMATION_TYPE_MAX = 2;
+export const ANIMATION_TYPE_MAX = 2;
 
 /**
  * The Base Process class for Cocostudio.
@@ -340,4 +340,3 @@ export class ProcessBase extends NewClass {
 
 };
 
-ccs.ProcessBase = ProcessBase;

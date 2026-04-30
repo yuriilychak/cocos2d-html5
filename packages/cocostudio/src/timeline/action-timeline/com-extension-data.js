@@ -54,4 +54,3 @@ export class ComExtensionData extends Component {
   }
 }
 
-ccs.ComExtensionData = ComExtensionData;

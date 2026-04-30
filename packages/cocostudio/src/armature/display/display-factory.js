@@ -41,7 +41,7 @@ import { ParticleDisplayData } from "../utils/datas/particle-display-data.js";
 import { SpriteDisplayData } from "../utils/datas/sprite-display-data.js";
 import { TransformHelp } from "../utils/transform-help.js";
 import { Skin } from "./skin.js";
-export const displayFactory = ccs.displayFactory = {
+export const displayFactory = {
     addDisplay: function (bone, decoDisplay, displayData) {
         switch (displayData.displayType) {
             case DISPLAY_TYPE_SPRITE:

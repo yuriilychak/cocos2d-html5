@@ -154,4 +154,3 @@ export class BaseData extends NewClass {
   }
 };
 
-ccs.BaseData = BaseData;

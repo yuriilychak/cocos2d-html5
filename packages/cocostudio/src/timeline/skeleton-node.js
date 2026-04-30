@@ -261,5 +261,4 @@ import { BoneNode } from "./bone-node.js";
     SkeletonNode.create = function () {
         return new SkeletonNode;
     };
-ccs.SkeletonNode = SkeletonNode;
 export { SkeletonNode };

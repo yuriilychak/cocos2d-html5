@@ -466,4 +466,3 @@ export class DisplayManager extends NewClass {
   }
 };
 
-ccs.DisplayManager = DisplayManager;

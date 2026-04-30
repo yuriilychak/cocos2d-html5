@@ -128,4 +128,3 @@ export class PositionFrame extends Frame {
   }
 };
 
-ccs.PositionFrame = PositionFrame;

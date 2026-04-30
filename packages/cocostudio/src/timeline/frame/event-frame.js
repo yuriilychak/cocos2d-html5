@@ -75,4 +75,3 @@ export class EventFrame extends Frame {
   }
 };
 
-ccs.EventFrame = EventFrame;

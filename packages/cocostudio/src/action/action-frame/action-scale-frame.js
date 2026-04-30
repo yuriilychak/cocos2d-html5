@@ -60,4 +60,3 @@ export class ActionScaleFrame extends ActionFrame {
   }
 };
 
-ccs.ActionScaleFrame = ActionScaleFrame;

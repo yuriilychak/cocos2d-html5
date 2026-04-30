@@ -65,4 +65,3 @@ export class BaseTriggerAction extends NewClass {
     }
 }
 
-ccs.BaseTriggerAction = BaseTriggerAction;

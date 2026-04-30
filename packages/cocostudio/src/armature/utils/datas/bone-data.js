@@ -77,4 +77,3 @@ export class BoneData extends BaseData {
   }
 };
 
-ccs.BoneData = BoneData;

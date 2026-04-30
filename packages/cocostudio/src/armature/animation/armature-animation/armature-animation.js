@@ -542,4 +542,3 @@ export class ArmatureAnimation extends ProcessBase {
 
 };
 
-ccs.ArmatureAnimation = ArmatureAnimation;

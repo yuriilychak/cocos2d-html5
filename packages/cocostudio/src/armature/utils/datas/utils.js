@@ -179,8 +179,3 @@ TextureData.prototype.getContourData = function (index) {
   return this.contourDataList[index];
 };
 
-ccs.MovementData = MovementData;
-ccs.AnimationData = AnimationData;
-ccs.ContourVertex2 = ContourVertex2;
-ccs.ContourData = ContourData;
-ccs.TextureData = TextureData;

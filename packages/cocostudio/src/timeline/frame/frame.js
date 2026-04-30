@@ -186,8 +186,6 @@ export class Frame extends NewClass {
   }
 };
 
-ccs.Frame = Frame;
-
 Frame.tweenToMap = {
   "-1": function (time, easingParam) {
     if (easingParam) {

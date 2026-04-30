@@ -52,4 +52,3 @@ export class BlendFuncFrame extends Frame {
   }
 };
 
-ccs.BlendFuncFrame = BlendFuncFrame;

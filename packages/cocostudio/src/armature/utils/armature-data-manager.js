@@ -37,13 +37,11 @@ export function RelativeData() {
     this.animations = [];
     this.textures = [];
 }
-ccs.RelativeData = RelativeData;
-
 /**
  * armatureDataManager is a singleton object which format and manage armature configuration and armature animation
  * @name armatureDataManager
  */
-export const armatureDataManager = ccs.armatureDataManager =  {
+export const armatureDataManager = {
     _animationDatas: {},
     _armatureDatas: {},
     _textureDatas: {},

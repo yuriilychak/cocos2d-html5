@@ -31,7 +31,7 @@ import { ArmatureMovementDispatcher } from "./armature-movement-dispatcher.js";
  * The trigger manager of Cocostudio
  * @name triggerManager
  */
-export const triggerManager = ccs.triggerManager = {
+export const triggerManager = {
     _eventTriggers: {},
     _triggerObjs: {},
     _movementDispatches: [],

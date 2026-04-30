@@ -113,4 +113,3 @@ export class SkewFrame extends Frame {
   }
 };
 
-ccs.SkewFrame = SkewFrame;

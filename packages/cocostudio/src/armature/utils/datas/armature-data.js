@@ -81,4 +81,3 @@ export class ArmatureData extends NewClass {
   }
 };
 
-ccs.ArmatureData = ArmatureData;

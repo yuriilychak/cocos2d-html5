@@ -16,4 +16,3 @@ export class TInfo extends NewClass {
     }
 };
 
-ccs.TInfo = TInfo;

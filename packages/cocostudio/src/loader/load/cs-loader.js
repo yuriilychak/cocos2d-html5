@@ -1,6 +1,6 @@
 import { _ccsLoad } from "./utils.js";
 
-export const csLoader = ccs.csLoader = {
+export const csLoader = {
 
     //@deprecated This function will be deprecated sooner or later please use load
     /**

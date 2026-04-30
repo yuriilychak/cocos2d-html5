@@ -106,4 +106,3 @@ export class ColorFrame extends Frame {
   }
 };
 
-ccs.ColorFrame = ColorFrame;

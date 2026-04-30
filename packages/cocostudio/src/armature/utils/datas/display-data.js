@@ -66,4 +66,3 @@ export class DisplayData extends NewClass {
   }
 };
 
-ccs.DisplayData = DisplayData;

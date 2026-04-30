@@ -65,4 +65,3 @@ export class ComController extends Component {
     }
 };
 
-ccs.ComController = ComController;

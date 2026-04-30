@@ -23,4 +23,4 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-export const PT_RATIO = ccs.PT_RATIO = 32;
+export const PT_RATIO = 32;

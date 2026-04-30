@@ -1,6 +1,6 @@
 import { Director, Loader, Node, Path, log, warn } from "@aspect/core";
 
-export const _ccsLoad = ccs._load = (function () {
+export const _ccsLoad = (function () {
 
     /**
      * load file
@@ -164,5 +164,3 @@ Loader.getInstance().register(["json"], {
     }
 });
 
-ccs.load = load;
-ccs.loadWithVisibleSize = loadWithVisibleSize;

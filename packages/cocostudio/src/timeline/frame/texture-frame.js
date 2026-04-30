@@ -91,4 +91,3 @@ export class TextureFrame extends Frame {
   }
 };
 
-ccs.TextureFrame = TextureFrame;

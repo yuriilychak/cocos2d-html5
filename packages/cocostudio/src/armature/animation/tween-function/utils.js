@@ -2,8 +2,6 @@ import { NewClass } from "@aspect/core";
 import { TweenType, DOUBLE_PI, HALF_PI, M_PI } from "./constants.js";
 
 export class TweenFunction extends NewClass {}
-ccs.TweenFunction = TweenFunction;
-
 TweenFunction.tweenTo = function (time, type, easingParam) {
     var delta = 0;
 

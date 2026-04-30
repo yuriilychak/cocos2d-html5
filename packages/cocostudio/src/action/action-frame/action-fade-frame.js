@@ -41,4 +41,3 @@ export class ActionFadeFrame extends ActionFrame {
   }
 };
 
-ccs.ActionFadeFrame = ActionFadeFrame;

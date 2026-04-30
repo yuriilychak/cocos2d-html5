@@ -51,4 +51,3 @@ export class ActionRotationFrame extends ActionFrame {
   }
 };
 
-ccs.ActionRotationFrame = ActionRotationFrame;

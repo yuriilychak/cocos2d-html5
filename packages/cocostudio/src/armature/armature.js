@@ -589,4 +589,3 @@ export class Armature extends Node {
   }
 };
 
-ccs.Armature = Armature;

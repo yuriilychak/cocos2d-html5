@@ -196,4 +196,3 @@ export class ComAttribute extends Component {
     }
 };
 
-ccs.ComAttribute = ComAttribute;

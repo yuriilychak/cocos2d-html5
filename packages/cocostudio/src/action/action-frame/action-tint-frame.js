@@ -48,4 +48,3 @@ export class ActionTintFrame extends ActionFrame {
   }
 };
 
-ccs.ActionTintFrame = ActionTintFrame;

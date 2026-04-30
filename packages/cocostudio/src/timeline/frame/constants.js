@@ -26,7 +26,7 @@
  * Static param
  * @namespace
  */
-export const InnerActionType = ccs.InnerActionType = {
+export const InnerActionType = {
   LoopAction: 0,
   NoLoopAction: 1,
   SingleFrame: 2

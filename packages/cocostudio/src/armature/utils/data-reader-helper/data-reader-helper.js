@@ -56,13 +56,11 @@ export function DataInfo () {
     this.flashToolVersion = 0;
     this.cocoStudioVersion = 0
 }
-ccs.DataInfo = DataInfo;
-
 /**
  * dataReaderHelper is a singleton object for reading CocoStudio data
  * @name dataReaderHelper
  */
-export const dataReaderHelper = ccs.dataReaderHelper = {
+export const dataReaderHelper = {
     ConfigType: {
         DragonBone_XML: 0,
         CocoStudio_JSON: 1,

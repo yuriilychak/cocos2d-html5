@@ -28,4 +28,3 @@ export class AnimationEvent extends NewClass {
 
 };
 
-ccs.AnimationEvent = AnimationEvent;

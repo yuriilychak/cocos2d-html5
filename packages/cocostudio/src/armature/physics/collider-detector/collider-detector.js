@@ -260,4 +260,3 @@ export class ColliderDetector extends NewClass {
 
 }
 
-ccs.ColliderDetector = ColliderDetector;

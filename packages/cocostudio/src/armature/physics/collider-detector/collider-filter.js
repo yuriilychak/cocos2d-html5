@@ -52,4 +52,3 @@ export class ColliderFilter extends NewClass {
 
 }
 
-ccs.ColliderFilter = ColliderFilter;

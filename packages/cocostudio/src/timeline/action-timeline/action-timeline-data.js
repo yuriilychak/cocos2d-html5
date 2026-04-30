@@ -61,4 +61,3 @@ export class ActionTimelineData extends NewClass {
   }
 }
 
-ccs.ActionTimelineData = ActionTimelineData;

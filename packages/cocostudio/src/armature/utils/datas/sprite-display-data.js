@@ -52,4 +52,3 @@ export class SpriteDisplayData extends DisplayData {
   }
 };
 
-ccs.SpriteDisplayData = SpriteDisplayData;

@@ -156,4 +156,3 @@ export class InnerActionFrame extends Frame {
   }
 };
 
-ccs.InnerActionFrame = InnerActionFrame;

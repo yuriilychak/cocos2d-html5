@@ -428,4 +428,3 @@ export class ActionTimeline extends Action {
   }
 }
 
-ccs.ActionTimeline = ActionTimeline;

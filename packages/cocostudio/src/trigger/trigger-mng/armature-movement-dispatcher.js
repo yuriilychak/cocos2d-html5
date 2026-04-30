@@ -54,4 +54,3 @@ export class ArmatureMovementDispatcher extends NewClass {
         }
     }
 };
-ccs.ArmatureMovementDispatcher = ArmatureMovementDispatcher;

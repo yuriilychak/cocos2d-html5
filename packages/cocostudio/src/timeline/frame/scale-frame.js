@@ -125,4 +125,3 @@ export class ScaleFrame extends Frame {
   }
 };
 
-ccs.ScaleFrame = ScaleFrame;

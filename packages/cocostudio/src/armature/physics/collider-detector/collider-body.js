@@ -112,4 +112,3 @@ export class ColliderBody extends NewClass {
 
 }
 
-ccs.ColliderBody = ColliderBody;

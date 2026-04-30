@@ -419,4 +419,3 @@ export class ActionNode extends NewClass {
   }
 };
 
-ccs.ActionNode = ActionNode;

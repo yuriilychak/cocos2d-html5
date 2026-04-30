@@ -160,4 +160,3 @@ export class ActionFrame extends NewClass {
   }
 };
 
-ccs.ActionFrame = ActionFrame;

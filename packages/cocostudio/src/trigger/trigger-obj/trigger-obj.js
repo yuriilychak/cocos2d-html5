@@ -174,4 +174,3 @@ export class TriggerObj extends NewClass {
     }
 }
 
-ccs.TriggerObj = TriggerObj;

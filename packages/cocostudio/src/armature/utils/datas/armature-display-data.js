@@ -40,4 +40,3 @@ export class ArmatureDisplayData extends DisplayData {
   }
 };
 
-ccs.ArmatureDisplayData = ArmatureDisplayData;

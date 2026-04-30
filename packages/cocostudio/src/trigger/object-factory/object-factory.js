@@ -29,7 +29,7 @@ import { isFunction } from '@aspect/core';
  * The singleton object that creating object factory, it creates object with class name, and manager the type mapping.
  * @name objectFactory
  */
-export const objectFactory = ccs.objectFactory = {
+export const objectFactory = {
     _typeMap: {},
 
     /**

@@ -177,4 +177,3 @@ export class Skin extends Sprite {
   }
 };
 
-ccs.Skin = Skin;

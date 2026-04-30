@@ -31,5 +31,3 @@ export function FrameEvent() {
     this.currentFrameIndex = 0;
 };
 
-ccs.MovementEvent = MovementEvent;
-ccs.FrameEvent = FrameEvent;

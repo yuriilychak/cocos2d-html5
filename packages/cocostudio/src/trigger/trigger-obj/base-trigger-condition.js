@@ -67,4 +67,3 @@ export class BaseTriggerCondition extends NewClass {
     }
 }
 
-ccs.BaseTriggerCondition = BaseTriggerCondition;

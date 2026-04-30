@@ -51,6 +51,3 @@ export function sendEvent (event) {
 export function registerTriggerClass (className, func) {
     new TInfo(className, func);
 };
-ccs.sendEvent = sendEvent;
-
-ccs.registerTriggerClass = registerTriggerClass;

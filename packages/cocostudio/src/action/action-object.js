@@ -259,4 +259,3 @@ export class ActionObject extends NewClass {
   }
 };
 
-ccs.ActionObject = ActionObject;

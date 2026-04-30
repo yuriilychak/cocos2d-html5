@@ -49,4 +49,3 @@ export class ActionMoveFrame extends ActionFrame {
   }
 };
 
-ccs.ActionMoveFrame = ActionMoveFrame;

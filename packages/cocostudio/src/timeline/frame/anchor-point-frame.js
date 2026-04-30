@@ -75,4 +75,3 @@ export class AnchorPointFrame extends Frame {
   }
 };
 
-ccs.AnchorPointFrame = AnchorPointFrame;

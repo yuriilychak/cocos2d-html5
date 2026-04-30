@@ -31,8 +31,6 @@
 import { AffineTransform, NewClass, Point } from "@aspect/core";
 
 export class TransformHelp extends NewClass {}
-ccs.TransformHelp = TransformHelp;
-
 TransformHelp.helpMatrix1 = AffineTransform.make(1, 0, 0, 1, 0, 0);
 TransformHelp.helpMatrix2 = AffineTransform.make(1, 0, 0, 1, 0, 0);
 TransformHelp.helpPoint1 = new Point(0, 0);

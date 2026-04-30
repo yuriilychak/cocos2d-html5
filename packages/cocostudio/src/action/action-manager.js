@@ -30,7 +30,7 @@ import { ActionObject } from "./action-object.js";
  * Base singleton object for ActionManager.
  * @name actionManager
  */
-export const actionManager = ccs.actionManager = {
+export const actionManager = {
   _actionDic: {},
 
   /**

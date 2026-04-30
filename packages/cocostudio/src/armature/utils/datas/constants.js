@@ -29,98 +29,98 @@
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_NORMAL = ccs.BLEND_TYPE_NORMAL = 0;
+export const BLEND_TYPE_NORMAL = 0;
 
 /**
  * The value of the blend type of layer
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_LAYER = ccs.BLEND_TYPE_LAYER = 1;
+export const BLEND_TYPE_LAYER = 1;
 
 /**
  * The value of the blend type of darken
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_DARKEN = ccs.BLEND_TYPE_DARKEN = 2;
+export const BLEND_TYPE_DARKEN = 2;
 
 /**
  * The value of the blend type of multiply
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_MULTIPLY = ccs.BLEND_TYPE_MULTIPLY = 3;
+export const BLEND_TYPE_MULTIPLY = 3;
 
 /**
  * The value of the blend type of lighten
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_LIGHTEN = ccs.BLEND_TYPE_LIGHTEN = 4;
+export const BLEND_TYPE_LIGHTEN = 4;
 
 /**
  * The value of the blend type of screen
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_SCREEN = ccs.BLEND_TYPE_SCREEN = 5;
+export const BLEND_TYPE_SCREEN = 5;
 
 /**
  * The value of the blend type of overlay
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_OVERLAY = ccs.BLEND_TYPE_OVERLAY = 6;
+export const BLEND_TYPE_OVERLAY = 6;
 
 /**
  * The value of the blend type of highlight
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_HIGHLIGHT = ccs.BLEND_TYPE_HIGHLIGHT = 7;
+export const BLEND_TYPE_HIGHLIGHT = 7;
 
 /**
  * The value of the blend type of add
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_ADD = ccs.BLEND_TYPE_ADD = 8;
+export const BLEND_TYPE_ADD = 8;
 
 /**
  * The value of the blend type of subtract
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_SUBTRACT = ccs.BLEND_TYPE_SUBTRACT = 9;
+export const BLEND_TYPE_SUBTRACT = 9;
 
 /**
  * The value of the blend type of difference
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_DIFFERENCE = ccs.BLEND_TYPE_DIFFERENCE = 10;
+export const BLEND_TYPE_DIFFERENCE = 10;
 
 /**
  * The value of the blend type of invert
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_INVERT = ccs.BLEND_TYPE_INVERT = 11;
+export const BLEND_TYPE_INVERT = 11;
 
 /**
  * The value of the blend type of alpha
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_ALPHA = ccs.BLEND_TYPE_ALPHA = 12;
+export const BLEND_TYPE_ALPHA = 12;
 
 /**
  * The value of the blend type of erase
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_ERASE = ccs.BLEND_TYPE_ERASE = 13;
+export const BLEND_TYPE_ERASE = 13;
 
 //DisplayType
 /**
@@ -128,17 +128,17 @@ export const BLEND_TYPE_ERASE = ccs.BLEND_TYPE_ERASE = 13;
  * @constant
  * @type Number
  */
-export const DISPLAY_TYPE_SPRITE = ccs.DISPLAY_TYPE_SPRITE = 0;
+export const DISPLAY_TYPE_SPRITE = 0;
 /**
  * The Armature flag of display render type.
  * @constant
  * @type Number
  */
-export const DISPLAY_TYPE_ARMATURE = ccs.DISPLAY_TYPE_ARMATURE = 1;
+export const DISPLAY_TYPE_ARMATURE = 1;
 /**
  * The Particle flag of display render type.
  * @constant
  * @type Number
  */
-export const DISPLAY_TYPE_PARTICLE = ccs.DISPLAY_TYPE_PARTICLE = 2;
-export const DISPLAY_TYPE_MAX = ccs.DISPLAY_TYPE_MAX = 3;
+export const DISPLAY_TYPE_PARTICLE = 2;
+export const DISPLAY_TYPE_MAX = 3;

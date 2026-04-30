@@ -2,7 +2,7 @@ import { _ccsLoad } from "./utils.js";
 
 //Forward compatible interface
 
-export const actionTimelineCache = ccs.actionTimelineCache = {
+export const actionTimelineCache = {
 
     //@deprecated This function will be deprecated sooner or later please use load
     /**

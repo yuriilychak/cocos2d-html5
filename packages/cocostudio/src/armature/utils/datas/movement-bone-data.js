@@ -72,4 +72,3 @@ export class MovementBoneData extends NewClass {
   }
 };
 
-ccs.MovementBoneData = MovementBoneData;

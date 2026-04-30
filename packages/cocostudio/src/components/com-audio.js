@@ -273,4 +273,3 @@ export class ComAudio extends Component {
     }
 };
 
-ccs.ComAudio = ComAudio;
