@@ -700,7 +700,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
 
 };
 
-var unScheduleAndRepeatTest = class unScheduleAndRepeatTest extends SchedulerTestLayer {
+export class unScheduleAndRepeatTest extends SchedulerTestLayer {
     constructor() {
         super();
         this._times = 5;

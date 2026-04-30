@@ -77,7 +77,7 @@ export class SpineTestLayer extends BaseTestLayer {
 
 };
 
-var customSkeletonAnimation = class customSkeletonAnimation extends sp.SkeletonAnimation {
+export class customSkeletonAnimation extends sp.SkeletonAnimation {
     constructor() {
         super(...arguments);
     }

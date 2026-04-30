@@ -73,7 +73,7 @@ export class SysTestBase extends BaseTestLayer {
 // setClearColorTest
 //
 //------------------------------------------------------------------
-var setClearColorTest = class setClearColorTest extends SysTestBase {
+export class setClearColorTest extends SysTestBase {
     constructor()
     {
         super();

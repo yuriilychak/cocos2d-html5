@@ -2080,7 +2080,7 @@ export class WrapAlgorithmTest extends AtlasDemo {
 
 };
 
-var labelTTFDrawModeTest = class labelTTFDrawModeTest extends AtlasDemo {
+export class labelTTFDrawModeTest extends AtlasDemo {
     constructor() {
         super();
         var cacheLabel = new cc.LabelTTF();

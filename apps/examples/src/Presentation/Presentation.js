@@ -719,7 +719,7 @@ var arrayOfPresentation = [
 	ThanksPage
 ];
 
-var nextPresentationSlide = class nextPresentationSlide {
+export class nextPresentationSlide {
 	constructor() {
     presentationSceneIdx++;
     presentationSceneIdx = presentationSceneIdx % arrayOfPresentation.length;
@@ -727,7 +727,7 @@ var nextPresentationSlide = class nextPresentationSlide {
     return new arrayOfPresentation[presentationSceneIdx]();
 	}
 };
-var previousPresentationSlide = class previousPresentationSlide {
+export class previousPresentationSlide {
 	constructor() {
     presentationSceneIdx--;
     if (presentationSceneIdx < 0)
@@ -736,7 +736,7 @@ var previousPresentationSlide = class previousPresentationSlide {
     return new arrayOfPresentation[presentationSceneIdx]();
 	}
 };
-var restartPresentationSlide = class restartPresentationSlide {
+export class restartPresentationSlide {
 	constructor() {
     return new arrayOfPresentation[presentationSceneIdx]();
 	}
