@@ -140,8 +140,8 @@ ccs.DataInfo = function () {
 };
 
 /**
- * ccs.dataReaderHelper is a singleton object for reading CocoStudio data
- * @name ccs.dataReaderHelper
+ * dataReaderHelper is a singleton object for reading CocoStudio data
+ * @name dataReaderHelper
  */
 export const dataReaderHelper = ccs.dataReaderHelper = {
     ConfigType: {
@@ -152,7 +152,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
 
     _configFileList: [],
     _flashToolVersion: ccs.CONST_VERSION_2_0,
-//    _cocoStudioVersion: ccs.CONST_VERSION_COMBINED,
+//    _cocoStudioVersion: CONST_VERSION_COMBINED,
     _positionReadScale: 1,
     _asyncRefCount: 0,
     _asyncRefTotalCount: 0,
@@ -258,7 +258,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Translate XML export from Dragon Bone flash tool to data, and save them. When you add a new xml, the data already saved will be keeped.
      * @param {Object} skeleton
-     * @param {ccs.DataInfo} dataInfo
+     * @param {DataInfo} dataInfo
      */
     addDataFromCache: function (skeleton, dataInfo) {
         if (!skeleton) {
@@ -296,8 +296,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * decode xml armature data.
      * @param {XMLDocument} armatureXML
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.ArmatureData}
+     * @param {DataInfo} dataInfo
+     * @returns {ArmatureData}
      */
     decodeArmature: function (armatureXML, dataInfo) {
         var armatureData = new ccs.ArmatureData();
@@ -314,7 +314,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
             var parentName = boneXML.getAttribute(ccs.CONST_A_PARENT);
             var parentXML = null;
             if (parentName) {
-                //parentXML = armatureXML.querySelectorAll(ccs.CONST_ARMATURE+" > "+ccs.CONST_BONE);
+                //parentXML = armatureXML.querySelectorAll(CONST_ARMATURE+" > "+CONST_BONE);
                 for (var j = 0; j < bonesXML.length; j++) {
                     parentXML = bonesXML[j];
                     if (parentName == bonesXML[j].getAttribute(ccs.CONST_A_NAME)) {
@@ -332,8 +332,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * decode json armature data.
      * @param {Object} json
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.ArmatureData}
+     * @param {DataInfo} dataInfo
+     * @returns {ArmatureData}
      */
     decodeArmatureFromJSON: function (json, dataInfo) {
         var armatureData = new ccs.ArmatureData();
@@ -358,8 +358,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
      * decode xml bone data.
      * @param {XMLDocument} boneXML
      * @param {XMLDocument} parentXML
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.BoneData}
+     * @param {DataInfo} dataInfo
+     * @returns {BoneData}
      */
     decodeBone: function (boneXML, parentXML, dataInfo) {
         var boneData = new ccs.BoneData();
@@ -382,8 +382,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * decode json bone data.
      * @param {Object} json json bone data.
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.BoneData}
+     * @param {DataInfo} dataInfo
+     * @returns {BoneData}
      */
     decodeBoneFromJson: function (json, dataInfo) {
         var boneData = new ccs.BoneData();
@@ -405,8 +405,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * decode xml display data of bone
      * @param {XMLDocument} displayXML
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.DisplayData}
+     * @param {DataInfo} dataInfo
+     * @returns {DisplayData}
      */
     decodeBoneDisplay: function (displayXML, dataInfo) {
         var isArmature = parseFloat(displayXML.getAttribute(ccs.CONST_A_IS_ARMATURE)) || 0;
@@ -430,8 +430,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes json display data of bone.
      * @param {Object} json
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.DisplayData}
+     * @param {DataInfo} dataInfo
+     * @returns {DisplayData}
      */
     decodeBoneDisplayFromJson: function (json, dataInfo) {
         var displayType = json[ccs.CONST_A_DISPLAY_TYPE] || ccs.DISPLAY_TYPE_SPRITE;
@@ -490,8 +490,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes xml animation data.
      * @param {XMLDocument} animationXML
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.AnimationData}
+     * @param {DataInfo} dataInfo
+     * @returns {AnimationData}
      */
     decodeAnimation: function (animationXML, dataInfo) {
         var aniData = new ccs.AnimationData();
@@ -513,8 +513,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes animation json data.
      * @param {Object} json
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.AnimationData}
+     * @param {DataInfo} dataInfo
+     * @returns {AnimationData}
      */
     decodeAnimationFromJson: function (json, dataInfo) {
         var aniData = new ccs.AnimationData();
@@ -534,9 +534,9 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes xml movement data.
      * @param {XMLDocument} movementXML
-     * @param {ccs.ArmatureData} armatureData
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.MovementData}
+     * @param {ArmatureData} armatureData
+     * @param {DataInfo} dataInfo
+     * @returns {MovementData}
      */
     decodeMovement: function (movementXML, armatureData, dataInfo) {
         var movementData = new ccs.MovementData();
@@ -594,8 +594,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes json movement data.
      * @param {Object} json
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.MovementData}
+     * @param {DataInfo} dataInfo
+     * @returns {MovementData}
      */
     decodeMovementFromJson: function (json, dataInfo) {
         var movementData = new ccs.MovementData();
@@ -628,9 +628,9 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
      * Decodes xml data of bone's movement.
      * @param {XMLDocument} movBoneXml
      * @param {XMLDocument} parentXml
-     * @param {ccs.BoneData} boneData
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.MovementBoneData}
+     * @param {BoneData} boneData
+     * @param {DataInfo} dataInfo
+     * @returns {MovementBoneData}
      */
     decodeMovementBone: function (movBoneXml, parentXml, boneData, dataInfo) {
         var movBoneData = new ccs.MovementBoneData();
@@ -712,8 +712,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes json data of bone's movement.
      * @param {Object} json
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.MovementBoneData}
+     * @param {DataInfo} dataInfo
+     * @returns {MovementBoneData}
      */
     decodeMovementBoneFromJson: function (json, dataInfo) {
         var movementBoneData = new ccs.MovementBoneData();
@@ -772,9 +772,9 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
      * Decodes xml data of frame.
      * @param {XMLDocument} frameXML
      * @param {XMLDocument} parentFrameXml
-     * @param {ccs.BoneData} boneData
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.FrameData}
+     * @param {BoneData} boneData
+     * @param {DataInfo} dataInfo
+     * @returns {FrameData}
      */
     decodeFrame: function (frameXML, parentFrameXml, boneData, dataInfo) {
         var x = 0, y = 0, scale_x = 0, scale_y = 0, skew_x = 0, skew_y = 0, tweenRotate = 0;
@@ -928,8 +928,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes json data of frame.
      * @param {Object} json
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.FrameData}
+     * @param {DataInfo} dataInfo
+     * @returns {FrameData}
      */
     decodeFrameFromJson: function (json, dataInfo) {
         var frameData = new ccs.FrameData();
@@ -966,8 +966,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes xml data of texture
      * @param {XMLDocument} textureXML
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.TextureData}
+     * @param {DataInfo} dataInfo
+     * @returns {TextureData}
      */
     decodeTexture: function (textureXML, dataInfo) {
         var textureData = new ccs.TextureData();
@@ -1006,7 +1006,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes json data of Texture.
      * @param json
-     * @returns {ccs.TextureData}
+     * @returns {TextureData}
      */
     decodeTextureFromJson: function (json) {
         var textureData = new ccs.TextureData();
@@ -1031,8 +1031,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes xml data of contour.
      * @param {XMLDocument} contourXML
-     * @param {ccs.DataInfo} dataInfo
-     * @returns {ccs.ContourData}
+     * @param {DataInfo} dataInfo
+     * @returns {ContourData}
      */
     decodeContour: function (contourXML, dataInfo) {
         var contourData = new ccs.ContourData();
@@ -1055,7 +1055,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Decodes json data of contour.
      * @param {Object} json
-     * @returns {ccs.ContourData}
+     * @returns {ContourData}
      */
     decodeContourFromJson: function (json) {
         var contourData = new ccs.ContourData();
@@ -1076,7 +1076,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Adds json armature data to armature data manager.
      * @param {Object} dic json armature data
-     * @param {ccs.DataInfo} dataInfo
+     * @param {DataInfo} dataInfo
      */
     addDataFromJsonCache: function (dic, dataInfo) {
         dataInfo.contentScale = dic[ccs.CONST_CONTENT_SCALE] == null ? 1 : dic[ccs.CONST_CONTENT_SCALE];
@@ -1198,7 +1198,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Adds xml armature data to armature data manager.
      * @param {XMLDocument} xml
-     * @param {ccs.DataInfo} dataInfo
+     * @param {DataInfo} dataInfo
      */
     addDataFromXML: function (xml, dataInfo) {
         /*
@@ -1215,7 +1215,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     /**
      * Adds json armature data to armature data manager.
      * @param {String} filePath
-     * @param {ccs.DataInfo} dataInfo
+     * @param {DataInfo} dataInfo
      */
     addDataFromJson: function (filePath, dataInfo) {
         var fileContent = Loader.getInstance().getRes(filePath);

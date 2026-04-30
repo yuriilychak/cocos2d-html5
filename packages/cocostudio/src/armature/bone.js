@@ -30,17 +30,17 @@
  * @param {String} [name] The name of the bone
  * @example
  *
- * var bone = new ccs.Bone("head");
+ * var bone = new Bone("head");
  *
- * @property {ccs.BoneData}         boneData                - The bone data
- * @property {ccs.Armature}         armature                - The armature
- * @property {ccs.Bone}             parentBone              - The parent bone
- * @property {ccs.Armature}         childArmature           - The child armature
+ * @property {BoneData}         boneData                - The bone data
+ * @property {Armature}         armature                - The armature
+ * @property {Bone}             parentBone              - The parent bone
+ * @property {Armature}         childArmature           - The child armature
  * @property {Array}                childrenBone            - <@readonly> All children bones
- * @property {ccs.Tween}            tween                   - <@readonly> Tween
- * @property {ccs.FrameData}        tweenData               - <@readonly> The tween data
- * @property {ccs.ColliderFilter}   colliderFilter          - The collider filter
- * @property {ccs.DisplayManager}   displayManager          - The displayManager
+ * @property {Tween}            tween                   - <@readonly> Tween
+ * @property {FrameData}        tweenData               - <@readonly> The tween data
+ * @property {ColliderFilter}   colliderFilter          - The collider filter
+ * @property {DisplayManager}   displayManager          - The displayManager
  * @property {Boolean}              ignoreMovementBoneData  - Indicate whether force the bone to show When Armature play a animation and there isn't a MovementBoneData of this bone in this MovementData.
  * @property {String}               name                    - The name of the bone
  * @property {Boolean}              blendDirty              - Indicate whether the blend is dirty
@@ -113,7 +113,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Initializes a ccs.Bone with the specified name
+   * Initializes a Bone with the specified name
    * @param {String} name bone name
    * @return {Boolean}
    */
@@ -133,8 +133,8 @@ export class Bone extends Node {
   }
 
   /**
-   * Sets the boneData to ccs.Bone.
-   * @param {ccs.BoneData} boneData
+   * Sets the boneData to Bone.
+   * @param {BoneData} boneData
    */
   setBoneData(boneData) {
     assert(boneData, "_boneData must not be null");
@@ -147,16 +147,16 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns boneData of ccs.Bone.
-   * @return {ccs.BoneData}
+   * Returns boneData of Bone.
+   * @return {BoneData}
    */
   getBoneData() {
     return this._boneData;
   }
 
   /**
-   * Sets the armature reference to ccs.Bone.
-   * @param {ccs.Armature} armature
+   * Sets the armature reference to Bone.
+   * @param {Armature} armature
    */
   setArmature(armature) {
     this._armature = armature;
@@ -168,8 +168,8 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns the armature reference of ccs.Bone.
-   * @return {ccs.Armature}
+   * Returns the armature reference of Bone.
+   * @return {Armature}
    */
   getArmature() {
     return this._armature;
@@ -253,7 +253,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Sets BlendFunc to ccs.Bone.
+   * Sets BlendFunc to Bone.
    * @param {BlendFunc|Number} blendFunc blendFunc or src of blendFunc
    * @param {Number} [dst] dst of blendFunc
    */
@@ -307,8 +307,8 @@ export class Bone extends Node {
   }
 
   /**
-   * Adds a child to this bone, and it will let this child call setParent(ccs.Bone) function to set self to it's parent
-   * @param {ccs.Bone} child
+   * Adds a child to this bone, and it will let this child call setParent(Bone) function to set self to it's parent
+   * @param {Bone} child
    */
   addChildBone(child) {
     assert(child, "Argument must be non-nil");
@@ -325,7 +325,7 @@ export class Bone extends Node {
 
   /**
    * Removes a child bone
-   * @param {ccs.Bone} bone
+   * @param {Bone} bone
    * @param {Boolean} recursion
    */
   removeChildBone(bone, recursion) {
@@ -345,7 +345,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Removes itself from its parent ccs.Bone.
+   * Removes itself from its parent Bone.
    * @param {Boolean} recursion
    */
   removeFromParent(recursion) {
@@ -353,26 +353,26 @@ export class Bone extends Node {
   }
 
   /**
-   * Sets parent bone to ccs.Bone.
+   * Sets parent bone to Bone.
    * If _parent is NUll, then also remove this bone from armature.
-   * It will not set the ccs.Armature, if you want to add the bone to a ccs.Armature, you should use ccs.Armature.addBone(bone, parentName).
-   * @param {ccs.Bone}  parent  the parent bone.
+   * It will not set the Armature, if you want to add the bone to a Armature, you should use Armature.addBone(bone, parentName).
+   * @param {Bone}  parent  the parent bone.
    */
   setParentBone(parent) {
     this._parentBone = parent;
   }
 
   /**
-   * Returns the parent bone of ccs.Bone.
-   * @returns {ccs.Bone}
+   * Returns the parent bone of Bone.
+   * @returns {Bone}
    */
   getParentBone() {
     return this._parentBone;
   }
 
   /**
-   * Sets ccs.Bone's child armature
-   * @param {ccs.Armature} armature
+   * Sets Bone's child armature
+   * @param {Armature} armature
    */
   setChildArmature(armature) {
     if (this._childArmature !== armature) {
@@ -383,23 +383,23 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns ccs.Bone's child armature.
-   * @return {ccs.Armature}
+   * Returns Bone's child armature.
+   * @return {Armature}
    */
   getChildArmature() {
     return this._childArmature;
   }
 
   /**
-   * Return the tween of ccs.Bone
-   * @return {ccs.Tween}
+   * Return the tween of Bone
+   * @return {Tween}
    */
   getTween() {
     return this._tween;
   }
 
   /**
-   * Sets the local zOrder to ccs.Bone.
+   * Sets the local zOrder to Bone.
    * @param {Number} zOrder
    */
   setLocalZOrder(zOrder) {
@@ -407,7 +407,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Return the worldTransform of ccs.Bone.
+   * Return the worldTransform of Bone.
    * @returns {AffineTransform}
    */
   getNodeToArmatureTransform() {
@@ -415,7 +415,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns the world transform of ccs.Bone.
+   * Returns the world transform of Bone.
    * @override
    * @returns {AffineTransform}
    */
@@ -446,7 +446,7 @@ export class Bone extends Node {
    * Add display and use  _displayData init the display.
    * If index already have a display, then replace it.
    * If index is current display index, then also change display to _index
-   * @param {ccs.DisplayData} displayData it include the display information, like DisplayType.
+   * @param {DisplayData} displayData it include the display information, like DisplayType.
    *          If you want to create a sprite display, then create a SpriteDisplayData param
    *@param {Number}    index the index of the display you want to replace or add to
    *          -1 : append display from back
@@ -509,7 +509,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns the collide detector of ccs.Bone.
+   * Returns the collide detector of Bone.
    * @returns {*}
    */
   getColliderDetector() {
@@ -522,8 +522,8 @@ export class Bone extends Node {
   }
 
   /**
-   * Sets collider filter to ccs.Bone.
-   * @param {ccs.ColliderFilter} filter
+   * Sets collider filter to Bone.
+   * @param {ColliderFilter} filter
    */
   setColliderFilter(filter) {
     var displayList = this._displayManager.getDecorativeDisplayList();
@@ -535,7 +535,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns collider filter of ccs.Bone.
+   * Returns collider filter of Bone.
    * @returns {ColliderFilter}
    */
   getColliderFilter() {
@@ -548,7 +548,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Sets ccs.Bone's transform dirty flag.
+   * Sets Bone's transform dirty flag.
    * @param {Boolean} dirty
    */
   setTransformDirty(dirty) {
@@ -556,7 +556,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns ccs.Bone's transform dirty flag whether is dirty.
+   * Returns Bone's transform dirty flag whether is dirty.
    * @return {Boolean}
    */
   isTransformDirty() {
@@ -565,7 +565,7 @@ export class Bone extends Node {
 
   /**
    * displayManager dirty getter
-   * @return {ccs.DisplayManager}
+   * @return {DisplayManager}
    */
   getDisplayManager() {
     return this._displayManager;
@@ -589,7 +589,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns the blendFunc of ccs.Bone.
+   * Returns the blendFunc of Bone.
    * @return {BlendFunc}
    */
   getBlendFunc() {
@@ -606,30 +606,30 @@ export class Bone extends Node {
 
   /**
    * Returns the blend dirty flag whether is dirty.
-   * @returns {Boolean|*|ccs.Bone._blendDirty}
+   * @returns {Boolean|*|Bone._blendDirty}
    */
   isBlendDirty() {
     return this._blendDirty;
   }
 
   /**
-   * Returns the tweenData of ccs.Bone.
-   * @return {ccs.FrameData}
+   * Returns the tweenData of Bone.
+   * @return {FrameData}
    */
   getTweenData() {
     return this._tweenData;
   }
 
   /**
-   * Returns the world information of ccs.Bone.
-   * @returns {ccs.BaseData}
+   * Returns the world information of Bone.
+   * @returns {BaseData}
    */
   getWorldInfo() {
     return this._worldInfo;
   }
 
   /**
-   * Returns the children of ccs.Bone
+   * Returns the children of Bone
    * @return {Array}
    * @deprecated since v3.0, please use getChildren instead.
    */
@@ -638,7 +638,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns the worldTransform of ccs.Bone.
+   * Returns the worldTransform of Bone.
    * @return {AffineTransform}
    * @deprecated since v3.0, please use getNodeToArmatureTransform instead.
    */

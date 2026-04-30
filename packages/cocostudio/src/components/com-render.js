@@ -23,12 +23,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Component } from "@aspect/core";
+
 /**
  * The render component for Cocostudio.
  */
-export class ComRender extends ccs.Component {
+export class ComRender extends Component {
   /**
-   * Construction of ccs.ComRender
+   * Construction of ComRender
    * @param {Node} node
    * @param {String} comName
    */

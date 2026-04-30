@@ -86,7 +86,7 @@ ccs.ANIMATION_TYPE_MAX = 2;
 export class ProcessBase extends NewClass {
 
     /**
-     * Constructor of ccs.ProcessBase
+     * Constructor of ProcessBase
      */
     constructor() {
         super();
@@ -265,7 +265,7 @@ export class ProcessBase extends NewClass {
     }
 
     /**
-     * Returns current percent of ccs.ProcessBase
+     * Returns current percent of ProcessBase
      * @returns {number}
      */
     getCurrentPercent() {
@@ -273,7 +273,7 @@ export class ProcessBase extends NewClass {
     }
 
     /**
-     * Returns the raw duration of ccs.ProcessBase
+     * Returns the raw duration of ProcessBase
      * @returns {number}
      */
     getRawDuration() {
@@ -281,7 +281,7 @@ export class ProcessBase extends NewClass {
     }
 
     /**
-     * Returns loop type of ccs.ProcessBase
+     * Returns loop type of ProcessBase
      * @returns {number}
      */
     getLoop() {
@@ -289,7 +289,7 @@ export class ProcessBase extends NewClass {
     }
 
     /**
-     * Returns tween easing of ccs.ProcessBase
+     * Returns tween easing of ProcessBase
      * @returns {number}
      */
     getTweenEasing() {
@@ -297,7 +297,7 @@ export class ProcessBase extends NewClass {
     }
 
     /**
-     * Returns animation interval of ccs.ProcessBase
+     * Returns animation interval of ProcessBase
      * @returns {number}
      */
     getAnimationInternal() {            //TODO rename getAnimationInternal to getAnimationInterval in v3.1
@@ -305,7 +305,7 @@ export class ProcessBase extends NewClass {
     }
 
     /**
-     * Sets animation interval to ccs.ProcessBase.
+     * Sets animation interval to ProcessBase.
      * @param animationInternal
      */
     setAnimationInternal(animationInternal) {

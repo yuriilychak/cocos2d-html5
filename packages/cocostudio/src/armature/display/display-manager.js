@@ -30,7 +30,7 @@ import { ParticleSystem } from "@aspect/particle";
 
 /**
  * The display manager for CocoStudio Armature bone.
- * @param {ccs.Bone} bone The bone for the display manager
+ * @param {Bone} bone The bone for the display manager
  */
 export class DisplayManager extends NewClass {
   constructor(bone) {
@@ -48,7 +48,7 @@ export class DisplayManager extends NewClass {
   }
 
   /**
-   * Initializes a ccs.DisplayManager.
+   * Initializes a DisplayManager.
    * @param bone
    * @returns {boolean}
    */
@@ -64,7 +64,7 @@ export class DisplayManager extends NewClass {
    *     If index already have a display, then replace it.                                <br/>
    *     If index is current display index, then also change display to _index            <br/>
    * </p>
-   * @param {ccs.DisplayData|Node} display it include the display information, like DisplayType. If you want to create a sprite display, then create a SpriteDisplayData param
+   * @param {DisplayData|Node} display it include the display information, like DisplayType. If you want to create a sprite display, then create a SpriteDisplayData param
    * @param {Number} index  the index of the display you want to replace or add to. -1 : append display from back
    */
   addDisplay(display, index) {
@@ -253,7 +253,7 @@ export class DisplayManager extends NewClass {
 
   /**
    * Sets current decorative display.
-   * @param {ccs.DecorativeDisplay} decoDisplay
+   * @param {DecorativeDisplay} decoDisplay
    */
   setCurrentDecorativeDisplay(decoDisplay) {
     var locCurrentDecoDisplay = this._currentDecoDisplay;
@@ -335,7 +335,7 @@ export class DisplayManager extends NewClass {
 
   /**
    * Returns the current decorative display
-   * @returns {ccs.DecorativeDisplay}
+   * @returns {DecorativeDisplay}
    */
   getCurrentDecorativeDisplay() {
     return this._currentDecoDisplay;
@@ -344,7 +344,7 @@ export class DisplayManager extends NewClass {
   /**
    * Gets a decorative display by index.
    * @param index
-   * @returns {ccs.DecorativeDisplay}
+   * @returns {DecorativeDisplay}
    */
   getDecorativeDisplayByIndex(index) {
     return this._decoDisplayList[index];
@@ -356,7 +356,7 @@ export class DisplayManager extends NewClass {
    *  If display is a sprite, and it have texture info in the TextureData, then use TextureData to init the display node's anchor point
    *  If the display is a Armature, then create a new Armature
    * </p>
-   * @param {ccs.BoneData} boneData
+   * @param {BoneData} boneData
    */
   initDisplayList(boneData) {
     this._decoDisplayList.length = 0;

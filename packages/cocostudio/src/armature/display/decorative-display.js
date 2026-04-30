@@ -39,7 +39,7 @@ export class DecorativeDisplay extends NewClass {
   }
 
   /**
-   * Initializes a ccs.DecorativeDisplay
+   * Initializes a DecorativeDisplay
    * @returns {boolean}
    */
   init() {
@@ -68,7 +68,7 @@ export class DecorativeDisplay extends NewClass {
 
   /**
    * Sets collide detector
-   * @param {ccs.ColliderDetector} colliderDetector
+   * @param {ColliderDetector} colliderDetector
    */
   setColliderDetector(colliderDetector) {
     this._colliderDetector = colliderDetector;
@@ -76,7 +76,7 @@ export class DecorativeDisplay extends NewClass {
 
   /**
    * Returns collide detector
-   * @returns {ccs.ColliderDetector}
+   * @returns {ColliderDetector}
    */
   getColliderDetector() {
     return this._colliderDetector;
@@ -84,7 +84,7 @@ export class DecorativeDisplay extends NewClass {
 
   /**
    * Sets display data
-   * @param {ccs.DisplayData} displayData
+   * @param {DisplayData} displayData
    */
   setDisplayData(displayData) {
     this._displayData = displayData;
@@ -92,7 +92,7 @@ export class DecorativeDisplay extends NewClass {
 
   /**
    * Returns display data
-   * @returns {ccs.DisplayData}
+   * @returns {DisplayData}
    */
   getDisplayData() {
     return this._displayData;

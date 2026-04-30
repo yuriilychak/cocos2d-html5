@@ -27,25 +27,25 @@
 /**
  * The main class of Armature, it plays armature animation, manages and updates bones' state.
  *
- * @property {ccs.Bone}                 parentBone      - The parent bone of the armature node
- * @property {ccs.ArmatureAnimation}    animation       - The animation
- * @property {ccs.ArmatureData}         armatureData    - The armature data
+ * @property {Bone}                 parentBone      - The parent bone of the armature node
+ * @property {ArmatureAnimation}    animation       - The animation
+ * @property {ArmatureData}         armatureData    - The armature data
  * @property {String}                   name            - The name of the armature
  * @property {SpriteBatchNode}       batchNode       - The batch node of the armature
  * @property {Number}                   version         - The version
  * @property {Object}                   body            - The body of the armature
- * @property {ccs.ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
+ * @property {ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
  */
 import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Game, Node, Point, Rect, RendererConfig, arrayRemoveObject, assert, log } from "@aspect/core";
 
 export class Armature extends Node {
   /**
    * Create a armature node.
-   * Constructor of ccs.Armature
+   * Constructor of Armature
    * @param {String} name
-   * @param {ccs.Bone} parentBone
+   * @param {Bone} parentBone
    * @example
-   * var armature = new ccs.Armature();
+   * var armature = new Armature();
    */
   constructor(name, parentBone) {
     super();
@@ -81,7 +81,7 @@ export class Armature extends Node {
   /**
    * Initializes a Armature with the specified name and Bone
    * @param {String} [name]
-   * @param {ccs.Bone} [parentBone]
+   * @param {Bone} [parentBone]
    * @return {Boolean}
    */
   init(name, parentBone) {
@@ -183,7 +183,7 @@ export class Armature extends Node {
   /**
    * create a bone with name
    * @param {String} boneName
-   * @return {ccs.Bone}
+   * @return {Bone}
    */
   createBone(boneName) {
     var existedBone = this.getBone(boneName);
@@ -209,7 +209,7 @@ export class Armature extends Node {
 
   /**
    * Add a Bone to this Armature
-   * @param {ccs.Bone} bone  The Bone you want to add to Armature
+   * @param {Bone} bone  The Bone you want to add to Armature
    * @param {String} parentName The parent Bone's name you want to add to. If it's  null, then set Armature to its parent
    */
   addBone(bone, parentName) {
@@ -234,7 +234,7 @@ export class Armature extends Node {
 
   /**
    * Remove a bone with the specified name. If recursion it will also remove child Bone recursively.
-   * @param {ccs.Bone} bone The bone you want to remove
+   * @param {Bone} bone The bone you want to remove
    * @param {Boolean} recursion Determine whether remove the bone's child  recursion.
    */
   removeBone(bone, recursion) {
@@ -251,7 +251,7 @@ export class Armature extends Node {
   /**
    * Gets a bone with the specified name
    * @param {String} name The bone's name you want to get
-   * @return {ccs.Bone}
+   * @return {Bone}
    */
   getBone(name) {
     return this._boneDic[name];
@@ -259,7 +259,7 @@ export class Armature extends Node {
 
   /**
    * Change a bone's parent with the specified parent name.
-   * @param {ccs.Bone} bone The bone you want to change parent
+   * @param {Bone} bone The bone you want to change parent
    * @param {String} parentName The new parent's name
    */
   changeBoneParent(bone, parentName) {
@@ -311,7 +311,7 @@ export class Armature extends Node {
 
   /**
    * Sets animation to this Armature
-   * @param {ccs.ArmatureAnimation} animation
+   * @param {ArmatureAnimation} animation
    */
   setAnimation(animation) {
     this.animation = animation;
@@ -319,7 +319,7 @@ export class Armature extends Node {
 
   /**
    * Gets the animation of this Armature.
-   * @return {ccs.ArmatureAnimation}
+   * @return {ArmatureAnimation}
    */
   getAnimation() {
     return this.animation;
@@ -334,7 +334,7 @@ export class Armature extends Node {
   }
 
   /**
-   * The update callback of ccs.Armature, it updates animation's state and updates bone's state.
+   * The update callback of Armature, it updates animation's state and updates bone's state.
    * @override
    * @param {Number} dt
    */
@@ -347,7 +347,7 @@ export class Armature extends Node {
   }
 
   /**
-   * The callback when ccs.Armature enter stage.
+   * The callback when Armature enter stage.
    * @override
    */
   onEnter() {
@@ -356,7 +356,7 @@ export class Armature extends Node {
   }
 
   /**
-   * The callback when ccs.Armature exit stage.
+   * The callback when Armature exit stage.
    * @override
    */
   onExit() {
@@ -420,7 +420,7 @@ export class Armature extends Node {
    * when bone  contain the point ,then return it.
    * @param {Number} x
    * @param {Number} y
-   * @returns {ccs.Bone}
+   * @returns {Bone}
    */
   getBoneAtPoint(x, y) {
     var locChildren = this._children;
@@ -437,7 +437,7 @@ export class Armature extends Node {
 
   /**
    * Sets parent bone of this Armature
-   * @param {ccs.Bone} parentBone
+   * @param {Bone} parentBone
    */
   setParentBone(parentBone) {
     this._parentBone = parentBone;
@@ -448,8 +448,8 @@ export class Armature extends Node {
   }
 
   /**
-   * Return parent bone of ccs.Armature.
-   * @returns {ccs.Bone}
+   * Return parent bone of Armature.
+   * @returns {Bone}
    */
   getParentBone() {
     return this._parentBone;
@@ -506,7 +506,7 @@ export class Armature extends Node {
   }
 
   /**
-   * Sets the blendFunc to ccs.Armature
+   * Sets the blendFunc to Armature
    * @param {BlendFunc|Number} blendFunc
    * @param {Number} [dst]
    */
@@ -521,7 +521,7 @@ export class Armature extends Node {
   }
 
   /**
-   * Returns the blendFunc of ccs.Armature
+   * Returns the blendFunc of Armature
    * @returns {BlendFunc}
    */
   getBlendFunc() {
@@ -530,7 +530,7 @@ export class Armature extends Node {
 
   /**
    * set collider filter
-   * @param {ccs.ColliderFilter} filter
+   * @param {ColliderFilter} filter
    */
   setColliderFilter(filter) {
     var locBoneDic = this._boneDic;
@@ -538,8 +538,8 @@ export class Armature extends Node {
   }
 
   /**
-   * Returns the armatureData of ccs.Armature
-   * @return {ccs.ArmatureData}
+   * Returns the armatureData of Armature
+   * @return {ArmatureData}
    */
   getArmatureData() {
     return this.armatureData;
@@ -547,7 +547,7 @@ export class Armature extends Node {
 
   /**
    * Sets armatureData to this Armature
-   * @param {ccs.ArmatureData} armatureData
+   * @param {ArmatureData} armatureData
    */
   setArmatureData(armatureData) {
     this.armatureData = armatureData;

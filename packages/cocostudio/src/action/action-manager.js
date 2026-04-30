@@ -24,8 +24,8 @@
  ****************************************************************************/
 
 /**
- * Base singleton object for ccs.ActionManager.
- * @name ccs.actionManager
+ * Base singleton object for ActionManager.
+ * @name actionManager
  */
 export const actionManager = ccs.actionManager = {
   _actionDic: {},
@@ -55,7 +55,7 @@ export const actionManager = ccs.actionManager = {
    * Gets an actionObject with a name.
    * @param {String} jsonName
    * @param {String} actionName
-   * @returns {ccs.ActionObject}
+   * @returns {ActionObject}
    */
   getActionByName: function (jsonName, actionName) {
     var path = jsonName;

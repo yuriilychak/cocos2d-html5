@@ -26,7 +26,7 @@
 
 /**
  *  use to calculate the matrix of node from parent node
- * @extend ccs.Class
+ * @extend Class
  */
 import { AffineTransform, NewClass, Point } from "@aspect/core";
 
@@ -42,7 +42,7 @@ ccs.TransformHelp.helpParentNode = {};
  * Calculate a BaseData's transform matrix from parent node.
  * @function
  * @static
- * @param {ccs.BaseData} bone
+ * @param {BaseData} bone
  * Constructor
  */
 ccs.TransformHelp.transformFromParent = function (bone, parentNode) {
@@ -115,7 +115,7 @@ ccs.TransformHelp.transformToParentWithoutScale = function (node, parentNode) {
 /**
  * @function
  * @static
- * @param {ccs.BaseData} node
+ * @param {BaseData} node
  * @param {AffineTransform} matrix
  */
 ccs.TransformHelp.nodeToMatrix = function (node, matrix) {
@@ -140,7 +140,7 @@ ccs.TransformHelp.nodeToMatrix = function (node, matrix) {
  * @function
  * @static
  * @param {AffineTransform} matrix
- * @param {ccs.BaseData} node
+ * @param {BaseData} node
  */
 ccs.TransformHelp.matrixToNode = function (matrix, node) {
   /*
@@ -171,8 +171,8 @@ ccs.TransformHelp.matrixToNode = function (matrix, node) {
 /**
  * @function
  * @static
- * @param {ccs.BaseData} target
- * @param {ccs.BaseData} source
+ * @param {BaseData} target
+ * @param {BaseData} source
  */
 ccs.TransformHelp.nodeConcat = function (target, source) {
   target.x += source.x;
@@ -186,8 +186,8 @@ ccs.TransformHelp.nodeConcat = function (target, source) {
 /**
  * @function
  * @static
- * @param {ccs.BaseData} target
- * @param {ccs.BaseData} source
+ * @param {BaseData} target
+ * @param {BaseData} source
  */
 ccs.TransformHelp.nodeSub = function (target, source) {
   target.x -= source.x;

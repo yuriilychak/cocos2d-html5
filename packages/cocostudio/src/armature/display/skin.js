@@ -25,13 +25,13 @@
  ****************************************************************************/
 
 /**
- * ccs.Bone uses ccs.Skin to displays on screen.
+ * Bone uses Skin to displays on screen.
  *
  * @param {String} [fileName]
  * @param {Rect} [rect]
  *
  * @property {Object}   skinData    - The data of the skin
- * @property {ccs.Bone} bone        - The bone of the skin
+ * @property {Bone} bone        - The bone of the skin
  * @property {String}   displayName - <@readonly> The displayed name of skin
  *
  */
@@ -104,8 +104,8 @@ export class Skin extends Sprite {
   }
 
   /**
-   * Sets skin data to ccs.Skin.
-   * @param {ccs.BaseData} skinData
+   * Sets skin data to Skin.
+   * @param {BaseData} skinData
    */
   setSkinData(skinData) {
     this._skinData = skinData;
@@ -119,8 +119,8 @@ export class Skin extends Sprite {
   }
 
   /**
-   * Returns skin date of ccs.Skin.
-   * @returns {ccs.BaseData}
+   * Returns skin date of Skin.
+   * @returns {BaseData}
    */
   getSkinData() {
     return this._skinData;
@@ -146,7 +146,7 @@ export class Skin extends Sprite {
   }
 
   /**
-   * Sets the bone reference to ccs.Skin.
+   * Sets the bone reference to Skin.
    * @param bone
    */
   setBone(bone) {
@@ -156,7 +156,7 @@ export class Skin extends Sprite {
   }
 
   /**
-   * Returns the bone reference of ccs.Skin.
+   * Returns the bone reference of Skin.
    * @returns {null}
    */
   getBone() {

@@ -26,7 +26,7 @@ import { NewClass, arrayRemoveObject } from '@aspect/core';
 
 /**
  * timeline object
- * @extend ccs.Class
+ * @extend Class
  */
 export class Timeline extends NewClass {
   constructor() {
@@ -58,7 +58,7 @@ export class Timeline extends NewClass {
 
   /**
    * Get the frame list
-   * @returns {ccs.Frame}
+   * @returns {Frame}
    */
   getFrames() {
     return this._frames;
@@ -66,7 +66,7 @@ export class Timeline extends NewClass {
 
   /**
    * push frame to frame list
-   * @param {ccs.Frame} frame
+   * @param {Frame} frame
    */
   addFrame(frame) {
     this._frames.push(frame);
@@ -75,7 +75,7 @@ export class Timeline extends NewClass {
 
   /**
    * insert the frame to frame list
-   * @param {ccs.Frame} frame
+   * @param {Frame} frame
    * @param {Number} index
    */
   insertFrame(frame, index) {
@@ -85,7 +85,7 @@ export class Timeline extends NewClass {
 
   /**
    * remove frame
-   * @param {ccs.Frame} frame
+   * @param {Frame} frame
    */
   removeFrame(frame) {
     arrayRemoveObject(this._frames, frame);
@@ -129,7 +129,7 @@ export class Timeline extends NewClass {
 
   /**
    * Set the action timeline
-   * @param {ccs.ActionTimeline} action
+   * @param {ActionTimeline} action
    */
   setActionTimeline(action) {
     this._ActionTimeline = action;
@@ -146,7 +146,7 @@ export class Timeline extends NewClass {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.Timeline}
+   * @return {Timeline}
    */
   clone() {
     var timeline = new ccs.Timeline();

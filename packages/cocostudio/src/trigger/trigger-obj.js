@@ -31,7 +31,7 @@ import { NewClass, log } from "@aspect/core";
 
 export class BaseTriggerCondition extends NewClass {
     /**
-     * Construction of ccs.BaseTriggerCondition
+     * Construction of BaseTriggerCondition
      */
     constructor () {
         super();
@@ -72,7 +72,7 @@ export class BaseTriggerCondition extends NewClass {
  */
 export class BaseTriggerAction extends NewClass {
     /**
-     * Construction of ccs.BaseTriggerAction
+     * Construction of BaseTriggerAction
      */
     constructor () {
         super();
@@ -93,7 +93,7 @@ export class BaseTriggerAction extends NewClass {
     }
 
     /**
-     * Serializes a ccs.BaseTriggerAction object.
+     * Serializes a BaseTriggerAction object.
      * @param jsonVal
      */
     serialize (jsonVal) {
@@ -120,7 +120,7 @@ export class TriggerObj extends NewClass {
     }
 
     /**
-     * Initializes a ccs.TriggerObj
+     * Initializes a TriggerObj
      * @returns {boolean}
      */
     init () {
@@ -163,7 +163,7 @@ export class TriggerObj extends NewClass {
     }
 
     /**
-     * Removes all condition and actions from ccs.TriggerObj.
+     * Removes all condition and actions from TriggerObj.
      */
     removeAll () {
         var obj = null;
@@ -182,7 +182,7 @@ export class TriggerObj extends NewClass {
     }
 
     /**
-     * Serializes ccs.TriggerObj
+     * Serializes TriggerObj
      * @param jsonVal
      */
     serialize (jsonVal) {
@@ -229,7 +229,7 @@ export class TriggerObj extends NewClass {
     }
 
     /**
-     * Returns the id of ccs.TriggerObj.
+     * Returns the id of TriggerObj.
      * @returns {number}
      */
     getId () {
@@ -245,7 +245,7 @@ export class TriggerObj extends NewClass {
     }
 
     /**
-     * Returns the events of ccs.TriggerObj.
+     * Returns the events of TriggerObj.
      * @returns {null|Array}
      */
     getEvents () {

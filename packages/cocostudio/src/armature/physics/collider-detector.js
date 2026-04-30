@@ -31,7 +31,7 @@ import { AffineTransform, NewClass, Point, arrayRemoveObject } from "@aspect/cor
 export const PT_RATIO = ccs.PT_RATIO = 32;
 
 /**
- * Base class for ccs.ColliderFilter
+ * Base class for ColliderFilter
  */
 export class ColliderFilter extends NewClass {
 
@@ -58,11 +58,11 @@ export class ColliderFilter extends NewClass {
 };
 
 /**
- * Base class for ccs.ColliderBody
+ * Base class for ColliderBody
  *
- * @property {ccs.ContourData}      contourData     - The contour data of collider body
- * @property {ccs.Shape}            shape           - The shape of collider body
- * @property {ccs.ColliderFilter}   colliderFilter  - The collider filter of collider body
+ * @property {ContourData}      contourData     - The contour data of collider body
+ * @property {Shape}            shape           - The shape of collider body
+ * @property {ColliderFilter}   colliderFilter  - The collider filter of collider body
  *
  */
 export class ColliderBody extends NewClass {
@@ -78,7 +78,7 @@ export class ColliderBody extends NewClass {
 
     /**
      * contourData getter
-     * @returns {ccs.ContourData}
+     * @returns {ContourData}
      */
     getContourData() {
         return this.coutourData;
@@ -86,7 +86,7 @@ export class ColliderBody extends NewClass {
 
     /**
      * colliderFilter setter
-     * @param {ccs.ColliderFilter} colliderFilter
+     * @param {ColliderFilter} colliderFilter
      */
     setColliderFilter(colliderFilter) {
         this.colliderFilter = colliderFilter;
@@ -110,7 +110,7 @@ export class ColliderBody extends NewClass {
 
     /**
      * shape getter
-     * @param {ccs.Shape} shape
+     * @param {Shape} shape
      */
     setShape(shape) {
         this.shape = shape;
@@ -118,7 +118,7 @@ export class ColliderBody extends NewClass {
 
     /**
      * shape setter
-     * @return {ccs.Shape}
+     * @return {Shape}
      */
     getShape() {
         return this.shape;
@@ -126,7 +126,7 @@ export class ColliderBody extends NewClass {
 
     /**
      * contourData setter
-     * @param {ccs.ContourData} contourData
+     * @param {ContourData} contourData
      */
     setContourData(contourData) {
         this.coutourData = contourData;
@@ -134,7 +134,7 @@ export class ColliderBody extends NewClass {
 
     /**
      * colliderFilter getter
-     * @returns {ccs.ColliderFilter}
+     * @returns {ColliderFilter}
      */
     getColliderFilter() {
         return this.colliderFilter;
@@ -143,11 +143,11 @@ export class ColliderBody extends NewClass {
 };
 
 /**
- * Base class for ccs.ColliderDetector
+ * Base class for ColliderDetector
  *
- * @param {ccs.Bone} [bone]
+ * @param {Bone} [bone]
  *
- * @property {ccs.ColliderFilter}   colliderFilter  - The collider filter of the collider detector
+ * @property {ColliderFilter}   colliderFilter  - The collider filter of the collider detector
  * @property {Boolean}              active          - Indicate whether the collider detector is active
  * @property {Object}               body            - The collider body
  */
@@ -182,7 +182,7 @@ export class ColliderDetector extends NewClass {
 
     /**
      *  add contourData
-     * @param {ccs.ContourData} contourData
+     * @param {ContourData} contourData
      */
     addContourData(contourData) {
         var colliderBody = new ccs.ColliderBody(contourData);
@@ -266,7 +266,7 @@ export class ColliderDetector extends NewClass {
 
     /**
      * set colliderFilter
-     * @param {ccs.ColliderFilter} filter
+     * @param {ColliderFilter} filter
      */
     setColliderFilter(filter) {
         this._filter = filter;
@@ -281,7 +281,7 @@ export class ColliderDetector extends NewClass {
 
     /**
      * get colliderFilter
-     * @returns {ccs.ColliderFilter}
+     * @returns {ColliderFilter}
      */
     getColliderFilter() {
         return this._filter;

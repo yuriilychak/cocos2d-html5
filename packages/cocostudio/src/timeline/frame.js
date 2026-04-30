@@ -81,7 +81,7 @@ export class Frame extends NewClass {
   /**
    * Get timeline
    * @param timeline
-   * @returns {ccs.timeline}
+   * @returns {timeline}
    */
   getTimeline(timeline) {
     return this._timeline;
@@ -122,7 +122,7 @@ export class Frame extends NewClass {
   /**
    * the execution of the callback
    * @override
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     // = 0
@@ -149,7 +149,7 @@ export class Frame extends NewClass {
    * to copy object with deep copy.
    * returns a clone of action.
    * @override
-   * @return {ccs.Frame}
+   * @return {Frame}
    */
   clone() {
     // = 0
@@ -255,7 +255,7 @@ ccs.Frame.tweenToMap = {
 /**
  * Visible frame
  * To control the display state
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class VisibleFrame extends Frame {
   constructor() {
@@ -265,7 +265,7 @@ export class VisibleFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (this._node) this._node.setVisible(this._visible);
@@ -274,7 +274,7 @@ export class VisibleFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.VisibleFrame}
+   * @return {VisibleFrame}
    */
   clone() {
     var frame = new ccs.VisibleFrame();
@@ -304,7 +304,7 @@ export class VisibleFrame extends Frame {
 
 /**
  * Texture frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class TextureFrame extends Frame {
   constructor() {
@@ -324,7 +324,7 @@ export class TextureFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (this._sprite) {
@@ -341,7 +341,7 @@ export class TextureFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.TextureFrame}
+   * @return {TextureFrame}
    */
   clone() {
     var frame = new ccs.TextureFrame();
@@ -369,7 +369,7 @@ export class TextureFrame extends Frame {
 
 /**
  * Rotation Frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class RotationFrame extends Frame {
   constructor() {
@@ -379,7 +379,7 @@ export class RotationFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (!this._node) return;
@@ -404,7 +404,7 @@ export class RotationFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.RotationFrame}
+   * @return {RotationFrame}
    */
   clone() {
     var frame = new ccs.RotationFrame();
@@ -434,7 +434,7 @@ export class RotationFrame extends Frame {
 
 /**
  * Skew frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class SkewFrame extends Frame {
   constructor() {
@@ -445,7 +445,7 @@ export class SkewFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (!this._node) return;
@@ -475,7 +475,7 @@ export class SkewFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.SkewFrame}
+   * @return {SkewFrame}
    */
   clone() {
     var frame = new ccs.SkewFrame();
@@ -522,12 +522,12 @@ export class SkewFrame extends Frame {
 
 /**
  * Rotation skew frame
- * @extend ccs.SkewFrame
+ * @extend SkewFrame
  */
 export class RotationSkewFrame extends SkewFrame {
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (!this._node) return;
@@ -557,7 +557,7 @@ export class RotationSkewFrame extends SkewFrame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.RotationSkewFrame}
+   * @return {RotationSkewFrame}
    */
   clone() {
     var frame = new ccs.RotationSkewFrame();
@@ -572,7 +572,7 @@ export class RotationSkewFrame extends SkewFrame {
 
 /**
  * Position frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class PositionFrame extends Frame {
   constructor() {
@@ -582,7 +582,7 @@ export class PositionFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (!this._node) return;
@@ -612,7 +612,7 @@ export class PositionFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.PositionFrame}
+   * @return {PositionFrame}
    */
   clone() {
     var frame = new ccs.PositionFrame();
@@ -674,7 +674,7 @@ export class PositionFrame extends Frame {
 
 /**
  * Scale frame
- * @xtend ccs.Frame
+ * @xtend Frame
  */
 export class ScaleFrame extends Frame {
   constructor() {
@@ -685,7 +685,7 @@ export class ScaleFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (!this._node) return;
@@ -718,7 +718,7 @@ export class ScaleFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.ScaleFrame}
+   * @return {ScaleFrame}
    */
   clone() {
     var frame = new ccs.ScaleFrame();
@@ -774,7 +774,7 @@ export class ScaleFrame extends Frame {
 
 /**
  * AnchorPoint frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class AnchorPointFrame extends Frame {
   constructor() {
@@ -784,7 +784,7 @@ export class AnchorPointFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (this._node) this._node.setAnchorPoint(this._anchorPoint);
@@ -793,7 +793,7 @@ export class AnchorPointFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.AnchorPointFrame}
+   * @return {AnchorPointFrame}
    */
   clone() {
     var frame = new ccs.AnchorPointFrame();
@@ -833,7 +833,7 @@ export const InnerActionType = ccs.InnerActionType = {
 
 /**
  * Inner action frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class InnerActionFrame extends Frame {
   constructor() {
@@ -849,7 +849,7 @@ export class InnerActionFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (!this._node) return;
@@ -913,7 +913,7 @@ export class InnerActionFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.InnerActionFrame}
+   * @return {InnerActionFrame}
    */
   clone() {
     var frame = new ccs.InnerActionFrame();
@@ -930,7 +930,7 @@ export class InnerActionFrame extends Frame {
 
   /**
    * Set the inner action type
-   * @param {ccs.InnerActionType} type
+   * @param {InnerActionType} type
    */
   setInnerActionType(type) {
     this._innerActionType = type;
@@ -938,7 +938,7 @@ export class InnerActionFrame extends Frame {
 
   /**
    * Gets the inner action type
-   * @returns {ccs.InnerActionType}
+   * @returns {InnerActionType}
    */
   getInnerActionType() {
     return this._innerActionType;
@@ -963,7 +963,7 @@ export class InnerActionFrame extends Frame {
 
 /**
  * Color frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class ColorFrame extends Frame {
   constructor() {
@@ -973,7 +973,7 @@ export class ColorFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.ColorFrame} nextFrame
+   * @param {ColorFrame} nextFrame
    */
   onEnter(nextFrame) {
     if (!this._node) return;
@@ -1015,7 +1015,7 @@ export class ColorFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.ColorFrame}
+   * @return {ColorFrame}
    */
   clone() {
     var frame = new ccs.ColorFrame();
@@ -1043,7 +1043,7 @@ export class ColorFrame extends Frame {
 
 /**
  * Alpha frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class AlphaFrame extends Frame {
   constructor() {
@@ -1091,7 +1091,7 @@ export class AlphaFrame extends Frame {
 
 /**
  * Event frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class EventFrame extends Frame {
   constructor() {
@@ -1102,7 +1102,7 @@ export class EventFrame extends Frame {
 
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     this._emitEvent();
@@ -1111,7 +1111,7 @@ export class EventFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.EventFrame}
+   * @return {EventFrame}
    */
   clone() {
     var frame = new ccs.EventFrame();
@@ -1141,12 +1141,12 @@ export class EventFrame extends Frame {
 
 /**
  * zOrder frame
- * @extend ccs.Frame
+ * @extend Frame
  */
 export class ZOrderFrame extends Frame {
   /**
    * the execution of the callback
-   * @param {ccs.Frame} nextFrame
+   * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (this._node) this._node.setLocalZOrder(this._zorder);
@@ -1155,7 +1155,7 @@ export class ZOrderFrame extends Frame {
   /**
    * to copy object with deep copy.
    * returns a clone of action.
-   * @return {ccs.ZOrderFrame}
+   * @return {ZOrderFrame}
    */
   clone() {
     var frame = new ccs.ZOrderFrame();

@@ -26,12 +26,12 @@
 /**
  * The attribute component for Cocostudio.
  */
-import { Loader, log } from "@aspect/core";
+import { Loader, log, Component } from "@aspect/core";
 
-export class ComAttribute extends ccs.Component {
+export class ComAttribute extends Component {
 
     /**
-     * Construction of ccs.ComAttribute
+     * Construction of ComAttribute
      */
     constructor () {
         super();
@@ -42,7 +42,7 @@ export class ComAttribute extends ccs.Component {
     }
 
     /**
-     * Initializes a ccs.ComAttribute
+     * Initializes a ComAttribute
      * @returns {boolean}
      */
     init () {

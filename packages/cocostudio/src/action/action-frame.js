@@ -120,12 +120,12 @@ export const FrameEaseType = ccs.FrameEaseType = {
 };
 
 /**
- * The action frame of Cocostudio. It's the base class of ccs.ActionMoveFrame, ccs.ActionScaleFrame etc.
+ * The action frame of Cocostudio. It's the base class of ActionMoveFrame, ActionScaleFrame etc.
  *
- * @property {Number}               frameType               - frame type of ccs.ActionFrame
- * @property {Number}               easingType              - easing type of ccs.ActionFrame
- * @property {Number}               frameIndex              - frame index of ccs.ActionFrame
- * @property {Number}               time                    - time of ccs.ActionFrame
+ * @property {Number}               frameType               - frame type of ActionFrame
+ * @property {Number}               easingType              - easing type of ActionFrame
+ * @property {Number}               frameIndex              - frame index of ActionFrame
+ * @property {Number}               time                    - time of ActionFrame
  */
 export class ActionFrame extends NewClass {
   /**
@@ -142,7 +142,7 @@ export class ActionFrame extends NewClass {
   /**
    * Returns the action of ActionFrame. its subClass need override it.
    * @param {number} duration the duration time of ActionFrame
-   * @param {ccs.ActionFrame} srcFrame source frame.
+   * @param {ActionFrame} srcFrame source frame.
    * @returns {null}
    */
   getAction(duration, srcFrame) {
@@ -269,7 +269,7 @@ export class ActionFrame extends NewClass {
   }
 
   /**
-   * Sets the easing type to ccs.ActionFrame
+   * Sets the easing type to ActionFrame
    * @param {Number} easingType
    */
   setEasingType(easingType) {
@@ -282,7 +282,7 @@ export class ActionFrame extends NewClass {
  */
 export class ActionMoveFrame extends ccs.ActionFrame {
   /**
-   * Construction of ccs.ActionMoveFrame
+   * Construction of ActionMoveFrame
    */
   constructor() {
     super();
@@ -328,7 +328,7 @@ export class ActionMoveFrame extends ccs.ActionFrame {
  */
 export class ActionScaleFrame extends ccs.ActionFrame {
   /**
-   * Construction of ccs.ActionScaleFrame
+   * Construction of ActionScaleFrame
    */
   constructor() {
     super();
@@ -386,7 +386,7 @@ export class ActionScaleFrame extends ccs.ActionFrame {
  */
 export class ActionRotationFrame extends ccs.ActionFrame {
   /**
-   * Construction of ccs.ActionRotationFrame
+   * Construction of ActionRotationFrame
    */
   constructor() {
     super();
@@ -435,7 +435,7 @@ export class ActionRotationFrame extends ccs.ActionFrame {
  */
 export class ActionFadeFrame extends ccs.ActionFrame {
   /**
-   * Construction of ccs.ActionFadeFrame
+   * Construction of ActionFadeFrame
    */
   constructor() {
     super();
@@ -474,7 +474,7 @@ export class ActionFadeFrame extends ccs.ActionFrame {
  */
 export class ActionTintFrame extends ccs.ActionFrame {
   /**
-   * Construction of ccs.ActionTintFrame
+   * Construction of ActionTintFrame
    */
   constructor() {
     super();

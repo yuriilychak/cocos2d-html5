@@ -27,7 +27,7 @@ import { NewClass } from '@aspect/core';
 
 /**
  * The trigger manager of Cocostudio
- * @name ccs.triggerManager
+ * @name triggerManager
  */
 export const triggerManager = ccs.triggerManager = {
     _eventTriggers: {},
@@ -64,7 +64,7 @@ export const triggerManager = ccs.triggerManager = {
     /**
      * Returns the trigger object by id
      * @param {Number} id
-     * @returns {ccs.TriggerObj}
+     * @returns {TriggerObj}
      */
     getTriggerObj: function (id) {
         return this._triggerObjs[id];
@@ -171,7 +171,7 @@ export const triggerManager = ccs.triggerManager = {
 
     /**
      * Adds an armature movement callback to manager.
-     * @param {ccs.Armature} armature
+     * @param {Armature} armature
      * @param {function} callFunc
      * @param {Object} target
      */
@@ -196,7 +196,7 @@ export const triggerManager = ccs.triggerManager = {
 
     /**
      * Removes armature movement callback from manager.
-     * @param {ccs.Armature} armature
+     * @param {Armature} armature
      * @param {Object} target
      * @param {function} callFunc
      */
@@ -213,7 +213,7 @@ export const triggerManager = ccs.triggerManager = {
 
     /**
      * Removes an armature's all movement callbacks.
-     * @param {ccs.Armature} armature
+     * @param {Armature} armature
      */
     removeArmatureAllMovementCallBack: function (armature) {
         if (armature == null)
@@ -229,14 +229,14 @@ export const triggerManager = ccs.triggerManager = {
     },
 
     /**
-     * Removes all armature movement callbacks from ccs.triggerManager.
+     * Removes all armature movement callbacks from triggerManager.
      */
     removeAllArmatureMovementCallBack: function () {
         this._movementDispatches.length = 0;
     },
 
     /**
-     * Returns the version of ccs.triggerManager
+     * Returns the version of triggerManager
      * @returns {string}
      */
 	version: function () {
@@ -259,7 +259,7 @@ export class ArmatureMovementDispatcher extends NewClass {
 
     /**
      * Calls armature movement events.
-     * @param {ccs.Armature} armature
+     * @param {Armature} armature
      * @param {Number} movementType
      * @param {String} movementID
      */

@@ -23,13 +23,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Component } from "@aspect/core";
+
 /**
  * The controller component for Cocostudio.
  */
-export class ComController extends ccs.Component {
+export class ComController extends Component {
 
     /**
-     * Construction of ccs.ComController.
+     * Construction of ComController.
      */
     constructor () {
         super();

@@ -1,5 +1,13 @@
-// Must be first: initializes the ccs global namespace
-import './setup.js';
+// Initialize the ccs global namespace before any module runs.
+import { Node, Sprite, Component } from "@aspect/core";
+
+window.ccs = window.ccs || {};
+
+ccs.Node = Node;
+ccs.Sprite = Sprite;
+ccs.Component = Component;
+
+ccs.cocostudioVersion = "v1.3.0.0";
 
 // ─── Armature ────────────────────────────────────────────────────────────────
 export * from './armature/armature-define.js';

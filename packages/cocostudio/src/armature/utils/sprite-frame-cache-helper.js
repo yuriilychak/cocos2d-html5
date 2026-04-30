@@ -25,8 +25,8 @@
  ****************************************************************************/
 
 /**
- * ccs.spriteFrameCacheHelper is a singleton object, it's a sprite frame cache helper
- * @name ccs.spriteFrameCacheHelper
+ * spriteFrameCacheHelper is a singleton object, it's a sprite frame cache helper
+ * @name spriteFrameCacheHelper
  */
 import { SpriteFrameCache, TextureAtlas } from "@aspect/core";
 

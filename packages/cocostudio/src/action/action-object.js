@@ -31,7 +31,7 @@ import { Director, NewClass, REPEAT_FOREVER, arrayRemoveObject } from "@aspect/c
 
 export class ActionObject extends NewClass {
   /**
-   * Construction of ccs.ActionObject.
+   * Construction of ActionObject.
    */
   constructor() {
     super();
@@ -47,7 +47,7 @@ export class ActionObject extends NewClass {
   }
 
   /**
-   * Sets name to ccs.ActionObject
+   * Sets name to ActionObject
    * @param {string} name
    */
   setName(name) {
@@ -55,7 +55,7 @@ export class ActionObject extends NewClass {
   }
 
   /**
-   * Returns name fo ccs.ActionObject
+   * Returns name fo ActionObject
    * @returns {string}
    */
   getName() {
@@ -160,7 +160,7 @@ export class ActionObject extends NewClass {
 
   /**
    * Adds a ActionNode to play the action.
-   * @param {ccs.ActionNode} node
+   * @param {ActionNode} node
    */
   addActionNode(node) {
     if (!node) return;
@@ -170,7 +170,7 @@ export class ActionObject extends NewClass {
 
   /**
    * Removes a ActionNode which play the action.
-   * @param {ccs.ActionNode} node
+   * @param {ActionNode} node
    */
   removeActionNode(node) {
     if (node == null) return;

@@ -43,7 +43,7 @@ export const MovementEventType = ccs.MovementEventType = {
 export class AnimationEvent extends NewClass {
 
     /**
-     * Constructor of ccs.AnimationEvent
+     * Constructor of AnimationEvent
      * @param {function} callFunc
      * @param {object} target
      * @param {object} [data]
@@ -68,7 +68,7 @@ export class AnimationEvent extends NewClass {
  * The movement event class for Armature.
  * @constructor
  *
- * @property {ccs.Armature}             armature        - The armature reference of movement event.
+ * @property {Armature}             armature        - The armature reference of movement event.
  * @property {Number}                   movementType    - The type of movement.
  * @property {String}                   movementID      - The ID of movement.
  */
@@ -82,7 +82,7 @@ export function MovementEvent() {
  * The frame event class for Armature.
  * @constructor
  *
- * @property {ccs.Bone}             bone                - The bone reference of frame event.
+ * @property {Bone}             bone                - The bone reference of frame event.
  * @property {String}               frameEventName      - The name of frame event.
  * @property {Number}               originFrameIndex    - The index of origin frame.
  * @property {Number}               currentFrameIndex   - The index of current frame.
@@ -97,9 +97,9 @@ export function FrameEvent() {
 /**
  * The Animation class for Armature, it plays armature animation, and controls speed scale and manages animation frame.
  *
- * @param {ccs.Armature} [armature] The armature
+ * @param {Armature} [armature] The armature
  *
- * @property {ccs.AnimationData}    animationData       - Animation data
+ * @property {AnimationData}    animationData       - Animation data
  * @property {Object}               userObject          - User custom object
  * @property {Boolean}              ignoreFrameEvent    - Indicate whether the frame event is ignored
  * @property {Number}               speedScale          - Animation play speed scale
@@ -127,7 +127,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
 
     /**
      * Initializes with an armature object
-     * @param {ccs.Armature} armature
+     * @param {Armature} armature
      * @return {Boolean}
      */
     init(armature) {
@@ -417,7 +417,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
     }
 
     /**
-     * Updates the state of ccs.Tween list, calls frame event's callback and calls movement event's callback.
+     * Updates the state of Tween list, calls frame event's callback and calls movement event's callback.
      * @param {Number} dt
      */
     update(dt) {
@@ -483,7 +483,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
                     this.movementEvent(this, ccs.MovementEventType.start, this._movementID);
                     break;
                 default:
-                    //locCurrentPercent = ccs.fmodf(locCurrentPercent, 1);
+                    //locCurrentPercent = fmodf(locCurrentPercent, 1);
                     this._currentFrame = ccs.fmodf(this._currentFrame, this._nextFrameIndex);
                     this._toIndex = 0;
                     this.movementEvent(this._armature, ccs.MovementEventType.loopComplete, this._movementID);
@@ -541,7 +541,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
 
     /**
      * Emits a frame event
-     * @param {ccs.Bone} bone
+     * @param {Bone} bone
      * @param {String} frameEventName
      * @param {Number} originFrameIndex
      * @param {Number} currentFrameIndex
@@ -559,7 +559,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
 
     /**
      * Emits a movement event
-     * @param {ccs.Armature} armature
+     * @param {Armature} armature
      * @param {Number} movementType
      * @param {String} movementID
      */
@@ -599,7 +599,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
 
     /**
      * Sets animation data to animation.
-     * @param {ccs.AnimationData} data
+     * @param {AnimationData} data
      */
     setAnimationData(data) {
         if(this._animationData !== data)
@@ -608,7 +608,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
 
     /**
      * Returns animation data of animation.
-     * @return {ccs.AnimationData}
+     * @return {AnimationData}
      */
     getAnimationData() {
         return this._animationData;

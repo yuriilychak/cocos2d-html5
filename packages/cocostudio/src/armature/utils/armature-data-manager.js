@@ -38,8 +38,8 @@ export function RelativeData() {
 ccs.RelativeData = RelativeData;
 
 /**
- * ccs.armatureDataManager is a singleton object which format and manage armature configuration and armature animation
- * @name ccs.armatureDataManager
+ * armatureDataManager is a singleton object which format and manage armature configuration and armature animation
+ * @name armatureDataManager
  */
 ccs.armatureDataManager =  {
     _animationDatas: {},
@@ -82,7 +82,7 @@ ccs.armatureDataManager =  {
     /**
      * Adds armature data
      * @param {string} id The id of the armature data
-     * @param {ccs.ArmatureData} armatureData
+     * @param {ArmatureData} armatureData
      */
     addArmatureData: function (id, armatureData, configFilePath) {
         var data = this.getRelativeData(configFilePath);
@@ -95,7 +95,7 @@ ccs.armatureDataManager =  {
     /**
      * Gets armatureData by id
      * @param {String} id
-     * @return {ccs.ArmatureData}
+     * @return {ArmatureData}
      */
     getArmatureData: function (id) {
         var armatureData = null;
@@ -117,7 +117,7 @@ ccs.armatureDataManager =  {
     /**
      * Adds animation data to armature data manager.
      * @param {String} id
-     * @param {ccs.AnimationData} animationData
+     * @param {AnimationData} animationData
      */
     addAnimationData: function (id, animationData, configFilePath) {
         var data = this.getRelativeData(configFilePath);
@@ -129,7 +129,7 @@ ccs.armatureDataManager =  {
     /**
      * Gets animationData by id
      * @param {String} id
-     * @return {ccs.AnimationData}
+     * @return {AnimationData}
      */
     getAnimationData: function (id) {
         var animationData = null;
@@ -151,7 +151,7 @@ ccs.armatureDataManager =  {
     /**
      * Adds texture data to Armature data manager.
      * @param {String} id
-     * @param {ccs.TextureData} textureData
+     * @param {TextureData} textureData
      */
     addTextureData: function (id, textureData, configFilePath) {
         var data = this.getRelativeData(configFilePath);
@@ -164,7 +164,7 @@ ccs.armatureDataManager =  {
     /**
      * Gets textureData by id
      * @param {String} id
-     * @return {ccs.TextureData}
+     * @return {TextureData}
      */
     getTextureData: function (id) {
         var textureData = null;
@@ -190,9 +190,9 @@ ccs.armatureDataManager =  {
      * @param {String} configFilePath
      * @example
      * //example1
-     * ccs.armatureDataManager.addArmatureFileInfo("res/test.json");
+     * armatureDataManager.addArmatureFileInfo("res/test.json");
      * //example2
-     * ccs.armatureDataManager.addArmatureFileInfo("res/test.png","res/test.plist","res/test.json");
+     * armatureDataManager.addArmatureFileInfo("res/test.png","res/test.plist","res/test.json");
      */
     addArmatureFileInfo: function ( /*imagePath, plistPath, configFilePath*/ ) {
         var imagePath, plistPath, configFilePath;
@@ -308,7 +308,7 @@ ccs.armatureDataManager =  {
     /**
      * Gets RelativeData of Armature data manager.
      * @param {String} configFilePath
-     * @returns {ccs.RelativeData}
+     * @returns {RelativeData}
      */
     getRelativeData: function (configFilePath) {
         return this._relativeDatas[configFilePath];

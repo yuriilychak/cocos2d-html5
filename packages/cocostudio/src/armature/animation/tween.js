@@ -26,9 +26,9 @@
 /**
  * The tween class for Armature.
  *
- * @param {ccs.Bone} The bone to be animated
+ * @param {Bone} The bone to be animated
  *
- * @property {ccs.ArmatureAnimation}    animation   - The animation
+ * @property {ArmatureAnimation}    animation   - The animation
  */
 
 export class Tween extends ccs.ProcessBase {
@@ -44,8 +44,8 @@ export class Tween extends ccs.ProcessBase {
     set animation(v) { this.setAnimation(v); }
 
     /**
-     * initializes a ccs.Tween with a Bone
-     * @param {ccs.Bone} bone
+     * initializes a Tween with a Bone
+     * @param {Bone} bone
      * @return {Boolean}
      */
     init(bone) {
@@ -64,11 +64,11 @@ export class Tween extends ccs.ProcessBase {
 
     /**
      * Plays the tween.
-     * @param {ccs.MovementBoneData} movementBoneData
+     * @param {MovementBoneData} movementBoneData
      * @param {Number} durationTo
      * @param {Number} durationTween
      * @param {Boolean} loop
-     * @param {ccs.TweenType} tweenEasing
+     * @param {TweenType} tweenEasing
      */
     play(movementBoneData, durationTo, durationTween, loop, tweenEasing) {
         super.play(durationTo, durationTween, loop, tweenEasing);
@@ -214,8 +214,8 @@ export class Tween extends ccs.ProcessBase {
 
     /**
      * Calculate the between value of _from and _to, and give it to between frame data
-     * @param {ccs.FrameData} from
-     * @param {ccs.FrameData} to
+     * @param {FrameData} from
+     * @param {FrameData} to
      * @param {Boolean} [limit=true]
      */
     setBetween(from, to, limit) {   //TODO set tweenColorTo to protected in v3.1
@@ -244,7 +244,7 @@ export class Tween extends ccs.ProcessBase {
 
     /**
      * Update display index and process the key frame event when arrived a key frame
-     * @param {ccs.FrameData} keyFrameData
+     * @param {FrameData} keyFrameData
      */
     arriveKeyFrame(keyFrameData) {                         //TODO set tweenColorTo to protected in v3.1
         if (keyFrameData) {
@@ -275,8 +275,8 @@ export class Tween extends ccs.ProcessBase {
     /**
      * According to the percent to calculate current FrameData with tween effect
      * @param {Number} percent
-     * @param {ccs.FrameData} [node]
-     * @return {ccs.FrameData}
+     * @param {FrameData} [node]
+     * @return {FrameData}
      */
     tweenNodeTo(percent, node) {         //TODO set tweenColorTo to protected in v3.1
         if (!node)
@@ -303,7 +303,7 @@ export class Tween extends ccs.ProcessBase {
     /**
      * According to the percent to calculate current color with tween effect
      * @param {Number} percent
-     * @param {ccs.FrameData} node
+     * @param {FrameData} node
      */
     tweenColorTo(percent,node){    //TODO set tweenColorTo to protected in v3.1
         var locFrom = this._from;
@@ -393,23 +393,23 @@ export class Tween extends ccs.ProcessBase {
     }
 
     /**
-     * Sets Armature animation to ccs.Tween.
-     * @param {ccs.ArmatureAnimation} animation
+     * Sets Armature animation to Tween.
+     * @param {ArmatureAnimation} animation
      */
     setAnimation(animation) {
         this._animation = animation;
     }
 
     /**
-     * Returns Armature animation of ccs.Tween.
-     * @return {ccs.ArmatureAnimation}
+     * Returns Armature animation of Tween.
+     * @return {ArmatureAnimation}
      */
     getAnimation() {
         return this._animation;
     }
 
     /**
-     * Sets movement bone data to ccs.Tween.
+     * Sets movement bone data to Tween.
      * @param data
      */
     setMovementBoneData(data){

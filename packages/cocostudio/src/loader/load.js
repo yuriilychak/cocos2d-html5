@@ -215,7 +215,7 @@ export function loadWithVisibleSize (file, path) {
 
 export const actionTimelineCache = ccs.actionTimelineCache = {
 
-    //@deprecated This function will be deprecated sooner or later please use ccs.load
+    //@deprecated This function will be deprecated sooner or later please use load
     /**
      * Create Timeline Action
      * @param file
@@ -228,7 +228,7 @@ export const actionTimelineCache = ccs.actionTimelineCache = {
 
 export const csLoader = ccs.csLoader = {
 
-    //@deprecated This function will be deprecated sooner or later please use ccs.load
+    //@deprecated This function will be deprecated sooner or later please use load
     /**
      * Create Timeline Node
      * @param file

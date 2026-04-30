@@ -169,7 +169,7 @@ export const DISPLAY_TYPE_MAX = ccs.DISPLAY_TYPE_MAX = 3;
  */
 export class BaseData extends NewClass {
   /**
-   * Construction of ccs.BaseData
+   * Construction of BaseData
    */
   constructor() {
     super();
@@ -191,7 +191,7 @@ export class BaseData extends NewClass {
   /**
    * Copy data from node
    * @function
-   * @param {ccs.BaseData} node
+   * @param {BaseData} node
    */
   copy(node) {
     this.x = node.x;
@@ -225,7 +225,7 @@ export class BaseData extends NewClass {
   }
 
   /**
-   * Returns the color of ccs.BaseData
+   * Returns the color of BaseData
    * @function
    * @returns {Color}
    */
@@ -236,8 +236,8 @@ export class BaseData extends NewClass {
   /**
    * Calculate two baseData's between value(to - from) and set to self
    * @function
-   * @param {ccs.BaseData} from
-   * @param {ccs.BaseData} to
+   * @param {BaseData} from
+   * @param {BaseData} to
    * @param {Boolean} limit
    */
   subtract(from, to, limit) {
@@ -281,7 +281,7 @@ export class BaseData extends NewClass {
  */
 export class DisplayData extends NewClass {
   /**
-   * Construction of ccs.DisplayData
+   * Construction of DisplayData
    */
   constructor() {
     super();
@@ -305,7 +305,7 @@ export class DisplayData extends NewClass {
   /**
    * copy data
    * @function
-   * @param {ccs.DisplayData} displayData
+   * @param {DisplayData} displayData
    */
   copy(displayData) {
     this.displayName = displayData.displayName;
@@ -316,11 +316,11 @@ export class DisplayData extends NewClass {
 /**
  * The sprite display data class.
  *
- * @property {ccs.BaseData}         skinData                - the skin data
+ * @property {BaseData}         skinData                - the skin data
  */
 export class SpriteDisplayData extends DisplayData {
   /**
-   * Construction of ccs.SpriteDisplayData
+   * Construction of SpriteDisplayData
    */
   constructor() {
     super();
@@ -330,7 +330,7 @@ export class SpriteDisplayData extends DisplayData {
   /**
    * copy data
    * @function
-   * @param {ccs.SpriteDisplayData} displayData
+   * @param {SpriteDisplayData} displayData
    */
   copy(displayData) {
     super.copy(displayData);
@@ -343,7 +343,7 @@ export class SpriteDisplayData extends DisplayData {
  */
 export class ArmatureDisplayData extends DisplayData {
   /**
-   * Construction of ccs.ArmatureDisplayData
+   * Construction of ArmatureDisplayData
    */
   constructor() {
     super();
@@ -357,7 +357,7 @@ export class ArmatureDisplayData extends DisplayData {
  */
 export class ParticleDisplayData extends DisplayData {
   /**
-   * Construction of ccs.ParticleDisplayData
+   * Construction of ParticleDisplayData
    */
   constructor() {
     super();
@@ -379,7 +379,7 @@ export class ParticleDisplayData extends DisplayData {
  */
 export class BoneData extends BaseData {
   /**
-   * Construction of ccs.BoneData
+   * Construction of BoneData
    */
   constructor() {
     super();
@@ -390,7 +390,7 @@ export class BoneData extends BaseData {
   }
 
   /**
-   * Initializes a ccs.BoneData
+   * Initializes a BoneData
    * @returns {boolean}
    */
   init() {
@@ -400,7 +400,7 @@ export class BoneData extends BaseData {
   /**
    * Adds display data to list
    * @function
-   * @param {ccs.DisplayData} displayData
+   * @param {DisplayData} displayData
    */
   addDisplayData(displayData) {
     this.displayDataList.push(displayData);
@@ -410,7 +410,7 @@ export class BoneData extends BaseData {
    * Returns display data with index.
    * @function
    * @param {Number} index
-   * @returns {ccs.DisplayData}
+   * @returns {DisplayData}
    */
   getDisplayData(index) {
     return this.displayDataList[index];
@@ -430,7 +430,7 @@ export class BoneData extends BaseData {
  */
 export class ArmatureData extends NewClass {
   /**
-   * Construction of ccs.ArmatureData
+   * Construction of ArmatureData
    */
   constructor() {
     super();
@@ -440,7 +440,7 @@ export class ArmatureData extends NewClass {
   }
 
   /**
-   * Initializes a ccs.ArmatureData
+   * Initializes a ArmatureData
    * @returns {boolean}
    */
   init() {
@@ -449,7 +449,7 @@ export class ArmatureData extends NewClass {
 
   /**
    * Adds bone data to dictionary
-   * @param {ccs.BoneData} boneData
+   * @param {BoneData} boneData
    */
   addBoneData(boneData) {
     this.boneDataDic[boneData.name] = boneData;
@@ -466,7 +466,7 @@ export class ArmatureData extends NewClass {
    * Gets bone data by bone name
    * @function
    * @param {String} boneName
-   * @returns {ccs.BoneData}
+   * @returns {BoneData}
    */
   getBoneData(boneName) {
     return this.boneDataDic[boneName];
@@ -491,7 +491,7 @@ export class ArmatureData extends NewClass {
  */
 export class FrameData extends BaseData {
   /**
-   * Construction of ccs.FrameData.
+   * Construction of FrameData.
    */
   constructor() {
     super();
@@ -549,7 +549,7 @@ export class FrameData extends BaseData {
  */
 export class MovementBoneData extends NewClass {
   /**
-   * Construction of ccs.MovementBoneData.
+   * Construction of MovementBoneData.
    */
   constructor() {
     super();
@@ -561,7 +561,7 @@ export class MovementBoneData extends NewClass {
   }
 
   /**
-   * Initializes a ccs.MovementBoneData.
+   * Initializes a MovementBoneData.
    * @returns {boolean}
    */
   init() {
@@ -569,7 +569,7 @@ export class MovementBoneData extends NewClass {
   }
   /**
    * Adds frame data to frame list.
-   * @param {ccs.FrameData} frameData
+   * @param {FrameData} frameData
    */
   addFrameData(frameData) {
     this.frameList.push(frameData);
@@ -578,7 +578,7 @@ export class MovementBoneData extends NewClass {
    * Gets frame data by Index.
    * @function
    * @param {Number} index
-   * @returns {ccs.FrameData}
+   * @returns {FrameData}
    */
   getFrameData(index) {
     return this.frameList[index];
@@ -618,7 +618,7 @@ export function MovementData() {
 
 /**
  * add a movement bone data to dictionary
- * @param {ccs.MovementBoneData} movBoneData
+ * @param {MovementBoneData} movBoneData
  */
 MovementData.prototype.addMovementBoneData = function (movBoneData) {
   this.movBoneDataDic[movBoneData.name] = movBoneData;
@@ -627,7 +627,7 @@ MovementData.prototype.addMovementBoneData = function (movBoneData) {
 /**
  * add a movement bone data from dictionary by name
  * @param boneName
- * @returns {ccs.MovementBoneData}
+ * @returns {MovementBoneData}
  */
 MovementData.prototype.getMovementBoneData = function (boneName) {
   return this.movBoneDataDic[boneName];
@@ -648,7 +648,7 @@ export function AnimationData() {
 
 /**
  * adds movement data to the movement data dictionary
- * @param {ccs.MovementData} moveData
+ * @param {MovementData} moveData
  */
 AnimationData.prototype.addMovement = function (moveData) {
   this.movementDataDic[moveData.name] = moveData;
@@ -658,7 +658,7 @@ AnimationData.prototype.addMovement = function (moveData) {
 /**
  * gets movement data from movement data dictionary
  * @param {String} moveName
- * @returns {ccs.MovementData}
+ * @returns {MovementData}
  */
 AnimationData.prototype.getMovement = function (moveName) {
   return this.movementDataDic[moveName];
@@ -701,7 +701,7 @@ ContourData.prototype.init = function () {
  * @param {Point} p
  */
 ContourData.prototype.addVertex = function (p) {
-  //var v = new ccs.ContourVertex2(p.x, p.y);              //ccs.ContourVertex2 is same as Point, so we needn't create a ccs.ContourVertex2 object
+  //var v = new ContourVertex2(p.x, p.y);              //ContourVertex2 is same as Point, so we needn't create a ContourVertex2 object
   this.vertexList.push(p);
 };
 
@@ -723,7 +723,7 @@ TextureData.prototype.init = function () {
 
 /**
  * Adds a contourData to contourDataList
- * @param {ccs.ContourData} contourData
+ * @param {ContourData} contourData
  */
 TextureData.prototype.addContourData = function (contourData) {
   this.contourDataList.push(contourData);
@@ -732,7 +732,7 @@ TextureData.prototype.addContourData = function (contourData) {
 /**
  * gets a contourData from contourDataList by index
  * @param {Number} index
- * @returns {ccs.ContourData}
+ * @returns {ContourData}
  */
 TextureData.prototype.getContourData = function (index) {
   return this.contourDataList[index];

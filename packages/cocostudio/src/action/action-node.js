@@ -33,7 +33,7 @@ import { sequence, spawn } from "@aspect/actions";
 
 export class ActionNode extends NewClass {
   /**
-   * Construction of ccs.ActionNode
+   * Construction of ActionNode
    */
   constructor() {
     super();
@@ -173,7 +173,7 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Sets tag to ccs.ActionNode
+   * Sets tag to ActionNode
    * @param {Number} tag
    */
   setActionTag(tag) {
@@ -181,7 +181,7 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Returns the tag of ccs.ActionNode
+   * Returns the tag of ActionNode
    * @returns {number}
    */
   getActionTag() {
@@ -205,7 +205,7 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Returns the target node of ccs.ActionNode
+   * Returns the target node of ActionNode
    * @returns {Node}
    */
   getActionNode() {
@@ -214,9 +214,9 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Inserts an ActionFrame to ccs.ActionNode.
+   * Inserts an ActionFrame to ActionNode.
    * @param {number} index
-   * @param {ccs.ActionFrame} frame
+   * @param {ActionFrame} frame
    */
   insertFrame(index, frame) {
     if (frame == null) return;
@@ -226,8 +226,8 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Pushes back an ActionFrame to ccs.ActionNode.
-   * @param {ccs.ActionFrame} frame
+   * Pushes back an ActionFrame to ActionNode.
+   * @param {ActionFrame} frame
    */
   addFrame(frame) {
     if (!frame) return;
@@ -237,8 +237,8 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Removes an ActionFrame from ccs.ActionNode.
-   * @param {ccs.ActionFrame} frame
+   * Removes an ActionFrame from ActionNode.
+   * @param {ActionFrame} frame
    */
   deleteFrame(frame) {
     if (frame === undefined) return;
@@ -248,7 +248,7 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Removes all ActionFrames from ccs.ActionNode.
+   * Removes all ActionFrames from ActionNode.
    */
   clearAllFrame() {
     for (var i = 0; i < this._frameArrayNum; i++)
@@ -287,7 +287,7 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Plays ccs.ActionNode's action.
+   * Plays ActionNode's action.
    * @param {CallFunc} fun
    */
   playAction(fun) {
@@ -333,7 +333,7 @@ export class ActionNode extends NewClass {
   }
 
   /**
-   * Returns the index of last ccs.ActionFrame.
+   * Returns the index of last ActionFrame.
    * @returns {number}
    */
   getLastFrameIndex() {
