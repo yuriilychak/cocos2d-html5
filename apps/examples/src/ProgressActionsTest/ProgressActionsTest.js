@@ -397,7 +397,7 @@ var arrayOfProgressTest = [
     SpriteProgressWithSpriteFrame
 ];
 
-var nextProgressTest = function () {
+export function nextProgressTest() {
     ProgressTestSceneIdx++;
     ProgressTestSceneIdx = ProgressTestSceneIdx % arrayOfProgressTest.length;
 
@@ -407,7 +407,7 @@ var nextProgressTest = function () {
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
 };
-var previousProgressTest = function () {
+export function previousProgressTest() {
     ProgressTestSceneIdx--;
     if (ProgressTestSceneIdx < 0)
         ProgressTestSceneIdx += arrayOfProgressTest.length;
@@ -418,6 +418,6 @@ var previousProgressTest = function () {
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
 };
-var restartProgressTest = function () {
+export function restartProgressTest() {
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
 };

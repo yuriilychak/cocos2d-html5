@@ -374,7 +374,7 @@ var arrayOfEffectsAdvancedTest = [
 if (!cc.sys.isNative)
 	arrayOfEffectsAdvancedTest.push(Effect4);
 
-var nextEffectAdvanceAction = function () {
+export function nextEffectAdvanceAction() {
     sceneIndex++;
     sceneIndex = sceneIndex % arrayOfEffectsAdvancedTest.length;
 
@@ -385,7 +385,7 @@ var nextEffectAdvanceAction = function () {
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 
-var backEffectAdvanceAction = function () {
+export function backEffectAdvanceAction() {
     sceneIndex--;
     if (sceneIndex < 0)
         sceneIndex += arrayOfEffectsAdvancedTest.length;
@@ -397,7 +397,7 @@ var backEffectAdvanceAction = function () {
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 
-var restartEffectAdvanceAction = function () {
+export function restartEffectAdvanceAction() {
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 

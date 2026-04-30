@@ -319,7 +319,7 @@ var arrayOfBakeLayerTest = [
     BakeLayerColorTest
 ];
 
-var nextBakeLayerTest = function (num) {
+export function nextBakeLayerTest(num) {
     _bakeLayerTestIdx = num ? num - 1 : _bakeLayerTestIdx;
     _bakeLayerTestIdx++;
     _bakeLayerTestIdx = _bakeLayerTestIdx % arrayOfBakeLayerTest.length;
@@ -330,7 +330,7 @@ var nextBakeLayerTest = function (num) {
     return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 };
 
-var previousBakeLayerTest = function () {
+export function previousBakeLayerTest() {
     _bakeLayerTestIdx--;
     if (_bakeLayerTestIdx < 0)
         _bakeLayerTestIdx += arrayOfBakeLayerTest.length;
@@ -340,6 +340,6 @@ var previousBakeLayerTest = function () {
     }
     return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 };
-var restartBakeLayerTest = function () {
+export function restartBakeLayerTest() {
     return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 };

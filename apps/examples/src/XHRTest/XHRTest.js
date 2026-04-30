@@ -178,7 +178,7 @@ export class XHRTestLayer extends cc.Layer {
 
 };
 
-var runXHRTest = function () {
+export function runXHRTest() {
     var pScene = new cc.Scene();
     var pLayer = new XHRTestLayer();
     pScene.addChild(pLayer);

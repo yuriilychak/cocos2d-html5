@@ -153,13 +153,13 @@ if( 'opengl' in cc.sys.capabilities && cc.rendererConfig.isWebGL){
 }
 
 
-var nextParticleAction = function () {
+export function nextParticleAction() {
     particleSceneIdx++;
     particleSceneIdx = particleSceneIdx % particleSceneArr.length;
     return particleSceneArr[particleSceneIdx]();
 };
 
-var backParticleAction = function () {
+export function backParticleAction() {
     particleSceneIdx--;
     if (particleSceneIdx < 0)
         particleSceneIdx += particleSceneArr.length;
@@ -167,7 +167,7 @@ var backParticleAction = function () {
     return particleSceneArr[particleSceneIdx]();
 };
 
-var restartParticleAction = function () {
+export function restartParticleAction() {
     return particleSceneArr[particleSceneIdx]();
 };
 

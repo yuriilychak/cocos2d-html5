@@ -175,19 +175,19 @@ var arrayOfPerformanceNowTest = [
     MonotonicIncreaseTest
 ];
 
-var nextPerformanceNowTest = function () {
+export function nextPerformanceNowTest() {
     scenePerformanceNowTestIdx++;
     scenePerformanceNowTestIdx = scenePerformanceNowTestIdx % arrayOfPerformanceNowTest.length;
 
     return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
 };
-var previousPerformanceNowTest = function () {
+export function previousPerformanceNowTest() {
     scenePerformanceNowTestIdx--;
     if (scenePerformanceNowTestIdx < 0)
         scenePerformanceNowTestIdx += arrayOfPerformanceNowTest.length;
 
     return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
 };
-var restartPerformanceNowTest = function () {
+export function restartPerformanceNowTest() {
     return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
 };

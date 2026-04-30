@@ -583,7 +583,7 @@ var arrayOfLayerTest = [
     IgnoreAnchorpointTest4
 ];
 
-var nextLayerTest = function () {
+export function nextLayerTest() {
     layerTestSceneIdx++;
     layerTestSceneIdx = layerTestSceneIdx % arrayOfLayerTest.length;
 
@@ -593,7 +593,7 @@ var nextLayerTest = function () {
 
     return new arrayOfLayerTest[layerTestSceneIdx]();
 };
-var previousLayerTest = function () {
+export function previousLayerTest() {
     layerTestSceneIdx--;
     if (layerTestSceneIdx < 0)
         layerTestSceneIdx += arrayOfLayerTest.length;
@@ -604,6 +604,6 @@ var previousLayerTest = function () {
 
     return new arrayOfLayerTest[layerTestSceneIdx]();
 };
-var restartLayerTest = function () {
+export function restartLayerTest() {
     return new arrayOfLayerTest[layerTestSceneIdx]();
 };

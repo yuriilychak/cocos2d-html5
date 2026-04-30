@@ -30,7 +30,7 @@ var TEXT_INPUT_FONT_SIZE = 36;
 
 var sceneIdx = -1;
 
-var textInputGetRect = function (node) {
+export function textInputGetRect(node) {
     var rc = new cc.Rect(node.x, node.y, node.width, node.height);
     rc.x -= rc.width / 2;
     rc.y -= rc.height / 2;
@@ -424,20 +424,20 @@ var arrayOfTextInputTest = [
     TextFieldTTFActionTest
 ];
 
-var nextTextInputTest = function () {
+export function nextTextInputTest() {
     sceneIdx++;
     sceneIdx = sceneIdx % arrayOfTextInputTest.length;
 
     return new arrayOfTextInputTest[sceneIdx]();
 };
-var previousTextInputTest = function () {
+export function previousTextInputTest() {
     sceneIdx--;
     if (sceneIdx < 0)
         sceneIdx += arrayOfTextInputTest.length;
 
     return new arrayOfTextInputTest[sceneIdx]();
 };
-var restartTextInputTest = function () {
+export function restartTextInputTest() {
     return new arrayOfTextInputTest[sceneIdx]();
 };
 

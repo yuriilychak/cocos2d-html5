@@ -260,20 +260,20 @@ var arrayOfMotionStreakTest = [
     Issue1358
 ];
 
-var nextMotionAction = function () {
+export function nextMotionAction() {
     sceneIdx++;
     sceneIdx = sceneIdx % arrayOfMotionStreakTest.length;
     return new arrayOfMotionStreakTest[sceneIdx]();
 };
 
-var backMotionAction = function () {
+export function backMotionAction() {
     sceneIdx--;
     if (sceneIdx < 0)
         sceneIdx += arrayOfMotionStreakTest.length;
     return new arrayOfMotionStreakTest[sceneIdx]();
 };
 
-var restartMotionAction = function () {
+export function restartMotionAction() {
     return new arrayOfMotionStreakTest[sceneIdx]();
 };
 

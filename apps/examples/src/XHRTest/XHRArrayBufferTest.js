@@ -116,7 +116,7 @@ export class XHRArrayBufferTestLayer extends cc.Layer {
 
 };
 
-var runXHRArrayBufferTest = function () {
+export function runXHRArrayBufferTest() {
     var pScene = new cc.Scene();
     var pLayer = new XHRArrayBufferTestLayer();
     pScene.addChild(pLayer);

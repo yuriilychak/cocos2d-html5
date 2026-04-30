@@ -133,7 +133,7 @@ export class EditBoxTestLayer extends cc.Layer {
 
 };
 
-var runEditBoxTest = function () {
+export function runEditBoxTest() {
     var pScene = new cc.Scene();
     var pLayer = new EditBoxTestLayer();
     pScene.addChild(pLayer);

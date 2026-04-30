@@ -284,151 +284,151 @@ export class TestLayer2 extends TransitionBase {
 
 };
 
-var JumpZoomTransition = function (t, s) {
+export function JumpZoomTransition(t, s) {
     return new cc.TransitionJumpZoom(t, s);
 };
-var FadeTransition = function (t, s) {
+export function FadeTransition(t, s) {
     return new cc.TransitionFade(t, s);
 };
 
-var FadeWhiteTransition = function (t, s) {
+export function FadeWhiteTransition(t, s) {
     return new cc.TransitionFade(t, s, new cc.Color(255, 255, 255));
 };
 
-var FlipXLeftOver = function (t, s) {
+export function FlipXLeftOver(t, s) {
     return new cc.TransitionFlipX(t, s, cc.TRANSITION_ORIENTATION_LEFT_OVER);
 };
 
-var FlipXRightOver = function (t, s) {
+export function FlipXRightOver(t, s) {
     return new cc.TransitionFlipX(t, s, cc.TRANSITION_ORIENTATION_RIGHT_OVER);
 };
 
-var FlipYUpOver = function (t, s) {
+export function FlipYUpOver(t, s) {
     return new cc.TransitionFlipY(t, s, cc.TRANSITION_ORIENTATION_UP_OVER);
 };
 
-var FlipYDownOver = function (t, s) {
+export function FlipYDownOver(t, s) {
     return new cc.TransitionFlipY(t, s, cc.TRANSITION_ORIENTATION_DOWN_OVER);
 };
 
-var FlipAngularLeftOver = function (t, s) {
+export function FlipAngularLeftOver(t, s) {
     return new cc.TransitionFlipAngular(t, s, cc.TRANSITION_ORIENTATION_LEFT_OVER);
 };
 
-var FlipAngularRightOver = function (t, s) {
+export function FlipAngularRightOver(t, s) {
     return new cc.TransitionFlipAngular(t, s, cc.TRANSITION_ORIENTATION_RIGHT_OVER);
 };
 
-var ZoomFlipXLeftOver = function (t, s) {
+export function ZoomFlipXLeftOver(t, s) {
     return new cc.TransitionZoomFlipX(t, s, cc.TRANSITION_ORIENTATION_LEFT_OVER);
 };
 
-var ZoomFlipXRightOver = function (t, s) {
+export function ZoomFlipXRightOver(t, s) {
     return new cc.TransitionZoomFlipX(t, s, cc.TRANSITION_ORIENTATION_RIGHT_OVER);
 };
 
-var ZoomFlipYUpOver = function (t, s) {
+export function ZoomFlipYUpOver(t, s) {
     return new cc.TransitionZoomFlipY(t, s, cc.TRANSITION_ORIENTATION_UP_OVER);
 };
 
-var ZoomFlipYDownOver = function (t, s) {
+export function ZoomFlipYDownOver(t, s) {
     return new cc.TransitionZoomFlipY(t, s, cc.TRANSITION_ORIENTATION_DOWN_OVER);
 };
 
-var ZoomFlipAngularLeftOver = function (t, s) {
+export function ZoomFlipAngularLeftOver(t, s) {
     return new cc.TransitionZoomFlipAngular(t, s, cc.TRANSITION_ORIENTATION_LEFT_OVER);
 };
 
-var ZoomFlipAngularRightOver = function (t, s) {
+export function ZoomFlipAngularRightOver(t, s) {
     return new cc.TransitionZoomFlipAngular(t, s, cc.TRANSITION_ORIENTATION_RIGHT_OVER);
 };
 
-var ShrinkGrowTransition = function (t, s) {
+export function ShrinkGrowTransition(t, s) {
     return new cc.TransitionShrinkGrow(t, s);
 };
 
-var RotoZoomTransition = function (t, s) {
+export function RotoZoomTransition(t, s) {
     return new cc.TransitionRotoZoom(t, s);
 };
 
-var MoveInLTransition = function (t, s) {
+export function MoveInLTransition(t, s) {
     return new cc.TransitionMoveInL(t, s);
 };
 
-var MoveInRTransition = function (t, s) {
+export function MoveInRTransition(t, s) {
     return new cc.TransitionMoveInR(t, s);
 };
 
-var MoveInTTransition = function (t, s) {
+export function MoveInTTransition(t, s) {
     return new cc.TransitionMoveInT(t, s);
 };
 
-var MoveInBTransition = function (t, s) {
+export function MoveInBTransition(t, s) {
     return new cc.TransitionMoveInB(t, s);
 };
 
-var SlideInLTransition = function (t, s) {
+export function SlideInLTransition(t, s) {
     return new cc.TransitionSlideInL(t, s);
 };
 
-var SlideInRTransition = function (t, s) {
+export function SlideInRTransition(t, s) {
     return new cc.TransitionSlideInR(t, s);
 };
 
-var SlideInTTransition = function (t, s) {
+export function SlideInTTransition(t, s) {
     return new cc.TransitionSlideInT(t, s);
 };
 
-var SlideInBTransition = function (t, s) {
+export function SlideInBTransition(t, s) {
     return new cc.TransitionSlideInB(t, s);
 };
 
-var CCTransitionCrossFade = function (t, s) {
+export function CCTransitionCrossFade(t, s) {
     return new cc.TransitionCrossFade(t, s);
 };
 
-var CCTransitionRadialCCW = function (t, s) {
+export function CCTransitionRadialCCW(t, s) {
     return new cc.TransitionProgressRadialCCW(t, s);
 };
 
-var CCTransitionRadialCW = function (t, s) {
+export function CCTransitionRadialCW(t, s) {
     return new cc.TransitionProgressRadialCW(t, s);
 };
 
-var PageTransitionForward = function (t, s) {
+export function PageTransitionForward(t, s) {
     director.setDepthTest(true);
     return new cc.TransitionPageTurn(t, s, false);
 };
 
-var PageTransitionBackward = function (t, s) {
+export function PageTransitionBackward(t, s) {
     director.setDepthTest(true);
     return new cc.TransitionPageTurn(t, s, true);
 };
 
-var FadeTRTransition = function (t, s) {
+export function FadeTRTransition(t, s) {
     return new cc.TransitionFadeTR(t, s);
 };
 
-var FadeBLTransition = function (t, s) {
+export function FadeBLTransition(t, s) {
     return new cc.TransitionFadeBL(t, s);
 };
 
-var FadeUpTransition = function (t, s) {
+export function FadeUpTransition(t, s) {
     return new cc.TransitionFadeUp(t, s);
 };
 
-var FadeDownTransition = function (t, s) {
+export function FadeDownTransition(t, s) {
     return new cc.TransitionFadeDown(t, s);
 };
 
-var TurnOffTilesTransition = function (t, s) {
+export function TurnOffTilesTransition(t, s) {
     return new cc.TransitionTurnOffTiles(t, s);
 };
 
-var SplitRowsTransition = function (t, s) {
+export function SplitRowsTransition(t, s) {
     return new cc.TransitionSplitRows(t, s);
 };
 
-var SplitColsTransition = function (t, s) {
+export function SplitColsTransition(t, s) {
     return new cc.TransitionSplitCols(t, s);
 };

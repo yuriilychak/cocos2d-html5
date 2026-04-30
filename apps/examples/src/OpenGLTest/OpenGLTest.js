@@ -1389,19 +1389,19 @@ var arrayOfOpenGLTest = [
     GLGetUniformTest
 ];
 
-var nextOpenGLTest = function () {
+export function nextOpenGLTest() {
     OpenGLTestIdx++;
     OpenGLTestIdx = OpenGLTestIdx % arrayOfOpenGLTest.length;
 
     return new arrayOfOpenGLTest[OpenGLTestIdx]();
 };
-var previousOpenGLTest = function () {
+export function previousOpenGLTest() {
     OpenGLTestIdx--;
     if (OpenGLTestIdx < 0)
         OpenGLTestIdx += arrayOfOpenGLTest.length;
 
     return new arrayOfOpenGLTest[OpenGLTestIdx]();
 };
-var restartOpenGLTest = function () {
+export function restartOpenGLTest() {
     return new arrayOfOpenGLTest[OpenGLTestIdx]();
 };

@@ -556,7 +556,7 @@ var arrayOfEffectsTest = [
     PageTurn3DInRectTest
 ];
 
-var nextEffectsTest = function () {
+export function nextEffectsTest() {
     effectsTestSceneIdx++;
     effectsTestSceneIdx = effectsTestSceneIdx % arrayOfEffectsTest.length;
 
@@ -566,7 +566,7 @@ var nextEffectsTest = function () {
 
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };
-var previousEffectsTest = function () {
+export function previousEffectsTest() {
     effectsTestSceneIdx--;
     if (effectsTestSceneIdx < 0)
         effectsTestSceneIdx += arrayOfEffectsTest.length;
@@ -577,6 +577,6 @@ var previousEffectsTest = function () {
 
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };
-var restartEffectsTest = function () {
+export function restartEffectsTest() {
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };

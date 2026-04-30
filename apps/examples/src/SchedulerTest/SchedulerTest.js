@@ -771,7 +771,7 @@ var arrayOfSchedulerTest = [
     unScheduleAndRepeatTest
 ];
 
-var nextSchedulerTest = function () {
+export function nextSchedulerTest() {
     schedulerTestSceneIdx++;
     schedulerTestSceneIdx = schedulerTestSceneIdx % arrayOfSchedulerTest.length;
 
@@ -781,7 +781,7 @@ var nextSchedulerTest = function () {
 
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
 };
-var previousSchedulerTest = function () {
+export function previousSchedulerTest() {
     schedulerTestSceneIdx--;
     if (schedulerTestSceneIdx < 0)
         schedulerTestSceneIdx += arrayOfSchedulerTest.length;
@@ -792,6 +792,6 @@ var previousSchedulerTest = function () {
 
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
 };
-var restartSchedulerTest = function () {
+export function restartSchedulerTest() {
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
 };

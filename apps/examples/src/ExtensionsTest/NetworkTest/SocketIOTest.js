@@ -326,7 +326,7 @@ export class SocketIOTestLayer extends cc.Layer {
 
 };
 
-var runSocketIOTest = function () {
+export function runSocketIOTest() {
     var pScene = new cc.Scene();
     var pLayer = new SocketIOTestLayer();
     pScene.addChild(pLayer);

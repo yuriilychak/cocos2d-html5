@@ -284,20 +284,20 @@ var arrayOfUnitTest = [
 
 ];
 
-var nextUnitTest = function () {
+export function nextUnitTest() {
     unitTestSceneIdx++;
     unitTestSceneIdx = unitTestSceneIdx % arrayOfUnitTest.length;
 
     return new arrayOfUnitTest[unitTestSceneIdx]();
 };
-var previousUnitTest = function () {
+export function previousUnitTest() {
     unitTestSceneIdx--;
     if (unitTestSceneIdx < 0)
         unitTestSceneIdx += arrayOfUnitTest.length;
 
     return new arrayOfUnitTest[unitTestSceneIdx]();
 };
-var restartUnitTest = function () {
+export function restartUnitTest() {
     return new arrayOfUnitTest[unitTestSceneIdx]();
 };
 

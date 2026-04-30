@@ -2155,7 +2155,7 @@ if (!cc.sys.isNative || cc.sys.isMobile) {
     arrayOfLabelTest.push(WrapAlgorithmTest);
 }
 
-var nextLabelTest = function () {
+export function nextLabelTest() {
     labelTestIdx++;
     labelTestIdx = labelTestIdx % arrayOfLabelTest.length;
 
@@ -2165,7 +2165,7 @@ var nextLabelTest = function () {
 
     return new arrayOfLabelTest[labelTestIdx]();
 };
-var previousLabelTest = function () {
+export function previousLabelTest() {
     labelTestIdx--;
     if (labelTestIdx < 0)
         labelTestIdx += arrayOfLabelTest.length;
@@ -2176,6 +2176,6 @@ var previousLabelTest = function () {
 
     return new arrayOfLabelTest[labelTestIdx]();
 };
-var restartLabelTest = function () {
+export function restartLabelTest() {
     return new arrayOfLabelTest[labelTestIdx]();
 };

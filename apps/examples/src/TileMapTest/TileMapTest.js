@@ -1822,20 +1822,20 @@ if ( !cc.sys.isNative ){
     arrayOfTileMapTest.push(TMXGIDObjectsTest);
 }
 
-var nextTileMapTest = function () {
+export function nextTileMapTest() {
     tileTestSceneIdx++;
     tileTestSceneIdx = tileTestSceneIdx % arrayOfTileMapTest.length;
 
     return new arrayOfTileMapTest[tileTestSceneIdx]();
 };
-var previousTileMapTest = function () {
+export function previousTileMapTest() {
     tileTestSceneIdx--;
     if (tileTestSceneIdx < 0)
         tileTestSceneIdx += arrayOfTileMapTest.length;
 
     return new arrayOfTileMapTest[tileTestSceneIdx]();
 };
-var restartTileMapTest = function () {
+export function restartTileMapTest() {
     return new arrayOfTileMapTest[tileTestSceneIdx]();
 };
 

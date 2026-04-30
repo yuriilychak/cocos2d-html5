@@ -5681,7 +5681,7 @@ var arrayOfSpriteTest = [
     SpriteBlendFuncTest
 ];
 
-var nextSpriteTest = function () {
+export function nextSpriteTest() {
     spriteTestIdx++;
     spriteTestIdx = spriteTestIdx % arrayOfSpriteTest.length;
 
@@ -5691,7 +5691,7 @@ var nextSpriteTest = function () {
 
     return new arrayOfSpriteTest[spriteTestIdx ]();
 };
-var previousSpriteTest = function () {
+export function previousSpriteTest() {
     spriteTestIdx--;
     if (spriteTestIdx < 0)
         spriteTestIdx += arrayOfSpriteTest.length;
@@ -5702,7 +5702,7 @@ var previousSpriteTest = function () {
 
     return new arrayOfSpriteTest[spriteTestIdx ]();
 };
-var restartSpriteTest = function () {
+export function restartSpriteTest() {
     return new arrayOfSpriteTest[spriteTestIdx ]();
 };
 

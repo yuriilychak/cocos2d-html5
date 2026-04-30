@@ -758,7 +758,7 @@ if ( cc.sys.isNative){
     );
 }
 
-var nextClippingNodeTest = function () {
+export function nextClippingNodeTest() {
     clippingNodeTestSceneIdx++;
     clippingNodeTestSceneIdx = clippingNodeTestSceneIdx % arrayOfClippingNodeTest.length;
 
@@ -769,7 +769,7 @@ var nextClippingNodeTest = function () {
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 
-var previousClippingNodeTest = function () {
+export function previousClippingNodeTest() {
     clippingNodeTestSceneIdx--;
     if (clippingNodeTestSceneIdx < 0)
         clippingNodeTestSceneIdx += arrayOfClippingNodeTest.length;
@@ -781,7 +781,7 @@ var previousClippingNodeTest = function () {
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 
-var restartClippingNodeTest = function () {
+export function restartClippingNodeTest() {
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 

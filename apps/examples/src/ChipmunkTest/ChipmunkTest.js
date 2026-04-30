@@ -2133,7 +2133,7 @@ if( cc.sys.isNative ) {
     arrayOfChipmunkTest.push( ChipmunkReleaseTest );
 }
 
-var nextChipmunkTest = function () {
+export function nextChipmunkTest() {
     chipmunkTestSceneIdx++;
     chipmunkTestSceneIdx = chipmunkTestSceneIdx % arrayOfChipmunkTest.length;
 
@@ -2143,7 +2143,7 @@ var nextChipmunkTest = function () {
 
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();
 };
-var previousChipmunkTest = function () {
+export function previousChipmunkTest() {
     chipmunkTestSceneIdx--;
     if (chipmunkTestSceneIdx < 0)
         chipmunkTestSceneIdx += arrayOfChipmunkTest.length;
@@ -2154,6 +2154,6 @@ var previousChipmunkTest = function () {
 
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();
 };
-var restartChipmunkTest = function () {
+export function restartChipmunkTest() {
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();
 };

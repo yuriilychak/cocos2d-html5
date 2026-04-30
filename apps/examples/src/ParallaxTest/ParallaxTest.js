@@ -266,19 +266,19 @@ var arrayOfParallaxTest = [
     Parallax2
 ];
 
-var nextParallaxTest = function () {
+export function nextParallaxTest() {
     parallaxTestSceneIdx++;
     parallaxTestSceneIdx = parallaxTestSceneIdx % arrayOfParallaxTest.length;
 
     return new arrayOfParallaxTest[parallaxTestSceneIdx]();
 };
-var previousParallaxTest = function () {
+export function previousParallaxTest() {
     parallaxTestSceneIdx--;
     if (parallaxTestSceneIdx < 0)
         parallaxTestSceneIdx += arrayOfParallaxTest.length;
 
     return new arrayOfParallaxTest[parallaxTestSceneIdx]();
 };
-var restartParallaxTest = function () {
+export function restartParallaxTest() {
     return new arrayOfParallaxTest[parallaxTestSceneIdx]();
 };

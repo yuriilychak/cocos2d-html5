@@ -276,7 +276,7 @@ WebSocketTestLayer.create = function () {
 };
 
 
-var runWebSocketTest = function () {
+export function runWebSocketTest() {
     var pScene = new cc.Scene();
     var pLayer = WebSocketTestLayer.create();
     pScene.addChild(pLayer);

@@ -371,20 +371,20 @@ if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
     arrayOfSysTest.push(RestartGameLayerTest);
 }
 
-var nextSysTest = function () {
+export function nextSysTest() {
     sysTestSceneIdx++;
     sysTestSceneIdx = sysTestSceneIdx % arrayOfSysTest.length;
 
     return new arrayOfSysTest[sysTestSceneIdx]();
 };
-var previousSysTest = function () {
+export function previousSysTest() {
     sysTestSceneIdx--;
     if (sysTestSceneIdx < 0)
         sysTestSceneIdx += arrayOfSysTest.length;
 
     return new arrayOfSysTest[sysTestSceneIdx]();
 };
-var restartSysTest = function () {
+export function restartSysTest() {
     return new arrayOfSysTest[sysTestSceneIdx]();
 };
 

@@ -1166,7 +1166,7 @@ var arrayOfEaseActionsTest = [
     SpriteEaseCubicInOutTest
 ];
 
-var nextEaseActionsTest = function () {
+export function nextEaseActionsTest() {
     easeActionsTestIdx++;
     easeActionsTestIdx = easeActionsTestIdx % arrayOfEaseActionsTest.length;
 
@@ -1176,7 +1176,7 @@ var nextEaseActionsTest = function () {
 
     return new arrayOfEaseActionsTest[easeActionsTestIdx]();
 };
-var previousEaseActionsTest = function () {
+export function previousEaseActionsTest() {
     easeActionsTestIdx--;
     if (easeActionsTestIdx < 0)
         easeActionsTestIdx += arrayOfEaseActionsTest.length;
@@ -1187,6 +1187,6 @@ var previousEaseActionsTest = function () {
 
     return new arrayOfEaseActionsTest[easeActionsTestIdx]();
 };
-var restartEaseActionsTest = function () {
+export function restartEaseActionsTest() {
     return new arrayOfEaseActionsTest[easeActionsTestIdx]();
 };

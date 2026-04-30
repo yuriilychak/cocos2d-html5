@@ -361,20 +361,20 @@ var arrayOfTexCacheTest = [
     RemoteTextureTest
 ];
 
-var nextTexCacheTest = function () {
+export function nextTexCacheTest() {
     texCacheTestSceneIdx++;
     texCacheTestSceneIdx = texCacheTestSceneIdx % arrayOfTexCacheTest.length;
 
     return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
 };
-var previousTexCacheTest = function () {
+export function previousTexCacheTest() {
     texCacheTestSceneIdx--;
     if (texCacheTestSceneIdx < 0)
         texCacheTestSceneIdx += arrayOfTexCacheTest.length;
 
     return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
 };
-var restartTexCacheTest = function () {
+export function restartTexCacheTest() {
     return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
 };
 

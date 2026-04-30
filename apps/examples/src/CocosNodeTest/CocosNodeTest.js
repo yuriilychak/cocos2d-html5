@@ -838,7 +838,7 @@ if ('opengl' in cc.sys.capabilities) {
 }
 
 
-var nextNodeTest = function () {
+export function nextNodeTest() {
     nodeTestSceneIdx++;
     nodeTestSceneIdx = nodeTestSceneIdx % arrayOfNodeTest.length;
 
@@ -848,7 +848,7 @@ var nextNodeTest = function () {
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };
-var previousNodeTest = function () {
+export function previousNodeTest() {
     nodeTestSceneIdx--;
     if (nodeTestSceneIdx < 0)
         nodeTestSceneIdx += arrayOfNodeTest.length;
@@ -859,7 +859,7 @@ var previousNodeTest = function () {
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };
-var restartNodeTest = function () {
+export function restartNodeTest() {
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };
 

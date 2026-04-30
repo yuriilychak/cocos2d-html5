@@ -236,7 +236,7 @@ var arrayOfDrawTest = [
     DrawNewAPITest2
 ];
 
-var nextDrawTest = function () {
+export function nextDrawTest() {
     drawTestSceneIdx++;
     drawTestSceneIdx = drawTestSceneIdx % arrayOfDrawTest.length;
 
@@ -246,7 +246,7 @@ var nextDrawTest = function () {
 
     return new arrayOfDrawTest[drawTestSceneIdx]();
 };
-var previousDrawTest = function () {
+export function previousDrawTest() {
     drawTestSceneIdx--;
     if (drawTestSceneIdx < 0)
         drawTestSceneIdx += arrayOfDrawTest.length;
@@ -257,7 +257,7 @@ var previousDrawTest = function () {
 
     return new arrayOfDrawTest[drawTestSceneIdx]();
 };
-var restartDrawTest = function () {
+export function restartDrawTest() {
     return new arrayOfDrawTest[drawTestSceneIdx]();
 };
 

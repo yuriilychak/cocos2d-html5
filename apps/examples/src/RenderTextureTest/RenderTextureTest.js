@@ -736,19 +736,19 @@ if(('opengl' in cc.sys.capabilities) && cc.rendererConfig.isWebGL && (!cc.sys.is
     arrayOfRenderTextureTest.push(RenderTextureTargetNode);
 }
 
-var nextRenderTextureTest = function () {
+export function nextRenderTextureTest() {
     sceneRenderTextureIdx++;
     sceneRenderTextureIdx = sceneRenderTextureIdx % arrayOfRenderTextureTest.length;
 
     return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
 };
-var previousRenderTextureTest = function () {
+export function previousRenderTextureTest() {
     sceneRenderTextureIdx--;
     if (sceneRenderTextureIdx < 0)
         sceneRenderTextureIdx += arrayOfRenderTextureTest.length;
 
     return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
 };
-var restartRenderTextureTest = function () {
+export function restartRenderTextureTest() {
     return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
 };

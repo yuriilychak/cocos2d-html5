@@ -51,7 +51,7 @@ plugin.onApplicationWillEnterForeground = function() {
     }
 };
 
-var loadAnalyticsPlugin = function() {
+export function loadAnalyticsPlugin() {
     var langType = cc.sys.language;//cc.Application.getInstance().getCurrentLanguage();
 
     var umengKey  = "";

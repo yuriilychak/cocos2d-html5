@@ -132,7 +132,7 @@ export class TableViewTestLayer extends cc.Layer {
 
 };
 
-var runTableViewTest = function () {
+export function runTableViewTest() {
     var pScene = new cc.Scene();
     var pLayer = new TableViewTestLayer();
     pScene.addChild(pLayer);

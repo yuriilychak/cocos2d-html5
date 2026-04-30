@@ -2872,7 +2872,7 @@ class CustomMoveBy extends cc.MoveBy {
 }
 
 // special code, just for reduce code redundancy
-var createCustomAction = function (ActionObject) {
+export function createCustomAction(ActionObject) {
   class CustomAction extends ActionObject {
     update(dt) {
       super.update(dt);
@@ -3266,7 +3266,7 @@ var arrayOfActionsTest = [
   ActionIssue13605
 ];
 
-var nextActionsTest = function () {
+export function nextActionsTest() {
   actionsTestIdx++;
   actionsTestIdx = actionsTestIdx % arrayOfActionsTest.length;
 
@@ -3276,7 +3276,7 @@ var nextActionsTest = function () {
 
   return new arrayOfActionsTest[actionsTestIdx]();
 };
-var previousActionsTest = function () {
+export function previousActionsTest() {
   actionsTestIdx--;
   if (actionsTestIdx < 0) actionsTestIdx += arrayOfActionsTest.length;
 
@@ -3286,6 +3286,6 @@ var previousActionsTest = function () {
 
   return new arrayOfActionsTest[actionsTestIdx]();
 };
-var restartActionsTest = function () {
+export function restartActionsTest() {
   return new arrayOfActionsTest[actionsTestIdx]();
 };

@@ -503,7 +503,7 @@ var arrayOfEventsTest = [
     KeyboardTest
 ];
 
-var nextEventsTest = function () {
+export function nextEventsTest() {
     sceneIdx++;
     sceneIdx = sceneIdx % arrayOfEventsTest.length;
 
@@ -513,7 +513,7 @@ var nextEventsTest = function () {
 
     return new arrayOfEventsTest[sceneIdx]();
 };
-var previousEventsTest = function () {
+export function previousEventsTest() {
     sceneIdx--;
     if (sceneIdx < 0)
         sceneIdx += arrayOfEventsTest.length;
@@ -524,7 +524,7 @@ var previousEventsTest = function () {
 
     return new arrayOfEventsTest[sceneIdx]();
 };
-var restartEventsTest = function () {
+export function restartEventsTest() {
     return new arrayOfEventsTest[sceneIdx]();
 };
 

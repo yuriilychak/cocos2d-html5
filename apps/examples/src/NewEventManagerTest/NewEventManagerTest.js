@@ -1301,7 +1301,7 @@ var arrayOfEventDispatcherTest = [
     Issue9898
 ];
 
-var nextDispatcherTest = function () {
+export function nextDispatcherTest() {
     eventDispatcherSceneIdx++;
     eventDispatcherSceneIdx = eventDispatcherSceneIdx % arrayOfEventDispatcherTest.length;
 
@@ -1311,7 +1311,7 @@ var nextDispatcherTest = function () {
 
     return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
 };
-var previousDispatcherTest = function () {
+export function previousDispatcherTest() {
     eventDispatcherSceneIdx--;
     if (eventDispatcherSceneIdx < 0)
         eventDispatcherSceneIdx += arrayOfEventDispatcherTest.length;
@@ -1322,6 +1322,6 @@ var previousDispatcherTest = function () {
 
     return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
 };
-var restartDispatcherTest = function () {
+export function restartDispatcherTest() {
     return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
 };

@@ -781,19 +781,19 @@ var arrayOfS9SpriteTest = [
     S9SpriteRenderingTypeToggleTest
 ];
 
-var nextS9SpriteTest = function () {
+export function nextS9SpriteTest() {
     sceneIdx++;
     sceneIdx = sceneIdx % arrayOfS9SpriteTest.length;
 
     return new arrayOfS9SpriteTest[sceneIdx]();
 };
-var previousS9SpriteTest = function () {
+export function previousS9SpriteTest() {
     sceneIdx--;
     if (sceneIdx < 0)
         sceneIdx += arrayOfS9SpriteTest.length;
 
     return new arrayOfS9SpriteTest[sceneIdx]();
 };
-var restartS9SpriteTest = function () {
+export function restartS9SpriteTest() {
     return new arrayOfS9SpriteTest[sceneIdx]();
 };

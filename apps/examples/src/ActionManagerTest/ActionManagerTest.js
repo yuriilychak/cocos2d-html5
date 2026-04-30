@@ -432,7 +432,7 @@ var arrayOfActionMgrTest = [
     ResumeTest
 ];
 
-var nextActionMgrTest = function (num) {
+export function nextActionMgrTest(num) {
 
     ActionMgrTestIdx = num ? num - 1 : ActionMgrTestIdx;
 
@@ -445,7 +445,7 @@ var nextActionMgrTest = function (num) {
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
-var previousActionMgrTest = function () {
+export function previousActionMgrTest() {
     ActionMgrTestIdx--;
     if (ActionMgrTestIdx < 0)
         ActionMgrTestIdx += arrayOfActionMgrTest.length;
@@ -456,6 +456,6 @@ var previousActionMgrTest = function () {
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
-var restartActionMgrTest = function () {
+export function restartActionMgrTest() {
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
