@@ -28,7 +28,7 @@
 export class UIImageViewFlipTest extends UIMainLayer {
     init(){
         if (super.init()) {
-            cc.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
+            spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("ImageView flip test");
@@ -36,11 +36,11 @@ export class UIImageViewFlipTest extends UIMainLayer {
             // Create the imageview
             var imageView = new ccui.ImageView("blocks9r.png", ccui.Widget.PLIST_TEXTURE);
             imageView.setScale9Enabled(true);
-            imageView.setContentSize(new cc.Size(250, 115));
+            imageView.setContentSize(new Size(250, 115));
             imageView.setFlippedX(true);
             imageView.setScale(0.5);
             imageView.ignoreContentAdaptWithSize(false);
-            imageView.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
+            imageView.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2));
 
             this._mainNode.addChild(imageView);
 
@@ -61,7 +61,7 @@ export class UIImageViewFlipTest extends UIMainLayer {
             toggleScale9.addClickEventListener(function(){
                 imageView.setScale9Enabled(!imageView.isScale9Enabled());
                 //after switching scale9, you must call setContentSize to keep the size not change
-                imageView.setContentSize(new cc.Size(250, 115));
+                imageView.setContentSize(new Size(250, 115));
             });
             return true;
         }

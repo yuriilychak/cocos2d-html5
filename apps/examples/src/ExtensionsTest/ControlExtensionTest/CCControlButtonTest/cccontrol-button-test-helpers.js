@@ -28,7 +28,7 @@
 ;
 
 ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
-    var scene = new cc.Scene();
+    var scene = new Scene();
     var controlLayer = new ControlButtonTest_HelloVariableSize();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);
@@ -40,7 +40,7 @@ ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
 ;
 
 ControlButtonTest_Event.create = function (sceneTitle) {
-    var scene = new cc.Scene();
+    var scene = new Scene();
     var controlLayer = new ControlButtonTest_Event();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);
@@ -52,7 +52,7 @@ ControlButtonTest_Event.create = function (sceneTitle) {
 ;
 
 ControlButtonTest_Styling.create = function (sceneTitle) {
-    var scene = new cc.Scene();
+    var scene = new Scene();
     var controlLayer = new ControlButtonTest_Styling();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);

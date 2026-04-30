@@ -48,24 +48,24 @@ export class Issue1008 extends ActionsDemo {
     this._grossini.y = 279;
 
     // 3 and only 3 control points should be used for Bezier actions.
-    var controlPoints1 = [new cc.Point(428, 279), new cc.Point(100, 100), new cc.Point(100, 100)];
-    var controlPoints2 = [new cc.Point(100, 100), new cc.Point(428, 279), new cc.Point(428, 279)];
+    var controlPoints1 = [new Point(428, 279), new Point(100, 100), new Point(100, 100)];
+    var controlPoints2 = [new Point(100, 100), new Point(428, 279), new Point(428, 279)];
 
-    var bz1 = new cc.BezierTo(1.5, controlPoints1);
-    var bz2 = new cc.BezierTo(1.5, controlPoints2);
-    var trace = new cc.CallFunc(this.onTrace, this);
-    var delay = new cc.DelayTime(0.25);
+    var bz1 = new BezierTo(1.5, controlPoints1);
+    var bz2 = new BezierTo(1.5, controlPoints2);
+    var trace = new CallFunc(this.onTrace, this);
+    var delay = new DelayTime(0.25);
 
-    var rep = cc.sequence(bz1, bz2, trace, delay).repeatForever();
+    var rep = sequence(bz1, bz2, trace, delay).repeatForever();
     this._grossini.runAction(rep);
 
     //----end10----
 
-    //this._grossini.runAction(cc.sequence(bz1, bz2, trace,delay));
+    //this._grossini.runAction(sequence(bz1, bz2, trace,delay));
   }
   onTrace(sender) {
-    var pos = new cc.Point(sender.x, sender.y);
-    cc.log("Position x: " + pos.x + " y:" + pos.y);
+    var pos = new Point(sender.x, sender.y);
+    log("Position x: " + pos.x + " y:" + pos.y);
     if (Math.round(pos.x) != 428 || Math.round(pos.y) != 279)
       this.log("Error: Issue 1008 is still open");
 
@@ -75,7 +75,7 @@ export class Issue1008 extends ActionsDemo {
     return "Issue 1008";
   }
   subtitle() {
-    return "cc.bezierTo + Repeat. See console";
+    return "bezierTo + Repeat. See console";
   }
   //
   // Automation

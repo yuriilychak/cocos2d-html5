@@ -33,9 +33,9 @@ export class LabelTTFMultiline extends AtlasDemo {
         this.pixel = {"0": 255, "1": 255, "2": 255, "3": 255};
         var s = director.getWinSize();
 
-        // cc.LabelBMFont
-        var center = new cc.LabelTTF("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
-            "Arial", 32, new cc.Size(s.width / 2, 200), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        // LabelBMFont
+        var center = new LabelTTF("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
+            "Arial", 32, new Size(s.width / 2, 200), TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP);
         center.setDimensions(s.width / 2, 200);
         center.x = s.width / 2;
         center.y = 150;
@@ -44,10 +44,10 @@ export class LabelTTFMultiline extends AtlasDemo {
         //----end20----
     }
     title() {
-        return "Testing cc.LabelTTF Word Wrap";
+        return "Testing LabelTTF Word Wrap";
     }
     subtitle() {
-        return "Word wrap using cc.LabelTTF";
+        return "Word wrap using LabelTTF";
     }
 
     //

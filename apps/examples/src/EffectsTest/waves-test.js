@@ -28,10 +28,10 @@ export class WavesTest extends EffectsBaseLayer {
         return "Waves";
     }
     code() {
-        return "a = cc.waves(duration, gridSize, waves, amplitude, horizontal, vertical)";
+        return "a = waves(duration, gridSize, waves, amplitude, horizontal, vertical)";
     }
     getEffect(duration) {
-        return cc.waves( duration, new cc.Size(16,12), 4, 20, true, true);
+        return waves( duration, new Size(16,12), 4, 20, true, true);
     }
 
 }

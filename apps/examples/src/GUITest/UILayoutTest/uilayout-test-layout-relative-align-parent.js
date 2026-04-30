@@ -31,7 +31,7 @@ export class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
 
              // Add the alert
              var alert = new ccui.Text("Layout Relative Align Parent", "Arial", 20);
-             alert.setColor(new cc.Color(159, 168, 176));
+             alert.setColor(new Color(159, 168, 176));
              alert.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 4.5);
              this._mainNode.addChild(alert);
 
@@ -43,7 +43,7 @@ export class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
              layout.setLayoutType(ccui.Layout.RELATIVE);
              layout.setContentSize(280, 150);
              layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
-             layout.setBackGroundColor(cc.Color.GREEN);
+             layout.setBackGroundColor(Color.GREEN);
              var backgroundSize = background.getContentSize();
              layout.setPosition((widgetSize.width - backgroundSize.width) / 2.0 + (backgroundSize.width - layout.width) / 2.0,
                      (widgetSize.height - backgroundSize.height) / 2.0 + (backgroundSize.height - layout.height) / 2.0);

@@ -33,7 +33,7 @@
 export class ActionTargeted extends ActionsDemo {
     constructor() {
         super();
-        this._code = "a = new cc.TargetedAction( target, action );";
+        this._code = "a = new TargetedAction( target, action );";
     }
 
 
@@ -42,15 +42,15 @@ export class ActionTargeted extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var jump1 = new cc.JumpBy(2, new cc.Point(0, 0), 100, 3);
+    var jump1 = new JumpBy(2, new Point(0, 0), 100, 3);
     var jump2 = jump1.clone();
-    var rot1 = new cc.RotateBy(1, 360);
+    var rot1 = new RotateBy(1, 360);
     var rot2 = rot1.clone();
 
-    var t1 = new cc.TargetedAction(this._kathia, jump2);
-    var t2 = new cc.TargetedAction(this._kathia, rot2);
+    var t1 = new TargetedAction(this._kathia, jump2);
+    var t2 = new TargetedAction(this._kathia, rot2);
 
-    var seq = cc.sequence(jump1, t1, rot1, t2);
+    var seq = sequence(jump1, t1, rot1, t2);
 
     var always = seq.repeatForever();
 

@@ -37,31 +37,31 @@ export class ActionSkew extends ActionsDemo {
     }
 
       get _code() { 
-        return "a = new cc.SkewBy( time, skew );\n" + "a = new cc.SkewTo( time, skewX, skewY );";
+        return "a = new SkewBy( time, skew );\n" + "a = new SkewTo( time, skewX, skewY );";
       }
 
   onEnter() {
     //----start5----onEnter
     super.onEnter();
     this.centerSprites(3);
-    var actionTo = new cc.SkewTo(2, 37.2, -37.2);
-    var actionToBack = new cc.SkewTo(2, 0, 0);
-    var actionBy = new cc.SkewBy(2, 0, -90);
-    var actionBy2 = new cc.SkewBy(2, 45.0, 45.0);
+    var actionTo = new SkewTo(2, 37.2, -37.2);
+    var actionToBack = new SkewTo(2, 0, 0);
+    var actionBy = new SkewBy(2, 0, -90);
+    var actionBy2 = new SkewBy(2, 45.0, 45.0);
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
-    this._tamara.runAction(cc.sequence(actionTo, delay, actionToBack));
+    this._tamara.runAction(sequence(actionTo, delay, actionToBack));
     this._grossini.runAction(
-      cc.sequence(actionBy, delay.clone(), actionBy.reverse())
+      sequence(actionBy, delay.clone(), actionBy.reverse())
     );
     this._kathia.runAction(
-      cc.sequence(actionBy2, delay.clone(), actionBy2.reverse())
+      sequence(actionBy2, delay.clone(), actionBy2.reverse())
     );
     //----end5----
   }
   title() {
-    return "cc.skewTo / cc.skewBy";
+    return "skewTo / skewBy";
   }
   //
   // Automation

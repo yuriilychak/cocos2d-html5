@@ -43,7 +43,7 @@ export class Issue1446 extends ActionsDemo {
     //----start46----onEnter
     super.onEnter();
     this.centerSprites(0);
-    var label = (this.label = new cc.LabelTTF("Hello World", "Arial", 64));
+    var label = (this.label = new LabelTTF("Hello World", "Arial", 64));
 
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;
@@ -51,8 +51,8 @@ export class Issue1446 extends ActionsDemo {
 
     this.addChild(label);
 
-    this.backwardsFade = new cc.Speed(
-      cc.sequence(new cc.DelayTime(2), new cc.FadeTo(1, 255), new cc.DelayTime(2)),
+    this.backwardsFade = new Speed(
+      sequence(new DelayTime(2), new FadeTo(1, 255), new DelayTime(2)),
       1
     );
     label.runAction(this.backwardsFade);

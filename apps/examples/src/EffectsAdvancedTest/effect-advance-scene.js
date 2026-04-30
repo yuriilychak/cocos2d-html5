@@ -30,7 +30,7 @@ export class EffectAdvanceScene extends TestScene {
         sceneIndex = -1;
         var pLayer = nextEffectAdvanceAction();
         this.addChild(pLayer);
-        cc.director.runScene(this);
+        director.runScene(this);
     }
 
 }

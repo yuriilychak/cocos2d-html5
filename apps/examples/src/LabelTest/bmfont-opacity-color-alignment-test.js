@@ -38,18 +38,18 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
         this.time = 0;
 
         this.testDuration = 1.1;
-        var col = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
+        var col = new LayerColor(new Color(128, 128, 128, 255));
         this.addChild(col, -10);
 
-        var label1 = new cc.LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
+        var label1 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
 
         // testing anchors
         label1.anchorX = 0;
         label1.anchorY = 0;
         this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
-        var fade = new cc.FadeOut(1.0);
+        var fade = new FadeOut(1.0);
         var fade_in = fade.reverse();
-        var seq = cc.sequence(fade, new cc.DelayTime(0.25), fade_in);
+        var seq = sequence(fade, new DelayTime(0.25), fade_in);
         var repeat = seq.repeatForever();
         label1.runAction(repeat);
 
@@ -57,15 +57,15 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
         // color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
         // If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
         // Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-        var label2 = new cc.LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
+        var label2 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
         // testing anchors
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
-        label2.color = cc.Color.RED;
+        label2.color = Color.RED;
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.runAction(repeat.clone());
 
-        var label3 = new cc.LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
+        var label3 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
         // testing anchors
         label3.anchorX = 1;
         label3.anchorY = 1;
@@ -100,7 +100,7 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
     }
 
     title() {
-        return "cc.LabelBMFont";
+        return "LabelBMFont";
     }
     subtitle() {
         return "Testing alignment. Testing opacity + tint";

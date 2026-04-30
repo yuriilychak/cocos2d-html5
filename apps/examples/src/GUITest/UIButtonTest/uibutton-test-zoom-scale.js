@@ -38,7 +38,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
             button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 );
             button.setPressedActionEnabled(true);
             button.addClickEventListener(function () {
-                cc.log("Button clicked, position = (" + button.x + ", " + button.y + ")");
+                log("Button clicked, position = (" + button.x + ", " + button.y + ")");
             });
             button.setName("button");
             this._mainNode.addChild(button);

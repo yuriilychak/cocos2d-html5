@@ -41,17 +41,17 @@ export class TMXOrthoZorder extends TileDemo {
         this.pixel1 = {"0":117, "1":185, "2":63, "3":255};
 
         this.pixel2 = {"0":91, "1":55, "2":20, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-zorder.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-zorder.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
-        this.tamara = new cc.Sprite(s_pathSister1);
+        this.tamara = new Sprite(s_pathSister1);
         map.addChild(this.tamara, map.children.length, TAG_TILE_MAP);
         this.tamara.anchorX = 0.5;
         this.tamara.anchorY = 0;
 
-        var move = new cc.MoveBy(5, cc.Point.mult(new cc.Point(400, 450), 0.58));
+        var move = new MoveBy(5, Point.mult(new Point(400, 450), 0.58));
         var back = move.reverse();
-        var seq = cc.sequence(move, back);
+        var seq = sequence(move, back);
         this.tamara.runAction(seq.repeatForever());
 
         this.schedule(this.repositionSprite);

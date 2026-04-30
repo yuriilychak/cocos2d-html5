@@ -29,7 +29,7 @@
 export class TestController extends cc.LayerGradient {
 
     constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(0x46,0x82,0xB4,255));
+        super(new Color(0,0,0,255), new Color(0x46,0x82,0xB4,255));
 
 
         this._itemMenu = null;
@@ -41,20 +41,20 @@ export class TestController extends cc.LayerGradient {
         this.isMouseDown = false;
 
         // globals
-        director = cc.director;
+        director = director;
         winSize = director.getWinSize();
 
         // add close menu
-        var closeItem = new cc.MenuItemImage(s_pathClose, s_pathClose, this.onCloseCallback, this);
+        var closeItem = new MenuItemImage(s_pathClose, s_pathClose, this.onCloseCallback, this);
         closeItem.x = winSize.width - 30;
         closeItem.y = winSize.height - 30;
 
-        var subItem1 = new cc.MenuItemFont("Automated Test: Off");
+        var subItem1 = new MenuItemFont("Automated Test: Off");
         subItem1.fontSize = 18;
-        var subItem2 = new cc.MenuItemFont("Automated Test: On");
+        var subItem2 = new MenuItemFont("Automated Test: On");
         subItem2.fontSize = 18;
 
-        var toggleAutoTestItem = new cc.MenuItemToggle(subItem1, subItem2);
+        var toggleAutoTestItem = new MenuItemToggle(subItem1, subItem2);
         toggleAutoTestItem.setCallback(this.onToggleAutoTest, this);
         toggleAutoTestItem.x = winSize.width - toggleAutoTestItem.width / 2 - 10;
         toggleAutoTestItem.y = 20;
@@ -63,7 +63,7 @@ export class TestController extends cc.LayerGradient {
             toggleAutoTestItem.setSelectedIndex(1);
 
 
-        var menu = new cc.Menu(closeItem, toggleAutoTestItem);//pmenu is just a holder for the close button
+        var menu = new Menu(closeItem, toggleAutoTestItem);//pmenu is just a holder for the close button
         menu.x = 0;
         menu.y = 0;
 
@@ -77,28 +77,28 @@ export class TestController extends cc.LayerGradient {
         });
 
         // add menu items for tests
-        this._itemMenu = new cc.Menu();//item menu is where all the label goes, and the one gets scrolled
+        this._itemMenu = new Menu();//item menu is where all the label goes, and the one gets scrolled
 
         for (var i = 0, len = testNames.length; i < len; i++) {
-            var label = new cc.LabelTTF((i + 1) +". "+ testNames[i].title, "Arial", 24);
-            var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
+            var label = new LabelTTF((i + 1) +". "+ testNames[i].title, "Arial", 24);
+            var menuItem = new MenuItemLabel(label, this.onMenuCallback, this);
             this._itemMenu.addChild(menuItem, i + 10000);
             menuItem.x = winSize.width / 2;
             menuItem.y = (winSize.height - (i + 1) * LINE_SPACE);
 
             // enable disable
-            if ( !cc.sys.isNative) {
-                if( !cc.rendererConfig.isCanvas ){
+            if ( !sys.isNative) {
+                if( !rendererConfig.isCanvas ){
                     menuItem.enabled = (testNames[i].platforms & PLATFORM_HTML5) | (testNames[i].platforms & PLATFORM_HTML5_WEBGL);
                 }else{
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_HTML5 );
                 }
             } else {
-                if (cc.sys.os == cc.sys.OS_ANDROID) {
+                if (sys.os == sys.OS_ANDROID) {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_ANDROID ) );
-                } else if (cc.sys.os == cc.sys.OS_IOS) {
+                } else if (sys.os == sys.OS_IOS) {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_IOS) );
-                } else if (cc.sys.os == cc.sys.OS_OSX) {
+                } else if (sys.os == sys.OS_OSX) {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFORM_MAC) );
                 } else {
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_JSB );
@@ -115,9 +115,9 @@ export class TestController extends cc.LayerGradient {
 
         // 'browser' can use touches or mouse.
         // The benefit of using 'touches' in a browser, is that it works both with mouse events or touches events
-        if ('touches' in cc.sys.capabilities) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in sys.capabilities) {
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved: function (touches, event) {
                     var target = event.getCurrentTarget();
                     var delta = touches[0].getDelta();
@@ -126,15 +126,15 @@ export class TestController extends cc.LayerGradient {
                 }
             }, this);
         }
-        else if ('mouse' in cc.sys.capabilities) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        else if ('mouse' in sys.capabilities) {
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseMove: function (event) {
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                    if(event.getButton() == EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().moveMenu(event.getDelta());
                 },
                 onMouseScroll: function (event) {
-                    var delta = cc.sys.isNative ? event.getScrollY() * 6 : -event.getScrollY();
+                    var delta = sys.isNative ? event.getScrollY() * 6 : -event.getScrollY();
                     event.getCurrentTarget().moveMenu({y : delta});
                     return true;
                 }
@@ -155,7 +155,7 @@ export class TestController extends cc.LayerGradient {
 
         var testCase = testNames[idx];
         var res = testCase.resource || [];
-        cc.LoaderScene.preload(res, function () {
+        LoaderScene.preload(res, function () {
             var scene = testCase.testScene();
             if (scene) {
                 scene.runThisTest();
@@ -163,9 +163,9 @@ export class TestController extends cc.LayerGradient {
         }, this);
     }
     onCloseCallback() {
-        if (cc.sys.isNative)
+        if (sys.isNative)
         {
-            cc.game.end();
+            game.end();
         }
         else {
             window.history && window.history.go(-1);

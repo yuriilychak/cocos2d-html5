@@ -34,7 +34,7 @@ export class MenuTestScene extends TestScene {
         var layer5 = new MenuBugsTest();
         var layer6 = new RemoveMenuItemWhenMove();
 
-        var layer = new cc.LayerMultiplex(layer1, layer2, layer3, layer4, layer5, layer6);
+        var layer = new LayerMultiplex(layer1, layer2, layer3, layer4, layer5, layer6);
         this.addChild(layer, 0);
 
         director.runScene(this);

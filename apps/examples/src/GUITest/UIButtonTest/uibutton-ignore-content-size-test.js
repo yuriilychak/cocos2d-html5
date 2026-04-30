@@ -42,7 +42,7 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
             button.setZoomScale(0.3);
             button.setPressedActionEnabled(true);
             button.addClickEventListener(function () {
-                cc.log("clicked!");
+                log("clicked!");
                 button.setScale(1.2);
             });
             this.addChild(button);
@@ -56,8 +56,8 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
             button2.setZoomScale(0.3);
             button2.setPressedActionEnabled(true);
             button2.addClickEventListener(function () {
-                button2.runAction(new cc.ScaleTo(1.0, 1.2));
-                cc.log("clicked!");
+                button2.runAction(new ScaleTo(1.0, 1.2));
+                log("clicked!");
             });
             this.addChild(button2);
 

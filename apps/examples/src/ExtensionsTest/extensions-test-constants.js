@@ -43,7 +43,7 @@ var extensionsTestItemNames = [
         testScene:function () {
             var pManager = ControlSceneManager.getInstance();
             var pScene = pManager.currentControlScene();
-	        cc.director.runScene(pScene);
+	        director.runScene(pScene);
         }
     },
     {

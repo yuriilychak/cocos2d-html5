@@ -35,8 +35,8 @@ export class RemoteTextureTest extends TextureCacheTestBase {
 
     onEnter() {
         super.onEnter();
-        if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
-            var label = new cc.LabelTTF("Not support Loading texture from remote site on HTML5-WebGL", "Times New Roman", 28);
+        if('opengl' in sys.capabilities && !sys.isNative){
+            var label = new LabelTTF("Not support Loading texture from remote site on HTML5-WebGL", "Times New Roman", 28);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;
             this.addChild(label, 100);
@@ -48,23 +48,23 @@ export class RemoteTextureTest extends TextureCacheTestBase {
         var imageUrlArray = ["http://www.cocos2d-x.org/s/upload/v35.jpg", "http://www.cocos2d-x.org/s/upload/testin.jpg", "http://www.cocos2d-x.org/s/upload/geometry_dash.jpg", "http://www.cocos2d-x.org/images/logo.png"];
 
         for (var i = 0; i < imageUrlArray.length; i++) {
-            cc.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
+            textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
         }
 
-        cc.loader.loadImg("http://www.cocos2d-x.org/no_such_file.jpg", this.failLoaded.bind(this));
+        loader.loadImg("http://www.cocos2d-x.org/no_such_file.jpg", this.failLoaded.bind(this));
     }
 
     texLoaded(texture) {
-        if (texture instanceof cc.Texture2D) {
-            cc.log("Remote texture loaded");
+        if (texture instanceof Texture2D) {
+            log("Remote texture loaded");
             
-            var sprite = new cc.Sprite(texture);
-            sprite.x = cc.winSize.width/2;
-            sprite.y = cc.winSize.height/2;
+            var sprite = new Sprite(texture);
+            sprite.x = winSize.width/2;
+            sprite.y = winSize.height/2;
             this.addChild(sprite);
         }
         else {
-            cc.log("Fail to load remote texture");
+            log("Fail to load remote texture");
         }
     }
 
@@ -77,7 +77,7 @@ export class RemoteTextureTest extends TextureCacheTestBase {
             str = "!!! Wrong behavior: succeed to download from wrong url";
         }
 
-        var label = new cc.LabelTTF(str, "Times New Roman", 28);
+        var label = new LabelTTF(str, "Times New Roman", 28);
         label.x = winSize.width / 2;
         label.y = winSize.height / 2;
         this.addChild(label, 100);

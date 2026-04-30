@@ -49,30 +49,30 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
         //
         // SpriteBatchNode
         //
         // parents
-        var aParent = new cc.SpriteBatchNode(s_grossini, 50);
+        var aParent = new SpriteBatchNode(s_grossini, 50);
         this.addChild(aParent, 0);
 
         // anchor (0,0)
-        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        var sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 0;
         sprite1.anchorY = 0;
 
-        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        var sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        var sprite4 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -82,28 +82,28 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
         sprite1.addChild(sprite3, -2);
         sprite1.addChild(sprite4, 3);
 
-        var point = new cc.Sprite(s_pathR1);
+        var point = new Sprite(s_pathR1);
         point.scale = 0.25;
 	    point.x = sprite1.x;
 	    point.y = sprite1.y;
         this.addChild(point, 10);
 
         // anchor (0.5, 0.5)
-        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 2;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 0.5;
         sprite1.anchorY = 0.5;
 
-        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        sprite4 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -113,7 +113,7 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
         sprite1.addChild(sprite3, -2);
         sprite1.addChild(sprite4, 3);
 
-        point = new cc.Sprite(s_pathR1);
+        point = new Sprite(s_pathR1);
         point.scale = 0.25;
         point.x = sprite1.x;
 	    point.y = sprite1.y;
@@ -121,21 +121,21 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
 
 
         // anchor (1,1)
-        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
         sprite1.x = winSize.width / 2 + winSize.width / 4;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 1;
         sprite1.anchorY = 1;
 
-        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        sprite4 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        sprite4 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -145,7 +145,7 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
         sprite1.addChild(sprite3, -2);
         sprite1.addChild(sprite4, 3);
 
-        point = new cc.Sprite(s_pathR1);
+        point = new Sprite(s_pathR1);
         point.scale = 0.25;
         point.x = sprite1.x;
 	    point.y = sprite1.y;

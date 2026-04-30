@@ -39,10 +39,10 @@ export class TextureCacheTest extends TextureCacheTestBase {
 
         this._numberOfLoadedSprites = 0;
 
-        var size = cc.director.getWinSize();
+        var size = director.getWinSize();
 
-        this._labelLoading = new cc.LabelTTF("loading...", "Arial", 15);
-        this._labelPercent = new cc.LabelTTF("%0", "Arial", 15);
+        this._labelLoading = new LabelTTF("loading...", "Arial", 15);
+        this._labelPercent = new LabelTTF("%0", "Arial", 15);
 
         this._labelLoading.x = size.width / 2;
 
@@ -53,7 +53,7 @@ export class TextureCacheTest extends TextureCacheTestBase {
         this.addChild(this._labelLoading);
         this.addChild(this._labelPercent);
 
-        var texCache = cc.textureCache;
+        var texCache = textureCache;
         // load textures
         texCache.addImageAsync("Images/HelloWorld.png", this.loadingCallBack, this);
         texCache.addImageAsync("Images/grossini.png", this.loadingCallBack, this);
@@ -77,35 +77,35 @@ export class TextureCacheTest extends TextureCacheTestBase {
         texCache.addImageAsync("Images/blocks.png", this.loadingCallBack, this);
     }
     addSprite() {
-        var size = cc.director.getWinSize();
+        var size = director.getWinSize();
 
         // create sprites
-        var bg = new cc.Sprite("Images/HelloWorld.png");
+        var bg = new Sprite("Images/HelloWorld.png");
         bg.x = size.width / 2;
         bg.y = size.height / 2;
         //bg.scale = 1.7;
 
-        var s1 = new cc.Sprite("Images/grossini.png");
-        var s2 = new cc.Sprite("Images/grossini_dance_01.png");
-        var s3 = new cc.Sprite("Images/grossini_dance_02.png");
-        var s4 = new cc.Sprite("Images/grossini_dance_03.png");
-        var s5 = new cc.Sprite("Images/grossini_dance_04.png");
-        var s6 = new cc.Sprite("Images/grossini_dance_05.png");
-        var s7 = new cc.Sprite("Images/grossini_dance_06.png");
-        var s8 = new cc.Sprite("Images/grossini_dance_07.png");
-        var s9 = new cc.Sprite("Images/grossini_dance_08.png");
-        var s10 = new cc.Sprite("Images/grossini_dance_09.png");
-        var s11 = new cc.Sprite("Images/grossini_dance_10.png");
-        var s12 = new cc.Sprite("Images/grossini_dance_11.png");
-        var s13 = new cc.Sprite("Images/grossini_dance_12.png");
-        var s14 = new cc.Sprite("Images/grossini_dance_13.png");
-        var s15 = new cc.Sprite("Images/grossini_dance_14.png");
+        var s1 = new Sprite("Images/grossini.png");
+        var s2 = new Sprite("Images/grossini_dance_01.png");
+        var s3 = new Sprite("Images/grossini_dance_02.png");
+        var s4 = new Sprite("Images/grossini_dance_03.png");
+        var s5 = new Sprite("Images/grossini_dance_04.png");
+        var s6 = new Sprite("Images/grossini_dance_05.png");
+        var s7 = new Sprite("Images/grossini_dance_06.png");
+        var s8 = new Sprite("Images/grossini_dance_07.png");
+        var s9 = new Sprite("Images/grossini_dance_08.png");
+        var s10 = new Sprite("Images/grossini_dance_09.png");
+        var s11 = new Sprite("Images/grossini_dance_10.png");
+        var s12 = new Sprite("Images/grossini_dance_11.png");
+        var s13 = new Sprite("Images/grossini_dance_12.png");
+        var s14 = new Sprite("Images/grossini_dance_13.png");
+        var s15 = new Sprite("Images/grossini_dance_14.png");
 
         // just loading textures to slow down
-        var s16 = new cc.Sprite("Images/background1.png");
-        var s17 = new cc.Sprite("Images/background2.png");
-        var s18 = new cc.Sprite("Images/background3.png");
-        var s19 = new cc.Sprite("Images/blocks.png");
+        var s16 = new Sprite("Images/background1.png");
+        var s17 = new Sprite("Images/background2.png");
+        var s18 = new Sprite("Images/background3.png");
+        var s19 = new Sprite("Images/blocks.png");
 
         s1.x = 50;
         s1.y = 50;

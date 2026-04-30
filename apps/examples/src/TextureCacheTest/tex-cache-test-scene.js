@@ -31,7 +31,7 @@ export class TexCacheTestScene extends TestScene {
         var layer = nextTexCacheTest();
         this.addChild(layer);
 
-        cc.director.runScene(this);
+        director.runScene(this);
     }
 
 }

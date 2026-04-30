@@ -28,10 +28,10 @@ export class TwirlTest extends EffectsBaseLayer {
         return "Twirl";
     }
     code() {
-        return "a = cc.twirl(duration, gridSize, position, twirls, amplitude)";
+        return "a = twirl(duration, gridSize, position, twirls, amplitude)";
     }
     getEffect(duration) {
-        return cc.twirl( duration, new cc.Size(12,8), new cc.Point(winSize.width/2, winSize.height/2), 1, 2.5);
+        return twirl( duration, new Size(12,8), new Point(winSize.width/2, winSize.height/2), 1, 2.5);
     }
 
 }

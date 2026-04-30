@@ -32,12 +32,12 @@ export class BMFontOneAtlas extends AtlasDemo {
         super();
         var s = director.getWinSize();
 
-        var label1 = new cc.LabelBMFont("This is Helvetica", s_resprefix + "fonts/helvetica-32.fnt", cc.LabelAutomaticWidth, cc.TEXT_ALIGNMENT_LEFT, new cc.Point(0, 0));
+        var label1 = new LabelBMFont("This is Helvetica", s_resprefix + "fonts/helvetica-32.fnt", LabelAutomaticWidth, TEXT_ALIGNMENT_LEFT, new Point(0, 0));
         this.addChild(label1);
         label1.x = s.width / 2;
         label1.y = s.height * 2 / 3;
 
-        var label2 = new cc.LabelBMFont("And this is Geneva", s_resprefix + "fonts/geneva-32.fnt", cc.LabelAutomaticWidth, cc.TEXT_ALIGNMENT_LEFT, new cc.Point(0, 128));
+        var label2 = new LabelBMFont("And this is Geneva", s_resprefix + "fonts/geneva-32.fnt", LabelAutomaticWidth, TEXT_ALIGNMENT_LEFT, new Point(0, 128));
         this.addChild(label2);
         label2.x = s.width / 2;
         label2.y = s.height / 3;
@@ -45,7 +45,7 @@ export class BMFontOneAtlas extends AtlasDemo {
     }
 
     title() {
-        return "cc.LabelBMFont with one texture";
+        return "LabelBMFont with one texture";
     }
 
     subtitle() {

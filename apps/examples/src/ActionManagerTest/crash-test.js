@@ -38,22 +38,22 @@ export class CrashTest extends ActionManagerTest {
         //----start0----onEnter
         super.onEnter();
 
-        var child = new cc.Sprite(s_pathGrossini);
+        var child = new Sprite(s_pathGrossini);
         child.x = 200;
         child.y = 200;
         this.addChild(child, 1);
 
         //Sum of all action's duration is 1.5 second.
-        child.runAction(new cc.RotateBy(1.5, 90));
-        // child.runAction(cc.sequence(
-        //     new cc.DelayTime(1.4),
-        //     new cc.FadeOut(1.1))
+        child.runAction(new RotateBy(1.5, 90));
+        // child.runAction(sequence(
+        //     new DelayTime(1.4),
+        //     new FadeOut(1.1))
         // );
 
         //After 1.5 second, self will be removed.
-        this.runAction(cc.sequence(
-           new cc.DelayTime(1.4),
-           new cc.CallFunc(this.onRemoveThis, this))
+        this.runAction(sequence(
+           new DelayTime(1.4),
+           new CallFunc(this.onRemoveThis, this))
         );
         //----end0----
     }

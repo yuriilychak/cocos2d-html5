@@ -44,18 +44,18 @@ export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
-            var point = new cc.Sprite(s_pathR1);
+            var point = new Sprite(s_pathR1);
             point.scale = 0.25;
             point.x = sprite.x;
             point.y = sprite.y;
@@ -84,13 +84,13 @@ export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
             var str = "";
             for (var j = 1; j < 15; j++) {
                 str = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = cc.spriteFrameCache.getSpriteFrame(str);
+                var frame = spriteFrameCache.getSpriteFrame(str);
                 animFrames.push(frame);
             }
 
-            var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
-            sprite.runAction(new cc.RotateBy(10, 360).repeatForever());
+            var animation = new Animation(animFrames, 0.3);
+            sprite.runAction(new Animate(animation).repeatForever());
+            sprite.runAction(new RotateBy(10, 360).repeatForever());
 
             this.addChild(sprite, 0);
         }
@@ -99,8 +99,8 @@ export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
     onExit() {
         //----start6----onExit
         super.onExit();
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end6----
     }
     //

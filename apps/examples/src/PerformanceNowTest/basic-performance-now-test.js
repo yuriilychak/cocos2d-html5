@@ -31,18 +31,18 @@ export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
     onEnter() {
         super.onEnter();
         if (performance && typeof performance.now === 'function') {
-            var currentPerformanceNow = new cc.LabelTTF("Current time since start : " + performance.now());
+            var currentPerformanceNow = new LabelTTF("Current time since start : " + performance.now());
             this.addChild(currentPerformanceNow);   
             currentPerformanceNow.attr({
-                x: cc.winSize.width/2,
-                y: cc.winSize.height/2
+                x: winSize.width/2,
+                y: winSize.height/2
             });            
         } else {
-            var errLabel = new cc.LabelTTF("On browser that does not support performance.now");
+            var errLabel = new LabelTTF("On browser that does not support performance.now");
             this.addChild(errLabel);   
             errLabel.attr({
-                x: cc.winSize.width/2,
-                y: cc.winSize.height/2
+                x: winSize.width/2,
+                y: winSize.height/2
             });            
 
         }

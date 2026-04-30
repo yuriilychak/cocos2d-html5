@@ -39,7 +39,7 @@ export class ActionSkewRotateScale extends ActionsDemo {
 
     var boxW = 100,
       boxH = 100;
-    var box = new cc.LayerColor(new cc.Color(255, 255, 0, 255));
+    var box = new LayerColor(new Color(255, 255, 0, 255));
     box.anchorX = 0;
     box.anchorY = 0;
     box.x = (winSize.width - boxW) / 2;
@@ -48,7 +48,7 @@ export class ActionSkewRotateScale extends ActionsDemo {
     box.height = boxH;
 
     var markrside = 10.0;
-    var uL = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
+    var uL = new LayerColor(new Color(255, 0, 0, 255));
     box.addChild(uL);
     uL.width = markrside;
     uL.height = markrside;
@@ -57,7 +57,7 @@ export class ActionSkewRotateScale extends ActionsDemo {
     uL.anchorX = 0;
     uL.anchorY = 0;
 
-    var uR = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
+    var uR = new LayerColor(new Color(0, 0, 255, 255));
     box.addChild(uR);
     uR.width = markrside;
     uR.height = markrside;
@@ -67,19 +67,19 @@ export class ActionSkewRotateScale extends ActionsDemo {
     uR.anchorY = 0;
 
     this.addChild(box);
-    var actionTo = new cc.SkewTo(2, 0, 2);
-    var rotateTo = new cc.RotateTo(2, 61.0);
-    var actionScaleTo = new cc.ScaleTo(2, -0.44, 0.47);
+    var actionTo = new SkewTo(2, 0, 2);
+    var rotateTo = new RotateTo(2, 61.0);
+    var actionScaleTo = new ScaleTo(2, -0.44, 0.47);
 
-    var actionScaleToBack = new cc.ScaleTo(2, 1.0, 1.0);
-    var rotateToBack = new cc.RotateTo(2, 0);
-    var actionToBack = new cc.SkewTo(2, 0, 0);
+    var actionScaleToBack = new ScaleTo(2, 1.0, 1.0);
+    var rotateToBack = new RotateTo(2, 0);
+    var actionToBack = new SkewTo(2, 0, 0);
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
-    box.runAction(cc.sequence(actionTo, delay, actionToBack));
-    box.runAction(cc.sequence(rotateTo, delay.clone(), rotateToBack));
-    box.runAction(cc.sequence(actionScaleTo, delay.clone(), actionScaleToBack));
+    box.runAction(sequence(actionTo, delay, actionToBack));
+    box.runAction(sequence(rotateTo, delay.clone(), rotateToBack));
+    box.runAction(sequence(actionScaleTo, delay.clone(), actionScaleToBack));
 
     this.box = box;
     //----end6----

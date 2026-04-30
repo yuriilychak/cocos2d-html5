@@ -34,7 +34,7 @@ export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
 
         this._title = "Test opacity cascade for Scale9Sprite with fade actions\n(fade to opacity 144, then fadeOut, then fadeIn)";
 
-        var colorLayer = new cc.LayerColor(new cc.Color(144,144,144));
+        var colorLayer = new LayerColor(new Color(144,144,144));
         colorLayer.setContentSize(winSize.width / 2, winSize.height / 2);
         colorLayer.x = winSize.width / 4;
         colorLayer.y = winSize.height / 4;
@@ -47,12 +47,12 @@ export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
 
         colorLayer.addChild(blocks);
 
-        var fadeToAction = new cc.FadeTo(1, 144);
-        var delay = new cc.DelayTime(0.5);
-        var fadeOutAction = new cc.FadeOut(0.8);
-        var fadeInAction = new cc.FadeIn(0.8);
+        var fadeToAction = new FadeTo(1, 144);
+        var delay = new DelayTime(0.5);
+        var fadeOutAction = new FadeOut(0.8);
+        var fadeInAction = new FadeIn(0.8);
 
-        colorLayer.runAction(cc.sequence(fadeToAction, delay, fadeOutAction, delay.clone(), fadeInAction));
+        colorLayer.runAction(sequence(fadeToAction, delay, fadeOutAction, delay.clone(), fadeInAction));
 
         this.addChild(colorLayer);
     }

@@ -32,23 +32,23 @@ export class ControlStepperTest extends ControlScene {
 
     init() {
         if (super.init()) {
-            var screenSize = cc.director.getWinSize();
+            var screenSize = director.getWinSize();
 
-            var layer = new cc.Node();
+            var layer = new Node();
             layer.x = screenSize.width / 2;
             layer.y = screenSize.height / 2;
             this.addChild(layer, 1);
             var layer_width = 0;
 
             // Add the black background for the text
-            var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
+            var background = new Scale9Sprite("extensions/buttonBackground.png");
             background.width = 100;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
             background.y = 0;
             layer.addChild(background);
 
-            this._displayValueLabel = new cc.LabelTTF("0", "HelveticaNeue-Bold", 30);
+            this._displayValueLabel = new LabelTTF("0", "HelveticaNeue-Bold", 30);
 
             this._displayValueLabel.x = background.x;
             this._displayValueLabel.y = background.y;
@@ -59,7 +59,7 @@ export class ControlStepperTest extends ControlScene {
             var stepper = this.makeControlStepper();
             stepper.x = layer_width + 10 + stepper.width / 2;
             stepper.y = 0;
-            stepper.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
+            stepper.addTargetWithActionForControlEvents(this, this.valueChanged, CONTROL_EVENT_VALUECHANGED);
             layer.addChild(stepper);
 
             layer_width += stepper.width;
@@ -71,16 +71,16 @@ export class ControlStepperTest extends ControlScene {
 	        layer.anchorY = 0.5;
 
             // Update the value label
-            this.valueChanged(stepper, cc.CONTROL_EVENT_VALUECHANGED);
+            this.valueChanged(stepper, CONTROL_EVENT_VALUECHANGED);
             return true;
         }
         return false;
     }
     makeControlStepper() {
-        var minusSprite = new cc.Sprite("extensions/stepper-minus.png");
-        var plusSprite = new cc.Sprite("extensions/stepper-plus.png");
+        var minusSprite = new Sprite("extensions/stepper-minus.png");
+        var plusSprite = new Sprite("extensions/stepper-plus.png");
 
-        return new cc.ControlStepper(minusSprite, plusSprite);
+        return new ControlStepper(minusSprite, plusSprite);
     }
 
     valueChanged(sender, controlEvent) {
@@ -91,7 +91,7 @@ export class ControlStepperTest extends ControlScene {
 };
 
 ControlStepperTest.create = function (sceneTitle) {
-    var scene = new cc.Scene();
+    var scene = new Scene();
     var controlLayer = new ControlStepperTest();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);

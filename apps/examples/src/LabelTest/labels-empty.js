@@ -38,20 +38,20 @@ export class LabelsEmpty extends AtlasDemo {
         this.setEmpty = null;
 
 
-        // cc.LabelBMFont
-        var label1 = new cc.LabelBMFont("", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        // LabelBMFont
+        var label1 = new LabelBMFont("", s_resprefix + "fonts/bitmapFontTest3.fnt");
         this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
         label1.x = winSize.width / 2;
         label1.y = winSize.height - 100;
 
-        // cc.LabelTTF
-        var label2 = new cc.LabelTTF("", "Arial", 24);
+        // LabelTTF
+        var label2 = new LabelTTF("", "Arial", 24);
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.x = winSize.width / 2;
         label2.y = winSize.height / 2;
 
-        // cc.LabelAtlas
-        var label3 = new cc.LabelAtlas("", s_resprefix + "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+        // LabelAtlas
+        var label3 = new LabelAtlas("", s_resprefix + "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
         this.addChild(label3, 0, TAG_BITMAP_ATLAS3);
         label3.x = winSize.width / 2;
         label3.y = 0 + 100;

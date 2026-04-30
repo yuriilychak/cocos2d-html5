@@ -35,16 +35,16 @@ export class UITextTest_LineWrap extends UIMainLayer {
             // Create the line wrap
             var text = new ccui.Text("TextArea Widget can line wrap","AmericanTypewriter",32);
             text.ignoreContentAdaptWithSize(false);
-            text.setContentSize(new cc.Size(280, 150));
-            text.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+            text.setContentSize(new Size(280, 150));
+            text.setTextHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
             text.setTouchScaleChangeEnabled(true);
             text.setTouchEnabled(true);
             text.addTouchEventListener(function(sender, type){
                 if (type == ccui.Widget.TOUCH_ENDED){
                     if (text.width == 280){
-                        text.setContentSize(new cc.Size(380,100));
+                        text.setContentSize(new Size(380,100));
                     }else {
-                        text.setContentSize(new cc.Size(280, 150));
+                        text.setContentSize(new Size(280, 150));
                     }
                 }
             });

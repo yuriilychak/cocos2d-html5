@@ -39,13 +39,13 @@ export class TMXIsoZorder extends TileDemo {
         this.testDuration = 5.2;
 
         this.pixel = {"0":255, "1":255, "2":255, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-zorder.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test-zorder.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         map.x = -map.width / 2;
         map.y = 0;
 
-        this.tamara = new cc.Sprite(s_pathSister1);
+        this.tamara = new Sprite(s_pathSister1);
         map.addChild(this.tamara, map.children.length);
         var mapWidth = map.getMapSize().width * map.getTileSize().width;
         this.tamara.x = mapWidth / 2;
@@ -53,10 +53,10 @@ export class TMXIsoZorder extends TileDemo {
         this.tamara.anchorX = 0.5;
         this.tamara.anchorY = 0;
 
-        var move = new cc.MoveBy(5, new cc.Point(300, 250));
+        var move = new MoveBy(5, new Point(300, 250));
         var back = move.reverse();
-        var delay = new cc.DelayTime(0.5);
-        var seq = cc.sequence(move, delay, back);
+        var delay = new DelayTime(0.5);
+        var seq = sequence(move, delay, back);
         this.tamara.runAction(seq.repeatForever());
 
         this.schedule(this.repositionSprite);

@@ -35,19 +35,19 @@ export class SpriteEaseSineInOut extends EaseSpriteDemo {
         //----start5----onEnter
         super.onEnter();
 
-        var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
+        var move = new MoveBy(2, new Point(winSize.width - 80, 0));
         var move_back = move.reverse();
 
         //old api
-        //var move_ease = cc.EaseSineInOutmove.clone());
+        //var move_ease = EaseSineInOutmove.clone());
 
-        var move_ease = move.clone().easing(cc.easeSineInOut());
+        var move_ease = move.clone().easing(easeSineInOut());
         var move_ease_back = move_ease.reverse();
 
-        var delay = new cc.DelayTime(0.1);
+        var delay = new DelayTime(0.1);
 
-        var seq1 = cc.sequence(move, delay, move_back, delay.clone());
-        var seq2 = cc.sequence(move_ease, delay.clone(), move_ease_back, delay.clone());
+        var seq1 = sequence(move, delay, move_back, delay.clone());
+        var seq2 = sequence(move_ease, delay.clone(), move_ease_back, delay.clone());
 
         this.positionForTwo();
 

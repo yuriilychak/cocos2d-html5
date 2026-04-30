@@ -49,8 +49,7 @@ export class UIMainLayer extends cc.Layer {
     init() {
         super.init();
 
-        var winSize = cc.winSize;
-        var mainNode = new cc.Node();
+        var mainNode = new Node();
         var scale = winSize.height/320;
         mainNode.attr({anchorX: 0, anchorY: 0, scale: scale, x: (winSize.width - 480 * scale) / 2, y: (winSize.height - 320 * scale) / 2});
         this.addChild(mainNode);
@@ -67,9 +66,9 @@ export class UIMainLayer extends cc.Layer {
             back_label.addTouchEventListener(this.toExtensionsMainLayer, this);
         }
         else{
-            var label = new cc.LabelTTF("Back", "Arial", 20);
-            var menuItem = new cc.MenuItemLabel(label, this.toExtensionsMainLayer, this);
-            var menu = new cc.Menu(menuItem);
+            var label = new LabelTTF("Back", "Arial", 20);
+            var menuItem = new MenuItemLabel(label, this.toExtensionsMainLayer, this);
+            var menu = new Menu(menuItem);
             menu.x = 0;
             menu.y = 0;
             menuItem.x = winSize.width - 50;
@@ -105,7 +104,7 @@ export class UIMainLayer extends cc.Layer {
             string: "INIT",
             fontName: "Marker Felt",
             fontSize: 30,
-            color: new cc.Color(159, 168, 176),
+            color: new Color(159, 168, 176),
             x: widgetSize.width / 2.0
         });
         bottomDisplayText.y = widgetSize.height / 2.0 - bottomDisplayText.height * 1.75;
@@ -127,19 +126,19 @@ export class UIMainLayer extends cc.Layer {
 
     previousCallback(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
-            cc.director.runScene(UISceneManager.getInstance().previousUIScene());
+            director.runScene(UISceneManager.getInstance().previousUIScene());
         }
     }
 
     restartCallback(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
-            cc.director.runScene(UISceneManager.getInstance().currentUIScene());
+            director.runScene(UISceneManager.getInstance().currentUIScene());
         }
     }
 
     nextCallback(sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
-            cc.director.runScene(UISceneManager.getInstance().nextUIScene());
+            director.runScene(UISceneManager.getInstance().nextUIScene());
         }
     }
 

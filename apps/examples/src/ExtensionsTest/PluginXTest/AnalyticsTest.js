@@ -38,7 +38,7 @@ if (!plugin) {
 
 plugin.onApplicationDidEnterBackground = function() {
     if (g_pAnalytics != null) {
-        cc.log("plugin.onApplicationDidEnterBackground.");
+        log("plugin.onApplicationDidEnterBackground.");
         g_pAnalytics.stopSession();
     }
 };
@@ -46,30 +46,30 @@ plugin.onApplicationDidEnterBackground = function() {
 
 plugin.onApplicationWillEnterForeground = function() {
     if (g_pAnalytics != null) {
-        cc.log("plugin.onApplicationWillEnterForeground.");
+        log("plugin.onApplicationWillEnterForeground.");
         g_pAnalytics.startSession(s_strAppKey);
     }
 };
 
 export function loadAnalyticsPlugin() {
-    var langType = cc.sys.language;//cc.Application.getInstance().getCurrentLanguage();
+    var langType = sys.language;//Application.getInstance().getCurrentLanguage();
 
     var umengKey  = "";
     var flurryKey = "";
 
-    if (cc.sys.os == cc.sys.OS_IOS)
+    if (sys.os == sys.OS_IOS)
     {
         umengKey  = UMENG_KEY_IOS;
         flurryKey = FLURRY_KEY_IOS;
     }
-    else if (cc.sys.os == cc.sys.OS_ANDROID)
+    else if (sys.os == sys.OS_ANDROID)
     {
         umengKey  = UMENG_KEY_ANDROID;
         flurryKey = FLURRY_KEY_ANDROID;
     }
 
     var pluginManager = plugin.PluginManager.getInstance();
-    if (cc.LANGUAGE_CHINESE == langType)
+    if (LANGUAGE_CHINESE == langType)
     {
         g_pAnalytics = pluginManager.loadPlugin("AnalyticsUmeng");
         s_strAppKey = umengKey;
@@ -117,42 +117,42 @@ export class AnalyticsTestLayer extends PluginXTest {
     constructor() {
         super();
         this._title = "Plugin-x Test";
-        this._subtitle = cc.LANGUAGE_CHINESE == cc.sys.language ? "umeng" : "flurry"; //cc.Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
+        this._subtitle = LANGUAGE_CHINESE == sys.language ? "umeng" : "flurry"; //Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
     }
 
 
 
     onEnter() {
         super.onEnter();
-        var size = cc.director.getWinSize();
+        var size = director.getWinSize();
 
         loadAnalyticsPlugin();
 
-        var pMenu = new cc.Menu();
-        pMenu.setPosition( new cc.Point(0, 0) );
+        var pMenu = new Menu();
+        pMenu.setPosition( new Point(0, 0) );
         this.addChild(pMenu, 1);
 
         var yPos = 0;
         for (var i = 0; i < s_EventMenuItem.length; i++) {
-            var label = new cc.LabelTTF(s_EventMenuItem[i].id, "Arial", 24);
-            var pMenuItem = new cc.MenuItemLabel(label, this.eventMenuCallback, this);
+            var label = new LabelTTF(s_EventMenuItem[i].id, "Arial", 24);
+            var pMenuItem = new MenuItemLabel(label, this.eventMenuCallback, this);
             pMenu.addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
             yPos = size.height - 50*i - 100;
-            pMenuItem.setPosition( new cc.Point(size.width / 2, yPos));
+            pMenuItem.setPosition( new Point(size.width / 2, yPos));
         }
 
         var strName = g_pAnalytics.getPluginName();
         var strVer = g_pAnalytics.getPluginVersion();
         var ret = "Plugin : "+strName+", Ver : "+ strVer;
-        var pLabel = new cc.LabelTTF(ret, "Arial", 24, new cc.Size(size.width, 0), cc.TEXT_ALIGNMENT_CENTER);
-        pLabel.setPosition(new cc.Point(size.width / 2, yPos - 100));
+        var pLabel = new LabelTTF(ret, "Arial", 24, new Size(size.width, 0), TEXT_ALIGNMENT_CENTER);
+        pLabel.setPosition(new Point(size.width / 2, yPos - 100));
         this.addChild(pLabel);
 
-        var label = new cc.LabelTTF("reload all plugins", "Arial", 24);
-        var pMenuItem = new cc.MenuItemLabel(label, this.reloadPluginMenuCallback, this);
-        pMenuItem.setAnchorPoint(new cc.Point(0.5, 0));
+        var label = new LabelTTF("reload all plugins", "Arial", 24);
+        var pMenuItem = new MenuItemLabel(label, this.reloadPluginMenuCallback, this);
+        pMenuItem.setAnchorPoint(new Point(0.5, 0));
         pMenu.addChild(pMenuItem, 0);
-        pMenuItem.setPosition( new cc.Point(size.width / 2, 0));
+        pMenuItem.setPosition( new Point(size.width / 2, 0));
     }
 
     reloadPluginMenuCallback(pSender) {
@@ -181,7 +181,7 @@ export class AnalyticsTestLayer extends PluginXTest {
                 break;
             case TAG_LOG_ONLINE_CONFIG:
             {
-                cc.log("Online config = " + g_pAnalytics.callStringFuncWithParam("getConfigParams", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "abc")));
+                log("Online config = " + g_pAnalytics.callStringFuncWithParam("getConfigParams", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "abc")));
             }
                 break;
             case TAG_LOG_EVENT_ID_DURATION:

@@ -32,55 +32,55 @@ export class SceneTestLayer1 extends cc.Layer {
         this.init();
 
         var s = director.getWinSize();
-        var item1 = new cc.MenuItemFont("Test pushScene", this.onPushScene, this);
-        var item2 = new cc.MenuItemFont("Test pushScene w/transition", this.onPushSceneTran, this);
-        var item3 = new cc.MenuItemFont("Quit", function () {
-            cc.log("quit!");
+        var item1 = new MenuItemFont("Test pushScene", this.onPushScene, this);
+        var item2 = new MenuItemFont("Test pushScene w/transition", this.onPushSceneTran, this);
+        var item3 = new MenuItemFont("Quit", function () {
+            log("quit!");
         }, this);
-        var item4 = new cc.MenuItemFont("setNotificationNode", function () {
-            var layerTemp = new cc.LayerColor(new cc.Color(0, 255, 255, 120));
-            var sprite = new cc.Sprite(s_pathGrossini);
-            sprite.setPosition(new cc.Point(winSize.width/2,winSize.height/2));
+        var item4 = new MenuItemFont("setNotificationNode", function () {
+            var layerTemp = new LayerColor(new Color(0, 255, 255, 120));
+            var sprite = new Sprite(s_pathGrossini);
+            sprite.setPosition(new Point(winSize.width/2,winSize.height/2));
             layerTemp.addChild(sprite);
-            cc.director.setNotificationNode(layerTemp);
-            var rotation = new cc.RotateBy(2,360);
+            director.setNotificationNode(layerTemp);
+            var rotation = new RotateBy(2,360);
             sprite.runAction(rotation.repeatForever());
-            cc.log("setNotificationNode!");
+            log("setNotificationNode!");
         }, this);
-        var item5 = new cc.MenuItemFont("clearNotificationNode", function () {
-            cc.log("clearNotificationNode!");
-            cc.director.setNotificationNode(null);
+        var item5 = new MenuItemFont("clearNotificationNode", function () {
+            log("clearNotificationNode!");
+            director.setNotificationNode(null);
         }, this);
 
-        var menu = new cc.Menu(item1, item2, item3, item4, item5);
+        var menu = new Menu(item1, item2, item3, item4, item5);
         menu.alignItemsVertically();
         this.addChild(menu);
 
-        var sprite = new cc.Sprite(s_pathGrossini);
+        var sprite = new Sprite(s_pathGrossini);
         this.addChild(sprite);
         sprite.x = s.width - 40;
         sprite.y = s.height / 2;
-        var rotate = new cc.RotateBy(2, 360);
+        var rotate = new RotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
 
-        //cc.schedule(this.testDealloc);
+        //schedule(this.testDealloc);
     }
 
 
     onEnter() {
-        cc.log("SceneTestLayer1#onEnter");
+        log("SceneTestLayer1#onEnter");
         super.onEnter();
     }
 
     onEnterTransitionDidFinish() {
-        cc.log("SceneTestLayer1#onEnterTransitionDidFinish");
+        log("SceneTestLayer1#onEnterTransitionDidFinish");
         super.onEnterTransitionDidFinish();
     }
 
     testDealloc(dt) {
-        //cc.log("SceneTestLayer1:testDealloc");
+        //log("SceneTestLayer1:testDealloc");
     }
 
     onPushScene(sender) {
@@ -95,10 +95,10 @@ export class SceneTestLayer1 extends cc.Layer {
         var layer = new SceneTestLayer2();
         scene.addChild(layer, 0);
 
-        director.pushScene(new cc.TransitionSlideInT(1, scene));
+        director.pushScene(new TransitionSlideInT(1, scene));
     }
     onExit(sender) {
-        cc.director.setNotificationNode(null);
+        director.setNotificationNode(null);
         super.onExit();
     }
 

@@ -37,11 +37,11 @@ export class TMXOrthoFlipTest extends TileDemo {
         this.testDuration = 2.2;
 
         this.pixel = {"0":41, "1":42, "2":54, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-rotation-test.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/ortho-rotation-test.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
         this.log("ContentSize:" + map.width + "," + map.height);
 
-        var action = new cc.ScaleBy(2, 0.5);
+        var action = new ScaleBy(2, 0.5);
         map.runAction(action);
     }
     title() {

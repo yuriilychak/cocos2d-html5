@@ -29,6 +29,6 @@ export class Box2DTestScene extends TestScene {
   runThisTest() {
     var layer = new Box2DTestLayer();
     this.addChild(layer);
-    cc.director.runScene(this);
+    director.runScene(this);
   }
 }

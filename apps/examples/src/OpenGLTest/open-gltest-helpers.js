@@ -32,7 +32,7 @@ cc.GLNode = cc.GLNode || class GLNode extends cc.Node {
     }
     init() {
         this._renderCmd._needDraw = true;
-        this._renderCmd._matrix = new cc.math.Matrix4();
+        this._renderCmd._matrix = new math.Matrix4();
         this._renderCmd._matrix.identity();
         this._renderCmd.rendering =  function(ctx){
             var wt = this._worldTransform;
@@ -43,13 +43,13 @@ cc.GLNode = cc.GLNode || class GLNode extends cc.Node {
             this._matrix.mat[5] = wt.d;
             this._matrix.mat[13] = wt.ty;
 
-            cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
-            cc.kmGLPushMatrix();
-            cc.kmGLLoadMatrix(this._matrix);
+            kmGLMatrixMode(KM_GL_MODELVIEW);
+            kmGLPushMatrix();
+            kmGLLoadMatrix(this._matrix);
 
             this._node.draw(ctx);
 
-            cc.kmGLPopMatrix();
+            kmGLPopMatrix();
         };
     }
     draw(ctx) {

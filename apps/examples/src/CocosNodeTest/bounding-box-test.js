@@ -36,16 +36,16 @@ export class BoundingBoxTest extends TestNodeDemo {
         this.testDuration = 0.5;
 
         this.testBB = null;
-        var sprite = new cc.Sprite(s_pathGrossini);
+        var sprite = new Sprite(s_pathGrossini);
         this.addChild(sprite);
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         var bb = sprite.getBoundingBox();
-        cc.log('BoundingBox:');
+        log('BoundingBox:');
         //for( var i in bb )
-        //    cc.log( i + " = " + bb[i] );
-        cc.log('origin = [ ' + bb.x + "," + bb.y + "]");
-        cc.log('size = [ ' + bb.width + "," + bb.height + "]");
+        //    log( i + " = " + bb[i] );
+        log('origin = [ ' + bb.x + "," + bb.y + "]");
+        log('size = [ ' + bb.width + "," + bb.height + "]");
 
         this.testBB = bb;
         //----end8----

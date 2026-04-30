@@ -36,38 +36,38 @@ export class Issue1305_2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(0);
 
-    var spr = new cc.Sprite(s_pathGrossini);
+    var spr = new Sprite(s_pathGrossini);
     spr.x = 200;
     spr.y = 200;
     this.addChild(spr);
 
-    var act1 = new cc.MoveBy(2, new cc.Point(0, 100));
+    var act1 = new MoveBy(2, new Point(0, 100));
 
-    var act2 = new cc.CallFunc(this.onLog1);
-    var act3 = new cc.MoveBy(2, new cc.Point(0, -100));
-    var act4 = new cc.CallFunc(this.onLog2, this);
-    var act5 = new cc.MoveBy(2, new cc.Point(100, -100));
-    var act6 = new cc.CallFunc(this.onLog3.bind(this));
-    var act7 = new cc.MoveBy(2, new cc.Point(-100, 0));
-    var act8 = new cc.CallFunc(this.onLog4, this);
+    var act2 = new CallFunc(this.onLog1);
+    var act3 = new MoveBy(2, new Point(0, -100));
+    var act4 = new CallFunc(this.onLog2, this);
+    var act5 = new MoveBy(2, new Point(100, -100));
+    var act6 = new CallFunc(this.onLog3.bind(this));
+    var act7 = new MoveBy(2, new Point(-100, 0));
+    var act8 = new CallFunc(this.onLog4, this);
 
-    var actF = cc.sequence(act1, act2, act3, act4, act5, act6, act7, act8);
+    var actF = sequence(act1, act2, act3, act4, act5, act6, act7, act8);
 
     //    [spr runAction:actF];
     director.getActionManager().addAction(actF, spr, false);
     //----end40----
   }
   onLog1() {
-    cc.log("1st block");
+    log("1st block");
   }
   onLog2() {
-    cc.log("2nd block");
+    log("2nd block");
   }
   onLog3() {
-    cc.log("3rd block");
+    log("3rd block");
   }
   onLog4() {
-    cc.log("4th block");
+    log("4th block");
   }
   title() {
     return "Issue 1305 #2";

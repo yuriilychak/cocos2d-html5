@@ -31,7 +31,7 @@ export class DemoSmoke extends ParticleDemo {
 
         this._emitter = new cc.ParticleSmoke();
         this._background.addChild(this._emitter, 10);
-        this._emitter.texture = cc.textureCache.addImage(s_fire);
+        this._emitter.texture = textureCache.addImage(s_fire);
 
         this.setEmitterPosition();
     }

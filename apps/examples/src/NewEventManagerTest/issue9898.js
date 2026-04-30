@@ -39,29 +39,29 @@ export class Issue9898 extends EventDispatcherTestDemo {
         super();
         //----start12----ctor
 
-        var origin = cc.director.getVisibleOrigin();
-        var size = cc.director.getVisibleSize();
+        var origin = director.getVisibleOrigin();
+        var size = director.getVisibleSize();
 
-        var node = new cc.Node();
+        var node = new Node();
         this.addChild(node);
 
-        var _listener = cc.EventListener.create({
-            event: cc.EventListener.CUSTOM,
+        var _listener = EventListener.create({
+            event: EventListener.CUSTOM,
             eventName: "Issue9898",
             callback: function(event){
-                cc.eventManager.removeListener(_listener);
-                event = new cc.EventCustom("Issue9898");
-                cc.eventManager.dispatchEvent(event);
+                eventManager.removeListener(_listener);
+                event = new EventCustom("Issue9898");
+                eventManager.dispatchEvent(event);
             }
         });
-        cc.eventManager.addListener(_listener, 1);
-        var menuItem  = new cc.MenuItemFont("Dispatch Custom Event1", function(sender){
-            var event = new cc.EventCustom("Issue9898");
-            cc.eventManager.dispatchEvent(event);
+        eventManager.addListener(_listener, 1);
+        var menuItem  = new MenuItemFont("Dispatch Custom Event1", function(sender){
+            var event = new EventCustom("Issue9898");
+            eventManager.dispatchEvent(event);
         });
         menuItem.setPosition(origin.x + size.width/2, origin.y + size.height/2);
 
-        var menu = new cc.Menu(menuItem);
+        var menu = new Menu(menuItem);
         menu.setPosition(0, 0);
         this.addChild(menu);
         //----end12----

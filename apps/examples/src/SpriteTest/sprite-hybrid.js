@@ -54,15 +54,15 @@ export class SpriteHybrid extends SpriteTestDemo {
 
         this.firstPixel2 = false;
         // parents
-        var parent1 = new cc.Node();
-        var parent2 = new cc.SpriteBatchNode(s_grossini, 50);
+        var parent1 = new Node();
+        var parent2 = new SpriteBatchNode(s_grossini, 50);
 
         this.addChild(parent1, 0, TAG_NODE);
         this.addChild(parent2, 0, TAG_SPRITE_BATCH_NODE);
 
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
         // create 250 sprites
         // only show 80% of them
@@ -72,8 +72,8 @@ export class SpriteHybrid extends SpriteTestDemo {
                 spriteIdx = 1;
             var str = "grossini_dance_" + (spriteIdx < 10 ? ("0" + spriteIdx) : spriteIdx) + ".png";
 
-            var frame = cc.spriteFrameCache.getSpriteFrame(str);
-            var sprite = new cc.Sprite(frame);
+            var frame = spriteFrameCache.getSpriteFrame(str);
+            var sprite = new Sprite(frame);
             parent1.addChild(sprite, i, i);
 
             var x = -1000;
@@ -85,7 +85,7 @@ export class SpriteHybrid extends SpriteTestDemo {
             sprite.x = x;
             sprite.y = y;
 
-            var action = new cc.RotateBy(4, 360);
+            var action = new RotateBy(4, 360);
             sprite.runAction(action.repeatForever());
         }
 
@@ -97,7 +97,7 @@ export class SpriteHybrid extends SpriteTestDemo {
     onExit() {
         //----start28----onExit
         super.onExit();
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         //----end28----
     }
     reparentSprite() {
@@ -145,12 +145,12 @@ export class SpriteHybrid extends SpriteTestDemo {
     }
     addTestSprite() {
         var p = this.getChildByTag(TAG_NODE);
-        var frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
-        var sprite1 = new cc.Sprite(frame);
+        var frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+        var sprite1 = new Sprite(frame);
         p.addChild(sprite1, 1000);
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 2;
-        var sprite2 = new cc.Sprite(frame);
+        var sprite2 = new Sprite(frame);
         p.addChild(sprite2, 1000);
         sprite2.x = winSize.width / 2;
         sprite2.y = winSize.height / 2;

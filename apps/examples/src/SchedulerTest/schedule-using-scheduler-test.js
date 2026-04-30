@@ -47,7 +47,7 @@ export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
         scheduler.scheduleUpdate(this, priority, paused);
 
         var interval = 0.25; // every 1/4 of second
-        var repeat = cc.REPEAT_FOREVER; // how many repeats. cc.REPEAT_FOREVER means forever
+        var repeat = REPEAT_FOREVER; // how many repeats. REPEAT_FOREVER means forever
         var delay = 2; // start after 2 seconds;
         paused = false; // not paused. queue it now.
         scheduler.schedule(this.onSchedUpdate, this, interval, repeat, delay, paused);
@@ -68,18 +68,18 @@ export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
     // callbacks
     update(dt) {
         //----start9----update
-        cc.log("update: " + dt);
+        log("update: " + dt);
         //----end9----
     }
     onSchedUpdate(dt) {
         //----start9----onSchedUpdate
-        cc.log("onSchedUpdate delta: " + dt);
+        log("onSchedUpdate delta: " + dt);
 
         this._accum += dt;
         if( this._accum > 3 ) {
             this.unscheduleAll();
         }
-        cc.log("onSchedUpdate accum: " + this._accum);
+        log("onSchedUpdate accum: " + this._accum);
         //----end9----
     }
     unscheduleAll() {

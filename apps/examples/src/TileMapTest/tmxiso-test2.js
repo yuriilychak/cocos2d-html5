@@ -37,16 +37,16 @@ export class TMXIsoTest2 extends TileDemo {
         this.testDuration = 1.2;
 
         this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
+        var color = new LayerColor(new Color(64, 64, 64, 255));
         this.addChild(color, -1);
 
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test2.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test2.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         // move map to the center of the screen
         var ms = map.getMapSize();
         var ts = map.getTileSize();
-        map.runAction(new cc.MoveTo(1.0, new cc.Point(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
+        map.runAction(new MoveTo(1.0, new Point(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
     }
     title() {
         return "TMX Isometric test 2";

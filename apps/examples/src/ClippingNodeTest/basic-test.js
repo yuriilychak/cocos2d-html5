@@ -35,7 +35,7 @@ export class BasicTest extends BaseClippingNodeTest {
     }
 
     setup() {
-        var winSize = cc.director.getWinSize();
+        var winSize = director.getWinSize();
 
         var stencil = this.stencil();
         stencil.tag = TAG_STENCILNODE;
@@ -61,25 +61,25 @@ export class BasicTest extends BaseClippingNodeTest {
     }
 
     actionRotate() {
-        return new cc.RotateBy(1.0, 90.0).repeatForever();
+        return new RotateBy(1.0, 90.0).repeatForever();
     }
 
     actionScale() {
-        var scale = new cc.ScaleBy(1.33, 1.5);
-        return cc.sequence(scale, scale.reverse()).repeatForever();
+        var scale = new ScaleBy(1.33, 1.5);
+        return sequence(scale, scale.reverse()).repeatForever();
     }
 
     shape() {
-        var shape = new cc.DrawNode();
-        var triangle = [new cc.Point(-100, -100),new cc.Point(100, -100), new cc.Point(0, 100)];
+        var shape = new DrawNode();
+        var triangle = [new Point(-100, -100),new Point(100, -100), new Point(0, 100)];
 
-        var green = new cc.Color(0, 255, 0, 255);
+        var green = new Color(0, 255, 0, 255);
         shape.drawPoly(triangle, green, 3, green);
         return shape;
     }
 
     grossini() {
-        var grossini = new cc.Sprite(s_pathGrossini);
+        var grossini = new Sprite(s_pathGrossini);
         grossini.scale = 1.5;
         return grossini;
     }
@@ -89,7 +89,7 @@ export class BasicTest extends BaseClippingNodeTest {
     }
 
     clipper() {
-        return new cc.ClippingNode();
+        return new ClippingNode();
     }
 
     content() {

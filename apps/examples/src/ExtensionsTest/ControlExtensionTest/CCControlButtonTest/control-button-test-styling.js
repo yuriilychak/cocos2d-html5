@@ -28,9 +28,9 @@
 export class ControlButtonTest_Styling extends ControlScene {
     init() {
         if (super.init()) {
-            var screenSize = cc.director.getWinSize();
+            var screenSize = director.getWinSize();
 
-            var layer = new cc.Node();
+            var layer = new Node();
             this.addChild(layer, 1);
 
             var space = 10; // px
@@ -59,7 +59,7 @@ export class ControlButtonTest_Styling extends ControlScene {
             layer.y = screenSize.height / 2.0;
 
             // Add the black background
-            var backgroundButton = new cc.Scale9Sprite(s_extensions_buttonBackground);
+            var backgroundButton = new Scale9Sprite(s_extensions_buttonBackground);
             backgroundButton.width = max_w + 14;
             backgroundButton.height = max_h + 14;
             backgroundButton.x = screenSize.width / 2.0;
@@ -71,18 +71,18 @@ export class ControlButtonTest_Styling extends ControlScene {
     }
     standardButtonWithTitle(title) {
         /** Creates and return a button with a default background and title color. */
-        var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-        backgroundButton.setPreferredSize(new cc.Size(45, 45));  // Set the prefered size
-        var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
-        backgroundHighlightedButton.setPreferredSize(new cc.Size(45, 45));  // Set the prefered size
+        var backgroundButton = new Scale9Sprite(s_extensions_button);
+        backgroundButton.setPreferredSize(new Size(45, 45));  // Set the prefered size
+        var backgroundHighlightedButton = new Scale9Sprite(s_extensions_buttonHighlighted);
+        backgroundHighlightedButton.setPreferredSize(new Size(45, 45));  // Set the prefered size
 
-        var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
+        var titleButton = new LabelTTF(title, "Marker Felt", 30);
 
-        titleButton.color = new cc.Color(159, 168, 176);
+        titleButton.color = new Color(159, 168, 176);
 
-        var button = new cc.ControlButton(titleButton, backgroundButton, null, null, false);
-        button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-        button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+        var button = new ControlButton(titleButton, backgroundButton, null, null, false);
+        button.setBackgroundSpriteForState(backgroundHighlightedButton, CONTROL_STATE_HIGHLIGHTED);
+        button.setTitleColorForState(Color.WHITE, CONTROL_STATE_HIGHLIGHTED);
 
         return button;
     }

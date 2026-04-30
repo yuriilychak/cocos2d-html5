@@ -2,6 +2,8 @@
 // Concatenated by rollup into dist/tests.min.js (loaded after dist/cocos2d.min.js).
 // Each entry is a path relative to the app directory.
 export default [
+  "src/_aliases.js",
+
   "src/BaseTestLayer/BaseTestLayer.js",
 
   "src/tests_resources.js",

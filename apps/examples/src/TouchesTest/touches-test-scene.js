@@ -32,7 +32,7 @@ export class TouchesTestScene extends TestScene {
         this.addChild(pongLayer);
     }
     runThisTest() {
-        cc.director.runScene(this);
+        director.runScene(this);
     }
     MainMenuCallback(sender) {
         super.MainMenuCallback(sender);

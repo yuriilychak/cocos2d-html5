@@ -29,8 +29,8 @@ export class Issue4160 extends EventDispatcherTestDemo {
     constructor(){
         //----start10----ctor
         super();
-        var origin = cc.director.getVisibleOrigin();
-        var size = cc.director.getVisibleSize();
+        var origin = director.getVisibleOrigin();
+        var size = director.getVisibleSize();
 
         var sprite1 = TouchableSprite.create(-30);
         sprite1.setTexture("Images/CyanSquare.png");

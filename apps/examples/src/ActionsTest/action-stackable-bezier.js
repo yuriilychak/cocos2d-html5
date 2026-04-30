@@ -40,20 +40,20 @@ export class ActionStackableBezier extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = new cc.MoveBy(0.05, new cc.Point(8, 8));
+    var move = new MoveBy(0.05, new Point(8, 8));
     var move_back = move.reverse();
-    var move_seq = cc.sequence(move, move_back);
+    var move_seq = sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 
     // Bezier
     var controlPoints = [
-      new cc.Point(0, winSize.height / 2),
-      new cc.Point(winSize.width - 80, -winSize.height / 2),
-      new cc.Point(winSize.width - 80, 100)
+      new Point(0, winSize.height / 2),
+      new Point(winSize.width - 80, -winSize.height / 2),
+      new Point(winSize.width - 80, 100)
     ];
 
-    var bezierForward = new cc.BezierBy(3, controlPoints);
+    var bezierForward = new BezierBy(3, controlPoints);
     var repeat = cc
       .sequence(bezierForward, bezierForward.reverse())
       .repeatForever();

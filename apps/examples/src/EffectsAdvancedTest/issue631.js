@@ -37,26 +37,26 @@ export class Issue631 extends EffectAdvanceTextLayer {
     onEnter() {
         super.onEnter();
 
-        var effect = cc.sequence(new cc.DelayTime(2.0), cc.shaky3D(5.0, new cc.Size(5, 5), 16, false));
+        var effect = sequence(new DelayTime(2.0), shaky3D(5.0, new Size(5, 5), 16, false));
 
         // cleanup
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
         this.removeChild(bg, true);
 
         // background
-        var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
+        var layer = new LayerColor(new Color(255, 0, 0, 255));
         this.addChild(layer, -10);
-        var sprite = new cc.Sprite(s_pathGrossini);
+        var sprite = new Sprite(s_pathGrossini);
         sprite.x = 50;
         sprite.y = 80;
         layer.addChild(sprite, 10);
 
         // foreground
-        var layer2 = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
-        var fog = new cc.Sprite(s_pathFog);
+        var layer2 = new LayerColor(new Color(0, 255, 0, 255));
+        var fog = new Sprite(s_pathFog);
 
-        fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
-	    var nodeGrid = new cc.NodeGrid();
+        fog.setBlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
+	    var nodeGrid = new NodeGrid();
         layer2.addChild(fog, 1);
 	    nodeGrid.addChild(layer2);
         this.addChild(nodeGrid, 1);

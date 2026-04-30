@@ -32,18 +32,18 @@ export class ChipmunkBaseLayer extends BaseTestLayer {
         //
         // VERY IMPORTANT
         //
-        // Only subclasses of a native classes MUST call cc.associateWithNative
+        // Only subclasses of a native classes MUST call associateWithNative
         // Failure to do so, it will crash.
         //
-        super( new cc.Color(0,0,0,255), new cc.Color(98*0.5,99*0.5,117*0.5,255) );
+        super( new Color(0,0,0,255), new Color(98*0.5,99*0.5,117*0.5,255) );
 
         this._title =  "No title";
         this._subtitle = "No Subtitle";
 
         // Menu to toggle debug physics on / off
-        var item = new cc.MenuItemFont("Physics On/Off", this.onToggleDebug, this);
+        var item = new MenuItemFont("Physics On/Off", this.onToggleDebug, this);
         item.fontSize = 24;
-        var menu = new cc.Menu( item );
+        var menu = new Menu( item );
         this.addChild( menu );
         menu.x = winSize.width-100;
         menu.y = winSize.height-90;
@@ -57,7 +57,7 @@ export class ChipmunkBaseLayer extends BaseTestLayer {
     setupDebugNode()
     {
         // debug only
-        this._debugNode = new cc.PhysicsDebugNode(this.space );
+        this._debugNode = new PhysicsDebugNode(this.space );
         this._debugNode.visible = false ;
         this.addChild( this._debugNode );
     }
@@ -69,9 +69,9 @@ export class ChipmunkBaseLayer extends BaseTestLayer {
 
     onEnter() {
         super.onEnter();
-        //cc.base(this, 'onEnter');
+        //base(this, 'onEnter');
 
-        cc.sys.garbageCollect();
+        sys.garbageCollect();
     }
 
     onCleanup() {

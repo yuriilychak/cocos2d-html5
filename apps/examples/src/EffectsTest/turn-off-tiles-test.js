@@ -28,13 +28,13 @@ export class TurnOffTilesTest extends EffectsBaseLayer {
         return "TurnOffTiles";
     }
     code() {
-        return "a = cc.turnOffTiles(duration, gridSize, seed)";
+        return "a = turnOffTiles(duration, gridSize, seed)";
     }
     getEffect(duration) {
-        var action = cc.turnOffTiles( duration, new cc.Size(48,32), 25);
-        var delay = new cc.DelayTime(0.5);
+        var action = turnOffTiles( duration, new Size(48,32), 25);
+        var delay = new DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.sequence( action, delay, back);
+        var seq = sequence( action, delay, back);
         return seq;
     }
 

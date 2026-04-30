@@ -72,9 +72,9 @@ export class AnimationCacheTest extends SpriteTestDemo {
 
 
         this.cPixel3 = null;
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_bluePlist);
+        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist);
+        spriteFrameCache.addSpriteFrames(s_grossini_bluePlist);
 
         //
         // create animation "dance"
@@ -84,15 +84,15 @@ export class AnimationCacheTest extends SpriteTestDemo {
         var str = "";
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
-            animFrame = new cc.AnimationFrame(frame, 1);
+            frame = spriteFrameCache.getSpriteFrame(str);
+            animFrame = new AnimationFrame(frame, 1);
             animFrames.push(animFrame);
         }
 
-        var animation = new cc.Animation(animFrames, 0.2);
+        var animation = new Animation(animFrames, 0.2);
 
         // Add an animation to the Cache
-        cc.animationCache.addAnimation(animation, "dance");
+        animationCache.addAnimation(animation, "dance");
 
         //
         // create animation "dance gray"
@@ -100,14 +100,14 @@ export class AnimationCacheTest extends SpriteTestDemo {
         animFrames = [];
         for (i = 1; i < 15; i++) {
             str = "grossini_dance_gray_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
+            frame = spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
-        animation = new cc.Animation(animFrames, 0.2);
+        animation = new Animation(animFrames, 0.2);
 
         // Add an animation to the Cache
-        cc.animationCache.addAnimation(animation, "dance_gray");
+        animationCache.addAnimation(animation, "dance_gray");
 
         //
         // create animation "dance blue"
@@ -115,16 +115,16 @@ export class AnimationCacheTest extends SpriteTestDemo {
         animFrames = [];
         for (i = 1; i < 4; i++) {
             str = "grossini_blue_0" + i + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
+            frame = spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
-        animation = new cc.Animation(animFrames, 0.2);
+        animation = new Animation(animFrames, 0.2);
 
         // Add an animation to the Cache
-        cc.animationCache.addAnimation(animation, "dance_blue");
+        animationCache.addAnimation(animation, "dance_blue");
 
-        var animCache = cc.animationCache;
+        var animCache = animationCache;
 
         var normal = animCache.getAnimation("dance");
         normal.setRestoreOriginalFrame(true);
@@ -133,14 +133,14 @@ export class AnimationCacheTest extends SpriteTestDemo {
         var dance_blue = animCache.getAnimation("dance_blue");
         dance_blue.setRestoreOriginalFrame(true);
 
-        var animN = new cc.Animate(normal);
-        var animG = new cc.Animate(dance_grey);
-        var animB = new cc.Animate(dance_blue);
+        var animN = new Animate(normal);
+        var animG = new Animate(dance_grey);
+        var animB = new Animate(dance_blue);
 
-        var seq = cc.sequence(animN, animG, animB);
+        var seq = sequence(animN, animG, animB);
 
-        frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
-        var grossini = new cc.Sprite(frame);
+        frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+        var grossini = new Sprite(frame);
 
         grossini.x = winSize.width / 2;
 

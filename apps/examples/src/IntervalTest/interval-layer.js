@@ -30,7 +30,7 @@ export class IntervalLayer extends cc.LayerGradient {
 
 
     constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+        super(new Color(0,0,0,255), new Color(98,99,117,255));
 
 
 
@@ -87,7 +87,7 @@ export class IntervalLayer extends cc.LayerGradient {
         var s = director.getWinSize();
         // sun
         var sun = new cc.ParticleSun();
-        sun.texture = cc.textureCache.addImage(s_fire);
+        sun.texture = textureCache.addImage(s_fire);
         sun.x = s.width - 32;
         sun.y = s.height - 32;
 
@@ -96,11 +96,11 @@ export class IntervalLayer extends cc.LayerGradient {
         this.addChild(sun);
 
         // timers, font "fonts/bitmapFontTest4.fnt"
-        this.label0 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label1 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label2 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label3 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label4 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label0 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label1 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label2 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label3 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label4 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
 
         this.scheduleUpdate();
         this.schedule(this.step1);
@@ -126,18 +126,18 @@ export class IntervalLayer extends cc.LayerGradient {
         this.addChild(this.label4);
 
         // Sprite
-        var sprite = new cc.Sprite(s_pathGrossini);
+        var sprite = new Sprite(s_pathGrossini);
         sprite.x = 40;
         sprite.y = 50;
 
-        var jump = new cc.JumpBy(3, new cc.Point(s.width - 80, 0), 50, 4);
+        var jump = new JumpBy(3, new Point(s.width - 80, 0), 50, 4);
 
         this.addChild(sprite);
-        sprite.runAction(cc.sequence(jump, jump.reverse()).repeatForever());
+        sprite.runAction(sequence(jump, jump.reverse()).repeatForever());
 
         // pause button
-        var item1 = new cc.MenuItemFont("Pause", this.onPause, this);
-        var menu = new cc.Menu(item1);
+        var item1 = new MenuItemFont("Pause", this.onPause, this);
+        var menu = new Menu(item1);
         menu.x = s.width / 2;
         menu.y = s.height - 50;
 

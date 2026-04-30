@@ -30,13 +30,13 @@
 ;
 
 DrawNewAPITest2.prototype.title = function(){
-    return 'cc.DrawNode 2';
+    return 'DrawNode 2';
 };
 
 ;
 
 DrawNewAPITest.prototype.title = function(){
-    return 'cc.DrawNode 1';
+    return 'DrawNode 1';
 };
 
 ;

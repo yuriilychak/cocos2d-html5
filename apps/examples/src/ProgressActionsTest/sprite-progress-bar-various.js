@@ -30,37 +30,37 @@ export class SpriteProgressBarVarious extends SpriteDemo {
         //----start4----onEnter
         super.onEnter();
 
-        var to = cc.progressFromTo(2, 0, 100);
+        var to = progressFromTo(2, 0, 100);
 
-        var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
-        left.type = cc.ProgressTimer.TYPE_BAR;
+        var left = new ProgressTimer(new Sprite(s_pathSister1));
+        left.type = ProgressTimer.TYPE_BAR;
 
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        left.midPoint = new cc.Point(0.5, 0.5);
+        left.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        left.barChangeRate = new cc.Point(1, 0);
+        left.barChangeRate = new Point(1, 0);
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
         left.runAction(to.clone().repeatForever());
 
-        var middle = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
-        middle.type = cc.ProgressTimer.TYPE_BAR;
+        var middle = new ProgressTimer(new Sprite(s_pathSister2));
+        middle.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        middle.midPoint = new cc.Point(0.5, 0.5);
+        middle.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        middle.barChangeRate = new cc.Point(1, 1);
+        middle.barChangeRate = new Point(1, 1);
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
         middle.runAction(to.clone().repeatForever());
 
-        var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
-        right.type = cc.ProgressTimer.TYPE_BAR;
+        var right = new ProgressTimer(new Sprite(s_pathSister2));
+        right.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        right.midPoint = new cc.Point(0.5, 0.5);
+        right.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        right.barChangeRate = new cc.Point(0, 1);
+        right.barChangeRate = new Point(0, 1);
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;

@@ -40,24 +40,24 @@ export class LayerTest1 extends LayerTest {
         //----start0----onEnter
         super.onEnter();
 
-        if( 'touches' in cc.sys.capabilities )
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if( 'touches' in sys.capabilities )
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved:function (touches, event) {
                     event.getCurrentTarget().updateSize(touches[0].getLocation());
                 }
             }, this);
-        else if ('mouse' in cc.sys.capabilities )
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        else if ('mouse' in sys.capabilities )
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseMove: function(event){
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                    if(event.getButton() == EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().updateSize(event.getLocation());
                 }
             }, this);
 
         var s = director.getWinSize();
-        var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 128));
+        var layer = new LayerColor(new Color(255, 0, 0, 128));
 
         layer.ignoreAnchor = false;
         layer.anchorX = 0.5;

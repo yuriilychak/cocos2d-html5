@@ -33,14 +33,14 @@ export class GLReadPixelsTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in sys.capabilities ) {
             var x = winSize.width;
             var y = winSize.height;
 
-            var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
-            var red = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
-            var green = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
-            var white = new cc.LayerColor(new cc.Color(255, 255, 255, 255));
+            var blue = new LayerColor(new Color(0, 0, 255, 255));
+            var red = new LayerColor(new Color(255, 0, 0, 255));
+            var green = new LayerColor(new Color(0, 255, 0, 255));
+            var white = new LayerColor(new Color(255, 255, 255, 255));
 
             blue.scale = 0.5;
             blue.x = -x / 4;

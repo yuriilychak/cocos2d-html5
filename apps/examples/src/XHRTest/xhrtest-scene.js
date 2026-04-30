@@ -32,7 +32,7 @@ export class XHRTestScene extends TestScene {
         this.addChild(xhrLayer);
     }
     runThisTest() {
-        cc.director.runScene(this);
+        director.runScene(this);
     }
     MainMenuCallback(sender) {
         super.MainMenuCallback(sender);

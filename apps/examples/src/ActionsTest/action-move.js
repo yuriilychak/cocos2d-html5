@@ -37,7 +37,7 @@ export class ActionMove extends ActionsDemo {
     }
 
       get _code() { 
-        return "a =new cc.MoveBy( time, new cc.Point(x,y) );\n" + "a = new cc.MoveTo( time, new cc.Point(x,y) );";
+        return "a =new MoveBy( time, new Point(x,y) );\n" + "a = new MoveTo( time, new Point(x,y) );";
       }
 
   onEnter() {
@@ -47,18 +47,18 @@ export class ActionMove extends ActionsDemo {
     this.centerSprites(3);
     var s = director.getWinSize();
 
-    var actionTo = new cc.MoveTo(2, new cc.Point(s.width - 40, s.height - 40));
+    var actionTo = new MoveTo(2, new Point(s.width - 40, s.height - 40));
 
-    var actionBy = new cc.MoveBy(1, new cc.Point(80, 80));
+    var actionBy = new MoveBy(1, new Point(80, 80));
     var actionByBack = actionBy.reverse();
 
     this._tamara.runAction(actionTo);
-    this._grossini.runAction(cc.sequence(actionBy, actionByBack));
-    this._kathia.runAction(new cc.MoveTo(1, new cc.Point(40, 40)));
+    this._grossini.runAction(sequence(actionBy, actionByBack));
+    this._kathia.runAction(new MoveTo(1, new Point(40, 40)));
     //----end1----
   }
   title() {
-    return "cc.moveTo / cc.moveBy";
+    return "moveTo / moveBy";
   }
 
   //
@@ -75,9 +75,9 @@ export class ActionMove extends ActionsDemo {
 
   getCurrentResult() {
     var ret = [];
-    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
-    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
+    ret.push(new Point(this._tamara.x, this._tamara.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._kathia.x, this._kathia.y));
 
     return JSON.stringify(ret);
   }

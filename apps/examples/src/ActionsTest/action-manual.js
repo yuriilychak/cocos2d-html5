@@ -56,12 +56,12 @@ export class ActionManual extends ActionsDemo {
       x: winSize.width / 2,
       y: winSize.height / 2,
       rotation: 120,
-      color: new cc.Color(255, 0, 0)
+      color: new Color(255, 0, 0)
     });
 
     this._kathia.x = winSize.width - 100;
     this._kathia.y = winSize.height / 2;
-    this._kathia.color = new cc.Color(0, 0, 255);
+    this._kathia.color = new Color(0, 0, 255);
     //----end0----
   }
 
@@ -92,14 +92,14 @@ export class ActionManual extends ActionsDemo {
   getCurrentResult() {
     var ret = [];
     ret.push(this._tamara.scaleX);
-    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
+    ret.push(new Point(this._tamara.x, this._tamara.y));
     ret.push(this._tamara.opacity);
 
     ret.push(this._grossini.rotation);
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.color);
 
-    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
+    ret.push(new Point(this._kathia.x, this._kathia.y));
     ret.push(this._kathia.color);
 
     return JSON.stringify(ret);

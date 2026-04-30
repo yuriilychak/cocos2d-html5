@@ -41,13 +41,13 @@ export class ActionSequence2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
     this._grossini.visible = false;
-    var action = cc.sequence(
-      new cc.Place(new cc.Point(200, 200)),
-      new cc.Show(),
-      new cc.MoveBy(1, new cc.Point(100, 0)),
-      new cc.CallFunc(this.onCallback1, this),
-      new cc.CallFunc(this.onCallback2.bind(this)),
-      new cc.CallFunc(this.onCallback3, this)
+    var action = sequence(
+      new Place(new Point(200, 200)),
+      new Show(),
+      new MoveBy(1, new Point(100, 0)),
+      new CallFunc(this.onCallback1, this),
+      new CallFunc(this.onCallback2.bind(this)),
+      new CallFunc(this.onCallback3, this)
     );
     this._grossini.runAction(action);
 
@@ -56,7 +56,7 @@ export class ActionSequence2 extends ActionsDemo {
   }
   onCallback1() {
     var s = director.getWinSize();
-    var label = new cc.LabelTTF("callback 1 called", "Marker Felt", 16);
+    var label = new LabelTTF("callback 1 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 1;
     label.y = s.height / 2;
 
@@ -65,7 +65,7 @@ export class ActionSequence2 extends ActionsDemo {
   }
   onCallback2() {
     var s = director.getWinSize();
-    var label = new cc.LabelTTF("callback 2 called", "Marker Felt", 16);
+    var label = new LabelTTF("callback 2 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 2;
     label.y = s.height / 2;
 
@@ -74,7 +74,7 @@ export class ActionSequence2 extends ActionsDemo {
   }
   onCallback3() {
     var s = director.getWinSize();
-    var label = new cc.LabelTTF("callback 3 called", "Marker Felt", 16);
+    var label = new LabelTTF("callback 3 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 3;
     label.y = s.height / 2;
 
@@ -97,7 +97,7 @@ export class ActionSequence2 extends ActionsDemo {
     ret.push(this.called2);
     ret.push(this.called3);
     ret.push(this._grossini.visible);
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
 

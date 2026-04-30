@@ -28,24 +28,24 @@
 export class labelTTFDrawModeTest extends AtlasDemo {
     constructor() {
         super();
-        var cacheLabel = new cc.LabelTTF();
+        var cacheLabel = new LabelTTF();
         cacheLabel.font = "32px 'Courier New'";
         cacheLabel.string = "This is a labelTTF \ndrawn On cached Canvas!";
-        cacheLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+        cacheLabel.setHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
         this.addChild(cacheLabel);
         cacheLabel.x = winSize.width / 2;
         cacheLabel.y = 3*winSize.height / 4 - cacheLabel.height;
 
 
-        var directLabel = new cc.LabelTTF();
-        if(cc.rendererConfig.isCanvas) {
+        var directLabel = new LabelTTF();
+        if(rendererConfig.isCanvas) {
             directLabel.setDrawMode(false);
             directLabel.string = "This is a labelTTF \ndrawn On Screen";
         }
         else
             directLabel.string = "WebGL does NOT support to \ndraw labelTTF on Screen";
         directLabel.font = "32px 'Courier New'";
-        directLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+        directLabel.setHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
         this.addChild(directLabel);
         directLabel.x = winSize.width / 2;
         directLabel.y = winSize.height / 4 ;

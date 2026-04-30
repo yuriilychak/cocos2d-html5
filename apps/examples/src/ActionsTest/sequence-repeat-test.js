@@ -32,16 +32,16 @@ export class SequenceRepeatTest extends ActionsDemo {
     this.centerSprites(2);
 
     this._kathia.runAction(
-      new cc.Repeat(cc.sequence(new cc.Blink(2, 3), new cc.DelayTime(2)), 3)
+      new Repeat(sequence(new Blink(2, 3), new DelayTime(2)), 3)
     );
 
-    var move = new cc.MoveBy(1, new cc.Point(50, 0));
+    var move = new MoveBy(1, new Point(50, 0));
     var move_back = move.reverse();
-    var move_seq = cc.sequence(
+    var move_seq = sequence(
       move,
-      new cc.DelayTime(1),
+      new DelayTime(1),
       move_back,
-      new cc.DelayTime(1)
+      new DelayTime(1)
     );
     this._tamara.runAction(move_seq.repeat(3));
     //----end47----

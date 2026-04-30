@@ -28,7 +28,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
         return "PageTurn3DInRectTest";
     }
     code() {
-        return "a = cc.pageTurn3D(duration, gridSize)";
+        return "a = pageTurn3D(duration, gridSize)";
     }
     // callbacks
     onRestartCallback(sender) {
@@ -49,40 +49,40 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     onEnter(){
         super.onEnter();
 
-        //var node = new cc.Node();
+        //var node = new Node();
         var visiableSize = director.getVisibleSize();
-        var gridRect = new cc.Rect(visiableSize.width*0.1,
+        var gridRect = new Rect(visiableSize.width*0.1,
             visiableSize.height*0.1,
             visiableSize.width*0.4,
             visiableSize.height*0.4);
-        var gridNodeTarget = new cc.NodeGrid(gridRect);
+        var gridNodeTarget = new NodeGrid(gridRect);
 
         gridNodeTarget.runAction(this.getEffect(3));
         this.addChild( gridNodeTarget );
 
         // back gradient
-        var background = new cc.LayerGradient( new cc.Color(255,0,0,255), new cc.Color(255,255,0,255));
+        var background = new LayerGradient( new Color(255,0,0,255), new Color(255,255,0,255));
         gridNodeTarget.addChild( background );
 
         // back image
-        var bg = new cc.Sprite(s_back3);
+        var bg = new Sprite(s_back3);
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         gridNodeTarget.addChild( bg );
 
-        var sister1 = new cc.Sprite(s_pathSister1);
+        var sister1 = new Sprite(s_pathSister1);
         sister1.x = winSize.width/3;
         sister1.y = winSize.height/2;
         gridNodeTarget.addChild( sister1, 1 );
 
-        var sister2 = new cc.Sprite(s_pathSister2);
+        var sister2 = new Sprite(s_pathSister2);
         sister2.x = winSize.width*2/3;
         sister2.y = winSize.height/2;
         gridNodeTarget.addChild( sister2, 1 );
 
-        var sc = new cc.ScaleBy(2, 5);
+        var sc = new ScaleBy(2, 5);
         var sc_back = sc.reverse();
-        var seq = cc.sequence( sc, sc_back );
+        var seq = sequence( sc, sc_back );
         var repeat = seq.repeatForever();
 
         sister1.runAction( repeat );
@@ -90,7 +90,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     }
 
     getEffect(duration) {
-        var action = cc.pageTurn3D(duration, new cc.Size(15,10));
+        var action = pageTurn3D(duration, new Size(15,10));
         return action;
     }
 

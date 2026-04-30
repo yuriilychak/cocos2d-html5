@@ -33,7 +33,7 @@ export class ShaderJuliaTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in sys.capabilities ) {
 
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Julia.vsh", ccbjs + "Shaders/example_Julia.fsh");
             this.addChild(shaderNode,10);

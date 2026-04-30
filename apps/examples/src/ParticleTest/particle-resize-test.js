@@ -34,7 +34,7 @@ export class ParticleResizeTest extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        var emitter1 = new cc.ParticleSystem( s_resprefix + 'Particles/LavaFlow.plist');
+        var emitter1 = new ParticleSystem( s_resprefix + 'Particles/LavaFlow.plist');
         emitter1.x = winSize.width/2;
         emitter1.y = winSize.height/2;
         this.addChild(emitter1);

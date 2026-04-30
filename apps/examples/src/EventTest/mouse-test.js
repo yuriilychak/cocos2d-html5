@@ -31,28 +31,28 @@
 export class MouseTest extends EventTest {
     init() {
         super.init();
-        var sprite = this.sprite = new cc.Sprite(s_pathR2);
+        var sprite = this.sprite = new Sprite(s_pathR2);
         this.addChild(sprite);
         sprite.x = 0;
         sprite.y = 0;
         sprite.scale = 1;
-        sprite.color = new cc.Color(Math.random()*200+55, Math.random()*200+55, Math.random()*200+55);
+        sprite.color = new Color(Math.random()*200+55, Math.random()*200+55, Math.random()*200+55);
 
-        if( 'mouse' in cc.sys.capabilities ) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        if( 'mouse' in sys.capabilities ) {
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseDown: function(event){
                     var pos = event.getLocation(), target = event.getCurrentTarget();
-                    if(event.getButton() === cc.EventMouse.BUTTON_RIGHT)
-                        cc.log("onRightMouseDown at: " + pos.x + " " + pos.y );
-                    else if(event.getButton() === cc.EventMouse.BUTTON_LEFT)
-                        cc.log("onLeftMouseDown at: " + pos.x + " " + pos.y );
+                    if(event.getButton() === EventMouse.BUTTON_RIGHT)
+                        log("onRightMouseDown at: " + pos.x + " " + pos.y );
+                    else if(event.getButton() === EventMouse.BUTTON_LEFT)
+                        log("onLeftMouseDown at: " + pos.x + " " + pos.y );
                     target.sprite.x = pos.x;
                     target.sprite.y = pos.y;
                 },
                 onMouseMove: function(event){
                     var pos = event.getLocation(), target = event.getCurrentTarget();
-                    cc.log("onMouseMove at: " + pos.x + " " + pos.y );
+                    log("onMouseMove at: " + pos.x + " " + pos.y );
                     target.sprite.x = pos.x;
                     target.sprite.y = pos.y;
                 },
@@ -60,11 +60,11 @@ export class MouseTest extends EventTest {
                     var pos = event.getLocation(), target = event.getCurrentTarget();
                     target.sprite.x = pos.x;
                     target.sprite.y = pos.y;
-                    cc.log("onMouseUp at: " + pos.x + " " + pos.y );
+                    log("onMouseUp at: " + pos.x + " " + pos.y );
                 }
             }, this);
         } else {
-            cc.log("MOUSE Not supported");
+            log("MOUSE Not supported");
         }
     }
     subtitle() {

@@ -32,8 +32,8 @@ export class DemoExplosion extends ParticleDemo {
         this._emitter = new cc.ParticleExplosion();
         this._background.addChild(this._emitter, 10);
 
-        this._emitter.texture = cc.textureCache.addImage(s_stars1);
-        this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
+        this._emitter.texture = textureCache.addImage(s_stars1);
+        this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
 
         this._emitter.setAutoRemoveOnFinish(true);
 

@@ -27,11 +27,11 @@
 
 export class SpineTestPerformanceLayer extends SpineTestLayer {
     constructor(){
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+        super(new Color(0,0,0,255), new Color(98,99,117,255));
 
         var self = this;
-        var listener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        var listener = EventListener.create({
+            event: EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan: function(touch, event){
                 var pos = self.convertToNodeSpace(touch.getLocation());
                 var skeletonNode = new sp.SkeletonAnimation("spine/goblins-pro.json", "spine/goblins.atlas", 1.5);
@@ -44,7 +44,7 @@ export class SpineTestPerformanceLayer extends SpineTestLayer {
                 return true;
             }
         });
-        cc.eventManager.addListener(listener, this);
+        eventManager.addListener(listener, this);
     }
     title(){
         return "Spine Test";

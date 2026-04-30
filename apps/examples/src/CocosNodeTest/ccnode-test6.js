@@ -31,20 +31,20 @@ export class CCNodeTest6 extends TestNodeDemo {
         super();
 
         this.testDuration = 2.1;
-        var sp1 = new cc.Sprite(s_pathSister1);
-        var sp11 = new cc.Sprite(s_pathSister1);
+        var sp1 = new Sprite(s_pathSister1);
+        var sp11 = new Sprite(s_pathSister1);
 
-        var sp2 = new cc.Sprite(s_pathSister2);
-        var sp21 = new cc.Sprite(s_pathSister2);
+        var sp2 = new Sprite(s_pathSister2);
+        var sp21 = new Sprite(s_pathSister2);
 
         sp1.x = 150;
         sp1.y = winSize.height / 2;
         sp2.x = winSize.width - 150;
         sp2.y = winSize.height / 2;
 
-        var rot = new cc.RotateBy(2, 360);
+        var rot = new RotateBy(2, 360);
         var rot_back = rot.reverse();
-        var forever1 = cc.sequence(rot, rot_back).repeatForever();
+        var forever1 = sequence(rot, rot_back).repeatForever();
         var forever11 = forever1.clone();
 
         var forever2 = forever1.clone();

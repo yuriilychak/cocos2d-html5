@@ -45,7 +45,7 @@ export class SchedulerUpdateFromCustom extends SchedulerTestLayer {
 
     update(dt) {
         //----start7----update
-        cc.log("update called:" + dt);
+        log("update called:" + dt);
         //----end7----
     }
     onSchedUpdate(dt) {

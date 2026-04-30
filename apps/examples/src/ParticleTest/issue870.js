@@ -34,15 +34,15 @@ export class Issue870 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.setColor(new cc.Color(0, 0, 0));
+        this.setColor(new Color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
 
-        var system = new cc.ParticleSystem(s_resprefix + "Particles/SpinningPeas.plist");
-        system.setTextureWithRect(cc.textureCache.addImage(s_particles), new cc.Rect(0, 0, 32, 32));
+        var system = new ParticleSystem(s_resprefix + "Particles/SpinningPeas.plist");
+        system.setTextureWithRect(textureCache.addImage(s_particles), new Rect(0, 0, 32, 32));
         this.addChild(system, 10);
         this._emitter = system;
-        this._emitter.drawMode = cc.ParticleSystem.TEXTURE_MODE;
+        this._emitter.drawMode = ParticleSystem.TEXTURE_MODE;
         this._emitter.x = director.getWinSize().width / 2;
         this._emitter.y = director.getWinSize().height / 2 - 50;
         this._index = 0;
@@ -56,7 +56,7 @@ export class Issue870 extends ParticleDemo {
     }
     updateQuads(dt) {
         this._index = (this._index + 1) % 4;
-        var rect = new cc.Rect(this._index * 32, 0, 32, 32);
+        var rect = new Rect(this._index * 32, 0, 32, 32);
         this._emitter.setTextureWithRect(this._emitter.texture, rect);
     }
 

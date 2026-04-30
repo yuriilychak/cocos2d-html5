@@ -48,21 +48,21 @@ export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
 
         this.pixel = {"0":153, "1":0, "2":153, "3":255};
         //----start9----ctor
-        var batch = new cc.SpriteBatchNode(s_grossini);
+        var batch = new SpriteBatchNode(s_grossini);
         this.addChild(batch);
 
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
-            var point = new cc.Sprite(s_pathR1);
+            var point = new Sprite(s_pathR1);
             point.scale = 0.25;
             point.x = sprite.x;
             point.y = sprite.y;
@@ -90,16 +90,16 @@ export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
             var str = "";
             for (var k = 1; k <= 14; k++) {
                 str = "grossini_dance_" + (k < 10 ? ("0" + k) : k) + ".png";
-                var frame = cc.spriteFrameCache.getSpriteFrame(str);
+                var frame = spriteFrameCache.getSpriteFrame(str);
                 animFrames.push(frame);
             }
 
-            var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            var animation = new Animation(animFrames, 0.3);
+            sprite.runAction(new Animate(animation).repeatForever());
 
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = new ScaleBy(2, 2);
             var scale_back = scale.reverse();
-            var seq_scale = cc.sequence(scale, scale_back);
+            var seq_scale = sequence(scale, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             batch.addChild(sprite, i);
@@ -109,8 +109,8 @@ export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
     onExit() {
         //----start9----onExit
         super.onExit();
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end9----
     }
     //

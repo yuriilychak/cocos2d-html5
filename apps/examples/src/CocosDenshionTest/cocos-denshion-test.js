@@ -27,19 +27,19 @@
 
 export class CocosDenshionTest extends cc.LayerGradient {
     constructor() {
-        super(new cc.Color(0, 0, 0, 255), new cc.Color(148, 80, 120, 255));
+        super(new Color(0, 0, 0, 255), new Color(148, 80, 120, 255));
 
         this._itemMenu = null;
 
-        this._beginPos = new cc.Point(0, 0);
+        this._beginPos = new Point(0, 0);
 
         this._testCount = 0;
 
-        this._itemMenu = new cc.Menu();
+        this._itemMenu = new Menu();
         var winSize = director.getWinSize();
         for (var i = 0; i < DenshionTests.length; i++) {
-            var label = new cc.LabelTTF(DenshionTests[i].title, "Arial", 24);
-            var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
+            var label = new LabelTTF(DenshionTests[i].title, "Arial", 24);
+            var menuItem = new MenuItemLabel(label, this.onMenuCallback, this);
             this._itemMenu.addChild(menuItem, i + 10000);
             menuItem.x = winSize.width / 2;
             menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
@@ -51,18 +51,18 @@ export class CocosDenshionTest extends cc.LayerGradient {
         this._itemMenu.y = 0;
         this.addChild(this._itemMenu);
 
-        if( 'touches' in cc.sys.capabilities ) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if( 'touches' in sys.capabilities ) {
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved: function (touches, event) {
                     event.getCurrentTarget().moveMenu(touches[0].getDelta());
                 }
             }, this);
-        } else if ('mouse' in cc.sys.capabilities )
-             cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in sys.capabilities )
+             eventManager.addListener({
+                event: EventListener.MOUSE,
                  onMouseMove: function(event){
-                     if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                     if(event.getButton() == EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().moveMenu(event.getDelta());
                  }
              }, this);

@@ -36,14 +36,14 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
 
             // Add the alert
             this._bottomDisplayLabel.setString("TextField");
-            this._bottomDisplayLabel.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075));
+            this._bottomDisplayLabel.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075));
 
             // Create the textfield
             var textField = new ccui.TextField("input words here","Arial",30);
             textField.setPlaceHolder("input text here");
-            textField.setPlaceHolderColor(cc.Color.GREEN);
-            textField.setTextColor(cc.Color.RED);
-            textField.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
+            textField.setPlaceHolderColor(Color.GREEN);
+            textField.setTextColor(Color.RED);
+            textField.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2));
             textField.addEventListener(this.textFieldEvent, this);
             this._mainNode.addChild(textField);
             return true;
@@ -54,11 +54,11 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(new cc.MoveTo(0.225, new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
+                textField.runAction(new MoveTo(0.225, new Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(new cc.MoveTo(0.175, new cc.Point(widgetSize.width / 2, widgetSize.height / 2)));
+                textField.runAction(new MoveTo(0.175, new Point(widgetSize.width / 2, widgetSize.height / 2)));
                 this._topDisplayLabel.setString("detach with IME");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:

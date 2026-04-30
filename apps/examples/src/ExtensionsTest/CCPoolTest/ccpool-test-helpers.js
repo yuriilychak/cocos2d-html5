@@ -38,10 +38,10 @@ CCPoolTest.create = function () {
 };
 
 export function runCCPoolTest() {
-    var pScene = new cc.Scene();
+    var pScene = new Scene();
     var pLayer = CCPoolTest.create();
     pScene.addChild(pLayer);
-    cc.director.runScene(pScene);
+    director.runScene(pScene);
 }
 
 ;
@@ -53,7 +53,6 @@ MySprite.create = function (f1, f2, f3) {
 }
 
 MySprite.reCreate = function (f1, f2, f3) {
-    var pool = cc.pool;
     if (pool.hasObject(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
     return  MySprite.create(f1, f2, f3);
 }

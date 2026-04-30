@@ -33,9 +33,9 @@ export class GLClearTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in sys.capabilities ) {
 
-            var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
+            var blue = new LayerColor(new Color(0, 0, 255, 255));
             this.addChild( blue, 1 );
 
             var node = new cc.GLNode();

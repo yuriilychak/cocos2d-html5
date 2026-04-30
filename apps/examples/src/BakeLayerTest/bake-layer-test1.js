@@ -37,28 +37,27 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
 
         this._bakeLayer = null;
 
-        var winSize = cc.winSize;
-        var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
-        var unbakeItem = new cc.MenuItemFont("unbake", this.onUnbake, this);
-        var runActionItem = new cc.MenuItemFont("run action", this.onRunAction, this);
-        var menu = new cc.Menu(bakeItem, unbakeItem, runActionItem);
+        var bakeItem = new MenuItemFont("bake", this.onBake, this);
+        var unbakeItem = new MenuItemFont("unbake", this.onUnbake, this);
+        var runActionItem = new MenuItemFont("run action", this.onRunAction, this);
+        var menu = new Menu(bakeItem, unbakeItem, runActionItem);
 
         menu.alignItemsVertically();
         menu.x = winSize.width - 70;
         menu.y = winSize.height - 120;
         this.addChild(menu, 10);
 
-        var rootLayer = new cc.Layer();
+        var rootLayer = new Layer();
         rootLayer.setPosition(20,20);
         this.addChild(rootLayer);
 
-        var bakeLayer = new cc.Layer();
+        var bakeLayer = new Layer();
         bakeLayer.bake();
         bakeLayer.setRotation(30);
         rootLayer.addChild(bakeLayer);
 
         for(var i = 0; i < 9; i++){
-            var sprite1 = new cc.Sprite(s_pathGrossini);
+            var sprite1 = new Sprite(s_pathGrossini);
             if (i % 2 === 0) {
                 sprite1.setPosition(90 + i * 80, winSize.height / 2 - 50);
             } else {
@@ -70,7 +69,7 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
             bakeLayer.addChild(sprite1);
         }
         this._bakeLayer = bakeLayer;
-        bakeLayer.runAction(cc.sequence(new cc.MoveBy(2, new cc.Point(100,100)), new cc.MoveBy(2, new cc.Point(-100,-100))));
+        bakeLayer.runAction(sequence(new MoveBy(2, new Point(100,100)), new MoveBy(2, new Point(-100,-100))));
     }
 
     onBake(){
@@ -82,7 +81,7 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
     }
 
     onRunAction(){
-        this._actionSprite.runAction(new cc.RotateBy(1, 180));
+        this._actionSprite.runAction(new RotateBy(1, 180));
     }
 
 }

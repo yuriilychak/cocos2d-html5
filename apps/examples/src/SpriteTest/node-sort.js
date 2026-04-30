@@ -71,30 +71,30 @@ export class NodeSort extends SpriteTestDemo {
 
 
         this.testOrders = [];
-        this._node = new cc.Node();
+        this._node = new Node();
         this.addChild(this._node, 0, 0);
 
-        this._sprite1 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+        this._sprite1 = new Sprite(s_piece, new Rect(128, 0, 64, 64));
         this._sprite1.x = 100;
         this._sprite1.y = 160;
         this._node.addChild(this._sprite1, -6, 1);
 
-        this._sprite2 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+        this._sprite2 = new Sprite(s_piece, new Rect(128, 0, 64, 64));
         this._sprite2.x = 164;
         this._sprite2.y = 160;
         this._node.addChild(this._sprite2, -6, 2);
 
-        this._sprite4 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+        this._sprite4 = new Sprite(s_piece, new Rect(128, 0, 64, 64));
         this._sprite4.x = 292;
         this._sprite4.y = 160;
         this._node.addChild(this._sprite4, -3, 4);
 
-        this._sprite3 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+        this._sprite3 = new Sprite(s_piece, new Rect(128, 0, 64, 64));
         this._sprite3.x = 228;
         this._sprite3.y = 160;
         this._node.addChild(this._sprite3, -4, 3);
 
-        this._sprite5 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+        this._sprite5 = new Sprite(s_piece, new Rect(128, 0, 64, 64));
         this._sprite5.x = 356;
         this._sprite5.y = 160;
         this._node.addChild(this._sprite5, -3, 5);
@@ -107,25 +107,25 @@ export class NodeSort extends SpriteTestDemo {
         //----start49----reorderSprite
         this.unschedule(this.reorderSprite);
 
-        cc.log("Before reorder--");
+        log("Before reorder--");
 
         var i = 0;
         var child;
         var nodeChildren = this._node.children;
         for (i = 0; i < nodeChildren.length; i++) {
             child = nodeChildren[i];
-            cc.log("tag:" + child.tag + "  z: " + child.zIndex);
+            log("tag:" + child.tag + "  z: " + child.zIndex);
         }
 
         //z-4
         this._node.reorderChild(this._node.children[0], -6);
         this._node.sortAllChildren();
 
-        cc.log("After reorder--");
+        log("After reorder--");
         nodeChildren = this._node.children;
         for (i = 0; i < nodeChildren.length; i++) {
             child = nodeChildren[i];
-            cc.log("tag:" + child.tag + "  z: " +
+            log("tag:" + child.tag + "  z: " +
                 child.zIndex);
             this.testOrders.push(child.tag);
         }

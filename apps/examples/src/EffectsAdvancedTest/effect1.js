@@ -39,14 +39,14 @@ export class Effect1 extends EffectAdvanceTextLayer {
         // in this case:
         //     Lens3D is Grid3D and it's size is (15,10)
         //     Waves3D is Grid3D and it's size is (15,10)
-        var size = cc.director.getWinSize();
-        var lens = cc.lens3D(0.0, new cc.Size(15, 10), new cc.Point(size.width / 2, size.height / 2), 240);
-        var waves = cc.waves3D(10, new cc.Size(15, 10), 18, 15);
+        var size = director.getWinSize();
+        var lens = lens3D(0.0, new Size(15, 10), new Point(size.width / 2, size.height / 2), 240);
+        var waves = waves3D(10, new Size(15, 10), 18, 15);
 
-        var reuse = cc.reuseGrid(1);
-        var delay = new cc.DelayTime(8);
+        var reuse = reuseGrid(1);
+        var delay = new DelayTime(8);
 
-        target.runAction(cc.sequence(lens, delay, reuse, waves));
+        target.runAction(sequence(lens, delay, reuse, waves));
     }
 
 }

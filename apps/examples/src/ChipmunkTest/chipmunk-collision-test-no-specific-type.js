@@ -69,7 +69,7 @@ export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
         shape.setFriction( 0.5 );
         this.space.addShape( shape );
 
-        var sprite = new cc.PhysicsSprite(file);
+        var sprite = new PhysicsSprite(file);
         sprite.setBody( body );
         return sprite;
     }
@@ -80,7 +80,7 @@ export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
         this.initPhysics();
         this.scheduleUpdate();
 
-        var sprite1 = this.createPhysicsSprite( new cc.Point(winSize.width/2, winSize.height-20), s_pathGrossini);
+        var sprite1 = this.createPhysicsSprite( new Point(winSize.width/2, winSize.height-20), s_pathGrossini);
         this.addChild( sprite1 );
 
         this.space.setDefaultCollisionHandler(
@@ -100,21 +100,21 @@ export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
     }
 
     collisionBegin( arbiter, space ) {
-        cc.log('collision begin');
+        log('collision begin');
         return true;
     }
 
     collisionPre( arbiter, space ) {
-        cc.log('collision pre');
+        log('collision pre');
         return true;
     }
 
     collisionPost( arbiter, space ) {
-        cc.log('collision post');
+        log('collision post');
     }
 
     collisionSeparate( arbiter, space ) {
-        cc.log('collision separate');
+        log('collision separate');
     }
 
 }

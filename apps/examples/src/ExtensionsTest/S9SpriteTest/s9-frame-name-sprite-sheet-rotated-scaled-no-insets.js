@@ -44,23 +44,23 @@ export class S9FrameNameSpriteSheetRotatedScaledNoInsets extends S9SpriteTestDem
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        cc.log("S9FrameNameSpriteSheetRotatedScaledNoInsets ...");
+        log("S9FrameNameSpriteSheetRotatedScaledNoInsets ...");
 
-        var blocks_scaled = new cc.Scale9Sprite('blocks9r.png');
-        cc.log("... created");
+        var blocks_scaled = new Scale9Sprite('blocks9r.png');
+        log("... created");
 
         blocks_scaled.x = x;
         blocks_scaled.y = y;
-        cc.log("... setPosition");
+        log("... setPosition");
 
         blocks_scaled.width = 96 * 4;
         blocks_scaled.height = 96*2;
-        cc.log("... setContentSize");
+        log("... setContentSize");
 
         this.addChild(blocks_scaled);
-        cc.log("this..addChild");
+        log("this..addChild");
 
-        cc.log("... S9FrameNameSpriteSheetRotatedScaledNoInsets done.");
+        log("... S9FrameNameSpriteSheetRotatedScaledNoInsets done.");
     }
 
 }

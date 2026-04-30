@@ -39,7 +39,7 @@ export class ActionAnimate extends ActionsDemo {
     //
     // Manual animation
     //
-    var animation = new cc.Animation();
+    var animation = new Animation();
     for (var i = 1; i < 15; i++) {
       var frameName =
         "Images/grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
@@ -48,20 +48,20 @@ export class ActionAnimate extends ActionsDemo {
     animation.setDelayPerUnit(2.8 / 14);
     animation.setRestoreOriginalFrame(true);
 
-    var action = new cc.Animate(animation);
-    this._grossini.runAction(cc.sequence(action, action.reverse()));
+    var action = new Animate(animation);
+    this._grossini.runAction(sequence(action, action.reverse()));
 
     //
     // File animation
     //
     // With 2 loops and reverse
-    var animCache = cc.animationCache;
+    var animCache = animationCache;
 
     animCache.addAnimations(s_animations2Plist);
     var animation2 = animCache.getAnimation("dance_1");
 
-    var action2 = new cc.Animate(animation2);
-    this._tamara.runAction(cc.sequence(action2, action2.reverse()));
+    var action2 = new Animate(animation2);
+    this._tamara.runAction(sequence(action2, action2.reverse()));
 
     //
     // File animation
@@ -70,7 +70,7 @@ export class ActionAnimate extends ActionsDemo {
     var animation3 = animation2.clone();
     animation3.setLoops(4);
 
-    var action3 = new cc.Animate(animation3);
+    var action3 = new Animate(animation3);
     this._kathia.runAction(action3);
     //----end44----
   }

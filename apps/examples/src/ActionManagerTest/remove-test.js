@@ -44,17 +44,17 @@ export class RemoveTest extends ActionManagerTest {
         super.onEnter();
 
         var s = director.getWinSize();
-        var l = new cc.LabelTTF("Should not crash", "Thonburi", 16);
+        var l = new LabelTTF("Should not crash", "Thonburi", 16);
         this.addChild(l);
         l.x = s.width / 2;
 	    l.y = 245;
 
-        var move = new cc.MoveBy(2, new cc.Point(200, 0));
-        var callback = new cc.CallFunc(this.stopAction, this);
-        var sequence = cc.sequence(move, callback);
+        var move = new MoveBy(2, new Point(200, 0));
+        var callback = new CallFunc(this.stopAction, this);
+        var sequence = sequence(move, callback);
         sequence.tag = TAG_SEQUENCE;
 
-        var child = new cc.Sprite(s_pathGrossini);
+        var child = new Sprite(s_pathGrossini);
         child.x = 200;
 	    child.y = 200;
 

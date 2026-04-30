@@ -29,18 +29,18 @@ export class DemoRotFlower extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this._emitter = new cc.ParticleSystem(("opengl" in cc.sys.capabilities) ? 300 : 150);
+        this._emitter = new ParticleSystem(("opengl" in sys.capabilities) ? 300 : 150);
 
         this._background.addChild(this._emitter, 10);
-        this._emitter.texture = cc.textureCache.addImage(s_stars2);
+        this._emitter.texture = textureCache.addImage(s_stars2);
         if (this._emitter.setShapeType)
-            this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
+            this._emitter.setShapeType(ParticleSystem.STAR_SHAPE);
 
         // duration
         this._emitter.duration = -1;
 
         // gravity
-        this._emitter.gravity = new cc.Point(0, 0);
+        this._emitter.gravity = new Point(0, 0);
 
         // angle
         this._emitter.angle = 90;
@@ -61,7 +61,7 @@ export class DemoRotFlower extends ParticleDemo {
         // emitter position
         this._emitter.x = 160;
         this._emitter.y = 240;
-        this._emitter.posVar = new cc.Point(0, 0);
+        this._emitter.posVar = new Point(0, 0);
 
         // life of particles
         this._emitter.life = 3;
@@ -73,15 +73,15 @@ export class DemoRotFlower extends ParticleDemo {
         this._emitter.endSpin = 0;
         this._emitter.endSpinVar = 2000;
 
-        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
-        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
-        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
-        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
+        this._emitter.startColor = new Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new Color(128, 128, 128, 255);
+        this._emitter.endColor = new Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 30.0;
         this._emitter.startSizeVar = 0;
-        this._emitter.endSize = cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
+        this._emitter.endSize = ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;

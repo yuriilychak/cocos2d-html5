@@ -56,9 +56,9 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
 
 
         this.testSprite = null;
-        if ('touches' in cc.sys.capabilities) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in sys.capabilities) {
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded: function (touches, event) {
                     for (var it = 0; it < touches.length; it++) {
                         var touch = touches[it];
@@ -70,17 +70,17 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
                     }
                 }
             }, this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in sys.capabilities)
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseUp: function(event){
                     event.getCurrentTarget().addNewSpriteWithCoords(event.getLocation());
                 }
             }, this);
 
-        var batchNode = new cc.SpriteBatchNode(s_grossini_dance_atlas, 50);
+        var batchNode = new SpriteBatchNode(s_grossini_dance_atlas, 50);
         this.addChild(batchNode, 0, TAG_SPRITE_BATCH_NODE);
-        this.addNewSpriteWithCoords(new cc.Point(winSize.width / 2, winSize.height / 2));
+        this.addNewSpriteWithCoords(new Point(winSize.width / 2, winSize.height / 2));
         //----end1----
     }
 
@@ -92,7 +92,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
         var x = (idx % 5) * 85;
         var y = (0 | (idx / 5)) * 121;
 
-        var sprite = new cc.Sprite(batchNode.texture, new cc.Rect(x, y, 85, 121));
+        var sprite = new Sprite(batchNode.texture, new Rect(x, y, 85, 121));
         batchNode.addChild(sprite);
 
         sprite.x = p.x;
@@ -103,18 +103,18 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
         var random = Math.random();
 
         if (random < 0.20)
-            action = new cc.ScaleBy(3, 2);
+            action = new ScaleBy(3, 2);
         else if (random < 0.40)
-            action = new cc.RotateBy(3, 360);
+            action = new RotateBy(3, 360);
         else if (random < 0.60)
-            action = new cc.Blink(1, 3);
+            action = new Blink(1, 3);
         else if (random < 0.8)
-            action = new cc.TintBy(2, 0, -255, -255);
+            action = new TintBy(2, 0, -255, -255);
         else
-            action = new cc.FadeOut(2);
+            action = new FadeOut(2);
 
         var action_back = action.reverse();
-        var seq = cc.sequence(action, action_back);
+        var seq = sequence(action, action_back);
 
         sprite.runAction(seq.repeatForever());
         this.testSprite = sprite;
@@ -126,7 +126,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
     //
     setupAutomation() {
         var fun = function () {
-            var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 0, 85, 121));
+            var sprite = new Sprite(s_grossini_dance_atlas, new Rect(0, 0, 85, 121));
             this.addChild(sprite, 999);
             sprite.x = winSize.width / 2;
             sprite.y = winSize.height / 2;

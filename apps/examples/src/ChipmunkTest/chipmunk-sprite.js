@@ -31,11 +31,11 @@ export class ChipmunkSprite extends ChipmunkBaseLayer {
 
     constructor() {
         super();
-        //cc.base(this);
+        //base(this);
 
         this.addSprite = function( pos ) {
             var sprite =  this.createPhysicsSprite( pos );
-            var child = new cc.Sprite(s_pathSister1);
+            var child = new Sprite(s_pathSister1);
             child.attr({
                 scale: 0.4,
                 anchorX: 0,
@@ -87,25 +87,25 @@ export class ChipmunkSprite extends ChipmunkBaseLayer {
         shape.setFriction( 0.5 );
         this.space.addShape( shape );
 
-        var sprite = new cc.PhysicsSprite(s_pathGrossini);
+        var sprite = new PhysicsSprite(s_pathGrossini);
         sprite.setBody( body );
         return sprite;
     }
 
     onEnter() {
         super.onEnter();
-        //cc.base(this, 'onEnter');
+        //base(this, 'onEnter');
 
         this.scheduleUpdate();
         for(var i=0; i<10; i++) {
-            var variancex = cc.randomMinus1To1() * 5;
-            var variancey = cc.randomMinus1To1() * 5;
+            var variancex = randomMinus1To1() * 5;
+            var variancey = randomMinus1To1() * 5;
             this.addSprite( cp.v(winSize.width/2 + variancex, winSize.height/2 + variancey) );
         }
 
-        if( 'touches' in cc.sys.capabilities ){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if( 'touches' in sys.capabilities ){
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded: function(touches, event){
                     var l = touches.length, target = event.getCurrentTarget();
                     for( var i=0; i < l; i++) {
@@ -113,9 +113,9 @@ export class ChipmunkSprite extends ChipmunkBaseLayer {
                     }
                 }
             }, this);
-        } else if( 'mouse' in cc.sys.capabilities )
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if( 'mouse' in sys.capabilities )
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseDown: function(event){
                     event.getCurrentTarget().addSprite(event.getLocation());
                 }

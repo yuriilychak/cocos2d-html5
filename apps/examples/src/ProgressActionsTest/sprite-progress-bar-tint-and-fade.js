@@ -30,50 +30,50 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
         //----start5----onEnter
         super.onEnter();
 
-        var to = cc.progressFromTo(6, 0, 100);
-        var tint = cc.sequence(
-            new cc.TintTo(1, 255, 0, 0),
-            new cc.TintTo(1, 0, 255, 0),
-            new cc.TintTo(1, 0, 0, 255)
+        var to = progressFromTo(6, 0, 100);
+        var tint = sequence(
+            new TintTo(1, 255, 0, 0),
+            new TintTo(1, 0, 255, 0),
+            new TintTo(1, 0, 0, 255)
         );
 
-        var fade = cc.sequence(new cc.FadeTo(1.0, 0), new cc.FadeTo(1.0, 255));
+        var fade = sequence(new FadeTo(1.0, 0), new FadeTo(1.0, 255));
 
-        var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
-        left.type = cc.ProgressTimer.TYPE_BAR;
+        var left = new ProgressTimer(new Sprite(s_pathSister1));
+        left.type = ProgressTimer.TYPE_BAR;
 
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        left.midPoint = new cc.Point(0.5, 0.5);
+        left.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        left.barChangeRate = new cc.Point(1, 0);
+        left.barChangeRate = new Point(1, 0);
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
         left.runAction(to.clone().repeatForever());
         left.runAction(tint.clone().repeatForever());
 
-        left.addChild(new cc.LabelTTF("Tint", "Marker Felt", 20.0));
+        left.addChild(new LabelTTF("Tint", "Marker Felt", 20.0));
 
-        var middle = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
-        middle.type = cc.ProgressTimer.TYPE_BAR;
+        var middle = new ProgressTimer(new Sprite(s_pathSister2));
+        middle.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        middle.midPoint = new cc.Point(0.5, 0.5);
+        middle.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        middle.barChangeRate = new cc.Point(1, 1);
+        middle.barChangeRate = new Point(1, 1);
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
         middle.runAction(to.clone().repeatForever());
         middle.runAction(fade.clone().repeatForever());
 
-        middle.addChild(new cc.LabelTTF("Fade", "Marker Felt", 20.0));
+        middle.addChild(new LabelTTF("Fade", "Marker Felt", 20.0));
 
-        var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
-        right.type = cc.ProgressTimer.TYPE_BAR;
+        var right = new ProgressTimer(new Sprite(s_pathSister2));
+        right.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        right.midPoint = new cc.Point(0.5, 0.5);
+        right.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        right.barChangeRate = new cc.Point(0, 1);
+        right.barChangeRate = new Point(0, 1);
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
@@ -81,7 +81,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
         right.runAction(tint.clone().repeatForever());
         right.runAction(fade.clone().repeatForever());
 
-        right.addChild(new cc.LabelTTF("Tint and Fade", "Marker Felt", 20.0));
+        right.addChild(new LabelTTF("Tint and Fade", "Marker Felt", 20.0));
         //----end5----
     }
 

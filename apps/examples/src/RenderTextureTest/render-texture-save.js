@@ -41,44 +41,44 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     onEnter() {
         super.onEnter();
 
-        if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in sys.capabilities){
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved:function (touches, event) {
                     event.getCurrentTarget().drawInLocation(touches[0].getLocation());
                 }
             }, this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in sys.capabilities)
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseDown: function(event){
                     event.getCurrentTarget()._lastLocation = event.getLocation();
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                    if(event.getButton() == EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().drawInLocation(event.getLocation());
                 }
             }, this);
 
         this._brushs = [];
 
-        var save = new cc.MenuItemFont("Save", this.saveCB, this);
-        var clear = new cc.MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
-        var menu = new cc.Menu(save, clear);
+        var save = new MenuItemFont("Save", this.saveCB, this);
+        var clear = new MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
+        var menu = new Menu(save, clear);
         menu.alignItemsVertically();
         menu.x = winSize.width - 70;
         menu.y = winSize.height - 80;
         this.addChild(menu, 10);
 
         // create a render texture
-        var target = new cc.RenderTexture(winSize.width, winSize.height, 2);
+        var target = new RenderTexture(winSize.width, winSize.height, 2);
         target.x = winSize.width / 2;
         target.y = winSize.height / 2;
         this.addChild(target, 1);
 
         this._target = target;
 
-        this._lastLocation = new cc.Point(winSize.width / 2, winSize.height / 2);
+        this._lastLocation = new Point(winSize.width / 2, winSize.height / 2);
     }
 
     onExit() {
@@ -86,18 +86,18 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     }
 
     saveCB(sender) {
-        if(!cc.sys.isNative){
-            cc.log("RenderTexture's saveToFile doesn't support on HTML5");
+        if(!sys.isNative){
+            log("RenderTexture's saveToFile doesn't support on HTML5");
             return;
         }
         var namePNG = "image-" + this._counter + ".png";
         var nameJPG = "image-" + this._counter + ".jpg";
 
         // You can only save one file at a time (in one frame)
-        this._target.saveToFile(nameJPG, cc.IMAGE_FORMAT_JPEG, false);
-        //this._target.saveToFile(namePNG, cc.IMAGE_FORMAT_PNG);
+        this._target.saveToFile(nameJPG, IMAGE_FORMAT_JPEG, false);
+        //this._target.saveToFile(namePNG, IMAGE_FORMAT_PNG);
 
-        cc.log("images saved!");
+        log("images saved!");
         this._counter++;
     }
 
@@ -106,7 +106,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     }
 
     drawInLocation(location) {
-        var distance = cc.Point.distance(location, this._lastLocation);
+        var distance = Point.distance(location, this._lastLocation);
 
         if (distance > 1) {
             var locLastLocation = this._lastLocation, i;
@@ -116,12 +116,12 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
                 var diffX = locLastLocation.x - location.x;
                 var diffY = locLastLocation.y - location.y;
                 var delta = i / distance;
-                var sprite = new cc.Sprite(s_fire);
+                var sprite = new Sprite(s_fire);
                 sprite.attr({
                     x: location.x + diffX * delta,
                     y: location.y + diffY * delta,
                     rotation: Math.random() * 360,
-                    color: new cc.Color(Math.random() * 255, 255, 255),
+                    color: new Color(Math.random() * 255, 255, 255),
                     scale: Math.random() + 0.25,
                     opacity: 20
                 });

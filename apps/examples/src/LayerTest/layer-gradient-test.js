@@ -35,12 +35,12 @@ class LayerGradientTest extends LayerTest {
         this.pixel1 = {"0": 255, "1": 0, "2": 0, "3": 255};
 
         this.pixel2 = {"0": 0, "1": 255, "2": 0, "3": 255};
-        var layer1 = new cc.LayerGradient(new cc.Color(255, 0, 0, 255), new cc.Color(0, 255, 0, 255), new cc.Point(0.9, 0.9));
+        var layer1 = new LayerGradient(new Color(255, 0, 0, 255), new Color(0, 255, 0, 255), new Point(0.9, 0.9));
         this.addChild(layer1, 0, cc.TAG_LAYER);
 
-        if( 'touches' in cc.sys.capabilities ){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if( 'touches' in sys.capabilities ){
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesBegan:function(touches, event){
                     event.getCurrentTarget().updateGradient(touches[0].getLocation());
                 },
@@ -48,26 +48,26 @@ class LayerGradientTest extends LayerTest {
                     event.getCurrentTarget().updateGradient(touches[0].getLocation());
                 }
             }, this);
-        } else if ('mouse' in cc.sys.capabilities ){
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in sys.capabilities ){
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseDown: function(event){
                     event.getCurrentTarget().updateGradient(event.getLocation());
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                    if(event.getButton() == EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().updateGradient(event.getLocation());
                 }
             }, this);
         }
 
-        var label1 = new cc.LabelTTF("Compressed Interpolation: Enabled", "Marker Felt", 26);
-        var label2 = new cc.LabelTTF("Compressed Interpolation: Disabled", "Marker Felt", 26);
-        var item1 = new cc.MenuItemLabel(label1);
-        var item2 = new cc.MenuItemLabel(label2);
-        var item = new cc.MenuItemToggle(item1, item2, this.onToggleItem, this);
+        var label1 = new LabelTTF("Compressed Interpolation: Enabled", "Marker Felt", 26);
+        var label2 = new LabelTTF("Compressed Interpolation: Disabled", "Marker Felt", 26);
+        var item1 = new MenuItemLabel(label1);
+        var item2 = new MenuItemLabel(label2);
+        var item = new MenuItemToggle(item1, item2, this.onToggleItem, this);
 
-         var menu = new cc.Menu(item);
+         var menu = new Menu(item);
          this.addChild(menu);
          menu.x = winSize.width / 2;
          menu.y = 100;
@@ -76,8 +76,8 @@ class LayerGradientTest extends LayerTest {
 
     updateGradient(pos) {
         //----start7----updateGradient
-        var diff = cc.Point.sub(new cc.Point(winSize.width / 2, winSize.height / 2), pos);
-        diff = cc.Point.normalize(diff);
+        var diff = Point.sub(new Point(winSize.width / 2, winSize.height / 2), pos);
+        diff = Point.normalize(diff);
 
         var gradient = this.getChildByTag(1);
         gradient.setVector(diff);

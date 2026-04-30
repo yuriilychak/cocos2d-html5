@@ -30,26 +30,26 @@ export class SpriteProgressToHorizontal extends SpriteDemo {
         //----start1----onEnter
         super.onEnter();
 
-        var to1 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
-        var to2 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
+        var to1 = sequence(progressTo(2, 100), progressTo(0, 0));
+        var to2 = sequence(progressTo(2, 100), progressTo(0, 0));
 
-        var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
-        left.type = cc.ProgressTimer.TYPE_BAR;
+        var left = new ProgressTimer(new Sprite(s_pathSister1));
+        left.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the left since the midpoint is 0 for the x
-        left.midPoint = new cc.Point(0, 0);
+        left.midPoint = new Point(0, 0);
         //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
-        left.barChangeRate = new cc.Point(1, 0);
+        left.barChangeRate = new Point(1, 0);
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
         left.runAction(to1.repeatForever());
 
-        var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
-        right.type = cc.ProgressTimer.TYPE_BAR;
+        var right = new ProgressTimer(new Sprite(s_pathSister2));
+        right.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the left since the midpoint is 1 for the x
-        right.midPoint = new cc.Point(1, 0);
+        right.midPoint = new Point(1, 0);
         //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
-        right.barChangeRate = new cc.Point(1, 0);
+        right.barChangeRate = new Point(1, 0);
         this.addChild(right);
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;

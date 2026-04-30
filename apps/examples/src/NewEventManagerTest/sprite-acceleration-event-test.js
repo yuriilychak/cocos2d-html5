@@ -33,25 +33,25 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        cc.inputManager.setAccelerometerEnabled(true);
+        inputManager.setAccelerometerEnabled(true);
 
-        var sprite = new cc.Sprite("Images/ball.png");
+        var sprite = new Sprite("Images/ball.png");
         sprite.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite);
 
-        cc.eventManager.addListener({
-            event: cc.EventListener.ACCELERATION,
+        eventManager.addListener({
+            event: EventListener.ACCELERATION,
             callback: function(acc, event){
                 var target = event.getCurrentTarget();
                 var ballSize  = target.getContentSize();
                 var ptNow  = target.getPosition();
 
-                //cc.log("acc: x = " + acc.x + ", y = " + acc.y);
+                //log("acc: x = " + acc.x + ", y = " + acc.y);
 
                 target.x = SpriteAccelerationEventTest._fix_pos(ptNow.x + acc.x * 9.81,
-                    (cc.visibleRect.left.x + ballSize.width / 2.0), (cc.visibleRect.right.x - ballSize.width / 2.0));
+                    (visibleRect.left.x + ballSize.width / 2.0), (visibleRect.right.x - ballSize.width / 2.0));
                 target.y = SpriteAccelerationEventTest._fix_pos(ptNow.y + acc.y * 9.81,
-                    (cc.visibleRect.bottom.y + ballSize.height / 2.0), (cc.visibleRect.top.y - ballSize.height / 2.0));
+                    (visibleRect.bottom.y + ballSize.height / 2.0), (visibleRect.top.y - ballSize.height / 2.0));
             }
         }, sprite);
         //----end5----
@@ -59,7 +59,7 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
 
     onExit(){
         //----start5----onEnter
-        cc.inputManager.setAccelerometerEnabled(false);
+        inputManager.setAccelerometerEnabled(false);
         super.onExit();
         //----end----
     }

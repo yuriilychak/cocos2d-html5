@@ -41,11 +41,11 @@ export class ActionRepeat extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(2);
 
-    var a1 = new cc.MoveBy(1, new cc.Point(150, 0));
+    var a1 = new MoveBy(1, new Point(150, 0));
 
-    var action1 = cc.sequence(new cc.Place(new cc.Point(60, 60)), a1).repeat(3);
+    var action1 = sequence(new Place(new Point(60, 60)), a1).repeat(3);
     var action2 = cc
-      .sequence(a1.clone(), a1.reverse(), new cc.DelayTime(0.25))
+      .sequence(a1.clone(), a1.reverse(), new DelayTime(0.25))
       .repeatForever();
 
     this._kathia.runAction(action1);
@@ -67,8 +67,8 @@ export class ActionRepeat extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
-    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
+    ret.push(new Point(this._kathia.x, this._kathia.y));
+    ret.push(new Point(this._tamara.x, this._tamara.y));
     return JSON.stringify(ret);
   }
 

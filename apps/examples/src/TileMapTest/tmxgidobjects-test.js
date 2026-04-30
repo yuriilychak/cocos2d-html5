@@ -31,12 +31,12 @@ export class TMXGIDObjectsTest extends TileDemo {
 
         this.testObjects = [];
 
-        var drawNode = new cc.DrawNode();
+        var drawNode = new DrawNode();
         drawNode.setLineWidth(3);
-        drawNode.setDrawColor(new cc.Color(255,255,255,255));
+        drawNode.setDrawColor(new Color(255,255,255,255));
         this.addChild(drawNode);
 
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/test-object-layer.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/test-object-layer.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         this.log("ContentSize:" + map.width + "," + map.height);
@@ -57,10 +57,10 @@ export class TMXGIDObjectsTest extends TileDemo {
             var width = dict["width"], height = dict["height"];
 
             if (width != 0 && height != 0) {
-                drawNode.drawSegment(new cc.Point(x, y), new cc.Point((x + width), y));
-                drawNode.drawSegment(new cc.Point((x + width), y), new cc.Point((x + width), (y + height)));
-                drawNode.drawSegment(new cc.Point((x + width), (y + height)), new cc.Point(x, (y + height)));
-                drawNode.drawSegment(new cc.Point(x, (y + height)), new cc.Point(x, y));
+                drawNode.drawSegment(new Point(x, y), new Point((x + width), y));
+                drawNode.drawSegment(new Point((x + width), y), new Point((x + width), (y + height)));
+                drawNode.drawSegment(new Point((x + width), (y + height)), new Point(x, (y + height)));
+                drawNode.drawSegment(new Point(x, (y + height)), new Point(x, y));
             }
         }
         this.testObjects = array;

@@ -39,14 +39,14 @@ export class KeyboardNotificationLayer extends TextInputTest {
 
         this._beginPos = null;
 
-        if( 'touches' in cc.sys.capabilities ){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if( 'touches' in sys.capabilities ){
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded: this.onTouchesEnded
             }, this);
-        } else if ('mouse' in cc.sys.capabilities )
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in sys.capabilities )
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseUp: this.onMouseUp
             }, this);
     }
@@ -59,23 +59,23 @@ export class KeyboardNotificationLayer extends TextInputTest {
     }
 
     keyboardWillShow(info) {
-        cc.log("TextInputTest:keyboardWillShowAt(origin:" + info.end.x + "," + info.end.y
+        log("TextInputTest:keyboardWillShowAt(origin:" + info.end.x + "," + info.end.y
             + ", size:" + info.end.width + "," + info.end.height + ")");
 
         if (!this._trackNode)
             return;
 
         var rectTracked = textInputGetRect(this._trackNode);
-        cc.log("TextInputTest:trackingNodeAt(origin:" + info.end.x + "," + info.end.y
+        log("TextInputTest:trackingNodeAt(origin:" + info.end.x + "," + info.end.y
             + ", size:" + info.end.width + "," + info.end.height + ")");
 
         // if the keyboard area doesn't intersect with the tracking node area, nothing need to do.
-        if (!cc.Rect.intersects(rectTracked, info.end))
+        if (!Rect.intersects(rectTracked, info.end))
             return;
 
         // assume keyboard at the bottom of screen, calculate the vertical adjustment.
-        var adjustVert = cc.Rect.getMaxY(info.end) - cc.Rect.getMinY(rectTracked);
-        cc.log("TextInputTest:needAdjustVerticalPosition(" + adjustVert + ")");
+        var adjustVert = Rect.getMaxY(info.end) - Rect.getMinY(rectTracked);
+        log("TextInputTest:needAdjustVerticalPosition(" + adjustVert + ")");
 
         // move all the children node of KeyboardNotificationLayer
         var children = this.children;
@@ -98,14 +98,14 @@ export class KeyboardNotificationLayer extends TextInputTest {
         var point = touch.getLocation();
 
         // decide the trackNode is clicked.
-        cc.log("KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")");
+        log("KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")");
 
         var rect = textInputGetRect(target._trackNode);
-        cc.log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
+        log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
             + ", size:" + rect.width + "," + rect.height + ")");
 
-        target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
-        cc.log("----------------------------------");
+        target.onClickTrackNode(Rect.containsPoint(rect, point));
+        log("----------------------------------");
     }
 
     onMouseUp(event) {
@@ -116,14 +116,14 @@ export class KeyboardNotificationLayer extends TextInputTest {
         var point = event.getLocation();
 
         // decide the trackNode is clicked.
-        cc.log("KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")");
+        log("KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")");
 
         var rect = textInputGetRect(target._trackNode);
-        cc.log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
+        log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
             + ", size:" + rect.width + "," + rect.height + ")");
 
-        target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
-        cc.log("----------------------------------");
+        target.onClickTrackNode(Rect.containsPoint(rect, point));
+        log("----------------------------------");
     }
 
 }

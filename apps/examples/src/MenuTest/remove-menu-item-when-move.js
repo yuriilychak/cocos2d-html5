@@ -33,18 +33,18 @@ export class RemoveMenuItemWhenMove extends cc.Layer {
 
         this._touchListener = null;
 
-        var s = cc.director.getWinSize();
+        var s = director.getWinSize();
 
-        var label = new cc.LabelTTF("click item and move, should not crash", "Arial", 20);
+        var label = new LabelTTF("click item and move, should not crash", "Arial", 20);
         label.x = s.width/2;
         label.y = s.height - 30;
         this.addChild(label);
 
-        this._item = new cc.MenuItemFont("item 1");
+        this._item = new MenuItemFont("item 1");
 
-        var back = new cc.MenuItemFont("go back", this.goBack, this);
+        var back = new MenuItemFont("go back", this.goBack, this);
 
-        var menu = new cc.Menu(this._item, back);
+        var menu = new Menu(this._item, back);
         this.addChild(menu);
         menu.alignItemsVertically();
 
@@ -54,8 +54,8 @@ export class RemoveMenuItemWhenMove extends cc.Layer {
 
 	onEnter() {
 		super.onEnter();
-		this._touchListener = cc.EventListener.create({
-			event: cc.EventListener.TOUCH_ONE_BY_ONE,
+		this._touchListener = EventListener.create({
+			event: EventListener.TOUCH_ONE_BY_ONE,
 			swallowTouches: false,
 			onTouchBegan:function(touch, event){
 				return true;
@@ -67,12 +67,12 @@ export class RemoveMenuItemWhenMove extends cc.Layer {
 				}
 			}.bind(this)
 		});
-		cc.eventManager.addListener(this._touchListener, -129);
+		eventManager.addListener(this._touchListener, -129);
 	}
 
 	onExit() {
 		super.onExit();
-		cc.eventManager.removeListener(this._touchListener);
+		eventManager.removeListener(this._touchListener);
 	}
 
     goBack(sender){

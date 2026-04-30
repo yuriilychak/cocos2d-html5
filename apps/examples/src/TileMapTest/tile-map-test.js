@@ -29,8 +29,8 @@
 export class TileMapTest extends TileDemo {
     constructor() {
         super();
-        var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
-        if ("opengl" in cc.sys.capabilities)
+        var map = new TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
+        if ("opengl" in sys.capabilities)
             map.texture.setAntiAliasTexParameters();
 
         this.log("ContentSize: " + map.width + " " + map.height);
@@ -42,10 +42,10 @@ export class TileMapTest extends TileDemo {
         map.anchorX = 0;
         map.anchorY = 0.5;
 
-        var scale = new cc.ScaleBy(4, 0.8);
+        var scale = new ScaleBy(4, 0.8);
         var scaleBack = scale.reverse();
 
-        var seq = cc.sequence(scale, scaleBack);
+        var seq = sequence(scale, scaleBack);
 
         map.runAction(seq.repeatForever());
     }

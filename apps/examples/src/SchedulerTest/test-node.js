@@ -40,7 +40,7 @@ export class TestNode extends cc.Node {
         this.scheduleUpdateWithPriority(priority);
     }
     update(dt) {
-        cc.log( this._pString );
+        log( this._pString );
     }
 
 }

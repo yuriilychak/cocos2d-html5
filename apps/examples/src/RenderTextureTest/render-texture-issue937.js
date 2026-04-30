@@ -26,7 +26,7 @@
 export class RenderTextureIssue937 extends RenderTextureBaseLayer {
     constructor() {
         super();
-        var winSize = cc.director.getWinSize();
+        var winSize = director.getWinSize();
         /*
          *     1    2
          * A: A1   A2
@@ -39,24 +39,24 @@ export class RenderTextureIssue937 extends RenderTextureBaseLayer {
          *  B1: non-premulti sprite
          *  B2: non-premulti render
          */
-        var background = new cc.LayerColor(new cc.Color(200, 200, 200, 255));
+        var background = new LayerColor(new Color(200, 200, 200, 255));
         this.addChild(background);
 
-        var spr_premulti = new cc.Sprite(s_fire);
+        var spr_premulti = new Sprite(s_fire);
         spr_premulti.x = 16;
         spr_premulti.y = 48;
 
-        var spr_nonpremulti = new cc.Sprite(s_fire);
+        var spr_nonpremulti = new Sprite(s_fire);
         spr_nonpremulti.x = 16;
         spr_nonpremulti.y = 16;
 
         /* A2 & B2 setup */
-        var rend = new cc.RenderTexture(32, 64, cc.Texture2D.PIXEL_FORMAT_RGBA8888);
+        var rend = new RenderTexture(32, 64, Texture2D.PIXEL_FORMAT_RGBA8888);
         if (!rend)
             return;
         // It's possible to modify the RenderTexture blending function by
         //        [[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-        //rend.getSprite().setBlendFunc(cc.rendererConfig.renderContext.ONE, cc.rendererConfig.renderContext.ONE_MINUS_SRC_ALPHA);
+        //rend.getSprite().setBlendFunc(rendererConfig.renderContext.ONE, rendererConfig.renderContext.ONE_MINUS_SRC_ALPHA);
         rend.begin();
         spr_premulti.visit();
         spr_nonpremulti.visit();

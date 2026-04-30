@@ -42,7 +42,7 @@ export class ActionRepeatForever extends ActionsDemo {
     //----start22----onEnter
     super.onEnter();
     this.centerSprites(1);
-    var action = cc.sequence(new cc.DelayTime(1), new cc.CallFunc(this.repeatForever)); // not passing 'this' since it is not used by the callback func
+    var action = sequence(new DelayTime(1), new CallFunc(this.repeatForever)); // not passing 'this' since it is not used by the callback func
 
     this._grossini.runAction(action);
     //----end22----
@@ -51,15 +51,15 @@ export class ActionRepeatForever extends ActionsDemo {
     sender.runAction(
       cc
         .sequence(
-          new cc.RotateBy(2, 90).easing(cc.easeElasticInOut(0.5)),
-          new cc.RotateBy(0.5, 90)
+          new RotateBy(2, 90).easing(easeElasticInOut(0.5)),
+          new RotateBy(0.5, 90)
         )
         .repeatForever()
     );
-    cc.sys.garbageCollect();
+    sys.garbageCollect();
   }
   title() {
-    return "cc.CallFunc + cc.RepeatForever";
+    return "CallFunc + RepeatForever";
   }
   //
   // Automation

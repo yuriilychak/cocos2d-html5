@@ -48,10 +48,10 @@ export class Issue1464 extends RenderTextureBaseLayer {
 
         this.testDuration = 2.1;
 
-        var sprite = new cc.Sprite(s_grossini);
+        var sprite = new Sprite(s_grossini);
 
         // create a render texture
-        var rend = new cc.RenderTexture( winSize.width/2, winSize.height/2 );
+        var rend = new RenderTexture( winSize.width/2, winSize.height/2 );
         rend.x = winSize.width/2;
         rend.y = winSize.height/2 ;
         this.addChild( rend, 1 );
@@ -63,15 +63,15 @@ export class Issue1464 extends RenderTextureBaseLayer {
         sprite.visit();
         rend.end();
 
-        var fadeout = new cc.FadeOut(2);
+        var fadeout = new FadeOut(2);
         var fadein = fadeout.reverse();
-        var delay = new cc.DelayTime(0.25);
-        var seq = cc.sequence(fadeout, delay, fadein, delay.clone());
+        var delay = new DelayTime(0.25);
+        var seq = sequence(fadeout, delay, fadein, delay.clone());
         var fe = seq.repeatForever();
         rend.getSprite().runAction(fe);
 
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
-            var label = new cc.LabelTTF("Not support Actions on HTML5-canvas", "Times New Roman", 30);
+        if (!sys.isNative && !("opengl" in sys.capabilities)) {
+            var label = new LabelTTF("Not support Actions on HTML5-canvas", "Times New Roman", 30);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2 + 50;
             this.addChild(label, 100);

@@ -40,26 +40,26 @@ export class ActionStackableCardinalSpline extends ActionsDemo {
     this._grossini.y = 40;
 
     // shake
-    var move = new cc.MoveBy(0.05, new cc.Point(8, 8));
+    var move = new MoveBy(0.05, new Point(8, 8));
     var move_back = move.reverse();
-    var move_seq = cc.sequence(move, move_back);
+    var move_seq = sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 
     // CardinalSpline
     var array = [
-      new cc.Point(0, 0),
-      new cc.Point(80, 80),
-      new cc.Point(winSize.width - 80, 80),
-      new cc.Point(winSize.width - 80, winSize.height - 80),
-      new cc.Point(80, winSize.height - 80),
-      new cc.Point(80, 80),
-      new cc.Point(winSize.width / 2, winSize.height / 2)
+      new Point(0, 0),
+      new Point(80, 80),
+      new Point(winSize.width - 80, 80),
+      new Point(winSize.width - 80, winSize.height - 80),
+      new Point(80, winSize.height - 80),
+      new Point(80, 80),
+      new Point(winSize.width / 2, winSize.height / 2)
     ];
 
-    var action1 = new cc.CardinalSplineBy(6, array, 0.9);
+    var action1 = new CardinalSplineBy(6, array, 0.9);
     var reverse1 = action1.reverse();
-    var seq1 = cc.sequence(action1, reverse1);
+    var seq1 = sequence(action1, reverse1);
     var repeat = seq1.repeatForever();
     this._grossini.runAction(repeat);
     //----end37----

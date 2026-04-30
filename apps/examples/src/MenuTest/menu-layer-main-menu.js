@@ -43,26 +43,26 @@ export class MenuLayerMainMenu extends cc.Layer {
         this._touchListener = null;
 
         // Font Item
-        var spriteNormal = new cc.Sprite(s_menuItem, new cc.Rect(0,23*2,115,23));
-        var spriteSelected = new cc.Sprite(s_menuItem, new cc.Rect(0,23,115,23));
-        var spriteDisabled = new cc.Sprite(s_menuItem, new cc.Rect(0,0,115,23));
+        var spriteNormal = new Sprite(s_menuItem, new Rect(0,23*2,115,23));
+        var spriteSelected = new Sprite(s_menuItem, new Rect(0,23,115,23));
+        var spriteDisabled = new Sprite(s_menuItem, new Rect(0,0,115,23));
 
-        var item1 = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, this.onMenuCallback, this);
+        var item1 = new MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, this.onMenuCallback, this);
 
         // Image Item
-        var sendScoreSF = new cc.SpriteFrame(s_sendScore, new cc.Rect(0, 0, 145, 26));
-        cc.spriteFrameCache.addSpriteFrame(sendScoreSF, "send_score_sf");
-        var item2 = new cc.MenuItemImage("#send_score_sf", s_pressSendScore, this.onMenuCallback2, this);
+        var sendScoreSF = new SpriteFrame(s_sendScore, new Rect(0, 0, 145, 26));
+        spriteFrameCache.addSpriteFrame(sendScoreSF, "send_score_sf");
+        var item2 = new MenuItemImage("#send_score_sf", s_pressSendScore, this.onMenuCallback2, this);
 
         // Label Item (LabelAtlas)
-        var labelAtlas = new cc.LabelAtlas("0123456789", s_fpsImages, 12, 32, '.');
-        var item3 = new cc.MenuItemLabel(labelAtlas, this.onMenuCallbackDisabled, this );
-        item3.setDisabledColor( new cc.Color(32,32,64) );
-        item3.color = new cc.Color(200,200,255);
-        cc.log("test MenuItemLabel getString()" + item3.getString());
+        var labelAtlas = new LabelAtlas("0123456789", s_fpsImages, 12, 32, '.');
+        var item3 = new MenuItemLabel(labelAtlas, this.onMenuCallbackDisabled, this );
+        item3.setDisabledColor( new Color(32,32,64) );
+        item3.color = new Color(200,200,255);
+        log("test MenuItemLabel getString()" + item3.getString());
 
         // Font Item
-        var item4 = new cc.MenuItemFont("I toggle enable items", function(sender) {
+        var item4 = new MenuItemFont("I toggle enable items", function(sender) {
             this._disabledItem.enabled = !this._disabledItem.enabled;
         }, this);
 
@@ -70,36 +70,36 @@ export class MenuLayerMainMenu extends cc.Layer {
         item4.fontName = "Arial";
 
         // Label Item (LabelBMFont)
-        var label = new cc.LabelBMFont("configuration", s_bitmapFontTest3_fnt);
-        var item5 = new cc.MenuItemLabel(label, this.onMenuCallbackConfig, this);
+        var label = new LabelBMFont("configuration", s_bitmapFontTest3_fnt);
+        var item5 = new MenuItemLabel(label, this.onMenuCallbackConfig, this);
 
         // Testing issue #500
         item5.scale = 0.8;
 
         // Events
-        cc.MenuItemFont.setFontName("Arial");
+        MenuItemFont.setFontName("Arial");
 
         // Bugs Item
-        var item7 = new cc.MenuItemFont("Bugs", this.onMenuCallbackBugsTest, this);
+        var item7 = new MenuItemFont("Bugs", this.onMenuCallbackBugsTest, this);
 
         // Font Item
-        var item8 = new cc.MenuItemFont("Quit", this.onQuit, this);
+        var item8 = new MenuItemFont("Quit", this.onQuit, this);
 
-        var item9 = new cc.MenuItemFont("Remove menu item when moving", this.onMenuMovingCallback, this);
+        var item9 = new MenuItemFont("Remove menu item when moving", this.onMenuMovingCallback, this);
 
-        var color_action = new cc.TintBy(0.5, 0, -255, -255);
+        var color_action = new TintBy(0.5, 0, -255, -255);
         var color_back = color_action.reverse();
-        var seq = cc.sequence(color_action, color_back);
+        var seq = sequence(color_action, color_back);
         item8.runAction(seq.repeatForever());
 
-        var menu = new cc.Menu( item1, item2, item3, item4, item5, item7, item8, item9);
+        var menu = new Menu( item1, item2, item3, item4, item5, item7, item8, item9);
         menu.alignItemsVertically();
 
         // elastic effect
-        var winSize = cc.director.getWinSize();
+        var winSize = director.getWinSize();
 
         var locChildren = menu.children;
-        var dstPoint = new cc.Point(0,0);
+        var dstPoint = new Point(0,0);
         for(var i = 0; i < locChildren.length; i++){
             var selChild = locChildren[i];
             if(selChild){
@@ -111,7 +111,7 @@ export class MenuLayerMainMenu extends cc.Layer {
 
                 selChild.x = dstPoint.x + offset;
                 selChild.y = dstPoint.y;
-                selChild.runAction(new cc.MoveBy(2, new cc.Point(dstPoint.x - offset,0)).easing(cc.easeElasticOut(0.35)));
+                selChild.runAction(new MoveBy(2, new Point(dstPoint.x - offset,0)).easing(easeElasticOut(0.35)));
             }
         }
         this._disabledItem = item3;
@@ -131,16 +131,16 @@ export class MenuLayerMainMenu extends cc.Layer {
     }
 
     onAllowTouches(dt) {
-        cc.eventManager.setPriority(this._touchListener, 1);
+        eventManager.setPriority(this._touchListener, 1);
         this.unscheduleAllCallbacks();
-        cc.log("TOUCHES ALLOWED AGAIN");
+        log("TOUCHES ALLOWED AGAIN");
     }
 
     onMenuCallbackDisabled(sender) {
         // hijack all touch events for 5 seconds
-        cc.eventManager.setPriority(this._touchListener, -1);
+        eventManager.setPriority(this._touchListener, -1);
         this.schedule(this.onAllowTouches, 5.0);
-        cc.log("TOUCHES DISABLED FOR 5 SECONDS");
+        log("TOUCHES DISABLED FOR 5 SECONDS");
     }
 
     onMenuCallback2(sender) {
@@ -149,23 +149,23 @@ export class MenuLayerMainMenu extends cc.Layer {
 
 	onEnter() {
 		super.onEnter();
-		this._touchListener = cc.EventListener.create({
-			event: cc.EventListener.TOUCH_ONE_BY_ONE,
+		this._touchListener = EventListener.create({
+			event: EventListener.TOUCH_ONE_BY_ONE,
 			swallowTouches: true,
 			onTouchBegan:function () {
 				return true;
 			}
 		});
-		cc.eventManager.addListener(this._touchListener, 1);
+		eventManager.addListener(this._touchListener, 1);
 	}
 
 	onExit() {
 		super.onExit();
-		cc.eventManager.removeListener(this._touchListener);
+		eventManager.removeListener(this._touchListener);
 	}
 
     onQuit(sender) {
-        cc.log("Quit called");
+        log("Quit called");
     }
 
     onMenuCallbackBugsTest(sender){

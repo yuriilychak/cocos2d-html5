@@ -30,10 +30,10 @@
 ;
 
 export function runXHRArrayBufferTest() {
-    var pScene = new cc.Scene();
+    var pScene = new Scene();
     var pLayer = new XHRArrayBufferTestLayer();
     pScene.addChild(pLayer);
-    cc.director.runScene(pScene);
+    director.runScene(pScene);
 }
 
 ;

@@ -42,18 +42,18 @@ export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite batch
             //
-            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
-            var point = new cc.Sprite(s_pathR1);
+            var point = new Sprite(s_pathR1);
             point.scale = 0.25;
 	        point.x = sprite.x;
 	        point.y = sprite.y;
@@ -81,28 +81,28 @@ export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
+                var frame = spriteFrameCache.getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 
-            var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            var animation = new Animation(animFrames, 0.3);
+            sprite.runAction(new Animate(animation).repeatForever());
 
             animFrames = null;
 
             // Skew
-            var skewX = new cc.SkewBy(2, 45, 0);
+            var skewX = new SkewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new cc.SkewBy(2, 0, 45);
+            var skewY = new SkewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
-            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
             // Scale
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = new ScaleBy(2, 2);
             var scale_back = scale.reverse();
-            var seq_scale = cc.sequence(scale, scale_back);
+            var seq_scale = sequence(scale, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             this.addChild(sprite, 0);

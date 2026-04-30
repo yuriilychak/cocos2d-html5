@@ -36,13 +36,13 @@ export class ActionTargetedCopy extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var jump1 = new cc.JumpBy(2, new cc.Point(0, 0), 100, 3);
+    var jump1 = new JumpBy(2, new Point(0, 0), 100, 3);
     var jump2 = jump1.clone();
 
-    var t1 = new cc.TargetedAction(this._kathia, jump2);
+    var t1 = new TargetedAction(this._kathia, jump2);
     var t_copy = t1.clone();
 
-    var seq = cc.sequence(jump1, t_copy);
+    var seq = sequence(jump1, t_copy);
 
     this._tamara.runAction(seq);
     //----end32----

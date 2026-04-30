@@ -32,13 +32,13 @@ export class KeyboardTest extends EventTest {
     init() {
         super.init();
         var self = this;
-        var label = new cc.LabelTTF("show key Code");
-        var size = cc.director.getWinSize();
+        var label = new LabelTTF("show key Code");
+        var size = director.getWinSize();
         label.setPosition(size.width / 2, size.height / 2);
         this.addChild(label);
-        if ('keyboard' in cc.sys.capabilities) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.KEYBOARD,
+        if ('keyboard' in sys.capabilities) {
+            eventManager.addListener({
+                event: EventListener.KEYBOARD,
                 onKeyPressed: function (key, event) {
                     var strTemp = "Key down:" + key;
                     var keyStr = self.getKeyStr(key);
@@ -59,19 +59,19 @@ export class KeyboardTest extends EventTest {
                 }
             }, this);
         } else {
-            cc.log("KEYBOARD Not supported");
+            log("KEYBOARD Not supported");
         }
     }
     getKeyStr(keycode)
     {
-        if (keycode == cc.KEY.none)
+        if (keycode == KEY.none)
         {
             return "";
         }
 
-        for (var keyTemp in cc.KEY)
+        for (var keyTemp in KEY)
         {
-            if (cc.KEY[keyTemp] == keycode)
+            if (KEY[keyTemp] == keycode)
             {
                 return keyTemp;
             }
@@ -85,7 +85,7 @@ export class KeyboardTest extends EventTest {
     // this callback is only available on JSB + OS X
     // Not supported on cocos2d-html5
     onKeyFlagsChanged(key) {
-        cc.log("Key flags changed:" + key);
+        log("Key flags changed:" + key);
     }
 
 }

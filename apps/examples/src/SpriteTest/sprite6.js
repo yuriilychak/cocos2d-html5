@@ -46,7 +46,7 @@ export class Sprite6 extends SpriteTestDemo {
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
         // small capacity. Testing resizing
         // Don't use capacity=1 in your real game. It is expensive to resize the capacity
-        var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
+        var batch = new SpriteBatchNode(s_grossini_dance_atlas, 1);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
         batch.ignoreAnchorPointForPosition(true);
 
@@ -57,18 +57,18 @@ export class Sprite6 extends SpriteTestDemo {
 	    batch.height = winSize.height;
 
         // SpriteBatchNode actions
-        var rotate1 = new cc.RotateBy(5, 360);
+        var rotate1 = new RotateBy(5, 360);
         var rotate_back = rotate1.reverse();
-        var rotate_seq = cc.sequence(rotate1, rotate_back);
+        var rotate_seq = sequence(rotate1, rotate_back);
         var rotate_forever = rotate_seq.repeatForever();
 
-        var scale = new cc.ScaleBy(5, 1.5);
+        var scale = new ScaleBy(5, 1.5);
         var scale_back = scale.reverse();
-        var scale_seq = cc.sequence(scale, scale_back);
+        var scale_seq = sequence(scale, scale_back);
         var scale_forever = scale_seq.repeatForever();
 
         for (var i = 0; i < 3; i++) {
-            var sprite = new cc.Sprite(batch.texture, new cc.Rect(85 * i, 121, 85, 121));
+            var sprite = new Sprite(batch.texture, new Rect(85 * i, 121, 85, 121));
             switch (i) {
                 case 0:
                     sprite.x = winSize.width / 2 - 100;
@@ -83,7 +83,7 @@ export class Sprite6 extends SpriteTestDemo {
                     sprite.y = winSize.height / 2;
                     break;
             }
-            var rotate = new cc.RotateBy(5, 360);
+            var rotate = new RotateBy(5, 360);
             var action = rotate.repeatForever();
             sprite.runAction(action.clone());
             batch.addChild(sprite, i);

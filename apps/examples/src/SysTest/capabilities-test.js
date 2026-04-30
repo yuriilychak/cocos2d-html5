@@ -40,9 +40,9 @@ export class CapabilitiesTest extends SysTestBase {
 
         this._subtitle = "See the console";
 
-        var c = cc.sys.capabilities;
+        var c = sys.capabilities;
         for( var i in c )
-            cc.log( i + " = " + c[i] );
+            log( i + " = " + c[i] );
     }
 
 

@@ -41,10 +41,10 @@ export class TMXTilesetTest extends TileDemo {
         this.pixel2 = {"0":213, "1":202, "2":190, "3":255};
 
         this.pixel3 = {"0":61, "1":118, "2":71, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
-        if ("opengl" in cc.sys.capabilities) {
+        if ("opengl" in sys.capabilities) {
             var layer;
             layer = map.getLayer("Layer 0");
             layer.texture.setAntiAliasTexParameters();

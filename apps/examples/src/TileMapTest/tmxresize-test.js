@@ -37,7 +37,7 @@ export class TMXResizeTest extends TileDemo {
         this.testDuration = 0.25;
 
         this.pixel = {"0":169, "1":120, "2":76, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         var layer;
@@ -46,7 +46,7 @@ export class TMXResizeTest extends TileDemo {
         var ls = layer.getLayerSize();
         for (var y = 0; y < ls.height; y++) {
             for (var x = 0; x < ls.width; x++) {
-                layer.setTileGID(1, new cc.Point(x, y));
+                layer.setTileGID(1, new Point(x, y));
             }
         }
     }

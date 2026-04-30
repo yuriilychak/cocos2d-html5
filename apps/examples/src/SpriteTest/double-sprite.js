@@ -33,13 +33,13 @@ export class DoubleSprite extends cc.Sprite {
 
         this.HD = false;
         //var resolutionType = texture.getResolutionType();
-        //this.HD = ( resolutionType == cc.kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
+        //this.HD = ( resolutionType == kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
     }
 
     setContentSize(size) {
-        var newSize = new cc.Size(size.width, size.height);
+        var newSize = new Size(size.width, size.height);
         // If Retina Display and Texture is in HD then scale the vertex rect
-        if (cc.contentScaleFactor() == 2 && !this.HD) {
+        if (contentScaleFactor() == 2 && !this.HD) {
             newSize.width *= 2;
             newSize.height *= 2;
         }
@@ -56,14 +56,14 @@ export class DoubleSprite extends cc.Sprite {
     
 	set width(value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
-		if (cc.contentScaleFactor() == 2 && !this.HD) {
+		if (contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
 		super._setWidth(value);
 	}
 	set height(value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
-		if (cc.contentScaleFactor() == 2 && !this.HD) {
+		if (contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
 		super._setHeight(value);
@@ -71,7 +71,7 @@ export class DoubleSprite extends cc.Sprite {
 
     setVertexRect(rect) {
         // If Retina Display and Texture is in HD then scale the vertex rect
-        if (cc.contentScaleFactor() == 2 && !this.HD) {
+        if (contentScaleFactor() == 2 && !this.HD) {
             rect.width *= 2;
             rect.height *= 2;
         }

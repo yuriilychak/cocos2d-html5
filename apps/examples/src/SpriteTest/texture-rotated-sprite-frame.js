@@ -48,14 +48,14 @@ export class TextureRotatedSpriteFrame extends SpriteTestDemo {
 
         this.pixel2 = {"0":51, "1":0, "2":51, "3":255};
 
-        cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
+        spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
 
-        var block = new cc.Sprite('#blocks9r.png');
+        var block = new Sprite('#blocks9r.png');
 
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        block.setTextureRect(new cc.Rect(32, 32, 32, 32), true, new cc.Rect(32, 32, 32, 32));
+        block.setTextureRect(new Rect(32, 32, 32, 32), true, new Rect(32, 32, 32, 32));
 
         block.x = x;
 

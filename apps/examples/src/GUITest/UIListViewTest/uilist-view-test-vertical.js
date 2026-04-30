@@ -60,7 +60,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
             this.listView.setBounceEnabled(true);
             this.listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             this.listView.setBackGroundImageScale9Enabled(true);
-            this.listView.setContentSize(new cc.Size(240, 130));
+            this.listView.setContentSize(new Size(240, 130));
             this.listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - this.listView.width) / 2;
             this.listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - this.listView.height) / 2;
             this.listView.addEventListener(this.selectedItemEvent, this);
@@ -107,11 +107,11 @@ export class UIListViewTest_Vertical extends UIMainLayer {
     }
 
     onEnter() {
-        cc.Node.prototype.onEnter.call(this);
+        Node.prototype.onEnter.call(this);
         //we must call foreceDoLayout in onEnter method in h5.
         this.listView.forceDoLayout();
         var totalHeight = this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
-        this.listView.getInnerContainer().setContentSize(new cc.Size(this.listView.getInnerContainerSize().width, totalHeight));
+        this.listView.getInnerContainer().setContentSize(new Size(this.listView.getInnerContainerSize().width, totalHeight));
         this.listView.jumpToTop();
     }
 
@@ -167,7 +167,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
             case ccui.ListView.EVENT_SELECTED_ITEM:
                 var listViewEx = sender;
                 var item = listViewEx.getItem(listViewEx.getCurSelectedIndex());
-                cc.log("select child index = " + item.getTag());
+                log("select child index = " + item.getTag());
                 break;
 
             default:

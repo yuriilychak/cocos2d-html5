@@ -32,7 +32,7 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
 
             // Add a label in which the textfield events will be displayed
             this._topDisplayLabel.setString("True Type Font Test - No Event");
-            this._topDisplayLabel.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + this._topDisplayLabel.height * 1.5));
+            this._topDisplayLabel.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2 + this._topDisplayLabel.height * 1.5));
 
             // Add the alert
             this._bottomDisplayLabel.setString("TextField");
@@ -51,12 +51,12 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
         var widgetSize = this._widget.getContentSize();
         switch (type){
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(new cc.MoveTo(0.225, new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
+                textField.runAction(new MoveTo(0.225, new Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
 
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(new cc.MoveTo(0.175, new cc.Point(widgetSize.width / 2, widgetSize.height / 2)));
+                textField.runAction(new MoveTo(0.175, new Point(widgetSize.width / 2, widgetSize.height / 2)));
                 this._topDisplayLabel.setString("detach with IME");
                 break;
 

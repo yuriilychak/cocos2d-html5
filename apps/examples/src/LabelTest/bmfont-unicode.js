@@ -34,24 +34,24 @@ export class BMFontUnicode extends AtlasDemo {
         var japanese = "良い一日を";
         var spanish = "Buen día";
 
-        var label1 = new cc.LabelBMFont(spanish, s_resprefix + "fonts/arial-unicode-26.fnt", 200, cc.TEXT_ALIGNMENT_LEFT);
+        var label1 = new LabelBMFont(spanish, s_resprefix + "fonts/arial-unicode-26.fnt", 200, TEXT_ALIGNMENT_LEFT);
         this.addChild(label1);
         label1.x = winSize.width / 2;
         label1.y = winSize.height / 4;
 
-        var label2 = new cc.LabelBMFont(chinese, s_resprefix + "fonts/arial-unicode-26.fnt");
+        var label2 = new LabelBMFont(chinese, s_resprefix + "fonts/arial-unicode-26.fnt");
         this.addChild(label2);
         label2.x = winSize.width / 2;
         label2.y = winSize.height / 2.2;
 
-        var label3 = new cc.LabelBMFont(japanese, s_resprefix + "fonts/arial-unicode-26.fnt");
+        var label3 = new LabelBMFont(japanese, s_resprefix + "fonts/arial-unicode-26.fnt");
         this.addChild(label3);
         label3.x = winSize.width / 2;
         label3.y = winSize.height / 1.5;
         //----end13----
     }
     title() {
-        return "cc.LabelBMFont with Unicode support";
+        return "LabelBMFont with Unicode support";
     }
     subtitle() {
         return "You should see 3 different labels: In Spanish, Chinese and Korean";

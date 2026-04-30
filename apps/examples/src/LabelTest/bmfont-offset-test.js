@@ -39,21 +39,21 @@ export class BMFontOffsetTest extends AtlasDemo {
         var s = director.getWinSize();
 
         var label = null;
-        label = new cc.LabelBMFont("FaFeFiFoFu", s_resprefix + "fonts/bitmapFontTest5.fnt");
+        label = new LabelBMFont("FaFeFiFoFu", s_resprefix + "fonts/bitmapFontTest5.fnt");
         this.addChild(label);
         label.x = s.width / 2;
         label.y = s.height / 2 + 50;
         label.anchorX = 0.5;
         label.anchorY = 0.5;
 
-        label = new cc.LabelBMFont("fafefifofu", s_resprefix + "fonts/bitmapFontTest5.fnt");
+        label = new LabelBMFont("fafefifofu", s_resprefix + "fonts/bitmapFontTest5.fnt");
         this.addChild(label);
         label.x = s.width / 2;
         label.y = s.height / 2;
         label.anchorX = 0.5;
         label.anchorY = 0.5;
 
-        label = new cc.LabelBMFont("aeiou", s_resprefix + "fonts/bitmapFontTest5.fnt");
+        label = new LabelBMFont("aeiou", s_resprefix + "fonts/bitmapFontTest5.fnt");
         this.addChild(label);
         label.x = s.width / 2;
         label.y = s.height / 2 - 50;
@@ -62,7 +62,7 @@ export class BMFontOffsetTest extends AtlasDemo {
         //----end6----
     }
     title() {
-        return "cc.LabelBMFont";
+        return "LabelBMFont";
     }
     subtitle() {
         return "Rendering should be OK. Testing offset";

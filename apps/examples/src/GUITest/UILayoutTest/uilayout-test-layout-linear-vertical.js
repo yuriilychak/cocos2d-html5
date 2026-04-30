@@ -28,7 +28,7 @@ export class UILayoutTest_Layout_Linear_Vertical extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
-        layout.setContentSize(new cc.Size(280, 150));
+        layout.setContentSize(new Size(280, 150));
         return layout;
     }
     getText() {

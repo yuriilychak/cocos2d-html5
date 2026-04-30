@@ -36,7 +36,7 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
 
             var layout = new ccui.Layout();
             layout.setContentSize(widgetSize.width * 0.6, widgetSize.height * 0.6);
-            layout.setBackGroundColor(cc.Color.GREEN);
+            layout.setBackGroundColor(Color.GREEN);
             layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             layout.setBackGroundColorOpacity(100);
             layout.setPosition(widgetSize.width/2, widgetSize.height/2);

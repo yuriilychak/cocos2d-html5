@@ -39,10 +39,10 @@ export class RotateWorldMainLayer extends cc.Layer {
         x = size.width;
         y = size.height;
 
-        var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
-        var red = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
-        var green = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
-        var white = new cc.LayerColor(new cc.Color(255, 255, 255, 255));
+        var blue = new LayerColor(new Color(0, 0, 255, 255));
+        var red = new LayerColor(new Color(255, 0, 0, 255));
+        var green = new LayerColor(new Color(0, 255, 0, 255));
+        var white = new LayerColor(new Color(255, 255, 255, 255));
 
         blue.scale = 0.5;
         blue.x = -x / 4;
@@ -67,7 +67,7 @@ export class RotateWorldMainLayer extends cc.Layer {
         this.addChild(green);
         this.addChild(red);
 
-        var rot = new cc.RotateBy(8, 720);
+        var rot = new RotateBy(8, 720);
 
         blue.runAction(rot);
         red.runAction(rot.clone());

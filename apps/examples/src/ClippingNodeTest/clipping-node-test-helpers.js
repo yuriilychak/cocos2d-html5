@@ -52,14 +52,14 @@ var _alphaThreshold = 0.05;
 var _PLANE_COUNT = 8;
 
 var _planeColor = [
-    new cc.Color(0, 0, 0, 166),
-    new cc.Color(179, 0, 0, 153),
-    new cc.Color(0, 179, 0, 140),
-    new cc.Color(0, 0, 179, 128),
-    new cc.Color(179, 179, 0, 115),
-    new cc.Color(0, 179, 179, 102),
-    new cc.Color(179, 0, 179, 89),
-    new cc.Color(179, 179, 179, 77)
+    new Color(0, 0, 0, 166),
+    new Color(179, 0, 0, 153),
+    new Color(0, 179, 0, 140),
+    new Color(0, 0, 179, 128),
+    new Color(179, 179, 0, 115),
+    new Color(0, 179, 179, 102),
+    new Color(179, 0, 179, 89),
+    new Color(179, 179, 179, 77)
 ];
 
 ;

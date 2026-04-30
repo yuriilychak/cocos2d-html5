@@ -41,15 +41,15 @@ export class MenuLayer2 extends cc.Layer {
 
         this._alignedH = false;
         for (var i = 0; i < 2; i++) {
-            var item1 = new cc.MenuItemImage(s_playNormal, s_playSelect, this.onMenuCallback, this);
-            var item2 = new cc.MenuItemImage(s_highNormal, s_highSelect, this.onMenuCallbackOpacity, this);
-            var item3 = new cc.MenuItemImage(s_aboutNormal, s_aboutSelect, this.onMenuCallbackAlign, this);
+            var item1 = new MenuItemImage(s_playNormal, s_playSelect, this.onMenuCallback, this);
+            var item2 = new MenuItemImage(s_highNormal, s_highSelect, this.onMenuCallbackOpacity, this);
+            var item3 = new MenuItemImage(s_aboutNormal, s_aboutSelect, this.onMenuCallbackAlign, this);
 
             item1.scaleX = 1.5;
             item2.scaleX = 0.5;
             item3.scaleX = 0.5;
 
-            var menu = new cc.Menu(item1, item2, item3);
+            var menu = new Menu(item1, item2, item3);
             var winSize = director.getWinSize();
 
             menu.tag = TAG_MENU;
@@ -58,7 +58,7 @@ export class MenuLayer2 extends cc.Layer {
 
             this.addChild(menu, 0, 100 + i);
 
-            this._centeredMenu = new cc.Point(menu.x, menu.y);
+            this._centeredMenu = new Point(menu.x, menu.y);
         }
         this._alignedH = true;
         this.alignMenuH();

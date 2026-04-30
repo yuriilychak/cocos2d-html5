@@ -44,17 +44,17 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
 
             // Create the page view
             var pageView = new ccui.PageView();
-            pageView.setContentSize(new cc.Size(240.0, 130.0));
-            pageView.setAnchorPoint(new cc.Point(0.5,0.5));
+            pageView.setContentSize(new Size(240.0, 130.0));
+            pageView.setAnchorPoint(new Point(0.5,0.5));
             var backgroundSize = background.getContentSize();
-            pageView.setPosition(new cc.Point(widgetSize.width / 2.0 ,widgetSize.height / 2.0));
-            pageView.setBackGroundColor(cc.Color.GREEN);
+            pageView.setPosition(new Point(widgetSize.width / 2.0 ,widgetSize.height / 2.0));
+            pageView.setBackGroundColor(Color.GREEN);
             pageView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
 
             var pageCount = 4;
             for (var i = 0; i < pageCount; ++i) {
                 var outerBox = new ccui.HBox();
-                outerBox.setContentSize(new cc.Size(240.0, 130.0));
+                outerBox.setContentSize(new Size(240.0, 130.0));
 
                 for (var k = 0; k < 2; ++k) {
                     var innerBox = new ccui.VBox();
@@ -79,27 +79,27 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
             pageView.setName("pageView");
             pageView.addTouchEventListener(function(sender, type){
                 if (type == ccui.Widget.TOUCH_BEGAN){
-                    cc.log("page view touch began");
+                    log("page view touch began");
                 }else if(type == ccui.Widget.TOUCH_MOVED){
-                    cc.log("page view touch moved");
+                    log("page view touch moved");
                 }else if(type == ccui.Widget.TOUCH_ENDED){
-                    cc.log("page view touch ended");
+                    log("page view touch ended");
                 }else{
-                    cc.log("page view touch cancelled");
+                    log("page view touch cancelled");
                 }
             });
             this._mainNode.addChild(pageView);
 
             var propagationText = new ccui.Text("Allow Propagation", "Arial", 10);
-            propagationText.setAnchorPoint(new cc.Point(0,0.5));
-            propagationText.setTextColor(cc.Color.RED);
-            propagationText.setPosition(new cc.Point(20, pageView.getPosition().y + 50));
+            propagationText.setAnchorPoint(new Point(0,0.5));
+            propagationText.setTextColor(Color.RED);
+            propagationText.setPosition(new Point(20, pageView.getPosition().y + 50));
             this._mainNode.addChild(propagationText);
 
             var swallowTouchText = new ccui.Text("Swallow Touches", "Arial", 10);
-            swallowTouchText.setAnchorPoint(new cc.Point(0,0.5));
-            swallowTouchText.setTextColor(cc.Color.RED);
-            swallowTouchText.setPosition(new cc.Point(20, pageView.getPosition().y));
+            swallowTouchText.setAnchorPoint(new Point(0,0.5));
+            swallowTouchText.setTextColor(Color.RED);
+            swallowTouchText.setPosition(new Point(20, pageView.getPosition().y));
             this._mainNode.addChild(swallowTouchText);
 
             // Create the checkbox
@@ -166,7 +166,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
             }
         }
         if (type == ccui.Widget.TOUCH_ENDED)
-            cc.log("button clicked");
+            log("button clicked");
     }
 
     pageViewEvent(pageView, type){

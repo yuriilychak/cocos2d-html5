@@ -67,15 +67,15 @@ export class AnimationCacheFile extends SpriteTestDemo {
 
 
         this.cPixel3 = null;
-        var frameCache = cc.spriteFrameCache;
+        var frameCache = spriteFrameCache;
         frameCache.addSpriteFrames(s_grossiniPlist);
         frameCache.addSpriteFrames(s_grossini_grayPlist);
         frameCache.addSpriteFrames(s_grossini_bluePlist);
 
         // Purge previously loaded animation
-        if(cc.animationCache._clear)
-	        cc.animationCache._clear();
-        var animCache = cc.animationCache;
+        if(animationCache._clear)
+	        animationCache._clear();
+        var animCache = animationCache;
 
         // Add an animation to the Cache
         // XXX API-FIX XXX
@@ -89,15 +89,15 @@ export class AnimationCacheFile extends SpriteTestDemo {
         var dance_blue = animCache.getAnimation("dance_3");
         dance_blue.setRestoreOriginalFrame(true);
 
-        var animN = new cc.Animate(normal);
-        var animG = new cc.Animate(dance_grey);
-        var animB = new cc.Animate(dance_blue);
+        var animN = new Animate(normal);
+        var animG = new Animate(dance_grey);
+        var animB = new Animate(dance_blue);
 
-        var seq = cc.sequence(animN, animG, animB);
+        var seq = sequence(animN, animG, animB);
 
         // create an sprite with frame name
         // texture-less sprites are not supported
-        var grossini = new cc.Sprite("#grossini_dance_01.png");
+        var grossini = new Sprite("#grossini_dance_01.png");
 
         grossini.x = winSize.width / 2;
 

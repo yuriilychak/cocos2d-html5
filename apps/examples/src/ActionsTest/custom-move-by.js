@@ -33,7 +33,7 @@ class CustomMoveBy extends cc.MoveBy {
     if (this.getTarget()) {
       // rand color
       this.getTarget().setColor(
-        new cc.Color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
+        new Color(rand() % 255, rand() % 255, rand() % 255)
       );
     }
   }

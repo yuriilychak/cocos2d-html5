@@ -45,20 +45,20 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
         // parents
-        var batch = new cc.SpriteBatchNode(s_grossini, 50);
+        var batch = new SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
-        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        var sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = winSize.width / 3;
         sprite1.y = winSize.height / 2;
 
-        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 50;
         sprite2.y = 50;
 
-        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new Sprite(spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -50;
         sprite3.y = -50;
 
@@ -71,26 +71,26 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
         var str = "";
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            var frame = cc.spriteFrameCache.getSpriteFrame(str);
+            var frame = spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
-        var animation = new cc.Animation(animFrames, 0.2);
-        sprite1.runAction(new cc.Animate(animation).repeatForever());
+        var animation = new Animation(animFrames, 0.2);
+        sprite1.runAction(new Animate(animation).repeatForever());
         // END NEW CODE
 
-        var action = new cc.MoveBy(2, new cc.Point(200, 0));
+        var action = new MoveBy(2, new Point(200, 0));
         var action_back = action.reverse();
-        var action_rot = new cc.RotateBy(2, 360);
-        var action_s = new cc.ScaleBy(2, 2);
+        var action_rot = new RotateBy(2, 360);
+        var action_s = new ScaleBy(2, 2);
         var action_s_back = action_s.reverse();
 
         var seq2 = action_rot.reverse();
         sprite2.runAction(seq2.repeatForever());
 
         sprite1.runAction(action_rot.repeatForever());
-        sprite1.runAction(cc.sequence(action, action_back).repeatForever());
-        sprite1.runAction(cc.sequence(action_s, action_s_back).repeatForever());
+        sprite1.runAction(sequence(action, action_back).repeatForever());
+        sprite1.runAction(sequence(action_s, action_s_back).repeatForever());
         //----end29----
     }
     //

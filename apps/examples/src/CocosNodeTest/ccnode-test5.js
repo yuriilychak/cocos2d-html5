@@ -39,16 +39,16 @@ export class CCNodeTest5 extends TestNodeDemo {
         this.pixel1 = {"0":0, "1":0, "2":0, "3":255};
 
         this.pixel2 = {"0":51, "1":0, "2":0, "3":255};
-        var sp1 = new cc.Sprite(s_pathSister1);
-        var sp2 = new cc.Sprite(s_pathSister2);
+        var sp1 = new Sprite(s_pathSister1);
+        var sp2 = new Sprite(s_pathSister2);
         sp1.x = 150;
         sp1.y = winSize.height / 2;
         sp2.x = winSize.width - 150;
         sp2.y = winSize.height / 2;
 
-        var rot = new cc.RotateBy(2, 360);
+        var rot = new RotateBy(2, 360);
         var rot_back = rot.reverse();
-        var forever = cc.sequence(rot, rot_back).repeatForever();
+        var forever = sequence(rot, rot_back).repeatForever();
         var forever2 = forever.clone();
         forever.tag = 101;
         forever2.tag = 102;

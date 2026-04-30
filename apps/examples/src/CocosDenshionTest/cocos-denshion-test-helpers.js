@@ -32,7 +32,7 @@
 var soundId = null;
 
 export function playMusic() {
-    cc.log("play background music");
+    log("play background music");
     var musicFile = MUSIC_FILE;
     audioEngine.playMusic(musicFile, false);
 }
@@ -40,28 +40,28 @@ export function playMusic() {
 ;
 
 export function stopMusic() {
-    cc.log("stop background music");
+    log("stop background music");
     audioEngine.stopMusic();
 }
 
 ;
 
 export function pauseMusic() {
-    cc.log("pause background music");
+    log("pause background music");
     audioEngine.pauseMusic();
 }
 
 ;
 
 export function resumeMusic() {
-    cc.log("resume background music");
+    log("resume background music");
     audioEngine.resumeMusic();
 }
 
 ;
 
 export function rewindMusic() {
-    cc.log("rewind background music");
+    log("rewind background music");
     audioEngine.rewindMusic();
 }
 
@@ -70,101 +70,101 @@ export function rewindMusic() {
 // is background music playing
 export function isMusicPlaying() {
     if (audioEngine.isMusicPlaying()) {
-        cc.log("background music is playing");
+        log("background music is playing");
     }
     else {
-        cc.log("background music is not playing");
+        log("background music is not playing");
     }
 }
 
 ;
 
 export function playEffect() {
-    cc.log("play effect");
+    log("play effect");
     soundId = audioEngine.playEffect(EFFECT_FILE);
 }
 
 ;
 
 export function playEffectRepeatly() {
-    cc.log("play effect repeatly");
+    log("play effect repeatly");
     soundId = audioEngine.playEffect(EFFECT_FILE, true);
 }
 
 ;
 
 export function stopEffect() {
-    cc.log("stop effect");
+    log("stop effect");
     audioEngine.stopEffect(soundId);
 }
 
 ;
 
 export function unloadEffect() {
-    cc.log("unload effect");
+    log("unload effect");
     audioEngine.unloadEffect(EFFECT_FILE);
 }
 
 ;
 
 export function addMusicVolume() {
-    cc.log("add bakcground music volume");
+    log("add bakcground music volume");
     audioEngine.setMusicVolume(audioEngine.getMusicVolume() + 0.1);
 }
 
 ;
 
 export function subMusicVolume() {
-    cc.log("sub backgroud music volume");
+    log("sub backgroud music volume");
     audioEngine.setMusicVolume(audioEngine.getMusicVolume() - 0.1);
 }
 
 ;
 
 export function addEffectsVolume() {
-    cc.log("add effects volume");
+    log("add effects volume");
     audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.1);
 }
 
 ;
 
 export function subEffectsVolume() {
-    cc.log("sub effects volume");
+    log("sub effects volume");
     audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() - 0.1);
 }
 
 ;
 
 export function pauseEffect() {
-    cc.log("pause effect");
+    log("pause effect");
     audioEngine.pauseEffect(soundId);
 }
 
 ;
 
 export function resumeEffect() {
-    cc.log("resume effect");
+    log("resume effect");
     audioEngine.resumeEffect(soundId);
 }
 
 ;
 
 export function pauseAllEffects() {
-    cc.log("pause all effects");
+    log("pause all effects");
     audioEngine.pauseAllEffects();
 }
 
 ;
 
 export function resumeAllEffects() {
-    cc.log("resume all effects");
+    log("resume all effects");
     audioEngine.resumeAllEffects();
 }
 
 ;
 
 export function stopAllEffects() {
-    cc.log("stop all effects");
+    log("stop all effects");
     audioEngine.stopAllEffects();
 }
 

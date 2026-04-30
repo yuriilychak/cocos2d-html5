@@ -33,14 +33,14 @@ export class ShaderNode extends cc.GLNode {
         super();
         this.init();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in sys.capabilities ) {
             this.width = 256;
             this.height = 256;
             this.anchorX = 0.5;
             this.anchorY = 0.5;
 
-            this.shader = new cc.GLProgram(vertexShader, framentShader);
-            this.shader.addAttribute("aVertex", cc.VERTEX_ATTRIB_POSITION);
+            this.shader = new GLProgram(vertexShader, framentShader);
+            this.shader.addAttribute("aVertex", VERTEX_ATTRIB_POSITION);
             this.shader.link();
             this.shader.updateUniforms();
 
@@ -60,9 +60,9 @@ export class ShaderNode extends cc.GLNode {
         //
         // Uniforms
         //
-        var frameSize = cc.view.getFrameSize();
-        var visibleSize = cc.view.getVisibleSize();
-        var retinaFactor = cc.view.getDevicePixelRatio();
+        var frameSize = view.getFrameSize();
+        var visibleSize = view.getVisibleSize();
+        var retinaFactor = view.getDevicePixelRatio();
         var position = this.getPosition();
 
         var centerx = position.x * frameSize.width/visibleSize.width * retinaFactor;
@@ -70,11 +70,11 @@ export class ShaderNode extends cc.GLNode {
         this.shader.setUniformLocationF32( this.uniformCenter, centerx, centery);
         this.shader.setUniformLocationF32( this.uniformResolution, 256, 256);
 
-        gl.enableVertexAttribArray( cc.VERTEX_ATTRIB_POSITION );
+        gl.enableVertexAttribArray( VERTEX_ATTRIB_POSITION );
 
         // Draw fullscreen Square
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
-        gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);

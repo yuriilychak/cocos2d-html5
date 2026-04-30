@@ -33,7 +33,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
 
     init(){
         if (super.init()) {
-            var winSize = cc.director.getVisibleSize();
+            var winSize = director.getVisibleSize();
 
             this._listView = new ccui.ListView();
             this._listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
@@ -69,7 +69,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
             }
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);
             this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.Color.GREEN);
+            this._loopText.setColor(Color.GREEN);
             this.addChild(this._loopText);
 
             this._btn.addTouchEventListener(this.toggleFocusLoop,this);

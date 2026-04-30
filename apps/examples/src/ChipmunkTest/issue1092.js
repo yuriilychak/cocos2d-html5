@@ -37,30 +37,30 @@ export class Issue1092 extends ChipmunkDemo {
         body.setPos(cp.v(winSize.width/2, winSize.height/2));
         space.addShape(cp.BoxShape(body, 50, 50));
 
-        cc.assert(body.vx == 0, "assertion failed : vx");
-        cc.assert(body.vy == 0, "assertion failed : vy");
-        cc.assert(body.v_limit == Infinity, "assertion failed : v_limit");
-        cc.assert(body.w_limit == Infinity, "assertion failed : w_limit");
-        cc.assert(body.f.x == 0, "assertion failed : f");
-        cc.assert(body.t == 0, "assertion failed : t");
-        cc.assert(body.m == 100, "assertion failed : m");
-        cc.assert(body.m_inv == 0.01, "assertion failed : m_inv");
-        cc.assert(body.i == 50, "assertion failed : i");
-        cc.assert(body.i_inv == 0.02, "assertion failed : i_inv");
-        cc.assert(body.rot.x == Math.cos(0), "assertion failed : rot");
+        assert(body.vx == 0, "assertion failed : vx");
+        assert(body.vy == 0, "assertion failed : vy");
+        assert(body.v_limit == Infinity, "assertion failed : v_limit");
+        assert(body.w_limit == Infinity, "assertion failed : w_limit");
+        assert(body.f.x == 0, "assertion failed : f");
+        assert(body.t == 0, "assertion failed : t");
+        assert(body.m == 100, "assertion failed : m");
+        assert(body.m_inv == 0.01, "assertion failed : m_inv");
+        assert(body.i == 50, "assertion failed : i");
+        assert(body.i_inv == 0.02, "assertion failed : i_inv");
+        assert(body.rot.x == Math.cos(0), "assertion failed : rot");
 
 
         space.addConstraint(new cp.PivotJoint(body, space.staticBody, cp.v(winSize.width/2, winSize.height/2)));
         body.applyImpulse(cp.v(winSize.width/2, winSize.height/2-20), cp.v(1, -1));
 
         body.eachShape(function(shape){
-            cc.log(shape);
+            log(shape);
         });
         body.eachConstraint(function(joint){
-            cc.log(joint);
+            log(joint);
         });
         body.eachArbiter(function(arbiter){
-            cc.log(arbiter);
+            log(arbiter);
         })
     }
 

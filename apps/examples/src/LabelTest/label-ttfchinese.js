@@ -30,21 +30,21 @@ export class LabelTTFChinese extends AtlasDemo {
         //----start21----ctor
         super();
         var size = director.getWinSize();
-        var fontname = (cc.sys.os === cc.sys.OS_WP8 ) ? "fonts/arialuni.ttf" : (cc.sys.os == cc.sys.OS_WINRT) ? "DengXian" : "Microsoft Yahei";
-        var label = new cc.LabelTTF("中国", fontname, 30);
+        var fontname = (sys.os === sys.OS_WP8 ) ? "fonts/arialuni.ttf" : (sys.os == sys.OS_WINRT) ? "DengXian" : "Microsoft Yahei";
+        var label = new LabelTTF("中国", fontname, 30);
         label.x = size.width / 2;
         label.y = size.height / 3 * 2;
         this.addChild(label);
 
         // Test UTF8 string from native to jsval.
-        var label2 = new cc.LabelTTF("string from native:"+label.getString(), fontname, 30);
+        var label2 = new LabelTTF("string from native:"+label.getString(), fontname, 30);
         label2.x = size.width / 2;
         label2.y = size.height / 3;
         this.addChild(label2);
         //----end21----
     }
     title() {
-        return "Testing cc.LabelTTF with Chinese character";
+        return "Testing LabelTTF with Chinese character";
     }
 
 }

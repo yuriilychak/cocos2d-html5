@@ -32,9 +32,9 @@ export class DemoFire extends ParticleDemo {
         this._emitter = new cc.ParticleFire();
         this._background.addChild(this._emitter, 10);
 
-        this._emitter.texture = cc.textureCache.addImage(s_fire);//.pvr"];
+        this._emitter.texture = textureCache.addImage(s_fire);//.pvr"];
         if (this._emitter.setShapeType)
-            this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
+            this._emitter.setShapeType(ParticleSystem.BALL_SHAPE);
 
         this.setEmitterPosition();
     }

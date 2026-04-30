@@ -37,10 +37,10 @@ export class CCNodeTest2 extends TestNodeDemo {
         //----start0----onEnter
         super.onEnter();
 
-        var sp1 = new cc.Sprite(s_pathSister1);
-        var sp2 = new cc.Sprite(s_pathSister2);
-        var sp3 = new cc.Sprite(s_pathSister1);
-        var sp4 = new cc.Sprite(s_pathSister2);
+        var sp1 = new Sprite(s_pathSister1);
+        var sp2 = new Sprite(s_pathSister2);
+        var sp3 = new Sprite(s_pathSister1);
+        var sp4 = new Sprite(s_pathSister2);
 
         sp1.x = winSize.width / 4;
         sp1.y = winSize.height / 2;
@@ -55,12 +55,12 @@ export class CCNodeTest2 extends TestNodeDemo {
         sp1.addChild(sp3);
         sp2.addChild(sp4);
 
-        var a1 = new cc.RotateBy(2, 360);
-        var a2 = new cc.ScaleBy(2, 2);
-        var delay = new cc.DelayTime(0.2);
+        var a1 = new RotateBy(2, 360);
+        var a2 = new ScaleBy(2, 2);
+        var delay = new DelayTime(0.2);
 
-        var action1 = cc.sequence(a1, a2, delay, a2.reverse()).repeatForever();
-        var action2 = cc.sequence(a1.clone(), a2.clone(), delay.clone(), a2.reverse()).repeatForever();
+        var action1 = sequence(a1, a2, delay, a2.reverse()).repeatForever();
+        var action2 = sequence(a1.clone(), a2.clone(), delay.clone(), a2.reverse()).repeatForever();
 
         sp2.anchorX = 0;
         sp2.anchorY = 0;

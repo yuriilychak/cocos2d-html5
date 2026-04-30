@@ -52,17 +52,17 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
 
 
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_familyPlist);
+        spriteFrameCache.addSpriteFrames(s_grossini_familyPlist);
 
-        var rot = new cc.RotateBy(10, 360);
+        var rot = new RotateBy(10, 360);
         var seq = rot.repeatForever();
 
         //
         // Children + Scale using Sprite
         // Test 1
         //
-        var aParent = new cc.Node();
-        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
+        var aParent = new Node();
+        var sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 4;
         sprite1.scaleX = 0.5;
@@ -70,7 +70,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         sprite1.runAction(seq);
 
 
-        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
+        var sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -78,21 +78,21 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = new RotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using SpriteBatchNode
         // Test 2
         //
-        aParent = new cc.SpriteBatchNode(s_grossini_family);
-        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
+        aParent = new SpriteBatchNode(s_grossini_family);
+        sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = 3 * winSize.width / 4;
         sprite1.y = winSize.height / 4;
         sprite1.scaleX = 0.5;
         sprite1.scaleY = 2.0;
         sprite1.runAction(seq);
 
-        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -100,21 +100,21 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = new RotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using Sprite
         // Test 3
         //
-        aParent = new cc.Node();
-        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
+        aParent = new Node();
+        sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = 2 * winSize.height / 3;
         sprite1.scaleX = 1.5;
         sprite1.scaleY = 0.5;
         sprite1.runAction(seq);
 
-        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -122,21 +122,21 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = new RotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using Sprite
         // Test 4
         //
-        aParent = new cc.SpriteBatchNode(s_grossini_family);
-        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
+        aParent = new SpriteBatchNode(s_grossini_family);
+        sprite1 = new Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = 3 * winSize.width / 4;
         sprite1.y = 2 * winSize.height / 3;
         sprite1.scaleX = 1.5;
         sprite1.scaleY = 0.5;
         sprite1.runAction(seq);
 
-        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new Sprite(spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 

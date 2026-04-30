@@ -34,7 +34,7 @@ export class CurrentLanguageTestScene extends TestScene {
         var layer = new CurrentLanguageTest();
         this.addChild(layer);
 
-        cc.director.runScene(this);
+        director.runScene(this);
     }
 
 }

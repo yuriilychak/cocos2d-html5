@@ -32,19 +32,19 @@ export class LabelTTFA8Test extends AtlasDemo {
         super();
         var s = director.getWinSize();
 
-        var layer = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
+        var layer = new LayerColor(new Color(128, 128, 128, 255));
         this.addChild(layer, -10);
 
-        // cc.LabelBMFont
-        var label1 = new cc.LabelTTF("Testing A8 Format", "Arial", 48);
+        // LabelBMFont
+        var label1 = new LabelTTF("Testing A8 Format", "Arial", 48);
         this.addChild(label1);
-        label1.color = new cc.Color(255, 0, 0);
+        label1.color = new Color(255, 0, 0);
         label1.x = s.width / 2;
         label1.y = s.height / 2;
 
-        var fadeOut = new cc.FadeOut(2);
-        var fadeIn = new cc.FadeIn(2);
-        var seq = cc.sequence(fadeOut, fadeIn);
+        var fadeOut = new FadeOut(2);
+        var fadeIn = new FadeIn(2);
+        var seq = sequence(fadeOut, fadeIn);
         var forever = seq.repeatForever();
         label1.runAction(forever);
         //----end22----

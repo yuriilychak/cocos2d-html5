@@ -38,10 +38,10 @@ export class LayerTestBlend extends LayerTest {
 
 
         this._blend = true;
-        var layer1 = new cc.LayerColor(new cc.Color(255, 255, 255, 80));
+        var layer1 = new LayerColor(new Color(255, 255, 255, 80));
 
-        var sister1 = new cc.Sprite(s_pathSister1);
-        var sister2 = new cc.Sprite(s_pathSister2);
+        var sister1 = new Sprite(s_pathSister1);
+        var sister2 = new Sprite(s_pathSister2);
 
         this.addChild(sister1);
         this.addChild(sister2);
@@ -53,8 +53,8 @@ export class LayerTestBlend extends LayerTest {
         sister2.x = winSize.width/3 * 2;
         sister2.y = winSize.height / 2;
 
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
-            var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
+        if (!sys.isNative && !("opengl" in sys.capabilities)) {
+            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;
@@ -72,11 +72,11 @@ export class LayerTestBlend extends LayerTest {
         var dst;
 
         if (this._blend) {
-            src = cc.SRC_ALPHA;
-            dst = cc.ONE_MINUS_SRC_ALPHA;
+            src = SRC_ALPHA;
+            dst = ONE_MINUS_SRC_ALPHA;
         } else {
-            src = cc.ONE_MINUS_DST_COLOR;
-            dst = cc.ZERO;
+            src = ONE_MINUS_DST_COLOR;
+            dst = ZERO;
         }
         layer.setBlendFunc( src, dst );
         this._blend = ! this._blend;

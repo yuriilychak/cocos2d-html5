@@ -36,18 +36,18 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
 
         this._accum = null;
 
-        var listener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        var listener = EventListener.create({
+            event: EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches:true,
             onTouchBegan: function(touch, event){
                 var target = event.getCurrentTarget();
 
                 var locationInNode = target.convertToNodeSpace(touch.getLocation());
                 var s = target.getContentSize();
-                var rect = new cc.Rect(0, 0, s.width, s.height);
+                var rect = new Rect(0, 0, s.width, s.height);
 
-                if (cc.Rect.containsPoint(rect, locationInNode)) {
-                    cc.log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+                if (Rect.containsPoint(rect, locationInNode)) {
+                    log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
                     target.setOpacity(180);
                     return true;
                 }
@@ -59,7 +59,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
                 target.y += delta.y;
             },
             onTouchEnded: function(touch, event){
-                cc.log("sprite onTouchesEnded.. ");
+                log("sprite onTouchesEnded.. ");
                 event.getCurrentTarget().setOpacity(255);
             }
         });
@@ -67,18 +67,18 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
         var SPRITE_COUNT = 8, sprite;
         for (var i = 0; i < SPRITE_COUNT; i++) {
             if(i==4) {
-                sprite = new cc.Sprite("Images/CyanSquare.png");
+                sprite = new Sprite("Images/CyanSquare.png");
                 this._sprite = sprite;
                 this._sprite.setGlobalZOrder(-1);
             } else
-                sprite = new cc.Sprite("Images/YellowSquare.png");
+                sprite = new Sprite("Images/YellowSquare.png");
 
-            cc.eventManager.addListener(listener.clone(), sprite);
+            eventManager.addListener(listener.clone(), sprite);
             this.addChild(sprite);
 
-            var visibleSize = cc.director.getVisibleSize();
-            sprite.x = cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
-            sprite.y = cc.visibleRect.center.y;
+            var visibleSize = director.getVisibleSize();
+            sprite.x = visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
+            sprite.y = visibleRect.center.y;
         }
 
         this.scheduleUpdate();

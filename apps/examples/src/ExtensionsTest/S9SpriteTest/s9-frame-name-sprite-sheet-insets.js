@@ -44,19 +44,19 @@ export class S9FrameNameSpriteSheetInsets extends S9SpriteTestDemo {
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        cc.log("S9FrameNameSpriteSheetInsets ...");
+        log("S9FrameNameSpriteSheetInsets ...");
 
-        var blocks_with_insets = new cc.Scale9Sprite('blocks9.png', new cc.Rect(32, 32, 32, 32));
-        cc.log("... created");
+        var blocks_with_insets = new Scale9Sprite('blocks9.png', new Rect(32, 32, 32, 32));
+        log("... created");
 
         blocks_with_insets.x = x;
         blocks_with_insets.y = y;
-        cc.log("... setPosition");
+        log("... setPosition");
 
         this.addChild(blocks_with_insets);
-        cc.log("this..addChild");
+        log("this..addChild");
 
-        cc.log("... S9FrameNameSpriteSheetInsets done.");
+        log("... S9FrameNameSpriteSheetInsets done.");
     }
 
 }

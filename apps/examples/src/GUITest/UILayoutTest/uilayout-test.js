@@ -27,7 +27,7 @@
 export class UILayoutTest extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
-        layout.setContentSize(new cc.Size(280, 150));
+        layout.setContentSize(new Size(280, 150));
         return layout;
     }
     getText() {

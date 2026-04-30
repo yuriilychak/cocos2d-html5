@@ -36,11 +36,11 @@ export class UIButtonTextOnly extends UIMainLayer {
             button.setNormalizedPosition(0.5, 0.5);
 
             button.setTitleText("PLAY GAME");
-            cc.log("content size should be greater than 0:  width = %f, height = %f", button.width, button.height);
+            log("content size should be greater than 0:  width = %f, height = %f", button.width, button.height);
             button.setZoomScale(0.3);
             button.setPressedActionEnabled(true);
             button.addClickEventListener(function () {
-                cc.log("clicked!");
+                log("clicked!");
             });
             this.addChild(button);
             return true;

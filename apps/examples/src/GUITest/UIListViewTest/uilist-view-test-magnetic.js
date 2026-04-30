@@ -53,9 +53,9 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
             this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             this._listView.setBackGroundImageScale9Enabled(true);
             this._listView.setContentSize(widgetSize.width / 2, widgetSize.height / 2);
-            this._listView.setScrollBarPositionFromCorner(new cc.Point(7, 7));
+            this._listView.setScrollBarPositionFromCorner(new Point(7, 7));
             this._listView.setItemsMargin(2.0);
-            this._listView.setAnchorPoint(new cc.Point(0.5 ,0.5));
+            this._listView.setAnchorPoint(new Point(0.5 ,0.5));
 
             this._listView.x = widgetSize.width / 2;
             this._listView.y = widgetSize.height / 2;
@@ -65,18 +65,18 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
             this._mainNode.addChild(this._listView);
 
             {
-                var pNode = new cc.DrawNode();
+                var pNode = new DrawNode();
 
-                var center = new cc.Point(widgetSize.width / 2, widgetSize.height / 2);
+                var center = new Point(widgetSize.width / 2, widgetSize.height / 2);
                 if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
                 {
                     var halfY = 110;
-                    pNode.drawSegment(new cc.Point(center.x, center.y - halfY), new cc.Point(center.x, center.y + halfY), 1, new cc.Color(0, 0, 0, 255));
+                    pNode.drawSegment(new Point(center.x, center.y - halfY), new Point(center.x, center.y + halfY), 1, new Color(0, 0, 0, 255));
                 }
                 else
                 {
                     var halfX = 150;
-                    pNode.drawSegment(new cc.Point(center.x - halfX, center.y), new cc.Point(center.x + halfX, center.y), 1, new cc.Color(0, 0, 0, 255));
+                    pNode.drawSegment(new Point(center.x - halfX, center.y), new Point(center.x + halfX, center.y), 1, new Color(0, 0, 0, 255));
                 }
                 pNode.setContentSize(this._listView.getContentSize());
                 this._mainNode.addChild(pNode);
@@ -88,9 +88,9 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
 
             // Magnetic change button
             var pButton = new ccui.Button("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png");
-            pButton.setAnchorPoint(new cc.Point(0.5, 0.5));
+            pButton.setAnchorPoint(new Point(0.5, 0.5));
             pButton.setScale(0.8);
-            pButton.setPosition(cc.Point.add(new cc.Point(widgetSize.width / 2, widgetSize.height / 2), new cc.Point(130, -60)));
+            pButton.setPosition(Point.add(new Point(widgetSize.width / 2, widgetSize.height / 2), new Point(130, -60)));
             pButton.setTitleText("Next Magnetic");
             pButton.addClickEventListener(function() {
                 var eCurrentType = this._listView.getMagneticType();

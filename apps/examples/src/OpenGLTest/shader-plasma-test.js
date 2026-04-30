@@ -32,7 +32,7 @@ export class ShaderPlasmaTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in sys.capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Plasma.vsh", ccbjs + "Shaders/example_Plasma.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;

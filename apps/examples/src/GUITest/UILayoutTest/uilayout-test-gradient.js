@@ -28,8 +28,8 @@ export class UILayoutTest_Gradient extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
-        layout.setBackGroundColor(new cc.Color(64, 64, 64), new cc.Color(192, 192, 192));
-        layout.setContentSize(new cc.Size(280, 150));
+        layout.setBackGroundColor(new Color(64, 64, 64), new Color(192, 192, 192));
+        layout.setContentSize(new Size(280, 150));
         return layout;
     }
     getText() {

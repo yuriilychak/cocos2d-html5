@@ -46,20 +46,20 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
 
         this.pixel = {"0":0, "1":102, "2":255, "3":255};
 
-        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+        spriteFrameCache.addSpriteFrames(s_ghostsPlist);
         //
         // SpriteBatchNode: 3 levels of children
         //
-        var aParent = new cc.SpriteBatchNode(s_ghosts);
+        var aParent = new SpriteBatchNode(s_ghosts);
 
         this._batchNode = aParent;
         //[[aParent texture] generateMipmap];
-        if ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)
+        if ("opengl" in sys.capabilities && rendererConfig.isWebGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 
         // parent
-        var l1 = new cc.Sprite("#father.gif");
+        var l1 = new Sprite("#father.gif");
         l1.x = winSize.width / 2;
         l1.y = winSize.height / 2;
 
@@ -67,7 +67,7 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
         var l1W = l1.width, l1H = l1.height;
 
         // child left
-        var l2a = new cc.Sprite("#sister1.gif");
+        var l2a = new Sprite("#sister1.gif");
         l2a.x = -10 + l1W / 2;
         l2a.y = 0 + l1H / 2;
 
@@ -75,7 +75,7 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
 	    var l2aW = l2a.width, l2aH = l2a.height;
 
         // child right
-        var l2b = new cc.Sprite("#sister2.gif");
+        var l2b = new Sprite("#sister2.gif");
         l2b.x = +50 + l1W / 2;
         l2b.y = 0 + l1H / 2;
 
@@ -83,14 +83,14 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
         var l2bW = l2b.width, l2bH = l2b.height;
 
         // child left bottom
-        var l3a1 = new cc.Sprite("#child1.gif");
+        var l3a1 = new Sprite("#child1.gif");
         l3a1.scale = 0.45;
         l3a1.x = 0 + l2aW / 2;
         l3a1.y = -50 + l2aH / 2;
         l2a.addChild(l3a1, 1);
 
         // child left top
-        var l3a2 = new cc.Sprite("#child1.gif");
+        var l3a2 = new Sprite("#child1.gif");
         l3a2.scale = 0.45;
         l3a2.x = 0 + l2aW / 2;
         l3a2.y = +50 + l2aH / 2;
@@ -99,7 +99,7 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
         this._reoderSprite = l2a;
 
         // child right bottom
-        var l3b1 = new cc.Sprite("#child1.gif");
+        var l3b1 = new Sprite("#child1.gif");
         l3b1.scale = 0.45;
         l3b1.setFlippedY(true);
         l3b1.x = 0 + l2bW / 2;
@@ -107,7 +107,7 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
         l2b.addChild(l3b1);
 
         // child right top
-        var l3b2 = new cc.Sprite("#child1.gif");
+        var l3b2 = new Sprite("#child1.gif");
         l3b2.scale = 0.45;
         l3b2.setFlippedY(true);
         l3b2.x = 0 + l2bW / 2;
@@ -121,7 +121,7 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
     reorderSprite(dt) {
         this._reoderSprite.parent.reorderChild(this._reoderSprite, -1);
         this._batchNode.sortAllChildren();
-        //cc.Sprite* child;
+        //Sprite* child;
         //CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
     }
     //

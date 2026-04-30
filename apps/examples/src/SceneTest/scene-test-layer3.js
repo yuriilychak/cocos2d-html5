@@ -31,37 +31,37 @@ export class SceneTestLayer3 extends cc.LayerColor {
 
         //----start0----Scene3-ctor
         super();
-        this.init( new cc.Color(0,128,255,255) );
+        this.init( new Color(0,128,255,255) );
 
-        var label = new cc.LabelTTF("Touch to popScene", "Arial", 28);
+        var label = new LabelTTF("Touch to popScene", "Arial", 28);
         this.addChild(label);
         var s = director.getWinSize();
         label.x = s.width / 2;
         label.y = s.height / 2;
 
-        var sprite = new cc.Sprite(s_pathGrossini);
+        var sprite = new Sprite(s_pathGrossini);
         this.addChild(sprite);
 
         sprite.x = s.width - 40;
 
         sprite.y = s.height / 2;
-        var rotate = new cc.RotateBy(2, 360);
+        var rotate = new RotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
     }
     
     onEnterTransitionDidFinish() {
-        if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in sys.capabilities){
+            eventManager.addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded: function(touches, event){
                     director.popScene();
                 }
             }, this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in sys.capabilities)
+            eventManager.addListener({
+                event: EventListener.MOUSE,
                 onMouseUp: function(event){
                     director.popScene();
                 }

@@ -28,7 +28,7 @@
 export class EaseSpriteDemo extends BaseTestLayer {
 
     constructor() {
-        super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+        super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
 
         this._grossini = null;
@@ -53,9 +53,9 @@ export class EaseSpriteDemo extends BaseTestLayer {
         super.onEnter();
 
         // Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
-        this._grossini = new cc.Sprite(s_pathGrossini);
-        this._tamara = new cc.Sprite(s_pathSister1);
-        this._kathia = new cc.Sprite(s_pathSister2);
+        this._grossini = new Sprite(s_pathGrossini);
+        this._tamara = new Sprite(s_pathSister1);
+        this._kathia = new Sprite(s_pathSister2);
 
         this.addChild(this._grossini, 3);
         this.addChild(this._kathia, 2);

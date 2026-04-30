@@ -39,7 +39,7 @@ export class TMXOrthoTest4 extends TileDemo {
         this.testLayerSize = null;
 
         this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test4.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test4.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         map.anchorX = 0;
@@ -52,16 +52,16 @@ export class TMXOrthoTest4 extends TileDemo {
         this.ty = s.height - 1;
 
         var sprite;
-        sprite = layer.getTileAt(new cc.Point(0, 0));
+        sprite = layer.getTileAt(new Point(0, 0));
         sprite.scale = 2;
 
-        sprite = layer.getTileAt(new cc.Point(s.width - 1, 0));
+        sprite = layer.getTileAt(new Point(s.width - 1, 0));
         sprite.scale = 2;
 
-        sprite = layer.getTileAt(new cc.Point(0, s.height - 1));
+        sprite = layer.getTileAt(new Point(0, s.height - 1));
         sprite.scale = 2;
 
-        sprite = layer.getTileAt(new cc.Point(s.width - 1, s.height - 1));
+        sprite = layer.getTileAt(new Point(s.width - 1, s.height - 1));
         sprite.scale = 2;
 
         this.scheduleOnce(this.onRemoveSprite, 0.2);
@@ -72,7 +72,7 @@ export class TMXOrthoTest4 extends TileDemo {
         var layer = map.getLayer("Layer 0");
         var layerSize = layer.getLayerSize();
 
-        var sprite = layer.getTileAt(new cc.Point(layerSize.width - 1, 0));
+        var sprite = layer.getTileAt(new Point(layerSize.width - 1, 0));
         layer.removeChild(sprite, true);
 
         this.testLayerSize = layerSize;

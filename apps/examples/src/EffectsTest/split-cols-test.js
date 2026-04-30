@@ -28,13 +28,13 @@ export class SplitColsTest extends EffectsBaseLayer {
         return "SplitCols";
     }
     code() {
-        return "a = cc.splitCols(duration, cols)";
+        return "a = splitCols(duration, cols)";
     }
     getEffect(duration) {
-        var action = cc.splitCols(duration, 9);
-        var delay = new cc.DelayTime(0.5);
+        var action = splitCols(duration, 9);
+        var delay = new DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.sequence( action, delay, back);
+        var seq = sequence( action, delay, back);
         return seq;
     }
 

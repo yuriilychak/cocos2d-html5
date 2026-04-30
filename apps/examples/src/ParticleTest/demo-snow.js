@@ -36,7 +36,7 @@ export class DemoSnow extends ParticleDemo {
         this._emitter.lifeVar = 1;
 
         // gravity
-        this._emitter.gravity = new cc.Point(0, -10);
+        this._emitter.gravity = new Point(0, -10);
 
         // speed of particles
         this._emitter.speed = 130;
@@ -55,8 +55,8 @@ export class DemoSnow extends ParticleDemo {
 
         this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;
 
-        this._emitter.texture = cc.textureCache.addImage(s_snow);
-        this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
+        this._emitter.texture = textureCache.addImage(s_snow);
+        this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
 
         this.setEmitterPosition();
     }

@@ -29,7 +29,7 @@ export class DemoModernArt extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this._emitter = new cc.ParticleSystem(("opengl" in cc.sys.capabilities) ? 1000 : 200);
+        this._emitter = new ParticleSystem(("opengl" in sys.capabilities) ? 1000 : 200);
 
         this._background.addChild(this._emitter, 10);
 
@@ -39,7 +39,7 @@ export class DemoModernArt extends ParticleDemo {
         this._emitter.duration = -1;
 
         // gravity
-        this._emitter.gravity = new cc.Point(0, 0);
+        this._emitter.gravity = new Point(0, 0);
 
         // angle
         this._emitter.angle = 0;
@@ -65,10 +65,10 @@ export class DemoModernArt extends ParticleDemo {
         this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;
 
         // color of particles
-        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
-        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
-        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
-        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
+        this._emitter.startColor = new Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new Color(128, 128, 128, 255);
+        this._emitter.endColor = new Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 1.0;
@@ -77,8 +77,8 @@ export class DemoModernArt extends ParticleDemo {
         this._emitter.endSizeVar = 8.0;
 
         // texture
-        this._emitter.texture = cc.textureCache.addImage(s_fire);
-        this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
+        this._emitter.texture = textureCache.addImage(s_fire);
+        this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
         // additive
         this._emitter.setBlendAdditive(false);

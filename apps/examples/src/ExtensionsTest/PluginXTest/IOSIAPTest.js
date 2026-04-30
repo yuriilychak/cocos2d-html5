@@ -60,20 +60,20 @@ export class IAPTestLayer extends PluginXTest {
         this.PluginIAP.setListener(this);
     }
     addMenuItem() {
-        var payMenu = new cc.Menu();
+        var payMenu = new Menu();
         for (var i = 0; i < s_IAPFunctionItem.length; i++) {
-            var text = new cc.LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
-            var item = new cc.MenuItemLabel(text, this.menuCallBack, this);
+            var text = new LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
+            var item = new MenuItemLabel(text, this.menuCallBack, this);
             item.tag = s_IAPFunctionItem[i].tag;
             item.x = 200;
-            item.y = cc.winSize.height - 200 - i * 50;
+            item.y = winSize.height - 200 - i * 50;
 
-            var resultLabel = new cc.LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
-            resultLabel.color = new cc.Color(125, 125, 125);
+            var resultLabel = new LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
+            resultLabel.color = new Color(125, 125, 125);
             resultLabel.anchorX = 0;
             resultLabel.tag = s_IAPResultItem[i].tag;
             resultLabel.x = 300;
-            resultLabel.y = cc.winSize.height - 200 - i * 50;
+            resultLabel.y = winSize.height - 200 - i * 50;
             payMenu.addChild(item);
             this.addChild(resultLabel);
         }
@@ -84,22 +84,22 @@ export class IAPTestLayer extends PluginXTest {
     closeFunction(sender) {
         var scene = new ExtensionsTestScene();
         scene.runThisTest();
-        cc.director.runScene(scene);
+        director.runScene(scene);
     }
     initToast() {
-        this.toastLayer = new cc.LayerColor();
-        var label = new cc.LabelTTF("loading", "Arial", 16);
+        this.toastLayer = new LayerColor();
+        var label = new LabelTTF("loading", "Arial", 16);
         this.toastLayer.addChild(label);
         this.toastLayer.setTag(TAG_TOAST);
-        label.x = cc.winSize.width / 2;
-        label.y = cc.winSize.height / 2;
-        this.toastLayer.setColor(new cc.Color(100, 100, 100, 100));
+        label.x = winSize.width / 2;
+        label.y = winSize.height / 2;
+        this.toastLayer.setColor(new Color(100, 100, 100, 100));
     }
     addTouch(bool) {
         if (bool) {
             var self = this.toastLayer;
-            this.listener = cc.EventListener.create({
-                event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            this.listener = EventListener.create({
+                event: EventListener.TOUCH_ONE_BY_ONE,
                 swallowTouches: true,
                 onTouchBegan: function (touch, event) {
                     return true;
@@ -111,9 +111,9 @@ export class IAPTestLayer extends PluginXTest {
                 onTouchCancelled: function (touch, event) {
                 }
             });
-            cc.eventManager.addListener(this.listener, self);
+            eventManager.addListener(this.listener, self);
         } else {
-            cc.eventManager.removeListener(this.listener);
+            eventManager.removeListener(this.listener);
         }
     }
     toggleToast(show) {
@@ -156,14 +156,14 @@ export class IAPTestLayer extends PluginXTest {
 
     onPayResult(ret, msg, productInfo) {
         this.toggleToast(false);
-        cc.log("onPayResult ret is " + ret);
+        log("onPayResult ret is " + ret);
         var str = "";
         if (ret == plugin.ProtocolIAP.PayResultCode.PaySuccess) {
             str = "payment Success pid is " + productInfo.productId;
             //if you use server mode get the receive message and post to your server
             if (this._serverMode && msg) {
                 str = "payment verify from server";
-                cc.log(str);
+                log(str);
                 this.postServerData(msg);
             }
         } else if (ret == plugin.ProtocolIAP.PayResultCode.PayFail) {
@@ -180,7 +180,7 @@ export class IAPTestLayer extends PluginXTest {
             msgStr = "request error";
             this.toggleToast(false);
         } else if (ret == plugin.ProtocolIAP.RequestProductCode.RequestSuccess) {
-            cc.log("request RequestSuccees " + productInfo[0].productName);
+            log("request RequestSuccees " + productInfo[0].productName);
             this.product = productInfo;
             msgStr = "list: [";
             for (var i = 0; i < productInfo.length; i++) {
@@ -197,7 +197,7 @@ export class IAPTestLayer extends PluginXTest {
     }
     postServerData(data) {
         var that = this;
-        var xhr = cc.loader.getXMLHttpRequest();
+        var xhr = loader.getXMLHttpRequest();
 
         //replace to your own server address
         xhr.open("POST", "http://localhost/");

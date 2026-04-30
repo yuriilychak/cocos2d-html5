@@ -37,7 +37,7 @@ export class TMXTilePropertyTest extends TileDemo {
         this.testDuration = 0.25;
 
         this.propertiesList = [];
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-tile-property.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/ortho-tile-property.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         for (var i = 1; i <= 6; i++) {

@@ -33,33 +33,33 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        var containerForSprite1 = new cc.Node();
-        var sprite1 = new cc.Sprite("Images/CyanSquare.png");
+        var containerForSprite1 = new Node();
+        var sprite1 = new Sprite("Images/CyanSquare.png");
         sprite1.setPosition(origin.x + size.width/2 - 80, origin.y + size.height/2 + 80);
         containerForSprite1.addChild(sprite1);
         this.addChild(containerForSprite1, 10);
 
-        var sprite2 = new cc.Sprite("Images/MagentaSquare.png");
+        var sprite2 = new Sprite("Images/MagentaSquare.png");
         sprite2.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite2, 20);
 
-        var sprite3 = new cc.Sprite("Images/YellowSquare.png");
+        var sprite3 = new Sprite("Images/YellowSquare.png");
         sprite3.setPosition(0,0);
         sprite2.addChild(sprite3, 1);
 
         // Make sprite1 touchable
-        var listener1 = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        var listener1 = EventListener.create({
+            event: EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
                 var target = event.getCurrentTarget();
 
                 var locationInNode = target.convertToNodeSpace(touch.getLocation());
                 var s = target.getContentSize();
-                var rect = new cc.Rect(0, 0, s.width, s.height);
+                var rect = new Rect(0, 0, s.width, s.height);
 
-                if (cc.Rect.containsPoint(rect, locationInNode)) {
-                    cc.log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
+                if (Rect.containsPoint(rect, locationInNode)) {
+                    log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
                     target.opacity = 180;
                     return true;
                 }
@@ -73,7 +73,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
             },
             onTouchEnded: function (touch, event) {
                 var target = event.getCurrentTarget();
-                cc.log("sprite onTouchesEnded.. ");
+                log("sprite onTouchesEnded.. ");
                 target.setOpacity(255);
                 if (target == sprite2) {
                     containerForSprite1.setLocalZOrder(100);
@@ -83,35 +83,35 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
             }
         });
 
-        cc.eventManager.addListener(listener1, sprite1);
-        cc.eventManager.addListener(listener1.clone(), sprite2);
-        cc.eventManager.addListener(listener1.clone(), sprite3);
+        eventManager.addListener(listener1, sprite1);
+        eventManager.addListener(listener1.clone(), sprite2);
+        eventManager.addListener(listener1.clone(), sprite3);
         var selfPointer = this;
 
-        var removeAllTouchItem = new cc.MenuItemFont("Remove All Touch Listeners", function(senderItem){
+        var removeAllTouchItem = new MenuItemFont("Remove All Touch Listeners", function(senderItem){
             senderItem.setString("Only Next item could be clicked");
 
-            cc.eventManager.removeListeners(cc.EventListener.TOUCH_ONE_BY_ONE);
+            eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
 
-            var nextItem = new cc.MenuItemFont("Next", function(sender){
+            var nextItem = new MenuItemFont("Next", function(sender){
                 selfPointer.onNextCallback();
             });
 
             nextItem.fontSize = 16;
-            nextItem.x = cc.visibleRect.right.x -100;
-            nextItem.y = cc.visibleRect.right.y - 30;
+            nextItem.x = visibleRect.right.x -100;
+            nextItem.y = visibleRect.right.y - 30;
 
-            var menu2 = new cc.Menu(nextItem);
+            var menu2 = new Menu(nextItem);
             menu2.setPosition(0, 0);
             menu2.setAnchorPoint(0, 0);
             selfPointer.addChild(menu2);
         });
 
         removeAllTouchItem.fontSize = 16;
-        removeAllTouchItem.x = cc.visibleRect.right.x -removeAllTouchItem.width/2-20;
-        removeAllTouchItem.y = cc.visibleRect.right.y;
+        removeAllTouchItem.x = visibleRect.right.x -removeAllTouchItem.width/2-20;
+        removeAllTouchItem.y = visibleRect.right.y;
 
-        var menu = new cc.Menu(removeAllTouchItem);
+        var menu = new Menu(removeAllTouchItem);
         menu.setPosition(0, 0);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu);

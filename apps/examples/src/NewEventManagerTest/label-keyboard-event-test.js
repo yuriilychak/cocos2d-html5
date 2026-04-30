@@ -33,30 +33,30 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        var statusLabel = new cc.LabelTTF("No keyboard event received!", "", 20);
+        var statusLabel = new LabelTTF("No keyboard event received!", "", 20);
         statusLabel.setPosition(origin.x + size.width/2, origin.x + size.height/2);
         this.addChild(statusLabel);
 
         var that = this;
-        cc.eventManager.addListener({
-            event: cc.EventListener.KEYBOARD,
+        eventManager.addListener({
+            event: EventListener.KEYBOARD,
             onKeyPressed:  function(keyCode, event){
                 var label = event.getCurrentTarget();
-                label.setString("Key " + (cc.sys.isNative ? that.getNativeKeyName(keyCode) : String.fromCharCode(keyCode) ) + "(" + keyCode.toString()  + ") was pressed!");
+                label.setString("Key " + (sys.isNative ? that.getNativeKeyName(keyCode) : String.fromCharCode(keyCode) ) + "(" + keyCode.toString()  + ") was pressed!");
             },
             onKeyReleased: function(keyCode, event){
                 var label = event.getCurrentTarget();
-                label.setString("Key " + (cc.sys.isNative ? that.getNativeKeyName(keyCode) : String.fromCharCode(keyCode) ) + "(" + keyCode.toString()  + ") was released!");
+                label.setString("Key " + (sys.isNative ? that.getNativeKeyName(keyCode) : String.fromCharCode(keyCode) ) + "(" + keyCode.toString()  + ") was released!");
             }
         }, statusLabel);
         //----end4----
     }
 
     getNativeKeyName(keyCode) {
-        var allCode = Object.getOwnPropertyNames(cc.KEY);
+        var allCode = Object.getOwnPropertyNames(KEY);
         var keyName = "";
         for(var x in allCode){
-            if(cc.KEY[allCode[x]] == keyCode){
+            if(KEY[allCode[x]] == keyCode){
                 keyName = allCode[x];
                 break;
             }

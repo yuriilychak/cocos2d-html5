@@ -36,12 +36,12 @@ export class Issue1288_2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(0);
 
-    var spr = new cc.Sprite(s_pathGrossini);
+    var spr = new Sprite(s_pathGrossini);
     spr.x = 100;
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = new cc.MoveBy(0.5, new cc.Point(100, 0));
+    var act1 = new MoveBy(0.5, new Point(100, 0));
     spr.runAction(act1.repeat(1));
     //----end42----
   }

@@ -43,14 +43,14 @@ export class LogicTest extends ActionManagerTest {
         //----start1----onEnter
         super.onEnter();
 
-        var grossini = new cc.Sprite(s_pathGrossini);
+        var grossini = new Sprite(s_pathGrossini);
         this.addChild(grossini, 0, 2);
         grossini.x = 200;
 	    grossini.y = 200;
 
-        grossini.runAction(cc.sequence(
-            new cc.MoveBy(1, new cc.Point(150, 0)),
-            new cc.CallFunc(this.onBugMe, this))
+        grossini.runAction(sequence(
+            new MoveBy(1, new Point(150, 0)),
+            new CallFunc(this.onBugMe, this))
         );
 
 
@@ -65,7 +65,7 @@ export class LogicTest extends ActionManagerTest {
     onBugMe(node) {
         //----start1----onBugMe
         node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
-        node.runAction(new cc.ScaleTo(2, 2));
+        node.runAction(new ScaleTo(2, 2));
         //----end1----
     }
 

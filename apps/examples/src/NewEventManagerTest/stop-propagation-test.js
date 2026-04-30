@@ -30,8 +30,8 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         //----start9----ctor
         super();
 
-        var touchOneByOneListener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        var touchOneByOneListener = EventListener.create({
+            event: EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches:true,
             onTouchBegan: function(touch, event){
                 // Skip if don't touch top half screen.
@@ -40,7 +40,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
 
                 var target = event.getCurrentTarget();
                 if(target.getTag() != StopPropagationTest._TAG_BLUE_SPRITE)
-                    cc.log("Yellow blocks shouldn't response event.");
+                    log("Yellow blocks shouldn't response event.");
 
                 if (this._isPointInNode(touch.getLocation(), target)) {
                     target.setOpacity(180);
@@ -56,8 +56,8 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
             }
         });
 
-        var touchAllAtOnceListener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        var touchAllAtOnceListener = EventListener.create({
+            event: EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: function(touches, event){
                 // Skip if don't touch top half screen.
                 if (this._isPointInTopHalfAreaOfScreen(touches[0].getLocation()))
@@ -65,7 +65,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
 
                 var target = event.getCurrentTarget();
                 if(target.getTag() != StopPropagationTest._TAG_BLUE_SPRITE2)
-                    cc.log("Yellow blocks shouldn't response event.");
+                    log("Yellow blocks shouldn't response event.");
 
                 if (this._isPointInNode(touches[0].getLocation(), target))
                     target.setOpacity(180);
@@ -79,7 +79,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
 
                 var target = event.getCurrentTarget();
                 if(target.getTag() != StopPropagationTest._TAG_BLUE_SPRITE2)
-                    cc.log("Yellow blocks shouldn't response event.");
+                    log("Yellow blocks shouldn't response event.");
 
                 if (this._isPointInNode(touches[0].getLocation(), target))
                     target.setOpacity(255);
@@ -88,12 +88,12 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
             }.bind(this)
         });
 
-        var keyboardEventListener = cc.EventListener.create({
-            event: cc.EventListener.KEYBOARD,
+        var keyboardEventListener = EventListener.create({
+            event: EventListener.KEYBOARD,
             onKeyPressed: function(key, event){
                 var target = event.getCurrentTarget();
                 if(!(target.getTag() == StopPropagationTest._TAG_BLUE_SPRITE || target.getTag() == StopPropagationTest._TAG_BLUE_SPRITE2)){
-                    cc.log("Yellow blocks shouldn't response event.");
+                    log("Yellow blocks shouldn't response event.");
                 }
                 // Stop propagation, so yellow blocks will not be able to receive event.
                 event.stopPropagation();
@@ -104,33 +104,33 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
 
         for (var i = 0; i < SPRITE_COUNT; i++) {
             if(i==4) {
-                sprite1 = new cc.Sprite("Images/CyanSquare.png");
+                sprite1 = new Sprite("Images/CyanSquare.png");
                 sprite1.setTag(StopPropagationTest._TAG_BLUE_SPRITE);
                 this.addChild(sprite1, 100);
 
-                sprite2 = new cc.Sprite("Images/CyanSquare.png");
+                sprite2 = new Sprite("Images/CyanSquare.png");
                 sprite2.setTag(StopPropagationTest._TAG_BLUE_SPRITE2);
                 this.addChild(sprite2, 100);
             } else {
-                sprite1 = new cc.Sprite("Images/YellowSquare.png");
+                sprite1 = new Sprite("Images/YellowSquare.png");
                 this.addChild(sprite1, 0);
-                sprite2 = new cc.Sprite("Images/YellowSquare.png");
+                sprite2 = new Sprite("Images/YellowSquare.png");
                 this.addChild(sprite2, 0);
             }
 
 
-            cc.eventManager.addListener(touchOneByOneListener.clone(), sprite1);
-            cc.eventManager.addListener(keyboardEventListener.clone(), sprite1);
+            eventManager.addListener(touchOneByOneListener.clone(), sprite1);
+            eventManager.addListener(keyboardEventListener.clone(), sprite1);
 
-            cc.eventManager.addListener(touchAllAtOnceListener.clone(), sprite2);
-            cc.eventManager.addListener(keyboardEventListener.clone(), sprite2);
+            eventManager.addListener(touchAllAtOnceListener.clone(), sprite2);
+            eventManager.addListener(keyboardEventListener.clone(), sprite2);
 
 
-            var visibleSize = cc.director.getVisibleSize();
-            sprite1.x = cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
-            sprite1.y = cc.visibleRect.center.y + sprite2.getContentSize().height / 2 + 10;
-            sprite2.x = cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
-            sprite2.y = cc.visibleRect.center.y - sprite2.getContentSize().height / 2 - 10;
+            var visibleSize = director.getVisibleSize();
+            sprite1.x = visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
+            sprite1.y = visibleRect.center.y + sprite2.getContentSize().height / 2 + 10;
+            sprite2.x = visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
+            sprite2.y = visibleRect.center.y - sprite2.getContentSize().height / 2 - 10;
         }
         //----end9----
     }
@@ -138,13 +138,13 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
     _isPointInNode(pt, node) {
         //----start9----_isPointInNode
         var s = node.getContentSize();
-        return cc.Rect.containsPoint(new cc.Rect(0, 0, s.width, s.height), node.convertToNodeSpace(pt));
+        return Rect.containsPoint(new Rect(0, 0, s.width, s.height), node.convertToNodeSpace(pt));
         //----end9----
     }
 
     _isPointInTopHalfAreaOfScreen(pt){
         //----start9----_isPointInTopHalfAreaOfScreen
-        var winSize = cc.director.getWinSize();
+        var winSize = director.getWinSize();
         return (pt.y >= winSize.height/2);
         //----end9----
     }

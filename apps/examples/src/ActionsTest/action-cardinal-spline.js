@@ -33,8 +33,8 @@
 export class ActionCardinalSpline extends ActionsDemo {
 
       get _code() { 
-        return " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
-        " a = cc.cadinalSplineTo( time, array_of_points, tension );";
+        return " a = cadinalSplineBy( time, array_of_points, tension );\n" +
+        " a = cadinalSplineTo( time, array_of_points, tension );";
       }
 
   constructor() {
@@ -54,34 +54,34 @@ export class ActionCardinalSpline extends ActionsDemo {
     this._array = [];
 
     //add draw node
-    var winSize = cc.director.getWinSize();
-    this._drawNode1 = new cc.DrawNode();
+    var winSize = director.getWinSize();
+    this._drawNode1 = new DrawNode();
     this.addChild(this._drawNode1);
     this._drawNode1.x = 50;
     this._drawNode1.y = 50;
-    this._drawNode1.setDrawColor(new cc.Color(255, 255, 255, 255));
+    this._drawNode1.setDrawColor(new Color(255, 255, 255, 255));
 
-    this._drawNode2 = new cc.DrawNode();
+    this._drawNode2 = new DrawNode();
     this.addChild(this._drawNode2);
     this._drawNode2.x = winSize.width * 0.5;
     this._drawNode2.y = 50;
-    this._drawNode2.setDrawColor(new cc.Color(255, 255, 255, 255));
+    this._drawNode2.setDrawColor(new Color(255, 255, 255, 255));
   }
 
   onEnter() {
     //----start11----onEnter
     super.onEnter();
-    var winSize = cc.director.getWinSize();
+    var winSize = director.getWinSize();
     this.centerSprites(2);
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
     var array = [
-      new cc.Point(0, 0),
-      new cc.Point(winSize.width / 2 - 30, 0),
-      new cc.Point(winSize.width / 2 - 30, winSize.height - 80),
-      new cc.Point(0, winSize.height - 80),
-      new cc.Point(0, 0)
+      new Point(0, 0),
+      new Point(winSize.width / 2 - 30, 0),
+      new Point(winSize.width / 2 - 30, winSize.height - 80),
+      new Point(0, winSize.height - 80),
+      new Point(0, 0)
     ];
 
     //
@@ -89,9 +89,9 @@ export class ActionCardinalSpline extends ActionsDemo {
     //
     // Spline with no tension (tension==0)
     //
-    var action1 = new cc.CardinalSplineBy(2, array, 0);
+    var action1 = new CardinalSplineBy(2, array, 0);
     var reverse1 = action1.reverse();
-    var seq = cc.sequence(action1, delay, reverse1, delay.clone());
+    var seq = sequence(action1, delay, reverse1, delay.clone());
 
     this._tamara.x = 50;
     this._tamara.y = 50;
@@ -102,9 +102,9 @@ export class ActionCardinalSpline extends ActionsDemo {
     //
     // Spline with high tension (tension==1)
     //
-    var action2 = new cc.CardinalSplineBy(2, array, 1);
+    var action2 = new CardinalSplineBy(2, array, 1);
     var reverse2 = action2.reverse();
-    var seq2 = cc.sequence(action2, delay.clone(), reverse2, delay.clone());
+    var seq2 = sequence(action2, delay.clone(), reverse2, delay.clone());
 
     this._kathia.x = winSize.width / 2;
     this._kathia.y = 50;
@@ -130,7 +130,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     this.scheduleOnce(this.checkControl3, 1.5);
   }
   checkControl1(dt) {
-    this.control1 = new cc.Point(this._tamara.x, this._tamara.y);
+    this.control1 = new Point(this._tamara.x, this._tamara.y);
   }
   verifyControl1(dt) {
     var x = Math.abs(50 + winSize.width / 2 - 30 - this.control1.x);
@@ -139,7 +139,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl2(dt) {
-    this.control2 = new cc.Point(this._tamara.x, this._tamara.y);
+    this.control2 = new Point(this._tamara.x, this._tamara.y);
   }
   verifyControl2(dt) {
     var x = Math.abs(50 + winSize.width / 2 - 30 - this.control2.x);
@@ -148,7 +148,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl3(dt) {
-    this.control3 = new cc.Point(this._tamara.x, this._tamara.y);
+    this.control3 = new Point(this._tamara.x, this._tamara.y);
   }
   verifyControl3(dt) {
     var x = Math.abs(50 - this.control3.x);
@@ -167,7 +167,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
     ret.push(this.verifyControl3());
-    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
+    ret.push(new Point(this._tamara.x, this._tamara.y));
 
     return JSON.stringify(ret);
   }

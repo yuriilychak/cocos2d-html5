@@ -38,8 +38,8 @@ export class BMFontHDTest extends AtlasDemo {
         this.pixel = {"0": 255, "1": 255, "2": 255, "3": 255};
         var s = director.getWinSize();
 
-        // cc.LabelBMFont
-        var label1 = new cc.LabelBMFont("TESTING RETINA DISPLAY", s_resprefix + "fonts/konqa32.fnt");
+        // LabelBMFont
+        var label1 = new LabelBMFont("TESTING RETINA DISPLAY", s_resprefix + "fonts/konqa32.fnt");
         this.addChild(label1);
         label1.x = s.width / 2;
         label1.y = s.height / 2;

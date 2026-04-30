@@ -28,7 +28,7 @@ export class UIScene extends TestScene {
     runThisTest(){
         var layer = new UIMainLayer();
         this.addChild(layer);
-        cc.director.runScene(this);
+        director.runScene(this);
     }
 
 }

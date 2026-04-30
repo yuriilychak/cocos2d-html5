@@ -41,7 +41,7 @@ export class UIScrollViewDisableTest extends UIMainLayer {
             var backgroundSize = background.getContentSize();
 
             var scrollView = new ccui.ScrollView();
-            scrollView.setContentSize(new cc.Size(280, 150));
+            scrollView.setContentSize(new Size(280, 150));
             scrollView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - scrollView.width) / 2;
             scrollView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - scrollView.height) / 2;
             scrollView.setTouchEnabled(false);
@@ -54,7 +54,7 @@ export class UIScrollViewDisableTest extends UIMainLayer {
             var innerWidth = scrollView.width;
             var innerHeight = scrollView.height + imageView.height;
 
-            scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
+            scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
             var button = new ccui.Button();
             button.setTouchEnabled(true);
@@ -81,7 +81,7 @@ export class UIScrollViewDisableTest extends UIMainLayer {
             button_scale9.y = textButton.getBottomBoundary() - textButton.height;
             scrollView.addChild(button_scale9);
 
-            imageView.setPosition(new cc.Point(innerWidth/2, imageView.getContentSize().height/2));
+            imageView.setPosition(new Point(innerWidth/2, imageView.getContentSize().height/2));
             scrollView.addChild(imageView);
 
             return true;

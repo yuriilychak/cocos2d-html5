@@ -36,7 +36,7 @@ export class UILabelTest_TTF extends UIMainLayer {
             text.boundingWidth = 280;
 	        text.boundingHeight = 150;
             text.attr({
-	            textAlign: cc.TEXT_ALIGNMENT_CENTER,
+	            textAlign: TEXT_ALIGNMENT_CENTER,
 	            string: "Label TTF",
 	            font: "32px mericanTypewriter",
 	            x: this._widget.width / 2,

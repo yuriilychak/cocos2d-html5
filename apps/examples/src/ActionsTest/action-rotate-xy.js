@@ -40,23 +40,23 @@ export class ActionRotateXY extends ActionsDemo {
     //----start4----onEnter
     super.onEnter();
     this.centerSprites(3);
-    var actionTo = new cc.RotateTo(2, 37.2, -37.2);
-    var actionToBack = new cc.RotateTo(2, 0, 0);
-    var actionBy = new cc.RotateBy(2, 0, -90);
-    var actionBy2 = new cc.RotateBy(2, 45.0, 45.0);
+    var actionTo = new RotateTo(2, 37.2, -37.2);
+    var actionToBack = new RotateTo(2, 0, 0);
+    var actionBy = new RotateBy(2, 0, -90);
+    var actionBy2 = new RotateBy(2, 45.0, 45.0);
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
-    this._tamara.runAction(cc.sequence(actionTo, delay, actionToBack));
+    this._tamara.runAction(sequence(actionTo, delay, actionToBack));
     this._grossini.runAction(
-      cc.sequence(actionBy, delay.clone(), actionBy.reverse())
+      sequence(actionBy, delay.clone(), actionBy.reverse())
     );
     this._kathia.runAction(
-      cc.sequence(actionBy2, delay.clone(), actionBy2.reverse())
+      sequence(actionBy2, delay.clone(), actionBy2.reverse())
     );
 
-    if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
-      var label = new cc.LabelTTF(
+    if (!sys.isNative && !("opengl" in sys.capabilities)) {
+      var label = new LabelTTF(
         "Not support Actions on HTML5-canvas",
         "Times New Roman",
         30
@@ -68,7 +68,7 @@ export class ActionRotateXY extends ActionsDemo {
     //----end4----
   }
   title() {
-    return "cc.RotateBy(x,y) / cc.RotateTo(x,y)";
+    return "RotateBy(x,y) / RotateTo(x,y)";
   }
   //
   // Automation

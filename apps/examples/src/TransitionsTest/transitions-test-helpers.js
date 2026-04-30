@@ -34,225 +34,225 @@
 ;
 
 export function JumpZoomTransition(t, s) {
-    return new cc.TransitionJumpZoom(t, s);
+    return new TransitionJumpZoom(t, s);
 }
 
 ;
 
 export function FadeTransition(t, s) {
-    return new cc.TransitionFade(t, s);
+    return new TransitionFade(t, s);
 }
 
 ;
 
 export function FadeWhiteTransition(t, s) {
-    return new cc.TransitionFade(t, s, new cc.Color(255, 255, 255));
+    return new TransitionFade(t, s, new Color(255, 255, 255));
 }
 
 ;
 
 export function FlipXLeftOver(t, s) {
-    return new cc.TransitionFlipX(t, s, cc.TRANSITION_ORIENTATION_LEFT_OVER);
+    return new TransitionFlipX(t, s, TRANSITION_ORIENTATION_LEFT_OVER);
 }
 
 ;
 
 export function FlipXRightOver(t, s) {
-    return new cc.TransitionFlipX(t, s, cc.TRANSITION_ORIENTATION_RIGHT_OVER);
+    return new TransitionFlipX(t, s, TRANSITION_ORIENTATION_RIGHT_OVER);
 }
 
 ;
 
 export function FlipYUpOver(t, s) {
-    return new cc.TransitionFlipY(t, s, cc.TRANSITION_ORIENTATION_UP_OVER);
+    return new TransitionFlipY(t, s, TRANSITION_ORIENTATION_UP_OVER);
 }
 
 ;
 
 export function FlipYDownOver(t, s) {
-    return new cc.TransitionFlipY(t, s, cc.TRANSITION_ORIENTATION_DOWN_OVER);
+    return new TransitionFlipY(t, s, TRANSITION_ORIENTATION_DOWN_OVER);
 }
 
 ;
 
 export function FlipAngularLeftOver(t, s) {
-    return new cc.TransitionFlipAngular(t, s, cc.TRANSITION_ORIENTATION_LEFT_OVER);
+    return new TransitionFlipAngular(t, s, TRANSITION_ORIENTATION_LEFT_OVER);
 }
 
 ;
 
 export function FlipAngularRightOver(t, s) {
-    return new cc.TransitionFlipAngular(t, s, cc.TRANSITION_ORIENTATION_RIGHT_OVER);
+    return new TransitionFlipAngular(t, s, TRANSITION_ORIENTATION_RIGHT_OVER);
 }
 
 ;
 
 export function ZoomFlipXLeftOver(t, s) {
-    return new cc.TransitionZoomFlipX(t, s, cc.TRANSITION_ORIENTATION_LEFT_OVER);
+    return new TransitionZoomFlipX(t, s, TRANSITION_ORIENTATION_LEFT_OVER);
 }
 
 ;
 
 export function ZoomFlipXRightOver(t, s) {
-    return new cc.TransitionZoomFlipX(t, s, cc.TRANSITION_ORIENTATION_RIGHT_OVER);
+    return new TransitionZoomFlipX(t, s, TRANSITION_ORIENTATION_RIGHT_OVER);
 }
 
 ;
 
 export function ZoomFlipYUpOver(t, s) {
-    return new cc.TransitionZoomFlipY(t, s, cc.TRANSITION_ORIENTATION_UP_OVER);
+    return new TransitionZoomFlipY(t, s, TRANSITION_ORIENTATION_UP_OVER);
 }
 
 ;
 
 export function ZoomFlipYDownOver(t, s) {
-    return new cc.TransitionZoomFlipY(t, s, cc.TRANSITION_ORIENTATION_DOWN_OVER);
+    return new TransitionZoomFlipY(t, s, TRANSITION_ORIENTATION_DOWN_OVER);
 }
 
 ;
 
 export function ZoomFlipAngularLeftOver(t, s) {
-    return new cc.TransitionZoomFlipAngular(t, s, cc.TRANSITION_ORIENTATION_LEFT_OVER);
+    return new TransitionZoomFlipAngular(t, s, TRANSITION_ORIENTATION_LEFT_OVER);
 }
 
 ;
 
 export function ZoomFlipAngularRightOver(t, s) {
-    return new cc.TransitionZoomFlipAngular(t, s, cc.TRANSITION_ORIENTATION_RIGHT_OVER);
+    return new TransitionZoomFlipAngular(t, s, TRANSITION_ORIENTATION_RIGHT_OVER);
 }
 
 ;
 
 export function ShrinkGrowTransition(t, s) {
-    return new cc.TransitionShrinkGrow(t, s);
+    return new TransitionShrinkGrow(t, s);
 }
 
 ;
 
 export function RotoZoomTransition(t, s) {
-    return new cc.TransitionRotoZoom(t, s);
+    return new TransitionRotoZoom(t, s);
 }
 
 ;
 
 export function MoveInLTransition(t, s) {
-    return new cc.TransitionMoveInL(t, s);
+    return new TransitionMoveInL(t, s);
 }
 
 ;
 
 export function MoveInRTransition(t, s) {
-    return new cc.TransitionMoveInR(t, s);
+    return new TransitionMoveInR(t, s);
 }
 
 ;
 
 export function MoveInTTransition(t, s) {
-    return new cc.TransitionMoveInT(t, s);
+    return new TransitionMoveInT(t, s);
 }
 
 ;
 
 export function MoveInBTransition(t, s) {
-    return new cc.TransitionMoveInB(t, s);
+    return new TransitionMoveInB(t, s);
 }
 
 ;
 
 export function SlideInLTransition(t, s) {
-    return new cc.TransitionSlideInL(t, s);
+    return new TransitionSlideInL(t, s);
 }
 
 ;
 
 export function SlideInRTransition(t, s) {
-    return new cc.TransitionSlideInR(t, s);
+    return new TransitionSlideInR(t, s);
 }
 
 ;
 
 export function SlideInTTransition(t, s) {
-    return new cc.TransitionSlideInT(t, s);
+    return new TransitionSlideInT(t, s);
 }
 
 ;
 
 export function SlideInBTransition(t, s) {
-    return new cc.TransitionSlideInB(t, s);
+    return new TransitionSlideInB(t, s);
 }
 
 ;
 
 export function CCTransitionCrossFade(t, s) {
-    return new cc.TransitionCrossFade(t, s);
+    return new TransitionCrossFade(t, s);
 }
 
 ;
 
 export function CCTransitionRadialCCW(t, s) {
-    return new cc.TransitionProgressRadialCCW(t, s);
+    return new TransitionProgressRadialCCW(t, s);
 }
 
 ;
 
 export function CCTransitionRadialCW(t, s) {
-    return new cc.TransitionProgressRadialCW(t, s);
+    return new TransitionProgressRadialCW(t, s);
 }
 
 ;
 
 export function PageTransitionForward(t, s) {
     director.setDepthTest(true);
-    return new cc.TransitionPageTurn(t, s, false);
+    return new TransitionPageTurn(t, s, false);
 }
 
 ;
 
 export function PageTransitionBackward(t, s) {
     director.setDepthTest(true);
-    return new cc.TransitionPageTurn(t, s, true);
+    return new TransitionPageTurn(t, s, true);
 }
 
 ;
 
 export function FadeTRTransition(t, s) {
-    return new cc.TransitionFadeTR(t, s);
+    return new TransitionFadeTR(t, s);
 }
 
 ;
 
 export function FadeBLTransition(t, s) {
-    return new cc.TransitionFadeBL(t, s);
+    return new TransitionFadeBL(t, s);
 }
 
 ;
 
 export function FadeUpTransition(t, s) {
-    return new cc.TransitionFadeUp(t, s);
+    return new TransitionFadeUp(t, s);
 }
 
 ;
 
 export function FadeDownTransition(t, s) {
-    return new cc.TransitionFadeDown(t, s);
+    return new TransitionFadeDown(t, s);
 }
 
 ;
 
 export function TurnOffTilesTransition(t, s) {
-    return new cc.TransitionTurnOffTiles(t, s);
+    return new TransitionTurnOffTiles(t, s);
 }
 
 ;
 
 export function SplitRowsTransition(t, s) {
-    return new cc.TransitionSplitRows(t, s);
+    return new TransitionSplitRows(t, s);
 }
 
 ;
 
 export function SplitColsTransition(t, s) {
-    return new cc.TransitionSplitCols(t, s);
+    return new TransitionSplitCols(t, s);
 }
 
 ;

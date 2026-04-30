@@ -46,11 +46,11 @@ export class DictionaryToFromTest extends UnitTestBase {
     }
 
     runTest() {
-        var frameCache = cc.spriteFrameCache;
+        var frameCache = spriteFrameCache;
         frameCache.addSpriteFrames(s_grossiniPlist);
 
         // Purge previously loaded animation
-        var animCache = cc.animationCache;
+        var animCache = animationCache;
         animCache.addAnimations(s_animations2Plist);
 
         var normal = animCache.getAnimation("dance_1");

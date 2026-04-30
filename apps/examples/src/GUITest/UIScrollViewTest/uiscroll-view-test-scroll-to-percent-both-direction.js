@@ -39,16 +39,16 @@ export class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
             // Create the scrollview
             var scrollView = new ccui.ScrollView();
             scrollView.setTouchEnabled(true);
-            scrollView.setBackGroundColor(cc.Color.GREEN);
+            scrollView.setBackGroundColor(Color.GREEN);
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
-            scrollView.setInnerContainerSize(new cc.Size(480, 320));
-            scrollView.setContentSize(new cc.Size(100, 100));
+            scrollView.setInnerContainerSize(new Size(480, 320));
+            scrollView.setContentSize(new Size(100, 100));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollViewSize.height) / 2;
-            scrollView.scrollToPercentBothDirection(new cc.Point(50, 50), 1, true);
+            scrollView.scrollToPercentBothDirection(new Point(50, 50), 1, true);
 
             this._mainNode.addChild(scrollView);
 

@@ -30,21 +30,21 @@ export class LabelTTFAlignment extends AtlasDemo {
         //----start24----ctor
         super();
         var s = director.getWinSize();
-        var ttf0 = new cc.LabelTTF("Alignment 0\nnew line", "Arial", 12, new cc.Size(256, 32), cc.TEXT_ALIGNMENT_LEFT);
+        var ttf0 = new LabelTTF("Alignment 0\nnew line", "Arial", 12, new Size(256, 32), TEXT_ALIGNMENT_LEFT);
         ttf0.x = s.width / 2;
         ttf0.y = (s.height / 6) * 2;
         ttf0.anchorX = 0.5;
         ttf0.anchorY = 0.5;
         this.addChild(ttf0);
 
-        var ttf1 = new cc.LabelTTF("Alignment 1\nnew line", "Arial", 12, new cc.Size(256, 32), cc.TEXT_ALIGNMENT_CENTER);
+        var ttf1 = new LabelTTF("Alignment 1\nnew line", "Arial", 12, new Size(256, 32), TEXT_ALIGNMENT_CENTER);
         ttf1.x = s.width / 2;
         ttf1.y = (s.height / 6) * 3;
         ttf1.anchorX = 0.5;
         ttf1.anchorY = 0.5;
         this.addChild(ttf1);
 
-        var ttf2 = new cc.LabelTTF("Alignment 2\nnew line", "Arial", 12, new cc.Size(256, 32), cc.TEXT_ALIGNMENT_RIGHT);
+        var ttf2 = new LabelTTF("Alignment 2\nnew line", "Arial", 12, new Size(256, 32), TEXT_ALIGNMENT_RIGHT);
         ttf2.x = s.width / 2;
         ttf2.y = (s.height / 6) * 4;
         ttf2.anchorX = 0.5;
@@ -53,7 +53,7 @@ export class LabelTTFAlignment extends AtlasDemo {
         //----end24----
     }
     title() {
-        return "cc.LabelTTF alignment";
+        return "LabelTTF alignment";
     }
     subtitle() {
         return "Tests alignment values";

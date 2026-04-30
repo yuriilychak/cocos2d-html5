@@ -46,17 +46,17 @@ export class SpriteBatchNodeAnchorPoint extends SpriteTestDemo {
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
         // small capacity. Testing resizing.
         // Don't use capacity=1 in your real game. It is expensive to resize the capacity
-        var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
+        var batch = new SpriteBatchNode(s_grossini_dance_atlas, 1);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         for (var i = 0; i < 3; i++) {
-            var rotate = new cc.RotateBy(10, 360);
+            var rotate = new RotateBy(10, 360);
             var action = rotate.repeatForever();
-            var sprite = new cc.Sprite(batch.texture, new cc.Rect(85 * i, 121, 85, 121));
+            var sprite = new Sprite(batch.texture, new Rect(85 * i, 121, 85, 121));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
-            var point = new cc.Sprite(s_pathR1);
+            var point = new Sprite(s_pathR1);
             point.scale = 0.25;
             point.x = sprite.x;
             point.y = sprite.y;

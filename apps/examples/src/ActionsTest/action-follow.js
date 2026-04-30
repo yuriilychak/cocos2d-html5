@@ -39,16 +39,16 @@ export class ActionFollow extends ActionsDemo {
 
     this._grossini.x = -(s.width / 2);
     this._grossini.y = s.height / 2;
-    var move = new cc.MoveBy(2, new cc.Point(s.width * 3, 0));
+    var move = new MoveBy(2, new Point(s.width * 3, 0));
     var move_back = move.reverse();
-    var seq = cc.sequence(move, move_back);
+    var seq = sequence(move, move_back);
 
     var rep = seq.repeatForever();
 
     this._grossini.runAction(rep);
 
     this.runAction(
-      new cc.Follow(this._grossini, new cc.Rect(0, 0, s.width * 2 - 100, s.height))
+      new Follow(this._grossini, new Rect(0, 0, s.width * 2 - 100, s.height))
     );
     //----end30----
   }

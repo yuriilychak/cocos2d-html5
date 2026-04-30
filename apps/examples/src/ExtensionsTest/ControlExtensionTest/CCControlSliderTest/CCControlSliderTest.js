@@ -33,10 +33,10 @@ export class ControlSliderTest extends ControlScene {
 
     init() {
         if (super.init()) {
-            var screenSize = cc.director.getWinSize();
+            var screenSize = director.getWinSize();
 
             // Add a label in which the slider value will be displayed
-            this._displayValueLabel = new cc.LabelTTF("Move the slider thumb!\nThe lower slider is restricted.", "Marker Felt", 32);
+            this._displayValueLabel = new LabelTTF("Move the slider thumb!\nThe lower slider is restricted.", "Marker Felt", 32);
             this._displayValueLabel.anchorX = 0.5;
             this._displayValueLabel.anchorY = -1.0;
             this._displayValueLabel.x = screenSize.width / 1.7;
@@ -44,7 +44,7 @@ export class ControlSliderTest extends ControlScene {
             this.addChild(this._displayValueLabel);
 
             // Add the slider
-            var slider = new cc.ControlSlider("extensions/sliderTrack.png", "extensions/sliderProgress.png", "extensions/sliderThumb.png");
+            var slider = new ControlSlider("extensions/sliderTrack.png", "extensions/sliderProgress.png", "extensions/sliderThumb.png");
             slider.anchorX = 0.5;
             slider.anchorY = 1.0;
             slider.setMinimumValue(0.0); // Sets the min value of range
@@ -54,9 +54,9 @@ export class ControlSliderTest extends ControlScene {
             slider.tag = 1;
 
             // When the value of the slider will change, the given selector will be call
-            slider.addTargetWithActionForControlEvents(this, this.upperValueChanged, cc.CONTROL_EVENT_VALUECHANGED);
+            slider.addTargetWithActionForControlEvents(this, this.upperValueChanged, CONTROL_EVENT_VALUECHANGED);
 
-            var restrictSlider = new cc.ControlSlider("extensions/sliderTrack.png", "extensions/sliderProgress.png", "extensions/sliderThumb.png");
+            var restrictSlider = new ControlSlider("extensions/sliderTrack.png", "extensions/sliderProgress.png", "extensions/sliderThumb.png");
             restrictSlider.anchorX = 0.5;
 	        restrictSlider.anchorY = 1.0;
             restrictSlider.setMinimumValue(0.0); // Sets the min value of range
@@ -69,7 +69,7 @@ export class ControlSliderTest extends ControlScene {
             restrictSlider.tag = 2;
 
             //same with restricted
-            restrictSlider.addTargetWithActionForControlEvents(this, this.lowerValueChanged, cc.CONTROL_EVENT_VALUECHANGED);
+            restrictSlider.addTargetWithActionForControlEvents(this, this.lowerValueChanged, CONTROL_EVENT_VALUECHANGED);
 
             this.addChild(slider);
             this.addChild(restrictSlider);
@@ -89,7 +89,7 @@ export class ControlSliderTest extends ControlScene {
 };
 
 ControlSliderTest.create = function (sceneTitle) {
-    var scene = new cc.Scene();
+    var scene = new Scene();
     var controlLayer = new ControlSliderTest();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);

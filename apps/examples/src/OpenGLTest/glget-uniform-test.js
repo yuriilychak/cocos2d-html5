@@ -33,10 +33,10 @@ export class GLGetUniformTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in sys.capabilities ) {
 
             if( ! autoTestEnabled ) {
-                cc.log( JSON.stringify( this.runTest() ));
+                log( JSON.stringify( this.runTest() ));
             }
 
         }
@@ -50,11 +50,11 @@ export class GLGetUniformTest extends OpenGLTestLayer {
     }
     runTest() {
 
-        var shader = cc.shaderCache.getProgram("ShaderPositionTextureColor");
+        var shader = shaderCache.getProgram("ShaderPositionTextureColor");
         var program = shader.getProgram();
         shader.use();
 
-        var loc = cc.sys.isNative ? gl.getUniformLocation(program, "CC_MVPMatrix") : gl.getUniformLocation(program, "CC_MVMatrix");
+        var loc = sys.isNative ? gl.getUniformLocation(program, "CC_MVPMatrix") : gl.getUniformLocation(program, "CC_MVMatrix");
 
         var pMatrix = [1,2,3,4, 4,3,2,1, 1,2,4,8, 1.1,1.2,1.3,1.4];
         this.pMatrix = new Float32Array(pMatrix);

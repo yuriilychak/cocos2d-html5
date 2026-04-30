@@ -44,9 +44,9 @@ export class UIPageViewButtonTest extends UIMainLayer {
 
             // Create the page view
             var pageView = new ccui.PageView();
-            pageView.setContentSize(new cc.Size(240.0, 130.0));
+            pageView.setContentSize(new Size(240.0, 130.0));
             var backgroundSize = background.getContentSize();
-            pageView.setPosition(new cc.Point((widgetSize.width - backgroundSize.width) / 2.0 +
+            pageView.setPosition(new Point((widgetSize.width - backgroundSize.width) / 2.0 +
                 (backgroundSize.width - pageView.getContentSize().width) / 2.0,
                 (widgetSize.height - backgroundSize.height) / 2.0 +
                 (backgroundSize.height - pageView.getContentSize().height) / 2.0));
@@ -56,7 +56,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
             var pageCount = 4;
             for (var i = 0; i < pageCount; ++i){
                 var outerBox = new ccui.HBox();
-                outerBox.setContentSize(new cc.Size(240.0, 130.0));
+                outerBox.setContentSize(new Size(240.0, 130.0));
 
                 for (var k = 0; k < 2; ++k) {
                     var innerBox = new ccui.VBox();
@@ -86,7 +86,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
     }
 
     onButtonClicked(sender, type){
-        cc.log("button %s clicked", sender.getName());
+        log("button %s clicked", sender.getName());
     }
 
     pageViewEvent(pageView, type){

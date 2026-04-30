@@ -44,29 +44,29 @@ export class S9BatchNodeBasic extends S9SpriteTestDemo {
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        cc.log("S9BatchNodeBasic ...");
+        log("S9BatchNodeBasic ...");
 
-        var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
-        cc.log("batchNode created with : " + "Images/blocks9.png");
+        var batchNode = new SpriteBatchNode("Images/blocks9.png");
+        log("batchNode created with : " + "Images/blocks9.png");
 
-        var blocks = new cc.Scale9Sprite();
-        cc.log("... created");
+        var blocks = new Scale9Sprite();
+        log("... created");
 
-        blocks.updateWithBatchNode(batchNode, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(0, 0, 96, 96));
-        cc.log("... updateWithBatchNode");
+        blocks.updateWithBatchNode(batchNode, new Rect(0, 0, 96, 96), false, new Rect(0, 0, 96, 96));
+        log("... updateWithBatchNode");
 
         blocks.x = x;
         blocks.y = y;
-        cc.log("... setPosition");
+        log("... setPosition");
 
         this.addChild(blocks);
-        cc.log("this..addChild");
+        log("this..addChild");
 
-        cc.log("... S9BatchNodeBasic done.");
+        log("... S9BatchNodeBasic done.");
 
-        var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
+        var moveBy = new MoveBy(1, new Point(80, 80));
         var moveByBack = moveBy.reverse();
-        blocks.runAction(cc.sequence(moveBy,moveByBack));
+        blocks.runAction(sequence(moveBy,moveByBack));
     }
 
 }

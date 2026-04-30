@@ -49,37 +49,37 @@ export class EffectsBaseLayer extends BaseTestLayer {
     onEnter() {
         super.onEnter();
 
-        var node = new cc.Node();
+        var node = new Node();
 
         //Whether to demonstrate the effects inside a smaller rect
-        var nodeGrid = new cc.NodeGrid();
+        var nodeGrid = new NodeGrid();
         nodeGrid.addChild(node);
         nodeGrid.runAction(this.getEffect(3));
         this.addChild( nodeGrid );
 
         // back gradient
-        var gradient = new cc.LayerGradient( new cc.Color(255,0,0,255), new cc.Color(255,255,0,255));
+        var gradient = new LayerGradient( new Color(255,0,0,255), new Color(255,255,0,255));
         node.addChild( gradient );
 
         // back image
-        var bg = new cc.Sprite(s_back3);
+        var bg = new Sprite(s_back3);
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         node.addChild( bg );
 
-        var sister1 = new cc.Sprite(s_pathSister1);
+        var sister1 = new Sprite(s_pathSister1);
         sister1.x = winSize.width/3;
         sister1.y = winSize.height/2;
         node.addChild( sister1, 1 );
 
-        var sister2 = new cc.Sprite(s_pathSister2);
+        var sister2 = new Sprite(s_pathSister2);
         sister2.x = winSize.width*2/3;
         sister2.y = winSize.height/2;
         node.addChild( sister2, 1 );
 
-        var sc = new cc.ScaleBy(2, 5);
+        var sc = new ScaleBy(2, 5);
         var sc_back = sc.reverse();
-        var seq = cc.sequence( sc, sc_back );
+        var seq = sequence( sc, sc_back );
         var repeat = seq.repeatForever();
 
         sister1.runAction( repeat );
@@ -88,7 +88,7 @@ export class EffectsBaseLayer extends BaseTestLayer {
 
     getEffect(duration) {
         // override me
-        return new cc.MoveBy(2, new cc.Point(10,10) );
+        return new MoveBy(2, new Point(10,10) );
     }
 
     // automation

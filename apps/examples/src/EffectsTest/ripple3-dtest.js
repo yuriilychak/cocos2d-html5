@@ -28,10 +28,10 @@ export class Ripple3DTest extends EffectsBaseLayer {
         return "Ripple3D";
     }
     code() {
-        return "a = cc.ripple3D(duration, gridSize, position, radius, waves, amplitude)";
+        return "a = ripple3D(duration, gridSize, position, radius, waves, amplitude)";
     }
     getEffect(duration) {
-        return cc.ripple3D( duration, new cc.Size(32,24), new cc.Point(winSize.width/2, winSize.height/2), 240, 4, 160);
+        return ripple3D( duration, new Size(32,24), new Point(winSize.width/2, winSize.height/2), 240, 4, 160);
     }
 
 }
