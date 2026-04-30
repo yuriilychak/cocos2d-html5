@@ -29,6 +29,7 @@
 //
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer.js";
+import "./glnode-polyfill.js";
 import { winSize } from "../tests-main-constants.js";
 
 export class GLNodeWebGLAPITest extends OpenGLTestLayer {

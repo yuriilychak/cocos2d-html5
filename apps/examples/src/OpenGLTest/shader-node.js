@@ -28,6 +28,8 @@
 // ShaderNode
 //
 //------------------------------------------------------------------
+import "./glnode-polyfill.js";
+
 export class ShaderNode extends cc.GLNode {
     constructor(vertexShader, framentShader) {
         super();
