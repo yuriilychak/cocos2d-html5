@@ -102,5 +102,5 @@ export default [
 
   "src/PerformanceNowTest/PerformanceNowTest.js",
 
-  "main.js"
+  "src/main.js"
 ];
