@@ -27,10 +27,11 @@
 
 import { nextEffectAdvanceAction } from "./effects-advanced-test-helpers.js";
 import { TestScene } from "../test-scene.js";
+import { _setsceneIndex, sceneIndex } from "./effects-advanced-test-constants.js";
 
 export class EffectAdvanceScene extends TestScene {
     runThisTest() {
-        sceneIndex = -1;
+        _setsceneIndex(-1);
         var pLayer = nextEffectAdvanceAction();
         this.addChild(pLayer);
         cc.director.runScene(this);

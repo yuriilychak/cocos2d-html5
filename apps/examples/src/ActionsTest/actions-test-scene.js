@@ -31,10 +31,11 @@
 import { nextActionsTest } from "./actions-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _setactionsTestIdx, actionsTestIdx } from "./actions-test-constants.js";
 
 export class ActionsTestScene extends TestScene {
   runThisTest(num) {
-    actionsTestIdx = num || num == 0 ? num - 1 : -1;
+    _setactionsTestIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextActionsTest());
     director.runScene(this);
   }

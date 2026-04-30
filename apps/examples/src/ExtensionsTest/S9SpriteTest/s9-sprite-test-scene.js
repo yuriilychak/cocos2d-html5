@@ -29,10 +29,11 @@
 import { nextS9SpriteTest } from "./s9-sprite-test-helpers.js";
 import { TestScene } from "../../test-scene.js";
 import { director } from "../../tests-main-constants.js";
+import { sceneIdx , _setsceneIdx} from "./s9-sprite-test-constants.js";
 
 export class S9SpriteTestScene extends TestScene {
     runThisTest(num) {
-        sceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setsceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextS9SpriteTest();
         this.addChild(layer);
 

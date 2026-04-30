@@ -28,10 +28,11 @@
 import { nextBakeLayerTest } from "./bake-layer-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _bakeLayerTestIdx, _set_bakeLayerTestIdx } from "./bake-layer-test-constants.js";
 
 export class BakeLayerTestScene extends TestScene {
     runThisTest(num) {
-        _bakeLayerTestIdx = (num || 0) - 1;
+        _set_bakeLayerTestIdx((num || 0) - 1);
         this.addChild(nextBakeLayerTest());
         director.runScene(this);
     }

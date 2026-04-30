@@ -29,10 +29,11 @@
 import { nextOpenGLTest } from "./open-gltest-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { OpenGLTestIdx, _setOpenGLTestIdx } from "./open-gltest-constants.js";
 
 export class OpenGLTestScene extends TestScene {
     runThisTest(num) {
-        OpenGLTestIdx = (num || num == 0) ? (num - 1) : -1;
+        _setOpenGLTestIdx((num || num == 0) ? (num - 1) : -1);
         this.addChild(nextOpenGLTest());
         director.runScene(this);
     }

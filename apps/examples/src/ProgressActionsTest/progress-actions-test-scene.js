@@ -28,11 +28,12 @@
 import { nextProgressTest } from "./progress-actions-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { ProgressTestSceneIdx, _setProgressTestSceneIdx } from "./progress-actions-test-constants.js";
 
 export class ProgressActionsTestScene extends TestScene {
 
     runThisTest(num) {
-        ProgressTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setProgressTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         this.addChild(nextProgressTest());
         director.runScene(this);
     }

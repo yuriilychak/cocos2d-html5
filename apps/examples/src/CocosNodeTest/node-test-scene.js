@@ -31,11 +31,11 @@
 import { nextNodeTest } from "./cocos-node-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _setnodeTestSceneIdx } from "./cocos-node-test-constants.js";
 
 export class NodeTestScene extends TestScene {
     runThisTest(num) {
-        nodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
-        MAX_LAYER = 9;
+        _setnodeTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextNodeTest();
         this.addChild(layer);
 

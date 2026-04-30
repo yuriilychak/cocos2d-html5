@@ -28,10 +28,11 @@
 import { nextParticleAction } from "./particle-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _setparticleSceneIdx, particleSceneIdx } from "./particle-test-constants.js";
 
 export class ParticleTestScene extends TestScene {
     runThisTest(num) {
-        particleSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setparticleSceneIdx((num || num == 0) ? (num - 1) : -1);
 
         this.addChild(nextParticleAction());
         director.runScene(this);

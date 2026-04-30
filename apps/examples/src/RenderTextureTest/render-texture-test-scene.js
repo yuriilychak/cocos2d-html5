@@ -26,10 +26,11 @@
 import { nextRenderTextureTest } from "./render-texture-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _setsceneRenderTextureIdx, sceneRenderTextureIdx } from "./render-texture-test-constants.js";
 
 export class RenderTextureTestScene extends TestScene {
     runThisTest(num) {
-        sceneRenderTextureIdx = (num || num == 0) ? (num - 1) : -1;
+        _setsceneRenderTextureIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextRenderTextureTest();
         this.addChild(layer);
 

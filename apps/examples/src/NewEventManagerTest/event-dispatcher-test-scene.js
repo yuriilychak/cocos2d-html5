@@ -28,10 +28,11 @@
 import { nextDispatcherTest } from "./new-event-manager-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _seteventDispatcherSceneIdx, eventDispatcherSceneIdx } from "./new-event-manager-test-constants.js";
 
 export class EventDispatcherTestScene extends TestScene {
     runThisTest(num) {
-        eventDispatcherSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _seteventDispatcherSceneIdx((num || num == 0) ? (num - 1) : -1);
         this.addChild(nextDispatcherTest());
         director.runScene(this);
     }

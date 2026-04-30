@@ -27,10 +27,11 @@
 import { nextSysTest } from "./sys-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _setsysTestSceneIdx, sysTestSceneIdx } from "./sys-test-constants.js";
 
 export class SysTestScene extends TestScene {
     runThisTest(num) {
-        sysTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setsysTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextSysTest();
         this.addChild(layer);
         director.runScene(this);

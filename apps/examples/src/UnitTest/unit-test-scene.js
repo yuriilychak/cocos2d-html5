@@ -26,10 +26,11 @@
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
 import { nextUnitTest } from "./unit-test-helpers.js";
+import { _setunitTestSceneIdx, unitTestSceneIdx } from "./unit-test-constants.js";
 
 export class UnitTestScene extends TestScene {
     runThisTest(num) {
-        unitTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setunitTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextUnitTest();
         this.addChild(layer);
 

@@ -28,10 +28,11 @@
 
 import { nextMotionAction } from "./motion-streak-test-helpers.js";
 import { TestScene } from "../test-scene.js";
+import { sceneIdx , _setsceneIdx} from "./motion-streak-test-constants.js";
 
 export class MotionStreakTestScene extends TestScene {
     runThisTest(num) {
-        sceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setsceneIdx((num || num == 0) ? (num - 1) : -1);
         var pLayer = nextMotionAction();
         this.addChild(pLayer);
         cc.director.runScene(this);

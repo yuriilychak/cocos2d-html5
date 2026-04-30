@@ -26,10 +26,11 @@
 import { nextEventsTest } from "./event-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { sceneIdx , _setsceneIdx} from "./event-test-constants.js";
 
 export class EventTestScene extends TestScene {
     runThisTest(num) {
-        sceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setsceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextEventsTest();
         // var menu = new EventTest();
         // menu.addKeyboardNotificationLayer( layer );

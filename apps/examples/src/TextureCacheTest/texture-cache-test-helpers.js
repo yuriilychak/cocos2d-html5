@@ -74,3 +74,5 @@ export function restartTexCacheTest() {
 }
 
 ;
+
+export function _settexCacheTestSceneIdx(v) { texCacheTestSceneIdx = v; }

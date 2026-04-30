@@ -28,10 +28,11 @@
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
 import { nextTileMapTest } from "./tile-map-test-helpers.js";
+import { _settileTestSceneIdx, tileTestSceneIdx } from "./tile-map-test-constants.js";
 
 export class TileMapTestScene extends TestScene {
     runThisTest(num) {
-        tileTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _settileTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextTileMapTest();
         this.addChild(layer);
 

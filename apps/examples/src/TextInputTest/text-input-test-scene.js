@@ -27,10 +27,11 @@
 
 import { TestScene } from "../test-scene.js";
 import { nextTextInputTest } from "./text-input-test-helpers.js";
+import { _setsceneIdx, sceneIdx } from "./text-input-test-constants.js";
 
 export class TextInputTestScene extends TestScene {
     runThisTest(num) {
-        sceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setsceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextTextInputTest();
 
         this.addChild(layer);

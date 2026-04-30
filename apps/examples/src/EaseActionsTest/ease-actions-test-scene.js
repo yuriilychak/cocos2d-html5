@@ -31,10 +31,11 @@
 import { nextEaseActionsTest } from "./ease-actions-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _seteaseActionsTestIdx, easeActionsTestIdx } from "./ease-actions-test-constants.js";
 
 export class EaseActionsTestScene extends TestScene {
     runThisTest(num) {
-        easeActionsTestIdx = (num || num == 0) ? (num - 1) : -1;
+        _seteaseActionsTestIdx((num || num == 0) ? (num - 1) : -1);
         this.addChild(nextEaseActionsTest());
         director.runScene(this);
     }

@@ -30,10 +30,11 @@
 import { nextDrawTest } from "./draw-primitives-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _setdrawTestSceneIdx, drawTestSceneIdx } from "./draw-primitives-test-constants.js";
 
 export class DrawPrimitivesTestScene extends TestScene {
     runThisTest(num) {
-        drawTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setdrawTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextDrawTest();
         this.addChild(layer);
 

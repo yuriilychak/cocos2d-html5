@@ -28,10 +28,11 @@
 import { nextChipmunkTest } from "./chipmunk-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _setchipmunkTestSceneIdx, chipmunkTestSceneIdx } from "./chipmunk-test-constants.js";
 
 export class ChipmunkTestScene extends TestScene {
     runThisTest(num) {
-        chipmunkTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setchipmunkTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextChipmunkTest();
         this.addChild(layer);
         director.runScene(this);

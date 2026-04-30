@@ -26,11 +26,11 @@
  ****************************************************************************/
 
 import { TestScene } from "../test-scene.js";
-import { nextTexCacheTest } from "./texture-cache-test-helpers.js";
+import { nextTexCacheTest , texCacheTestSceneIdx, _settexCacheTestSceneIdx} from "./texture-cache-test-helpers.js";
 
 export class TexCacheTestScene extends TestScene {
     runThisTest(num) {
-        texCacheTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _settexCacheTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextTexCacheTest();
         this.addChild(layer);
 

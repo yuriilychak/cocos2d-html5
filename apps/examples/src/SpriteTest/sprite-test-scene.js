@@ -28,10 +28,11 @@
 import { nextSpriteTest } from "./sprite-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { _setspriteTestIdx, spriteTestIdx } from "./sprite-test-constants.js";
 
 export class SpriteTestScene extends TestScene {
     runThisTest(num) {
-        spriteTestIdx = (num || num == 0) ? (num - 1) : -1;
+        _setspriteTestIdx((num || num == 0) ? (num - 1) : -1);
         var layer = nextSpriteTest();
         this.addChild(layer);
 

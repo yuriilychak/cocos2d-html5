@@ -28,10 +28,11 @@
 import { nextActionMgrTest } from "./action-manager-test-helpers.js";
 import { TestScene } from "../test-scene.js";
 import { director } from "../tests-main-constants.js";
+import { ActionMgrTestIdx, _setActionMgrTestIdx } from "./action-manager-test-constants.js";
 
 export class ActionManagerTestScene extends TestScene {
     runThisTest(num) {
-        ActionMgrTestIdx = (num || 0) - 1;
+        _setActionMgrTestIdx((num || 0) - 1);
         this.addChild(nextActionMgrTest());
         director.runScene(this);
     }

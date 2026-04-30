@@ -27,10 +27,11 @@
 
 import { nextClippingNodeTest } from "./clipping-node-test-helpers.js";
 import { TestScene } from "../test-scene.js";
+import { _setclippingNodeTestSceneIdx, clippingNodeTestSceneIdx } from "./clipping-node-test-constants.js";
 
 export class ClippingNodeTestScene extends TestScene {
     runThisTest(num) {
-        clippingNodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setclippingNodeTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         cc.director.runScene(this);
 	    var layer = nextClippingNodeTest();
 	    this.addChild(layer);
