@@ -71,6 +71,7 @@ import { TransitionsTestScene } from "./TransitionsTest/transitions-test-scene.j
 import { UnitTestScene } from "./UnitTest/unit-test-scene.js";
 import { XHRArrayBufferTestScene } from "./XHRTest/xhrarray-buffer-test-scene.js";
 import { XHRTestScene } from "./XHRTest/xhrtest-scene.js";
+import { GUITestScene } from "./GUITest/UISceneManager.js";
 
 //Controller stuff
 export var LINE_SPACE = 40;

@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UISceneManager, GUITestScene } from "./UISceneManager.js";
+
 export class UIMainLayer extends cc.Layer {
 
     constructor() {

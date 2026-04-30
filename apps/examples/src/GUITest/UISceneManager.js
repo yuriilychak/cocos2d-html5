@@ -133,8 +133,6 @@ import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest.js";
 import { TestScene } from "../test-scene.js";
 import { winSize } from "../tests-main-constants.js";
 
-(function(global){
-
     var currentTestingArray = null;
 
     var testingItems = {
@@ -828,7 +826,7 @@ import { winSize } from "../tests-main-constants.js";
     }
 
     var guiTestScene = null;
-    global.GUITestScene = class GUITestScene extends cc.NewClass {
+    export class GUITestScene extends cc.NewClass {
 
         runThisTest(){
             var guiTestScene = new listScene();
@@ -843,7 +841,7 @@ import { winSize } from "../tests-main-constants.js";
         constructor(){
             super();
 
-            global.UISceneManager.getInstance().ctor();
+            UISceneManager.getInstance().ctor();
             var menu = new cc.Menu();
             menu.x = 0;
             menu.y = 0;
@@ -853,7 +851,7 @@ import { winSize } from "../tests-main-constants.js";
                     var label = new cc.LabelTTF(name, "Arial", 24);
                     var menuItem = new cc.MenuItemLabel(label, function(){
                         currentTestingArray = list;
-                        var manager = global.UISceneManager.getInstance();
+                        var manager = UISceneManager.getInstance();
                         var scene = manager.currentUIScene();
                         cc.director.runScene(scene);
                     }, this);
@@ -914,7 +912,7 @@ import { winSize } from "../tests-main-constants.js";
     
 };
 
-    global.UISceneManager = {
+    export const UISceneManager = {
 
         _currentUISceneId: 0,
 
@@ -949,12 +947,12 @@ import { winSize } from "../tests-main-constants.js";
         }
     };
 
-    global.UISceneManager.getInstance = function () {
+    UISceneManager.getInstance = function () {
         return this;
     };
 
-    global.UISceneManager.purge = function (){
+    UISceneManager.purge = function (){
         this._currentUISceneId = 0;
     };
 
-})(window);
+// IIFE wrapper removed for ES module compatibility
