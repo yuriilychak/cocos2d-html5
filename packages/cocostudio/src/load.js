@@ -24,7 +24,7 @@ import { Director } from '@aspect/core';
  THE SOFTWARE.
  ****************************************************************************/
 
-export const _load = ccs._load = (function () {
+const _ccsLoad = ccs._load = (function () {
 
     /**
      * load file

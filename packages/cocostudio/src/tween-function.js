@@ -427,7 +427,7 @@ ccs.TweenFunction.backEaseInOut = function (time) {
 
 
 // Bounce Ease
-export function bounceTime (time) {
+function _cssBounceTime (time) {
     if (time < 1 / 2.75) {
         return 7.5625 * time * time;
     } else if (time < 2 / 2.75) {
@@ -442,20 +442,20 @@ export function bounceTime (time) {
     return 7.5625 * time * time + 0.984375;
 };
 ccs.TweenFunction.bounceEaseIn = function (time) {
-    return 1 - bounceTime(1 - time);
+    return 1 - _cssBounceTime(1 - time);
 };
 
 ccs.TweenFunction.bounceEaseOut = function (time) {
-    return bounceTime(time);
+    return _cssBounceTime(time);
 };
 
 ccs.TweenFunction.bounceEaseInOut = function (time) {
     var newT = 0;
     if (time < 0.5) {
         time = time * 2;
-        newT = (1 - bounceTime(1 - time)) * 0.5;
+        newT = (1 - _cssBounceTime(1 - time)) * 0.5;
     } else {
-        newT = bounceTime(time * 2 - 1) * 0.5 + 0.5;
+        newT = _cssBounceTime(time * 2 - 1) * 0.5 + 0.5;
     }
 
     return newT;

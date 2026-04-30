@@ -994,3 +994,5 @@ export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
 export { rectPointsToPixels } from "./platform/macro/utils";
 export { Path, Game, Loader } from "./boot";
 export { EGLView } from "./platform/egl-view/egl-view";
+export { AffineTransform } from "./cocoa/affine-transform";
+export { TextureAtlas } from "./textures/texture-atlas";

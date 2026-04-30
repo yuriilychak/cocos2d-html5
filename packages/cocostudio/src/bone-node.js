@@ -34,7 +34,7 @@ import { Node, arrayRemoveObject } from '@aspect/core';
 
     // Node imported from @aspect/core
     
-    var BlendFunc = cc.BlendFunc;
+    var _BlendFunc = cc.BlendFunc;
     var type = {
         p: cc.p,
         size: cc.size,
@@ -73,7 +73,7 @@ import { Node, arrayRemoveObject } from '@aspect/core';
                 ];
 
             this._rackColor = cc.Color.WHITE;
-            this._blendFunc = BlendFunc.ALPHA_NON_PREMULTIPLIED;
+            this._blendFunc = _BlendFunc.ALPHA_NON_PREMULTIPLIED;
 
             this._childBones = [];
             this._boneSkins = [];
