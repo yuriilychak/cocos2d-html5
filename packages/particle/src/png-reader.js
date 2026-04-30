@@ -26,11 +26,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { NewClass } from "@aspect/core";
+import { inflate } from "@aspect/compression";
+
 /**
  * A png file reader
- * @name cc.tiffReader
+ * @name PNGReader
  */
-cc.PNGReader = class PNGReader extends cc.NewClass {
+export class PNGReader extends NewClass {
   constructor(data) {
     super();
     var chunkSize,
@@ -249,7 +252,7 @@ cc.PNGReader = class PNGReader extends cc.NewClass {
     if (data.length === 0) {
       return new Uint8Array(0);
     }
-    data = cc.inflate(data);
+    data = inflate(data);
 
     pixelBytes = this.pixelBitlength / 8;
     scanlineLength = pixelBytes * this.width;
@@ -405,4 +408,4 @@ cc.PNGReader = class PNGReader extends cc.NewClass {
     this.copyToImageData(data, this.decodePixels());
     return ctx.putImageData(data, 0, 0);
   }
-};
+}

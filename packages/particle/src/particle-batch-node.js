@@ -27,32 +27,48 @@
  *
  */
 
+import {
+  Node,
+  Texture2D,
+  TextureAtlas,
+  TextureCache,
+  RendererConfig,
+  BlendFunc,
+  BLEND_SRC,
+  BLEND_DST,
+  SRC_ALPHA,
+  ONE_MINUS_SRC_ALPHA,
+  log,
+  isString
+} from "@aspect/core";
+import { ParticleSystem } from "./particle-system/particle-system";
+
 /**
  * paticle default capacity
  * @constant
  * @type Number
  */
-cc.PARTICLE_DEFAULT_CAPACITY = 500;
+export const PARTICLE_DEFAULT_CAPACITY = 500;
 
 /**
  * <p>
- *    cc.ParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call  <br/>
+ *    ParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call  <br/>
  *    (often known as "batch draw").  </br>
  *
- *    A cc.ParticleBatchNode can reference one and only one texture (one image file, one texture atlas).<br/>
- *    Only the cc.ParticleSystems that are contained in that texture can be added to the cc.SpriteBatchNode.<br/>
- *    All cc.ParticleSystems added to a cc.SpriteBatchNode are drawn in one OpenGL ES draw call.<br/>
- *    If the cc.ParticleSystems are not added to a cc.ParticleBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.</br>
+ *    A ParticleBatchNode can reference one and only one texture (one image file, one texture atlas).<br/>
+ *    Only the ParticleSystems that are contained in that texture can be added to the SpriteBatchNode.<br/>
+ *    All ParticleSystems added to a SpriteBatchNode are drawn in one OpenGL ES draw call.<br/>
+ *    If the ParticleSystems are not added to a ParticleBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.</br>
  *
  *    Limitations:<br/>
- *    - At the moment only cc.ParticleSystem is supported<br/>
+ *    - At the moment only ParticleSystem is supported<br/>
  *    - All systems need to be drawn with the same parameters, blend function, aliasing, texture<br/>
  *
  *    Most efficient usage<br/>
  *    - Initialize the ParticleBatchNode with the texture and enough capacity for all the particle systems<br/>
  *    - Initialize all particle systems and add them as child to the batch node<br/>
  * </p>
- * @param {String|cc.Texture2D} fileImage
+ * @param {String|Texture2D} fileImage
  * @param {Number} capacity
  *
  * @property {Texture2D|HTMLImageElement|HTMLCanvasElement}  texture         - The used texture
@@ -60,41 +76,41 @@ cc.PARTICLE_DEFAULT_CAPACITY = 500;
  *
  * @example
  * 1.
- * //Create a cc.ParticleBatchNode with image path  and capacity
- * var particleBatchNode = new cc.ParticleBatchNode("res/grossini_dance.png",30);
+ * //Create a ParticleBatchNode with image path  and capacity
+ * var particleBatchNode = new ParticleBatchNode("res/grossini_dance.png",30);
  *
  * 2.
- * //Create a cc.ParticleBatchNode with a texture and capacity
- * var texture = cc.TextureCache.getInstance().addImage("res/grossini_dance.png");
- * var particleBatchNode = new cc.ParticleBatchNode(texture, 30);
+ * //Create a ParticleBatchNode with a texture and capacity
+ * var texture = TextureCache.getInstance().addImage("res/grossini_dance.png");
+ * var particleBatchNode = new ParticleBatchNode(texture, 30);
  */
-cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
+export class ParticleBatchNode extends Node {
   textureAtlas = null;
   //the blend function used for drawing the quads
   _blendFunc = null;
   _className = "ParticleBatchNode";
 
   /**
-   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
-   * Constructor of cc.ParticleBatchNode
-   * @param {String|cc.Texture2D} fileImage
+   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles
+   * Constructor of ParticleBatchNode
+   * @param {String|Texture2D} fileImage
    * @param {Number} capacity
    * @example
    * 1.
-   * //Create a cc.ParticleBatchNode with image path  and capacity
-   * var particleBatchNode = new cc.ParticleBatchNode("res/grossini_dance.png",30);
+   * //Create a ParticleBatchNode with image path  and capacity
+   * var particleBatchNode = new ParticleBatchNode("res/grossini_dance.png",30);
    *
    * 2.
-   * //Create a cc.ParticleBatchNode with a texture and capacity
-   * var texture = cc.TextureCache.getInstance().addImage("res/grossini_dance.png");
-   * var particleBatchNode = new cc.ParticleBatchNode(texture, 30);
+   * //Create a ParticleBatchNode with a texture and capacity
+   * var texture = TextureCache.getInstance().addImage("res/grossini_dance.png");
+   * var particleBatchNode = new ParticleBatchNode(texture, 30);
    */
   constructor(fileImage, capacity) {
     super();
-    this._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
-    if (cc.isString(fileImage)) {
+    this._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
+    if (isString(fileImage)) {
       this.init(fileImage, capacity);
-    } else if (fileImage instanceof cc.Texture2D) {
+    } else if (fileImage instanceof Texture2D) {
       this.initWithTexture(fileImage, capacity);
     }
   }
@@ -107,19 +123,19 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
   }
 
   _createRenderCmd() {
-    if (cc.rendererConfig.isCanvas)
-      return new cc.ParticleBatchNode.CanvasRenderCmd(this);
-    else return new cc.ParticleBatchNode.WebGLRenderCmd(this);
+    if (RendererConfig.getInstance().isCanvas)
+      return new ParticleBatchNode.CanvasRenderCmd(this);
+    else return new ParticleBatchNode.WebGLRenderCmd(this);
   }
 
   /**
-   * initializes the particle system with cc.Texture2D, a capacity of particles
+   * initializes the particle system with Texture2D, a capacity of particles
    * @param {Texture2D|HTMLImageElement|HTMLCanvasElement} texture
    * @param {Number} capacity
    * @return {Boolean}
    */
   initWithTexture(texture, capacity) {
-    this.textureAtlas = new cc.TextureAtlas();
+    this.textureAtlas = new TextureAtlas();
     this.textureAtlas.initWithTexture(texture, capacity);
 
     // no lazy alloc in this node
@@ -130,24 +146,24 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
   }
 
   /**
-   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
+   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles
    * @param {String} fileImage
    * @param {Number} capacity
    * @return {Boolean}
    */
   initWithFile(fileImage, capacity) {
-    var tex = cc.textureCache.addImage(fileImage);
+    var tex = TextureCache.getInstance().addImage(fileImage);
     return this.initWithTexture(tex, capacity);
   }
 
   /**
-   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
+   * initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles
    * @param {String} fileImage
    * @param {Number} capacity
    * @return {Boolean}
    */
   init(fileImage, capacity) {
-    var tex = cc.textureCache.addImage(fileImage);
+    var tex = TextureCache.getInstance().addImage(fileImage);
     return this.initWithTexture(tex, capacity);
   }
 
@@ -162,12 +178,12 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
     }
 
     cmd.visit(parentCmd);
-    cc.rendererConfig.renderer.pushRenderCommand(cmd);
+    RendererConfig.getInstance().renderer.pushRenderCommand(cmd);
     cmd._dirtyFlag = 0;
   }
 
   /**
-   * Add a child into the cc.ParticleBatchNode
+   * Add a child into the ParticleBatchNode
    * @param {ParticleSystem} child
    * @param {Number} zOrder
    * @param {Number} tag
@@ -175,18 +191,18 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
   addChild(child, zOrder, tag) {
     if (!child)
       throw new Error(
-        "cc.ParticleBatchNode.addChild() : child should be non-null"
+        "ParticleBatchNode.addChild() : child should be non-null"
       );
-    if (!(child instanceof cc.ParticleSystem))
+    if (!(child instanceof ParticleSystem))
       throw new Error(
-        "cc.ParticleBatchNode.addChild() : only supports cc.ParticleSystem as children"
+        "ParticleBatchNode.addChild() : only supports ParticleSystem as children"
       );
     zOrder = zOrder == null ? child.zIndex : zOrder;
     tag = tag == null ? child.tag : tag;
 
     if (child.getTexture() !== this.textureAtlas.texture)
       throw new Error(
-        "cc.ParticleSystem.addChild() : the child is not using the same texture id"
+        "ParticleSystem.addChild() : the child is not using the same texture id"
       );
 
     // If this is the 1st children, then copy blending function
@@ -197,8 +213,8 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
         childBlendFunc.src !== this._blendFunc.src ||
         childBlendFunc.dst !== this._blendFunc.dst
       ) {
-        cc.log(
-          "cc.ParticleSystem.addChild() : Can't add a ParticleSystem that uses a different blending function"
+        log(
+          "ParticleSystem.addChild() : Can't add a ParticleSystem that uses a different blending function"
         );
         return;
       }
@@ -222,7 +238,7 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
   }
 
   /**
-   * Inserts a child into the cc.ParticleBatchNode
+   * Inserts a child into the ParticleBatchNode
    * @param {ParticleSystem} pSystem
    * @param {Number} index
    */
@@ -257,13 +273,13 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
     // explicit nil handling
     if (child == null) return;
 
-    if (!(child instanceof cc.ParticleSystem))
+    if (!(child instanceof ParticleSystem))
       throw new Error(
-        "cc.ParticleBatchNode.removeChild(): only supports cc.ParticleSystem as children"
+        "ParticleBatchNode.removeChild(): only supports ParticleSystem as children"
       );
     if (this._children.indexOf(child) === -1) {
-      cc.log(
-        "cc.ParticleBatchNode.removeChild(): doesn't contain the sprite. Can't remove it"
+      log(
+        "ParticleBatchNode.removeChild(): doesn't contain the sprite. Can't remove it"
       );
       return;
     }
@@ -297,15 +313,15 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
   reorderChild(child, zOrder) {
     if (!child)
       throw new Error(
-        "cc.ParticleBatchNode.reorderChild(): child should be non-null"
+        "ParticleBatchNode.reorderChild(): child should be non-null"
       );
-    if (!(child instanceof cc.ParticleSystem))
+    if (!(child instanceof ParticleSystem))
       throw new Error(
-        "cc.ParticleBatchNode.reorderChild(): only supports cc.QuadParticleSystems as children"
+        "ParticleBatchNode.reorderChild(): only supports QuadParticleSystems as children"
       );
     if (this._children.indexOf(child) === -1) {
-      cc.log(
-        "cc.ParticleBatchNode.reorderChild(): Child doesn't belong to batch"
+      log(
+        "ParticleBatchNode.reorderChild(): Child doesn't belong to batch"
       );
       return;
     }
@@ -407,11 +423,11 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
     if (
       texture &&
       !texture.hasPremultipliedAlpha() &&
-      locBlendFunc.src === cc.BLEND_SRC &&
-      locBlendFunc.dst === cc.BLEND_DST
+      locBlendFunc.src === BLEND_SRC &&
+      locBlendFunc.dst === BLEND_DST
     ) {
-      locBlendFunc.src = cc.SRC_ALPHA;
-      locBlendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
+      locBlendFunc.src = SRC_ALPHA;
+      locBlendFunc.dst = ONE_MINUS_SRC_ALPHA;
     }
   }
 
@@ -435,7 +451,7 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
    * @return {BlendFunc}
    */
   getBlendFunc() {
-    return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
+    return new BlendFunc(this._blendFunc.src, this._blendFunc.dst);
   }
 
   _updateAllAtlasIndexes() {
@@ -449,8 +465,8 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
   }
 
   _increaseAtlasCapacityTo(quantity) {
-    cc.log(
-      "cocos2d: cc.ParticleBatchNode: resizing TextureAtlas capacity from [" +
+    log(
+      "cocos2d: ParticleBatchNode: resizing TextureAtlas capacity from [" +
         this.textureAtlas.getCapacity() +
         "] to [" +
         quantity +
@@ -459,8 +475,8 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
 
     if (!this.textureAtlas.resizeCapacity(quantity)) {
       // serious problems
-      cc.log(
-        "cc.ParticleBatchNode._increaseAtlasCapacityTo() : WARNING: Not enough memory to resize the atlas"
+      log(
+        "ParticleBatchNode._increaseAtlasCapacityTo() : WARNING: Not enough memory to resize the atlas"
       );
     }
   }
@@ -522,11 +538,11 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
   _addChildHelper(child, z, aTag) {
     if (!child)
       throw new Error(
-        "cc.ParticleBatchNode._addChildHelper(): child should be non-null"
+        "ParticleBatchNode._addChildHelper(): child should be non-null"
       );
     if (child.parent) {
-      cc.log(
-        "cc.ParticleBatchNode._addChildHelper(): child already added. It can't be added again"
+      log(
+        "ParticleBatchNode._addChildHelper(): child already added. It can't be added again"
       );
       return null;
     }
@@ -541,9 +557,9 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
     child._setLocalZOrder(z);
     child.parent = this;
     if (this._running) {
-      child._performRecursive(cc.Node._stateCallbackType.onEnter);
+      child._performRecursive(Node._stateCallbackType.onEnter);
       child._performRecursive(
-        cc.Node._stateCallbackType.onEnterTransitionDidFinish
+        Node._stateCallbackType.onEnterTransitionDidFinish
       );
     }
     return pos;
@@ -551,8 +567,8 @@ cc.ParticleBatchNode = class ParticleBatchNode extends cc.Node {
 
   _updateBlendFunc() {
     if (!this.textureAtlas.texture.hasPremultipliedAlpha()) {
-      this._blendFunc.src = cc.SRC_ALPHA;
-      this._blendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
+      this._blendFunc.src = SRC_ALPHA;
+      this._blendFunc.dst = ONE_MINUS_SRC_ALPHA;
     }
   }
 

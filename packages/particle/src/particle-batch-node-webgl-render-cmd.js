@@ -22,17 +22,42 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-(function () {
-    /**
-     * cc.ParticleBatchNode's rendering objects of Canvas
-     */
-    cc.ParticleBatchNode.CanvasRenderCmd = class CanvasRenderCmd extends cc.Node.CanvasRenderCmd {
-        constructor(renderable) {
-            super(renderable);
-            this._needDraw = false;
-        }
+import {
+  NodeWebGLRenderCmd,
+  Matrix4,
+  ShaderCache,
+  glBlendFuncForParticle,
+  SHADER_POSITION_TEXTURECOLOR
+} from "@aspect/core";
 
-        _initWithTexture() {
-        }
-    };
-})();
+export class ParticleBatchNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
+  constructor(renderable) {
+    super(renderable);
+    this._needDraw = true;
+    this._matrix = new Matrix4();
+    this._matrix.identity();
+  }
+
+  rendering(ctx) {
+    const _t = this._node;
+    if (_t.textureAtlas.totalQuads === 0) return;
+
+    const wt = this._worldTransform;
+    this._matrix.mat[0] = wt.a;
+    this._matrix.mat[4] = wt.c;
+    this._matrix.mat[12] = wt.tx;
+    this._matrix.mat[1] = wt.b;
+    this._matrix.mat[5] = wt.d;
+    this._matrix.mat[13] = wt.ty;
+
+    this._glProgramState.apply(this._matrix);
+    glBlendFuncForParticle(_t._blendFunc.src, _t._blendFunc.dst);
+    _t.textureAtlas.drawQuads();
+  }
+
+  _initWithTexture() {
+    this._shaderProgram = ShaderCache.getInstance().programForKey(
+      SHADER_POSITION_TEXTURECOLOR
+    );
+  }
+}

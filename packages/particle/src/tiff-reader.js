@@ -1,7 +1,5 @@
 /****************************************************************************
  Copyright (c) 2011 Gordon P. Hemsley
- http://gphemsley.org/
-
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -27,11 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { log, Color } from "@aspect/core";
+
+
+
 /**
- * cc.tiffReader is a singleton object, it's a tiff file reader, it can parse byte array to draw into a canvas
- * @name cc.tiffReader
+ * tiffReader is a singleton object, it's a tiff file reader, it can parse byte array to draw into a canvas
+ * @name tiffReader
  */
-cc.tiffReader = {
+export const tiffReader = {
     _littleEndian: false,
     _tiffData: null,
     _fileDirectories: [],
@@ -133,7 +135,7 @@ cc.tiffReader = {
                         // Denominator
                         fieldValues.push(this.getUint32(valueOffset + indexOffset + 4));
                     } else {
-                        cc.log("Can't handle this field type or size");
+                        log("Can't handle this field type or size");
                     }
                 } else {
                     fieldValues.push(this.getBytes(fieldTypeLength, valueOffset + indexOffset));
@@ -151,7 +153,7 @@ cc.tiffReader = {
 
     getBytes: function (numBytes, offset) {
         if (numBytes <= 0) {
-            cc.log("No bytes requested");
+            log("No bytes requested");
         } else if (numBytes <= 1) {
             return this.getUint8(offset);
         } else if (numBytes <= 2) {
@@ -161,7 +163,7 @@ cc.tiffReader = {
         } else if (numBytes <= 4) {
             return this.getUint32(offset);
         } else {
-            cc.log("Too many bytes requested");
+            log("Too many bytes requested");
         }
     },
 
@@ -295,7 +297,7 @@ cc.tiffReader = {
         if (fileDirectory['StripByteCounts']) {
             var stripByteCountValues = fileDirectory['StripByteCounts'].values;
         } else {
-            cc.log("Missing StripByteCounts!");
+            log("Missing StripByteCounts!");
 
             // Infer StripByteCounts, if possible.
             if (numStripOffsetValues === 1) {
@@ -445,7 +447,7 @@ cc.tiffReader = {
             var ctx = this.canvas.getContext("2d");
 
             // Set a default fill style.
-            ctx.fillStyle = cc.Color.toRgba(255, 255, 255, 0);
+            ctx.fillStyle = Color.toRgba(255, 255, 255, 0);
 
             // If RowsPerStrip is missing, the whole image is in one strip.
             var rowsPerStrip = fileDirectory['RowsPerStrip'] ? fileDirectory['RowsPerStrip'].values[0] : imageLength;
@@ -550,7 +552,7 @@ cc.tiffReader = {
                                 break;
                         }
 
-                        ctx.fillStyle = cc.Color.toRgba(red, green, blue, opacity * 255);
+                        ctx.fillStyle = Color.toRgba(red, green, blue, opacity * 255);
                         ctx.fillRect(x, yPadding + y, 1, 1);
                     }
                 }
