@@ -1,64 +1,11 @@
-/****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+import { NewClass } from "@aspect/core";
 
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
-/**
- * @constant
- * @type Number
- */
-cc.TGA_OK = 0;
-
-/**
- * @constant
- * @type Number
- */
-cc.TGA_ERROR_FILE_OPEN = 1;
-
-/**
- * @constant
- * @type Number
- */
-cc.TGA_ERROR_READING_FILE = 2;
-
-/**
- * @constant
- * @type Number
- */
-cc.TGA_ERROR_INDEXED_COLOR = 3;
-
-/**
- * @constant
- * @type Number
- */
-cc.TGA_ERROR_MEMORY = 4;
-
-/**
- * @constant
- * @type Number
- */
-cc.TGA_ERROR_COMPRESSED_FILE = 5;
+export const TGA_OK = 0;
+export const TGA_ERROR_FILE_OPEN = 1;
+export const TGA_ERROR_READING_FILE = 2;
+export const TGA_ERROR_INDEXED_COLOR = 3;
+export const TGA_ERROR_MEMORY = 4;
+export const TGA_ERROR_COMPRESSED_FILE = 5;
 
 /**
  * TGA format
@@ -71,7 +18,7 @@ cc.TGA_ERROR_COMPRESSED_FILE = 5;
  * @param {Number} flipped
  * @constructor
  */
-cc.ImageTGA = function (
+export function ImageTGA(
   status,
   type,
   pixelDepth,
@@ -87,7 +34,17 @@ cc.ImageTGA = function (
   this.height = height || 0;
   this.imageData = imageData || [];
   this.flipped = flipped || 0;
-};
+}
+
+export function __getSubArray(array, start, end) {
+  if (array instanceof Array) return array.slice(start, end);
+  else return array.subarray(start, end);
+}
+
+export function __setDataToArray(sourceData, destArray, startIndex) {
+  for (let i = 0; i < sourceData.length; i++)
+    destArray[startIndex + i] = sourceData[i];
+}
 
 /**
  * load the image header field from stream. We only keep those that matter!
@@ -96,15 +53,15 @@ cc.ImageTGA = function (
  * @param {ImageTGA} psInfo
  * @return {Boolean}
  */
-cc.tgaLoadHeader = function (buffer, bufSize, psInfo) {
+export function tgaLoadHeader(buffer, bufSize, psInfo) {
   let step = 2;
   if (step + 1 > bufSize) return false;
 
-  const binaryReader = new cc.BinaryStreamReader(buffer);
+  const binaryReader = new BinaryStreamReader(buffer);
 
   binaryReader.setOffset(step);
   psInfo.type = binaryReader.readByte();
-  step += 10; // . step += sizeof(unsigned char) * 2; step += sizeof(signed short) * 4;
+  step += 10;
 
   if (step + 4 + 1 > bufSize) return false;
   binaryReader.setOffset(step);
@@ -112,14 +69,14 @@ cc.tgaLoadHeader = function (buffer, bufSize, psInfo) {
   psInfo.height = binaryReader.readUnsignedInteger();
   psInfo.pixelDepth = binaryReader.readByte();
 
-  step += 5; // .  step += sizeof(unsigned char);  step += sizeof(signed short) * 2;
+  step += 5;
   if (step + 1 > bufSize) return false;
 
   const garbage = binaryReader.readByte();
   psInfo.flipped = 0;
   if (garbage & 0x20) psInfo.flipped = 1;
   return true;
-};
+}
 
 /**
  * loads the image pixels. You shouldn't call this function directly.
@@ -128,21 +85,17 @@ cc.tgaLoadHeader = function (buffer, bufSize, psInfo) {
  * @param {ImageTGA} psInfo
  * @return {Boolean}
  */
-cc.tgaLoadImageData = function (buffer, bufSize, psInfo) {
+export function tgaLoadImageData(buffer, bufSize, psInfo) {
   let mode, total, i, aux;
-  const step = 18; // .size_t step = (sizeof(unsigned char) + sizeof(signed short)) * 6;
+  const step = 18;
 
-  // mode equal the number of components for each pixel
   mode = 0 | (psInfo.pixelDepth / 2);
-  // total is the number of unsigned chars we'll have to read
   total = psInfo.height * psInfo.width * mode;
 
   if (step + total > bufSize) return false;
 
-  psInfo.imageData = cc.__getSubArray(buffer, step, step + total);
+  psInfo.imageData = __getSubArray(buffer, step, step + total);
 
-  // mode=3 or 4 implies that the image is RGB(A). However TGA
-  // stores it as BGR(A) so we'll have to swap R and B.
   if (mode >= 3) {
     for (i = 0; i < total; i += mode) {
       aux = psInfo.imageData[i];
@@ -151,58 +104,48 @@ cc.tgaLoadImageData = function (buffer, bufSize, psInfo) {
     }
   }
   return true;
-};
+}
 
 /**
  * converts RGB to grayscale
  * @param {ImageTGA} psInfo
  */
-cc.tgaRGBtogreyscale = function (psInfo) {
+export function tgaRGBtogreyscale(psInfo) {
   let i, j;
 
-  // if the image is already grayscale do nothing
   if (psInfo.pixelDepth === 8) return;
 
-  // compute the number of actual components
   const mode = psInfo.pixelDepth / 8;
 
-  // allocate an array for the new image data
   const newImageData = new Uint8Array(psInfo.height * psInfo.width);
   if (newImageData === null) return;
 
-  // convert pixels: grayscale = o.30 * R + 0.59 * G + 0.11 * B
   for (i = 0, j = 0; j < psInfo.width * psInfo.height; i += mode, j++)
     newImageData[j] =
       0.3 * psInfo.imageData[i] +
       0.59 * psInfo.imageData[i + 1] +
       0.11 * psInfo.imageData[i + 2];
 
-  // reassign pixelDepth and type according to the new image type
   psInfo.pixelDepth = 8;
   psInfo.type = 3;
-  // reassigning imageData to the new array.
   psInfo.imageData = newImageData;
-};
+}
 
 /**
  * releases the memory used for the image
  * @param {ImageTGA} psInfo
  */
-cc.tgaDestroy = function (psInfo) {
+export function tgaDestroy(psInfo) {
   if (!psInfo) return;
 
   psInfo.imageData = null;
   psInfo = null;
-};
+}
 
 /**
  * Load RLE image data
- * @param buffer
- * @param bufSize
- * @param psInfo
- * @returns {boolean}
  */
-cc.tgaLoadRLEImageData = function (buffer, bufSize, psInfo) {
+export function tgaLoadRLEImageData(buffer, bufSize, psInfo) {
   let mode,
     total,
     i,
@@ -212,40 +155,30 @@ cc.tgaLoadRLEImageData = function (buffer, bufSize, psInfo) {
   let aux = [],
     runlength = 0;
 
-  const step = 18; // . size_t step = (sizeof(unsigned char) + sizeof(signed short)) * 6;
+  const step = 18;
 
-  // mode equal the number of components for each pixel
   mode = psInfo.pixelDepth / 8;
-  // total is the number of unsigned chars we'll have to read
   total = psInfo.height * psInfo.width;
 
   for (i = 0; i < total; i++) {
-    // if we have a run length pending, run it
     if (runlength !== 0) {
-      // we do, update the run length count
       runlength--;
       skip = flag !== 0;
     } else {
-      // otherwise, read in the run length token
       if (step + 1 > bufSize) break;
       runlength = buffer[step];
       step += 1;
 
-      // see if it's a RLE encoded sequence
       flag = runlength & 0x80;
       if (flag) runlength -= 128;
       skip = 0;
     }
 
-    // do we need to skip reading this pixel?
     if (!skip) {
-      // no, read in the pixel data
       if (step + mode > bufSize) break;
-      aux = cc.__getSubArray(buffer, step, step + mode);
+      aux = __getSubArray(buffer, step, step + mode);
       step += mode;
 
-      // mode=3 or 4 implies that the image is RGB(A). However TGA
-      // stores it as BGR(A) so we'll have to swap R and B.
       if (mode >= 3) {
         const tmp = aux[0];
         aux[0] = aux[2];
@@ -253,32 +186,30 @@ cc.tgaLoadRLEImageData = function (buffer, bufSize, psInfo) {
       }
     }
 
-    // add the pixel to our image
     for (let j = 0; j < mode; j++) psInfo.imageData[index + j] = aux[j];
 
     index += mode;
   }
 
   return true;
-};
+}
 
 /**
  * ImageTGA Flip
  * @param {ImageTGA} psInfo
  */
-cc.tgaFlipImage = function (psInfo) {
-  // mode equal the number of components for each pixel
+export function tgaFlipImage(psInfo) {
   const mode = psInfo.pixelDepth / 8;
   const rowbytes = psInfo.width * mode;
 
   for (let y = 0; y < psInfo.height / 2; y++) {
-    const row = cc.__getSubArray(
+    const row = __getSubArray(
       psInfo.imageData,
       y * rowbytes,
       y * rowbytes + rowbytes
     );
-    cc.__setDataToArray(
-      cc.__getSubArray(
+    __setDataToArray(
+      __getSubArray(
         psInfo.imageData,
         (psInfo.height - (y + 1)) * rowbytes,
         rowbytes
@@ -286,31 +217,19 @@ cc.tgaFlipImage = function (psInfo) {
       psInfo.imageData,
       y * rowbytes
     );
-    cc.__setDataToArray(
+    __setDataToArray(
       row,
       psInfo.imageData,
       (psInfo.height - (y + 1)) * rowbytes
     );
   }
   psInfo.flipped = 0;
-};
-
-cc.__getSubArray = function (array, start, end) {
-  if (array instanceof Array) return array.slice(start, end);
-  else return array.subarray(start, end);
-};
-
-cc.__setDataToArray = function (sourceData, destArray, startIndex) {
-  for (let i = 0; i < sourceData.length; i++)
-    destArray[startIndex + i] = sourceData[i];
-};
+}
 
 /**
  * Binary Stream Reader
- *
- * @param binaryData
  */
-cc.BinaryStreamReader = class BinaryStreamReader extends cc.NewClass {
+export class BinaryStreamReader extends NewClass {
   constructor(binaryData) {
     super();
     this._binaryData = binaryData;
@@ -318,20 +237,12 @@ cc.BinaryStreamReader = class BinaryStreamReader extends cc.NewClass {
     this._offset = 0;
   }
 
-  /**
-   * Set the binaryData.
-   * @param binaryData
-   */
   setBinaryData(binaryData) {
     this._binaryData = binaryData;
     this._data = binaryData;
     this._offset = 0;
   }
 
-  /**
-   * Gets the binaryData.
-   * @returns {Object}
-   */
   getBinaryData() {
     return this._binaryData;
   }
@@ -351,7 +262,7 @@ cc.BinaryStreamReader = class BinaryStreamReader extends cc.NewClass {
     const exponent = this._readBits(precisionBits, exponentBits, size);
     let significand = 0;
     let divisor = 2;
-    let curByte = 0; //length + (-precisionBits >> 3) - 1;
+    let curByte = 0;
     do {
       const byteValue = this._readByte(++curByte, size);
       const startBit = precisionBits % 8 || 8;
@@ -458,7 +369,6 @@ cc.BinaryStreamReader = class BinaryStreamReader extends cc.NewClass {
     if (this._binaryData instanceof Array) {
       return this._binaryData.slice(start, end);
     } else {
-      //typed array
       return this._binaryData.subarray(start, end);
     }
   }
@@ -470,4 +380,4 @@ cc.BinaryStreamReader = class BinaryStreamReader extends cc.NewClass {
   getOffset() {
     return this._offset;
   }
-};
+}

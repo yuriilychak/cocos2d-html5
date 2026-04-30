@@ -1002,3 +1002,6 @@ export { SHADER_POSITION_TEXTURECOLOR } from "./platform/macro/constants";
 export { glBlendFuncForParticle } from "./shaders/CCGLStateCache";
 export { randomMinus1To1 } from "./platform/macro/utils";
 export { FMT_PNG, FMT_TIFF, getImageFormatByData } from "./platform/common";
+export { SAXParser } from "./platform/sax-parser/sax-parser";
+export { _txtLoader } from "./platform/loaders";
+export { SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST } from "./platform/macro/constants";

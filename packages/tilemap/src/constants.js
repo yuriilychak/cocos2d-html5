@@ -1,0 +1,22 @@
+export const TMX_ORIENTATION_ORTHO = 0;
+export const TMX_ORIENTATION_HEX = 1;
+export const TMX_ORIENTATION_ISO = 2;
+
+export const TMX_PROPERTY_NONE = 0;
+export const TMX_PROPERTY_MAP = 1;
+export const TMX_PROPERTY_LAYER = 2;
+export const TMX_PROPERTY_OBJECTGROUP = 3;
+export const TMX_PROPERTY_OBJECT = 4;
+export const TMX_PROPERTY_TILE = 5;
+
+export const TMX_TILE_HORIZONTAL_FLAG = 0x80000000;
+export const TMX_TILE_VERTICAL_FLAG = 0x40000000;
+export const TMX_TILE_DIAGONAL_FLAG = 0x20000000;
+
+export const TMX_TILE_FLIPPED_ALL =
+  (TMX_TILE_HORIZONTAL_FLAG |
+    TMX_TILE_VERTICAL_FLAG |
+    TMX_TILE_DIAGONAL_FLAG) >>>
+  0;
+
+export const TMX_TILE_FLIPPED_MASK = ~TMX_TILE_FLIPPED_ALL >>> 0;

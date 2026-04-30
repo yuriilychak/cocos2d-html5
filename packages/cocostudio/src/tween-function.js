@@ -76,9 +76,17 @@ export const TweenType = ccs.TweenType = {
 
 ccs.TweenFunction = class TweenFunction extends cc.NewClass {};
 
-export const DOUBLE_PI = DOUBLE_PI = M_PI_X_2 = Math.PI * 2;
-export const HALF_PI = HALF_PI = M_PI_2 = Math.PI / 2;
-export const M_PI = M_PI = Math.PI;
+export const DOUBLE_PI = Math.PI * 2;
+export const HALF_PI = Math.PI / 2;
+export const M_PI = Math.PI;
+export const M_PI_X_2 = DOUBLE_PI;
+export const M_PI_2 = HALF_PI;
+
+ccs.DOUBLE_PI = DOUBLE_PI;
+ccs.HALF_PI = HALF_PI;
+ccs.M_PI = M_PI;
+ccs.M_PI_X_2 = M_PI_X_2;
+ccs.M_PI_2 = M_PI_2;
 
 ccs.TweenFunction.tweenTo = function (time, type, easingParam) {
     var delta = 0;
