@@ -40,11 +40,6 @@ export default [
   'timeline/CCBoneNode.js',
   'timeline/CCSkeletonNode.js',
   'loader/load.js',
-  'loader/parsers/scene-1.x.js',
-  'loader/parsers/uiParser-1.x.js',
-  'loader/parsers/action-1.x.js',
-  'loader/parsers/action-2.x.js',
-  'loader/parsers/timelineParser-1.x.js',
-  'loader/parsers/timelineParser-2.x.js',
-  'loader/parsers/compatible.js'
+  'loader/parsers/action.js',
+  'loader/parsers/timelineParser.js'
 ];

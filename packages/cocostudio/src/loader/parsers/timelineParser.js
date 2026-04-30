@@ -1393,6 +1393,5 @@
     });
   });
 
-  load.registerParser("timeline", "2.*", parser);
   load.registerParser("timeline", "*", parser);
 })(ccs._load, ccs._parser);

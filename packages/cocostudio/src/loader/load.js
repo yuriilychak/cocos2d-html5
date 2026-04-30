@@ -43,14 +43,8 @@ ccs._load = (function () {
 
         var parse;
         if (!type) {
-            if (json["widgetTree"])
-                parse = parser["ccui"];
-            else if (json["nodeTree"])
+            if (json["Content"] && json["Content"]["Content"])
                 parse = parser["timeline"];
-            else if (json["Content"] && json["Content"]["Content"])
-                parse = parser["timeline"];
-            else if (json["gameobjects"])
-                parse = parser["scene"];
         } else {
             parse = parser[type];
         }
@@ -76,10 +70,8 @@ ccs._load = (function () {
     };
 
     var parser = {
-        "ccui": {},
         "timeline": {},
-        "action": {},
-        "scene": {}
+        "action": {}
     };
 
     load.registerParser = function (name, version, target) {
@@ -175,11 +167,9 @@ ccs._parser = class extends cc.NewClass {
 /**
  * Analysis of studio JSON file
  * The incoming file name, parse out the corresponding object
- * Temporary support file list:
- *   ui 1.*
- *   node 1.* - 2.*
- *   action 1.* - 2.*
- *   scene 0.* - 1.*
+ * Support file list:
+ *   node 2.*
+ *   action 2.*
  * @param {String} file
  * @param {String} [path=] Resource path
  * @returns {{node: cc.Node, action: cc.Action}}
@@ -203,11 +193,9 @@ ccs.load.preload = true;
 /**
  * Analysis of studio JSON file and layout ui widgets by visible size.
  * The incoming file name, parse out the corresponding object
- * Temporary support file list:
- *   ui 1.*
- *   node 1.* - 2.*
- *   action 1.* - 2.*
- *   scene 0.* - 1.*
+ * Support file list:
+ *   node 2.*
+ *   action 2.*
  * @param {String} file
  * @param {String} [path=] Resource path
  * @returns {{node: cc.Node, action: cc.Action}}
