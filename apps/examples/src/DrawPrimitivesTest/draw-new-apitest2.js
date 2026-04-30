@@ -1,0 +1,96 @@
+/****************************************************************************
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+//------------------------------------------------------------------
+//
+// Testing cc.DrawNode API 2
+//
+//------------------------------------------------------------------
+export class DrawNewAPITest2 extends DrawTestDemo {
+    constructor() {
+        super();
+        this._title = "cc.DrawNode";
+        this._subtitle = "Testing cc.DrawNode API 2";
+    }
+
+    onEnter() {
+        //----start0----ctor
+        super.onEnter();
+        var draw = new cc.DrawNode();
+        this.addChild(draw, 10);
+        var winSize = cc.director.getWinSize();
+        var centerPos = new cc.Point(winSize.width / 2, winSize.height / 2);
+        //drawSegment
+        draw.drawSegment(new cc.Point(0, 0), new cc.Point(winSize.width, winSize.height), 1, new cc.Color(255, 255, 255, 255));
+        draw.drawSegment(new cc.Point(0, winSize.height), new cc.Point(winSize.width, 0), 5, new cc.Color(255, 0, 0, 255));
+
+        //drawDot
+        draw.drawDot(new cc.Point(winSize.width / 2, winSize.height / 2), 40, new cc.Color(0, 0, 255, 128));
+        var points = [new cc.Point(60, 60), new cc.Point(70, 70), new cc.Point(60, 70), new cc.Point(70, 60)];
+        for (var i = 0; i < points.length; i++) {
+            draw.drawDot(points[i], 4, new cc.Color(0, 255, 255, 255));
+        }
+        //drawCircle
+        draw.drawCircle(new cc.Point(winSize.width / 2, winSize.height / 2), 100, 0, 10, false, 6, new cc.Color(0, 255, 0, 255));
+        draw.drawCircle(new cc.Point(winSize.width / 2, winSize.height / 2), 50, cc.degreesToRadians(90), 50, true, 2, new cc.Color(0, 255, 255, 255));
+
+        //draw poly
+        //not fill
+        var vertices = [new cc.Point(0, 0), new cc.Point(50, 50), new cc.Point(100, 50), new cc.Point(100, 100), new cc.Point(50, 100) ];
+        draw.drawPoly(vertices, null, 5, new cc.Color(255, 255, 0, 255));
+        var vertices2 = [new cc.Point(30, 130), new cc.Point(30, 230), new cc.Point(50, 200)];
+        draw.drawPoly(vertices2, null, 2, new cc.Color(255, 0, 255, 255));
+        //fill
+        var vertices3 = [new cc.Point(60, 130), new cc.Point(60, 230), new cc.Point(80, 200)];
+        draw.drawPoly(vertices3, new cc.Color(0, 255, 255, 50), 2, new cc.Color(255, 0, 255, 255));
+
+        //draw rect
+        //not fill
+        draw.drawRect(new cc.Point(120, 120), new cc.Point(200, 200), null, 2, new cc.Color(255, 0, 255, 255));
+        //fill
+        draw.drawRect(new cc.Point(120, 220), new cc.Point(200, 300), new cc.Color(0, 255, 255, 50), 2, new cc.Color(128, 128, 0, 255));
+
+        // draw quad bezier path
+        draw.drawQuadBezier(new cc.Point(0, winSize.height), new cc.Point(centerPos.x, centerPos.y), new cc.Point(winSize.width, winSize.height), 50, 2, new cc.Color(255, 0, 255, 255));
+
+        // draw cubic bezier path
+        draw.drawCubicBezier(new cc.Point(winSize.width / 2, winSize.height / 2), new cc.Point(winSize.width / 2 + 30, winSize.height / 2 + 50),
+            new cc.Point(winSize.width / 2 + 60, winSize.height / 2 - 50), new cc.Point(winSize.width, winSize.height / 2), 100, 2, new cc.Color(255, 0, 255, 255));
+
+        //draw cardinal spline
+        var vertices4 = [
+            new cc.Point(centerPos.x - 130, centerPos.y - 130),
+            new cc.Point(centerPos.x - 130, centerPos.y + 130),
+            new cc.Point(centerPos.x + 130, centerPos.y + 130),
+            new cc.Point(centerPos.x + 130, centerPos.y - 130),
+            new cc.Point(centerPos.x - 130, centerPos.y - 130)
+        ];
+        draw.drawCardinalSpline(vertices4, 0.5, 100, 2, new cc.Color(255, 255, 255, 255));
+        //----end0----
+    }
+
+}

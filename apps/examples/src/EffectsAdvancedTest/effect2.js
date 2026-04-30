@@ -1,0 +1,57 @@
+/****************************************************************************
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+export class Effect2 extends EffectAdvanceTextLayer {
+    title() {
+        return "ShakyTiles + ShuffleTiles + TurnOffTiles";
+    }
+
+    onEnter() {
+        super.onEnter();
+        var target = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
+
+        // To reuse a grid the grid size and the grid type must be the same.
+        // in this case:
+        //     ShakyTiles is TiledGrid3D and it's size is (15,10)
+        //     Shuffletiles is TiledGrid3D and it's size is (15,10)
+        //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
+        var shaky = cc.shakyTiles3D(5, new cc.Size(15, 10), 4, false);
+        var shuffle = cc.shuffleTiles(0, new cc.Size(15, 10), 3);
+        var turnoff = cc.turnOffTiles(0, new cc.Size(15, 10), 3);
+        var turnon = turnoff.reverse();
+
+        // reuse 2 times:
+        //   1 for shuffle
+        //   2 for turn off
+        //   turnon tiles will use a new grid
+        var reuse = cc.reuseGrid(2);
+        var delay = new cc.DelayTime(1);
+
+        target.runAction(cc.sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon));
+    }
+
+}

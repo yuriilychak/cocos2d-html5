@@ -1,0 +1,109 @@
+/****************************************************************************
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+//------------------------------------------------------------------
+//
+// Sprite6
+//
+//------------------------------------------------------------------
+export class Sprite6 extends SpriteTestDemo {
+
+    constructor() {
+        //----start21----ctor
+        super();
+
+
+        this._title = "SpriteBatchNode transformation";
+
+
+        this.testDuration = 2;
+
+
+        this.pixel = {"0":255, "1":204, "2":153, "3":255};
+        // small capacity. Testing resizing
+        // Don't use capacity=1 in your real game. It is expensive to resize the capacity
+        var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
+        this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
+        batch.ignoreAnchorPointForPosition(true);
+
+        batch.anchorX = 0.5;
+
+        batch.anchorY = 0.5;
+        batch.width = winSize.width;
+	    batch.height = winSize.height;
+
+        // SpriteBatchNode actions
+        var rotate1 = new cc.RotateBy(5, 360);
+        var rotate_back = rotate1.reverse();
+        var rotate_seq = cc.sequence(rotate1, rotate_back);
+        var rotate_forever = rotate_seq.repeatForever();
+
+        var scale = new cc.ScaleBy(5, 1.5);
+        var scale_back = scale.reverse();
+        var scale_seq = cc.sequence(scale, scale_back);
+        var scale_forever = scale_seq.repeatForever();
+
+        for (var i = 0; i < 3; i++) {
+            var sprite = new cc.Sprite(batch.texture, new cc.Rect(85 * i, 121, 85, 121));
+            switch (i) {
+                case 0:
+                    sprite.x = winSize.width / 2 - 100;
+                    sprite.y = winSize.height / 2;
+                    break;
+                case 1:
+                    sprite.x = winSize.width / 2;
+                    sprite.y = winSize.height / 2;
+                    break;
+                case 2:
+                    sprite.x = winSize.width / 2 + 100;
+                    sprite.y = winSize.height / 2;
+                    break;
+            }
+            var rotate = new cc.RotateBy(5, 360);
+            var action = rotate.repeatForever();
+            sprite.runAction(action.clone());
+            batch.addChild(sprite, i);
+        }
+
+        batch.runAction(scale_forever);
+        batch.runAction(rotate_forever);
+        //----end21----
+    }
+    // Automation
+    getExpectedResult() {
+        var ret = {"pixel1":"yes", "pixel2":"yes"};
+        return JSON.stringify(ret);
+    }
+    getCurrentResult() {
+        var ret1 = this.readPixels(winSize.width / 2 + 111, winSize.height / 2 + 82, 5, 5);
+        var ret2 = this.readPixels(winSize.width / 2 - 148, winSize.height / 2 - 58, 5, 5);
+        var ret = {"pixel1":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no",
+            "pixel2":this.containsPixel(ret2, this.pixel, false) ? "yes" : "no"};
+        return JSON.stringify(ret);
+    }
+
+}

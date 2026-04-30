@@ -1,0 +1,137 @@
+/****************************************************************************
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+export class AnimationCacheFile extends SpriteTestDemo {
+
+
+    constructor() {
+        //----start54----ctor
+        super();
+
+
+
+        this._title = "AnimationCache - Load file";
+
+
+
+        this._subtitle = "Sprite should be animated";
+
+
+
+        this.testDuration = 6.5;
+
+
+
+        this.ePixel1 = {"0":51, "1":0, "2":51, "3":255};
+
+
+
+        this.ePixel2 = {"0":15, "1":15, "2":15, "3":255};
+
+
+
+        this.ePixel3 = {"0":0, "1":38, "2":0, "3":255};
+
+
+
+        this.cPixel1 = null;
+
+
+
+        this.cPixel2 = null;
+
+
+
+        this.cPixel3 = null;
+        var frameCache = cc.spriteFrameCache;
+        frameCache.addSpriteFrames(s_grossiniPlist);
+        frameCache.addSpriteFrames(s_grossini_grayPlist);
+        frameCache.addSpriteFrames(s_grossini_bluePlist);
+
+        // Purge previously loaded animation
+        if(cc.animationCache._clear)
+	        cc.animationCache._clear();
+        var animCache = cc.animationCache;
+
+        // Add an animation to the Cache
+        // XXX API-FIX XXX
+        // renamed from addAnimationsWithFile to addAnimations
+        animCache.addAnimations(s_animationsPlist);
+
+        var normal = animCache.getAnimation("dance_1");
+        normal.setRestoreOriginalFrame(true);
+        var dance_grey = animCache.getAnimation("dance_2");
+        dance_grey.setRestoreOriginalFrame(true);
+        var dance_blue = animCache.getAnimation("dance_3");
+        dance_blue.setRestoreOriginalFrame(true);
+
+        var animN = new cc.Animate(normal);
+        var animG = new cc.Animate(dance_grey);
+        var animB = new cc.Animate(dance_blue);
+
+        var seq = cc.sequence(animN, animG, animB);
+
+        // create an sprite with frame name
+        // texture-less sprites are not supported
+        var grossini = new cc.Sprite("#grossini_dance_01.png");
+
+        grossini.x = winSize.width / 2;
+
+        grossini.y = winSize.height / 2;
+        this.addChild(grossini);
+
+        // run the animation
+        grossini.runAction(seq);
+        //----end54----
+    }
+    //
+    // Automation
+    //
+    setupAutomation() {
+        this.scheduleOnce(this.getPixel1, 0.4);
+        this.scheduleOnce(this.getPixel2, 3.2);
+        this.scheduleOnce(this.getPixel3, 6);
+    }
+    getPixel1() {
+        this.cPixel1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
+    }
+    getPixel2() {
+        this.cPixel2 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
+    }
+    getPixel3() {
+        this.cPixel3 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
+    }
+    getExpectedResult() {
+        var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
+        return JSON.stringify(ret);
+    }
+    getCurrentResult() {
+        var ret = {"pixel1":this.containsPixel(this.cPixel1, this.ePixel1) ? "yes" : "no", "pixel2":this.containsPixel(this.cPixel2, this.ePixel2) ? "yes" : "no", "pixel3":this.containsPixel(this.cPixel3, this.ePixel3, true, 5) ? "yes" : "no"};
+        return JSON.stringify(ret);
+    }
+
+}
