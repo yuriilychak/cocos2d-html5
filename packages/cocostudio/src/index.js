@@ -2,68 +2,68 @@
 import './setup.js';
 
 // ─── Armature ────────────────────────────────────────────────────────────────
-export * from './armature-define.js';
-export * from './data-reader-helper.js';
-export * from './sprite-frame-cache-helper.js';
-export * from './transform-help.js';
-export * from './tween-function.js';
-export * from './util-math.js';
-export * from './armature-data-manager.js';
-export * from './datas.js';
-export * from './decorative-display.js';
-export * from './display-factory.js';
-export * from './display-manager.js';
+export * from './armature/armature-define.js';
+export * from './armature/utils/data-reader-helper.js';
+export * from './armature/utils/sprite-frame-cache-helper.js';
+export * from './armature/utils/transform-help.js';
+export * from './armature/animation/tween-function.js';
+export * from './armature/utils/util-math.js';
+export * from './armature/utils/armature-data-manager.js';
+export * from './armature/utils/datas.js';
+export * from './armature/display/decorative-display.js';
+export * from './armature/display/display-factory.js';
+export * from './armature/display/display-manager.js';
 
-import { Skin } from './skin.js';
-import { SkinCanvasRenderCmd, SkinWebGLRenderCmd } from './skin-render-cmd.js';
+import { Skin } from './armature/display/skin.js';
+import { SkinCanvasRenderCmd, SkinWebGLRenderCmd } from './armature/display/skin-render-cmd.js';
 Skin.CanvasRenderCmd = SkinCanvasRenderCmd;
 Skin.WebGLRenderCmd = SkinWebGLRenderCmd;
-export { Skin } from './skin.js';
-export * from './skin-render-cmd.js';
+export { Skin } from './armature/display/skin.js';
+export * from './armature/display/skin-render-cmd.js';
 
-export * from './process-base.js';
-export * from './armature-animation.js';
-export * from './tween.js';
-export * from './collider-detector.js';
+export * from './armature/animation/process-base.js';
+export * from './armature/animation/armature-animation.js';
+export * from './armature/animation/tween.js';
+export * from './armature/physics/collider-detector.js';
 
-import { Armature } from './armature.js';
-import { ArmatureCanvasRenderCmd } from './armature-canvas-render-cmd.js';
-import { ArmatureWebGLRenderCmd } from './armature-webgl-render-cmd.js';
+import { Armature } from './armature/armature.js';
+import { ArmatureCanvasRenderCmd } from './armature/armature-canvas-render-cmd.js';
+import { ArmatureWebGLRenderCmd } from './armature/armature-webgl-render-cmd.js';
 Armature.CanvasRenderCmd = ArmatureCanvasRenderCmd;
 Armature.WebGLRenderCmd = ArmatureWebGLRenderCmd;
-export { Armature } from './armature.js';
-export * from './armature-canvas-render-cmd.js';
-export * from './armature-webgl-render-cmd.js';
+export { Armature } from './armature/armature.js';
+export * from './armature/armature-canvas-render-cmd.js';
+export * from './armature/armature-webgl-render-cmd.js';
 
-export * from './bone.js';
+export * from './armature/bone.js';
 
 // ─── Action ──────────────────────────────────────────────────────────────────
-export * from './action-frame.js';
-export * from './action-manager.js';
-export * from './action-node.js';
-export * from './action-object.js';
+export * from './action/action-frame.js';
+export * from './action/action-manager.js';
+export * from './action/action-node.js';
+export * from './action/action-object.js';
 
 // ─── Components ──────────────────────────────────────────────────────────────
-export * from './com-attribute.js';
-export * from './com-audio.js';
-export * from './com-controller.js';
-export * from './com-render.js';
+export * from './components/com-attribute.js';
+export * from './components/com-audio.js';
+export * from './components/com-controller.js';
+export * from './components/com-render.js';
 
 // ─── Trigger ─────────────────────────────────────────────────────────────────
-export * from './object-factory.js';
-export * from './trigger-base.js';
-export * from './trigger-mng.js';
-export * from './trigger-obj.js';
+export * from './trigger/object-factory.js';
+export * from './trigger/trigger-base.js';
+export * from './trigger/trigger-mng.js';
+export * from './trigger/trigger-obj.js';
 
 // ─── Timeline ────────────────────────────────────────────────────────────────
-export * from './action-timeline.js';
-export * from './frame.js';
-export * from './timeline.js';
-export * from './skin-node.js';
-export * from './bone-node.js';
-export * from './skeleton-node.js';
+export * from './timeline/action-timeline.js';
+export * from './timeline/frame.js';
+export * from './timeline/timeline.js';
+export * from './timeline/skin-node.js';
+export * from './timeline/bone-node.js';
+export * from './timeline/skeleton-node.js';
 
 // ─── Loader ──────────────────────────────────────────────────────────────────
-export * from './load.js';
-import './action-parser.js';
-import './timeline-parser.js';
+export * from './loader/load.js';
+import './loader/action-parser.js';
+import './loader/timeline-parser.js';
