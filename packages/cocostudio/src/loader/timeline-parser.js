@@ -48,10 +48,11 @@ import { _ccsLoad, load } from "./load/utils.js";
     }
 
     getNodeJson(json) {
+      if (!json["Content"]) return null;
       var content = json["Content"];
       if (content["ObjectData"]) return content["ObjectData"];
 
-      return content["Content"]["ObjectData"];
+      return content["Content"] ? content["Content"]["ObjectData"] : null;
     }
 
     getClass(json) {

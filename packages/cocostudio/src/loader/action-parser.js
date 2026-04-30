@@ -46,6 +46,7 @@ import { _ccsLoad } from "./load/utils.js";
     var Parser = class Parser extends _parser {
 
         getNodeJson(json){
+            if (!json["Content"] || !json["Content"]["Content"]) return null;
             return json["Content"]["Content"]["Animation"];
         }
 
@@ -76,6 +77,7 @@ import { _ccsLoad } from "./load/utils.js";
         }
 
         deferred(json, resourcePath, action, file){
+            if (!json["Content"] || !json["Content"]["Content"]) return;
             var animationlist = json["Content"]["Content"]["AnimationList"];
             var length = animationlist ? animationlist.length : 0;
             for (var i = 0; i < length; i++){
