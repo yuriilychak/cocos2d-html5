@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { winSize } from "../tests-main-constants.js";
+import { TextureCacheTestBase } from "./texture-cache-test-base.js";
+
 export class TextureLoadImgTest extends TextureCacheTestBase {
     constructor() {
         super();

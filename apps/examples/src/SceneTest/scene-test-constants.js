@@ -25,14 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var MID_PUSHSCENE = 100;
+export var MID_PUSHSCENE = 100;
 
-var MID_PUSHSCENETRAN = 101;
+export var MID_PUSHSCENETRAN = 101;
 
-var MID_QUIT = 102;
+export var MID_QUIT = 102;
 
-var MID_runScene = 103;
+export var MID_runScene = 103;
 
-var MID_runSceneTRAN = 104;
+export var MID_runSceneTRAN = 104;
 
-var MID_GOBACK = 105;
+export var MID_GOBACK = 105;

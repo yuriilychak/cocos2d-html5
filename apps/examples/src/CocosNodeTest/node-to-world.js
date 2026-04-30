@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestNodeDemo } from "./test-node-demo.js";
+import { s_back3, s_playNormal, s_playSelect } from "../tests_resources.js";
+
 export class NodeToWorld extends TestNodeDemo {
     constructor() {
         //----start6----ctor

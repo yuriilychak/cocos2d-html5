@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { CurrentLanguageTest } from "./current-language-test.js";
+import { TestScene } from "../test-scene.js";
+
 export class CurrentLanguageTestScene extends TestScene {
     runThisTest() {
         if(window.sideIndexBar){

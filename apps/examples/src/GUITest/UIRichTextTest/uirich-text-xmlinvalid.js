@@ -27,6 +27,8 @@
 //
 // UIRichTextXMLInvalid
 //
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIRichTextXMLInvalid extends UIMainLayer {
     constructor() {
         super();

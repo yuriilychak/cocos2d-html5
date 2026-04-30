@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SceneTestLayer1 } from "./scene-test-layer1.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 ;
 
 ;
@@ -43,6 +47,6 @@ SceneTestScene = class SceneTestScene extends TestScene {
 
 };
 
-var arrayOfSceneTest = [
+export var arrayOfSceneTest = [
     SceneTestLayer1
 ];

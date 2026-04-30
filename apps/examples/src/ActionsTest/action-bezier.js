@@ -30,6 +30,9 @@
 // ActionBezier
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { director, winSize } from "../tests-main-constants.js";
+
 export class ActionBezier extends ActionsDemo {
     constructor() {
         super();

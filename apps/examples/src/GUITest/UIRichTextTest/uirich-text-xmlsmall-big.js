@@ -27,6 +27,8 @@
 //
 // UIRichTextXMLSmallBig
 //
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIRichTextXMLSmallBig extends UIMainLayer {
     constructor() {
         super();

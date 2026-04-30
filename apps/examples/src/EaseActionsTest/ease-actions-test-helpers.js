@@ -25,6 +25,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { easeActionsTestIdx , _seteaseActionsTestIdx} from "./ease-actions-test-constants.js";
+import { SchedulerTest } from "./scheduler-test.js";
+import { SpeedTest } from "./speed-test.js";
+import { SpriteEaseBackInOut } from "./sprite-ease-back-in-out.js";
+import { SpriteEaseBack } from "./sprite-ease-back.js";
+import { SpriteEaseBezierTest } from "./sprite-ease-bezier-test.js";
+import { SpriteEaseBounceInOut } from "./sprite-ease-bounce-in-out.js";
+import { SpriteEaseBounce } from "./sprite-ease-bounce.js";
+import { SpriteEaseCircleInOutTest } from "./sprite-ease-circle-in-out-test.js";
+import { SpriteEaseCircleTest } from "./sprite-ease-circle-test.js";
+import { SpriteEaseCubicInOutTest } from "./sprite-ease-cubic-in-out-test.js";
+import { SpriteEaseCubicTest } from "./sprite-ease-cubic-test.js";
+import { SpriteEaseElasticInOut } from "./sprite-ease-elastic-in-out.js";
+import { SpriteEaseElastic } from "./sprite-ease-elastic.js";
+import { SpriteEaseExponentialInOut } from "./sprite-ease-exponential-in-out.js";
+import { SpriteEaseExponential } from "./sprite-ease-exponential.js";
+import { SpriteEaseInOut } from "./sprite-ease-in-out.js";
+import { SpriteEaseQuadraticInOutTest } from "./sprite-ease-quadratic-in-out-test.js";
+import { SpriteEaseQuadraticTest } from "./sprite-ease-quadratic-test.js";
+import { SpriteEaseQuarticInOutTest } from "./sprite-ease-quartic-in-out-test.js";
+import { SpriteEaseQuarticTest } from "./sprite-ease-quartic-test.js";
+import { SpriteEaseQuinticInOutTest } from "./sprite-ease-quintic-in-out-test.js";
+import { SpriteEaseQuinticTest } from "./sprite-ease-quintic-test.js";
+import { SpriteEaseSineInOut } from "./sprite-ease-sine-in-out.js";
+import { SpriteEaseSine } from "./sprite-ease-sine.js";
+import { SpriteEase } from "./sprite-ease.js";
+
 ;
 
 ;
@@ -82,7 +109,7 @@
 //
 // Flow control
 //
-var arrayOfEaseActionsTest = [
+export var arrayOfEaseActionsTest = [
     SpriteEase,
     SpriteEaseInOut,
     SpriteEaseExponential,
@@ -111,11 +138,11 @@ var arrayOfEaseActionsTest = [
 ];
 
 export function nextEaseActionsTest() {
-    easeActionsTestIdx++;
-    easeActionsTestIdx = easeActionsTestIdx % arrayOfEaseActionsTest.length;
+    _seteaseActionsTestIdx(easeActionsTestIdx + 1);
+    _seteaseActionsTestIdx(easeActionsTestIdx % arrayOfEaseActionsTest.length);
 
     if(window.sideIndexBar){
-        easeActionsTestIdx = window.sideIndexBar.changeTest(easeActionsTestIdx, 10);
+        _seteaseActionsTestIdx(window.sideIndexBar.changeTest(easeActionsTestIdx, 10));
     }
 
     return new arrayOfEaseActionsTest[easeActionsTestIdx]();
@@ -124,12 +151,12 @@ export function nextEaseActionsTest() {
 ;
 
 export function previousEaseActionsTest() {
-    easeActionsTestIdx--;
+    _seteaseActionsTestIdx(easeActionsTestIdx - 1);
     if (easeActionsTestIdx < 0)
-        easeActionsTestIdx += arrayOfEaseActionsTest.length;
+        _seteaseActionsTestIdx(easeActionsTestIdx + (arrayOfEaseActionsTest.length));
 
     if(window.sideIndexBar){
-        easeActionsTestIdx = window.sideIndexBar.changeTest(easeActionsTestIdx, 10);
+        _seteaseActionsTestIdx(window.sideIndexBar.changeTest(easeActionsTestIdx, 10));
     }
 
     return new arrayOfEaseActionsTest[easeActionsTestIdx]();

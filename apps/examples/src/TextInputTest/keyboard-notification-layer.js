@@ -28,6 +28,9 @@
 //////////////////////////////////////////////////////////////////////////
 // KeyboardNotificationLayer for test IME keyboard notification.
 //////////////////////////////////////////////////////////////////////////
+import { textInputGetRect } from "./text-input-test-constants.js";
+import { TextInputTest } from "./text-input-test.js";
+
 export class KeyboardNotificationLayer extends TextInputTest {
 
     constructor() {

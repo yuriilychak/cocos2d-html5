@@ -27,6 +27,9 @@
 // Chipmunk Demo: Joints
 //
 //------------------------------------------------------------------
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers.js";
+
 export class Joints extends ChipmunkDemo {
     constructor() {
         super();

@@ -28,6 +28,9 @@
 //
 // SpriteEaseCubicInOut
 //
+import { EaseSpriteDemo } from "./ease-sprite-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteEaseCubicInOutTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();

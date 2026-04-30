@@ -26,6 +26,10 @@
  ****************************************************************************/
 
 /// BMFontUnicode
+import { AtlasDemo } from "./atlas-demo.js";
+import { s_resprefix } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class BMFontUnicode extends AtlasDemo {
     constructor() {
         //----start13----ctor

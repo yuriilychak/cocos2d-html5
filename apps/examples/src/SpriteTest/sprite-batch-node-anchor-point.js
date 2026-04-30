@@ -30,6 +30,11 @@
 // SpriteBatchNodeAnchorPoint
 //
 //------------------------------------------------------------------
+import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossini_dance_atlas, s_pathR1 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteBatchNodeAnchorPoint extends SpriteTestDemo {
 
     constructor() {

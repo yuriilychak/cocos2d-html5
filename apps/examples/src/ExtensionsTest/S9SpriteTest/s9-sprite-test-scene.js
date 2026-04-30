@@ -26,6 +26,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextS9SpriteTest } from "./s9-sprite-test-helpers.js";
+import { TestScene } from "../../test-scene.js";
+import { director } from "../../tests-main-constants.js";
+
 export class S9SpriteTestScene extends TestScene {
     runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;

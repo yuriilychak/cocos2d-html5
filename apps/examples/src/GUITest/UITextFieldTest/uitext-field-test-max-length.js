@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UITextFieldTest_MaxLength extends UIMainLayer {
     init() {
         if (super.init()) {

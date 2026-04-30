@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteDemo } from "./sprite-demo.js";
+import { s_pathBlock, s_pathSister1 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteProgressToRadial extends SpriteDemo {
     onEnter() {
         //----start0----onEnter

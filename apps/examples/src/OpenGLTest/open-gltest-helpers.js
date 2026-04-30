@@ -23,6 +23,25 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { GetSupportedExtensionsTest } from "./get-supported-extensions-test.js";
+import { GLClearTest } from "./glclear-test.js";
+import { GLGetActiveTest } from "./glget-active-test.js";
+import { GLGetUniformTest } from "./glget-uniform-test.js";
+import { GLNodeCCAPITest } from "./glnode-ccapitest.js";
+import { GLNodeWebGLAPITest } from "./glnode-web-glapitest.js";
+import { GLReadPixelsTest } from "./glread-pixels-test.js";
+import { GLTexParamterTest } from "./gltex-paramter-test.js";
+import { OpenGLTestIdx , _setOpenGLTestIdx} from "./open-gltest-constants.js";
+import { ShaderFlowerTest } from "./shader-flower-test.js";
+import { ShaderHeartTest } from "./shader-heart-test.js";
+import { ShaderJuliaTest } from "./shader-julia-test.js";
+import { ShaderMandelbrotTest } from "./shader-mandelbrot-test.js";
+import { ShaderMonjoriTest } from "./shader-monjori-test.js";
+import { ShaderOutlineEffect } from "./shader-outline-effect.js";
+import { ShaderPlasmaTest } from "./shader-plasma-test.js";
+import { ShaderRetroEffect } from "./shader-retro-effect.js";
+import { TexImage2DTest } from "./tex-image2-dtest.js";
+
 ;
 
 cc.GLNode = cc.GLNode || class GLNode extends cc.Node {
@@ -99,7 +118,7 @@ cc.GLNode = cc.GLNode || class GLNode extends cc.Node {
 //
 // Flow control
 //
-var arrayOfOpenGLTest = [
+export var arrayOfOpenGLTest = [
     ShaderOutlineEffect,
     ShaderRetroEffect,
     ShaderMonjoriTest,
@@ -120,8 +139,8 @@ var arrayOfOpenGLTest = [
 ];
 
 export function nextOpenGLTest() {
-    OpenGLTestIdx++;
-    OpenGLTestIdx = OpenGLTestIdx % arrayOfOpenGLTest.length;
+    _setOpenGLTestIdx(OpenGLTestIdx + 1);
+    _setOpenGLTestIdx(OpenGLTestIdx % arrayOfOpenGLTest.length);
 
     return new arrayOfOpenGLTest[OpenGLTestIdx]();
 }
@@ -129,9 +148,9 @@ export function nextOpenGLTest() {
 ;
 
 export function previousOpenGLTest() {
-    OpenGLTestIdx--;
+    _setOpenGLTestIdx(OpenGLTestIdx - 1);
     if (OpenGLTestIdx < 0)
-        OpenGLTestIdx += arrayOfOpenGLTest.length;
+        _setOpenGLTestIdx(OpenGLTestIdx + (arrayOfOpenGLTest.length));
 
     return new arrayOfOpenGLTest[OpenGLTestIdx]();
 }

@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { SpineTestScene } from "./spine-test-scene.js";
+
 export class SpineTestLayer extends BaseTestLayer {
     onRestartCallback(sender){
         var s = new SpineTestScene();

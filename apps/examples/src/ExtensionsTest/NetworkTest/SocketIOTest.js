@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 /** @expose */
+import { ExtensionsTestScene } from "../extensions-test-scene.js";
+
 window.io;
 
 // SocketIO is now provided by the socketio package

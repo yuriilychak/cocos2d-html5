@@ -30,6 +30,10 @@
 // BMFontSpeedTest
 //
 //------------------------------------------------------------------
+import { AtlasDemo } from "./atlas-demo.js";
+import { s_resprefix } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class BMFontSpeedTest extends AtlasDemo {
     constructor() {
         //----start8----ctor

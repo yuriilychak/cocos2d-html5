@@ -27,6 +27,8 @@
 //
 // UIRichTextXMLUrl
 //
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIRichTextXMLUrl extends UIMainLayer {
     constructor() {
         super();

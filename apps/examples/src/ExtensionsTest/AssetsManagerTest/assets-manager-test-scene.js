@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AssetsManagerTestLayer } from "./assets-manager-test-layer.js";
+import { TestScene } from "../../test-scene.js";
+
 export class AssetsManagerTestScene extends TestScene {
 
     constructor(background) {

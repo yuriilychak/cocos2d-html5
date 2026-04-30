@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ControlScene } from "../CCControlScene.js";
+
 export class ControlSwitchTest extends ControlScene {
     init() {
         if (super.init()) {

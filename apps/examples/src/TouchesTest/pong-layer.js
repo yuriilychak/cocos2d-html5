@@ -25,6 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_ball, s_paddle } from "../tests_resources.js";
+import { Ball } from "./Ball.js";
+import { Paddle } from "./Paddle.js";
+import { HIGH_PLAYER, LOW_PLAYER, STATUS_BAR_HEIGHT } from "./touches-test-constants.js";
+
 export class PongLayer extends cc.Layer {
 
     constructor() {

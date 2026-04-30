@@ -26,6 +26,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { S9BatchNodeBasic } from "./s9-batch-node-basic.js";
+import { S9BatchNodeScaleWithCapInsets } from "./s9-batch-node-scale-with-cap-insets.js";
+import { S9BatchNodeScaledNoInsets } from "./s9-batch-node-scaled-no-insets.js";
+import { S9FrameNameSpriteSheetInsetsScaled } from "./s9-frame-name-sprite-sheet-insets-scaled.js";
+import { S9FrameNameSpriteSheetInsets } from "./s9-frame-name-sprite-sheet-insets.js";
+import { S9FrameNameSpriteSheetRotatedInsetsScaled } from "./s9-frame-name-sprite-sheet-rotated-insets-scaled.js";
+import { S9FrameNameSpriteSheetRotatedInsets } from "./s9-frame-name-sprite-sheet-rotated-insets.js";
+import { S9FrameNameSpriteSheetRotatedScaledNoInsets } from "./s9-frame-name-sprite-sheet-rotated-scaled-no-insets.js";
+import { S9FrameNameSpriteSheetRotated } from "./s9-frame-name-sprite-sheet-rotated.js";
+import { S9FrameNameSpriteSheetScaledNoInsets } from "./s9-frame-name-sprite-sheet-scaled-no-insets.js";
+import { S9FrameNameSpriteSheet } from "./s9-frame-name-sprite-sheet.js";
+import { S9SpriteActionTest } from "./s9-sprite-action-test.js";
+import { S9SpriteColorOpacityTest } from "./s9-sprite-color-opacity-test.js";
+import { S9SpriteOpacityWithFadeActionsTest } from "./s9-sprite-opacity-with-fade-actions-test.js";
+import { S9SpriteRenderingTypeToggleTest } from "./s9-sprite-rendering-type-toggle-test.js";
+import { sceneIdx , _setsceneIdx} from "./s9-sprite-test-constants.js";
+import { S9_TexturePacker } from "./s9-texture-packer.js";
+
 ;
 
 ;
@@ -65,7 +83,7 @@
 //
 // Flow control
 //
-var arrayOfS9SpriteTest = [
+export var arrayOfS9SpriteTest = [
     S9BatchNodeBasic,
     S9FrameNameSpriteSheet,
     S9FrameNameSpriteSheetRotated,
@@ -85,8 +103,8 @@ var arrayOfS9SpriteTest = [
 ];
 
 export function nextS9SpriteTest() {
-    sceneIdx++;
-    sceneIdx = sceneIdx % arrayOfS9SpriteTest.length;
+    _setsceneIdx(sceneIdx + 1);
+    _setsceneIdx(sceneIdx % arrayOfS9SpriteTest.length);
 
     return new arrayOfS9SpriteTest[sceneIdx]();
 }
@@ -94,9 +112,9 @@ export function nextS9SpriteTest() {
 ;
 
 export function previousS9SpriteTest() {
-    sceneIdx--;
+    _setsceneIdx(sceneIdx - 1);
     if (sceneIdx < 0)
-        sceneIdx += arrayOfS9SpriteTest.length;
+        _setsceneIdx(sceneIdx + (arrayOfS9SpriteTest.length));
 
     return new arrayOfS9SpriteTest[sceneIdx]();
 }

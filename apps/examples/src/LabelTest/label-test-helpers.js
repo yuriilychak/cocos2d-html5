@@ -25,7 +25,36 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { BMFontChineseTest } from "./bmfont-chinese-test.js";
+import { BMFontColorParentChild } from "./bmfont-color-parent-child.js";
+import { BMFontGlyphDesignerTest } from "./bmfont-glyph-designer-test.js";
+import { BMFontHDTest } from "./bmfont-hdtest.js";
+import { BMFontInit } from "./bmfont-init.js";
+import { BMFontMultiLineAlignmentTest } from "./bmfont-multi-line-alignment-test.js";
+import { BMFontMultiLineTest } from "./bmfont-multi-line-test.js";
+import { BMFontMultiLine2Test } from "./bmfont-multi-line2-test.js";
+import { BMFontOffsetTest } from "./bmfont-offset-test.js";
+import { BMFontOneAtlas } from "./bmfont-one-atlas.js";
+import { BMFontOpacityColorAlignmentTest } from "./bmfont-opacity-color-alignment-test.js";
+import { BMFontPaddingTest } from "./bmfont-padding-test.js";
+import { BMFontSpeedTest } from "./bmfont-speed-test.js";
+import { BMFontSubSpriteTest } from "./bmfont-sub-sprite-test.js";
+import { BMFontTintTest } from "./bmfont-tint-test.js";
+import { BMFontUnicode } from "./bmfont-unicode.js";
+import { LabelAtlasHD } from "./label-atlas-hd.js";
+import { LabelAtlasOpacityColorTest } from "./label-atlas-opacity-color-test.js";
+import { LabelAtlasOpacityTest } from "./label-atlas-opacity-test.js";
+import { labelTestIdx , _setlabelTestIdx} from "./label-test-constants.js";
+import { LabelTTFA8Test } from "./label-ttfa8-test.js";
+import { LabelTTFAlignment } from "./label-ttfalignment.js";
+import { LabelTTFChinese } from "./label-ttfchinese.js";
+import { labelTTFDrawModeTest } from "./label-ttfdraw-mode-test.js";
+import { LabelTTFFontInitTest } from "./label-ttffont-init-test.js";
+import { LabelTTFMultiline } from "./label-ttfmultiline.js";
+import { LabelTTFStrokeShadowTest } from "./label-ttfstroke-shadow-test.js";
+import { LabelTTFTest } from "./label-ttftest.js";
+import { LabelsEmpty } from "./labels-empty.js";
+import { WrapAlgorithmTest } from "./wrap-algorithm-test.js";
 
 ;
 
@@ -67,43 +96,45 @@
 
 ;
 
-var LongSentencesExample = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+;
 
-var chineseExampleText = "美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天";
+export var LongSentencesExample = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
-var chineseMixEnglishText = "美好的一天bdgpy美b好b的d一b天d美好bd的p一g天美好b的d一d天bdgpybdgpybdgpybdg美好的一天bdgpy美好的一天美好的一天";
+export var chineseExampleText = "美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天";
 
-var mixAllLanguageText = "美好良い一日を一Buen díabdgpy美b好b的d一b天d美Buen い一日を好b的d一d天Buen py美好的一天bdgpy美好的一天美好的一天";
+export var chineseMixEnglishText = "美好的一天bdgpy美b好b的d一b天d美好bd的p一g天美好b的d一d天bdgpybdgpybdgpybdg美好的一天bdgpy美好的一天美好的一天";
 
-var LineBreaksExample = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah";
+export var mixAllLanguageText = "美好良い一日を一Buen díabdgpy美b好b的d一b天d美Buen い一日を好b的d一d天Buen py美好的一天bdgpy美好的一天美好的一天";
 
-var MixedExample = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF";
+export var LineBreaksExample = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah";
 
-var ArrowsMax = 0.95;
+export var MixedExample = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF";
 
-var ArrowsMin = 0.7;
+export var ArrowsMax = 0.95;
 
-var LeftAlign = 0;
+export var ArrowsMin = 0.7;
 
-var CenterAlign = 1;
+export var LeftAlign = 0;
 
-var RightAlign = 2;
+export var CenterAlign = 1;
 
-var LongSentences = 0;
+export var RightAlign = 2;
 
-var LineBreaks = 1;
+export var LongSentences = 0;
 
-var Mixed = 2;
+export var LineBreaks = 1;
 
-var chineseText = 3;
+export var Mixed = 2;
 
-var chineseMixEnglish = 4;
+export var chineseText = 3;
 
-var mixAllLanguage = 5;
+export var chineseMixEnglish = 4;
 
-var alignmentItemPadding = 40;
+export var mixAllLanguage = 5;
 
-var menuItemPaddingCenter = 80;
+export var alignmentItemPadding = 40;
+
+export var menuItemPaddingCenter = 80;
 
 ;
 
@@ -128,7 +159,7 @@ var menuItemPaddingCenter = 80;
 //
 // Flow control
 //
-var arrayOfLabelTest = [
+export var arrayOfLabelTest = [
     LabelAtlasOpacityTest,
     LabelAtlasOpacityColorTest,
     LabelAtlasHD,
@@ -167,11 +198,11 @@ if (!cc.sys.isNative || cc.sys.isMobile) {
 }
 
 export function nextLabelTest() {
-    labelTestIdx++;
-    labelTestIdx = labelTestIdx % arrayOfLabelTest.length;
+    _setlabelTestIdx(labelTestIdx + 1);
+    _setlabelTestIdx(labelTestIdx % arrayOfLabelTest.length);
 
     if(window.sideIndexBar){
-        labelTestIdx = window.sideIndexBar.changeTest(labelTestIdx, 19);
+        _setlabelTestIdx(window.sideIndexBar.changeTest(labelTestIdx, 19));
     }
 
     return new arrayOfLabelTest[labelTestIdx]();
@@ -180,12 +211,12 @@ export function nextLabelTest() {
 ;
 
 export function previousLabelTest() {
-    labelTestIdx--;
+    _setlabelTestIdx(labelTestIdx - 1);
     if (labelTestIdx < 0)
-        labelTestIdx += arrayOfLabelTest.length;
+        _setlabelTestIdx(labelTestIdx + (arrayOfLabelTest.length));
 
     if(window.sideIndexBar){
-        labelTestIdx = window.sideIndexBar.changeTest(labelTestIdx, 19);
+        _setlabelTestIdx(window.sideIndexBar.changeTest(labelTestIdx, 19));
     }
 
     return new arrayOfLabelTest[labelTestIdx]();

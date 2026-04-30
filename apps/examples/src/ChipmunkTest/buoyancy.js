@@ -22,6 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { k_scalar_body } from "./chipmunk-test-constants.js";
+import { FLUID_DENSITY, FLUID_DRAG, NOT_GRABABLE_MASK } from "./chipmunk-test-helpers.js";
+
 export class Buoyancy extends ChipmunkDemo {
     constructor() {
         super();

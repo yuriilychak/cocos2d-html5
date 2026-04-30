@@ -23,4 +23,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var OpenGLTestIdx = -1;
+export let OpenGLTestIdx = -1;
+
+export function _setOpenGLTestIdx(v) { OpenGLTestIdx = v; }

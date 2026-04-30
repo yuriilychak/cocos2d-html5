@@ -30,6 +30,8 @@
 //  ActionRotate
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionRotate extends ActionsDemo {
     constructor() {
         super();

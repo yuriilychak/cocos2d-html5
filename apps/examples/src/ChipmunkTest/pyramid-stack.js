@@ -27,6 +27,9 @@
 // Chipmunk Demo: Pyramid Stack
 //
 //------------------------------------------------------------------
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { v } from "./chipmunk-test-helpers.js";
+
 export class PyramidStack extends ChipmunkDemo {
 
     constructor() {

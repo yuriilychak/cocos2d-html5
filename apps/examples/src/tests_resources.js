@@ -23,9 +23,9 @@
  ****************************************************************************/
 
 // Resources prefix
-var s_resprefix = "";
+export var s_resprefix = "";
 
-var ccbjs = "";
+export var ccbjs = "";
 // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
 // so the respath will modify to res,
 if (!cc.sys.isNative) {
@@ -36,180 +36,180 @@ if (!cc.sys.isNative) {
     }
 }
 
-var s_pathGrossini = "Images/grossini.png";
-var s_pathSister1 = "Images/grossinis_sister1.png";
-var s_pathSister2 = "Images/grossinis_sister2.png";
-var s_pathB1 = "Images/b1.png";
-var s_pathB2 = "Images/b2.png";
-var s_pathR1 = "Images/r1.png";
-var s_pathR2 = "Images/r2.png";
-var s_pathF1 = "Images/f1.png";
-var s_pathF2 = "Images/f2.png";
-var s_pathBlock = "Images/blocks.png";
-var s_back = "Images/background.png";
-var s_back1 = "Images/background1.png";
-var s_back2 = "Images/background2.png";
-var s_back3 = "Images/background3.png";
-var s_stars1 = "Images/stars.png";
-var s_stars2 = "Images/stars2.png";
-var s_fire = "Images/fire.png";
-var s_snow = "Images/snow.png";
-var s_streak = "Images/streak.png";
-var s_playNormal = "Images/btn-play-normal.png";
-var s_playSelect = "Images/btn-play-selected.png";
-var s_aboutNormal = "Images/btn-about-normal.png";
-var s_aboutSelect = "Images/btn-about-selected.png";
-var s_highNormal = "Images/btn-highscores-normal.png";
-var s_highSelect = "Images/btn-highscores-selected.png";
-var s_ball = "Images/ball.png";
-var s_paddle = "Images/paddle.png";
-var s_pathClose = "Images/close.png";
-var s_menuItem = "Images/menuitemsprite.png";
-var s_shapeModeMenuItem = "Images/shapemode.png";
-var s_textureModeMenuItem = "Images/texturemode.png";
-var s_MovementMenuItem = "Images/movement.png";
-var s_sendScore = "Images/SendScoreButton.png";
-var s_pressSendScore = "Images/SendScoreButtonPressed.png";
-var s_power = "Images/powered.png";
-var s_atlasTest = "Images/atlastest.png";
-var s_stars2Grayscale = "Images/stars2-grayscale.png";
-var s_starsGrayscale = "Images/stars-grayscale.png";
-var s_grossini_dance_atlas = "Images/grossini_dance_atlas.png";
-var s_piece = "Images/piece.png";
-var s_grossini_dance_atlas_mono = "Images/grossini_dance_atlas-mono.png";
-var s_lookup_desktop_plist = "Images/lookup-desktop.plist";
-var s_lookup_mobile_plist = "Images/lookup-mobile.plist";
-var s_lookup_html5_plist = "Images/lookup-html5.plist";
+export var s_pathGrossini = "Images/grossini.png";
+export var s_pathSister1 = "Images/grossinis_sister1.png";
+export var s_pathSister2 = "Images/grossinis_sister2.png";
+export var s_pathB1 = "Images/b1.png";
+export var s_pathB2 = "Images/b2.png";
+export var s_pathR1 = "Images/r1.png";
+export var s_pathR2 = "Images/r2.png";
+export var s_pathF1 = "Images/f1.png";
+export var s_pathF2 = "Images/f2.png";
+export var s_pathBlock = "Images/blocks.png";
+export var s_back = "Images/background.png";
+export var s_back1 = "Images/background1.png";
+export var s_back2 = "Images/background2.png";
+export var s_back3 = "Images/background3.png";
+export var s_stars1 = "Images/stars.png";
+export var s_stars2 = "Images/stars2.png";
+export var s_fire = "Images/fire.png";
+export var s_snow = "Images/snow.png";
+export var s_streak = "Images/streak.png";
+export var s_playNormal = "Images/btn-play-normal.png";
+export var s_playSelect = "Images/btn-play-selected.png";
+export var s_aboutNormal = "Images/btn-about-normal.png";
+export var s_aboutSelect = "Images/btn-about-selected.png";
+export var s_highNormal = "Images/btn-highscores-normal.png";
+export var s_highSelect = "Images/btn-highscores-selected.png";
+export var s_ball = "Images/ball.png";
+export var s_paddle = "Images/paddle.png";
+export var s_pathClose = "Images/close.png";
+export var s_menuItem = "Images/menuitemsprite.png";
+export var s_shapeModeMenuItem = "Images/shapemode.png";
+export var s_textureModeMenuItem = "Images/texturemode.png";
+export var s_MovementMenuItem = "Images/movement.png";
+export var s_sendScore = "Images/SendScoreButton.png";
+export var s_pressSendScore = "Images/SendScoreButtonPressed.png";
+export var s_power = "Images/powered.png";
+export var s_atlasTest = "Images/atlastest.png";
+export var s_stars2Grayscale = "Images/stars2-grayscale.png";
+export var s_starsGrayscale = "Images/stars-grayscale.png";
+export var s_grossini_dance_atlas = "Images/grossini_dance_atlas.png";
+export var s_piece = "Images/piece.png";
+export var s_grossini_dance_atlas_mono = "Images/grossini_dance_atlas-mono.png";
+export var s_lookup_desktop_plist = "Images/lookup-desktop.plist";
+export var s_lookup_mobile_plist = "Images/lookup-mobile.plist";
+export var s_lookup_html5_plist = "Images/lookup-html5.plist";
 
-var s_grossini = "animations/grossini.png";
-var s_grossini_gray = "animations/grossini_gray.png";
-var s_grossini_blue = "animations/grossini_blue.png";
-var s_grossini_aliases = "animations/grossini-aliases.png";
-var s_dragon_animation = "animations/dragon_animation.png";
-var s_ghosts = "animations/ghosts.png";
-var s_grossini_family = "animations/grossini_family.png";
+export var s_grossini = "animations/grossini.png";
+export var s_grossini_gray = "animations/grossini_gray.png";
+export var s_grossini_blue = "animations/grossini_blue.png";
+export var s_grossini_aliases = "animations/grossini-aliases.png";
+export var s_dragon_animation = "animations/dragon_animation.png";
+export var s_ghosts = "animations/ghosts.png";
+export var s_grossini_family = "animations/grossini_family.png";
 
-var s_tcc_issue_1 = "animations/tcc_issue_1.png";
-var s_tcc_issue_2 = "animations/tcc_issue_2.png";
-var s_tcc_issue_1_plist = "animations/tcc_issue_1.plist";
-var s_tcc_issue_2_plist = "animations/tcc_issue_2.plist";
+export var s_tcc_issue_1 = "animations/tcc_issue_1.png";
+export var s_tcc_issue_2 = "animations/tcc_issue_2.png";
+export var s_tcc_issue_1_plist = "animations/tcc_issue_1.plist";
+export var s_tcc_issue_2_plist = "animations/tcc_issue_2.plist";
 
 // Issue CustomIssueAnimationsWithOnlyOneFrame
-var s_testIssueAnimationsWithOnlyOneFrame_json = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/AnimationsWithOnlyOneFrame.json";
-var s_testIssueAnimationsWithOnlyOneFrame_png = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/TheDigitalSpell.png";
+export var s_testIssueAnimationsWithOnlyOneFrame_json = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/AnimationsWithOnlyOneFrame.json";
+export var s_testIssueAnimationsWithOnlyOneFrame_png = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/TheDigitalSpell.png";
 
-var s_s9s_blocks9 = "Images/blocks9ss.png";
-var s_s9s_blocks9_plist = "Images/blocks9ss.plist";
-var s_blocks9 = "Images/blocks9.png";
+export var s_s9s_blocks9 = "Images/blocks9ss.png";
+export var s_s9s_blocks9_plist = "Images/blocks9ss.plist";
+export var s_blocks9 = "Images/blocks9.png";
 
-var s_s9s_ui = "Images/ui.png";
-var s_s9s_ui_plist = "Images/ui.plist";
+export var s_s9s_ui = "Images/ui.png";
+export var s_s9s_ui_plist = "Images/ui.plist";
 
-var s_boilingFoamPlist = "Images/BoilingFoam.plist";
-var s_grossiniPlist = "animations/grossini.plist";
-var s_grossini_grayPlist = "animations/grossini_gray.plist";
-var s_grossini_bluePlist = "animations/grossini_blue.plist";
-var s_grossini_aliasesPlist = "animations/grossini-aliases.plist";
-var s_ghostsPlist = "animations/ghosts.plist";
-var s_grossini_familyPlist = "animations/grossini_family.plist";
-var s_animations2Plist = "animations/animations-2.plist";
-var s_animationsPlist = "animations/animations.plist";
+export var s_boilingFoamPlist = "Images/BoilingFoam.plist";
+export var s_grossiniPlist = "animations/grossini.plist";
+export var s_grossini_grayPlist = "animations/grossini_gray.plist";
+export var s_grossini_bluePlist = "animations/grossini_blue.plist";
+export var s_grossini_aliasesPlist = "animations/grossini-aliases.plist";
+export var s_ghostsPlist = "animations/ghosts.plist";
+export var s_grossini_familyPlist = "animations/grossini_family.plist";
+export var s_animations2Plist = "animations/animations-2.plist";
+export var s_animationsPlist = "animations/animations.plist";
 
-var s_helloWorld = "Images/HelloWorld.png";
-var s_grossiniDance01 = "Images/grossini_dance_01.png";
-var s_grossiniDance02 = "Images/grossini_dance_02.png";
-var s_grossiniDance03 = "Images/grossini_dance_03.png";
-var s_grossiniDance04 = "Images/grossini_dance_04.png";
-var s_grossiniDance05 = "Images/grossini_dance_05.png";
-var s_grossiniDance06 = "Images/grossini_dance_06.png";
-var s_grossiniDance07 = "Images/grossini_dance_07.png";
-var s_grossiniDance08 = "Images/grossini_dance_08.png";
-var s_grossiniDance09 = "Images/grossini_dance_09.png";
-var s_grossiniDance10 = "Images/grossini_dance_10.png";
-var s_grossiniDance11 = "Images/grossini_dance_11.png";
-var s_grossiniDance12 = "Images/grossini_dance_12.png";
-var s_grossiniDance13 = "Images/grossini_dance_13.png";
-var s_grossiniDance14 = "Images/grossini_dance_14.png";
+export var s_helloWorld = "Images/HelloWorld.png";
+export var s_grossiniDance01 = "Images/grossini_dance_01.png";
+export var s_grossiniDance02 = "Images/grossini_dance_02.png";
+export var s_grossiniDance03 = "Images/grossini_dance_03.png";
+export var s_grossiniDance04 = "Images/grossini_dance_04.png";
+export var s_grossiniDance05 = "Images/grossini_dance_05.png";
+export var s_grossiniDance06 = "Images/grossini_dance_06.png";
+export var s_grossiniDance07 = "Images/grossini_dance_07.png";
+export var s_grossiniDance08 = "Images/grossini_dance_08.png";
+export var s_grossiniDance09 = "Images/grossini_dance_09.png";
+export var s_grossiniDance10 = "Images/grossini_dance_10.png";
+export var s_grossiniDance11 = "Images/grossini_dance_11.png";
+export var s_grossiniDance12 = "Images/grossini_dance_12.png";
+export var s_grossiniDance13 = "Images/grossini_dance_13.png";
+export var s_grossiniDance14 = "Images/grossini_dance_14.png";
 
-var s_arrows = "Images/arrows.png";
-var s_arrowsBar = "Images/arrowsBar.png";
-var s_arrows_hd = "Images/arrows-hd.png";
-var s_arrowsBar_hd = "Images/arrowsBar-hd.png";
+export var s_arrows = "Images/arrows.png";
+export var s_arrowsBar = "Images/arrowsBar.png";
+export var s_arrows_hd = "Images/arrows-hd.png";
+export var s_arrowsBar_hd = "Images/arrowsBar-hd.png";
 
 // tilemaps resource
-var s_tilesPng = "TileMaps/tiles.png";
-var s_levelMapTga = "TileMaps/levelmap.tga";
-var s_fixedOrthoTest2Png = "TileMaps/fixed-ortho-test2.png";
-var s_hexaTilesPng = "TileMaps/hexa-tiles.png";
-var s_isoTestPng = "TileMaps/iso-test.png";
-var s_isoTest2Png = "TileMaps/iso-test2.png";
-var s_isoPng = "TileMaps/iso.png";
-var s_orthoTest1BwPng = "TileMaps/ortho-test1_bw.png";
-var s_orthoTest1Png = "TileMaps/ortho-test1.png";
-var s_tilesHdPng = "TileMaps/tiles-hd.png";
-var s_tmwDesertSpacingHdPng = "TileMaps/tmw_desert_spacing-hd.png";
-var s_tmwDesertSpacingPng = "TileMaps/tmw_desert_spacing.png";
-var s_tileISOOffsetPng = "TileMaps/tile_iso_offset.png";
-var s_tileISOOffsetTmx = "TileMaps/tile_iso_offset.tmx";
+export var s_tilesPng = "TileMaps/tiles.png";
+export var s_levelMapTga = "TileMaps/levelmap.tga";
+export var s_fixedOrthoTest2Png = "TileMaps/fixed-ortho-test2.png";
+export var s_hexaTilesPng = "TileMaps/hexa-tiles.png";
+export var s_isoTestPng = "TileMaps/iso-test.png";
+export var s_isoTest2Png = "TileMaps/iso-test2.png";
+export var s_isoPng = "TileMaps/iso.png";
+export var s_orthoTest1BwPng = "TileMaps/ortho-test1_bw.png";
+export var s_orthoTest1Png = "TileMaps/ortho-test1.png";
+export var s_tilesHdPng = "TileMaps/tiles-hd.png";
+export var s_tmwDesertSpacingHdPng = "TileMaps/tmw_desert_spacing-hd.png";
+export var s_tmwDesertSpacingPng = "TileMaps/tmw_desert_spacing.png";
+export var s_tileISOOffsetPng = "TileMaps/tile_iso_offset.png";
+export var s_tileISOOffsetTmx = "TileMaps/tile_iso_offset.tmx";
 
-var s_fnTuffyBoldItalicCharmapPng = "fonts/tuffy_bold_italic-charmap.png";
-var s_fpsImages = "fps_images.png";
-var s_bitmapFontTest = "fonts/bitmapFontTest.png";
-var s_bitmapFontTest2 = "fonts/bitmapFontTest2.png";
-var s_bitmapFontTest3 = "fonts/bitmapFontTest3.png";
-var s_bitmapFontTest4 = "fonts/bitmapFontTest4.png";
-var s_bitmapFontTest5 = "fonts/bitmapFontTest5.png";
-var s_konqa32 = "fonts/konqa32.png";
-var s_konqa32_hd = "fonts/konqa32-hd.png";
-var s_bitmapFontChinese = "fonts/bitmapFontChinese.png";
-var s_arial16 = "fonts/arial16.png";
-var s_larabie_16 = "fonts/larabie-16.png";
-var s_larabie_16_hd = "fonts/larabie-16-hd.png";
-var s_futura48 = "fonts/futura-48.png";
-var s_arial_unicode_26 = "fonts/arial-unicode-26.png";
+export var s_fnTuffyBoldItalicCharmapPng = "fonts/tuffy_bold_italic-charmap.png";
+export var s_fpsImages = "fps_images.png";
+export var s_bitmapFontTest = "fonts/bitmapFontTest.png";
+export var s_bitmapFontTest2 = "fonts/bitmapFontTest2.png";
+export var s_bitmapFontTest3 = "fonts/bitmapFontTest3.png";
+export var s_bitmapFontTest4 = "fonts/bitmapFontTest4.png";
+export var s_bitmapFontTest5 = "fonts/bitmapFontTest5.png";
+export var s_konqa32 = "fonts/konqa32.png";
+export var s_konqa32_hd = "fonts/konqa32-hd.png";
+export var s_bitmapFontChinese = "fonts/bitmapFontChinese.png";
+export var s_arial16 = "fonts/arial16.png";
+export var s_larabie_16 = "fonts/larabie-16.png";
+export var s_larabie_16_hd = "fonts/larabie-16-hd.png";
+export var s_futura48 = "fonts/futura-48.png";
+export var s_arial_unicode_26 = "fonts/arial-unicode-26.png";
 
-var s_bitmapFontTest_fnt = "fonts/bitmapFontTest.fnt";
-var s_bitmapFontTest2_fnt = "fonts/bitmapFontTest2.fnt";
-var s_bitmapFontTest3_fnt = "fonts/bitmapFontTest3.fnt";
-var s_bitmapFontTest4_fnt = "fonts/bitmapFontTest4.fnt";
-var s_bitmapFontTest5_fnt = "fonts/bitmapFontTest5.fnt";
-var s_konqa32_fnt = "fonts/konqa32.fnt";
-var s_konqa32_hd_fnt = "fonts/konqa32-hd.fnt";
-var s_bitmapFontChinese_fnt = "fonts/bitmapFontChinese.fnt";
-var s_arial16_fnt = "fonts/arial16.fnt";
-var s_futura48_fnt = "fonts/futura-48.fnt";
-var s_helvetica32_fnt = "fonts/helvetica-32.fnt";
-var s_geneva32_fnt = "fonts/geneva-32.fnt";
-var s_helvetica_helvetica_32_png = "fonts/helvetica-geneva-32.png";
-var s_arial_unicode_26_fnt = "fonts/arial-unicode-26.fnt";
-var s_markerFelt_fnt = "fonts/markerFelt.fnt";
-var s_markerFelt_png = "fonts/markerFelt.png";
-var s_markerFelt_hd_fnt = "fonts/markerFelt-hd.fnt";
-var s_markerFelt_hd_png = "fonts/markerFelt-hd.png";
+export var s_bitmapFontTest_fnt = "fonts/bitmapFontTest.fnt";
+export var s_bitmapFontTest2_fnt = "fonts/bitmapFontTest2.fnt";
+export var s_bitmapFontTest3_fnt = "fonts/bitmapFontTest3.fnt";
+export var s_bitmapFontTest4_fnt = "fonts/bitmapFontTest4.fnt";
+export var s_bitmapFontTest5_fnt = "fonts/bitmapFontTest5.fnt";
+export var s_konqa32_fnt = "fonts/konqa32.fnt";
+export var s_konqa32_hd_fnt = "fonts/konqa32-hd.fnt";
+export var s_bitmapFontChinese_fnt = "fonts/bitmapFontChinese.fnt";
+export var s_arial16_fnt = "fonts/arial16.fnt";
+export var s_futura48_fnt = "fonts/futura-48.fnt";
+export var s_helvetica32_fnt = "fonts/helvetica-32.fnt";
+export var s_geneva32_fnt = "fonts/geneva-32.fnt";
+export var s_helvetica_helvetica_32_png = "fonts/helvetica-geneva-32.png";
+export var s_arial_unicode_26_fnt = "fonts/arial-unicode-26.fnt";
+export var s_markerFelt_fnt = "fonts/markerFelt.fnt";
+export var s_markerFelt_png = "fonts/markerFelt.png";
+export var s_markerFelt_hd_fnt = "fonts/markerFelt-hd.fnt";
+export var s_markerFelt_hd_png = "fonts/markerFelt-hd.png";
 
-var s_larabie_16_plist = "fonts/larabie-16.plist";
-var s_larabie_16_hd_plist = "fonts/larabie-16-hd.plist";
-var s_tuffy_bold_italic_charmap = "fonts/tuffy_bold_italic-charmap.plist";
-var s_tuffy_bold_italic_charmap_hd = "fonts/tuffy_bold_italic-charmap-hd.plist";
+export var s_larabie_16_plist = "fonts/larabie-16.plist";
+export var s_larabie_16_hd_plist = "fonts/larabie-16-hd.plist";
+export var s_tuffy_bold_italic_charmap = "fonts/tuffy_bold_italic-charmap.plist";
+export var s_tuffy_bold_italic_charmap_hd = "fonts/tuffy_bold_italic-charmap-hd.plist";
 
-var s_particles = "Images/particles.png";
-var s_particles_hd = "Images/particles-hd.png";
-var s_texture512 = "Images/texture512x512.png";
-var s_hole_effect_png = "Images/hole_effect.png";
-var s_hole_stencil_png = "Images/hole_stencil.png";
-var s_pathFog = "Images/Fog.png";
-var s_circle_plist  = "Images/bugs/circle.plist";
-var s_circle_png  = "Images/bugs/circle.png";
+export var s_particles = "Images/particles.png";
+export var s_particles_hd = "Images/particles-hd.png";
+export var s_texture512 = "Images/texture512x512.png";
+export var s_hole_effect_png = "Images/hole_effect.png";
+export var s_hole_stencil_png = "Images/hole_stencil.png";
+export var s_pathFog = "Images/Fog.png";
+export var s_circle_plist  = "Images/bugs/circle.plist";
+export var s_circle_png  = "Images/bugs/circle.png";
 
-var s_extensions_background = "extensions/background.png";
-var s_extensions_buttonBackground = "extensions/buttonBackground.png";
-var s_extensions_button = "extensions/button.png";
-var s_extensions_buttonHighlighted = "extensions/buttonHighlighted.png";
-var s_extensions_ribbon = "extensions/ribbon.png";
-var s_image_icon = "Images/Icon.png";
-var s_html5_logo = "Images/cocos-html5.png";
+export var s_extensions_background = "extensions/background.png";
+export var s_extensions_buttonBackground = "extensions/buttonBackground.png";
+export var s_extensions_button = "extensions/button.png";
+export var s_extensions_buttonHighlighted = "extensions/buttonHighlighted.png";
+export var s_extensions_ribbon = "extensions/ribbon.png";
+export var s_image_icon = "Images/Icon.png";
+export var s_html5_logo = "Images/cocos-html5.png";
 
-var g_resources = [
+export var g_resources = [
     //global
     s_grossini_dance_atlas,
     s_pathFog,
@@ -264,7 +264,7 @@ var g_resources = [
     s_extensions_ribbon
 ];
 
-var g_sprites = [
+export var g_sprites = [
     s_piece,
     s_grossini_gray,
     s_grossini_blue,
@@ -292,7 +292,7 @@ var g_sprites = [
     "Images/wood.jpg"
 ];
 
-var g_menu = [
+export var g_menu = [
     s_bitmapFontTest3_fnt,
     s_bitmapFontTest3,
     s_aboutNormal,
@@ -305,19 +305,19 @@ var g_menu = [
     s_fpsImages
 ];
 
-var g_touches = [
+export var g_touches = [
     s_ball,
     s_paddle
 ];
 
-var g_s9s_blocks = [
+export var g_s9s_blocks = [
     s_s9s_blocks9_plist,
     s_s9s_blocks9,
     s_s9s_ui,
     s_s9s_ui_plist
 ];
 
-var g_opengl_resources = [
+export var g_opengl_resources = [
     //preload shader source
     ccbjs + "Shaders/example_Outline.fsh",
     ccbjs + "Shaders/example_Outline.vsh",
@@ -343,7 +343,7 @@ var g_opengl_resources = [
     "fonts/west_england-64.png"
 ];
 
-var g_label = [
+export var g_label = [
     //s_atlasTest,
     s_bitmapFontTest,
     s_bitmapFontTest2,
@@ -387,29 +387,29 @@ var g_label = [
     "fonts/strings.xml"
 ];
 
-var g_transitions = [
+export var g_transitions = [
     s_back1
 ];
 
-var g_box2d = [
+export var g_box2d = [
     s_pathBlock
 ];
 
-var g_cocosdeshion = [
+export var g_cocosdeshion = [
     "background.mp3",
     "effect2.mp3"
     //"background.ogg",                        //one sound only, cc.audio can auto select other format to load if the sound format isn't supported on some browser.
     //"effect2.ogg"
 ];
 
-var g_parallax = [
+export var g_parallax = [
     "TileMaps/orthogonal-test2.tmx",
     s_fixedOrthoTest2Png,
     s_power,
     s_back
 ];
 
-var g_eventDispatcher = [
+export var g_eventDispatcher = [
     "Images/CyanSquare.png",
     "Images/MagentaSquare.png",
     "Images/YellowSquare.png",
@@ -419,7 +419,7 @@ var g_eventDispatcher = [
     s_extensions_buttonBackground
 ];
 
-var g_particle = [
+export var g_particle = [
     s_fpsImages,
     s_starsGrayscale,
     s_stars2Grayscale,
@@ -448,7 +448,7 @@ var g_particle = [
     "Particles/Upsidedown.plist"
 ];
 
-var g_fonts = [
+export var g_fonts = [
     //@face-font for WebFonts
     {
         type:"font",
@@ -472,7 +472,7 @@ var g_fonts = [
     }
 ];
 
-var g_extensions = [
+export var g_extensions = [
     s_image_icon,
     s_extensions_background,
     s_extensions_buttonBackground,
@@ -501,7 +501,7 @@ var g_extensions = [
     "extensions/CCControlColourPickerSpriteSheet.png",
 ];
 
-var g_ui = [
+export var g_ui = [
     "ccs-res/cocosui/switch-mask.png",
     "ccs-res/cocosui/animationbuttonnormal.png",
     "ccs-res/cocosui/animationbuttonpressed.png",
@@ -555,7 +555,7 @@ var g_ui = [
     "ccs-res/cocosui/CloseSelected.png"
 ];
 
-var g_performace = [
+export var g_performace = [
     "animations/crystals.plist",
     "animations/crystals.png",
     "fps_images.png",
@@ -626,7 +626,7 @@ var g_performace = [
     "Images/sprites_test/sprite-7-7.png"
 ];
 
-var g_tilemaps = [
+export var g_tilemaps = [
     //image
     s_fixedOrthoTest2Png,
     s_hexaTilesPng,
@@ -672,7 +672,7 @@ var g_tilemaps = [
     "TileMaps/ortho-rotation-test.tmx"
 ];
 
-var g_spine = [
+export var g_spine = [
     "spine/spineboy.atlas",
     "spine/spineboy-pro.json",
     "spine/spineboy.png",

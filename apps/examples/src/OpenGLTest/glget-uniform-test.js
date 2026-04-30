@@ -28,6 +28,9 @@
 // GLGetUniformTest
 //
 //------------------------------------------------------------------
+import { OpenGLTestLayer } from "./open-gltest-layer.js";
+import { autoTestEnabled } from "../tests-main-constants.js";
+
 export class GLGetUniformTest extends OpenGLTestLayer {
 
     constructor() {

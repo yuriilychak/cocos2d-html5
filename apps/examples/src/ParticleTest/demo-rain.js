@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ParticleDemo } from "./particle-demo.js";
+import { s_fire } from "../tests_resources.js";
+
 export class DemoRain extends ParticleDemo {
     onEnter() {
         super.onEnter();

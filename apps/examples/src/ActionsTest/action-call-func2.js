@@ -30,6 +30,9 @@
 // ActionCallFunc2
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { SPRITE_GROSSINI_TAG } from "./actions-test-constants.js";
+
 export class ActionCallFunc2 extends ActionsDemo {
     constructor() {
         super();

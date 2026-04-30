@@ -25,6 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TAG_SPRITE1, TAG_SPRITE2 } from "./cocos-node-test-constants.js";
+import { TestNodeDemo } from "./test-node-demo.js";
+import { s_pathSister1, s_pathSister2 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class CCNodeTest6 extends TestNodeDemo {
     constructor() {
         //----start3----ctor

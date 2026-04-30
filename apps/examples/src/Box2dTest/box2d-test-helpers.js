@@ -25,8 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { Box2DTestLayer } from "./box2-dtest-layer.js";
 
 ;
 
-var arrayOfBox2DTest = [Box2DTestLayer];
+;
+
+export var arrayOfBox2DTest = [Box2DTestLayer];

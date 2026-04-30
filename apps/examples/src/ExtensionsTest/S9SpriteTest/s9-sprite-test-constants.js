@@ -26,4 +26,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var sceneIdx = -1;
+export let sceneIdx = -1;
+
+export function _setsceneIdx(v) { sceneIdx = v; }

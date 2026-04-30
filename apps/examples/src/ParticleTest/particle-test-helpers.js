@@ -25,9 +25,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { DemoBigFlower } from "./demo-big-flower.js";
+import { DemoExplosion } from "./demo-explosion.js";
+import { DemoFire } from "./demo-fire.js";
+import { DemoFirework } from "./demo-firework.js";
+import { DemoFlower } from "./demo-flower.js";
+import { DemoGalaxy } from "./demo-galaxy.js";
+import { DemoMeteor } from "./demo-meteor.js";
+import { DemoModernArt } from "./demo-modern-art.js";
+import { DemoParticleFromFile } from "./demo-particle-from-file.js";
+import { DemoPause } from "./demo-pause.js";
+import { DemoRain } from "./demo-rain.js";
+import { DemoRing } from "./demo-ring.js";
+import { DemoRotFlower } from "./demo-rot-flower.js";
+import { DemoSmoke } from "./demo-smoke.js";
+import { DemoSnow } from "./demo-snow.js";
+import { DemoSpiral } from "./demo-spiral.js";
+import { DemoSun } from "./demo-sun.js";
+import { Issue704 } from "./issue704.js";
+import { Issue870 } from "./issue870.js";
+import { ParallaxParticle } from "./parallax-particle.js";
+import { ParticleBatchTest } from "./particle-batch-test.js";
+import { ParticleResizeTest } from "./particle-resize-test.js";
+import { particleSceneIdx , _setparticleSceneIdx} from "./particle-test-constants.js";
+import { RadiusMode1 } from "./radius-mode1.js";
+import { RadiusMode2 } from "./radius-mode2.js";
+
 ;
 
-var particleSceneArr = [
+export var particleSceneArr = [
     function () {
         return new DemoFlower();
     },
@@ -142,17 +168,17 @@ if( 'opengl' in cc.sys.capabilities && cc.rendererConfig.isWebGL){
 }
 
 export function nextParticleAction() {
-    particleSceneIdx++;
-    particleSceneIdx = particleSceneIdx % particleSceneArr.length;
+    _setparticleSceneIdx(particleSceneIdx + 1);
+    _setparticleSceneIdx(particleSceneIdx % particleSceneArr.length);
     return particleSceneArr[particleSceneIdx]();
 }
 
 ;
 
 export function backParticleAction() {
-    particleSceneIdx--;
+    _setparticleSceneIdx(particleSceneIdx - 1);
     if (particleSceneIdx < 0)
-        particleSceneIdx += particleSceneArr.length;
+        _setparticleSceneIdx(particleSceneIdx + (particleSceneArr.length));
 
     return particleSceneArr[particleSceneIdx]();
 }

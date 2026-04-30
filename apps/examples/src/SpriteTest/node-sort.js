@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_piece } from "../tests_resources.js";
+
 export class NodeSort extends SpriteTestDemo {
 
 

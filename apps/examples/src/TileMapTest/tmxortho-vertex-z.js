@@ -30,6 +30,11 @@
 // TMXOrthoVertexZ
 //
 //------------------------------------------------------------------
+import { s_resprefix } from "../tests_resources.js";
+import { director, winSize } from "../tests-main-constants.js";
+import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { TMXFixBugLayer } from "./tmxfix-bug-layer.js";
+
 export class TMXOrthoVertexZ extends TMXFixBugLayer {
     constructor() {
         super();

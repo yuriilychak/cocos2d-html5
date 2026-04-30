@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { sp } from "./spine-test-constants.js";
+
 export class customSkeletonAnimation extends sp.SkeletonAnimation {
     constructor() {
         super(...arguments);

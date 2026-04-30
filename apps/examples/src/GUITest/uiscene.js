@@ -24,6 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "./uimain-layer.js";
+import { TestScene } from "../test-scene.js";
+
 export class UIScene extends TestScene {
     runThisTest(){
         var layer = new UIMainLayer();

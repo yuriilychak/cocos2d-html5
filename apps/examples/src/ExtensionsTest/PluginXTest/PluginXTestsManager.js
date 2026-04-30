@@ -23,7 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var pluginXTestItemNames = [];
+import { AnalyticsTestLayer } from "./AnalyticsTest.js";
+import { IAPTestLayer } from "./IOSIAPTest.js";
+
+export var pluginXTestItemNames = [];
 
 if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
     pluginXTestItemNames.push({
@@ -42,7 +45,7 @@ if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
     });
 }
 
-var pluginXSceneManager = {
+export var pluginXSceneManager = {
     _currentPluginXSceneId: 0,
 
     getCurrentPluginXSceneId: function () {

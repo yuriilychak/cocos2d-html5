@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ExtensionsMainLayer } from "./extensions-main-layer.js";
+import { TestScene } from "../test-scene.js";
+
 export class ExtensionsTestScene extends TestScene {
     runThisTest() {
         var pLayer = new ExtensionsMainLayer();

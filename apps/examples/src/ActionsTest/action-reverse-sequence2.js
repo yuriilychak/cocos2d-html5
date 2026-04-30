@@ -30,6 +30,8 @@
 // ActionReverseSequence2
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionReverseSequence2 extends ActionsDemo {
   onEnter() {
     //----start29----onEnter

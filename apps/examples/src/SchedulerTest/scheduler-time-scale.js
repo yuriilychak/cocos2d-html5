@@ -26,6 +26,9 @@
  ****************************************************************************/
 
 // SchedulerTimeScale
+import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { s_stars1 } from "../tests_resources.js";
+
 export class SchedulerTimeScale extends SchedulerTestLayer {
     constructor() {
         super();

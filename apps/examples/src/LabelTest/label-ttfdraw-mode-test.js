@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AtlasDemo } from "./atlas-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class labelTTFDrawModeTest extends AtlasDemo {
     constructor() {
         super();

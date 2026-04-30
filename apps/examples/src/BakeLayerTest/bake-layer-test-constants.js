@@ -25,4 +25,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var _bakeLayerTestIdx = -1;
+export let _bakeLayerTestIdx = -1;
+
+export function _set_bakeLayerTestIdx(v) { _bakeLayerTestIdx = v; }

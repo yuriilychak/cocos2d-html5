@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class ShakyTiles3DTest extends EffectsBaseLayer {
     title() {
         return "ShakyTiles3D";

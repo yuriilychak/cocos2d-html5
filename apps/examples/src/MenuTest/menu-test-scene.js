@@ -25,6 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { MenuBugsTest } from "./menu-bugs-test.js";
+import { MenuLayerMainMenu } from "./menu-layer-main-menu.js";
+import { MenuLayer2 } from "./menu-layer2.js";
+import { MenuLayer3 } from "./menu-layer3.js";
+import { MenuLayer4 } from "./menu-layer4.js";
+import { RemoveMenuItemWhenMove } from "./remove-menu-item-when-move.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class MenuTestScene extends TestScene {
     runThisTest() {
         var layer1 = new MenuLayerMainMenu();

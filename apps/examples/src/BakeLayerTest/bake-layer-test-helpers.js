@@ -25,6 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BakeLayerColorTest } from "./bake-layer-color-test.js";
+import { _bakeLayerTestIdx , _set_bakeLayerTestIdx} from "./bake-layer-test-constants.js";
+import { BakeLayerTest1 } from "./bake-layer-test1.js";
+import { BakeLayerTest2 } from "./bake-layer-test2.js";
+
 ;
 
 ;
@@ -39,19 +44,19 @@
 //
 // Flow control
 //
-var arrayOfBakeLayerTest = [
+export var arrayOfBakeLayerTest = [
     BakeLayerTest1,
     BakeLayerTest2,
     BakeLayerColorTest
 ];
 
 export function nextBakeLayerTest(num) {
-    _bakeLayerTestIdx = num ? num - 1 : _bakeLayerTestIdx;
-    _bakeLayerTestIdx++;
-    _bakeLayerTestIdx = _bakeLayerTestIdx % arrayOfBakeLayerTest.length;
+    _set_bakeLayerTestIdx(num ? num - 1 : _bakeLayerTestIdx);
+    _set_bakeLayerTestIdx(_bakeLayerTestIdx + 1);
+    _set_bakeLayerTestIdx(_bakeLayerTestIdx % arrayOfBakeLayerTest.length);
 
     if(window.sideIndexBar){
-        _bakeLayerTestIdx = window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0);
+        _set_bakeLayerTestIdx(window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0));
     }
     return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 }
@@ -59,12 +64,12 @@ export function nextBakeLayerTest(num) {
 ;
 
 export function previousBakeLayerTest() {
-    _bakeLayerTestIdx--;
+    _set_bakeLayerTestIdx(_bakeLayerTestIdx - 1);
     if (_bakeLayerTestIdx < 0)
-        _bakeLayerTestIdx += arrayOfBakeLayerTest.length;
+        _set_bakeLayerTestIdx(_bakeLayerTestIdx + (arrayOfBakeLayerTest.length));
 
     if(window.sideIndexBar){
-        _bakeLayerTestIdx = window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0);
+        _set_bakeLayerTestIdx(window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0));
     }
     return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 }

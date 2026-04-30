@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { TestNode } from "./test-node.js";
+
 export class SchedulerUpdate extends SchedulerTestLayer {
     onEnter() {
         //----start5----onEnter

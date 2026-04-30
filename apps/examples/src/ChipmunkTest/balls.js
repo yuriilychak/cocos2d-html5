@@ -27,6 +27,9 @@
 // Chipmunk Demo: Balls
 //
 //------------------------------------------------------------------
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers.js";
+
 export class Balls extends ChipmunkDemo {
     constructor() {
         super();

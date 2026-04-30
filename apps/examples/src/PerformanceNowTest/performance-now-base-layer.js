@@ -22,6 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { scenePerformanceNowTestIdx } from "./performance-now-test-constants.js";
+import { arrayOfPerformanceNowTest, nextPerformanceNowTest, previousPerformanceNowTest, restartPerformanceNowTest } from "./performance-now-test-helpers.js";
+import { PerformanceNowTestScene } from "./performance-now-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class PerformanceNowBaseLayer extends BaseTestLayer {
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );

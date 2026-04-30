@@ -28,6 +28,9 @@
 //
 // SpriteEaseBezier action
 //
+import { EaseSpriteDemo } from "./ease-sprite-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class SpriteEaseBezierTest extends EaseSpriteDemo {
 
     onEnter(){

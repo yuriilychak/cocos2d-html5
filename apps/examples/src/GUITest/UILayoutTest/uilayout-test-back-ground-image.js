@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UILayoutTestBase } from "./uilayout-test-base.js";
+
 export class UILayoutTest_BackGroundImage extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();

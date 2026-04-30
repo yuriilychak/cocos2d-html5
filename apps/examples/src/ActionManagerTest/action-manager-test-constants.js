@@ -25,12 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_NODE = 5560;
+export var TAG_NODE = 5560;
 
-var TAG_GROSSINI = 5561;
+export var TAG_GROSSINI = 5561;
 
-var TAG_SEQUENCE = 5562;
+export var TAG_SEQUENCE = 5562;
 
-var ActionMgrTestIdx  = -1;
+export let ActionMgrTestIdx  = -1;
 
-var NOT_CRASHED_CONST = "NOT_CRASHED";
+export var NOT_CRASHED_CONST = "NOT_CRASHED";
+
+export function _setActionMgrTestIdx(v) { ActionMgrTestIdx = v; }

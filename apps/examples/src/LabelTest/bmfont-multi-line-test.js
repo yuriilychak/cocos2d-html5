@@ -30,6 +30,11 @@
 // BMFontMultiLineTest
 //
 //------------------------------------------------------------------
+import { AtlasDemo } from "./atlas-demo.js";
+import { TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2, TAG_BITMAP_ATLAS3 } from "./label-test-constants.js";
+import { s_resprefix } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class BMFontMultiLineTest extends AtlasDemo {
     constructor() {
         //----start9----ctor

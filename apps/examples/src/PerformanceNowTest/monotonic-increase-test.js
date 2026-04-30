@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { PerformanceNowBaseLayer } from "./performance-now-base-layer.js";
+
 export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
     constructor() {
         super();

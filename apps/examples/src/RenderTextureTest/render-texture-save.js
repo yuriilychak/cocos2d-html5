@@ -28,6 +28,10 @@
 // Tests
 //
 //------------------------------------------------------------------
+import { RenderTextureBaseLayer } from "./render-texture-base-layer.js";
+import { s_fire } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class RenderTextureSave extends RenderTextureBaseLayer {
     constructor() {
         super();

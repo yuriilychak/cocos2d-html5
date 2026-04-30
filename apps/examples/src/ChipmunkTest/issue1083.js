@@ -22,6 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { v } from "./chipmunk-test-helpers.js";
+
 export class Issue1083 extends ChipmunkDemo {
     constructor(){
         super();

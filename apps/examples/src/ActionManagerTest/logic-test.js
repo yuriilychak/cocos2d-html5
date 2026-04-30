@@ -30,6 +30,10 @@
 // Test2
 //
 //------------------------------------------------------------------
+import { ActionManagerTest } from "./action-manager-test.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { autoTestEnabled } from "../tests-main-constants.js";
+
 export class LogicTest extends ActionManagerTest {
     constructor() {
         super();

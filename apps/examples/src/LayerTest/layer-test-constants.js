@@ -27,8 +27,10 @@
 
 cc.TAG_LAYER = 1;
 
-var layerTestSceneIdx = -1;
+export let layerTestSceneIdx = -1;
 
-var LAYERTEST2_LAYER1_TAG = 1;
+export var LAYERTEST2_LAYER1_TAG = 1;
 
-var LAYERTEST2_LAYER2_TAG = 2;
+export var LAYERTEST2_LAYER2_TAG = 2;
+
+export function _setlayerTestSceneIdx(v) { layerTestSceneIdx = v; }

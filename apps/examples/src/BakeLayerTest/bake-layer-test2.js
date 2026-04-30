@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BakeLayerBaseTest } from "./bake-layer-base-test.js";
+import { s_pathGrossini, s_pathSister1 } from "../tests_resources.js";
+
 export class BakeLayerTest2 extends BakeLayerBaseTest {
 
     title() {

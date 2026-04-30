@@ -30,6 +30,10 @@
 // MenuLayer2
 //
 //------------------------------------------------------------------
+import { TAG_MENU } from "./menu-test-constants.js";
+import { s_aboutNormal, s_aboutSelect, s_highNormal, s_highSelect, s_playNormal, s_playSelect } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class MenuLayer2 extends cc.Layer {
 
     constructor() {

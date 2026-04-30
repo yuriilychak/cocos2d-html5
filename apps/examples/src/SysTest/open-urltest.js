@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SysTestBase } from "./sys-test-base.js";
+
 export class OpenURLTest extends SysTestBase {
     getTitle(){
         return "Open URL Test";

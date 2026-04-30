@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RemoteTextureTest } from "./remote-texture-test.js";
+import { TextureCacheTest } from "./texture-cache-test.js";
+import { TextureLoadImgTest } from "./texture-load-img-test.js";
+
 ;
 
 ;
@@ -36,11 +40,11 @@
 //
 // Flow control
 //
-var texCacheTestSceneIdx = -1;
+export var texCacheTestSceneIdx = -1;
 
 ;
 
-var arrayOfTexCacheTest = [
+export var arrayOfTexCacheTest = [
     TextureLoadImgTest,
     TextureCacheTest,
     RemoteTextureTest

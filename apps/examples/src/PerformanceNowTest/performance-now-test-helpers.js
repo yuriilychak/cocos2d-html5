@@ -22,6 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BasicPerformanceNowTest } from "./basic-performance-now-test.js";
+import { MonotonicIncreaseTest } from "./monotonic-increase-test.js";
+import { scenePerformanceNowTestIdx , _setscenePerformanceNowTestIdx} from "./performance-now-test-constants.js";
+
 ;
 
 ;
@@ -33,14 +37,14 @@
 //
 // Flow control
 //
-var arrayOfPerformanceNowTest = [
+export var arrayOfPerformanceNowTest = [
     BasicPerformanceNowTest,
     MonotonicIncreaseTest
 ];
 
 export function nextPerformanceNowTest() {
-    scenePerformanceNowTestIdx++;
-    scenePerformanceNowTestIdx = scenePerformanceNowTestIdx % arrayOfPerformanceNowTest.length;
+    _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx + 1);
+    _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx % arrayOfPerformanceNowTest.length);
 
     return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
 }
@@ -48,9 +52,9 @@ export function nextPerformanceNowTest() {
 ;
 
 export function previousPerformanceNowTest() {
-    scenePerformanceNowTestIdx--;
+    _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx - 1);
     if (scenePerformanceNowTestIdx < 0)
-        scenePerformanceNowTestIdx += arrayOfPerformanceNowTest.length;
+        _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx + (arrayOfPerformanceNowTest.length));
 
     return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
 }

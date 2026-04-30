@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class FadeOutDownTilesTest extends EffectsBaseLayer {
     title() {
         return "FadeOutDownTilesTest";

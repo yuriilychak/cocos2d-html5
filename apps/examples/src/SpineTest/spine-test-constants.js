@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var sp = sp || {};
+export var sp = sp || {};
 
-var spineSceneIdx = -1;
+export let spineSceneIdx = -1;
+
+export function _setspineSceneIdx(v) { spineSceneIdx = v; }

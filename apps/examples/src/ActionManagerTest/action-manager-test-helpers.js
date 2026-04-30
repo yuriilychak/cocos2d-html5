@@ -25,6 +25,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ActionMgrTestIdx , _setActionMgrTestIdx} from "./action-manager-test-constants.js";
+import { CrashTest } from "./crash-test.js";
+import { LogicTest } from "./logic-test.js";
+import { PauseTest } from "./pause-test.js";
+import { RemoveTest } from "./remove-test.js";
+import { ResumeTest } from "./resume-test.js";
+
 ;
 
 ;
@@ -43,7 +50,7 @@
 //
 // Flow control
 //
-var arrayOfActionMgrTest = [
+export var arrayOfActionMgrTest = [
     CrashTest,
     LogicTest,
     PauseTest,
@@ -53,13 +60,13 @@ var arrayOfActionMgrTest = [
 
 export function nextActionMgrTest(num) {
 
-    ActionMgrTestIdx = num ? num - 1 : ActionMgrTestIdx;
+    _setActionMgrTestIdx(num ? num - 1 : ActionMgrTestIdx);
 
-    ActionMgrTestIdx++;
-    ActionMgrTestIdx = ActionMgrTestIdx % arrayOfActionMgrTest.length;
+    _setActionMgrTestIdx(ActionMgrTestIdx + 1);
+    _setActionMgrTestIdx(ActionMgrTestIdx % arrayOfActionMgrTest.length);
 
     if(window.sideIndexBar){
-        ActionMgrTestIdx = window.sideIndexBar.changeTest(ActionMgrTestIdx, 0);
+        _setActionMgrTestIdx(window.sideIndexBar.changeTest(ActionMgrTestIdx, 0));
     }
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
@@ -68,12 +75,12 @@ export function nextActionMgrTest(num) {
 ;
 
 export function previousActionMgrTest() {
-    ActionMgrTestIdx--;
+    _setActionMgrTestIdx(ActionMgrTestIdx - 1);
     if (ActionMgrTestIdx < 0)
-        ActionMgrTestIdx += arrayOfActionMgrTest.length;
+        _setActionMgrTestIdx(ActionMgrTestIdx + (arrayOfActionMgrTest.length));
 
     if(window.sideIndexBar){
-        ActionMgrTestIdx = window.sideIndexBar.changeTest(ActionMgrTestIdx, 0);
+        _setActionMgrTestIdx(window.sideIndexBar.changeTest(ActionMgrTestIdx, 0));
     }
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();

@@ -26,10 +26,10 @@
 /**
  * The audio component for Cocostudio.
  */
-import { Loader } from "@aspect/core";
+import { Component, Loader } from "@aspect/core";
 import { audioEngine } from "@aspect/audio";
 
-export class ComAudio extends ccs.Component {
+export class ComAudio extends Component {
 
     /**
      * Construction of ccs.ComAudio
@@ -273,4 +273,3 @@ export class ComAudio extends ccs.Component {
     }
 };
 
-ccs.ComAudio = ComAudio;

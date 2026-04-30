@@ -25,6 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Effect1 } from "./effect1.js";
+import { Effect2 } from "./effect2.js";
+import { Effect3 } from "./effect3.js";
+import { Effect4 } from "./effect4.js";
+import { Effect5 } from "./effect5.js";
+import { sceneIndex , _setsceneIndex} from "./effects-advanced-test-constants.js";
+import { Issue631 } from "./issue631.js";
+import { Lens3DTarget } from "./lens3-dtarget.js";
+
 ;
 
 ;
@@ -47,7 +56,7 @@ Lens3DTarget.create = function (action) {
 
 ;
 
-var arrayOfEffectsAdvancedTest = [
+export var arrayOfEffectsAdvancedTest = [
     Effect3,
     Effect2,
     Effect1,
@@ -59,11 +68,11 @@ if (!cc.sys.isNative)
 	arrayOfEffectsAdvancedTest.push(Effect4);
 
 export function nextEffectAdvanceAction() {
-    sceneIndex++;
-    sceneIndex = sceneIndex % arrayOfEffectsAdvancedTest.length;
+    _setsceneIndex(sceneIndex + 1);
+    _setsceneIndex(sceneIndex % arrayOfEffectsAdvancedTest.length);
 
     if(window.sideIndexBar){
-        sceneIndex = window.sideIndexBar.changeTest(sceneIndex, 15);
+        _setsceneIndex(window.sideIndexBar.changeTest(sceneIndex, 15));
     }
 
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
@@ -72,12 +81,12 @@ export function nextEffectAdvanceAction() {
 ;
 
 export function backEffectAdvanceAction() {
-    sceneIndex--;
+    _setsceneIndex(sceneIndex - 1);
     if (sceneIndex < 0)
-        sceneIndex += arrayOfEffectsAdvancedTest.length;
+        _setsceneIndex(sceneIndex + (arrayOfEffectsAdvancedTest.length));
 
     if(window.sideIndexBar){
-        sceneIndex = window.sideIndexBar.changeTest(sceneIndex, 15);
+        _setsceneIndex(window.sideIndexBar.changeTest(sceneIndex, 15));
     }
 
     return new arrayOfEffectsAdvancedTest[sceneIndex]();

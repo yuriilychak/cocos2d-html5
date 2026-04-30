@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class JumpTiles3DTest extends EffectsBaseLayer {
     title() {
         return "JumpTiles3D";

@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ControlSceneManager } from "./CCControlSceneManager.js";
+import { ExtensionsTestScene } from "../extensions-test-scene.js";
+import { s_extensions_background, s_extensions_ribbon, s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../../tests_resources.js";
+
 export class ControlScene extends cc.Layer {
     constructor() {
         super();

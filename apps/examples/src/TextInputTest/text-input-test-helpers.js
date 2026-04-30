@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TextFieldTTFActionTest } from "./text-field-ttfaction-test.js";
+import { TextFieldTTFDefaultTest } from "./text-field-ttfdefault-test.js";
+import { sceneIdx , _setsceneIdx} from "./text-input-test-constants.js";
+
 ;
 
 ;
@@ -38,14 +42,14 @@
 //
 // Flow control
 //
-var arrayOfTextInputTest = [
+export var arrayOfTextInputTest = [
     TextFieldTTFDefaultTest,
     TextFieldTTFActionTest
 ];
 
 export function nextTextInputTest() {
-    sceneIdx++;
-    sceneIdx = sceneIdx % arrayOfTextInputTest.length;
+    _setsceneIdx(sceneIdx + 1);
+    _setsceneIdx(sceneIdx % arrayOfTextInputTest.length);
 
     return new arrayOfTextInputTest[sceneIdx]();
 }
@@ -53,9 +57,9 @@ export function nextTextInputTest() {
 ;
 
 export function previousTextInputTest() {
-    sceneIdx--;
+    _setsceneIdx(sceneIdx - 1);
     if (sceneIdx < 0)
-        sceneIdx += arrayOfTextInputTest.length;
+        _setsceneIdx(sceneIdx + (arrayOfTextInputTest.length));
 
     return new arrayOfTextInputTest[sceneIdx]();
 }

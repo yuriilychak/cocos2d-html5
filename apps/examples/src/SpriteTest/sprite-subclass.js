@@ -25,6 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { MySprite1 } from "./my-sprite1.js";
+import { MySprite2 } from "./my-sprite2.js";
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_ghosts, s_ghostsPlist, s_pathGrossini } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteSubclass extends SpriteTestDemo {
 
     constructor() {

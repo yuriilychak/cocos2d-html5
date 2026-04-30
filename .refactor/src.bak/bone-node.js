@@ -34,6 +34,7 @@
     
 import { AffineTransform, BlendFunc, Color, Node, Point, Rect, RendererConfig, Size, arrayRemoveObject, assert, log } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
+import { SkeletonNode } from "./skeleton-node.js";
 
     var _BlendFunc = BlendFunc;
     var type = {
@@ -360,7 +361,7 @@ import { DrawNode } from "@aspect/shape-nodes";
         _removeFromBoneList(bone) {
             if (
                 this._rootSkeleton != null &&
-                bone instanceof ccs.SkeletonNode &&
+                bone instanceof SkeletonNode &&
                 bone._rootSkeleton === this._rootSkeleton
             ) {
                 bone._rootSkeleton = null;
@@ -558,5 +559,4 @@ import { DrawNode } from "@aspect/shape-nodes";
             }
         }
     }
-ccs.BoneNode = BoneNode;
 export { BoneNode };

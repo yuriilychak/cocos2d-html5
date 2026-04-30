@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_TILE_MAP = 1;
+export var TAG_TILE_MAP = 1;
 
-var tileTestSceneIdx = -1;
+export let tileTestSceneIdx = -1;
+
+export function _settileTestSceneIdx(v) { tileTestSceneIdx = v; }

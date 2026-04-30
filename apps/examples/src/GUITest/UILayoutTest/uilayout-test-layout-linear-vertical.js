@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UILayoutTestBase } from "./uilayout-test-base.js";
+
 export class UILayoutTest_Layout_Linear_Vertical extends UILayoutTestBase {
     createLayout() {
         var layout = new ccui.Layout();

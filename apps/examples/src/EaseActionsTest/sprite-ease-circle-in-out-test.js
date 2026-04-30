@@ -28,6 +28,9 @@
 //
 // SpriteEaseCircleInOut
 //
+import { EaseSpriteDemo } from "./ease-sprite-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteEaseCircleInOutTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();

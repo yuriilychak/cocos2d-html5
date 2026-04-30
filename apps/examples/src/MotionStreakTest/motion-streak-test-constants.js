@@ -26,10 +26,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_LABEL = 1;
+export var TAG_LABEL = 1;
 
-var TAG_SPRITE1 = 2;
+export var TAG_SPRITE1 = 2;
 
-var TAG_SPRITE2 = 3;
+export var TAG_SPRITE2 = 3;
 
-var sceneIdx = -1;
+export let sceneIdx = -1;
+
+export function _setsceneIdx(v) { sceneIdx = v; }

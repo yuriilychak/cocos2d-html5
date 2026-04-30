@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextEffectAdvanceAction } from "./effects-advanced-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+
 export class EffectAdvanceScene extends TestScene {
     runThisTest() {
         sceneIndex = -1;

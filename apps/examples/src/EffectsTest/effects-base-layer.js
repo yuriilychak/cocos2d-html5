@@ -26,6 +26,13 @@
 //
 // Base Layer
 //
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { effectsTestSceneIdx } from "./effects-test-constants.js";
+import { arrayOfEffectsTest, nextEffectsTest, previousEffectsTest, restartEffectsTest } from "./effects-test-helpers.js";
+import { EffectsTestScene } from "./effects-test-scene.js";
+import { s_back3, s_pathSister1, s_pathSister2 } from "../tests_resources.js";
+import { director, winSize } from "../tests-main-constants.js";
+
 export class EffectsBaseLayer extends BaseTestLayer {
     code() {
         return "";

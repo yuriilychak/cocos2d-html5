@@ -30,6 +30,11 @@
 // SpriteHybrid
 //
 //------------------------------------------------------------------
+import { TAG_NODE, TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossini, s_grossiniPlist } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteHybrid extends SpriteTestDemo {
 
     constructor() {

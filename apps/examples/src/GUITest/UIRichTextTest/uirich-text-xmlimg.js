@@ -27,6 +27,8 @@
 //
 // UIRichTextXMLImg
 //
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIRichTextXMLImg extends UIMainLayer {
     constructor() {
         super();

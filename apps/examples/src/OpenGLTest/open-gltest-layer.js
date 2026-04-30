@@ -23,6 +23,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { OpenGLTestIdx } from "./open-gltest-constants.js";
+import { arrayOfOpenGLTest, nextOpenGLTest, previousOpenGLTest, restartOpenGLTest } from "./open-gltest-helpers.js";
+import { OpenGLTestScene } from "./open-gltest-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class OpenGLTestLayer extends BaseTestLayer {
 
     constructor() {

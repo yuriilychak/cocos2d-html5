@@ -27,7 +27,9 @@
  * Base singleton object for ccs.ActionManager.
  * @name ccs.actionManager
  */
-export const actionManager = ccs.actionManager = {
+import { ActionObject } from "./action-object.js";
+
+export const actionManager = {
   _actionDic: {},
 
   /**
@@ -43,7 +45,7 @@ export const actionManager = ccs.actionManager = {
     var actionList = dic["actionlist"];
     var locActionList = [];
     for (var i = 0; i < actionList.length; i++) {
-      var locAction = new ccs.ActionObject();
+      var locAction = new ActionObject();
       var locActionDic = actionList[i];
       locAction.initWithDictionary(locActionDic, root);
       locActionList.push(locAction);

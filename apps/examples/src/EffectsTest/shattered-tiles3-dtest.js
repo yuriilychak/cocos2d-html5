@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class ShatteredTiles3DTest extends EffectsBaseLayer {
     title() {
         return "ShatteredTiles3D";

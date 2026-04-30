@@ -28,6 +28,10 @@
 // Issue1464
 //
 //------------------------------------------------------------------
+import { RenderTextureBaseLayer } from "./render-texture-base-layer.js";
+import { s_grossini } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class Issue1464 extends RenderTextureBaseLayer {
 
     constructor() {

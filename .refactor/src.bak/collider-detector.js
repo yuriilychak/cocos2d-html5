@@ -27,8 +27,10 @@
  * @ignore
  */
 import { AffineTransform, NewClass, Point, arrayRemoveObject } from "@aspect/core";
+import { ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "./armature-define.js";
+import { ContourVertex2 } from "./datas.js";
 
-export const PT_RATIO = ccs.PT_RATIO = 32;
+export const PT_RATIO = 32;
 
 /**
  * Base class for ccs.ColliderFilter
@@ -70,8 +72,8 @@ export class ColliderBody extends NewClass {
         super();
         this.shape = null;
         this.coutourData = contourData;
-        this.colliderFilter = new ccs.ColliderFilter();
-        if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+        this.colliderFilter = new ColliderFilter();
+        if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             this._calculatedVertexList = [];
         }
     }
@@ -176,7 +178,7 @@ export class ColliderDetector extends NewClass {
         this._colliderBodyList.length = 0;
         if (bone)
             this._bone = bone;
-        this._filter = new ccs.ColliderFilter();
+        this._filter = new ColliderFilter();
         return true;
     }
 
@@ -185,14 +187,14 @@ export class ColliderDetector extends NewClass {
      * @param {ccs.ContourData} contourData
      */
     addContourData(contourData) {
-        var colliderBody = new ccs.ColliderBody(contourData);
+        var colliderBody = new ColliderBody(contourData);
         this._colliderBodyList.push(colliderBody);
 
-        if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+        if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             var calculatedVertexList = colliderBody.getCalculatedVertexList();
             var vertexList = contourData.vertexList;
             for (var i = 0; i < vertexList.length; i++) {
-                var newVertex = new ccs.ContourVertex2(0, 0);
+                var newVertex = new ContourVertex2(0, 0);
                 calculatedVertexList.push(newVertex);
             }
         }
@@ -314,7 +316,7 @@ export class ColliderDetector extends NewClass {
                 locHelpPoint.y = vs[j].y;
                 locHelpPoint = AffineTransform.applyToPoint(locHelpPoint, t);
 
-                if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+                if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
                     var v = new Point(0, 0);
                     v.x = locHelpPoint.x;
                     v.y = locHelpPoint.y;
@@ -373,8 +375,5 @@ export class ColliderDetector extends NewClass {
 
 };
 
-ccs.ColliderFilter = ColliderFilter;
 
-ccs.ColliderBody = ColliderBody;
 
-ccs.ColliderDetector = ColliderDetector;

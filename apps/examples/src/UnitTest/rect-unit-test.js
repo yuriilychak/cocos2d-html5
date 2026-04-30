@@ -28,6 +28,8 @@
 // RectUnitTest
 //
 //------------------------------------------------------------------
+import { UnitTestBase } from "./unit-test-base.js";
+
 export class RectUnitTest extends UnitTestBase {
     constructor() {
         super();

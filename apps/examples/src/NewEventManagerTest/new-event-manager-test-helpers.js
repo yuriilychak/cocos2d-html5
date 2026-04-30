@@ -25,6 +25,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { CustomEventTest } from "./custom-event-test.js";
+import { DirectorEventTest } from "./director-event-test.js";
+import { FixedPriorityTest } from "./fixed-priority-test.js";
+import { GlobalZTouchTest } from "./global-ztouch-test.js";
+import { Issue4160 } from "./issue4160.js";
+import { Issue9898 } from "./issue9898.js";
+import { LabelKeyboardEventTest } from "./label-keyboard-event-test.js";
+import { eventDispatcherSceneIdx , _seteventDispatcherSceneIdx} from "./new-event-manager-test-constants.js";
+import { PauseResumeTargetTest } from "./pause-resume-target-test.js";
+import { RemoveAndRetainNodeTest } from "./remove-and-retain-node-test.js";
+import { RemoveListenerAfterAddingTest } from "./remove-listener-after-adding-test.js";
+import { RemoveListenerWhenDispatching } from "./remove-listener-when-dispatching.js";
+import { SpriteAccelerationEventTest } from "./sprite-acceleration-event-test.js";
+import { StopPropagationTest } from "./stop-propagation-test.js";
+import { TouchableSpriteTest } from "./touchable-sprite-test.js";
+import { TouchableSprite } from "./touchable-sprite.js";
+
 ;
 
 ;
@@ -162,7 +179,7 @@ Issue9898.create = function(){
 
 ;
 
-var arrayOfEventDispatcherTest = [
+export var arrayOfEventDispatcherTest = [
     TouchableSpriteTest,
     FixedPriorityTest,
     RemoveListenerWhenDispatching,
@@ -180,11 +197,11 @@ var arrayOfEventDispatcherTest = [
 ];
 
 export function nextDispatcherTest() {
-    eventDispatcherSceneIdx++;
-    eventDispatcherSceneIdx = eventDispatcherSceneIdx % arrayOfEventDispatcherTest.length;
+    _seteventDispatcherSceneIdx(eventDispatcherSceneIdx + 1);
+    _seteventDispatcherSceneIdx(eventDispatcherSceneIdx % arrayOfEventDispatcherTest.length);
 
     if(window.sideIndexBar){
-        eventDispatcherSceneIdx = window.sideIndexBar.changeTest(eventDispatcherSceneIdx, 11);
+        _seteventDispatcherSceneIdx(window.sideIndexBar.changeTest(eventDispatcherSceneIdx, 11));
     }
 
     return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
@@ -193,12 +210,12 @@ export function nextDispatcherTest() {
 ;
 
 export function previousDispatcherTest() {
-    eventDispatcherSceneIdx--;
+    _seteventDispatcherSceneIdx(eventDispatcherSceneIdx - 1);
     if (eventDispatcherSceneIdx < 0)
-        eventDispatcherSceneIdx += arrayOfEventDispatcherTest.length;
+        _seteventDispatcherSceneIdx(eventDispatcherSceneIdx + (arrayOfEventDispatcherTest.length));
 
     if(window.sideIndexBar){
-        eventDispatcherSceneIdx = window.sideIndexBar.changeTest(eventDispatcherSceneIdx, 11);
+        _seteventDispatcherSceneIdx(window.sideIndexBar.changeTest(eventDispatcherSceneIdx, 11));
     }
 
     return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();

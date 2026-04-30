@@ -28,6 +28,9 @@
 // All At Once Touches
 //
 //------------------------------------------------------------------
+import { EventTest } from "./event-test.js";
+import { s_pathR2 } from "../tests_resources.js";
+
 export class TouchAllAtOnce extends EventTest {
     init() {
         super.init();

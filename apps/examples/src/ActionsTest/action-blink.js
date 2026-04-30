@@ -30,6 +30,8 @@
 // ActionBlink
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionBlink extends ActionsDemo {
     constructor() {
         super();

@@ -25,6 +25,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { FixBugBaseTest } from "./fix-bug-base-test.js";
+import { TileDemo } from "./tile-demo.js";
+import { tileTestSceneIdx , _settileTestSceneIdx} from "./tile-map-test-constants.js";
+import { TMXBug787 } from "./tmxbug787.js";
+import { TMXBug987 } from "./tmxbug987.js";
+import { TMXFixBugLayer } from "./tmxfix-bug-layer.js";
+import { TMXGIDObjectsTest } from "./tmxgidobjects-test.js";
+import { TMXHexTest } from "./tmxhex-test.js";
+import { TMXIsoMoveLayer } from "./tmxiso-move-layer.js";
+import { TMXIsoObjectsTest } from "./tmxiso-objects-test.js";
+import { TMXIsoOffsetTest } from "./tmxiso-offset-test.js";
+import { TMXIsoTest } from "./tmxiso-test.js";
+import { TMXIsoTest1 } from "./tmxiso-test1.js";
+import { TMXIsoTest2 } from "./tmxiso-test2.js";
+import { TMXIsoVertexZ } from "./tmxiso-vertex-z.js";
+import { TMXIsoZorder } from "./tmxiso-zorder.js";
+import { TMXOrthoFlipRunTimeTest } from "./tmxortho-flip-run-time-test.js";
+import { TMXOrthoFlipTest } from "./tmxortho-flip-test.js";
+import { TMXOrthoFromXMLTest } from "./tmxortho-from-xmltest.js";
+import { TMXOrthoMoveLayer } from "./tmxortho-move-layer.js";
+import { TMXOrthoObjectsTest } from "./tmxortho-objects-test.js";
+import { TMXOrthoTest } from "./tmxortho-test.js";
+import { TMXOrthoTest2 } from "./tmxortho-test2.js";
+import { TMXOrthoTest3 } from "./tmxortho-test3.js";
+import { TMXOrthoTest4 } from "./tmxortho-test4.js";
+import { TMXOrthoVertexZ } from "./tmxortho-vertex-z.js";
+import { TMXOrthoZorder } from "./tmxortho-zorder.js";
+import { TMXReadWriteTest } from "./tmxread-write-test.js";
+import { TMXResizeTest } from "./tmxresize-test.js";
+import { TMXTilePropertyTest } from "./tmxtile-property-test.js";
+import { TMXTilesetTest } from "./tmxtileset-test.js";
+import { TMXUncompressedTest } from "./tmxuncompressed-test.js";
+
 ;
 
 ;
@@ -109,7 +143,7 @@ Object.getOwnPropertyNames(TileDemo.prototype).forEach(function(name) {
 //
 // Flow control
 //
-var arrayOfTileMapTest = [
+export var arrayOfTileMapTest = [
     TMXOrthoTest,
     TMXOrthoTest2,
     TMXOrthoTest3,
@@ -145,8 +179,8 @@ if ( !cc.sys.isNative ){
 }
 
 export function nextTileMapTest() {
-    tileTestSceneIdx++;
-    tileTestSceneIdx = tileTestSceneIdx % arrayOfTileMapTest.length;
+    _settileTestSceneIdx(tileTestSceneIdx + 1);
+    _settileTestSceneIdx(tileTestSceneIdx % arrayOfTileMapTest.length);
 
     return new arrayOfTileMapTest[tileTestSceneIdx]();
 }
@@ -154,9 +188,9 @@ export function nextTileMapTest() {
 ;
 
 export function previousTileMapTest() {
-    tileTestSceneIdx--;
+    _settileTestSceneIdx(tileTestSceneIdx - 1);
     if (tileTestSceneIdx < 0)
-        tileTestSceneIdx += arrayOfTileMapTest.length;
+        _settileTestSceneIdx(tileTestSceneIdx + (arrayOfTileMapTest.length));
 
     return new arrayOfTileMapTest[tileTestSceneIdx]();
 }

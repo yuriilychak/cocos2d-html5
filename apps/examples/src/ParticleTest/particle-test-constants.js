@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_LABEL_ATLAS = 1;
+export var TAG_LABEL_ATLAS = 1;
 
-var particleSceneIdx = -1;
+export let particleSceneIdx = -1;
+
+export function _setparticleSceneIdx(v) { particleSceneIdx = v; }

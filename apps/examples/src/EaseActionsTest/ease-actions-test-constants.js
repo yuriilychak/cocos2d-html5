@@ -31,4 +31,6 @@ TAG_ACTION2_EASE_ACTIONS = 2;
 
 TAG_SLIDER_EASE_ACTIONS = 1;
 
-var easeActionsTestIdx = -1;
+export let easeActionsTestIdx = -1;
+
+export function _seteaseActionsTestIdx(v) { easeActionsTestIdx = v; }

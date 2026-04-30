@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectAdvanceTextLayer } from "./effect-advance-text-layer.js";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
+import { Lens3DTarget } from "./lens3-dtarget.js";
+
 export class Effect4 extends EffectAdvanceTextLayer {
     title() {
         return "Jumpy Lens3D";

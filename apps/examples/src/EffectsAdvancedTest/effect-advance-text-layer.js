@@ -25,6 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectAdvanceScene } from "./effect-advance-scene.js";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
+import { backEffectAdvanceAction, nextEffectAdvanceAction, restartEffectAdvanceAction } from "./effects-advanced-test-helpers.js";
+import { s_back3, s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_pathSister1, s_pathSister2 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class EffectAdvanceTextLayer extends cc.Layer {
 
     constructor() {

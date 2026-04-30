@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { director } from "../tests-main-constants.js";
+
 export class TestLayer extends cc.Layer {
     constructor() {
         super();

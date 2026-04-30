@@ -24,8 +24,10 @@
  ****************************************************************************/
 
 import { Director, Loader, NewClass, Node, Path, log, warn } from "@aspect/core";
+import { armatureDataManager } from "./armature-data-manager.js";
+import { Armature } from "./armature.js";
 
-const _ccsLoad = ccs._load = (function () {
+export const _ccsLoad = (function () {
 
     /**
      * load file
@@ -59,8 +61,8 @@ const _ccsLoad = ccs._load = (function () {
         var version = json["version"] || json["Version"];
         if (!version && json["armature_data"]) {
             warn("%s is armature. please use:", file);
-            warn("    ccs.armatureDataManager.addArmatureFileInfoAsync(%s);", file);
-            warn("    var armature = new ccs.Armature('name');");
+            warn("    armatureDataManager.addArmatureFileInfoAsync(%s);", file);
+            warn("    var armature = new Armature('name');");
             return new Node();
         }
         var currentParser = getParser(parse, version);
@@ -182,8 +184,8 @@ export function load (file, path) {
         action: null
     };
 
-    object.node = ccs._load(file, null, path);
-    object.action = ccs._load(file, "action", path);
+    object.node = _ccsLoad(file, null, path);
+    object.action = _ccsLoad(file, "action", path);
     if (object.action && object.action.tag === -1 && object.node)
         object.action.tag = object.node.tag;
     return object;
@@ -202,7 +204,7 @@ load.preload = true;
  * @returns {{node: Node, action: Action}}
  */
 export function loadWithVisibleSize (file, path) {
-    var object = ccs.load(file, path);
+    var object = load(file, path);
     var size = Director.getInstance().getVisibleSize();
     if (object.node && size) {
         object.node.setContentSize(size.width, size.height);
@@ -213,7 +215,7 @@ export function loadWithVisibleSize (file, path) {
 
 //Forward compatible interface
 
-export const actionTimelineCache = ccs.actionTimelineCache = {
+export const actionTimelineCache = {
 
     //@deprecated This function will be deprecated sooner or later please use ccs.load
     /**
@@ -222,11 +224,11 @@ export const actionTimelineCache = ccs.actionTimelineCache = {
      * @returns {*}
      */
     createAction: function (file) {
-        return ccs._load(file, "action");
+        return _ccsLoad(file, "action");
     }
 };
 
-export const csLoader = ccs.csLoader = {
+export const csLoader = {
 
     //@deprecated This function will be deprecated sooner or later please use ccs.load
     /**
@@ -235,7 +237,7 @@ export const csLoader = ccs.csLoader = {
      * @returns {*}
      */
     createNode: function (file) {
-        return ccs._load(file);
+        return _ccsLoad(file);
     }
 };
 
@@ -249,12 +251,12 @@ Loader.getInstance().register(["json"], {
                     list = [],
                     tmpUrl, normalUrl;
                 for (var i = 0; i < UsedResources.length; i++) {
-                    if (!ccs.load.preload && /\.(png|jpg$)/.test(UsedResources[i]))
+                    if (!load.preload && /\.(png|jpg$)/.test(UsedResources[i]))
                         continue;
                     tmpUrl = path.join(dirname, UsedResources[i]);
                     normalUrl = path._normalize(tmpUrl);
-                    if (!ccs.load.validate[normalUrl]) {
-                        ccs.load.validate[normalUrl] = true;
+                    if (!load.validate[normalUrl]) {
+                        load.validate[normalUrl] = true;
                         list.push(normalUrl);
                     }
                 }
@@ -269,8 +271,5 @@ Loader.getInstance().register(["json"], {
     }
 });
 
-ccs._parser = _parser;
 
-ccs.load = load;
 
-ccs.loadWithVisibleSize = loadWithVisibleSize;

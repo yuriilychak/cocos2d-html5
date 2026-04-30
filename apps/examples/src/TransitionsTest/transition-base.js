@@ -25,6 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { director } from "../tests-main-constants.js";
+import { arrayOfTransitionsTest, transitionsIdx , _settransitionsIdx} from "./transitions-test-constants.js";
+import { TransitionsTestScene } from "./transitions-test-scene.js";
+
 export class TransitionBase extends BaseTestLayer {
 
     title() {
@@ -73,8 +78,8 @@ export class TransitionBase extends BaseTestLayer {
             director.runScene(scene);
     }
     onNextCallback(sender) {
-        transitionsIdx++;
-        transitionsIdx = transitionsIdx % arrayOfTransitionsTest.length;
+        _settransitionsIdx(transitionsIdx + 1);
+        _settransitionsIdx(transitionsIdx % arrayOfTransitionsTest.length);
 
         var s = new TransitionsTestScene();
 
@@ -86,9 +91,9 @@ export class TransitionBase extends BaseTestLayer {
             director.runScene(scene);
     }
     onBackCallback(sender) {
-        transitionsIdx--;
+        _settransitionsIdx(transitionsIdx - 1);
         if (transitionsIdx < 0)
-            transitionsIdx += arrayOfTransitionsTest.length;
+            _settransitionsIdx(transitionsIdx + (arrayOfTransitionsTest.length));
 
         var s = new TransitionsTestScene();
         var layer = this.createNextScene();

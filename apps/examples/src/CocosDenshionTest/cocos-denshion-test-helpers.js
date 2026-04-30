@@ -25,11 +25,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { EFFECT_FILE, MUSIC_FILE } from "./cocos-denshion-test-constants.js";
 
 ;
 
-var soundId = null;
+;
+
+export var soundId = null;
 
 export function playMusic() {
     cc.log("play background music");

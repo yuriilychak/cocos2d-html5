@@ -25,21 +25,21 @@
 /**
  * @ignore
  */
-ccs.VERSION_COMBINED = 0.30;
-ccs.VERSION_CHANGE_ROTATION_RANGE = 1.0;
-ccs.VERSION_COLOR_READING = 1.1;
-ccs.MAX_VERTEXZ_VALUE = 5000000.0;
-ccs.ARMATURE_MAX_CHILD = 50.0;
-ccs.ARMATURE_MAX_ZORDER = 100;
-ccs.ARMATURE_MAX_COUNT = ((ccs.MAX_VERTEXZ_VALUE) / (ccs.ARMATURE_MAX_CHILD) / ccs.ARMATURE_MAX_ZORDER);
-ccs.AUTO_ADD_SPRITE_FRAME_NAME_PREFIX = false;
-ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT = false;
-ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX = false;
+export const VERSION_COMBINED = 0.30;
+export const VERSION_CHANGE_ROTATION_RANGE = 1.0;
+export const VERSION_COLOR_READING = 1.1;
+export const MAX_VERTEXZ_VALUE = 5000000.0;
+export const ARMATURE_MAX_CHILD = 50.0;
+export const ARMATURE_MAX_ZORDER = 100;
+export const ARMATURE_MAX_COUNT = ((MAX_VERTEXZ_VALUE) / (ARMATURE_MAX_CHILD) / ARMATURE_MAX_ZORDER);
+export const AUTO_ADD_SPRITE_FRAME_NAME_PREFIX = false;
+export const ENABLE_PHYSICS_CHIPMUNK_DETECT = false;
+export const ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX = false;
 
 /**
  * Returns the version of Armature.
  * @returns {string}
  */
-ccs.armatureVersion = function(){
+export const armatureVersion = function(){
     return "v1.1.0.0";
 };

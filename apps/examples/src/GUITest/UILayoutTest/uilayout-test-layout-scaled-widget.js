@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
     init(){
         if (super.init()) {

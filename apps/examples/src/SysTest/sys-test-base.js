@@ -29,6 +29,12 @@
 // SysTestBase
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { sysTestSceneIdx } from "./sys-test-constants.js";
+import { arrayOfSysTest, nextSysTest, previousSysTest, restartSysTest } from "./sys-test-helpers.js";
+import { SysTestScene } from "./sys-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class SysTestBase extends BaseTestLayer {
 
     constructor() {

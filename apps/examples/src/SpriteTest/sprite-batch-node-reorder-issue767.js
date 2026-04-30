@@ -30,6 +30,11 @@
 // SpriteBatchNodeReorderIssue767
 //
 //------------------------------------------------------------------
+import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE_LEFT, TAG_SPRITE_RIGHT } from "./sprite-test-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_ghosts, s_ghostsPlist } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
     constructor() {

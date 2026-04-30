@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+import { nextTileMapTest } from "./tile-map-test-helpers.js";
+
 export class TileMapTestScene extends TestScene {
     runThisTest(num) {
         tileTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

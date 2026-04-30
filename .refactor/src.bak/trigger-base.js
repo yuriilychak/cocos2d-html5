@@ -28,8 +28,11 @@
  * @function
  * @param {Number} event
  */
+import { TInfo } from "./object-factory.js";
+import { triggerManager } from "./trigger-mng.js";
+
 export function sendEvent (event) {
-    var triggerObjArr = ccs.triggerManager.get(event);
+    var triggerObjArr = triggerManager.get(event);
     if (triggerObjArr == null)
         return;
     for (var i = 0; i < triggerObjArr.length; i++) {
@@ -45,8 +48,6 @@ export function sendEvent (event) {
  * @param {function} func
  */
 export function registerTriggerClass (className, func) {
-    new ccs.TInfo(className, func);
+    new TInfo(className, func);
 };
-ccs.sendEvent = sendEvent;
 
-ccs.registerTriggerClass = registerTriggerClass;

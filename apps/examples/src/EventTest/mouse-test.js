@@ -28,6 +28,9 @@
 // Mouse test
 //
 //------------------------------------------------------------------
+import { EventTest } from "./event-test.js";
+import { s_pathR2 } from "../tests_resources.js";
+
 export class MouseTest extends EventTest {
     init() {
         super.init();

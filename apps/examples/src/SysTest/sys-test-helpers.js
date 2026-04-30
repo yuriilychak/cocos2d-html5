@@ -24,6 +24,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { CapabilitiesTest } from "./capabilities-test.js";
+import { LocalStorageTest } from "./local-storage-test.js";
+import { OpenURLTest } from "./open-urltest.js";
+import { RestartGameLayerTest } from "./restart-game-layer-test.js";
+import { ScriptTestLayer } from "./script-test-layer.js";
+import { setClearColorTest } from "./set-clear-color-test.js";
+import { sysTestSceneIdx , _setsysTestSceneIdx} from "./sys-test-constants.js";
+
 ;
 
 ;
@@ -39,7 +47,7 @@
 // Script dynamic reload test
 //
 //------------------------------------------------------------------
-var tempJSFileName = "ScriptTestTempFile.js";
+export var tempJSFileName = "ScriptTestTempFile.js";
 
 ;
 
@@ -50,7 +58,7 @@ var tempJSFileName = "ScriptTestTempFile.js";
 //
 // Flow control
 //
-var arrayOfSysTest = [
+export var arrayOfSysTest = [
     LocalStorageTest,
     CapabilitiesTest,
     OpenURLTest,
@@ -63,8 +71,8 @@ if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
 }
 
 export function nextSysTest() {
-    sysTestSceneIdx++;
-    sysTestSceneIdx = sysTestSceneIdx % arrayOfSysTest.length;
+    _setsysTestSceneIdx(sysTestSceneIdx + 1);
+    _setsysTestSceneIdx(sysTestSceneIdx % arrayOfSysTest.length);
 
     return new arrayOfSysTest[sysTestSceneIdx]();
 }
@@ -72,9 +80,9 @@ export function nextSysTest() {
 ;
 
 export function previousSysTest() {
-    sysTestSceneIdx--;
+    _setsysTestSceneIdx(sysTestSceneIdx - 1);
     if (sysTestSceneIdx < 0)
-        sysTestSceneIdx += arrayOfSysTest.length;
+        _setsysTestSceneIdx(sysTestSceneIdx + (arrayOfSysTest.length));
 
     return new arrayOfSysTest[sysTestSceneIdx]();
 }

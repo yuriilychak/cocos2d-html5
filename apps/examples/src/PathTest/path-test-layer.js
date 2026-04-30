@@ -28,6 +28,8 @@
 // PathTestLayer
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+
 export class PathTestLayer extends BaseTestLayer {
 
     constructor() {

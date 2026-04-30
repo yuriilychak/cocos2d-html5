@@ -23,4 +23,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var effectsTestSceneIdx = -1;
+export let effectsTestSceneIdx = -1;
+
+export function _seteffectsTestSceneIdx(v) { effectsTestSceneIdx = v; }

@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestNodeDemo } from "./test-node-demo.js";
+import { s_pathSister1, s_pathSister2 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class CCNodeTest2 extends TestNodeDemo {
     constructor() {
         super();

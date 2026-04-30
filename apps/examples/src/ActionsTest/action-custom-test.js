@@ -25,6 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ActionsDemo } from "./actions-demo.js";
+import { createCustomAction } from "./actions-test-helpers.js";
+import { CustomMoveBy } from "./custom-move-by.js";
+import { s_pathGrossini } from "../tests_resources.js";
+
 export class ActionCustomTest extends ActionsDemo {
     constructor() {
         super();

@@ -30,6 +30,10 @@
 // Test1
 //
 //------------------------------------------------------------------
+import { NOT_CRASHED_CONST } from "./action-manager-test-constants.js";
+import { ActionManagerTest } from "./action-manager-test.js";
+import { s_pathGrossini } from "../tests_resources.js";
+
 export class CrashTest extends ActionManagerTest {
     title() {
         return "Test 1. Should not crash";

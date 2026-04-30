@@ -27,6 +27,8 @@
 // ChipmunkReleaseTest
 //
 //------------------------------------------------------------------
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+
 export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
 
     constructor() {

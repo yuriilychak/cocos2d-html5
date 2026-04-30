@@ -30,6 +30,8 @@
 //	ActionSkew
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionSkew extends ActionsDemo {
     constructor() {
         super();

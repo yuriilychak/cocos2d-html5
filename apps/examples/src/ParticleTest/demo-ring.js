@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ParticleDemo } from "./particle-demo.js";
+import { s_stars1 } from "../tests_resources.js";
+
 export class DemoRing extends ParticleDemo {
     onEnter() {
         super.onEnter();

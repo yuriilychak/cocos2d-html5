@@ -22,6 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers.js";
+
 export class ChipmunkDemo extends ChipmunkBaseLayer {
     constructor() {
         super();

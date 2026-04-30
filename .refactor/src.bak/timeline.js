@@ -149,7 +149,7 @@ export class Timeline extends NewClass {
    * @return {ccs.Timeline}
    */
   clone() {
-    var timeline = new ccs.Timeline();
+    var timeline = new Timeline();
     timeline._actionTag = this._actionTag;
 
     for (var i = 0; i < this._frames.length; i++) {
@@ -295,4 +295,3 @@ export class Timeline extends NewClass {
   }
 };
 
-ccs.Timeline = Timeline;

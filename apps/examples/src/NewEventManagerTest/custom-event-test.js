@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class CustomEventTest extends EventDispatcherTestDemo {
     constructor() {
         super();

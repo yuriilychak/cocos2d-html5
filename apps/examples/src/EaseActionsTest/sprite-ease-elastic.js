@@ -30,6 +30,9 @@
 // SpriteEaseElastic
 //
 //------------------------------------------------------------------
+import { EaseSpriteDemo } from "./ease-sprite-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteEaseElastic extends EaseSpriteDemo {
     onEnter() {
         //----start6----onEnter

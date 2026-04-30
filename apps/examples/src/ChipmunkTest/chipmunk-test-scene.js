@@ -25,6 +25,10 @@
 //
 // Entry point
 //
+import { nextChipmunkTest } from "./chipmunk-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class ChipmunkTestScene extends TestScene {
     runThisTest(num) {
         chipmunkTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

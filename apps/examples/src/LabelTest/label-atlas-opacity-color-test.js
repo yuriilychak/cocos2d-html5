@@ -30,6 +30,10 @@
 // LabelAtlasOpacityColorTest
 //
 //------------------------------------------------------------------
+import { AtlasDemo } from "./atlas-demo.js";
+import { TAG_LABEL_SPRITE1, TAG_LABEL_SPRITE12 } from "./label-test-constants.js";
+import { s_resprefix } from "../tests_resources.js";
+
 export class LabelAtlasOpacityColorTest extends AtlasDemo {
     constructor() {
         //----start1----ctor

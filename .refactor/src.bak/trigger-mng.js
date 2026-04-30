@@ -1,4 +1,5 @@
 import { NewClass } from '@aspect/core';
+import { TriggerObj } from "./trigger-obj.js";
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -29,7 +30,7 @@ import { NewClass } from '@aspect/core';
  * The trigger manager of Cocostudio
  * @name ccs.triggerManager
  */
-export const triggerManager = ccs.triggerManager = {
+export const triggerManager = {
     _eventTriggers: {},
     _triggerObjs: {},
     _movementDispatches: [],
@@ -41,7 +42,7 @@ export const triggerManager = ccs.triggerManager = {
     parse: function (triggers) {
         for (var i = 0; i < triggers.length; ++i) {
             var subDict = triggers[i];
-            var triggerObj = new ccs.TriggerObj();
+            var triggerObj = new TriggerObj();
             triggerObj.serialize(subDict);
             var events = triggerObj.getEvents();
             for (var j = 0; j < events.length; j++) {
@@ -187,7 +188,7 @@ export const triggerManager = ccs.triggerManager = {
             }
         }
         if (!hasADD) {
-            var newAmd = new ccs.ArmatureMovementDispatcher();
+            var newAmd = new ArmatureMovementDispatcher();
             armature.getAnimation().setMovementEventCallFunc(newAmd.animationEvent, newAmd);
             newAmd.addAnimationEventCallBack(callFunc, target);
             this._movementDispatches.push([armature, newAmd]);
@@ -298,4 +299,3 @@ export class ArmatureMovementDispatcher extends NewClass {
         }
     }
 };
-ccs.ArmatureMovementDispatcher = ArmatureMovementDispatcher;

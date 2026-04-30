@@ -23,6 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextRenderTextureTest } from "./render-texture-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class RenderTextureTestScene extends TestScene {
     runThisTest(num) {
         sceneRenderTextureIdx = (num || num == 0) ? (num - 1) : -1;

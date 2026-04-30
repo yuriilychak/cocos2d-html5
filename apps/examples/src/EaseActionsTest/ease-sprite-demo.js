@@ -25,6 +25,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { easeActionsTestIdx } from "./ease-actions-test-constants.js";
+import { arrayOfEaseActionsTest, nextEaseActionsTest, previousEaseActionsTest, restartEaseActionsTest } from "./ease-actions-test-helpers.js";
+import { EaseActionsTestScene } from "./ease-actions-test-scene.js";
+import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../tests_resources.js";
+import { director, winSize } from "../tests-main-constants.js";
+
 export class EaseSpriteDemo extends BaseTestLayer {
 
     constructor() {

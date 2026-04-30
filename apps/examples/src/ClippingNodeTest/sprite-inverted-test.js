@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteTest } from "./sprite-test.js";
+
 export class SpriteInvertedTest extends SpriteTest {
     title() {
         return "Sprite Inverted Basic Test";

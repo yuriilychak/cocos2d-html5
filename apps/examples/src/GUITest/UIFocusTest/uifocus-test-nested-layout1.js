@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIFocusTestBase } from "./uifocus-test-base.js";
+
 export class UIFocusTestNestedLayout1 extends UIFocusTestBase {
     constructor() {
         super();

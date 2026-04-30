@@ -30,6 +30,10 @@
 // SpriteOffsetAnchorScale
 //
 //------------------------------------------------------------------
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteOffsetAnchorScale extends SpriteTestDemo {
 
 

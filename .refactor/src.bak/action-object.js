@@ -28,6 +28,7 @@
  * The Cocostudio's action object.
  */
 import { Director, NewClass, REPEAT_FOREVER, arrayRemoveObject } from "@aspect/core";
+import { ActionNode } from "./action-node.js";
 
 export class ActionObject extends NewClass {
   /**
@@ -143,7 +144,7 @@ export class ActionObject extends NewClass {
     var actionNodeList = dic["actionnodelist"];
     var maxLength = 0;
     for (var i = 0; i < actionNodeList.length; i++) {
-      var actionNode = new ccs.ActionNode();
+      var actionNode = new ActionNode();
 
       var actionNodeDic = actionNodeList[i];
       actionNode.initWithDictionary(actionNodeDic, root);
@@ -258,4 +259,3 @@ export class ActionObject extends NewClass {
   }
 };
 
-ccs.ActionObject = ActionObject;

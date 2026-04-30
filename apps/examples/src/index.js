@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestController } from "./test-controller.js";
+import { _initGlobals } from "./tests-main-constants.js";
+import { g_resources } from "./tests_resources.js";
+
 cc.game.onStart = function(){
     cc.view.enableRetina(true);
     cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
@@ -34,6 +38,7 @@ cc.game.onStart = function(){
     cc.loader.resPath = 'res';
 
     cc.LoaderScene.preload(g_resources, function () {
+        _initGlobals();
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();
         }else{

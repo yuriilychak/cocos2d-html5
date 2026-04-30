@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ParticleDemo } from "./particle-demo.js";
+import { s_starsGrayscale } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class RadiusMode1 extends ParticleDemo {
     onEnter() {
         super.onEnter();

@@ -30,6 +30,12 @@
 // SpriteTestDemo
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { spriteTestIdx } from "./sprite-test-constants.js";
+import { arrayOfSpriteTest, nextSpriteTest, previousSpriteTest, restartSpriteTest } from "./sprite-test-helpers.js";
+import { SpriteTestScene } from "./sprite-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class SpriteTestDemo extends BaseTestLayer {
 
     constructor() {

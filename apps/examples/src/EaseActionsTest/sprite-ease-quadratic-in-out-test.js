@@ -28,6 +28,9 @@
 //
 // SpriteEaseQuadraticInOut
 //
+import { EaseSpriteDemo } from "./ease-sprite-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteEaseQuadraticInOutTest extends EaseSpriteDemo {
 
     onEnter(){

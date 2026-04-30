@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { XHRTestLayer } from "./xhrtest-layer.js";
+
 ;
 
 ;

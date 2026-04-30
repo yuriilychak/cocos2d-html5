@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class PageTurn3DTest extends EffectsBaseLayer {
     title() {
         return "PageTurn3D";

@@ -28,6 +28,9 @@
 /*
     SchedulerPauseResume
 */
+import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { director } from "../tests-main-constants.js";
+
 export class SchedulerPauseResume extends SchedulerTestLayer {
     onEnter() {
         //----start1----onEnter

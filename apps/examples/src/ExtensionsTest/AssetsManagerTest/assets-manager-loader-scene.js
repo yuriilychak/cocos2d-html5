@@ -25,6 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { backgroundPaths, currentScene, sceneManifests, storagePaths } from "./assets-manager-test-constants.js";
+import { __failCount , _set__failCount} from "./assets-manager-test-helpers.js";
+import { AssetsManagerTestScene } from "./assets-manager-test-scene.js";
+import { TestScene } from "../../test-scene.js";
+import { s_image_icon } from "../../tests_resources.js";
+
 export class AssetsManagerLoaderScene extends TestScene {
     constructor() {
         super();
@@ -86,7 +92,7 @@ export class AssetsManagerLoaderScene extends TestScene {
             case jsb.EventAssetsManager.UPDATE_FAILED:
                 cc.log("Update failed. " + event.getMessage());
 
-                __failCount ++;
+                _set__failCount(__failCount + 1);
                 if (__failCount < 5)
                 {
                     this._am.downloadFailedAssets();
@@ -94,7 +100,7 @@ export class AssetsManagerLoaderScene extends TestScene {
                 else
                 {
                     cc.log("Reach maximum fail count, exit update process");
-                    __failCount = 0;
+                    _set__failCount(0);
                     scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                     cc.director.runScene(scene);
                 }

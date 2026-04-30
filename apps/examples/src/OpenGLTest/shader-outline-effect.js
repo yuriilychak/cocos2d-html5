@@ -31,6 +31,10 @@
 //FIX ME:
 //The renderers of webgl and opengl is quite different now, so we have to use different shader and different js code
 //This is a bug, need to be fixed in the future
+import { OpenGLTestLayer } from "./open-gltest-layer.js";
+import { ccbjs } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ShaderOutlineEffect extends OpenGLTestLayer {
     constructor() {
         super();

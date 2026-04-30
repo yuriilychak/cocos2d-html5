@@ -25,6 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { labelTestIdx } from "./label-test-constants.js";
+import { arrayOfLabelTest, nextLabelTest, previousLabelTest, restartLabelTest } from "./label-test-helpers.js";
+import { LabelTestScene } from "./label-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class AtlasDemo extends BaseTestLayer {
 
     title() {

@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TableViewTestLayer } from "./table-view-test-layer.js";
+
 ;
 
 ;

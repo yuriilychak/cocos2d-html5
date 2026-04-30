@@ -29,6 +29,8 @@
 
 ;
 
-var __failCount = 0;
+export let __failCount = 0;
 
 ;
+
+export function _set__failCount(v) { __failCount = v; }

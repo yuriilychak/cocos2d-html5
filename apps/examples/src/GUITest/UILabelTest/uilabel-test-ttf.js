@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UILabelTest_TTF extends UIMainLayer {
     init() {
         if (super.init()) {

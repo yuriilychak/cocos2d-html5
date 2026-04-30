@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ExtensionsTestScene } from "../extensions-test-scene.js";
+import { CustomTableViewCell } from "./custom-table-view-cell.js";
+import { s_image_icon } from "../../tests_resources.js";
+
 export class TableViewTestLayer extends cc.Layer {
 
     constructor() {

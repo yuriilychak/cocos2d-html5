@@ -27,6 +27,8 @@
 //
 // UIRichTextXMLColor
 //
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIRichTextXMLColor extends UIMainLayer {
     constructor() {
         super();

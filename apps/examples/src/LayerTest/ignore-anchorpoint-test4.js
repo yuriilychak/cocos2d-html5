@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { LayerTest } from "./layer-test.js";
+import { director } from "../tests-main-constants.js";
+
 export class IgnoreAnchorpointTest4 extends LayerTest {
     onEnter() {
         //----start6----onEnter

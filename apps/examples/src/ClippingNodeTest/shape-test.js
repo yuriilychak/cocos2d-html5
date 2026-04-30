@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BasicTest } from "./basic-test.js";
+
 export class ShapeTest extends BasicTest {
     title() {
         return "Shape Basic Test";

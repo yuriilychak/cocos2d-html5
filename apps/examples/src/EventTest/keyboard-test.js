@@ -28,6 +28,8 @@
 // Keyboard test
 //
 //------------------------------------------------------------------
+import { EventTest } from "./event-test.js";
+
 export class KeyboardTest extends EventTest {
     init() {
         super.init();

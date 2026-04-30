@@ -30,6 +30,11 @@
 // SpriteAliased
 //
 //------------------------------------------------------------------
+import { TAG_SPRITE1, TAG_SPRITE2 } from "./sprite-test-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossini_dance_atlas } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteAliased extends SpriteTestDemo {
 
     constructor() {

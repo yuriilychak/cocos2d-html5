@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossini_dance_atlas } from "../tests_resources.js";
+
 export class SpriteBatchBug1217 extends SpriteTestDemo {
 
 

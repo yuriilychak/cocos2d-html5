@@ -23,6 +23,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { effectsTestSceneIdx , _seteffectsTestSceneIdx} from "./effects-test-constants.js";
+import { FadeOutBLTilesTest } from "./fade-out-bltiles-test.js";
+import { FadeOutDownTilesTest } from "./fade-out-down-tiles-test.js";
+import { FadeOutTRTilesTest } from "./fade-out-trtiles-test.js";
+import { FadeOutUpTilesTest } from "./fade-out-up-tiles-test.js";
+import { FlipXTest } from "./flip-xtest.js";
+import { FlipYTest } from "./flip-ytest.js";
+import { JumpTiles3DTest } from "./jump-tiles3-dtest.js";
+import { Lens3DTest } from "./lens3-dtest.js";
+import { LiquidTest } from "./liquid-test.js";
+import { PageTurn3DInRectTest } from "./page-turn3-din-rect-test.js";
+import { PageTurn3DTest } from "./page-turn3-dtest.js";
+import { Ripple3DTest } from "./ripple3-dtest.js";
+import { ShakyTiles3DTest } from "./shaky-tiles3-dtest.js";
+import { Shaky3DTest } from "./shaky3-dtest.js";
+import { ShatteredTiles3DTest } from "./shattered-tiles3-dtest.js";
+import { ShuffleTilesTest } from "./shuffle-tiles-test.js";
+import { SplitColsTest } from "./split-cols-test.js";
+import { SplitRowsTest } from "./split-rows-test.js";
+import { TurnOffTilesTest } from "./turn-off-tiles-test.js";
+import { TwirlTest } from "./twirl-test.js";
+import { WavesTest } from "./waves-test.js";
+import { WavesTiles3DTest } from "./waves-tiles3-dtest.js";
+import { Waves3DTest } from "./waves3-dtest.js";
+
 ;
 
 ;
@@ -76,7 +101,7 @@
 //
 // Flow control
 //
-var arrayOfEffectsTest = [
+export var arrayOfEffectsTest = [
     Shaky3DTest,
     Waves3DTest,
     FlipXTest,
@@ -103,11 +128,11 @@ var arrayOfEffectsTest = [
 ];
 
 export function nextEffectsTest() {
-    effectsTestSceneIdx++;
-    effectsTestSceneIdx = effectsTestSceneIdx % arrayOfEffectsTest.length;
+    _seteffectsTestSceneIdx(effectsTestSceneIdx + 1);
+    _seteffectsTestSceneIdx(effectsTestSceneIdx % arrayOfEffectsTest.length);
 
     if(window.sideIndexBar){
-        effectsTestSceneIdx = window.sideIndexBar.changeTest(effectsTestSceneIdx, 14);
+        _seteffectsTestSceneIdx(window.sideIndexBar.changeTest(effectsTestSceneIdx, 14));
     }
 
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
@@ -116,12 +141,12 @@ export function nextEffectsTest() {
 ;
 
 export function previousEffectsTest() {
-    effectsTestSceneIdx--;
+    _seteffectsTestSceneIdx(effectsTestSceneIdx - 1);
     if (effectsTestSceneIdx < 0)
-        effectsTestSceneIdx += arrayOfEffectsTest.length;
+        _seteffectsTestSceneIdx(effectsTestSceneIdx + (arrayOfEffectsTest.length));
 
     if(window.sideIndexBar){
-        effectsTestSceneIdx = window.sideIndexBar.changeTest(effectsTestSceneIdx, 14);
+        _seteffectsTestSceneIdx(window.sideIndexBar.changeTest(effectsTestSceneIdx, 14));
     }
 
     return new arrayOfEffectsTest[effectsTestSceneIdx]();

@@ -22,4 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var scenePerformanceNowTestIdx = -1;
+export let scenePerformanceNowTestIdx = -1;
+
+export function _setscenePerformanceNowTestIdx(v) { scenePerformanceNowTestIdx = v; }

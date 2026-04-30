@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class FlipYTest extends EffectsBaseLayer {
     title() {
         return "FlipY3D";

@@ -29,6 +29,10 @@
 // Base your samples on the "Object Oriented" API.
 //
 //------------------------------------------------------------------
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { s_bitmapFontTest5_fnt, s_pathGrossini, s_pathSister1 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
 
     constructor() {

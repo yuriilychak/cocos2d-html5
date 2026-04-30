@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AtlasDemo } from "./atlas-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class LabelTTFAlignment extends AtlasDemo {
     constructor() {
         //----start24----ctor

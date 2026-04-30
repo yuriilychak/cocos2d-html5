@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
+import { _PLANE_COUNT, _planeColor, _stencilBits , _set_stencilBits} from "./clipping-node-test-helpers.js";
+import { s_pathGrossini } from "../tests_resources.js";
+
 export class RawStencilBufferTest extends BaseClippingNodeTest {
     constructor() {
         super();
@@ -45,7 +49,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
     }
 
     setup() {
-        _stencilBits = cc.rendererConfig.renderContext.getParameter(cc.rendererConfig.renderContext.STENCIL_BITS);
+        _set_stencilBits(cc.rendererConfig.renderContext.getParameter(cc.rendererConfig.renderContext.STENCIL_BITS));
         if (_stencilBits < 3)
             cc.log("Stencil must be enabled for the current CCGLView.");
 

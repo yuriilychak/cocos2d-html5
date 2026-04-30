@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextDispatcherTest } from "./new-event-manager-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class EventDispatcherTestScene extends TestScene {
     runThisTest(num) {
         eventDispatcherSceneIdx = (num || num == 0) ? (num - 1) : -1;

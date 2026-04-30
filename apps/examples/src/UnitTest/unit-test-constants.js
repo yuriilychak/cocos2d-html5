@@ -23,4 +23,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var unitTestSceneIdx = -1;
+export let unitTestSceneIdx = -1;
+
+export function _setunitTestSceneIdx(v) { unitTestSceneIdx = v; }

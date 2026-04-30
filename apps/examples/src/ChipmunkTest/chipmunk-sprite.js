@@ -27,6 +27,10 @@
 // Chipmunk + Sprite
 //
 //------------------------------------------------------------------
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { s_pathGrossini, s_pathSister1 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ChipmunkSprite extends ChipmunkBaseLayer {
 
     constructor() {

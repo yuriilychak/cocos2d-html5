@@ -28,6 +28,9 @@
 // DictionaryToFromTest
 //
 //------------------------------------------------------------------
+import { s_animations2Plist, s_grossiniPlist } from "../tests_resources.js";
+import { UnitTestBase } from "./unit-test-base.js";
+
 export class DictionaryToFromTest extends UnitTestBase {
 
     constructor() {

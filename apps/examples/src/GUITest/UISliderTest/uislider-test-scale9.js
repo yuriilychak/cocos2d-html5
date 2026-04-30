@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UISliderTest_Scale9 extends UIMainLayer {
     init() {
         if (super.init()) {

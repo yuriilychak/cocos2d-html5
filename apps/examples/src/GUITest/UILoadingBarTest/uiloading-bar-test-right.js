@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UILoadingBarTest } from "./uiloading-bar-test.js";
+
 export class UILoadingBarTest_Right extends UILoadingBarTest {
     createLoadingBar() {
         var widgetSize = this._widget.getContentSize();

@@ -26,7 +26,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { Issue1358 } from "./issue1358.js";
+import { sceneIdx , _setsceneIdx} from "./motion-streak-test-constants.js";
+import { MotionStreakTest1 } from "./motion-streak-test1.js";
+import { MotionStreakTest2 } from "./motion-streak-test2.js";
 
 ;
 
@@ -34,24 +37,26 @@
 
 ;
 
-var arrayOfMotionStreakTest = [
+;
+
+export var arrayOfMotionStreakTest = [
     MotionStreakTest1,
     MotionStreakTest2,
     Issue1358
 ];
 
 export function nextMotionAction() {
-    sceneIdx++;
-    sceneIdx = sceneIdx % arrayOfMotionStreakTest.length;
+    _setsceneIdx(sceneIdx + 1);
+    _setsceneIdx(sceneIdx % arrayOfMotionStreakTest.length);
     return new arrayOfMotionStreakTest[sceneIdx]();
 }
 
 ;
 
 export function backMotionAction() {
-    sceneIdx--;
+    _setsceneIdx(sceneIdx - 1);
     if (sceneIdx < 0)
-        sceneIdx += arrayOfMotionStreakTest.length;
+        _setsceneIdx(sceneIdx + (arrayOfMotionStreakTest.length));
     return new arrayOfMotionStreakTest[sceneIdx]();
 }
 

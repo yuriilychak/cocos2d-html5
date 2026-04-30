@@ -27,6 +27,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { MySprite } from "./my-sprite.js";
+import { ExtensionsTestScene } from "../extensions-test-scene.js";
+import { winSize } from "../../tests-main-constants.js";
+
 export class CCPoolTest extends cc.Layer {
     constructor() {
         super();

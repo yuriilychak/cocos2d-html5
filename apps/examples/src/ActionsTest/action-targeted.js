@@ -30,6 +30,8 @@
 // ActionTargeted
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionTargeted extends ActionsDemo {
     constructor() {
         super();

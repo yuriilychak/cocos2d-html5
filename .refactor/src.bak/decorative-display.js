@@ -105,4 +105,3 @@ export class DecorativeDisplay extends NewClass {
   }
 };
 
-ccs.DecorativeDisplay = DecorativeDisplay;

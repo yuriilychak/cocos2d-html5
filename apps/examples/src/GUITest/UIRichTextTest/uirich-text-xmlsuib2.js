@@ -27,6 +27,8 @@
 //
 // UIRichTextXMLSUIB2
 //
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIRichTextXMLSUIB2 extends UIMainLayer {
     constructor() {
         super();

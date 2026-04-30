@@ -30,6 +30,8 @@
 // ActionTargetedCopy
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionTargetedCopy extends ActionsDemo {
   onEnter() {
     //----start32----onEnter

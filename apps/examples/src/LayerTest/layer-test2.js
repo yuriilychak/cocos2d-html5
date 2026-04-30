@@ -30,6 +30,10 @@
 // LayerTest2
 //
 //------------------------------------------------------------------
+import { LAYERTEST2_LAYER1_TAG, LAYERTEST2_LAYER2_TAG } from "./layer-test-constants.js";
+import { LayerTest } from "./layer-test.js";
+import { autoTestEnabled, director } from "../tests-main-constants.js";
+
 export class LayerTest2 extends LayerTest {
     constructor() {
         super();

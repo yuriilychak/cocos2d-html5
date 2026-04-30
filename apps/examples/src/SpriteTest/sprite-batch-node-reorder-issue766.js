@@ -30,6 +30,9 @@
 // SpriteBatchNodeReorderIssue766
 //
 //------------------------------------------------------------------
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_piece } from "../tests_resources.js";
+
 export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
 
 

@@ -25,20 +25,26 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { spineSceneIdx , _setspineSceneIdx} from "./spine-test-constants.js";
+import { SpineTestLayerFFD } from "./spine-test-layer-ffd.js";
+import { SpineTestLayerNormal } from "./spine-test-layer-normal.js";
+import { SpineTestPerformanceLayer } from "./spine-test-performance-layer.js";
+import { SpineTestScene } from "./spine-test-scene.js";
+
 ;
 
 SpineTestScene.nextSpineTestLayer = function() {
-    spineSceneIdx++;
+    _setspineSceneIdx(spineSceneIdx + 1);
     var layers = SpineTestScene.testLayers;
-    spineSceneIdx = spineSceneIdx % layers.length;
+    _setspineSceneIdx(spineSceneIdx % layers.length);
     return new layers[spineSceneIdx](spineSceneIdx);
 };
 
 SpineTestScene.backSpineTestLayer = function() {
-    spineSceneIdx--;
+    _setspineSceneIdx(spineSceneIdx - 1);
     var layers = SpineTestScene.testLayers;
     if(spineSceneIdx < 0)
-        spineSceneIdx = layers.length - 1;
+        _setspineSceneIdx(layers.length - 1);
     return new layers[spineSceneIdx](spineSceneIdx);
 };
 

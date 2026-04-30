@@ -29,6 +29,9 @@
 // Restart game test
 //
 //------------------------------------------------------------------
+import { SysTestBase } from "./sys-test-base.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class RestartGameLayerTest extends SysTestBase {
     getTitle() {
         return "RestartGameTest only used in native";

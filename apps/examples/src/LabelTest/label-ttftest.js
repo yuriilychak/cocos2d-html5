@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AtlasDemo } from "./atlas-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class LabelTTFTest extends AtlasDemo {
     constructor() {
         //----start19----ctor

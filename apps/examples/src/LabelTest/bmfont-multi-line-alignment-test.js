@@ -25,6 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AtlasDemo } from "./atlas-demo.js";
+import { ArrowsMax, ArrowsMin, CenterAlign, LeftAlign, LineBreaks, LineBreaksExample, LongSentences, LongSentencesExample, Mixed, MixedExample, RightAlign, alignmentItemPadding, chineseExampleText, chineseMixEnglish, chineseMixEnglishText, chineseText, menuItemPaddingCenter, mixAllLanguage, mixAllLanguageText } from "./label-test-helpers.js";
+import { s_resprefix } from "../tests_resources.js";
+import { director, winSize } from "../tests-main-constants.js";
+
 export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     constructor() {
         //----start11----ctor

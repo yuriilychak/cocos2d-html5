@@ -23,6 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RenderTextureBaseLayer } from "./render-texture-base-layer.js";
+import { s_circle_plist, s_circle_png } from "../tests_resources.js";
+
 export class RenderTextureZbuffer extends RenderTextureBaseLayer {
 
     constructor() {

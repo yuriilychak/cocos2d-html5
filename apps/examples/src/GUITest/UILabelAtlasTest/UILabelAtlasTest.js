@@ -25,6 +25,8 @@
  ****************************************************************************/
 
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UILabelAtlasTest extends UIMainLayer {
     init() {
         if (super.init()) {

@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIListViewTest_ScrollToItem } from "./uilist-view-test-scroll-to-item.js";
+
 export class UIListViewTest_ScrollToItemHorizontal extends UIListViewTest_ScrollToItem {
     _getListViewDirection()
     {

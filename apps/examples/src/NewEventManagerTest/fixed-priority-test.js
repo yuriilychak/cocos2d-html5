@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
+import { TouchableSprite } from "./touchable-sprite.js";
+import { director } from "../tests-main-constants.js";
+
 export class FixedPriorityTest extends EventDispatcherTestDemo {
     onEnter(){
         //----start1----onEnter

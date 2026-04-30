@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestScene } from "../test-scene.js";
+import { nextTexCacheTest } from "./texture-cache-test-helpers.js";
+
 export class TexCacheTestScene extends TestScene {
     runThisTest(num) {
         texCacheTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

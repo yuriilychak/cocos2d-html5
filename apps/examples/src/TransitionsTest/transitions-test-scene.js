@@ -28,6 +28,10 @@
 // the class inherit from TestScene
 // every .Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+import { TestLayer1 } from "./test-layer1.js";
+
 export class TransitionsTestScene extends TestScene {
     onEnter() {
         super.onEnter();

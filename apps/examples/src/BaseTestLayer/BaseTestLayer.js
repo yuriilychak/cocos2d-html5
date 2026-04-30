@@ -23,6 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestController } from "../test-controller.js";
+import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../tests_resources.js";
+import { _initGlobals, autoTestCurrentTestName, autoTestEnabled, director, winSize } from "../tests-main-constants.js";
+
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
 export const BASE_TEST_MENUITEM_RESET_TAG = 2;
 export const BASE_TEST_MENUITEM_NEXT_TAG = 3;
@@ -30,10 +34,6 @@ export const BASE_TEST_MENUITEM_NEXT_TAG = 3;
 export const BASE_TEST_MENU_TAG = 10;
 export const BASE_TEST_TITLE_TAG = 11;
 export const BASE_TEST_SUBTITLE_TAG = 12;
-
-
-var autoTestEnabled = autoTestEnabled || false;
-var autoTestCurrentTestName = autoTestCurrentTestName || "N/A";
 
 
 
@@ -62,7 +62,7 @@ export class BaseTestLayer extends cc.LayerGradient {
         this.testDuration = 0.25;
 
         // Update winsize in case it was resized
-        winSize = director.getWinSize();
+        _initGlobals();
 
         if( autoTestEnabled ) {
             this.totalNumberOfTests = this.numberOfPendingTests();

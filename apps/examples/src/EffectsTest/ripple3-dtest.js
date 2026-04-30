@@ -23,6 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class Ripple3DTest extends EffectsBaseLayer {
     title() {
         return "Ripple3D";

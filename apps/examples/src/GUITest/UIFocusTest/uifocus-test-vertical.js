@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIFocusTestBase } from "./uifocus-test-base.js";
+
 export class UIFocusTestVertical extends UIFocusTestBase {
     constructor() {
         super();

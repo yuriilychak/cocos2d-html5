@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextClippingNodeTest } from "./clipping-node-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+
 export class ClippingNodeTestScene extends TestScene {
     runThisTest(num) {
         clippingNodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

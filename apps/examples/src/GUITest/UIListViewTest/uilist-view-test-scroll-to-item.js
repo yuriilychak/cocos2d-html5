@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIListViewTest_ScrollToItem extends UIMainLayer {
     constructor() {
         super();

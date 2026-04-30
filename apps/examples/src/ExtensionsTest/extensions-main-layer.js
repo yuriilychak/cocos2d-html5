@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ITEM_TAG_BASIC, LINE_SPACE, extensionsTestItemNames } from "./extensions-test-constants.js";
+
 export class ExtensionsMainLayer extends cc.Layer {
     onEnter() {
         super.onEnter();

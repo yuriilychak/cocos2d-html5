@@ -23,6 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { DictionaryToFromTest } from "./dictionary-to-from-test.js";
+import { RectUnitTest } from "./rect-unit-test.js";
+import { unitTestSceneIdx , _setunitTestSceneIdx} from "./unit-test-constants.js";
+
 ;
 
 ;
@@ -34,7 +38,7 @@
 //
 // Flow control
 //
-var arrayOfUnitTest = [
+export var arrayOfUnitTest = [
 
     RectUnitTest,
     DictionaryToFromTest
@@ -42,8 +46,8 @@ var arrayOfUnitTest = [
 ];
 
 export function nextUnitTest() {
-    unitTestSceneIdx++;
-    unitTestSceneIdx = unitTestSceneIdx % arrayOfUnitTest.length;
+    _setunitTestSceneIdx(unitTestSceneIdx + 1);
+    _setunitTestSceneIdx(unitTestSceneIdx % arrayOfUnitTest.length);
 
     return new arrayOfUnitTest[unitTestSceneIdx]();
 }
@@ -51,9 +55,9 @@ export function nextUnitTest() {
 ;
 
 export function previousUnitTest() {
-    unitTestSceneIdx--;
+    _setunitTestSceneIdx(unitTestSceneIdx - 1);
     if (unitTestSceneIdx < 0)
-        unitTestSceneIdx += arrayOfUnitTest.length;
+        _setunitTestSceneIdx(unitTestSceneIdx + (arrayOfUnitTest.length));
 
     return new arrayOfUnitTest[unitTestSceneIdx]();
 }

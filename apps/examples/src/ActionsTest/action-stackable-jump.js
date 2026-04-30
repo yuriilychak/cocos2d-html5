@@ -30,6 +30,9 @@
 // ActionStackableJump
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ActionStackableJump extends ActionsDemo {
   onEnter() {
     //----start34----onEnter

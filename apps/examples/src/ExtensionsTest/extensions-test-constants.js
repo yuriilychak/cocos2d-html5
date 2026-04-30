@@ -25,19 +25,26 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var LINE_SPACE = 40;
+import { runCCPoolTest } from "./CCPoolTest/ccpool-test-helpers.js";
+import { ControlSceneManager } from "./ControlExtensionTest/CCControlSceneManager.js";
+import { runEditBoxTest } from "./EditBoxTest/EditBoxTest.js";
+import { runSocketIOTest } from "./NetworkTest/SocketIOTest_simple.js";
+import { runWebSocketTest } from "./NetworkTest/WebSocketTest.js";
+import { runTableViewTest } from "./TableViewTest/table-view-test-scene-helpers.js";
 
-var ITEM_TAG_BASIC = 1000;
+export var LINE_SPACE = 40;
 
-var TEST_NOTIFICATIONCENTER = 0;
+export var ITEM_TAG_BASIC = 1000;
 
-var TEST_CCCONTROLBUTTON = 1;
+export var TEST_NOTIFICATIONCENTER = 0;
 
-var TEST_COCOSBUILDER = 2;
+export var TEST_CCCONTROLBUTTON = 1;
 
-var TEST_HTTPCLIENT = 3;
+export var TEST_COCOSBUILDER = 2;
 
-var extensionsTestItemNames = [
+export var TEST_HTTPCLIENT = 3;
+
+export var extensionsTestItemNames = [
     {
         itemTitle:"CCControlButtonTest",
         testScene:function () {

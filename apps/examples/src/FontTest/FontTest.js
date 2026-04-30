@@ -24,14 +24,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-var TAG_LABEL1 = 550;
-var TAG_LABEL2 = 551;
-var TAG_LABEL3 = 552;
-var TAG_LABEL4 = 553;
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
 
-var fontIdx = 0;
+export var TAG_LABEL1 = 550;
+export var TAG_LABEL2 = 551;
+export var TAG_LABEL3 = 552;
+export var TAG_LABEL4 = 553;
 
-var fontList = [
+export var fontIdx = 0;
+
+export var fontList = [
 
     // System Fonts
     "sans-serif",
@@ -59,7 +63,7 @@ var fontList = [
 ];
 
 
-function nextFontTestAction() {
+export function nextFontTestAction() {
     fontIdx++;
     fontIdx = fontIdx % fontList.length;
 
@@ -70,7 +74,7 @@ function nextFontTestAction() {
     return fontList[fontIdx];
 }
 
-function backFontTestAction() {
+export function backFontTestAction() {
     fontIdx--;
     if (fontIdx < 0) {
         fontIdx += fontList.length;
@@ -83,7 +87,7 @@ function backFontTestAction() {
     return fontList[fontIdx];
 }
 
-function restartFontTestAction() {
+export function restartFontTestAction() {
     return fontList[fontIdx];
 }
 FontTestScene = class FontTestScene extends TestScene {

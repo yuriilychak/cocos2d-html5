@@ -28,6 +28,10 @@
 /**
  @brief    TextInputTest for retain prev, reset, next, main menu buttons.
  */
+import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../tests_resources.js";
+import { nextTextInputTest, previousTextInputTest, restartTextInputTest } from "./text-input-test-helpers.js";
+import { TextInputTestScene } from "./text-input-test-scene.js";
+
 export class TextInputTest extends cc.Layer {
     constructor() {
         super();

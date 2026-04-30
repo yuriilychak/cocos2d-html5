@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var EffectsAdvancedTest = EffectsAdvancedTest || {};
+export var EffectsAdvancedTest = EffectsAdvancedTest || {};
 
 EffectsAdvancedTest.TAG_TEXTLAYER = 1;
 
@@ -43,4 +43,6 @@ EffectsAdvancedTest.IDC_BACK = 101;
 
 EffectsAdvancedTest.IDC_RESTART = 102;
 
-var sceneIndex = -1;
+export let sceneIndex = -1;
+
+export function _setsceneIndex(v) { sceneIndex = v; }

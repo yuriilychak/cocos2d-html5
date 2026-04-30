@@ -25,14 +25,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_SPRITE1 = 1;
+export var TAG_SPRITE1 = 1;
 
-var TAG_SPRITE2 = 2;
+export var TAG_SPRITE2 = 2;
 
-var TAG_SPRITE3 = 3;
+export var TAG_SPRITE3 = 3;
 
-var TAG_SLIDER = 4;
+export var TAG_SLIDER = 4;
 
-var nodeTestSceneIdx = -1;
+export let nodeTestSceneIdx = -1;
 
-var MAX_LAYER = 9;
+export var MAX_LAYER = 9;
+
+export function _setnodeTestSceneIdx(v) { nodeTestSceneIdx = v; }

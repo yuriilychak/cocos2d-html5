@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_ANIMATION_DANCE = 1;
+export var TAG_ANIMATION_DANCE = 1;
 
-var schedulerTestSceneIdx = -1;
+export let schedulerTestSceneIdx = -1;
+
+export function _setschedulerTestSceneIdx(v) { schedulerTestSceneIdx = v; }

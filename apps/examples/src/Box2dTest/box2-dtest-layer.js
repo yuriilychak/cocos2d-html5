@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { PTM_RATIO, TAG_SPRITE_MANAGER } from "./box2d-test-constants.js";
+import { s_pathBlock } from "../tests_resources.js";
+
 export class Box2DTestLayer extends cc.LayerColor {
   constructor() {
     if (window.sideIndexBar) {

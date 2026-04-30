@@ -30,6 +30,8 @@
 // ActionCallFunc3
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionCallFunc3 extends ActionsDemo {
     constructor() {
         super();

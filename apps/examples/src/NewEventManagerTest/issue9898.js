@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
+
 export class Issue9898 extends EventDispatcherTestDemo {
 
     title(){

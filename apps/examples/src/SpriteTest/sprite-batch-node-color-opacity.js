@@ -30,6 +30,11 @@
 // SpriteBatchNodeColorOpacity
 //
 //------------------------------------------------------------------
+import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE3, TAG_SPRITE4, TAG_SPRITE5, TAG_SPRITE6, TAG_SPRITE7, TAG_SPRITE8, TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossini_dance_atlas } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
 
 

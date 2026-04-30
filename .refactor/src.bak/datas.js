@@ -30,99 +30,100 @@
  * @type Number
  */
 import { BLEND_DST, BLEND_SRC, BlendFunc, Color, NewClass } from "@aspect/core";
+import { DOUBLE_PI, M_PI, TweenType } from "./tween-function.js";
 
-export const BLEND_TYPE_NORMAL = ccs.BLEND_TYPE_NORMAL = 0;
+export const BLEND_TYPE_NORMAL = 0;
 
 /**
  * The value of the blend type of layer
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_LAYER = ccs.BLEND_TYPE_LAYER = 1;
+export const BLEND_TYPE_LAYER = 1;
 
 /**
  * The value of the blend type of darken
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_DARKEN = ccs.BLEND_TYPE_DARKEN = 2;
+export const BLEND_TYPE_DARKEN = 2;
 
 /**
  * The value of the blend type of multiply
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_MULTIPLY = ccs.BLEND_TYPE_MULTIPLY = 3;
+export const BLEND_TYPE_MULTIPLY = 3;
 
 /**
  * The value of the blend type of lighten
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_LIGHTEN = ccs.BLEND_TYPE_LIGHTEN = 4;
+export const BLEND_TYPE_LIGHTEN = 4;
 
 /**
  * The value of the blend type of screen
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_SCREEN = ccs.BLEND_TYPE_SCREEN = 5;
+export const BLEND_TYPE_SCREEN = 5;
 
 /**
  * The value of the blend type of overlay
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_OVERLAY = ccs.BLEND_TYPE_OVERLAY = 6;
+export const BLEND_TYPE_OVERLAY = 6;
 
 /**
  * The value of the blend type of highlight
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_HIGHLIGHT = ccs.BLEND_TYPE_HIGHLIGHT = 7;
+export const BLEND_TYPE_HIGHLIGHT = 7;
 
 /**
  * The value of the blend type of add
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_ADD = ccs.BLEND_TYPE_ADD = 8;
+export const BLEND_TYPE_ADD = 8;
 
 /**
  * The value of the blend type of subtract
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_SUBTRACT = ccs.BLEND_TYPE_SUBTRACT = 9;
+export const BLEND_TYPE_SUBTRACT = 9;
 
 /**
  * The value of the blend type of difference
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_DIFFERENCE = ccs.BLEND_TYPE_DIFFERENCE = 10;
+export const BLEND_TYPE_DIFFERENCE = 10;
 
 /**
  * The value of the blend type of invert
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_INVERT = ccs.BLEND_TYPE_INVERT = 11;
+export const BLEND_TYPE_INVERT = 11;
 
 /**
  * The value of the blend type of alpha
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_ALPHA = ccs.BLEND_TYPE_ALPHA = 12;
+export const BLEND_TYPE_ALPHA = 12;
 
 /**
  * The value of the blend type of erase
  * @constant
  * @type Number
  */
-export const BLEND_TYPE_ERASE = ccs.BLEND_TYPE_ERASE = 13;
+export const BLEND_TYPE_ERASE = 13;
 
 //DisplayType
 /**
@@ -130,20 +131,20 @@ export const BLEND_TYPE_ERASE = ccs.BLEND_TYPE_ERASE = 13;
  * @constant
  * @type Number
  */
-export const DISPLAY_TYPE_SPRITE = ccs.DISPLAY_TYPE_SPRITE = 0;
+export const DISPLAY_TYPE_SPRITE = 0;
 /**
  * The Armature flag of display render type.
  * @constant
  * @type Number
  */
-export const DISPLAY_TYPE_ARMATURE = ccs.DISPLAY_TYPE_ARMATURE = 1;
+export const DISPLAY_TYPE_ARMATURE = 1;
 /**
  * The Particle flag of display render type.
  * @constant
  * @type Number
  */
-export const DISPLAY_TYPE_PARTICLE = ccs.DISPLAY_TYPE_PARTICLE = 2;
-export const DISPLAY_TYPE_MAX = ccs.DISPLAY_TYPE_MAX = 3;
+export const DISPLAY_TYPE_PARTICLE = 2;
+export const DISPLAY_TYPE_MAX = 3;
 
 /**
  * <p>
@@ -260,15 +261,15 @@ export class BaseData extends NewClass {
     }
 
     if (limit) {
-      if (this.skewX > ccs.M_PI) this.skewX -= ccs.DOUBLE_PI;
-      if (this.skewX < -ccs.M_PI) this.skewX += ccs.DOUBLE_PI;
-      if (this.skewY > ccs.M_PI) this.skewY -= ccs.DOUBLE_PI;
-      if (this.skewY < -ccs.M_PI) this.skewY += ccs.DOUBLE_PI;
+      if (this.skewX > M_PI) this.skewX -= DOUBLE_PI;
+      if (this.skewX < -M_PI) this.skewX += DOUBLE_PI;
+      if (this.skewY > M_PI) this.skewY -= DOUBLE_PI;
+      if (this.skewY < -M_PI) this.skewY += DOUBLE_PI;
     }
 
     if (to.tweenRotate) {
-      this.skewX += to.tweenRotate * ccs.PI * 2;
-      this.skewY -= to.tweenRotate * ccs.PI * 2;
+      this.skewX += to.tweenRotate * Math.PI * 2;
+      this.skewY -= to.tweenRotate * Math.PI * 2;
     }
   }
 };
@@ -285,7 +286,7 @@ export class DisplayData extends NewClass {
    */
   constructor() {
     super();
-    this.displayType = ccs.DISPLAY_TYPE_MAX;
+    this.displayType = DISPLAY_TYPE_MAX;
   }
   /**
    * Changes display name to texture type
@@ -324,8 +325,8 @@ export class SpriteDisplayData extends DisplayData {
    */
   constructor() {
     super();
-    this.skinData = new ccs.BaseData();
-    this.displayType = ccs.DISPLAY_TYPE_SPRITE;
+    this.skinData = new BaseData();
+    this.displayType = DISPLAY_TYPE_SPRITE;
   }
   /**
    * copy data
@@ -348,7 +349,7 @@ export class ArmatureDisplayData extends DisplayData {
   constructor() {
     super();
     this.displayName = "";
-    this.displayType = ccs.DISPLAY_TYPE_ARMATURE;
+    this.displayType = DISPLAY_TYPE_ARMATURE;
   }
 };
 
@@ -361,7 +362,7 @@ export class ParticleDisplayData extends DisplayData {
    */
   constructor() {
     super();
-    this.displayType = ccs.DISPLAY_TYPE_PARTICLE;
+    this.displayType = DISPLAY_TYPE_PARTICLE;
   }
 };
 
@@ -496,7 +497,7 @@ export class FrameData extends BaseData {
   constructor() {
     super();
     this.duration = 1;
-    this.tweenEasing = ccs.TweenType.LINEAR;
+    this.tweenEasing = TweenType.LINEAR;
     this.easingParamNumber = 0;
     this.easingParams = [];
     this.displayIndex = 0;
@@ -612,7 +613,7 @@ export function MovementData() {
    * Which tween easing effect the movement use
    * TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
    */
-  this.tweenEasing = ccs.TweenType.LINEAR;
+  this.tweenEasing = TweenType.LINEAR;
   this.movBoneDataDic = {};
 };
 
@@ -738,26 +739,12 @@ TextureData.prototype.getContourData = function (index) {
   return this.contourDataList[index];
 };
 
-ccs.BaseData = BaseData;
 
-ccs.DisplayData = DisplayData;
 
-ccs.SpriteDisplayData = SpriteDisplayData;
 
-ccs.ArmatureDisplayData = ArmatureDisplayData;
 
-ccs.ParticleDisplayData = ParticleDisplayData;
 
-ccs.BoneData = BoneData;
 
-ccs.ArmatureData = ArmatureData;
 
-ccs.FrameData = FrameData;
 
-ccs.MovementBoneData = MovementBoneData;
 
-ccs.MovementData = MovementData;
-ccs.AnimationData = AnimationData;
-ccs.ContourVertex2 = ContourVertex2;
-ccs.ContourData = ContourData;
-ccs.TextureData = TextureData;

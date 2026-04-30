@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TAG_NODE } from "./parallax-test-constants.js";
+import { s_back, s_power, s_resprefix } from "../tests_resources.js";
+
 export class Parallax2 extends ParallaxDemo {
     constructor() {
         super();

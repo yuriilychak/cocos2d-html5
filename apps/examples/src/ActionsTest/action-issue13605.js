@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ActionsDemo } from "./actions-demo.js";
+import { CustomMoveBy } from "./custom-move-by.js";
+
 export class ActionIssue13605 extends ActionsDemo {
   onEnter() {
     //----start47----onEnter

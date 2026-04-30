@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ParticleDemo } from "./particle-demo.js";
+import { s_snow } from "../tests_resources.js";
+
 export class DemoSnow extends ParticleDemo {
     onEnter() {
         super.onEnter();

@@ -26,6 +26,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestController } from "./test-controller.js";
+import { director, winSize } from "./tests-main-constants.js";
+
 export class TestScene extends cc.Scene {
     constructor(bPortrait) {
         super();

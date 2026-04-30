@@ -27,6 +27,9 @@
  ****************************************************************************/
 
 // S9FrameNameSpriteSheet
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
+import { winSize } from "../../tests-main-constants.js";
+
 export class S9FrameNameSpriteSheet extends S9SpriteTestDemo {
 
 

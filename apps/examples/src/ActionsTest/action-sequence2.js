@@ -30,6 +30,9 @@
 //	ActionSequence2
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class ActionSequence2 extends ActionsDemo {
     constructor() {
         super();

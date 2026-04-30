@@ -29,6 +29,7 @@
  */
 import { Color, NewClass, Point, SpriteFrameCache, log } from "@aspect/core";
 import { _easeBackInObj, _easeBackInOutObj, _easeBackOutObj, _easeBounceInObj, _easeBounceInOutObj, _easeBounceOutObj, _easeCircleActionIn, _easeCircleActionInOut, _easeCircleActionOut, _easeCubicActionIn, _easeCubicActionInOut, _easeCubicActionOut, _easeExponentialInObj, _easeExponentialInOutObj, _easeExponentialOutObj, _easeQuadraticActionIn, _easeQuadraticActionInOut, _easeQuadraticActionOut, _easeQuinticActionIn, _easeQuinticActionInOut, _easeQuinticActionOut, _easeSineInObj, _easeSineInOutObj, _easeSineOutObj, easeElasticIn, easeElasticInOut, easeElasticOut } from "@aspect/actions";
+import { FrameEaseType } from "./action-frame.js";
 
 export class Frame extends NewClass {
   constructor() {
@@ -136,8 +137,8 @@ export class Frame extends NewClass {
   apply(percent) {
     if (!this._tween) return;
     if (
-      this._tweenType !== ccs.FrameEaseType.TWEEN_EASING_MAX &&
-      this._tweenType !== ccs.FrameEaseType.LINEAR
+      this._tweenType !== FrameEaseType.TWEEN_EASING_MAX &&
+      this._tweenType !== FrameEaseType.LINEAR
     )
       percent = this.tweenPercent(percent);
     this._onApply(percent);
@@ -156,7 +157,7 @@ export class Frame extends NewClass {
   }
 
   tweenPercent(percent) {
-    var func = ccs.Frame.tweenToMap[this._tweenType];
+    var func = Frame.tweenToMap[this._tweenType];
     if (func) return func(percent, this._easingParam);
     else return percent;
   }
@@ -186,7 +187,7 @@ export class Frame extends NewClass {
   }
 };
 
-ccs.Frame.tweenToMap = {
+Frame.tweenToMap = {
   "-1": function (time, easingParam) {
     if (easingParam) {
       var tt = 1 - time;
@@ -277,7 +278,7 @@ export class VisibleFrame extends Frame {
    * @return {ccs.VisibleFrame}
    */
   clone() {
-    var frame = new ccs.VisibleFrame();
+    var frame = new VisibleFrame();
     frame.setVisible(this._visible);
 
     frame._cloneProperty(this);
@@ -344,7 +345,7 @@ export class TextureFrame extends Frame {
    * @return {ccs.TextureFrame}
    */
   clone() {
-    var frame = new ccs.TextureFrame();
+    var frame = new TextureFrame();
     frame.setTextureName(this._textureName);
     frame._cloneProperty(this);
     return frame;
@@ -407,7 +408,7 @@ export class RotationFrame extends Frame {
    * @return {ccs.RotationFrame}
    */
   clone() {
-    var frame = new ccs.RotationFrame();
+    var frame = new RotationFrame();
     frame.setRotation(this._rotation);
 
     frame._cloneProperty(this);
@@ -478,7 +479,7 @@ export class SkewFrame extends Frame {
    * @return {ccs.SkewFrame}
    */
   clone() {
-    var frame = new ccs.SkewFrame();
+    var frame = new SkewFrame();
     frame.setSkewX(this._skewX);
     frame.setSkewY(this._skewY);
 
@@ -560,7 +561,7 @@ export class RotationSkewFrame extends SkewFrame {
    * @return {ccs.RotationSkewFrame}
    */
   clone() {
-    var frame = new ccs.RotationSkewFrame();
+    var frame = new RotationSkewFrame();
     frame.setSkewX(this._skewX);
     frame.setSkewY(this._skewY);
 
@@ -615,7 +616,7 @@ export class PositionFrame extends Frame {
    * @return {ccs.PositionFrame}
    */
   clone() {
-    var frame = new ccs.PositionFrame();
+    var frame = new PositionFrame();
     frame.setPosition(this._position);
 
     frame._cloneProperty(this);
@@ -721,7 +722,7 @@ export class ScaleFrame extends Frame {
    * @return {ccs.ScaleFrame}
    */
   clone() {
-    var frame = new ccs.ScaleFrame();
+    var frame = new ScaleFrame();
     frame.setScaleX(this._scaleX);
     frame.setScaleY(this._scaleY);
 
@@ -796,7 +797,7 @@ export class AnchorPointFrame extends Frame {
    * @return {ccs.AnchorPointFrame}
    */
   clone() {
-    var frame = new ccs.AnchorPointFrame();
+    var frame = new AnchorPointFrame();
     frame.setAnchorPoint(this._anchorPoint);
 
     frame._cloneProperty(this);
@@ -825,7 +826,7 @@ export class AnchorPointFrame extends Frame {
  * Static param
  * @namespace
  */
-export const InnerActionType = ccs.InnerActionType = {
+export const InnerActionType = {
   LoopAction: 0,
   NoLoopAction: 1,
   SingleFrame: 2
@@ -843,7 +844,7 @@ export class InnerActionFrame extends Frame {
     this._singleFrameIndex = 0;
     this._animationName = "";
     this._enterWithName = false;
-    this._innerActionType = ccs.InnerActionType.LoopAction;
+    this._innerActionType = InnerActionType.LoopAction;
     this._startFrameIndex = 0;
   }
 
@@ -855,7 +856,7 @@ export class InnerActionFrame extends Frame {
     if (!this._node) return;
     var innerActiontimeline = this._node.getActionByTag(this._node.getTag());
     if (!innerActiontimeline) return;
-    if (ccs.InnerActionType.SingleFrame === this._innerActionType) {
+    if (InnerActionType.SingleFrame === this._innerActionType) {
       innerActiontimeline.gotoFrameAndPause(this._singleFrameIndex);
       return;
     }
@@ -883,9 +884,9 @@ export class InnerActionFrame extends Frame {
       innerEnd += odddiff;
     }
 
-    if (ccs.InnerActionType.NoLoopAction === this._innerActionType) {
+    if (InnerActionType.NoLoopAction === this._innerActionType) {
       innerActiontimeline.gotoFrameAndPlay(innerStart, innerEnd, false);
-    } else if (ccs.InnerActionType.LoopAction === this._innerActionType) {
+    } else if (InnerActionType.LoopAction === this._innerActionType) {
       innerActiontimeline.gotoFrameAndPlay(innerStart, innerEnd, true);
     }
   }
@@ -916,7 +917,7 @@ export class InnerActionFrame extends Frame {
    * @return {ccs.InnerActionFrame}
    */
   clone() {
-    var frame = new ccs.InnerActionFrame();
+    var frame = new InnerActionFrame();
     frame.setInnerActionType(this._innerActionType);
     frame.setStartFrameIndex(this._startFrameIndex);
     frame.setEnterWithName(this._enterWithName);
@@ -1018,7 +1019,7 @@ export class ColorFrame extends Frame {
    * @return {ccs.ColorFrame}
    */
   clone() {
-    var frame = new ccs.ColorFrame();
+    var frame = new ColorFrame();
     frame.setColor(this._color);
     frame._cloneProperty(this);
     return frame;
@@ -1082,7 +1083,7 @@ export class AlphaFrame extends Frame {
   }
 
   clone() {
-    var frame = new ccs.AlphaFrame();
+    var frame = new AlphaFrame();
     frame.setAlpha(this._alpha);
     frame._cloneProperty(this);
     return frame;
@@ -1114,7 +1115,7 @@ export class EventFrame extends Frame {
    * @return {ccs.EventFrame}
    */
   clone() {
-    var frame = new ccs.EventFrame();
+    var frame = new EventFrame();
     frame.setEvent(this._event);
 
     frame._cloneProperty(this);
@@ -1158,7 +1159,7 @@ export class ZOrderFrame extends Frame {
    * @return {ccs.ZOrderFrame}
    */
   clone() {
-    var frame = new ccs.ZOrderFrame();
+    var frame = new ZOrderFrame();
     frame.setZOrder(this._zorder);
 
     frame._cloneProperty(this);
@@ -1194,7 +1195,7 @@ export class BlendFuncFrame extends Frame {
   }
 
   clone() {
-    var frame = new ccs.BlendFuncFrame();
+    var frame = new BlendFuncFrame();
     frame.setBlendFunc(this._blendFunc);
     frame._cloneProperty(this);
     return frame;
@@ -1210,31 +1211,15 @@ export class BlendFuncFrame extends Frame {
   }
 };
 
-ccs.Frame = Frame;
 
-ccs.VisibleFrame = VisibleFrame;
 
-ccs.TextureFrame = TextureFrame;
 
-ccs.RotationFrame = RotationFrame;
 
-ccs.SkewFrame = SkewFrame;
 
-ccs.PositionFrame = PositionFrame;
 
-ccs.ScaleFrame = ScaleFrame;
 
-ccs.AnchorPointFrame = AnchorPointFrame;
 
-ccs.ZOrderFrame = ZOrderFrame;
 
-ccs.InnerActionFrame = InnerActionFrame;
 
-ccs.ColorFrame = ColorFrame;
 
-ccs.EventFrame = EventFrame;
 
-ccs.AlphaFrame = AlphaFrame;
-ccs.RotationSkewFrame = RotationSkewFrame;
-ccs.AnchorPointFrame = AnchorPointFrame;
-ccs.BlendFuncFrame = BlendFuncFrame;

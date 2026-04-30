@@ -25,6 +25,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RescheduleCallback } from "./reschedule-callback.js";
+import { ScheduleUsingSchedulerTest } from "./schedule-using-scheduler-test.js";
+import { SchedulerAutoremove } from "./scheduler-autoremove.js";
+import { SchedulerPauseResume } from "./scheduler-pause-resume.js";
+import { SchedulerSchedulesAndRemove } from "./scheduler-schedules-and-remove.js";
+import { schedulerTestSceneIdx , _setschedulerTestSceneIdx} from "./scheduler-test-constants.js";
+import { SchedulerTimeScale } from "./scheduler-time-scale.js";
+import { SchedulerUnscheduleAllHard } from "./scheduler-unschedule-all-hard.js";
+import { SchedulerUnscheduleAll } from "./scheduler-unschedule-all.js";
+import { SchedulerUpdateAndCustom } from "./scheduler-update-and-custom.js";
+import { SchedulerUpdateFromCustom } from "./scheduler-update-from-custom.js";
+import { SchedulerUpdate } from "./scheduler-update.js";
+import { unScheduleAndRepeatTest } from "./un-schedule-and-repeat-test.js";
+
 ;
 
 ;
@@ -58,7 +72,7 @@
 //
 // Flow control
 //
-var arrayOfSchedulerTest = [
+export var arrayOfSchedulerTest = [
     SchedulerTimeScale,
     SchedulerAutoremove,
     SchedulerPauseResume,
@@ -74,11 +88,11 @@ var arrayOfSchedulerTest = [
 ];
 
 export function nextSchedulerTest() {
-    schedulerTestSceneIdx++;
-    schedulerTestSceneIdx = schedulerTestSceneIdx % arrayOfSchedulerTest.length;
+    _setschedulerTestSceneIdx(schedulerTestSceneIdx + 1);
+    _setschedulerTestSceneIdx(schedulerTestSceneIdx % arrayOfSchedulerTest.length);
 
     if(window.sideIndexBar){
-        schedulerTestSceneIdx = window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34);
+        _setschedulerTestSceneIdx(window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34));
     }
 
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
@@ -87,12 +101,12 @@ export function nextSchedulerTest() {
 ;
 
 export function previousSchedulerTest() {
-    schedulerTestSceneIdx--;
+    _setschedulerTestSceneIdx(schedulerTestSceneIdx - 1);
     if (schedulerTestSceneIdx < 0)
-        schedulerTestSceneIdx += arrayOfSchedulerTest.length;
+        _setschedulerTestSceneIdx(schedulerTestSceneIdx + (arrayOfSchedulerTest.length));
 
     if(window.sideIndexBar){
-        schedulerTestSceneIdx = window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34);
+        _setschedulerTestSceneIdx(window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34));
     }
 
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();

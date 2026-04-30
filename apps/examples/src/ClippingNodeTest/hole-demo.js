@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
+import { s_hole_effect_png, s_hole_stencil_png, s_pathBlock } from "../tests_resources.js";
+
 export class HoleDemo extends BaseClippingNodeTest {
     constructor() {
         super();

@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIListViewTest_Magnetic extends UIMainLayer {
     constructor() {
         super();

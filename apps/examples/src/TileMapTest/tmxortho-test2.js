@@ -30,6 +30,10 @@
 // TMXOrthoTest2
 //
 //------------------------------------------------------------------
+import { s_resprefix } from "../tests_resources.js";
+import { TileDemo } from "./tile-demo.js";
+import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+
 export class TMXOrthoTest2 extends TileDemo {
     constructor() {
         super();

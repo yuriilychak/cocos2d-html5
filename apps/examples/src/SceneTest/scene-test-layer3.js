@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_pathGrossini } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class SceneTestLayer3 extends cc.LayerColor {
     
     constructor() {

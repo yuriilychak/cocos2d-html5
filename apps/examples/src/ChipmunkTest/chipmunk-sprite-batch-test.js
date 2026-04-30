@@ -27,6 +27,9 @@
 // Chipmunk + Sprite + Batch
 //
 //------------------------------------------------------------------
+import { ChipmunkSprite } from "./chipmunk-sprite.js";
+import { s_pathGrossini } from "../tests_resources.js";
+
 export class ChipmunkSpriteBatchTest extends ChipmunkSprite {
     constructor() {
         super();

@@ -25,7 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { ProgressTestSceneIdx , _setProgressTestSceneIdx} from "./progress-actions-test-constants.js";
+import { SpriteProgressBarTintAndFade } from "./sprite-progress-bar-tint-and-fade.js";
+import { SpriteProgressBarVarious } from "./sprite-progress-bar-various.js";
+import { SpriteProgressToHorizontal } from "./sprite-progress-to-horizontal.js";
+import { SpriteProgressToRadialMidpointChanged } from "./sprite-progress-to-radial-midpoint-changed.js";
+import { SpriteProgressToRadial } from "./sprite-progress-to-radial.js";
+import { SpriteProgressToVertical } from "./sprite-progress-to-vertical.js";
+import { SpriteProgressWithSpriteFrame } from "./sprite-progress-with-sprite-frame.js";
 
 ;
 
@@ -43,7 +50,9 @@
 
 ;
 
-var arrayOfProgressTest = [
+;
+
+export var arrayOfProgressTest = [
     SpriteProgressToRadial,
     SpriteProgressToHorizontal,
     SpriteProgressToVertical,
@@ -54,11 +63,11 @@ var arrayOfProgressTest = [
 ];
 
 export function nextProgressTest() {
-    ProgressTestSceneIdx++;
-    ProgressTestSceneIdx = ProgressTestSceneIdx % arrayOfProgressTest.length;
+    _setProgressTestSceneIdx(ProgressTestSceneIdx + 1);
+    _setProgressTestSceneIdx(ProgressTestSceneIdx % arrayOfProgressTest.length);
 
     if(window.sideIndexBar){
-        ProgressTestSceneIdx = window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30);
+        _setProgressTestSceneIdx(window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30));
     }
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
@@ -67,12 +76,12 @@ export function nextProgressTest() {
 ;
 
 export function previousProgressTest() {
-    ProgressTestSceneIdx--;
+    _setProgressTestSceneIdx(ProgressTestSceneIdx - 1);
     if (ProgressTestSceneIdx < 0)
-        ProgressTestSceneIdx += arrayOfProgressTest.length;
+        _setProgressTestSceneIdx(ProgressTestSceneIdx + (arrayOfProgressTest.length));
 
     if(window.sideIndexBar){
-        ProgressTestSceneIdx = window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30);
+        _setProgressTestSceneIdx(window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30));
     }
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();

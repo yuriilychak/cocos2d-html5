@@ -22,6 +22,27 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Balls } from "./balls.js";
+import { Buoyancy } from "./buoyancy.js";
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { ChipmunkCollisionMemoryLeakTest } from "./chipmunk-collision-memory-leak-test.js";
+import { ChipmunkCollisionTestB } from "./chipmunk-collision-test-b.js";
+import { ChipmunkCollisionTest_no_specific_type } from "./chipmunk-collision-test-no-specific-type.js";
+import { ChipmunkCollisionTest } from "./chipmunk-collision-test.js";
+import { ChipmunkReleaseTest } from "./chipmunk-release-test.js";
+import { ChipmunkSpriteAnchorPoint } from "./chipmunk-sprite-anchor-point.js";
+import { ChipmunkSpriteBatchTest } from "./chipmunk-sprite-batch-test.js";
+import { ChipmunkSprite } from "./chipmunk-sprite.js";
+import { chipmunkTestSceneIdx , _setchipmunkTestSceneIdx} from "./chipmunk-test-constants.js";
+import { Issue1073 } from "./issue1073.js";
+import { Issue1083 } from "./issue1083.js";
+import { Issue1092 } from "./issue1092.js";
+import { Joints } from "./joints.js";
+import { PyramidStack } from "./pyramid-stack.js";
+import { PyramidTopple } from "./pyramid-topple.js";
+import { Query } from "./query.js";
+import { s_hole_stencil_png } from "../tests_resources.js";
+
 ;
 
 ;
@@ -46,13 +67,13 @@
 // Chipmunk Demos from Chipmunk-JS project
 // https://github.com/josephg/chipmunk-js
 //
-var v = cp.v;
+export var v = cp.v;
 
-var ctx;
+export var ctx;
 
-var GRABABLE_MASK_BIT = 1<<31;
+export var GRABABLE_MASK_BIT = 1<<31;
 
-var NOT_GRABABLE_MASK = ~GRABABLE_MASK_BIT;
+export var NOT_GRABABLE_MASK = ~GRABABLE_MASK_BIT;
 
 ;
 
@@ -69,9 +90,9 @@ var NOT_GRABABLE_MASK = ~GRABABLE_MASK_BIT;
 // Buoyancy
 //
 //------------------------------------------------------------------
-var FLUID_DENSITY = 0.00014;
+export var FLUID_DENSITY = 0.00014;
 
-var FLUID_DRAG = 2.0;
+export var FLUID_DRAG = 2.0;
 
 ;
 
@@ -84,7 +105,7 @@ var FLUID_DRAG = 2.0;
  // LogoSmash
  //
  //------------------------------------------------------------------
-var LogoSmash = (function(){
+export var LogoSmash = (function(){
 
     var image_width = 188;
     var image_height = 35;
@@ -230,7 +251,7 @@ var LogoSmash = (function(){
 ;
 
 // Chipmunk Demos
-var arrayOfChipmunkTest =  [
+export var arrayOfChipmunkTest =  [
 
 // Chipmunk "C" Tests
         // Planet,
@@ -261,11 +282,11 @@ if( cc.sys.isNative ) {
 }
 
 export function nextChipmunkTest() {
-    chipmunkTestSceneIdx++;
-    chipmunkTestSceneIdx = chipmunkTestSceneIdx % arrayOfChipmunkTest.length;
+    _setchipmunkTestSceneIdx(chipmunkTestSceneIdx + 1);
+    _setchipmunkTestSceneIdx(chipmunkTestSceneIdx % arrayOfChipmunkTest.length);
 
     if(window.sideIndexBar){
-        chipmunkTestSceneIdx = window.sideIndexBar.changeTest(chipmunkTestSceneIdx, 3);
+        _setchipmunkTestSceneIdx(window.sideIndexBar.changeTest(chipmunkTestSceneIdx, 3));
     }
 
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();
@@ -274,12 +295,12 @@ export function nextChipmunkTest() {
 ;
 
 export function previousChipmunkTest() {
-    chipmunkTestSceneIdx--;
+    _setchipmunkTestSceneIdx(chipmunkTestSceneIdx - 1);
     if (chipmunkTestSceneIdx < 0)
-        chipmunkTestSceneIdx += arrayOfChipmunkTest.length;
+        _setchipmunkTestSceneIdx(chipmunkTestSceneIdx + (arrayOfChipmunkTest.length));
 
     if(window.sideIndexBar){
-        chipmunkTestSceneIdx = window.sideIndexBar.changeTest(chipmunkTestSceneIdx, 3);
+        _setchipmunkTestSceneIdx(window.sideIndexBar.changeTest(chipmunkTestSceneIdx, 3));
     }
 
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();

@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RawStencilBufferTest } from "./raw-stencil-buffer-test.js";
+
 export class RawStencilBufferTest3 extends RawStencilBufferTest {
     subtitle() {
         return "3:DepthTest:DISABLE,DepthMask:FALSE";

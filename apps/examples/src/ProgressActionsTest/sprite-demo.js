@@ -25,6 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { ProgressTestSceneIdx } from "./progress-actions-test-constants.js";
+import { arrayOfProgressTest, nextProgressTest, previousProgressTest, restartProgressTest } from "./progress-actions-test-helpers.js";
+import { ProgressActionsTestScene } from "./progress-actions-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class SpriteDemo extends BaseTestLayer {
 
     title() {

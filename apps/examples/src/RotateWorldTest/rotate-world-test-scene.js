@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RotateWorldMainLayer } from "./rotate-world-main-layer.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class RotateWorldTestScene extends TestScene {
     runThisTest() {
         var layer = new RotateWorldMainLayer();

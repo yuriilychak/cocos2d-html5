@@ -28,6 +28,9 @@
 /*
     ScheduleUsingSchedulerTest
 */
+import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { director } from "../tests-main-constants.js";
+
 export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
     constructor() {
         super();

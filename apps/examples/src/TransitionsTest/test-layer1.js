@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_back1 } from "../tests_resources.js";
+import { TestLayer2 } from "./test-layer2.js";
+import { TransitionBase } from "./transition-base.js";
+
 export class TestLayer1 extends TransitionBase {
     constructor() {
         super(s_back1, "Scene 1", new cc.Color(0,0,0,255), new cc.Color(160,99,117,255));

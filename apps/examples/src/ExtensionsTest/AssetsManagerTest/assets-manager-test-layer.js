@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer.js";
+import { AssetsManagerLoaderScene } from "./assets-manager-loader-scene.js";
+import { currentScene, sceneManifests , _setcurrentScene} from "./assets-manager-test-constants.js";
+
 export class AssetsManagerTestLayer extends BaseTestLayer {
 
     constructor(spritePath) {
@@ -59,9 +63,9 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
     onNextCallback() {
         if (currentScene < sceneManifests.length - 1)
         {
-            currentScene++;
+            _setcurrentScene(currentScene + 1);
         }
-        else currentScene = 0;
+        else _setcurrentScene(0);
         var scene = new AssetsManagerLoaderScene();
         scene.runThisTest();
     }
@@ -69,9 +73,9 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
     onBackCallback() {
         if (currentScene > 0)
         {
-            currentScene--;
+            _setcurrentScene(currentScene - 1);
         }
-        else currentScene = sceneManifests.length - 1;
+        else _setcurrentScene(sceneManifests.length - 1);
         var scene = new AssetsManagerLoaderScene();
         scene.runThisTest();
     }

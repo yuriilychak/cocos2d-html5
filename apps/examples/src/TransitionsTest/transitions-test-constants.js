@@ -25,9 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { CCTransitionCrossFade, CCTransitionRadialCCW, CCTransitionRadialCW, FadeBLTransition, FadeDownTransition, FadeTRTransition, FadeTransition, FadeUpTransition, FadeWhiteTransition, JumpZoomTransition, MoveInBTransition, MoveInLTransition, MoveInRTransition, MoveInTTransition, PageTransitionBackward, PageTransitionForward, RotoZoomTransition, ShrinkGrowTransition, SlideInBTransition, SlideInLTransition, SlideInRTransition, SlideInTTransition, SplitColsTransition, SplitRowsTransition, TurnOffTilesTransition } from "./transitions-test-helpers.js";
+
 TRANSITION_DURATION = 1.2;
 
-var arrayOfTransitionsTest = [
+export var arrayOfTransitionsTest = [
 
     {title:"JumpZoomTransition", transitionFunc:function (t, s) {
         return new JumpZoomTransition(t, s);
@@ -139,4 +141,6 @@ if (!cc.rendererConfig.isCanvas) {
         ]);
 }
 
-var transitionsIdx = 0;
+export let transitionsIdx = 0;
+
+export function _settransitionsIdx(v) { transitionsIdx = v; }

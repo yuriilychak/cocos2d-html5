@@ -30,7 +30,7 @@
  * @extend ccs.Class
  *
  */
-import { NewClass, arrayRemoveObject, log } from "@aspect/core";
+import { Component, NewClass, arrayRemoveObject, log } from "@aspect/core";
 import { Action } from "@aspect/actions";
 
 export class ActionTimelineData extends NewClass {
@@ -68,7 +68,7 @@ export function AnimationInfo (name, start, end) {
   this.endIndex = end;
 };
 
-export class ComExtensionData extends ccs.Component {
+export class ComExtensionData extends Component {
   _customProperty = null;
   _timelineData = null;
   _name = "ComExtensionData";
@@ -76,7 +76,7 @@ export class ComExtensionData extends ccs.Component {
   constructor() {
     super();
     this._customProperty = "";
-    this._timelineData = new ccs.ActionTimelineData(0);
+    this._timelineData = new ActionTimelineData(0);
   }
 
   setActionTag(actionTag) {
@@ -352,7 +352,7 @@ export class ActionTimeline extends Action {
    * @returns {ccs.ActionTimeline}
    */
   clone() {
-    var newAction = new ccs.ActionTimeline();
+    var newAction = new ActionTimeline();
     newAction.setDuration(this._duration);
     newAction.setTimeSpeed(this._timeSpeed);
 
@@ -498,10 +498,6 @@ export class ActionTimeline extends Action {
   }
 };
 
-ccs.ActionTimelineData = ActionTimelineData;
 
-ccs.AnimationInfo = AnimationInfo;
 
-ccs.ComExtensionData = ComExtensionData;
 
-ccs.ActionTimeline = ActionTimeline;

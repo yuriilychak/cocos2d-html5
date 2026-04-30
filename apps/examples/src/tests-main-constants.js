@@ -26,30 +26,38 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-// globals
-var director = null;
+// globals (lazy-init in _initGlobals; live bindings let importers see updates)
+export let director = null;
 
-var winSize = null;
+export let winSize = null;
 
-var PLATFORM_JSB = 1 << 0;
+export function _initGlobals() {
+    director = cc.director;
+    winSize = cc.director.getWinSize();
+}
 
-var PLATFORM_HTML5 = 1 << 1;
+export var PLATFORM_JSB = 1 << 0;
 
-var PLATFORM_HTML5_WEBGL = 1 << 2;
+export var PLATFORM_HTML5 = 1 << 1;
 
-var PLATFROM_ANDROID = 1 << 3;
+export var PLATFORM_HTML5_WEBGL = 1 << 2;
 
-var PLATFROM_IOS = 1 << 4;
+export var PLATFROM_ANDROID = 1 << 3;
 
-var PLATFORM_MAC = 1 << 5;
+export var PLATFROM_IOS = 1 << 4;
 
-var PLATFORM_JSB_AND_WEBGL =  PLATFORM_JSB | PLATFORM_HTML5_WEBGL;
+export var PLATFORM_MAC = 1 << 5;
 
-var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID | PLATFROM_IOS;
+export var PLATFORM_JSB_AND_WEBGL =  PLATFORM_JSB | PLATFORM_HTML5_WEBGL;
 
-var PLATFROM_APPLE = PLATFROM_IOS | PLATFORM_MAC;
+export var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID | PLATFROM_IOS;
 
-// automation vars
-var autoTestEnabled = autoTestEnabled || false;
+export var PLATFROM_APPLE = PLATFROM_IOS | PLATFORM_MAC;
 
-var autoTestCurrentTestName = autoTestCurrentTestName || "N/A";
+// automation vars (read window globals if set externally, else default)
+export let autoTestEnabled = (typeof window !== "undefined" && window.autoTestEnabled) || false;
+
+export let autoTestCurrentTestName = (typeof window !== "undefined" && window.autoTestCurrentTestName) || "N/A";
+
+export function _setAutoTestEnabled(v) { autoTestEnabled = v; }
+export function _setAutoTestCurrentTestName(v) { autoTestCurrentTestName = v; }

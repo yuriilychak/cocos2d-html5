@@ -30,6 +30,9 @@
 // Draw New API Test
 //
 //------------------------------------------------------------------
+import { DrawTestDemo } from "./draw-test-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class DrawNewAPITest extends DrawTestDemo {
     constructor() {
         super();

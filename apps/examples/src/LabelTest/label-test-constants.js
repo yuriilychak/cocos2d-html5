@@ -25,32 +25,34 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_LABEL = 1;
+export var TAG_LABEL = 1;
 
-var TAG_LABEL_SPRITE_MANAGER = 1;
+export var TAG_LABEL_SPRITE_MANAGER = 1;
 
-var TAG_ANIMATION1 = 1;
+export var TAG_ANIMATION1 = 1;
 
-var TAG_BITMAP_ATLAS1 = 1;
+export var TAG_BITMAP_ATLAS1 = 1;
 
-var TAG_BITMAP_ATLAS2 = 2;
+export var TAG_BITMAP_ATLAS2 = 2;
 
-var TAG_BITMAP_ATLAS3 = 3;
+export var TAG_BITMAP_ATLAS3 = 3;
 
-var TAG_LABEL_SPRITE1 = 660;
+export var TAG_LABEL_SPRITE1 = 660;
 
-var TAG_LABEL_SPRITE12 = 661;
+export var TAG_LABEL_SPRITE12 = 661;
 
-var TAG_LABEL_SPRITE13 = 662;
+export var TAG_LABEL_SPRITE13 = 662;
 
-var TAG_LABEL_SPRITE14 = 663;
+export var TAG_LABEL_SPRITE14 = 663;
 
-var TAG_LABEL_SPRITE15 = 664;
+export var TAG_LABEL_SPRITE15 = 664;
 
-var TAG_LABEL_SPRITE16 = 665;
+export var TAG_LABEL_SPRITE16 = 665;
 
-var TAG_LABEL_SPRITE17 = 666;
+export var TAG_LABEL_SPRITE17 = 666;
 
-var TAG_LABEL_SPRITE18 = 667;
+export var TAG_LABEL_SPRITE18 = 667;
 
-var labelTestIdx = -1;
+export let labelTestIdx = -1;
+
+export function _setlabelTestIdx(v) { labelTestIdx = v; }

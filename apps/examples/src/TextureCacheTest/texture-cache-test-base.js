@@ -25,6 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { director } from "../tests-main-constants.js";
+import { TexCacheTestScene } from "./tex-cache-test-scene.js";
+import { nextTexCacheTest, previousTexCacheTest, restartTexCacheTest } from "./texture-cache-test-helpers.js";
+
 export class TextureCacheTestBase extends BaseTestLayer {
 
     constructor() {

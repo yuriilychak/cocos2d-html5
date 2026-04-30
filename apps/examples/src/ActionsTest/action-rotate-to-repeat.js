@@ -30,6 +30,8 @@
 // ActionRotateToRepeat
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionRotateToRepeat extends ActionsDemo {
     constructor() {
         super();

@@ -25,6 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { DoubleSprite } from "./double-sprite.js";
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossiniDance08, s_pathGrossini } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteDoubleResolution extends SpriteTestDemo {
 
 

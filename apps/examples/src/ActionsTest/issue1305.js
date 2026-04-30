@@ -30,6 +30,9 @@
 // Issue1305
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { s_pathGrossini } from "../tests_resources.js";
+
 export class Issue1305 extends ActionsDemo {
     constructor() {
         super();

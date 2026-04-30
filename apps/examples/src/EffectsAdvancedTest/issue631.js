@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectAdvanceTextLayer } from "./effect-advance-text-layer.js";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
+import { s_pathFog, s_pathGrossini } from "../tests_resources.js";
+
 export class Issue631 extends EffectAdvanceTextLayer {
     title() {
         return "Testing Opacity";

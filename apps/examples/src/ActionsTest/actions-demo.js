@@ -25,6 +25,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SPRITE_GROSSINI_TAG, SPRITE_KATHIA_TAG, SPRITE_TAMARA_TAG, actionsTestIdx } from "./actions-test-constants.js";
+import { arrayOfActionsTest, nextActionsTest, previousActionsTest, restartActionsTest } from "./actions-test-helpers.js";
+import { ActionsTestScene } from "./actions-test-scene.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class ActionsDemo extends BaseTestLayer {
 
   constructor() {

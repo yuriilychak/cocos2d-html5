@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UILayoutComponentTest } from "./uilayout-component-test.js";
+
 export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest {
     init(){
         if (super.init()) {

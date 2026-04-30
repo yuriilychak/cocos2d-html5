@@ -30,6 +30,9 @@
 // Issue1438
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { s_animations2Plist } from "../tests_resources.js";
+
 export class Issue1438 extends ActionsDemo {
   onEnter() {
     //----start45----onEnter

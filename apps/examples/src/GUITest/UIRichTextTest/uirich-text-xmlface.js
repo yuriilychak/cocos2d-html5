@@ -27,6 +27,8 @@
 //
 // UIRichTextXMLFace
 //
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIRichTextXMLFace extends UIMainLayer {
     constructor() {
         super();

@@ -29,6 +29,8 @@
 // LocalStorageTest
 //
 //------------------------------------------------------------------
+import { SysTestBase } from "./sys-test-base.js";
+
 export class LocalStorageTest extends SysTestBase {
 
     constructor() {

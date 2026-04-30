@@ -30,6 +30,11 @@
 // BMFontSubSpriteTest
 //
 //------------------------------------------------------------------
+import { AtlasDemo } from "./atlas-demo.js";
+import { TAG_BITMAP_ATLAS2 } from "./label-test-constants.js";
+import { s_resprefix } from "../tests_resources.js";
+import { autoTestEnabled, director } from "../tests-main-constants.js";
+
 export class BMFontSubSpriteTest extends AtlasDemo {
     constructor() {
         //----start4----ctor

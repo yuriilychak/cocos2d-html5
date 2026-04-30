@@ -25,10 +25,17 @@
 import { BlendFunc, Color, Loader, Node, Path, Point, Rect, Size, Sprite, SpriteFrameCache, Sys, log } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 import { TMXTiledMap } from "@aspect/tilemap";
+import { ComExtensionData } from "./action-timeline.js";
+import { armatureDataManager } from "./armature-data-manager.js";
+import { Armature } from "./armature.js";
+import { BoneNode } from "./bone-node.js";
+import { ComAudio } from "./com-audio.js";
+import { _ccsLoad, _parser, load } from "./load.js";
+import { SkeletonNode } from "./skeleton-node.js";
 
   var DEBUG = false;
 
-  var Parser = class Parser extends ccs._parser {
+  var Parser = class Parser extends _parser {
     parse(file, json, path) {
       var resourcePath;
       if (path !== undefined) resourcePath = path;
@@ -101,7 +108,7 @@ import { TMXTiledMap } from "@aspect/tilemap";
     node.setTag(json["Tag"] || 0);
 
     var actionTag = json["ActionTag"] || 0;
-    var extensionData = new ccs.ComExtensionData();
+    var extensionData = new ComExtensionData();
     var customProperty = json["UserData"];
     if (customProperty !== undefined)
       extensionData.setCustomProperty(customProperty);
@@ -241,7 +248,7 @@ import { TMXTiledMap } from "@aspect/tilemap";
 
     var actionTag = json["ActionTag"] || 0;
     widget.setActionTag(actionTag);
-    var extensionData = new ccs.ComExtensionData();
+    var extensionData = new ComExtensionData();
     var customProperty = json["UserData"];
     if (customProperty !== undefined)
       extensionData.setCustomProperty(customProperty);
@@ -1171,7 +1178,7 @@ import { TMXTiledMap } from "@aspect/tilemap";
    * @param resourcePath
    */
   parser.initSimpleAudio = function (json, resourcePath) {
-    var node = new ccs.ComAudio();
+    var node = new ComAudio();
     var loop = json["Loop"] || false;
     //var volume = json["Volume"] || 0;
     //audioEngine.setMusicVolume(volume);
@@ -1210,7 +1217,7 @@ import { TMXTiledMap } from "@aspect/tilemap";
     if (projectFile != null && projectFile["Path"]) {
       var file = resourcePath + projectFile["Path"];
       if (Loader.getInstance().getRes(file)) {
-        var obj = ccs.load(file, resourcePath);
+        var obj = load(file, resourcePath);
         parser.generalAttributes(obj.node, json);
         if (obj.action && obj.node) {
           obj.action.tag = obj.node.tag;
@@ -1238,7 +1245,7 @@ import { TMXTiledMap } from "@aspect/tilemap";
    * @param resourcePath
    */
   parser.initArmature = function (json, resourcePath) {
-    var node = new ccs.Armature();
+    var node = new Armature();
 
     var isLoop = json["IsLoop"];
 
@@ -1258,7 +1265,7 @@ import { TMXTiledMap } from "@aspect/tilemap";
             SpriteFrameCache.getInstance().addSpriteFrames(plist, pngs[index]);
         });
       }
-      ccs.armatureDataManager.addArmatureFileInfo(path);
+      armatureDataManager.addArmatureFileInfo(path);
       node.init(getFileName(path));
       if (isAutoPlay)
         node.getAnimation().play(currentAnimationName, -1, isLoop);
@@ -1277,7 +1284,7 @@ import { TMXTiledMap } from "@aspect/tilemap";
   };
 
   parser.initBoneNode = function (json, resourcePath) {
-    var node = new ccs.BoneNode();
+    var node = new BoneNode();
 
     var length = json["Length"];
     if (length !== undefined) node.setDebugDrawLength(length);
@@ -1303,7 +1310,7 @@ import { TMXTiledMap } from "@aspect/tilemap";
   };
 
   parser.initSkeletonNode = function (json) {
-    var node = new ccs.SkeletonNode();
+    var node = new SkeletonNode();
     parser.generalAttributes(node, json);
     var color = json["CColor"];
     if (
@@ -1396,4 +1403,4 @@ import { TMXTiledMap } from "@aspect/tilemap";
     });
   });
 
-  ccs._load.registerParser("timeline", "*", parser);
+  _ccsLoad.registerParser("timeline", "*", parser);

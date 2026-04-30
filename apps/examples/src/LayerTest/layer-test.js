@@ -30,6 +30,12 @@
 // LayerTest
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { layerTestSceneIdx } from "./layer-test-constants.js";
+import { arrayOfLayerTest, nextLayerTest, previousLayerTest, restartLayerTest } from "./layer-test-helpers.js";
+import { LayerTestScene } from "./layer-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class LayerTest extends BaseTestLayer {
     constructor() {
         super();

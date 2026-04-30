@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
+import { TouchableSprite } from "./touchable-sprite.js";
+
 export class Issue4160 extends EventDispatcherTestDemo {
     constructor(){
         //----start10----ctor

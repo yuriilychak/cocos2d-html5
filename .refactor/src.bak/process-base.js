@@ -30,44 +30,46 @@
  * @type {number}
  */
 import { NewClass } from "@aspect/core";
+import { TweenType } from "./tween-function.js";
+import { fmodf } from "./util-math.js";
 
-ccs.ANIMATION_TYPE_SINGLE_FRAME = -4;
+export const ANIMATION_TYPE_SINGLE_FRAME = -4;
 /**
  * The animation isn't loop
  * @constant
  * @type {number}
  */
-ccs.ANIMATION_TYPE_NO_LOOP = -3;
+export const ANIMATION_TYPE_NO_LOOP = -3;
 /**
  * The animation to loop from front
  * @constant
  * @type {number}
  */
-ccs.ANIMATION_TYPE_TO_LOOP_FRONT = -2;
+export const ANIMATION_TYPE_TO_LOOP_FRONT = -2;
 /**
  * The animation to loop from back
  * @constant
  * @type {number}
  */
-ccs.ANIMATION_TYPE_TO_LOOP_BACK = -1;
+export const ANIMATION_TYPE_TO_LOOP_BACK = -1;
 /**
  * The animation loop from front
  * @constant
  * @type {number}
  */
-ccs.ANIMATION_TYPE_LOOP_FRONT = 0;
+export const ANIMATION_TYPE_LOOP_FRONT = 0;
 /**
  * The animation loop from back
  * @constant
  * @type {number}
  */
-ccs.ANIMATION_TYPE_LOOP_BACK = 1;
+export const ANIMATION_TYPE_LOOP_BACK = 1;
 /**
  * The animation max
  * @constant
  * @type {number}
  */
-ccs.ANIMATION_TYPE_MAX = 2;
+export const ANIMATION_TYPE_MAX = 2;
 
 /**
  * The Base Process class for Cocostudio.
@@ -98,8 +100,8 @@ export class ProcessBase extends NewClass {
         this._currentPercent = 0.0;
         this._durationTween = 0;
         this._rawDuration = 0;
-        this._loopType = ccs.ANIMATION_TYPE_LOOP_BACK;
-        this._tweenEasing = ccs.TweenType.LINEAR;
+        this._loopType = ANIMATION_TYPE_LOOP_BACK;
+        this._tweenEasing = TweenType.LINEAR;
         this.animationInternal = 1 / 60;
         this._curFrameIndex = 0;
         this._durationTween = 0;
@@ -211,7 +213,7 @@ export class ProcessBase extends NewClass {
              *	if currentFrame is bigger or equal than this._nextFrameIndex, then reduce it util currentFrame is
              *  smaller than this._nextFrameIndex
              */
-            locCurrentFrame = ccs.fmodf(locCurrentFrame, locNextFrameIndex);
+            locCurrentFrame = fmodf(locCurrentFrame, locNextFrameIndex);
         }
         this._currentFrame = locCurrentFrame;
         this.updateHandler();
@@ -223,10 +225,10 @@ export class ProcessBase extends NewClass {
      */
     gotoFrame(frameIndex) {
         var locLoopType = this._loopType;
-        if (locLoopType === ccs.ANIMATION_TYPE_NO_LOOP)
-            locLoopType = ccs.ANIMATION_TYPE_MAX;
-        else if (locLoopType === ccs.ANIMATION_TYPE_TO_LOOP_FRONT)
-            locLoopType = ccs.ANIMATION_TYPE_LOOP_FRONT;
+        if (locLoopType === ANIMATION_TYPE_NO_LOOP)
+            locLoopType = ANIMATION_TYPE_MAX;
+        else if (locLoopType === ANIMATION_TYPE_TO_LOOP_FRONT)
+            locLoopType = ANIMATION_TYPE_LOOP_FRONT;
         this._loopType = locLoopType;
         this._curFrameIndex = frameIndex;
         this._nextFrameIndex = this._durationTween;
@@ -338,4 +340,3 @@ export class ProcessBase extends NewClass {
 
 };
 
-ccs.ProcessBase = ProcessBase;

@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextLayerTest } from "./layer-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class LayerTestScene extends TestScene {
     runThisTest(num) {
         layerTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

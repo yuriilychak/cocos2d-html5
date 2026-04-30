@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SceneTestLayer2 } from "./scene-test-layer2.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { director, winSize } from "../tests-main-constants.js";
+
 export class SceneTestLayer1 extends cc.Layer {
     constructor() {
         //----start0----Scene1-ctor

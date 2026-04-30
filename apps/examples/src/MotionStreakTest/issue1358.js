@@ -26,6 +26,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { MotionStreakTest } from "./motion-streak-test.js";
+import { s_image_icon } from "../tests_resources.js";
+
 export class Issue1358 extends MotionStreakTest {
     constructor() {
         super();

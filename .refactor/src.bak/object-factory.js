@@ -29,7 +29,7 @@ import { NewClass, isFunction } from '@aspect/core';
  * The singleton object that creating object factory, it creates object with class name, and manager the type mapping.
  * @name ccs.objectFactory
  */
-export const objectFactory = ccs.objectFactory = {
+export const objectFactory = {
     _typeMap: {},
 
     /**
@@ -94,8 +94,7 @@ export class TInfo extends NewClass {
             this._className = c._className;
             this._fun = c._fun;
         }
-        ccs.objectFactory.registerType(this);
+        objectFactory.registerType(this);
     }
 };
 
-ccs.TInfo = TInfo;

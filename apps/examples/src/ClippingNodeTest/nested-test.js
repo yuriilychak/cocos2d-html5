@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
+import { s_pathGrossini } from "../tests_resources.js";
+
 export class NestedTest extends BaseClippingNodeTest {
     title() {
         return "Nested Test";

@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
+import { TAG_CLIPPERNODE, TAG_CONTENTNODE } from "./clipping-node-test-constants.js";
+import { s_back2 } from "../tests_resources.js";
+
 export class ScrollViewDemo extends BaseClippingNodeTest {
     constructor() {
         super();

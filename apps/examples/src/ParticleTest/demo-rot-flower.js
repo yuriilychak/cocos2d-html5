@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ParticleDemo } from "./particle-demo.js";
+import { s_stars2 } from "../tests_resources.js";
+
 export class DemoRotFlower extends ParticleDemo {
     onEnter() {
         super.onEnter();

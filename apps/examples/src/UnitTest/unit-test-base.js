@@ -28,6 +28,12 @@
 // UnitTestBase
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { director } from "../tests-main-constants.js";
+import { unitTestSceneIdx } from "./unit-test-constants.js";
+import { arrayOfUnitTest, nextUnitTest, previousUnitTest, restartUnitTest } from "./unit-test-helpers.js";
+import { UnitTestScene } from "./unit-test-scene.js";
+
 export class UnitTestBase extends BaseTestLayer {
     constructor() {
         super();

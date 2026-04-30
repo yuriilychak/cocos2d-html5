@@ -25,6 +25,58 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ActionAnimate } from "./action-animate.js";
+import { ActionBezierToCopy } from "./action-bezier-to-copy.js";
+import { ActionBezier } from "./action-bezier.js";
+import { ActionBlink } from "./action-blink.js";
+import { ActionCallFunc1 } from "./action-call-func1.js";
+import { ActionCallFunc2 } from "./action-call-func2.js";
+import { ActionCallFunc3 } from "./action-call-func3.js";
+import { ActionCardinalSpline } from "./action-cardinal-spline.js";
+import { ActionCatmullRom } from "./action-catmull-rom.js";
+import { ActionCustomTest } from "./action-custom-test.js";
+import { ActionDelayTime } from "./action-delay-time.js";
+import { ActionFade } from "./action-fade.js";
+import { ActionFollow } from "./action-follow.js";
+import { ActionIssue13605 } from "./action-issue13605.js";
+import { ActionJump } from "./action-jump.js";
+import { ActionManual } from "./action-manual.js";
+import { ActionMove } from "./action-move.js";
+import { ActionRepeatForever } from "./action-repeat-forever.js";
+import { ActionRepeat } from "./action-repeat.js";
+import { ActionReverseSequence } from "./action-reverse-sequence.js";
+import { ActionReverseSequence2 } from "./action-reverse-sequence2.js";
+import { ActionReverse } from "./action-reverse.js";
+import { ActionRotateJerk } from "./action-rotate-jerk.js";
+import { ActionRotateToRepeat } from "./action-rotate-to-repeat.js";
+import { ActionRotateXY } from "./action-rotate-xy.js";
+import { ActionRotate } from "./action-rotate.js";
+import { ActionScale } from "./action-scale.js";
+import { ActionSequence } from "./action-sequence.js";
+import { ActionSequence2 } from "./action-sequence2.js";
+import { ActionSkewRotateScale } from "./action-skew-rotate-scale.js";
+import { ActionSkew } from "./action-skew.js";
+import { ActionSpawn } from "./action-spawn.js";
+import { ActionStackableBezier } from "./action-stackable-bezier.js";
+import { ActionStackableCardinalSpline } from "./action-stackable-cardinal-spline.js";
+import { ActionStackableCatmullRom } from "./action-stackable-catmull-rom.js";
+import { ActionStackableJump } from "./action-stackable-jump.js";
+import { ActionStackableMove } from "./action-stackable-move.js";
+import { ActionTargetedCopy } from "./action-targeted-copy.js";
+import { ActionTargeted } from "./action-targeted.js";
+import { ActionTint } from "./action-tint.js";
+import { actionsTestIdx , _setactionsTestIdx} from "./actions-test-constants.js";
+import { Issue1008 } from "./issue1008.js";
+import { Issue1288_2 } from "./issue1288-2.js";
+import { Issue1288 } from "./issue1288.js";
+import { Issue1305_2 } from "./issue1305-2.js";
+import { Issue1305 } from "./issue1305.js";
+import { Issue1327 } from "./issue1327.js";
+import { Issue1438 } from "./issue1438.js";
+import { Issue1446 } from "./issue1446.js";
+import { PauseResumeActions } from "./pause-resume-actions.js";
+import { SequenceRepeatTest } from "./sequence-repeat-test.js";
+
 ;
 
 ;
@@ -152,7 +204,7 @@ export function createCustomAction(ActionObject) {
 //
 // Flow control
 //
-var arrayOfActionsTest = [
+export var arrayOfActionsTest = [
   ActionManual,
   ActionMove,
   ActionScale,
@@ -209,11 +261,11 @@ var arrayOfActionsTest = [
 ];
 
 export function nextActionsTest() {
-  actionsTestIdx++;
-  actionsTestIdx = actionsTestIdx % arrayOfActionsTest.length;
+  _setactionsTestIdx(actionsTestIdx + 1);
+  _setactionsTestIdx(actionsTestIdx % arrayOfActionsTest.length);
 
   if (window.sideIndexBar) {
-    actionsTestIdx = window.sideIndexBar.changeTest(actionsTestIdx, 1);
+    _setactionsTestIdx(window.sideIndexBar.changeTest(actionsTestIdx, 1));
   }
 
   return new arrayOfActionsTest[actionsTestIdx]();
@@ -222,11 +274,11 @@ export function nextActionsTest() {
 ;
 
 export function previousActionsTest() {
-  actionsTestIdx--;
-  if (actionsTestIdx < 0) actionsTestIdx += arrayOfActionsTest.length;
+  _setactionsTestIdx(actionsTestIdx - 1);
+  if (actionsTestIdx < 0) _setactionsTestIdx(actionsTestIdx + (arrayOfActionsTest.length));
 
   if (window.sideIndexBar) {
-    actionsTestIdx = window.sideIndexBar.changeTest(actionsTestIdx, 1);
+    _setactionsTestIdx(window.sideIndexBar.changeTest(actionsTestIdx, 1));
   }
 
   return new arrayOfActionsTest[actionsTestIdx]();

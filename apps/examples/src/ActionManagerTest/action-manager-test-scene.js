@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextActionMgrTest } from "./action-manager-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class ActionManagerTestScene extends TestScene {
     runThisTest(num) {
         ActionMgrTestIdx = (num || 0) - 1;

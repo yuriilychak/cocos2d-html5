@@ -30,6 +30,8 @@
 // ActionRepeatForever
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionRepeatForever extends ActionsDemo {
     constructor() {
         super();

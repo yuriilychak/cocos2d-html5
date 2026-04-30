@@ -30,6 +30,8 @@
 // Issue1008
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class Issue1008 extends ActionsDemo {
     constructor() {
         super();

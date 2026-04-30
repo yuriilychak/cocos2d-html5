@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ControlScene } from "../CCControlScene.js";
+import { s_extensions_button, s_extensions_buttonBackground, s_extensions_buttonHighlighted } from "../../../tests_resources.js";
+
 export class ControlButtonTest_Event extends ControlScene {
     constructor() {
         super();

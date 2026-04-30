@@ -28,6 +28,9 @@
 // ReadPixelsTest
 //
 //------------------------------------------------------------------
+import { OpenGLTestLayer } from "./open-gltest-layer.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class GLReadPixelsTest extends OpenGLTestLayer {
 
     constructor() {

@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Box2DTestLayer } from "./box2-dtest-layer.js";
+import { TestScene } from "../test-scene.js";
+
 export class Box2DTestScene extends TestScene {
   runThisTest() {
     var layer = new Box2DTestLayer();

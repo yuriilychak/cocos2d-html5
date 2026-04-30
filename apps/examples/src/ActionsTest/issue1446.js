@@ -30,6 +30,9 @@
 // Issue1438
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class Issue1446 extends ActionsDemo {
   title() {
     return "Sequence + Speed in 'reverse mode'";

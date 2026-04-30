@@ -23,8 +23,12 @@
  ****************************************************************************/
 
 import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/core";
+import { ActionTimeline } from "./action-timeline.js";
+import { AlphaFrame, AnchorPointFrame, BlendFuncFrame, ColorFrame, EventFrame, InnerActionFrame, InnerActionType, PositionFrame, RotationFrame, RotationSkewFrame, ScaleFrame, SkewFrame, TextureFrame, VisibleFrame, ZOrderFrame } from "./frame.js";
+import { _ccsLoad, _parser } from "./load.js";
+import { Timeline } from "./timeline.js";
 
-    var Parser = class Parser extends ccs._parser {
+    var Parser = class Parser extends _parser {
 
         getNodeJson(json){
             return json["Content"]["Content"]["Animation"];
@@ -35,7 +39,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
                 return null;
 
             var self = this,
-                action = new ccs.ActionTimeline();
+                action = new ActionTimeline();
 
             action.setDuration(json["Duration"]);
             action.setTimeSpeed(json["Speed"] || 1);
@@ -77,7 +81,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "Position",
             handle: function(options){
-                var frame = new ccs.PositionFrame();
+                var frame = new PositionFrame();
                 var x = options["X"];
                 var y = options["Y"];
                 frame.setPosition(new Point(x,y));
@@ -87,7 +91,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "VisibleForFrame",
             handle: function(options){
-                var frame = new ccs.VisibleFrame();
+                var frame = new VisibleFrame();
                 var visible = options["Value"];
                 frame.setVisible(visible);
                 return frame;
@@ -96,7 +100,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "Scale",
             handle: function(options){
-                var frame = new ccs.ScaleFrame();
+                var frame = new ScaleFrame();
                 var scalex = options["X"];
                 var scaley = options["Y"];
                 frame.setScaleX(scalex);
@@ -107,7 +111,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "Rotation",
             handle: function(options){
-                var frame = new ccs.RotationFrame();
+                var frame = new RotationFrame();
                 var rotation = options["Rotation"] || options["Value"] || 0;
                 frame.setRotation(rotation);
                 return frame;
@@ -116,7 +120,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "Skew",
             handle: function(options){
-                var frame = new ccs.SkewFrame();
+                var frame = new SkewFrame();
                 var skewx = options["X"];
                 var skewy = options["Y"];
                 frame.setSkewX(skewx);
@@ -127,7 +131,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "RotationSkew",
             handle: function(options){
-                var frame = new ccs.RotationSkewFrame();
+                var frame = new RotationSkewFrame();
                 var skewx = options["X"];
                 var skewy = options["Y"];
                 frame.setSkewX(skewx);
@@ -138,7 +142,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "Anchor",
             handle: function(options){
-                var frame = new ccs.AnchorPointFrame();
+                var frame = new AnchorPointFrame();
                 var anchorx = options["X"];
                 var anchory = options["Y"];
                 frame.setAnchorPoint(new Point(anchorx, anchory));
@@ -147,7 +151,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         },{
             name: "AnchorPoint",
             handle: function(options){
-                var frame = new ccs.AnchorPointFrame();
+                var frame = new AnchorPointFrame();
                 var anchorx = options["X"];
                 var anchory = options["Y"];
                 frame.setAnchorPoint(new Point(anchorx, anchory));
@@ -156,7 +160,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         },{
             name: "InnerAction",
             handle: function(options){
-                var frame = new ccs.InnerActionFrame();
+                var frame = new InnerActionFrame();
                 var type = options["InnerActionType"];
                 var startFrame = options["StartFrame"];
                 frame.setInnerActionType(type);
@@ -167,7 +171,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "CColor",
             handle: function(options){
-                var frame = new ccs.ColorFrame();
+                var frame = new ColorFrame();
                 var color = options["Color"];
                 if(!color) color = {};
                 color["R"] = color["R"] === undefined ? 255 : color["R"];
@@ -180,7 +184,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "Alpha",
             handle: function(options){
-                var frame = new ccs.AlphaFrame();
+                var frame = new AlphaFrame();
                 var alpha = options["Value"];
                 frame.setAlpha(alpha);
                 return frame;
@@ -190,7 +194,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
             name: "FileData",
             handle: function(options, resourcePath){
                 var frame, texture, plist, path, spriteFrame;
-                frame = new ccs.TextureFrame();
+                frame = new TextureFrame();
                 texture = options["TextureFile"];
                 if(texture != null) {
                     plist = texture["Plist"];
@@ -215,7 +219,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "FrameEvent",
             handle: function(options){
-                var frame = new ccs.EventFrame();
+                var frame = new EventFrame();
                 var evnt = options["Value"];
                 if(evnt != null)
                     frame.setEvent(evnt);
@@ -225,7 +229,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "ZOrder",
             handle: function(options){
-                var frame = new ccs.ZOrderFrame();
+                var frame = new ZOrderFrame();
                 var zorder = options["Value"];
                 frame.setZOrder(zorder);
                 return frame;
@@ -235,7 +239,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
             name: "ActionValue",
             handle: function (options) {
 
-                var frame = new ccs.InnerActionFrame();
+                var frame = new InnerActionFrame();
                 var innerActionType = options["InnerActionType"];
 
                 var currentAnimationFrame = options["CurrentAniamtionName"];
@@ -246,7 +250,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
                 if(frameIndex !== undefined)
                     frame.setFrameIndex(frameIndex);
 
-                frame.setInnerActionType(ccs.InnerActionType[innerActionType]);
+                frame.setInnerActionType(InnerActionType[innerActionType]);
                 frame.setSingleFrameIndex(singleFrameIndex);
 
                 frame.setEnterWithName(true);
@@ -259,7 +263,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         {
             name: "BlendFunc",
             handle: function(options){
-                var frame = new ccs.BlendFuncFrame();
+                var frame = new BlendFuncFrame();
                 var blendFunc = options["BlendFunc"];
                 if(blendFunc && blendFunc["Src"] !== undefined && blendFunc["Dst"] !== undefined)
                     frame.setBlendFunc(new BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
@@ -284,7 +288,7 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
 
     frameList.forEach(function(item){
         parser.registerParser(item.name, function(options, resourcePath){
-            var timeline = new ccs.Timeline();
+            var timeline = new Timeline();
             timeline.setActionTag(options["ActionTag"]);
 
             var frames = options["Frames"];
@@ -305,4 +309,4 @@ import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/
         });
     });
 
-    ccs._load.registerParser("action", "*", parser);
+    _ccsLoad.registerParser("action", "*", parser);

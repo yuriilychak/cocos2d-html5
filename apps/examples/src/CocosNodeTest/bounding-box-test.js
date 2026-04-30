@@ -28,6 +28,10 @@
 //
 // BoundingBox Test
 //
+import { TestNodeDemo } from "./test-node-demo.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class BoundingBoxTest extends TestNodeDemo {
     constructor() {
         //----start8----ctor

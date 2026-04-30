@@ -30,6 +30,11 @@
 // PauseTest
 //
 //------------------------------------------------------------------
+import { TAG_GROSSINI } from "./action-manager-test-constants.js";
+import { ActionManagerTest } from "./action-manager-test.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { autoTestEnabled, director } from "../tests-main-constants.js";
+
 export class PauseTest extends ActionManagerTest {
     constructor() {
         super();

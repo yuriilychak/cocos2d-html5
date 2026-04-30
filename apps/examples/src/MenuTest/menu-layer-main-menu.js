@@ -30,6 +30,8 @@
 // LayerMainMenu
 //
 //------------------------------------------------------------------
+import { s_bitmapFontTest3_fnt, s_fpsImages, s_menuItem, s_pressSendScore, s_sendScore } from "../tests_resources.js";
+
 export class MenuLayerMainMenu extends cc.Layer {
 
     constructor() {

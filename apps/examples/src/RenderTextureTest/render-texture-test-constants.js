@@ -23,4 +23,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var sceneRenderTextureIdx = -1;
+export let sceneRenderTextureIdx = -1;
+
+export function _setsceneRenderTextureIdx(v) { sceneRenderTextureIdx = v; }

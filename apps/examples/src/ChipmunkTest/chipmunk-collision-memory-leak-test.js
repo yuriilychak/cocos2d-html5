@@ -27,6 +27,8 @@
 // Chipmunk Collision Memory Leak Test
 //
 //------------------------------------------------------------------
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+
 export class ChipmunkCollisionMemoryLeakTest extends ChipmunkBaseLayer {
 
     constructor() {

@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIVideoPlayerTest extends UIMainLayer {
 
     onEnter(){

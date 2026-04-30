@@ -26,6 +26,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextMotionAction } from "./motion-streak-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+
 export class MotionStreakTestScene extends TestScene {
     runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;

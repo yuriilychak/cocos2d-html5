@@ -30,6 +30,10 @@
 // Issue1305_2
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class Issue1305_2 extends ActionsDemo {
   onEnter() {
     //----start40----onEnter

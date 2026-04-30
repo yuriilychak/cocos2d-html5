@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { AffineTransform, BlendFunc, CustomRenderCmd, Node, Point, RendererConfig } from "@aspect/core";
+import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./datas.js";
 
     export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
         constructor(renderableObject) {
@@ -77,7 +78,7 @@ import { AffineTransform, BlendFunc, CustomRenderCmd, Node, Point, RendererConfi
                     if (selNode && selNode._renderCmd) {
                         var cmd = selNode._renderCmd;
                         cmd.transform(null);
-                        if (boneType !== ccs.DISPLAY_TYPE_ARMATURE && boneType !== ccs.DISPLAY_TYPE_SPRITE) {
+                        if (boneType !== DISPLAY_TYPE_ARMATURE && boneType !== DISPLAY_TYPE_SPRITE) {
                             AffineTransform.concatIn(cmd._worldTransform, selBone._worldTransform);
                         }
 
@@ -135,10 +136,10 @@ import { AffineTransform, BlendFunc, CustomRenderCmd, Node, Point, RendererConfi
 
                     selBone._renderCmd._syncStatus(this);
                     switch (selBone.getDisplayRenderNodeType()) {
-                        case ccs.DISPLAY_TYPE_SPRITE:
+                        case DISPLAY_TYPE_SPRITE:
                             selNode.visit(selBone);
                             break;
-                        case ccs.DISPLAY_TYPE_ARMATURE:
+                        case DISPLAY_TYPE_ARMATURE:
                             selNode._renderCmd.rendering(ctx, scaleX, scaleY);
                             break;
                         default:

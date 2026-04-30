@@ -26,7 +26,9 @@
 /**
  * The controller component for Cocostudio.
  */
-export class ComController extends ccs.Component {
+import { Component } from "@aspect/core";
+
+export class ComController extends Component {
 
     /**
      * Construction of ccs.ComController.
@@ -63,4 +65,3 @@ export class ComController extends ccs.Component {
     }
 };
 
-ccs.ComController = ComController;

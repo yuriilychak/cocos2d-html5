@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { DrawNewAPITest } from "./draw-new-apitest.js";
+import { DrawNewAPITest2 } from "./draw-new-apitest2.js";
+import { drawTestSceneIdx , _setdrawTestSceneIdx} from "./draw-primitives-test-constants.js";
+
 ;
 
 ;
@@ -44,17 +48,17 @@ DrawNewAPITest.prototype.title = function(){
 //
 // Flow control
 //
-var arrayOfDrawTest = [
+export var arrayOfDrawTest = [
     DrawNewAPITest,
     DrawNewAPITest2
 ];
 
 export function nextDrawTest() {
-    drawTestSceneIdx++;
-    drawTestSceneIdx = drawTestSceneIdx % arrayOfDrawTest.length;
+    _setdrawTestSceneIdx(drawTestSceneIdx + 1);
+    _setdrawTestSceneIdx(drawTestSceneIdx % arrayOfDrawTest.length);
 
     if(window.sideIndexBar){
-        drawTestSceneIdx = window.sideIndexBar.changeTest(drawTestSceneIdx, 9);
+        _setdrawTestSceneIdx(window.sideIndexBar.changeTest(drawTestSceneIdx, 9));
     }
 
     return new arrayOfDrawTest[drawTestSceneIdx]();
@@ -63,12 +67,12 @@ export function nextDrawTest() {
 ;
 
 export function previousDrawTest() {
-    drawTestSceneIdx--;
+    _setdrawTestSceneIdx(drawTestSceneIdx - 1);
     if (drawTestSceneIdx < 0)
-        drawTestSceneIdx += arrayOfDrawTest.length;
+        _setdrawTestSceneIdx(drawTestSceneIdx + (arrayOfDrawTest.length));
 
     if(window.sideIndexBar){
-        drawTestSceneIdx = window.sideIndexBar.changeTest(drawTestSceneIdx, 9);
+        _setdrawTestSceneIdx(window.sideIndexBar.changeTest(drawTestSceneIdx, 9));
     }
 
     return new arrayOfDrawTest[drawTestSceneIdx]();

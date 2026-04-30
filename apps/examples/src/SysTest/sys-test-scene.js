@@ -24,6 +24,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextSysTest } from "./sys-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class SysTestScene extends TestScene {
     runThisTest(num) {
         sysTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

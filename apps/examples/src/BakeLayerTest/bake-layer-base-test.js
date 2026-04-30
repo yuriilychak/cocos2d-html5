@@ -30,6 +30,12 @@
 // ActionManagerTest
 //
 //------------------------------------------------------------------
+import { _bakeLayerTestIdx } from "./bake-layer-test-constants.js";
+import { arrayOfBakeLayerTest, nextBakeLayerTest, previousBakeLayerTest, restartBakeLayerTest } from "./bake-layer-test-helpers.js";
+import { BakeLayerTestScene } from "./bake-layer-test-scene.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { director } from "../tests-main-constants.js";
+
 export class BakeLayerBaseTest extends BaseTestLayer {
     constructor() {
         super();

@@ -26,6 +26,9 @@
  ****************************************************************************/
 
 // LabelTTFFontInitTest
+import { AtlasDemo } from "./atlas-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class LabelTTFFontInitTest extends AtlasDemo {
     constructor() {
         //----start23----ctor

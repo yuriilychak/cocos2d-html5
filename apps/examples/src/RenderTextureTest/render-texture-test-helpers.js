@@ -23,6 +23,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Issue1464 } from "./issue1464.js";
+import { RenderTextureIssue937 } from "./render-texture-issue937.js";
+import { RenderTextureSave } from "./render-texture-save.js";
+import { RenderTextureTargetNode } from "./render-texture-target-node.js";
+import { sceneRenderTextureIdx , _setsceneRenderTextureIdx} from "./render-texture-test-constants.js";
+import { RenderTextureTestDepthStencil } from "./render-texture-test-depth-stencil.js";
+import { RenderTextureZbuffer } from "./render-texture-zbuffer.js";
+
 ;
 
 ;
@@ -42,7 +50,7 @@
 //
 // Flow control
 //
-var arrayOfRenderTextureTest = [
+export var arrayOfRenderTextureTest = [
     RenderTextureSave,
     Issue1464
 ];
@@ -55,8 +63,8 @@ if(('opengl' in cc.sys.capabilities) && cc.rendererConfig.isWebGL && (!cc.sys.is
 }
 
 export function nextRenderTextureTest() {
-    sceneRenderTextureIdx++;
-    sceneRenderTextureIdx = sceneRenderTextureIdx % arrayOfRenderTextureTest.length;
+    _setsceneRenderTextureIdx(sceneRenderTextureIdx + 1);
+    _setsceneRenderTextureIdx(sceneRenderTextureIdx % arrayOfRenderTextureTest.length);
 
     return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
 }
@@ -64,9 +72,9 @@ export function nextRenderTextureTest() {
 ;
 
 export function previousRenderTextureTest() {
-    sceneRenderTextureIdx--;
+    _setsceneRenderTextureIdx(sceneRenderTextureIdx - 1);
     if (sceneRenderTextureIdx < 0)
-        sceneRenderTextureIdx += arrayOfRenderTextureTest.length;
+        _setsceneRenderTextureIdx(sceneRenderTextureIdx + (arrayOfRenderTextureTest.length));
 
     return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
 }

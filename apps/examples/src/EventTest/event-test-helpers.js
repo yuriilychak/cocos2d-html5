@@ -23,6 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AccelerometerTest } from "./accelerometer-test.js";
+import { sceneIdx , _setsceneIdx} from "./event-test-constants.js";
+import { KeyboardTest } from "./keyboard-test.js";
+import { MouseTest } from "./mouse-test.js";
+import { TouchAllAtOnce } from "./touch-all-at-once.js";
+import { TouchOneByOneTest } from "./touch-one-by-one-test.js";
+
 ;
 
 ;
@@ -40,7 +47,7 @@
 //
 // Flow control
 //
-var arrayOfEventsTest = [
+export var arrayOfEventsTest = [
     TouchOneByOneTest,
     TouchAllAtOnce,
     AccelerometerTest,
@@ -49,11 +56,11 @@ var arrayOfEventsTest = [
 ];
 
 export function nextEventsTest() {
-    sceneIdx++;
-    sceneIdx = sceneIdx % arrayOfEventsTest.length;
+    _setsceneIdx(sceneIdx + 1);
+    _setsceneIdx(sceneIdx % arrayOfEventsTest.length);
 
     if(window.sideIndexBar){
-        sceneIdx = window.sideIndexBar.changeTest(sceneIdx, 12);
+        _setsceneIdx(window.sideIndexBar.changeTest(sceneIdx, 12));
     }
 
     return new arrayOfEventsTest[sceneIdx]();
@@ -62,12 +69,12 @@ export function nextEventsTest() {
 ;
 
 export function previousEventsTest() {
-    sceneIdx--;
+    _setsceneIdx(sceneIdx - 1);
     if (sceneIdx < 0)
-        sceneIdx += arrayOfEventsTest.length;
+        _setsceneIdx(sceneIdx + (arrayOfEventsTest.length));
 
     if(window.sideIndexBar){
-        sceneIdx = window.sideIndexBar.changeTest(sceneIdx, 12);
+        _setsceneIdx(window.sideIndexBar.changeTest(sceneIdx, 12));
     }
 
     return new arrayOfEventsTest[sceneIdx]();

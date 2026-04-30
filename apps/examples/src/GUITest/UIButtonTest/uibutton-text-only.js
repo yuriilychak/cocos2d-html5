@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIButtonTextOnly extends UIMainLayer {
     init(){
         if (super.init()) {

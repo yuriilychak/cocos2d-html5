@@ -28,6 +28,8 @@
  * @constructor
  */
 import { SpriteFrameCache } from "@aspect/core";
+import { dataReaderHelper } from "./data-reader-helper.js";
+import { spriteFrameCacheHelper } from "./sprite-frame-cache-helper.js";
 
 export function RelativeData() {
     this.plistFiles = [];
@@ -35,13 +37,12 @@ export function RelativeData() {
     this.animations = [];
     this.textures = [];
 }
-ccs.RelativeData = RelativeData;
 
 /**
  * ccs.armatureDataManager is a singleton object which format and manage armature configuration and armature animation
  * @name ccs.armatureDataManager
  */
-ccs.armatureDataManager =  {
+export const armatureDataManager = {
     _animationDatas: {},
     _armatureDatas: {},
     _textureDatas: {},
@@ -75,7 +76,7 @@ ccs.armatureDataManager =  {
                 SpriteFrameCache.getInstance().removeSpriteFramesFromFile(obj);
             }
             delete this._relativeDatas[configFilePath];
-            ccs.dataReaderHelper.removeConfigFile(configFilePath);
+            dataReaderHelper.removeConfigFile(configFilePath);
         }
     },
 
@@ -203,7 +204,7 @@ ccs.armatureDataManager =  {
                 this.addRelativeData(configFilePath);
 
                 this._autoLoadSpriteFile = true;
-                ccs.dataReaderHelper.addDataFromFile(configFilePath);
+                dataReaderHelper.addDataFromFile(configFilePath);
                 break;
             case 3:
                 imagePath = arguments[0];
@@ -213,7 +214,7 @@ ccs.armatureDataManager =  {
                 this.addRelativeData(configFilePath);
 
                 this._autoLoadSpriteFile = false;
-                ccs.dataReaderHelper.addDataFromFile(configFilePath);
+                dataReaderHelper.addDataFromFile(configFilePath);
                 this.addSpriteFrameFromFile(plistPath, imagePath);
         }
     },
@@ -235,7 +236,7 @@ ccs.armatureDataManager =  {
                 selector = arguments[1];
                 this.addRelativeData(configFilePath);
                 this._autoLoadSpriteFile = true;
-                ccs.dataReaderHelper.addDataFromFileAsync("", "", configFilePath, selector, target);
+                dataReaderHelper.addDataFromFileAsync("", "", configFilePath, selector, target);
                 break;
             case 5:
                 imagePath = arguments[0];
@@ -246,7 +247,7 @@ ccs.armatureDataManager =  {
                 this.addRelativeData(configFilePath);
 
                 this._autoLoadSpriteFile = false;
-                ccs.dataReaderHelper.addDataFromFileAsync(imagePath, plistPath, configFilePath, selector, target);
+                dataReaderHelper.addDataFromFileAsync(imagePath, plistPath, configFilePath, selector, target);
                 this.addSpriteFrameFromFile(plistPath, imagePath);
         }
     },
@@ -261,7 +262,7 @@ ccs.armatureDataManager =  {
         var data = this.getRelativeData(configFilePath);
         if (data)
             data.plistFiles.push(plistPath);
-        ccs.spriteFrameCacheHelper.addSpriteFrameFromFile(plistPath, imagePath);
+        spriteFrameCacheHelper.addSpriteFrameFromFile(plistPath, imagePath);
     },
 
     /**
@@ -325,7 +326,7 @@ ccs.armatureDataManager =  {
         this._armatureDatas = {};
         this._textureDatas = {};
         this._relativeDatas = {};
-        ccs.spriteFrameCacheHelper.clear();
-        ccs.dataReaderHelper.clear();
+        spriteFrameCacheHelper.clear();
+        dataReaderHelper.clear();
     }
 };

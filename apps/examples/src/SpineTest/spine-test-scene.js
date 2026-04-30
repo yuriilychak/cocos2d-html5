@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class SpineTestScene extends TestScene {
     runThisTest() {
         var layer = SpineTestScene.nextSpineTestLayer();

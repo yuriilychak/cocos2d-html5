@@ -27,6 +27,12 @@
 // ChipmunkBaseLayer
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { chipmunkTestSceneIdx } from "./chipmunk-test-constants.js";
+import { arrayOfChipmunkTest, nextChipmunkTest, previousChipmunkTest, restartChipmunkTest } from "./chipmunk-test-helpers.js";
+import { ChipmunkTestScene } from "./chipmunk-test-scene.js";
+import { director, winSize } from "../tests-main-constants.js";
+
 export class ChipmunkBaseLayer extends BaseTestLayer {
     constructor() {
         //

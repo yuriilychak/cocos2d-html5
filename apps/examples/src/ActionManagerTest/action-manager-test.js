@@ -30,6 +30,12 @@
 // ActionManagerTest
 //
 //------------------------------------------------------------------
+import { ActionMgrTestIdx } from "./action-manager-test-constants.js";
+import { arrayOfActionMgrTest, nextActionMgrTest, previousActionMgrTest, restartActionMgrTest } from "./action-manager-test-helpers.js";
+import { ActionManagerTestScene } from "./action-manager-test-scene.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { director } from "../tests-main-constants.js";
+
 export class ActionManagerTest extends BaseTestLayer {
     constructor() {
         super();

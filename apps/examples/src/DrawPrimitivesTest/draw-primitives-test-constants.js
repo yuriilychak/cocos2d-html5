@@ -25,4 +25,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var drawTestSceneIdx = -1;
+export let drawTestSceneIdx = -1;
+
+export function _setdrawTestSceneIdx(v) { drawTestSceneIdx = v; }

@@ -29,6 +29,8 @@
 // CapabilitiesTest
 //
 //------------------------------------------------------------------
+import { SysTestBase } from "./sys-test-base.js";
+
 export class CapabilitiesTest extends SysTestBase {
 
     constructor() {

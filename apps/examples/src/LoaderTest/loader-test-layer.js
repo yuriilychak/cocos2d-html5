@@ -28,6 +28,10 @@
 // LoaderTestLayer
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { LoaderCycleLayer } from "./loader-cycle-layer.js";
+import { s_ghosts, s_ghostsPlist, s_helloWorld, s_lookup_desktop_plist, s_lookup_html5_plist, s_lookup_mobile_plist } from "../tests_resources.js";
+
 export class LoaderTestLayer extends BaseTestLayer {
 
     constructor() {

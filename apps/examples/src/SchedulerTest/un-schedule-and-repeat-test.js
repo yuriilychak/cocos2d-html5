@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+
 export class unScheduleAndRepeatTest extends SchedulerTestLayer {
     constructor() {
         super();

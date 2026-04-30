@@ -25,6 +25,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BASE_TEST_TITLE_TAG, BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { TAG_LABEL_ATLAS, particleSceneIdx } from "./particle-test-constants.js";
+import { backParticleAction, nextParticleAction, particleSceneArr } from "./particle-test-helpers.js";
+import { ParticleTestScene } from "./particle-test-scene.js";
+import { s_MovementMenuItem, s_back3, s_fpsImages, s_shapeModeMenuItem, s_textureModeMenuItem } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class ParticleDemo extends BaseTestLayer {
 
     setColor() {

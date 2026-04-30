@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_back, s_power, s_resprefix } from "../tests_resources.js";
+
 export class Parallax1 extends ParallaxDemo {
 
     constructor() {

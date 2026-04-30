@@ -25,7 +25,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var controTestItemNames = [
+import { ControlButtonTest_Event } from "./CCControlButtonTest/control-button-test-event.js";
+import { ControlButtonTest_HelloVariableSize } from "./CCControlButtonTest/control-button-test-hello-variable-size.js";
+import { ControlButtonTest_Styling } from "./CCControlButtonTest/control-button-test-styling.js";
+import { ControlColourPickerTest } from "./CCControlColourPickerTest/CCControlColourPickerTest.js";
+import { ControlPotentiometerTest } from "./CCControlPotentiometerTest/CCControlPotentiometerTest.js";
+import { ControlSliderTest } from "./CCControlSliderTest/CCControlSliderTest.js";
+import { ControlStepperTest } from "./CCControlStepperTest/CCControlStepperTest.js";
+import { ControlSwitchTest } from "./CCControlSwitchTest/CCControlSwitchTest.js";
+
+export var controTestItemNames = [
     {
         itemTitle:"ControlSliderTest",
         testScene:function () {

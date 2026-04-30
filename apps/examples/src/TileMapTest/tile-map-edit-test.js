@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_levelMapTga, s_tilesPng } from "../tests_resources.js";
+import { TileDemo } from "./tile-demo.js";
+import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+
 export class TileMapEditTest extends TileDemo {
     constructor() {
         super();

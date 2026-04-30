@@ -28,6 +28,9 @@
 //
 // SpriteEaseQuintic
 //
+import { EaseSpriteDemo } from "./ease-sprite-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteEaseQuinticTest extends EaseSpriteDemo {
     onEnter(){
         super.onEnter();

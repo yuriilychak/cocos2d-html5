@@ -27,6 +27,8 @@
 //
 // UIRichTextXMLBR
 //
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIRichTextXMLBR extends UIMainLayer {
     constructor() {
         super();

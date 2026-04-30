@@ -31,11 +31,18 @@
  * @property {ccs.ArmatureAnimation}    animation   - The animation
  */
 
-export class Tween extends ccs.ProcessBase {
+import { CONST_VERSION_COMBINED } from "./data-reader-helper.js";
+import { FrameData } from "./datas.js";
+import { ANIMATION_TYPE_LOOP_FRONT, ANIMATION_TYPE_MAX, ANIMATION_TYPE_NO_LOOP, ANIMATION_TYPE_SINGLE_FRAME, ANIMATION_TYPE_TO_LOOP_BACK, ANIMATION_TYPE_TO_LOOP_FRONT, ProcessBase } from "./process-base.js";
+import { TransformHelp } from "./transform-help.js";
+import { TweenFunction, TweenType } from "./tween-function.js";
+import { fmodf } from "./util-math.js";
+
+export class Tween extends ProcessBase {
 
     constructor(bone) {
         super();
-        this._frameTweenEasing = ccs.TweenType.LINEAR;
+        this._frameTweenEasing = TweenType.LINEAR;
 
         this.init(bone);
     }
@@ -49,8 +56,8 @@ export class Tween extends ccs.ProcessBase {
      * @return {Boolean}
      */
     init(bone) {
-        this._from = new ccs.FrameData();
-        this._between = new ccs.FrameData();
+        this._from = new FrameData();
+        this._between = new FrameData();
 
         this._bone = bone;
         this._tweenData = this._bone.getTweenData();
@@ -72,7 +79,7 @@ export class Tween extends ccs.ProcessBase {
      */
     play(movementBoneData, durationTo, durationTween, loop, tweenEasing) {
         super.play(durationTo, durationTween, loop, tweenEasing);
-        this._loopType = (loop)?ccs.ANIMATION_TYPE_TO_LOOP_FRONT:ccs.ANIMATION_TYPE_NO_LOOP;
+        this._loopType = (loop)?ANIMATION_TYPE_TO_LOOP_FRONT:ANIMATION_TYPE_NO_LOOP;
 
         this._totalDuration = 0;
         this._betweenDuration = 0;
@@ -86,19 +93,19 @@ export class Tween extends ccs.ProcessBase {
         var nextKeyFrame = this._movementBoneData.getFrameData(0);
         this._tweenData.displayIndex = nextKeyFrame.displayIndex;
 
-        if (this._bone.getArmature().getArmatureData().dataVersion >= ccs.CONST_VERSION_COMBINED)        {
-            ccs.TransformHelp.nodeSub(this._tweenData, this._bone.getBoneData());
+        if (this._bone.getArmature().getArmatureData().dataVersion >= CONST_VERSION_COMBINED)        {
+            TransformHelp.nodeSub(this._tweenData, this._bone.getBoneData());
             this._tweenData.scaleX += 1;
             this._tweenData.scaleY += 1;
         }
 
         if (this._rawDuration === 0) {
-            this._loopType = ccs.ANIMATION_TYPE_SINGLE_FRAME;
+            this._loopType = ANIMATION_TYPE_SINGLE_FRAME;
             if (durationTo === 0)
                 this.setBetween(nextKeyFrame, nextKeyFrame);
             else
                 this.setBetween(this._tweenData, nextKeyFrame);
-            this._frameTweenEasing = ccs.TweenType.LINEAR;
+            this._frameTweenEasing = TweenType.LINEAR;
         }
         else if (this._movementBoneData.frameList.length > 1) {
             this._durationTween = durationTween * this._movementBoneData.scale;
@@ -149,13 +156,13 @@ export class Tween extends ccs.ProcessBase {
         var locLoopType = this._loopType;
         if (locCurrentPercent >= 1) {
             switch (locLoopType) {
-                case ccs.ANIMATION_TYPE_SINGLE_FRAME:
+                case ANIMATION_TYPE_SINGLE_FRAME:
                     locCurrentPercent = 1;
                     this._isComplete = true;
                     this._isPlaying = false;
                     break;
-                case ccs.ANIMATION_TYPE_NO_LOOP:
-                    locLoopType = ccs.ANIMATION_TYPE_MAX;
+                case ANIMATION_TYPE_NO_LOOP:
+                    locLoopType = ANIMATION_TYPE_MAX;
                     if (this._durationTween <= 0)
                         locCurrentPercent = 1;
                     else
@@ -173,8 +180,8 @@ export class Tween extends ccs.ProcessBase {
                         this._fromIndex = this._toIndex = 0;
                         break;
                     }
-                case ccs.ANIMATION_TYPE_TO_LOOP_FRONT:
-                    locLoopType = ccs.ANIMATION_TYPE_LOOP_FRONT;
+                case ANIMATION_TYPE_TO_LOOP_FRONT:
+                    locLoopType = ANIMATION_TYPE_LOOP_FRONT;
                     this._nextFrameIndex = this._durationTween > 0 ? this._durationTween : 1;
 
                     if (this._movementBoneData.delay !== 0) {
@@ -189,26 +196,26 @@ export class Tween extends ccs.ProcessBase {
                     this._betweenDuration = 0;
                     this._fromIndex = this._toIndex = 0;
                     break;
-                case ccs.ANIMATION_TYPE_MAX:
+                case ANIMATION_TYPE_MAX:
                     locCurrentPercent = 1;
                     this._isComplete = true;
                     this._isPlaying = false;
                     break;
                 default:
-                    this._currentFrame = ccs.fmodf(this._currentFrame, this._nextFrameIndex);
+                    this._currentFrame = fmodf(this._currentFrame, this._nextFrameIndex);
                     break;
             }
         }
 
-        if (locCurrentPercent < 1 && locLoopType < ccs.ANIMATION_TYPE_TO_LOOP_BACK)
+        if (locCurrentPercent < 1 && locLoopType < ANIMATION_TYPE_TO_LOOP_BACK)
             locCurrentPercent = Math.sin(locCurrentPercent * Math.PI / 2);
 
         this._currentPercent = locCurrentPercent;
         this._loopType = locLoopType;
 
-        if (locLoopType > ccs.ANIMATION_TYPE_TO_LOOP_BACK)
+        if (locLoopType > ANIMATION_TYPE_TO_LOOP_BACK)
             locCurrentPercent = this.updateFrameData(locCurrentPercent);
-        if (this._frameTweenEasing !== ccs.TweenType.TWEEN_EASING_MAX)
+        if (this._frameTweenEasing !== TweenType.TWEEN_EASING_MAX)
             this.tweenNodeTo(locCurrentPercent);
     }
 
@@ -322,7 +329,7 @@ export class Tween extends ccs.ProcessBase {
      */
     updateFrameData(currentPercent) {                             //TODO set tweenColorTo to protected in v3.1
         if (currentPercent > 1 && this._movementBoneData.delay !== 0)
-            currentPercent = ccs.fmodf(currentPercent,1);
+            currentPercent = fmodf(currentPercent,1);
 
         var playedTime = (this._rawDuration-1) * currentPercent;
 
@@ -385,9 +392,9 @@ export class Tween extends ccs.ProcessBase {
         /*
          *  if frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
          */
-        var tweenType = (this._frameTweenEasing !== ccs.TweenType.LINEAR) ? this._frameTweenEasing : this._tweenEasing;
-        if (tweenType !== ccs.TweenType.TWEEN_EASING_MAX && tweenType !== ccs.TweenType.LINEAR && !this._passLastFrame) {
-            currentPercent = ccs.TweenFunction.tweenTo(currentPercent, tweenType, this._from.easingParams);
+        var tweenType = (this._frameTweenEasing !== TweenType.LINEAR) ? this._frameTweenEasing : this._tweenEasing;
+        if (tweenType !== TweenType.TWEEN_EASING_MAX && tweenType !== TweenType.LINEAR && !this._passLastFrame) {
+            currentPercent = TweenFunction.tweenTo(currentPercent, tweenType, this._from.easingParams);
         }
         return currentPercent;
     }
@@ -418,4 +425,3 @@ export class Tween extends ccs.ProcessBase {
 
 };
 
-ccs.Tween = Tween;

@@ -28,6 +28,8 @@
 // Tests
 //
 //------------------------------------------------------------------
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class Shaky3DTest extends EffectsBaseLayer {
     title() {
         return "Shaky 3D";

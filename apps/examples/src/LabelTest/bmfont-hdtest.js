@@ -30,6 +30,10 @@
 // BMFontHDTest
 //
 //------------------------------------------------------------------
+import { AtlasDemo } from "./atlas-demo.js";
+import { s_resprefix } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class BMFontHDTest extends AtlasDemo {
     constructor() {
         //----start16----ctor

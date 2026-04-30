@@ -25,4 +25,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var eventDispatcherSceneIdx = -1;
+export let eventDispatcherSceneIdx = -1;
+
+export function _seteventDispatcherSceneIdx(v) { eventDispatcherSceneIdx = v; }

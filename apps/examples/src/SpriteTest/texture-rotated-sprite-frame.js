@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_s9s_blocks9_plist } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class TextureRotatedSpriteFrame extends SpriteTestDemo {
 
 

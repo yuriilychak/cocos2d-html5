@@ -25,6 +25,8 @@
  ****************************************************************************/
 
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UILabelBMFontTest extends UIMainLayer {
     init() {
         if (super.init()) {

@@ -30,6 +30,9 @@
 // ActionStackableMove
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ActionStackableMove extends ActionsDemo {
     constructor() {
         super();

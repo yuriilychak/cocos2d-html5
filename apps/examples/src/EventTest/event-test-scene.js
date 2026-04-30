@@ -23,6 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextEventsTest } from "./event-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class EventTestScene extends TestScene {
     runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;

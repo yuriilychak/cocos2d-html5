@@ -25,38 +25,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_TILE_MAP = 1;
+export var TAG_TILE_MAP = 1;
 
-var TAG_SPRITE_BATCH_NODE = 1;
+export var TAG_SPRITE_BATCH_NODE = 1;
 
-var TAG_NODE = 2;
+export var TAG_NODE = 2;
 
-var TAG_ANIMATION1 = 1;
+export var TAG_ANIMATION1 = 1;
 
-var TAG_SPRITE_LEFT = 2;
+export var TAG_SPRITE_LEFT = 2;
 
-var TAG_SPRITE_RIGHT = 3;
+export var TAG_SPRITE_RIGHT = 3;
 
-var TAG_SPRITE1 = 0;
+export var TAG_SPRITE1 = 0;
 
-var TAG_SPRITE2 = 1;
+export var TAG_SPRITE2 = 1;
 
-var TAG_SPRITE3 = 2;
+export var TAG_SPRITE3 = 2;
 
-var TAG_SPRITE4 = 3;
+export var TAG_SPRITE4 = 3;
 
-var TAG_SPRITE5 = 4;
+export var TAG_SPRITE5 = 4;
 
-var TAG_SPRITE6 = 5;
+export var TAG_SPRITE6 = 5;
 
-var TAG_SPRITE7 = 6;
+export var TAG_SPRITE7 = 6;
 
-var TAG_SPRITE8 = 7;
+export var TAG_SPRITE8 = 7;
 
-var IDC_NEXT = 100;
+export var IDC_NEXT = 100;
 
-var IDC_BACK = 101;
+export var IDC_BACK = 101;
 
-var IDC_RESTART = 102;
+export var IDC_RESTART = 102;
 
-var spriteTestIdx = -1;
+export let spriteTestIdx = -1;
+
+export function _setspriteTestIdx(v) { spriteTestIdx = v; }

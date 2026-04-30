@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextProgressTest } from "./progress-actions-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class ProgressActionsTestScene extends TestScene {
 
     runThisTest(num) {

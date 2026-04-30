@@ -30,6 +30,8 @@
 // ActionRotateJerk
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionRotateJerk extends ActionsDemo {
   onEnter() {
     //----start24----onEnter

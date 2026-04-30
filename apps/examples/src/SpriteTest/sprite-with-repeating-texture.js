@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_pathBlock } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteWithRepeatingTexture extends SpriteTestDemo {
 
 

@@ -23,6 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { LoaderTestLayer } from "./loader-test-layer.js";
+
 export class LoaderCycleLayer extends BaseTestLayer {
 
     constructor(){

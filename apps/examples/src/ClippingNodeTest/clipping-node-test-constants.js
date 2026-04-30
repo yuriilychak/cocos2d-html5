@@ -25,14 +25,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_TITLELABEL = 1;
+export var TAG_TITLELABEL = 1;
 
-var TAG_SUBTITLELABEL = 2;
+export var TAG_SUBTITLELABEL = 2;
 
-var TAG_STENCILNODE = 100;
+export var TAG_STENCILNODE = 100;
 
-var TAG_CLIPPERNODE = 101;
+export var TAG_CLIPPERNODE = 101;
 
-var TAG_CONTENTNODE = 102;
+export var TAG_CONTENTNODE = 102;
 
-var clippingNodeTestSceneIdx = -1;
+export let clippingNodeTestSceneIdx = -1;
+
+export function _setclippingNodeTestSceneIdx(v) { clippingNodeTestSceneIdx = v; }

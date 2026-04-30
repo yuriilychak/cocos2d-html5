@@ -30,6 +30,9 @@
 // ActionManual
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ActionManual extends ActionsDemo {
     constructor() {
         super();

@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ControlButtonTest_Event } from "./control-button-test-event.js";
+import { ControlButtonTest_HelloVariableSize } from "./control-button-test-hello-variable-size.js";
+import { ControlButtonTest_Styling } from "./control-button-test-styling.js";
+
 ;
 
 ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {

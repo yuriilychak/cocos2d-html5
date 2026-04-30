@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteLayer } from "./sprite-layer.js";
+import { TestLayer } from "./test-layer.js";
+import { director } from "../tests-main-constants.js";
+
 export class RotateWorldMainLayer extends cc.Layer {
     constructor() {
         super();

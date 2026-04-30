@@ -25,15 +25,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var MUSIC_FILE = cc.sys.os == cc.sys.OS_WINRT ? "background.wav" : "background.mp3";
+import { addEffectsVolume, addMusicVolume, isMusicPlaying, pauseAllEffects, pauseEffect, pauseMusic, playEffect, playEffectRepeatly, playMusic, resumeAllEffects, resumeEffect, resumeMusic, rewindMusic, stopAllEffects, stopEffect, stopMusic, subEffectsVolume, subMusicVolume, unloadEffect } from "./cocos-denshion-test-helpers.js";
 
-var EFFECT_FILE = cc.sys.os == cc.sys.OS_WINRT ? "effect1.wav" : "effect2.mp3";
+export var MUSIC_FILE = cc.sys.os == cc.sys.OS_WINRT ? "background.wav" : "background.mp3";
 
-var _DenshionTests = [
+export var EFFECT_FILE = cc.sys.os == cc.sys.OS_WINRT ? "effect1.wav" : "effect2.mp3";
+
+export var _DenshionTests = [
     'Music Test'
 ];
 
-var DenshionTests = [
+export var DenshionTests = [
     {
         title:"Play Music",
         playFunc:function () {

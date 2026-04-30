@@ -28,6 +28,9 @@
 // GLNodeCCAPITest
 //
 //------------------------------------------------------------------
+import { OpenGLTestLayer } from "./open-gltest-layer.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class GLNodeCCAPITest extends OpenGLTestLayer {
 
     constructor() {

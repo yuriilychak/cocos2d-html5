@@ -23,6 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ExtensionsTestScene } from "../extensions-test-scene.js";
+import { PluginXTest } from "./PluginXTest.js";
+
 TAG_SETSERVERMODE = 0;
 TAG_GETPRODUCTLIST = 1;
 TAG_PAYMENT = 2;
@@ -32,12 +35,12 @@ TAG_SETSERVERMODE_RESULT = 4;
 TAG_GETPRODUCTLIST_RESULT = 5;
 TAG_PAYMENT_RESULT = 6;
 
-var s_IAPFunctionItem = [
+export var s_IAPFunctionItem = [
     {name: "setServerMode", tag: TAG_SETSERVERMODE},
     {name: "getProductList", tag: TAG_GETPRODUCTLIST},
     {name: "PayForProduct", tag: TAG_PAYMENT}
 ];
-var s_IAPResultItem = [
+export var s_IAPResultItem = [
     {name: "false", tag: TAG_SETSERVERMODE_RESULT},
     {name: "[ ]", tag: TAG_GETPRODUCTLIST_RESULT},
     {name: "didn't call payFunction yet", tag: TAG_PAYMENT_RESULT}

@@ -26,7 +26,9 @@
 /**
  * The render component for Cocostudio.
  */
-export class ComRender extends ccs.Component {
+import { Component } from "@aspect/core";
+
+export class ComRender extends Component {
   /**
    * Construction of ccs.ComRender
    * @param {Node} node
@@ -74,4 +76,3 @@ export class ComRender extends ccs.Component {
   }
 };
 
-ccs.ComRender = ComRender;

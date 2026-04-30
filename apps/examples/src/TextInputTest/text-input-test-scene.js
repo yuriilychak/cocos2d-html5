@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestScene } from "../test-scene.js";
+import { nextTextInputTest } from "./text-input-test-helpers.js";
+
 export class TextInputTestScene extends TestScene {
     runThisTest(num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;

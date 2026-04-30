@@ -30,6 +30,10 @@
 // LabelAtlasHD
 //
 //------------------------------------------------------------------
+import { AtlasDemo } from "./atlas-demo.js";
+import { s_resprefix } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class LabelAtlasHD extends AtlasDemo {
     constructor() {
         //----start2----ctor

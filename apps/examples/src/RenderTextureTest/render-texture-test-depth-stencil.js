@@ -23,6 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { RenderTextureBaseLayer } from "./render-texture-base-layer.js";
+import { s_fire } from "../tests_resources.js";
+
 export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
 
     constructor() {

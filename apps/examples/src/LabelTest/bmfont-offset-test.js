@@ -30,6 +30,10 @@
 // BMFontOffsetTest
 //
 //------------------------------------------------------------------
+import { AtlasDemo } from "./atlas-demo.js";
+import { s_resprefix } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class BMFontOffsetTest extends AtlasDemo {
     constructor() {
         //----start6----ctor

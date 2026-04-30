@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestScene } from "../test-scene.js";
+import { XHRTestLayer } from "./xhrtest-layer.js";
+
 export class XHRTestScene extends TestScene {
     constructor() {
         super(true);

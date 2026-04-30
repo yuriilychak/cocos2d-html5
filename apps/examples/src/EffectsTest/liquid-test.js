@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class LiquidTest extends EffectsBaseLayer {
     title() {
         return "Liquid";

@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class Waves3DTest extends EffectsBaseLayer {
     title() {
         return "Waves 3D";

@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+
 export class SpriteBlendFuncTest extends SpriteTestDemo {
     //webgl only
 

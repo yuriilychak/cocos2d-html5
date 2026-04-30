@@ -24,6 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+import { director } from "../../tests-main-constants.js";
+
 export class UIS9NinePatchTest extends UIMainLayer {
     init() {
         if (super.init()) {

@@ -30,6 +30,9 @@
 // ActionCardinalSpline
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ActionCardinalSpline extends ActionsDemo {
 
       get _code() { 

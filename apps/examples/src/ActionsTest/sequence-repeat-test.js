@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ActionsDemo } from "./actions-demo.js";
+
 export class SequenceRepeatTest extends ActionsDemo {
   onEnter() {
     //----start47----onEnter

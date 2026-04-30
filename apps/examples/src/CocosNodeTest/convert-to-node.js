@@ -28,6 +28,10 @@
 //
 // ConvertToNode
 //
+import { TestNodeDemo } from "./test-node-demo.js";
+import { s_pathGrossini, s_pathR1 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ConvertToNode extends TestNodeDemo {
     constructor() {
         //----start9----ctor

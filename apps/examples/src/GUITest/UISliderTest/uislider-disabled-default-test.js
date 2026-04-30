@@ -25,6 +25,8 @@
  ****************************************************************************/
 
 //2015-01-14
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UISliderDisabledDefaultTest extends UIMainLayer {
     init() {
         if (super.init()) {

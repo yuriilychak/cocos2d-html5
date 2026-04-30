@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SceneTestLayer3 } from "./scene-test-layer3.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class SceneTestLayer2 extends cc.Layer {
 
 

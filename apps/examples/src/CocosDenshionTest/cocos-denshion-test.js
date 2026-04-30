@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { DenshionTests } from "./cocos-denshion-test-constants.js";
+import { director, winSize } from "../tests-main-constants.js";
+import { LINE_SPACE } from "../tests-main-helpers.js";
+
 export class CocosDenshionTest extends cc.LayerGradient {
     constructor() {
         super(new cc.Color(0, 0, 0, 255), new cc.Color(148, 80, 120, 255));

@@ -23,6 +23,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { sceneRenderTextureIdx } from "./render-texture-test-constants.js";
+import { arrayOfRenderTextureTest, nextRenderTextureTest, previousRenderTextureTest, restartRenderTextureTest } from "./render-texture-test-helpers.js";
+import { RenderTextureTestScene } from "./render-texture-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class RenderTextureBaseLayer extends BaseTestLayer {
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );

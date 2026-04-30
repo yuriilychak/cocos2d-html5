@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestNodeDemo } from "./test-node-demo.js";
+import { s_back1 } from "../tests_resources.js";
+
 export class NodeOpaqueTest extends TestNodeDemo {
     constructor() {
         //----start13----ctor

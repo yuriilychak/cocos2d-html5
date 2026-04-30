@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestScene } from "../test-scene.js";
+import { XHRArrayBufferTestLayer } from "./xhrarray-buffer-test-layer.js";
+
 export class XHRArrayBufferTestScene extends TestScene {
     constructor() {
         super(true);

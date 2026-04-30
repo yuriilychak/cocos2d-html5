@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextLabelTest } from "./label-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class LabelTestScene extends TestScene {
     runThisTest(num) {
         labelTestIdx = (num || num == 0) ? (num - 1) : -1;

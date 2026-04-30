@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIListViewTest_Magnetic } from "./uilist-view-test-magnetic.js";
+
 export class UIListViewTest_MagneticVertical extends UIListViewTest_Magnetic {
     _getListViewDirection()
     {

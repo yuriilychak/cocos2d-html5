@@ -26,6 +26,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { MotionStreakTest } from "./motion-streak-test.js";
+import { s_pathR1, s_streak } from "../tests_resources.js";
+
 export class MotionStreakTest1 extends MotionStreakTest {
     constructor() {
         super();

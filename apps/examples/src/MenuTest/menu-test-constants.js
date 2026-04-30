@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_MENU = 77771;
+export var TAG_MENU = 77771;
 
-var TAG_MENU0 = 77770;
+export var TAG_MENU0 = 77770;
 
-var TAG_MENU1 = 77771;
+export var TAG_MENU1 = 77771;

@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { XHRArrayBufferTestLayer } from "./xhrarray-buffer-test-layer.js";
+
 ;
 
 ;

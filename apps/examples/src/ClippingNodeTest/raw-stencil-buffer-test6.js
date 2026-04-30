@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { _alphaThreshold } from "./clipping-node-test-helpers.js";
+import { RawStencilBufferTest } from "./raw-stencil-buffer-test.js";
+
 export class RawStencilBufferTest6 extends RawStencilBufferTest {
     subtitle() {
         return "6:ManualClear,AlphaTest:ENABLE";

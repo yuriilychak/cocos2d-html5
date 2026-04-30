@@ -25,10 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var actionsTestIdx = -1;
+export let actionsTestIdx = -1;
 
-var SPRITE_GROSSINI_TAG = 1;
+export var SPRITE_GROSSINI_TAG = 1;
 
-var SPRITE_TAMARA_TAG = 2;
+export var SPRITE_TAMARA_TAG = 2;
 
-var SPRITE_KATHIA_TAG = 3;
+export var SPRITE_KATHIA_TAG = 3;
+
+export function _setactionsTestIdx(v) { actionsTestIdx = v; }

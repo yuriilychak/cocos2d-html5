@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
+import { TAG_CLIPPERNODE, TAG_STENCILNODE } from "./clipping-node-test-constants.js";
+import { s_pathGrossini } from "../tests_resources.js";
+
 export class BasicTest extends BaseClippingNodeTest {
     title() {
         return "Basic Test";

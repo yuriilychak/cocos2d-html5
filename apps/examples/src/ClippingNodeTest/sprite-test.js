@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BasicTest } from "./basic-test.js";
+
 export class SpriteTest extends BasicTest {
     title() {
         return "Sprite Basic Test";

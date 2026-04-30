@@ -30,6 +30,9 @@
 // ActionReverse
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ActionReverse extends ActionsDemo {
     constructor() {
         super();

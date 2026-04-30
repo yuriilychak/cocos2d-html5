@@ -30,13 +30,13 @@
  */
 import { AffineTransform, NewClass, Point } from "@aspect/core";
 
-ccs.TransformHelp = class TransformHelp extends NewClass {};
+export class TransformHelp extends NewClass {};
 
-ccs.TransformHelp.helpMatrix1 = AffineTransform.make(1, 0, 0, 1, 0, 0);
-ccs.TransformHelp.helpMatrix2 = AffineTransform.make(1, 0, 0, 1, 0, 0);
-ccs.TransformHelp.helpPoint1 = new Point(0, 0);
-ccs.TransformHelp.helpPoint2 = new Point(0, 0);
-ccs.TransformHelp.helpParentNode = {};
+TransformHelp.helpMatrix1 = AffineTransform.make(1, 0, 0, 1, 0, 0);
+TransformHelp.helpMatrix2 = AffineTransform.make(1, 0, 0, 1, 0, 0);
+TransformHelp.helpPoint1 = new Point(0, 0);
+TransformHelp.helpPoint2 = new Point(0, 0);
+TransformHelp.helpParentNode = {};
 
 /**
  * Calculate a BaseData's transform matrix from parent node.
@@ -45,7 +45,7 @@ ccs.TransformHelp.helpParentNode = {};
  * @param {ccs.BaseData} bone
  * Constructor
  */
-ccs.TransformHelp.transformFromParent = function (bone, parentNode) {
+TransformHelp.transformFromParent = function (bone, parentNode) {
   this.nodeToMatrix(bone, this.helpMatrix1);
   this.nodeToMatrix(parentNode, this.helpMatrix2);
 
@@ -58,7 +58,7 @@ ccs.TransformHelp.transformFromParent = function (bone, parentNode) {
   this.matrixToNode(this.helpMatrix1, bone);
 };
 
-ccs.TransformHelp.transformToParent = function (node, parentNode) {
+TransformHelp.transformToParent = function (node, parentNode) {
   this.nodeToMatrix(node, this.helpMatrix1);
   this.nodeToMatrix(parentNode, this.helpMatrix2);
 
@@ -70,7 +70,7 @@ ccs.TransformHelp.transformToParent = function (node, parentNode) {
   this.matrixToNode(this.helpMatrix1, node);
 };
 
-ccs.TransformHelp.transformFromParentWithoutScale = function (
+TransformHelp.transformFromParentWithoutScale = function (
   node,
   parentNode
 ) {
@@ -94,7 +94,7 @@ ccs.TransformHelp.transformFromParentWithoutScale = function (
   this.matrixToNode(this.helpMatrix1, node);
 };
 
-ccs.TransformHelp.transformToParentWithoutScale = function (node, parentNode) {
+TransformHelp.transformToParentWithoutScale = function (node, parentNode) {
   for (var p in parentNode) {
     this.helpParentNode[p] = parentNode[p];
   }
@@ -118,7 +118,7 @@ ccs.TransformHelp.transformToParentWithoutScale = function (node, parentNode) {
  * @param {ccs.BaseData} node
  * @param {AffineTransform} matrix
  */
-ccs.TransformHelp.nodeToMatrix = function (node, matrix) {
+TransformHelp.nodeToMatrix = function (node, matrix) {
   if (node.skewX === -node.skewY) {
     var sine = Math.sin(node.skewX);
     var cosine = Math.cos(node.skewX);
@@ -142,7 +142,7 @@ ccs.TransformHelp.nodeToMatrix = function (node, matrix) {
  * @param {AffineTransform} matrix
  * @param {ccs.BaseData} node
  */
-ccs.TransformHelp.matrixToNode = function (matrix, node) {
+TransformHelp.matrixToNode = function (matrix, node) {
   /*
    *  In as3 language, there is a function called "deltaTransformPoint", it calculate a point used give Transform
    *  but not used the tx, ty value. we simulate the function here
@@ -174,7 +174,7 @@ ccs.TransformHelp.matrixToNode = function (matrix, node) {
  * @param {ccs.BaseData} target
  * @param {ccs.BaseData} source
  */
-ccs.TransformHelp.nodeConcat = function (target, source) {
+TransformHelp.nodeConcat = function (target, source) {
   target.x += source.x;
   target.y += source.y;
   target.skewX += source.skewX;
@@ -189,7 +189,7 @@ ccs.TransformHelp.nodeConcat = function (target, source) {
  * @param {ccs.BaseData} target
  * @param {ccs.BaseData} source
  */
-ccs.TransformHelp.nodeSub = function (target, source) {
+TransformHelp.nodeSub = function (target, source) {
   target.x -= source.x;
   target.y -= source.y;
   target.skewX -= source.skewX;

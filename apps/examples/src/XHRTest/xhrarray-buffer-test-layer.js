@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { winSize } from "../tests-main-constants.js";
+
 export class XHRArrayBufferTestLayer extends cc.Layer {
     constructor() {
         super();

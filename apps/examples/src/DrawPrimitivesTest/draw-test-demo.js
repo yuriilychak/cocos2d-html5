@@ -30,6 +30,12 @@
 // DrawTestDemo
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { drawTestSceneIdx } from "./draw-primitives-test-constants.js";
+import { arrayOfDrawTest, nextDrawTest, previousDrawTest, restartDrawTest } from "./draw-primitives-test-helpers.js";
+import { DrawPrimitivesTestScene } from "./draw-primitives-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class DrawTestDemo extends BaseTestLayer {
 
     constructor() {

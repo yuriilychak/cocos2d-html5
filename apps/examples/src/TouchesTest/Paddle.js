@@ -24,8 +24,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-var PADDLE_STATE_GRABBED = 0;
-var PADDLE_STATE_UNGRABBED = 1;
+export var PADDLE_STATE_GRABBED = 0;
+export var PADDLE_STATE_UNGRABBED = 1;
 
 export class Paddle extends cc.Sprite {
 

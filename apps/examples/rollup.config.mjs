@@ -1,4 +1,4 @@
-import { createAppConfig, createTestsConcatConfig } from "../../scripts/rollup.app.mjs";
+import { createAppConfig, createTestsBundleConfig } from "../../scripts/rollup.app.mjs";
 import { copyFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -26,8 +26,8 @@ function copyBox2dWasmPlugin() {
 const engineConfig = createAppConfig({ outputFile: "dist/cocos2d.min.js" });
 engineConfig.plugins.push(copyBox2dWasmPlugin());
 
-const testsConfig = createTestsConcatConfig({
-  filesModulePath: "files.mjs",
+const testsConfig = createTestsBundleConfig({
+  input: "src/index.js",
   outputFile: "dist/tests.min.js"
 });
 

@@ -28,6 +28,9 @@
 //////////////////////////////////////////////////////////////////////////
 // TextFieldTTFDefaultTest for test TextFieldTTF default behavior.
 //////////////////////////////////////////////////////////////////////////
+import { KeyboardNotificationLayer } from "./keyboard-notification-layer.js";
+import { TEXT_INPUT_FONT_NAME, TEXT_INPUT_FONT_SIZE } from "./text-input-test-constants.js";
+
 export class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
     subtitle() {
         return "TextFieldTTF with default behavior test";

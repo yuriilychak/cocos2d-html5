@@ -30,6 +30,9 @@
 // PauseResumeActions
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class PauseResumeActions extends ActionsDemo {
     constructor() {
         super();

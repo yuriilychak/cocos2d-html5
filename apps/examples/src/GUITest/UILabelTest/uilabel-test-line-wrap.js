@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UILabelTest_LineWrap extends UIMainLayer {
     init() {
         if (super.init()) {

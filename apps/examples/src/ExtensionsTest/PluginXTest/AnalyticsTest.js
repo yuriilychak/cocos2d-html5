@@ -23,13 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var g_pAnalytics = null;
-var s_strAppKey = "";
+import { PluginXTest } from "./PluginXTest.js";
+import { director } from "../../tests-main-constants.js";
+
+export var g_pAnalytics = null;
+export var s_strAppKey = "";
 // The app key of flurry
-var FLURRY_KEY_IOS      =    "KMGG7CD9WPK2TW4X9VR8";
-var FLURRY_KEY_ANDROID  =    "SPKFH8KMPGHMMBWRBT5W";
-var UMENG_KEY_IOS       =    "50d2b18c5270152187000097";
-var UMENG_KEY_ANDROID   =    "";          // umeng key for android is setted in AndroidManifest.xml
+export var FLURRY_KEY_IOS      =    "KMGG7CD9WPK2TW4X9VR8";
+export var FLURRY_KEY_ANDROID  =    "SPKFH8KMPGHMMBWRBT5W";
+export var UMENG_KEY_IOS       =    "50d2b18c5270152187000097";
+export var UMENG_KEY_ANDROID   =    "";          // umeng key for android is setted in AndroidManifest.xml
 
 
 if (!plugin) {
@@ -103,7 +106,7 @@ TAG_LOG_EVENT_BEGIN = 4;
 TAG_LOG_EVENT_END = 5;
 TAG_MAKE_ME_CRASH = 6;
 
-var s_EventMenuItem = [
+export var s_EventMenuItem = [
     {id: "OnlineConfig",     tag: TAG_LOG_ONLINE_CONFIG},
     {id: "LogEvent-eventId", tag:  TAG_LOG_EVENT_ID},
     {id: "LogEvent-eventId-kv", tag: TAG_LOG_EVENT_ID_KV},

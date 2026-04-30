@@ -30,6 +30,9 @@
 // ActionFollow
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class ActionFollow extends ActionsDemo {
   onEnter() {
     //----start30----onEnter

@@ -25,4 +25,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var ProgressTestSceneIdx = -1;
+export let ProgressTestSceneIdx = -1;
+
+export function _setProgressTestSceneIdx(v) { ProgressTestSceneIdx = v; }

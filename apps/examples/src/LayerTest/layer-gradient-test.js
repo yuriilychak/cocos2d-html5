@@ -25,7 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-class LayerGradientTest extends LayerTest {
+import { LayerTest } from "./layer-test.js";
+import { director, winSize } from "../tests-main-constants.js";
+
+export class LayerGradientTest extends LayerTest {
     constructor() {
         //----start7----onEnter
         super();

@@ -30,6 +30,10 @@
 // SpriteFrameTest
 //
 //------------------------------------------------------------------
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossini, s_grossiniPlist, s_grossini_blue, s_grossini_bluePlist, s_grossini_gray, s_grossini_grayPlist } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteFrameTest extends SpriteTestDemo {
     constructor() {
         super();

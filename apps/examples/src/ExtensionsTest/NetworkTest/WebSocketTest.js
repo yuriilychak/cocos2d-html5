@@ -26,7 +26,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket; 
+import { ExtensionsTestScene } from "../extensions-test-scene.js";
+
+export var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket; 
 
 export class WebSocketTestLayer extends cc.Layer {
     constructor() {

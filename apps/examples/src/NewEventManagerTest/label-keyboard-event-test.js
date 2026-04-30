@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
     onEnter(){
         //----start4----onEnter

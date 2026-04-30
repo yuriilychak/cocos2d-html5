@@ -24,6 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { TestScene } from "../test-scene.js";
+
 export class VibrateTest extends BaseTestLayer {
     constructor() {
         super();
@@ -100,6 +103,6 @@ export class VibrateTestScene extends TestScene {
 
 };
 
-var arrayOfVibrateTest = [
+export var arrayOfVibrateTest = [
     VibrateTest
 ];

@@ -28,6 +28,8 @@
 /*
     SchedulerAutoremove
 */
+import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+
 export class SchedulerAutoremove extends SchedulerTestLayer {
     constructor() {
         super();

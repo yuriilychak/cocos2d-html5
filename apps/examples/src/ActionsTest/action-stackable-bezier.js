@@ -30,6 +30,9 @@
 // ActionStackableBezier
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ActionStackableBezier extends ActionsDemo {
   onEnter() {
     //----start35----onEnter

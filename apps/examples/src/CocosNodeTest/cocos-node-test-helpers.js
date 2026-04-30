@@ -25,13 +25,27 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { BoundingBoxTest } from "./bounding-box-test.js";
+import { CCNodeTest2 } from "./ccnode-test2.js";
+import { CCNodeTest4 } from "./ccnode-test4.js";
+import { CCNodeTest5 } from "./ccnode-test5.js";
+import { CCNodeTest6 } from "./ccnode-test6.js";
+import { nodeTestSceneIdx , _setnodeTestSceneIdx} from "./cocos-node-test-constants.js";
+import { ConvertToNode } from "./convert-to-node.js";
+import { NodeNonOpaqueTest } from "./node-non-opaque-test.js";
+import { NodeOpaqueTest } from "./node-opaque-test.js";
+import { NodeToWorld } from "./node-to-world.js";
+import { SchedulerTest1 } from "./scheduler-test1.js";
+import { StressTest1 } from "./stress-test1.js";
+import { StressTest2 } from "./stress-test2.js";
 
 ;
 
-var SID_DELAY2 = 1;
+;
 
-var SID_DELAY4 = 2;
+export var SID_DELAY2 = 1;
+
+export var SID_DELAY4 = 2;
 
 ;
 
@@ -60,7 +74,7 @@ var SID_DELAY4 = 2;
 //
 // Flow control
 //
-var arrayOfNodeTest = [
+export var arrayOfNodeTest = [
     CCNodeTest2,
     CCNodeTest4,
     CCNodeTest5,
@@ -79,11 +93,11 @@ if ('opengl' in cc.sys.capabilities) {
 }
 
 export function nextNodeTest() {
-    nodeTestSceneIdx++;
-    nodeTestSceneIdx = nodeTestSceneIdx % arrayOfNodeTest.length;
+    _setnodeTestSceneIdx(nodeTestSceneIdx + 1);
+    _setnodeTestSceneIdx(nodeTestSceneIdx % arrayOfNodeTest.length);
 
     if(window.sideIndexBar){
-        nodeTestSceneIdx = window.sideIndexBar.changeTest(nodeTestSceneIdx, 24);
+        _setnodeTestSceneIdx(window.sideIndexBar.changeTest(nodeTestSceneIdx, 24));
     }
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
@@ -92,12 +106,12 @@ export function nextNodeTest() {
 ;
 
 export function previousNodeTest() {
-    nodeTestSceneIdx--;
+    _setnodeTestSceneIdx(nodeTestSceneIdx - 1);
     if (nodeTestSceneIdx < 0)
-        nodeTestSceneIdx += arrayOfNodeTest.length;
+        _setnodeTestSceneIdx(nodeTestSceneIdx + (arrayOfNodeTest.length));
 
     if(window.sideIndexBar){
-        nodeTestSceneIdx = window.sideIndexBar.changeTest(nodeTestSceneIdx, 24);
+        _setnodeTestSceneIdx(window.sideIndexBar.changeTest(nodeTestSceneIdx, 24));
     }
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();

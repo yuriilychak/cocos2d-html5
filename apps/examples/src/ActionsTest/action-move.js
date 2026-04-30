@@ -30,6 +30,9 @@
 //	ActionMove
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { director, winSize } from "../tests-main-constants.js";
+
 export class ActionMove extends ActionsDemo {
     constructor() {
         super();

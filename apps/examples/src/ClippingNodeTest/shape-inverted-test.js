@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ShapeTest } from "./shape-test.js";
+
 export class ShapeInvertedTest extends ShapeTest {
     title() {
         return "Shape Inverted Basic Test";

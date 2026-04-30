@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UILoadingBarTest } from "./uiloading-bar-test.js";
+
 export class UILoadingBarTest_Fix_Scale9 extends UILoadingBarTest {
     createLoadingBar() {
         var widgetSize = this._widget.getContentSize();

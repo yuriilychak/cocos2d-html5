@@ -27,6 +27,8 @@
 // Tests
 //
 //------------------------------------------------------------------
+import { PerformanceNowBaseLayer } from "./performance-now-base-layer.js";
+
 export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
     onEnter() {
         super.onEnter();

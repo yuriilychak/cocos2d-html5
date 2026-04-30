@@ -28,6 +28,9 @@
 // GetSupportedExtensionsTest
 //
 //------------------------------------------------------------------
+import { OpenGLTestLayer } from "./open-gltest-layer.js";
+import { autoTestEnabled } from "../tests-main-constants.js";
+
 export class GetSupportedExtensionsTest extends OpenGLTestLayer {
     constructor() {
         super();

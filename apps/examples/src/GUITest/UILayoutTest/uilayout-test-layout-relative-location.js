@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
      init(){
          if (super.init()) {

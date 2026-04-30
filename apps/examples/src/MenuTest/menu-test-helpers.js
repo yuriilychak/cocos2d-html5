@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { MenuTestScene } from "./menu-test-scene.js";
 
 ;
 
@@ -39,4 +39,6 @@
 
 ;
 
-var arrayOfMenuTest = [MenuTestScene];
+;
+
+export var arrayOfMenuTest = [MenuTestScene];

@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectAdvanceTextLayer } from "./effect-advance-text-layer.js";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
+
 export class Effect1 extends EffectAdvanceTextLayer {
     title() {
         return "Lens + Waves3d";

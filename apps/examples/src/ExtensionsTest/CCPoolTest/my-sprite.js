@@ -27,6 +27,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_grossini } from "../../tests_resources.js";
+
 export class MySprite extends cc.Sprite {
     constructor(f1, f2, f3) {
         super(s_grossini);

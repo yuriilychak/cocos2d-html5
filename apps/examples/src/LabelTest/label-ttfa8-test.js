@@ -26,6 +26,9 @@
  ****************************************************************************/
 
 /// LabelTTFA8Test
+import { AtlasDemo } from "./atlas-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class LabelTTFA8Test extends AtlasDemo {
     constructor() {
         //----start22----ctor

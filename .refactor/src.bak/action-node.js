@@ -30,6 +30,7 @@
  */
 import { Color, NewClass, Node, REPEAT_FOREVER, arrayRemoveObject } from "@aspect/core";
 import { sequence, spawn } from "@aspect/actions";
+import { ActionFadeFrame, ActionMoveFrame, ActionRotationFrame, ActionScaleFrame, ActionTintFrame, FRAME_TYPE_FADE, FRAME_TYPE_MAX, FRAME_TYPE_MOVE, FRAME_TYPE_ROTATE, FRAME_TYPE_SCALE, FRAME_TYPE_TINT } from "./action-frame.js";
 
 export class ActionNode extends NewClass {
   /**
@@ -45,7 +46,7 @@ export class ActionNode extends NewClass {
     this._actionSpawn = null;
     this._action = null;
     this._frameArray = [];
-    this._frameArrayNum = ccs.FRAME_TYPE_MAX;
+    this._frameArrayNum = FRAME_TYPE_MAX;
     for (var i = 0; i < this._frameArrayNum; i++) this._frameArray.push([]);
   }
 
@@ -84,47 +85,47 @@ export class ActionNode extends NewClass {
           positionX += AnchorPointIn.x;
           positionY += AnchorPointIn.y;
         }
-        actionFrame = new ccs.ActionMoveFrame();
+        actionFrame = new ActionMoveFrame();
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.setPosition(positionX, positionY);
-        actionArray = this._frameArray[ccs.FRAME_TYPE_MOVE];
+        actionArray = this._frameArray[FRAME_TYPE_MOVE];
         actionArray.push(actionFrame);
       }
 
       if (actionFrameDic["scalex"] !== undefined) {
         var scaleX = actionFrameDic["scalex"];
         var scaleY = actionFrameDic["scaley"];
-        actionFrame = new ccs.ActionScaleFrame();
+        actionFrame = new ActionScaleFrame();
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.setScaleX(scaleX);
         actionFrame.setScaleY(scaleY);
-        actionArray = this._frameArray[ccs.FRAME_TYPE_SCALE];
+        actionArray = this._frameArray[FRAME_TYPE_SCALE];
         actionArray.push(actionFrame);
       }
 
       if (actionFrameDic["rotation"] !== undefined) {
         var rotation = actionFrameDic["rotation"];
-        actionFrame = new ccs.ActionRotationFrame();
+        actionFrame = new ActionRotationFrame();
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.setRotation(rotation);
-        actionArray = this._frameArray[ccs.FRAME_TYPE_ROTATE];
+        actionArray = this._frameArray[FRAME_TYPE_ROTATE];
         actionArray.push(actionFrame);
       }
 
       if (actionFrameDic["opacity"] !== undefined) {
         var opacity = actionFrameDic["opacity"];
-        actionFrame = new ccs.ActionFadeFrame();
+        actionFrame = new ActionFadeFrame();
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.setOpacity(opacity);
-        actionArray = this._frameArray[ccs.FRAME_TYPE_FADE];
+        actionArray = this._frameArray[FRAME_TYPE_FADE];
         actionArray.push(actionFrame);
       }
 
@@ -132,12 +133,12 @@ export class ActionNode extends NewClass {
         var colorR = actionFrameDic["colorr"];
         var colorG = actionFrameDic["colorg"];
         var colorB = actionFrameDic["colorb"];
-        actionFrame = new ccs.ActionTintFrame();
+        actionFrame = new ActionTintFrame();
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.setColor(new Color(colorR, colorG, colorB));
-        actionArray = this._frameArray[ccs.FRAME_TYPE_TINT];
+        actionArray = this._frameArray[FRAME_TYPE_TINT];
         actionArray.push(actionFrame);
       }
       actionFrameDic = null;
@@ -413,4 +414,3 @@ export class ActionNode extends NewClass {
   }
 };
 
-ccs.ActionNode = ActionNode;

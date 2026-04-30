@@ -30,6 +30,10 @@
 // XXX  IT WAS ADDED FOR TESTING PURPOSES ONLY
 //
 //------------------------------------------------------------------
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { s_bitmapFontTest5_fnt, s_pathGrossini, s_pathSister1 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
 
     constructor() {

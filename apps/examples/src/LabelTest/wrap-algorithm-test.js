@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AtlasDemo } from "./atlas-demo.js";
+
 export class WrapAlgorithmTest extends AtlasDemo {
     constructor(){
         super();

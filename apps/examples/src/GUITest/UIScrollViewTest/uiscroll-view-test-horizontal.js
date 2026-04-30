@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIScrollViewTest_Horizontal extends UIMainLayer {
     init() {
         if (super.init()) {

@@ -29,6 +29,10 @@
  // The default collision handler is invoked for each colliding pair of shapes that isn't explicitly handled by a specific collision handler.
  //
  //------------------------------------------------------------------
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
     constructor() {
         super();

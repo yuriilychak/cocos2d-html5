@@ -25,27 +25,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { parallaxTestSceneIdx , _setparallaxTestSceneIdx} from "./parallax-test-constants.js";
+import { Parallax1 } from "./parallax1.js";
+import { Parallax2 } from "./parallax2.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 ;
 
 ;
 
 ParallaxTestScene = class ParallaxTestScene extends TestScene {
     runThisTest(num) {
-        parallaxTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
+        _setparallaxTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         this.addChild(nextParallaxTest());
         director.runScene(this);
     }
 
 };
 
-var arrayOfParallaxTest = [
+export var arrayOfParallaxTest = [
     Parallax1,
     Parallax2
 ];
 
 export function nextParallaxTest() {
-    parallaxTestSceneIdx++;
-    parallaxTestSceneIdx = parallaxTestSceneIdx % arrayOfParallaxTest.length;
+    _setparallaxTestSceneIdx(parallaxTestSceneIdx + 1);
+    _setparallaxTestSceneIdx(parallaxTestSceneIdx % arrayOfParallaxTest.length);
 
     return new arrayOfParallaxTest[parallaxTestSceneIdx]();
 }
@@ -53,9 +59,9 @@ export function nextParallaxTest() {
 ;
 
 export function previousParallaxTest() {
-    parallaxTestSceneIdx--;
+    _setparallaxTestSceneIdx(parallaxTestSceneIdx - 1);
     if (parallaxTestSceneIdx < 0)
-        parallaxTestSceneIdx += arrayOfParallaxTest.length;
+        _setparallaxTestSceneIdx(parallaxTestSceneIdx + (arrayOfParallaxTest.length));
 
     return new arrayOfParallaxTest[parallaxTestSceneIdx]();
 }

@@ -25,6 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { EventDispatcherTestScene } from "./event-dispatcher-test-scene.js";
+import { eventDispatcherSceneIdx } from "./new-event-manager-test-constants.js";
+import { arrayOfEventDispatcherTest, nextDispatcherTest, previousDispatcherTest, restartDispatcherTest } from "./new-event-manager-test-helpers.js";
+import { director } from "../tests-main-constants.js";
+
 export class EventDispatcherTestDemo extends BaseTestLayer {
     constructor() {
         super(new cc.Color(0,0,0,255), new cc.Color(160,32,32,255));

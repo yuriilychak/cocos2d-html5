@@ -26,6 +26,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TAG_LABEL } from "./motion-streak-test-constants.js";
+import { backMotionAction, nextMotionAction, restartMotionAction } from "./motion-streak-test-helpers.js";
+import { MotionStreakTestScene } from "./motion-streak-test-scene.js";
+import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../tests_resources.js";
+
 export class MotionStreakTest extends cc.Layer {
     constructor() {
         super();

@@ -22,6 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { v } from "./chipmunk-test-helpers.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class Issue1073 extends ChipmunkDemo {
     constructor(){
         super();

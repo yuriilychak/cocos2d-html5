@@ -28,6 +28,10 @@
 //
 // MAIN ENTRY POINT
 //
+import { nextNodeTest } from "./cocos-node-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class NodeTestScene extends TestScene {
     runThisTest(num) {
         nodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

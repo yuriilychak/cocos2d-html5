@@ -25,6 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { clippingNodeTestSceneIdx } from "./clipping-node-test-constants.js";
+import { arrayOfClippingNodeTest, nextClippingNodeTest, previousClippingNodeTest, restartClippingNodeTest } from "./clipping-node-test-helpers.js";
+import { ClippingNodeTestScene } from "./clipping-node-test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class BaseClippingNodeTest extends BaseTestLayer {
 
     constructor() {

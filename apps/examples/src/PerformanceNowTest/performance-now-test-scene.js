@@ -22,6 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextPerformanceNowTest } from "./performance-now-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class PerformanceNowTestScene extends TestScene {
     runThisTest(num) {
         scenePerformanceNowTestIdx = (num || num == 0) ? (num - 1) : -1;

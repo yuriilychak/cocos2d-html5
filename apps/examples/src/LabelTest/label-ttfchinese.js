@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AtlasDemo } from "./atlas-demo.js";
+import { director } from "../tests-main-constants.js";
+
 export class LabelTTFChinese extends AtlasDemo {
     constructor() {
         //----start21----ctor

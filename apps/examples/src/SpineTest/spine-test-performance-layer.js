@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { sp } from "./spine-test-constants.js";
+import { SpineTestLayer } from "./spine-test-layer.js";
+
 export class SpineTestPerformanceLayer extends SpineTestLayer {
     constructor(){
         super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));

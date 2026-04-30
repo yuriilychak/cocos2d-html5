@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AtlasDemo } from "./atlas-demo.js";
+import { s_resprefix } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class BMFontColorParentChild extends AtlasDemo {
     constructor() {
         //----start15----ctor

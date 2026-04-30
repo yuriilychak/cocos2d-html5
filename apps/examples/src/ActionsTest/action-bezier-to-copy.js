@@ -30,6 +30,9 @@
 // ActionBezierToCopy
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ActionBezierToCopy extends ActionsDemo {
   onEnter() {
     //----start9----onEnter

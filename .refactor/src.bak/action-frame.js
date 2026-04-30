@@ -34,44 +34,44 @@
 import { Color, NewClass, Point, log } from "@aspect/core";
 import { FadeTo, MoveTo, RotateBy, RotateTo, ScaleTo, TintTo, easeBackIn, easeBackInOut, easeBackOut, easeBounceIn, easeBounceInOut, easeBounceOut, easeCircleActionIn, easeCircleActionInOut, easeCircleActionOut, easeCubicActionIn, easeCubicActionInOut, easeCubicActionOut, easeElasticIn, easeElasticInOut, easeElasticOut, easeExponentialIn, easeExponentialInOut, easeExponentialOut, easeQuadraticActionIn, easeQuadraticActionInOut, easeQuadraticActionOut, easeQuarticActionIn, easeQuarticActionInOut, easeQuarticActionOut, easeQuinticActionIn, easeQuinticActionInOut, easeQuinticActionOut, easeSineIn, easeSineInOut, easeSineOut } from "@aspect/actions";
 
-export const FRAME_TYPE_MOVE = ccs.FRAME_TYPE_MOVE = 0;
+export const FRAME_TYPE_MOVE = 0;
 /**
  * The flag scale action type of Cocostudio frame.
  * @constant
  * @type {number}
  */
-export const FRAME_TYPE_SCALE = ccs.FRAME_TYPE_SCALE = 1;
+export const FRAME_TYPE_SCALE = 1;
 /**
  * The flag rotate action type of Cocostudio frame.
  * @constant
  * @type {number}
  */
-ccs.FRAME_TYPE_ROTATE = 2;
+export const FRAME_TYPE_ROTATE = 2;
 /**
  * The flag tint action type of Cocostudio frame.
  * @constant
  * @type {number}
  */
-export const FRAME_TYPE_TINT = ccs.FRAME_TYPE_TINT = 3;
+export const FRAME_TYPE_TINT = 3;
 /**
  * The flag fade action type of Cocostudio frame.
  * @constant
  * @type {number}
  */
-ccs.FRAME_TYPE_FADE = 4;
+export const FRAME_TYPE_FADE = 4;
 /**
  * The max flag of Cocostudio frame.
  * @constant
  * @type {number}
  */
-ccs.FRAME_TYPE_MAX = 5;
+export const FRAME_TYPE_MAX = 5;
 
 /**
  * The ease type of Cocostudio frame.
  * @constant
  * @type {Object}
  */
-export const FrameEaseType = ccs.FrameEaseType = {
+export const FrameEaseType = {
   CUSTOM: -1,
 
   LINEAR: 0,
@@ -134,7 +134,7 @@ export class ActionFrame extends NewClass {
   constructor() {
     super();
     this.frameType = 0;
-    this.easingType = ccs.FrameEaseType.LINEAR;
+    this.easingType = FrameEaseType.LINEAR;
     this.frameIndex = 0;
     this.time = 0;
   }
@@ -158,99 +158,99 @@ export class ActionFrame extends NewClass {
 
     var resultAction;
     switch (this.easingType) {
-      case ccs.FrameEaseType.CUSTOM:
+      case FrameEaseType.CUSTOM:
         break;
-      case ccs.FrameEaseType.LINEAR:
+      case FrameEaseType.LINEAR:
         resultAction = action;
         break;
-      case ccs.FrameEaseType.SINE_EASEIN:
+      case FrameEaseType.SINE_EASEIN:
         resultAction = action.easing(easeSineIn());
         break;
-      case ccs.FrameEaseType.SINE_EASEOUT:
+      case FrameEaseType.SINE_EASEOUT:
         resultAction = action.easing(easeSineOut());
         break;
-      case ccs.FrameEaseType.SINE_EASEINOUT:
+      case FrameEaseType.SINE_EASEINOUT:
         resultAction = action.easing(easeSineInOut());
         break;
-      case ccs.FrameEaseType.QUAD_EASEIN:
+      case FrameEaseType.QUAD_EASEIN:
         resultAction = action.easing(easeQuadraticActionIn());
         break;
-      case ccs.FrameEaseType.QUAD_EASEOUT:
+      case FrameEaseType.QUAD_EASEOUT:
         resultAction = action.easing(easeQuadraticActionOut());
         break;
-      case ccs.FrameEaseType.QUAD_EASEINOUT:
+      case FrameEaseType.QUAD_EASEINOUT:
         resultAction = action.easing(easeQuadraticActionInOut());
         break;
-      case ccs.FrameEaseType.CUBIC_EASEIN:
+      case FrameEaseType.CUBIC_EASEIN:
         resultAction = action.easing(easeCubicActionIn());
         break;
-      case ccs.FrameEaseType.CUBIC_EASEOUT:
+      case FrameEaseType.CUBIC_EASEOUT:
         resultAction = action.easing(easeCubicActionOut());
         break;
-      case ccs.FrameEaseType.CUBIC_EASEINOUT:
+      case FrameEaseType.CUBIC_EASEINOUT:
         resultAction = action.easing(easeCubicActionInOut());
         break;
-      case ccs.FrameEaseType.QUART_EASEIN:
+      case FrameEaseType.QUART_EASEIN:
         resultAction = action.easing(easeQuarticActionIn());
         break;
-      case ccs.FrameEaseType.QUART_EASEOUT:
+      case FrameEaseType.QUART_EASEOUT:
         resultAction = action.easing(easeQuarticActionOut());
         break;
-      case ccs.FrameEaseType.QUART_EASEINOUT:
+      case FrameEaseType.QUART_EASEINOUT:
         resultAction = action.easing(easeQuarticActionInOut());
         break;
-      case ccs.FrameEaseType.QUINT_EASEIN:
+      case FrameEaseType.QUINT_EASEIN:
         resultAction = action.easing(easeQuinticActionIn());
         break;
-      case ccs.FrameEaseType.QUINT_EASEOUT:
+      case FrameEaseType.QUINT_EASEOUT:
         resultAction = action.easing(easeQuinticActionOut());
         break;
-      case ccs.FrameEaseType.QUINT_EASEINOUT:
+      case FrameEaseType.QUINT_EASEINOUT:
         resultAction = action.easing(easeQuinticActionInOut());
         break;
-      case ccs.FrameEaseType.EXPO_EASEIN:
+      case FrameEaseType.EXPO_EASEIN:
         resultAction = action.easing(easeExponentialIn());
         break;
-      case ccs.FrameEaseType.EXPO_EASEOUT:
+      case FrameEaseType.EXPO_EASEOUT:
         resultAction = action.easing(easeExponentialOut());
         break;
-      case ccs.FrameEaseType.EXPO_EASEINOUT:
+      case FrameEaseType.EXPO_EASEINOUT:
         resultAction = action.easing(easeExponentialInOut());
         break;
-      case ccs.FrameEaseType.CIRC_EASEIN:
+      case FrameEaseType.CIRC_EASEIN:
         resultAction = action.easing(easeCircleActionIn());
         break;
-      case ccs.FrameEaseType.CIRC_EASEOUT:
+      case FrameEaseType.CIRC_EASEOUT:
         resultAction = action.easing(easeCircleActionOut());
         break;
-      case ccs.FrameEaseType.CIRC_EASEINOUT:
+      case FrameEaseType.CIRC_EASEINOUT:
         resultAction = action.easing(easeCircleActionInOut());
         break;
-      case ccs.FrameEaseType.ELASTIC_EASEIN:
+      case FrameEaseType.ELASTIC_EASEIN:
         resultAction = action.easing(easeElasticIn());
         break;
-      case ccs.FrameEaseType.ELASTIC_EASEOUT:
+      case FrameEaseType.ELASTIC_EASEOUT:
         resultAction = action.easing(easeElasticOut());
         break;
-      case ccs.FrameEaseType.ELASTIC_EASEINOUT:
+      case FrameEaseType.ELASTIC_EASEINOUT:
         resultAction = action.easing(easeElasticInOut());
         break;
-      case ccs.FrameEaseType.BACK_EASEIN:
+      case FrameEaseType.BACK_EASEIN:
         resultAction = action.easing(easeBackIn());
         break;
-      case ccs.FrameEaseType.BACK_EASEOUT:
+      case FrameEaseType.BACK_EASEOUT:
         resultAction = action.easing(easeBackOut());
         break;
-      case ccs.FrameEaseType.BACK_EASEINOUT:
+      case FrameEaseType.BACK_EASEINOUT:
         resultAction = action.easing(easeBackInOut());
         break;
-      case ccs.FrameEaseType.BOUNCE_EASEIN:
+      case FrameEaseType.BOUNCE_EASEIN:
         resultAction = action.easing(easeBounceIn());
         break;
-      case ccs.FrameEaseType.BOUNCE_EASEOUT:
+      case FrameEaseType.BOUNCE_EASEOUT:
         resultAction = action.easing(easeBounceOut());
         break;
-      case ccs.FrameEaseType.BOUNCE_EASEINOUT:
+      case FrameEaseType.BOUNCE_EASEINOUT:
         resultAction = action.easing(easeBounceInOut());
         break;
     }
@@ -280,14 +280,14 @@ export class ActionFrame extends NewClass {
 /**
  * The Cocostudio's move action frame.
  */
-export class ActionMoveFrame extends ccs.ActionFrame {
+export class ActionMoveFrame extends ActionFrame {
   /**
    * Construction of ccs.ActionMoveFrame
    */
   constructor() {
     super();
     this._position = new Point(0, 0);
-    this.frameType = ccs.FRAME_TYPE_MOVE;
+    this.frameType = FRAME_TYPE_MOVE;
   }
 
   /**
@@ -326,7 +326,7 @@ export class ActionMoveFrame extends ccs.ActionFrame {
 /**
  * The Cocostudio's scale action frame
  */
-export class ActionScaleFrame extends ccs.ActionFrame {
+export class ActionScaleFrame extends ActionFrame {
   /**
    * Construction of ccs.ActionScaleFrame
    */
@@ -334,7 +334,7 @@ export class ActionScaleFrame extends ccs.ActionFrame {
     super();
     this._scaleX = 1;
     this._scaleY = 1;
-    this.frameType = ccs.FRAME_TYPE_SCALE;
+    this.frameType = FRAME_TYPE_SCALE;
   }
 
   /**
@@ -384,14 +384,14 @@ export class ActionScaleFrame extends ccs.ActionFrame {
 /**
  * The Cocostudio's rotation action frame.
  */
-export class ActionRotationFrame extends ccs.ActionFrame {
+export class ActionRotationFrame extends ActionFrame {
   /**
    * Construction of ccs.ActionRotationFrame
    */
   constructor() {
     super();
     this._rotation = 0;
-    this.frameType = ccs.FRAME_TYPE_ROTATE;
+    this.frameType = FRAME_TYPE_ROTATE;
   }
 
   /**
@@ -433,14 +433,14 @@ export class ActionRotationFrame extends ccs.ActionFrame {
 /**
  * The Cocostudio's fade action frame.
  */
-export class ActionFadeFrame extends ccs.ActionFrame {
+export class ActionFadeFrame extends ActionFrame {
   /**
    * Construction of ccs.ActionFadeFrame
    */
   constructor() {
     super();
     this._opacity = 255;
-    this.frameType = ccs.FRAME_TYPE_FADE;
+    this.frameType = FRAME_TYPE_FADE;
   }
 
   /**
@@ -472,14 +472,14 @@ export class ActionFadeFrame extends ccs.ActionFrame {
 /**
  * The Cocostudio's tint action frame.
  */
-export class ActionTintFrame extends ccs.ActionFrame {
+export class ActionTintFrame extends ActionFrame {
   /**
    * Construction of ccs.ActionTintFrame
    */
   constructor() {
     super();
     this._color = new Color(255, 255, 255, 255);
-    this.frameType = ccs.FRAME_TYPE_TINT;
+    this.frameType = FRAME_TYPE_TINT;
   }
 
   /**
@@ -514,14 +514,8 @@ export class ActionTintFrame extends ccs.ActionFrame {
   }
 };
 
-ccs.ActionFrame = ActionFrame;
 
-ccs.ActionMoveFrame = ActionMoveFrame;
 
-ccs.ActionScaleFrame = ActionScaleFrame;
 
-ccs.ActionRotationFrame = ActionRotationFrame;
 
-ccs.ActionFadeFrame = ActionFadeFrame;
 
-ccs.ActionTintFrame = ActionTintFrame;

@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ExtensionsTestScene } from "../extensions-test-scene.js";
+import { winSize } from "../../tests-main-constants.js";
+
 export class EditBoxTestLayer extends cc.Layer {
 
     constructor() {

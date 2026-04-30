@@ -30,6 +30,12 @@
 // TileDemo
 //
 //------------------------------------------------------------------
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { director } from "../tests-main-constants.js";
+import { TAG_TILE_MAP, tileTestSceneIdx } from "./tile-map-test-constants.js";
+import { arrayOfTileMapTest, nextTileMapTest, previousTileMapTest, restartTileMapTest } from "./tile-map-test-helpers.js";
+import { TileMapTestScene } from "./tile-map-test-scene.js";
+
 export class TileDemo extends BaseTestLayer {
     constructor() {
         super();

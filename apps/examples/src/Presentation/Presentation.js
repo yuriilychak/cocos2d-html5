@@ -24,9 +24,14 @@
  ****************************************************************************/
 
 
-var presentationSceneIdx = -1;
-var centerPos = new cc.Point(0,0); // will be updated later
-var images_path = 'Presentation/';
+import { BASE_TEST_MENUITEM_NEXT_TAG, BASE_TEST_MENUITEM_PREV_TAG, BASE_TEST_MENUITEM_RESET_TAG, BASE_TEST_MENU_TAG, BASE_TEST_SUBTITLE_TAG, BASE_TEST_TITLE_TAG, BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { TestScene } from "../test-scene.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { director, winSize } from "../tests-main-constants.js";
+
+export var presentationSceneIdx = -1;
+export var centerPos = new cc.Point(0,0); // will be updated later
+export var images_path = 'Presentation/';
 
 //------------------------------------------------------------------
 //
@@ -698,7 +703,7 @@ export class PresentationScene extends TestScene {
 //
 // Flow control
 //
-var arrayOfPresentation = [
+export var arrayOfPresentation = [
 	IntroPage,
 	GoalPage,
 	HTML5EnginesPage,

@@ -24,6 +24,8 @@
 
  */
 
+import { ControlScene } from "../CCControlScene.js";
+
 export class ControlStepperTest extends ControlScene {
     constructor() {
         super();

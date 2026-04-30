@@ -26,6 +26,10 @@
  ****************************************************************************/
 
 // BMFontInit
+import { AtlasDemo } from "./atlas-demo.js";
+import { s_resprefix } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class BMFontInit extends AtlasDemo {
     constructor() {
         //----start14----ctor

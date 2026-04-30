@@ -51,9 +51,11 @@
 //
 // JavaScript + chipmunk tests
 //
-var chipmunkTestSceneIdx = -1;
+export let chipmunkTestSceneIdx = -1;
 
-function k_scalar_body(body, point, n) {
+export function k_scalar_body(body, point, n) {
     var rcn = cp.v.cross(cp.v.sub(point, body.p), n);
     return 1.0/body.m + rcn*rcn/body.i;
 }
+
+export function _setchipmunkTestSceneIdx(v) { chipmunkTestSceneIdx = v; }

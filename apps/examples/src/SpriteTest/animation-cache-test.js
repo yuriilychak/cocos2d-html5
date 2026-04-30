@@ -30,6 +30,10 @@
 // AnimationCache
 //
 //------------------------------------------------------------------
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossiniPlist, s_grossini_bluePlist, s_grossini_grayPlist } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class AnimationCacheTest extends SpriteTestDemo {
 
 

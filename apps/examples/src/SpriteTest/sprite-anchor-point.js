@@ -30,6 +30,10 @@
 // SpriteAnchorPoint
 //
 //------------------------------------------------------------------
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossini_dance_atlas, s_pathR1 } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteAnchorPoint extends SpriteTestDemo {
 
     constructor() {

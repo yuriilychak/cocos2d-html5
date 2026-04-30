@@ -26,18 +26,64 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ActionManagerTestScene } from "./ActionManagerTest/action-manager-test-scene.js";
+import { ActionsTestScene } from "./ActionsTest/actions-test-scene.js";
+import { BakeLayerTestScene } from "./BakeLayerTest/bake-layer-test-scene.js";
+import { Box2DTestScene } from "./Box2dTest/box2-dtest-scene.js";
+import { ChipmunkTestScene } from "./ChipmunkTest/chipmunk-test-scene.js";
+import { ClippingNodeTestScene } from "./ClippingNodeTest/clipping-node-test-scene.js";
+import { CocosDenshionTestScene } from "./CocosDenshionTest/cocos-denshion-test-scene.js";
+import { NodeTestScene } from "./CocosNodeTest/node-test-scene.js";
+import { CurrentLanguageTestScene } from "./CurrentLanguageTest/current-language-test-scene.js";
+import { DrawPrimitivesTestScene } from "./DrawPrimitivesTest/draw-primitives-test-scene.js";
+import { EaseActionsTestScene } from "./EaseActionsTest/ease-actions-test-scene.js";
+import { EffectAdvanceScene } from "./EffectsAdvancedTest/effect-advance-scene.js";
+import { EffectsTestScene } from "./EffectsTest/effects-test-scene.js";
+import { EventTestScene } from "./EventTest/event-test-scene.js";
+import { ExtensionsTestScene } from "./ExtensionsTest/extensions-test-scene.js";
+import { S9SpriteTestScene } from "./ExtensionsTest/S9SpriteTest/s9-sprite-test-scene.js";
+import { IntervalTestScene } from "./IntervalTest/interval-test-scene.js";
+import { LabelTestScene } from "./LabelTest/label-test-scene.js";
+import { LayerTestScene } from "./LayerTest/layer-test-scene.js";
+import { LoaderTestScene } from "./LoaderTest/loader-test-scene.js";
+import { MenuTestScene } from "./MenuTest/menu-test-scene.js";
+import { MotionStreakTestScene } from "./MotionStreakTest/motion-streak-test-scene.js";
+import { EventDispatcherTestScene } from "./NewEventManagerTest/event-dispatcher-test-scene.js";
+import { OpenGLTestScene } from "./OpenGLTest/open-gltest-scene.js";
+import { ParticleTestScene } from "./ParticleTest/particle-test-scene.js";
+import { PathTestScene } from "./PathTest/path-test-scene.js";
+import { PerformanceNowTestScene } from "./PerformanceNowTest/performance-now-test-scene.js";
+import { ProgressActionsTestScene } from "./ProgressActionsTest/progress-actions-test-scene.js";
+import { RenderTextureTestScene } from "./RenderTextureTest/render-texture-test-scene.js";
+import { RotateWorldTestScene } from "./RotateWorldTest/rotate-world-test-scene.js";
+import { SchedulerTestScene } from "./SchedulerTest/scheduler-test-scene.js";
+import { SpineTestScene } from "./SpineTest/spine-test-scene.js";
+import { SpriteTestScene } from "./SpriteTest/sprite-test-scene.js";
+import { SysTestScene } from "./SysTest/sys-test-scene.js";
+import { TestController } from "./test-controller.js";
+import { g_box2d, g_cocosdeshion, g_eventDispatcher, g_extensions, g_fonts, g_label, g_menu, g_opengl_resources, g_parallax, g_particle, g_s9s_blocks, g_spine, g_sprites, g_tilemaps, g_touches, g_transitions, g_ui } from "./tests_resources.js";
+import { PLATFORM_ALL, PLATFORM_HTML5, PLATFORM_JSB_AND_WEBGL } from "./tests-main-constants.js";
+import { TextInputTestScene } from "./TextInputTest/text-input-test-scene.js";
+import { TexCacheTestScene } from "./TextureCacheTest/tex-cache-test-scene.js";
+import { TileMapTestScene } from "./TileMapTest/tile-map-test-scene.js";
+import { TouchesTestScene } from "./TouchesTest/touches-test-scene.js";
+import { TransitionsTestScene } from "./TransitionsTest/transitions-test-scene.js";
+import { UnitTestScene } from "./UnitTest/unit-test-scene.js";
+import { XHRArrayBufferTestScene } from "./XHRTest/xhrarray-buffer-test-scene.js";
+import { XHRTestScene } from "./XHRTest/xhrtest-scene.js";
+
 ;
 
 //Controller stuff
-var LINE_SPACE = 40;
+export var LINE_SPACE = 40;
 
-var curPos = new cc.Point(0,0);
+export var curPos = new cc.Point(0,0);
 
 ;
 
 TestController.YOffset = 0;
 
-var testNames = [
+export var testNames = [
     {
         title:"ActionManager Test",
         platforms: PLATFORM_ALL,

@@ -24,6 +24,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { ScriptTestTempLayer } from "./ScriptTestTempFile.js";
+import { SysTestBase } from "./sys-test-base.js";
+import { tempJSFileName } from "./sys-test-helpers.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ScriptTestLayer extends SysTestBase {
     startDownload() {
         if (!cc.sys.isNative)

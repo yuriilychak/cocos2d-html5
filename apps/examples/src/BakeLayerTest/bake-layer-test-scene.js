@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nextBakeLayerTest } from "./bake-layer-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class BakeLayerTestScene extends TestScene {
     runThisTest(num) {
         _bakeLayerTestIdx = (num || 0) - 1;

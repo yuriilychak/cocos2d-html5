@@ -47,6 +47,12 @@
  *
  */
 import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Color, Node, RendererConfig, arrayRemoveObject, assert, degreesToRadians, log } from "@aspect/core";
+import { CONST_VERSION_COMBINED } from "./data-reader-helper.js";
+import { BaseData, FrameData } from "./datas.js";
+import { displayFactory } from "./display-factory.js";
+import { DisplayManager } from "./display-manager.js";
+import { TransformHelp } from "./transform-help.js";
+import { Tween } from "./tween.js";
 
 export class Bone extends Node {
   constructor(name) {
@@ -120,14 +126,14 @@ export class Bone extends Node {
   init(name) {
     //        super.init();
     if (name) this._name = name;
-    this._tweenData = new ccs.FrameData();
+    this._tweenData = new FrameData();
 
-    this._tween = new ccs.Tween(this);
+    this._tween = new Tween(this);
 
-    this._displayManager = new ccs.DisplayManager(this);
+    this._displayManager = new DisplayManager(this);
 
-    this._worldInfo = new ccs.BaseData();
-    this._boneData = new ccs.BaseData();
+    this._worldInfo = new BaseData();
+    this._boneData = new BaseData();
 
     return true;
   }
@@ -189,8 +195,8 @@ export class Bone extends Node {
 
     if (this._boneTransformDirty) {
       var locTweenData = this._tweenData;
-      if (this._dataVersion >= ccs.CONST_VERSION_COMBINED) {
-        ccs.TransformHelp.nodeConcat(locTweenData, this._boneData);
+      if (this._dataVersion >= CONST_VERSION_COMBINED) {
+        TransformHelp.nodeConcat(locTweenData, this._boneData);
         locTweenData.scaleX -= 1;
         locTweenData.scaleY -= 1;
       }
@@ -212,7 +218,7 @@ export class Bone extends Node {
           this._applyParentTransform(this._armatureParentBone);
       }
 
-      ccs.TransformHelp.nodeToMatrix(locWorldInfo, this._worldTransform);
+      TransformHelp.nodeToMatrix(locWorldInfo, this._worldTransform);
       if (this._armatureParentBone)
         AffineTransform.concatIn(
           this._worldTransform,
@@ -220,7 +226,7 @@ export class Bone extends Node {
         ); //TODO TransformConcat
     }
 
-    ccs.displayFactory.updateDisplay(
+    displayFactory.updateDisplay(
       this,
       delta,
       this._boneTransformDirty || this._armature.getArmatureTransformDirty()
@@ -298,7 +304,7 @@ export class Bone extends Node {
    */
   updateZOrder() {
     if (
-      this._armature.getArmatureData().dataVersion >= ccs.CONST_VERSION_COMBINED
+      this._armature.getArmatureData().dataVersion >= CONST_VERSION_COMBINED
     ) {
       this.setLocalZOrder(this._tweenData.zOrder + this._boneData.zOrder);
     } else {
@@ -676,8 +682,8 @@ export class Bone extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas) return new ccs.Bone.CanvasRenderCmd(this);
-    else return new ccs.Bone.WebGLRenderCmd(this);
+    if (RendererConfig.getInstance().isCanvas) return new Bone.CanvasRenderCmd(this);
+    else return new Bone.WebGLRenderCmd(this);
   }
 };
 
@@ -794,4 +800,3 @@ export class Bone extends Node {
 
 Bone.CanvasRenderCmd = BoneCanvasRenderCmd;
 Bone.WebGLRenderCmd = BoneWebGLRenderCmd;
-ccs.Bone = Bone;

@@ -30,6 +30,9 @@
 // LayerTest1
 //
 //------------------------------------------------------------------
+import { LayerTest } from "./layer-test.js";
+import { director, winSize } from "../tests-main-constants.js";
+
 export class LayerTest1 extends LayerTest {
     constructor() {
         super();

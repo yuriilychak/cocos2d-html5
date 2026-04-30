@@ -30,6 +30,9 @@
 // Issue1288_2
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { s_pathGrossini } from "../tests_resources.js";
+
 export class Issue1288_2 extends ActionsDemo {
   onEnter() {
     //----start42----onEnter

@@ -26,9 +26,9 @@
 /**
  * The attribute component for Cocostudio.
  */
-import { Loader, log } from "@aspect/core";
+import { Component, Loader, log } from "@aspect/core";
 
-export class ComAttribute extends ccs.Component {
+export class ComAttribute extends Component {
 
     /**
      * Construction of ccs.ComAttribute
@@ -196,4 +196,3 @@ export class ComAttribute extends ccs.Component {
     }
 };
 
-ccs.ComAttribute = ComAttribute;

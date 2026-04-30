@@ -30,6 +30,8 @@
 // ActionTint
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionTint extends ActionsDemo {
     constructor() {
         super();

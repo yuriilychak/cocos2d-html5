@@ -26,6 +26,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_pathClose } from "./tests_resources.js";
+import { PLATFORM_HTML5, PLATFORM_HTML5_WEBGL, PLATFORM_JSB, PLATFORM_MAC, PLATFROM_ANDROID, PLATFROM_IOS, _setAutoTestCurrentTestName, _setAutoTestEnabled, autoTestEnabled, director, winSize } from "./tests-main-constants.js";
+import { LINE_SPACE, curPos, testNames } from "./tests-main-helpers.js";
+
 export class TestController extends cc.LayerGradient {
 
     constructor() {
@@ -40,14 +44,12 @@ export class TestController extends cc.LayerGradient {
 
         this.isMouseDown = false;
 
-        // globals
-        director = cc.director;
-        winSize = director.getWinSize();
+        var winSizeLocal = cc.director.getWinSize();
 
         // add close menu
         var closeItem = new cc.MenuItemImage(s_pathClose, s_pathClose, this.onCloseCallback, this);
-        closeItem.x = winSize.width - 30;
-        closeItem.y = winSize.height - 30;
+        closeItem.x = winSizeLocal.width - 30;
+        closeItem.y = winSizeLocal.height - 30;
 
         var subItem1 = new cc.MenuItemFont("Automated Test: Off");
         subItem1.fontSize = 18;
@@ -151,7 +153,7 @@ export class TestController extends cc.LayerGradient {
         // get the userdata, it's the index of the menu item clicked
         // create the test scene and run it
 
-        autoTestCurrentTestName = testNames[idx].title;
+        _setAutoTestCurrentTestName(testNames[idx].title);
 
         var testCase = testNames[idx];
         var res = testCase.resource || [];
@@ -172,7 +174,7 @@ export class TestController extends cc.LayerGradient {
         }
     }
     onToggleAutoTest() {
-        autoTestEnabled = !autoTestEnabled;
+        _setAutoTestEnabled(!autoTestEnabled);
     }
 
     moveMenu(delta) {

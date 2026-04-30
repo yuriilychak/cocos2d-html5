@@ -30,6 +30,10 @@
 // SpriteBatchNodeChildrenScale
 //
 //------------------------------------------------------------------
+import { SpriteTestDemo } from "./sprite-test-demo.js";
+import { s_grossini_family, s_grossini_familyPlist } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
 
 

@@ -27,6 +27,9 @@
 // Query
 //
 //------------------------------------------------------------------
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { v } from "./chipmunk-test-helpers.js";
+
 export class Query extends ChipmunkDemo {
     constructor() {
         super();

@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIButtonTestSwitchScale9 extends UIMainLayer {
     init(){
         if (super.init()){

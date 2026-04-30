@@ -30,6 +30,8 @@
 // ActionScale
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionScale extends ActionsDemo {
     constructor() {
         super();

@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { UIMainLayer } from "../uimain-layer.js";
+
 export class UIButtonTest_PressedAction extends UIMainLayer {
     init() {
         if (super.init()) {

@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { winSize } from "../tests-main-constants.js";
+
 export class XHRTestLayer extends cc.Layer {
     constructor() {
         super();

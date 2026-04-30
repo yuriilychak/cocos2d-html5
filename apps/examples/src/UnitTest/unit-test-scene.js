@@ -23,6 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+import { nextUnitTest } from "./unit-test-helpers.js";
+
 export class UnitTestScene extends TestScene {
     runThisTest(num) {
         unitTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

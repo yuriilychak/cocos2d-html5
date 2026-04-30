@@ -25,10 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var HIGH_PLAYER = 0;
+export var HIGH_PLAYER = 0;
 
-var LOW_PLAYER = 1;
+export var LOW_PLAYER = 1;
 
-var STATUS_BAR_HEIGHT = 20.0;
+export var STATUS_BAR_HEIGHT = 20.0;
 
-var SPRITE_TAG = 0;
+export var SPRITE_TAG = 0;

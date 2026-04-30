@@ -25,6 +25,9 @@
 //
 // Flow control
 //
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class Issue1092 extends ChipmunkDemo {
     constructor(){
         super();

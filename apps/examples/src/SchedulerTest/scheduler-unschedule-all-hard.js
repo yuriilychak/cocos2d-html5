@@ -28,6 +28,9 @@
 /*
     SchedulerUnscheduleAllHard
 */
+import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { director } from "../tests-main-constants.js";
+
 export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
     onEnter() {
         //----start3----onEnter

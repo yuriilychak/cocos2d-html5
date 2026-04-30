@@ -30,6 +30,8 @@
 // ActionFade
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+
 export class ActionFade extends ActionsDemo {
     constructor() {
         super();

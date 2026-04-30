@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+
 export class ShuffleTilesTest extends EffectsBaseLayer {
     title() {
         return "ShuffleTiles";

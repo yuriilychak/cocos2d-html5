@@ -25,6 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
+import { TouchableSprite } from "./touchable-sprite.js";
+import { s_extensions_button, s_extensions_buttonBackground, s_extensions_buttonHighlighted } from "../tests_resources.js";
+
 export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     constructor() {
         //----start11----ctor

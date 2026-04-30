@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
+
 export class StopPropagationTest extends EventDispatcherTestDemo {
     constructor(){
         //----start9----ctor

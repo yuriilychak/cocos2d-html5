@@ -30,6 +30,8 @@
 // Testing cc.DrawNode API 2
 //
 //------------------------------------------------------------------
+import { DrawTestDemo } from "./draw-test-demo.js";
+
 export class DrawNewAPITest2 extends DrawTestDemo {
     constructor() {
         super();

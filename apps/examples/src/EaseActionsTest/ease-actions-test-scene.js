@@ -28,6 +28,10 @@
 // the class inherit from TestScene
 // every .Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
+import { nextEaseActionsTest } from "./ease-actions-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class EaseActionsTestScene extends TestScene {
     runThisTest(num) {
         easeActionsTestIdx = (num || num == 0) ? (num - 1) : -1;

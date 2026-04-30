@@ -27,6 +27,10 @@
 // Planet
 //
 //------------------------------------------------------------------
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { NOT_GRABABLE_MASK } from "./chipmunk-test-helpers.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class Planet extends ChipmunkDemo {
     constructor() {
         super();

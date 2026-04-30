@@ -30,6 +30,9 @@
 // ActionAnimate
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { s_animations2Plist } from "../tests_resources.js";
+
 export class ActionAnimate extends ActionsDemo {
   onEnter() {
     //----start44----onEnter

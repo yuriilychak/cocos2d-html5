@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { SpriteTest } from "./sprite-test.js";
+
 export class SpriteNoAlphaTest extends SpriteTest {
     title() {
         return "Sprite No Alpha Basic Test";

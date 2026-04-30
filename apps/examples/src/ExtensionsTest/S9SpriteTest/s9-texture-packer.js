@@ -27,6 +27,10 @@
  ****************************************************************************/
 
 // S9_TexturePacker
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
+import { s_s9s_ui_plist } from "../../tests_resources.js";
+import { winSize } from "../../tests-main-constants.js";
+
 export class S9_TexturePacker extends S9SpriteTestDemo {
 
 

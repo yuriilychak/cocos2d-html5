@@ -25,9 +25,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TAG_NODE = 9960;
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { arrayOfParallaxTest, nextParallaxTest, previousParallaxTest, restartParallaxTest } from "./parallax-test-helpers.js";
+import { director } from "../tests-main-constants.js";
 
-var parallaxTestSceneIdx = -1;
+export var TAG_NODE = 9960;
+
+export let parallaxTestSceneIdx = -1;
 
 ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
     constructor() {
@@ -68,3 +72,5 @@ ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
 
 
 };
+
+export function _setparallaxTestSceneIdx(v) { parallaxTestSceneIdx = v; }

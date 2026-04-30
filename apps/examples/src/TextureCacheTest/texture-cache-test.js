@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TextureCacheTestBase } from "./texture-cache-test-base.js";
+
 export class TextureCacheTest extends TextureCacheTestBase {
     constructor() {
         super();

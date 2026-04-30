@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 // custom action sample code
-class CustomMoveBy extends cc.MoveBy {
+export class CustomMoveBy extends cc.MoveBy {
   update(dt) {
     super.update(dt);
 

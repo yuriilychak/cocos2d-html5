@@ -27,6 +27,10 @@
 
 //
 //
+import { nextDrawTest } from "./draw-primitives-test-helpers.js";
+import { TestScene } from "../test-scene.js";
+import { director } from "../tests-main-constants.js";
+
 export class DrawPrimitivesTestScene extends TestScene {
     runThisTest(num) {
         drawTestSceneIdx = (num || num == 0) ? (num - 1) : -1;

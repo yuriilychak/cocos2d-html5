@@ -30,6 +30,10 @@
 // TMXIsoObjectsTest
 //
 //------------------------------------------------------------------
+import { s_resprefix } from "../tests_resources.js";
+import { TileDemo } from "./tile-demo.js";
+import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+
 export class TMXIsoObjectsTest extends TileDemo {
     constructor() {
         super();

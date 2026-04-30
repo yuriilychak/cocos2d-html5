@@ -25,6 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { nodeTestSceneIdx } from "./cocos-node-test-constants.js";
+import { arrayOfNodeTest, nextNodeTest, previousNodeTest, restartNodeTest } from "./cocos-node-test-helpers.js";
+import { NodeTestScene } from "./node-test-scene.js";
+import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class TestNodeDemo extends cc.Layer {
     constructor() {
         super();

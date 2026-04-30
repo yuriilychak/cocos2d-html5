@@ -28,6 +28,11 @@
 // ShaderMandelbrotTest
 //
 //------------------------------------------------------------------
+import { OpenGLTestLayer } from "./open-gltest-layer.js";
+import { ShaderNode } from "./shader-node.js";
+import { ccbjs } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ShaderMandelbrotTest extends OpenGLTestLayer {
     constructor() {
         super();

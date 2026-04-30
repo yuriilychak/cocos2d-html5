@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestScene } from "../test-scene.js";
+import { PongLayer } from "./pong-layer.js";
+
 export class TouchesTestScene extends TestScene {
     constructor() {
         super(true);

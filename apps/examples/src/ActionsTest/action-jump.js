@@ -30,6 +30,9 @@
 // ActionJump
 //
 //------------------------------------------------------------------
+import { ActionsDemo } from "./actions-demo.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ActionJump extends ActionsDemo {
     constructor() {
         super();

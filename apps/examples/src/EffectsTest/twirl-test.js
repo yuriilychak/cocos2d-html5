@@ -23,6 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class TwirlTest extends EffectsBaseLayer {
     title() {
         return "Twirl";

@@ -25,10 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { CurrentLanguageTest } from "./current-language-test.js";
 
 ;
 
-var arrayOfCurrentLanguageTest = [
+;
+
+export var arrayOfCurrentLanguageTest = [
     CurrentLanguageTest
 ];

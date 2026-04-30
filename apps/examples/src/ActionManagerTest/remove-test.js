@@ -30,6 +30,11 @@
 // RemoveTest
 //
 //------------------------------------------------------------------
+import { NOT_CRASHED_CONST, TAG_GROSSINI, TAG_SEQUENCE } from "./action-manager-test-constants.js";
+import { ActionManagerTest } from "./action-manager-test.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { director } from "../tests-main-constants.js";
+
 export class RemoveTest extends ActionManagerTest {
     constructor() {
         super();

@@ -23,8 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TEXT_INPUT_FONT_NAME = "Thonburi";
+export var TEXT_INPUT_FONT_NAME = "Thonburi";
 
-var TEXT_INPUT_FONT_SIZE = 36;
+export var TEXT_INPUT_FONT_SIZE = 36;
 
-var sceneIdx = -1;
+export let sceneIdx = -1;
+
+export function _setsceneIdx(v) { sceneIdx = v; }

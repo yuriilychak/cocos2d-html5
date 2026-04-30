@@ -27,6 +27,11 @@
 // Test Anchor Point with PhysicsSprite
 //
 //------------------------------------------------------------------
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { v } from "./chipmunk-test-helpers.js";
+import { s_pathGrossini } from "../tests_resources.js";
+import { winSize } from "../tests-main-constants.js";
+
 export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
 
     constructor() {

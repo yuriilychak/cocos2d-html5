@@ -27,6 +27,9 @@
 // Chipmunk Demo: Pyramid Topple
 //
 //------------------------------------------------------------------
+import { ChipmunkDemo } from "./chipmunk-demo.js";
+import { v } from "./chipmunk-test-helpers.js";
+
 export class PyramidTopple extends ChipmunkDemo {
 
     constructor() {

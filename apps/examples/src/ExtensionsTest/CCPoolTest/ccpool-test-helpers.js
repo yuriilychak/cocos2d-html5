@@ -27,6 +27,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { CCPoolTest } from "./ccpool-test.js";
+import { MySprite } from "./my-sprite.js";
+
 ;
 
 CCPoolTest.create = function () {

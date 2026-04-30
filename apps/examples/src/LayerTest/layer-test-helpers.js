@@ -25,7 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-;
+import { IgnoreAnchorpointTest1 } from "./ignore-anchorpoint-test1.js";
+import { IgnoreAnchorpointTest2 } from "./ignore-anchorpoint-test2.js";
+import { IgnoreAnchorpointTest3 } from "./ignore-anchorpoint-test3.js";
+import { IgnoreAnchorpointTest4 } from "./ignore-anchorpoint-test4.js";
+import { LayerGradientTest } from "./layer-gradient-test.js";
+import { LayerTestBlend } from "./layer-test-blend.js";
+import { layerTestSceneIdx , _setlayerTestSceneIdx} from "./layer-test-constants.js";
+import { LayerTest1 } from "./layer-test1.js";
+import { LayerTest2 } from "./layer-test2.js";
 
 ;
 
@@ -45,7 +53,9 @@
 
 ;
 
-var arrayOfLayerTest = [
+;
+
+export var arrayOfLayerTest = [
     LayerTest1,
     LayerTest2,
     LayerGradientTest,
@@ -57,11 +67,11 @@ var arrayOfLayerTest = [
 ];
 
 export function nextLayerTest() {
-    layerTestSceneIdx++;
-    layerTestSceneIdx = layerTestSceneIdx % arrayOfLayerTest.length;
+    _setlayerTestSceneIdx(layerTestSceneIdx + 1);
+    _setlayerTestSceneIdx(layerTestSceneIdx % arrayOfLayerTest.length);
 
     if(window.sideIndexBar){
-        layerTestSceneIdx = window.sideIndexBar.changeTest(layerTestSceneIdx, 20);
+        _setlayerTestSceneIdx(window.sideIndexBar.changeTest(layerTestSceneIdx, 20));
     }
 
     return new arrayOfLayerTest[layerTestSceneIdx]();
@@ -70,12 +80,12 @@ export function nextLayerTest() {
 ;
 
 export function previousLayerTest() {
-    layerTestSceneIdx--;
+    _setlayerTestSceneIdx(layerTestSceneIdx - 1);
     if (layerTestSceneIdx < 0)
-        layerTestSceneIdx += arrayOfLayerTest.length;
+        _setlayerTestSceneIdx(layerTestSceneIdx + (arrayOfLayerTest.length));
 
     if(window.sideIndexBar){
-        layerTestSceneIdx = window.sideIndexBar.changeTest(layerTestSceneIdx, 20);
+        _setlayerTestSceneIdx(window.sideIndexBar.changeTest(layerTestSceneIdx, 20));
     }
 
     return new arrayOfLayerTest[layerTestSceneIdx]();

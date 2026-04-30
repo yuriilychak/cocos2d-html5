@@ -25,6 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { TestNodeDemo } from "./test-node-demo.js";
+
 export class SchedulerTest1 extends TestNodeDemo {
     constructor() {
         //----start7----ctor
