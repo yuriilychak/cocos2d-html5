@@ -23,13 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var BASE_TEST_MENUITEM_PREV_TAG = 1;
-var BASE_TEST_MENUITEM_RESET_TAG = 2;
-var BASE_TEST_MENUITEM_NEXT_TAG = 3;
+export const BASE_TEST_MENUITEM_PREV_TAG = 1;
+export const BASE_TEST_MENUITEM_RESET_TAG = 2;
+export const BASE_TEST_MENUITEM_NEXT_TAG = 3;
 
-var BASE_TEST_MENU_TAG = 10;
-var BASE_TEST_TITLE_TAG = 11;
-var BASE_TEST_SUBTITLE_TAG = 12;
+export const BASE_TEST_MENU_TAG = 10;
+export const BASE_TEST_TITLE_TAG = 11;
+export const BASE_TEST_SUBTITLE_TAG = 12;
 
 
 var autoTestEnabled = autoTestEnabled || false;
@@ -37,7 +37,7 @@ var autoTestCurrentTestName = autoTestCurrentTestName || "N/A";
 
 
 
-var BaseTestLayer = class BaseTestLayer extends cc.LayerGradient {
+export class BaseTestLayer extends cc.LayerGradient {
 
     constructor(colorA, colorB ) {
 
@@ -297,7 +297,7 @@ var BaseTestLayer = class BaseTestLayer extends cc.LayerGradient {
 
 };
 
-var FlowControl = function (testArray) {
+export var FlowControl = function (testArray) {
 
     var sceneIdx = 0;
 
