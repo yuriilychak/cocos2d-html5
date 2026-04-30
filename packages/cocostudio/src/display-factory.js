@@ -26,6 +26,9 @@
 /**
  * @ignore
  */
+import { AffineTransform, Node, Point } from "@aspect/core";
+import { ParticleSystem } from "@aspect/particle";
+
 export const displayFactory = ccs.displayFactory = {
     addDisplay: function (bone, decoDisplay, displayData) {
         switch (displayData.displayType) {
@@ -68,7 +71,7 @@ export const displayFactory = ccs.displayFactory = {
         switch (bone.getDisplayRenderNodeType()) {
             case ccs.DISPLAY_TYPE_SPRITE:
                 if (dirty) {
-                    display._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+                    display._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
                     display.updateArmatureTransform();
                 }
                 break;
@@ -97,10 +100,10 @@ export const displayFactory = ccs.displayFactory = {
                     helpTransform.d = displayTransform.d;
                     helpTransform.tx = displayTransform.tx;
                     helpTransform.ty = displayTransform.ty;
-                    var anchorPoint = cc.AffineTransform.applyToPoint(node.getAnchorPointInPoints(), helpTransform);
+                    var anchorPoint = AffineTransform.applyToPoint(node.getAnchorPointInPoints(), helpTransform);
                     helpTransform.tx = anchorPoint.x;
                     helpTransform.ty = anchorPoint.y;
-                    var t = cc.AffineTransform.concat(helpTransform, bone.getArmature().getNodeToParentTransform());
+                    var t = AffineTransform.concat(helpTransform, bone.getArmature().getNodeToParentTransform());
                     detector.updateTransform(t);
                 }
             }
@@ -153,7 +156,7 @@ export const displayFactory = ccs.displayFactory = {
         var textureData = ccs.armatureDataManager.getTextureData(textureName);
         if (textureData) {
             //! Init display anchorPoint, every Texture have a anchor point
-            skin.setAnchorPoint(new cc.Point(textureData.pivotX, textureData.pivotY));
+            skin.setAnchorPoint(new Point(textureData.pivotX, textureData.pivotY));
         }
 
         if (ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT || ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
@@ -196,7 +199,7 @@ export const displayFactory = ccs.displayFactory = {
 
     createParticleDisplay: function (bone, decoDisplay) {
         var displayData = decoDisplay.getDisplayData();
-        var system = new cc.ParticleSystem(displayData.displayName);
+        var system = new ParticleSystem(displayData.displayName);
 
         system.removeFromParent();
         system.cleanup();

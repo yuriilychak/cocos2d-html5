@@ -27,6 +27,8 @@
  * TweenType
  * @type Object
  */
+import { NewClass } from "@aspect/core";
+
 export const TweenType = ccs.TweenType = {
     CUSTOM_EASING: -1,
     LINEAR: 0,
@@ -74,7 +76,7 @@ export const TweenType = ccs.TweenType = {
     TWEEN_EASING_MAX: 10000
 };
 
-ccs.TweenFunction = class TweenFunction extends cc.NewClass {};
+ccs.TweenFunction = class TweenFunction extends NewClass {};
 
 export const DOUBLE_PI = Math.PI * 2;
 export const HALF_PI = Math.PI / 2;
@@ -218,12 +220,10 @@ ccs.TweenFunction.tweenTo = function (time, type, easingParam) {
     return delta;
 };
 
-
 // Linear
 ccs.TweenFunction.linear = function (time) {
     return time;
 };
-
 
 // Sine Ease
 ccs.TweenFunction.sineEaseIn = function (time) {
@@ -235,7 +235,6 @@ ccs.TweenFunction.sineEaseOut = function (time) {
 ccs.TweenFunction.sineEaseInOut = function (time) {
     return -0.5 * (Math.cos(M_PI * time) - 1);
 };
-
 
 // Quad Ease
 ccs.TweenFunction.quadEaseIn = function (time) {
@@ -251,7 +250,6 @@ ccs.TweenFunction.quadEaseInOut = function (time) {
     --time;
     return -0.5 * (time * (time - 2) - 1);
 };
-
 
 // Cubic Ease
 ccs.TweenFunction.cubicEaseIn = function (time) {
@@ -269,7 +267,6 @@ ccs.TweenFunction.cubicEaseInOut = function (time) {
     return 0.5 * (time * time * time + 2);
 };
 
-
 // Quart Ease
 ccs.TweenFunction.quartEaseIn = function (time) {
     return time * time * time * time;
@@ -286,7 +283,6 @@ ccs.TweenFunction.quartEaseInOut = function (time) {
     return -0.5 * (time * time * time * time - 2);
 };
 
-
 // Quint Ease
 ccs.TweenFunction.quintEaseIn = function (time) {
     return time * time * time * time * time;
@@ -302,7 +298,6 @@ ccs.TweenFunction.quintEaseInOut = function (time) {
     time -= 2;
     return 0.5 * (time * time * time * time * time + 2);
 };
-
 
 // Expo Ease
 ccs.TweenFunction.expoEaseIn = function (time) {
@@ -323,7 +318,6 @@ ccs.TweenFunction.expoEaseInOut = function (time) {
     return time;
 };
 
-
 // Circ Ease
 ccs.TweenFunction.circEaseIn = function (time) {
     return -1 * (Math.sqrt(1 - time * time) - 1);
@@ -339,7 +333,6 @@ ccs.TweenFunction.circEaseInOut = function (time) {
     time -= 2;
     return 0.5 * (Math.sqrt(1 - time * time) + 1);
 };
-
 
 // Elastic Ease
 ccs.TweenFunction.elasticEaseIn = function (time, easingParam) {
@@ -408,7 +401,6 @@ ccs.TweenFunction.elasticEaseInOut = function (time, easingParam) {
     return newT;
 };
 
-
 // Back Ease
 ccs.TweenFunction.backEaseIn = function (time) {
     var overshoot = 1.70158;
@@ -432,7 +424,6 @@ ccs.TweenFunction.backEaseInOut = function (time) {
         return (time * time * ((overshoot + 1) * time + overshoot)) / 2 + 1;
     }
 };
-
 
 // Bounce Ease
 function _cssBounceTime (time) {
@@ -468,7 +459,6 @@ ccs.TweenFunction.bounceEaseInOut = function (time) {
 
     return newT;
 };
-
 
 // Custom Ease
 ccs.TweenFunction.customEase = function (time, easingParam) {

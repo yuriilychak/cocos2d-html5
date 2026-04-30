@@ -26,7 +26,9 @@
 /**
  * Decorative a display node for Cocos Armature
  */
-export class DecorativeDisplay extends cc.NewClass {
+import { NewClass } from "@aspect/core";
+
+export class DecorativeDisplay extends NewClass {
   constructor() {
     super();
     this._display = null;

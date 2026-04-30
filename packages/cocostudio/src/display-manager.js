@@ -1,4 +1,3 @@
-import { RendererConfig } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -25,13 +24,15 @@ import { RendererConfig } from '@aspect/core';
  THE SOFTWARE.
  ****************************************************************************/
 
+
+import { NewClass, Node, Point, Rect, RendererConfig, Size, log } from "@aspect/core";
+import { ParticleSystem } from "@aspect/particle";
+
 /**
  * The display manager for CocoStudio Armature bone.
- * @extend cc.Class
- *
  * @param {ccs.Bone} bone The bone for the display manager
  */
-export class DisplayManager extends cc.NewClass {
+export class DisplayManager extends NewClass {
   constructor(bone) {
     super();
     this._decoDisplayList = [];
@@ -63,7 +64,7 @@ export class DisplayManager extends cc.NewClass {
    *     If index already have a display, then replace it.                                <br/>
    *     If index is current display index, then also change display to _index            <br/>
    * </p>
-   * @param {ccs.DisplayData|cc.Node} display it include the display information, like DisplayType. If you want to create a sprite display, then create a SpriteDisplayData param
+   * @param {ccs.DisplayData|Node} display it include the display information, like DisplayType. If you want to create a sprite display, then create a SpriteDisplayData param
    * @param {Number} index  the index of the display you want to replace or add to. -1 : append display from back
    */
   addDisplay(display, index) {
@@ -115,10 +116,10 @@ export class DisplayManager extends cc.NewClass {
         }
         if (!find) display.setSkinData(new ccs.BaseData());
       }
-    } else if (display instanceof cc.ParticleSystem) {
+    } else if (display instanceof ParticleSystem) {
       displayData = new ccs.ParticleDisplayData();
       display.removeFromParent();
-      display._performRecursive(cc.Node._stateCallbackType.cleanup);
+      display._performRecursive(Node._stateCallbackType.cleanup);
       var armature = this._bone.getArmature();
       if (armature) display.setParent(armature);
     } else if (display instanceof ccs.Armature) {
@@ -169,7 +170,7 @@ export class DisplayManager extends cc.NewClass {
         }
         skin.setSkinData(new ccs.BaseData());
       }
-    } else if (display instanceof cc.ParticleSystem) {
+    } else if (display instanceof ParticleSystem) {
       displayData = new ccs.ParticleDisplayData();
       displayData.displayName = display._plistFile;
     } else if (display instanceof ccs.Armature) {
@@ -214,7 +215,7 @@ export class DisplayManager extends cc.NewClass {
    */
   changeDisplayWithIndex(index, force) {
     if (index >= this._decoDisplayList.length) {
-      cc.log("the index value is out of range");
+      log("the index value is out of range");
       return;
     }
     this._forceChangeDisplay = force;
@@ -290,11 +291,11 @@ export class DisplayManager extends cc.NewClass {
       if (displayRenderNode instanceof ccs.Armature) {
         this._bone.setChildArmature(displayRenderNode);
         displayRenderNode.setParentBone(this._bone);
-      } else if (displayRenderNode instanceof cc.ParticleSystem) {
+      } else if (displayRenderNode instanceof ParticleSystem) {
         if (displayRenderNode instanceof ccs.Armature) {
           locBone.setChildArmature(displayRenderNode);
           displayRenderNode.setParentBone(locBone);
-        } else if (displayRenderNode instanceof cc.ParticleSystem)
+        } else if (displayRenderNode instanceof ParticleSystem)
           displayRenderNode.resetSystem();
       }
 
@@ -381,7 +382,7 @@ export class DisplayManager extends cc.NewClass {
   containPoint(point, y) {
     if (!this._visible || this._displayIndex < 0) return false;
 
-    if (y !== undefined) point = new cc.Point(point, y);
+    if (y !== undefined) point = new Point(point, y);
 
     if (
       this._currentDecoDisplay.getDisplayData().displayType ===
@@ -421,22 +422,22 @@ export class DisplayManager extends cc.NewClass {
   }
 
   getContentSize() {
-    if (!this._displayRenderNode) return new cc.Size(0, 0);
+    if (!this._displayRenderNode) return new Size(0, 0);
     return this._displayRenderNode.getContentSize();
   }
 
   getBoundingBox() {
-    if (!this._displayRenderNode) return new cc.Rect(0, 0, 0, 0);
+    if (!this._displayRenderNode) return new Rect(0, 0, 0, 0);
     return this._displayRenderNode.getBoundingBox();
   }
 
   getAnchorPoint() {
-    if (!this._displayRenderNode) return new cc.Point(0, 0);
+    if (!this._displayRenderNode) return new Point(0, 0);
     return this._displayRenderNode.getAnchorPoint();
   }
 
   getAnchorPointInPoints() {
-    if (!this._displayRenderNode) return new cc.Point(0, 0);
+    if (!this._displayRenderNode) return new Point(0, 0);
     return this._displayRenderNode.getAnchorPointInPoints();
   }
 

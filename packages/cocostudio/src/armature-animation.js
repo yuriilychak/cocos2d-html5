@@ -28,6 +28,8 @@
  * @constant
  * @type {Object}
  */
+import { NewClass, assert, log } from "@aspect/core";
+
 export const MovementEventType = ccs.MovementEventType = {
     start: 0,
     complete: 1,
@@ -38,7 +40,7 @@ export const MovementEventType = ccs.MovementEventType = {
  * The animation event class, it has the callback, target and arguments.
  * @deprecated since v3.0.
  */
-export class AnimationEvent extends cc.NewClass {
+export class AnimationEvent extends NewClass {
 
     /**
      * Constructor of ccs.AnimationEvent
@@ -226,10 +228,10 @@ export class ArmatureAnimation extends ccs.ProcessBase {
      * armature.getAnimation().play("run",-1,0);//not loop play
      */
     play(animationName, durationTo, loop) {
-        cc.assert(this._animationData, "this.animationData can not be null");
+        assert(this._animationData, "this.animationData can not be null");
 
         this._movementData = this._animationData.getMovement(animationName);
-        cc.assert(this._movementData, "this._movementData can not be null");
+        assert(this._movementData, "this._movementData can not be null");
 
         durationTo = (durationTo === undefined) ? -1 : durationTo;
         loop = (loop === undefined) ? -1 : loop;
@@ -297,7 +299,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
      * @deprecated since v3.0, please use playWithIndex instead.
      */
     playByIndex(animationIndex, durationTo, durationTween, loop, tweenEasing) {
-        cc.log("playByIndex is deprecated. Use playWithIndex instead.");
+        log("playByIndex is deprecated. Use playWithIndex instead.");
         this.playWithIndex(animationIndex, durationTo, loop);
     }
 
@@ -309,7 +311,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
      */
     playWithIndex(animationIndex, durationTo, loop) {
         var movName = this._animationData.movementNames;
-        cc.assert((animationIndex > -1) && (animationIndex < movName.length));
+        assert((animationIndex > -1) && (animationIndex < movName.length));
 
         var animationName = movName[animationIndex];
         this.play(animationName, durationTo, loop);
@@ -377,7 +379,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
      */
     gotoAndPlay(frameIndex) {
         if (!this._movementData || frameIndex < 0 || frameIndex >= this._movementData.duration) {
-            cc.log("Please ensure you have played a movement, and the frameIndex is in the range.");
+            log("Please ensure you have played a movement, and the frameIndex is in the range.");
             return;
         }
 
@@ -629,9 +631,6 @@ export class ArmatureAnimation extends ccs.ProcessBase {
     }
 
 };
-
-
-
 
 ccs.AnimationEvent = AnimationEvent;
 

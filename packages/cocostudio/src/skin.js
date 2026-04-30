@@ -1,4 +1,3 @@
-import { Sprite, SpriteFrameCache, RendererConfig } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -36,13 +35,15 @@ import { Sprite, SpriteFrameCache, RendererConfig } from '@aspect/core';
  * @property {String}   displayName - <@readonly> The displayed name of skin
  *
  */
+import { AffineTransform, RendererConfig, Sprite, SpriteFrameCache, log, radiansToDegrees } from "@aspect/core";
+
 export class Skin extends Sprite {
   constructor(fileName, rect) {
     super();
     this._skinData = null;
     this.bone = null;
     this._displayName = "";
-    this._skinTransform = cc.AffineTransform.makeIdentity();
+    this._skinTransform = AffineTransform.makeIdentity();
     this._armature = null;
 
     if (fileName == null || fileName === "") {
@@ -78,7 +79,7 @@ export class Skin extends Sprite {
     var ret = true;
     if (pFrame) this.initWithSpriteFrame(pFrame);
     else {
-      cc.log(
+      log(
         "Can't find CCSpriteFrame with %s. Please check your .plist file",
         spriteFrameName
       );
@@ -110,8 +111,8 @@ export class Skin extends Sprite {
     this._skinData = skinData;
     this.setScaleX(skinData.scaleX);
     this.setScaleY(skinData.scaleY);
-    this.setRotationX(cc.radiansToDegrees(skinData.skewX));
-    this.setRotationY(cc.radiansToDegrees(-skinData.skewY));
+    this.setRotationX(radiansToDegrees(skinData.skewX));
+    this.setRotationY(radiansToDegrees(-skinData.skewY));
     this.setPosition(skinData.x, skinData.y);
 
     this._renderCmd.transform();

@@ -23,8 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AffineTransform, Node, Sprite } from "@aspect/core";
 
-    export class SkinCanvasRenderCmd extends cc.Sprite.CanvasRenderCmd {
+    export class SkinCanvasRenderCmd extends Sprite.CanvasRenderCmd {
         constructor(renderable) {
             super(renderable);
             this._realWorldTM = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
@@ -40,12 +41,12 @@
                 pt = parentCmd ? parentCmd._worldTransform : null,
                 t = this._transform,
                 wt = this._worldTransform,
-                dirty = this._dirtyFlag & cc.Node._dirtyFlags.transformDirty;
+                dirty = this._dirtyFlag & Node._dirtyFlags.transformDirty;
 
             if (dirty || pt) {
                 this.originTransform();
-                cc.AffineTransform.concatIn(this._transform, node.bone.getNodeToArmatureTransform());
-                this._dirtyFlag &= ~cc.Node._dirtyFlags.transformDirty;
+                AffineTransform.concatIn(this._transform, node.bone.getNodeToArmatureTransform());
+                this._dirtyFlag &= ~Node._dirtyFlags.transformDirty;
             }
 
             if (pt) {
@@ -82,34 +83,34 @@
             var rwtm = this._realWorldTM;
             if (rwtm) {
                 rwtm.a = t.a; rwtm.b = t.b; rwtm.c = t.c; rwtm.d = t.d; rwtm.tx = t.tx; rwtm.ty = t.ty;
-                cc.AffineTransform.concatIn(rwtm, this._node.bone.getArmature()._renderCmd._worldTransform);
+                AffineTransform.concatIn(rwtm, this._node.bone.getArmature()._renderCmd._worldTransform);
             }
         }
 
         getNodeToWorldTransform() {
-            return cc.AffineTransform.concat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
+            return AffineTransform.concat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
         }
 
         getNodeToWorldTransformAR() {
             var displayTransform = this._transform, node = this._node;
-            this._anchorPointInPoints = cc.AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
+            this._anchorPointInPoints = AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
             displayTransform.ty = this._anchorPointInPoints.y;
-            return cc.AffineTransform.concat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
+            return AffineTransform.concat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
         }
 
         _updateCurrentRegions() {
             var temp = this._currentRegion;
             this._currentRegion = this._oldRegion;
             this._oldRegion = temp;
-            if (cc.Node.CanvasRenderCmd.RegionStatus.DirtyDouble === this._regionFlag && (!this._currentRegion.isEmpty())) {
+            if (Node.CanvasRenderCmd.RegionStatus.DirtyDouble === this._regionFlag && (!this._currentRegion.isEmpty())) {
                 this._oldRegion.union(this._currentRegion);
             }
             this._currentRegion.updateRegion(this.getLocalBB(), this._realWorldTM);
         }
     };
 
-    export class SkinWebGLRenderCmd extends cc.Sprite.WebGLRenderCmd {
+    export class SkinWebGLRenderCmd extends Sprite.WebGLRenderCmd {
         constructor(renderable) {
             super(renderable);
         }
@@ -124,12 +125,12 @@
                 pt = parentCmd ? parentCmd._worldTransform : null,
                 t = this._transform,
                 wt = this._worldTransform,
-                dirty = this._dirtyFlag & cc.Node._dirtyFlags.transformDirty;
+                dirty = this._dirtyFlag & Node._dirtyFlags.transformDirty;
 
             if (dirty || pt) {
                 this.originTransform();
-                cc.AffineTransform.concatIn(this._transform, node.bone.getNodeToArmatureTransform());
-                this._dirtyFlag &= ~cc.Node._dirtyFlags.transformDirty;
+                AffineTransform.concatIn(this._transform, node.bone.getNodeToArmatureTransform());
+                this._dirtyFlag &= ~Node._dirtyFlags.transformDirty;
             }
 
             if (pt) {
@@ -166,14 +167,14 @@
         }
 
         getNodeToWorldTransform() {
-            return cc.AffineTransform.concat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
+            return AffineTransform.concat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
         }
 
         getNodeToWorldTransformAR() {
             var displayTransform = this._transform, node = this._node;
-            this._anchorPointInPoints = cc.AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
+            this._anchorPointInPoints = AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
             displayTransform.ty = this._anchorPointInPoints.y;
-            return cc.AffineTransform.concat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
+            return AffineTransform.concat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
         }
     };

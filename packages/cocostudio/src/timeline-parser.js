@@ -22,6 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BlendFunc, Color, Loader, Node, Path, Point, Rect, Size, Sprite, SpriteFrameCache, Sys, log } from "@aspect/core";
+import { ParticleSystem } from "@aspect/particle";
+import { TMXTiledMap } from "@aspect/tilemap";
 
   var DEBUG = false;
 
@@ -63,7 +66,7 @@
 
     var position = json["Position"];
     if (position != null && (position["X"] != null || position["Y"] != null))
-      node.setPosition(new cc.Point(position["X"] || 0, position["Y"] || 0));
+      node.setPosition(new Point(position["X"] || 0, position["Y"] || 0));
 
     var scale = json["Scale"];
     if (scale != null) {
@@ -82,7 +85,7 @@
       if (anchor["ScaleX"] == null) anchor["ScaleX"] = 0;
       if (anchor["ScaleY"] == null) anchor["ScaleY"] = 0;
       if (anchor["ScaleX"] != 0.5 || anchor["ScaleY"] != 0.5)
-        node.setAnchorPoint(new cc.Point(anchor["ScaleX"], anchor["ScaleY"]));
+        node.setAnchorPoint(new Point(anchor["ScaleX"], anchor["ScaleY"]));
     }
 
     if (json["ZOrder"] != null) node.setLocalZOrder(json["ZOrder"]);
@@ -132,7 +135,7 @@
                 var position = child.getPositionPercent();
                 var anchor = node.getAnchorPoint();
                 child.setPositionPercent(
-                  new cc.Point(position.x + anchor.x, position.y + anchor.y)
+                  new Point(position.x + anchor.x, position.y + anchor.y)
                 );
               }
             }
@@ -149,7 +152,7 @@
    * @returns {Node}
    */
   parser.initSingleNode = function (json) {
-    var node = new cc.Node();
+    var node = new Node();
 
     this.generalAttributes(node, json);
     var color = json["CColor"];
@@ -165,19 +168,19 @@
    * @returns {Sprite}
    */
   parser.initSprite = function (json, resourcePath) {
-    var node = new cc.Sprite();
+    var node = new Sprite();
 
     loadTexture(json["FileData"], resourcePath, function (path, type) {
       if (type === 0) node.setTexture(path);
       else if (type === 1) {
-        var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
+        var spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(path);
         if (spriteFrame) node.setSpriteFrame(spriteFrame);
       }
     });
 
     var blendData = json["BlendFunc"];
     if (json["BlendFunc"]) {
-      var blendFunc = cc.BlendFunc.ALPHA_PREMULTIPLIED;
+      var blendFunc = BlendFunc.ALPHA_PREMULTIPLIED;
       if (blendData["Src"] !== undefined) blendFunc.src = blendData["Src"];
       if (blendData["Dst"] !== undefined) blendFunc.dst = blendData["Dst"];
       node.setBlendFunc(blendFunc);
@@ -203,15 +206,15 @@
     var node,
       self = this;
     loadTexture(json["FileData"], resourcePath, function (path, type) {
-      if (!cc.loader.getRes(path)) cc.log("%s need to be preloaded", path);
-      node = new cc.ParticleSystem(path);
+      if (!Loader.getInstance().getRes(path)) log("%s need to be preloaded", path);
+      node = new ParticleSystem(path);
       self.generalAttributes(node, json);
-      node.setPositionType(cc.ParticleSystem.TYPE_GROUPED);
-      !cc.sys.isNative && node.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
+      node.setPositionType(ParticleSystem.TYPE_GROUPED);
+      !Sys.getInstance().isNative && node.setDrawMode(ParticleSystem.TEXTURE_MODE);
 
       var blendData = json["BlendFunc"];
       if (json["BlendFunc"]) {
-        var blendFunc = cc.BlendFunc.ALPHA_PREMULTIPLIED;
+        var blendFunc = BlendFunc.ALPHA_PREMULTIPLIED;
         if (blendData["Src"] !== undefined) blendFunc.src = blendData["Src"];
         if (blendData["Dst"] !== undefined) blendFunc.dst = blendData["Dst"];
         node.setBlendFunc(blendFunc);
@@ -426,7 +429,7 @@
   var setLayoutBackgroundVector = function (widget, vector) {
     var x = vector["ScaleX"] || 0;
     var y = vector["ScaleY"] || 0;
-    widget.setBackGroundColorVector(new cc.Point(x, y));
+    widget.setBackGroundColorVector(new Point(x, y));
   };
 
   /**
@@ -469,7 +472,7 @@
       var scale9Height = json["Scale9Height"] || 0;
 
       widget.setBackGroundImageCapInsets(
-        new cc.Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
+        new Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
       );
 
       setContentSize(widget, json["Size"]);
@@ -514,7 +517,7 @@
     var areaWidth = json["AreaWidth"];
     var areaHeight = json["areaHeight"];
     if (areaWidth && areaHeight)
-      widget.setTextAreaSize(new cc.Size(areaWidth, areaHeight));
+      widget.setTextAreaSize(new Size(areaWidth, areaHeight));
 
     var h_alignment = json["HorizontalAlignmentType"] || "HT_Left";
     switch (h_alignment) {
@@ -549,8 +552,8 @@
       var path = fontResource["Path"];
       //resoutceType = fontResource["Type"];
       if (path != null) {
-        if (cc.sys.isNative) {
-          fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
+        if (Sys.getInstance().isNative) {
+          fontName = Path.join(Loader.getInstance().resPath, resourcePath, path);
         } else {
           fontName = path.match(/([^\/]+)\.(\S+)/);
           fontName = fontName ? fontName[1] : "";
@@ -568,7 +571,7 @@
     if (json["ShadowEnabled"] && json["ShadowColor"] && widget.enableShadow)
       widget.enableShadow(
         getColor(json["ShadowColor"]),
-        new cc.Size(
+        new Size(
           getParam(json["ShadowOffsetX"], 2),
           getParam(json["ShadowOffsetY"], -2)
         ),
@@ -632,8 +635,8 @@
       var path = fontResource["Path"];
       //resoutceType = fontResource["Type"];
       if (path != null) {
-        if (cc.sys.isNative) {
-          fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
+        if (Sys.getInstance().isNative) {
+          fontName = Path.join(Loader.getInstance().resPath, resourcePath, path);
         } else {
           fontName = path.match(/([^\/]+)\.(\S+)/);
           fontName = fontName ? fontName[1] : "";
@@ -651,7 +654,7 @@
     ) {
       label.enableShadow(
         getColor(json["ShadowColor"]),
-        new cc.Size(
+        new Size(
           getParam(json["ShadowOffsetX"], 2),
           getParam(json["ShadowOffsetY"], -2)
         ),
@@ -674,7 +677,7 @@
     if (scale9Enabled) {
       widget.setUnifySizeEnabled(false);
       widget.ignoreContentAdaptWithSize(false);
-      var capInsets = new cc.Rect(
+      var capInsets = new Rect(
         json["Scale9OriginX"] || 0,
         json["Scale9OriginY"] || 0,
         json["Scale9Width"] || 0,
@@ -764,7 +767,7 @@
       var scale9Width = json["Scale9Width"] || 0;
       var scale9Height = json["Scale9Height"] || 0;
       widget.setBackGroundImageCapInsets(
-        new cc.Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
+        new Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
       );
       setContentSize(widget, json["Size"]);
     } else if (!widget.isIgnoreContentAdaptWithSize()) {
@@ -780,7 +783,7 @@
     setLayoutBackgroundVector(widget, json["ColorVector"]);
 
     var innerNodeSize = json["InnerNodeSize"];
-    var innerSize = new cc.Size(
+    var innerSize = new Size(
       innerNodeSize["Width"] || 0,
       innerNodeSize["Height"] || 0
     );
@@ -824,7 +827,7 @@
       var scale9Width = json["Scale9Width"] || 0;
       var scale9Height = json["Scale9Height"] || 0;
       widget.setCapInsets(
-        new cc.Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
+        new Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
       );
     } else setContentSize(widget, json["Size"]);
 
@@ -864,7 +867,7 @@
    */
   parser.initSlider = function (json, resourcePath) {
     var widget = new ccui.Slider();
-    var loader = cc.loader;
+    var loader = Loader.getInstance();
 
     this.widgetAttributes(widget, json);
 
@@ -878,7 +881,7 @@
     textureList.forEach(function (item) {
       loadTexture(json[item.name], resourcePath, function (path, type) {
         if (type === 0 && !loader.getRes(path))
-          cc.log("%s need to be preloaded", path);
+          log("%s need to be preloaded", path);
         item.handle.call(widget, path, type);
       });
     });
@@ -919,7 +922,7 @@
       var scale9Width = json["Scale9Width"] || 0;
       var scale9Height = json["Scale9Height"] || 0;
       widget.setBackGroundImageCapInsets(
-        new cc.Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
+        new Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
       );
     }
 
@@ -974,7 +977,7 @@
       var scale9Width = json["Scale9Width"] || 0;
       var scale9Height = json["Scale9Height"] || 0;
       widget.setBackGroundImageCapInsets(
-        new cc.Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
+        new Rect(scale9OriginX, scale9OriginY, scale9Width, scale9Height)
       );
     }
 
@@ -1010,7 +1013,7 @@
     //Width
     if (innerSize != null)
       widget.setInnerContainerSize(
-        new cc.Size(innerSize["Widget"] || 0, innerSize["Height"] || 0)
+        new Size(innerSize["Widget"] || 0, innerSize["Height"] || 0)
       );
 
     setLayoutBackground(
@@ -1048,7 +1051,7 @@
       json["LabelAtlasFileImage_CNB"],
       resourcePath,
       function (path, type) {
-        if (!cc.loader.getRes(path)) cc.log("%s need to be preloaded", path);
+        if (!Loader.getInstance().getRes(path)) log("%s need to be preloaded", path);
         if (type === 0) {
           widget.setProperty(
             stringValue,
@@ -1082,7 +1085,7 @@
       json["LabelBMFontFile_CNB"],
       resourcePath,
       function (path, type) {
-        if (!cc.loader.getRes(path)) cc.log("%s need to be pre loaded", path);
+        if (!Loader.getInstance().getRes(path)) log("%s need to be pre loaded", path);
         widget.setFntFile(path);
       }
     );
@@ -1137,8 +1140,8 @@
       var path = fontResource["Path"];
       //resoutceType = fontResource["Type"];
       if (path != null) {
-        if (cc.sys.isNative) {
-          fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
+        if (Sys.getInstance().isNative) {
+          fontName = Path.join(Loader.getInstance().resPath, resourcePath, path);
         } else {
           fontName = path.match(/([^\/]+)\.(\S+)/);
           fontName = fontName ? fontName[1] : "";
@@ -1155,7 +1158,7 @@
 
     if (!widget.isIgnoreContentAdaptWithSize()) {
       setContentSize(widget, json["Size"]);
-      if (cc.sys.isNative)
+      if (Sys.getInstance().isNative)
         widget.getVirtualRenderer().setLineBreakWithoutSpace(true);
     }
 
@@ -1171,7 +1174,7 @@
     var node = new ccs.ComAudio();
     var loop = json["Loop"] || false;
     //var volume = json["Volume"] || 0;
-    //cc.audioEngine.setMusicVolume(volume);
+    //audioEngine.setMusicVolume(volume);
     node.setLoop(loop);
     loadTexture(json["FileData"], resourcePath, function (path, type) {
       node.setFile(path);
@@ -1188,7 +1191,7 @@
     var node = null;
 
     loadTexture(json["FileData"], resourcePath, function (path, type) {
-      if (type === 0) node = new cc.TMXTiledMap(path);
+      if (type === 0) node = new TMXTiledMap(path);
 
       parser.generalAttributes(node, json);
     });
@@ -1206,7 +1209,7 @@
     var projectFile = json["FileData"];
     if (projectFile != null && projectFile["Path"]) {
       var file = resourcePath + projectFile["Path"];
-      if (cc.loader.getRes(file)) {
+      if (Loader.getInstance().getRes(file)) {
         var obj = ccs.load(file, resourcePath);
         parser.generalAttributes(obj.node, json);
         if (obj.action && obj.node) {
@@ -1218,7 +1221,7 @@
           obj.action.gotoFrameAndPause(0);
         }
         return obj.node;
-      } else cc.log("%s need to be preloaded", file);
+      } else log("%s need to be preloaded", file);
     }
   };
 
@@ -1245,14 +1248,14 @@
 
     loadTexture(json["FileData"], resourcePath, function (path, type) {
       var plists, pngs;
-      var armJson = cc.loader.getRes(path);
-      if (!armJson) cc.log("%s need to be preloaded", path);
+      var armJson = Loader.getInstance().getRes(path);
+      if (!armJson) log("%s need to be preloaded", path);
       else {
         plists = armJson["config_file_path"];
         pngs = armJson["config_png_path"];
         plists.forEach(function (plist, index) {
           if (pngs[index])
-            cc.spriteFrameCache.addSpriteFrames(plist, pngs[index]);
+            SpriteFrameCache.getInstance().addSpriteFrames(plist, pngs[index]);
         });
       }
       ccs.armatureDataManager.addArmatureFileInfo(path);
@@ -1285,7 +1288,7 @@
       blendFunc["Src"] !== undefined &&
       blendFunc["Dst"] !== undefined
     )
-      node.setBlendFunc(new cc.BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
+      node.setBlendFunc(new BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
 
     parser.generalAttributes(node, json);
     var color = json["CColor"];
@@ -1322,20 +1325,20 @@
       else type = 1;
       var plist = json["Plist"];
       if (plist) {
-        if (cc.loader.getRes(resourcePath + plist)) {
+        if (Loader.getInstance().getRes(resourcePath + plist)) {
           loadedPlist[resourcePath + plist] = true;
-          cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
+          SpriteFrameCache.getInstance().addSpriteFrames(resourcePath + plist);
         } else {
           if (
             !loadedPlist[resourcePath + plist] &&
-            !cc.spriteFrameCache.getSpriteFrame(path)
+            !SpriteFrameCache.getInstance().getSpriteFrame(path)
           )
-            cc.log("%s need to be preloaded", resourcePath + plist);
+            log("%s need to be preloaded", resourcePath + plist);
         }
       }
       if (type !== 0) {
-        if (cc.spriteFrameCache.getSpriteFrame(path)) cb(path, type);
-        else cc.log("failed to get spriteFrame: %s", path);
+        if (SpriteFrameCache.getInstance().getSpriteFrame(path)) cb(path, type);
+        else log("failed to get spriteFrame: %s", path);
       } else cb(resourcePath + path, type);
     }
   };
@@ -1346,13 +1349,13 @@
     var g = json["G"] != null ? json["G"] : 255;
     var b = json["B"] != null ? json["B"] : 255;
     var a = json["A"] != null ? json["A"] : 255;
-    return new cc.Color(r, g, b, a);
+    return new Color(r, g, b, a);
   };
 
   var setContentSize = function (node, size) {
     var x = size["X"] || 0;
     var y = size["Y"] || 0;
-    if (size) node.setContentSize(new cc.Size(x, y));
+    if (size) node.setContentSize(new Size(x, y));
   };
 
   var register = [

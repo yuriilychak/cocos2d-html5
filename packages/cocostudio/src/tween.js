@@ -30,6 +30,7 @@
  *
  * @property {ccs.ArmatureAnimation}    animation   - The animation
  */
+
 export class Tween extends ccs.ProcessBase {
 
     constructor(bone) {
@@ -200,7 +201,7 @@ export class Tween extends ccs.ProcessBase {
         }
 
         if (locCurrentPercent < 1 && locLoopType < ccs.ANIMATION_TYPE_TO_LOOP_BACK)
-            locCurrentPercent = Math.sin(locCurrentPercent * cc.PI / 2);
+            locCurrentPercent = Math.sin(locCurrentPercent * Math.PI / 2);
 
         this._currentPercent = locCurrentPercent;
         this._loopType = locLoopType;
@@ -416,7 +417,5 @@ export class Tween extends ccs.ProcessBase {
     }
 
 };
-
-
 
 ccs.Tween = Tween;

@@ -1,4 +1,3 @@
-import { arrayRemoveObject, REPEAT_FOREVER, Director } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -28,7 +27,9 @@ import { arrayRemoveObject, REPEAT_FOREVER, Director } from '@aspect/core';
 /**
  * The Cocostudio's action object.
  */
-export class ActionObject extends cc.NewClass {
+import { Director, NewClass, REPEAT_FOREVER, arrayRemoveObject } from "@aspect/core";
+
+export class ActionObject extends NewClass {
   /**
    * Construction of ccs.ActionObject.
    */

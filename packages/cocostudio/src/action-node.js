@@ -1,5 +1,4 @@
-import { Node, arrayRemoveObject, REPEAT_FOREVER } from '@aspect/core';
-import { sequence, spawn } from '@aspect/actions';
+
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -29,7 +28,10 @@ import { sequence, spawn } from '@aspect/actions';
 /**
  * The Cocostudio's action node, it contains action target, action frame list and current frame index.  it can be play action by calling playAciton.
  */
-export class ActionNode extends cc.NewClass {
+import { Color, NewClass, Node, REPEAT_FOREVER, arrayRemoveObject } from "@aspect/core";
+import { sequence, spawn } from "@aspect/actions";
+
+export class ActionNode extends NewClass {
   /**
    * Construction of ccs.ActionNode
    */
@@ -134,7 +136,7 @@ export class ActionNode extends cc.NewClass {
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
-        actionFrame.setColor(new cc.Color(colorR, colorG, colorB));
+        actionFrame.setColor(new Color(colorR, colorG, colorB));
         actionArray = this._frameArray[ccs.FRAME_TYPE_TINT];
         actionArray.push(actionFrame);
       }
@@ -207,7 +209,7 @@ export class ActionNode extends cc.NewClass {
    * @returns {Node}
    */
   getActionNode() {
-    if (this._object instanceof cc.Node) return this._object;
+    if (this._object instanceof Node) return this._object;
     return null;
   }
 

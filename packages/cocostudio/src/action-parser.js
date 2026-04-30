@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
+import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/core";
 
     var Parser = class Parser extends ccs._parser {
 
@@ -48,7 +48,7 @@
                 if(parser)
                     frame = parser.call(self, timeline, resourcePath);
                 else
-                    cc.log("parser does not exist : %s", timeline["Property"]);
+                    log("parser does not exist : %s", timeline["Property"]);
                 if(frame)
                     action.addTimeline(frame);
             });
@@ -80,7 +80,7 @@
                 var frame = new ccs.PositionFrame();
                 var x = options["X"];
                 var y = options["Y"];
-                frame.setPosition(new cc.Point(x,y));
+                frame.setPosition(new Point(x,y));
                 return frame;
             }
         },
@@ -141,7 +141,7 @@
                 var frame = new ccs.AnchorPointFrame();
                 var anchorx = options["X"];
                 var anchory = options["Y"];
-                frame.setAnchorPoint(new cc.Point(anchorx, anchory));
+                frame.setAnchorPoint(new Point(anchorx, anchory));
                 return frame;
             }
         },{
@@ -150,7 +150,7 @@
                 var frame = new ccs.AnchorPointFrame();
                 var anchorx = options["X"];
                 var anchory = options["Y"];
-                frame.setAnchorPoint(new cc.Point(anchorx, anchory));
+                frame.setAnchorPoint(new Point(anchorx, anchory));
                 return frame;
             }
         },{
@@ -173,7 +173,7 @@
                 color["R"] = color["R"] === undefined ? 255 : color["R"];
                 color["G"] = color["G"] === undefined ? 255 : color["G"];
                 color["B"] = color["B"] === undefined ? 255 : color["B"];
-                frame.setColor(new cc.Color(color["R"], color["G"], color["B"]));
+                frame.setColor(new Color(color["R"], color["G"], color["B"]));
                 return frame;
             }
         },
@@ -195,13 +195,13 @@
                 if(texture != null) {
                     plist = texture["Plist"];
                     path = texture["Path"];
-                    spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
+                    spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(path);
                     if(!spriteFrame && plist){
-                        if(cc.loader.getRes(resourcePath + plist)){
-                            cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
-                            spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
+                        if(Loader.getInstance().getRes(resourcePath + plist)){
+                            SpriteFrameCache.getInstance().addSpriteFrames(resourcePath + plist);
+                            spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(path);
                         }else{
-                            cc.log("%s need to be preloaded", resourcePath + plist);
+                            log("%s need to be preloaded", resourcePath + plist);
                         }
                     }
                     if(spriteFrame == null){
@@ -262,7 +262,7 @@
                 var frame = new ccs.BlendFuncFrame();
                 var blendFunc = options["BlendFunc"];
                 if(blendFunc && blendFunc["Src"] !== undefined && blendFunc["Dst"] !== undefined)
-                    frame.setBlendFunc(new cc.BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
+                    frame.setBlendFunc(new BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
                 return frame;
             }
         }

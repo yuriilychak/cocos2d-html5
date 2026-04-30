@@ -26,6 +26,8 @@
 /**
  * The attribute component for Cocostudio.
  */
+import { Loader, log } from "@aspect/core";
+
 export class ComAttribute extends ccs.Component {
 
     /**
@@ -55,7 +57,7 @@ export class ComAttribute extends ccs.Component {
      */
     setInt (key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
@@ -68,7 +70,7 @@ export class ComAttribute extends ccs.Component {
      */
     setDouble (key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
@@ -81,7 +83,7 @@ export class ComAttribute extends ccs.Component {
      */
     setFloat (key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
@@ -94,7 +96,7 @@ export class ComAttribute extends ccs.Component {
      */
     setBool (key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
@@ -107,7 +109,7 @@ export class ComAttribute extends ccs.Component {
      */
     setString (key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
@@ -120,7 +122,7 @@ export class ComAttribute extends ccs.Component {
      */
     setObject (key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            log("Argument must be non-nil");
             return;
         }
         this._jsonDict[key] = value;
@@ -190,7 +192,7 @@ export class ComAttribute extends ccs.Component {
      * @param  filename
      */
     parse (filename) {
-        this._jsonDict = cc.loader.getRes(filename);
+        this._jsonDict = Loader.getInstance().getRes(filename);
     }
 };
 

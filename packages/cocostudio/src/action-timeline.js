@@ -1,5 +1,4 @@
-import { NewClass, arrayRemoveObject } from '@aspect/core';
-import { Action } from '@aspect/actions';
+
 
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -31,6 +30,9 @@ import { Action } from '@aspect/actions';
  * @extend ccs.Class
  *
  */
+import { NewClass, arrayRemoveObject, log } from "@aspect/core";
+import { Action } from "@aspect/actions";
+
 export class ActionTimelineData extends NewClass {
   _actionTag = 0;
 
@@ -96,8 +98,6 @@ export class ComExtensionData extends ccs.Component {
 
 /**
  * ActionTimeline
- * @extend cc.Action
- *
  * @property gotoFrameAndPlay
  * @property gotoFrameAndPause
  */
@@ -276,7 +276,7 @@ export class ActionTimeline extends Action {
       this._currentFrame = frameIndex;
       this._time = this._currentFrame * this._frameInternal;
     } else {
-      cc.log("frame index is not between start frame and end frame");
+      log("frame index is not between start frame and end frame");
     }
   }
 
@@ -460,7 +460,7 @@ export class ActionTimeline extends Action {
    */
   play(name, loop) {
     var info = this._animationInfos[name];
-    if (!info) return cc.log("Can't find animation info for %s", name);
+    if (!info) return log("Can't find animation info for %s", name);
 
     this.gotoFrameAndPlay(info.startIndex, info.endIndex, loop);
   }

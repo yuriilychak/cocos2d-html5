@@ -29,6 +29,8 @@
  * @constant
  * @type Number
  */
+import { BLEND_DST, BLEND_SRC, BlendFunc, Color, NewClass } from "@aspect/core";
+
 export const BLEND_TYPE_NORMAL = ccs.BLEND_TYPE_NORMAL = 0;
 
 /**
@@ -165,7 +167,7 @@ export const DISPLAY_TYPE_MAX = ccs.DISPLAY_TYPE_MAX = 3;
  * @property {Number}         b                - b of color
  * @property {Number}         a                - a of color
  */
-export class BaseData extends cc.NewClass {
+export class BaseData extends NewClass {
   /**
    * Construction of ccs.BaseData
    */
@@ -228,7 +230,7 @@ export class BaseData extends cc.NewClass {
    * @returns {Color}
    */
   getColor() {
-    return new cc.Color(this.r, this.g, this.b, this.a);
+    return new Color(this.r, this.g, this.b, this.a);
   }
 
   /**
@@ -277,7 +279,7 @@ export class BaseData extends cc.NewClass {
  * @property {Number}         displayType                - the display type
  * @property {String}         displayName                - the display name
  */
-export class DisplayData extends cc.NewClass {
+export class DisplayData extends NewClass {
   /**
    * Construction of ccs.DisplayData
    */
@@ -426,7 +428,7 @@ export class BoneData extends BaseData {
  * @property {String}                    name                       - the name of armature data
  * @property {Number}                    dataVersion                - the data version of armature data
  */
-export class ArmatureData extends cc.NewClass {
+export class ArmatureData extends NewClass {
   /**
    * Construction of ccs.ArmatureData
    */
@@ -502,7 +504,7 @@ export class FrameData extends BaseData {
     this.event = "";
     this.sound = "";
     this.soundEffect = "";
-    this.blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
+    this.blendFunc = new BlendFunc(BLEND_SRC, BLEND_DST);
     this.frameID = 0;
     this.isTween = true;
   }
@@ -545,7 +547,7 @@ export class FrameData extends BaseData {
  * @property {Array}                     frameList         - the frame list of bone's movement.
  * @property {String}                    name              - the name of bone's movement.
  */
-export class MovementBoneData extends cc.NewClass {
+export class MovementBoneData extends NewClass {
   /**
    * Construction of ccs.MovementBoneData.
    */
@@ -618,7 +620,7 @@ export function MovementData() {
  * add a movement bone data to dictionary
  * @param {ccs.MovementBoneData} movBoneData
  */
-ccs.MovementData.prototype.addMovementBoneData = function (movBoneData) {
+MovementData.prototype.addMovementBoneData = function (movBoneData) {
   this.movBoneDataDic[movBoneData.name] = movBoneData;
 };
 
@@ -627,7 +629,7 @@ ccs.MovementData.prototype.addMovementBoneData = function (movBoneData) {
  * @param boneName
  * @returns {ccs.MovementBoneData}
  */
-ccs.MovementData.prototype.getMovementBoneData = function (boneName) {
+MovementData.prototype.getMovementBoneData = function (boneName) {
   return this.movBoneDataDic[boneName];
 };
 
@@ -648,7 +650,7 @@ export function AnimationData() {
  * adds movement data to the movement data dictionary
  * @param {ccs.MovementData} moveData
  */
-ccs.AnimationData.prototype.addMovement = function (moveData) {
+AnimationData.prototype.addMovement = function (moveData) {
   this.movementDataDic[moveData.name] = moveData;
   this.movementNames.push(moveData.name);
 };
@@ -658,7 +660,7 @@ ccs.AnimationData.prototype.addMovement = function (moveData) {
  * @param {String} moveName
  * @returns {ccs.MovementData}
  */
-ccs.AnimationData.prototype.getMovement = function (moveName) {
+AnimationData.prototype.getMovement = function (moveName) {
   return this.movementDataDic[moveName];
 };
 
@@ -666,7 +668,7 @@ ccs.AnimationData.prototype.getMovement = function (moveName) {
  * gets the count of movement data dictionary
  * @returns {Number}
  */
-ccs.AnimationData.prototype.getMovementCount = function () {
+AnimationData.prototype.getMovementCount = function () {
   return Object.keys(this.movementDataDic).length;
 };
 
@@ -689,7 +691,7 @@ export function ContourData() {
   this.vertexList = [];
 };
 
-ccs.ContourData.prototype.init = function () {
+ContourData.prototype.init = function () {
   this.vertexList.length = 0;
   return true;
 };
@@ -698,8 +700,8 @@ ccs.ContourData.prototype.init = function () {
  * add a vertex object to vertex list
  * @param {Point} p
  */
-ccs.ContourData.prototype.addVertex = function (p) {
-  //var v = new ccs.ContourVertex2(p.x, p.y);              //ccs.ContourVertex2 is same as cc.Point, so we needn't create a ccs.ContourVertex2 object
+ContourData.prototype.addVertex = function (p) {
+  //var v = new ccs.ContourVertex2(p.x, p.y);              //ccs.ContourVertex2 is same as Point, so we needn't create a ccs.ContourVertex2 object
   this.vertexList.push(p);
 };
 
@@ -715,7 +717,7 @@ export function TextureData() {
   this.contourDataList = [];
 };
 
-ccs.TextureData.prototype.init = function () {
+TextureData.prototype.init = function () {
   this.contourDataList.length = 0;
 };
 
@@ -723,7 +725,7 @@ ccs.TextureData.prototype.init = function () {
  * Adds a contourData to contourDataList
  * @param {ccs.ContourData} contourData
  */
-ccs.TextureData.prototype.addContourData = function (contourData) {
+TextureData.prototype.addContourData = function (contourData) {
   this.contourDataList.push(contourData);
 };
 
@@ -732,7 +734,7 @@ ccs.TextureData.prototype.addContourData = function (contourData) {
  * @param {Number} index
  * @returns {ccs.ContourData}
  */
-ccs.TextureData.prototype.getContourData = function (index) {
+TextureData.prototype.getContourData = function (index) {
   return this.contourDataList[index];
 };
 

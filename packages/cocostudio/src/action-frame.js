@@ -1,4 +1,4 @@
-// Color and Point are used via cc.* global; action classes used via cc.* global
+// Color and Point are used via global; action classes used via global
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -31,6 +31,9 @@
  * @constant
  * @type {number}
  */
+import { Color, NewClass, Point, log } from "@aspect/core";
+import { FadeTo, MoveTo, RotateBy, RotateTo, ScaleTo, TintTo, easeBackIn, easeBackInOut, easeBackOut, easeBounceIn, easeBounceInOut, easeBounceOut, easeCircleActionIn, easeCircleActionInOut, easeCircleActionOut, easeCubicActionIn, easeCubicActionInOut, easeCubicActionOut, easeElasticIn, easeElasticInOut, easeElasticOut, easeExponentialIn, easeExponentialInOut, easeExponentialOut, easeQuadraticActionIn, easeQuadraticActionInOut, easeQuadraticActionOut, easeQuarticActionIn, easeQuarticActionInOut, easeQuarticActionOut, easeQuinticActionIn, easeQuinticActionInOut, easeQuinticActionOut, easeSineIn, easeSineInOut, easeSineOut } from "@aspect/actions";
+
 export const FRAME_TYPE_MOVE = ccs.FRAME_TYPE_MOVE = 0;
 /**
  * The flag scale action type of Cocostudio frame.
@@ -124,9 +127,9 @@ export const FrameEaseType = ccs.FrameEaseType = {
  * @property {Number}               frameIndex              - frame index of ccs.ActionFrame
  * @property {Number}               time                    - time of ccs.ActionFrame
  */
-export class ActionFrame extends cc.NewClass {
+export class ActionFrame extends NewClass {
   /**
-   * The constructor of cc.ActionFrame.
+   * The constructor of ActionFrame.
    */
   constructor() {
     super();
@@ -143,7 +146,7 @@ export class ActionFrame extends cc.NewClass {
    * @returns {null}
    */
   getAction(duration, srcFrame) {
-    cc.log("Need a definition of <getAction> for ActionFrame");
+    log("Need a definition of <getAction> for ActionFrame");
     return null;
   }
 
@@ -161,94 +164,94 @@ export class ActionFrame extends cc.NewClass {
         resultAction = action;
         break;
       case ccs.FrameEaseType.SINE_EASEIN:
-        resultAction = action.easing(cc.easeSineIn());
+        resultAction = action.easing(easeSineIn());
         break;
       case ccs.FrameEaseType.SINE_EASEOUT:
-        resultAction = action.easing(cc.easeSineOut());
+        resultAction = action.easing(easeSineOut());
         break;
       case ccs.FrameEaseType.SINE_EASEINOUT:
-        resultAction = action.easing(cc.easeSineInOut());
+        resultAction = action.easing(easeSineInOut());
         break;
       case ccs.FrameEaseType.QUAD_EASEIN:
-        resultAction = action.easing(cc.easeQuadraticActionIn());
+        resultAction = action.easing(easeQuadraticActionIn());
         break;
       case ccs.FrameEaseType.QUAD_EASEOUT:
-        resultAction = action.easing(cc.easeQuadraticActionOut());
+        resultAction = action.easing(easeQuadraticActionOut());
         break;
       case ccs.FrameEaseType.QUAD_EASEINOUT:
-        resultAction = action.easing(cc.easeQuadraticActionInOut());
+        resultAction = action.easing(easeQuadraticActionInOut());
         break;
       case ccs.FrameEaseType.CUBIC_EASEIN:
-        resultAction = action.easing(cc.easeCubicActionIn());
+        resultAction = action.easing(easeCubicActionIn());
         break;
       case ccs.FrameEaseType.CUBIC_EASEOUT:
-        resultAction = action.easing(cc.easeCubicActionOut());
+        resultAction = action.easing(easeCubicActionOut());
         break;
       case ccs.FrameEaseType.CUBIC_EASEINOUT:
-        resultAction = action.easing(cc.easeCubicActionInOut());
+        resultAction = action.easing(easeCubicActionInOut());
         break;
       case ccs.FrameEaseType.QUART_EASEIN:
-        resultAction = action.easing(cc.easeQuarticActionIn());
+        resultAction = action.easing(easeQuarticActionIn());
         break;
       case ccs.FrameEaseType.QUART_EASEOUT:
-        resultAction = action.easing(cc.easeQuarticActionOut());
+        resultAction = action.easing(easeQuarticActionOut());
         break;
       case ccs.FrameEaseType.QUART_EASEINOUT:
-        resultAction = action.easing(cc.easeQuarticActionInOut());
+        resultAction = action.easing(easeQuarticActionInOut());
         break;
       case ccs.FrameEaseType.QUINT_EASEIN:
-        resultAction = action.easing(cc.easeQuinticActionIn());
+        resultAction = action.easing(easeQuinticActionIn());
         break;
       case ccs.FrameEaseType.QUINT_EASEOUT:
-        resultAction = action.easing(cc.easeQuinticActionOut());
+        resultAction = action.easing(easeQuinticActionOut());
         break;
       case ccs.FrameEaseType.QUINT_EASEINOUT:
-        resultAction = action.easing(cc.easeQuinticActionInOut());
+        resultAction = action.easing(easeQuinticActionInOut());
         break;
       case ccs.FrameEaseType.EXPO_EASEIN:
-        resultAction = action.easing(cc.easeExponentialIn());
+        resultAction = action.easing(easeExponentialIn());
         break;
       case ccs.FrameEaseType.EXPO_EASEOUT:
-        resultAction = action.easing(cc.easeExponentialOut());
+        resultAction = action.easing(easeExponentialOut());
         break;
       case ccs.FrameEaseType.EXPO_EASEINOUT:
-        resultAction = action.easing(cc.easeExponentialInOut());
+        resultAction = action.easing(easeExponentialInOut());
         break;
       case ccs.FrameEaseType.CIRC_EASEIN:
-        resultAction = action.easing(cc.easeCircleActionIn());
+        resultAction = action.easing(easeCircleActionIn());
         break;
       case ccs.FrameEaseType.CIRC_EASEOUT:
-        resultAction = action.easing(cc.easeCircleActionOut());
+        resultAction = action.easing(easeCircleActionOut());
         break;
       case ccs.FrameEaseType.CIRC_EASEINOUT:
-        resultAction = action.easing(cc.easeCircleActionInOut());
+        resultAction = action.easing(easeCircleActionInOut());
         break;
       case ccs.FrameEaseType.ELASTIC_EASEIN:
-        resultAction = action.easing(cc.easeElasticIn());
+        resultAction = action.easing(easeElasticIn());
         break;
       case ccs.FrameEaseType.ELASTIC_EASEOUT:
-        resultAction = action.easing(cc.easeElasticOut());
+        resultAction = action.easing(easeElasticOut());
         break;
       case ccs.FrameEaseType.ELASTIC_EASEINOUT:
-        resultAction = action.easing(cc.easeElasticInOut());
+        resultAction = action.easing(easeElasticInOut());
         break;
       case ccs.FrameEaseType.BACK_EASEIN:
-        resultAction = action.easing(cc.easeBackIn());
+        resultAction = action.easing(easeBackIn());
         break;
       case ccs.FrameEaseType.BACK_EASEOUT:
-        resultAction = action.easing(cc.easeBackOut());
+        resultAction = action.easing(easeBackOut());
         break;
       case ccs.FrameEaseType.BACK_EASEINOUT:
-        resultAction = action.easing(cc.easeBackInOut());
+        resultAction = action.easing(easeBackInOut());
         break;
       case ccs.FrameEaseType.BOUNCE_EASEIN:
-        resultAction = action.easing(cc.easeBounceIn());
+        resultAction = action.easing(easeBounceIn());
         break;
       case ccs.FrameEaseType.BOUNCE_EASEOUT:
-        resultAction = action.easing(cc.easeBounceOut());
+        resultAction = action.easing(easeBounceOut());
         break;
       case ccs.FrameEaseType.BOUNCE_EASEINOUT:
-        resultAction = action.easing(cc.easeBounceInOut());
+        resultAction = action.easing(easeBounceInOut());
         break;
     }
 
@@ -283,7 +286,7 @@ export class ActionMoveFrame extends ccs.ActionFrame {
    */
   constructor() {
     super();
-    this._position = new cc.Point(0, 0);
+    this._position = new Point(0, 0);
     this.frameType = ccs.FRAME_TYPE_MOVE;
   }
 
@@ -316,7 +319,7 @@ export class ActionMoveFrame extends ccs.ActionFrame {
    * @returns {MoveTo}
    */
   getAction(duration) {
-    return this._getEasingAction(new cc.MoveTo(duration, this._position));
+    return this._getEasingAction(new MoveTo(duration, this._position));
   }
 };
 
@@ -373,7 +376,7 @@ export class ActionScaleFrame extends ccs.ActionFrame {
    */
   getAction(duration) {
     return this._getEasingAction(
-      new cc.ScaleTo(duration, this._scaleX, this._scaleY)
+      new ScaleTo(duration, this._scaleX, this._scaleY)
     );
   }
 };
@@ -415,13 +418,13 @@ export class ActionRotationFrame extends ccs.ActionFrame {
    */
   getAction(duration, srcFrame) {
     if (srcFrame === undefined)
-      return this._getEasingAction(new cc.RotateTo(duration, this._rotation));
+      return this._getEasingAction(new RotateTo(duration, this._rotation));
     else {
-      if (!(srcFrame instanceof cc.ActionRotationFrame))
+      if (!(srcFrame instanceof ActionRotationFrame))
         return this.getAction(duration);
       else {
         var diffRotation = this._rotation - srcFrame._rotation;
-        return this._getEasingAction(new cc.RotateBy(duration, diffRotation));
+        return this._getEasingAction(new RotateBy(duration, diffRotation));
       }
     }
   }
@@ -462,7 +465,7 @@ export class ActionFadeFrame extends ccs.ActionFrame {
    * @returns {FadeTo}
    */
   getAction(duration) {
-    return this._getEasingAction(new cc.FadeTo(duration, this._opacity));
+    return this._getEasingAction(new FadeTo(duration, this._opacity));
   }
 };
 
@@ -475,7 +478,7 @@ export class ActionTintFrame extends ccs.ActionFrame {
    */
   constructor() {
     super();
-    this._color = new cc.Color(255, 255, 255, 255);
+    this._color = new Color(255, 255, 255, 255);
     this.frameType = ccs.FRAME_TYPE_TINT;
   }
 
@@ -496,7 +499,7 @@ export class ActionTintFrame extends ccs.ActionFrame {
    */
   getColor() {
     var locColor = this._color;
-    return new cc.Color(locColor.r, locColor.g, locColor.b, locColor.a);
+    return new Color(locColor.r, locColor.g, locColor.b, locColor.a);
   }
 
   /**
@@ -506,7 +509,7 @@ export class ActionTintFrame extends ccs.ActionFrame {
    */
   getAction(duration) {
     return this._getEasingAction(
-      new cc.TintTo(duration, this._color.r, this._color.g, this._color.b)
+      new TintTo(duration, this._color.r, this._color.g, this._color.b)
     );
   }
 };

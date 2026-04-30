@@ -29,6 +29,8 @@
  * @constant
  * @type {number}
  */
+import { NewClass } from "@aspect/core";
+
 ccs.ANIMATION_TYPE_SINGLE_FRAME = -4;
 /**
  * The animation isn't loop
@@ -81,7 +83,7 @@ ccs.ANIMATION_TYPE_MAX = 2;
  * @property {Number}   processScale        - The process scale
  * @property {Boolean}  playing             - <@readonly> Indicate whether the process is playing
  */
-export class ProcessBase extends cc.NewClass {
+export class ProcessBase extends NewClass {
 
     /**
      * Constructor of ccs.ProcessBase
@@ -335,7 +337,5 @@ export class ProcessBase extends cc.NewClass {
     }
 
 };
-
-
 
 ccs.ProcessBase = ProcessBase;

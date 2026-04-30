@@ -1,4 +1,3 @@
-import { arrayRemoveObject } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2015-2016 Chukong Technologies Inc.
@@ -31,18 +30,17 @@ import { arrayRemoveObject } from '@aspect/core';
  * base class
  */
 
-
     
 
+import { AffineTransform, Point, Rect, RendererConfig, Size, arrayRemoveObject } from "@aspect/core";
+
     var type = {
-        p: cc.p,
-        size: cc.size,
-        rect: cc.rect
+        p: new Point,
+        size: new Size,
+        rect: new Rect
     };
 
     class SkeletonNode extends ccs.BoneNode {
-
-
 
         constructor() {
             super();
@@ -111,38 +109,38 @@ import { arrayRemoveObject } from '@aspect/core';
             var boundingBox = this.getVisibleSkinsRect();
             var first = true;
             if (boundingBox.x !== 0 || boundingBox.y !== 0 || boundingBox.width !== 0 || boundingBox.height !== 0) {
-                minx = cc.Rect.getMinX(boundingBox);
-                miny = cc.Rect.getMinY(boundingBox);
-                maxx = cc.Rect.getMaxX(boundingBox);
-                maxy = cc.Rect.getMaxY(boundingBox);
+                minx = Rect.getMinX(boundingBox);
+                miny = Rect.getMinY(boundingBox);
+                maxx = Rect.getMaxX(boundingBox);
+                maxy = Rect.getMaxY(boundingBox);
                 first = false;
             }
             var allBones = this.getAllSubBones();
             for (var bone, i = 0; i < allBones.length; i++) {
                 bone = allBones[i];
-                var r = cc.AffineTransform.applyToRect(bone.getVisibleSkinsRect(), bone.getNodeToParentTransform(bone.getRootSkeletonNode()));
+                var r = AffineTransform.applyToRect(bone.getVisibleSkinsRect(), bone.getNodeToParentTransform(bone.getRootSkeletonNode()));
                 if (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0)
                     continue;
 
                 if (first) {
-                    minx = cc.Rect.getMinX(r);
-                    miny = cc.Rect.getMinY(r);
-                    maxx = cc.Rect.getMaxX(r);
-                    maxy = cc.Rect.getMaxY(r);
+                    minx = Rect.getMinX(r);
+                    miny = Rect.getMinY(r);
+                    maxx = Rect.getMaxX(r);
+                    maxy = Rect.getMaxY(r);
 
                     first = false;
                 } else {
-                    minx = Math.min(cc.Rect.getMinX(r), minx);
-                    miny = Math.min(cc.Rect.getMinY(r), miny);
-                    maxx = Math.max(cc.Rect.getMaxX(r), maxx);
-                    maxy = Math.max(cc.Rect.getMaxY(r), maxy);
+                    minx = Math.min(Rect.getMinX(r), minx);
+                    miny = Math.min(Rect.getMinY(r), miny);
+                    maxx = Math.max(Rect.getMaxX(r), maxx);
+                    maxy = Math.max(Rect.getMaxY(r), maxy);
                 }
             }
             boundingBox.x = minx;
             boundingBox.y = miny;
             boundingBox.width = maxx - minx;
             boundingBox.height = maxy - miny;
-            return cc.AffineTransform.applyToRect(boundingBox, this.getNodeToParentTransform());
+            return AffineTransform.applyToRect(boundingBox, this.getNodeToParentTransform());
         }
 
         _visit(parentCmd) {
@@ -175,7 +173,7 @@ import { arrayRemoveObject } from '@aspect/core';
             if (cmd._debug)
                 for (i = 0; i < subOrderedAllBones.length; i++) {
                     subOrderedBoneCmd = subOrderedAllBones[i]._renderCmd;
-                    cc.rendererConfig.renderer.pushRenderCommand(subOrderedBoneCmd._drawNode._renderCmd);
+                    RendererConfig.getInstance().renderer.pushRenderCommand(subOrderedBoneCmd._drawNode._renderCmd);
                 }
             cmd._dirtyFlag = 0;
         }

@@ -1,4 +1,3 @@
-import { Node, arrayRemoveObject } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2015-2016 Chukong Technologies Inc.
@@ -31,25 +30,23 @@ import { Node, arrayRemoveObject } from '@aspect/core';
  * base class
  */
 
-
     // Node imported from @aspect/core
     
-    var _BlendFunc = cc.BlendFunc;
+import { AffineTransform, BlendFunc, Color, Node, Point, Rect, RendererConfig, Size, arrayRemoveObject, assert, log } from "@aspect/core";
+import { DrawNode } from "@aspect/shape-nodes";
+
+    var _BlendFunc = BlendFunc;
     var type = {
-        p: cc.p,
-        size: cc.size,
-        rect: cc.rect
+        p: new Point,
+        size: new Size,
+        rect: new Rect
     };
     var debug = {
-        log: cc.log,
-        assert: cc.assert
+        log: log,
+        assert: assert
     };
 
     class BoneNode extends Node {
-
-
-
-
 
         constructor(length) {
             super();
@@ -72,7 +69,7 @@ import { Node, arrayRemoveObject } from '@aspect/core';
                     {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}
                 ];
 
-            this._rackColor = cc.Color.WHITE;
+            this._rackColor = Color.WHITE;
             this._blendFunc = _BlendFunc.ALPHA_NON_PREMULTIPLIED;
 
             this._childBones = [];
@@ -236,7 +233,7 @@ import { Node, arrayRemoveObject } from '@aspect/core';
                 return;
 
             renderCmd._debug = isDebugDraw;
-            cc.rendererConfig.renderer.childrenOrderDirty = true;
+            RendererConfig.getInstance().renderer.childrenOrderDirty = true;
 
             if (this._visible && null != this._rootSkeleton) {
                 this._rootSkeleton._subBonesDirty = true;
@@ -276,17 +273,17 @@ import { Node, arrayRemoveObject } from '@aspect/core';
                     continue;
 
                 if (first) {
-                    minx = cc.Rect.getMinX(r);
-                    miny = cc.Rect.getMinY(r);
-                    maxx = cc.Rect.getMaxX(r);
-                    maxy = cc.Rect.getMaxY(r);
+                    minx = Rect.getMinX(r);
+                    miny = Rect.getMinY(r);
+                    maxx = Rect.getMaxX(r);
+                    maxy = Rect.getMaxY(r);
 
                     first = false;
                 } else {
-                    minx = Math.min(cc.Rect.getMinX(r), minx);
-                    miny = Math.min(cc.Rect.getMinY(r), miny);
-                    maxx = Math.max(cc.Rect.getMaxX(r), maxx);
-                    maxy = Math.max(cc.Rect.getMaxY(r), maxy);
+                    minx = Math.min(Rect.getMinX(r), minx);
+                    miny = Math.min(Rect.getMinY(r), miny);
+                    maxx = Math.max(Rect.getMaxX(r), maxx);
+                    maxy = Math.max(Rect.getMaxY(r), maxy);
                 }
                 displayRect.setRect(minx, miny, maxx - minx, maxy - miny);
             }
@@ -295,7 +292,7 @@ import { Node, arrayRemoveObject } from '@aspect/core';
 
         getBoundingBox() {
             var boundingBox = this.getVisibleSkinsRect();
-            return cc.AffineTransform.applyToRect(boundingBox, this.getNodeToParentAffineTransform());
+            return AffineTransform.applyToRect(boundingBox, this.getNodeToParentAffineTransform());
         }
 
         batchBoneDrawToSkeleton(bone) {
@@ -408,7 +405,7 @@ import { Node, arrayRemoveObject } from '@aspect/core';
                             this._rootSkeleton._subBonesDirty = true;
                             this._rootSkeleton._subBonesOrderDirty = true;
                         } else {
-                            cc.log("already has a bone named %s in skeleton %s", bonename, this._rootSkeleton.getName());
+                            log("already has a bone named %s in skeleton %s", bonename, this._rootSkeleton.getName());
                             this._rootSkeleton._subBonesDirty = true;
                             this._rootSkeleton._subBonesOrderDirty = true;
                         }
@@ -510,7 +507,7 @@ import { Node, arrayRemoveObject } from '@aspect/core';
         }
 
         _createRenderCmd() {
-            if (cc.rendererConfig.isCanvas)
+            if (RendererConfig.getInstance().isCanvas)
                 return new BoneNodeCanvasCmd(this);
             else
                 return new BoneNodeWebGLCmd(this);
@@ -522,8 +519,8 @@ import { Node, arrayRemoveObject } from '@aspect/core';
         constructor(node) {
             super(node);
             this._debug = false;
-            this._color = cc.Color.WHITE;
-            this._drawNode = new cc.DrawNode();
+            this._color = Color.WHITE;
+            this._drawNode = new DrawNode();
         }
 
         updateDebugPoint(points) {
@@ -544,8 +541,8 @@ import { Node, arrayRemoveObject } from '@aspect/core';
         constructor(node) {
             super(node);
             this._debug = false;
-            this._color = cc.Color.WHITE;
-            this._drawNode = new cc.DrawNode();
+            this._color = Color.WHITE;
+            this._drawNode = new DrawNode();
         }
 
         updateDebugPoint(points) {

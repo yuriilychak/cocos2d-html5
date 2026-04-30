@@ -9,6 +9,7 @@ Audio.WebAudio = WebAudio;
 
 // cc globals
 cc.Audio = Audio;
-cc.audioEngine = new AudioEngine();
+export const audioEngine = new AudioEngine();
+cc.audioEngine = audioEngine;
 
 export { Audio, WebAudio, AudioEngine };

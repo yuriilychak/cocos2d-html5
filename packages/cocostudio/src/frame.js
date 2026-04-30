@@ -1,4 +1,3 @@
-import { NewClass } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -28,6 +27,9 @@ import { NewClass } from '@aspect/core';
  * Timeline Frame.
  * base class
  */
+import { Color, NewClass, Point, SpriteFrameCache, log } from "@aspect/core";
+import { _easeBackInObj, _easeBackInOutObj, _easeBackOutObj, _easeBounceInObj, _easeBounceInOutObj, _easeBounceOutObj, _easeCircleActionIn, _easeCircleActionInOut, _easeCircleActionOut, _easeCubicActionIn, _easeCubicActionInOut, _easeCubicActionOut, _easeExponentialInObj, _easeExponentialInOutObj, _easeExponentialOutObj, _easeQuadraticActionIn, _easeQuadraticActionInOut, _easeQuadraticActionOut, _easeQuinticActionIn, _easeQuinticActionInOut, _easeQuinticActionOut, _easeSineInObj, _easeSineInOutObj, _easeSineOutObj, easeElasticIn, easeElasticInOut, easeElasticOut } from "@aspect/actions";
+
 export class Frame extends NewClass {
   constructor() {
     super();
@@ -197,57 +199,57 @@ ccs.Frame.tweenToMap = {
     }
     return time;
   },
-  1: cc._easeSineInObj.easing, //Sine_EaseIn
-  2: cc._easeSineOutObj.easing, //Sine_EaseOut
-  3: cc._easeSineInOutObj.easing, //Sine_EaseInOut
+  1: _easeSineInObj.easing, //Sine_EaseIn
+  2: _easeSineOutObj.easing, //Sine_EaseOut
+  3: _easeSineInOutObj.easing, //Sine_EaseInOut
 
-  4: cc._easeQuadraticActionIn.easing, //Quad_EaseIn
-  5: cc._easeQuadraticActionOut.easing, //Quad_EaseOut
-  6: cc._easeQuadraticActionInOut.easing, //Quad_EaseInOut
+  4: _easeQuadraticActionIn.easing, //Quad_EaseIn
+  5: _easeQuadraticActionOut.easing, //Quad_EaseOut
+  6: _easeQuadraticActionInOut.easing, //Quad_EaseInOut
 
-  7: cc._easeCubicActionIn.easing, //Cubic_EaseIn
-  8: cc._easeCubicActionOut.easing, //Cubic_EaseOut
-  9: cc._easeCubicActionInOut.easing, //Cubic_EaseInOut
+  7: _easeCubicActionIn.easing, //Cubic_EaseIn
+  8: _easeCubicActionOut.easing, //Cubic_EaseOut
+  9: _easeCubicActionInOut.easing, //Cubic_EaseInOut
 
-  10: cc._easeCubicActionIn.easing, //Cubic_EaseIn
-  11: cc._easeCubicActionOut.easing, //Cubic_EaseOut
-  12: cc._easeCubicActionInOut.easing, //Cubic_EaseInOut
+  10: _easeCubicActionIn.easing, //Cubic_EaseIn
+  11: _easeCubicActionOut.easing, //Cubic_EaseOut
+  12: _easeCubicActionInOut.easing, //Cubic_EaseInOut
 
-  13: cc._easeQuinticActionIn.easing, //Quint_EaseIn
-  14: cc._easeQuinticActionOut.easing, //Quint_EaseOut
-  15: cc._easeQuinticActionInOut.easing, //Quint_EaseInOut
+  13: _easeQuinticActionIn.easing, //Quint_EaseIn
+  14: _easeQuinticActionOut.easing, //Quint_EaseOut
+  15: _easeQuinticActionInOut.easing, //Quint_EaseInOut
 
-  16: cc._easeExponentialInObj.easing, //Expo_EaseIn
-  17: cc._easeExponentialOutObj.easing, //Expo_EaseOut
-  18: cc._easeExponentialInOutObj.easing, //Expo_EaseInOut
+  16: _easeExponentialInObj.easing, //Expo_EaseIn
+  17: _easeExponentialOutObj.easing, //Expo_EaseOut
+  18: _easeExponentialInOutObj.easing, //Expo_EaseInOut
 
-  19: cc._easeCircleActionIn.easing, //Circ_EaseIn
-  20: cc._easeCircleActionOut.easing, //Circ_EaseOut
-  21: cc._easeCircleActionInOut.easing, //Circ_EaseInOut
+  19: _easeCircleActionIn.easing, //Circ_EaseIn
+  20: _easeCircleActionOut.easing, //Circ_EaseOut
+  21: _easeCircleActionInOut.easing, //Circ_EaseInOut
 
   22: function (time, easingParam) {
     var period = 0.3;
     easingParam != null && (period = easingParam[0]);
-    return cc.easeElasticIn(period).easing(time);
+    return easeElasticIn(period).easing(time);
   }, //Elastic_EaesIn
   23: function (time, easingParam) {
     var period = 0.3;
     easingParam != null && (period = easingParam[0]);
-    return cc.easeElasticOut(period).easing(time);
+    return easeElasticOut(period).easing(time);
   }, //Elastic_EaesOut
   24: function (time, easingParam) {
     var period = 0.3;
     easingParam != null && (period = easingParam[0]);
-    return cc.easeElasticInOut(period).easing(time);
+    return easeElasticInOut(period).easing(time);
   }, //Elastic_EaesInOut
 
-  25: cc._easeBackInObj.easing, //Back_EaseIn
-  26: cc._easeBackOutObj.easing, //Back_EaseOut
-  27: cc._easeBackInOutObj.easing, //Back_EaseInOut
+  25: _easeBackInObj.easing, //Back_EaseIn
+  26: _easeBackOutObj.easing, //Back_EaseOut
+  27: _easeBackInOutObj.easing, //Back_EaseInOut
 
-  28: cc._easeBounceInObj.easing, //Bounce_EaseIn
-  29: cc._easeBounceOutObj.easing, //Bounce_EaseOut
-  30: cc._easeBounceInOutObj.easing //Bounce_EaseInOut
+  28: _easeBounceInObj.easing, //Bounce_EaseIn
+  29: _easeBounceOutObj.easing, //Bounce_EaseOut
+  30: _easeBounceInOutObj.easing //Bounce_EaseInOut
 };
 
 /**
@@ -327,7 +329,7 @@ export class TextureFrame extends Frame {
   onEnter(nextFrame) {
     if (this._sprite) {
       var spriteBlendFunc = this._sprite.getBlendFunc();
-      var spriteFrame = cc.spriteFrameCache._spriteFrames[this._textureName];
+      var spriteFrame = SpriteFrameCache.getInstance()._spriteFrames[this._textureName];
       if (spriteFrame != null) this._sprite.setSpriteFrame(spriteFrame);
       else this._sprite.setTexture(this._textureName);
 
@@ -575,7 +577,7 @@ export class RotationSkewFrame extends SkewFrame {
 export class PositionFrame extends Frame {
   constructor() {
     super();
-    this._position = new cc.Point(0, 0);
+    this._position = new Point(0, 0);
   }
 
   /**
@@ -599,7 +601,7 @@ export class PositionFrame extends Frame {
    */
   _onApply(percent) {
     if (this._node && (this._betweenX !== 0 || this._betweenY !== 0)) {
-      var p = new cc.Point(0, 0);
+      var p = new Point(0, 0);
       p.x = this._position.x + this._betweenX * percent;
       p.y = this._position.y + this._betweenY * percent;
 
@@ -777,7 +779,7 @@ export class ScaleFrame extends Frame {
 export class AnchorPointFrame extends Frame {
   constructor() {
     super();
-    this._anchorPoint = new cc.Point(0, 0);
+    this._anchorPoint = new Point(0, 0);
   }
 
   /**
@@ -871,7 +873,7 @@ export class InnerActionFrame extends Frame {
         innerStart = info.startIndex;
         innerEnd = info.endIndex;
       } else {
-        cc.log("Animation %s not exists!", this._animationName);
+        log("Animation %s not exists!", this._animationName);
       }
     }
 
@@ -966,7 +968,7 @@ export class InnerActionFrame extends Frame {
 export class ColorFrame extends Frame {
   constructor() {
     super();
-    this._color = new cc.Color(255, 255, 255);
+    this._color = new Color(255, 255, 255);
   }
 
   /**
@@ -997,7 +999,7 @@ export class ColorFrame extends Frame {
         this._betweenGreen !== 0 ||
         this._betweenBlue !== 0)
     ) {
-      var color = new cc.Color(255, 255, 255);
+      var color = new Color(255, 255, 255);
       color.r = this._color.r + this._betweenRed * percent;
       color.g = this._color.g + this._betweenGreen * percent;
       color.b = this._color.b + this._betweenBlue * percent;

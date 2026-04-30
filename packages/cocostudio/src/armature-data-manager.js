@@ -27,12 +27,15 @@
  * RelativeData uses to save plist files, armature files, animations and textures for armature data manager.
  * @constructor
  */
-ccs.RelativeData = function () {
+import { SpriteFrameCache } from "@aspect/core";
+
+export function RelativeData() {
     this.plistFiles = [];
     this.armatures = [];
     this.animations = [];
     this.textures = [];
-};
+}
+ccs.RelativeData = RelativeData;
 
 /**
  * ccs.armatureDataManager is a singleton object which format and manage armature configuration and armature animation
@@ -69,7 +72,7 @@ ccs.armatureDataManager =  {
             }
             for (i = 0; i < data.plistFiles.length; i++) {
                 obj = data.plistFiles[i];
-                cc.spriteFrameCache.removeSpriteFramesFromFile(obj);
+                SpriteFrameCache.getInstance().removeSpriteFramesFromFile(obj);
             }
             delete this._relativeDatas[configFilePath];
             ccs.dataReaderHelper.removeConfigFile(configFilePath);
@@ -299,7 +302,7 @@ ccs.armatureDataManager =  {
      */
     addRelativeData: function (configFilePath) {
         if (!this._relativeDatas[configFilePath])
-            this._relativeDatas[configFilePath] = new ccs.RelativeData();
+            this._relativeDatas[configFilePath] = new RelativeData();
     },
 
     /**
@@ -326,5 +329,3 @@ ccs.armatureDataManager =  {
         ccs.dataReaderHelper.clear();
     }
 };
-
-ccs.RelativeData = RelativeData;

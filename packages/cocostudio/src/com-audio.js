@@ -26,6 +26,9 @@
 /**
  * The audio component for Cocostudio.
  */
+import { Loader } from "@aspect/core";
+import { audioEngine } from "@aspect/audio";
+
 export class ComAudio extends ccs.Component {
 
     /**
@@ -60,7 +63,7 @@ export class ComAudio extends ccs.Component {
      * Stops all audios.
      */
     end () {
-        cc.audioEngine.end();
+        audioEngine.end();
     }
 
     /**
@@ -68,7 +71,7 @@ export class ComAudio extends ccs.Component {
      * @param {String} pszFilePath
      */
     preloadBackgroundMusic (pszFilePath) {
-        cc.loader.load(pszFilePath);
+        Loader.getInstance().load(pszFilePath);
     }
 
     /**
@@ -78,9 +81,9 @@ export class ComAudio extends ccs.Component {
      */
     playBackgroundMusic (pszFilePath, loop) {
         if(pszFilePath){
-            cc.audioEngine.playMusic(pszFilePath, loop);
+            audioEngine.playMusic(pszFilePath, loop);
         }else{
-            cc.audioEngine.playMusic(this._filePath, this._loop);
+            audioEngine.playMusic(this._filePath, this._loop);
         }
     }
 
@@ -89,28 +92,28 @@ export class ComAudio extends ccs.Component {
      * @param {String} releaseData
      */
     stopBackgroundMusic (releaseData) {
-        cc.audioEngine.stopMusic(releaseData);
+        audioEngine.stopMusic(releaseData);
     }
 
     /**
      * Pause background music
      */
     pauseBackgroundMusic () {
-        cc.audioEngine.pauseMusic();
+        audioEngine.pauseMusic();
     }
 
     /**
      * Resume background music
      */
     resumeBackgroundMusic () {
-        cc.audioEngine.resumeMusic();
+        audioEngine.resumeMusic();
     }
 
     /**
      * Rewind background music
      */
     rewindBackgroundMusic () {
-        cc.audioEngine.rewindMusic();
+        audioEngine.rewindMusic();
     }
 
     /**
@@ -118,7 +121,7 @@ export class ComAudio extends ccs.Component {
      * @returns {boolean}
      */
     willPlayBackgroundMusic () {
-        return cc.audioEngine.willPlayMusic();
+        return audioEngine.willPlayMusic();
     }
 
     /**
@@ -126,7 +129,7 @@ export class ComAudio extends ccs.Component {
      * @returns {Boolean}
      */
     isBackgroundMusicPlaying () {
-        return cc.audioEngine.isMusicPlaying();
+        return audioEngine.isMusicPlaying();
     }
 
     /**
@@ -134,7 +137,7 @@ export class ComAudio extends ccs.Component {
      * @returns {Number}
      */
     getBackgroundMusicVolume () {
-        return cc.audioEngine.getMusicVolume();
+        return audioEngine.getMusicVolume();
     }
 
     /**
@@ -142,7 +145,7 @@ export class ComAudio extends ccs.Component {
      * @param {Number} volume   must be in 0.0~1.0 .
      */
     setBackgroundMusicVolume (volume) {
-        cc.audioEngine.setMusicVolume(volume);
+        audioEngine.setMusicVolume(volume);
     }
 
     /**
@@ -150,7 +153,7 @@ export class ComAudio extends ccs.Component {
      * @returns {Number}
      */
     getEffectsVolume () {
-        return cc.audioEngine.getEffectsVolume();
+        return audioEngine.getEffectsVolume();
     }
 
     /**
@@ -158,7 +161,7 @@ export class ComAudio extends ccs.Component {
      * @param {Number} volume
      */
     setEffectsVolume (volume) {
-        cc.audioEngine.setEffectsVolume(volume);
+        audioEngine.setEffectsVolume(volume);
     }
 
     /**
@@ -169,9 +172,9 @@ export class ComAudio extends ccs.Component {
      */
     playEffect (pszFilePath, loop) {
         if (pszFilePath)
-            return cc.audioEngine.playEffect(pszFilePath, loop);
+            return audioEngine.playEffect(pszFilePath, loop);
          else
-            return cc.audioEngine.playEffect(this._filePath, this._loop);
+            return audioEngine.playEffect(this._filePath, this._loop);
     }
 
     /**
@@ -179,14 +182,14 @@ export class ComAudio extends ccs.Component {
      * @param {Number} soundId
      */
     pauseEffect (soundId) {
-        cc.audioEngine.pauseEffect(soundId);
+        audioEngine.pauseEffect(soundId);
     }
 
     /**
      * Pause all effects
      */
     pauseAllEffects () {
-        cc.audioEngine.pauseAllEffects();
+        audioEngine.pauseAllEffects();
     }
 
     /**
@@ -194,14 +197,14 @@ export class ComAudio extends ccs.Component {
      * @param {Number} soundId
      */
     resumeEffect (soundId) {
-        cc.audioEngine.resumeEffect(soundId);
+        audioEngine.resumeEffect(soundId);
     }
 
     /**
      * Resume all effects
      */
     resumeAllEffects () {
-        cc.audioEngine.resumeAllEffects();
+        audioEngine.resumeAllEffects();
     }
 
     /**
@@ -209,14 +212,14 @@ export class ComAudio extends ccs.Component {
      * @param {Number} soundId
      */
     stopEffect (soundId) {
-        cc.audioEngine.stopEffect(soundId);
+        audioEngine.stopEffect(soundId);
     }
 
     /**
      * stop all effects
      */
     stopAllEffects () {
-        cc.audioEngine.stopAllEffects();
+        audioEngine.stopAllEffects();
     }
 
     /**
@@ -224,7 +227,7 @@ export class ComAudio extends ccs.Component {
      * @param {String} pszFilePath
      */
     preloadEffect (pszFilePath) {
-        cc.loader.getRes(pszFilePath);
+        Loader.getInstance().getRes(pszFilePath);
         this.setFile(pszFilePath);
         this.setLoop(false);
     }
@@ -234,7 +237,7 @@ export class ComAudio extends ccs.Component {
      * @param {String} pszFilePath
      */
     unloadEffect (pszFilePath) {
-        cc.audioEngine.unloadEffect(pszFilePath);
+        audioEngine.unloadEffect(pszFilePath);
     }
 
     /**

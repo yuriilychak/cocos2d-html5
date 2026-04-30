@@ -1,4 +1,3 @@
-import { NewClass } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -28,6 +27,8 @@ import { NewClass } from '@aspect/core';
 /**
  * The base class of trigger condition.
  */
+import { NewClass, log } from "@aspect/core";
+
 export class BaseTriggerCondition extends NewClass {
     /**
      * Construction of ccs.BaseTriggerCondition
@@ -192,7 +193,7 @@ export class TriggerObj extends NewClass {
             var classname = subDict["classname"];
             var con = ccs.objectFactory.createObject(classname);
             if (!con) {
-                cc.log("class named classname(" + classname + ") can not implement!");
+                log("class named classname(" + classname + ") can not implement!");
                 continue;
             }
 
@@ -207,7 +208,7 @@ export class TriggerObj extends NewClass {
             var classname = subDict["classname"];
             var act = ccs.objectFactory.createObject(classname);
             if (!act) {
-                cc.log("class named classname(" + classname + ") can not implement!");
+                log("class named classname(" + classname + ") can not implement!");
                 continue;
             }
 

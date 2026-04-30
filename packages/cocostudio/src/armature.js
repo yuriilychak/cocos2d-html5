@@ -1,4 +1,3 @@
-import { Node } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -37,6 +36,8 @@ import { Node } from '@aspect/core';
  * @property {Object}                   body            - The body of the armature
  * @property {ccs.ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
  */
+import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Game, Node, Point, Rect, RendererConfig, arrayRemoveObject, assert, log } from "@aspect/core";
+
 export class Armature extends Node {
   /**
    * Create a armature node.
@@ -51,9 +52,9 @@ export class Armature extends Node {
     this._name = "";
     this._topBoneList = [];
     this._armatureIndexDic = {};
-    this._offsetPoint = new cc.Point(0, 0);
+    this._offsetPoint = new Point(0, 0);
     this._armatureTransformDirty = true;
-    this._blendFunc = { src: cc.BLEND_SRC, dst: cc.BLEND_DST };
+    this._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
     name && this.init(name, parentBone);
     // Hack way to avoid RendererWebGL from skipping Armature
     this._texture = {};
@@ -99,13 +100,13 @@ export class Armature extends Node {
     if (name !== "") {
       //animationData
       animationData = armatureDataManager.getAnimationData(name);
-      cc.assert(animationData, "AnimationData not exist!");
+      assert(animationData, "AnimationData not exist!");
 
       this.animation.setAnimationData(animationData);
 
       //armatureData
       var armatureData = armatureDataManager.getArmatureData(name);
-      cc.assert(armatureData, "ArmatureData not exist!");
+      assert(armatureData, "ArmatureData not exist!");
 
       this.armatureData = armatureData;
 
@@ -171,7 +172,7 @@ export class Armature extends Node {
 
   addChild(child, localZOrder, tag) {
     if (child instanceof ccui.Widget) {
-      cc.log(
+      log(
         "Armature doesn't support to add Widget as its child, it will be fix soon."
       );
       return;
@@ -212,10 +213,10 @@ export class Armature extends Node {
    * @param {String} parentName The parent Bone's name you want to add to. If it's  null, then set Armature to its parent
    */
   addBone(bone, parentName) {
-    cc.assert(bone, "Argument must be non-nil");
+    assert(bone, "Argument must be non-nil");
     var locBoneDic = this._boneDic;
     if (bone.getName())
-      cc.assert(
+      assert(
         !locBoneDic[bone.getName()],
         "bone already added. It can't be added again"
       );
@@ -237,11 +238,11 @@ export class Armature extends Node {
    * @param {Boolean} recursion Determine whether remove the bone's child  recursion.
    */
   removeBone(bone, recursion) {
-    cc.assert(bone, "bone must be added to the bone dictionary!");
+    assert(bone, "bone must be added to the bone dictionary!");
 
     bone.setArmature(null);
     bone.removeFromParent(recursion);
-    cc.arrayRemoveObject(this._topBoneList, bone);
+    arrayRemoveObject(this._topBoneList, bone);
 
     delete this._boneDic[bone.getName()];
     this.removeChild(bone, true);
@@ -262,11 +263,11 @@ export class Armature extends Node {
    * @param {String} parentName The new parent's name
    */
   changeBoneParent(bone, parentName) {
-    cc.assert(bone, "bone must be added to the bone dictionary!");
+    assert(bone, "bone must be added to the bone dictionary!");
 
     var parentBone = bone.getParentBone();
     if (parentBone) {
-      cc.arrayRemoveObject(parentBone.getChildren(), bone);
+      arrayRemoveObject(parentBone.getChildren(), bone);
       bone.setParentBone(null);
     }
 
@@ -274,7 +275,7 @@ export class Armature extends Node {
       var boneParent = this._boneDic[parentName];
       if (boneParent) {
         boneParent.addChildBone(bone);
-        cc.arrayRemoveObject(this._topBoneList, bone);
+        arrayRemoveObject(this._topBoneList, bone);
       } else this._topBoneList.push(bone);
     }
   }
@@ -374,7 +375,7 @@ export class Armature extends Node {
       maxY = 0;
     var first = true;
 
-    var boundingBox = new cc.Rect(0, 0, 0, 0),
+    var boundingBox = new Rect(0, 0, 0, 0),
       locChildren = this._children;
 
     var len = locChildren.length;
@@ -409,7 +410,7 @@ export class Armature extends Node {
         boundingBox.height = maxY - minY;
       }
     }
-    return cc.AffineTransform.applyToRect(
+    return AffineTransform.applyToRect(
       boundingBox,
       this.getNodeToParentTransform()
     );
@@ -458,8 +459,8 @@ export class Armature extends Node {
    * draw contour
    */
   drawContour() {
-    cc.game.drawingUtil.setDrawColor(255, 255, 255, 255);
-    cc.game.drawingUtil.setLineWidth(1);
+    Game.getInstance().drawingUtil.setDrawColor(255, 255, 255, 255);
+    Game.getInstance().drawingUtil.setLineWidth(1);
     var locBoneDic = this._boneDic;
     for (var key in locBoneDic) {
       var bone = locBoneDic[key];
@@ -469,7 +470,7 @@ export class Armature extends Node {
       for (var i = 0; i < bodyList.length; i++) {
         var body = bodyList[i];
         var vertexList = body.getCalculatedVertexList();
-        cc.game.drawingUtil.drawPoly(vertexList, vertexList.length, true);
+        Game.getInstance().drawingUtil.drawPoly(vertexList, vertexList.length, true);
       }
     }
   }
@@ -524,7 +525,7 @@ export class Armature extends Node {
    * @returns {BlendFunc}
    */
   getBlendFunc() {
-    return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
+    return new BlendFunc(this._blendFunc.src, this._blendFunc.dst);
   }
 
   /**
@@ -577,7 +578,7 @@ export class Armature extends Node {
   }
 
   _createRenderCmd() {
-    if (cc.rendererConfig.isCanvas)
+    if (RendererConfig.getInstance().isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }

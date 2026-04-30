@@ -1,4 +1,3 @@
-import { SpriteFrameCache } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -29,6 +28,8 @@ import { SpriteFrameCache } from '@aspect/core';
  * ccs.spriteFrameCacheHelper is a singleton object, it's a sprite frame cache helper
  * @name ccs.spriteFrameCacheHelper
  */
+import { SpriteFrameCache, TextureAtlas } from "@aspect/core";
+
 ccs.spriteFrameCacheHelper =  {
     _textureAtlasDic:{},
     _imagePaths:[],
@@ -53,7 +54,7 @@ ccs.spriteFrameCacheHelper =  {
         var textureName = texture.getName();
         var atlas = this._textureAtlasDic[textureName];
         if (atlas == null) {
-            atlas = new cc.TextureAtlas(texture, 20);
+            atlas = new TextureAtlas(texture, 20);
             this._textureAtlasDic[textureName] = atlas;
         }
         return atlas;

@@ -1,4 +1,3 @@
-import { Node } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -47,6 +46,8 @@ import { Node } from '@aspect/core';
  * @property {Boolean}              blendDirty              - Indicate whether the blend is dirty
  *
  */
+import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Color, Node, RendererConfig, arrayRemoveObject, assert, degreesToRadians, log } from "@aspect/core";
+
 export class Bone extends Node {
   constructor(name) {
     super();
@@ -59,9 +60,9 @@ export class Bone extends Node {
     this._displayManager = null;
     this.ignoreMovementBoneData = false;
 
-    this._worldTransform = cc.AffineTransform.make(1, 0, 0, 1, 0, 0);
+    this._worldTransform = AffineTransform.make(1, 0, 0, 1, 0, 0);
     this._boneTransformDirty = true;
-    this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
+    this._blendFunc = new BlendFunc(BLEND_SRC, BLEND_DST);
     this.blendDirty = false;
     this._worldInfo = null;
 
@@ -136,7 +137,7 @@ export class Bone extends Node {
    * @param {ccs.BoneData} boneData
    */
   setBoneData(boneData) {
-    cc.assert(boneData, "_boneData must not be null");
+    assert(boneData, "_boneData must not be null");
 
     if (this._boneData !== boneData) this._boneData = boneData;
 
@@ -201,9 +202,9 @@ export class Bone extends Node {
       locWorldInfo.scaleX = locTweenData.scaleX * this._scaleX;
       locWorldInfo.scaleY = locTweenData.scaleY * this._scaleY;
       locWorldInfo.skewX =
-        locTweenData.skewX + this._skewX + cc.degreesToRadians(this._rotationX);
+        locTweenData.skewX + this._skewX + degreesToRadians(this._rotationX);
       locWorldInfo.skewY =
-        locTweenData.skewY + this._skewY - cc.degreesToRadians(this._rotationY);
+        locTweenData.skewY + this._skewY - degreesToRadians(this._rotationY);
 
       if (this._parentBone) this._applyParentTransform(this._parentBone);
       else {
@@ -213,7 +214,7 @@ export class Bone extends Node {
 
       ccs.TransformHelp.nodeToMatrix(locWorldInfo, this._worldTransform);
       if (this._armatureParentBone)
-        cc.AffineTransform.concatIn(
+        AffineTransform.concatIn(
           this._worldTransform,
           this._armature.getNodeToParentTransform()
         ); //TODO TransformConcat
@@ -282,7 +283,7 @@ export class Bone extends Node {
     if (display !== null) {
       var cmd = this._renderCmd;
       display.setColor(
-        new cc.Color(
+        new Color(
           (cmd._displayedColor.r * this._tweenData.r) / 255,
           (cmd._displayedColor.g * this._tweenData.g) / 255,
           (cmd._displayedColor.b * this._tweenData.b) / 255
@@ -310,8 +311,8 @@ export class Bone extends Node {
    * @param {ccs.Bone} child
    */
   addChildBone(child) {
-    cc.assert(child, "Argument must be non-nil");
-    cc.assert(
+    assert(child, "Argument must be non-nil");
+    assert(
       !child.parentBone,
       "child already added. It can't be added again"
     );
@@ -339,7 +340,7 @@ export class Bone extends Node {
 
       bone.setParentBone(null);
       bone.getDisplayManager().setCurrentDecorativeDisplay(null);
-      cc.arrayRemoveObject(this._children, bone);
+      arrayRemoveObject(this._children, bone);
     }
   }
 
@@ -419,7 +420,7 @@ export class Bone extends Node {
    * @returns {AffineTransform}
    */
   getNodeToWorldTransform() {
-    return cc.AffineTransform.concat(
+    return AffineTransform.concat(
       this._worldTransform,
       this._armature.getNodeToWorldTransform()
     );
@@ -470,7 +471,7 @@ export class Bone extends Node {
    * @param {Boolean} force
    */
   changeDisplayByIndex(index, force) {
-    cc.log(
+    log(
       "changeDisplayByIndex is deprecated. Use changeDisplayWithIndex instead."
     );
     this.changeDisplayWithIndex(index, force);
@@ -483,7 +484,7 @@ export class Bone extends Node {
    * @param {Boolean} force
    */
   changeDisplayByName(name, force) {
-    cc.log(
+    log(
       "changeDisplayByName is deprecated. Use changeDisplayWithName instead."
     );
     this.changeDisplayWithName(name, force);
@@ -592,7 +593,7 @@ export class Bone extends Node {
    * @return {BlendFunc}
    */
   getBlendFunc() {
-    return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
+    return new BlendFunc(this._blendFunc.src, this._blendFunc.dst);
   }
 
   /**
@@ -675,13 +676,13 @@ export class Bone extends Node {
   }
 
   _createRenderCmd() {
-    if (cc.rendererConfig.isCanvas) return new ccs.Bone.CanvasRenderCmd(this);
+    if (RendererConfig.getInstance().isCanvas) return new ccs.Bone.CanvasRenderCmd(this);
     else return new ccs.Bone.WebGLRenderCmd(this);
   }
 };
 
 (function () {
-  class BoneCanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+  class BoneCanvasRenderCmd extends Node.CanvasRenderCmd {
     constructor(renderable) {
       super(renderable);
       this._needDraw = false;
@@ -713,7 +714,7 @@ export class Bone extends Node {
 
       if (pt) {
         this.originTransform();
-        cc.AffineTransform.concatIn(t, node._worldTransform);
+        AffineTransform.concatIn(t, node._worldTransform);
       }
 
       if (pt) {
@@ -736,8 +737,8 @@ export class Bone extends Node {
 })();
 
 (function () {
-  if (!cc.Node.WebGLRenderCmd) return;
-  class BoneWebGLRenderCmd extends cc.Node.WebGLRenderCmd {
+  if (!Node.WebGLRenderCmd) return;
+  class BoneWebGLRenderCmd extends Node.WebGLRenderCmd {
     constructor(renderable) {
       super(renderable);
       this._needDraw = false;
@@ -769,7 +770,7 @@ export class Bone extends Node {
 
       if (pt) {
         this.originTransform();
-        cc.AffineTransform.concatIn(t, node._worldTransform);
+        AffineTransform.concatIn(t, node._worldTransform);
       }
 
       if (pt) {

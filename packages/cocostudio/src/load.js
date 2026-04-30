@@ -1,4 +1,3 @@
-import { Director } from '@aspect/core';
 
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -24,6 +23,8 @@ import { Director } from '@aspect/core';
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Director, Loader, NewClass, Node, Path, log, warn } from "@aspect/core";
+
 const _ccsLoad = ccs._load = (function () {
 
     /**
@@ -35,13 +36,13 @@ const _ccsLoad = ccs._load = (function () {
      */
     var load = function (file, type, path) {
 
-        var json = cc.loader.getRes(file);
+        var json = Loader.getInstance().getRes(file);
 
         if (!json)
-            return cc.log("%s does not exist", file);
+            return log("%s does not exist", file);
         var ext = extname(file).toLocaleLowerCase();
         if (ext !== "json" && ext !== "exportjson")
-            return cc.log("%s load error, must be json file", file);
+            return log("%s load error, must be json file", file);
 
         var parse;
         if (!type) {
@@ -52,20 +53,20 @@ const _ccsLoad = ccs._load = (function () {
         }
 
         if (!parse) {
-            cc.log("Can't find the parser : %s", file);
-            return new cc.Node();
+            log("Can't find the parser : %s", file);
+            return new Node();
         }
         var version = json["version"] || json["Version"];
         if (!version && json["armature_data"]) {
-            cc.warn("%s is armature. please use:", file);
-            cc.warn("    ccs.armatureDataManager.addArmatureFileInfoAsync(%s);", file);
-            cc.warn("    var armature = new ccs.Armature('name');");
-            return new cc.Node();
+            warn("%s is armature. please use:", file);
+            warn("    ccs.armatureDataManager.addArmatureFileInfoAsync(%s);", file);
+            warn("    var armature = new ccs.Armature('name');");
+            return new Node();
         }
         var currentParser = getParser(parse, version);
         if (!currentParser) {
-            cc.log("Can't find the parser : %s", file);
-            return new cc.Node();
+            log("Can't find the parser : %s", file);
+            return new Node();
         }
 
         return currentParser.parse(file, json, path) || null;
@@ -78,7 +79,7 @@ const _ccsLoad = ccs._load = (function () {
 
     load.registerParser = function (name, version, target) {
         if (!name || !version || !target)
-            return cc.log("register parser error");
+            return log("register parser error");
         if (!parser[name])
             parser[name] = {};
         parser[name][version] = target;
@@ -99,7 +100,6 @@ const _ccsLoad = ccs._load = (function () {
     };
     var extnameReg = /\.([^\.]+)$/;
 
-
     var parserReg = /([^\.](\.\*)?)*$/;
     var getParser = function (parser, version) {
         if (parser[version])
@@ -114,7 +114,7 @@ const _ccsLoad = ccs._load = (function () {
 
 })();
 
-export class _parser extends cc.NewClass {
+export class _parser extends NewClass {
 
     _dirnameReg = /\S*\//;
 
@@ -156,7 +156,7 @@ export class _parser extends cc.NewClass {
         if (parser)
             widget = parser.call(this, json, resourcePath);
         else
-            cc.log("Can't find the parser : %s", this.getClass(json));
+            log("Can't find the parser : %s", this.getClass(json));
 
         return widget;
     }
@@ -174,7 +174,7 @@ export class _parser extends cc.NewClass {
  *   action 2.*
  * @param {String} file
  * @param {String} [path=] Resource path
- * @returns {{node: cc.Node, action: cc.Action}}
+ * @returns {{node: Node, action: Action}}
  */
 export function load (file, path) {
     var object = {
@@ -199,7 +199,7 @@ load.preload = true;
  *   action 2.*
  * @param {String} file
  * @param {String} [path=] Resource path
- * @returns {{node: cc.Node, action: cc.Action}}
+ * @returns {{node: Node, action: Action}}
  */
 export function loadWithVisibleSize (file, path) {
     var object = ccs.load(file, path);
@@ -214,7 +214,6 @@ export function loadWithVisibleSize (file, path) {
 //Forward compatible interface
 
 export const actionTimelineCache = ccs.actionTimelineCache = {
-
 
     //@deprecated This function will be deprecated sooner or later please use ccs.load
     /**
@@ -240,10 +239,10 @@ export const csLoader = ccs.csLoader = {
     }
 };
 
-cc.loader.register(["json"], {
+Loader.getInstance().register(["json"], {
     load: function (realUrl, url, res, cb) {
-        cc.loader.loadJson(realUrl, function (error, data) {
-            var path = cc.path;
+        Loader.getInstance().loadJson(realUrl, function (error, data) {
+            var path = Path;
             if (data && data["Content"] && data["Content"]["Content"]["UsedResources"]) {
                 var UsedResources = data["Content"]["Content"]["UsedResources"],
                     dirname = path.dirname(url),
@@ -259,7 +258,7 @@ cc.loader.register(["json"], {
                         list.push(normalUrl);
                     }
                 }
-                cc.loader.load(list, function () {
+                Loader.getInstance().load(list, function () {
                     cb(error, data);
                 });
             } else {

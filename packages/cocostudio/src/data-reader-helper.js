@@ -26,6 +26,8 @@
 /**
  * @ignore
  */
+import { BLEND_DST, BLEND_SRC, DST_COLOR, Director, Loader, ONE, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, Path, Point, SAXParser, SRC_ALPHA, arrayRemoveObject, degreesToRadians, isFunction, log } from "@aspect/core";
+
 export const CONST_VERSION = ccs.CONST_VERSION = "version";
 export const CONST_VERSION_2_0 = ccs.CONST_VERSION_2_0 = 2.0;
 export const CONST_VERSION_COMBINED = ccs.CONST_VERSION_COMBINED = 0.3;
@@ -185,7 +187,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
         // Read content from file
         // Here the reader into the next process
 
-        var str = cc.path.extname(filePath).toLowerCase();
+        var str = Path.extname(filePath).toLowerCase();
 
         var dataInfo = new ccs.DataInfo();
         dataInfo.filename = filePath;
@@ -232,7 +234,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
             self._asyncRefCount--;
             self._asyncCallBack(selector,target, (self._asyncRefTotalCount - self._asyncRefCount) / self._asyncRefTotalCount);
         };
-        cc.director.getScheduler().schedule(fun, this, 0.1, false, 0, false, "armatrueDataHelper");
+        Director.getInstance().getScheduler().schedule(fun, this, 0.1, false, 0, false, "armatrueDataHelper");
     },
 
     /**
@@ -240,7 +242,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
      * @param {String} configFile
      */
     removeConfigFile: function (configFile) {
-//        cc.arrayRemoveObject(this._configFileList, configFile);
+//      arrayRemoveObject(this._configFileList, configFile);
         var locFileList = this._configFileList;
         var len = locFileList.length;
         var it = locFileList[len];
@@ -250,7 +252,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
         }
 
         if (it !== locFileList[len])
-            cc.arrayRemoveObject(locFileList, configFile);
+            arrayRemoveObject(locFileList, configFile);
     },
 
     /**
@@ -260,7 +262,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
      */
     addDataFromCache: function (skeleton, dataInfo) {
         if (!skeleton) {
-            cc.log("XML error  or  XML is empty.");
+            log("XML error  or  XML is empty.");
             return;
         }
         dataInfo.flashToolVersion = parseFloat(skeleton.getAttribute(ccs.CONST_VERSION));
@@ -823,10 +825,10 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
             frameData.scaleY = parseFloat(scale_y);
         skew_x = frameXML.getAttribute(ccs.CONST_A_SKEW_X);
         if( skew_x != null )
-            frameData.skewX = cc.degreesToRadians(parseFloat(skew_x));
+            frameData.skewX = degreesToRadians(parseFloat(skew_x));
         skew_y = frameXML.getAttribute(ccs.CONST_A_SKEW_Y);
         if( skew_y != null )
-            frameData.skewY = cc.degreesToRadians(-parseFloat(skew_y));
+            frameData.skewY = degreesToRadians(-parseFloat(skew_y));
 
         duration = frameXML.getAttribute(ccs.CONST_A_DURATION);
         if( duration != null )
@@ -846,24 +848,24 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
             var blendFunc = frameData.blendFunc;
             switch (blendType) {
                 case ccs.BLEND_TYPE_NORMAL:
-                    blendFunc.src = cc.BLEND_SRC;
-                    blendFunc.dst = cc.BLEND_DST;
+                    blendFunc.src = BLEND_SRC;
+                    blendFunc.dst = BLEND_DST;
                     break;
                 case ccs.BLEND_TYPE_ADD:
-                    blendFunc.src = cc.SRC_ALPHA;
-                    blendFunc.dst = cc.ONE;
+                    blendFunc.src = SRC_ALPHA;
+                    blendFunc.dst = ONE;
                     break;
                 case ccs.BLEND_TYPE_MULTIPLY:
-                    blendFunc.src = cc.DST_COLOR;
-                    blendFunc.dst = cc.ONE_MINUS_SRC_ALPHA;
+                    blendFunc.src = DST_COLOR;
+                    blendFunc.dst = ONE_MINUS_SRC_ALPHA;
                     break;
                 case ccs.BLEND_TYPE_SCREEN:
-                    blendFunc.src = cc.ONE;
-                    blendFunc.dst = cc.ONE_MINUS_DST_COLOR;
+                    blendFunc.src = ONE;
+                    blendFunc.dst = ONE_MINUS_DST_COLOR;
                     break;
                 default:
-                    frameData.blendFunc.src = cc.BLEND_SRC;
-                    frameData.blendFunc.dst = cc.BLEND_DST;
+                    frameData.blendFunc.src = BLEND_SRC;
+                    frameData.blendFunc.dst = BLEND_DST;
                     break;
             }
         }
@@ -916,8 +918,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
             helpNode.skewY = parseFloat(parentFrameXml.getAttribute(ccs.CONST_A_SKEW_Y));
 
             helpNode.y = -helpNode.y;
-            helpNode.skewX = cc.degreesToRadians(helpNode.skewX);
-            helpNode.skewY = cc.degreesToRadians(-helpNode.skewY);
+            helpNode.skewX = degreesToRadians(helpNode.skewX);
+            helpNode.skewY = degreesToRadians(-helpNode.skewY);
             ccs.TransformHelp.transformFromParent(frameData, helpNode);
         }
         return frameData;
@@ -936,8 +938,8 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
 
         frameData.tweenEasing = json[ccs.CONST_A_TWEEN_EASING] || ccs.TweenType.LINEAR;
         frameData.displayIndex = json[ccs.CONST_A_DISPLAY_INDEX];
-        var bd_src = json[ccs.CONST_A_BLEND_SRC] == null ? cc.BLEND_SRC : json[ccs.CONST_A_BLEND_SRC];
-        var bd_dst = json[ccs.CONST_A_BLEND_DST] == null ? cc.BLEND_DST : json[ccs.CONST_A_BLEND_DST];
+        var bd_src = json[ccs.CONST_A_BLEND_SRC] == null ? BLEND_SRC : json[ccs.CONST_A_BLEND_SRC];
+        var bd_dst = json[ccs.CONST_A_BLEND_DST] == null ? BLEND_DST : json[ccs.CONST_A_BLEND_DST];
         frameData.blendFunc.src = bd_src;
         frameData.blendFunc.dst = bd_dst;
         frameData.isTween = json[ccs.CONST_A_TWEEN_FRAME] == null ? true : json[ccs.CONST_A_TWEEN_FRAME];
@@ -1040,7 +1042,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
         var vertexDataXML;
         for (var i = 0; i < vertexDatasXML.length; i++) {
             vertexDataXML = vertexDatasXML[i];
-            var vertex = new cc.Point(0, 0);
+            var vertex = new Point(0, 0);
             vertex.x = parseFloat(vertexDataXML.getAttribute(ccs.CONST_A_X)) || 0;
             vertex.y = parseFloat(vertexDataXML.getAttribute(ccs.CONST_A_Y)) || 0;
 
@@ -1063,7 +1065,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
         var len = vertexPointList.length;
         for (var i = 0; i < len; i++) {
             var dic = vertexPointList[i];
-            var vertex = new cc.Point(0, 0);
+            var vertex = new Point(0, 0);
             vertex.x = dic[ccs.CONST_A_X] || 0;
             vertex.y = dic[ccs.CONST_A_Y] || 0;
             contourData.vertexList.push(vertex);
@@ -1172,7 +1174,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
     },
 
     _asyncCallBack: function (selector, target, percent) {
-        if(selector && cc.isFunction(selector))
+        if(selector && isFunction(selector))
             selector.call(target, percent);
         if(target && selector && typeof selector === 'string')
             target[selector](percent);
@@ -1202,9 +1204,9 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
         /*
          *  Need to get the full path of the xml file, or the Tiny XML can't find the xml at IOS
          */
-        var xmlStr = cc.loader.getRes(xml);
+        var xmlStr = Loader.getInstance().getRes(xml);
         if (!xmlStr) throw new Error("Please load the resource first : " + xml);
-        var skeletonXML = cc.saxParser.parse(xmlStr);
+        var skeletonXML = new SAXParser().parse(xmlStr);
         var skeleton = skeletonXML.documentElement;
         if (skeleton)
             this.addDataFromCache(skeleton, dataInfo);
@@ -1216,7 +1218,7 @@ export const dataReaderHelper = ccs.dataReaderHelper = {
      * @param {ccs.DataInfo} dataInfo
      */
     addDataFromJson: function (filePath, dataInfo) {
-        var fileContent = cc.loader.getRes(filePath);
+        var fileContent = Loader.getInstance().getRes(filePath);
         this.addDataFromJsonCache(fileContent, dataInfo);
     }
 };

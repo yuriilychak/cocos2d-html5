@@ -22,16 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { AffineTransform, BlendFunc, CustomRenderCmd, Node, Point, RendererConfig } from "@aspect/core";
 
-    export class ArmatureCanvasRenderCmd extends cc.Node.CanvasRenderCmd {
+    export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
         constructor(renderableObject) {
             super(renderableObject);
             this._needDraw = true;
 
-            this._realAnchorPointInPoints = new cc.Point(0, 0);
+            this._realAnchorPointInPoints = new Point(0, 0);
             this._canUseDirtyRegion = true;
-            this._startRenderCmd = new cc.CustomRenderCmd(this, this._startCmdCallback);
-            this._RestoreRenderCmd = new cc.CustomRenderCmd(this, this._RestoreCmdCallback);
+            this._startRenderCmd = new CustomRenderCmd(this, this._startCmdCallback);
+            this._RestoreRenderCmd = new CustomRenderCmd(this, this._RestoreCmdCallback);
             this._startRenderCmd._canUseDirtyRegion = true;
             this._RestoreRenderCmd._canUseDirtyRegion = true;
 
@@ -47,18 +48,18 @@
 
             this._realAnchorPointInPoints.x = contentSize.width * anchorPoint.x;
             this._realAnchorPointInPoints.y = contentSize.height * anchorPoint.y;
-            this.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+            this.setDirtyFlag(Node._dirtyFlags.transformDirty);
         }
 
         getAnchorPointInPoints() {
-            return new cc.Point(this._realAnchorPointInPoints);
+            return new Point(this._realAnchorPointInPoints);
         }
 
         _startCmdCallback(ctx, scaleX, scaleY) {
             var node = this._node, parent = node._parent;
             this.transform(parent ? parent._renderCmd : null);
 
-            var wrapper = ctx || cc.rendererConfig.renderContext;
+            var wrapper = ctx || RendererConfig.getInstance().renderContext;
             wrapper.save();
             wrapper._switchToArmatureMode(true, this._worldTransform, scaleX, scaleY);
         }
@@ -77,10 +78,10 @@
                         var cmd = selNode._renderCmd;
                         cmd.transform(null);
                         if (boneType !== ccs.DISPLAY_TYPE_ARMATURE && boneType !== ccs.DISPLAY_TYPE_SPRITE) {
-                            cc.AffineTransform.concatIn(cmd._worldTransform, selBone._worldTransform);
+                            AffineTransform.concatIn(cmd._worldTransform, selBone._worldTransform);
                         }
 
-                        var flags = cc.Node._dirtyFlags, locFlag = cmd._dirtyFlag, boneFlag = boneCmd._dirtyFlag;
+                        var flags = Node._dirtyFlags, locFlag = cmd._dirtyFlag, boneFlag = boneCmd._dirtyFlag;
                         var colorDirty = boneFlag & flags.colorDirty,
                             opacityDirty = boneFlag & flags.opacityDirty;
                         if (colorDirty)
@@ -124,7 +125,7 @@
         rendering(ctx, scaleX, scaleY) {
             var node = this._node;
             var locChildren = node._children;
-            var alphaPremultiplied = cc.BlendFunc.ALPHA_PREMULTIPLIED, alphaNonPremultipled = cc.BlendFunc.ALPHA_NON_PREMULTIPLIED;
+            var alphaPremultiplied = BlendFunc.ALPHA_PREMULTIPLIED, alphaNonPremultipled = BlendFunc.ALPHA_NON_PREMULTIPLIED;
             for (var i = 0, len = locChildren.length; i < len; i++) {
                 var selBone = locChildren[i];
                 if (selBone && selBone.getDisplayRenderNode) {
@@ -144,7 +145,7 @@
                             selNode.visit(selBone);
                             break;
                     }
-                } else if (selBone instanceof cc.Node) {
+                } else if (selBone instanceof Node) {
                     this._visitNormalChild(selBone);
                 }
             }
@@ -173,11 +174,11 @@
                     else
                         break;
                 }
-                cc.rendererConfig.renderer.pushRenderCommand(cmd);
+                RendererConfig.getInstance().renderer.pushRenderCommand(cmd);
                 for (; i < len; i++)
                     children[i].visit(childNode);
             } else {
-                cc.rendererConfig.renderer.pushRenderCommand(cmd);
+                RendererConfig.getInstance().renderer.pushRenderCommand(cmd);
             }
             this._dirtyFlag = 0;
         }
@@ -190,9 +191,9 @@
             this._syncStatus(parentCmd);
             node.sortAllChildren();
 
-            cc.rendererConfig.renderer.pushRenderCommand(this._startRenderCmd);
+            RendererConfig.getInstance().renderer.pushRenderCommand(this._startRenderCmd);
             this.rendering();
-            cc.rendererConfig.renderer.pushRenderCommand(this._RestoreRenderCmd);
+            RendererConfig.getInstance().renderer.pushRenderCommand(this._RestoreRenderCmd);
 
             this._cacheDirty = false;
         }

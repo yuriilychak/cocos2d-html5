@@ -26,12 +26,14 @@
 /**
  * @ignore
  */
+import { AffineTransform, NewClass, Point, arrayRemoveObject } from "@aspect/core";
+
 export const PT_RATIO = ccs.PT_RATIO = 32;
 
 /**
  * Base class for ccs.ColliderFilter
  */
-export class ColliderFilter extends cc.NewClass {
+export class ColliderFilter extends NewClass {
 
     constructor(collisionType, group) {
         super();
@@ -63,7 +65,7 @@ export class ColliderFilter extends cc.NewClass {
  * @property {ccs.ColliderFilter}   colliderFilter  - The collider filter of collider body
  *
  */
-export class ColliderBody extends cc.NewClass {
+export class ColliderBody extends NewClass {
     constructor(contourData) {
         super();
         this.shape = null;
@@ -149,7 +151,7 @@ export class ColliderBody extends cc.NewClass {
  * @property {Boolean}              active          - Indicate whether the collider detector is active
  * @property {Object}               body            - The collider body
  */
-export class ColliderDetector extends cc.NewClass {
+export class ColliderDetector extends NewClass {
 
     constructor(bone) {
         super();
@@ -219,7 +221,7 @@ export class ColliderDetector extends cc.NewClass {
         }
 
         for (i=0; i<eraseList.length; i++)
-            cc.arrayRemoveObject(locBodyList, eraseList[i]);
+            arrayRemoveObject(locBodyList, eraseList[i]);
     }
 
     /**
@@ -310,10 +312,10 @@ export class ColliderDetector extends cc.NewClass {
             for (var j = 0; j < vs.length; j++) {
                 locHelpPoint.x = vs[j].x;
                 locHelpPoint.y = vs[j].y;
-                locHelpPoint = cc.AffineTransform.applyToPoint(locHelpPoint, t);
+                locHelpPoint = AffineTransform.applyToPoint(locHelpPoint, t);
 
                 if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
-                    var v = new cc.Point(0, 0);
+                    var v = new Point(0, 0);
                     v.x = locHelpPoint.x;
                     v.y = locHelpPoint.y;
                     cvs[j] = v;
@@ -370,7 +372,6 @@ export class ColliderDetector extends cc.NewClass {
     }
 
 };
-
 
 ccs.ColliderFilter = ColliderFilter;
 
