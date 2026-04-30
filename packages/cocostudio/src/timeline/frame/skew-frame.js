@@ -24,6 +24,7 @@
 
 import { Frame } from "./frame.js";
 
+
 /**
  * Skew frame
  * @extend Frame
@@ -70,7 +71,7 @@ export class SkewFrame extends Frame {
    * @return {SkewFrame}
    */
   clone() {
-    var frame = new ccs.SkewFrame();
+    var frame = new SkewFrame();
     frame.setSkewX(this._skewX);
     frame.setSkewY(this._skewY);
 

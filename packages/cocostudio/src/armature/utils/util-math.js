@@ -47,8 +47,8 @@ export function isSpriteContainPoint (sprite, point, outPoint) {
     var s = sprite.getContentSize();
     return Rect.containsPoint(new Rect(0, 0, s.width, s.height), p);
 };
-ccs.SPRITE_CONTAIN_POINT = ccs.isSpriteContainPoint;
-ccs.SPRITE_CONTAIN_POINT_WITH_RETURN = ccs.isSpriteContainPoint;
+export const SPRITE_CONTAIN_POINT = ccs.SPRITE_CONTAIN_POINT = isSpriteContainPoint;
+export const SPRITE_CONTAIN_POINT_WITH_RETURN = ccs.SPRITE_CONTAIN_POINT_WITH_RETURN = isSpriteContainPoint;
 
 export function extBezierTo (t, point1, point2, point3, point4) {
     var p = new Point(0, 0);

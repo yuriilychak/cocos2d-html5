@@ -24,6 +24,8 @@
 
 import { BlendFunc, GLProgramState, Node, Point, RendererConfig, SHADER_SPRITE_POSITION_TEXTURECOLOR, ShaderCache } from "@aspect/core";
 
+import { Skin } from "./display/skin.js";
+import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/constants.js";
     export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
         constructor(renderableObject) {
             super(renderableObject);
@@ -66,8 +68,8 @@ import { BlendFunc, GLProgramState, Node, Point, RendererConfig, SHADER_SPRITE_P
                         continue;
                     cmd = selNode._renderCmd;
                     switch (selBone.getDisplayRenderNodeType()) {
-                        case ccs.DISPLAY_TYPE_SPRITE:
-                            if (selNode instanceof ccs.Skin) {
+                        case DISPLAY_TYPE_SPRITE:
+                            if (selNode instanceof Skin) {
                                 selNode.setShaderProgram(this._shaderProgram);
                                 this._updateColorAndOpacity(cmd, selBone);
                                 cmd.transform(parentCmd);
@@ -89,7 +91,7 @@ import { BlendFunc, GLProgramState, Node, Point, RendererConfig, SHADER_SPRITE_P
                                 RendererConfig.getInstance().renderer._uploadBufferData(cmd);
                             }
                             break;
-                        case ccs.DISPLAY_TYPE_ARMATURE:
+                        case DISPLAY_TYPE_ARMATURE:
                             selNode.setShaderProgram(this._shaderProgram);
                             this._updateColorAndOpacity(cmd, selBone);
                             cmd._parentCmd = this;

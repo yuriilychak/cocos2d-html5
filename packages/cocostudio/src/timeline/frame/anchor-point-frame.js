@@ -25,6 +25,7 @@
 import { Point } from "@aspect/core";
 import { Frame } from "./frame.js";
 
+
 /**
  * AnchorPoint frame
  * @extend Frame
@@ -49,7 +50,7 @@ export class AnchorPointFrame extends Frame {
    * @return {AnchorPointFrame}
    */
   clone() {
-    var frame = new ccs.AnchorPointFrame();
+    var frame = new AnchorPointFrame();
     frame.setAnchorPoint(this._anchorPoint);
 
     frame._cloneProperty(this);

@@ -29,16 +29,28 @@
 import { AffineTransform, Node, Point } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
+import { ENABLE_PHYSICS_CHIPMUNK_DETECT, ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../armature-define.js";
+import { Armature } from "../armature.js";
+import { ColliderDetector } from "../physics/collider-detector/collider-detector.js";
+import { armatureDataManager } from "../utils/armature-data-manager.js";
+import { CONST_VERSION_COMBINED } from "../utils/data-reader-helper/constants.js";
+import { ArmatureDisplayData } from "../utils/datas/armature-display-data.js";
+import { BaseData } from "../utils/datas/base-data.js";
+import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_PARTICLE, DISPLAY_TYPE_SPRITE } from "../utils/datas/constants.js";
+import { ParticleDisplayData } from "../utils/datas/particle-display-data.js";
+import { SpriteDisplayData } from "../utils/datas/sprite-display-data.js";
+import { TransformHelp } from "../utils/transform-help.js";
+import { Skin } from "./skin.js";
 export const displayFactory = ccs.displayFactory = {
     addDisplay: function (bone, decoDisplay, displayData) {
         switch (displayData.displayType) {
-            case ccs.DISPLAY_TYPE_SPRITE:
+            case DISPLAY_TYPE_SPRITE:
                 this.addSpriteDisplay(bone, decoDisplay, displayData);
                 break;
-            case ccs.DISPLAY_TYPE_PARTICLE:
+            case DISPLAY_TYPE_PARTICLE:
                 this.addParticleDisplay(bone, decoDisplay, displayData);
                 break;
-            case ccs.DISPLAY_TYPE_ARMATURE:
+            case DISPLAY_TYPE_ARMATURE:
                 this.addArmatureDisplay(bone, decoDisplay, displayData);
                 break;
             default:
@@ -48,13 +60,13 @@ export const displayFactory = ccs.displayFactory = {
 
     createDisplay: function (bone, decoDisplay) {
         switch (decoDisplay.getDisplayData().displayType) {
-            case ccs.DISPLAY_TYPE_SPRITE:
+            case DISPLAY_TYPE_SPRITE:
                 this.createSpriteDisplay(bone, decoDisplay);
                 break;
-            case ccs.DISPLAY_TYPE_PARTICLE:
+            case DISPLAY_TYPE_PARTICLE:
                 this.createParticleDisplay(bone, decoDisplay);
                 break;
-            case ccs.DISPLAY_TYPE_ARMATURE:
+            case DISPLAY_TYPE_ARMATURE:
                 this.createArmatureDisplay(bone, decoDisplay);
                 break;
             default:
@@ -69,16 +81,16 @@ export const displayFactory = ccs.displayFactory = {
             return;
 
         switch (bone.getDisplayRenderNodeType()) {
-            case ccs.DISPLAY_TYPE_SPRITE:
+            case DISPLAY_TYPE_SPRITE:
                 if (dirty) {
                     display._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
                     display.updateArmatureTransform();
                 }
                 break;
-            case ccs.DISPLAY_TYPE_PARTICLE:
+            case DISPLAY_TYPE_PARTICLE:
                 this.updateParticleDisplay(bone, display, dt);
                 break;
-            case ccs.DISPLAY_TYPE_ARMATURE:
+            case DISPLAY_TYPE_ARMATURE:
                 this.updateArmatureDisplay(bone, display, dt);
                 break;
             default:
@@ -86,7 +98,7 @@ export const displayFactory = ccs.displayFactory = {
                 display.setAdditionalTransform(transform);
                 break;
         }
-        if (ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT || ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+        if (ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             if (dirty) {
                 var decoDisplay = bone.getDisplayManager().getCurrentDecorativeDisplay();
                 var detector = decoDisplay.getColliderDetector();
@@ -111,7 +123,7 @@ export const displayFactory = ccs.displayFactory = {
     },
 
     addSpriteDisplay: function (bone, decoDisplay, displayData) {
-        var sdp = new ccs.SpriteDisplayData();
+        var sdp = new SpriteDisplayData();
         sdp.copy(displayData);
         decoDisplay.setDisplayData(sdp);
         this.createSpriteDisplay(bone, decoDisplay);
@@ -127,9 +139,9 @@ export const displayFactory = ccs.displayFactory = {
             textureName = textureName.substring(0, startPos);
         //! create display
         if (textureName === "")
-            skin = new ccs.Skin();
+            skin = new Skin();
         else
-            skin = new ccs.Skin("#" + textureName + ".png");
+            skin = new Skin("#" + textureName + ".png");
 
         decoDisplay.setDisplay(skin);
 
@@ -138,7 +150,7 @@ export const displayFactory = ccs.displayFactory = {
 
         var armature = bone.getArmature();
         if (armature) {
-            if (armature.getArmatureData().dataVersion >= ccs.CONST_VERSION_COMBINED)
+            if (armature.getArmatureData().dataVersion >= CONST_VERSION_COMBINED)
                 skin.setSkinData(displayData.skinData);
             else
                 skin.setSkinData(bone.boneData);
@@ -153,16 +165,16 @@ export const displayFactory = ccs.displayFactory = {
         if (startPos !== -1)
             textureName = textureName.substring(0, startPos);
 
-        var textureData = ccs.armatureDataManager.getTextureData(textureName);
+        var textureData = armatureDataManager.getTextureData(textureName);
         if (textureData) {
             //! Init display anchorPoint, every Texture have a anchor point
             skin.setAnchorPoint(new Point(textureData.pivotX, textureData.pivotY));
         }
 
-        if (ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT || ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+        if (ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             if (textureData && textureData.contourDataList.length > 0) {
                 //! create ContourSprite
-                var colliderDetector = new ccs.ColliderDetector(bone);
+                var colliderDetector = new ColliderDetector(bone);
                 colliderDetector.addContourDataList(textureData.contourDataList);
                 decoDisplay.setColliderDetector(colliderDetector);
             }
@@ -170,7 +182,7 @@ export const displayFactory = ccs.displayFactory = {
     },
 
     addArmatureDisplay: function (bone, decoDisplay, displayData) {
-        var adp = new ccs.ArmatureDisplayData();
+        var adp = new ArmatureDisplayData();
         adp.copy(displayData);
         decoDisplay.setDisplayData(adp);
 
@@ -179,7 +191,7 @@ export const displayFactory = ccs.displayFactory = {
 
     createArmatureDisplay: function (bone, decoDisplay) {
         var displayData = decoDisplay.getDisplayData();
-        var armature = new ccs.Armature(displayData.displayName, bone);
+        var armature = new Armature(displayData.displayName, bone);
         decoDisplay.setDisplay(armature);
     },
 
@@ -191,7 +203,7 @@ export const displayFactory = ccs.displayFactory = {
     },
 
     addParticleDisplay: function (bone, decoDisplay, displayData) {
-        var adp = new ccs.ParticleDisplayData();
+        var adp = new ParticleDisplayData();
         adp.copy(displayData);
         decoDisplay.setDisplayData(adp);
         this.createParticleDisplay(bone, decoDisplay);
@@ -212,8 +224,8 @@ export const displayFactory = ccs.displayFactory = {
     },
 
     updateParticleDisplay: function (bone, particleSystem, dt) {
-        var node = new ccs.BaseData();
-        ccs.TransformHelp.matrixToNode(bone.nodeToArmatureTransform(), node);
+        var node = new BaseData();
+        TransformHelp.matrixToNode(bone.nodeToArmatureTransform(), node);
         particleSystem.setPosition(node.x, node.y);
         particleSystem.setScaleX(node.scaleX);
         particleSystem.setScaleY(node.scaleY);

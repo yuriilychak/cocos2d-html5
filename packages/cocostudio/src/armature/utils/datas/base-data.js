@@ -25,6 +25,7 @@
 
 import { Color, NewClass } from "@aspect/core";
 
+import { DOUBLE_PI, M_PI } from "../../animation/tween-function/constants.js";
 /**
  * <p>
  *     The base data class for Armature. it contains position, zOrder, skew, scale, color datas.                                       <br/>
@@ -140,15 +141,15 @@ export class BaseData extends NewClass {
     }
 
     if (limit) {
-      if (this.skewX > ccs.M_PI) this.skewX -= ccs.DOUBLE_PI;
-      if (this.skewX < -ccs.M_PI) this.skewX += ccs.DOUBLE_PI;
-      if (this.skewY > ccs.M_PI) this.skewY -= ccs.DOUBLE_PI;
-      if (this.skewY < -ccs.M_PI) this.skewY += ccs.DOUBLE_PI;
+      if (this.skewX > M_PI) this.skewX -= DOUBLE_PI;
+      if (this.skewX < -M_PI) this.skewX += DOUBLE_PI;
+      if (this.skewY > M_PI) this.skewY -= DOUBLE_PI;
+      if (this.skewY < -M_PI) this.skewY += DOUBLE_PI;
     }
 
     if (to.tweenRotate) {
-      this.skewX += to.tweenRotate * ccs.PI * 2;
-      this.skewY -= to.tweenRotate * ccs.PI * 2;
+      this.skewX += to.tweenRotate * Math.PI * 2;
+      this.skewY -= to.tweenRotate * Math.PI * 2;
     }
   }
 };

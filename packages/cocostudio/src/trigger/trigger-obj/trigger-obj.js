@@ -29,6 +29,7 @@
  */
 import { NewClass, log } from "@aspect/core";
 
+import { objectFactory } from "../object-factory/object-factory.js";
 export class TriggerObj extends NewClass {
 
     constructor () {
@@ -111,7 +112,7 @@ export class TriggerObj extends NewClass {
         for (var i = 0; i < conditions.length; i++) {
             var subDict = conditions[i];
             var classname = subDict["classname"];
-            var con = ccs.objectFactory.createObject(classname);
+            var con = objectFactory.createObject(classname);
             if (!con) {
                 log("class named classname(" + classname + ") can not implement!");
                 continue;
@@ -126,7 +127,7 @@ export class TriggerObj extends NewClass {
         for (var i = 0; i < actions.length; i++) {
             var subDict = actions[i];
             var classname = subDict["classname"];
-            var act = ccs.objectFactory.createObject(classname);
+            var act = objectFactory.createObject(classname);
             if (!act) {
                 log("class named classname(" + classname + ") can not implement!");
                 continue;

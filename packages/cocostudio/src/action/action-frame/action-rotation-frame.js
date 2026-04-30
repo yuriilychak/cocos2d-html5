@@ -1,16 +1,18 @@
 import { RotateBy, RotateTo } from "@aspect/actions";
 
+import { ActionFrame } from "./action-frame.js";
+import { FRAME_TYPE_ROTATE } from "./constants.js";
 /**
  * The Cocostudio's rotation action frame.
  */
-export class ActionRotationFrame extends ccs.ActionFrame {
+export class ActionRotationFrame extends ActionFrame {
   /**
    * Construction of ActionRotationFrame
    */
   constructor() {
     super();
     this._rotation = 0;
-    this.frameType = ccs.FRAME_TYPE_ROTATE;
+    this.frameType = FRAME_TYPE_ROTATE;
   }
 
   /**

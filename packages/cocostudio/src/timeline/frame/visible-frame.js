@@ -24,6 +24,7 @@
 
 import { Frame } from "./frame.js";
 
+
 /**
  * Visible frame
  * To control the display state
@@ -49,7 +50,7 @@ export class VisibleFrame extends Frame {
    * @return {VisibleFrame}
    */
   clone() {
-    var frame = new ccs.VisibleFrame();
+    var frame = new VisibleFrame();
     frame.setVisible(this._visible);
 
     frame._cloneProperty(this);

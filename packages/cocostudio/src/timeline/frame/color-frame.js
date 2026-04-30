@@ -25,6 +25,7 @@
 import { Color } from "@aspect/core";
 import { Frame } from "./frame.js";
 
+
 /**
  * Color frame
  * @extend Frame
@@ -82,7 +83,7 @@ export class ColorFrame extends Frame {
    * @return {ColorFrame}
    */
   clone() {
-    var frame = new ccs.ColorFrame();
+    var frame = new ColorFrame();
     frame.setColor(this._color);
     frame._cloneProperty(this);
     return frame;

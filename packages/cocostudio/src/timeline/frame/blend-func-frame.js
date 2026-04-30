@@ -24,6 +24,7 @@
 
 import { Frame } from "./frame.js";
 
+
 export class BlendFuncFrame extends Frame {
   constructor() {
     super();
@@ -35,7 +36,7 @@ export class BlendFuncFrame extends Frame {
   }
 
   clone() {
-    var frame = new ccs.BlendFuncFrame();
+    var frame = new BlendFuncFrame();
     frame.setBlendFunc(this._blendFunc);
     frame._cloneProperty(this);
     return frame;

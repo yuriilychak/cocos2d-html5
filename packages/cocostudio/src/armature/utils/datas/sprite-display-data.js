@@ -25,6 +25,8 @@
 
 import { DisplayData } from "./display-data.js";
 
+import { BaseData } from "./base-data.js";
+import { DISPLAY_TYPE_SPRITE } from "./constants.js";
 /**
  * The sprite display data class.
  *
@@ -36,8 +38,8 @@ export class SpriteDisplayData extends DisplayData {
    */
   constructor() {
     super();
-    this.skinData = new ccs.BaseData();
-    this.displayType = ccs.DISPLAY_TYPE_SPRITE;
+    this.skinData = new BaseData();
+    this.displayType = DISPLAY_TYPE_SPRITE;
   }
   /**
    * copy data

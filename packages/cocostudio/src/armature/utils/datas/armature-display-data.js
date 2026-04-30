@@ -25,6 +25,7 @@
 
 import { DisplayData } from "./display-data.js";
 
+import { DISPLAY_TYPE_ARMATURE } from "./constants.js";
 /**
  * The armature display data class
  */
@@ -35,7 +36,7 @@ export class ArmatureDisplayData extends DisplayData {
   constructor() {
     super();
     this.displayName = "";
-    this.displayType = ccs.DISPLAY_TYPE_ARMATURE;
+    this.displayType = DISPLAY_TYPE_ARMATURE;
   }
 };
 

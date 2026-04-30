@@ -1,16 +1,18 @@
 import { FadeTo } from "@aspect/actions";
 
+import { ActionFrame } from "./action-frame.js";
+import { FRAME_TYPE_FADE } from "./constants.js";
 /**
  * The Cocostudio's fade action frame.
  */
-export class ActionFadeFrame extends ccs.ActionFrame {
+export class ActionFadeFrame extends ActionFrame {
   /**
    * Construction of ActionFadeFrame
    */
   constructor() {
     super();
     this._opacity = 255;
-    this.frameType = ccs.FRAME_TYPE_FADE;
+    this.frameType = FRAME_TYPE_FADE;
   }
 
   /**

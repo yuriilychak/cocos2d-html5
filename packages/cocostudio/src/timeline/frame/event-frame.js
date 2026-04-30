@@ -24,6 +24,7 @@
 
 import { Frame } from "./frame.js";
 
+
 /**
  * Event frame
  * @extend Frame
@@ -49,7 +50,7 @@ export class EventFrame extends Frame {
    * @return {EventFrame}
    */
   clone() {
-    var frame = new ccs.EventFrame();
+    var frame = new EventFrame();
     frame.setEvent(this._event);
 
     frame._cloneProperty(this);

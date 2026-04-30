@@ -25,6 +25,7 @@
 import { SpriteFrameCache } from "@aspect/core";
 import { Frame } from "./frame.js";
 
+
 /**
  * Texture frame
  * @extend Frame
@@ -67,7 +68,7 @@ export class TextureFrame extends Frame {
    * @return {TextureFrame}
    */
   clone() {
-    var frame = new ccs.TextureFrame();
+    var frame = new TextureFrame();
     frame.setTextureName(this._textureName);
     frame._cloneProperty(this);
     return frame;

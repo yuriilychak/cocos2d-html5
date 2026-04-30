@@ -23,13 +23,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+
+import { TInfo } from "./object-factory/t-info.js";
+import { triggerManager } from "./trigger-mng/trigger-manager.js";
+
 /**
  * Sends event by trigger manager.
  * @function
  * @param {Number} event
  */
 export function sendEvent (event) {
-    var triggerObjArr = ccs.triggerManager.get(event);
+    var triggerObjArr = triggerManager.get(event);
     if (triggerObjArr == null)
         return;
     for (var i = 0; i < triggerObjArr.length; i++) {
@@ -45,7 +49,7 @@ export function sendEvent (event) {
  * @param {function} func
  */
 export function registerTriggerClass (className, func) {
-    new ccs.TInfo(className, func);
+    new TInfo(className, func);
 };
 ccs.sendEvent = sendEvent;
 

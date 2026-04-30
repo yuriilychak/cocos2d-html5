@@ -30,7 +30,7 @@
  */
 import { SpriteFrameCache, TextureAtlas } from "@aspect/core";
 
-ccs.spriteFrameCacheHelper =  {
+export const spriteFrameCacheHelper = ccs.spriteFrameCacheHelper =  {
     _textureAtlasDic:{},
     _imagePaths:[],
 

@@ -29,6 +29,7 @@
 import { NewClass } from "@aspect/core";
 import { _easeBackInObj, _easeBackInOutObj, _easeBackOutObj, _easeBounceInObj, _easeBounceInOutObj, _easeBounceOutObj, _easeCircleActionIn, _easeCircleActionInOut, _easeCircleActionOut, _easeCubicActionIn, _easeCubicActionInOut, _easeCubicActionOut, _easeExponentialInObj, _easeExponentialInOutObj, _easeExponentialOutObj, _easeQuadraticActionIn, _easeQuadraticActionInOut, _easeQuadraticActionOut, _easeQuinticActionIn, _easeQuinticActionInOut, _easeQuinticActionOut, _easeSineInObj, _easeSineInOutObj, _easeSineOutObj, easeElasticIn, easeElasticInOut, easeElasticOut } from "@aspect/actions";
 
+import { FrameEaseType } from "../../action/action-frame/constants.js";
 export class Frame extends NewClass {
   constructor() {
     super();
@@ -135,8 +136,8 @@ export class Frame extends NewClass {
   apply(percent) {
     if (!this._tween) return;
     if (
-      this._tweenType !== ccs.FrameEaseType.TWEEN_EASING_MAX &&
-      this._tweenType !== ccs.FrameEaseType.LINEAR
+      this._tweenType !== FrameEaseType.TWEEN_EASING_MAX &&
+      this._tweenType !== FrameEaseType.LINEAR
     )
       percent = this.tweenPercent(percent);
     this._onApply(percent);
@@ -155,7 +156,7 @@ export class Frame extends NewClass {
   }
 
   tweenPercent(percent) {
-    var func = ccs.Frame.tweenToMap[this._tweenType];
+    var func = Frame.tweenToMap[this._tweenType];
     if (func) return func(percent, this._easingParam);
     else return percent;
   }
@@ -187,7 +188,7 @@ export class Frame extends NewClass {
 
 ccs.Frame = Frame;
 
-ccs.Frame.tweenToMap = {
+Frame.tweenToMap = {
   "-1": function (time, easingParam) {
     if (easingParam) {
       var tt = 1 - time;

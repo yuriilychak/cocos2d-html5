@@ -1,5 +1,9 @@
 import { assert, log } from "@aspect/core";
 
+import { fmodf } from "../../utils/util-math.js";
+import { ANIMATION_TYPE_LOOP_FRONT, ANIMATION_TYPE_MAX, ANIMATION_TYPE_NO_LOOP, ANIMATION_TYPE_SINGLE_FRAME, ANIMATION_TYPE_TO_LOOP_FRONT, ProcessBase } from "../process-base.js";
+import { MovementEventType } from "./constants.js";
+import { FrameEvent, MovementEvent } from "./utils.js";
 /**
  * The Animation class for Armature, it plays armature animation, and controls speed scale and manages animation frame.
  *
@@ -11,7 +15,7 @@ import { assert, log } from "@aspect/core";
  * @property {Number}               speedScale          - Animation play speed scale
  * @property {Number}               animationScale      - Animation play speed scale
  */
-export class ArmatureAnimation extends ccs.ProcessBase {
+export class ArmatureAnimation extends ProcessBase {
 
     constructor(armature) {
         super();
@@ -159,9 +163,9 @@ export class ArmatureAnimation extends ccs.ProcessBase {
         super.play(durationTo, durationTween, loop, tweenEasing);
 
         if (this._rawDuration === 0)
-            this._loopType = ccs.ANIMATION_TYPE_SINGLE_FRAME;
+            this._loopType = ANIMATION_TYPE_SINGLE_FRAME;
         else {
-            this._loopType = loop ? ccs.ANIMATION_TYPE_TO_LOOP_FRONT : ccs.ANIMATION_TYPE_NO_LOOP;
+            this._loopType = loop ? ANIMATION_TYPE_TO_LOOP_FRONT : ANIMATION_TYPE_NO_LOOP;
             this._durationTween = durationTween;
         }
 
@@ -361,38 +365,38 @@ export class ArmatureAnimation extends ccs.ProcessBase {
         var locCurrentPercent = this._currentPercent;
         if (locCurrentPercent >= 1) {
             switch (this._loopType) {
-                case ccs.ANIMATION_TYPE_NO_LOOP:
-                    this._loopType = ccs.ANIMATION_TYPE_MAX;
+                case ANIMATION_TYPE_NO_LOOP:
+                    this._loopType = ANIMATION_TYPE_MAX;
                     this._currentFrame = (locCurrentPercent - 1) * this._nextFrameIndex;
                     locCurrentPercent = this._currentFrame / this._durationTween;
                     if (locCurrentPercent < 1.0) {
                         this._nextFrameIndex = this._durationTween;
-                        this.movementEvent(this._armature, ccs.MovementEventType.start, this._movementID);
+                        this.movementEvent(this._armature, MovementEventType.start, this._movementID);
                         break;
                     }
                     break;
-                case ccs.ANIMATION_TYPE_MAX:
-                case ccs.ANIMATION_TYPE_SINGLE_FRAME:
+                case ANIMATION_TYPE_MAX:
+                case ANIMATION_TYPE_SINGLE_FRAME:
                     locCurrentPercent = 1;
                     this._isComplete = true;
                     this._isPlaying = false;
 
-                    this.movementEvent(this._armature, ccs.MovementEventType.complete, this._movementID);
+                    this.movementEvent(this._armature, MovementEventType.complete, this._movementID);
 
                     this.updateMovementList();
                     break;
-                case ccs.ANIMATION_TYPE_TO_LOOP_FRONT:
-                    this._loopType = ccs.ANIMATION_TYPE_LOOP_FRONT;
-                    locCurrentPercent = ccs.fmodf(locCurrentPercent, 1);
-                    this._currentFrame = this._nextFrameIndex === 0 ? 0 : ccs.fmodf(this._currentFrame, this._nextFrameIndex);
+                case ANIMATION_TYPE_TO_LOOP_FRONT:
+                    this._loopType = ANIMATION_TYPE_LOOP_FRONT;
+                    locCurrentPercent = fmodf(locCurrentPercent, 1);
+                    this._currentFrame = this._nextFrameIndex === 0 ? 0 : fmodf(this._currentFrame, this._nextFrameIndex);
                     this._nextFrameIndex = this._durationTween > 0 ? this._durationTween : 1;
-                    this.movementEvent(this, ccs.MovementEventType.start, this._movementID);
+                    this.movementEvent(this, MovementEventType.start, this._movementID);
                     break;
                 default:
                     //locCurrentPercent = fmodf(locCurrentPercent, 1);
-                    this._currentFrame = ccs.fmodf(this._currentFrame, this._nextFrameIndex);
+                    this._currentFrame = fmodf(this._currentFrame, this._nextFrameIndex);
                     this._toIndex = 0;
-                    this.movementEvent(this._armature, ccs.MovementEventType.loopComplete, this._movementID);
+                    this.movementEvent(this._armature, MovementEventType.loopComplete, this._movementID);
                     break;
             }
             this._currentPercent = locCurrentPercent;
@@ -454,7 +458,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
      */
     frameEvent(bone, frameEventName, originFrameIndex, currentFrameIndex) {
         if ((this._frameEventTarget && this._frameEventCallFunc) || this._frameEventListener) {
-            var frameEvent = new ccs.FrameEvent();
+            var frameEvent = new FrameEvent();
             frameEvent.bone = bone;
             frameEvent.frameEventName = frameEventName;
             frameEvent.originFrameIndex = originFrameIndex;
@@ -471,7 +475,7 @@ export class ArmatureAnimation extends ccs.ProcessBase {
      */
     movementEvent(armature, movementType, movementID) {
         if ((this._movementEventTarget && this._movementEventCallFunc) || this._movementEventListener) {
-            var event = new ccs.MovementEvent();
+            var event = new MovementEvent();
             event.armature = armature;
             event.movementType = movementType;
             event.movementID = movementID;

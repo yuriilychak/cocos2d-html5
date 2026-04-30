@@ -24,6 +24,7 @@
 
 import { SkewFrame } from "./skew-frame.js";
 
+
 /**
  * Rotation skew frame
  * @extend SkewFrame
@@ -64,7 +65,7 @@ export class RotationSkewFrame extends SkewFrame {
    * @return {RotationSkewFrame}
    */
   clone() {
-    var frame = new ccs.RotationSkewFrame();
+    var frame = new RotationSkewFrame();
     frame.setSkewX(this._skewX);
     frame.setSkewY(this._skewY);
 

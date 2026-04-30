@@ -25,6 +25,7 @@
 
 import { NewClass } from "@aspect/core";
 
+import { DISPLAY_TYPE_MAX } from "./constants.js";
 /**
  * The class use for save display data.
  *
@@ -37,7 +38,7 @@ export class DisplayData extends NewClass {
    */
   constructor() {
     super();
-    this.displayType = ccs.DISPLAY_TYPE_MAX;
+    this.displayType = DISPLAY_TYPE_MAX;
   }
   /**
    * Changes display name to texture type

@@ -6,9 +6,12 @@
  * @property {Number}                   movementType    - The type of movement.
  * @property {String}                   movementID      - The ID of movement.
  */
+
+import { MovementEventType } from "./constants.js";
+
 export function MovementEvent() {
     this.armature = null;
-    this.movementType = ccs.MovementEventType.start;
+    this.movementType = MovementEventType.start;
     this.movementID = "";
 };
 

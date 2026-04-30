@@ -24,6 +24,7 @@
 
 import { Frame } from "./frame.js";
 
+
 /**
  * zOrder frame
  * @extend Frame
@@ -43,7 +44,7 @@ export class ZOrderFrame extends Frame {
    * @return {ZOrderFrame}
    */
   clone() {
-    var frame = new ccs.ZOrderFrame();
+    var frame = new ZOrderFrame();
     frame.setZOrder(this._zorder);
 
     frame._cloneProperty(this);

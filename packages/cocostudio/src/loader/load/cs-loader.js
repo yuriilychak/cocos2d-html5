@@ -1,3 +1,5 @@
+import { _ccsLoad } from "./utils.js";
+
 export const csLoader = ccs.csLoader = {
 
     //@deprecated This function will be deprecated sooner or later please use load
@@ -7,6 +9,6 @@ export const csLoader = ccs.csLoader = {
      * @returns {*}
      */
     createNode: function (file) {
-        return ccs._load(file);
+        return _ccsLoad(file);
     }
 };

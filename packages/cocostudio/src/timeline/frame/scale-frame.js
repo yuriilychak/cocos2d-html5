@@ -24,6 +24,7 @@
 
 import { Frame } from "./frame.js";
 
+
 /**
  * Scale frame
  * @xtend Frame
@@ -73,7 +74,7 @@ export class ScaleFrame extends Frame {
    * @return {ScaleFrame}
    */
   clone() {
-    var frame = new ccs.ScaleFrame();
+    var frame = new ScaleFrame();
     frame.setScaleX(this._scaleX);
     frame.setScaleY(this._scaleY);
 

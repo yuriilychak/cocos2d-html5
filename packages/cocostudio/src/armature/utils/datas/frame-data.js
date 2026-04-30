@@ -26,6 +26,7 @@
 import { BLEND_DST, BLEND_SRC, BlendFunc } from "@aspect/core";
 import { BaseData } from "./base-data.js";
 
+import { TweenType } from "../../animation/tween-function/constants.js";
 /**
  * FrameData saved the frame data needed for armature animation in this Armature.
  *
@@ -49,7 +50,7 @@ export class FrameData extends BaseData {
   constructor() {
     super();
     this.duration = 1;
-    this.tweenEasing = ccs.TweenType.LINEAR;
+    this.tweenEasing = TweenType.LINEAR;
     this.easingParamNumber = 0;
     this.easingParams = [];
     this.displayIndex = 0;

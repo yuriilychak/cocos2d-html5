@@ -24,6 +24,7 @@
 
 import { Frame } from "./frame.js";
 
+
 /**
  * Rotation Frame
  * @extend Frame
@@ -64,7 +65,7 @@ export class RotationFrame extends Frame {
    * @return {RotationFrame}
    */
   clone() {
-    var frame = new ccs.RotationFrame();
+    var frame = new RotationFrame();
     frame.setRotation(this._rotation);
 
     frame._cloneProperty(this);

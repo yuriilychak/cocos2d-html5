@@ -34,13 +34,14 @@
 
 import { AffineTransform, Point, Rect, RendererConfig, Size, arrayRemoveObject } from "@aspect/core";
 
+import { BoneNode } from "./bone-node.js";
     var type = {
         p: new Point,
         size: new Size,
         rect: new Rect
     };
 
-    class SkeletonNode extends ccs.BoneNode {
+    class SkeletonNode extends BoneNode {
 
         constructor() {
             super();

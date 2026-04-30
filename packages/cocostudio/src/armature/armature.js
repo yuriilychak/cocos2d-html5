@@ -38,6 +38,11 @@
  */
 import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Game, Node, Point, Rect, RendererConfig, arrayRemoveObject, assert, log } from "@aspect/core";
 
+import { ArmatureAnimation } from "./animation/armature-animation/armature-animation.js";
+import { Bone } from "./bone.js";
+import { armatureDataManager } from "./utils/armature-data-manager.js";
+import { ArmatureData } from "./utils/datas/armature-data.js";
+import { AnimationData } from "./utils/datas/utils.js";
 export class Armature extends Node {
   /**
    * Create a armature node.
@@ -87,14 +92,14 @@ export class Armature extends Node {
   init(name, parentBone) {
     if (parentBone) this._parentBone = parentBone;
     this.removeAllChildren();
-    this.animation = new ccs.ArmatureAnimation();
+    this.animation = new ArmatureAnimation();
     this.animation.init(this);
 
     this._boneDic = {};
     this._topBoneList.length = 0;
 
     //this._name = name || "";
-    var armatureDataManager = ccs.armatureDataManager;
+    var armatureDataManager = armatureDataManager;
 
     var animationData;
     if (name !== "") {
@@ -137,10 +142,10 @@ export class Armature extends Node {
       this.updateOffsetPoint();
     } else {
       name = "new_armature";
-      this.armatureData = new ccs.ArmatureData();
+      this.armatureData = new ArmatureData();
       this.armatureData.name = name;
 
-      animationData = new ccs.AnimationData();
+      animationData = new AnimationData();
       animationData.name = name;
 
       armatureDataManager.addArmatureData(name, this.armatureData);
@@ -195,10 +200,10 @@ export class Armature extends Node {
     var bone = null;
     if (parentName) {
       this.createBone(parentName);
-      bone = new ccs.Bone(boneName);
+      bone = new Bone(boneName);
       this.addBone(bone, parentName);
     } else {
-      bone = new ccs.Bone(boneName);
+      bone = new Bone(boneName);
       this.addBone(bone, "");
     }
 
@@ -427,7 +432,7 @@ export class Armature extends Node {
     for (var i = locChildren.length - 1; i >= 0; i--) {
       var child = locChildren[i];
       if (
-        child instanceof ccs.Bone &&
+        child instanceof Bone &&
         child.getDisplayManager().containPoint(x, y)
       )
         return child;
@@ -485,7 +490,7 @@ export class Armature extends Node {
       locChildren = this._children;
     for (var i = 0; i < locChildren.length; i++) {
       child = locChildren[i];
-      if (child instanceof ccs.Bone) {
+      if (child instanceof Bone) {
         var displayList = child.getDisplayManager().getDecorativeDisplayList();
         for (var j = 0; j < displayList.length; j++) {
           displayObject = displayList[j];

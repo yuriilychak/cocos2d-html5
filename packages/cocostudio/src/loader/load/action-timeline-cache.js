@@ -1,3 +1,5 @@
+import { _ccsLoad } from "./utils.js";
+
 //Forward compatible interface
 
 export const actionTimelineCache = ccs.actionTimelineCache = {
@@ -9,6 +11,6 @@ export const actionTimelineCache = ccs.actionTimelineCache = {
      * @returns {*}
      */
     createAction: function (file) {
-        return ccs._load(file, "action");
+        return _ccsLoad(file, "action");
     }
 };

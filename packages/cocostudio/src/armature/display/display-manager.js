@@ -28,6 +28,18 @@
 import { NewClass, Node, Point, Rect, RendererConfig, Size, log } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
+import { ENABLE_PHYSICS_CHIPMUNK_DETECT, ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../armature-define.js";
+import { Armature } from "../armature.js";
+import { ArmatureDisplayData } from "../utils/datas/armature-display-data.js";
+import { BaseData } from "../utils/datas/base-data.js";
+import { DISPLAY_TYPE_MAX, DISPLAY_TYPE_SPRITE } from "../utils/datas/constants.js";
+import { DisplayData } from "../utils/datas/display-data.js";
+import { ParticleDisplayData } from "../utils/datas/particle-display-data.js";
+import { SpriteDisplayData } from "../utils/datas/sprite-display-data.js";
+import { SPRITE_CONTAIN_POINT_WITH_RETURN } from "../utils/util-math.js";
+import { DecorativeDisplay } from "./decorative-display.js";
+import { displayFactory } from "./display-factory.js";
+import { Skin } from "./skin.js";
 /**
  * The display manager for CocoStudio Armature bone.
  * @param {Bone} bone The bone for the display manager
@@ -42,7 +54,7 @@ export class DisplayManager extends NewClass {
     this._forceChangeDisplay = false;
     this._bone = null;
     this._visible = true;
-    this._displayType = ccs.DISPLAY_TYPE_MAX;
+    this._displayType = DISPLAY_TYPE_MAX;
 
     bone && this.init(bone);
   }
@@ -73,12 +85,12 @@ export class DisplayManager extends NewClass {
     if (index >= 0 && index < locDisplayList.length)
       decoDisplay = locDisplayList[index];
     else {
-      decoDisplay = new ccs.DecorativeDisplay();
+      decoDisplay = new DecorativeDisplay();
       locDisplayList.push(decoDisplay);
     }
 
-    if (display instanceof ccs.DisplayData) {
-      ccs.displayFactory.addDisplay(this._bone, decoDisplay, display);
+    if (display instanceof DisplayData) {
+      displayFactory.addDisplay(this._bone, decoDisplay, display);
       //! if changed display index is current display index, then change current display to the new display
       if (index === this._displayIndex) {
         this._displayIndex = -1;
@@ -88,10 +100,10 @@ export class DisplayManager extends NewClass {
     }
 
     var displayData = null;
-    if (display instanceof ccs.Skin) {
+    if (display instanceof Skin) {
       display.setBone(this._bone);
-      displayData = new ccs.SpriteDisplayData();
-      ccs.displayFactory.initSpriteDisplay(
+      displayData = new SpriteDisplayData();
+      displayFactory.initSpriteDisplay(
         this._bone,
         decoDisplay,
         display.getDisplayName(),
@@ -99,7 +111,7 @@ export class DisplayManager extends NewClass {
       );
 
       var spriteDisplayData = decoDisplay.getDisplayData();
-      if (spriteDisplayData instanceof ccs.SpriteDisplayData) {
+      if (spriteDisplayData instanceof SpriteDisplayData) {
         display.setSkinData(spriteDisplayData.skinData);
         displayData.skinData = spriteDisplayData.skinData;
       } else {
@@ -107,26 +119,26 @@ export class DisplayManager extends NewClass {
         for (var i = locDisplayList.length - 2; i >= 0; i--) {
           var dd = locDisplayList[i];
           var sdd = dd.getDisplayData();
-          if (sdd instanceof ccs.SpriteDisplayData) {
+          if (sdd instanceof SpriteDisplayData) {
             find = true;
             display.setSkinData(sdd.skinData);
             displayData.skinData = sdd.skinData;
             break;
           }
         }
-        if (!find) display.setSkinData(new ccs.BaseData());
+        if (!find) display.setSkinData(new BaseData());
       }
     } else if (display instanceof ParticleSystem) {
-      displayData = new ccs.ParticleDisplayData();
+      displayData = new ParticleDisplayData();
       display.removeFromParent();
       display._performRecursive(Node._stateCallbackType.cleanup);
       var armature = this._bone.getArmature();
       if (armature) display.setParent(armature);
-    } else if (display instanceof ccs.Armature) {
-      displayData = new ccs.ArmatureDisplayData();
+    } else if (display instanceof Armature) {
+      displayData = new ArmatureDisplayData();
       displayData.displayName = display.getName();
       display.setParentBone(this._bone);
-    } else displayData = new ccs.DisplayData();
+    } else displayData = new DisplayData();
     decoDisplay.setDisplay(display);
     decoDisplay.setDisplayData(displayData);
 
@@ -139,19 +151,19 @@ export class DisplayManager extends NewClass {
 
   _addDisplayOther(decoDisplay, display) {
     var displayData = null;
-    if (display instanceof ccs.Skin) {
+    if (display instanceof Skin) {
       var skin = display;
       skin.setBone(this._bone);
-      displayData = new ccs.SpriteDisplayData();
+      displayData = new SpriteDisplayData();
       displayData.displayName = skin.getDisplayName();
-      ccs.displayFactory.initSpriteDisplay(
+      displayFactory.initSpriteDisplay(
         this._bone,
         decoDisplay,
         skin.getDisplayName(),
         skin
       );
       var spriteDisplayData = decoDisplay.getDisplayData();
-      if (spriteDisplayData instanceof ccs.SpriteDisplayData)
+      if (spriteDisplayData instanceof SpriteDisplayData)
         skin.setSkinData(spriteDisplayData.skinData);
       else {
         var find = false;
@@ -166,19 +178,19 @@ export class DisplayManager extends NewClass {
           }
         }
         if (!find) {
-          skin.setSkinData(new ccs.BaseData());
+          skin.setSkinData(new BaseData());
         }
-        skin.setSkinData(new ccs.BaseData());
+        skin.setSkinData(new BaseData());
       }
     } else if (display instanceof ParticleSystem) {
-      displayData = new ccs.ParticleDisplayData();
+      displayData = new ParticleDisplayData();
       displayData.displayName = display._plistFile;
-    } else if (display instanceof ccs.Armature) {
-      displayData = new ccs.ArmatureDisplayData();
+    } else if (display instanceof Armature) {
+      displayData = new ArmatureDisplayData();
       displayData.displayName = display.getName();
       display.setParentBone(this._bone);
     } else {
-      displayData = new ccs.DisplayData();
+      displayData = new DisplayData();
     }
     decoDisplay.setDisplay(display);
     decoDisplay.setDisplayData(displayData);
@@ -258,8 +270,8 @@ export class DisplayManager extends NewClass {
   setCurrentDecorativeDisplay(decoDisplay) {
     var locCurrentDecoDisplay = this._currentDecoDisplay;
     if (
-      ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT ||
-      ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+      ENABLE_PHYSICS_CHIPMUNK_DETECT ||
+      ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     ) {
       if (locCurrentDecoDisplay && locCurrentDecoDisplay.getColliderDetector())
         locCurrentDecoDisplay.getColliderDetector().setActive(false);
@@ -268,8 +280,8 @@ export class DisplayManager extends NewClass {
     this._currentDecoDisplay = decoDisplay;
     locCurrentDecoDisplay = this._currentDecoDisplay;
     if (
-      ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT ||
-      ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+      ENABLE_PHYSICS_CHIPMUNK_DETECT ||
+      ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     ) {
       if (locCurrentDecoDisplay && locCurrentDecoDisplay.getColliderDetector())
         locCurrentDecoDisplay.getColliderDetector().setActive(true);
@@ -282,17 +294,17 @@ export class DisplayManager extends NewClass {
     var locRenderNode = this._displayRenderNode,
       locBone = this._bone;
     if (locRenderNode) {
-      if (locRenderNode instanceof ccs.Armature) locBone.setChildArmature(null);
+      if (locRenderNode instanceof Armature) locBone.setChildArmature(null);
       locRenderNode.removeFromParent(true);
     }
     this._displayRenderNode = displayRenderNode;
 
     if (displayRenderNode) {
-      if (displayRenderNode instanceof ccs.Armature) {
+      if (displayRenderNode instanceof Armature) {
         this._bone.setChildArmature(displayRenderNode);
         displayRenderNode.setParentBone(this._bone);
       } else if (displayRenderNode instanceof ParticleSystem) {
-        if (displayRenderNode instanceof ccs.Armature) {
+        if (displayRenderNode instanceof Armature) {
           locBone.setChildArmature(displayRenderNode);
           displayRenderNode.setParentBone(locBone);
         } else if (displayRenderNode instanceof ParticleSystem)
@@ -304,7 +316,7 @@ export class DisplayManager extends NewClass {
 
       this._displayRenderNode.setVisible(this._visible);
       this._displayType = this._currentDecoDisplay.getDisplayData().displayType;
-    } else this._displayType = ccs.DISPLAY_TYPE_MAX;
+    } else this._displayType = DISPLAY_TYPE_MAX;
 
     RendererConfig.getInstance().renderer.childrenOrderDirty = true;
   }
@@ -366,9 +378,9 @@ export class DisplayManager extends NewClass {
       locBone = this._bone;
     for (var i = 0; i < displayList.length; i++) {
       var displayData = displayList[i];
-      var decoDisplay = new ccs.DecorativeDisplay();
+      var decoDisplay = new DecorativeDisplay();
       decoDisplay.setDisplayData(displayData);
-      ccs.displayFactory.createDisplay(locBone, decoDisplay);
+      displayFactory.createDisplay(locBone, decoDisplay);
       decoList.push(decoDisplay);
     }
   }
@@ -386,7 +398,7 @@ export class DisplayManager extends NewClass {
 
     if (
       this._currentDecoDisplay.getDisplayData().displayType ===
-      ccs.DISPLAY_TYPE_SPRITE
+      DISPLAY_TYPE_SPRITE
     ) {
       /*
        *  First we first check if the point is in the sprite content rect. If false, then we continue to check
@@ -395,7 +407,7 @@ export class DisplayManager extends NewClass {
        */
       var sprite = this._currentDecoDisplay.getDisplay();
       sprite = sprite.getChildByTag(0);
-      return ccs.SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point);
+      return SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point);
     }
     return false;
   }

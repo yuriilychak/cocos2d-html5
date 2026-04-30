@@ -23,6 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+
+import { TweenType } from "../../animation/tween-function/constants.js";
+
 /**
  * The movement data information of Cocos Armature.
  * @constructor
@@ -50,7 +53,7 @@ export function MovementData() {
    * Which tween easing effect the movement use
    * TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
    */
-  this.tweenEasing = ccs.TweenType.LINEAR;
+  this.tweenEasing = TweenType.LINEAR;
   this.movBoneDataDic = {};
 };
 

@@ -1,5 +1,6 @@
 import { NewClass } from '@aspect/core';
 
+import { objectFactory } from "./object-factory.js";
 export class TInfo extends NewClass {
 
     constructor (c, f) {
@@ -11,7 +12,7 @@ export class TInfo extends NewClass {
             this._className = c._className;
             this._fun = c._fun;
         }
-        ccs.objectFactory.registerType(this);
+        objectFactory.registerType(this);
     }
 };
 

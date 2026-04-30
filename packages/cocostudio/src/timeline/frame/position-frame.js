@@ -25,6 +25,7 @@
 import { Point } from "@aspect/core";
 import { Frame } from "./frame.js";
 
+
 /**
  * Position frame
  * @extend Frame
@@ -70,7 +71,7 @@ export class PositionFrame extends Frame {
    * @return {PositionFrame}
    */
   clone() {
-    var frame = new ccs.PositionFrame();
+    var frame = new PositionFrame();
     frame.setPosition(this._position);
 
     frame._cloneProperty(this);

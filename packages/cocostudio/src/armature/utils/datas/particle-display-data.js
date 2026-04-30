@@ -25,6 +25,7 @@
 
 import { DisplayData } from "./display-data.js";
 
+import { DISPLAY_TYPE_PARTICLE } from "./constants.js";
 /**
  * The particle display data class.
  */
@@ -34,7 +35,7 @@ export class ParticleDisplayData extends DisplayData {
    */
   constructor() {
     super();
-    this.displayType = ccs.DISPLAY_TYPE_PARTICLE;
+    this.displayType = DISPLAY_TYPE_PARTICLE;
   }
 };
 

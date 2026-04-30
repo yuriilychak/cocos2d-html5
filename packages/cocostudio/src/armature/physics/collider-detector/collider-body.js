@@ -34,13 +34,14 @@
 import { NewClass } from "@aspect/core";
 import { ColliderFilter } from "./collider-filter.js";
 
+import { ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../../armature-define.js";
 export class ColliderBody extends NewClass {
     constructor(contourData) {
         super();
         this.shape = null;
         this.coutourData = contourData;
         this.colliderFilter = new ColliderFilter();
-        if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+        if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             this._calculatedVertexList = [];
         }
     }

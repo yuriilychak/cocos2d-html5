@@ -24,6 +24,7 @@
 
 import { Frame } from "./frame.js";
 
+
 /**
  * Alpha frame
  * @extend Frame
@@ -65,7 +66,7 @@ export class AlphaFrame extends Frame {
   }
 
   clone() {
-    var frame = new ccs.AlphaFrame();
+    var frame = new AlphaFrame();
     frame.setAlpha(this._alpha);
     frame._cloneProperty(this);
     return frame;

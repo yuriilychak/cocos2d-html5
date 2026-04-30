@@ -1,9 +1,11 @@
 import { ScaleTo } from "@aspect/actions";
 
+import { ActionFrame } from "./action-frame.js";
+import { FRAME_TYPE_SCALE } from "./constants.js";
 /**
  * The Cocostudio's scale action frame
  */
-export class ActionScaleFrame extends ccs.ActionFrame {
+export class ActionScaleFrame extends ActionFrame {
   /**
    * Construction of ActionScaleFrame
    */
@@ -11,7 +13,7 @@ export class ActionScaleFrame extends ccs.ActionFrame {
     super();
     this._scaleX = 1;
     this._scaleY = 1;
-    this.frameType = ccs.FRAME_TYPE_SCALE;
+    this.frameType = FRAME_TYPE_SCALE;
   }
 
   /**

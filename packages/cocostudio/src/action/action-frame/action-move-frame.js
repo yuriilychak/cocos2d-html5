@@ -1,17 +1,19 @@
 import { Point } from "@aspect/core";
 import { MoveTo } from "@aspect/actions";
 
+import { ActionFrame } from "./action-frame.js";
+import { FRAME_TYPE_MOVE } from "./constants.js";
 /**
  * The Cocostudio's move action frame.
  */
-export class ActionMoveFrame extends ccs.ActionFrame {
+export class ActionMoveFrame extends ActionFrame {
   /**
    * Construction of ActionMoveFrame
    */
   constructor() {
     super();
     this._position = new Point(0, 0);
-    this.frameType = ccs.FRAME_TYPE_MOVE;
+    this.frameType = FRAME_TYPE_MOVE;
   }
 
   /**

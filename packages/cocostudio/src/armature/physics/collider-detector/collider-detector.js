@@ -36,6 +36,8 @@ import { AffineTransform, NewClass, Point, arrayRemoveObject } from "@aspect/cor
 import { ColliderFilter } from "./collider-filter.js";
 import { ColliderBody } from "./collider-body.js";
 
+import { ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../../armature-define.js";
+import { ContourVertex2 } from "../../utils/datas/utils.js";
 export class ColliderDetector extends NewClass {
 
     constructor(bone) {
@@ -73,11 +75,11 @@ export class ColliderDetector extends NewClass {
         var colliderBody = new ColliderBody(contourData);
         this._colliderBodyList.push(colliderBody);
 
-        if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+        if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             var calculatedVertexList = colliderBody.getCalculatedVertexList();
             var vertexList = contourData.vertexList;
             for (var i = 0; i < vertexList.length; i++) {
-                var newVertex = new ccs.ContourVertex2(0, 0);
+                var newVertex = new ContourVertex2(0, 0);
                 calculatedVertexList.push(newVertex);
             }
         }
@@ -199,7 +201,7 @@ export class ColliderDetector extends NewClass {
                 locHelpPoint.y = vs[j].y;
                 locHelpPoint = AffineTransform.applyToPoint(locHelpPoint, t);
 
-                if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+                if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
                     var v = new Point(0, 0);
                     v.x = locHelpPoint.x;
                     v.y = locHelpPoint.y;

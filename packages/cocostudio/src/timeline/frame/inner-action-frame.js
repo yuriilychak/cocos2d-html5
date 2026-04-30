@@ -25,6 +25,7 @@
 import { log } from "@aspect/core";
 import { Frame } from "./frame.js";
 
+import { InnerActionType } from "./constants.js";
 /**
  * Inner action frame
  * @extend Frame
@@ -37,7 +38,7 @@ export class InnerActionFrame extends Frame {
     this._singleFrameIndex = 0;
     this._animationName = "";
     this._enterWithName = false;
-    this._innerActionType = ccs.InnerActionType.LoopAction;
+    this._innerActionType = InnerActionType.LoopAction;
     this._startFrameIndex = 0;
   }
 
@@ -49,7 +50,7 @@ export class InnerActionFrame extends Frame {
     if (!this._node) return;
     var innerActiontimeline = this._node.getActionByTag(this._node.getTag());
     if (!innerActiontimeline) return;
-    if (ccs.InnerActionType.SingleFrame === this._innerActionType) {
+    if (InnerActionType.SingleFrame === this._innerActionType) {
       innerActiontimeline.gotoFrameAndPause(this._singleFrameIndex);
       return;
     }
@@ -77,9 +78,9 @@ export class InnerActionFrame extends Frame {
       innerEnd += odddiff;
     }
 
-    if (ccs.InnerActionType.NoLoopAction === this._innerActionType) {
+    if (InnerActionType.NoLoopAction === this._innerActionType) {
       innerActiontimeline.gotoFrameAndPlay(innerStart, innerEnd, false);
-    } else if (ccs.InnerActionType.LoopAction === this._innerActionType) {
+    } else if (InnerActionType.LoopAction === this._innerActionType) {
       innerActiontimeline.gotoFrameAndPlay(innerStart, innerEnd, true);
     }
   }
@@ -110,7 +111,7 @@ export class InnerActionFrame extends Frame {
    * @return {InnerActionFrame}
    */
   clone() {
-    var frame = new ccs.InnerActionFrame();
+    var frame = new InnerActionFrame();
     frame.setInnerActionType(this._innerActionType);
     frame.setStartFrameIndex(this._startFrameIndex);
     frame.setEnterWithName(this._enterWithName);

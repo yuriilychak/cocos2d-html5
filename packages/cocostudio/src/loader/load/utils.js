@@ -1,6 +1,6 @@
 import { Director, Loader, Node, Path, log, warn } from "@aspect/core";
 
-const _ccsLoad = ccs._load = (function () {
+export const _ccsLoad = ccs._load = (function () {
 
     /**
      * load file
@@ -105,8 +105,8 @@ export function load (file, path) {
         action: null
     };
 
-    object.node = ccs._load(file, null, path);
-    object.action = ccs._load(file, "action", path);
+    object.node = _ccsLoad(file, null, path);
+    object.action = _ccsLoad(file, "action", path);
     if (object.action && object.action.tag === -1 && object.node)
         object.action.tag = object.node.tag;
     return object;
@@ -125,7 +125,7 @@ load.preload = true;
  * @returns {{node: Node, action: Action}}
  */
 export function loadWithVisibleSize (file, path) {
-    var object = ccs.load(file, path);
+    var object = load(file, path);
     var size = Director.getInstance().getVisibleSize();
     if (object.node && size) {
         object.node.setContentSize(size.width, size.height);
@@ -144,12 +144,12 @@ Loader.getInstance().register(["json"], {
                     list = [],
                     tmpUrl, normalUrl;
                 for (var i = 0; i < UsedResources.length; i++) {
-                    if (!ccs.load.preload && /\.(png|jpg$)/.test(UsedResources[i]))
+                    if (!load.preload && /\.(png|jpg$)/.test(UsedResources[i]))
                         continue;
                     tmpUrl = path.join(dirname, UsedResources[i]);
                     normalUrl = path._normalize(tmpUrl);
-                    if (!ccs.load.validate[normalUrl]) {
-                        ccs.load.validate[normalUrl] = true;
+                    if (!load.validate[normalUrl]) {
+                        load.validate[normalUrl] = true;
                         list.push(normalUrl);
                     }
                 }
