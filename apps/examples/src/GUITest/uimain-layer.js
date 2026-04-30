@@ -79,13 +79,13 @@ export class UIMainLayer extends cc.Layer {
             this.addChild(menu, 1);
         }
         var left_button = widget.getChildByName("left_Button");
-        left_button.addTouchEventListener(this.previousCallback ,this);
+        if (left_button) left_button.addTouchEventListener(this.previousCallback ,this);
 
         var middle_button = widget.getChildByName("middle_Button");
-        middle_button.addTouchEventListener(this.restartCallback ,this);
+        if (middle_button) middle_button.addTouchEventListener(this.restartCallback ,this);
 
         var right_button = widget.getChildByName("right_Button");
-        right_button.addTouchEventListener(this.nextCallback ,this);
+        if (right_button) right_button.addTouchEventListener(this.nextCallback ,this);
 
         //add topDisplayLabel
         var widgetSize = widget.getContentSize();
@@ -120,7 +120,7 @@ export class UIMainLayer extends cc.Layer {
         return true;
     }
     setSceneTitle(title) {
-        this._sceneTitle.setString(title);
+        if (this._sceneTitle) this._sceneTitle.setString(title);
     }
     toExtensionsMainLayer(sender) {
         UISceneManager.purge();
