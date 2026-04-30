@@ -189,3 +189,5 @@ export class TestController extends cc.LayerGradient {
     }
 
 }
+
+TestController.YOffset = 0;

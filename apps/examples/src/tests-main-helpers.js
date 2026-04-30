@@ -72,16 +72,11 @@ import { UnitTestScene } from "./UnitTest/unit-test-scene.js";
 import { XHRArrayBufferTestScene } from "./XHRTest/xhrarray-buffer-test-scene.js";
 import { XHRTestScene } from "./XHRTest/xhrtest-scene.js";
 
-;
-
 //Controller stuff
 export var LINE_SPACE = 40;
 
 export var curPos = new cc.Point(0,0);
 
-;
-
-TestController.YOffset = 0;
 
 export var testNames = [
     {
