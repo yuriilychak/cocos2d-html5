@@ -60,6 +60,14 @@ export class UIMainLayer extends cc.Layer {
         var widget;
         var json = ccs.load("ccs-res/cocosui/UITest/UITest.json");
         widget = json.node;
+
+        // If the JSON couldn't be parsed (legacy widgetTree format not yet
+        // supported), widget will be an empty Node with no children.
+        // Return false so subclass init() blocks are skipped entirely.
+        if (!widget || widget.getChildrenCount() === 0) {
+            return false;
+        }
+
         mainNode.addChild(widget,-1);
 
         this._sceneTitle = widget.getChildByName("UItest");
