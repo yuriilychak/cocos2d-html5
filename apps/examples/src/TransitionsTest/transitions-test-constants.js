@@ -27,7 +27,7 @@
 
 import { CCTransitionCrossFade, CCTransitionRadialCCW, CCTransitionRadialCW, FadeBLTransition, FadeDownTransition, FadeTRTransition, FadeTransition, FadeUpTransition, FadeWhiteTransition, JumpZoomTransition, MoveInBTransition, MoveInLTransition, MoveInRTransition, MoveInTTransition, PageTransitionBackward, PageTransitionForward, RotoZoomTransition, ShrinkGrowTransition, SlideInBTransition, SlideInLTransition, SlideInRTransition, SlideInTTransition, SplitColsTransition, SplitRowsTransition, TurnOffTilesTransition } from "./transitions-test-helpers.js";
 
-TRANSITION_DURATION = 1.2;
+export var TRANSITION_DURATION = 1.2;
 
 export var arrayOfTransitionsTest = [
 

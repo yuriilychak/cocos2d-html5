@@ -27,7 +27,7 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
 import { director } from "../tests-main-constants.js";
-import { arrayOfTransitionsTest, transitionsIdx , _settransitionsIdx} from "./transitions-test-constants.js";
+import { arrayOfTransitionsTest, transitionsIdx , _settransitionsIdx, TRANSITION_DURATION } from "./transitions-test-constants.js";
 import { TransitionsTestScene } from "./transitions-test-scene.js";
 
 export class TransitionBase extends BaseTestLayer {

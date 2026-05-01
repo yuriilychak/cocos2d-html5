@@ -27,6 +27,7 @@
 
 import { EaseSpriteDemo } from "./ease-sprite-demo.js";
 import { winSize } from "../tests-main-constants.js";
+import { TAG_ACTION1_EASE_ACTIONS } from "./ease-actions-test-constants.js";
 
 export class SpeedTest extends EaseSpriteDemo {
     constructor() {

@@ -25,11 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-TAG_ACTION1_EASE_ACTIONS = 1;
+export var TAG_ACTION1_EASE_ACTIONS = 1;
 
-TAG_ACTION2_EASE_ACTIONS = 2;
+export var TAG_ACTION2_EASE_ACTIONS = 2;
 
-TAG_SLIDER_EASE_ACTIONS = 1;
+export var TAG_SLIDER_EASE_ACTIONS = 1;
 
 export let easeActionsTestIdx = -1;
 
