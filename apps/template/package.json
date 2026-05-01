@@ -7,6 +7,8 @@
     "build": "rollup -c rollup.config.mjs"
   },
   "dependencies": {
-    "@aspect/cocos2d": "*"
+    "@aspect/cocos2d": "*",
+    "@aspect/core": "*",
+    "@aspect/menus": "*"
   }
 }

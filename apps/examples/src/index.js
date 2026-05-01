@@ -29,6 +29,15 @@ import { TestController } from "./test-controller";
 import { _initGlobals } from "./constants";
 import { g_resources } from "./resources";
 
+const projectConfig = {
+  debugMode: 1,
+  noCache: false,
+  showFPS: true,
+  frameRate: 60,
+  id: "gameCanvas",
+  renderMode: 0
+};
+
 cc.game.onStart = function () {
   cc.view.enableRetina(true);
   cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
@@ -52,4 +61,4 @@ cc.game.onStart = function () {
     this
   );
 };
-cc.game.run();
+cc.game.run(projectConfig);

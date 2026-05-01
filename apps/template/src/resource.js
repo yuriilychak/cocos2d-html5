@@ -1,8 +1,8 @@
-var s_HelloWorld = "HelloWorld.jpg";
-var s_CloseNormal = "CloseNormal.png";
-var s_CloseSelected = "CloseSelected.png";
+export const s_HelloWorld = "HelloWorld.jpg";
+export const s_CloseNormal = "CloseNormal.png";
+export const s_CloseSelected = "CloseSelected.png";
 
-var g_resources = [
+export const g_resources = [
     //image
     s_HelloWorld,
     s_CloseNormal,

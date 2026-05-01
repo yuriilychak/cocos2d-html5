@@ -1,4 +1,8 @@
-class MyLayer extends cc.Layer {
+import { Layer, Scene, Sprite, LabelTTF, Director, log } from "@aspect/core";
+import { Menu, MenuItemImage } from "@aspect/menus";
+import { s_HelloWorld, s_CloseNormal, s_CloseSelected } from "./resource";
+
+export class MyLayer extends Layer {
   constructor() {
     super();
     this.helloLabel = null;
@@ -14,20 +18,20 @@ class MyLayer extends cc.Layer {
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
     // ask director the window size
-    var size = cc.director.getWinSize();
+    var size = Director.getInstance().getWinSize();
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    var closeItem = new cc.MenuItemImage(
+    var closeItem = new MenuItemImage(
       s_CloseNormal,
       s_CloseSelected,
       function () {
-        cc.log("close");
+        log("close");
       },
       this
     );
     closeItem.setAnchorPoint(0.5, 0.5);
 
-    var menu = new cc.Menu(closeItem);
+    var menu = new Menu(closeItem);
     menu.setPosition(0, 0);
     this.addChild(menu, 1);
     closeItem.setPosition(size.width - 20, 20);
@@ -36,14 +40,14 @@ class MyLayer extends cc.Layer {
     // 3. add your codes below...
     // add a label shows "Hello World"
     // create and initialize a label
-    this.helloLabel = new cc.LabelTTF("Hello World", "Impact", 38);
+    this.helloLabel = new LabelTTF("Hello World", "Impact", 38);
     // position the label on the center of the screen
     this.helloLabel.setPosition(size.width / 2, size.height - 40);
     // add the label as a child to this layer
     this.addChild(this.helloLabel, 5);
 
     // add "Helloworld" splash screen"
-    this.sprite = new cc.Sprite(s_HelloWorld);
+    this.sprite = new Sprite(s_HelloWorld);
     this.sprite.setAnchorPoint(0.5, 0.5);
     this.sprite.setPosition(size.width / 2, size.height / 2);
     this.sprite.setScale(size.height / this.sprite.getContentSize().height);
@@ -51,7 +55,7 @@ class MyLayer extends cc.Layer {
   }
 }
 
-class MyScene extends cc.Scene {
+export class MyScene extends Scene {
   onEnter() {
     super.onEnter();
     var layer = new MyLayer();

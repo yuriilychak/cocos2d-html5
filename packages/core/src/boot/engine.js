@@ -98,6 +98,6 @@ export function initEngine(config, cb) {
 
   document.body
     ? _load(config)
-    : cc._addEventListener(window, "load", _windowLoaded, false);
+    : window.addEventListener("load", _windowLoaded, false);
   _engineInitCalled = true;
 }
