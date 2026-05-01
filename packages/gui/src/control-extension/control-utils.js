@@ -18,6 +18,7 @@ export const ControlUtils = {
         sprite.setPosition(pos.x, pos.y);
         sprite.setAnchorPoint(anchor.x, anchor.y);
         target.addChild(sprite);
+        return sprite;
     },
 
     HSVfromRGB(rgbValue) {
