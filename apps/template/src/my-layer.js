@@ -1,4 +1,4 @@
-import { Layer, Scene, Sprite, LabelTTF, Director, log } from "@aspect/core";
+import { Layer, Sprite, LabelTTF, Director, log } from "@aspect/core";
 import { Menu, MenuItemImage } from "@aspect/menus";
 import { s_HelloWorld, s_CloseNormal, s_CloseSelected } from "./resource";
 
@@ -18,10 +18,10 @@ export class MyLayer extends Layer {
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
     // ask director the window size
-    var size = Director.getInstance().getWinSize();
+    const size = Director.getInstance().getWinSize();
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    var closeItem = new MenuItemImage(
+    const closeItem = new MenuItemImage(
       s_CloseNormal,
       s_CloseSelected,
       function () {
@@ -31,7 +31,7 @@ export class MyLayer extends Layer {
     );
     closeItem.setAnchorPoint(0.5, 0.5);
 
-    var menu = new Menu(closeItem);
+    const menu = new Menu(closeItem);
     menu.setPosition(0, 0);
     this.addChild(menu, 1);
     closeItem.setPosition(size.width - 20, 20);
@@ -52,14 +52,5 @@ export class MyLayer extends Layer {
     this.sprite.setPosition(size.width / 2, size.height / 2);
     this.sprite.setScale(size.height / this.sprite.getContentSize().height);
     this.addChild(this.sprite, 0);
-  }
-}
-
-export class MyScene extends Scene {
-  onEnter() {
-    super.onEnter();
-    var layer = new MyLayer();
-    this.addChild(layer);
-    layer.init();
   }
 }

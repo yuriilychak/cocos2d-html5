@@ -1,17 +1,14 @@
 /**
  * Shared Rollup config for individual packages.
  *
- * Supports two modes:
- * - Modern: If `src/index.js` exists, uses standard ES module resolution.
- *   Exports are stripped from the output to keep dist compatible with the
- *   app-level concat build.
- * - Legacy: Falls back to concatenating files listed in `files.mjs`.
+ * Uses standard ES module resolution via src/index.js.
+ * Exports and @aspect/* imports are stripped from the output to keep
+ * dist compatible with the app-level concat build.
  *
  * Usage (in each package.json): "build": "rollup -c ../../scripts/rollup.package.mjs"
  */
-import { readFileSync, existsSync } from "fs";
 import { join } from "path";
-import MagicString, { Bundle } from "magic-string";
+import MagicString from "magic-string";
 import resolve from "@rollup/plugin-node-resolve";
 
 const PKG_DIR = process.cwd();
@@ -61,87 +58,19 @@ function stripWorkspaceImportsPlugin() {
   };
 }
 
-function createModernConfig() {
-  return {
-    input: join(PKG_DIR, "src", "index.js"),
-    treeshake: false,
-    external: (id) => id.startsWith("@aspect/"),
-    plugins: [
-      resolve({ extensions: [".js"] }),
-      stripExportsPlugin(),
-      stripWorkspaceImportsPlugin()
-    ],
-    output: {
-      file: "dist/index.js",
-      format: "es",
-      strict: false,
-      sourcemap: true
-    }
-  };
-}
-
-async function createLegacyConfig() {
-  const VIRTUAL_ENTRY_ID = "concat-entry";
-  const filesModule = await import(join(PKG_DIR, "files.mjs"));
-  const files = filesModule.default;
-
-  return {
-    input: VIRTUAL_ENTRY_ID,
-    plugins: [
-      {
-        name: "concat",
-        resolveId(id) {
-          if (id === VIRTUAL_ENTRY_ID) return VIRTUAL_ENTRY_ID;
-          return null;
-        },
-        load(id) {
-          if (id !== VIRTUAL_ENTRY_ID) return null;
-
-          const bundle = new Bundle();
-
-          for (const relPath of files) {
-            const absPath = join(PKG_DIR, "src", relPath);
-            const code = readFileSync(absPath, "utf-8");
-            const s = new MagicString(code, { filename: relPath });
-            bundle.addSource({
-              filename: relPath,
-              content: s,
-              separator: "\n"
-            });
-          }
-
-          const map = bundle.generateMap({
-            file: "index.js",
-            includeContent: true,
-            hires: "boundary"
-          });
-
-          return {
-            code: bundle.toString(),
-            map: {
-              version: map.version,
-              sources: map.sources,
-              sourcesContent: map.sourcesContent,
-              names: map.names,
-              mappings: map.mappings
-            }
-          };
-        }
-      }
-    ],
-    output: {
-      file: "dist/index.js",
-      format: "es",
-      strict: false,
-      sourcemap: true
-    }
-  };
-}
-
-export default async () => {
-  if (existsSync(join(PKG_DIR, "src", "index.js"))) {
-    return createModernConfig();
+export default {
+  input: join(PKG_DIR, "src", "index.js"),
+  treeshake: false,
+  external: (id) => id.startsWith("@aspect/"),
+  plugins: [
+    resolve({ extensions: [".js"] }),
+    stripExportsPlugin(),
+    stripWorkspaceImportsPlugin()
+  ],
+  output: {
+    file: "dist/index.js",
+    format: "es",
+    strict: false,
+    sourcemap: true
   }
-
-  return createLegacyConfig();
 };

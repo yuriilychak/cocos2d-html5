@@ -1,6 +1,6 @@
 # Package Migration Guide: Legacy `cc.*` Globals → ES Modules
 
-The build system automatically switches a package to **Modern mode** (ES module resolution via rollup) once `src/index.js` exists in that package. Legacy mode concatenates files listed in `files.mjs`.
+All packages now use **Modern mode**: ES module resolution via `src/index.js` built with Rollup.
 
 ---
 

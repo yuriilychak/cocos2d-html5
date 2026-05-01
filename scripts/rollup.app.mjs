@@ -14,6 +14,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import terser from '@rollup/plugin-terser';
+import resolve from '@rollup/plugin-node-resolve';
 import MagicString, { Bundle } from 'magic-string';
 
 const VIRTUAL_ENTRY_ID = 'app-concat-entry';
@@ -225,6 +226,66 @@ export function createTestsBundleConfig({
         const pkgName = id.replace('@aspect/', '');
         return ASPECT_GLOBALS[pkgName] ?? 'cc';
       }
+    }
+  };
+}
+
+/**
+ * Standalone ES module bundle for an app entry point.
+ * Resolves all @aspect/* imports directly from package source files,
+ * producing a single self-contained IIFE with no runtime cc global dependency.
+ *
+ * Use this for apps (e.g. template) that import from @aspect/* and should
+ * bundle everything in one file without relying on a pre-built engine bundle.
+ */
+export function createStandaloneConfig({
+  input = 'src/index.js',
+  outputFile = 'dist/app.min.js'
+} = {}) {
+  const appDir = process.cwd();
+  const rootDir = join(appDir, '..', '..');
+
+  return {
+    input,
+    treeshake: false,
+    plugins: [
+      {
+        name: 'aspect-src-resolver',
+        resolveId(id) {
+          if (!id.startsWith('@aspect/')) return null;
+          const pkgName = id.replace('@aspect/', '');
+          const srcFile = join(rootDir, 'packages', pkgName, 'src', 'index.js');
+          if (existsSync(srcFile)) return srcFile;
+          throw new Error(
+            `[aspect-src-resolver] No src/index.js found for "${id}". ` +
+            `Meta-packages cannot be imported directly in standalone mode.`
+          );
+        }
+      },
+      resolve({ extensions: ['.js'] }),
+      terser({
+        ecma: 2020,
+        module: false,
+        compress: {
+          dead_code: true,
+          drop_console: false,
+          passes: 2
+        },
+        mangle: {
+          reserved: ['cc', 'gl', 'WebGLRenderingContext']
+        },
+        format: {
+          comments: false
+        }
+      })
+    ],
+    output: {
+      file: outputFile,
+      format: 'iife',
+      name: 'App',
+      strict: false,
+      sourcemap: true,
+      inlineDynamicImports: true
     }
   };
 }

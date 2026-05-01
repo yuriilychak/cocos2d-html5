@@ -917,6 +917,7 @@ export { Animation } from "./sprites/animation/animation";
 export { AnimationFrame } from "./sprites/animation/animation-frame";
 export { Node } from "./base-nodes/node";
 export { Scene } from "./scenes/scene";
+export { LoaderScene } from "./scenes/loader-scene";
 export { LayerColor } from "./layers/layer-color";
 export { default as EventManager } from "./event-manager/event-manager";
 export {
