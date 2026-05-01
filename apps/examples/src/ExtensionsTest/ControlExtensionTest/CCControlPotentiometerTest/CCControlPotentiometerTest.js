@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
+import { LabelTTF, Scene } from "@aspect/core";
 
 export class ControlPotentiometerTest extends ControlScene {
   constructor() {
@@ -54,7 +55,7 @@ export class ControlPotentiometerTest extends ControlScene {
 
       layer_width += background.width;
 
-      this._displayValueLabel = new cc.LabelTTF("", "HelveticaNeue-Bold", 30);
+      this._displayValueLabel = new LabelTTF("", "HelveticaNeue-Bold", 30);
 
       this._displayValueLabel.x = background.x;
       this._displayValueLabel.y = background.y;
@@ -99,7 +100,7 @@ export class ControlPotentiometerTest extends ControlScene {
   }
 }
 ControlPotentiometerTest.create = function (sceneTitle) {
-  var scene = new cc.Scene();
+  var scene = new Scene();
   var controlLayer = new ControlPotentiometerTest();
   if (controlLayer && controlLayer.init()) {
     controlLayer.getSceneTitleLabel().setString(sceneTitle);

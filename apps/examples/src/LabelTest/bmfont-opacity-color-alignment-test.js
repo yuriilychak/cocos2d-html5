@@ -35,6 +35,7 @@ import { TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2, TAG_BITMAP_ATLAS3 } from "./label
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
 import { Color } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
     constructor() {
@@ -47,7 +48,7 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
         var col = new cc.LayerColor(new Color(128, 128, 128, 255));
         this.addChild(col, -10);
 
-        var label1 = new cc.LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
+        var label1 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
 
         // testing anchors
         label1.anchorX = 0;
@@ -63,7 +64,7 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
         // color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
         // If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
         // Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-        var label2 = new cc.LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
+        var label2 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
         // testing anchors
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
@@ -71,7 +72,7 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.runAction(repeat.clone());
 
-        var label3 = new cc.LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
+        var label3 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
         // testing anchors
         label3.anchorX = 1;
         label3.anchorY = 1;
@@ -106,7 +107,7 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
     }
 
     title() {
-        return "cc.LabelBMFont";
+        return "LabelBMFont";
     }
     subtitle() {
         return "Testing alignment. Testing opacity + tint";

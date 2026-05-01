@@ -34,6 +34,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
 import { Color } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontTintTest extends AtlasDemo {
     constructor() {
@@ -48,7 +49,7 @@ export class BMFontTintTest extends AtlasDemo {
         var s = director.getWinSize();
 
         var label = null;
-        label = new cc.LabelBMFont("Blue", s_resprefix + "fonts/bitmapFontTest5.fnt");
+        label = new LabelBMFont("Blue", s_resprefix + "fonts/bitmapFontTest5.fnt");
         label.color = new Color(0, 0, 255);
         this.addChild(label);
         label.x = s.width / 2;
@@ -56,7 +57,7 @@ export class BMFontTintTest extends AtlasDemo {
         label.anchorX = 0.5;
         label.anchorY = 0.5;
 
-        label = new cc.LabelBMFont("Red", s_resprefix + "fonts/bitmapFontTest5.fnt");
+        label = new LabelBMFont("Red", s_resprefix + "fonts/bitmapFontTest5.fnt");
         this.addChild(label);
         label.x = s.width / 2;
         label.y = 2 * s.height / 4;
@@ -64,7 +65,7 @@ export class BMFontTintTest extends AtlasDemo {
         label.anchorY = 0.5;
         label.color = new Color(255, 0, 0);
 
-        label = new cc.LabelBMFont("G", s_resprefix + "fonts/bitmapFontTest5.fnt");
+        label = new LabelBMFont("G", s_resprefix + "fonts/bitmapFontTest5.fnt");
         this.addChild(label);
         label.x = s.width / 2;
         label.y = 3 * s.height / 4;
@@ -75,7 +76,7 @@ export class BMFontTintTest extends AtlasDemo {
         //----end7----
     }
     title() {
-        return "cc.LabelBMFont BMFontTintTest";
+        return "LabelBMFont BMFontTintTest";
     }
     subtitle() {
         return "Testing color";

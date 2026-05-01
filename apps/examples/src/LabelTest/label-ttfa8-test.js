@@ -28,7 +28,8 @@
 /// LabelTTFA8Test
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class LabelTTFA8Test extends AtlasDemo {
   constructor() {
@@ -39,8 +40,8 @@ export class LabelTTFA8Test extends AtlasDemo {
     var layer = new cc.LayerColor(new Color(128, 128, 128, 255));
     this.addChild(layer, -10);
 
-    // cc.LabelBMFont
-    var label1 = new cc.LabelTTF("Testing A8 Format", "Arial", 48);
+    // LabelBMFont
+    var label1 = new LabelTTF("Testing A8 Format", "Arial", 48);
     this.addChild(label1);
     label1.color = new Color(255, 0, 0);
     label1.x = s.width / 2;

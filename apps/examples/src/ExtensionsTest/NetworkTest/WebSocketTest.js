@@ -27,11 +27,11 @@
  ****************************************************************************/
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Size } from "@aspect/core";
+import { LabelTTF, Layer, Scene, Size } from "@aspect/core";
 
 export var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket;
 
-export class WebSocketTestLayer extends cc.Layer {
+export class WebSocketTestLayer extends Layer {
   constructor() {
     super();
     this._wsiSendText = null;
@@ -50,7 +50,7 @@ export class WebSocketTestLayer extends cc.Layer {
     var MARGIN = 40;
     var SPACE = 35;
 
-    var label = new cc.LabelTTF("WebSocket Test", "Arial", 28);
+    var label = new LabelTTF("WebSocket Test", "Arial", 28);
     label.x = winSize.width / 2;
     label.y = winSize.height - MARGIN;
     this.addChild(label, 0);
@@ -61,7 +61,7 @@ export class WebSocketTestLayer extends cc.Layer {
     this.addChild(menuRequest);
 
     // Send Text
-    var labelSendText = new cc.LabelTTF("Send Text", "Arial", 22);
+    var labelSendText = new LabelTTF("Send Text", "Arial", 22);
     var itemSendText = new cc.MenuItemLabel(
       labelSendText,
       this.onMenuSendTextClicked,
@@ -72,7 +72,7 @@ export class WebSocketTestLayer extends cc.Layer {
     menuRequest.addChild(itemSendText);
 
     // Send Binary
-    var labelSendBinary = new cc.LabelTTF("Send Binary", "Arial", 22);
+    var labelSendBinary = new LabelTTF("Send Binary", "Arial", 22);
     var itemSendBinary = new cc.MenuItemLabel(
       labelSendBinary,
       this.onMenuSendBinaryClicked,
@@ -83,7 +83,7 @@ export class WebSocketTestLayer extends cc.Layer {
     menuRequest.addChild(itemSendBinary);
 
     // Send Text Status Label
-    this._sendTextStatus = new cc.LabelTTF(
+    this._sendTextStatus = new LabelTTF(
       "Send Text WS is waiting...",
       "Arial",
       14,
@@ -98,7 +98,7 @@ export class WebSocketTestLayer extends cc.Layer {
     this.addChild(this._sendTextStatus);
 
     // Send Binary Status Label
-    this._sendBinaryStatus = new cc.LabelTTF(
+    this._sendBinaryStatus = new LabelTTF(
       "Send Binary WS is waiting...",
       "Arial",
       14,
@@ -113,7 +113,7 @@ export class WebSocketTestLayer extends cc.Layer {
     this.addChild(this._sendBinaryStatus);
 
     // Error Label
-    this._errorStatus = new cc.LabelTTF(
+    this._errorStatus = new LabelTTF(
       "Error WS is waiting...",
       "Arial",
       14,
@@ -299,7 +299,7 @@ WebSocketTestLayer.create = function () {
 };
 
 export function runWebSocketTest() {
-  var pScene = new cc.Scene();
+  var pScene = new Scene();
   var pLayer = WebSocketTestLayer.create();
   pScene.addChild(pLayer);
   cc.director.runScene(pScene);

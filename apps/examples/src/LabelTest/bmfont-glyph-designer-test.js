@@ -34,6 +34,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
 import { Color } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontGlyphDesignerTest extends AtlasDemo {
     constructor() {
@@ -46,8 +47,8 @@ export class BMFontGlyphDesignerTest extends AtlasDemo {
         var layer = new cc.LayerColor(new Color(128, 128, 128, 255));
         this.addChild(layer, -10);
 
-        // cc.LabelBMFont
-        var label1 = new cc.LabelBMFont("Testing Glyph Designer", s_resprefix + "fonts/futura-48.fnt");
+        // LabelBMFont
+        var label1 = new LabelBMFont("Testing Glyph Designer", s_resprefix + "fonts/futura-48.fnt");
         this.addChild(label1);
         label1.x = s.width / 2;
         label1.y = s.height / 2;

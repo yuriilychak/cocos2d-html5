@@ -34,6 +34,7 @@ import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class ResumeTest extends ActionManagerTest {
   constructor() {
@@ -49,7 +50,7 @@ export class ResumeTest extends ActionManagerTest {
     super.onEnter();
 
     var s = director.getWinSize();
-    var l = new cc.LabelTTF(
+    var l = new LabelTTF(
       "Grossini only rotate/scale in 3 seconds",
       "Thonburi",
       16

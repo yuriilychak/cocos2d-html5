@@ -29,13 +29,14 @@
 import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { winSize } from "../constants";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontInit extends AtlasDemo {
     constructor() {
         //----start14----ctor
         super();
 
-        var bmFont = new cc.LabelBMFont();
+        var bmFont = new LabelBMFont();
         bmFont.setFntFile(s_resprefix + "fonts/helvetica-32.fnt");
         bmFont.setString("It is working!");
         this.addChild(bmFont);
@@ -44,7 +45,7 @@ export class BMFontInit extends AtlasDemo {
         //----end14----
     }
     title() {
-        return "cc.LabelBMFont init";
+        return "LabelBMFont init";
     }
     subtitle() {
         return "Test for support of init method without parameters.";

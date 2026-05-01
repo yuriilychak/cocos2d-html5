@@ -34,7 +34,7 @@ import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled, director } from "../constants";
-import { Point } from "@aspect/core";
+import { LabelTTF, Point } from "@aspect/core";
 
 export class PauseTest extends ActionManagerTest {
   constructor() {
@@ -54,7 +54,7 @@ export class PauseTest extends ActionManagerTest {
     super.onEnter();
 
     var s = director.getWinSize();
-    var l = new cc.LabelTTF(
+    var l = new LabelTTF(
       "After 3 seconds grossini should move",
       "Thonburi",
       16

@@ -36,6 +36,7 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
+import { LabelBMFont } from "@aspect/labels";
 
 export class ShaderRetroEffect extends OpenGLTestLayer {
     constructor() {
@@ -48,7 +49,7 @@ export class ShaderRetroEffect extends OpenGLTestLayer {
             program.link();
             program.updateUniforms();
 
-            var label = new cc.LabelBMFont("RETRO EFFECT","fonts/west_england-64.fnt");
+            var label = new LabelBMFont("RETRO EFFECT","fonts/west_england-64.fnt");
             
             if(cc.sys.isNative)
                 label.children[0].shaderProgram = program;

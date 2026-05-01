@@ -41,7 +41,7 @@ import {
   winSize
 } from "./constants";
 import { LINE_SPACE, curPos, testNames } from "./tests-main-helpers";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF } from "@aspect/core";
 
 export class TestController extends cc.LayerGradient {
   constructor() {
@@ -93,7 +93,7 @@ export class TestController extends cc.LayerGradient {
     this._itemMenu = new cc.Menu(); //item menu is where all the label goes, and the one gets scrolled
 
     for (var i = 0, len = testNames.length; i < len; i++) {
-      var label = new cc.LabelTTF(
+      var label = new LabelTTF(
         i + 1 + ". " + testNames[i].title,
         "Arial",
         24

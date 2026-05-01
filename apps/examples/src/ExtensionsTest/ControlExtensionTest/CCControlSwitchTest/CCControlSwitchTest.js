@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
+import { LabelTTF, Scene } from "@aspect/core";
 
 export class ControlSwitchTest extends ControlScene {
   init() {
@@ -49,7 +50,7 @@ export class ControlSwitchTest extends ControlScene {
 
       layer_width += background.width;
 
-      this._displayValueLabel = new cc.LabelTTF("#color", "Marker Felt", 30);
+      this._displayValueLabel = new LabelTTF("#color", "Marker Felt", 30);
 
       this._displayValueLabel.x = background.x;
       this._displayValueLabel.y = background.y;
@@ -61,8 +62,8 @@ export class ControlSwitchTest extends ControlScene {
         new cc.Sprite("extensions/switch-on.png"),
         new cc.Sprite("extensions/switch-off.png"),
         new cc.Sprite("extensions/switch-thumb.png"),
-        new cc.LabelTTF("On", "Arial-BoldMT", 16),
-        new cc.LabelTTF("Off", "Arial-BoldMT", 16)
+        new LabelTTF("On", "Arial-BoldMT", 16),
+        new LabelTTF("Off", "Arial-BoldMT", 16)
       );
       switchControl.x = layer_width + 10 + switchControl.width / 2;
       switchControl.y = 0;
@@ -96,7 +97,7 @@ export class ControlSwitchTest extends ControlScene {
 }
 
 ControlSwitchTest.create = function (sceneTitle) {
-  var scene = new cc.Scene();
+  var scene = new Scene();
   var controlLayer = new ControlSwitchTest();
   if (controlLayer && controlLayer.init()) {
     controlLayer.getSceneTitleLabel().setString(sceneTitle);

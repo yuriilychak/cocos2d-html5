@@ -24,18 +24,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class CurrentLanguageTest extends cc.Layer {
+
+export class CurrentLanguageTest extends Layer {
     constructor() {
         super();
 
         var s = cc.director.getWinSize();
-        var label = new cc.LabelTTF("Current language Test", "Arial", 28);
+        var label = new LabelTTF("Current language Test", "Arial", 28);
         this.addChild(label, 0);
         label.x = s.width / 2;
 	    label.y = s.height - 50;
 
-        var labelLanguage = new cc.LabelTTF("", "Arial", 20);
+        var labelLanguage = new LabelTTF("", "Arial", 20);
         labelLanguage.x = s.width / 2;
 	    labelLanguage.y = s.height / 2;
 

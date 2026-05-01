@@ -34,7 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2 } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { Rect } from "@aspect/core";
+import { LabelTTF, Rect } from "@aspect/core";
 
 export class SpriteAliased extends SpriteTestDemo {
 
@@ -80,7 +80,7 @@ export class SpriteAliased extends SpriteTestDemo {
         // So sprite1 and sprite2 will be affected by this change
         //
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
-            var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
+            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;

@@ -27,9 +27,9 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { winSize } from "../../constants";
-import { Size, Color } from "@aspect/core";
+import { Color, Layer, Scene, Size } from "@aspect/core";
 
-export class EditBoxTestLayer extends cc.Layer {
+export class EditBoxTestLayer extends Layer {
   constructor() {
     super();
 
@@ -40,7 +40,7 @@ export class EditBoxTestLayer extends cc.Layer {
     this._box3 = null;
 
     this._box4 = null;
-    cc.associateWithNative(this, cc.Layer);
+    cc.associateWithNative(this, Layer);
     this.init();
   }
 
@@ -154,7 +154,7 @@ export class EditBoxTestLayer extends cc.Layer {
 }
 
 export function runEditBoxTest() {
-  var pScene = new cc.Scene();
+  var pScene = new Scene();
   var pLayer = new EditBoxTestLayer();
   pScene.addChild(pLayer);
   cc.director.runScene(pScene);

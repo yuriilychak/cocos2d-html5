@@ -33,9 +33,9 @@ import {
   LOW_PLAYER,
   STATUS_BAR_HEIGHT
 } from "./touches-test-constants";
-import { Point } from "@aspect/core";
+import { Layer, Point } from "@aspect/core";
 
-export class PongLayer extends cc.Layer {
+export class PongLayer extends Layer {
   constructor() {
     super();
 

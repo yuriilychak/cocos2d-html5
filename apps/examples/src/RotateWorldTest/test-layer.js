@@ -26,8 +26,9 @@
  ****************************************************************************/
 
 import { director } from "../constants";
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class TestLayer extends cc.Layer {
+export class TestLayer extends Layer {
   constructor() {
     super();
     this.init();
@@ -45,7 +46,7 @@ export class TestLayer extends cc.Layer {
     //cc.MutableArray *array = [UIFont familyNames];
     //for( cc.String *s in array )
     //	NSLog( s );
-    var label = new cc.LabelTTF("cocos2d", "Tahoma", 64);
+    var label = new LabelTTF("cocos2d", "Tahoma", 64);
 
     label.x = x / 2;
     label.y = y / 2;

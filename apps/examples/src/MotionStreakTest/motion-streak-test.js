@@ -41,8 +41,9 @@ import {
   s_pathR1,
   s_pathR2
 } from "../resources";
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class MotionStreakTest extends cc.Layer {
+export class MotionStreakTest extends Layer {
   constructor() {
     super();
     this._streak = null;
@@ -60,14 +61,14 @@ export class MotionStreakTest extends cc.Layer {
 
     var winSize = cc.director.getWinSize();
 
-    var label = new cc.LabelTTF(this.title(), "Arial", 32);
+    var label = new LabelTTF(this.title(), "Arial", 32);
     this.addChild(label, 0, TAG_LABEL);
     label.x = winSize.width / 2;
     label.y = winSize.height - 50;
 
     var subTitle = this.subtitle();
     if (subTitle.length > 0) {
-      var l = new cc.LabelTTF(subTitle, "Arial", 16);
+      var l = new LabelTTF(subTitle, "Arial", 16);
       this.addChild(l, 1);
       l.x = winSize.width / 2;
       l.y = winSize.height - 80;

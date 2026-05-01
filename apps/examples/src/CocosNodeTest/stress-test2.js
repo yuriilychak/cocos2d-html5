@@ -29,14 +29,14 @@ import { TAG_SPRITE1 } from "./cocos-node-test-constants";
 import { TestNodeDemo } from "./test-node-demo";
 import { s_fire, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Layer, Point } from "@aspect/core";
 
 export class StressTest2 extends TestNodeDemo {
     constructor() {
         //----start5----ctor
         super();
 
-        var sublayer = new cc.Layer();
+        var sublayer = new Layer();
 
         var sp1 = new cc.Sprite(s_pathSister1);
         sp1.x = 80;

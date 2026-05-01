@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { Color, Rect } from "@aspect/core";
+import { Color, LabelTTF, Rect } from "@aspect/core";
 
 export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
   onEnter() {
@@ -64,7 +64,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
 
     cc.eventManager.addListener(listener1, sprite1);
 
-    var statusLabel = new cc.LabelTTF("The sprite could be touched!", "", 20);
+    var statusLabel = new LabelTTF("The sprite could be touched!", "", 20);
     statusLabel.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height - 90

@@ -61,8 +61,9 @@ import { TMXResizeTest } from "./tmxresize-test";
 import { TMXTilePropertyTest } from "./tmxtile-property-test";
 import { TMXTilesetTest } from "./tmxtileset-test";
 import { TMXUncompressedTest } from "./tmxuncompressed-test";
+import { Layer } from "@aspect/core";
 
-// Copy BaseTestLayer prototype methods (mixin pattern, originally cc.Layer.extend(BaseTestLayerProps))
+// Copy BaseTestLayer prototype methods (mixin pattern, originally Layer.extend(BaseTestLayerProps))
 Object.getOwnPropertyNames(BaseTestLayer.prototype).forEach(function (name) {
   if (
     name !== "constructor" &&

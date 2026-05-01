@@ -34,6 +34,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
 import { Point } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontSpeedTest extends AtlasDemo {
     constructor() {
@@ -42,7 +43,7 @@ export class BMFontSpeedTest extends AtlasDemo {
         // Upper Label
         for (var i = 0; i < 100; i++) {
             var str = "-" + i + "-";
-            var label = new cc.LabelBMFont(str, s_resprefix + "fonts/bitmapFontTest.fnt");
+            var label = new LabelBMFont(str, s_resprefix + "fonts/bitmapFontTest.fnt");
             this.addChild(label);
 
             var s = director.getWinSize();
@@ -55,10 +56,10 @@ export class BMFontSpeedTest extends AtlasDemo {
         //----end8----
     }
     title() {
-        return "cc.LabelBMFont";
+        return "LabelBMFont";
     }
     subtitle() {
-        return "Creating several cc.LabelBMFont with the same .fnt file should be fast";
+        return "Creating several LabelBMFont with the same .fnt file should be fast";
     }
 
 }

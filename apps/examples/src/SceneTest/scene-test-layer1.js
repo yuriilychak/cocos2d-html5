@@ -28,9 +28,9 @@
 import { SceneTestLayer2 } from "./scene-test-layer2";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, Layer, Point } from "@aspect/core";
 
-export class SceneTestLayer1 extends cc.Layer {
+export class SceneTestLayer1 extends Layer {
   constructor() {
     //----start0----Scene1-ctor
     super();

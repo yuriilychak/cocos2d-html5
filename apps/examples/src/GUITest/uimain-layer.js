@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 import { UISceneManager, GUITestScene } from "./UISceneManager";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF, Layer } from "@aspect/core";
 
-export class UIMainLayer extends cc.Layer {
+export class UIMainLayer extends Layer {
   constructor() {
     super();
 
@@ -77,7 +77,7 @@ export class UIMainLayer extends cc.Layer {
     if (back_label) {
       back_label.addTouchEventListener(this.toExtensionsMainLayer, this);
     } else {
-      var label = new cc.LabelTTF("Back", "Arial", 20);
+      var label = new LabelTTF("Back", "Arial", 20);
       var menuItem = new cc.MenuItemLabel(
         label,
         this.toExtensionsMainLayer,

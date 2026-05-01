@@ -27,7 +27,7 @@
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini } from "../resources";
-import { Point } from "@aspect/core";
+import { Layer, Point } from "@aspect/core";
 
 export class BakeLayerTest1 extends BakeLayerBaseTest {
   title() {
@@ -54,11 +54,11 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
     menu.y = winSize.height - 120;
     this.addChild(menu, 10);
 
-    var rootLayer = new cc.Layer();
+    var rootLayer = new Layer();
     rootLayer.setPosition(20, 20);
     this.addChild(rootLayer);
 
-    var bakeLayer = new cc.Layer();
+    var bakeLayer = new Layer();
     bakeLayer.bake();
     bakeLayer.setRotation(30);
     rootLayer.addChild(bakeLayer);

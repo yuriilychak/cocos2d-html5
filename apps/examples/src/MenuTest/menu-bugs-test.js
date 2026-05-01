@@ -24,8 +24,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { Layer } from "@aspect/core";
 
-export class MenuBugsTest extends cc.Layer {
+
+export class MenuBugsTest extends Layer {
      constructor(){
          super();
 

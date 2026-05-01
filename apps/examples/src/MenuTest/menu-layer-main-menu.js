@@ -37,9 +37,10 @@ import {
   s_pressSendScore,
   s_sendScore
 } from "../resources";
-import { Point, Color, Rect } from "@aspect/core";
+import { Color, Layer, Point, Rect } from "@aspect/core";
+import { LabelAtlas, LabelBMFont } from "@aspect/labels";
 
-export class MenuLayerMainMenu extends cc.Layer {
+export class MenuLayerMainMenu extends Layer {
   constructor() {
     //----start0----ctor
     super();
@@ -78,7 +79,7 @@ export class MenuLayerMainMenu extends cc.Layer {
     );
 
     // Label Item (LabelAtlas)
-    var labelAtlas = new cc.LabelAtlas("0123456789", s_fpsImages, 12, 32, ".");
+    var labelAtlas = new LabelAtlas("0123456789", s_fpsImages, 12, 32, ".");
     var item3 = new cc.MenuItemLabel(
       labelAtlas,
       this.onMenuCallbackDisabled,
@@ -101,7 +102,7 @@ export class MenuLayerMainMenu extends cc.Layer {
     item4.fontName = "Arial";
 
     // Label Item (LabelBMFont)
-    var label = new cc.LabelBMFont("configuration", s_bitmapFontTest3_fnt);
+    var label = new LabelBMFont("configuration", s_bitmapFontTest3_fnt);
     var item5 = new cc.MenuItemLabel(label, this.onMenuCallbackConfig, this);
 
     // Testing issue #500

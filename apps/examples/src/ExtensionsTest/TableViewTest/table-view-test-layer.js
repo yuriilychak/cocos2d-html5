@@ -28,9 +28,9 @@
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { CustomTableViewCell } from "./custom-table-view-cell";
 import { s_image_icon } from "../../resources";
-import { Size } from "@aspect/core";
+import { LabelTTF, Layer, Size } from "@aspect/core";
 
-export class TableViewTestLayer extends cc.Layer {
+export class TableViewTestLayer extends Layer {
   constructor() {
     super();
     this.init();
@@ -108,7 +108,7 @@ export class TableViewTestLayer extends cc.Layer {
       sprite.y = 0;
       cell.addChild(sprite);
 
-      label = new cc.LabelTTF(strValue, "Helvetica", 20.0);
+      label = new LabelTTF(strValue, "Helvetica", 20.0);
       label.x = 0;
       label.y = 0;
       label.anchorX = 0;

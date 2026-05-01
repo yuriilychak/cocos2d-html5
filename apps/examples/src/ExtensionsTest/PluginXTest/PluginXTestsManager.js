@@ -25,6 +25,7 @@
 
 import { AnalyticsTestLayer } from "./AnalyticsTest";
 import { IAPTestLayer } from "./IOSIAPTest";
+import { Scene } from "@aspect/core";
 
 export var pluginXTestItemNames = [];
 
@@ -71,7 +72,7 @@ export var pluginXSceneManager = {
   },
 
   currentPluginXScene: function () {
-    var scene = new cc.Scene();
+    var scene = new Scene();
     var layer = pluginXTestItemNames[this._currentPluginXSceneId].testLayer();
     scene.addChild(layer);
     return scene;

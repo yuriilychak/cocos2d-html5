@@ -34,7 +34,7 @@ import {
   TRANSITION_DURATION
 } from "./transitions-test-constants";
 import { TransitionsTestScene } from "./transitions-test-scene";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF } from "@aspect/core";
 
 export class TransitionBase extends BaseTestLayer {
   title() {
@@ -58,13 +58,13 @@ export class TransitionBase extends BaseTestLayer {
     bg1.scale = 1.7;
     this.addChild(bg1);
 
-    var title = new cc.LabelTTF(this.title(), "Thonburi", 32);
+    var title = new LabelTTF(this.title(), "Thonburi", 32);
     this.addChild(title);
     title.color = new Color(255, 32, 32);
     title.x = x / 2;
     title.y = y - 100;
 
-    var label = new cc.LabelTTF(this.sceneName, "Marker Felt", 38);
+    var label = new LabelTTF(this.sceneName, "Marker Felt", 38);
     label.color = new Color(16, 16, 255);
     label.x = x / 2;
     label.y = y / 2;

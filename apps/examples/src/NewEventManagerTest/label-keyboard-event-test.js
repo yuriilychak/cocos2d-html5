@@ -27,6 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
   onEnter() {
@@ -36,7 +37,7 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
     var origin = director.getVisibleOrigin();
     var size = director.getVisibleSize();
 
-    var statusLabel = new cc.LabelTTF("No keyboard event received!", "", 20);
+    var statusLabel = new LabelTTF("No keyboard event received!", "", 20);
     statusLabel.setPosition(
       origin.x + size.width / 2,
       origin.x + size.height / 2

@@ -27,7 +27,7 @@
 
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, LabelTTF, Point } from "@aspect/core";
 
 export class LayerGradientTest extends LayerTest {
   constructor() {
@@ -75,12 +75,12 @@ export class LayerGradientTest extends LayerTest {
       );
     }
 
-    var label1 = new cc.LabelTTF(
+    var label1 = new LabelTTF(
       "Compressed Interpolation: Enabled",
       "Marker Felt",
       26
     );
-    var label2 = new cc.LabelTTF(
+    var label2 = new LabelTTF(
       "Compressed Interpolation: Disabled",
       "Marker Felt",
       26

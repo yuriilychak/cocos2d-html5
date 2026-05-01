@@ -29,13 +29,14 @@ import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { winSize } from "../constants";
 import { Color } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontColorParentChild extends AtlasDemo {
     constructor() {
         //----start15----ctor
         super();
 
-        this.label = new cc.LabelBMFont("YRGB", s_resprefix + "fonts/konqa32.fnt");
+        this.label = new LabelBMFont("YRGB", s_resprefix + "fonts/konqa32.fnt");
         this.addChild(this.label);
         this.label.x = winSize.width / 2;
         this.label.y = winSize.height / 2;
@@ -68,7 +69,7 @@ export class BMFontColorParentChild extends AtlasDemo {
     }
 
     title() {
-        return "cc.LabelBMFont color parent / child";
+        return "LabelBMFont color parent / child";
     }
     subtitle() {
         return "Yellow Red Green Blue and numbers in Yellow";

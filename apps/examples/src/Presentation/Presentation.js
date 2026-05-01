@@ -35,7 +35,7 @@ import {
 import { TestScene } from "../test-scene";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, LabelTTF, Point } from "@aspect/core";
 
 export var presentationSceneIdx = -1;
 export var centerPos = new Point(0, 0); // will be updated later
@@ -71,7 +71,7 @@ export class PresentationBaseLayer extends BaseTestLayer {
       fontSize = winSize.width * 0.09;
     }
 
-    this.label = new cc.LabelTTF(this._title, "Gill Sans", fontSize);
+    this.label = new LabelTTF(this._title, "Gill Sans", fontSize);
     this.addChild(this.label, 100);
 
     var isMain = this.isMainTitle;
@@ -92,7 +92,7 @@ export class PresentationBaseLayer extends BaseTestLayer {
         subfontSize = fontSize * 0.4;
       }
 
-      this.sublabel = new cc.LabelTTF(subStr, "Thonburi", subfontSize);
+      this.sublabel = new LabelTTF(subStr, "Thonburi", subfontSize);
       this.addChild(this.sublabel, 90);
       if (isMain) {
         this.sublabel.x = winSize.width / 2;
@@ -132,7 +132,7 @@ export class PresentationBaseLayer extends BaseTestLayer {
     }
 
     var fontSize = winSize.height * 0.07;
-    var bullets = new cc.LabelTTF(str, "Gill Sans", fontSize);
+    var bullets = new LabelTTF(str, "Gill Sans", fontSize);
     bullets.x = centerPos.x;
     bullets.y = centerPos.y;
     this.addChild(bullets, 80);

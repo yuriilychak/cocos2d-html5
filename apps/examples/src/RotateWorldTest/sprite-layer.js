@@ -27,9 +27,9 @@
 
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
-import { Point } from "@aspect/core";
+import { Layer, Point } from "@aspect/core";
 
-export class SpriteLayer extends cc.Layer {
+export class SpriteLayer extends Layer {
     constructor() {
         super();
         this.init();

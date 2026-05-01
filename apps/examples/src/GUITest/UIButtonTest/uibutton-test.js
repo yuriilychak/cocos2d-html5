@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { LabelTTF } from "@aspect/core";
 
 export class UIButtonTest extends UIMainLayer {
   constructor() {
@@ -52,7 +53,7 @@ export class UIButtonTest extends UIMainLayer {
       button.addTouchEventListener(this.touchEvent, this);
       this._mainNode.addChild(button);
 
-      var label = new cc.LabelTTF("setOpacity", "Arial", 25);
+      var label = new LabelTTF("setOpacity", "Arial", 25);
       var menuItem = new cc.MenuItemLabel(label, this.setOpacityTest, this);
       var menu = new cc.Menu(menuItem);
       menu.x = 0;

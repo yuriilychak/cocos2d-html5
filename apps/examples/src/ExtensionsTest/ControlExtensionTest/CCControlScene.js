@@ -37,9 +37,9 @@ import {
   s_pathR1,
   s_pathR2
 } from "../../resources";
-import { Rect } from "@aspect/core";
+import { LabelTTF, Layer, Rect, Scene } from "@aspect/core";
 
-export class ControlScene extends cc.Layer {
+export class ControlScene extends Layer {
   constructor() {
     super();
     this._sceneTitleLabel = null;
@@ -90,7 +90,7 @@ export class ControlScene extends cc.Layer {
       this.addChild(ribbon);
 
       // Add the title
-      this.setSceneTitleLabel(new cc.LabelTTF("Title", "Arial", 12));
+      this.setSceneTitleLabel(new LabelTTF("Title", "Arial", 12));
       this._sceneTitleLabel.x = screensize.width / 2;
       this._sceneTitleLabel.y =
         screensize.height - this._sceneTitleLabel.height / 2 - 5;
@@ -154,7 +154,7 @@ export class ControlScene extends cc.Layer {
 }
 
 ControlScene.create = function (title) {
-  var scene = new cc.Scene();
+  var scene = new Scene();
   var controlLayer = new ControlScene();
   if (controlLayer && controlLayer.init()) {
     controlLayer.getSceneTitleLabel().setString(title);

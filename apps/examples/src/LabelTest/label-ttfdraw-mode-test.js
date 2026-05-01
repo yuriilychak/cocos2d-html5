@@ -27,11 +27,12 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { winSize } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class labelTTFDrawModeTest extends AtlasDemo {
   constructor() {
     super();
-    var cacheLabel = new cc.LabelTTF();
+    var cacheLabel = new LabelTTF();
     cacheLabel.font = "32px 'Courier New'";
     cacheLabel.string = "This is a labelTTF \ndrawn On cached Canvas!";
     cacheLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
@@ -39,7 +40,7 @@ export class labelTTFDrawModeTest extends AtlasDemo {
     cacheLabel.x = winSize.width / 2;
     cacheLabel.y = (3 * winSize.height) / 4 - cacheLabel.height;
 
-    var directLabel = new cc.LabelTTF();
+    var directLabel = new LabelTTF();
     if (cc.rendererConfig.isCanvas) {
       directLabel.setDrawMode(false);
       directLabel.string = "This is a labelTTF \ndrawn On Screen";

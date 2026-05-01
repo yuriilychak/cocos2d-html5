@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class ActionRotateXY extends ActionsDemo {
   constructor() {
@@ -59,7 +60,7 @@ export class ActionRotateXY extends ActionsDemo {
     );
 
     if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
-      var label = new cc.LabelTTF(
+      var label = new LabelTTF(
         "Not support Actions on HTML5-canvas",
         "Times New Roman",
         30

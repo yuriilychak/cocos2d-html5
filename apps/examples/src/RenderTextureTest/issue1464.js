@@ -31,6 +31,7 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_grossini } from "../resources";
 import { winSize } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class Issue1464 extends RenderTextureBaseLayer {
 
@@ -75,7 +76,7 @@ export class Issue1464 extends RenderTextureBaseLayer {
         rend.getSprite().runAction(fe);
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
-            var label = new cc.LabelTTF("Not support Actions on HTML5-canvas", "Times New Roman", 30);
+            var label = new LabelTTF("Not support Actions on HTML5-canvas", "Times New Roman", 30);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2 + 50;
             this.addChild(label, 100);

@@ -30,6 +30,7 @@ import { ArrowsMax, ArrowsMin, CenterAlign, LeftAlign, LineBreaks, LineBreaksExa
 import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { Point, Color, Rect } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     constructor() {
@@ -73,7 +74,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         var size = director.getWinSize();
 
         // create and initialize a Label
-        this.labelShouldRetain = new cc.LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, new Point(0, 0));
+        this.labelShouldRetain = new LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, new Point(0, 0));
         this.arrowsBarShouldRetain = new cc.Sprite(s_resprefix + "Images/arrowsBar.png");
         this.arrowsShouldRetain = new cc.Sprite(s_resprefix + "Images/arrows.png");
 

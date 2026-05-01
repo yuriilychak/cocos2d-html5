@@ -42,8 +42,9 @@ import {
   s_pathR2
 } from "../resources";
 import { director } from "../constants";
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class TestNodeDemo extends cc.Layer {
+export class TestNodeDemo extends Layer {
   constructor() {
     super();
     this.init();
@@ -79,14 +80,14 @@ export class TestNodeDemo extends cc.Layer {
   onEnter() {
     super.onEnter();
     var s = director.getWinSize();
-    var label = new cc.LabelTTF(this.title(), "Arial", 24);
+    var label = new LabelTTF(this.title(), "Arial", 24);
     this.addChild(label);
     label.x = s.width / 2;
     label.y = s.height - 50;
 
     var subTitle = this.subtitle();
     if (subTitle && subTitle !== "") {
-      var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
+      var l = new LabelTTF(subTitle, "Thonburi", 16);
       this.addChild(l, 1);
       l.x = s.width / 2;
       l.y = s.height - 80;

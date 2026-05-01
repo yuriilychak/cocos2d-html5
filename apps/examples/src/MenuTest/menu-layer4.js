@@ -27,8 +27,10 @@
 
 import { s_bitmapFontTest3_fnt } from "../resources";
 import { director } from "../constants";
+import { Layer } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
-export class MenuLayer4 extends cc.Layer {
+export class MenuLayer4 extends Layer {
     constructor() {
         super();
         this.init();
@@ -97,7 +99,7 @@ export class MenuLayer4 extends cc.Layer {
         cc.MenuItemFont.setFontName("Marker Felt");
         cc.MenuItemFont.setFontSize(34);
 
-        var label = new cc.LabelBMFont("go back", s_bitmapFontTest3_fnt);
+        var label = new LabelBMFont("go back", s_bitmapFontTest3_fnt);
         var back = new cc.MenuItemLabel(label, this.onBackCallback, this);
 
         var menu = new cc.Menu(

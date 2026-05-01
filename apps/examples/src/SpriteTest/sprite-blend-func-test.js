@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { Size } from "@aspect/core";
+import { LabelTTF, Size } from "@aspect/core";
 
 export class SpriteBlendFuncTest extends SpriteTestDemo {
   //webgl only
@@ -85,7 +85,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     this.addChild(destSprite);
 
     if (cc.rendererConfig.isCanvas) {
-      var info = new cc.LabelTTF(
+      var info = new LabelTTF(
         "support is not complete on canvas",
         "Arial",
         18
@@ -100,7 +100,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     for (i = 0; i < destTitles.length; i++) {
       title = destTitles[i];
       fontSize = title.length > 10 ? 14 : 18;
-      titleLabel = new cc.LabelTTF(title, "Arial", fontSize);
+      titleLabel = new LabelTTF(title, "Arial", fontSize);
       titleLabel.setAnchorPoint(0, 0.5);
       titleLabel.setPosition(0, 355 - 60 * i);
       this.addChild(titleLabel);
@@ -109,7 +109,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     for (i = 0; i < srcTitles.length; i++) {
       title = srcTitles[i];
       fontSize = title.length > 10 ? 14 : 18;
-      titleLabel = new cc.LabelTTF(title, "Arial", fontSize);
+      titleLabel = new LabelTTF(title, "Arial", fontSize);
       titleLabel.setAnchorPoint(0, 0.5);
       titleLabel.setPosition(220 + i * 60, 390);
       titleLabel.setRotation(-20);

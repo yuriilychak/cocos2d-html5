@@ -28,15 +28,16 @@
 
 import { TestController } from "./test-controller";
 import { director, winSize } from "./constants";
+import { LabelTTF, Scene } from "@aspect/core";
 
-export class TestScene extends cc.Scene {
+export class TestScene extends Scene {
   constructor(bPortrait) {
     super();
 
     this._mainMenu = null;
     this.init();
 
-    var label = new cc.LabelTTF("Main Menu", "Arial", 20);
+    var label = new LabelTTF("Main Menu", "Arial", 20);
     var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
 
     var menu = new cc.Menu(menuItem);
@@ -55,7 +56,7 @@ export class TestScene extends cc.Scene {
       director.resume();
     }
     this._mainMenu.enabled = false;
-    var scene = new cc.Scene();
+    var scene = new Scene();
     var layer = new TestController();
     scene.addChild(layer);
     var transition = new cc.TransitionProgressRadialCCW(0.5, scene);

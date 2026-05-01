@@ -35,9 +35,9 @@ import {
   s_pathR1,
   s_pathR2
 } from "../../resources";
-import { Rect } from "@aspect/core";
+import { LabelTTF, Layer, Rect } from "@aspect/core";
 
-export class PluginXTest extends cc.Layer {
+export class PluginXTest extends Layer {
   getSceneTitleLabel() {
     return this._sceneTitleLabel;
   }
@@ -85,7 +85,7 @@ export class PluginXTest extends cc.Layer {
     this.addChild(ribbon);
 
     // Add the title
-    this.setSceneTitleLabel(new cc.LabelTTF(title || "Title", "Arial", 12));
+    this.setSceneTitleLabel(new LabelTTF(title || "Title", "Arial", 12));
     this._sceneTitleLabel.x = screensize.width / 2;
     this._sceneTitleLabel.y =
       screensize.height - this._sceneTitleLabel.height / 2 - 5;

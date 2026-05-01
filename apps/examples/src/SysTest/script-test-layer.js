@@ -28,7 +28,7 @@ import { ScriptTestTempLayer } from "./ScriptTestTempFile";
 import { SysTestBase } from "./sys-test-base";
 import { tempJSFileName } from "./sys-test-helpers";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { LabelTTF, Point } from "@aspect/core";
 
 export class ScriptTestLayer extends SysTestBase {
   startDownload() {
@@ -129,14 +129,14 @@ export class ScriptTestLayer extends SysTestBase {
     menu.height = winSize.height;
     this.addChild(menu, 1);
     var item1 = new cc.MenuItemLabel(
-      new cc.LabelTTF("Click me show tempLayer", "Arial", 22),
+      new LabelTTF("Click me show tempLayer", "Arial", 22),
       this.clickMeShowTempLayer,
       this
     );
     menu.addChild(item1);
 
     var item2 = new cc.MenuItemLabel(
-      new cc.LabelTTF("Click me reload tempLayer", "Arial", 22),
+      new LabelTTF("Click me reload tempLayer", "Arial", 22),
       this.clickMeReloadTempLayer,
       this
     );

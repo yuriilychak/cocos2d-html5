@@ -28,9 +28,9 @@
 import { SpriteLayer } from "./sprite-layer";
 import { TestLayer } from "./test-layer";
 import { director } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, Layer } from "@aspect/core";
 
-export class RotateWorldMainLayer extends cc.Layer {
+export class RotateWorldMainLayer extends Layer {
   constructor() {
     super();
     this.init();

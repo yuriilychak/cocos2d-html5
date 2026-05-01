@@ -31,7 +31,7 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF, Scene } from "@aspect/core";
 
 export class ControlButtonTest_HelloVariableSize extends ControlScene {
   init() {
@@ -100,7 +100,7 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
       s_extensions_buttonHighlighted
     );
 
-    var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
+    var titleButton = new LabelTTF(title, "Marker Felt", 30);
 
     titleButton.color = new Color(159, 168, 176);
 
@@ -116,7 +116,7 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
 }
 
 ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
-  var scene = new cc.Scene();
+  var scene = new Scene();
   var controlLayer = new ControlButtonTest_HelloVariableSize();
   if (controlLayer && controlLayer.init()) {
     controlLayer.getSceneTitleLabel().setString(sceneTitle);

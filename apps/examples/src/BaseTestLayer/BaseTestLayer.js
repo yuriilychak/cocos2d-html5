@@ -39,7 +39,7 @@ import {
   director,
   winSize
 } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF, Scene } from "@aspect/core";
 
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
 export const BASE_TEST_MENUITEM_RESET_TAG = 2;
@@ -112,14 +112,14 @@ export class BaseTestLayer extends cc.LayerGradient {
     cc.sys.garbageCollect();
 
     var t = this.getTitle();
-    var label = new cc.LabelTTF(t, "Arial", 28);
+    var label = new LabelTTF(t, "Arial", 28);
     this.addChild(label, 100, BASE_TEST_TITLE_TAG);
     label.x = winSize.width / 2;
     label.y = winSize.height - 50;
 
     var st = this.getSubtitle();
     if (st) {
-      var l = new cc.LabelTTF(st.toString(), "Thonburi", 16);
+      var l = new LabelTTF(st.toString(), "Thonburi", 16);
       this.addChild(l, 101, BASE_TEST_SUBTITLE_TAG);
       l.x = winSize.width / 2;
       l.y = winSize.height - 80;
@@ -262,7 +262,7 @@ export class BaseTestLayer extends cc.LayerGradient {
 
   runNextTest() {
     if (this.numberOfPendingTests() <= 0) {
-      var scene = new cc.Scene();
+      var scene = new Scene();
       var layer = new TestController();
       scene.addChild(layer);
       director.runScene(scene);
@@ -376,7 +376,7 @@ export var FlowControl = function (testArray) {
     },
     start: function () {
       sceneIdx = 0;
-      var s = new cc.Scene();
+      var s = new Scene();
       s.addChild(this.current());
       cc.director.runScene(s);
     }

@@ -31,7 +31,7 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF, Scene } from "@aspect/core";
 
 export class ControlButtonTest_Event extends ControlScene {
   constructor() {
@@ -50,14 +50,14 @@ export class ControlButtonTest_Event extends ControlScene {
       );
 
       // Add a label in which the button events will be displayed
-      this.setDisplayValueLabel(new cc.LabelTTF("No Event", "Marker Felt", 32));
+      this.setDisplayValueLabel(new LabelTTF("No Event", "Marker Felt", 32));
       this._displayValueLabel.anchorX = 0.5;
       this._displayValueLabel.anchorY = -1;
       this._displayValueLabel.x = screenSize.width / 2.0;
       this._displayValueLabel.y = screenSize.height / 2.0;
       this.addChild(this._displayValueLabel, 10);
 
-      var titleButton = new cc.LabelTTF("Touch Me!", "Marker Felt", 30);
+      var titleButton = new LabelTTF("Touch Me!", "Marker Felt", 30);
       titleButton.color = new Color(159, 168, 176);
 
       var controlButton = new cc.ControlButton(titleButton, backgroundButton);
@@ -164,7 +164,7 @@ export class ControlButtonTest_Event extends ControlScene {
 }
 
 ControlButtonTest_Event.create = function (sceneTitle) {
-  var scene = new cc.Scene();
+  var scene = new Scene();
   var controlLayer = new ControlButtonTest_Event();
   if (controlLayer && controlLayer.init()) {
     controlLayer.getSceneTitleLabel().setString(sceneTitle);

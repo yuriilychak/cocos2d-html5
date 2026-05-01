@@ -33,6 +33,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontPaddingTest extends AtlasDemo {
     constructor() {
@@ -40,7 +41,7 @@ export class BMFontPaddingTest extends AtlasDemo {
         super();
 
         this.pixel = {"0": 255, "1": 255, "2": 255, "3": 255};
-        var label = new cc.LabelBMFont("abcdefg", s_resprefix + "fonts/bitmapFontTest4.fnt");
+        var label = new LabelBMFont("abcdefg", s_resprefix + "fonts/bitmapFontTest4.fnt");
         this.addChild(label);
 
         var s = director.getWinSize();
@@ -52,7 +53,7 @@ export class BMFontPaddingTest extends AtlasDemo {
         //----end5----
     }
     title() {
-        return "cc.LabelBMFont BMFontPaddingTest";
+        return "LabelBMFont BMFontPaddingTest";
     }
     subtitle() {
         return "Testing padding";

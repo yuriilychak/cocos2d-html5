@@ -27,7 +27,7 @@
 
 import { PTM_RATIO, TAG_SPRITE_MANAGER } from "./box2d-test-constants";
 import { s_pathBlock } from "../resources";
-import { Point, Color, Rect } from "@aspect/core";
+import { Color, LabelTTF, Point, Rect } from "@aspect/core";
 
 export class Box2DTestLayer extends cc.LayerColor {
   constructor() {
@@ -53,7 +53,7 @@ export class Box2DTestLayer extends cc.LayerColor {
       this
     );
 
-    var label = new cc.LabelTTF("Tap screen", "Marker Felt", 32);
+    var label = new LabelTTF("Tap screen", "Marker Felt", 32);
     this.addChild(label, 0);
     label.color = new Color(0, 0, 255);
     label.x = cc.director.getWinSize().width / 2;

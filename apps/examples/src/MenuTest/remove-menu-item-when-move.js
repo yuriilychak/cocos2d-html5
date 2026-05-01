@@ -24,8 +24,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class RemoveMenuItemWhenMove extends cc.Layer {
+
+export class RemoveMenuItemWhenMove extends Layer {
     constructor(){
         super();
 
@@ -35,7 +37,7 @@ export class RemoveMenuItemWhenMove extends cc.Layer {
 
         var s = cc.director.getWinSize();
 
-        var label = new cc.LabelTTF("click item and move, should not crash", "Arial", 20);
+        var label = new LabelTTF("click item and move, should not crash", "Arial", 20);
         label.x = s.width/2;
         label.y = s.height - 30;
         this.addChild(label);

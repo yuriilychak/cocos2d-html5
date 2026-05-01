@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
+import { LabelTTF, Scene } from "@aspect/core";
 
 export class ControlSliderTest extends ControlScene {
   constructor() {
@@ -38,7 +39,7 @@ export class ControlSliderTest extends ControlScene {
       var screenSize = cc.director.getWinSize();
 
       // Add a label in which the slider value will be displayed
-      this._displayValueLabel = new cc.LabelTTF(
+      this._displayValueLabel = new LabelTTF(
         "Move the slider thumb!\nThe lower slider is restricted.",
         "Marker Felt",
         32
@@ -114,7 +115,7 @@ export class ControlSliderTest extends ControlScene {
 }
 
 ControlSliderTest.create = function (sceneTitle) {
-  var scene = new cc.Scene();
+  var scene = new Scene();
   var controlLayer = new ControlSliderTest();
   if (controlLayer && controlLayer.init()) {
     controlLayer.getSceneTitleLabel().setString(sceneTitle);

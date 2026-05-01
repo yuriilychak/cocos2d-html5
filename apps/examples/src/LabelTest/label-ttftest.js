@@ -27,7 +27,7 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { Size, Color } from "@aspect/core";
+import { Color, LabelTTF, Size } from "@aspect/core";
 
 export class LabelTTFTest extends AtlasDemo {
   constructor() {
@@ -91,7 +91,7 @@ export class LabelTTFTest extends AtlasDemo {
       this._label.removeFromParent();
     }
 
-    this._label = new cc.LabelTTF(
+    this._label = new LabelTTF(
       this.getCurrentAlignment(),
       "Arial",
       32,
@@ -163,7 +163,7 @@ export class LabelTTFTest extends AtlasDemo {
     //----end19----
   }
   title() {
-    return "Testing cc.LabelTTF";
+    return "Testing LabelTTF";
   }
   subtitle() {
     return "Select the buttons on the sides to change alignment";

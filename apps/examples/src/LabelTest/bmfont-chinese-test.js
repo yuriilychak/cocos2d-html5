@@ -28,6 +28,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontChineseTest extends AtlasDemo {
     constructor() {
@@ -36,14 +37,14 @@ export class BMFontChineseTest extends AtlasDemo {
 
         this.pixel = {"0": 255, "1": 0, "2": 142, "3": 255};
         var size = director.getWinSize();
-        var label = new cc.LabelBMFont("中国", s_resprefix + "fonts/bitmapFontChinese.fnt");
+        var label = new LabelBMFont("中国", s_resprefix + "fonts/bitmapFontChinese.fnt");
         label.x = size.width / 2;
         label.y = size.height / 2;
         this.addChild(label);
         //----end18----
     }
     title() {
-        return "Testing cc.LabelBMFont with Chinese character";
+        return "Testing LabelBMFont with Chinese character";
     }
 
     //

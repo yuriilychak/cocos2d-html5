@@ -27,14 +27,14 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { Size } from "@aspect/core";
+import { LabelTTF, Size } from "@aspect/core";
 
 export class LabelTTFAlignment extends AtlasDemo {
   constructor() {
     //----start24----ctor
     super();
     var s = director.getWinSize();
-    var ttf0 = new cc.LabelTTF(
+    var ttf0 = new LabelTTF(
       "Alignment 0\nnew line",
       "Arial",
       12,
@@ -47,7 +47,7 @@ export class LabelTTFAlignment extends AtlasDemo {
     ttf0.anchorY = 0.5;
     this.addChild(ttf0);
 
-    var ttf1 = new cc.LabelTTF(
+    var ttf1 = new LabelTTF(
       "Alignment 1\nnew line",
       "Arial",
       12,
@@ -60,7 +60,7 @@ export class LabelTTFAlignment extends AtlasDemo {
     ttf1.anchorY = 0.5;
     this.addChild(ttf1);
 
-    var ttf2 = new cc.LabelTTF(
+    var ttf2 = new LabelTTF(
       "Alignment 2\nnew line",
       "Arial",
       12,
@@ -75,7 +75,7 @@ export class LabelTTFAlignment extends AtlasDemo {
     //----end24----
   }
   title() {
-    return "cc.LabelTTF alignment";
+    return "LabelTTF alignment";
   }
   subtitle() {
     return "Tests alignment values";

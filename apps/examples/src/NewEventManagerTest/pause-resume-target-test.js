@@ -32,7 +32,7 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../resources";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF } from "@aspect/core";
 
 export class PauseResumeTargetTest extends EventDispatcherTestDemo {
   constructor() {
@@ -73,7 +73,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         s_extensions_buttonHighlighted
       );
 
-      var titleButton = new cc.LabelTTF("Close Dialog", "Marker Felt", 26);
+      var titleButton = new LabelTTF("Close Dialog", "Marker Felt", 26);
       titleButton.color = new Color(159, 168, 176);
 
       var controlButton = new cc.ControlButton(titleButton, backgroundButton);

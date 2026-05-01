@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF, Scene } from "@aspect/core";
 
 export class ControlColourPickerTest extends ControlScene {
   constructor() {
@@ -73,7 +73,7 @@ export class ControlColourPickerTest extends ControlScene {
 
       layer_width += background.width;
 
-      this._colorLabel = new cc.LabelTTF("#color", "Marker Felt", 30);
+      this._colorLabel = new LabelTTF("#color", "Marker Felt", 30);
 
       this._colorLabel.x = background.x;
       this._colorLabel.y = background.y;
@@ -97,7 +97,7 @@ export class ControlColourPickerTest extends ControlScene {
   }
 }
 ControlColourPickerTest.create = function (sceneTitle) {
-  var scene = new cc.Scene();
+  var scene = new Scene();
   var controlLayer = new ControlColourPickerTest();
   if (controlLayer && controlLayer.init()) {
     controlLayer.getSceneTitleLabel().setString(sceneTitle);

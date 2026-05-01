@@ -25,7 +25,7 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { PluginXTest } from "./PluginXTest";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF } from "@aspect/core";
 
 TAG_SETSERVERMODE = 0;
 TAG_GETPRODUCTLIST = 1;
@@ -66,13 +66,13 @@ export class IAPTestLayer extends PluginXTest {
   addMenuItem() {
     var payMenu = new cc.Menu();
     for (var i = 0; i < s_IAPFunctionItem.length; i++) {
-      var text = new cc.LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
+      var text = new LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
       var item = new cc.MenuItemLabel(text, this.menuCallBack, this);
       item.tag = s_IAPFunctionItem[i].tag;
       item.x = 200;
       item.y = cc.winSize.height - 200 - i * 50;
 
-      var resultLabel = new cc.LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
+      var resultLabel = new LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
       resultLabel.color = new Color(125, 125, 125);
       resultLabel.anchorX = 0;
       resultLabel.tag = s_IAPResultItem[i].tag;
@@ -92,7 +92,7 @@ export class IAPTestLayer extends PluginXTest {
   }
   initToast() {
     this.toastLayer = new cc.LayerColor();
-    var label = new cc.LabelTTF("loading", "Arial", 16);
+    var label = new LabelTTF("loading", "Arial", 16);
     this.toastLayer.addChild(label);
     this.toastLayer.setTag(TAG_TOAST);
     label.x = cc.winSize.width / 2;

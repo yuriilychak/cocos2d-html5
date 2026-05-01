@@ -26,9 +26,10 @@
  ****************************************************************************/
 
 import { XHRTestLayer } from "./xhrtest-layer";
+import { Scene } from "@aspect/core";
 
 export function runXHRTest() {
-  var pScene = new cc.Scene();
+  var pScene = new Scene();
   var pLayer = new XHRTestLayer();
   pScene.addChild(pLayer);
   cc.director.runScene(pScene);

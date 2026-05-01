@@ -33,6 +33,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { LabelAtlas, LabelBMFont } from "@aspect/labels";
 
 export class LabelAtlasHD extends AtlasDemo {
     constructor() {
@@ -42,8 +43,8 @@ export class LabelAtlasHD extends AtlasDemo {
         this.pixel = {"0": 255, "1": 255, "2": 255, "3": 255};
         var s = director.getWinSize();
 
-        // cc.LabelBMFont
-        var label1 = new cc.LabelAtlas("TESTING RETINA DISPLAY", s_resprefix + "fonts/larabie-16.plist");
+        // LabelBMFont
+        var label1 = new LabelAtlas("TESTING RETINA DISPLAY", s_resprefix + "fonts/larabie-16.plist");
         label1.anchorX = 0.5;
         label1.anchorY = 0.5;
 

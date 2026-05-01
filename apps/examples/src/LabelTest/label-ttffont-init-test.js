@@ -28,12 +28,13 @@
 // LabelTTFFontInitTest
 import { AtlasDemo } from "./atlas-demo";
 import { winSize } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class LabelTTFFontInitTest extends AtlasDemo {
   constructor() {
     //----start23----ctor
     super();
-    var font = new cc.LabelTTF();
+    var font = new LabelTTF();
     font.font = "48px 'Courier New'";
     //font.setFontName("Arial");
     font.string = "It is working!";
@@ -43,7 +44,7 @@ export class LabelTTFFontInitTest extends AtlasDemo {
     //----end23----
   }
   title() {
-    return "cc.LabelTTF init";
+    return "LabelTTF init";
   }
   subtitle() {
     return "Test for support of init method without parameters.";

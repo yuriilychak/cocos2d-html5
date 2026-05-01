@@ -29,12 +29,13 @@
 //
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
+import { LabelTTF } from "@aspect/core";
 
 export class KeyboardTest extends EventTest {
   init() {
     super.init();
     var self = this;
-    var label = new cc.LabelTTF("show key Code");
+    var label = new LabelTTF("show key Code");
     var size = cc.director.getWinSize();
     label.setPosition(size.width / 2, size.height / 2);
     this.addChild(label);

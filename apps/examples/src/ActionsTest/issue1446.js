@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class Issue1446 extends ActionsDemo {
   title() {
@@ -46,7 +47,7 @@ export class Issue1446 extends ActionsDemo {
     //----start46----onEnter
     super.onEnter();
     this.centerSprites(0);
-    var label = (this.label = new cc.LabelTTF("Hello World", "Arial", 64));
+    var label = (this.label = new LabelTTF("Hello World", "Arial", 64));
 
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;

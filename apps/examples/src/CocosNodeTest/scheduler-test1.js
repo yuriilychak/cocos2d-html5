@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { TestNodeDemo } from "./test-node-demo";
+import { Layer } from "@aspect/core";
 
 export class SchedulerTest1 extends TestNodeDemo {
   constructor() {
@@ -35,7 +36,7 @@ export class SchedulerTest1 extends TestNodeDemo {
     this.testDuration = 0.5;
 
     this.testBool = true;
-    var layer = new cc.Layer();
+    var layer = new Layer();
     //UXLOG("retain count after init is %d", layer->retainCount());
     // 1
 

@@ -32,6 +32,7 @@ import { ParticleTestScene } from "./particle-test-scene";
 import { s_MovementMenuItem, s_back3, s_fpsImages, s_shapeModeMenuItem, s_textureModeMenuItem } from "../resources";
 import { director } from "../constants";
 import { Point, Color, Rect } from "@aspect/core";
+import { LabelAtlas } from "@aspect/labels";
 
 export class ParticleDemo extends BaseTestLayer {
 
@@ -172,7 +173,7 @@ export class ParticleDemo extends BaseTestLayer {
 
         this.addChild(menu, 100);
         //TODO
-        var labelAtlas = new cc.LabelAtlas("0123456789", s_fpsImages, 12, 32, '.');
+        var labelAtlas = new LabelAtlas("0123456789", s_fpsImages, 12, 32, '.');
         this.addChild(labelAtlas, 100, TAG_LABEL_ATLAS);
         labelAtlas.x = s.width - 66;
         labelAtlas.y = 50;

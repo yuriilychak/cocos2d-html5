@@ -28,7 +28,7 @@
 // SchedulerTimeScale
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { s_stars1 } from "../resources";
-import { Point } from "@aspect/core";
+import { LabelTTF, Point } from "@aspect/core";
 
 export class SchedulerTimeScale extends SchedulerTestLayer {
   constructor() {
@@ -104,7 +104,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     this.addChild(slider);
     slider.setPercent(20);
 
-    l = new cc.LabelTTF("Control time scale only for Grossini", "Thonburi", 16);
+    l = new LabelTTF("Control time scale only for Grossini", "Thonburi", 16);
     this.addChild(l);
     l.x = slider.x;
     l.y = slider.y + 30;
@@ -123,7 +123,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     slider.addEventListener(this.sliderEventForGlobal, this);
     this.addChild(slider);
     slider.setPercent(20);
-    l = new cc.LabelTTF("Control time scale for all", "Thonburi", 16);
+    l = new LabelTTF("Control time scale for all", "Thonburi", 16);
     this.addChild(l);
     l.x = slider.x;
     l.y = slider.y + 30;

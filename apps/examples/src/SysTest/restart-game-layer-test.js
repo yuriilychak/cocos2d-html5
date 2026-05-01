@@ -31,7 +31,7 @@
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { LabelTTF, Point } from "@aspect/core";
 
 export class RestartGameLayerTest extends SysTestBase {
   getTitle() {
@@ -48,7 +48,7 @@ export class RestartGameLayerTest extends SysTestBase {
     menu.height = winSize.height;
     this.addChild(menu, 1);
     var item1 = new cc.MenuItemLabel(
-      new cc.LabelTTF("restartGame", "Arial", 22),
+      new LabelTTF("restartGame", "Arial", 22),
       this.restartGame,
       this
     );

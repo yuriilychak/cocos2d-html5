@@ -35,6 +35,7 @@ import { __failCount, _set__failCount } from "./assets-manager-test-helpers";
 import { AssetsManagerTestScene } from "./assets-manager-test-scene";
 import { TestScene } from "../../test-scene";
 import { s_image_icon } from "../../resources";
+import { Layer } from "@aspect/core";
 
 export class AssetsManagerLoaderScene extends TestScene {
   constructor() {
@@ -130,7 +131,7 @@ export class AssetsManagerLoaderScene extends TestScene {
       storagePaths[currentScene];
     cc.log("Storage path for this test : " + storagePath);
 
-    var layer = new cc.Layer();
+    var layer = new Layer();
     this.addChild(layer);
 
     var icon = new cc.Sprite(s_image_icon);

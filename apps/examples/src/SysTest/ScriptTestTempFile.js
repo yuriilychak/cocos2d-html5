@@ -26,13 +26,13 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
-import { Size } from "@aspect/core";
+import { LabelTTF, Layer, Size } from "@aspect/core";
 
-export class ScriptTestTempLayer extends cc.Layer {
+export class ScriptTestTempLayer extends Layer {
   constructor() {
     super();
 
-    var labelTest = new cc.LabelTTF(
+    var labelTest = new LabelTTF(
       "this is the ScriptTestTempLayer old file",
       "Verdana",
       32,

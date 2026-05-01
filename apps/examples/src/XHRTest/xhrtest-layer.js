@@ -26,15 +26,16 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class XHRTestLayer extends cc.Layer {
+export class XHRTestLayer extends Layer {
   constructor() {
     super();
   }
 
   onEnter() {
     super.onEnter();
-    var l = new cc.LabelTTF("Get infos via XHR", "Thonburi", 16);
+    var l = new LabelTTF("Get infos via XHR", "Thonburi", 16);
     this.addChild(l, 1);
     l.x = winSize.width / 2;
     l.y = winSize.height - 60;
@@ -74,7 +75,7 @@ export class XHRTestLayer extends cc.Layer {
   }
 
   sendGetRequest() {
-    var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
+    var statusGetLabel = new LabelTTF("Status:", "Thonburi", 12);
     this.addChild(statusGetLabel, 1);
 
     statusGetLabel.x = 10;
@@ -82,7 +83,7 @@ export class XHRTestLayer extends cc.Layer {
     this.ensureLeftAligned(statusGetLabel);
     statusGetLabel.setString("Status: Send Get Request to httpbin.org");
 
-    var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
+    var responseLabel = new LabelTTF("", "Thonburi", 16);
     this.addChild(responseLabel, 1);
 
     this.ensureLeftAligned(responseLabel);
@@ -108,7 +109,7 @@ export class XHRTestLayer extends cc.Layer {
   }
 
   sendPostPlainText() {
-    var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
+    var statusPostLabel = new LabelTTF("Status:", "Thonburi", 12);
     this.addChild(statusPostLabel, 1);
 
     statusPostLabel.x = (winSize.width / 10) * 3;
@@ -118,7 +119,7 @@ export class XHRTestLayer extends cc.Layer {
       "Status: Send Post Request to httpbin.org with plain text"
     );
 
-    var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
+    var responseLabel = new LabelTTF("", "Thonburi", 16);
     this.addChild(responseLabel, 1);
     this.ensureLeftAligned(responseLabel);
     responseLabel.x = (winSize.width / 10) * 3;
@@ -141,7 +142,7 @@ export class XHRTestLayer extends cc.Layer {
   }
 
   sendPostForms() {
-    var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
+    var statusPostLabel = new LabelTTF("Status:", "Thonburi", 12);
     this.addChild(statusPostLabel, 1);
 
     statusPostLabel.x = (winSize.width / 10) * 7;
@@ -151,7 +152,7 @@ export class XHRTestLayer extends cc.Layer {
       "Status: Send Post Request to httpbin.org width form data"
     );
 
-    var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
+    var responseLabel = new LabelTTF("", "Thonburi", 16);
     this.addChild(responseLabel, 1);
 
     this.ensureLeftAligned(responseLabel);

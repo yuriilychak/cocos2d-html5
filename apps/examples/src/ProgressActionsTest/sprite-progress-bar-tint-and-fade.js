@@ -28,7 +28,7 @@
 import { SpriteDemo } from "./sprite-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { LabelTTF, Point } from "@aspect/core";
 
 export class SpriteProgressBarTintAndFade extends SpriteDemo {
     onEnter() {
@@ -57,7 +57,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
         left.runAction(to.clone().repeatForever());
         left.runAction(tint.clone().repeatForever());
 
-        left.addChild(new cc.LabelTTF("Tint", "Marker Felt", 20.0));
+        left.addChild(new LabelTTF("Tint", "Marker Felt", 20.0));
 
         var middle = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
         middle.type = cc.ProgressTimer.TYPE_BAR;
@@ -71,7 +71,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
         middle.runAction(to.clone().repeatForever());
         middle.runAction(fade.clone().repeatForever());
 
-        middle.addChild(new cc.LabelTTF("Fade", "Marker Felt", 20.0));
+        middle.addChild(new LabelTTF("Fade", "Marker Felt", 20.0));
 
         var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
@@ -86,7 +86,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
         right.runAction(tint.clone().repeatForever());
         right.runAction(fade.clone().repeatForever());
 
-        right.addChild(new cc.LabelTTF("Tint and Fade", "Marker Felt", 20.0));
+        right.addChild(new LabelTTF("Tint and Fade", "Marker Felt", 20.0));
         //----end5----
     }
 

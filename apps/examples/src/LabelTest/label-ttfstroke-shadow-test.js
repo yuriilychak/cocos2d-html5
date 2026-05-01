@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { Point, Size, Color } from "@aspect/core";
+import { Color, LabelTTF, Point, Size } from "@aspect/core";
 
 export class LabelTTFStrokeShadowTest extends AtlasDemo {
   constructor() {
@@ -80,7 +80,7 @@ export class LabelTTFStrokeShadowTest extends AtlasDemo {
     fontDefRedShadow.shadowOffsetY = shadowOffset.y;
 
     // create the label using the definition
-    this._labelShadow = new cc.LabelTTF("Shadow Only", fontDefRedShadow);
+    this._labelShadow = new LabelTTF("Shadow Only", fontDefRedShadow);
     this._labelShadow.anchorX = 0;
     this._labelShadow.anchorY = 0;
     this._labelShadow.x = posX;
@@ -99,7 +99,7 @@ export class LabelTTFStrokeShadowTest extends AtlasDemo {
     fontDefBlueStroke.strokeEnabled = true;
     fontDefBlueStroke.strokeStyle = yellowColor;
 
-    this._labelStroke = new cc.LabelTTF("Stroke Only", fontDefBlueStroke);
+    this._labelStroke = new LabelTTF("Stroke Only", fontDefBlueStroke);
     this._labelStroke.anchorX = 0;
     this._labelStroke.anchorY = 0;
     this._labelStroke.x = posX;
@@ -122,7 +122,7 @@ export class LabelTTFStrokeShadowTest extends AtlasDemo {
     fontDefRedStrokeShadow.shadowOffsetX = -12;
     fontDefRedStrokeShadow.shadowOffsetY = 12; //shadowOffset;
 
-    this._labelStrokeShadow = new cc.LabelTTF(
+    this._labelStrokeShadow = new LabelTTF(
       "Stroke + Shadow\n New Line",
       fontDefRedStrokeShadow
     );
@@ -139,7 +139,7 @@ export class LabelTTFStrokeShadowTest extends AtlasDemo {
   }
 
   title() {
-    return "Testing cc.LabelTTF + shadow and stroke";
+    return "Testing LabelTTF + shadow and stroke";
   }
 
   subtitle() {

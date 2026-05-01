@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
-import { Point } from "@aspect/core";
+import { LabelTTF, Point } from "@aspect/core";
 
 export class ActionCallFunc1 extends ActionsDemo {
   constructor() {
@@ -77,7 +77,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback1(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new cc.LabelTTF("callback 1 called", "Marker Felt", 16);
+    var label = new LabelTTF("callback 1 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 1;
     label.y = s.height / 2;
     this.addChild(label);
@@ -85,7 +85,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback2(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new cc.LabelTTF("callback 2 called", "Marker Felt", 16);
+    var label = new LabelTTF("callback 2 called", "Marker Felt", 16);
     label.x = (s.width / 4) * 2;
     label.y = s.height / 2;
 
@@ -94,7 +94,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback3(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new cc.LabelTTF(
+    var label = new LabelTTF(
       "callback 3 called:" + value,
       "Marker Felt",
       16

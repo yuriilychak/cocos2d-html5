@@ -28,7 +28,7 @@
 import { DenshionTests } from "./cocos-denshion-test-constants";
 import { director, winSize } from "../constants";
 import { LINE_SPACE } from "../tests-main-helpers";
-import { Point, Color } from "@aspect/core";
+import { Color, LabelTTF, Point } from "@aspect/core";
 
 export class CocosDenshionTest extends cc.LayerGradient {
   constructor() {
@@ -43,7 +43,7 @@ export class CocosDenshionTest extends cc.LayerGradient {
     this._itemMenu = new cc.Menu();
     var winSize = director.getWinSize();
     for (var i = 0; i < DenshionTests.length; i++) {
-      var label = new cc.LabelTTF(DenshionTests[i].title, "Arial", 24);
+      var label = new LabelTTF(DenshionTests[i].title, "Arial", 24);
       var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
       this._itemMenu.addChild(menuItem, i + 10000);
       menuItem.x = winSize.width / 2;

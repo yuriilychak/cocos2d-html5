@@ -29,7 +29,7 @@ import { ActionsDemo } from "./actions-demo";
 import { createCustomAction } from "./actions-test-helpers";
 import { CustomMoveBy } from "./custom-move-by";
 import { s_pathGrossini } from "../resources";
-import { Point } from "@aspect/core";
+import { LabelTTF, Layer, Point } from "@aspect/core";
 
 export class ActionCustomTest extends ActionsDemo {
   constructor() {
@@ -44,16 +44,16 @@ export class ActionCustomTest extends ActionsDemo {
 
     this.centerSprites(0);
 
-    this._layer = new cc.Layer();
+    this._layer = new Layer();
     this.addChild(this._layer);
 
     var label1 = new cc.MenuItemLabel(
-      new cc.LabelTTF("showInterval(click me)", "arial", 25),
+      new LabelTTF("showInterval(click me)", "arial", 25),
       this.createActionInterval,
       this
     );
     var label2 = new cc.MenuItemLabel(
-      new cc.LabelTTF("showInstant(click me)", "arial", 25),
+      new LabelTTF("showInstant(click me)", "arial", 25),
       this.createActionInstant,
       this
     );
@@ -286,7 +286,7 @@ export class ActionCustomTest extends ActionsDemo {
     }
 
     if (actionTypeName) {
-      var label = new cc.LabelTTF(actionTypeName, "arial", 18);
+      var label = new LabelTTF(actionTypeName, "arial", 18);
       if (addLabelInLayerFlag) {
         label.setPosition(spriteTemp.getPosition());
         this._layer.addChild(label);

@@ -30,9 +30,9 @@
 import { MySprite } from "./my-sprite";
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { winSize } from "../../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, LabelTTF, Layer, Point } from "@aspect/core";
 
-export class CCPoolTest extends cc.Layer {
+export class CCPoolTest extends Layer {
   constructor() {
     super();
     this.timeList = null;
@@ -43,7 +43,7 @@ export class CCPoolTest extends cc.Layer {
     var winSize = cc.director.getWinSize();
 
     var MARGIN = 40;
-    var label = new cc.LabelTTF("CCPoolTest", "Arial", 28);
+    var label = new LabelTTF("CCPoolTest", "Arial", 28);
     label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
     this.addChild(label, 0);
 
@@ -53,12 +53,12 @@ export class CCPoolTest extends cc.Layer {
     return true;
   }
   initUI() {
-    var createLabel = new cc.LabelTTF(
+    var createLabel = new LabelTTF(
       "click me to create\n 150 sprites directly",
       "Arial",
       23
     );
-    var reCreateLabel = new cc.LabelTTF(
+    var reCreateLabel = new LabelTTF(
       "click me to create\n 150 sprites use pool",
       "Arial",
       23
@@ -77,8 +77,8 @@ export class CCPoolTest extends cc.Layer {
     );
     var menu = new cc.Menu(menuItem1, menuItem2);
     menu.alignItemsHorizontallyWithPadding(150);
-    this.directLabel = new cc.LabelTTF("create directly cost:", "Arial", 18);
-    this.poolLabel = new cc.LabelTTF("use pool cost:", "Arial", 18);
+    this.directLabel = new LabelTTF("create directly cost:", "Arial", 18);
+    this.poolLabel = new LabelTTF("use pool cost:", "Arial", 18);
     this.directLabel.setPosition(
       Point.add(cc.visibleRect.center, new Point(-190, -65))
     );

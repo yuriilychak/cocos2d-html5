@@ -35,6 +35,7 @@ import { TAG_BITMAP_ATLAS2 } from "./label-test-constants";
 import { s_resprefix } from "../resources";
 import { autoTestEnabled, director } from "../constants";
 import { Point, Color } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontSubSpriteTest extends AtlasDemo {
     constructor() {
@@ -55,7 +56,7 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         drawNode.drawSegment(new Point(s.width / 2, 0), new Point(s.width / 2, s.height), 2);
 
         // Upper Label
-        var label = new cc.LabelBMFont("Bitmap Font Atlas", s_resprefix + "fonts/bitmapFontTest.fnt");
+        var label = new LabelBMFont("Bitmap Font Atlas", s_resprefix + "fonts/bitmapFontTest.fnt");
         this.labelObj = label;
         this.addChild(label);
 
@@ -100,7 +101,7 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         AChar.runAction(fade_4ever);
 
         // Bottom Label
-        var label2 = new cc.LabelBMFont("00.0", s_resprefix + "fonts/bitmapFontTest.fnt");
+        var label2 = new LabelBMFont("00.0", s_resprefix + "fonts/bitmapFontTest.fnt");
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.x = s.width / 2.0;
         label2.y = 80;
@@ -121,7 +122,7 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         //----end4----
     }
     title() {
-        return "cc.LabelBMFont BMFontSubSpriteTest";
+        return "LabelBMFont BMFontSubSpriteTest";
     }
     subtitle() {
         return "Using fonts as cc.Sprite objects. Some characters should rotate.";

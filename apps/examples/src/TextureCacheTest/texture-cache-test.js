@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { TextureCacheTestBase } from "./texture-cache-test-base";
+import { LabelTTF } from "@aspect/core";
 
 export class TextureCacheTest extends TextureCacheTestBase {
   constructor() {
@@ -43,8 +44,8 @@ export class TextureCacheTest extends TextureCacheTestBase {
 
     var size = cc.director.getWinSize();
 
-    this._labelLoading = new cc.LabelTTF("loading...", "Arial", 15);
-    this._labelPercent = new cc.LabelTTF("%0", "Arial", 15);
+    this._labelLoading = new LabelTTF("loading...", "Arial", 15);
+    this._labelPercent = new LabelTTF("%0", "Arial", 15);
 
     this._labelLoading.x = size.width / 2;
 

@@ -24,7 +24,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { Layer } from "@aspect/core";
+
 
 /******************for vertexz bug**************/
-// FixBugBaseTest: cc.Layer with BaseTestLayer methods mixed in
-export class FixBugBaseTest extends cc.Layer {}
+// FixBugBaseTest: Layer with BaseTestLayer methods mixed in
+export class FixBugBaseTest extends Layer {}

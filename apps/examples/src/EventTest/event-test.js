@@ -30,8 +30,9 @@ import { nextEventsTest, previousEventsTest, restartEventsTest } from "./event-t
 import { EventTestScene } from "./event-test-scene";
 import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../resources";
 import { director } from "../constants";
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class EventTest extends cc.Layer {
+export class EventTest extends Layer {
     constructor() {
         super();
         this.init();
@@ -62,14 +63,14 @@ export class EventTest extends cc.Layer {
 
         var s = director.getWinSize();
 
-        var label = new cc.LabelTTF(this.title(), "Arial", 24);
+        var label = new LabelTTF(this.title(), "Arial", 24);
         this.addChild(label);
         label.x = s.width / 2;
         label.y = s.height - 50;
 
         var subTitle = this.subtitle();
         if (subTitle && subTitle !== "") {
-            var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
+            var l = new LabelTTF(subTitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = s.width / 2;
             l.y = s.height - 80;

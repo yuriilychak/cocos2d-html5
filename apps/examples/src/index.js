@@ -28,6 +28,7 @@
 import { TestController } from "./test-controller";
 import { _initGlobals } from "./constants";
 import { g_resources } from "./resources";
+import { Scene } from "@aspect/core";
 
 const projectConfig = {
   debugMode: 1,
@@ -53,7 +54,7 @@ cc.game.onStart = function () {
       if (window.sideIndexBar && typeof sideIndexBar.start === "function") {
         sideIndexBar.start();
       } else {
-        var scene = new cc.Scene();
+        var scene = new Scene();
         scene.addChild(new TestController());
         cc.director.runScene(scene);
       }

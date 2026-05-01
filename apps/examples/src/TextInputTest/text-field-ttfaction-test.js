@@ -33,7 +33,7 @@ import {
   TEXT_INPUT_FONT_NAME,
   TEXT_INPUT_FONT_SIZE
 } from "./text-input-test-constants";
-import { Point, Color } from "@aspect/core";
+import { Color, LabelTTF, Point } from "@aspect/core";
 
 export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
   constructor() {
@@ -123,7 +123,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     }
 
     // create a insert text sprite and do some action
-    var label = new cc.LabelTTF(
+    var label = new LabelTTF(
       text,
       TEXT_INPUT_FONT_NAME,
       TEXT_INPUT_FONT_SIZE
@@ -158,7 +158,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
   onTextFieldDeleteBackward(sender, delText, len) {
     // create a delete text sprite and do some action
-    var label = new cc.LabelTTF(
+    var label = new LabelTTF(
       delText,
       TEXT_INPUT_FONT_NAME,
       TEXT_INPUT_FONT_SIZE

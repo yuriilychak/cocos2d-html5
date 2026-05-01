@@ -30,9 +30,9 @@ import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { backEffectAdvanceAction, nextEffectAdvanceAction, restartEffectAdvanceAction } from "./effects-advanced-test-helpers";
 import { s_back3, s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF, Layer } from "@aspect/core";
 
-export class EffectAdvanceTextLayer extends cc.Layer {
+export class EffectAdvanceTextLayer extends Layer {
 
     constructor() {
         super();
@@ -83,7 +83,7 @@ export class EffectAdvanceTextLayer extends cc.Layer {
         var sc2_back = sc2.reverse();
         tamara.runAction(cc.sequence(sc2, sc2_back).repeatForever());
 
-        var label = new cc.LabelTTF(this.title(), "Arial", 28);
+        var label = new LabelTTF(this.title(), "Arial", 28);
         label.x = cc.visibleRect.center.x;
         label.y = cc.visibleRect.top.y - 80;
         this.addChild(label);
@@ -91,7 +91,7 @@ export class EffectAdvanceTextLayer extends cc.Layer {
 
         var strSubtitle = this.subtitle();
         if (strSubtitle != "") {
-            var subtitleLabel = new cc.LabelTTF(strSubtitle, "Arial", 16);
+            var subtitleLabel = new LabelTTF(strSubtitle, "Arial", 16);
             this.addChild(subtitleLabel, 101);
             subtitleLabel.x = cc.visibleRect.center.x;
             subtitleLabel.y = cc.visibleRect.top.y - 80;

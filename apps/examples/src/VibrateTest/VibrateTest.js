@@ -26,6 +26,7 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
+import { LabelTTF } from "@aspect/core";
 
 export class VibrateTest extends BaseTestLayer {
   constructor() {
@@ -35,7 +36,7 @@ export class VibrateTest extends BaseTestLayer {
 
     this._durationLabel = null;
     var s = cc.director.getWinSize();
-    var label = new cc.LabelTTF("vibrate control test", "Arial", 28);
+    var label = new LabelTTF("vibrate control test", "Arial", 28);
     this.addChild(label, 0);
     label.x = s.width / 2;
     label.y = s.height - 50;
@@ -55,7 +56,7 @@ export class VibrateTest extends BaseTestLayer {
     menu.y = 0;
     this.addChild(menu);
 
-    this._durationLabel = new cc.LabelTTF(
+    this._durationLabel = new LabelTTF(
       "duration: " + this._duration.toFixed(3) + "s",
       "Arial",
       20

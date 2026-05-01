@@ -27,6 +27,7 @@
 
 import { winSize } from "../constants";
 import { TextureCacheTestBase } from "./texture-cache-test-base";
+import { LabelTTF } from "@aspect/core";
 
 export class TextureLoadImgTest extends TextureCacheTestBase {
   constructor() {
@@ -39,7 +40,7 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
     this._labelSecond = null;
 
     if ("opengl" in cc.sys.capabilities && !cc.sys.isNative) {
-      var label = new cc.LabelTTF(
+      var label = new LabelTTF(
         "Not support Loading texture from remote site on HTML5-WebGL",
         "Times New Roman",
         28
@@ -50,14 +51,14 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
       return;
     }
 
-    this._labelFirst = new cc.LabelTTF("load first image");
+    this._labelFirst = new LabelTTF("load first image");
     this._labelFirst.attr({
       x: cc.winSize.width / 2,
       y: cc.winSize.height / 2 + 30
     });
     this.addChild(this._labelFirst, 1);
 
-    this._labelSecond = new cc.LabelTTF("load second image");
+    this._labelSecond = new LabelTTF("load second image");
     this._labelSecond.attr({
       x: cc.winSize.width / 2,
       y: cc.winSize.height / 2 - 30

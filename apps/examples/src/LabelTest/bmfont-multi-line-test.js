@@ -34,6 +34,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2, TAG_BITMAP_ATLAS3 } from "./label-test-constants";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontMultiLineTest extends AtlasDemo {
     constructor() {
@@ -43,7 +44,7 @@ export class BMFontMultiLineTest extends AtlasDemo {
         this.pixel = {"0": 255, "1": 186, "2": 33, "3": 255};
 
         // Left
-        var label1 = new cc.LabelBMFont("Multi line\nLeft", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label1 = new LabelBMFont("Multi line\nLeft", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label1.anchorX = 0;
         label1.anchorY = 0;
         this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
@@ -51,14 +52,14 @@ export class BMFontMultiLineTest extends AtlasDemo {
 
 
         // Center
-        var label2 = new cc.LabelBMFont("Multi line\nCenter", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label2 = new LabelBMFont("Multi line\nCenter", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         cc.log("content size:" + label2.width + "," + label2.height);
 
         // right
-        var label3 = new cc.LabelBMFont("Multi line\nRight\nThree lines Three", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label3 = new LabelBMFont("Multi line\nRight\nThree lines Three", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label3.anchorX = 1;
         label3.anchorY = 1;
         this.addChild(label3, 0, TAG_BITMAP_ATLAS3);
@@ -74,7 +75,7 @@ export class BMFontMultiLineTest extends AtlasDemo {
         //----end9----
     }
     title() {
-        return "cc.LabelBMFont BMFontMultiLineTest";
+        return "LabelBMFont BMFontMultiLineTest";
     }
     subtitle() {
         return "Multiline + anchor point";

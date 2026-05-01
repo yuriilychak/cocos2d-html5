@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { SysTestBase } from "./sys-test-base";
+import { LabelTTF } from "@aspect/core";
 
 export class OpenURLTest extends SysTestBase {
   getTitle() {
@@ -34,7 +35,7 @@ export class OpenURLTest extends SysTestBase {
   constructor() {
     super();
 
-    var label = new cc.LabelTTF(
+    var label = new LabelTTF(
       "Touch the screen to open\nthe cocos2d-x home page",
       "Arial",
       22

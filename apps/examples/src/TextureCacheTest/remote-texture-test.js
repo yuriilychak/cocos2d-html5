@@ -27,6 +27,7 @@
 
 import { winSize } from "../constants";
 import { TextureCacheTestBase } from "./texture-cache-test-base";
+import { LabelTTF } from "@aspect/core";
 
 export class RemoteTextureTest extends TextureCacheTestBase {
   constructor() {
@@ -39,7 +40,7 @@ export class RemoteTextureTest extends TextureCacheTestBase {
   onEnter() {
     super.onEnter();
     if ("opengl" in cc.sys.capabilities && !cc.sys.isNative) {
-      var label = new cc.LabelTTF(
+      var label = new LabelTTF(
         "Not support Loading texture from remote site on HTML5-WebGL",
         "Times New Roman",
         28
@@ -89,7 +90,7 @@ export class RemoteTextureTest extends TextureCacheTestBase {
       str = "!!! Wrong behavior: succeed to download from wrong url";
     }
 
-    var label = new cc.LabelTTF(str, "Times New Roman", 28);
+    var label = new LabelTTF(str, "Times New Roman", 28);
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;
     this.addChild(label, 100);

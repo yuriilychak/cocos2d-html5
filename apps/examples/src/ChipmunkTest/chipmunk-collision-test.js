@@ -37,6 +37,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
 export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
   constructor() {
@@ -138,7 +139,7 @@ export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
 
   collisionBegin(arbiter, space) {
     if (!this.messageDisplayed) {
-      var label = new cc.LabelBMFont(
+      var label = new LabelBMFont(
         "Collision Detected",
         s_bitmapFontTest5_fnt
       );

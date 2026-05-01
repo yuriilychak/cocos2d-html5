@@ -27,7 +27,7 @@
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini } from "../resources";
-import { Point, Color } from "@aspect/core";
+import { Color, Layer, Point } from "@aspect/core";
 
 export class BakeLayerColorTest extends BakeLayerBaseTest {
   title() {
@@ -56,7 +56,7 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     menu.y = winSize.height - 120;
     this.addChild(menu, 10);
 
-    var rootLayer = new cc.Layer();
+    var rootLayer = new Layer();
     rootLayer.setPosition(20, 20);
     this.addChild(rootLayer);
 

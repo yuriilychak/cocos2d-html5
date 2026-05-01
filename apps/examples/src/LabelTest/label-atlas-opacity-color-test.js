@@ -34,6 +34,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { TAG_LABEL_SPRITE1, TAG_LABEL_SPRITE12 } from "./label-test-constants";
 import { s_resprefix } from "../resources";
 import { Color } from "@aspect/core";
+import { LabelAtlas } from "@aspect/labels";
 
 export class LabelAtlasOpacityColorTest extends AtlasDemo {
   constructor() {
@@ -43,7 +44,7 @@ export class LabelAtlasOpacityColorTest extends AtlasDemo {
     this.time = null;
 
     this.testDuration = 1;
-    var label1 = new cc.LabelAtlas(
+    var label1 = new LabelAtlas(
       "123 Test",
       s_resprefix + "fonts/tuffy_bold_italic-charmap.png",
       48,
@@ -55,7 +56,7 @@ export class LabelAtlasOpacityColorTest extends AtlasDemo {
     label1.y = 100;
     label1.opacity = 200;
 
-    var label2 = new cc.LabelAtlas(
+    var label2 = new LabelAtlas(
       "0123456789",
       s_resprefix + "fonts/tuffy_bold_italic-charmap.png",
       48,

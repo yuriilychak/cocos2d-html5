@@ -30,8 +30,9 @@ import {
   LINE_SPACE,
   extensionsTestItemNames
 } from "./extensions-test-constants";
+import { Layer } from "@aspect/core";
 
-export class ExtensionsMainLayer extends cc.Layer {
+export class ExtensionsMainLayer extends Layer {
   onEnter() {
     super.onEnter();
 

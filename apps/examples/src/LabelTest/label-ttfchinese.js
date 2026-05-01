@@ -27,6 +27,7 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class LabelTTFChinese extends AtlasDemo {
   constructor() {
@@ -39,13 +40,13 @@ export class LabelTTFChinese extends AtlasDemo {
         : cc.sys.os == cc.sys.OS_WINRT
           ? "DengXian"
           : "Microsoft Yahei";
-    var label = new cc.LabelTTF("中国", fontname, 30);
+    var label = new LabelTTF("中国", fontname, 30);
     label.x = size.width / 2;
     label.y = (size.height / 3) * 2;
     this.addChild(label);
 
     // Test UTF8 string from native to jsval.
-    var label2 = new cc.LabelTTF(
+    var label2 = new LabelTTF(
       "string from native:" + label.getString(),
       fontname,
       30
@@ -56,6 +57,6 @@ export class LabelTTFChinese extends AtlasDemo {
     //----end21----
   }
   title() {
-    return "Testing cc.LabelTTF with Chinese character";
+    return "Testing LabelTTF with Chinese character";
   }
 }

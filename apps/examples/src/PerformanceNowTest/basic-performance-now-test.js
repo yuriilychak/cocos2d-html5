@@ -28,12 +28,13 @@
 //
 //------------------------------------------------------------------
 import { PerformanceNowBaseLayer } from "./performance-now-base-layer";
+import { LabelTTF } from "@aspect/core";
 
 export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
   onEnter() {
     super.onEnter();
     if (performance && typeof performance.now === "function") {
-      var currentPerformanceNow = new cc.LabelTTF(
+      var currentPerformanceNow = new LabelTTF(
         "Current time since start : " + performance.now()
       );
       this.addChild(currentPerformanceNow);
@@ -42,7 +43,7 @@ export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
         y: cc.winSize.height / 2
       });
     } else {
-      var errLabel = new cc.LabelTTF(
+      var errLabel = new LabelTTF(
         "On browser that does not support performance.now"
       );
       this.addChild(errLabel);

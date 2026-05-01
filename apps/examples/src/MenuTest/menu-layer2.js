@@ -40,9 +40,9 @@ import {
   s_playSelect
 } from "../resources";
 import { director } from "../constants";
-import { Point } from "@aspect/core";
+import { Layer, Point } from "@aspect/core";
 
-export class MenuLayer2 extends cc.Layer {
+export class MenuLayer2 extends Layer {
   constructor() {
     super();
 

@@ -34,7 +34,7 @@ import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { Point } from "@aspect/core";
+import { LabelTTF, Point } from "@aspect/core";
 
 export class TMXOrthoVertexZ extends TMXFixBugLayer {
     constructor() {
@@ -61,7 +61,7 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
         this.tamara.runAction(seq.repeatForever());
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
-            var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
+            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;

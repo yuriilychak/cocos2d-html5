@@ -35,7 +35,7 @@ import { nextS9SpriteTest, previousS9SpriteTest, restartS9SpriteTest } from "./s
 import { S9SpriteTestScene } from "./s9-sprite-test-scene";
 import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_s9s_blocks9_plist } from "../../resources";
 import { director, winSize } from "../../constants";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF } from "@aspect/core";
 
 export class S9SpriteTestDemo extends cc.LayerGradient {
 
@@ -53,13 +53,13 @@ export class S9SpriteTestDemo extends cc.LayerGradient {
     onEnter() {
         super.onEnter();
 
-        var label = new cc.LabelTTF(this._title, "Arial", 28);
+        var label = new LabelTTF(this._title, "Arial", 28);
         this.addChild(label, 1);
         label.x = winSize.width / 2;
         label.y = winSize.height - 50;
 
         if (this._subtitle !== "") {
-            var l = new cc.LabelTTF(this._subtitle, "Thonburi", 16);
+            var l = new LabelTTF(this._subtitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = winSize.width / 2;
             l.y = winSize.height - 80;

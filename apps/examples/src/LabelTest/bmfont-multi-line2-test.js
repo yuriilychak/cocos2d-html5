@@ -34,6 +34,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2, TAG_BITMAP_ATLAS3 } from "./label-test-constants";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { LabelBMFont } from "@aspect/labels";
 
 export class BMFontMultiLine2Test extends AtlasDemo {
     constructor() {
@@ -43,7 +44,7 @@ export class BMFontMultiLine2Test extends AtlasDemo {
         this.pixel = {"0": 255, "1": 186, "2": 33, "3": 255};
 
         // Left
-        var label1 = new cc.LabelBMFont("Multi line\n\nAligned to the left", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label1 = new LabelBMFont("Multi line\n\nAligned to the left", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label1.anchorX = 0;
         label1.anchorY = 0;
         label1.textAlign = cc.TEXT_ALIGNMENT_LEFT;
@@ -53,7 +54,7 @@ export class BMFontMultiLine2Test extends AtlasDemo {
 
 
         // Center
-        var label2 = new cc.LabelBMFont("Error\n\nSome error message", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label2 = new LabelBMFont("Error\n\nSome error message", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
         label2.textAlign = cc.TEXT_ALIGNMENT_CENTER;
@@ -62,7 +63,7 @@ export class BMFontMultiLine2Test extends AtlasDemo {
         cc.log("content size:" + label2.width + "," + label2.height);
 
         // right
-        var label3 = new cc.LabelBMFont("Multi line\n\nAligned to the right", s_resprefix + "fonts/bitmapFontTest3.fnt");
+        var label3 = new LabelBMFont("Multi line\n\nAligned to the right", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label3.anchorX = 1;
         label3.anchorY = 1;
         label3.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
@@ -80,7 +81,7 @@ export class BMFontMultiLine2Test extends AtlasDemo {
         //----end10----
     }
     title() {
-        return "cc.LabelBMFont BMFontMultiLine2Test";
+        return "LabelBMFont BMFontMultiLine2Test";
     }
     subtitle() {
         return "Multiline with 2 new lines. All characters should appear";

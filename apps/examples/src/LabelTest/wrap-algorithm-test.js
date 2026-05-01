@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { AtlasDemo } from "./atlas-demo";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF } from "@aspect/core";
 
 export class WrapAlgorithmTest extends AtlasDemo {
   constructor() {
@@ -47,7 +47,7 @@ export class WrapAlgorithmTest extends AtlasDemo {
     ];
 
     normalText.forEach(function (text, i) {
-      var LabelTTF = new cc.LabelTTF();
+      var LabelTTF = new LabelTTF();
       LabelTTF.setString(text);
       LabelTTF.setPosition(30 + 150 * ((i / 4) | 0), 300 - (i % 4) * 60);
       LabelTTF.setAnchorPoint(0, 1);
@@ -64,7 +64,7 @@ export class WrapAlgorithmTest extends AtlasDemo {
     var extremeText = ["测", "\n", "\r\n", "、", ",", "W", "7"];
 
     extremeText.forEach(function (text, i) {
-      var LabelTTF = new cc.LabelTTF();
+      var LabelTTF = new LabelTTF();
       LabelTTF.setString(text);
       LabelTTF.setPosition(480 + i * 25, 300);
       LabelTTF.setAnchorPoint(0, 1);
@@ -85,7 +85,7 @@ export class WrapAlgorithmTest extends AtlasDemo {
     ];
 
     combinatorialText.forEach(function (text, i) {
-      var LabelTTF = new cc.LabelTTF();
+      var LabelTTF = new LabelTTF();
       LabelTTF.setString(text);
       LabelTTF.setPosition(480 + 100 * ((i / 3) | 0), 240 - (i % 3) * 60);
       LabelTTF.setAnchorPoint(0, 1);

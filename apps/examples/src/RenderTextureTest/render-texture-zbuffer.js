@@ -25,7 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_circle_plist, s_circle_png } from "../resources";
-import { Color } from "@aspect/core";
+import { Color, LabelTTF } from "@aspect/core";
 
 export class RenderTextureZbuffer extends RenderTextureBaseLayer {
   constructor() {
@@ -62,17 +62,17 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     );
 
     var size = cc.director.getWinSize();
-    var label = new cc.LabelTTF("vertexZ = 50", "Marker Felt", 64);
+    var label = new LabelTTF("vertexZ = 50", "Marker Felt", 64);
     label.x = size.width / 2;
     label.y = size.height * 0.25;
     this.addChild(label);
 
-    var label2 = new cc.LabelTTF("vertexZ = 0", "Marker Felt", 64);
+    var label2 = new LabelTTF("vertexZ = 0", "Marker Felt", 64);
     label2.x = size.width / 2;
     label2.y = size.height * 0.5;
     this.addChild(label2);
 
-    var label3 = new cc.LabelTTF("vertexZ = -50", "Marker Felt", 64);
+    var label3 = new LabelTTF("vertexZ = -50", "Marker Felt", 64);
     label3.x = size.width / 2;
     label3.y = size.height * 0.75;
     this.addChild(label3);

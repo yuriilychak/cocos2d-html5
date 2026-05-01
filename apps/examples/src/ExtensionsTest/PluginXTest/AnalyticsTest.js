@@ -25,7 +25,7 @@
 
 import { PluginXTest } from "./PluginXTest";
 import { director } from "../../constants";
-import { Point, Size } from "@aspect/core";
+import { LabelTTF, Point, Size } from "@aspect/core";
 
 export var g_pAnalytics = null;
 export var s_strAppKey = "";
@@ -146,7 +146,7 @@ export class AnalyticsTestLayer extends PluginXTest {
 
     var yPos = 0;
     for (var i = 0; i < s_EventMenuItem.length; i++) {
-      var label = new cc.LabelTTF(s_EventMenuItem[i].id, "Arial", 24);
+      var label = new LabelTTF(s_EventMenuItem[i].id, "Arial", 24);
       var pMenuItem = new cc.MenuItemLabel(label, this.eventMenuCallback, this);
       pMenu.addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
       yPos = size.height - 50 * i - 100;
@@ -156,7 +156,7 @@ export class AnalyticsTestLayer extends PluginXTest {
     var strName = g_pAnalytics.getPluginName();
     var strVer = g_pAnalytics.getPluginVersion();
     var ret = "Plugin : " + strName + ", Ver : " + strVer;
-    var pLabel = new cc.LabelTTF(
+    var pLabel = new LabelTTF(
       ret,
       "Arial",
       24,
@@ -166,7 +166,7 @@ export class AnalyticsTestLayer extends PluginXTest {
     pLabel.setPosition(new Point(size.width / 2, yPos - 100));
     this.addChild(pLabel);
 
-    var label = new cc.LabelTTF("reload all plugins", "Arial", 24);
+    var label = new LabelTTF("reload all plugins", "Arial", 24);
     var pMenuItem = new cc.MenuItemLabel(
       label,
       this.reloadPluginMenuCallback,

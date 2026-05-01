@@ -32,9 +32,10 @@
 //------------------------------------------------------------------
 import { s_bitmapFontTest3_fnt, s_menuItem } from "../resources";
 import { director } from "../constants";
-import { Point, Rect } from "@aspect/core";
+import { Layer, Point, Rect } from "@aspect/core";
+import { LabelBMFont } from "@aspect/labels";
 
-export class MenuLayer3 extends cc.Layer {
+export class MenuLayer3 extends Layer {
 
     constructor() {
         super();
@@ -48,7 +49,7 @@ export class MenuLayer3 extends cc.Layer {
         cc.MenuItemFont.setFontName("Marker Felt");
         cc.MenuItemFont.setFontSize(28);
 
-        var label = new cc.LabelBMFont("Enable AtlasItem", s_bitmapFontTest3_fnt);
+        var label = new LabelBMFont("Enable AtlasItem", s_bitmapFontTest3_fnt);
         var item1 = new cc.MenuItemLabel(label, function(sender){
             this._disabledItem.enabled = !this._disabledItem.enabled;
             this._disabledItem.stopAllActions();

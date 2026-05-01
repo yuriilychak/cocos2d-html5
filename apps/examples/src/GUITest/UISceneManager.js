@@ -132,6 +132,7 @@ import { UIVideoPlayerTest } from "./UIVideoPlayerTest/UIVideoPlayerTest";
 import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest";
 import { TestScene } from "../test-scene";
 import { winSize } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 var currentTestingArray = null;
 
@@ -847,7 +848,7 @@ var listScene = class listScene extends TestScene {
     var index = 0;
     for (var p in testingItems) {
       (function (name, list) {
-        var label = new cc.LabelTTF(name, "Arial", 24);
+        var label = new LabelTTF(name, "Arial", 24);
         var menuItem = new cc.MenuItemLabel(
           label,
           function () {

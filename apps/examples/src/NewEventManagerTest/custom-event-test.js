@@ -27,6 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
+import { LabelTTF } from "@aspect/core";
 
 export class CustomEventTest extends EventDispatcherTestDemo {
   constructor() {
@@ -47,7 +48,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
 
     cc.MenuItemFont.setFontSize(20);
 
-    var statusLabel = new cc.LabelTTF("No custom event 1 received!", "", 20);
+    var statusLabel = new LabelTTF("No custom event 1 received!", "", 20);
     statusLabel.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height - 90
@@ -75,7 +76,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     });
     sendItem.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
 
-    var statusLabel2 = new cc.LabelTTF("No custom event 2 received!", "", 20);
+    var statusLabel2 = new LabelTTF("No custom event 2 received!", "", 20);
     statusLabel2.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height - 120

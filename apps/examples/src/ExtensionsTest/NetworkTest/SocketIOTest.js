@@ -25,7 +25,7 @@
  ****************************************************************************/
 /** @expose */
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Point } from "@aspect/core";
+import { LabelTTF, Layer, Point, Scene } from "@aspect/core";
 
 window.io;
 
@@ -36,7 +36,7 @@ if (!window.SocketIO && !cc.SocketIO) {
   console.warn("Socket.IO not available for SocketIOTest");
 }
 
-export class SocketIOTestLayer extends cc.Layer {
+export class SocketIOTestLayer extends Layer {
   constructor() {
     super();
 
@@ -54,7 +54,7 @@ export class SocketIOTestLayer extends cc.Layer {
     var MARGIN = 40;
     var SPACE = 35;
 
-    var label = new cc.LabelTTF("SocketIO Test", "Arial", 28);
+    var label = new LabelTTF("SocketIO Test", "Arial", 28);
     label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
     this.addChild(label, 0);
 
@@ -63,7 +63,7 @@ export class SocketIOTestLayer extends cc.Layer {
     this.addChild(menuRequest);
 
     // Test to create basic client in the default namespace
-    var labelSIOClient = new cc.LabelTTF("Open SocketIO Client", "Arial", 22);
+    var labelSIOClient = new LabelTTF("Open SocketIO Client", "Arial", 22);
     labelSIOClient.setAnchorPoint(new Point(0, 0));
     var itemSIOClient = new cc.MenuItemLabel(
       labelSIOClient,
@@ -79,7 +79,7 @@ export class SocketIOTestLayer extends cc.Layer {
     menuRequest.addChild(itemSIOClient);
 
     // Test to create a client at the endpoint '/testpoint'
-    var labelSIOEndpoint = new cc.LabelTTF(
+    var labelSIOEndpoint = new LabelTTF(
       "Open SocketIO Endpoint",
       "Arial",
       22
@@ -99,7 +99,7 @@ export class SocketIOTestLayer extends cc.Layer {
     menuRequest.addChild(itemSIOEndpoint);
 
     // Test sending message to default namespace
-    var labelTestMessage = new cc.LabelTTF("Send Test Message", "Arial", 22);
+    var labelTestMessage = new LabelTTF("Send Test Message", "Arial", 22);
     labelTestMessage.setAnchorPoint(new Point(0, 0));
     var itemTestMessage = new cc.MenuItemLabel(
       labelTestMessage,
@@ -115,7 +115,7 @@ export class SocketIOTestLayer extends cc.Layer {
     menuRequest.addChild(itemTestMessage);
 
     // Test sending message to the endpoint '/testpoint'
-    var labelTestMessageEndpoint = new cc.LabelTTF(
+    var labelTestMessageEndpoint = new LabelTTF(
       "Test Endpoint Message",
       "Arial",
       22
@@ -136,7 +136,7 @@ export class SocketIOTestLayer extends cc.Layer {
     menuRequest.addChild(itemTestMessageEndpoint);
 
     // Test sending event 'echotest' to default namespace
-    var labelTestEvent = new cc.LabelTTF("Send Test Event", "Arial", 22);
+    var labelTestEvent = new LabelTTF("Send Test Event", "Arial", 22);
     labelTestEvent.setAnchorPoint(new Point(0, 0));
     var itemTestEvent = new cc.MenuItemLabel(
       labelTestEvent,
@@ -152,7 +152,7 @@ export class SocketIOTestLayer extends cc.Layer {
     menuRequest.addChild(itemTestEvent);
 
     // Test sending event 'echotest' to the endpoint '/testpoint'
-    var labelTestEventEndpoint = new cc.LabelTTF(
+    var labelTestEventEndpoint = new LabelTTF(
       "Test Endpoint Event",
       "Arial",
       22
@@ -173,7 +173,7 @@ export class SocketIOTestLayer extends cc.Layer {
     menuRequest.addChild(itemTestEventEndpoint);
 
     // Test disconnecting basic client
-    var labelTestClientDisconnect = new cc.LabelTTF(
+    var labelTestClientDisconnect = new LabelTTF(
       "Disconnect Socket",
       "Arial",
       22
@@ -193,7 +193,7 @@ export class SocketIOTestLayer extends cc.Layer {
     menuRequest.addChild(itemClientDisconnect);
 
     // Test disconnecting the endpoint '/testpoint'
-    var labelTestEndpointDisconnect = new cc.LabelTTF(
+    var labelTestEndpointDisconnect = new LabelTTF(
       "Disconnect Endpoint",
       "Arial",
       22
@@ -213,7 +213,7 @@ export class SocketIOTestLayer extends cc.Layer {
     );
     menuRequest.addChild(itemTestEndpointDisconnect);
 
-    this._sioClientStatus = new cc.LabelTTF("Not connected...", "Arial", 14);
+    this._sioClientStatus = new LabelTTF("Not connected...", "Arial", 14);
     this._sioClientStatus.setAnchorPoint(new Point(0, 0));
     this._sioClientStatus.setPosition(new Point(0, winSize.height * 0.25));
     this.addChild(this._sioClientStatus);
@@ -418,7 +418,7 @@ export class SocketIOTestLayer extends cc.Layer {
 }
 
 export function runSocketIOTest() {
-  var pScene = new cc.Scene();
+  var pScene = new Scene();
   var pLayer = new SocketIOTestLayer();
   pScene.addChild(pLayer);
   cc.director.runScene(pScene);

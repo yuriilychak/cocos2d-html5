@@ -42,8 +42,9 @@ import {
   restartTextInputTest
 } from "./text-input-test-helpers";
 import { TextInputTestScene } from "./text-input-test-scene";
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class TextInputTest extends cc.Layer {
+export class TextInputTest extends Layer {
   constructor() {
     super();
 
@@ -81,14 +82,14 @@ export class TextInputTest extends cc.Layer {
 
     var winSize = cc.director.getWinSize();
 
-    var label = new cc.LabelTTF(this.title(), "Arial", 24);
+    var label = new LabelTTF(this.title(), "Arial", 24);
     this.addChild(label);
     label.x = winSize.width / 2;
     label.y = winSize.height - 50;
 
     var subTitle = this.subtitle();
     if (subTitle && subTitle !== "") {
-      var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
+      var l = new LabelTTF(subTitle, "Thonburi", 16);
       this.addChild(l, 1);
       l.x = winSize.width / 2;
       l.y = winSize.height - 80;

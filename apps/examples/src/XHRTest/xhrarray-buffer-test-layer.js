@@ -26,15 +26,16 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
+import { LabelTTF, Layer } from "@aspect/core";
 
-export class XHRArrayBufferTestLayer extends cc.Layer {
+export class XHRArrayBufferTestLayer extends Layer {
   constructor() {
     super();
   }
 
   onEnter() {
     super.onEnter();
-    var l = new cc.LabelTTF("Get infos via XHR", "Thonburi", 16);
+    var l = new LabelTTF("Get infos via XHR", "Thonburi", 16);
     this.addChild(l, 1);
     l.x = winSize.width / 2;
     l.y = winSize.height - 60;
@@ -73,7 +74,7 @@ export class XHRArrayBufferTestLayer extends cc.Layer {
   }
 
   sendPostArrayBuffer() {
-    var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
+    var statusPostLabel = new LabelTTF("Status:", "Thonburi", 12);
     this.addChild(statusPostLabel, 1);
 
     statusPostLabel.x = 10;
@@ -83,7 +84,7 @@ export class XHRArrayBufferTestLayer extends cc.Layer {
       "Status: Send Post Request to httpbin.org with ArrayBuffer"
     );
 
-    var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
+    var responseLabel = new LabelTTF("", "Thonburi", 16);
     this.addChild(responseLabel, 1);
     this.ensureLeftAligned(responseLabel);
     responseLabel.x = 10;
