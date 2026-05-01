@@ -25,6 +25,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { Director } from "@aspect/core";
+
 
 // globals (lazy-init in _initGlobals; live bindings let importers see updates)
 export let director = null;
@@ -32,8 +34,8 @@ export let director = null;
 export let winSize = null;
 
 export function _initGlobals() {
-    director = cc.director;
-    winSize = cc.director.getWinSize();
+    director = Director.getInstance();
+    winSize = Director.getInstance().getWinSize();
 }
 
 export var PLATFORM_JSB = 1 << 0;

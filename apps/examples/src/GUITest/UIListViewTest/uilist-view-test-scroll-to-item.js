@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Color } from "@aspect/core";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class UIListViewTest_ScrollToItem extends UIMainLayer {
   constructor() {
@@ -68,7 +69,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
       this._mainNode.addChild(listView);
 
       {
-        var pNode = new cc.DrawNode();
+        var pNode = new DrawNode();
 
         var center = new Point(widgetSize.width / 2, widgetSize.height / 2);
         if (this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL) {

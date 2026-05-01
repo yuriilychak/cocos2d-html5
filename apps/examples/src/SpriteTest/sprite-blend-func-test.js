@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { LabelTTF, Size } from "@aspect/core";
+import { LabelTTF, Size, Sprite } from "@aspect/core";
 
 export class SpriteBlendFuncTest extends SpriteTestDemo {
   //webgl only
@@ -75,8 +75,8 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       destImg = "Images/wood.jpg";
     var sourceTexture = cc.textureCache.addImage(sourceImg);
     sourceTexture.handleLoadedTexture(true);
-    var sourceSprite = new cc.Sprite(sourceImg);
-    var destSprite = new cc.Sprite(destImg);
+    var sourceSprite = new Sprite(sourceImg);
+    var destSprite = new Sprite(destImg);
     sourceSprite.setScale(0.8);
     destSprite.setScale(0.8);
     sourceSprite.setPosition(60, 400);
@@ -118,12 +118,12 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     //j = 0;
     for (i = 0; i < srcFactors.length; i++) {
       for (j = 0; j < destFactors.length; j++) {
-        sourceSprite = new cc.Sprite(sourceImg);
+        sourceSprite = new Sprite(sourceImg);
         //sourceSprite.setScale(0.8);
         sourceSprite.setPosition(220 + i * 60, 355 - j * 60);
         sourceSprite.setBlendFunc(srcFactors[i], destFactors[j]);
 
-        destSprite = new cc.Sprite(destImg);
+        destSprite = new Sprite(destImg);
         //destSprite.setScale(0.8);
         destSprite.setPosition(220 + i * 60, 355 - j * 60);
         //                destSprite.setBlendFunc(srcFactors[j], destFactors[i]);

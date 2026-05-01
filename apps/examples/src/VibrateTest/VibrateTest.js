@@ -26,7 +26,8 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
-import { LabelTTF } from "@aspect/core";
+import { Director, LabelTTF } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class VibrateTest extends BaseTestLayer {
   constructor() {
@@ -35,7 +36,7 @@ export class VibrateTest extends BaseTestLayer {
     this._duration = 0.1;
 
     this._durationLabel = null;
-    var s = cc.director.getWinSize();
+    var s = Director.getInstance().getWinSize();
     var label = new LabelTTF("vibrate control test", "Arial", 28);
     this.addChild(label, 0);
     label.x = s.width / 2;
@@ -43,14 +44,14 @@ export class VibrateTest extends BaseTestLayer {
 
     this._duration = 0.1;
 
-    cc.MenuItemFont.setFontName("Arial");
-    cc.MenuItemFont.setFontSize(24);
+    MenuItemFont.setFontName("Arial");
+    MenuItemFont.setFontSize(24);
 
-    var vibrateItem = new cc.MenuItemFont("Vibrate", this.startVibrate, this);
+    var vibrateItem = new MenuItemFont("Vibrate", this.startVibrate, this);
     vibrateItem.x = s.width * 0.5;
     vibrateItem.y = s.height * 0.7;
 
-    var menu = new cc.Menu();
+    var menu = new Menu();
     menu.addChild(vibrateItem);
     menu.x = 0;
     menu.y = 0;
@@ -108,7 +109,7 @@ export class VibrateTestScene extends TestScene {
     var layer = new VibrateTest();
     this.addChild(layer);
 
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }
 

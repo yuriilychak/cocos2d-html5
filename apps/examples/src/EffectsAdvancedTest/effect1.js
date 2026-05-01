@@ -27,7 +27,7 @@
 
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
-import { Point, Size } from "@aspect/core";
+import { Director, Point, Size } from "@aspect/core";
 import { DelayTime, sequence } from "@aspect/actions";
 
 export class Effect1 extends EffectAdvanceTextLayer {
@@ -44,7 +44,7 @@ export class Effect1 extends EffectAdvanceTextLayer {
     // in this case:
     //     Lens3D is Grid3D and it's size is (15,10)
     //     Waves3D is Grid3D and it's size is (15,10)
-    var size = cc.director.getWinSize();
+    var size = Director.getInstance().getWinSize();
     var lens = cc.lens3D(
       0.0,
       new Size(15, 10),

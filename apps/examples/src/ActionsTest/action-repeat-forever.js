@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { CallFunc, DelayTime, RepeatForever, RotateBy, Sequence, easeElasticInOut } from "@aspect/actions";
+import { Sys } from "@aspect/core";
 
 export class ActionRepeatForever extends ActionsDemo {
   constructor() {
@@ -61,7 +62,7 @@ export class ActionRepeatForever extends ActionsDemo {
         )
         .repeatForever()
     );
-    cc.sys.garbageCollect();
+    Sys.getInstance().garbageCollect();
   }
   title() {
     return "CallFunc + RepeatForever";

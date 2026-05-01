@@ -34,6 +34,7 @@ import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point, Color } from "@aspect/core";
 import { CatmullRomBy, CatmullRomTo, DelayTime, Sequence } from "@aspect/actions";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class ActionCatmullRom extends ActionsDemo {
   get _code() {
@@ -52,13 +53,13 @@ export class ActionCatmullRom extends ActionsDemo {
 
     this.testDuration = 3.1;
 
-    this._drawNode1 = new cc.DrawNode();
+    this._drawNode1 = new DrawNode();
     this._drawNode1.x = 50;
     this._drawNode1.y = 50;
     this._drawNode1.setDrawColor(new Color(255, 255, 255, 255));
     this.addChild(this._drawNode1);
 
-    this._drawNode2 = new cc.DrawNode();
+    this._drawNode2 = new DrawNode();
     this._drawNode2.setDrawColor(new Color(255, 255, 255, 255));
     this.addChild(this._drawNode2);
   }

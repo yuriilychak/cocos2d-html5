@@ -59,7 +59,7 @@ export class ActionFade extends ActionsDemo {
     //----end14----
   }
   title() {
-    return "cc.fadeIn / cc.fadeOut";
+    return "fadeIn / fadeOut";
   }
   //
   // Automation

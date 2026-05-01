@@ -27,12 +27,13 @@
 
 import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
+import { ParticleSmoke } from "./ParticleExamples";
 
 export class DemoSmoke extends ParticleDemo {
   onEnter() {
     super.onEnter();
 
-    this._emitter = new cc.ParticleSmoke();
+    this._emitter = new ParticleSmoke();
     this._background.addChild(this._emitter, 10);
     this._emitter.texture = cc.textureCache.addImage(s_fire);
 

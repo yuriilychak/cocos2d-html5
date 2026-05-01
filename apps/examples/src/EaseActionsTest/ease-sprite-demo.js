@@ -31,7 +31,7 @@ import { arrayOfEaseActionsTest, nextEaseActionsTest, previousEaseActionsTest, r
 import { EaseActionsTestScene } from "./ease-actions-test-scene";
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, Sprite } from "@aspect/core";
 
 export class EaseSpriteDemo extends BaseTestLayer {
 
@@ -61,9 +61,9 @@ export class EaseSpriteDemo extends BaseTestLayer {
         super.onEnter();
 
         // Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
-        this._grossini = new cc.Sprite(s_pathGrossini);
-        this._tamara = new cc.Sprite(s_pathSister1);
-        this._kathia = new cc.Sprite(s_pathSister2);
+        this._grossini = new Sprite(s_pathGrossini);
+        this._tamara = new Sprite(s_pathSister1);
+        this._kathia = new Sprite(s_pathSister2);
 
         this.addChild(this._grossini, 3);
         this.addChild(this._kathia, 2);

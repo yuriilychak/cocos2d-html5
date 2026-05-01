@@ -31,8 +31,9 @@ import {
   s_hole_stencil_png,
   s_pathBlock
 } from "../resources";
-import { Point, Size, Color, Rect } from "@aspect/core";
+import { Color, EventListener, EventManager, Node, Point, Rect, Size, Sprite } from "@aspect/core";
 import { RotateBy, ScaleBy, ScaleTo, sequence } from "@aspect/actions";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class HoleDemo extends BaseClippingNodeTest {
   constructor() {
@@ -40,13 +41,13 @@ export class HoleDemo extends BaseClippingNodeTest {
   }
 
   setup() {
-    var target = new cc.Sprite(s_pathBlock);
+    var target = new Sprite(s_pathBlock);
     target.anchorX = 0;
     target.anchorY = 0;
     target.scale = 3;
 
     var scale = target.scale;
-    var stencil = new cc.DrawNode();
+    var stencil = new DrawNode();
 
     var rectangle = [
       new Point(0, 0),
@@ -85,19 +86,19 @@ export class HoleDemo extends BaseClippingNodeTest {
 
     holesClipper.addChild(target);
 
-    this._holes = new cc.Node();
+    this._holes = new Node();
 
     holesClipper.addChild(this._holes);
 
-    this._holesStencil = new cc.Node();
+    this._holesStencil = new Node();
 
     holesClipper.stencil = this._holesStencil;
     this._outerClipper.addChild(holesClipper);
     this.addChild(this._outerClipper);
 
-    cc.eventManager.addListener(
-      cc.EventListener.create({
-        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+    EventManager.getInstance().addListener(
+      EventListener.create({
+        event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {
           var target = event.getCurrentTarget();
           var touch = touches[0];
@@ -130,7 +131,7 @@ export class HoleDemo extends BaseClippingNodeTest {
     var scale = Math.random() * 0.2 + 0.9;
     var rotation = Math.random() * 360;
 
-    var hole = new cc.Sprite(s_hole_effect_png);
+    var hole = new Sprite(s_hole_effect_png);
     hole.attr({
       x: point.x,
       y: point.y,
@@ -140,7 +141,7 @@ export class HoleDemo extends BaseClippingNodeTest {
 
     this._holes.addChild(hole);
 
-    var holeStencil = new cc.Sprite(s_hole_stencil_png);
+    var holeStencil = new Sprite(s_hole_stencil_png);
     holeStencil.attr({
       x: point.x,
       y: point.y,

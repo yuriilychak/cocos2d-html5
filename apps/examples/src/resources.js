@@ -21,6 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { Game, Sys } from "@aspect/core";
+
 
 // Resources prefix
 export var s_resprefix = "";
@@ -28,8 +30,8 @@ export var s_resprefix = "";
 export var ccbjs = "";
 // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
 // so the respath will modify to res,
-if (!cc.sys.isNative) {
-    if (cc.game.config && cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+if (!Sys.getInstance().isNative) {
+    if (Game.getInstance().config && Game.getInstance().config[Game.getInstance().CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
         ccbjs = "";
     } else {
         ccbjs = "";
@@ -398,7 +400,7 @@ export var g_box2d = [
 export var g_cocosdeshion = [
     "background.mp3",
     "effect2.mp3"
-    //"background.ogg",                        //one sound only, cc.audio can auto select other format to load if the sound format isn't supported on some browser.
+    //"background.ogg",                        //one sound only, audio can auto select other format to load if the sound format isn't supported on some browser.
     //"effect2.ogg"
 ];
 
@@ -682,7 +684,7 @@ export var g_spine = [
     "spine/goblins-pro.json"
 ];
 
-if (!cc.sys.isNative) {
+if (!Sys.getInstance().isNative) {
     var res = res || {};
     res.CCControlColourPickerSpriteSheet_plist = "extensions/CCControlColourPickerSpriteSheet.plist";
     res.CCControlColourPickerSpriteSheet_png = "extensions/CCControlColourPickerSpriteSheet.png";

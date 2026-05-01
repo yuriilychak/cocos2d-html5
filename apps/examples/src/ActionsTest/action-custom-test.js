@@ -29,8 +29,9 @@ import { ActionsDemo } from "./actions-demo";
 import { createCustomAction } from "./actions-test-helpers";
 import { CustomMoveBy } from "./custom-move-by";
 import { s_pathGrossini } from "../resources";
-import { LabelTTF, Layer, Point } from "@aspect/core";
+import { LabelTTF, Layer, Point, Sprite, log } from "@aspect/core";
 import { Animate, BezierBy, BezierTo, Blink, CallFunc, DelayTime, FadeIn, FadeOut, FadeTo, FlipX, FlipY, Hide, JumpBy, JumpTo, MoveBy, MoveTo, Place, Repeat, RepeatForever, RotateBy, RotateTo, ScaleBy, ScaleTo, Sequence, Show, SkewBy, SkewTo, Spawn, TintBy, TintTo, sequence, spawn } from "@aspect/actions";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class ActionCustomTest extends ActionsDemo {
   constructor() {
@@ -48,17 +49,17 @@ export class ActionCustomTest extends ActionsDemo {
     this._layer = new Layer();
     this.addChild(this._layer);
 
-    var label1 = new cc.MenuItemLabel(
+    var label1 = new MenuItemLabel(
       new LabelTTF("showInterval(click me)", "arial", 25),
       this.createActionInterval,
       this
     );
-    var label2 = new cc.MenuItemLabel(
+    var label2 = new MenuItemLabel(
       new LabelTTF("showInstant(click me)", "arial", 25),
       this.createActionInstant,
       this
     );
-    var buttonTemp = new cc.Menu(label1, label2);
+    var buttonTemp = new Menu(label1, label2);
     buttonTemp.alignItemsVerticallyWithPadding(10);
     buttonTemp.setPosition(new Point(100, cc.winSize.height / 2 + 100));
     this.addChild(buttonTemp);
@@ -105,7 +106,7 @@ export class ActionCustomTest extends ActionsDemo {
 
     spriteTemp = this.addandCreateSpriteTemp("CallFunc");
     var callFunc = new (createCustomAction(CallFunc))(function () {
-      cc.log("callfunc");
+      log("callfunc");
     }, this);
     spriteTemp.runAction(callFunc);
   }
@@ -137,14 +138,14 @@ export class ActionCustomTest extends ActionsDemo {
     /**
      * group 2
      */
-    spriteTemp = this.addandCreateSpriteTemp("cc.repeat");
+    spriteTemp = this.addandCreateSpriteTemp("repeat");
     var moveRepeat = new Repeat(
       new (createCustomAction(MoveBy))(5, new Point(50, 0)),
       2
     );
     spriteTemp.runAction(moveRepeat);
 
-    spriteTemp = this.addandCreateSpriteTemp("cc.repeatForever");
+    spriteTemp = this.addandCreateSpriteTemp("repeatForever");
     var moveRepeatForever = new RepeatForever(
       new Sequence(
         new (createCustomAction(MoveBy))(5, new Point(50, 0)),
@@ -276,7 +277,7 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp.runAction(animate);
   }
   addandCreateSpriteTemp(actionTypeName, addLabelInLayerFlag) {
-    var spriteTemp = new cc.Sprite(s_pathGrossini);
+    var spriteTemp = new Sprite(s_pathGrossini);
     this._layer.addChild(spriteTemp);
     spriteTemp.setPosition(this._spritePos);
     var spriteContentSize = spriteTemp.getContentSize();

@@ -53,7 +53,7 @@ export class RawStencilBufferTest5 extends RawStencilBufferTest {
 
   setupStencilForDrawingOnPlane(plane) {
     cc.rendererConfig.renderContext.depthMask(true);
-    //cc.rendererConfig.renderContext.enable(cc.rendererConfig.renderContext.DEPTH_TEST);
+    //rendererConfig.renderContext.enable(rendererConfig.renderContext.DEPTH_TEST);
     super.setupStencilForDrawingOnPlane(plane);
   }
 }

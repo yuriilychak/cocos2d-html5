@@ -27,15 +27,15 @@
 
 import { SkeletonAnimation } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
-import { Color } from "@aspect/core";
+import { Color, EventListener, EventManager } from "@aspect/core";
 
 export class SpineTestPerformanceLayer extends SpineTestLayer {
   constructor() {
     super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     var self = this;
-    var listener = cc.EventListener.create({
-      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+    var listener = EventListener.create({
+      event: EventListener.TOUCH_ONE_BY_ONE,
       onTouchBegan: function (touch, event) {
         var pos = self.convertToNodeSpace(touch.getLocation());
         var skeletonNode = new SkeletonAnimation(
@@ -52,7 +52,7 @@ export class SpineTestPerformanceLayer extends SpineTestLayer {
         return true;
       }
     });
-    cc.eventManager.addListener(listener, this);
+    EventManager.getInstance().addListener(listener, this);
   }
   title() {
     return "Spine Test";

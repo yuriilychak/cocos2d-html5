@@ -28,7 +28,7 @@
 import { SpriteDemo } from "./sprite-demo";
 import { s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteProgressWithSpriteFrame extends SpriteDemo {
     onEnter() {
@@ -37,9 +37,9 @@ export class SpriteProgressWithSpriteFrame extends SpriteDemo {
 
         var to = cc.progressFromTo(6, 0, 100);
 
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
 
-        var left = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_01.png"));
+        var left = new cc.ProgressTimer(new Sprite("#grossini_dance_01.png"));
         left.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         left.midpoint = new Point(0.5, 0.5);
@@ -50,7 +50,7 @@ export class SpriteProgressWithSpriteFrame extends SpriteDemo {
         left.y = winSize.height / 2;
         left.runAction(to.clone().repeatForever());
 
-        var middle = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_02.png"));
+        var middle = new cc.ProgressTimer(new Sprite("#grossini_dance_02.png"));
         middle.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         middle.midpoint = new Point(0.5, 0.5);
@@ -61,7 +61,7 @@ export class SpriteProgressWithSpriteFrame extends SpriteDemo {
         middle.y = winSize.height / 2;
         middle.runAction(to.clone().repeatForever());
 
-        var right = new cc.ProgressTimer(new cc.Sprite("#grossini_dance_03.png"));
+        var right = new cc.ProgressTimer(new Sprite("#grossini_dance_03.png"));
         right.type = cc.ProgressTimer.TYPE_RADIAL;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         right.midPoint = new Point(0.5, 0.5);

@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { UIFocusTestBase } from "./uifocus-test-base";
-import { Color } from "@aspect/core";
+import { Color, Director } from "@aspect/core";
 
 export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
   constructor() {
@@ -35,7 +35,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
 
   init() {
     if (super.init()) {
-      var winSize = cc.director.getVisibleSize();
+      var winSize = Director.getInstance().getVisibleSize();
 
       this._horizontalLayout = new ccui.HBox();
       this._horizontalLayout.setPosition(

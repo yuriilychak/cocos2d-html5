@@ -34,9 +34,10 @@ import { AtlasDemo } from "./atlas-demo";
 import { TAG_BITMAP_ATLAS2 } from "./label-test-constants";
 import { s_resprefix } from "../resources";
 import { autoTestEnabled, director } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, Point, Sprite } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 import { DelayTime, FadeIn, FadeOut, JumpBy, RotateBy, ScaleBy, sequence } from "@aspect/actions";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class BMFontSubSpriteTest extends AtlasDemo {
     constructor() {
@@ -50,7 +51,7 @@ export class BMFontSubSpriteTest extends AtlasDemo {
 
         var s = director.getWinSize();
 
-        var drawNode = new cc.DrawNode();
+        var drawNode = new DrawNode();
         this.addChild(drawNode);
         drawNode.setDrawColor(new Color(255,0,0,128));
         drawNode.drawSegment(new Point(0, s.height / 2), new Point(s.width, s.height / 2), 2);
@@ -126,7 +127,7 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         return "LabelBMFont BMFontSubSpriteTest";
     }
     subtitle() {
-        return "Using fonts as cc.Sprite objects. Some characters should rotate.";
+        return "Using fonts as Sprite objects. Some characters should rotate.";
     }
 
     //

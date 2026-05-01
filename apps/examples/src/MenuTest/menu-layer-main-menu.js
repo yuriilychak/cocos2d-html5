@@ -37,9 +37,10 @@ import {
   s_pressSendScore,
   s_sendScore
 } from "../resources";
-import { Color, Layer, Point, Rect } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, Layer, Point, Rect, Sprite, SpriteFrame, SpriteFrameCache, log } from "@aspect/core";
 import { LabelAtlas, LabelBMFont } from "@aspect/labels";
 import { MoveBy, TintBy, easeElasticOut, sequence } from "@aspect/actions";
+import { Menu, MenuItemFont, MenuItemImage, MenuItemLabel, MenuItemSprite } from "@aspect/menus";
 
 export class MenuLayerMainMenu extends Layer {
   constructor() {
@@ -51,14 +52,14 @@ export class MenuLayerMainMenu extends Layer {
     this._touchListener = null;
 
     // Font Item
-    var spriteNormal = new cc.Sprite(
+    var spriteNormal = new Sprite(
       s_menuItem,
       new Rect(0, 23 * 2, 115, 23)
     );
-    var spriteSelected = new cc.Sprite(s_menuItem, new Rect(0, 23, 115, 23));
-    var spriteDisabled = new cc.Sprite(s_menuItem, new Rect(0, 0, 115, 23));
+    var spriteSelected = new Sprite(s_menuItem, new Rect(0, 23, 115, 23));
+    var spriteDisabled = new Sprite(s_menuItem, new Rect(0, 0, 115, 23));
 
-    var item1 = new cc.MenuItemSprite(
+    var item1 = new MenuItemSprite(
       spriteNormal,
       spriteSelected,
       spriteDisabled,
@@ -67,12 +68,12 @@ export class MenuLayerMainMenu extends Layer {
     );
 
     // Image Item
-    var sendScoreSF = new cc.SpriteFrame(
+    var sendScoreSF = new SpriteFrame(
       s_sendScore,
       new Rect(0, 0, 145, 26)
     );
-    cc.spriteFrameCache.addSpriteFrame(sendScoreSF, "send_score_sf");
-    var item2 = new cc.MenuItemImage(
+    SpriteFrameCache.getInstance().addSpriteFrame(sendScoreSF, "send_score_sf");
+    var item2 = new MenuItemImage(
       "#send_score_sf",
       s_pressSendScore,
       this.onMenuCallback2,
@@ -81,17 +82,17 @@ export class MenuLayerMainMenu extends Layer {
 
     // Label Item (LabelAtlas)
     var labelAtlas = new LabelAtlas("0123456789", s_fpsImages, 12, 32, ".");
-    var item3 = new cc.MenuItemLabel(
+    var item3 = new MenuItemLabel(
       labelAtlas,
       this.onMenuCallbackDisabled,
       this
     );
     item3.setDisabledColor(new Color(32, 32, 64));
     item3.color = new Color(200, 200, 255);
-    cc.log("test MenuItemLabel getString()" + item3.getString());
+    log("test MenuItemLabel getString()" + item3.getString());
 
     // Font Item
-    var item4 = new cc.MenuItemFont(
+    var item4 = new MenuItemFont(
       "I toggle enable items",
       function (sender) {
         this._disabledItem.enabled = !this._disabledItem.enabled;
@@ -104,21 +105,21 @@ export class MenuLayerMainMenu extends Layer {
 
     // Label Item (LabelBMFont)
     var label = new LabelBMFont("configuration", s_bitmapFontTest3_fnt);
-    var item5 = new cc.MenuItemLabel(label, this.onMenuCallbackConfig, this);
+    var item5 = new MenuItemLabel(label, this.onMenuCallbackConfig, this);
 
     // Testing issue #500
     item5.scale = 0.8;
 
     // Events
-    cc.MenuItemFont.setFontName("Arial");
+    MenuItemFont.setFontName("Arial");
 
     // Bugs Item
-    var item7 = new cc.MenuItemFont("Bugs", this.onMenuCallbackBugsTest, this);
+    var item7 = new MenuItemFont("Bugs", this.onMenuCallbackBugsTest, this);
 
     // Font Item
-    var item8 = new cc.MenuItemFont("Quit", this.onQuit, this);
+    var item8 = new MenuItemFont("Quit", this.onQuit, this);
 
-    var item9 = new cc.MenuItemFont(
+    var item9 = new MenuItemFont(
       "Remove menu item when moving",
       this.onMenuMovingCallback,
       this
@@ -129,7 +130,7 @@ export class MenuLayerMainMenu extends Layer {
     var seq = sequence(color_action, color_back);
     item8.runAction(seq.repeatForever());
 
-    var menu = new cc.Menu(
+    var menu = new Menu(
       item1,
       item2,
       item3,
@@ -142,7 +143,7 @@ export class MenuLayerMainMenu extends Layer {
     menu.alignItemsVertically();
 
     // elastic effect
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var locChildren = menu.children;
     var dstPoint = new Point(0, 0);
@@ -180,16 +181,16 @@ export class MenuLayerMainMenu extends Layer {
   }
 
   onAllowTouches(dt) {
-    cc.eventManager.setPriority(this._touchListener, 1);
+    EventManager.getInstance().setPriority(this._touchListener, 1);
     this.unscheduleAllCallbacks();
-    cc.log("TOUCHES ALLOWED AGAIN");
+    log("TOUCHES ALLOWED AGAIN");
   }
 
   onMenuCallbackDisabled(sender) {
     // hijack all touch events for 5 seconds
-    cc.eventManager.setPriority(this._touchListener, -1);
+    EventManager.getInstance().setPriority(this._touchListener, -1);
     this.schedule(this.onAllowTouches, 5.0);
-    cc.log("TOUCHES DISABLED FOR 5 SECONDS");
+    log("TOUCHES DISABLED FOR 5 SECONDS");
   }
 
   onMenuCallback2(sender) {
@@ -198,23 +199,23 @@ export class MenuLayerMainMenu extends Layer {
 
   onEnter() {
     super.onEnter();
-    this._touchListener = cc.EventListener.create({
-      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+    this._touchListener = EventListener.create({
+      event: EventListener.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function () {
         return true;
       }
     });
-    cc.eventManager.addListener(this._touchListener, 1);
+    EventManager.getInstance().addListener(this._touchListener, 1);
   }
 
   onExit() {
     super.onExit();
-    cc.eventManager.removeListener(this._touchListener);
+    EventManager.getInstance().removeListener(this._touchListener);
   }
 
   onQuit(sender) {
-    cc.log("Quit called");
+    log("Quit called");
   }
 
   onMenuCallbackBugsTest(sender) {

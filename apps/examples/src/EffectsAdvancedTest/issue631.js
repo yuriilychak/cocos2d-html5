@@ -28,7 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { s_pathFog, s_pathGrossini } from "../resources";
-import { Size, Color } from "@aspect/core";
+import { Color, LayerColor, Size, Sprite } from "@aspect/core";
 import { DelayTime, sequence } from "@aspect/actions";
 
 export class Issue631 extends EffectAdvanceTextLayer {
@@ -53,16 +53,16 @@ export class Issue631 extends EffectAdvanceTextLayer {
     this.removeChild(bg, true);
 
     // background
-    var layer = new cc.LayerColor(new Color(255, 0, 0, 255));
+    var layer = new LayerColor(new Color(255, 0, 0, 255));
     this.addChild(layer, -10);
-    var sprite = new cc.Sprite(s_pathGrossini);
+    var sprite = new Sprite(s_pathGrossini);
     sprite.x = 50;
     sprite.y = 80;
     layer.addChild(sprite, 10);
 
     // foreground
-    var layer2 = new cc.LayerColor(new Color(0, 255, 0, 255));
-    var fog = new cc.Sprite(s_pathFog);
+    var layer2 = new LayerColor(new Color(0, 255, 0, 255));
+    var fog = new Sprite(s_pathFog);
 
     fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
     var nodeGrid = new cc.NodeGrid();

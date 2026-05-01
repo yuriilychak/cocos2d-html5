@@ -32,9 +32,10 @@
 //------------------------------------------------------------------
 import { s_bitmapFontTest3_fnt, s_menuItem } from "../resources";
 import { director } from "../constants";
-import { Layer, Point, Rect } from "@aspect/core";
+import { Layer, Point, Rect, Sprite, log } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 import { JumpBy, RotateBy, sequence } from "@aspect/actions";
+import { Menu, MenuItemFont, MenuItemLabel, MenuItemSprite } from "@aspect/menus";
 
 export class MenuLayer3 extends Layer {
 
@@ -47,29 +48,29 @@ export class MenuLayer3 extends Layer {
     }
     init() {
         super.init();
-        cc.MenuItemFont.setFontName("Marker Felt");
-        cc.MenuItemFont.setFontSize(28);
+        MenuItemFont.setFontName("Marker Felt");
+        MenuItemFont.setFontSize(28);
 
         var label = new LabelBMFont("Enable AtlasItem", s_bitmapFontTest3_fnt);
-        var item1 = new cc.MenuItemLabel(label, function(sender){
+        var item1 = new MenuItemLabel(label, function(sender){
             this._disabledItem.enabled = !this._disabledItem.enabled;
             this._disabledItem.stopAllActions();
         }, this);
-        var item2 = new cc.MenuItemFont("--- Go Back ---", function(sender){
+        var item2 = new MenuItemFont("--- Go Back ---", function(sender){
             this.parent.switchTo(0, false);
         }, this);
 
-        var spriteNormal = new cc.Sprite(s_menuItem, new Rect(0, 23 * 2, 115, 23));
-        var spriteSelected = new cc.Sprite(s_menuItem, new Rect(0, 23, 115, 23));
-        var spriteDisabled = new cc.Sprite(s_menuItem, new Rect(0, 0, 115, 23));
+        var spriteNormal = new Sprite(s_menuItem, new Rect(0, 23 * 2, 115, 23));
+        var spriteSelected = new Sprite(s_menuItem, new Rect(0, 23, 115, 23));
+        var spriteDisabled = new Sprite(s_menuItem, new Rect(0, 0, 115, 23));
 
-        var item3 = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, function(sender){
-            cc.log("sprite clicked!");
+        var item3 = new MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, function(sender){
+            log("sprite clicked!");
         }, this);
         this._disabledItem = item3;
         this._disabledItem.enabled = false;
 
-        var menu = new cc.Menu(item1, item2, item3);
+        var menu = new Menu(item1, item2, item3);
         menu.x = 0;
         menu.y = 0;
 

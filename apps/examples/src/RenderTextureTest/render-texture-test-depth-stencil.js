@@ -25,6 +25,8 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
+import { Director, EventListener, EventManager, Sprite } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
   constructor() {
@@ -33,9 +35,9 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._spriteDraw = null;
 
     this._rend = null;
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
-    this._spriteDraw = new cc.Sprite(s_fire);
+    this._spriteDraw = new Sprite(s_fire);
     this._spriteDraw.x = winSize.width * 0.25;
     this._spriteDraw.y = 0;
     this._spriteDraw.scale = 10;
@@ -60,8 +62,8 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._rend.x = winSize.width * 0.5;
     this._rend.y = winSize.height * 0.5;
     this.addChild(this._rend);
-    var item = new cc.MenuItemFont("Click Me", this.maskTest, this);
-    var menu = new cc.Menu(item);
+    var item = new MenuItemFont("Click Me", this.maskTest, this);
+    var menu = new Menu(item);
     menu.x = winSize.width - 90;
     menu.y = winSize.height - 100;
 
@@ -84,7 +86,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._rend.beginWithClear(0, 0, 0, 0, 0, 0);
 
     gl.stencilMask(0xff);
-    cc.eventManager.removeListeners(cc.EventListener.TOUCH_ONE_BY_ONE);
+    EventManager.getInstance().removeListeners(EventListener.TOUCH_ONE_BY_ONE);
     gl.stencilFunc(gl.NEVER, 1, 0xff);
     gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
     gl.enable(gl.STENCIL_TEST);

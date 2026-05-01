@@ -30,6 +30,7 @@ import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
 import { Point } from "@aspect/core";
 import { DelayTime, MoveBy, RotateBy, ScaleTo, sequence } from "@aspect/actions";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9SpriteActionTest extends S9SpriteTestDemo {
   constructor() {
@@ -37,7 +38,7 @@ export class S9SpriteActionTest extends S9SpriteTestDemo {
 
     this._title = "Test Action for Scale9Sprite : Rotate + Scale + Translate";
 
-    var blocks_with_insets = new cc.Scale9Sprite("blocks9.png");
+    var blocks_with_insets = new Scale9Sprite("blocks9.png");
 
     blocks_with_insets.x = winSize.width / 2;
     blocks_with_insets.y = winSize.height / 2;

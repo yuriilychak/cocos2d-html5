@@ -31,7 +31,7 @@ export class PageTurn3DTest extends EffectsBaseLayer {
     return "PageTurn3D";
   }
   code() {
-    return "a = cc.pageTurn3D(duration, gridSize)";
+    return "a = pageTurn3D(duration, gridSize)";
   }
   getEffect(duration) {
     var action = cc.pageTurn3D(duration, new Size(15, 10));

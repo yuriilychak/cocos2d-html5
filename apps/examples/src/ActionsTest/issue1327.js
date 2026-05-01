@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
 import { CallFunc, RotateBy, Sequence } from "@aspect/actions";
+import { Sprite, log } from "@aspect/core";
 
 export class Issue1327 extends ActionsDemo {
   onEnter() {
@@ -40,7 +41,7 @@ export class Issue1327 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(0);
 
-    var spr = new cc.Sprite(s_pathGrossini);
+    var spr = new Sprite(s_pathGrossini);
     spr.x = 100;
     spr.y = 100;
     this.addChild(spr);
@@ -70,7 +71,7 @@ export class Issue1327 extends ActionsDemo {
     //----end43----
   }
   onLogSprRotation(pSender) {
-    cc.log(pSender.rotation);
+    log(pSender.rotation);
   }
   title() {
     return "Issue 1327";

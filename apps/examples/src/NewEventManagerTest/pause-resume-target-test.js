@@ -32,15 +32,17 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../resources";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, Director, EventManager, LabelTTF, LayerColor, visibleRect } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class PauseResumeTargetTest extends EventDispatcherTestDemo {
   constructor() {
     //----start11----ctor
     super();
 
-    var origin = cc.director.getVisibleOrigin();
-    var size = cc.director.getVisibleSize();
+    var origin = Director.getInstance().getVisibleOrigin();
+    var size = Director.getInstance().getVisibleSize();
 
     var sprite1 = TouchableSprite.create();
     sprite1.setTexture("Images/CyanSquare.png");
@@ -61,15 +63,15 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     sprite2.addChild(sprite3, -1);
 
     var _this = this;
-    var popup = new cc.MenuItemFont("Popup", function (sender) {
+    var popup = new MenuItemFont("Popup", function (sender) {
       sprite3.getListener().setEnabled(false);
-      cc.eventManager.pauseTarget(_this, true);
-      var colorLayer = new cc.LayerColor(new Color(0, 0, 255, 100));
+      EventManager.getInstance().pauseTarget(_this, true);
+      var colorLayer = new LayerColor(new Color(0, 0, 255, 100));
       _this.addChild(colorLayer, 999); //set colorLayer to top
 
       // Add the button
-      var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-      var backgroundHighlightedButton = new cc.Scale9Sprite(
+      var backgroundButton = new Scale9Sprite(s_extensions_button);
+      var backgroundHighlightedButton = new Scale9Sprite(
         s_extensions_buttonHighlighted
       );
 
@@ -95,14 +97,14 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         this,
         function () {
           colorLayer.removeFromParent();
-          cc.eventManager.resumeTarget(_this, true);
+          EventManager.getInstance().resumeTarget(_this, true);
           sprite3.getListener().setEnabled(true);
         },
         cc.CONTROL_EVENT_TOUCH_UP_INSIDE
       );
 
       // Add the black background
-      var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
+      var background = new Scale9Sprite(s_extensions_buttonBackground);
       background.width = 300;
       background.height = 170;
       background.x = size.width / 2.0 + 50;
@@ -111,9 +113,9 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     });
 
     popup.setAnchorPoint(1, 0.5);
-    popup.setPosition(cc.visibleRect.right);
+    popup.setPosition(visibleRect.right);
 
-    var menu = new cc.Menu(popup);
+    var menu = new Menu(popup);
     menu.setAnchorPoint(0, 0);
     menu.setPosition(0, 0);
 

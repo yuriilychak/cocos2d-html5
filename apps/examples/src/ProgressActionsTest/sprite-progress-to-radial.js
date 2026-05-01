@@ -28,6 +28,7 @@
 import { SpriteDemo } from "./sprite-demo";
 import { s_pathBlock, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
+import { Sprite } from "@aspect/core";
 
 export class SpriteProgressToRadial extends SpriteDemo {
     onEnter() {
@@ -37,14 +38,14 @@ export class SpriteProgressToRadial extends SpriteDemo {
         var to1 = cc.progressFromTo(2, 0, 100);
         var to2 = cc.progressFromTo(2, 0, 100);
 
-        var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
+        var left = new cc.ProgressTimer(new Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_RADIAL;
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
         left.runAction(to1.repeatForever());
 
-        var right = new cc.ProgressTimer(new cc.Sprite(s_pathBlock));
+        var right = new cc.ProgressTimer(new Sprite(s_pathBlock));
         right.type = cc.ProgressTimer.TYPE_RADIAL;
         right.setReverseDirection(true);
         this.addChild(right);

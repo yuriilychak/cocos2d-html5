@@ -64,7 +64,7 @@ export class ActionScale extends ActionsDemo {
     //----end2----
   }
   title() {
-    return "cc.scaleTo / cc.scaleBy";
+    return "scaleTo / scaleBy";
   }
 
   //

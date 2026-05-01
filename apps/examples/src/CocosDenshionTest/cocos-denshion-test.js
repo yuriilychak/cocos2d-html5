@@ -28,7 +28,8 @@
 import { DenshionTests } from "./cocos-denshion-test-constants";
 import { director, winSize } from "../constants";
 import { LINE_SPACE } from "../tests-main-helpers";
-import { Color, LabelTTF, Point } from "@aspect/core";
+import { Color, EventListener, EventManager, LabelTTF, Point, Sys } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class CocosDenshionTest extends cc.LayerGradient {
   constructor() {
@@ -40,11 +41,11 @@ export class CocosDenshionTest extends cc.LayerGradient {
 
     this._testCount = 0;
 
-    this._itemMenu = new cc.Menu();
+    this._itemMenu = new Menu();
     var winSize = director.getWinSize();
     for (var i = 0; i < DenshionTests.length; i++) {
       var label = new LabelTTF(DenshionTests[i].title, "Arial", 24);
-      var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
+      var menuItem = new MenuItemLabel(label, this.onMenuCallback, this);
       this._itemMenu.addChild(menuItem, i + 10000);
       menuItem.x = winSize.width / 2;
       menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
@@ -56,20 +57,20 @@ export class CocosDenshionTest extends cc.LayerGradient {
     this._itemMenu.y = 0;
     this.addChild(this._itemMenu);
 
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             event.getCurrentTarget().moveMenu(touches[0].getDelta());
           }
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseMove: function (event) {
             if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().moveMenu(event.getDelta());

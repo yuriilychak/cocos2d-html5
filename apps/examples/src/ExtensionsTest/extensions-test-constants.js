@@ -31,6 +31,7 @@ import { runEditBoxTest } from "./EditBoxTest/EditBoxTest";
 import { runSocketIOTest } from "./NetworkTest/SocketIOTest_simple";
 import { runWebSocketTest } from "./NetworkTest/WebSocketTest";
 import { runTableViewTest } from "./TableViewTest/table-view-test-scene-helpers";
+import { Director, Sys } from "@aspect/core";
 
 export var LINE_SPACE = 40;
 
@@ -50,7 +51,7 @@ export var extensionsTestItemNames = [
     testScene: function () {
       var pManager = ControlSceneManager.getInstance();
       var pScene = pManager.currentControlScene();
-      cc.director.runScene(pScene);
+      Director.getInstance().runScene(pScene);
     }
   },
   {
@@ -79,7 +80,7 @@ export var extensionsTestItemNames = [
   }
 ];
 
-if (!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os) {
+if (!Sys.getInstance().isNative || Sys.getInstance().OS_LINUX !== Sys.getInstance().os) {
   extensionsTestItemNames.push({
     itemTitle: "EditBoxTest",
     testScene: function () {

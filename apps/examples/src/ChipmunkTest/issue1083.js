@@ -24,6 +24,7 @@
 
 import { ChipmunkDemo } from "./chipmunk-demo";
 import { v } from "./chipmunk-test-helpers";
+import { assert } from "@aspect/core";
 
 export class Issue1083 extends ChipmunkDemo {
   constructor() {
@@ -61,20 +62,20 @@ export class Issue1083 extends ChipmunkDemo {
     var poly = new cp.PolyShape(body, verts, v(0, 0));
     space.addShape(poly);
 
-    cc.assert(
+    assert(
       segment.a.x == -length / 2,
       "SegmentShape assertion failed : a.x"
     );
-    cc.assert(segment.a.y == 0, "SegmentShape assertion failed : a.y");
-    cc.assert(segment.b.x == length / 2, "SegmentShape assertion failed : b.x");
-    cc.assert(segment.b.y == 0, "SegmentShape assertion failed : b.y");
+    assert(segment.a.y == 0, "SegmentShape assertion failed : a.y");
+    assert(segment.b.x == length / 2, "SegmentShape assertion failed : b.x");
+    assert(segment.b.y == 0, "SegmentShape assertion failed : b.y");
     var normal = cp.v.perp(cp.v.normalize(cp.v.sub(b, a)));
-    cc.assert(segment.n.x == normal.x, "SegmentShape assertion failed : n.x");
-    cc.assert(segment.n.y == normal.y, "SegmentShape assertion failed : n.y");
-    cc.assert(segment.r == 20, "SegmentShape assertion failed : r");
+    assert(segment.n.x == normal.x, "SegmentShape assertion failed : n.x");
+    assert(segment.n.y == normal.y, "SegmentShape assertion failed : n.y");
+    assert(segment.r == 20, "SegmentShape assertion failed : r");
 
     for (var i = 0; i < verts.length; ++i) {
-      cc.assert(
+      assert(
         verts[i] == poly.verts[i],
         "PolyShape assertion failed : verts"
       );
@@ -82,7 +83,7 @@ export class Issue1083 extends ChipmunkDemo {
 
     // FIXME: Chipmunk v7.0 does export planes
     // var plane = poly.planes[0];
-    // cc.assert(plane.d.toFixed(4) == 24.2705, "PolyShape assertion failed : planes d");
-    // cc.assert(plane.n.x.toFixed(4) == 0.8090, "PolyShape assertion failed : planes n");
+    // assert(plane.d.toFixed(4) == 24.2705, "PolyShape assertion failed : planes d");
+    // assert(plane.n.x.toFixed(4) == 0.8090, "PolyShape assertion failed : planes n");
   }
 }

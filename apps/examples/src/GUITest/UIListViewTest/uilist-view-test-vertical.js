@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Size } from "@aspect/core";
+import { Node, Size, log } from "@aspect/core";
 
 export class UIListViewTest_Vertical extends UIMainLayer {
   constructor() {
@@ -120,7 +120,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
   }
 
   onEnter() {
-    cc.Node.prototype.onEnter.call(this);
+    Node.prototype.onEnter.call(this);
     //we must call foreceDoLayout in onEnter method in h5.
     this.listView.forceDoLayout();
     var totalHeight =
@@ -193,7 +193,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       case ccui.ListView.EVENT_SELECTED_ITEM:
         var listViewEx = sender;
         var item = listViewEx.getItem(listViewEx.getCurSelectedIndex());
-        cc.log("select child index = " + item.getTag());
+        log("select child index = " + item.getTag());
         break;
 
       default:

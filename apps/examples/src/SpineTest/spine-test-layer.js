@@ -27,23 +27,24 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { SpineTestScene } from "./spine-test-scene";
+import { Director } from "@aspect/core";
 
 export class SpineTestLayer extends BaseTestLayer {
   onRestartCallback(sender) {
     var s = new SpineTestScene();
     s.addChild(SpineTestScene.restartSpineTestLayer());
-    cc.director.runScene(s);
+    Director.getInstance().runScene(s);
   }
 
   onNextCallback(sender) {
     var s = new SpineTestScene();
     s.addChild(SpineTestScene.nextSpineTestLayer());
-    cc.director.runScene(s);
+    Director.getInstance().runScene(s);
   }
 
   onBackCallback(sender) {
     var s = new SpineTestScene();
     s.addChild(SpineTestScene.backSpineTestLayer());
-    cc.director.runScene(s);
+    Director.getInstance().runScene(s);
   }
 }

@@ -35,7 +35,11 @@ import {
 import { TestScene } from "../test-scene";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, LabelTTF, Point } from "@aspect/core";
+import { Color, EventListener, EventManager, LabelTTF, Point, Sprite, Sys } from "@aspect/core";
+import { TransitionSlideInL, TransitionSlideInR } from "@aspect/transitions";
+import { Menu, MenuItemFont } from "@aspect/menus";
+import { ParticleFireworks, ParticleMeteor, ParticleSun } from "../ParticleTest/ParticleExamples";
+import { ParticleSystem } from "@aspect/particle";
 
 export var presentationSceneIdx = -1;
 export var centerPos = new Point(0, 0); // will be updated later
@@ -119,10 +123,10 @@ export class PresentationBaseLayer extends BaseTestLayer {
     this.removeChildByTag(BASE_TEST_SUBTITLE_TAG);
   }
   prevTransition() {
-    return cc.TransitionSlideInL;
+    return TransitionSlideInL;
   }
   nextTransition() {
-    return cc.TransitionSlideInR;
+    return TransitionSlideInR;
   }
   createBulletList() {
     var str = "";
@@ -138,7 +142,7 @@ export class PresentationBaseLayer extends BaseTestLayer {
     this.addChild(bullets, 80);
   }
   createImage(file) {
-    var sprite = new cc.Sprite(file);
+    var sprite = new Sprite(file);
     sprite.x = centerPos.x;
     sprite.y = centerPos.y;
     this.addChild(sprite, 70);
@@ -332,13 +336,13 @@ export class ChipmunkPage extends PresentationBaseLayer {
   }
   initMenu() {
     // menu
-    cc.MenuItemFont.setFontSize(16);
-    var menuItem = new cc.MenuItemFont(
+    MenuItemFont.setFontSize(16);
+    var menuItem = new MenuItemFont(
       "Toggle Physics Debug",
       this.onTogglePhysicsDebug,
       this
     );
-    var menu = new cc.Menu(menuItem);
+    var menu = new Menu(menuItem);
     this.addChild(menu, 99);
     menu.x = winSize.width - 80;
     menu.y = winSize.height - 100;
@@ -401,10 +405,10 @@ export class ChipmunkPage extends PresentationBaseLayer {
       this.addSprite(cp.v(x, y));
     }
 
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: function (touches, event) {
             var target = event.getCurrentTarget();
             var l = touches.length;
@@ -415,10 +419,10 @@ export class ChipmunkPage extends PresentationBaseLayer {
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseUp: function (event) {
             event.getCurrentTarget().addSprite(event.getLocation());
           }
@@ -456,37 +460,37 @@ export class ParticlesPage extends PresentationBaseLayer {
     this._title = "Performance";
     this._subtitle = "Particles";
 
-    // var tex = cc.textureCache.addImage(s_fire);
+    // var tex = textureCache.addImage(s_fire);
 
-    var firework = new cc.ParticleFireworks();
+    var firework = new ParticleFireworks();
     // firework.texture = tex;
     this.addChild(firework);
     firework.x = centerPos.x;
     firework.y = centerPos.y;
 
-    var sun = new cc.ParticleSun();
+    var sun = new ParticleSun();
     // sun.texture = tex;
     this.addChild(sun);
     sun.x = winSize.width / 4;
     sun.y = winSize.height / 2;
 
-    var meteor = new cc.ParticleMeteor();
+    var meteor = new ParticleMeteor();
     // meteor.texture = tex;
     this.addChild(meteor);
     meteor.x = (winSize.width * 3) / 4;
     meteor.y = winSize.height / 2;
 
-    var flower = new cc.ParticleSystem("Particles/Flower.plist");
+    var flower = new ParticleSystem("Particles/Flower.plist");
     this.addChild(flower);
     flower.x = centerPos.x;
     flower.y = centerPos.y;
 
     this.particle = firework;
 
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var particle = event.getCurrentTarget().particle;
             var pos = touches[0].getLocation();
@@ -502,10 +506,10 @@ export class ParticlesPage extends PresentationBaseLayer {
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseMove: function (event) {
             var particle = event.getCurrentTarget().particle;
             particle.x = event.getLocationX();

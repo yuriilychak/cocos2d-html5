@@ -28,12 +28,13 @@
 import { nextEffectAdvanceAction } from "./effects-advanced-test-helpers";
 import { TestScene } from "../test-scene";
 import { _setsceneIndex, sceneIndex } from "./effects-advanced-test-constants";
+import { Director } from "@aspect/core";
 
 export class EffectAdvanceScene extends TestScene {
   runThisTest() {
     _setsceneIndex(-1);
     var pLayer = nextEffectAdvanceAction();
     this.addChild(pLayer);
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }

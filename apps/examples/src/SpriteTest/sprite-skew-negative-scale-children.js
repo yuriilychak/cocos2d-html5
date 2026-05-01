@@ -29,6 +29,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { SkewBy, sequence } from "@aspect/actions";
+import { Node, Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteSkewNegativeScaleChildren extends SpriteTestDemo {
 
@@ -51,15 +52,15 @@ export class SpriteSkewNegativeScaleChildren extends SpriteTestDemo {
 
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
 
-        var cache = cc.spriteFrameCache;
+        var cache = SpriteFrameCache.getInstance();
         cache.addSpriteFrames(s_grossiniPlist);
         cache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
-        var parent = new cc.Node();
+        var parent = new Node();
         this.addChild(parent);
 
         for (var i = 0; i < 2; i++) {
-            var sprite = new cc.Sprite("#grossini_dance_01.png");
+            var sprite = new Sprite("#grossini_dance_01.png");
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -75,7 +76,7 @@ export class SpriteSkewNegativeScaleChildren extends SpriteTestDemo {
             var seq_skew = sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
-            var child1 = new cc.Sprite("#grossini_dance_01.png");
+            var child1 = new Sprite("#grossini_dance_01.png");
             child1.x = sprite.width / 2.0;
             child1.y = sprite.height / 2.0;
 

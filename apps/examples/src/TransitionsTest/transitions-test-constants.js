@@ -52,6 +52,7 @@ import {
   SplitRowsTransition,
   TurnOffTilesTransition
 } from "./transitions-test-helpers";
+import { TransitionProgressHorizontal, TransitionProgressInOut, TransitionProgressOutIn, TransitionProgressRadialCCW, TransitionProgressRadialCW, TransitionProgressVertical } from "@aspect/transitions";
 
 export var TRANSITION_DURATION = 1.2;
 
@@ -66,42 +67,42 @@ export var arrayOfTransitionsTest = [
   {
     title: "TransitionProgressRadialCCW",
     transitionFunc: function (t, s) {
-      return new cc.TransitionProgressRadialCCW(t, s);
+      return new TransitionProgressRadialCCW(t, s);
     }
   },
 
   {
     title: "TransitionProgressRadialCW",
     transitionFunc: function (t, s) {
-      return new cc.TransitionProgressRadialCW(t, s);
+      return new TransitionProgressRadialCW(t, s);
     }
   },
 
   {
     title: "TransitionProgressHorizontal",
     transitionFunc: function (t, s) {
-      return new cc.TransitionProgressHorizontal(t, s);
+      return new TransitionProgressHorizontal(t, s);
     }
   },
 
   {
     title: "TransitionProgressVertical",
     transitionFunc: function (t, s) {
-      return new cc.TransitionProgressVertical(t, s);
+      return new TransitionProgressVertical(t, s);
     }
   },
 
   {
     title: "TransitionProgressInOut",
     transitionFunc: function (t, s) {
-      return new cc.TransitionProgressInOut(t, s);
+      return new TransitionProgressInOut(t, s);
     }
   },
 
   {
     title: "TransitionProgressOutIn",
     transitionFunc: function (t, s) {
-      return new cc.TransitionProgressOutIn(t, s);
+      return new TransitionProgressOutIn(t, s);
     }
   },
 

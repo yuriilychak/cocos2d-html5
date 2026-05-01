@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas, s_grossini_dance_atlas_mono } from "../resources";
 import { winSize } from "../constants";
-import { Point, Rect } from "@aspect/core";
+import { EventListener, EventManager, Node, Point, Rect, Sprite, Sys } from "@aspect/core";
 import { Blink, FadeOut, RotateBy, ScaleBy, TintBy, sequence } from "@aspect/actions";
 
 export class SpriteNewTexture extends SpriteTestDemo {
@@ -61,22 +61,22 @@ export class SpriteNewTexture extends SpriteTestDemo {
 
         this.pixel = {"0":51, "1":0, "2":51, "3":255};
 
-        if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in Sys.getInstance().capabilities){
+            EventManager.getInstance().addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded:function (touches, event) {
                     event.getCurrentTarget().onChangeTexture();
                 }
             }, this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in Sys.getInstance().capabilities)
+            EventManager.getInstance().addListener({
+                event: EventListener.MOUSE,
                 onMouseUp: function(event){
                     event.getCurrentTarget().onChangeTexture();
                 }
             }, this);
 
-        var node = new cc.Node();
+        var node = new Node();
         this.addChild(node, 0, TAG_SPRITE_BATCH_NODE);
 
         this._texture1 = cc.textureCache.addImage(s_grossini_dance_atlas);
@@ -100,7 +100,7 @@ export class SpriteNewTexture extends SpriteTestDemo {
 
 
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-        var sprite = new cc.Sprite(this._texture1, new Rect(x, y, 85, 121));
+        var sprite = new Sprite(this._texture1, new Rect(x, y, 85, 121));
         node.addChild(sprite);
 
         sprite.x = p.x;
@@ -161,7 +161,7 @@ export class SpriteNewTexture extends SpriteTestDemo {
     }
     addTestSprite() {
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-        var sprite = new cc.Sprite(this._texture1, new Rect(0, 0, 85, 121));
+        var sprite = new Sprite(this._texture1, new Rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         node.addChild(sprite);

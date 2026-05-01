@@ -31,16 +31,17 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled } from "../constants";
+import { Sys, log } from "@aspect/core";
 
 export class GLTexParamterTest extends OpenGLTestLayer {
 
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in Sys.getInstance().capabilities ) {
             if( ! autoTestEnabled ) {
-                cc.log( "[Max, MIN, WRAP_S, WRAP_T]" );
-                cc.log( this.getTexValues() );
+                log( "[Max, MIN, WRAP_S, WRAP_T]" );
+                log( this.getTexValues() );
             }
         }
     }
@@ -52,7 +53,7 @@ export class GLTexParamterTest extends OpenGLTestLayer {
         return "tests texParameter()\n See the Console";
     }
     getTexValues() {
-        if(!cc.sys.isNative){
+        if(!Sys.getInstance().isNative){
             var texture2d = cc.textureCache.getTextureForKey(s_pathGrossini);
             gl.bindTexture(gl.TEXTURE_2D, texture2d.getName());
         } else {

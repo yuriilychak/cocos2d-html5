@@ -30,6 +30,8 @@ import { TestNodeDemo } from "./test-node-demo";
 import { s_fire, s_pathSister1 } from "../resources";
 import { autoTestEnabled, winSize } from "../constants";
 import { CallFunc, RotateBy, sequence } from "@aspect/actions";
+import { Sprite } from "@aspect/core";
+import { ParticleSun } from "../ParticleTest/ParticleExamples";
 
 export class StressTest1 extends TestNodeDemo {
     constructor() {
@@ -40,7 +42,7 @@ export class StressTest1 extends TestNodeDemo {
 
         this.testPass = false;
 
-        var sp1 = new cc.Sprite(s_pathSister1);
+        var sp1 = new Sprite(s_pathSister1);
         this.addChild(sp1, 0, TAG_SPRITE1);
         this.width = 0
 	    this.height = 0;
@@ -56,7 +58,7 @@ export class StressTest1 extends TestNodeDemo {
         this.unschedule(this.onShouldNotCrash);
 
         // if the node has timers, it crashes
-        var explosion = new cc.ParticleSun();
+        var explosion = new ParticleSun();
         explosion.texture = cc.textureCache.addImage(s_fire);
 
         explosion.x = winSize.width / 2;

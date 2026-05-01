@@ -33,6 +33,7 @@ import { Effect5 } from "./effect5";
 import { sceneIndex, _setsceneIndex } from "./effects-advanced-test-constants";
 import { Issue631 } from "./issue631";
 import { Lens3DTarget } from "./lens3-dtarget";
+import { Sys } from "@aspect/core";
 
 Lens3DTarget.create = function (action) {
   var target = new Lens3DTarget();
@@ -48,7 +49,7 @@ export var arrayOfEffectsAdvancedTest = [
   Issue631
 ];
 
-if (!cc.sys.isNative) arrayOfEffectsAdvancedTest.push(Effect4);
+if (!Sys.getInstance().isNative) arrayOfEffectsAdvancedTest.push(Effect4);
 
 export function nextEffectAdvanceAction() {
   _setsceneIndex(sceneIndex + 1);

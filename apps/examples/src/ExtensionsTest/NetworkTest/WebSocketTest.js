@@ -27,7 +27,8 @@
  ****************************************************************************/
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { LabelTTF, Layer, Scene, Size } from "@aspect/core";
+import { Director, LabelTTF, Layer, Scene, Size, Sys, log } from "@aspect/core";
+import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
 
 export var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket;
 
@@ -45,7 +46,7 @@ export class WebSocketTestLayer extends Layer {
   }
 
   init() {
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var MARGIN = 40;
     var SPACE = 35;
@@ -55,14 +56,14 @@ export class WebSocketTestLayer extends Layer {
     label.y = winSize.height - MARGIN;
     this.addChild(label, 0);
 
-    var menuRequest = new cc.Menu();
+    var menuRequest = new Menu();
     menuRequest.x = 0;
     menuRequest.y = 0;
     this.addChild(menuRequest);
 
     // Send Text
     var labelSendText = new LabelTTF("Send Text", "Arial", 22);
-    var itemSendText = new cc.MenuItemLabel(
+    var itemSendText = new MenuItemLabel(
       labelSendText,
       this.onMenuSendTextClicked,
       this
@@ -73,7 +74,7 @@ export class WebSocketTestLayer extends Layer {
 
     // Send Binary
     var labelSendBinary = new LabelTTF("Send Binary", "Arial", 22);
-    var itemSendBinary = new cc.MenuItemLabel(
+    var itemSendBinary = new MenuItemLabel(
       labelSendBinary,
       this.onMenuSendBinaryClicked,
       this
@@ -128,14 +129,14 @@ export class WebSocketTestLayer extends Layer {
     this.addChild(this._errorStatus);
 
     // Back Menu
-    var itemBack = new cc.MenuItemFont(
+    var itemBack = new MenuItemFont(
       "Back",
       this.toExtensionsMainLayer,
       this
     );
     itemBack.x = winSize.width - 50;
     itemBack.y = 25;
-    var menuBack = new cc.Menu(itemBack);
+    var menuBack = new Menu(itemBack);
     menuBack.x = 0;
     menuBack.y = 0;
     this.addChild(menuBack);
@@ -156,22 +157,22 @@ export class WebSocketTestLayer extends Layer {
       self._sendTextTimes++;
       var textStr =
         "response text msg: " + evt.data + ", " + self._sendTextTimes;
-      cc.log(textStr);
+      log(textStr);
 
       self._sendTextStatus.setString(textStr);
     };
 
     this._wsiSendText.onerror = function (evt) {
-      cc.log("_wsiSendText Error was fired");
-      if (cc.sys.isObjectValid(self)) {
+      log("_wsiSendText Error was fired");
+      if (Sys.getInstance().isObjectValid(self)) {
         self._errorStatus.setString("an error was fired");
       } else {
-        cc.log("WebSocket test layer was destroyed!");
+        log("WebSocket test layer was destroyed!");
       }
     };
 
     this._wsiSendText.onclose = function (evt) {
-      cc.log("_wsiSendText websocket instance closed.");
+      log("_wsiSendText websocket instance closed.");
       self._wsiSendText = null;
     };
 
@@ -202,21 +203,21 @@ export class WebSocketTestLayer extends Layer {
       }
 
       binaryStr += str + ", " + self._sendBinaryTimes;
-      cc.log(binaryStr);
+      log(binaryStr);
       self._sendBinaryStatus.setString(binaryStr);
     };
 
     this._wsiSendBinary.onerror = function (evt) {
-      cc.log("_wsiSendBinary Error was fired");
-      if (cc.sys.isObjectValid(self)) {
+      log("_wsiSendBinary Error was fired");
+      if (Sys.getInstance().isObjectValid(self)) {
         self._errorStatus.setString("an error was fired");
       } else {
-        cc.log("WebSocket test layer was destroyed!");
+        log("WebSocket test layer was destroyed!");
       }
     };
 
     this._wsiSendBinary.onclose = function (evt) {
-      cc.log("_wsiSendBinary websocket instance closed.");
+      log("_wsiSendBinary websocket instance closed.");
       self._wsiSendBinary = null;
     };
 
@@ -224,15 +225,15 @@ export class WebSocketTestLayer extends Layer {
     this._wsiError.onopen = function (evt) {};
     this._wsiError.onmessage = function (evt) {};
     this._wsiError.onerror = function (evt) {
-      cc.log("_wsiError Error was fired");
-      if (cc.sys.isObjectValid(self)) {
+      log("_wsiError Error was fired");
+      if (Sys.getInstance().isObjectValid(self)) {
         self._errorStatus.setString("an error was fired");
       } else {
-        cc.log("WebSocket test layer was destroyed!");
+        log("WebSocket test layer was destroyed!");
       }
     };
     this._wsiError.onclose = function (evt) {
-      cc.log("_wsiError websocket instance closed.");
+      log("_wsiError websocket instance closed.");
       self._wsiError = null;
     };
 
@@ -255,7 +256,7 @@ export class WebSocketTestLayer extends Layer {
       this._wsiSendText.send("Hello WebSocket中文, I'm a text message.");
     } else {
       var warningStr = "send text websocket instance wasn't ready...";
-      cc.log(warningStr);
+      log(warningStr);
       this._sendTextStatus.setString(warningStr);
     }
   }
@@ -279,7 +280,7 @@ export class WebSocketTestLayer extends Layer {
       this._wsiSendBinary.send(binary.buffer);
     } else {
       var warningStr = "send binary websocket instance wasn't ready...";
-      cc.log(warningStr);
+      log(warningStr);
       this._sendBinaryStatus.setString(warningStr);
     }
   }
@@ -302,5 +303,5 @@ export function runWebSocketTest() {
   var pScene = new Scene();
   var pLayer = WebSocketTestLayer.create();
   pScene.addChild(pLayer);
-  cc.director.runScene(pScene);
+  Director.getInstance().runScene(pScene);
 }

@@ -45,6 +45,7 @@ import { PyramidStack } from "./pyramid-stack";
 import { PyramidTopple } from "./pyramid-topple";
 import { Query } from "./query";
 import { s_hole_stencil_png } from "../resources";
+import { Sprite, Sys } from "@aspect/core";
 
 //
 // Base class for Chipmunk Demo
@@ -159,7 +160,7 @@ export var LogoSmash = (function () {
       //
       // (... Except the spatial hash isn't implemented in JS)
       // but it is implemented in JSB :)
-      if (cc.sys.isNative) space.useSpatialHash(2.0, 10000);
+      if (Sys.getInstance().isNative) space.useSpatialHash(2.0, 10000);
 
       var batch = new cc.SpriteBatchNode(s_hole_stencil_png);
       this.addChild(batch);
@@ -181,7 +182,7 @@ export var LogoSmash = (function () {
           space.addBody(shape.getBody());
           space.addShape(shape);
 
-          sprite = new cc.Sprite(batch.texture);
+          sprite = new Sprite(batch.texture);
           sprite.setPosition(posx, posy);
           batch.addChild(sprite);
 
@@ -199,7 +200,7 @@ export var LogoSmash = (function () {
       shape.setLayers(NOT_GRABABLE_MASK);
       shape.ball = true;
 
-      sprite = new cc.Sprite(batch.texture);
+      sprite = new Sprite(batch.texture);
       sprite.setPosition(posx, posy);
       batch.addChild(sprite);
       shape.sprite = sprite;
@@ -244,7 +245,7 @@ export var arrayOfChipmunkTest = [
   Issue1092
 ];
 
-if (cc.sys.isNative) {
+if (Sys.getInstance().isNative) {
   arrayOfChipmunkTest.push(ChipmunkCollisionTestB);
   arrayOfChipmunkTest.push(ChipmunkReleaseTest);
 }

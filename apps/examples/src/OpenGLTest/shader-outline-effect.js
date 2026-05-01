@@ -35,13 +35,14 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { RotateTo, sequence } from "@aspect/actions";
+import { Sprite, Sys } from "@aspect/core";
 
 export class ShaderOutlineEffect extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
-            if(cc.sys.isNative){
+        if( 'opengl' in Sys.getInstance().capabilities ) {
+            if(Sys.getInstance().isNative){
                 this.shader = new cc.GLProgram(ccbjs + "Shaders/example_Outline_noMVP.vsh", ccbjs + "Shaders/example_Outline.fsh");
                 this.shader.link();
                 this.shader.updateUniforms();
@@ -59,14 +60,14 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
                 this.shader.setUniformLocationWith3f(this.shader.getUniformLocationForName('u_outlineColor'), 0 / 255, 255 / 255, 0 / 255);
             }
 
-            this.sprite = new cc.Sprite('Images/grossini.png');
+            this.sprite = new Sprite('Images/grossini.png');
             this.sprite.attr({
                 x: winSize.width / 2,
                 y: winSize.height / 2
             });
             this.sprite.runAction(sequence(new RotateTo(1.0, 10), new RotateTo(1.0, -10)).repeatForever());
 
-            if(cc.sys.isNative){
+            if(Sys.getInstance().isNative){
                 var glProgram_state = cc.GLProgramState.getOrCreateWithGLProgram(this.shader);
                 glProgram_state.setUniformFloat("u_threshold", 1.75);
                 glProgram_state.setUniformVec3("u_outlineColor", {x: 0/255, y: 255/255, z: 0/255});
@@ -81,8 +82,8 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
         }
     }
     update(dt) {
-        if( 'opengl' in cc.sys.capabilities ) {
-            if(cc.sys.isNative){
+        if( 'opengl' in Sys.getInstance().capabilities ) {
+            if(Sys.getInstance().isNative){
                 this.sprite.getGLProgramState().setUniformFloat("u_radius", Math.abs(this.sprite.getRotation() / 500));
             }else{
                 this.shader.use();

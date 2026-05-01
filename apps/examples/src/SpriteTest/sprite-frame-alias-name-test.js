@@ -34,6 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_aliases, s_grossini_aliasesPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate } from "@aspect/actions";
+import { Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteFrameAliasNameTest extends SpriteTestDemo {
     constructor() {
@@ -50,24 +51,24 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
         //
-        // cc.cc.spriteFrameCache is a cache of cc.SpriteFrames
-        // cc.SpriteFrames each contain a texture id and a rect (frame).
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_aliasesPlist, s_grossini_aliases);
+        // spriteFrameCache is a cache of SpriteFrames
+        // SpriteFrames each contain a texture id and a rect (frame).
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_aliasesPlist, s_grossini_aliases);
 
         //
         // Animation using Sprite batch
         //
-        // A cc.SpriteBatchNode can reference one and only one texture (one .png file)
-        // Sprites that are contained in that texture can be instantiated as cc.Sprites and then added to the cc.SpriteBatchNode
-        // All cc.Sprites added to a cc.SpriteBatchNode are drawn in one OpenGL ES draw call
-        // If the cc.Sprites are not added to a cc.SpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient
+        // A SpriteBatchNode can reference one and only one texture (one .png file)
+        // Sprites that are contained in that texture can be instantiated as Sprites and then added to the SpriteBatchNode
+        // All Sprites added to a SpriteBatchNode are drawn in one OpenGL ES draw call
+        // If the Sprites are not added to a SpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient
         //
         // When you animate a sprite, CCAnimation changes the frame of the sprite using setDisplayFrame: (this is why the animation must be in the same texture)
-        // When setDisplayFrame: is used in the CCAnimation it changes the frame to one specified by the cc.SpriteFrames that were added to the animation,
-        // but texture id is still the same and so the sprite is still a child of the cc.SpriteBatchNode,
-        // and therefore all the animation sprites are also drawn as part of the cc.SpriteBatchNode
+        // When setDisplayFrame: is used in the CCAnimation it changes the frame to one specified by the SpriteFrames that were added to the animation,
+        // but texture id is still the same and so the sprite is still a child of the SpriteBatchNode,
+        // and therefore all the animation sprites are also drawn as part of the SpriteBatchNode
         //
-        var sprite = new cc.Sprite("#grossini_dance_01.png");
+        var sprite = new Sprite("#grossini_dance_01.png");
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
 
@@ -80,7 +81,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
         for (var i = 1; i < 15; i++) {
             // Obtain frames by alias name
             str = "dance_" + (i < 10 ? ("0" + i) : i);
-            var frame = cc.spriteFrameCache.getSpriteFrame(str);
+            var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -92,7 +93,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
     }
     onExit() {
         super.onExit();
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_aliasesPlist);
+        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossini_aliasesPlist);
     }
     //
     // Automation

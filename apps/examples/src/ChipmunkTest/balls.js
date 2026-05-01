@@ -33,7 +33,7 @@ import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers";
 export class Balls extends ChipmunkDemo {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
     this._subtitle = "Chipmunk Demo";
     this._title = "Balls";
 

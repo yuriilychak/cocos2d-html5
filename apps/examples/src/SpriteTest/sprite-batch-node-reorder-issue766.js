@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_piece } from "../resources";
-import { Rect } from "@aspect/core";
+import { Rect, Sprite } from "@aspect/core";
 
 export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
   constructor() {
@@ -83,21 +83,21 @@ export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
   }
   makeSpriteZ(aZ) {
     //----start17----makeSpriteZ
-    var sprite = new cc.Sprite(
+    var sprite = new Sprite(
       this._batchNode.texture,
       new Rect(128, 0, 64, 64)
     );
     this._batchNode.addChild(sprite, aZ + 1, 0);
 
     //children
-    var spriteShadow = new cc.Sprite(
+    var spriteShadow = new Sprite(
       this._batchNode.texture,
       new Rect(0, 0, 64, 64)
     );
     spriteShadow.opacity = 128;
     sprite.addChild(spriteShadow, aZ, 3);
 
-    var spriteTop = new cc.Sprite(
+    var spriteTop = new Sprite(
       this._batchNode.texture,
       new Rect(64, 0, 64, 64)
     );

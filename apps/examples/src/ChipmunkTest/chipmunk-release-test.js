@@ -28,11 +28,12 @@
 //
 //------------------------------------------------------------------
 import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
+import { Sys, log } from "@aspect/core";
 
 export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
 
     this._title = "Chipmunk Release Test";
     this._subtitle = "Space finalizer should be called";
@@ -47,19 +48,19 @@ export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
   }
 
   collisionPost(arbiter, space) {
-    cc.log("collision post");
+    log("collision post");
   }
 
   collisionSeparate(arbiter, space) {
-    cc.log("collision separate");
+    log("collision separate");
   }
 
   onEnter() {
     super.onEnter();
-    // cc.base(this, 'onEnter');
+    // base(this, 'onEnter');
 
-    cc.log("OnEnter");
-    cc.sys.garbageCollect();
+    log("OnEnter");
+    Sys.getInstance().garbageCollect();
 
     this.space.addCollisionHandler(
       10,
@@ -72,13 +73,13 @@ export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
   }
 
   onExit() {
-    cc.log("OnExit");
+    log("OnExit");
 
     // not calling this on purpose
     this.space.removeCollisionHandler(10, 11);
     this.space = null;
 
-    // cc.base(this, 'onExit');
+    // base(this, 'onExit');
     super.onExit();
   }
 }

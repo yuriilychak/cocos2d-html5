@@ -28,7 +28,7 @@
 import { SpriteDemo } from "./sprite-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
 
 export class SpriteProgressBarVarious extends SpriteDemo {
     onEnter() {
@@ -37,7 +37,7 @@ export class SpriteProgressBarVarious extends SpriteDemo {
 
         var to = cc.progressFromTo(2, 0, 100);
 
-        var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
+        var left = new cc.ProgressTimer(new Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
 
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
@@ -49,7 +49,7 @@ export class SpriteProgressBarVarious extends SpriteDemo {
         left.y = winSize.height / 2;
         left.runAction(to.clone().repeatForever());
 
-        var middle = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
+        var middle = new cc.ProgressTimer(new Sprite(s_pathSister2));
         middle.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         middle.midPoint = new Point(0.5, 0.5);
@@ -60,7 +60,7 @@ export class SpriteProgressBarVarious extends SpriteDemo {
         middle.y = winSize.height / 2;
         middle.runAction(to.clone().repeatForever());
 
-        var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
+        var right = new cc.ProgressTimer(new Sprite(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         right.midPoint = new Point(0.5, 0.5);

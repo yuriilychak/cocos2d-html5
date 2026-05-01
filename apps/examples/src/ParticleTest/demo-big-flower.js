@@ -28,16 +28,17 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_stars1 } from "../resources";
 import { Point, Color } from "@aspect/core";
+import { ParticleSystem } from "@aspect/particle";
 
 export class DemoBigFlower extends ParticleDemo {
   onEnter() {
     super.onEnter();
 
-    this._emitter = new cc.ParticleSystem(50);
+    this._emitter = new ParticleSystem(50);
 
     this._background.addChild(this._emitter, 10);
     this._emitter.texture = cc.textureCache.addImage(s_stars1);
-    this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
+    this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
 
     this._emitter.duration = -1;
 
@@ -84,7 +85,7 @@ export class DemoBigFlower extends ParticleDemo {
     // size, in pixels
     this._emitter.startSize = 80.0;
     this._emitter.startSizeVar = 40.0;
-    this._emitter.endSize = cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
+    this._emitter.endSize = ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
 
     // emits per second
     this._emitter.emissionRate =

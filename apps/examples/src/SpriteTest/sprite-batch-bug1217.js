@@ -27,7 +27,7 @@
 
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
-import { Color, Rect } from "@aspect/core";
+import { Color, Rect, Sprite } from "@aspect/core";
 
 export class SpriteBatchBug1217 extends SpriteTestDemo {
   constructor() {
@@ -47,9 +47,9 @@ export class SpriteBatchBug1217 extends SpriteTestDemo {
     this.pixel3 = { 0: 0, 1: 0, 2: 51, 3: 255 };
     var bn = new cc.SpriteBatchNode(s_grossini_dance_atlas, 15);
 
-    var s1 = new cc.Sprite(bn.texture, new Rect(0, 0, 57, 57));
-    var s2 = new cc.Sprite(bn.texture, new Rect(0, 0, 57, 57));
-    var s3 = new cc.Sprite(bn.texture, new Rect(0, 0, 57, 57));
+    var s1 = new Sprite(bn.texture, new Rect(0, 0, 57, 57));
+    var s2 = new Sprite(bn.texture, new Rect(0, 0, 57, 57));
+    var s3 = new Sprite(bn.texture, new Rect(0, 0, 57, 57));
 
     s1.color = new Color(255, 0, 0);
     s2.color = new Color(0, 255, 0);

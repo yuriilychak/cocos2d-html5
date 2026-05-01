@@ -66,7 +66,7 @@ export class ActionMove extends ActionsDemo {
     //----end1----
   }
   title() {
-    return "cc.moveTo / cc.moveBy";
+    return "moveTo / moveBy";
   }
 
   //

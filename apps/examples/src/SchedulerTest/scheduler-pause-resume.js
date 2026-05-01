@@ -30,6 +30,7 @@
 */
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { director } from "../constants";
+import { log } from "@aspect/core";
 
 export class SchedulerPauseResume extends SchedulerTestLayer {
   onEnter() {
@@ -50,12 +51,12 @@ export class SchedulerPauseResume extends SchedulerTestLayer {
 
   onTick1(dt) {
     //----start1----onTick1
-    cc.log("SchedulerPauseResume tick1");
+    log("SchedulerPauseResume tick1");
     //----end1----
   }
   onTick2(dt) {
     //----start1----onTick2
-    cc.log("SchedulerPauseResume tick2");
+    log("SchedulerPauseResume tick2");
     //----end1----
   }
   onPause(dt) {

@@ -28,7 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_s9s_blocks9_plist } from "../resources";
 import { winSize } from "../constants";
-import { Rect } from "@aspect/core";
+import { Rect, Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class TextureRotatedSpriteFrame extends SpriteTestDemo {
 
@@ -53,9 +53,9 @@ export class TextureRotatedSpriteFrame extends SpriteTestDemo {
 
         this.pixel2 = {"0":51, "1":0, "2":51, "3":255};
 
-        cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_s9s_blocks9_plist);
 
-        var block = new cc.Sprite('#blocks9r.png');
+        var block = new Sprite('#blocks9r.png');
 
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);

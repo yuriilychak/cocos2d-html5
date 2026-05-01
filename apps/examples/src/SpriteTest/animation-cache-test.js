@@ -34,6 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_bluePlist, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate, sequence } from "@aspect/actions";
+import { Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class AnimationCacheTest extends SpriteTestDemo {
 
@@ -77,9 +78,9 @@ export class AnimationCacheTest extends SpriteTestDemo {
 
 
         this.cPixel3 = null;
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_bluePlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_bluePlist);
 
         //
         // create animation "dance"
@@ -89,7 +90,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
         var str = "";
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
+            frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrame = new cc.AnimationFrame(frame, 1);
             animFrames.push(animFrame);
         }
@@ -105,7 +106,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
         animFrames = [];
         for (i = 1; i < 15; i++) {
             str = "grossini_dance_gray_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
+            frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -120,7 +121,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
         animFrames = [];
         for (i = 1; i < 4; i++) {
             str = "grossini_blue_0" + i + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
+            frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -144,8 +145,8 @@ export class AnimationCacheTest extends SpriteTestDemo {
 
         var seq = sequence(animN, animG, animB);
 
-        frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
-        var grossini = new cc.Sprite(frame);
+        frame = SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png");
+        var grossini = new Sprite(frame);
 
         grossini.x = winSize.width / 2;
 

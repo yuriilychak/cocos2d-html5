@@ -32,6 +32,7 @@ import {
   sceneManifests,
   _setcurrentScene
 } from "./assets-manager-test-constants";
+import { Sprite } from "@aspect/core";
 
 export class AssetsManagerTestLayer extends BaseTestLayer {
   constructor(spritePath) {
@@ -50,7 +51,7 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
 
   onEnter() {
     super.onEnter();
-    this._background = new cc.Sprite(this._spritePath);
+    this._background = new Sprite(this._spritePath);
     this.addChild(this._background, 1);
     this._background.x = cc.winSize.width / 2;
     this._background.y = cc.winSize.height / 2;

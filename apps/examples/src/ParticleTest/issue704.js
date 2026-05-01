@@ -30,6 +30,7 @@ import { s_fire } from "../resources";
 import { director } from "../constants";
 import { Point, Color } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
+import { ParticleSystem } from "@aspect/particle";
 
 export class Issue704 extends ParticleDemo {
     onEnter() {
@@ -39,21 +40,21 @@ export class Issue704 extends ParticleDemo {
         this.removeChild(this._background, true);
         this._background = null;
 
-        this._emitter = new cc.ParticleSystem(100);
+        this._emitter = new ParticleSystem(100);
         this.addChild(this._emitter, 10);
         this._emitter.texture = cc.textureCache.addImage(s_fire);
-        this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
+        this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
         // duration
-        this._emitter.duration = cc.ParticleSystem.DURATION_INFINITY;
+        this._emitter.duration = ParticleSystem.DURATION_INFINITY;
 
         // radius mode
-        this._emitter.emitterMode = cc.ParticleSystem.MODE_RADIUS;
+        this._emitter.emitterMode = ParticleSystem.MODE_RADIUS;
 
         // radius mode: start and end radius in pixels
         this._emitter.startRadius = 50;
         this._emitter.startRadiusVar = 0;
-        this._emitter.endRadius = cc.ParticleSystem.START_RADIUS_EQUAL_TO_END_RADIUS;
+        this._emitter.endRadius = ParticleSystem.START_RADIUS_EQUAL_TO_END_RADIUS;
         this._emitter.endRadiusVar = 0;
 
         // radius mode: degrees per second
@@ -89,7 +90,7 @@ export class Issue704 extends ParticleDemo {
         // size, in pixels
         this._emitter.startSize = 16;
         this._emitter.startSizeVar = 0;
-        this._emitter.endSize = cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
+        this._emitter.endSize = ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;

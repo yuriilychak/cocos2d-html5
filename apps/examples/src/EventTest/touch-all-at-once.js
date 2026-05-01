@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
-import { Color } from "@aspect/core";
+import { Color, EventListener, EventManager, Sprite, Sys, log } from "@aspect/core";
 
 export class TouchAllAtOnce extends EventTest {
   init() {
@@ -39,11 +39,11 @@ export class TouchAllAtOnce extends EventTest {
     this.ids = {};
     this.unused_sprites = [];
 
-    if ("touches" in cc.sys.capabilities) {
+    if ("touches" in Sys.getInstance().capabilities) {
       // this is the default behavior. No need to set it explicitly.
-      cc.eventManager.addListener(
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesBegan: this.onTouchesBegan,
           onTouchesMoved: this.onTouchesMoved,
           onTouchesEnded: this.onTouchesEnded,
@@ -52,11 +52,11 @@ export class TouchAllAtOnce extends EventTest {
         this
       );
     } else {
-      cc.log("TOUCHES not supported");
+      log("TOUCHES not supported");
     }
 
     for (var i = 0; i < 5; i++) {
-      var sprite = (this.sprite = new cc.Sprite(s_pathR2));
+      var sprite = (this.sprite = new Sprite(s_pathR2));
       this.addChild(sprite, i + 10);
       sprite.x = 0;
       sprite.y = 0;
@@ -98,7 +98,7 @@ export class TouchAllAtOnce extends EventTest {
       var touch = touches[i];
       var pos = touch.getLocation();
       var id = touch.getID();
-      cc.log(
+      log(
         "Touch #" +
           i +
           ". onTouchesBegan at: " +
@@ -123,7 +123,7 @@ export class TouchAllAtOnce extends EventTest {
         force = touch.getCurrentForce();
         maxForce = touch.getMaxForce();
       }
-      cc.log(
+      log(
         "Touch #" +
           i +
           ". onTouchesMoved at: " +
@@ -146,7 +146,7 @@ export class TouchAllAtOnce extends EventTest {
       var touch = touches[i];
       var pos = touch.getLocation();
       var id = touch.getID();
-      cc.log(
+      log(
         "Touch #" +
           i +
           ". onTouchesEnded at: " +
@@ -165,7 +165,7 @@ export class TouchAllAtOnce extends EventTest {
       var touch = touches[i];
       var pos = touch.getLocation();
       var id = touch.getID();
-      cc.log(
+      log(
         "Touch #" +
           i +
           ". onTouchesCancelled at: " +

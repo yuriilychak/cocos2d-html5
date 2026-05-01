@@ -27,7 +27,7 @@
 
 import { _alphaThreshold } from "./clipping-node-test-helpers";
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
-import { Point, Color } from "@aspect/core";
+import { Color, Director, Point } from "@aspect/core";
 
 export class RawStencilBufferTest6 extends RawStencilBufferTest {
   subtitle() {
@@ -47,7 +47,7 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
     gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
     cc._drawingUtil.drawSolidRect(
       new Point(0, 0),
-      Point.fromSize(cc.director.getWinSize()),
+      Point.fromSize(Director.getInstance().getWinSize()),
       new Color(255, 255, 255, 255)
     );
     gl.stencilFunc(gl.NEVER, planeMask, planeMask);

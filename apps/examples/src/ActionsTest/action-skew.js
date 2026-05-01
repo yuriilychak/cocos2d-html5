@@ -67,7 +67,7 @@ export class ActionSkew extends ActionsDemo {
     //----end5----
   }
   title() {
-    return "cc.skewTo / cc.skewBy";
+    return "skewTo / skewBy";
   }
   //
   // Automation

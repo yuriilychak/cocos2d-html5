@@ -33,7 +33,7 @@ import {
 export class Buoyancy extends ChipmunkDemo {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
     this._subtitle = "Chipmunk Demo";
     this._title = "Buoyancy";
 

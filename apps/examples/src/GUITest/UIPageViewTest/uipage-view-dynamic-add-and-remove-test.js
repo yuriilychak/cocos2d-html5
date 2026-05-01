@@ -26,7 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
-import { Point, Size, Color } from "@aspect/core";
+import { Color, Point, Size, log } from "@aspect/core";
 
 export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
   init() {
@@ -140,7 +140,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
         if (pageView.getPages().length > 0) {
           pageView.removePageAtIndex(pageView.getPages().length - 1);
         } else {
-          cc.log("There is no page to remove!");
+          log("There is no page to remove!");
         }
         self._topDisplayLabel.setString(
           "page count = " + pageView.getPages().length

@@ -31,7 +31,7 @@ export class SplitRowsTest extends EffectsBaseLayer {
     return "SplitRows";
   }
   code() {
-    return "a = cc.splitRows(duration, rows)";
+    return "a = splitRows(duration, rows)";
   }
   getEffect(duration) {
     var action = cc.splitRows(duration, 9);

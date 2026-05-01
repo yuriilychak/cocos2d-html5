@@ -28,7 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_pathBlock } from "../resources";
 import { winSize } from "../constants";
-import { Rect } from "@aspect/core";
+import { Rect, Sprite } from "@aspect/core";
 
 export class SpriteWithRepeatingTexture extends SpriteTestDemo {
 
@@ -43,8 +43,8 @@ export class SpriteWithRepeatingTexture extends SpriteTestDemo {
 
 
 
-        this._subtitle = "aTexture.setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);";
-        var block = new cc.Sprite(s_pathBlock);
+        this._subtitle = "aTexture.setTexParameters(LINEAR, LINEAR, REPEAT, REPEAT);";
+        var block = new Sprite(s_pathBlock);
 
         var x = winSize.width / 2;
         var y = (winSize.height / 2);

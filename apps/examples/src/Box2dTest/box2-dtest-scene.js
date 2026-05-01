@@ -27,11 +27,12 @@
 
 import { Box2DTestLayer } from "./box2-dtest-layer";
 import { TestScene } from "../test-scene";
+import { Director } from "@aspect/core";
 
 export class Box2DTestScene extends TestScene {
   runThisTest() {
     var layer = new Box2DTestLayer();
     this.addChild(layer);
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }

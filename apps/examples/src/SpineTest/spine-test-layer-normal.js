@@ -28,7 +28,8 @@
 import { SkeletonAnimation, ANIMATION_EVENT_TYPE } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
 import { director } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, EventListener, EventManager, Point, log } from "@aspect/core";
+import { Menu, MenuItemFont, MenuItemToggle } from "@aspect/menus";
 
 export class SpineTestLayerNormal extends SpineTestLayer {
   constructor(idx) {
@@ -66,20 +67,20 @@ export class SpineTestLayerNormal extends SpineTestLayer {
         var animationName = trackEntry.animation
           ? trackEntry.animation.name
           : "";
-        cc.log("%d start: %s", trackEntry.trackIndex, animationName);
+        log("%d start: %s", trackEntry.trackIndex, animationName);
       }
     });
     spineBoy.setEndListener(function (trackEntry) {
-      cc.log("%d end.", trackEntry.trackIndex);
+      log("%d end.", trackEntry.trackIndex);
     });
     spineBoy.setCompleteListener(function (trackEntry) {
       var loopCount = Math.floor(
         trackEntry.trackTime / trackEntry.animationEnd
       );
-      cc.log("%d complete: %d", trackEntry.trackIndex, loopCount);
+      log("%d complete: %d", trackEntry.trackIndex, loopCount);
     });
     spineBoy.setEventListener(function (trackEntry, event) {
-      cc.log(
+      log(
         trackEntry.trackIndex + " event: %s, %d, %d, %s",
         event.data.name,
         event.intValue,
@@ -91,12 +92,12 @@ export class SpineTestLayerNormal extends SpineTestLayer {
     var jumpEntry = spineBoy.addAnimation(0, "jump", false, 3);
     spineBoy.addAnimation(0, "run", true);
     // spineBoy.setTrackStartListener(jumpEntry, function(traceIndex){
-    //     cc.log("jumped!");
+    //     log("jumped!");
     // });
 
-    cc.eventManager.addListener(
+    EventManager.getInstance().addListener(
       {
-        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {
           if (spineBoy.getTimeScale() === 1.0) spineBoy.setTimeScale(0.3);
           else spineBoy.setTimeScale(1);
@@ -105,20 +106,20 @@ export class SpineTestLayerNormal extends SpineTestLayer {
       this
     );
 
-    cc.MenuItemFont.setFontSize(20);
-    var bonesToggle = new cc.MenuItemToggle(
-      new cc.MenuItemFont("Debug Bones: Off"),
-      new cc.MenuItemFont("Debug Bones: On")
+    MenuItemFont.setFontSize(20);
+    var bonesToggle = new MenuItemToggle(
+      new MenuItemFont("Debug Bones: Off"),
+      new MenuItemFont("Debug Bones: On")
     );
     bonesToggle.setCallback(this.onDebugBones, this);
     bonesToggle.setPosition(160 - size.width / 2, 120 - size.height / 2);
-    var slotsToggle = new cc.MenuItemToggle(
-      new cc.MenuItemFont("Debug Slots: Off"),
-      new cc.MenuItemFont("Debug Slots: On")
+    var slotsToggle = new MenuItemToggle(
+      new MenuItemFont("Debug Slots: Off"),
+      new MenuItemFont("Debug Slots: On")
     );
     slotsToggle.setCallback(this.onDebugSlots, this);
     slotsToggle.setPosition(160 - size.width / 2, 160 - size.height / 2);
-    var menu = new cc.Menu();
+    var menu = new Menu();
     menu.ignoreAnchorPointForPosition(true);
     menu.addChild(bonesToggle);
     menu.addChild(slotsToggle);
@@ -149,16 +150,16 @@ export class SpineTestLayerNormal extends SpineTestLayer {
     var animationName = entry && entry.animation ? entry.animation.name : 0;
     switch (type) {
       case ANIMATION_EVENT_TYPE.START:
-        cc.log(trackIndex + " start: " + animationName);
+        log(trackIndex + " start: " + animationName);
         break;
       case ANIMATION_EVENT_TYPE.END:
-        cc.log(trackIndex + " end:" + animationName);
+        log(trackIndex + " end:" + animationName);
         break;
       case ANIMATION_EVENT_TYPE.EVENT:
-        cc.log(trackIndex + " event: " + animationName);
+        log(trackIndex + " event: " + animationName);
         break;
       case ANIMATION_EVENT_TYPE.COMPLETE:
-        cc.log(trackIndex + " complete: " + animationName + "," + loopCount);
+        log(trackIndex + " complete: " + animationName + "," + loopCount);
         if (this._flipped) {
           this._flipped = false;
           this._spineboy.setScaleX(0.5);

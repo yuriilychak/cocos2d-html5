@@ -31,7 +31,7 @@
 import { TestNodeDemo } from "./test-node-demo";
 import { s_pathGrossini, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { EventListener, EventManager, Point, Sprite, Sys, log } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 
 export class ConvertToNode extends TestNodeDemo {
@@ -48,9 +48,9 @@ export class ConvertToNode extends TestNodeDemo {
         this.testP2 = [];
 
         this.expectedP2 = [];
-        if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener(cc.EventListener.create({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in Sys.getInstance().capabilities){
+            EventManager.getInstance().addListener(EventListener.create({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded:function (touches, event) {
                     var target = event.getCurrentTarget();
                     for (var it = 0; it < touches.length; it++) {
@@ -60,9 +60,9 @@ export class ConvertToNode extends TestNodeDemo {
                     }
                 }
             }), this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in Sys.getInstance().capabilities)
+            EventManager.getInstance().addListener({
+                event: EventListener.MOUSE,
                 onMouseUp: function(event){
                     event.getCurrentTarget().processEvent(event.getLocation());
                 }
@@ -71,10 +71,10 @@ export class ConvertToNode extends TestNodeDemo {
         var rotate = new RotateBy(10, 360);
         var action = rotate.repeatForever();
         for (var i = 0; i < 3; i++) {
-            var sprite = new cc.Sprite(s_pathGrossini);
+            var sprite = new Sprite(s_pathGrossini);
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
-            var point = new cc.Sprite(s_pathR1);
+            var point = new Sprite(s_pathR1);
             point.scale = 0.25;
 	        point.x = sprite.x;
 	        point.y = sprite.y;
@@ -114,7 +114,7 @@ export class ConvertToNode extends TestNodeDemo {
             var p1 = node.convertToNodeSpaceAR(location);
             var p2 = node.convertToNodeSpace(location);
 
-            cc.log("AR: x=" + p1.x.toFixed(2) + ", y=" + p1.y.toFixed(2) + " -- Not AR: x=" + p2.x.toFixed(2) + ", y=" + p2.y.toFixed(2));
+            log("AR: x=" + p1.x.toFixed(2) + ", y=" + p1.y.toFixed(2) + " -- Not AR: x=" + p2.x.toFixed(2) + ", y=" + p2.y.toFixed(2));
 
             this.testP1.push({"x":p1.x, "y":p1.y});
             this.testP2.push({"x":p2.x, "y":p2.y});

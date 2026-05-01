@@ -26,7 +26,8 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { director } from "../../constants";
-import { Point, Size } from "@aspect/core";
+import { Point, Size, SpriteFrameCache, log } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class UIS9NinePatchTest extends UIMainLayer {
   init() {
@@ -35,7 +36,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
       this._topDisplayLabel.setString("");
       this._bottomDisplayLabel.setString("");
 
-      cc.spriteFrameCache.addSpriteFrames(
+      SpriteFrameCache.getInstance().addSpriteFrames(
         "ccs-res/cocosui/android9patch.plist"
       );
 
@@ -46,11 +47,11 @@ export class UIS9NinePatchTest extends UIMainLayer {
       var preferedSize = new Size(99, 99);
 
       //9-patch sprite with filename
-      var playerSprite = new cc.Scale9Sprite("ccs-res/cocosui/player.9.png");
+      var playerSprite = new Scale9Sprite("ccs-res/cocosui/player.9.png");
       playerSprite.setPosition(x, y);
       playerSprite.setContentSize(preferedSize);
       var capInsets = playerSprite.getCapInsets();
-      cc.log(
+      log(
         "player sprite capInset = " +
           capInsets.x +
           ", " +
@@ -62,12 +63,12 @@ export class UIS9NinePatchTest extends UIMainLayer {
       );
       this.addChild(playerSprite);
 
-      var animationBtnSprite = new cc.Scale9Sprite(
+      var animationBtnSprite = new Scale9Sprite(
         "animationbuttonpressed.png"
       );
       animationBtnSprite.setPosition(x - 100, y - 100);
       capInsets = animationBtnSprite.getCapInsets();
-      cc.log(
+      log(
         "animationBtnSprite capInset = " +
           capInsets.x +
           ", " +
@@ -79,11 +80,11 @@ export class UIS9NinePatchTest extends UIMainLayer {
       );
       this.addChild(animationBtnSprite);
 
-      var monsterSprite = new cc.Scale9Sprite("monster.9.png");
+      var monsterSprite = new Scale9Sprite("monster.9.png");
       monsterSprite.setPosition(x + 100, y - 100);
       capInsets = monsterSprite.getCapInsets();
       monsterSprite.setContentSize(preferedSize);
-      cc.log(
+      log(
         "monsterSprite capInset = ",
         +capInsets.x +
           ", " +
@@ -96,8 +97,8 @@ export class UIS9NinePatchTest extends UIMainLayer {
       this.addChild(monsterSprite);
 
       var spriteFrame =
-        cc.spriteFrameCache.getSpriteFrame("buttonnormal.9.png");
-      var buttonScale9Sprite = new cc.Scale9Sprite(spriteFrame);
+        SpriteFrameCache.getInstance().getSpriteFrame("buttonnormal.9.png");
+      var buttonScale9Sprite = new Scale9Sprite(spriteFrame);
       buttonScale9Sprite.setContentSize(new Size(150, 80));
       buttonScale9Sprite.setPosition(new Point(100, 200));
       this.addChild(buttonScale9Sprite);

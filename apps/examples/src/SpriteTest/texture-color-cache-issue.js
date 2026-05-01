@@ -28,7 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_tcc_issue_1, s_tcc_issue_1_plist, s_tcc_issue_2, s_tcc_issue_2_plist } from "../resources";
 import { winSize } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class TextureColorCacheIssue extends SpriteTestDemo {
 
@@ -53,14 +53,14 @@ export class TextureColorCacheIssue extends SpriteTestDemo {
 
         this.pixel2 = {"0":0, "1":0, "2":153, "3":255};
 
-        cc.spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
-        cc.spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
 
-        var grossini = new cc.Sprite('#tcc_grossini_dance_01.png');
+        var grossini = new Sprite('#tcc_grossini_dance_01.png');
         grossini.x = winSize.width / 3;
         grossini.y = winSize.height / 2;
 
-        var sister = new cc.Sprite('#tcc_grossinis_sister1.png');
+        var sister = new Sprite('#tcc_grossinis_sister1.png');
         sister.x = winSize.width / 3 * 2;
         sister.y = winSize.height / 2;
 
@@ -73,8 +73,8 @@ export class TextureColorCacheIssue extends SpriteTestDemo {
     }
     onExit() {
         //----start55----onExit
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
+        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_tcc_issue_1_plist);
+        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_tcc_issue_2_plist);
         super.onExit();
         //----end55----
     }

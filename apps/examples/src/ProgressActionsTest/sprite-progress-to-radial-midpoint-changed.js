@@ -28,7 +28,7 @@
 import { SpriteDemo } from "./sprite-demo";
 import { s_pathBlock } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
 import { sequence } from "@aspect/actions";
 
 export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
@@ -41,7 +41,7 @@ export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
         /**
          *  Our image on the left should be a radial progress indicator, clockwise
          */
-        var left = new cc.ProgressTimer(new cc.Sprite(s_pathBlock));
+        var left = new cc.ProgressTimer(new Sprite(s_pathBlock));
         left.type = cc.ProgressTimer.TYPE_RADIAL;
         this.addChild(left);
         left.midPoint = new Point(0.25, 0.75);
@@ -52,7 +52,7 @@ export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
         /**
          *  Our image on the left should be a radial progress indicator, counter clockwise
          */
-        var right = new cc.ProgressTimer(new cc.Sprite(s_pathBlock));
+        var right = new cc.ProgressTimer(new Sprite(s_pathBlock));
         right.type = cc.ProgressTimer.TYPE_RADIAL;
         right.midPoint = new Point(0.75, 0.25);
         /**

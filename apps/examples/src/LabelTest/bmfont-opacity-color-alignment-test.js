@@ -34,7 +34,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2, TAG_BITMAP_ATLAS3 } from "./label-test-constants";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, LayerColor } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 import { DelayTime, FadeOut, sequence } from "@aspect/actions";
 
@@ -46,7 +46,7 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
         this.time = 0;
 
         this.testDuration = 1.1;
-        var col = new cc.LayerColor(new Color(128, 128, 128, 255));
+        var col = new LayerColor(new Color(128, 128, 128, 255));
         this.addChild(col, -10);
 
         var label1 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");

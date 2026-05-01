@@ -24,13 +24,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { Sprite } from "@aspect/core";
+
 
 //------------------------------------------------------------------
 //
 // SpriteSubclass
 //
 //------------------------------------------------------------------
-export class MySprite1 extends cc.Sprite {
+export class MySprite1 extends Sprite {
 	constructor(spriteFrameName) {
 		super(spriteFrameName);
 

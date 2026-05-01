@@ -33,7 +33,7 @@ import {
   TEXT_INPUT_FONT_NAME,
   TEXT_INPUT_FONT_SIZE
 } from "./text-input-test-constants";
-import { Color, LabelTTF, Point } from "@aspect/core";
+import { Color, Director, LabelTTF, Point, log } from "@aspect/core";
 import { CallFunc, FadeIn, FadeOut, MoveTo, RotateBy, ScaleTo, sequence, spawn } from "@aspect/actions";
 
 export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
@@ -61,11 +61,11 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     var textField = this._trackNode;
     if (clicked) {
       // TextFieldTTFTest be clicked
-      cc.log("TextFieldTTFActionTest:CCTextFieldTTF attachWithIME");
+      log("TextFieldTTFActionTest:CCTextFieldTTF attachWithIME");
       textField.attachWithIME();
     } else {
       // TextFieldTTFTest not be clicked
-      cc.log("TextFieldTTFActionTest:CCTextFieldTTF detachWithIME");
+      log("TextFieldTTFActionTest:CCTextFieldTTF detachWithIME");
       textField.detachWithIME();
     }
   }
@@ -81,7 +81,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     this._action = false;
 
     // add CCTextFieldTTF
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     this._textField = new cc.TextFieldTTF(
       "<click here for input>",
@@ -142,7 +142,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
     var duration = 0.5;
     label.x = endX;
-    label.y = cc.director.getWinSize().height - label.height * 2;
+    label.y = Director.getInstance().getWinSize().height - label.height * 2;
     label.scale = 8;
 
     var seq = sequence(
@@ -171,7 +171,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
       beginY = sender.y;
     beginX += (sender.width - label.width) / 2.0;
 
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     var endPos = new Point(
       -winSize.width / 4.0,
       winSize.height * (0.5 + Math.random() / 2.0)

@@ -24,23 +24,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point, Color } from "@aspect/core";
+import { Color, Director, Point, rendererConfig } from "@aspect/core";
+import { ParticleSystem } from "@aspect/particle";
 
 
 /**
  * A fire particle system
  *
  * @example
- * var emitter = new cc.ParticleFire();
+ * var emitter = new ParticleFire();
  */
-cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
+export class ParticleFire extends ParticleSystem {
     /**
-     * <p>The cc.ParticleFire's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleFire()".<br/>
+     * <p>The ParticleFire's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFire()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 300 : 150);
+        super((rendererConfig.isWebGL) ? 300 : 150);
     }
 
     /**
@@ -51,10 +52,10 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // Gravity Mode
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
 
             // Gravity Mode: gravity
@@ -73,7 +74,7 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
             this.setAngleVar(10);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, 60);
             this.setPosVar(new Point(40, 20));
 
@@ -85,7 +86,7 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(54.0);
             this.setStartSizeVar(10.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per frame
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
@@ -109,16 +110,16 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
  * A fireworks particle system
  *
  * @example
- * var emitter = new cc.ParticleFireworks();
+ * var emitter = new ParticleFireworks();
  */
-cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
+export class ParticleFireworks extends ParticleSystem {
     /**
-     * <p>The cc.ParticleFireworks's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleFireworks()".<br/>
+     * <p>The ParticleFireworks's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFireworks()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 1500 : 150);
+        super((rendererConfig.isWebGL) ? 1500 : 150);
     }
 
     /**
@@ -129,10 +130,10 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // Gravity Mode
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(0, -90));
@@ -146,7 +147,7 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
             this.setSpeedVar(50);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
 
             // angle
@@ -169,7 +170,7 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(8.0);
             this.setStartSizeVar(2.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // additive
             this.setBlendAdditive(false);
@@ -184,16 +185,16 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
  * A sun particle system
  *
  * @example
- * var emitter = new cc.ParticleSun();
+ * var emitter = new ParticleSun();
  */
-cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
+export class ParticleSun extends ParticleSystem {
     /**
-     * <p>The cc.ParticleSun's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleSun()".<br/>
+     * <p>The ParticleSun's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSun()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 350 : 150);
+        super((rendererConfig.isWebGL) ? 350 : 150);
     }
 
     /**
@@ -207,10 +208,10 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             this.setBlendAdditive(true);
 
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // Gravity Mode
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(0, 0));
@@ -228,7 +229,7 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -239,7 +240,7 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(30.0);
             this.setStartSizeVar(10.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per seconds
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
@@ -262,16 +263,16 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
  * A galaxy particle system
  *
  * @example
- * var emitter = new cc.ParticleGalaxy();
+ * var emitter = new ParticleGalaxy();
  */
-cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
+export class ParticleGalaxy extends ParticleSystem {
     /**
-     * <p>The cc.ParticleGalaxy's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleGalaxy()".<br/>
+     * <p>The ParticleGalaxy's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleGalaxy()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 200 : 100);
+        super((rendererConfig.isWebGL) ? 200 : 100);
     }
 
     /**
@@ -282,10 +283,10 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // Gravity Mode
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(0, 0));
@@ -307,7 +308,7 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -318,7 +319,7 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(37.0);
             this.setStartSizeVar(10.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per second
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
@@ -341,16 +342,16 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
  * A flower particle system
  *
  * @example
- * var emitter = new cc.ParticleFlower();
+ * var emitter = new ParticleFlower();
  */
-cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
+export class ParticleFlower extends ParticleSystem {
     /**
-     * <p>The cc.ParticleFlower's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleFlower()".<br/>
+     * <p>The ParticleFlower's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFlower()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 250 : 100);
+        super((rendererConfig.isWebGL) ? 250 : 100);
     }
 
     /**
@@ -361,10 +362,10 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // Gravity Mode
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(0, 0));
@@ -386,7 +387,7 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -397,7 +398,7 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(30.0);
             this.setStartSizeVar(10.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per second
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
@@ -422,16 +423,16 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
  * A meteor particle system
  *
  * @example
- * var emitter = new cc.ParticleMeteor();
+ * var emitter = new ParticleMeteor();
  */
-cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
+export class ParticleMeteor extends ParticleSystem {
     /**
-     * <p>The cc.ParticleMeteor's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleMeteor()".<br/>
+     * <p>The ParticleMeteor's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleMeteor()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 150 : 100);
+        super((rendererConfig.isWebGL) ? 150 : 100);
     }
 
     /**
@@ -442,10 +443,10 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // Gravity Mode
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(-200, 200));
@@ -467,7 +468,7 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -478,7 +479,7 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(60.0);
             this.setStartSizeVar(10.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per second
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
@@ -502,17 +503,17 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
  * A spiral particle system
  *
  * @example
- * var emitter = new cc.ParticleSpiral();
+ * var emitter = new ParticleSpiral();
  */
-cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
+export class ParticleSpiral extends ParticleSystem {
 
     /**
-     * <p>The cc.ParticleSpiral's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleSpiral()".<br/>
+     * <p>The ParticleSpiral's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSpiral()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 500 : 100);
+        super((rendererConfig.isWebGL) ? 500 : 100);
     }
 
     /**
@@ -523,10 +524,10 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // Gravity Mode
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(0, 0));
@@ -548,7 +549,7 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
             this.setAngleVar(0);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -559,7 +560,7 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(20.0);
             this.setStartSizeVar(0.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per second
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
@@ -583,16 +584,16 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
  * An explosion particle system
  *
  * @example
- * var emitter = new cc.ParticleExplosion();
+ * var emitter = new ParticleExplosion();
  */
-cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
+export class ParticleExplosion extends ParticleSystem {
     /**
-     * <p>The cc.ParticleExplosion's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleExplosion()".<br/>
+     * <p>The ParticleExplosion's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleExplosion()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 700 : 300);
+        super((rendererConfig.isWebGL) ? 700 : 300);
     }
 
     /**
@@ -605,7 +606,7 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             // duration
             this.setDuration(0.1);
 
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(0, 0));
@@ -627,7 +628,7 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -638,7 +639,7 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(15.0);
             this.setStartSizeVar(10.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per second
             this.setEmissionRate(this.getTotalParticles() / this.getDuration());
@@ -662,17 +663,17 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
  * A smoke particle system
  *
  * @example
- * var emitter = new cc.ParticleSmoke();
+ * var emitter = new ParticleSmoke();
  */
-cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
+export class ParticleSmoke extends ParticleSystem {
 
     /**
-     * <p>The cc.ParticleSmoke's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleSmoke()".<br/>
+     * <p>The ParticleSmoke's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSmoke()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 200 : 100);
+        super((rendererConfig.isWebGL) ? 200 : 100);
     }
 
     /**
@@ -683,10 +684,10 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // Emitter mode: Gravity Mode
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(0, 0));
@@ -704,7 +705,7 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
             this.setAngleVar(5);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, 0);
             this.setPosVar(new Point(20, 0));
 
@@ -715,7 +716,7 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(60.0);
             this.setStartSizeVar(10.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per frame
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
@@ -739,17 +740,17 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
  * A snow particle system
  *
  * @example
- * var emitter = new cc.ParticleSnow();
+ * var emitter = new ParticleSnow();
  */
-cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
+export class ParticleSnow extends ParticleSystem {
 
     /**
-     * <p>The cc.ParticleSnow's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleSnow()".<br/>
+     * <p>The ParticleSnow's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSnow()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 700 : 250);
+        super((rendererConfig.isWebGL) ? 700 : 250);
     }
 
     /**
@@ -760,10 +761,10 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
             // set gravity mode.
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(0, -1));
@@ -781,7 +782,7 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
             this.setTangentialAccelVar(1);
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height + 10);
             this.setPosVar(new Point(winSize.width / 2, 0));
 
@@ -796,7 +797,7 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(10.0);
             this.setStartSizeVar(5.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per second
             this.setEmissionRate(10);
@@ -821,17 +822,17 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
  * A rain particle system
  *
  * @example
- * var emitter = new cc.ParticleRain();
+ * var emitter = new ParticleRain();
  */
-cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
+export class ParticleRain extends ParticleSystem {
 
     /**
-     * <p>The cc.ParticleRain's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new cc.ParticleRain()".<br/>
+     * <p>The ParticleRain's constructor. <br/>
+     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleRain()".<br/>
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((cc.rendererConfig.isWebGL) ? 1000 : 300);
+        super((rendererConfig.isWebGL) ? 1000 : 300);
     }
 
     /**
@@ -842,9 +843,9 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
     initWithTotalParticles(numberOfParticles) {
         if (super.initWithTotalParticles(numberOfParticles)) {
             // duration
-            this.setDuration(cc.ParticleSystem.DURATION_INFINITY);
+            this.setDuration(ParticleSystem.DURATION_INFINITY);
 
-            this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
+            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
             this.setGravity(new Point(10, -10));
@@ -867,7 +868,7 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
 
 
             // emitter position
-            var winSize = cc.director.getWinSize();
+            var winSize = Director.getInstance().getWinSize();
             this.setPosition(winSize.width / 2, winSize.height);
             this.setPosVar(new Point(winSize.width / 2, 0));
 
@@ -878,7 +879,7 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
             // size, in pixels
             this.setStartSize(4.0);
             this.setStartSizeVar(2.0);
-            this.setEndSize(cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
 
             // emits per second
             this.setEmissionRate(20);

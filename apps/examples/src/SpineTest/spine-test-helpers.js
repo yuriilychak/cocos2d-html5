@@ -30,6 +30,7 @@ import { SpineTestLayerFFD } from "./spine-test-layer-ffd";
 import { SpineTestLayerNormal } from "./spine-test-layer-normal";
 import { SpineTestPerformanceLayer } from "./spine-test-performance-layer";
 import { SpineTestScene } from "./spine-test-scene";
+import { Sys } from "@aspect/core";
 
 SpineTestScene.nextSpineTestLayer = function () {
   _setspineSceneIdx(spineSceneIdx + 1);
@@ -56,7 +57,7 @@ SpineTestScene.testLayers = [
   //SpineTestPerformanceLayer //it doesn't support mesh on Canvas.
 ];
 
-if (cc.sys.isNative || cc.rendererConfig.isWebGL) {
+if (Sys.getInstance().isNative || cc.rendererConfig.isWebGL) {
   SpineTestScene.testLayers.push(SpineTestLayerFFD);
   SpineTestScene.testLayers.push(SpineTestPerformanceLayer);
 }

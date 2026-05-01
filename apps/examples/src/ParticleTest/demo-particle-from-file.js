@@ -29,6 +29,7 @@ import { ParticleDemo } from "./particle-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
 import { Color } from "@aspect/core";
+import { ParticleSystem } from "@aspect/particle";
 
 export class DemoParticleFromFile extends ParticleDemo {
     constructor(filename) {
@@ -43,17 +44,17 @@ export class DemoParticleFromFile extends ParticleDemo {
         this.removeChild(this._background, true);
         this._background = null;
 
-        this._emitter = new cc.ParticleSystem(s_resprefix + "Particles/" + this._title + ".plist");
+        this._emitter = new ParticleSystem(s_resprefix + "Particles/" + this._title + ".plist");
         // test create from a object
         // var plistData = jsb.fileUtils.getValueMapFromFile(s_resprefix + "Particles/" + this._title + ".plist");
-        // this._emitter = new cc.ParticleSystem(plistData);
+        // this._emitter = new ParticleSystem(plistData);
 
         this.addChild(this._emitter, 10);
 
         if (this._title == "Flower") {
-            this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
+            this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
         }//else if( this._title == "Upsidedown"){
-        //   this._emitter.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
+        //   this._emitter.setDrawMode(ParticleSystem.TEXTURE_MODE);
         //}
 
         this.setEmitterPosition();

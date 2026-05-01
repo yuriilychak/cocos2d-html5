@@ -28,6 +28,7 @@
 import { TestScene } from "../test-scene";
 import { nextTextInputTest } from "./text-input-test-helpers";
 import { _setsceneIdx, sceneIdx } from "./text-input-test-constants";
+import { Director } from "@aspect/core";
 
 export class TextInputTestScene extends TestScene {
   runThisTest(num) {
@@ -35,6 +36,6 @@ export class TextInputTestScene extends TestScene {
     var layer = nextTextInputTest();
 
     this.addChild(layer);
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }

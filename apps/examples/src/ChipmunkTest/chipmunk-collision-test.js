@@ -36,13 +36,13 @@ import {
   s_pathSister1
 } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, log } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 
 export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
 
     this._title = "Chipmunk Collision test";
     this._subtitle = "Using Object Oriented API. ** Use this API **";
@@ -99,7 +99,7 @@ export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
 
   onEnter() {
     super.onEnter();
-    // cc.base(this, 'onEnter');
+    // base(this, 'onEnter');
 
     this.initPhysics();
     this.scheduleUpdate();
@@ -148,28 +148,28 @@ export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
       label.y = winSize.height / 2;
       this.messageDisplayed = true;
     }
-    cc.log("collision begin");
+    log("collision begin");
     var shapes = arbiter.getShapes();
     var collTypeA = shapes[0].collision_type;
     var collTypeB = shapes[1].collision_type;
-    cc.log("Collision Type A:" + collTypeA);
-    cc.log("Collision Type B:" + collTypeB);
+    log("Collision Type A:" + collTypeA);
+    log("Collision Type B:" + collTypeB);
 
     //test addPostStepCallback
     space.addPostStepCallback(function () {
-      cc.log("post step callback 1");
+      log("post step callback 1");
     });
     space.addPostStepCallback(function () {
-      cc.log("post step callback 2");
+      log("post step callback 2");
     });
     return true;
   }
 
   collisionPre(arbiter, space) {
-    cc.log("collision pre");
-    cc.log("arbiter e : " + arbiter.e);
-    cc.log("arbiter u : " + arbiter.u);
-    cc.log(
+    log("collision pre");
+    log("arbiter e : " + arbiter.e);
+    log("arbiter u : " + arbiter.u);
+    log(
       "arbiter surface_vr : " +
         arbiter.surface_vr.x +
         "," +
@@ -179,11 +179,11 @@ export class ChipmunkCollisionTest extends ChipmunkBaseLayer {
   }
 
   collisionPost(arbiter, space) {
-    cc.log("collision post");
+    log("collision post");
   }
 
   collisionSeparate(arbiter, space) {
-    cc.log("collision separate");
+    log("collision separate");
   }
 
   title() {

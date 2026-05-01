@@ -30,16 +30,17 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { autoTestEnabled } from "../constants";
+import { Sys, log } from "@aspect/core";
 
 export class GetSupportedExtensionsTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in cc.sys.capabilities) {
+    if ("opengl" in Sys.getInstance().capabilities) {
       if (!autoTestEnabled) {
         var array = gl.getSupportedExtensions();
-        cc.log(JSON.stringify(array));
-        if (array.length > 0) cc.log(gl.getExtension(array[0]));
+        log(JSON.stringify(array));
+        if (array.length > 0) log(gl.getExtension(array[0]));
       }
     }
   }

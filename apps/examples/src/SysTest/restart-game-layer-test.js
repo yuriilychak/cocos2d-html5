@@ -31,28 +31,29 @@
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
 import { winSize } from "../constants";
-import { LabelTTF, Point } from "@aspect/core";
+import { Game, LabelTTF, Point, visibleRect } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class RestartGameLayerTest extends SysTestBase {
   getTitle() {
     return "RestartGameTest only used in native";
   }
   restartGame() {
-    cc.game.restart();
+    Game.getInstance().restart();
   }
   constructor() {
     super();
-    var menu = new cc.Menu();
+    var menu = new Menu();
     menu.setPosition(new Point(0, 0));
     menu.width = winSize.width;
     menu.height = winSize.height;
     this.addChild(menu, 1);
-    var item1 = new cc.MenuItemLabel(
+    var item1 = new MenuItemLabel(
       new LabelTTF("restartGame", "Arial", 22),
       this.restartGame,
       this
     );
     menu.addChild(item1);
-    menu.setPosition(Point.add(cc.visibleRect.left, new Point(+180, 0)));
+    menu.setPosition(Point.add(visibleRect.left, new Point(+180, 0)));
   }
 }

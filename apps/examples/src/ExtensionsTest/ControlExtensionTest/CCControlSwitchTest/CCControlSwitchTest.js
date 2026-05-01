@@ -26,14 +26,15 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { LabelTTF, Scene } from "@aspect/core";
+import { Director, LabelTTF, Node, Scene, Sprite } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class ControlSwitchTest extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = cc.director.getWinSize();
+      var screenSize = Director.getInstance().getWinSize();
 
-      var layer = new cc.Node();
+      var layer = new Node();
       layer.x = screenSize.width / 2;
       layer.y = screenSize.height / 2;
       this.addChild(layer, 1);
@@ -41,7 +42,7 @@ export class ControlSwitchTest extends ControlScene {
       var layer_width = 0;
 
       // Add the black background for the text
-      var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
+      var background = new Scale9Sprite("extensions/buttonBackground.png");
       background.width = 80;
       background.height = 50;
       background.x = layer_width + background.width / 2.0;
@@ -58,10 +59,10 @@ export class ControlSwitchTest extends ControlScene {
 
       // Create the switch
       var switchControl = new cc.ControlSwitch(
-        new cc.Sprite("extensions/switch-mask.png"),
-        new cc.Sprite("extensions/switch-on.png"),
-        new cc.Sprite("extensions/switch-off.png"),
-        new cc.Sprite("extensions/switch-thumb.png"),
+        new Sprite("extensions/switch-mask.png"),
+        new Sprite("extensions/switch-on.png"),
+        new Sprite("extensions/switch-off.png"),
+        new Sprite("extensions/switch-thumb.png"),
         new LabelTTF("On", "Arial-BoldMT", 16),
         new LabelTTF("Off", "Arial-BoldMT", 16)
       );

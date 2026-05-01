@@ -39,7 +39,8 @@ import {
   director,
   winSize
 } from "../constants";
-import { Color, LabelTTF, Scene } from "@aspect/core";
+import { Color, Director, LabelTTF, Scene, Sys, log } from "@aspect/core";
+import { Menu, MenuItemImage } from "@aspect/menus";
 
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
 export const BASE_TEST_MENUITEM_RESET_TAG = 2;
@@ -101,7 +102,7 @@ export class BaseTestLayer extends cc.LayerGradient {
     return st;
   }
   log(str) {
-    if (!autoTestEnabled) cc.log(str);
+    if (!autoTestEnabled) log(str);
   }
   //
   // Menu
@@ -109,7 +110,7 @@ export class BaseTestLayer extends cc.LayerGradient {
   onEnter() {
     super.onEnter();
 
-    cc.sys.garbageCollect();
+    Sys.getInstance().garbageCollect();
 
     var t = this.getTitle();
     var label = new LabelTTF(t, "Arial", 28);
@@ -125,19 +126,19 @@ export class BaseTestLayer extends cc.LayerGradient {
       l.y = winSize.height - 80;
     }
 
-    var item1 = new cc.MenuItemImage(
+    var item1 = new MenuItemImage(
       s_pathB1,
       s_pathB2,
       this.onBackCallback,
       this
     );
-    var item2 = new cc.MenuItemImage(
+    var item2 = new MenuItemImage(
       s_pathR1,
       s_pathR2,
       this.onRestartCallback,
       this
     );
-    var item3 = new cc.MenuItemImage(
+    var item3 = new MenuItemImage(
       s_pathF1,
       s_pathF2,
       this.onNextCallback,
@@ -148,7 +149,7 @@ export class BaseTestLayer extends cc.LayerGradient {
     item2.tag = BASE_TEST_MENUITEM_RESET_TAG;
     item3.tag = BASE_TEST_MENUITEM_NEXT_TAG;
 
-    var menu = new cc.Menu(item1, item2, item3);
+    var menu = new Menu(item1, item2, item3);
 
     menu.x = 0;
     menu.y = 0;
@@ -216,7 +217,7 @@ export class BaseTestLayer extends cc.LayerGradient {
     try {
       if (this.tearDown(dt)) {
         // Test OK
-        cc.log(
+        log(
           autoTestCurrentTestName +
             " - " +
             this.getTestNumber() +
@@ -226,7 +227,7 @@ export class BaseTestLayer extends cc.LayerGradient {
         );
       } else {
         // Test failed
-        cc.log(
+        log(
           autoTestCurrentTestName +
             " - " +
             this.getTestNumber() +
@@ -237,7 +238,7 @@ export class BaseTestLayer extends cc.LayerGradient {
         );
       }
     } catch (err) {
-      cc.log(
+      log(
         autoTestCurrentTestName +
           " - " +
           this.getTestNumber() +
@@ -270,7 +271,7 @@ export class BaseTestLayer extends cc.LayerGradient {
       try {
         this.onNextCallback(this);
       } catch (err) {
-        cc.log(
+        log(
           autoTestCurrentTestName +
             " - " +
             this.getTestNumber() +
@@ -311,7 +312,7 @@ export class BaseTestLayer extends cc.LayerGradient {
   }
 
   readPixels(x, y, w, h) {
-    if ("opengl" in cc.sys.capabilities) {
+    if ("opengl" in Sys.getInstance().capabilities) {
       var size = 4 * w * h;
       var array = new Uint8Array(size);
       gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, array);
@@ -378,7 +379,7 @@ export var FlowControl = function (testArray) {
       sceneIdx = 0;
       var s = new Scene();
       s.addChild(this.current());
-      cc.director.runScene(s);
+      Director.getInstance().runScene(s);
     }
   };
 };

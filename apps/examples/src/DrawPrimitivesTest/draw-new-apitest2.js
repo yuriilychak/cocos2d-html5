@@ -27,25 +27,26 @@
 
 //------------------------------------------------------------------
 //
-// Testing cc.DrawNode API 2
+// Testing DrawNode API 2
 //
 //------------------------------------------------------------------
 import { DrawTestDemo } from "./draw-test-demo";
-import { Point, Color } from "@aspect/core";
+import { Color, Director, Point } from "@aspect/core";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class DrawNewAPITest2 extends DrawTestDemo {
   constructor() {
     super();
-    this._title = "cc.DrawNode";
-    this._subtitle = "Testing cc.DrawNode API 2";
+    this._title = "DrawNode";
+    this._subtitle = "Testing DrawNode API 2";
   }
 
   onEnter() {
     //----start0----ctor
     super.onEnter();
-    var draw = new cc.DrawNode();
+    var draw = new DrawNode();
     this.addChild(draw, 10);
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     var centerPos = new Point(winSize.width / 2, winSize.height / 2);
     //drawSegment
     draw.drawSegment(

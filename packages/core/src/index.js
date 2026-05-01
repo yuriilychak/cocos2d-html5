@@ -424,10 +424,12 @@ cc.loader = Loader.getInstance();
 
 // Boot — Sys & Engine
 cc.create3DContext = create3DContext;
+cc.Sys = Sys;
 cc.sys = Sys.getInstance();
 cc.initEngine = initEngine;
 
 // Boot — Game
+cc.Game = Game;
 cc.game = Game.getInstance();
 
 // Boot — Debugger
@@ -611,6 +613,7 @@ cc._EventListenerTouchOneByOne = _EventListenerTouchOneByOne;
 cc._EventListenerTouchAllAtOnce = _EventListenerTouchAllAtOnce;
 cc._EventListenerFocus = _EventListenerFocus;
 cc._EventListenerVector = _EventListenerVector;
+cc.EventManager = EventManager;
 cc.eventManager = EventManager.getInstance();
 cc.EventAcceleration = EventAcceleration;
 cc.EventKeyboard = EventKeyboard;
@@ -683,6 +686,7 @@ cc.AnimationFrame = AnimationFrame;
 cc.Animation = Animation;
 cc.animationCache = AnimationCache.getInstance();
 cc.SpriteFrame = SpriteFrame;
+cc.SpriteFrameCache = SpriteFrameCache;
 cc.spriteFrameCache = SpriteFrameCache.getInstance();
 
 // Director, Scheduler, ActionManager

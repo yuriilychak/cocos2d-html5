@@ -43,8 +43,8 @@ export class TestLayer extends Layer {
     x = size.width;
     y = size.height;
 
-    //cc.MutableArray *array = [UIFont familyNames];
-    //for( cc.String *s in array )
+    //MutableArray *array = [UIFont familyNames];
+    //for( String *s in array )
     //	NSLog( s );
     var label = new LabelTTF("cocos2d", "Tahoma", 64);
 

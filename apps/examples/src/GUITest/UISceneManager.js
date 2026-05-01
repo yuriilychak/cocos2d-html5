@@ -132,7 +132,8 @@ import { UIVideoPlayerTest } from "./UIVideoPlayerTest/UIVideoPlayerTest";
 import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest";
 import { TestScene } from "../test-scene";
 import { winSize } from "../constants";
-import { LabelTTF } from "@aspect/core";
+import { Director, EventListener, EventManager, LabelTTF, Sys } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 var currentTestingArray = null;
 
@@ -785,7 +786,7 @@ var testingItems = {
   ]
 };
 
-if (cc.sys.isNative) {
+if (Sys.getInstance().isNative) {
   testingItems["UIS9NinePatchTest"] = [
     {
       title: "UIS9NinePatchTest",
@@ -806,9 +807,9 @@ if (cc.sys.isNative) {
 }
 
 if (
-  cc.sys.os == cc.sys.OS_ANDROID ||
-  cc.sys.os == cc.sys.OS_IOS ||
-  !cc.sys.isNative
+  Sys.getInstance().os == Sys.getInstance().OS_ANDROID ||
+  Sys.getInstance().os == Sys.getInstance().OS_IOS ||
+  !Sys.getInstance().isNative
 ) {
   testingItems["UIVideoPlayer"] = [
     {
@@ -833,7 +834,7 @@ var guiTestScene = null;
 export class GUITestScene extends cc.NewClass {
   runThisTest() {
     var guiTestScene = new listScene();
-    cc.director.runScene(guiTestScene);
+    Director.getInstance().runScene(guiTestScene);
   }
 }
 
@@ -842,20 +843,20 @@ var listScene = class listScene extends TestScene {
     super();
 
     UISceneManager.getInstance().ctor();
-    var menu = new cc.Menu();
+    var menu = new Menu();
     menu.x = 0;
     menu.y = 0;
     var index = 0;
     for (var p in testingItems) {
       (function (name, list) {
         var label = new LabelTTF(name, "Arial", 24);
-        var menuItem = new cc.MenuItemLabel(
+        var menuItem = new MenuItemLabel(
           label,
           function () {
             currentTestingArray = list;
             var manager = UISceneManager.getInstance();
             var scene = manager.currentUIScene();
-            cc.director.runScene(scene);
+            Director.getInstance().runScene(scene);
           },
           this
         );
@@ -877,10 +878,10 @@ var listScene = class listScene extends TestScene {
 
   onEnter() {
     super.onEnter();
-    if ("touches" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var target = event.getCurrentTarget();
             var delta = touches[0].getDelta();
@@ -890,16 +891,16 @@ var listScene = class listScene extends TestScene {
         },
         this
       );
-    else if ("mouse" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    else if ("mouse" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseMove: function (event) {
             if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().moveMenu(event.getDelta());
           },
           onMouseScroll: function (event) {
-            var delta = cc.sys.isNative
+            var delta = Sys.getInstance().isNative
               ? event.getScrollY() * 6
               : -event.getScrollY();
             event.getCurrentTarget().moveMenu({ y: delta });

@@ -31,7 +31,8 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
 import { winSize } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, EventListener, EventManager, Point, Sprite, Sys, log } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class RenderTextureSave extends RenderTextureBaseLayer {
     constructor() {
@@ -46,16 +47,16 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     onEnter() {
         super.onEnter();
 
-        if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in Sys.getInstance().capabilities){
+            EventManager.getInstance().addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved:function (touches, event) {
                     event.getCurrentTarget().drawInLocation(touches[0].getLocation());
                 }
             }, this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in Sys.getInstance().capabilities)
+            EventManager.getInstance().addListener({
+                event: EventListener.MOUSE,
                 onMouseDown: function(event){
                     event.getCurrentTarget()._lastLocation = event.getLocation();
                 },
@@ -67,9 +68,9 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
 
         this._brushs = [];
 
-        var save = new cc.MenuItemFont("Save", this.saveCB, this);
-        var clear = new cc.MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
-        var menu = new cc.Menu(save, clear);
+        var save = new MenuItemFont("Save", this.saveCB, this);
+        var clear = new MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
+        var menu = new Menu(save, clear);
         menu.alignItemsVertically();
         menu.x = winSize.width - 70;
         menu.y = winSize.height - 80;
@@ -91,8 +92,8 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     }
 
     saveCB(sender) {
-        if(!cc.sys.isNative){
-            cc.log("RenderTexture's saveToFile doesn't support on HTML5");
+        if(!Sys.getInstance().isNative){
+            log("RenderTexture's saveToFile doesn't support on HTML5");
             return;
         }
         var namePNG = "image-" + this._counter + ".png";
@@ -100,9 +101,9 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
 
         // You can only save one file at a time (in one frame)
         this._target.saveToFile(nameJPG, cc.IMAGE_FORMAT_JPEG, false);
-        //this._target.saveToFile(namePNG, cc.IMAGE_FORMAT_PNG);
+        //this._target.saveToFile(namePNG, IMAGE_FORMAT_PNG);
 
-        cc.log("images saved!");
+        log("images saved!");
         this._counter++;
     }
 
@@ -121,7 +122,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
                 var diffX = locLastLocation.x - location.x;
                 var diffY = locLastLocation.y - location.y;
                 var delta = i / distance;
-                var sprite = new cc.Sprite(s_fire);
+                var sprite = new Sprite(s_fire);
                 sprite.attr({
                     x: location.x + diffX * delta,
                     y: location.y + diffY * delta,

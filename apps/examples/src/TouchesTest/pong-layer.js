@@ -33,7 +33,7 @@ import {
   LOW_PLAYER,
   STATUS_BAR_HEIGHT
 } from "./touches-test-constants";
-import { Layer, Point } from "@aspect/core";
+import { Director, Layer, Point } from "@aspect/core";
 
 export class PongLayer extends Layer {
   constructor() {
@@ -47,7 +47,7 @@ export class PongLayer extends Layer {
 
     this._winSize = null;
     this._ballStartingVelocity = new Point(20.0, -100.0);
-    this._winSize = cc.director.getWinSize();
+    this._winSize = Director.getInstance().getWinSize();
 
     this._ball = Ball.ballWithTexture(cc.textureCache.addImage(s_ball));
     this._ball.x = this._winSize.width / 2;

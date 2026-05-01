@@ -70,7 +70,7 @@ export class ActionRotate extends ActionsDemo {
     //----end3----
   }
   title() {
-    return "cc.rotateTo / cc.rotateBy";
+    return "rotateTo / rotateBy";
   }
   //
   // Automation

@@ -28,6 +28,7 @@
 import { BaseClippingNodeTest } from "./base-clipping-node-test";
 import { s_pathGrossini } from "../resources";
 import { DelayTime, RotateBy, Show, sequence } from "@aspect/actions";
+import { Sprite } from "@aspect/core";
 
 export class NestedTest extends BaseClippingNodeTest {
   title() {
@@ -61,7 +62,7 @@ export class NestedTest extends BaseClippingNodeTest {
       );
       parent.addChild(clipper);
 
-      var stencil = new cc.Sprite(s_pathGrossini);
+      var stencil = new Sprite(s_pathGrossini);
       stencil.attr({
         scale: 2.5 - i * (2.5 / depth),
         anchorX: 0.5,

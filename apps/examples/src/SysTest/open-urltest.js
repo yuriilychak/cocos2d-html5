@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { SysTestBase } from "./sys-test-base";
-import { LabelTTF } from "@aspect/core";
+import { EventListener, EventManager, LabelTTF, Sys } from "@aspect/core";
 
 export class OpenURLTest extends SysTestBase {
   getTitle() {
@@ -43,15 +43,15 @@ export class OpenURLTest extends SysTestBase {
     this.addChild(label);
     label.setPosition(cc.winSize.width / 2, cc.winSize.height / 2);
 
-    cc.eventManager.addListener(
+    EventManager.getInstance().addListener(
       {
-        event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        event: EventListener.TOUCH_ONE_BY_ONE,
         swallowTouches: true,
         onTouchBegan: function () {
           return true;
         },
         onTouchEnded: function () {
-          cc.sys.openURL("http://www.cocos2d-x.org/");
+          Sys.getInstance().openURL("http://www.cocos2d-x.org/");
         }
       },
       this

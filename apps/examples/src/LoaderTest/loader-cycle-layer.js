@@ -25,7 +25,7 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { LoaderTestLayer } from "./loader-test-layer";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, Director, LabelTTF } from "@aspect/core";
 
 export class LoaderCycleLayer extends BaseTestLayer {
   constructor() {
@@ -35,7 +35,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
     this._subtitle = "";
 
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var resultTTF = new LabelTTF("result: unknown");
     resultTTF.x = winSize.width / 2;
@@ -79,7 +79,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
   }
 
   createInfo() {
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     var info1 = new LabelTTF("Load 5 files");
     info1.x = winSize.width / 2;
     info1.y = winSize.height / 2 + 80;

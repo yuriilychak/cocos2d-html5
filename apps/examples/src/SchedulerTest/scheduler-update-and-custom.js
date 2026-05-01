@@ -29,6 +29,7 @@
     SchedulerUpdateAndCustom
 */
 import { SchedulerTestLayer } from "./scheduler-test-layer";
+import { log } from "@aspect/core";
 
 export class SchedulerUpdateAndCustom extends SchedulerTestLayer {
   onEnter() {
@@ -49,12 +50,12 @@ export class SchedulerUpdateAndCustom extends SchedulerTestLayer {
 
   update(dt) {
     //----start6----update
-    cc.log("update called:" + dt);
+    log("update called:" + dt);
     //----end6----
   }
   onTick(dt) {
     //----start6----onTick
-    cc.log("custom callback called:" + dt);
+    log("custom callback called:" + dt);
     //----end6----
   }
   onStopCallbacks(dt) {

@@ -31,8 +31,9 @@ import {
   TAG_CONTENTNODE
 } from "./clipping-node-test-constants";
 import { s_back2 } from "../resources";
-import { Point, Color, Rect } from "@aspect/core";
+import { Color, EventListener, EventManager, Point, Rect, Sprite } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class ScrollViewDemo extends BaseClippingNodeTest {
   constructor() {
@@ -61,7 +62,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
     clipper.runAction(new RotateBy(1, 45).repeatForever());
     this.addChild(clipper);
 
-    var stencil = new cc.DrawNode();
+    var stencil = new DrawNode();
     var rectangle = [
       new Point(0, 0),
       new Point(clipper.width, 0),
@@ -73,7 +74,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
     stencil.drawPoly(rectangle, white, 1, white);
     clipper.stencil = stencil;
 
-    var content = new cc.Sprite(s_back2);
+    var content = new Sprite(s_back2);
     content.tag = TAG_CONTENTNODE;
     content.anchorX = 0.5;
     content.anchorY = 0.5;
@@ -82,9 +83,9 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
     clipper.addChild(content);
 
     this._scrolling = false;
-    cc.eventManager.addListener(
-      cc.EventListener.create({
-        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+    EventManager.getInstance().addListener(
+      EventListener.create({
+        event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {
           if (!touches || touches.length == 0) return;
           var target = event.getCurrentTarget();

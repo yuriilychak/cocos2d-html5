@@ -28,7 +28,7 @@ import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers";
 export class ChipmunkDemo extends ChipmunkBaseLayer {
   constructor() {
     super();
-    //cc.base(this);
+    //base(this);
 
     this.remainder = 0;
 

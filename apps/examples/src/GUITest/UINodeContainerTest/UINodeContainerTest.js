@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Sprite } from "@aspect/core";
 
 export class UIWidgetAddNodeTest extends UIMainLayer {
   init() {
@@ -40,7 +41,7 @@ export class UIWidgetAddNodeTest extends UIMainLayer {
       nodeContainer.y = widgetSize.height / 2;
       this._mainNode.addChild(nodeContainer);
 
-      var sprite = new cc.Sprite("ccs-res/cocosui/ccicon.png");
+      var sprite = new Sprite("ccs-res/cocosui/ccicon.png");
       sprite.x = 0;
       sprite.y = sprite.getBoundingBox().height / 4;
       nodeContainer.addNode(sprite);

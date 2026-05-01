@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { ScaleBy } from "@aspect/actions";
+import { Sys, log } from "@aspect/core";
 
 export class TMXOrthoFromXMLTest extends TileDemo {
   constructor() {
@@ -51,9 +52,9 @@ export class TMXOrthoFromXMLTest extends TileDemo {
     var map = new cc.TMXTiledMap(xmlStr, resources);
     this.addChild(map, 0, TAG_TILE_MAP);
 
-    cc.log("ContentSize: " + map.width + ", " + map.height);
+    log("ContentSize: " + map.width + ", " + map.height);
 
-    if ("opengl" in cc.sys.capabilities) {
+    if ("opengl" in Sys.getInstance().capabilities) {
       var mapChildren = map.children;
       for (var i = 0; i < mapChildren.length; i++) {
         var child = mapChildren[i];

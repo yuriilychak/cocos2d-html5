@@ -27,7 +27,7 @@
 
 import { SkeletonAnimation } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
-import { Color } from "@aspect/core";
+import { Color, Director, EventListener, EventManager } from "@aspect/core";
 
 export class SpineTestLayerFFD extends SpineTestLayer {
   constructor() {
@@ -42,12 +42,12 @@ export class SpineTestLayerFFD extends SpineTestLayer {
     skeletonNode.setSkin("goblin");
 
     skeletonNode.setScale(0.5);
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     skeletonNode.setPosition(winSize.width / 2, 20);
     this.addChild(skeletonNode);
 
-    var listener = cc.EventListener.create({
-      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+    var listener = EventListener.create({
+      event: EventListener.TOUCH_ONE_BY_ONE,
       onTouchBegan: function (touch, event) {
         if (!skeletonNode.getDebugBonesEnabled())
           skeletonNode.setDebugBonesEnabled(true);
@@ -60,7 +60,7 @@ export class SpineTestLayerFFD extends SpineTestLayer {
         return true;
       }
     });
-    cc.eventManager.addListener(listener, this);
+    EventManager.getInstance().addListener(listener, this);
   }
 
   title() {

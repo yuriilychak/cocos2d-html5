@@ -53,6 +53,7 @@ import {
 } from "./particle-test-constants";
 import { RadiusMode1 } from "./radius-mode1";
 import { RadiusMode2 } from "./radius-mode2";
+import { Sys } from "@aspect/core";
 
 export var particleSceneArr = [
   function () {
@@ -159,7 +160,7 @@ export var particleSceneArr = [
   }
 ];
 
-if ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL) {
+if ("opengl" in Sys.getInstance().capabilities && cc.rendererConfig.isWebGL) {
   particleSceneArr.push(function () {
     return new ParallaxParticle();
   });

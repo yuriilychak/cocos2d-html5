@@ -69,7 +69,7 @@ export class ActionBezierToCopy extends ActionsDemo {
     //----end9----
   }
   title() {
-    return "cc.bezierTo copy test";
+    return "bezierTo copy test";
   }
   subtitle() {
     return "Both sprites should move across the same path";

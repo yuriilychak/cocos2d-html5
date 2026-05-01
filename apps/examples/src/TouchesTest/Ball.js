@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point, Rect } from "@aspect/core";
+import { Director, Point, Rect, Sprite } from "@aspect/core";
 
-export class Ball extends cc.Sprite {
+export class Ball extends Sprite {
     constructor() {
         super();
         this._velocity = new Point(0,0);
@@ -43,7 +43,7 @@ export class Ball extends cc.Sprite {
     move(delta) {
 	    this.x += this._velocity.x * delta;
 	    this.y += this._velocity.y * delta;
-        var winSize = cc.director.getWinSize();
+        var winSize = Director.getInstance().getWinSize();
         if (this.x > winSize.width - this.radius()) {
             this.x = winSize.width - this.radius();
             this._velocity.x *= -1;

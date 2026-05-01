@@ -62,7 +62,7 @@ export class ActionTint extends ActionsDemo {
     //----end15----
   }
   title() {
-    return "cc.tintTo / cc.tintBy";
+    return "tintTo / tintBy";
   }
   //
   // Automation

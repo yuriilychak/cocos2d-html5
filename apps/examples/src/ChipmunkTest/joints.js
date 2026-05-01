@@ -29,11 +29,12 @@
 //------------------------------------------------------------------
 import { ChipmunkDemo } from "./chipmunk-demo";
 import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers";
+import { log } from "@aspect/core";
 
 export class Joints extends ChipmunkDemo {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
     this._subtitle = "Chipmunk Demo";
     this._title = "Joints";
 
@@ -177,9 +178,9 @@ export class Joints extends ChipmunkDemo {
     body2.setAngle(Math.PI);
     var pinJoint = new cp.PinJoint(body1, body2, v(15, 0), v(15, 0));
     space.addConstraint(pinJoint);
-    cc.log("pin joint anchr1 : " + pinJoint.anchr1.x + "," + pinJoint.anchr1.y);
-    cc.log("pin joint anchr2 : " + pinJoint.anchr2.x + "," + pinJoint.anchr2.y);
-    cc.log("pin joint dist : " + pinJoint.dist);
+    log("pin joint anchr1 : " + pinJoint.anchr1.x + "," + pinJoint.anchr1.y);
+    log("pin joint anchr2 : " + pinJoint.anchr2.x + "," + pinJoint.anchr2.y);
+    log("pin joint dist : " + pinJoint.dist);
 
     // Slide Joints - Like pin joints but with a min/max distance.
     // Can be used for a cheap approximation of a rope.
@@ -197,14 +198,14 @@ export class Joints extends ChipmunkDemo {
       40
     );
     space.addConstraint(slideJoint);
-    cc.log(
+    log(
       "slide joint anchr1 : " + slideJoint.anchr1.x + "," + slideJoint.anchr1.y
     );
-    cc.log(
+    log(
       "slide joint anchr2 : " + slideJoint.anchr2.x + "," + slideJoint.anchr2.y
     );
-    cc.log("slide joint min : " + slideJoint.min);
-    cc.log("slide joint max : " + slideJoint.max);
+    log("slide joint min : " + slideJoint.min);
+    log("slide joint max : " + slideJoint.max);
 
     // Pivot Joints - Holds the two anchor points together. Like a swivel.
     boxOffset = v(320, 0);
@@ -220,10 +221,10 @@ export class Joints extends ChipmunkDemo {
       cp.v.add(boxOffset, v(80, 60))
     );
     space.addConstraint(pivotJoint);
-    cc.log(
+    log(
       "pivot joint anchr1 : " + pivotJoint.anchr1.x + "," + pivotJoint.anchr1.y
     );
-    cc.log(
+    log(
       "pivot joint anchr2 : " + pivotJoint.anchr2.x + "," + pivotJoint.anchr2.y
     );
 
@@ -240,16 +241,16 @@ export class Joints extends ChipmunkDemo {
       v(-30, 0)
     );
     space.addConstraint(grooveJoint);
-    cc.log(
+    log(
       "groove joint anchr2 : " +
         grooveJoint.anchr2.x +
         "," +
         grooveJoint.anchr2.y
     );
-    cc.log(
+    log(
       "groove joint grv_a : " + grooveJoint.grv_a.x + "," + grooveJoint.grv_a.y
     );
-    cc.log(
+    log(
       "groove joint grv_b : " + grooveJoint.grv_b.x + "," + grooveJoint.grv_b.y
     );
 
@@ -269,21 +270,21 @@ export class Joints extends ChipmunkDemo {
       0.3
     );
     space.addConstraint(dampedSpring);
-    cc.log(
+    log(
       "damped spring anchr1 : " +
         dampedSpring.anchr1.x +
         "," +
         dampedSpring.anchr1.y
     );
-    cc.log(
+    log(
       "damped spring anchr2 : " +
         dampedSpring.anchr2.x +
         "," +
         dampedSpring.anchr2.y
     );
-    cc.log("damped spring damping : " + dampedSpring.damping);
-    cc.log("damped spring restLength : " + dampedSpring.restLength);
-    cc.log("damped spring stiffness : " + dampedSpring.stiffness);
+    log("damped spring damping : " + dampedSpring.damping);
+    log("damped spring restLength : " + dampedSpring.restLength);
+    log("damped spring stiffness : " + dampedSpring.stiffness);
 
     // Damped Rotary Springs
     boxOffset = v(160, 120);
@@ -301,9 +302,9 @@ export class Joints extends ChipmunkDemo {
       60
     );
     space.addConstraint(dampedRotarySpring);
-    cc.log("damped rotary spring restAngle : " + dampedRotarySpring.restAngle);
-    cc.log("damped rotary spring stiffness : " + dampedRotarySpring.stiffness);
-    cc.log("damped rotary spring damping : " + dampedRotarySpring.damping);
+    log("damped rotary spring restAngle : " + dampedRotarySpring.restAngle);
+    log("damped rotary spring stiffness : " + dampedRotarySpring.stiffness);
+    log("damped rotary spring damping : " + dampedRotarySpring.damping);
 
     // Rotary Limit Joint
     boxOffset = v(320, 120);
@@ -321,8 +322,8 @@ export class Joints extends ChipmunkDemo {
       Math.PI / 2
     );
     space.addConstraint(rotaryLimitJoint);
-    cc.log("rotary limit joint min : " + rotaryLimitJoint.min);
-    cc.log("rotary limit joint max : " + rotaryLimitJoint.max);
+    log("rotary limit joint min : " + rotaryLimitJoint.min);
+    log("rotary limit joint max : " + rotaryLimitJoint.max);
 
     // Ratchet Joint - A rotary ratchet, like a socket wrench
     boxOffset = v(480, 120);
@@ -335,9 +336,9 @@ export class Joints extends ChipmunkDemo {
     // Ratchet every 90 degrees
     var ratchet = new cp.RatchetJoint(body1, body2, 0, Math.PI / 2);
     space.addConstraint(ratchet);
-    cc.log("ratchet phase : " + ratchet.phase);
-    cc.log("ratchet ratchet : " + ratchet.ratchet);
-    cc.log("ratchet angle : " + ratchet.angle);
+    log("ratchet phase : " + ratchet.phase);
+    log("ratchet ratchet : " + ratchet.ratchet);
+    log("ratchet angle : " + ratchet.angle);
 
     // Gear Joint - Maintain a specific angular velocity ratio
     boxOffset = v(0, 240);
@@ -350,8 +351,8 @@ export class Joints extends ChipmunkDemo {
     // Force one to sping 2x as fast as the other
     var gearJoint = new cp.GearJoint(body1, body2, 0, 2);
     space.addConstraint(gearJoint);
-    cc.log("gear joint phase : " + gearJoint.phase);
-    cc.log("gear jonit ratio : " + gearJoint.ratio);
+    log("gear joint phase : " + gearJoint.phase);
+    log("gear jonit ratio : " + gearJoint.ratio);
 
     // Simple Motor - Maintain a specific angular relative velocity
     boxOffset = v(160, 240);
@@ -364,7 +365,7 @@ export class Joints extends ChipmunkDemo {
     // Make them spin at 1/2 revolution per second in relation to each other.
     var simpleMotor = new cp.SimpleMotor(body1, body2, Math.PI);
     space.addConstraint(simpleMotor);
-    cc.log("simple motor rate : " + simpleMotor.rate);
+    log("simple motor rate : " + simpleMotor.rate);
 
     // Make a car with some nice soft suspension
     boxOffset = v(320, 240);

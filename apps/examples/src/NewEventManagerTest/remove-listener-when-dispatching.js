@@ -27,7 +27,8 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { Color, LabelTTF, Rect } from "@aspect/core";
+import { Color, EventListener, EventManager, LabelTTF, Rect, Sprite } from "@aspect/core";
+import { Menu, MenuItemFont, MenuItemToggle } from "@aspect/menus";
 
 export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
   onEnter() {
@@ -37,13 +38,13 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     var origin = director.getVisibleOrigin();
     var size = director.getVisibleSize();
 
-    var sprite1 = new cc.Sprite("Images/CyanSquare.png");
+    var sprite1 = new Sprite("Images/CyanSquare.png");
     sprite1.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
     this.addChild(sprite1, 10);
 
     // Make sprite1 touchable
-    var listener1 = cc.EventListener.create({
-      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+    var listener1 = EventListener.create({
+      event: EventListener.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         var locationInNode = sprite1.convertToNodeSpace(touch.getLocation());
@@ -62,7 +63,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     });
     this.setUserObject(listener1);
 
-    cc.eventManager.addListener(listener1, sprite1);
+    EventManager.getInstance().addListener(listener1, sprite1);
 
     var statusLabel = new LabelTTF("The sprite could be touched!", "", 20);
     statusLabel.setPosition(
@@ -74,16 +75,16 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     var enable = true;
 
     // Enable/Disable item
-    var toggleItem = new cc.MenuItemToggle(
-      new cc.MenuItemFont("Enabled"),
-      new cc.MenuItemFont("Disabled"),
+    var toggleItem = new MenuItemToggle(
+      new MenuItemFont("Enabled"),
+      new MenuItemFont("Disabled"),
       function (sender) {
         if (enable) {
-          cc.eventManager.removeListener(listener1);
+          EventManager.getInstance().removeListener(listener1);
           statusLabel.setString("The sprite could not be touched!");
           enable = false;
         } else {
-          cc.eventManager.addListener(listener1, sprite1);
+          EventManager.getInstance().addListener(listener1, sprite1);
           statusLabel.setString("The sprite could be touched!");
           enable = true;
         }
@@ -91,7 +92,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     );
 
     toggleItem.setPosition(origin.x + size.width / 2, origin.y + 80);
-    var menu = new cc.Menu(toggleItem);
+    var menu = new Menu(toggleItem);
     menu.setPosition(0, 0);
     menu.setAnchorPoint(0, 0);
     this.addChild(menu, 1);

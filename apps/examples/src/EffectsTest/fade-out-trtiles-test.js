@@ -32,7 +32,7 @@ export class FadeOutTRTilesTest extends EffectsBaseLayer {
     return "FadeOutTRTilesTest";
   }
   code() {
-    return "a = cc.fadeOutTRTiles(duration, gridSize)";
+    return "a = fadeOutTRTiles(duration, gridSize)";
   }
   getEffect(duration) {
     var action = cc.fadeOutTRTiles(duration, new Size(16, 12));

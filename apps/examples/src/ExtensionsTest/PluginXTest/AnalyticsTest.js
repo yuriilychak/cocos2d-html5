@@ -25,7 +25,8 @@
 
 import { PluginXTest } from "./PluginXTest";
 import { director } from "../../constants";
-import { LabelTTF, Point, Size } from "@aspect/core";
+import { Director, LabelTTF, Point, Size, Sys, log } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export var g_pAnalytics = null;
 export var s_strAppKey = "";
@@ -41,28 +42,28 @@ if (!plugin) {
 
 plugin.onApplicationDidEnterBackground = function () {
   if (g_pAnalytics != null) {
-    cc.log("plugin.onApplicationDidEnterBackground.");
+    log("plugin.onApplicationDidEnterBackground.");
     g_pAnalytics.stopSession();
   }
 };
 
 plugin.onApplicationWillEnterForeground = function () {
   if (g_pAnalytics != null) {
-    cc.log("plugin.onApplicationWillEnterForeground.");
+    log("plugin.onApplicationWillEnterForeground.");
     g_pAnalytics.startSession(s_strAppKey);
   }
 };
 
 export function loadAnalyticsPlugin() {
-  var langType = cc.sys.language; //cc.Application.getInstance().getCurrentLanguage();
+  var langType = Sys.getInstance().language; //Application.getInstance().getCurrentLanguage();
 
   var umengKey = "";
   var flurryKey = "";
 
-  if (cc.sys.os == cc.sys.OS_IOS) {
+  if (Sys.getInstance().os == Sys.getInstance().OS_IOS) {
     umengKey = UMENG_KEY_IOS;
     flurryKey = FLURRY_KEY_IOS;
-  } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+  } else if (Sys.getInstance().os == Sys.getInstance().OS_ANDROID) {
     umengKey = UMENG_KEY_ANDROID;
     flurryKey = FLURRY_KEY_ANDROID;
   }
@@ -131,23 +132,23 @@ export class AnalyticsTestLayer extends PluginXTest {
     super();
     this._title = "Plugin-x Test";
     this._subtitle =
-      cc.LANGUAGE_CHINESE == cc.sys.language ? "umeng" : "flurry"; //cc.Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
+      cc.LANGUAGE_CHINESE == Sys.getInstance().language ? "umeng" : "flurry"; //Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
   }
 
   onEnter() {
     super.onEnter();
-    var size = cc.director.getWinSize();
+    var size = Director.getInstance().getWinSize();
 
     loadAnalyticsPlugin();
 
-    var pMenu = new cc.Menu();
+    var pMenu = new Menu();
     pMenu.setPosition(new Point(0, 0));
     this.addChild(pMenu, 1);
 
     var yPos = 0;
     for (var i = 0; i < s_EventMenuItem.length; i++) {
       var label = new LabelTTF(s_EventMenuItem[i].id, "Arial", 24);
-      var pMenuItem = new cc.MenuItemLabel(label, this.eventMenuCallback, this);
+      var pMenuItem = new MenuItemLabel(label, this.eventMenuCallback, this);
       pMenu.addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
       yPos = size.height - 50 * i - 100;
       pMenuItem.setPosition(new Point(size.width / 2, yPos));
@@ -167,7 +168,7 @@ export class AnalyticsTestLayer extends PluginXTest {
     this.addChild(pLabel);
 
     var label = new LabelTTF("reload all plugins", "Arial", 24);
-    var pMenuItem = new cc.MenuItemLabel(
+    var pMenuItem = new MenuItemLabel(
       label,
       this.reloadPluginMenuCallback,
       this
@@ -202,7 +203,7 @@ export class AnalyticsTestLayer extends PluginXTest {
         break;
       case TAG_LOG_ONLINE_CONFIG:
         {
-          cc.log(
+          log(
             "Online config = " +
               g_pAnalytics.callStringFuncWithParam(
                 "getConfigParams",

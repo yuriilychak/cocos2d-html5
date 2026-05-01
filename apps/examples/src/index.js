@@ -28,7 +28,7 @@
 import { TestController } from "./test-controller";
 import { _initGlobals } from "./constants";
 import { g_resources } from "./resources";
-import { Scene } from "@aspect/core";
+import { Director, EGLView, Game, Scene } from "@aspect/core";
 
 const projectConfig = {
   debugMode: 1,
@@ -39,11 +39,11 @@ const projectConfig = {
   renderMode: 0
 };
 
-cc.game.onStart = function () {
-  cc.view.enableRetina(true);
-  cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
-  cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
-  cc.view.resizeWithBrowserSize(true);
+Game.getInstance().onStart = function () {
+  EGLView.getInstance().enableRetina(true);
+  EGLView.getInstance().setOrientation(cc.ORIENTATION_LANDSCAPE);
+  EGLView.getInstance().setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
+  EGLView.getInstance().resizeWithBrowserSize(true);
 
   cc.loader.resPath = "res";
 
@@ -56,10 +56,10 @@ cc.game.onStart = function () {
       } else {
         var scene = new Scene();
         scene.addChild(new TestController());
-        cc.director.runScene(scene);
+        Director.getInstance().runScene(scene);
       }
     },
     this
   );
 };
-cc.game.run(projectConfig);
+Game.getInstance().run(projectConfig);

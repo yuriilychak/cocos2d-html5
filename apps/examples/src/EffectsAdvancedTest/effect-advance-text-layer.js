@@ -30,8 +30,9 @@ import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { backEffectAdvanceAction, nextEffectAdvanceAction, restartEffectAdvanceAction } from "./effects-advanced-test-helpers";
 import { s_back3, s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Color, LabelTTF, Layer } from "@aspect/core";
+import { Color, Director, LabelTTF, Layer, Sprite, visibleRect } from "@aspect/core";
 import { ScaleBy, sequence } from "@aspect/actions";
+import { Menu, MenuItemImage } from "@aspect/menus";
 
 export class EffectAdvanceTextLayer extends Layer {
 
@@ -58,13 +59,13 @@ export class EffectAdvanceTextLayer extends Layer {
 	    nodeGrid.addChild(this.rootNode);
         this.addChild(nodeGrid, 0, EffectsAdvancedTest.TAG_BACKGROUND);
 
-        var bg = new cc.Sprite(s_back3);
+        var bg = new Sprite(s_back3);
         //this.addChild(bg, 0, EffectsAdvancedTest.TAG_BACKGROUND);
 	    this.rootNode.addChild(bg);
         bg.x = winSize.width / 2;
         bg.y = winSize.height / 2;
 
-        var grossini = new cc.Sprite(s_pathSister2);
+        var grossini = new Sprite(s_pathSister2);
 	    var grossiniGrid = new cc.NodeGrid();
 	    grossiniGrid.addChild(grossini);
 	    this.rootNode.addChild(grossiniGrid, 1, EffectsAdvancedTest.TAG_SPRITE1);
@@ -74,7 +75,7 @@ export class EffectAdvanceTextLayer extends Layer {
         var sc_back = sc.reverse();
         grossini.runAction(sequence(sc, sc_back).repeatForever());
 
-        var tamara = new cc.Sprite(s_pathSister1);
+        var tamara = new Sprite(s_pathSister1);
 	    var tamaraGrid = new cc.NodeGrid();
 	    tamaraGrid.addChild(tamara);
 	    this.rootNode.addChild(tamaraGrid, 1, EffectsAdvancedTest.TAG_SPRITE2);
@@ -85,8 +86,8 @@ export class EffectAdvanceTextLayer extends Layer {
         tamara.runAction(sequence(sc2, sc2_back).repeatForever());
 
         var label = new LabelTTF(this.title(), "Arial", 28);
-        label.x = cc.visibleRect.center.x;
-        label.y = cc.visibleRect.top.y - 80;
+        label.x = visibleRect.center.x;
+        label.y = visibleRect.top.y - 80;
         this.addChild(label);
         label.tag = EffectsAdvancedTest.TAG_LABEL;
 
@@ -94,19 +95,19 @@ export class EffectAdvanceTextLayer extends Layer {
         if (strSubtitle != "") {
             var subtitleLabel = new LabelTTF(strSubtitle, "Arial", 16);
             this.addChild(subtitleLabel, 101);
-            subtitleLabel.x = cc.visibleRect.center.x;
-            subtitleLabel.y = cc.visibleRect.top.y - 80;
+            subtitleLabel.x = visibleRect.center.x;
+            subtitleLabel.y = visibleRect.top.y - 80;
         }
 
-        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
-        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
+        var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
+        var item2 = new MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
+        var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
 
-        var menu = new cc.Menu(item1, item2, item3);
+        var menu = new Menu(item1, item2, item3);
 
         menu.x = 0;
         menu.y = 0;
-	    var centerx = cc.visibleRect.center.x, bottomy = cc.visibleRect.bottom.y;
+	    var centerx = visibleRect.center.x, bottomy = visibleRect.bottom.y;
         item1.x = centerx - item2.width * 2;
         item1.y = bottomy + item2.height / 2;
         item2.x = centerx;
@@ -128,19 +129,19 @@ export class EffectAdvanceTextLayer extends Layer {
     restartCallback(sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(restartEffectAdvanceAction());
-        cc.director.runScene(scene);
+        Director.getInstance().runScene(scene);
     }
 
     nextCallback(sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(nextEffectAdvanceAction());
-        cc.director.runScene(scene);
+        Director.getInstance().runScene(scene);
     }
 
     backCallback(sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(backEffectAdvanceAction());
-        cc.director.runScene(scene);
+        Director.getInstance().runScene(scene);
     }
 
 }

@@ -27,7 +27,9 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { winSize } from "../../constants";
-import { Color, Layer, Scene, Size } from "@aspect/core";
+import { Color, Director, Layer, Scene, Size, log } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class EditBoxTestLayer extends Layer {
   constructor() {
@@ -47,8 +49,8 @@ export class EditBoxTestLayer extends Layer {
   init() {
     this._box1 = new cc.EditBox(
       new Size(170, 50),
-      new cc.Scale9Sprite("extensions/green_edit.png"),
-      new cc.Scale9Sprite("extensions/orange_edit.png")
+      new Scale9Sprite("extensions/green_edit.png"),
+      new Scale9Sprite("extensions/orange_edit.png")
     );
     this._box1.setString("EditBoxs");
     this._box1.x = 220;
@@ -59,7 +61,7 @@ export class EditBoxTestLayer extends Layer {
 
     this._box2 = new cc.EditBox(
       new Size(130, 50),
-      new cc.Scale9Sprite("extensions/green_edit.png")
+      new Scale9Sprite("extensions/green_edit.png")
     );
     this._box2.setString("EditBox Sample");
     this._box2.x = 220;
@@ -73,7 +75,7 @@ export class EditBoxTestLayer extends Layer {
 
     this._box3 = new cc.EditBox(
       new Size(65, 50),
-      new cc.Scale9Sprite("extensions/orange_edit.png")
+      new Scale9Sprite("extensions/orange_edit.png")
     );
     this._box3.setString("Image");
     this._box3.x = 220;
@@ -86,7 +88,7 @@ export class EditBoxTestLayer extends Layer {
 
     this._box4 = new cc.EditBox(
       new Size(180, 50),
-      new cc.Scale9Sprite("extensions/yellow_edit.png")
+      new Scale9Sprite("extensions/yellow_edit.png")
     );
     this._box4.setPlaceholderFontColor(new Color(255, 0, 0));
     this._box4.setPlaceHolder("This editBox can't be touched!");
@@ -98,14 +100,14 @@ export class EditBoxTestLayer extends Layer {
     this._box4.setTouchEnabled(false);
     this._box3.addChild(this._box4);
 
-    var itemBack = new cc.MenuItemFont(
+    var itemBack = new MenuItemFont(
       "Back",
       this.toExtensionsMainLayer,
       this
     );
     itemBack.x = winSize.width - 50;
     itemBack.y = 25;
-    var menuBack = new cc.Menu(itemBack);
+    var menuBack = new Menu(itemBack);
     menuBack.x = 0;
     menuBack.y = 0;
     this.addChild(menuBack);
@@ -119,15 +121,15 @@ export class EditBoxTestLayer extends Layer {
   }
 
   editBoxEditingDidBegin(editBox) {
-    cc.log("editBox " + this._getEditBoxName(editBox) + " DidBegin !");
+    log("editBox " + this._getEditBoxName(editBox) + " DidBegin !");
   }
 
   editBoxEditingDidEnd(editBox) {
-    cc.log("editBox " + this._getEditBoxName(editBox) + " DidEnd !");
+    log("editBox " + this._getEditBoxName(editBox) + " DidEnd !");
   }
 
   editBoxTextChanged(editBox, text) {
-    cc.log(
+    log(
       "editBox " +
         this._getEditBoxName(editBox) +
         ", TextChanged, text: " +
@@ -136,7 +138,7 @@ export class EditBoxTestLayer extends Layer {
   }
 
   editBoxReturn(editBox) {
-    cc.log("editBox " + this._getEditBoxName(editBox) + " was returned !");
+    log("editBox " + this._getEditBoxName(editBox) + " was returned !");
   }
 
   _getEditBoxName(editBox) {
@@ -157,5 +159,5 @@ export function runEditBoxTest() {
   var pScene = new Scene();
   var pLayer = new EditBoxTestLayer();
   pScene.addChild(pLayer);
-  cc.director.runScene(pScene);
+  Director.getInstance().runScene(pScene);
 }

@@ -37,14 +37,15 @@ import {
 } from "./chipmunk-test-helpers";
 import { ChipmunkTestScene } from "./chipmunk-test-scene";
 import { director, winSize } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, Sys } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class ChipmunkBaseLayer extends BaseTestLayer {
   constructor() {
     //
     // VERY IMPORTANT
     //
-    // Only subclasses of a native classes MUST call cc.associateWithNative
+    // Only subclasses of a native classes MUST call associateWithNative
     // Failure to do so, it will crash.
     //
     super(
@@ -56,9 +57,9 @@ export class ChipmunkBaseLayer extends BaseTestLayer {
     this._subtitle = "No Subtitle";
 
     // Menu to toggle debug physics on / off
-    var item = new cc.MenuItemFont("Physics On/Off", this.onToggleDebug, this);
+    var item = new MenuItemFont("Physics On/Off", this.onToggleDebug, this);
     item.fontSize = 24;
-    var menu = new cc.Menu(item);
+    var menu = new Menu(item);
     this.addChild(menu);
     menu.x = winSize.width - 100;
     menu.y = winSize.height - 90;
@@ -83,9 +84,9 @@ export class ChipmunkBaseLayer extends BaseTestLayer {
 
   onEnter() {
     super.onEnter();
-    //cc.base(this, 'onEnter');
+    //base(this, 'onEnter');
 
-    cc.sys.garbageCollect();
+    Sys.getInstance().garbageCollect();
   }
 
   onCleanup() {

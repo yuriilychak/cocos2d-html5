@@ -34,6 +34,7 @@ import { NOT_CRASHED_CONST } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { CallFunc, DelayTime, FadeOut, RotateBy, sequence } from "@aspect/actions";
+import { Sprite } from "@aspect/core";
 
 export class CrashTest extends ActionManagerTest {
   title() {
@@ -43,7 +44,7 @@ export class CrashTest extends ActionManagerTest {
     //----start0----onEnter
     super.onEnter();
 
-    var child = new cc.Sprite(s_pathGrossini);
+    var child = new Sprite(s_pathGrossini);
     child.x = 200;
     child.y = 200;
     this.addChild(child, 1);

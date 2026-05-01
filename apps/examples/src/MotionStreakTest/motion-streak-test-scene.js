@@ -29,12 +29,13 @@
 import { nextMotionAction } from "./motion-streak-test-helpers";
 import { TestScene } from "../test-scene";
 import { sceneIdx, _setsceneIdx } from "./motion-streak-test-constants";
+import { Director } from "@aspect/core";
 
 export class MotionStreakTestScene extends TestScene {
   runThisTest(num) {
     _setsceneIdx(num || num == 0 ? num - 1 : -1);
     var pLayer = nextMotionAction();
     this.addChild(pLayer);
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }

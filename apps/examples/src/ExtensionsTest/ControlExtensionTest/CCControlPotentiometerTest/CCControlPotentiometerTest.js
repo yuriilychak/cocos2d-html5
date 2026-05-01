@@ -26,7 +26,8 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { LabelTTF, Scene } from "@aspect/core";
+import { Director, LabelTTF, Node, Scene } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class ControlPotentiometerTest extends ControlScene {
   constructor() {
@@ -36,9 +37,9 @@ export class ControlPotentiometerTest extends ControlScene {
 
   init() {
     if (super.init()) {
-      var screenSize = cc.director.getWinSize();
+      var screenSize = Director.getInstance().getWinSize();
 
-      var layer = new cc.Node();
+      var layer = new Node();
       layer.x = screenSize.width / 2;
       layer.y = screenSize.height / 2;
       this.addChild(layer, 1);
@@ -46,7 +47,7 @@ export class ControlPotentiometerTest extends ControlScene {
       var layer_width = 0;
 
       // Add the black background for the text
-      var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
+      var background = new Scale9Sprite("extensions/buttonBackground.png");
       background.width = 80;
       background.height = 50;
       background.x = layer_width + background.width / 2.0;

@@ -25,11 +25,11 @@
 
 import { AnalyticsTestLayer } from "./AnalyticsTest";
 import { IAPTestLayer } from "./IOSIAPTest";
-import { Scene } from "@aspect/core";
+import { Scene, Sys } from "@aspect/core";
 
 export var pluginXTestItemNames = [];
 
-if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
+if (Sys.getInstance().isMobile && Sys.getInstance().os == Sys.getInstance().OS_IOS) {
   pluginXTestItemNames.push({
     itemTitle: "Analytics Test",
     testLayer: function () {
@@ -37,7 +37,7 @@ if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
     }
   });
 }
-if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
+if (Sys.getInstance().isMobile && Sys.getInstance().os == Sys.getInstance().OS_IOS) {
   pluginXTestItemNames.push({
     itemTitle: "iOS IAP Test",
     testLayer: function () {

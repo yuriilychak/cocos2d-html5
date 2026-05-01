@@ -37,7 +37,9 @@ import {
   s_pathR1,
   s_pathR2
 } from "../../resources";
-import { LabelTTF, Layer, Rect, Scene } from "@aspect/core";
+import { Director, LabelTTF, Layer, Rect, Scene, Sprite } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
+import { Menu, MenuItemFont, MenuItemImage } from "@aspect/menus";
 
 export class ControlScene extends Layer {
   constructor() {
@@ -55,22 +57,22 @@ export class ControlScene extends Layer {
   init() {
     if (super.init()) {
       // Get the sceensize
-      var screensize = cc.director.getWinSize();
+      var screensize = Director.getInstance().getWinSize();
 
-      var pBackItem = new cc.MenuItemFont(
+      var pBackItem = new MenuItemFont(
         "Back",
         this.toExtensionsMainLayer,
         this
       );
       pBackItem.x = screensize.width - 50;
       pBackItem.y = 25;
-      var pBackMenu = new cc.Menu(pBackItem);
+      var pBackMenu = new Menu(pBackItem);
       pBackMenu.x = 0;
       pBackMenu.y = 0;
       this.addChild(pBackMenu, 10);
 
       // Add the generated background
-      var background = new cc.Sprite(s_extensions_background);
+      var background = new Sprite(s_extensions_background);
       background.x = screensize.width / 2;
       background.y = screensize.height / 2;
       var bgRect = background.getTextureRect();
@@ -79,7 +81,7 @@ export class ControlScene extends Layer {
       this.addChild(background);
 
       // Add the ribbon
-      var ribbon = new cc.Scale9Sprite(
+      var ribbon = new Scale9Sprite(
         s_extensions_ribbon,
         new Rect(1, 1, 48, 55)
       );
@@ -97,26 +99,26 @@ export class ControlScene extends Layer {
       this.addChild(this._sceneTitleLabel, 1);
 
       // Add the menu
-      var item1 = new cc.MenuItemImage(
+      var item1 = new MenuItemImage(
         s_pathB1,
         s_pathB2,
         this.previousCallback,
         this
       );
-      var item2 = new cc.MenuItemImage(
+      var item2 = new MenuItemImage(
         s_pathR1,
         s_pathR2,
         this.restartCallback,
         this
       );
-      var item3 = new cc.MenuItemImage(
+      var item3 = new MenuItemImage(
         s_pathF1,
         s_pathF2,
         this.nextCallback,
         this
       );
 
-      var menu = new cc.Menu(item1, item3, item2);
+      var menu = new Menu(item1, item3, item2);
       menu.x = 0;
       menu.y = 0;
       item1.x = screensize.width / 2 - 100;
@@ -139,17 +141,17 @@ export class ControlScene extends Layer {
   }
 
   previousCallback(sender) {
-    cc.director.runScene(
+    Director.getInstance().runScene(
       ControlSceneManager.getInstance().previousControlScene()
     );
   }
   restartCallback(sender) {
-    cc.director.runScene(
+    Director.getInstance().runScene(
       ControlSceneManager.getInstance().currentControlScene()
     );
   }
   nextCallback(sender) {
-    cc.director.runScene(ControlSceneManager.getInstance().nextControlScene());
+    Director.getInstance().runScene(ControlSceneManager.getInstance().nextControlScene());
   }
 }
 

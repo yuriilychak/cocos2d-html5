@@ -27,8 +27,9 @@
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini } from "../resources";
-import { Color, Layer, Point } from "@aspect/core";
+import { Color, Layer, Point, Sprite } from "@aspect/core";
 import { MoveBy, RotateBy, sequence } from "@aspect/actions";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class BakeLayerColorTest extends BakeLayerBaseTest {
   title() {
@@ -43,14 +44,14 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     this._actionSprite = null;
 
     var winSize = cc.winSize;
-    var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
-    var unbakeItem = new cc.MenuItemFont("unbake", this.onUnbake, this);
-    var runActionItem = new cc.MenuItemFont(
+    var bakeItem = new MenuItemFont("bake", this.onBake, this);
+    var unbakeItem = new MenuItemFont("unbake", this.onUnbake, this);
+    var runActionItem = new MenuItemFont(
       "run action",
       this.onRunAction,
       this
     );
-    var menu = new cc.Menu(bakeItem, unbakeItem, runActionItem);
+    var menu = new Menu(bakeItem, unbakeItem, runActionItem);
 
     menu.alignItemsVertically();
     menu.x = winSize.width - 70;
@@ -72,7 +73,7 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     rootLayer.addChild(bakeLayer);
 
     for (var i = 0; i < 9; i++) {
-      var sprite1 = new cc.Sprite(s_pathGrossini);
+      var sprite1 = new Sprite(s_pathGrossini);
       if (i % 2 === 0) {
         sprite1.setPosition(20 + i * 80, 100);
       } else {

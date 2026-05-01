@@ -53,7 +53,7 @@ export class ActionBlink extends ActionsDemo {
     //----end13----
   }
   title() {
-    return "cc.blink";
+    return "blink";
   }
   //
   // Automation

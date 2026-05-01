@@ -61,7 +61,7 @@ import { TMXResizeTest } from "./tmxresize-test";
 import { TMXTilePropertyTest } from "./tmxtile-property-test";
 import { TMXTilesetTest } from "./tmxtileset-test";
 import { TMXUncompressedTest } from "./tmxuncompressed-test";
-import { Layer } from "@aspect/core";
+import { Layer, Sys } from "@aspect/core";
 
 // Copy BaseTestLayer prototype methods (mixin pattern, originally Layer.extend(BaseTestLayerProps))
 Object.getOwnPropertyNames(BaseTestLayer.prototype).forEach(function (name) {
@@ -115,7 +115,7 @@ export var arrayOfTileMapTest = [
   TMXIsoOffsetTest
 ];
 
-if (!cc.sys.isNative) {
+if (!Sys.getInstance().isNative) {
   //This test is supported only in HTML5
   arrayOfTileMapTest.push(TMXGIDObjectsTest);
 }

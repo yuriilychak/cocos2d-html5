@@ -31,7 +31,7 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_grossini } from "../resources";
 import { winSize } from "../constants";
-import { LabelTTF } from "@aspect/core";
+import { LabelTTF, Sprite, Sys } from "@aspect/core";
 import { DelayTime, FadeOut, sequence } from "@aspect/actions";
 
 export class Issue1464 extends RenderTextureBaseLayer {
@@ -54,7 +54,7 @@ export class Issue1464 extends RenderTextureBaseLayer {
 
         this.testDuration = 2.1;
 
-        var sprite = new cc.Sprite(s_grossini);
+        var sprite = new Sprite(s_grossini);
 
         // create a render texture
         var rend = new cc.RenderTexture( winSize.width/2, winSize.height/2 );
@@ -76,7 +76,7 @@ export class Issue1464 extends RenderTextureBaseLayer {
         var fe = seq.repeatForever();
         rend.getSprite().runAction(fe);
 
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
+        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
             var label = new LabelTTF("Not support Actions on HTML5-canvas", "Times New Roman", 30);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2 + 50;

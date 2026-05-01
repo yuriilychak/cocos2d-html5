@@ -29,7 +29,7 @@
 
 import { CCPoolTest } from "./ccpool-test";
 import { MySprite } from "./my-sprite";
-import { Scene } from "@aspect/core";
+import { Director, Scene } from "@aspect/core";
 
 CCPoolTest.create = function () {
   var retObj = new CCPoolTest();
@@ -43,7 +43,7 @@ export function runCCPoolTest() {
   var pScene = new Scene();
   var pLayer = CCPoolTest.create();
   pScene.addChild(pLayer);
-  cc.director.runScene(pScene);
+  Director.getInstance().runScene(pScene);
 }
 
 MySprite.create = function (f1, f2, f3) {

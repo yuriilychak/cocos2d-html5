@@ -32,13 +32,14 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ShaderNode } from "./shader-node";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
+import { Sys } from "@aspect/core";
 
 export class ShaderFlowerTest extends OpenGLTestLayer {
 
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in Sys.getInstance().capabilities ) {
 
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Flower.vsh", ccbjs + "Shaders/example_Flower.fsh");
             this.addChild(shaderNode,10);

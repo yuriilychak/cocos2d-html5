@@ -27,20 +27,21 @@
 
 import { ParticleDemo } from "./particle-demo";
 import { s_stars2 } from "../resources";
-import { Point, Color } from "@aspect/core";
+import { Color, Point, Sys } from "@aspect/core";
+import { ParticleSystem } from "@aspect/particle";
 
 export class DemoRotFlower extends ParticleDemo {
   onEnter() {
     super.onEnter();
 
-    this._emitter = new cc.ParticleSystem(
-      "opengl" in cc.sys.capabilities ? 300 : 150
+    this._emitter = new ParticleSystem(
+      "opengl" in Sys.getInstance().capabilities ? 300 : 150
     );
 
     this._background.addChild(this._emitter, 10);
     this._emitter.texture = cc.textureCache.addImage(s_stars2);
     if (this._emitter.setShapeType)
-      this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
+      this._emitter.setShapeType(ParticleSystem.STAR_SHAPE);
 
     // duration
     this._emitter.duration = -1;
@@ -87,7 +88,7 @@ export class DemoRotFlower extends ParticleDemo {
     // size, in pixels
     this._emitter.startSize = 30.0;
     this._emitter.startSizeVar = 0;
-    this._emitter.endSize = cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
+    this._emitter.endSize = ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
 
     // emits per second
     this._emitter.emissionRate =

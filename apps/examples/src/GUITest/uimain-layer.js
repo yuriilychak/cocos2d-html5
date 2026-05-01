@@ -25,7 +25,8 @@
  ****************************************************************************/
 
 import { UISceneManager, GUITestScene } from "./UISceneManager";
-import { Color, LabelTTF, Layer } from "@aspect/core";
+import { Color, Director, LabelTTF, Layer, Node } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class UIMainLayer extends Layer {
   constructor() {
@@ -47,7 +48,7 @@ export class UIMainLayer extends Layer {
     super.init();
 
     var winSize = cc.winSize;
-    var mainNode = new cc.Node();
+    var mainNode = new Node();
     var scale = winSize.height / 320;
     mainNode.attr({
       anchorX: 0,
@@ -78,12 +79,12 @@ export class UIMainLayer extends Layer {
       back_label.addTouchEventListener(this.toExtensionsMainLayer, this);
     } else {
       var label = new LabelTTF("Back", "Arial", 20);
-      var menuItem = new cc.MenuItemLabel(
+      var menuItem = new MenuItemLabel(
         label,
         this.toExtensionsMainLayer,
         this
       );
-      var menu = new cc.Menu(menuItem);
+      var menu = new Menu(menuItem);
       menu.x = 0;
       menu.y = 0;
       menuItem.x = winSize.width - 50;
@@ -145,19 +146,19 @@ export class UIMainLayer extends Layer {
 
   previousCallback(sender, type) {
     if (type == ccui.Widget.TOUCH_ENDED) {
-      cc.director.runScene(UISceneManager.getInstance().previousUIScene());
+      Director.getInstance().runScene(UISceneManager.getInstance().previousUIScene());
     }
   }
 
   restartCallback(sender, type) {
     if (type == ccui.Widget.TOUCH_ENDED) {
-      cc.director.runScene(UISceneManager.getInstance().currentUIScene());
+      Director.getInstance().runScene(UISceneManager.getInstance().currentUIScene());
     }
   }
 
   nextCallback(sender, type) {
     if (type == ccui.Widget.TOUCH_ENDED) {
-      cc.director.runScene(UISceneManager.getInstance().nextUIScene());
+      Director.getInstance().runScene(UISceneManager.getInstance().nextUIScene());
     }
   }
 }

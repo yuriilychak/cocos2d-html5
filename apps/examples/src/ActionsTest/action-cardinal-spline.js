@@ -32,14 +32,15 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, Director, Point } from "@aspect/core";
 import { CardinalSplineBy, DelayTime, Sequence } from "@aspect/actions";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class ActionCardinalSpline extends ActionsDemo {
   get _code() {
     return (
-      " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
-      " a = cc.cadinalSplineTo( time, array_of_points, tension );"
+      " a = cadinalSplineBy( time, array_of_points, tension );\n" +
+      " a = cadinalSplineTo( time, array_of_points, tension );"
     );
   }
 
@@ -56,14 +57,14 @@ export class ActionCardinalSpline extends ActionsDemo {
     this._array = [];
 
     //add draw node
-    var winSize = cc.director.getWinSize();
-    this._drawNode1 = new cc.DrawNode();
+    var winSize = Director.getInstance().getWinSize();
+    this._drawNode1 = new DrawNode();
     this.addChild(this._drawNode1);
     this._drawNode1.x = 50;
     this._drawNode1.y = 50;
     this._drawNode1.setDrawColor(new Color(255, 255, 255, 255));
 
-    this._drawNode2 = new cc.DrawNode();
+    this._drawNode2 = new DrawNode();
     this.addChild(this._drawNode2);
     this._drawNode2.x = winSize.width * 0.5;
     this._drawNode2.y = 50;
@@ -73,7 +74,7 @@ export class ActionCardinalSpline extends ActionsDemo {
   onEnter() {
     //----start11----onEnter
     super.onEnter();
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     this.centerSprites(2);
 
     var delay = new DelayTime(0.25);

@@ -36,7 +36,7 @@ import { ScaleBy, sequence } from "@aspect/actions";
 export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
 
     this._title = "AnchorPoint in PhysicsSprite";
     this._subtitle = "Tests AnchorPoint in PhysicsSprite. See animated sprites";
@@ -44,7 +44,7 @@ export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
 
   onEnter() {
     super.onEnter();
-    // cc.base(this, 'onEnter');
+    // base(this, 'onEnter');
 
     this._debugNode.visible = true;
 

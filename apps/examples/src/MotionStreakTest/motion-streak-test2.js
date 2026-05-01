@@ -28,7 +28,7 @@
 
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_streak } from "../resources";
-import { Color } from "@aspect/core";
+import { Color, Director, EventListener, EventManager } from "@aspect/core";
 
 export class MotionStreakTest2 extends MotionStreakTest {
   constructor() {
@@ -40,9 +40,9 @@ export class MotionStreakTest2 extends MotionStreakTest {
   onEnter() {
     super.onEnter();
 
-    cc.eventManager.addListener(
+    EventManager.getInstance().addListener(
       {
-        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesMoved: function (touches, event) {
           if (touches.length == 0) return;
 
@@ -55,7 +55,7 @@ export class MotionStreakTest2 extends MotionStreakTest {
       },
       this
     );
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     // create the streak object and add it to the scene
     this._streak = new cc.MotionStreak(3, 3, 64, Color.WHITE, s_streak);
     this.addChild(this._streak);

@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { Rect } from "@aspect/core";
+import { Rect, Sprite } from "@aspect/core";
 import { RotateBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class Sprite6 extends SpriteTestDemo {
@@ -75,7 +75,7 @@ export class Sprite6 extends SpriteTestDemo {
         var scale_forever = scale_seq.repeatForever();
 
         for (var i = 0; i < 3; i++) {
-            var sprite = new cc.Sprite(batch.texture, new Rect(85 * i, 121, 85, 121));
+            var sprite = new Sprite(batch.texture, new Rect(85 * i, 121, 85, 121));
             switch (i) {
                 case 0:
                     sprite.x = winSize.width / 2 - 100;

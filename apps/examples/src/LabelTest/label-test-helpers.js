@@ -55,6 +55,7 @@ import { LabelTTFStrokeShadowTest } from "./label-ttfstroke-shadow-test";
 import { LabelTTFTest } from "./label-ttftest";
 import { LabelsEmpty } from "./labels-empty";
 import { WrapAlgorithmTest } from "./wrap-algorithm-test";
+import { Sys } from "@aspect/core";
 
 export var LongSentencesExample =
   "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -137,7 +138,7 @@ export var arrayOfLabelTest = [
   labelTTFDrawModeTest
 ];
 
-if (!cc.sys.isNative || cc.sys.isMobile) {
+if (!Sys.getInstance().isNative || Sys.getInstance().isMobile) {
   arrayOfLabelTest.push(WrapAlgorithmTest);
 }
 

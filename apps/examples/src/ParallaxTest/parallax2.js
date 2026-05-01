@@ -27,7 +27,7 @@
 
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
-import { Point } from "@aspect/core";
+import { EventListener, EventManager, Point, Sprite, Sys } from "@aspect/core";
 
 export class Parallax2 extends ParallaxDemo {
   constructor() {
@@ -39,10 +39,10 @@ export class Parallax2 extends ParallaxDemo {
 
     this._streak = null;
 
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var touch = touches[0];
             var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
@@ -52,10 +52,10 @@ export class Parallax2 extends ParallaxDemo {
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseMove: function (event) {
             if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
@@ -69,7 +69,7 @@ export class Parallax2 extends ParallaxDemo {
     }
 
     // Top Layer, a simple image
-    var cocosImage = new cc.Sprite(s_power);
+    var cocosImage = new Sprite(s_power);
     // scale the image (optional)
     cocosImage.scale = 1.5;
     // change the transform anchor point to 0,0 (optional)
@@ -77,7 +77,7 @@ export class Parallax2 extends ParallaxDemo {
     cocosImage.anchorY = 0;
 
     // Middle layer: a Tile map atlas
-    //var tilemap = cc.TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
+    //var tilemap = TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
     var tilemap = new cc.TMXTiledMap(
       s_resprefix + "TileMaps/orthogonal-test2.tmx"
     );
@@ -90,7 +90,7 @@ export class Parallax2 extends ParallaxDemo {
     //tilemap.texture.setAntiAliasTexParameters();
 
     // background layer: another image
-    var background = new cc.Sprite(s_back);
+    var background = new Sprite(s_back);
     // scale the image (optional)
     //background.scale = 1.5;
     // change the transform anchor point (optional)

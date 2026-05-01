@@ -27,8 +27,9 @@
 
 import { TestNodeDemo } from "./test-node-demo";
 import { s_back3, s_playNormal, s_playSelect } from "../resources";
-import { Point } from "@aspect/core";
+import { Point, Sprite, log } from "@aspect/core";
 import { DelayTime, MoveBy, RotateBy, sequence } from "@aspect/actions";
+import { Menu, MenuItemImage } from "@aspect/menus";
 
 export class NodeToWorld extends TestNodeDemo {
   constructor() {
@@ -39,13 +40,13 @@ export class NodeToWorld extends TestNodeDemo {
     super();
 
     this.testDuration = 3.1;
-    var back = new cc.Sprite(s_back3);
+    var back = new Sprite(s_back3);
     this.addChild(back, 5);
     back.anchorX = 0;
     back.anchorY = 0;
 
-    var item = new cc.MenuItemImage(s_playNormal, s_playSelect, this.onClicked);
-    var menu = new cc.Menu(item);
+    var item = new MenuItemImage(s_playNormal, s_playSelect, this.onClicked);
+    var menu = new Menu(item);
     menu.alignItemsVertically();
     menu.x = back.width / 2;
     menu.y = back.height / 2;
@@ -68,7 +69,7 @@ export class NodeToWorld extends TestNodeDemo {
   }
   onClicked() {
     //----start6----ctor
-    cc.log("On clicked");
+    log("On clicked");
     //----end6----
   }
   title() {

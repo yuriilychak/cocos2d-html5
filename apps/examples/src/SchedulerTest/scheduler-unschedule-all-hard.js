@@ -30,6 +30,7 @@
 */
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { director } from "../constants";
+import { log } from "@aspect/core";
 
 export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
   onEnter() {
@@ -52,22 +53,22 @@ export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
 
   onTick1(dt) {
     //----start3----onTick1
-    cc.log("SchedulerUnscheduleAllHard tick1");
+    log("SchedulerUnscheduleAllHard tick1");
     //----end3----
   }
   onTick2(dt) {
     //----start3----onTick2
-    cc.log("SchedulerUnscheduleAllHard tick2");
+    log("SchedulerUnscheduleAllHard tick2");
     //----end3----
   }
   onTick3(dt) {
     //----start3----onTick3
-    cc.log("SchedulerUnscheduleAllHard tick3");
+    log("SchedulerUnscheduleAllHard tick3");
     //----end3----
   }
   onTick4(dt) {
     //----start3----onTick4
-    cc.log("SchedulerUnscheduleAllHard tick4");
+    log("SchedulerUnscheduleAllHard tick4");
     //----end3----
   }
   onUnscheduleAll(dt) {

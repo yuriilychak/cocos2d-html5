@@ -27,8 +27,10 @@
 
 import { s_fire, s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, Point, Sprite } from "@aspect/core";
 import { JumpBy, sequence } from "@aspect/actions";
+import { Menu, MenuItemFont } from "@aspect/menus";
+import { ParticleSun } from "../ParticleTest/ParticleExamples";
 
 export class IntervalLayer extends cc.LayerGradient {
 
@@ -91,7 +93,7 @@ export class IntervalLayer extends cc.LayerGradient {
 
         var s = director.getWinSize();
         // sun
-        var sun = new cc.ParticleSun();
+        var sun = new ParticleSun();
         sun.texture = cc.textureCache.addImage(s_fire);
         sun.x = s.width - 32;
         sun.y = s.height - 32;
@@ -131,7 +133,7 @@ export class IntervalLayer extends cc.LayerGradient {
         this.addChild(this.label4);
 
         // Sprite
-        var sprite = new cc.Sprite(s_pathGrossini);
+        var sprite = new Sprite(s_pathGrossini);
         sprite.x = 40;
         sprite.y = 50;
 
@@ -141,8 +143,8 @@ export class IntervalLayer extends cc.LayerGradient {
         sprite.runAction(sequence(jump, jump.reverse()).repeatForever());
 
         // pause button
-        var item1 = new cc.MenuItemFont("Pause", this.onPause, this);
-        var menu = new cc.Menu(item1);
+        var item1 = new MenuItemFont("Pause", this.onPause, this);
+        var menu = new Menu(item1);
         menu.x = s.width / 2;
         menu.y = s.height - 50;
 

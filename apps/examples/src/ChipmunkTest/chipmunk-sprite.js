@@ -30,15 +30,16 @@
 import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 import { s_pathGrossini, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
+import { EventListener, EventManager, Sprite, Sys } from "@aspect/core";
 
 export class ChipmunkSprite extends ChipmunkBaseLayer {
   constructor() {
     super();
-    //cc.base(this);
+    //base(this);
 
     this.addSprite = function (pos) {
       var sprite = this.createPhysicsSprite(pos);
-      var child = new cc.Sprite(s_pathSister1);
+      var child = new Sprite(s_pathSister1);
       child.attr({
         scale: 0.4,
         anchorX: 0,
@@ -108,7 +109,7 @@ export class ChipmunkSprite extends ChipmunkBaseLayer {
 
   onEnter() {
     super.onEnter();
-    //cc.base(this, 'onEnter');
+    //base(this, 'onEnter');
 
     this.scheduleUpdate();
     for (var i = 0; i < 10; i++) {
@@ -119,10 +120,10 @@ export class ChipmunkSprite extends ChipmunkBaseLayer {
       );
     }
 
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: function (touches, event) {
             var l = touches.length,
               target = event.getCurrentTarget();
@@ -133,10 +134,10 @@ export class ChipmunkSprite extends ChipmunkBaseLayer {
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseDown: function (event) {
             event.getCurrentTarget().addSprite(event.getLocation());
           }

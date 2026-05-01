@@ -31,14 +31,15 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
-import { Color, LabelTTF, Scene, Size } from "@aspect/core";
+import { Color, Director, LabelTTF, Node, Scene, Size } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class ControlButtonTest_Styling extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = cc.director.getWinSize();
+      var screenSize = Director.getInstance().getWinSize();
 
-      var layer = new cc.Node();
+      var layer = new Node();
       this.addChild(layer, 1);
 
       var space = 10; // px
@@ -70,7 +71,7 @@ export class ControlButtonTest_Styling extends ControlScene {
       layer.y = screenSize.height / 2.0;
 
       // Add the black background
-      var backgroundButton = new cc.Scale9Sprite(s_extensions_buttonBackground);
+      var backgroundButton = new Scale9Sprite(s_extensions_buttonBackground);
       backgroundButton.width = max_w + 14;
       backgroundButton.height = max_h + 14;
       backgroundButton.x = screenSize.width / 2.0;
@@ -82,9 +83,9 @@ export class ControlButtonTest_Styling extends ControlScene {
   }
   standardButtonWithTitle(title) {
     /** Creates and return a button with a default background and title color. */
-    var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+    var backgroundButton = new Scale9Sprite(s_extensions_button);
     backgroundButton.setPreferredSize(new Size(45, 45)); // Set the prefered size
-    var backgroundHighlightedButton = new cc.Scale9Sprite(
+    var backgroundHighlightedButton = new Scale9Sprite(
       s_extensions_buttonHighlighted
     );
     backgroundHighlightedButton.setPreferredSize(new Size(45, 45)); // Set the prefered size

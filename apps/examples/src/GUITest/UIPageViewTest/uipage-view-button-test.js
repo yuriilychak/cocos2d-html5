@@ -26,7 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
-import { Point, Size } from "@aspect/core";
+import { Point, Size, log } from "@aspect/core";
 
 export class UIPageViewButtonTest extends UIMainLayer {
   init() {
@@ -100,7 +100,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
   }
 
   onButtonClicked(sender, type) {
-    cc.log("button %s clicked", sender.getName());
+    log("button %s clicked", sender.getName());
   }
 
   pageViewEvent(pageView, type) {

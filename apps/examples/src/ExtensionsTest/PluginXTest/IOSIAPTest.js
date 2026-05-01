@@ -25,7 +25,8 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { PluginXTest } from "./PluginXTest";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, log } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 TAG_SETSERVERMODE = 0;
 TAG_GETPRODUCTLIST = 1;
@@ -64,10 +65,10 @@ export class IAPTestLayer extends PluginXTest {
     this.PluginIAP.setListener(this);
   }
   addMenuItem() {
-    var payMenu = new cc.Menu();
+    var payMenu = new Menu();
     for (var i = 0; i < s_IAPFunctionItem.length; i++) {
       var text = new LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
-      var item = new cc.MenuItemLabel(text, this.menuCallBack, this);
+      var item = new MenuItemLabel(text, this.menuCallBack, this);
       item.tag = s_IAPFunctionItem[i].tag;
       item.x = 200;
       item.y = cc.winSize.height - 200 - i * 50;
@@ -88,10 +89,10 @@ export class IAPTestLayer extends PluginXTest {
   closeFunction(sender) {
     var scene = new ExtensionsTestScene();
     scene.runThisTest();
-    cc.director.runScene(scene);
+    Director.getInstance().runScene(scene);
   }
   initToast() {
-    this.toastLayer = new cc.LayerColor();
+    this.toastLayer = new LayerColor();
     var label = new LabelTTF("loading", "Arial", 16);
     this.toastLayer.addChild(label);
     this.toastLayer.setTag(TAG_TOAST);
@@ -102,8 +103,8 @@ export class IAPTestLayer extends PluginXTest {
   addTouch(bool) {
     if (bool) {
       var self = this.toastLayer;
-      this.listener = cc.EventListener.create({
-        event: cc.EventListener.TOUCH_ONE_BY_ONE,
+      this.listener = EventListener.create({
+        event: EventListener.TOUCH_ONE_BY_ONE,
         swallowTouches: true,
         onTouchBegan: function (touch, event) {
           return true;
@@ -112,9 +113,9 @@ export class IAPTestLayer extends PluginXTest {
         onTouchEnded: function (touch, event) {},
         onTouchCancelled: function (touch, event) {}
       });
-      cc.eventManager.addListener(this.listener, self);
+      EventManager.getInstance().addListener(this.listener, self);
     } else {
-      cc.eventManager.removeListener(this.listener);
+      EventManager.getInstance().removeListener(this.listener);
     }
   }
   toggleToast(show) {
@@ -163,14 +164,14 @@ export class IAPTestLayer extends PluginXTest {
 
   onPayResult(ret, msg, productInfo) {
     this.toggleToast(false);
-    cc.log("onPayResult ret is " + ret);
+    log("onPayResult ret is " + ret);
     var str = "";
     if (ret == plugin.ProtocolIAP.PayResultCode.PaySuccess) {
       str = "payment Success pid is " + productInfo.productId;
       //if you use server mode get the receive message and post to your server
       if (this._serverMode && msg) {
         str = "payment verify from server";
-        cc.log(str);
+        log(str);
         this.postServerData(msg);
       }
     } else if (ret == plugin.ProtocolIAP.PayResultCode.PayFail) {
@@ -187,7 +188,7 @@ export class IAPTestLayer extends PluginXTest {
       msgStr = "request error";
       this.toggleToast(false);
     } else if (ret == plugin.ProtocolIAP.RequestProductCode.RequestSuccess) {
-      cc.log("request RequestSuccees " + productInfo[0].productName);
+      log("request RequestSuccees " + productInfo[0].productName);
       this.product = productInfo;
       msgStr = "list: [";
       for (var i = 0; i < productInfo.length; i++) {

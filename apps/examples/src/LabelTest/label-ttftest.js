@@ -27,7 +27,8 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { Color, LabelTTF, Size } from "@aspect/core";
+import { Color, LabelTTF, LayerColor, Size } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class LabelTTFTest extends AtlasDemo {
   constructor() {
@@ -42,7 +43,7 @@ export class LabelTTFTest extends AtlasDemo {
     var blockSize = new Size(200, 160);
     var s = director.getWinSize();
 
-    var colorLayer = new cc.LayerColor(
+    var colorLayer = new LayerColor(
       new Color(100, 100, 100, 255),
       blockSize.width,
       blockSize.height
@@ -54,21 +55,21 @@ export class LabelTTFTest extends AtlasDemo {
 
     this.addChild(colorLayer);
 
-    cc.MenuItemFont.setFontSize(30);
-    var menu = new cc.Menu(
-      new cc.MenuItemFont("Left", this.setAlignmentLeft, this),
-      new cc.MenuItemFont("Center", this.setAlignmentCenter, this),
-      new cc.MenuItemFont("Right", this.setAlignmentRight, this)
+    MenuItemFont.setFontSize(30);
+    var menu = new Menu(
+      new MenuItemFont("Left", this.setAlignmentLeft, this),
+      new MenuItemFont("Center", this.setAlignmentCenter, this),
+      new MenuItemFont("Right", this.setAlignmentRight, this)
     );
     menu.alignItemsVerticallyWithPadding(4);
     menu.x = 50;
     menu.y = s.height / 2 - 20;
     this.addChild(menu);
 
-    menu = new cc.Menu(
-      new cc.MenuItemFont("Top", this.setAlignmentTop, this),
-      new cc.MenuItemFont("Middle", this.setAlignmentMiddle, this),
-      new cc.MenuItemFont("Bottom", this.setAlignmentBottom, this)
+    menu = new Menu(
+      new MenuItemFont("Top", this.setAlignmentTop, this),
+      new MenuItemFont("Middle", this.setAlignmentMiddle, this),
+      new MenuItemFont("Bottom", this.setAlignmentBottom, this)
     );
     menu.alignItemsVerticallyWithPadding(4);
     menu.x = s.width - 50;

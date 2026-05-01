@@ -28,7 +28,8 @@
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { CustomTableViewCell } from "./custom-table-view-cell";
 import { s_image_icon } from "../../resources";
-import { LabelTTF, Layer, Size } from "@aspect/core";
+import { Director, LabelTTF, Layer, Size, Sprite, log } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class TableViewTestLayer extends Layer {
   constructor() {
@@ -37,7 +38,7 @@ export class TableViewTestLayer extends Layer {
   }
 
   init() {
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var tableView = new cc.TableView(this, new Size(600, 60));
     tableView.setDirection(cc.SCROLLVIEW_DIRECTION_HORIZONTAL);
@@ -57,14 +58,14 @@ export class TableViewTestLayer extends Layer {
     tableView.reloadData();
 
     // Back Menu
-    var itemBack = new cc.MenuItemFont(
+    var itemBack = new MenuItemFont(
       "Back",
       this.toExtensionsMainLayer,
       this
     );
     itemBack.x = winSize.width - 50;
     itemBack.y = 25;
-    var menuBack = new cc.Menu(itemBack);
+    var menuBack = new Menu(itemBack);
     menuBack.x = 0;
     menuBack.y = 0;
     this.addChild(menuBack);
@@ -81,10 +82,10 @@ export class TableViewTestLayer extends Layer {
   scrollViewDidZoom(view) {}
 
   tableCellTouched(table, cell) {
-    cc.log("cell touched at index: " + cell.getIdx());
+    log("cell touched at index: " + cell.getIdx());
   }
   tableCellTouched2() {
-    cc.log("cell touched at index: ");
+    log("cell touched at index: ");
   }
 
   tableCellSizeForIndex(table, idx) {
@@ -101,7 +102,7 @@ export class TableViewTestLayer extends Layer {
     if (!cell) {
       cell = new CustomTableViewCell();
 
-      var sprite = new cc.Sprite(s_image_icon);
+      var sprite = new Sprite(s_image_icon);
       sprite.anchorX = 0;
       sprite.anchorY = 0;
       sprite.x = 0;

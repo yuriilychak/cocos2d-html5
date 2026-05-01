@@ -27,11 +27,12 @@
 
 import { ExtensionsMainLayer } from "./extensions-main-layer";
 import { TestScene } from "../test-scene";
+import { Director } from "@aspect/core";
 
 export class ExtensionsTestScene extends TestScene {
   runThisTest() {
     var pLayer = new ExtensionsMainLayer();
     this.addChild(pLayer);
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }

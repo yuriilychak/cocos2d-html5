@@ -34,7 +34,7 @@ import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { LabelTTF, Point } from "@aspect/core";
+import { Director, LabelTTF, Point, Sprite, Sys } from "@aspect/core";
 import { DelayTime, MoveBy, sequence } from "@aspect/actions";
 
 export class TMXIsoVertexZ extends TMXFixBugLayer {
@@ -53,7 +53,7 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
         map.y = 0;
 
         // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
-        // can use any cc.Sprite and it will work OK.
+        // can use any Sprite and it will work OK.
         var layer = map.getLayer("Trees");
         this.tamara = layer.getTileAt(new Point(29, 29));
 
@@ -63,7 +63,7 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
         var seq = sequence(move, delay, back);
         this.tamara.runAction(seq.repeatForever());
 
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
+        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
             var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
@@ -80,16 +80,16 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
     }
     onEnter() {
         super.onEnter();
-        director.setProjection(cc.Director.PROJECTION_2D);
+        director.setProjection(Director.PROJECTION_2D);
         director.setDepthTest(true);
     }
     onExit() {
-        director.setProjection(cc.Director.PROJECTION_DEFAULT);
+        director.setProjection(Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
         super.onExit();
     }
     repositionSprite(dt) {
-        if (cc.sys.isNative) {
+        if (Sys.getInstance().isNative) {
             this.tamara.vertexZ = -(this.tamara.y + 32) / 16;
         }
         else {

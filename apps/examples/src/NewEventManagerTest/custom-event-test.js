@@ -27,7 +27,8 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { LabelTTF } from "@aspect/core";
+import { EventListener, EventManager, LabelTTF } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class CustomEventTest extends EventDispatcherTestDemo {
   constructor() {
@@ -46,7 +47,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       size = director.getVisibleSize(),
       selfPointer = this;
 
-    cc.MenuItemFont.setFontSize(20);
+    MenuItemFont.setFontSize(20);
 
     var statusLabel = new LabelTTF("No custom event 1 received!", "", 20);
     statusLabel.setPosition(
@@ -55,8 +56,8 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     );
     this.addChild(statusLabel);
 
-    this._listener1 = cc.EventListener.create({
-      event: cc.EventListener.CUSTOM,
+    this._listener1 = EventListener.create({
+      event: EventListener.CUSTOM,
       eventName: "game_custom_event1",
       callback: function (event) {
         statusLabel.setString(
@@ -64,15 +65,15 @@ export class CustomEventTest extends EventDispatcherTestDemo {
         );
       }
     });
-    cc.eventManager.addListener(this._listener1, 1);
+    EventManager.getInstance().addListener(this._listener1, 1);
 
-    var sendItem = new cc.MenuItemFont("Send Custom Event 1", function (
+    var sendItem = new MenuItemFont("Send Custom Event 1", function (
       sender
     ) {
       ++selfPointer._item1Count;
       var event = new cc.EventCustom("game_custom_event1");
       event.setUserData(selfPointer._item1Count.toString());
-      cc.eventManager.dispatchEvent(event);
+      EventManager.getInstance().dispatchEvent(event);
     });
     sendItem.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
 
@@ -83,8 +84,8 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     );
     this.addChild(statusLabel2);
 
-    this._listener2 = cc.EventListener.create({
-      event: cc.EventListener.CUSTOM,
+    this._listener2 = EventListener.create({
+      event: EventListener.CUSTOM,
       eventName: "game_custom_event2",
       callback: function (event) {
         statusLabel2.setString(
@@ -93,21 +94,21 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       }
     });
 
-    cc.eventManager.addListener(this._listener2, 1);
-    var sendItem2 = new cc.MenuItemFont("Send Custom Event 2", function (
+    EventManager.getInstance().addListener(this._listener2, 1);
+    var sendItem2 = new MenuItemFont("Send Custom Event 2", function (
       sender
     ) {
       ++selfPointer._item2Count;
       var event = new cc.EventCustom("game_custom_event2");
       event.setUserData(selfPointer._item2Count.toString());
-      cc.eventManager.dispatchEvent(event);
+      EventManager.getInstance().dispatchEvent(event);
     });
     sendItem2.setPosition(
       origin.x + size.width / 2,
       origin.x + size.height / 2 - 40
     );
 
-    var menu = new cc.Menu(sendItem, sendItem2);
+    var menu = new Menu(sendItem, sendItem2);
     menu.setPosition(0, 0);
     menu.setAnchorPoint(0, 0);
     this.addChild(menu, 1);
@@ -116,8 +117,8 @@ export class CustomEventTest extends EventDispatcherTestDemo {
 
   onExit() {
     //----start3----onExit
-    cc.eventManager.removeListener(this._listener1);
-    cc.eventManager.removeListener(this._listener2);
+    EventManager.getInstance().removeListener(this._listener1);
+    EventManager.getInstance().removeListener(this._listener2);
     super.onExit();
     //----end3----
   }

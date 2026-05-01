@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, EventListener, EventManager, LayerColor, Sys } from "@aspect/core";
 
 export class LayerTest1 extends LayerTest {
   constructor() {
@@ -44,20 +44,20 @@ export class LayerTest1 extends LayerTest {
     //----start0----onEnter
     super.onEnter();
 
-    if ("touches" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             event.getCurrentTarget().updateSize(touches[0].getLocation());
           }
         },
         this
       );
-    else if ("mouse" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    else if ("mouse" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseMove: function (event) {
             if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().updateSize(event.getLocation());
@@ -67,7 +67,7 @@ export class LayerTest1 extends LayerTest {
       );
 
     var s = director.getWinSize();
-    var layer = new cc.LayerColor(new Color(255, 0, 0, 128));
+    var layer = new LayerColor(new Color(255, 0, 0, 128));
 
     layer.ignoreAnchor = false;
     layer.anchorX = 0.5;

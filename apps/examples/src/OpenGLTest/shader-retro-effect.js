@@ -31,18 +31,19 @@
 
 // Fix me:
 // The implemetation of LabelBMFont is quite defferent between html5 and native
-// That is why we use 'if (cc.sys.isNative){...}else{...}' in this test case
+// That is why we use 'if (sys.isNative){...}else{...}' in this test case
 // It should be fixed in the future.
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { LabelBMFont } from "@aspect/labels";
+import { Sys } from "@aspect/core";
 
 export class ShaderRetroEffect extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in Sys.getInstance().capabilities ) {
             var program = new cc.GLProgram(ccbjs + "Shaders/example_ColorBars.vsh", ccbjs + "Shaders/example_ColorBars.fsh");
             program.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
             program.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
@@ -51,7 +52,7 @@ export class ShaderRetroEffect extends OpenGLTestLayer {
 
             var label = new LabelBMFont("RETRO EFFECT","fonts/west_england-64.fnt");
             
-            if(cc.sys.isNative)
+            if(Sys.getInstance().isNative)
                 label.children[0].shaderProgram = program;
             else
                 label.shaderProgram = program;
@@ -70,7 +71,7 @@ export class ShaderRetroEffect extends OpenGLTestLayer {
     update(dt) {
         this.accum += dt;
 
-        if(cc.sys.isNative){
+        if(Sys.getInstance().isNative){
             var letters = this.label.children[0];
             for(var i = 0; i< letters.getStringLength(); ++i){
                 var sprite = letters.getLetter(i);

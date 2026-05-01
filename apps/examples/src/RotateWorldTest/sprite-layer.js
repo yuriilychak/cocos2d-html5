@@ -27,7 +27,7 @@
 
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
-import { Layer, Point } from "@aspect/core";
+import { Layer, Point, Sprite } from "@aspect/core";
 import { JumpBy, RotateBy, sequence } from "@aspect/actions";
 
 export class SpriteLayer extends Layer {
@@ -45,9 +45,9 @@ export class SpriteLayer extends Layer {
         x = size.width;
         y = size.height;
 
-        var sprite = new cc.Sprite(s_pathGrossini);
-        var spriteSister1 = new cc.Sprite(s_pathSister1);
-        var spriteSister2 = new cc.Sprite(s_pathSister2);
+        var sprite = new Sprite(s_pathGrossini);
+        var spriteSister1 = new Sprite(s_pathSister1);
+        var spriteSister2 = new Sprite(s_pathSister2);
 
         sprite.scale = 1.5;
         spriteSister1.scale = 1.5;

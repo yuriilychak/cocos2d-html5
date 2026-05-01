@@ -31,7 +31,7 @@ export class FlipYTest extends EffectsBaseLayer {
     return "FlipY3D";
   }
   code() {
-    return "a = cc.flipY3D(duration )";
+    return "a = flipY3D(duration )";
   }
   getEffect(duration) {
     var a = cc.flipY3D(duration);

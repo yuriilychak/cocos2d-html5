@@ -29,6 +29,7 @@ import { ParticleDemo } from "./particle-demo";
 import { s_resprefix } from "../resources";
 import { winSize } from "../constants";
 import { Color } from "@aspect/core";
+import { ParticleBatchNode, ParticleSystem } from "@aspect/particle";
 
 export class ParticleBatchTest extends ParticleDemo {
     constructor() {
@@ -39,11 +40,11 @@ export class ParticleBatchTest extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        var emitter1 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
+        var emitter1 = new ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
         emitter1.startColor = new Color(255, 0, 0, 255);
-        var emitter2 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
+        var emitter2 = new ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
         emitter2.startColor = new Color(0, 255, 0, 255);
-        var emitter3 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
+        var emitter3 = new ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
         emitter3.startColor = new Color(0, 0, 255, 255);
 
         emitter1.x = winSize.width / 1.25;
@@ -54,7 +55,7 @@ export class ParticleBatchTest extends ParticleDemo {
         emitter3.x = winSize.width / 4;
         emitter3.y = winSize.height / 4;
 
-        var batch = new cc.ParticleBatchNode(emitter1.texture);
+        var batch = new ParticleBatchNode(emitter1.texture);
 
         batch.addChild(emitter1);
         batch.addChild(emitter2);

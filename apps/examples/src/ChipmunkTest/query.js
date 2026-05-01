@@ -29,7 +29,8 @@
 //------------------------------------------------------------------
 import { ChipmunkDemo } from "./chipmunk-demo";
 import { v } from "./chipmunk-test-helpers";
-import { Point, Color } from "@aspect/core";
+import { Color, EventListener, EventManager, Point, Sys, log } from "@aspect/core";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class Query extends ChipmunkDemo {
   constructor() {
@@ -39,21 +40,21 @@ export class Query extends ChipmunkDemo {
     this._subtitle = "Chipmunk Demo";
     this._title = "Query";
 
-    this.drawNode = new cc.DrawNode();
+    this.drawNode = new DrawNode();
     this.addChild(this.drawNode, 10);
 
-    if ("mouse" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("mouse" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseMove: this.drawQuery
         },
         this
       );
-    } else if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    } else if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ONE_BY_ONE,
+          event: EventListener.TOUCH_ONE_BY_ONE,
           swallowTouches: true,
           onTouchBegan: function () {
             return true;
@@ -169,7 +170,7 @@ export class Query extends ChipmunkDemo {
       // Draw a little red dot on the hit point.
       drawNode.drawDot(info.point, 3, new Color(255, 0, 0, 255));
 
-      cc.log(
+      log(
         "Segment Query: Dist(" +
           info.alpha * cp.v.dist(start, end) +
           ") Normal:(" +
@@ -182,7 +183,7 @@ export class Query extends ChipmunkDemo {
       // Draw a fat green line over the unoccluded part of the query
       // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, new Color(0,255,0,255));
     } else {
-      cc.log("Segment Query (None)");
+      log("Segment Query (None)");
     }
 
     var nearestInfo = target.space.pointQueryNearest(

@@ -28,7 +28,7 @@
 
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_pathR1, s_streak } from "../resources";
-import { Point, Color } from "@aspect/core";
+import { Color, Director, Point, Sprite } from "@aspect/core";
 import { MoveBy, RotateBy, TintTo, sequence } from "@aspect/actions";
 
 export class MotionStreakTest1 extends MotionStreakTest {
@@ -41,15 +41,15 @@ export class MotionStreakTest1 extends MotionStreakTest {
   onEnter() {
     super.onEnter();
 
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     // the root object just rotates around
-    this._root = new cc.Sprite(s_pathR1);
+    this._root = new Sprite(s_pathR1);
     this.addChild(this._root, 1);
     this._root.x = winSize.width / 2;
     this._root.y = winSize.height / 2;
 
     // the target object is offset from root, and the streak is moved to follow it
-    this._target = new cc.Sprite(s_pathR1);
+    this._target = new Sprite(s_pathR1);
     this._root.addChild(this._target);
     this._target.x = winSize.width / 4;
     this._target.y = 0;

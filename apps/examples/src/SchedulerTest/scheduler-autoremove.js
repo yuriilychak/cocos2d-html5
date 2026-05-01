@@ -29,6 +29,7 @@
     SchedulerAutoremove
 */
 import { SchedulerTestLayer } from "./scheduler-test-layer";
+import { log } from "@aspect/core";
 
 export class SchedulerAutoremove extends SchedulerTestLayer {
   constructor() {
@@ -55,15 +56,15 @@ export class SchedulerAutoremove extends SchedulerTestLayer {
   onAutoremove(dt) {
     //----start0----onAutoremove
     this._accum += dt;
-    cc.log("Time: " + this._accum);
+    log("Time: " + this._accum);
 
     if (this._accum > 3) {
       this.unschedule(this.onAutoremove);
-      cc.log("scheduler removed");
+      log("scheduler removed");
     }
     //----end0----
   }
   onTick(dt) {
-    cc.log("This scheduler should not be removed");
+    log("This scheduler should not be removed");
   }
 }

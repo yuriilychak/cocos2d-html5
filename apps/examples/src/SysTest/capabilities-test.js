@@ -30,6 +30,7 @@
 //
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
+import { Sys, log } from "@aspect/core";
 
 export class CapabilitiesTest extends SysTestBase {
   constructor() {
@@ -39,7 +40,7 @@ export class CapabilitiesTest extends SysTestBase {
 
     this._subtitle = "See the console";
 
-    var c = cc.sys.capabilities;
-    for (var i in c) cc.log(i + " = " + c[i]);
+    var c = Sys.getInstance().capabilities;
+    for (var i in c) log(i + " = " + c[i]);
   }
 }

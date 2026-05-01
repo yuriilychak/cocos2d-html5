@@ -41,7 +41,8 @@ import {
   winSize
 } from "./constants";
 import { LINE_SPACE, curPos, testNames } from "./tests-main-helpers";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, Game, LabelTTF, Sys } from "@aspect/core";
+import { Menu, MenuItemFont, MenuItemImage, MenuItemLabel, MenuItemToggle } from "@aspect/menus";
 
 export class TestController extends cc.LayerGradient {
   constructor() {
@@ -53,10 +54,10 @@ export class TestController extends cc.LayerGradient {
 
     this.isMouseDown = false;
 
-    var winSizeLocal = cc.director.getWinSize();
+    var winSizeLocal = Director.getInstance().getWinSize();
 
     // add close menu
-    var closeItem = new cc.MenuItemImage(
+    var closeItem = new MenuItemImage(
       s_pathClose,
       s_pathClose,
       this.onCloseCallback,
@@ -65,19 +66,19 @@ export class TestController extends cc.LayerGradient {
     closeItem.x = winSizeLocal.width - 30;
     closeItem.y = winSizeLocal.height - 30;
 
-    var subItem1 = new cc.MenuItemFont("Automated Test: Off");
+    var subItem1 = new MenuItemFont("Automated Test: Off");
     subItem1.fontSize = 18;
-    var subItem2 = new cc.MenuItemFont("Automated Test: On");
+    var subItem2 = new MenuItemFont("Automated Test: On");
     subItem2.fontSize = 18;
 
-    var toggleAutoTestItem = new cc.MenuItemToggle(subItem1, subItem2);
+    var toggleAutoTestItem = new MenuItemToggle(subItem1, subItem2);
     toggleAutoTestItem.setCallback(this.onToggleAutoTest, this);
     toggleAutoTestItem.x = winSize.width - toggleAutoTestItem.width / 2 - 10;
     toggleAutoTestItem.y = 20;
     toggleAutoTestItem.setVisible(false);
     if (autoTestEnabled) toggleAutoTestItem.setSelectedIndex(1);
 
-    var menu = new cc.Menu(closeItem, toggleAutoTestItem); //pmenu is just a holder for the close button
+    var menu = new Menu(closeItem, toggleAutoTestItem); //pmenu is just a holder for the close button
     menu.x = 0;
     menu.y = 0;
 
@@ -90,7 +91,7 @@ export class TestController extends cc.LayerGradient {
     });
 
     // add menu items for tests
-    this._itemMenu = new cc.Menu(); //item menu is where all the label goes, and the one gets scrolled
+    this._itemMenu = new Menu(); //item menu is where all the label goes, and the one gets scrolled
 
     for (var i = 0, len = testNames.length; i < len; i++) {
       var label = new LabelTTF(
@@ -98,13 +99,13 @@ export class TestController extends cc.LayerGradient {
         "Arial",
         24
       );
-      var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
+      var menuItem = new MenuItemLabel(label, this.onMenuCallback, this);
       this._itemMenu.addChild(menuItem, i + 10000);
       menuItem.x = winSize.width / 2;
       menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
 
       // enable disable
-      if (!cc.sys.isNative) {
+      if (!Sys.getInstance().isNative) {
         if (!cc.rendererConfig.isCanvas) {
           menuItem.enabled =
             (testNames[i].platforms & PLATFORM_HTML5) |
@@ -113,15 +114,15 @@ export class TestController extends cc.LayerGradient {
           menuItem.setEnabled(testNames[i].platforms & PLATFORM_HTML5);
         }
       } else {
-        if (cc.sys.os == cc.sys.OS_ANDROID) {
+        if (Sys.getInstance().os == Sys.getInstance().OS_ANDROID) {
           menuItem.setEnabled(
             testNames[i].platforms & (PLATFORM_JSB | PLATFROM_ANDROID)
           );
-        } else if (cc.sys.os == cc.sys.OS_IOS) {
+        } else if (Sys.getInstance().os == Sys.getInstance().OS_IOS) {
           menuItem.setEnabled(
             testNames[i].platforms & (PLATFORM_JSB | PLATFROM_IOS)
           );
-        } else if (cc.sys.os == cc.sys.OS_OSX) {
+        } else if (Sys.getInstance().os == Sys.getInstance().OS_OSX) {
           menuItem.setEnabled(
             testNames[i].platforms & (PLATFORM_JSB | PLATFORM_MAC)
           );
@@ -140,10 +141,10 @@ export class TestController extends cc.LayerGradient {
 
     // 'browser' can use touches or mouse.
     // The benefit of using 'touches' in a browser, is that it works both with mouse events or touches events
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var target = event.getCurrentTarget();
             var delta = touches[0].getDelta();
@@ -153,16 +154,16 @@ export class TestController extends cc.LayerGradient {
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseMove: function (event) {
             if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().moveMenu(event.getDelta());
           },
           onMouseScroll: function (event) {
-            var delta = cc.sys.isNative
+            var delta = Sys.getInstance().isNative
               ? event.getScrollY() * 6
               : -event.getScrollY();
             event.getCurrentTarget().moveMenu({ y: delta });
@@ -199,8 +200,8 @@ export class TestController extends cc.LayerGradient {
     );
   }
   onCloseCallback() {
-    if (cc.sys.isNative) {
-      cc.game.end();
+    if (Sys.getInstance().isNative) {
+      Game.getInstance().end();
     } else {
       window.history && window.history.go(-1);
     }

@@ -34,6 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
 import { Blink } from "@aspect/actions";
+import { Node, Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteChildrenVisibility extends SpriteTestDemo {
 
@@ -59,7 +60,7 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
 
         this.visible2 = null;
 
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
         //
         // SpriteBatchNode
         //
@@ -69,15 +70,15 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        var sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -90,20 +91,20 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
         //
         // Sprite
         //
-        aParent = new cc.Node();
+        aParent = new Node();
         aParent.x = 2 * winSize.width / 3;
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 

@@ -1,6 +1,7 @@
-// cc.GLNode polyfill — required by ShaderNode and tests that instantiate
-// `new cc.GLNode()`. Imported for side effects from any file that needs it.
-cc.GLNode = cc.GLNode || class GLNode extends cc.Node {
+import { Node } from "@aspect/core";
+// GLNode polyfill — required by ShaderNode and tests that instantiate
+// `new GLNode()`. Imported for side effects from any file that needs it.
+cc.GLNode = cc.GLNode || class GLNode extends Node {
     constructor() {
         super();
         this.init();

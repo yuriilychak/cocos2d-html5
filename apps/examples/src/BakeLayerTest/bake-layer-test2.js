@@ -27,7 +27,8 @@
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini, s_pathSister1 } from "../resources";
-import { Layer } from "@aspect/core";
+import { Layer, Sprite } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class BakeLayerTest2 extends BakeLayerBaseTest {
   title() {
@@ -44,19 +45,19 @@ export class BakeLayerTest2 extends BakeLayerBaseTest {
     this._bakeLayer = null;
 
     var winSize = cc.winSize;
-    var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
-    var unbakeItem = new cc.MenuItemFont("unbake", this.onUnbake, this);
-    var chTopItem = new cc.MenuItemFont(
+    var bakeItem = new MenuItemFont("bake", this.onBake, this);
+    var unbakeItem = new MenuItemFont("unbake", this.onUnbake, this);
+    var chTopItem = new MenuItemFont(
       "change top layer",
       this.onChangeZOrder,
       this
     );
-    var chBakeItem = new cc.MenuItemFont(
+    var chBakeItem = new MenuItemFont(
       "change bake layer",
       this.onChangeBakeZOrder,
       this
     );
-    var menu = new cc.Menu(bakeItem, unbakeItem, chTopItem, chBakeItem);
+    var menu = new Menu(bakeItem, unbakeItem, chTopItem, chBakeItem);
 
     menu.alignItemsVertically();
     menu.x = winSize.width - 70;
@@ -73,7 +74,7 @@ export class BakeLayerTest2 extends BakeLayerBaseTest {
     rootLayer.addChild(bakeLayer);
 
     for (var i = 0; i < 9; i++) {
-      var sprite1 = new cc.Sprite(s_pathGrossini);
+      var sprite1 = new Sprite(s_pathGrossini);
       if (i % 2 === 0) {
         sprite1.setPosition(50 + i * 30, winSize.height / 2 - 150);
       } else {
@@ -89,7 +90,7 @@ export class BakeLayerTest2 extends BakeLayerBaseTest {
     rootLayer.addChild(normalLayer);
 
     for (var i = 0; i < 9; i++) {
-      var sprite1 = new cc.Sprite(s_pathSister1);
+      var sprite1 = new Sprite(s_pathSister1);
       if (i % 2 === 0) {
         sprite1.setPosition(400 + i * 40, winSize.height / 2 - 50);
       } else {

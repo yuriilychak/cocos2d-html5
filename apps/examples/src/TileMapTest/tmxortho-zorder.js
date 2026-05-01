@@ -33,7 +33,7 @@
 import { s_pathSister1, s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
-import { Point } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
 import { MoveBy, sequence } from "@aspect/actions";
 
 export class TMXOrthoZorder extends TileDemo {
@@ -52,7 +52,7 @@ export class TMXOrthoZorder extends TileDemo {
     );
     this.addChild(map, 0, TAG_TILE_MAP);
 
-    this.tamara = new cc.Sprite(s_pathSister1);
+    this.tamara = new Sprite(s_pathSister1);
     map.addChild(this.tamara, map.children.length, TAG_TILE_MAP);
     this.tamara.anchorX = 0.5;
     this.tamara.anchorY = 0;

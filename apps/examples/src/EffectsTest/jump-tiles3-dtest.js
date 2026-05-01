@@ -31,7 +31,7 @@ export class JumpTiles3DTest extends EffectsBaseLayer {
     return "JumpTiles3D";
   }
   code() {
-    return "a = cc.jumpTiles3D(duration, gridSize, jumps, amplitude)";
+    return "a = jumpTiles3D(duration, gridSize, jumps, amplitude)";
   }
   getEffect(duration) {
     var action = cc.jumpTiles3D(duration, new Size(16, 12), 2, 30);

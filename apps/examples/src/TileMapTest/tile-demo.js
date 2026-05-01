@@ -40,15 +40,16 @@ import {
   restartTileMapTest
 } from "./tile-map-test-helpers";
 import { TileMapTestScene } from "./tile-map-test-scene";
+import { EventListener, EventManager, Sys } from "@aspect/core";
 
 export class TileDemo extends BaseTestLayer {
   constructor() {
     super();
 
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var touch = touches[0];
             var delta = touch.getDelta();
@@ -60,10 +61,10 @@ export class TileDemo extends BaseTestLayer {
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseMove: function (event) {
             if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);

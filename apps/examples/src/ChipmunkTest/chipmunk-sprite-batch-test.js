@@ -29,11 +29,12 @@
 //------------------------------------------------------------------
 import { ChipmunkSprite } from "./chipmunk-sprite";
 import { s_pathGrossini } from "../resources";
+import { Sprite } from "@aspect/core";
 
 export class ChipmunkSpriteBatchTest extends ChipmunkSprite {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
 
     // batch node
     this.batch = new cc.SpriteBatchNode(s_pathGrossini, 50);
@@ -41,7 +42,7 @@ export class ChipmunkSpriteBatchTest extends ChipmunkSprite {
 
     this.addSprite = function (pos) {
       var sprite = this.createPhysicsSprite(pos);
-      var child = new cc.Sprite(s_pathGrossini);
+      var child = new Sprite(s_pathGrossini);
       child.attr({
         scale: 0.4,
         anchorX: 0,

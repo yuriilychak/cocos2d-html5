@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Rect } from "@aspect/core";
+import { Director, EventListener, EventManager, Rect, Sprite, log, visibleRect } from "@aspect/core";
 
 export class GlobalZTouchTest extends EventDispatcherTestDemo {
   constructor() {
@@ -36,8 +36,8 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
 
     this._accum = null;
 
-    var listener = cc.EventListener.create({
-      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+    var listener = EventListener.create({
+      event: EventListener.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         var target = event.getCurrentTarget();
@@ -47,7 +47,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
         var rect = new Rect(0, 0, s.width, s.height);
 
         if (Rect.containsPoint(rect, locationInNode)) {
-          cc.log(
+          log(
             "sprite began... x = %f, y = %f",
             locationInNode.x,
             locationInNode.y
@@ -64,7 +64,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
         target.y += delta.y;
       },
       onTouchEnded: function (touch, event) {
-        cc.log("sprite onTouchesEnded.. ");
+        log("sprite onTouchesEnded.. ");
         event.getCurrentTarget().setOpacity(255);
       }
     });
@@ -73,18 +73,18 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
       sprite;
     for (var i = 0; i < SPRITE_COUNT; i++) {
       if (i == 4) {
-        sprite = new cc.Sprite("Images/CyanSquare.png");
+        sprite = new Sprite("Images/CyanSquare.png");
         this._sprite = sprite;
         this._sprite.setGlobalZOrder(-1);
-      } else sprite = new cc.Sprite("Images/YellowSquare.png");
+      } else sprite = new Sprite("Images/YellowSquare.png");
 
-      cc.eventManager.addListener(listener.clone(), sprite);
+      EventManager.getInstance().addListener(listener.clone(), sprite);
       this.addChild(sprite);
 
-      var visibleSize = cc.director.getVisibleSize();
+      var visibleSize = Director.getInstance().getVisibleSize();
       sprite.x =
-        cc.visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
-      sprite.y = cc.visibleRect.center.y;
+        visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
+      sprite.y = visibleRect.center.y;
     }
 
     this.scheduleUpdate();

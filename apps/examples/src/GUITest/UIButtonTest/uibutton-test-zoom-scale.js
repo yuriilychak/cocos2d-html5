@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { log } from "@aspect/core";
 
 export class UIButtonTestZoomScale extends UIMainLayer {
   init() {
@@ -43,7 +44,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
       button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
       button.setPressedActionEnabled(true);
       button.addClickEventListener(function () {
-        cc.log(
+        log(
           "Button clicked, position = (" + button.x + ", " + button.y + ")"
         );
       });

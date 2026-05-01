@@ -29,6 +29,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Color } from "@aspect/core";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class TMXGIDObjectsTest extends TileDemo {
   constructor() {
@@ -36,7 +37,7 @@ export class TMXGIDObjectsTest extends TileDemo {
 
     this.testObjects = [];
 
-    var drawNode = new cc.DrawNode();
+    var drawNode = new DrawNode();
     drawNode.setLineWidth(3);
     drawNode.setDrawColor(new Color(255, 255, 255, 255));
     this.addChild(drawNode);

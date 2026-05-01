@@ -34,7 +34,7 @@ import {
   TRANSITION_DURATION
 } from "./transitions-test-constants";
 import { TransitionsTestScene } from "./transitions-test-scene";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, LabelTTF, Sprite } from "@aspect/core";
 
 export class TransitionBase extends BaseTestLayer {
   title() {
@@ -52,7 +52,7 @@ export class TransitionBase extends BaseTestLayer {
     x = size.width;
     y = size.height;
 
-    var bg1 = new cc.Sprite(this.backgroundImage);
+    var bg1 = new Sprite(this.backgroundImage);
     bg1.x = size.width / 2;
     bg1.y = size.height / 2;
     bg1.scale = 1.7;

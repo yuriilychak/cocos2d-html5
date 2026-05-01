@@ -28,7 +28,7 @@ import { nextEffectsTest, previousEffectsTest, restartEffectsTest } from "./effe
 import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
-import { Size, Color, Rect } from "@aspect/core";
+import { Color, Node, Rect, Size, Sprite } from "@aspect/core";
 import { ScaleBy, sequence } from "@aspect/actions";
 
 export class PageTurn3DInRectTest extends BaseTestLayer {
@@ -36,7 +36,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
         return "PageTurn3DInRectTest";
     }
     code() {
-        return "a = cc.pageTurn3D(duration, gridSize)";
+        return "a = pageTurn3D(duration, gridSize)";
     }
     // callbacks
     onRestartCallback(sender) {
@@ -57,7 +57,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     onEnter(){
         super.onEnter();
 
-        //var node = new cc.Node();
+        //var node = new Node();
         var visiableSize = director.getVisibleSize();
         var gridRect = new Rect(visiableSize.width*0.1,
             visiableSize.height*0.1,
@@ -73,17 +73,17 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
         gridNodeTarget.addChild( background );
 
         // back image
-        var bg = new cc.Sprite(s_back3);
+        var bg = new Sprite(s_back3);
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         gridNodeTarget.addChild( bg );
 
-        var sister1 = new cc.Sprite(s_pathSister1);
+        var sister1 = new Sprite(s_pathSister1);
         sister1.x = winSize.width/3;
         sister1.y = winSize.height/2;
         gridNodeTarget.addChild( sister1, 1 );
 
-        var sister2 = new cc.Sprite(s_pathSister2);
+        var sister2 = new Sprite(s_pathSister2);
         sister2.x = winSize.width*2/3;
         sister2.y = winSize.height/2;
         gridNodeTarget.addChild( sister2, 1 );

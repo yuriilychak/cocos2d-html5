@@ -44,7 +44,7 @@ export class SpriteEaseSineInOut extends EaseSpriteDemo {
     var move_back = move.reverse();
 
     //old api
-    //var move_ease = cc.EaseSineInOutmove.clone());
+    //var move_ease = EaseSineInOutmove.clone());
 
     var move_ease = move.clone().easing(easeSineInOut());
     var move_ease_back = move_ease.reverse();

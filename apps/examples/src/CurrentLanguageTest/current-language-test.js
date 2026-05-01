@@ -24,14 +24,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-import { LabelTTF, Layer } from "@aspect/core";
+import { Director, LabelTTF, Layer, Sys } from "@aspect/core";
 
 
 export class CurrentLanguageTest extends Layer {
     constructor() {
         super();
 
-        var s = cc.director.getWinSize();
+        var s = Director.getInstance().getWinSize();
         var label = new LabelTTF("Current language Test", "Arial", 28);
         this.addChild(label, 0);
         label.x = s.width / 2;
@@ -41,27 +41,27 @@ export class CurrentLanguageTest extends Layer {
         labelLanguage.x = s.width / 2;
 	    labelLanguage.y = s.height / 2;
 
-        var currentLanguageType = cc.sys.language;
+        var currentLanguageType = Sys.getInstance().language;
         switch (currentLanguageType) {
-            case cc.sys.LANGUAGE_ENGLISH:
+            case Sys.getInstance().LANGUAGE_ENGLISH:
                 labelLanguage.setString("current language is English");
                 break;
-            case cc.sys.LANGUAGE_CHINESE:
+            case Sys.getInstance().LANGUAGE_CHINESE:
                 labelLanguage.setString("current language is Chinese");
                 break;
-            case cc.sys.LANGUAGE_FRENCH:
+            case Sys.getInstance().LANGUAGE_FRENCH:
                 labelLanguage.setString("current language is French");
                 break;
-            case cc.sys.LANGUAGE_GERMAN:
+            case Sys.getInstance().LANGUAGE_GERMAN:
                 labelLanguage.setString("current language is German");
                 break;
-            case cc.sys.LANGUAGE_ITALIAN:
+            case Sys.getInstance().LANGUAGE_ITALIAN:
                 labelLanguage.setString("current language is Italian");
                 break;
-            case cc.sys.LANGUAGE_RUSSIAN:
+            case Sys.getInstance().LANGUAGE_RUSSIAN:
                 labelLanguage.setString("current language is Russian");
                 break;
-            case cc.sys.LANGUAGE_SPANISH:
+            case Sys.getInstance().LANGUAGE_SPANISH:
                 labelLanguage.setString("current language is Spanish");
                 break;
         }

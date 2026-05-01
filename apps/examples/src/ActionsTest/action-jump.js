@@ -68,7 +68,7 @@ export class ActionJump extends ActionsDemo {
     //----end7----
   }
   title() {
-    return "cc.jumpTo / cc.jumpBy";
+    return "jumpTo / jumpBy";
   }
   subtitle() {
     return "Actions will stop for 0.25s after 2 seconds";

@@ -31,8 +31,9 @@ import {
   TAG_STENCILNODE
 } from "./clipping-node-test-constants";
 import { s_pathGrossini } from "../resources";
-import { Point, Color } from "@aspect/core";
+import { Color, Director, Point, Sprite } from "@aspect/core";
 import { RotateBy, ScaleBy, sequence } from "@aspect/actions";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class BasicTest extends BaseClippingNodeTest {
   title() {
@@ -44,7 +45,7 @@ export class BasicTest extends BaseClippingNodeTest {
   }
 
   setup() {
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var stencil = this.stencil();
     stencil.tag = TAG_STENCILNODE;
@@ -79,7 +80,7 @@ export class BasicTest extends BaseClippingNodeTest {
   }
 
   shape() {
-    var shape = new cc.DrawNode();
+    var shape = new DrawNode();
     var triangle = [
       new Point(-100, -100),
       new Point(100, -100),
@@ -92,7 +93,7 @@ export class BasicTest extends BaseClippingNodeTest {
   }
 
   grossini() {
-    var grossini = new cc.Sprite(s_pathGrossini);
+    var grossini = new Sprite(s_pathGrossini);
     grossini.scale = 1.5;
     return grossini;
   }

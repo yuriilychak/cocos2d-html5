@@ -24,22 +24,23 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-import { Layer } from "@aspect/core";
+import { Director, Layer, log } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 
 export class MenuBugsTest extends Layer {
      constructor(){
          super();
 
-         var issue1410 = new cc.MenuItemFont("Issue 1410", this.onIssue1410MenuCallback, this);
-         var issue1410_2 = new cc.MenuItemFont("Issue 1410 #2", this.onIssue1410v2MenuCallback, this);
-         var back = new cc.MenuItemFont("Back", this.onBackMenuCallback, this);
+         var issue1410 = new MenuItemFont("Issue 1410", this.onIssue1410MenuCallback, this);
+         var issue1410_2 = new MenuItemFont("Issue 1410 #2", this.onIssue1410v2MenuCallback, this);
+         var back = new MenuItemFont("Back", this.onBackMenuCallback, this);
 
-         var menu = new cc.Menu(issue1410, issue1410_2, back);
+         var menu = new Menu(issue1410, issue1410_2, back);
          this.addChild(menu);
          menu.alignItemsVertically();
 
-         var s = cc.director.getWinSize();
+         var s = Director.getInstance().getWinSize();
          menu.x = s.width/2;
          menu.y = s.height/2;
      }
@@ -49,7 +50,7 @@ export class MenuBugsTest extends Layer {
         menu.setEnabled(false);
         menu.setEnabled(true);
 
-        cc.log("NO CRASHES");
+        log("NO CRASHES");
     }
 
     onIssue1410v2MenuCallback(sender){
@@ -57,7 +58,7 @@ export class MenuBugsTest extends Layer {
         menu.setEnabled(true);
         menu.setEnabled(false);
 
-        cc.log("NO CRASHES. AND MENU SHOULD STOP WORKING");
+        log("NO CRASHES. AND MENU SHOULD STOP WORKING");
     }
 
     onBackMenuCallback(sender){

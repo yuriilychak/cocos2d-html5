@@ -25,10 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, Rect } from "@aspect/core";
+import { Color, EventListener, EventManager, Rect, Sprite } from "@aspect/core";
 
 
-export class TouchableSprite extends cc.Sprite {
+export class TouchableSprite extends Sprite {
 
     constructor(priority){
         super();
@@ -52,8 +52,8 @@ export class TouchableSprite extends cc.Sprite {
         super.onEnter();
 
         var selfPointer = this;
-        var listener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        var listener = EventListener.create({
+            event: EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
                 var locationInNode = selfPointer.convertToNodeSpace(touch.getLocation());
@@ -72,21 +72,21 @@ export class TouchableSprite extends cc.Sprite {
             onTouchEnded: function (touch, event) {
                 selfPointer.setColor(Color.WHITE);
                 if(selfPointer._removeListenerOnTouchEnded) {
-                    cc.eventManager.removeListener(selfPointer._listener);
+                    EventManager.getInstance().removeListener(selfPointer._listener);
                     selfPointer._listener = null;
                 }
             }
         });
 
         if(this._fixedPriority != 0)
-            cc.eventManager.addListener(listener, this._fixedPriority);
+            EventManager.getInstance().addListener(listener, this._fixedPriority);
         else
-            cc.eventManager.addListener(listener, this);
+            EventManager.getInstance().addListener(listener, this);
         this._listener = listener;
     }
 
     onExit(){
-        this._listener && cc.eventManager.removeListener(this._listener);
+        this._listener && EventManager.getInstance().removeListener(this._listener);
         super.onExit();
     }
 

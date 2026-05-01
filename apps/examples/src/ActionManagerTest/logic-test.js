@@ -33,7 +33,7 @@
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
 import { CallFunc, MoveBy, ScaleTo, sequence } from "@aspect/actions";
 
 export class LogicTest extends ActionManagerTest {
@@ -49,7 +49,7 @@ export class LogicTest extends ActionManagerTest {
     //----start1----onEnter
     super.onEnter();
 
-    var grossini = new cc.Sprite(s_pathGrossini);
+    var grossini = new Sprite(s_pathGrossini);
     this.addChild(grossini, 0, 2);
     grossini.x = 200;
     grossini.y = 200;

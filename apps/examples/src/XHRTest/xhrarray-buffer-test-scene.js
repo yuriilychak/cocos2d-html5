@@ -27,6 +27,7 @@
 
 import { TestScene } from "../test-scene";
 import { XHRArrayBufferTestLayer } from "./xhrarray-buffer-test-layer";
+import { Director } from "@aspect/core";
 
 export class XHRArrayBufferTestScene extends TestScene {
   constructor() {
@@ -35,7 +36,7 @@ export class XHRArrayBufferTestScene extends TestScene {
     this.addChild(xhrLayer);
   }
   runThisTest() {
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
   MainMenuCallback(sender) {
     super.MainMenuCallback(sender);

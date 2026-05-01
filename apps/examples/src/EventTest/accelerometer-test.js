@@ -31,6 +31,7 @@
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
 import { winSize } from "../constants";
+import { EventListener, EventManager, Sprite, Sys, log } from "@aspect/core";
 
 export class AccelerometerTest extends EventTest {
     constructor() {
@@ -41,19 +42,19 @@ export class AccelerometerTest extends EventTest {
     init() {
         super.init();
 
-        if( 'accelerometer' in cc.sys.capabilities ) {
+        if( 'accelerometer' in Sys.getInstance().capabilities ) {
             var self = this;
             // call is called 30 times per second
             cc.inputManager.setAccelerometerInterval(1/30);
             cc.inputManager.setAccelerometerEnabled(true);
-            cc.eventManager.addListener({
-                event: cc.EventListener.ACCELERATION,
+            EventManager.getInstance().addListener({
+                event: EventListener.ACCELERATION,
                 callback: function(accelEvent, event){
                     var target = event.getCurrentTarget();
                     self._logIndex++;
                     if (self._logIndex > 20)
                     {
-                        cc.log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );    
+                        log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );    
                         self._logIndex = 0;
                     }
                     
@@ -75,7 +76,7 @@ export class AccelerometerTest extends EventTest {
                 }
             }, this);
 
-            var sprite = this.sprite = new cc.Sprite(s_pathR2);
+            var sprite = this.sprite = new Sprite(s_pathR2);
             this.addChild( sprite );
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
@@ -84,13 +85,13 @@ export class AccelerometerTest extends EventTest {
             this.prevX = 0;
             this.prevY = 0;
         } else {
-            cc.log("ACCELEROMETER not supported");
+            log("ACCELEROMETER not supported");
         }
     }
 
     onExit(){
         super.onExit();
-        if( 'accelerometer' in cc.sys.capabilities )
+        if( 'accelerometer' in Sys.getInstance().capabilities )
             cc.inputManager.setAccelerometerEnabled(false);
     }
 

@@ -31,9 +31,11 @@ import { backParticleAction, nextParticleAction, particleSceneArr } from "./part
 import { ParticleTestScene } from "./particle-test-scene";
 import { s_MovementMenuItem, s_back3, s_fpsImages, s_shapeModeMenuItem, s_textureModeMenuItem } from "../resources";
 import { director } from "../constants";
-import { Point, Color, Rect } from "@aspect/core";
+import { Color, EventListener, EventManager, Point, Rect, Sprite, Sys } from "@aspect/core";
 import { LabelAtlas } from "@aspect/labels";
 import { MoveBy, sequence } from "@aspect/actions";
+import { Menu, MenuItemSprite } from "@aspect/menus";
+import { ParticleSystem } from "@aspect/particle";
 
 export class ParticleDemo extends BaseTestLayer {
 
@@ -59,9 +61,9 @@ export class ParticleDemo extends BaseTestLayer {
         this._isPressed = false;
         this._emitter = null;
 
-        if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in Sys.getInstance().capabilities){
+            EventManager.getInstance().addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesBegan:function (touches, event) {
                     event.getCurrentTarget()._moveToTouchPoint(touches[0].getLocation());
                 },
@@ -69,9 +71,9 @@ export class ParticleDemo extends BaseTestLayer {
                     event.getCurrentTarget()._moveToTouchPoint(touches[0].getLocation());
                 }
             }, this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in Sys.getInstance().capabilities)
+            EventManager.getInstance().addListener({
+                event: EventListener.MOUSE,
                 onMouseDown: function(event){
                     event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
                 },
@@ -83,22 +85,22 @@ export class ParticleDemo extends BaseTestLayer {
 
         var s = director.getWinSize();
 
-        var freeBtnNormal = new cc.Sprite(s_MovementMenuItem, new Rect(0, 23 * 2, 123, 23));
-        var freeBtnSelected = new cc.Sprite(s_MovementMenuItem, new Rect(0, 23, 123, 23));
-        var freeBtnDisabled = new cc.Sprite(s_MovementMenuItem, new Rect(0, 0, 123, 23));
+        var freeBtnNormal = new Sprite(s_MovementMenuItem, new Rect(0, 23 * 2, 123, 23));
+        var freeBtnSelected = new Sprite(s_MovementMenuItem, new Rect(0, 23, 123, 23));
+        var freeBtnDisabled = new Sprite(s_MovementMenuItem, new Rect(0, 0, 123, 23));
 
-        var relativeBtnNormal = new cc.Sprite(s_MovementMenuItem, new Rect(123, 23 * 2, 138, 23));
-        var relativeBtnSelected = new cc.Sprite(s_MovementMenuItem, new Rect(123, 23, 138, 23));
-        var relativeBtnDisabled = new cc.Sprite(s_MovementMenuItem, new Rect(123, 0, 138, 23));
+        var relativeBtnNormal = new Sprite(s_MovementMenuItem, new Rect(123, 23 * 2, 138, 23));
+        var relativeBtnSelected = new Sprite(s_MovementMenuItem, new Rect(123, 23, 138, 23));
+        var relativeBtnDisabled = new Sprite(s_MovementMenuItem, new Rect(123, 0, 138, 23));
 
-        var groupBtnNormal = new cc.Sprite(s_MovementMenuItem, new Rect(261, 23 * 2, 136, 23));
-        var groupBtnSelected = new cc.Sprite(s_MovementMenuItem, new Rect(261, 23, 136, 23));
-        var groupBtnDisabled = new cc.Sprite(s_MovementMenuItem, new Rect(261, 0, 136, 23));
+        var groupBtnNormal = new Sprite(s_MovementMenuItem, new Rect(261, 23 * 2, 136, 23));
+        var groupBtnSelected = new Sprite(s_MovementMenuItem, new Rect(261, 23, 136, 23));
+        var groupBtnDisabled = new Sprite(s_MovementMenuItem, new Rect(261, 0, 136, 23));
 
         var selfPoint = this;
-        this._freeMovementButton = new cc.MenuItemSprite(freeBtnNormal, freeBtnSelected, freeBtnDisabled,
+        this._freeMovementButton = new MenuItemSprite(freeBtnNormal, freeBtnSelected, freeBtnDisabled,
             function () {
-                selfPoint._emitter.setPositionType(cc.ParticleSystem.TYPE_RELATIVE);
+                selfPoint._emitter.setPositionType(ParticleSystem.TYPE_RELATIVE);
                 selfPoint._relativeMovementButton.setVisible(true);
                 selfPoint._freeMovementButton.setVisible(false);
                 selfPoint._groupMovementButton.setVisible(false);
@@ -107,9 +109,9 @@ export class ParticleDemo extends BaseTestLayer {
         this._freeMovementButton.y = 150;
         this._freeMovementButton.setAnchorPoint(0, 0);
 
-        this._relativeMovementButton = new cc.MenuItemSprite(relativeBtnNormal, relativeBtnSelected, relativeBtnDisabled,
+        this._relativeMovementButton = new MenuItemSprite(relativeBtnNormal, relativeBtnSelected, relativeBtnDisabled,
             function () {
-                selfPoint._emitter.setPositionType(cc.ParticleSystem.TYPE_GROUPED);
+                selfPoint._emitter.setPositionType(ParticleSystem.TYPE_GROUPED);
                 selfPoint._relativeMovementButton.setVisible(false);
                 selfPoint._freeMovementButton.setVisible(false);
                 selfPoint._groupMovementButton.setVisible(true);
@@ -119,9 +121,9 @@ export class ParticleDemo extends BaseTestLayer {
         this._relativeMovementButton.y = 150;
         this._relativeMovementButton.setAnchorPoint(0, 0);
 
-        this._groupMovementButton = new cc.MenuItemSprite(groupBtnNormal, groupBtnSelected, groupBtnDisabled,
+        this._groupMovementButton = new MenuItemSprite(groupBtnNormal, groupBtnSelected, groupBtnDisabled,
             function () {
-                selfPoint._emitter.setPositionType(cc.ParticleSystem.TYPE_FREE);
+                selfPoint._emitter.setPositionType(ParticleSystem.TYPE_FREE);
                 selfPoint._relativeMovementButton.setVisible(false);
                 selfPoint._freeMovementButton.setVisible(true);
                 selfPoint._groupMovementButton.setVisible(false);
@@ -131,14 +133,14 @@ export class ParticleDemo extends BaseTestLayer {
         this._groupMovementButton.y = 150;
         this._groupMovementButton.setAnchorPoint(0, 0);
 
-        var spriteNormal = new cc.Sprite(s_shapeModeMenuItem, new Rect(0, 23 * 2, 115, 23));
-        var spriteSelected = new cc.Sprite(s_shapeModeMenuItem, new Rect(0, 23, 115, 23));
-        var spriteDisabled = new cc.Sprite(s_shapeModeMenuItem, new Rect(0, 0, 115, 23));
+        var spriteNormal = new Sprite(s_shapeModeMenuItem, new Rect(0, 23 * 2, 115, 23));
+        var spriteSelected = new Sprite(s_shapeModeMenuItem, new Rect(0, 23, 115, 23));
+        var spriteDisabled = new Sprite(s_shapeModeMenuItem, new Rect(0, 0, 115, 23));
 
-        this._shapeModeButton = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled,
+        this._shapeModeButton = new MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled,
             function () {
                 if (selfPoint._emitter.setDrawMode)
-                    selfPoint._emitter.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
+                    selfPoint._emitter.setDrawMode(ParticleSystem.TEXTURE_MODE);
                 selfPoint._textureModeButton.setVisible(true);
                 selfPoint._shapeModeButton.setVisible(false);
             });
@@ -147,14 +149,14 @@ export class ParticleDemo extends BaseTestLayer {
         this._shapeModeButton.y = 100;
         this._shapeModeButton.setAnchorPoint(0, 0);
 
-        var spriteNormal_t = new cc.Sprite(s_textureModeMenuItem, new Rect(0, 23 * 2, 115, 23));
-        var spriteSelected_t = new cc.Sprite(s_textureModeMenuItem, new Rect(0, 23, 115, 23));
-        var spriteDisabled_t = new cc.Sprite(s_textureModeMenuItem, new Rect(0, 0, 115, 23));
+        var spriteNormal_t = new Sprite(s_textureModeMenuItem, new Rect(0, 23 * 2, 115, 23));
+        var spriteSelected_t = new Sprite(s_textureModeMenuItem, new Rect(0, 23, 115, 23));
+        var spriteDisabled_t = new Sprite(s_textureModeMenuItem, new Rect(0, 0, 115, 23));
 
-        this._textureModeButton = new cc.MenuItemSprite(spriteNormal_t, spriteSelected_t, spriteDisabled_t,
+        this._textureModeButton = new MenuItemSprite(spriteNormal_t, spriteSelected_t, spriteDisabled_t,
             function () {
                 if (selfPoint._emitter.setDrawMode)
-                    selfPoint._emitter.setDrawMode(cc.ParticleSystem.SHAPE_MODE);
+                    selfPoint._emitter.setDrawMode(ParticleSystem.SHAPE_MODE);
                 selfPoint._textureModeButton.setVisible(false);
                 selfPoint._shapeModeButton.setVisible(true);
             });
@@ -162,12 +164,12 @@ export class ParticleDemo extends BaseTestLayer {
         this._textureModeButton.y = 100;
         this._textureModeButton.setAnchorPoint(0, 0);
 
-        if ('opengl' in cc.sys.capabilities ) {
+        if ('opengl' in Sys.getInstance().capabilities ) {
             // Shape type is not compatible with JSB
             this._textureModeButton.enabled = false;
         }
 
-        var menu = new cc.Menu( this._shapeModeButton, this._textureModeButton,
+        var menu = new Menu( this._shapeModeButton, this._textureModeButton,
             this._freeMovementButton, this._relativeMovementButton, this._groupMovementButton);
         menu.x = 0;
         menu.y = 0;
@@ -180,7 +182,7 @@ export class ParticleDemo extends BaseTestLayer {
         labelAtlas.y = 50;
 
         // moving background
-        this._background = new cc.Sprite(s_back3);
+        this._background = new Sprite(s_back3);
         this.addChild(this._background, 5);
         this._background.x = s.width / 2;
         this._background.y = s.height - 180;
@@ -221,12 +223,12 @@ export class ParticleDemo extends BaseTestLayer {
         director.runScene(s);
     }
     toggleCallback(sender) {
-        if (this._emitter.getPositionType() == cc.ParticleSystem.TYPE_GROUPED)
-            this._emitter.setPositionType(cc.ParticleSystem.TYPE_FREE);
-        else if (this._emitter.getPositionType() == cc.ParticleSystem.TYPE_FREE)
-            this._emitter.setPositionType(cc.ParticleSystem.TYPE_RELATIVE);
-        else if (this._emitter.getPositionType() == cc.ParticleSystem.TYPE_RELATIVE)
-            this._emitter.setPositionType(cc.ParticleSystem.TYPE_GROUPED);
+        if (this._emitter.getPositionType() == ParticleSystem.TYPE_GROUPED)
+            this._emitter.setPositionType(ParticleSystem.TYPE_FREE);
+        else if (this._emitter.getPositionType() == ParticleSystem.TYPE_FREE)
+            this._emitter.setPositionType(ParticleSystem.TYPE_RELATIVE);
+        else if (this._emitter.getPositionType() == ParticleSystem.TYPE_RELATIVE)
+            this._emitter.setPositionType(ParticleSystem.TYPE_GROUPED);
     }
 
     _moveToTouchPoint(location) {

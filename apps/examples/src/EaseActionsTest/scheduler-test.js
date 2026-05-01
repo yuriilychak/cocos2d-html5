@@ -34,6 +34,7 @@ import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
 import { JumpBy, RotateBy, Speed, sequence, spawn } from "@aspect/actions";
+import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 
 export class SchedulerTest extends EaseSpriteDemo {
   constructor() {
@@ -68,7 +69,7 @@ export class SchedulerTest extends EaseSpriteDemo {
     this._tamara.runAction(action2.speed(1.5));
     this._kathia.runAction(action3.speed(1.0));
 
-    var emitter = new cc.ParticleFireworks();
+    var emitter = new ParticleFireworks();
     emitter.setTotalParticles(250);
     emitter.texture = cc.textureCache.addImage("Images/fire.png");
     this.addChild(emitter);

@@ -33,7 +33,7 @@ import { v } from "./chipmunk-test-helpers";
 export class PyramidStack extends ChipmunkDemo {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
     this._subtitle = "Chipmunk Demo";
     this._title = "Pyramid Stack";
 

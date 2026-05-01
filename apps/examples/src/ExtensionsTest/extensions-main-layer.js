@@ -30,22 +30,23 @@ import {
   LINE_SPACE,
   extensionsTestItemNames
 } from "./extensions-test-constants";
-import { Layer } from "@aspect/core";
+import { Director, Layer } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class ExtensionsMainLayer extends Layer {
   onEnter() {
     super.onEnter();
 
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
-    var pMenu = new cc.Menu();
+    var pMenu = new Menu();
     pMenu.x = 0;
     pMenu.y = 0;
-    cc.MenuItemFont.setFontName("Arial");
-    cc.MenuItemFont.setFontSize(24);
+    MenuItemFont.setFontName("Arial");
+    MenuItemFont.setFontSize(24);
     for (var i = 0; i < extensionsTestItemNames.length; ++i) {
       var selItem = extensionsTestItemNames[i];
-      var pItem = new cc.MenuItemFont(
+      var pItem = new MenuItemFont(
         selItem.itemTitle,
         this.menuCallback,
         this

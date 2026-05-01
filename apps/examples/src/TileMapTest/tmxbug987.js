@@ -33,7 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
-import { Point } from "@aspect/core";
+import { Point, Sys } from "@aspect/core";
 
 export class TMXBug987 extends TileDemo {
   constructor() {
@@ -56,7 +56,7 @@ export class TMXBug987 extends TileDemo {
     for (var i = 0, len = childs.length; i < len; i++) {
       node = childs[i];
       if (!node) break;
-      if ("opengl" in cc.sys.capabilities) node.texture.setAliasTexParameters();
+      if ("opengl" in Sys.getInstance().capabilities) node.texture.setAliasTexParameters();
     }
 
     map.anchorX = 0;

@@ -27,7 +27,7 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { LabelTTF } from "@aspect/core";
+import { LabelTTF, Sys } from "@aspect/core";
 
 export class LabelTTFChinese extends AtlasDemo {
   constructor() {
@@ -35,9 +35,9 @@ export class LabelTTFChinese extends AtlasDemo {
     super();
     var size = director.getWinSize();
     var fontname =
-      cc.sys.os === cc.sys.OS_WP8
+      Sys.getInstance().os === Sys.getInstance().OS_WP8
         ? "fonts/arialuni.ttf"
-        : cc.sys.os == cc.sys.OS_WINRT
+        : Sys.getInstance().os == Sys.getInstance().OS_WINRT
           ? "DengXian"
           : "Microsoft Yahei";
     var label = new LabelTTF("中国", fontname, 30);

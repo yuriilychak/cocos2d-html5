@@ -31,7 +31,7 @@ export class LiquidTest extends EffectsBaseLayer {
     return "Liquid";
   }
   code() {
-    return "a = cc.liquid(duration, gridSize, waves, amplitude)";
+    return "a = liquid(duration, gridSize, waves, amplitude)";
   }
   getEffect(duration) {
     return cc.liquid(duration, new Size(16, 12), 4, 20);

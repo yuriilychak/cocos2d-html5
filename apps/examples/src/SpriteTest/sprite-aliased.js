@@ -34,7 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2 } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { LabelTTF, Rect } from "@aspect/core";
+import { LabelTTF, Rect, Sprite, Sys } from "@aspect/core";
 import { ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteAliased extends SpriteTestDemo {
@@ -48,12 +48,12 @@ export class SpriteAliased extends SpriteTestDemo {
 
 
         this._subtitle = "You should see pixelated sprites";
-        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite1 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         this.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite2 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);
@@ -80,7 +80,7 @@ export class SpriteAliased extends SpriteTestDemo {
         // This change will affect every sprite that uses the same texture
         // So sprite1 and sprite2 will be affected by this change
         //
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
+        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities && cc.rendererConfig.isWebGL)) {
             var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
@@ -94,7 +94,7 @@ export class SpriteAliased extends SpriteTestDemo {
     }
     onExit() {
         //----start24----onExit
-        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
+        if (Sys.getInstance().isNative || ("opengl" in Sys.getInstance().capabilities && cc.rendererConfig.isWebGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE1);
             sprite.texture.setAntiAliasTexParameters();
         }

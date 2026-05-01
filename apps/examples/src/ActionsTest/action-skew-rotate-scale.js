@@ -27,7 +27,7 @@
 
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, LayerColor } from "@aspect/core";
 import { DelayTime, RotateTo, ScaleTo, Sequence, SkewTo } from "@aspect/actions";
 
 export class ActionSkewRotateScale extends ActionsDemo {
@@ -44,7 +44,7 @@ export class ActionSkewRotateScale extends ActionsDemo {
 
     var boxW = 100,
       boxH = 100;
-    var box = new cc.LayerColor(new Color(255, 255, 0, 255));
+    var box = new LayerColor(new Color(255, 255, 0, 255));
     box.anchorX = 0;
     box.anchorY = 0;
     box.x = (winSize.width - boxW) / 2;
@@ -53,7 +53,7 @@ export class ActionSkewRotateScale extends ActionsDemo {
     box.height = boxH;
 
     var markrside = 10.0;
-    var uL = new cc.LayerColor(new Color(255, 0, 0, 255));
+    var uL = new LayerColor(new Color(255, 0, 0, 255));
     box.addChild(uL);
     uL.width = markrside;
     uL.height = markrside;
@@ -62,7 +62,7 @@ export class ActionSkewRotateScale extends ActionsDemo {
     uL.anchorX = 0;
     uL.anchorY = 0;
 
-    var uR = new cc.LayerColor(new Color(0, 0, 255, 255));
+    var uR = new LayerColor(new Color(0, 0, 255, 255));
     box.addChild(uR);
     uR.width = markrside;
     uR.height = markrside;

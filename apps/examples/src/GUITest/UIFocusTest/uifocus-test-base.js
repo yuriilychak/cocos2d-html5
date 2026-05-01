@@ -24,7 +24,8 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Color } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, log } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class UIFocusTestBase extends UIMainLayer {
   constructor() {
@@ -41,15 +42,15 @@ export class UIFocusTestBase extends UIMainLayer {
       var background = root.getChildByName("background_Panel");
       background.removeFromParent(true);
 
-      this._dpadMenu = new cc.Menu();
+      this._dpadMenu = new Menu();
 
-      cc.MenuItemFont.setFontSize(20);
-      var winSize = cc.director.getVisibleSize();
-      var leftItem = new cc.MenuItemFont("Left", this.onLeftKeyPressed, this);
+      MenuItemFont.setFontSize(20);
+      var winSize = Director.getInstance().getVisibleSize();
+      var leftItem = new MenuItemFont("Left", this.onLeftKeyPressed, this);
       leftItem.setPosition(winSize.width - 100, winSize.height / 2);
       this._dpadMenu.addChild(leftItem);
 
-      var rightItem = new cc.MenuItemFont(
+      var rightItem = new MenuItemFont(
         "Right",
         this.onRightKeyPressed,
         this
@@ -57,11 +58,11 @@ export class UIFocusTestBase extends UIMainLayer {
       rightItem.setPosition(winSize.width - 30, winSize.height / 2);
       this._dpadMenu.addChild(rightItem);
 
-      var upItem = new cc.MenuItemFont("Up", this.onUpKeyPressed, this);
+      var upItem = new MenuItemFont("Up", this.onUpKeyPressed, this);
       upItem.setPosition(winSize.width - 60, winSize.height / 2 + 50);
       this._dpadMenu.addChild(upItem);
 
-      var downItem = new cc.MenuItemFont("Down", this.onDownKeyPressed, this);
+      var downItem = new MenuItemFont("Down", this.onDownKeyPressed, this);
       downItem.setPosition(winSize.width - 60, winSize.height / 2 - 50);
       this._dpadMenu.addChild(downItem);
 
@@ -79,11 +80,11 @@ export class UIFocusTestBase extends UIMainLayer {
       //call this method to enable Dpad focus navigation
       ccui.Widget.enableDpadNavigation(true);
 
-      this._eventListener = cc.EventListener.create({
-        event: cc.EventListener.FOCUS, //TODO Need add focus event in JSB
+      this._eventListener = EventListener.create({
+        event: EventListener.FOCUS, //TODO Need add focus event in JSB
         onFocusChanged: this.onFocusChanged.bind(this)
       });
-      cc.eventManager.addListener(this._eventListener, 1);
+      EventManager.getInstance().addListener(this._eventListener, 1);
       return true;
     }
     return false;
@@ -91,19 +92,19 @@ export class UIFocusTestBase extends UIMainLayer {
 
   onLeftKeyPressed() {
     var event = new cc.EventKeyboard(cc.KEY.dpadLeft, false);
-    cc.eventManager.dispatchEvent(event);
+    EventManager.getInstance().dispatchEvent(event);
   }
   onRightKeyPressed() {
     var event = new cc.EventKeyboard(cc.KEY.dpadRight, false);
-    cc.eventManager.dispatchEvent(event);
+    EventManager.getInstance().dispatchEvent(event);
   }
   onUpKeyPressed() {
     var event = new cc.EventKeyboard(cc.KEY.dpadUp, false);
-    cc.eventManager.dispatchEvent(event);
+    EventManager.getInstance().dispatchEvent(event);
   }
   onDownKeyPressed() {
     var event = new cc.EventKeyboard(cc.KEY.dpadDown, false);
-    cc.eventManager.dispatchEvent(event);
+    EventManager.getInstance().dispatchEvent(event);
   }
   onFocusChanged(widgetLostFocus, widgetGetFocus) {
     if (widgetGetFocus && widgetGetFocus.isFocusEnabled())
@@ -113,7 +114,7 @@ export class UIFocusTestBase extends UIMainLayer {
       widgetLostFocus.setColor(Color.WHITE);
 
     if (widgetLostFocus && widgetGetFocus)
-      cc.log(
+      log(
         "on focus change, %d widget get focus, %d widget lose focus",
         widgetGetFocus.getTag(),
         widgetLostFocus.getTag()
@@ -132,7 +133,7 @@ export class UIFocusTestBase extends UIMainLayer {
     }
   }
   onExit() {
-    cc.eventManager.removeListener(this._eventListener);
+    EventManager.getInstance().removeListener(this._eventListener);
     super.onExit();
   }
 }

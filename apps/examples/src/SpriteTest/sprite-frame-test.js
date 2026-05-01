@@ -34,6 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_blue, s_grossini_bluePlist, s_grossini_gray, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate } from "@aspect/actions";
+import { Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteFrameTest extends SpriteTestDemo {
     constructor() {
@@ -54,15 +55,15 @@ export class SpriteFrameTest extends SpriteTestDemo {
         super.onEnter();
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-        //     cc.spriteFrameCache.removeUnusedSpriteFrames);
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_bluePlist, s_grossini_blue);
+        //     spriteFrameCache.removeUnusedSpriteFrames);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_bluePlist, s_grossini_blue);
 
         //
         // Animation using Sprite BatchNode
         //
-        this._sprite1 = new cc.Sprite("#grossini_dance_01.png");
+        this._sprite1 = new Sprite("#grossini_dance_01.png");
         this._sprite1.x = winSize.width / 2 - 80;
         this._sprite1.y = winSize.height / 2;
 
@@ -75,7 +76,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
         var frame;
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
+            frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -89,7 +90,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
         //
         // Animation using standard Sprite
         //
-        this._sprite2 = new cc.Sprite("#grossini_dance_01.png");
+        this._sprite2 = new Sprite("#grossini_dance_01.png");
         this._sprite2.x = winSize.width / 2 + 80;
         this._sprite2.y = winSize.height / 2;
         this.addChild(this._sprite2);
@@ -97,13 +98,13 @@ export class SpriteFrameTest extends SpriteTestDemo {
         var moreFrames = [];
         for (i = 1; i < 15; i++) {
             str = "grossini_dance_gray_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
+            frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
             moreFrames.push(frame);
         }
 
         for (i = 1; i < 5; i++) {
             str = "grossini_blue_0" + i + ".png";
-            frame = cc.spriteFrameCache.getSpriteFrame(str);
+            frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
             moreFrames.push(frame);
         }
 
@@ -124,9 +125,9 @@ export class SpriteFrameTest extends SpriteTestDemo {
     onExit() {
         //----start2----onExit
         super.onExit();
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_bluePlist);
+        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossiniPlist);
+        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossini_grayPlist);
+        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossini_bluePlist);
         //----end2----
     }
     onStartIn05Secs() {

@@ -34,7 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE3, TAG_SPRITE4, TAG_SPRITE5, TAG_SP
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { Rect } from "@aspect/core";
+import { Rect, Sprite } from "@aspect/core";
 import { DelayTime, FadeOut, TintBy, sequence } from "@aspect/actions";
 
 export class SpriteColorOpacity extends SpriteTestDemo {
@@ -67,15 +67,15 @@ export class SpriteColorOpacity extends SpriteTestDemo {
 
 
         this.pixel4 = {"0":255, "1":204, "2":153, "3":255};
-        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new Rect(0, 121, 85, 121));
-        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
-        var sprite3 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85 * 2, 121, 85, 121));
-        var sprite4 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85 * 3, 121, 85, 121));
+        var sprite1 = new Sprite(s_grossini_dance_atlas, new Rect(0, 121, 85, 121));
+        var sprite2 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite3 = new Sprite(s_grossini_dance_atlas, new Rect(85 * 2, 121, 85, 121));
+        var sprite4 = new Sprite(s_grossini_dance_atlas, new Rect(85 * 3, 121, 85, 121));
 
-        var sprite5 = new cc.Sprite(s_grossini_dance_atlas, new Rect(0, 121, 85, 121));
-        var sprite6 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
-        var sprite7 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85 * 2, 121, 85, 121));
-        var sprite8 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85 * 3, 121, 85, 121));
+        var sprite5 = new Sprite(s_grossini_dance_atlas, new Rect(0, 121, 85, 121));
+        var sprite6 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite7 = new Sprite(s_grossini_dance_atlas, new Rect(85 * 2, 121, 85, 121));
+        var sprite8 = new Sprite(s_grossini_dance_atlas, new Rect(85 * 3, 121, 85, 121));
 
         sprite1.x = (winSize.width / 5);
 

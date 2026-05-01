@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { s_back, s_power, s_resprefix } from "../resources";
-import { Point } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
 import { DelayTime, MoveBy, sequence } from "@aspect/actions";
 
 export class Parallax1 extends ParallaxDemo {
@@ -44,7 +44,7 @@ export class Parallax1 extends ParallaxDemo {
     this.testDuration = 5;
 
     // Top Layer, a simple image
-    this._cocosimage = new cc.Sprite(s_power);
+    this._cocosimage = new Sprite(s_power);
     // scale the image (optional)
     this._cocosimage.scale = 1.5;
     // change the transform anchor point to 0,0 (optional)
@@ -52,7 +52,7 @@ export class Parallax1 extends ParallaxDemo {
     this._cocosimage.anchorY = 0;
 
     // Middle layer: a Tile map atlas
-    //var tilemap = cc.TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
+    //var tilemap = TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
     this._tilemap = new cc.TMXTiledMap(
       s_resprefix + "TileMaps/orthogonal-test2.tmx"
     );
@@ -65,7 +65,7 @@ export class Parallax1 extends ParallaxDemo {
     //tilemap.texture.setAntiAliasTexParameters();
 
     // background layer: another image
-    this._background = new cc.Sprite(s_back);
+    this._background = new Sprite(s_back);
     // scale the image (optional)
     //background.scale = 1.5;
     // change the transform anchor point (optional)

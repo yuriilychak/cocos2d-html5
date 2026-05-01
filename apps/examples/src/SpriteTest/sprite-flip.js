@@ -34,7 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2 } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { Rect } from "@aspect/core";
+import { Rect, Sprite } from "@aspect/core";
 
 export class SpriteFlip extends SpriteTestDemo {
 
@@ -62,12 +62,12 @@ export class SpriteFlip extends SpriteTestDemo {
 
 
         this.pixel4 = null;
-        var sprite1 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite1 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         this.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new cc.Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
+        var sprite2 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);

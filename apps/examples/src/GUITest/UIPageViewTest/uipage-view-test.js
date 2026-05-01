@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Size, Color } from "@aspect/core";
+import { Color, Size, log } from "@aspect/core";
 
 export class UIPageViewTest extends UIMainLayer {
   init() {
@@ -82,8 +82,8 @@ export class UIPageViewTest extends UIMainLayer {
       pageView.addEventListener(this.pageViewEvent, this);
 
       //for test purpose only
-      cc.log(pageView.getPages());
-      cc.log(pageView.getPage(0));
+      log(pageView.getPages());
+      log(pageView.getPage(0));
       this._mainNode.addChild(pageView);
 
       return true;

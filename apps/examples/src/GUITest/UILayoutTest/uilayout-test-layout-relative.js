@@ -37,7 +37,7 @@ export class UILayoutTest_Layout_Relative extends UILayoutTestBase {
     //layout.setContentSize(new Size(280, 150));
     layout.setPositionType(ccui.Widget.POSITION_PERCENT);
     layout.setPositionPercent(new Point(0.25, 0.25));
-    //layout.setPosition(new Point(cc.winSize.width/2, cc.winSize.height/2));
+    //layout.setPosition(new Point(winSize.width/2, winSize.height/2));
     layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
     layout.setBackGroundColor(Color.GREEN);
     return layout;

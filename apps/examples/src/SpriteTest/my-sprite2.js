@@ -24,8 +24,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { Sprite } from "@aspect/core";
 
-export class MySprite2 extends cc.Sprite {
+
+export class MySprite2 extends Sprite {
 	constructor(name) {
 		super(name);
 

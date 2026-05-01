@@ -31,12 +31,13 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import "./glnode-polyfill";
 import { winSize } from "../constants";
+import { Sys, log } from "@aspect/core";
 
 export class GLNodeWebGLAPITest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in cc.sys.capabilities) {
+    if ("opengl" in Sys.getInstance().capabilities) {
       // simple shader example taken from:
       // http://learningwebgl.com/blog/?p=134
       var vsh =
@@ -230,7 +231,7 @@ export class GLNodeWebGLAPITest extends OpenGLTestLayer {
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      cc.log(gl.getShaderInfoLog(shader));
+      log(gl.getShaderInfoLog(shader));
       throw "Could not compile " + type + " shader";
     }
     return shader;

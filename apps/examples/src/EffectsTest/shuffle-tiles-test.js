@@ -32,7 +32,7 @@ export class ShuffleTilesTest extends EffectsBaseLayer {
     return "ShuffleTiles";
   }
   code() {
-    return "a = cc.shuffleTiles(duration, gridSize, seed)";
+    return "a = shuffleTiles(duration, gridSize, seed)";
   }
   getEffect(duration) {
     var action = cc.shuffleTiles(duration, new Size(16, 12), 25);

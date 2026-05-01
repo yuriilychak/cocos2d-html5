@@ -32,6 +32,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, ScaleBy, SkewBy, sequence } from "@aspect/actions";
+import { Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
 
@@ -47,18 +48,18 @@ export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
 
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite batch
             //
-            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
-            var point = new cc.Sprite(s_pathR1);
+            var point = new Sprite(s_pathR1);
             point.scale = 0.25;
 	        point.x = sprite.x;
 	        point.y = sprite.y;
@@ -86,7 +87,7 @@ export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
             var tmp = "";
             for (var j = 1; j <= 14; j++) {
                 tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = cc.spriteFrameCache.getSpriteFrame(tmp);
+                var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
                 animFrames.push(frame);
             }
 

@@ -30,13 +30,14 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { winSize } from "../constants";
+import { Sprite, Sys, log } from "@aspect/core";
 
 export class GLGetActiveTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in cc.sys.capabilities) {
-      var sprite = (this.sprite = new cc.Sprite("Images/grossini.png"));
+    if ("opengl" in Sys.getInstance().capabilities) {
+      var sprite = (this.sprite = new Sprite("Images/grossini.png"));
       sprite.x = winSize.width / 2;
       sprite.y = winSize.height / 2;
       this.addChild(sprite);
@@ -47,7 +48,7 @@ export class GLGetActiveTest extends OpenGLTestLayer {
   }
 
   onTest(dt) {
-    cc.log(this.getCurrentResult());
+    log(this.getCurrentResult());
   }
 
   title() {

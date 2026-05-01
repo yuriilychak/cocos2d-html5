@@ -25,12 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Rect } from "@aspect/core";
+import { EventListener, EventManager, Rect, Sprite, assert } from "@aspect/core";
 
 export var PADDLE_STATE_GRABBED = 0;
 export var PADDLE_STATE_UNGRABBED = 1;
 
-export class Paddle extends cc.Sprite {
+export class Paddle extends Sprite {
 
     constructor(){
         super();
@@ -40,8 +40,8 @@ export class Paddle extends cc.Sprite {
 
 
         this._rect = null;
-        cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        EventManager.getInstance().addListener({
+            event: EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: this.onTouchBegan,
             onTouchMoved: this.onTouchMoved,
@@ -87,18 +87,18 @@ export class Paddle extends cc.Sprite {
         // to the touch from touchBegan and check that the current touch is the same
         // as that one.
         // Actually, it would be even more complicated since in the Cocos dispatcher
-        // you get Array instead of 1 cc.Touch, so you'd need to loop through the set
+        // you get Array instead of 1 Touch, so you'd need to loop through the set
         // in each touchXXX method.
-        cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
+        assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
 
         var touchPoint = touch.getLocation();
-        //touchPoint = cc.director.convertToGL( touchPoint );
+        //touchPoint = director.convertToGL( touchPoint );
 
         target.x = touchPoint.x;
     }
     onTouchEnded(touch, event) {
         var target = event.getCurrentTarget();
-        cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
+        assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
         target._state = PADDLE_STATE_UNGRABBED;
     }
     touchDelegateRetain() {

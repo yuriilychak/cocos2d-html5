@@ -29,13 +29,14 @@
 //
 //------------------------------------------------------------------
 import "./glnode-polyfill";
+import { EGLView, Sys } from "@aspect/core";
 
 export class ShaderNode extends cc.GLNode {
   constructor(vertexShader, framentShader) {
     super();
     this.init();
 
-    if ("opengl" in cc.sys.capabilities) {
+    if ("opengl" in Sys.getInstance().capabilities) {
       this.width = 256;
       this.height = 256;
       this.anchorX = 0.5;
@@ -62,9 +63,9 @@ export class ShaderNode extends cc.GLNode {
     //
     // Uniforms
     //
-    var frameSize = cc.view.getFrameSize();
-    var visibleSize = cc.view.getVisibleSize();
-    var retinaFactor = cc.view.getDevicePixelRatio();
+    var frameSize = EGLView.getInstance().getFrameSize();
+    var visibleSize = EGLView.getInstance().getVisibleSize();
+    var retinaFactor = EGLView.getInstance().getDevicePixelRatio();
     var position = this.getPosition();
 
     var centerx =

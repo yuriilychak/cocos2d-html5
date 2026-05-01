@@ -25,7 +25,8 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
-import { Color } from "@aspect/core";
+import { Color, Director, LayerColor, Sprite } from "@aspect/core";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class RenderTextureTargetNode extends RenderTextureBaseLayer {
   constructor() {
@@ -52,27 +53,27 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
      *  B1: non-premulti sprite
      *  B2: non-premulti render
      */
-    var background = new cc.LayerColor(new Color(40, 40, 40, 255));
+    var background = new LayerColor(new Color(40, 40, 40, 255));
     this.addChild(background);
 
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     this._winSize = winSize;
 
     // sprite 1
-    var sprite1 = new cc.Sprite(s_fire);
+    var sprite1 = new Sprite(s_fire);
     sprite1.x = winSize.width;
     sprite1.y = winSize.height;
     this._sprite1 = sprite1;
 
     // sprite 2
     //todo Images/fire_rgba8888.pvr
-    var sprite2 = new cc.Sprite(s_fire);
+    var sprite2 = new Sprite(s_fire);
     sprite2.x = winSize.width;
     sprite2.y = winSize.height;
     this._sprite2 = sprite2;
 
     /* Create the render texture */
-    //var renderTexture = new cc.RenderTexture(winSize.width, winSize.height, cc.TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
+    //var renderTexture = new RenderTexture(winSize.width, winSize.height, TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
     var renderTexture = new cc.RenderTexture(winSize.width, winSize.height);
     this._renderTexture = renderTexture;
 
@@ -93,8 +94,8 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     this.scheduleUpdate();
 
     // Toggle clear on / off
-    var item = new cc.MenuItemFont("Clear On/Off", this.touched, this);
-    var menu = new cc.Menu(item);
+    var item = new MenuItemFont("Clear On/Off", this.touched, this);
+    var menu = new Menu(item);
     this.addChild(menu);
 
     menu.x = winSize.width / 2;

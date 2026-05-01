@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { log } from "@aspect/core";
 
 export class UIButtonTextOnly extends UIMainLayer {
   init() {
@@ -38,7 +39,7 @@ export class UIButtonTextOnly extends UIMainLayer {
       button.setNormalizedPosition(0.5, 0.5);
 
       button.setTitleText("PLAY GAME");
-      cc.log(
+      log(
         "content size should be greater than 0:  width = %f, height = %f",
         button.width,
         button.height
@@ -46,7 +47,7 @@ export class UIButtonTextOnly extends UIMainLayer {
       button.setZoomScale(0.3);
       button.setPressedActionEnabled(true);
       button.addClickEventListener(function () {
-        cc.log("clicked!");
+        log("clicked!");
       });
       this.addChild(button);
       return true;

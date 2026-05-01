@@ -29,6 +29,8 @@
 import { TestController } from "./test-controller";
 import { director, winSize } from "./constants";
 import { LabelTTF, Scene } from "@aspect/core";
+import { TransitionProgressRadialCCW } from "@aspect/transitions";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class TestScene extends Scene {
   constructor(bPortrait) {
@@ -38,9 +40,9 @@ export class TestScene extends Scene {
     this.init();
 
     var label = new LabelTTF("Main Menu", "Arial", 20);
-    var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
+    var menuItem = new MenuItemLabel(label, this.onMainMenuCallback, this);
 
-    var menu = new cc.Menu(menuItem);
+    var menu = new Menu(menuItem);
     this._mainMenu = menu;
     menu.x = 0;
     menu.y = 0;
@@ -59,7 +61,7 @@ export class TestScene extends Scene {
     var scene = new Scene();
     var layer = new TestController();
     scene.addChild(layer);
-    var transition = new cc.TransitionProgressRadialCCW(0.5, scene);
+    var transition = new TransitionProgressRadialCCW(0.5, scene);
     director.runScene(transition);
   }
 

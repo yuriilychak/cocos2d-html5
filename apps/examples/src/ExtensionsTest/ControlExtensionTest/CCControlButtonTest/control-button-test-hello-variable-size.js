@@ -31,17 +31,18 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
-import { Color, LabelTTF, Scene } from "@aspect/core";
+import { Color, Director, LabelTTF, Node, Scene } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class ControlButtonTest_HelloVariableSize extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = cc.director.getWinSize();
+      var screenSize = Director.getInstance().getWinSize();
 
       // Defines an array of title to create buttons dynamically
       var stringArray = ["Hello", "Variable", "Size", "!"];
 
-      var layer = new cc.Node();
+      var layer = new Node();
       this.addChild(layer, 1);
 
       var total_width = 0,
@@ -82,7 +83,7 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
       layer.y = screenSize.height / 2.0;
 
       // Add the black background
-      var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
+      var background = new Scale9Sprite(s_extensions_buttonBackground);
       background.width = total_width + 14;
       background.height = height + 14;
       background.x = screenSize.width / 2.0;
@@ -95,8 +96,8 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
   // Creates and return a button with a default background and title color.
   standardButtonWithTitle(title) {
     // Creates and return a button with a default background and title color.
-    var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-    var backgroundHighlightedButton = new cc.Scale9Sprite(
+    var backgroundButton = new Scale9Sprite(s_extensions_button);
+    var backgroundHighlightedButton = new Scale9Sprite(
       s_extensions_buttonHighlighted
     );
 

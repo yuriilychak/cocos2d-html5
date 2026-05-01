@@ -30,14 +30,14 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { winSize } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, LayerColor, Sys } from "@aspect/core";
 
 export class GLClearTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in cc.sys.capabilities) {
-      var blue = new cc.LayerColor(new Color(0, 0, 255, 255));
+    if ("opengl" in Sys.getInstance().capabilities) {
+      var blue = new LayerColor(new Color(0, 0, 255, 255));
       this.addChild(blue, 1);
 
       var node = new cc.GLNode();
@@ -56,7 +56,7 @@ export class GLClearTest extends OpenGLTestLayer {
     return "gl.clear(gl.COLOR_BUFFER_BIT)";
   }
   subtitle() {
-    return "Testing gl.clear() with cc.GLNode\n The layer should be in black";
+    return "Testing gl.clear() with GLNode\n The layer should be in black";
   }
 
   //

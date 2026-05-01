@@ -29,6 +29,8 @@
 // S9FrameNameSpriteSheetRotated
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
+import { log } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9FrameNameSpriteSheetRotated extends S9SpriteTestDemo {
   constructor() {
@@ -41,18 +43,18 @@ export class S9FrameNameSpriteSheetRotated extends S9SpriteTestDemo {
     var x = winSize.width / 2;
     var y = 0 + winSize.height / 2;
 
-    cc.log("S9FrameNameSpriteSheetRotated ...");
+    log("S9FrameNameSpriteSheetRotated ...");
 
-    var blocks = new cc.Scale9Sprite("blocks9r.png");
-    cc.log("... created");
+    var blocks = new Scale9Sprite("blocks9r.png");
+    log("... created");
 
     blocks.x = x;
     blocks.y = y;
-    cc.log("... setPosition");
+    log("... setPosition");
 
     this.addChild(blocks);
-    cc.log("this..addChild");
+    log("this..addChild");
 
-    cc.log("... S9FrameNameSpriteSheetRotated done.");
+    log("... S9FrameNameSpriteSheetRotated done.");
   }
 }

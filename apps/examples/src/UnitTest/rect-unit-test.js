@@ -29,7 +29,7 @@
 //
 //------------------------------------------------------------------
 import { UnitTestBase } from "./unit-test-base";
-import { Point, Rect } from "@aspect/core";
+import { Node, Point, Rect } from "@aspect/core";
 
 export class RectUnitTest extends UnitTestBase {
   constructor() {
@@ -117,7 +117,7 @@ export class RectUnitTest extends UnitTestBase {
     ret.push(rectA.height);
 
     this.log("Test 11: getBoundingBox()");
-    var node = new cc.Node();
+    var node = new Node();
     node.width = 99;
     node.height = 101;
     var bb = node.getBoundingBox();

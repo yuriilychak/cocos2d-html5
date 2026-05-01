@@ -28,7 +28,7 @@
 import { SpriteDemo } from "./sprite-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
 import { sequence } from "@aspect/actions";
 
 export class SpriteProgressToHorizontal extends SpriteDemo {
@@ -39,7 +39,7 @@ export class SpriteProgressToHorizontal extends SpriteDemo {
         var to1 = sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
         var to2 = sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
 
-        var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
+        var left = new cc.ProgressTimer(new Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the left since the midpoint is 0 for the x
         left.midPoint = new Point(0, 0);
@@ -50,7 +50,7 @@ export class SpriteProgressToHorizontal extends SpriteDemo {
         left.y = winSize.height / 2;
         left.runAction(to1.repeatForever());
 
-        var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
+        var right = new cc.ProgressTimer(new Sprite(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the left since the midpoint is 1 for the x
         right.midPoint = new Point(1, 0);

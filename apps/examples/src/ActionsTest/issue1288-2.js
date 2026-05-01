@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
-import { Point } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
 import { MoveBy } from "@aspect/actions";
 
 export class Issue1288_2 extends ActionsDemo {
@@ -41,7 +41,7 @@ export class Issue1288_2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(0);
 
-    var spr = new cc.Sprite(s_pathGrossini);
+    var spr = new Sprite(s_pathGrossini);
     spr.x = 100;
     spr.y = 100;
     this.addChild(spr);

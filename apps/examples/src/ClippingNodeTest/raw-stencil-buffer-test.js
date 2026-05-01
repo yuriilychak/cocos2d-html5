@@ -33,7 +33,7 @@ import {
   _set_stencilBits
 } from "./clipping-node-test-helpers";
 import { s_pathGrossini } from "../resources";
-import { Point, Color } from "@aspect/core";
+import { Color, Director, Point, Sprite, log } from "@aspect/core";
 
 export class RawStencilBufferTest extends BaseClippingNodeTest {
   constructor() {
@@ -60,22 +60,22 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       )
     );
     if (_stencilBits < 3)
-      cc.log("Stencil must be enabled for the current CCGLView.");
+      log("Stencil must be enabled for the current CCGLView.");
 
-    this._sprite = new cc.Sprite(s_pathGrossini);
+    this._sprite = new Sprite(s_pathGrossini);
     this._sprite.anchorX = 0.5;
     this._sprite.anchorY = 0;
     this._sprite.scale = 2.5;
-    cc.director.setAlphaBlending(true);
+    Director.getInstance().setAlphaBlending(true);
   }
 
   draw(ctx) {
     var gl = ctx || cc.rendererConfig.renderContext;
-    var winPoint = Point.fromSize(cc.director.getWinSize());
+    var winPoint = Point.fromSize(Director.getInstance().getWinSize());
     var planeSize = Point.mult(winPoint, 1.0 / _PLANE_COUNT);
 
     gl.enable(gl.STENCIL_TEST);
-    //cc.checkGLErrorDebug();
+    //checkGLErrorDebug();
 
     for (var i = 0; i < _PLANE_COUNT; i++) {
       var stencilPoint = Point.mult(planeSize, _PLANE_COUNT - i);
@@ -87,7 +87,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       this._sprite.y = y;
 
       this.setupStencilForClippingOnPlane(i);
-      //cc.checkGLErrorDebug();
+      //checkGLErrorDebug();
 
       cc._drawingUtil.drawSolidRect(
         new Point(0, 0),
@@ -101,7 +101,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       cc.kmGLPopMatrix();
 
       this.setupStencilForDrawingOnPlane(i);
-      //cc.checkGLErrorDebug();
+      //checkGLErrorDebug();
 
       cc._drawingUtil.drawSolidRect(
         new Point(0, 0),
@@ -116,7 +116,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
     }
 
     gl.disable(gl.STENCIL_TEST);
-    //cc.checkGLErrorDebug();
+    //checkGLErrorDebug();
   }
 
   setupStencilForClippingOnPlane(plane) {

@@ -41,6 +41,7 @@ import { NodeToWorld } from "./node-to-world";
 import { SchedulerTest1 } from "./scheduler-test1";
 import { StressTest1 } from "./stress-test1";
 import { StressTest2 } from "./stress-test2";
+import { Sys } from "@aspect/core";
 
 export var SID_DELAY2 = 1;
 
@@ -62,7 +63,7 @@ export var arrayOfNodeTest = [
   ConvertToNode
 ];
 
-if ("opengl" in cc.sys.capabilities) {
+if ("opengl" in Sys.getInstance().capabilities) {
   arrayOfNodeTest.push(NodeOpaqueTest);
   arrayOfNodeTest.push(NodeNonOpaqueTest);
 }

@@ -30,7 +30,8 @@
 import { MySprite } from "./my-sprite";
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { winSize } from "../../constants";
-import { Color, LabelTTF, Layer, Point } from "@aspect/core";
+import { Color, Director, LabelTTF, Layer, Point, visibleRect } from "@aspect/core";
+import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
 
 export class CCPoolTest extends Layer {
   constructor() {
@@ -40,14 +41,14 @@ export class CCPoolTest extends Layer {
 
   init() {
     this.timeList = {};
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var MARGIN = 40;
     var label = new LabelTTF("CCPoolTest", "Arial", 28);
     label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
     this.addChild(label, 0);
 
-    var menuRequest = new cc.Menu();
+    var menuRequest = new Menu();
     menuRequest.setPosition(new Point(0, 0));
     this.initUI();
     return true;
@@ -65,26 +66,26 @@ export class CCPoolTest extends Layer {
     );
     reCreateLabel.color = new Color(255, 255, 255, 255);
     createLabel.color = new Color(255, 255, 255, 255);
-    var menuItem1 = new cc.MenuItemLabel(
+    var menuItem1 = new MenuItemLabel(
       createLabel,
       this.addSpriteByCreate,
       this
     );
-    var menuItem2 = new cc.MenuItemLabel(
+    var menuItem2 = new MenuItemLabel(
       reCreateLabel,
       this.addSpriteByPool,
       this
     );
-    var menu = new cc.Menu(menuItem1, menuItem2);
+    var menu = new Menu(menuItem1, menuItem2);
     menu.alignItemsHorizontallyWithPadding(150);
     this.directLabel = new LabelTTF("create directly cost:", "Arial", 18);
     this.poolLabel = new LabelTTF("use pool cost:", "Arial", 18);
     this.directLabel.setPosition(
-      Point.add(cc.visibleRect.center, new Point(-190, -65))
+      Point.add(visibleRect.center, new Point(-190, -65))
     );
     this.directLabel.anchorY = 0;
     this.poolLabel.setPosition(
-      Point.add(cc.visibleRect.center, new Point(200, -65))
+      Point.add(visibleRect.center, new Point(200, -65))
     );
     this.poolLabel.anchorY = 0;
     this.addChild(this.directLabel);
@@ -92,13 +93,13 @@ export class CCPoolTest extends Layer {
     this.addChild(menu, 100);
 
     // Back Menu
-    var itemBack = new cc.MenuItemFont(
+    var itemBack = new MenuItemFont(
       "Back",
       this.toExtensionsMainLayer,
       this
     );
     itemBack.setPosition(new Point(winSize.width - 50, 25));
-    var menuBack = new cc.Menu(itemBack);
+    var menuBack = new Menu(itemBack);
     menuBack.setPosition(new Point(0, 0));
     this.addChild(menuBack);
   }

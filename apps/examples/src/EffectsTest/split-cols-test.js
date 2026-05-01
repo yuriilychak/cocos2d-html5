@@ -31,7 +31,7 @@ export class SplitColsTest extends EffectsBaseLayer {
     return "SplitCols";
   }
   code() {
-    return "a = cc.splitCols(duration, cols)";
+    return "a = splitCols(duration, cols)";
   }
   getEffect(duration) {
     var action = cc.splitCols(duration, 9);

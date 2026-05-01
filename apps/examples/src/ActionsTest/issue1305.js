@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
 import { CallFunc } from "@aspect/actions";
+import { Sprite, log } from "@aspect/core";
 
 export class Issue1305 extends ActionsDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class Issue1305 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(0);
 
-    this._spriteTmp = new cc.Sprite(s_pathGrossini);
+    this._spriteTmp = new Sprite(s_pathGrossini);
     /* c++ can't support block, so we use CCCallFuncN instead.
          [spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
          NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
@@ -63,7 +64,7 @@ export class Issue1305 extends ActionsDemo {
     }
   }
   onLog(pSender) {
-    cc.log(
+    log(
       "This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE"
     );
   }

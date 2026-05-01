@@ -41,7 +41,7 @@ import { ActionsTestScene } from "./actions-test-scene";
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, Sprite } from "@aspect/core";
 
 export class ActionsDemo extends BaseTestLayer {
   constructor() {
@@ -53,9 +53,9 @@ export class ActionsDemo extends BaseTestLayer {
 
     this._kathia = null;
 
-    this._grossini = new cc.Sprite(s_pathGrossini);
-    this._tamara = new cc.Sprite(s_pathSister1);
-    this._kathia = new cc.Sprite(s_pathSister2);
+    this._grossini = new Sprite(s_pathGrossini);
+    this._tamara = new Sprite(s_pathSister1);
+    this._kathia = new Sprite(s_pathSister2);
     this.addChild(this._grossini, SPRITE_GROSSINI_TAG);
     this.addChild(this._tamara, SPRITE_TAMARA_TAG);
     this.addChild(this._kathia, SPRITE_KATHIA_TAG);

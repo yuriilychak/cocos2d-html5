@@ -37,13 +37,13 @@ import {
   s_pathSister1
 } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, log } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 
 export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
 
     this.messageDisplayed = false;
 
@@ -109,7 +109,7 @@ export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
 
   onEnter() {
     super.onEnter();
-    // cc.base(this, 'onEnter');
+    // base(this, 'onEnter');
 
     this.initPhysics();
     this.scheduleUpdate();
@@ -160,26 +160,26 @@ export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
       label.y = winSize.height / 2;
       this.messageDisplayed = true;
     }
-    cc.log("collision begin");
+    log("collision begin");
     var bodies = cp.arbiterGetBodies(arbiter);
     var shapes = cp.arbiterGetShapes(arbiter);
     var collTypeA = cp.shapeGetCollisionType(shapes[0]);
     var collTypeB = cp.shapeGetCollisionType(shapes[1]);
-    cc.log("Collision Type A:" + collTypeA);
-    cc.log("Collision Type B:" + collTypeB);
+    log("Collision Type A:" + collTypeA);
+    log("Collision Type B:" + collTypeB);
     return true;
   }
 
   collisionPre(arbiter, space) {
-    cc.log("collision pre");
+    log("collision pre");
     return true;
   }
 
   collisionPost(arbiter, space) {
-    cc.log("collision post");
+    log("collision post");
   }
 
   collisionSeparate(arbiter, space) {
-    cc.log("collision separate");
+    log("collision separate");
   }
 }

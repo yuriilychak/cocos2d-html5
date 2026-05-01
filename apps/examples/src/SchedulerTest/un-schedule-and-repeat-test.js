@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { SchedulerTestLayer } from "./scheduler-test-layer";
+import { log } from "@aspect/core";
 
 export class unScheduleAndRepeatTest extends SchedulerTestLayer {
   constructor() {
@@ -35,22 +36,22 @@ export class unScheduleAndRepeatTest extends SchedulerTestLayer {
 
   onEnter() {
     super.onEnter();
-    cc.log("start schedule 'repeat': run once and repeat 4 times");
+    log("start schedule 'repeat': run once and repeat 4 times");
     this.schedule(this.repeat, 0.5, 4);
-    cc.log("start schedule 'forever': repeat forever (stop in 8s)");
+    log("start schedule 'forever': repeat forever (stop in 8s)");
     this.schedule(this.forever, 0.5);
     this.schedule(function () {
-      cc.log("stop the 'forever'");
+      log("stop the 'forever'");
       this.unschedule(this.forever);
     }, 8);
   }
 
   repeat() {
-    cc.log("Repeat - the remaining number: " + this._times--);
+    log("Repeat - the remaining number: " + this._times--);
   }
 
   forever() {
-    cc.log("Repeat Forever...");
+    log("Repeat Forever...");
   }
 
   title() {

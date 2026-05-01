@@ -41,6 +41,7 @@ import {
 } from "../resources";
 import { director } from "../constants";
 import { Layer, Point } from "@aspect/core";
+import { Menu, MenuItemImage } from "@aspect/menus";
 
 export class MenuLayer2 extends Layer {
   constructor() {
@@ -50,19 +51,19 @@ export class MenuLayer2 extends Layer {
 
     this._alignedH = false;
     for (var i = 0; i < 2; i++) {
-      var item1 = new cc.MenuItemImage(
+      var item1 = new MenuItemImage(
         s_playNormal,
         s_playSelect,
         this.onMenuCallback,
         this
       );
-      var item2 = new cc.MenuItemImage(
+      var item2 = new MenuItemImage(
         s_highNormal,
         s_highSelect,
         this.onMenuCallbackOpacity,
         this
       );
-      var item3 = new cc.MenuItemImage(
+      var item3 = new MenuItemImage(
         s_aboutNormal,
         s_aboutSelect,
         this.onMenuCallbackAlign,
@@ -73,7 +74,7 @@ export class MenuLayer2 extends Layer {
       item2.scaleX = 0.5;
       item3.scaleX = 0.5;
 
-      var menu = new cc.Menu(item1, item2, item3);
+      var menu = new Menu(item1, item2, item3);
       var winSize = director.getWinSize();
 
       menu.tag = TAG_MENU;

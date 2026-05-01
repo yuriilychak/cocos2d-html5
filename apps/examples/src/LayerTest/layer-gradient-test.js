@@ -27,7 +27,8 @@
 
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color, LabelTTF, Point } from "@aspect/core";
+import { Color, EventListener, EventManager, LabelTTF, Point, Sys } from "@aspect/core";
+import { Menu, MenuItemLabel, MenuItemToggle } from "@aspect/menus";
 
 export class LayerGradientTest extends LayerTest {
   constructor() {
@@ -46,10 +47,10 @@ export class LayerGradientTest extends LayerTest {
     );
     this.addChild(layer1, 0, cc.TAG_LAYER);
 
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesBegan: function (touches, event) {
             event.getCurrentTarget().updateGradient(touches[0].getLocation());
           },
@@ -59,10 +60,10 @@ export class LayerGradientTest extends LayerTest {
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseDown: function (event) {
             event.getCurrentTarget().updateGradient(event.getLocation());
           },
@@ -85,11 +86,11 @@ export class LayerGradientTest extends LayerTest {
       "Marker Felt",
       26
     );
-    var item1 = new cc.MenuItemLabel(label1);
-    var item2 = new cc.MenuItemLabel(label2);
-    var item = new cc.MenuItemToggle(item1, item2, this.onToggleItem, this);
+    var item1 = new MenuItemLabel(label1);
+    var item2 = new MenuItemLabel(label2);
+    var item = new MenuItemToggle(item1, item2, this.onToggleItem, this);
 
-    var menu = new cc.Menu(item);
+    var menu = new Menu(item);
     this.addChild(menu);
     menu.x = winSize.width / 2;
     menu.y = 100;

@@ -30,7 +30,7 @@
 //////////////////////////////////////////////////////////////////////////
 import { textInputGetRect } from "./text-input-test-constants";
 import { TextInputTest } from "./text-input-test";
-import { Rect } from "@aspect/core";
+import { EventListener, EventManager, Rect, Sys, log } from "@aspect/core";
 
 export class KeyboardNotificationLayer extends TextInputTest {
   constructor() {
@@ -40,18 +40,18 @@ export class KeyboardNotificationLayer extends TextInputTest {
 
     this._beginPos = null;
 
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: this.onTouchesEnded
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseUp: this.onMouseUp
         },
         this
@@ -65,7 +65,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
   onClickTrackNode(clicked) {}
 
   keyboardWillShow(info) {
-    cc.log(
+    log(
       "TextInputTest:keyboardWillShowAt(origin:" +
         info.end.x +
         "," +
@@ -80,7 +80,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
     if (!this._trackNode) return;
 
     var rectTracked = textInputGetRect(this._trackNode);
-    cc.log(
+    log(
       "TextInputTest:trackingNodeAt(origin:" +
         info.end.x +
         "," +
@@ -97,7 +97,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
 
     // assume keyboard at the bottom of screen, calculate the vertical adjustment.
     var adjustVert = Rect.getMaxY(info.end) - Rect.getMinY(rectTracked);
-    cc.log("TextInputTest:needAdjustVerticalPosition(" + adjustVert + ")");
+    log("TextInputTest:needAdjustVerticalPosition(" + adjustVert + ")");
 
     // move all the children node of KeyboardNotificationLayer
     var children = this.children;
@@ -118,12 +118,12 @@ export class KeyboardNotificationLayer extends TextInputTest {
     var point = touch.getLocation();
 
     // decide the trackNode is clicked.
-    cc.log(
+    log(
       "KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")"
     );
 
     var rect = textInputGetRect(target._trackNode);
-    cc.log(
+    log(
       "KeyboardNotificationLayer:TrackNode at(origin:" +
         rect.x +
         "," +
@@ -136,7 +136,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
     );
 
     target.onClickTrackNode(Rect.containsPoint(rect, point));
-    cc.log("----------------------------------");
+    log("----------------------------------");
   }
 
   onMouseUp(event) {
@@ -146,12 +146,12 @@ export class KeyboardNotificationLayer extends TextInputTest {
     var point = event.getLocation();
 
     // decide the trackNode is clicked.
-    cc.log(
+    log(
       "KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")"
     );
 
     var rect = textInputGetRect(target._trackNode);
-    cc.log(
+    log(
       "KeyboardNotificationLayer:TrackNode at(origin:" +
         rect.x +
         "," +
@@ -164,6 +164,6 @@ export class KeyboardNotificationLayer extends TextInputTest {
     );
 
     target.onClickTrackNode(Rect.containsPoint(rect, point));
-    cc.log("----------------------------------");
+    log("----------------------------------");
   }
 }

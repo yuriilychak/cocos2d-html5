@@ -24,8 +24,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { Node } from "@aspect/core";
 
-export class Lens3DTarget extends cc.Node {
+
+export class Lens3DTarget extends Node {
 
     constructor() {
         super();

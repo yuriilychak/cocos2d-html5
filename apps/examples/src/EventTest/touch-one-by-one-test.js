@@ -31,7 +31,7 @@
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
 import { winSize } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, EventListener, EventManager, Sprite, Sys, log } from "@aspect/core";
 
 export class TouchOneByOneTest extends EventTest {
     init() {
@@ -39,9 +39,9 @@ export class TouchOneByOneTest extends EventTest {
         this.ids = {};
         this.unused_sprites = [];
 
-        if( 'touches' in cc.sys.capabilities ) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        if( 'touches' in Sys.getInstance().capabilities ) {
+            EventManager.getInstance().addListener({
+                event: EventListener.TOUCH_ONE_BY_ONE,
                 swallowTouches: true,
                 onTouchBegan: this.onTouchBegan,
                 onTouchMoved: this.onTouchMoved,
@@ -49,11 +49,11 @@ export class TouchOneByOneTest extends EventTest {
                 onTouchCancelled: this.onTouchCancelled
             }, this);
         } else {
-            cc.log("TOUCH-ONE-BY-ONE test is not supported on desktop");
+            log("TOUCH-ONE-BY-ONE test is not supported on desktop");
         }
 
         for( var i=0; i < 5;i++) {
-            var sprite = this.sprite = new cc.Sprite(s_pathR2);
+            var sprite = this.sprite = new Sprite(s_pathR2);
             this.addChild(sprite,i+10);
             sprite.x = 0;
             sprite.y = 0;
@@ -88,7 +88,7 @@ export class TouchOneByOneTest extends EventTest {
     onTouchBegan(touch, event) {
         var pos = touch.getLocation();
         var id = touch.getID();
-        cc.log("onTouchBegan at: " + pos.x + " " + pos.y + " Id:" + id );
+        log("onTouchBegan at: " + pos.x + " " + pos.y + " Id:" + id );
         if( pos.x < winSize.width/2) {
             event.getCurrentTarget().new_id(id,pos);
             return true;
@@ -98,19 +98,19 @@ export class TouchOneByOneTest extends EventTest {
     onTouchMoved(touch, event) {
         var pos = touch.getLocation();
         var id = touch.getID();
-        cc.log("onTouchMoved at: " + pos.x + " " + pos.y + " Id:" + id );
+        log("onTouchMoved at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().update_id(id,pos);
     }
     onTouchEnded(touch, event) {
         var pos = touch.getLocation();
         var id = touch.getID();
-        cc.log("onTouchEnded at: " + pos.x + " " + pos.y + " Id:" + id );
+        log("onTouchEnded at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().release_id(id,pos);
     }
     onTouchCancelled(touch, event) {
         var pos = touch.getLocation();
         var id = touch.getID();
-        cc.log("onTouchCancelled at: " + pos.x + " " + pos.y + " Id:" + id );
+        log("onTouchCancelled at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().update_id(id,pos);
     }
 

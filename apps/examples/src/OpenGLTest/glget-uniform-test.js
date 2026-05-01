@@ -30,14 +30,15 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { autoTestEnabled } from "../constants";
+import { Sys, log } from "@aspect/core";
 
 export class GLGetUniformTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in cc.sys.capabilities) {
+    if ("opengl" in Sys.getInstance().capabilities) {
       if (!autoTestEnabled) {
-        cc.log(JSON.stringify(this.runTest()));
+        log(JSON.stringify(this.runTest()));
       }
     }
   }
@@ -53,7 +54,7 @@ export class GLGetUniformTest extends OpenGLTestLayer {
     var program = shader.getProgram();
     shader.use();
 
-    var loc = cc.sys.isNative
+    var loc = Sys.getInstance().isNative
       ? gl.getUniformLocation(program, "CC_MVPMatrix")
       : gl.getUniformLocation(program, "CC_MVMatrix");
 

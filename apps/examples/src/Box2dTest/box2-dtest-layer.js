@@ -27,9 +27,9 @@
 
 import { PTM_RATIO, TAG_SPRITE_MANAGER } from "./box2d-test-constants";
 import { s_pathBlock } from "../resources";
-import { Color, LabelTTF, Point, Rect } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, Point, Rect, Sprite } from "@aspect/core";
 
-export class Box2DTestLayer extends cc.LayerColor {
+export class Box2DTestLayer extends LayerColor {
   constructor() {
     if (window.sideIndexBar) {
       window.sideIndexBar.changeTest(0, 2);
@@ -38,12 +38,12 @@ export class Box2DTestLayer extends cc.LayerColor {
     super(new Color(0, 0, 0, 255));
 
     this.world = null;
-    // External map from body pointer -> cc.Sprite (box2d-wasm doesn't support userData)
+    // External map from body pointer -> Sprite (box2d-wasm doesn't support userData)
     this._bodyToSprite = {};
 
-    cc.eventManager.addListener(
-      cc.EventListener.create({
-        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+    EventManager.getInstance().addListener(
+      EventListener.create({
+        event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesEnded: function (touches, event) {
           var touch = touches[0];
           var location = touch.getLocation();
@@ -56,8 +56,8 @@ export class Box2DTestLayer extends cc.LayerColor {
     var label = new LabelTTF("Tap screen", "Marker Felt", 32);
     this.addChild(label, 0);
     label.color = new Color(0, 0, 255);
-    label.x = cc.director.getWinSize().width / 2;
-    label.y = cc.director.getWinSize().height - 50;
+    label.x = Director.getInstance().getWinSize().width / 2;
+    label.y = Director.getInstance().getWinSize().height - 50;
 
     // Defer physics setup until box2d-wasm WASM has finished loading
     window.Box2DReady.then(
@@ -79,7 +79,7 @@ export class Box2DTestLayer extends cc.LayerColor {
     var b2PolygonShape = box2D.b2PolygonShape;
     this._box2D = box2D;
 
-    var screenSize = cc.director.getWinSize();
+    var screenSize = Director.getInstance().getWinSize();
 
     // Construct a world object
     var gravity = new b2Vec2(0, -10);
@@ -140,7 +140,7 @@ export class Box2DTestLayer extends cc.LayerColor {
 
     var idx = Math.random() > 0.5 ? 0 : 1;
     var idy = Math.random() > 0.5 ? 0 : 1;
-    var sprite = new cc.Sprite(
+    var sprite = new Sprite(
       batch.texture,
       new Rect(32 * idx, 32 * idy, 32, 32)
     );

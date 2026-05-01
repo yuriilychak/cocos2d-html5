@@ -30,6 +30,8 @@
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { s_s9s_ui_plist } from "../../resources";
 import { winSize } from "../../constants";
+import { SpriteFrameCache, log } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9_TexturePacker extends S9SpriteTestDemo {
 
@@ -44,46 +46,46 @@ export class S9_TexturePacker extends S9SpriteTestDemo {
 
 
         this._subtitle = "createWithSpriteFrameName('button_normal.png');createWithSpriteFrameName('button_actived.png');";
-        cc.spriteFrameCache.addSpriteFrames(s_s9s_ui_plist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_s9s_ui_plist);
 
         var x = winSize.width / 4;
         var y = 0 + (winSize.height / 2);
 
-        cc.log("S9_TexturePacker ...");
+        log("S9_TexturePacker ...");
 
-        var s = new cc.Scale9Sprite('button_normal.png');
-        cc.log("... created");
+        var s = new Scale9Sprite('button_normal.png');
+        log("... created");
 
         s.x = x;
 
         s.y = y;
-        cc.log("... setPosition");
+        log("... setPosition");
 
         s.width = 21 * 16;
 
         s.height = 13 * 16;
-        cc.log("... setContentSize");
+        log("... setContentSize");
 
         this.addChild(s);
-        cc.log("this..addChild");
+        log("this..addChild");
 
         x = winSize.width * 3/4;
 
-        var s2 = new cc.Scale9Sprite('button_actived.png');
-        cc.log("... created");
+        var s2 = new Scale9Sprite('button_actived.png');
+        log("... created");
 
         s2.x = x;
         s2.y = y;
-        cc.log("... setPosition");
+        log("... setPosition");
 
         s2.width = 21 * 16;
         s2.height = 13 * 16;
-        cc.log("... setContentSize");
+        log("... setContentSize");
 
         this.addChild(s2);
-        cc.log("this..addChild");
+        log("this..addChild");
 
-        cc.log("... S9_TexturePacker done.");
+        log("... S9_TexturePacker done.");
     }
 
 }

@@ -33,7 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, Sprite, log } from "@aspect/core";
 import { CallFunc, MoveBy, Sequence } from "@aspect/actions";
 
 export class Issue1305_2 extends ActionsDemo {
@@ -42,7 +42,7 @@ export class Issue1305_2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(0);
 
-    var spr = new cc.Sprite(s_pathGrossini);
+    var spr = new Sprite(s_pathGrossini);
     spr.x = 200;
     spr.y = 200;
     this.addChild(spr);
@@ -64,16 +64,16 @@ export class Issue1305_2 extends ActionsDemo {
     //----end40----
   }
   onLog1() {
-    cc.log("1st block");
+    log("1st block");
   }
   onLog2() {
-    cc.log("2nd block");
+    log("2nd block");
   }
   onLog3() {
-    cc.log("3rd block");
+    log("3rd block");
   }
   onLog4() {
-    cc.log("4th block");
+    log("4th block");
   }
   title() {
     return "Issue 1305 #2";

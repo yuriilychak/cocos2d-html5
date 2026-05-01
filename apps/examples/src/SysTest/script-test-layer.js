@@ -28,11 +28,12 @@ import { ScriptTestTempLayer } from "./ScriptTestTempFile";
 import { SysTestBase } from "./sys-test-base";
 import { tempJSFileName } from "./sys-test-helpers";
 import { winSize } from "../constants";
-import { LabelTTF, Point } from "@aspect/core";
+import { EventManager, LabelTTF, Point, Sys, log, visibleRect } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class ScriptTestLayer extends SysTestBase {
   startDownload() {
-    if (!cc.sys.isNative) {
+    if (!Sys.getInstance().isNative) {
       return;
     }
     var that = this;
@@ -40,7 +41,7 @@ export class ScriptTestLayer extends SysTestBase {
     var storagePath =
       (jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") +
       "JSBTests/AssetsManagerTest/ScriptTest/";
-    cc.log("Storage path for this test : " + storagePath);
+    log("Storage path for this test : " + storagePath);
 
     if (this._am) {
       this._am = null;
@@ -48,7 +49,7 @@ export class ScriptTestLayer extends SysTestBase {
 
     this._am = new jsb.AssetsManager(manifestPath, storagePath);
     if (!this._am.getLocalManifest().isLoaded()) {
-      cc.log("Fail to update assets, step skipped.");
+      log("Fail to update assets, step skipped.");
       that.clickMeShowTempLayer();
     } else {
       var listener = new jsb.EventListenerAssetsManager(this._am, function (
@@ -57,28 +58,28 @@ export class ScriptTestLayer extends SysTestBase {
         var scene;
         switch (event.getEventCode()) {
           case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
-            cc.log("No local manifest file found, skip assets update.");
+            log("No local manifest file found, skip assets update.");
             that.clickMeShowTempLayer();
             break;
           case jsb.EventAssetsManager.UPDATE_PROGRESSION:
-            cc.log(event.getPercent() + "%");
+            log(event.getPercent() + "%");
             break;
           case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
           case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
-            cc.log("Fail to download manifest file, update skipped.");
+            log("Fail to download manifest file, update skipped.");
             that.clickMeShowTempLayer();
             break;
           case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
           case jsb.EventAssetsManager.UPDATE_FINISHED:
-            cc.log("Update finished. " + event.getMessage());
+            log("Update finished. " + event.getMessage());
             require(tempJSFileName);
             that.clickMeShowTempLayer();
             break;
           case jsb.EventAssetsManager.UPDATE_FAILED:
-            cc.log("Update failed. " + event.getMessage());
+            log("Update failed. " + event.getMessage());
             break;
           case jsb.EventAssetsManager.ERROR_UPDATING:
-            cc.log(
+            log(
               "Asset update error: " +
                 event.getAssetId() +
                 ", " +
@@ -86,13 +87,13 @@ export class ScriptTestLayer extends SysTestBase {
             );
             break;
           case jsb.EventAssetsManager.ERROR_DECOMPRESS:
-            cc.log(event.getMessage());
+            log(event.getMessage());
             break;
           default:
             break;
         }
       });
-      cc.eventManager.addListener(listener, 1);
+      EventManager.getInstance().addListener(listener, 1);
       this._am.update();
     }
   }
@@ -102,8 +103,8 @@ export class ScriptTestLayer extends SysTestBase {
     this.addChild(this._tempLayer, 0, 233);
   }
   clickMeReloadTempLayer() {
-    cc.sys.cleanScript(tempJSFileName);
-    if (!cc.sys.isNative) {
+    Sys.getInstance().cleanScript(tempJSFileName);
+    if (!Sys.getInstance().isNative) {
       this.clickMeShowTempLayer();
     } else {
       this.startDownload();
@@ -123,19 +124,19 @@ export class ScriptTestLayer extends SysTestBase {
 
     this._am = null;
 
-    var menu = new cc.Menu();
+    var menu = new Menu();
     menu.setPosition(new Point(0, 0));
     menu.width = winSize.width;
     menu.height = winSize.height;
     this.addChild(menu, 1);
-    var item1 = new cc.MenuItemLabel(
+    var item1 = new MenuItemLabel(
       new LabelTTF("Click me show tempLayer", "Arial", 22),
       this.clickMeShowTempLayer,
       this
     );
     menu.addChild(item1);
 
-    var item2 = new cc.MenuItemLabel(
+    var item2 = new MenuItemLabel(
       new LabelTTF("Click me reload tempLayer", "Arial", 22),
       this.clickMeReloadTempLayer,
       this
@@ -143,7 +144,7 @@ export class ScriptTestLayer extends SysTestBase {
     menu.addChild(item2);
 
     menu.alignItemsVerticallyWithPadding(8);
-    menu.setPosition(Point.add(cc.visibleRect.left, new Point(+180, 0)));
+    menu.setPosition(Point.add(visibleRect.left, new Point(+180, 0)));
   }
 
   getTitle() {

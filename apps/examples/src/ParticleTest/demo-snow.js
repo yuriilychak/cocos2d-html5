@@ -28,12 +28,14 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_snow } from "../resources";
 import { Point } from "@aspect/core";
+import { ParticleSnow } from "./ParticleExamples";
+import { ParticleSystem } from "@aspect/particle";
 
 export class DemoSnow extends ParticleDemo {
   onEnter() {
     super.onEnter();
 
-    this._emitter = new cc.ParticleSnow();
+    this._emitter = new ParticleSnow();
     this._background.addChild(this._emitter, 10);
 
     this._emitter.life = 3;
@@ -60,7 +62,7 @@ export class DemoSnow extends ParticleDemo {
       this._emitter.totalParticles / this._emitter.life;
 
     this._emitter.texture = cc.textureCache.addImage(s_snow);
-    this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
+    this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
 
     this.setEmitterPosition();
   }

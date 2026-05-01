@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { LabelTTF, Size } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
   constructor() {
@@ -70,19 +71,19 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       var labelButton = new LabelTTF("Buttons", "Arial", 25);
       var labelS9sprite = new LabelTTF("s9Sprites", "Arial", 25);
 
-      var menuItem1 = new cc.MenuItemLabel(labelText, this.drawTexts, this);
-      var menuItem2 = new cc.MenuItemLabel(
+      var menuItem1 = new MenuItemLabel(labelText, this.drawTexts, this);
+      var menuItem2 = new MenuItemLabel(
         labelButton,
         this.drawButtons,
         this,
         false
       );
-      var menuItem3 = new cc.MenuItemLabel(
+      var menuItem3 = new MenuItemLabel(
         labelS9sprite,
         this.drawS9Buttons,
         this
       );
-      var menu = new cc.Menu(menuItem1, menuItem2, menuItem3);
+      var menu = new Menu(menuItem1, menuItem2, menuItem3);
       menu.x = 0;
       menu.y = 0;
       menuItem1.x = menuItem2.x = menuItem3.x = 120;

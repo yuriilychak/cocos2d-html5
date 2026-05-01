@@ -27,6 +27,7 @@
 
 import { TestScene } from "../test-scene";
 import { PongLayer } from "./pong-layer";
+import { Director } from "@aspect/core";
 
 export class TouchesTestScene extends TestScene {
   constructor() {
@@ -35,7 +36,7 @@ export class TouchesTestScene extends TestScene {
     this.addChild(pongLayer);
   }
   runThisTest() {
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
   MainMenuCallback(sender) {
     super.MainMenuCallback(sender);

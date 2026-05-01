@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Color } from "@aspect/core";
+import { Color, LayerColor, log } from "@aspect/core";
 
 export class UILayoutComponentTest extends UIMainLayer {
   constructor() {
@@ -37,14 +37,14 @@ export class UILayoutComponentTest extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._baseLayer = new cc.LayerColor();
+      this._baseLayer = new LayerColor();
       this._baseLayer.setColor(new Color(50, 100, 0));
       this._baseLayer.setOpacity(100);
       this._baseLayer.setContentSize(200, 200);
       this._mainNode.addChild(this._baseLayer);
 
       var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
-      cc.log(
+      log(
         "content size should be greater than 0:  width = %f, height = %f",
         button.width,
         button.height

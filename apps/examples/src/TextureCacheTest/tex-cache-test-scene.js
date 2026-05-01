@@ -31,6 +31,7 @@ import {
   texCacheTestSceneIdx,
   _settexCacheTestSceneIdx
 } from "./texture-cache-test-helpers";
+import { Director } from "@aspect/core";
 
 export class TexCacheTestScene extends TestScene {
   runThisTest(num) {
@@ -38,6 +39,6 @@ export class TexCacheTestScene extends TestScene {
     var layer = nextTexCacheTest();
     this.addChild(layer);
 
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }

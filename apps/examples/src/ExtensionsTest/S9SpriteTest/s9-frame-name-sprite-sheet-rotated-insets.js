@@ -29,7 +29,8 @@
 // S9FrameNameSpriteSheetRotatedInsets
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
-import { Rect } from "@aspect/core";
+import { Rect, log } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9FrameNameSpriteSheetRotatedInsets extends S9SpriteTestDemo {
   constructor() {
@@ -43,21 +44,21 @@ export class S9FrameNameSpriteSheetRotatedInsets extends S9SpriteTestDemo {
     var x = winSize.width / 2;
     var y = 0 + winSize.height / 2;
 
-    cc.log("S9FrameNameSpriteSheetRotatedInsets ...");
+    log("S9FrameNameSpriteSheetRotatedInsets ...");
 
-    var blocks_with_insets = new cc.Scale9Sprite(
+    var blocks_with_insets = new Scale9Sprite(
       "blocks9r.png",
       new Rect(32, 32, 32, 32)
     );
-    cc.log("... created");
+    log("... created");
 
     blocks_with_insets.x = x;
     blocks_with_insets.y = y;
-    cc.log("... setPosition");
+    log("... setPosition");
 
     this.addChild(blocks_with_insets);
-    cc.log("this..addChild");
+    log("this..addChild");
 
-    cc.log("... S9FrameNameSpriteSheetRotatedInsets done.");
+    log("... S9FrameNameSpriteSheetRotatedInsets done.");
   }
 }

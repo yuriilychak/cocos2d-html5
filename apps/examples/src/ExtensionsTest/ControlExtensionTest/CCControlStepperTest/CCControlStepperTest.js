@@ -25,7 +25,8 @@
  */
 
 import { ControlScene } from "../CCControlScene";
-import { LabelTTF, Scene } from "@aspect/core";
+import { Director, LabelTTF, Node, Scene, Sprite } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class ControlStepperTest extends ControlScene {
   constructor() {
@@ -35,16 +36,16 @@ export class ControlStepperTest extends ControlScene {
 
   init() {
     if (super.init()) {
-      var screenSize = cc.director.getWinSize();
+      var screenSize = Director.getInstance().getWinSize();
 
-      var layer = new cc.Node();
+      var layer = new Node();
       layer.x = screenSize.width / 2;
       layer.y = screenSize.height / 2;
       this.addChild(layer, 1);
       var layer_width = 0;
 
       // Add the black background for the text
-      var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
+      var background = new Scale9Sprite("extensions/buttonBackground.png");
       background.width = 100;
       background.height = 50;
       background.x = layer_width + background.width / 2.0;
@@ -84,8 +85,8 @@ export class ControlStepperTest extends ControlScene {
     return false;
   }
   makeControlStepper() {
-    var minusSprite = new cc.Sprite("extensions/stepper-minus.png");
-    var plusSprite = new cc.Sprite("extensions/stepper-plus.png");
+    var minusSprite = new Sprite("extensions/stepper-minus.png");
+    var plusSprite = new Sprite("extensions/stepper-plus.png");
 
     return new cc.ControlStepper(minusSprite, plusSprite);
   }

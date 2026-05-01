@@ -31,7 +31,7 @@ export class ShakyTiles3DTest extends EffectsBaseLayer {
     return "ShakyTiles3D";
   }
   code() {
-    return "a = cc.shakyTiles3D(duration, gridSize, range, shakeZ)";
+    return "a = shakyTiles3D(duration, gridSize, range, shakeZ)";
   }
   getEffect(duration) {
     return cc.shakyTiles3D(duration, new Size(16, 12), 5, false);

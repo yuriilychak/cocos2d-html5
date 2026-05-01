@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { LabelTTF } from "@aspect/core";
+import { Director, EventManager, LabelTTF } from "@aspect/core";
 
 export class DirectorEventTest extends EventDispatcherTestDemo {
   constructor() {
@@ -69,24 +69,24 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     this._label4.setPosition(80, s.height / 2 - 60);
     this.addChild(this._label4);
 
-    var dispatcher = cc.eventManager;
+    var dispatcher = EventManager.getInstance();
 
     this._event1 = dispatcher.addCustomListener(
-      cc.Director.EVENT_AFTER_UPDATE,
+      Director.EVENT_AFTER_UPDATE,
       this.onEvent1.bind(this)
     );
     this._event2 = dispatcher.addCustomListener(
-      cc.Director.EVENT_AFTER_VISIT,
+      Director.EVENT_AFTER_VISIT,
       this.onEvent2.bind(this)
     );
     this._event3 = dispatcher.addCustomListener(
-      cc.Director.EVENT_AFTER_DRAW,
+      Director.EVENT_AFTER_DRAW,
       function (event) {
         selfPointer._label3.setString("Draw: " + selfPointer._count3++);
       }
     );
     this._event4 = dispatcher.addCustomListener(
-      cc.Director.EVENT_PROJECTION_CHANGED,
+      Director.EVENT_PROJECTION_CHANGED,
       function (event) {
         selfPointer._label4.setString("Projection: " + selfPointer._count4++);
       }
@@ -99,7 +99,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     //----start8----onExit
     super.onExit();
 
-    var eventManager = cc.eventManager;
+    var eventManager = EventManager.getInstance();
     eventManager.removeListener(this._event1);
     eventManager.removeListener(this._event2);
     eventManager.removeListener(this._event3);
@@ -111,7 +111,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     //----start8----update
     this._time += dt;
     if (this._time > 0.5) {
-      cc.director.setProjection(cc.Director.PROJECTION_2D);
+      Director.getInstance().setProjection(Director.PROJECTION_2D);
       this._time = 0;
     }
     //----end8----

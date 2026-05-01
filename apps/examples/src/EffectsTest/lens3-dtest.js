@@ -32,7 +32,7 @@ export class Lens3DTest extends EffectsBaseLayer {
     return "Lens3D";
   }
   code() {
-    return "a = cc.lens3D(duration, gridSize, position, radius)";
+    return "a = lens3D(duration, gridSize, position, radius)";
   }
   getEffect(duration) {
     return cc.lens3D(

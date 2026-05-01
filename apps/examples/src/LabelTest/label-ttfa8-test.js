@@ -28,7 +28,7 @@
 /// LabelTTFA8Test
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, LabelTTF, LayerColor } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 import { FadeIn, FadeOut, sequence } from "@aspect/actions";
 
@@ -38,7 +38,7 @@ export class LabelTTFA8Test extends AtlasDemo {
     super();
     var s = director.getWinSize();
 
-    var layer = new cc.LayerColor(new Color(128, 128, 128, 255));
+    var layer = new LayerColor(new Color(128, 128, 128, 255));
     this.addChild(layer, -10);
 
     // LabelBMFont

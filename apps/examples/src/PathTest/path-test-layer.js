@@ -29,13 +29,13 @@
 //
 //------------------------------------------------------------------
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
-import { Color } from "@aspect/core";
+import { Color, log } from "@aspect/core";
 
 export class PathTestLayer extends BaseTestLayer {
   constructor() {
     super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
-    this._title = "cc.path";
+    this._title = "path";
 
     this._subtitle = "See the console please!";
 
@@ -83,80 +83,80 @@ export class PathTestLayer extends BaseTestLayer {
   }
 
   _join(args) {
-    cc.log("-----------cc.path.join begin----------");
+    log("-----------path.join begin----------");
     for (var i = 0, li = args.length; i < li; i++) {
       var obj = args[i];
-      cc.log(
-        "cc.path.join('" +
+      log(
+        "path.join('" +
           obj.join("','") +
           "') ---> " +
           cc.path.join.apply(cc.path, obj)
       );
     }
-    cc.log("-----------cc.path.join end------------");
+    log("-----------path.join end------------");
   }
 
   _extname(args) {
-    cc.log("-----------cc.path.extname begin----------");
+    log("-----------path.extname begin----------");
     for (var i = 0, li = args.length; i < li; i++) {
       var obj = args[i];
-      cc.log("cc.path.extname('" + obj + "') ---> " + cc.path.extname(obj));
+      log("path.extname('" + obj + "') ---> " + cc.path.extname(obj));
     }
-    cc.log("-----------cc.path.extname end------------");
+    log("-----------path.extname end------------");
   }
 
   _basename(args) {
-    cc.log("-----------cc.path.basename begin----------");
+    log("-----------path.basename begin----------");
     for (var i = 0, li = args.length; i < li; i++) {
       var obj = args[i];
-      cc.log(
-        "cc.path.basename('" +
+      log(
+        "path.basename('" +
           obj.join("','") +
           "') ---> " +
           cc.path.basename.apply(cc.path, obj)
       );
     }
-    cc.log("-----------cc.path.basename end------------");
+    log("-----------path.basename end------------");
   }
 
   _dirname(args) {
-    cc.log("-----------cc.path.dirname begin----------");
+    log("-----------path.dirname begin----------");
     for (var i = 0, li = args.length; i < li; i++) {
       var obj = args[i];
-      cc.log("cc.path.dirname('" + obj + "') ---> " + cc.path.dirname(obj));
+      log("path.dirname('" + obj + "') ---> " + cc.path.dirname(obj));
     }
-    cc.log("-----------cc.path.dirname end------------");
+    log("-----------path.dirname end------------");
   }
 
   _changeExtname(args) {
-    cc.log("-----------cc.path.changeExtname begin----------");
+    log("-----------path.changeExtname begin----------");
     for (var i = 0, li = args.length; i < li; i++) {
       var obj = args[i];
-      cc.log(
-        "cc.path.changeExtname('" +
+      log(
+        "path.changeExtname('" +
           obj.join("','") +
           "') ---> " +
           cc.path.changeExtname.apply(cc.path, obj)
       );
     }
-    cc.log("-----------cc.path.changeExtname end------------");
+    log("-----------path.changeExtname end------------");
   }
 
   _changeBasename(args) {
-    cc.log("-----------cc.path.changeBasename begin----------");
+    log("-----------path.changeBasename begin----------");
     for (var i = 0, li = args.length; i < li; i++) {
       var obj = args[i];
       var str =
         obj.length == 3
           ? "'" + obj[0] + "','" + obj[1] + "'," + obj[2]
           : "" + obj.join("','") + "'";
-      cc.log(
-        "cc.path.changeBasename(" +
+      log(
+        "path.changeBasename(" +
           str +
           ") ---> " +
           cc.path.changeBasename.apply(cc.path, obj)
       );
     }
-    cc.log("-----------cc.path.changeBasename end------------");
+    log("-----------path.changeBasename end------------");
   }
 }

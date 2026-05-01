@@ -27,16 +27,18 @@
 
 import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
+import { ParticleSun } from "./ParticleExamples";
+import { ParticleSystem } from "@aspect/particle";
 
 export class DemoSun extends ParticleDemo {
   onEnter() {
     super.onEnter();
 
-    this._emitter = new cc.ParticleSun();
+    this._emitter = new ParticleSun();
     this._background.addChild(this._emitter, 10);
     this._emitter.texture = cc.textureCache.addImage(s_fire);
     if (this._emitter.setShapeType)
-      this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
+      this._emitter.setShapeType(ParticleSystem.BALL_SHAPE);
 
     this.setEmitterPosition();
   }

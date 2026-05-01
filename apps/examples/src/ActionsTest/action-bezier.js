@@ -94,7 +94,7 @@ export class ActionBezier extends ActionsDemo {
     //----end8----
   }
   title() {
-    return "cc.bezierBy / cc.bezierTo";
+    return "bezierBy / bezierTo";
   }
   //
   // Automation

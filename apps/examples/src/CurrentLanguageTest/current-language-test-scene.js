@@ -27,6 +27,7 @@
 
 import { CurrentLanguageTest } from "./current-language-test";
 import { TestScene } from "../test-scene";
+import { Director } from "@aspect/core";
 
 export class CurrentLanguageTestScene extends TestScene {
   runThisTest() {
@@ -37,6 +38,6 @@ export class CurrentLanguageTestScene extends TestScene {
     var layer = new CurrentLanguageTest();
     this.addChild(layer);
 
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }

@@ -24,11 +24,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+import { Node, log } from "@aspect/core";
+
 
 /*
     SchedulerUpdate
 */
-export class TestNode extends cc.Node {
+export class TestNode extends Node {
 
     constructor(str, priority) {
         super();
@@ -40,7 +42,7 @@ export class TestNode extends cc.Node {
         this.scheduleUpdateWithPriority(priority);
     }
     update(dt) {
-        cc.log( this._pString );
+        log( this._pString );
     }
 
 }

@@ -27,10 +27,10 @@
 
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, EventListener, EventManager, LabelTTF, LayerColor, Sprite, Sys } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 
-export class SceneTestLayer3 extends cc.LayerColor {
+export class SceneTestLayer3 extends LayerColor {
   constructor() {
     //----start0----Scene3-ctor
     super();
@@ -42,7 +42,7 @@ export class SceneTestLayer3 extends cc.LayerColor {
     label.x = s.width / 2;
     label.y = s.height / 2;
 
-    var sprite = new cc.Sprite(s_pathGrossini);
+    var sprite = new Sprite(s_pathGrossini);
     this.addChild(sprite);
 
     sprite.x = s.width - 40;
@@ -55,20 +55,20 @@ export class SceneTestLayer3 extends cc.LayerColor {
   }
 
   onEnterTransitionDidFinish() {
-    if ("touches" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("touches" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: function (touches, event) {
             director.popScene();
           }
         },
         this
       );
-    } else if ("mouse" in cc.sys.capabilities)
-      cc.eventManager.addListener(
+    } else if ("mouse" in Sys.getInstance().capabilities)
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseUp: function (event) {
             director.popScene();
           }

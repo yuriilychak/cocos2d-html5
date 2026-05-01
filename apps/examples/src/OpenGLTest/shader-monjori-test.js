@@ -32,12 +32,13 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ShaderNode } from "./shader-node";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
+import { Sys } from "@aspect/core";
 
 export class ShaderMonjoriTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
+        if( 'opengl' in Sys.getInstance().capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Monjori.vsh", ccbjs + "Shaders/example_Monjori.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;

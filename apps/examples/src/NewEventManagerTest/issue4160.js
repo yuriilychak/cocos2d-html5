@@ -27,13 +27,14 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { TouchableSprite } from "./touchable-sprite";
+import { Director } from "@aspect/core";
 
 export class Issue4160 extends EventDispatcherTestDemo {
   constructor() {
     //----start10----ctor
     super();
-    var origin = cc.director.getVisibleOrigin();
-    var size = cc.director.getVisibleSize();
+    var origin = Director.getInstance().getVisibleOrigin();
+    var size = Director.getInstance().getVisibleSize();
 
     var sprite1 = TouchableSprite.create(-30);
     sprite1.setTexture("Images/CyanSquare.png");

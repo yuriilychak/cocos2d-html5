@@ -25,7 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_circle_plist, s_circle_png } from "../resources";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, LabelTTF, Sprite, SpriteFrameCache } from "@aspect/core";
 import { FadeTo, Hide, sequence } from "@aspect/actions";
 
 export class RenderTextureZbuffer extends RenderTextureBaseLayer {
@@ -52,9 +52,9 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
 
     this.sp9 = null;
 
-    cc.eventManager.addListener(
+    EventManager.getInstance().addListener(
       {
-        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: this.onTouchesBegan.bind(this),
         onTouchesEnded: this.onTouchesEnded.bind(this),
         onTouchesMoved: this.onTouchesMoved.bind(this)
@@ -62,7 +62,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
       this
     );
 
-    var size = cc.director.getWinSize();
+    var size = Director.getInstance().getWinSize();
     var label = new LabelTTF("vertexZ = 50", "Marker Felt", 64);
     label.x = size.width / 2;
     label.y = size.height * 0.25;
@@ -82,18 +82,18 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     label2.vertexZ = 0;
     label3.vertexZ = -50;
 
-    cc.spriteFrameCache.addSpriteFrames(s_circle_plist);
+    SpriteFrameCache.getInstance().addSpriteFrames(s_circle_plist);
     this.mgr = new cc.SpriteBatchNode(s_circle_png, 9);
     this.addChild(this.mgr);
-    this.sp1 = new cc.Sprite("#circle.png");
-    this.sp2 = new cc.Sprite("#circle.png");
-    this.sp3 = new cc.Sprite("#circle.png");
-    this.sp4 = new cc.Sprite("#circle.png");
-    this.sp5 = new cc.Sprite("#circle.png");
-    this.sp6 = new cc.Sprite("#circle.png");
-    this.sp7 = new cc.Sprite("#circle.png");
-    this.sp8 = new cc.Sprite("#circle.png");
-    this.sp9 = new cc.Sprite("#circle.png");
+    this.sp1 = new Sprite("#circle.png");
+    this.sp2 = new Sprite("#circle.png");
+    this.sp3 = new Sprite("#circle.png");
+    this.sp4 = new Sprite("#circle.png");
+    this.sp5 = new Sprite("#circle.png");
+    this.sp6 = new Sprite("#circle.png");
+    this.sp7 = new Sprite("#circle.png");
+    this.sp8 = new Sprite("#circle.png");
+    this.sp9 = new Sprite("#circle.png");
 
     this.mgr.addChild(this.sp1, 9);
     this.mgr.addChild(this.sp2, 8);
@@ -186,7 +186,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
   }
 
   renderScreenShot() {
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     var texture = new cc.RenderTexture(winSize.width, winSize.width);
     if (!texture) return;
 
@@ -196,7 +196,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     this.visit();
     texture.end();
 
-    var sprite = new cc.Sprite(texture.getSprite().texture);
+    var sprite = new Sprite(texture.getSprite().texture);
 
     sprite.x = winSize.width / 2;
     sprite.y = winSize.width / 2;

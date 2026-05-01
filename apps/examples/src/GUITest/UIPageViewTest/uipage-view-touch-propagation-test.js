@@ -26,7 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
-import { Point, Size, Color } from "@aspect/core";
+import { Color, Point, Size, log } from "@aspect/core";
 
 export class UIPageViewTouchPropagationTest extends UIMainLayer {
   init() {
@@ -91,13 +91,13 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       pageView.setName("pageView");
       pageView.addTouchEventListener(function (sender, type) {
         if (type == ccui.Widget.TOUCH_BEGAN) {
-          cc.log("page view touch began");
+          log("page view touch began");
         } else if (type == ccui.Widget.TOUCH_MOVED) {
-          cc.log("page view touch moved");
+          log("page view touch moved");
         } else if (type == ccui.Widget.TOUCH_ENDED) {
-          cc.log("page view touch ended");
+          log("page view touch ended");
         } else {
-          cc.log("page view touch cancelled");
+          log("page view touch cancelled");
         }
       });
       this._mainNode.addChild(pageView);
@@ -150,9 +150,9 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       checkBox2.setName("swallow");
       this._mainNode.addChild(checkBox2);
 
-      //            var eventListener = new cc.EventListenerTouchOneByOne();
+      //            var eventListener = new EventListenerTouchOneByOne();
       //            eventListener.onTouchBegan = function(touch, event){
-      //                cc.log("layout receives touches");
+      //                log("layout receives touches");
       //                return true;
       //            };
       //            this._eventDispatcher.addEventListenerWithSceneGraphPriority(eventListener, this);
@@ -183,7 +183,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
         pageView.setSwallowTouches(false);
       }
     }
-    if (type == ccui.Widget.TOUCH_ENDED) cc.log("button clicked");
+    if (type == ccui.Widget.TOUCH_ENDED) log("button clicked");
   }
 
   pageViewEvent(pageView, type) {

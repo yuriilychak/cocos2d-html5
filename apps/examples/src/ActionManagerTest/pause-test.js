@@ -34,7 +34,7 @@ import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled, director } from "../constants";
-import { LabelTTF, Point } from "@aspect/core";
+import { LabelTTF, Point, Sprite } from "@aspect/core";
 import { MoveBy } from "@aspect/actions";
 
 export class PauseTest extends ActionManagerTest {
@@ -67,7 +67,7 @@ export class PauseTest extends ActionManagerTest {
     //
     // Also, this test MUST be done, after [super onEnter]
     //
-    var grossini = new cc.Sprite(s_pathGrossini);
+    var grossini = new Sprite(s_pathGrossini);
     this.addChild(grossini, 0, TAG_GROSSINI);
     grossini.x = 200;
     grossini.y = 200;

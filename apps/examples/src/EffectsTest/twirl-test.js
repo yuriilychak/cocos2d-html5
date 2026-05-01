@@ -32,7 +32,7 @@ export class TwirlTest extends EffectsBaseLayer {
     return "Twirl";
   }
   code() {
-    return "a = cc.twirl(duration, gridSize, position, twirls, amplitude)";
+    return "a = twirl(duration, gridSize, position, twirls, amplitude)";
   }
   getEffect(duration) {
     return cc.twirl(

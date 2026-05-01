@@ -30,6 +30,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniDance08, s_pathGrossini } from "../resources";
 import { winSize } from "../constants";
 import { ScaleBy, sequence } from "@aspect/actions";
+import { Sprite } from "@aspect/core";
 
 export class SpriteDoubleResolution extends SpriteTestDemo {
 
@@ -60,7 +61,7 @@ export class SpriteDoubleResolution extends SpriteTestDemo {
         child1_left.x = -30;
         child1_left.y = 0;
 
-        var child1_right = new cc.Sprite(s_pathGrossini);
+        var child1_right = new Sprite(s_pathGrossini);
         spriteSD.addChild(child1_right);
         child1_left.x = spriteSD.height;
         child1_left.y = 0;
@@ -69,7 +70,7 @@ export class SpriteDoubleResolution extends SpriteTestDemo {
         // RIGHT: HD sprite
         //
         // there is an HD version of grossini.png
-        var spriteHD = new cc.Sprite(s_pathGrossini);
+        var spriteHD = new Sprite(s_pathGrossini);
         this.addChild(spriteHD);
         spriteHD.x = winSize.width / 4 * 3;
         spriteHD.y = winSize.height / 2;
@@ -79,7 +80,7 @@ export class SpriteDoubleResolution extends SpriteTestDemo {
         child2_left.x = -30;
         child2_left.y = 0;
 
-        var child2_right = new cc.Sprite(s_pathGrossini);
+        var child2_right = new Sprite(s_pathGrossini);
         spriteHD.addChild(child2_right);
         child2_left.x = spriteHD.height;
         child2_left.y = 0;

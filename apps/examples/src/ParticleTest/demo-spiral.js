@@ -27,16 +27,18 @@
 
 import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
+import { ParticleSpiral } from "./ParticleExamples";
+import { ParticleSystem } from "@aspect/particle";
 
 export class DemoSpiral extends ParticleDemo {
   onEnter() {
     super.onEnter();
 
-    this._emitter = new cc.ParticleSpiral();
+    this._emitter = new ParticleSpiral();
     this._background.addChild(this._emitter, 10);
 
     this._emitter.texture = cc.textureCache.addImage(s_fire);
-    this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
+    this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
     this.setEmitterPosition();
   }

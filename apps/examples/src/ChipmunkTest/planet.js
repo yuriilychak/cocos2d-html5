@@ -34,7 +34,7 @@ import { winSize } from "../constants";
 export class Planet extends ChipmunkDemo {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
     this._subtitle = "Chipmunk Demo";
     this._title = "Planet";
 

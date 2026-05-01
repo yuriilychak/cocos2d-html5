@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { Rect } from "@aspect/core";
+import { EventListener, EventManager, Rect, Sprite, Sys, log } from "@aspect/core";
 import { CallFunc, DelayTime, sequence } from "@aspect/actions";
 
 export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
@@ -44,7 +44,7 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     var origin = director.getVisibleOrigin();
     var size = director.getVisibleSize();
 
-    this._sprite = new cc.Sprite("Images/CyanSquare.png");
+    this._sprite = new Sprite("Images/CyanSquare.png");
     this._sprite.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height / 2
@@ -52,8 +52,8 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     this.addChild(this._sprite, 10);
 
     // Make sprite1 touchable
-    var listener1 = cc.EventListener.create({
-      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+    var listener1 = EventListener.create({
+      event: EventListener.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         var target = event.getCurrentTarget();
@@ -63,7 +63,7 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
         var rect = new Rect(0, 0, s.width, s.height);
 
         if (Rect.containsPoint(rect, locationInNode)) {
-          cc.log(
+          log(
             "sprite began... x = " +
               locationInNode.x +
               ", y = " +
@@ -82,11 +82,11 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
       },
       onTouchEnded: function (touch, event) {
         var target = event.getCurrentTarget();
-        cc.log("sprite onTouchesEnded.. ");
+        log("sprite onTouchesEnded.. ");
         target.opacity = 255;
       }
     });
-    cc.eventManager.addListener(listener1, this._sprite);
+    EventManager.getInstance().addListener(listener1, this._sprite);
 
     this.runAction(
       sequence(
@@ -99,8 +99,8 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
         new CallFunc(function () {
           this._spriteSaved = false;
           this.addChild(this._sprite);
-          if (!cc.sys.isNative)
-            cc.eventManager.addListener(listener1, this._sprite);
+          if (!Sys.getInstance().isNative)
+            EventManager.getInstance().addListener(listener1, this._sprite);
         }, this)
       )
     );

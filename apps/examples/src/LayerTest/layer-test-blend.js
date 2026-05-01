@@ -33,7 +33,7 @@
 import { LayerTest } from "./layer-test";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, LabelTTF, LayerColor, Sprite, Sys } from "@aspect/core";
 
 export class LayerTestBlend extends LayerTest {
 
@@ -43,10 +43,10 @@ export class LayerTestBlend extends LayerTest {
 
 
         this._blend = true;
-        var layer1 = new cc.LayerColor(new Color(255, 255, 255, 80));
+        var layer1 = new LayerColor(new Color(255, 255, 255, 80));
 
-        var sister1 = new cc.Sprite(s_pathSister1);
-        var sister2 = new cc.Sprite(s_pathSister2);
+        var sister1 = new Sprite(s_pathSister1);
+        var sister2 = new Sprite(s_pathSister2);
 
         this.addChild(sister1);
         this.addChild(sister2);
@@ -58,7 +58,7 @@ export class LayerTestBlend extends LayerTest {
         sister2.x = winSize.width/3 * 2;
         sister2.y = winSize.height / 2;
 
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
+        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
             var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;

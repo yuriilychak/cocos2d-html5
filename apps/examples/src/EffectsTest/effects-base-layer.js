@@ -32,7 +32,7 @@ import { arrayOfEffectsTest, nextEffectsTest, previousEffectsTest, restartEffect
 import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, Node, Point, Sprite } from "@aspect/core";
 import { MoveBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class EffectsBaseLayer extends BaseTestLayer {
@@ -58,7 +58,7 @@ export class EffectsBaseLayer extends BaseTestLayer {
     onEnter() {
         super.onEnter();
 
-        var node = new cc.Node();
+        var node = new Node();
 
         //Whether to demonstrate the effects inside a smaller rect
         var nodeGrid = new cc.NodeGrid();
@@ -71,17 +71,17 @@ export class EffectsBaseLayer extends BaseTestLayer {
         node.addChild( gradient );
 
         // back image
-        var bg = new cc.Sprite(s_back3);
+        var bg = new Sprite(s_back3);
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         node.addChild( bg );
 
-        var sister1 = new cc.Sprite(s_pathSister1);
+        var sister1 = new Sprite(s_pathSister1);
         sister1.x = winSize.width/3;
         sister1.y = winSize.height/2;
         node.addChild( sister1, 1 );
 
-        var sister2 = new cc.Sprite(s_pathSister2);
+        var sister2 = new Sprite(s_pathSister2);
         sister2.x = winSize.width*2/3;
         sister2.y = winSize.height/2;
         node.addChild( sister2, 1 );

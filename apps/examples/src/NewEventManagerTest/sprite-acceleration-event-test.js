@@ -27,6 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
+import { EventListener, EventManager, Sprite, log, visibleRect } from "@aspect/core";
 
 export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
   onEnter() {
@@ -38,29 +39,29 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
 
     cc.inputManager.setAccelerometerEnabled(true);
 
-    var sprite = new cc.Sprite("Images/ball.png");
+    var sprite = new Sprite("Images/ball.png");
     sprite.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
     this.addChild(sprite);
 
-    cc.eventManager.addListener(
+    EventManager.getInstance().addListener(
       {
-        event: cc.EventListener.ACCELERATION,
+        event: EventListener.ACCELERATION,
         callback: function (acc, event) {
           var target = event.getCurrentTarget();
           var ballSize = target.getContentSize();
           var ptNow = target.getPosition();
 
-          //cc.log("acc: x = " + acc.x + ", y = " + acc.y);
+          //log("acc: x = " + acc.x + ", y = " + acc.y);
 
           target.x = SpriteAccelerationEventTest._fix_pos(
             ptNow.x + acc.x * 9.81,
-            cc.visibleRect.left.x + ballSize.width / 2.0,
-            cc.visibleRect.right.x - ballSize.width / 2.0
+            visibleRect.left.x + ballSize.width / 2.0,
+            visibleRect.right.x - ballSize.width / 2.0
           );
           target.y = SpriteAccelerationEventTest._fix_pos(
             ptNow.y + acc.y * 9.81,
-            cc.visibleRect.bottom.y + ballSize.height / 2.0,
-            cc.visibleRect.top.y - ballSize.height / 2.0
+            visibleRect.bottom.y + ballSize.height / 2.0,
+            visibleRect.top.y - ballSize.height / 2.0
           );
         }
       },

@@ -30,6 +30,7 @@
 //------------------------------------------------------------------
 import { s_animations2Plist, s_grossiniPlist } from "../resources";
 import { UnitTestBase } from "./unit-test-base";
+import { SpriteFrameCache } from "@aspect/core";
 
 export class DictionaryToFromTest extends UnitTestBase {
   constructor() {
@@ -45,7 +46,7 @@ export class DictionaryToFromTest extends UnitTestBase {
   }
 
   runTest() {
-    var frameCache = cc.spriteFrameCache;
+    var frameCache = SpriteFrameCache.getInstance();
     frameCache.addSpriteFrames(s_grossiniPlist);
 
     // Purge previously loaded animation

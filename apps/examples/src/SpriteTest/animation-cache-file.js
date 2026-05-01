@@ -29,6 +29,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_animationsPlist, s_grossiniPlist, s_grossini_bluePlist, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate, sequence } from "@aspect/actions";
+import { Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class AnimationCacheFile extends SpriteTestDemo {
 
@@ -72,7 +73,7 @@ export class AnimationCacheFile extends SpriteTestDemo {
 
 
         this.cPixel3 = null;
-        var frameCache = cc.spriteFrameCache;
+        var frameCache = SpriteFrameCache.getInstance();
         frameCache.addSpriteFrames(s_grossiniPlist);
         frameCache.addSpriteFrames(s_grossini_grayPlist);
         frameCache.addSpriteFrames(s_grossini_bluePlist);
@@ -102,7 +103,7 @@ export class AnimationCacheFile extends SpriteTestDemo {
 
         // create an sprite with frame name
         // texture-less sprites are not supported
-        var grossini = new cc.Sprite("#grossini_dance_01.png");
+        var grossini = new Sprite("#grossini_dance_01.png");
 
         grossini.x = winSize.width / 2;
 

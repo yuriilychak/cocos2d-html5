@@ -28,8 +28,9 @@
  ****************************************************************************/
 
 import { s_grossini } from "../../resources";
+import { Sprite } from "@aspect/core";
 
-export class MySprite extends cc.Sprite {
+export class MySprite extends Sprite {
   constructor(f1, f2, f3) {
     super(s_grossini);
 

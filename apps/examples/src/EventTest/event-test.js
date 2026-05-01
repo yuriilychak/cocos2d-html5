@@ -31,6 +31,7 @@ import { EventTestScene } from "./event-test-scene";
 import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../resources";
 import { director } from "../constants";
 import { LabelTTF, Layer } from "@aspect/core";
+import { Menu, MenuItemImage } from "@aspect/menus";
 
 export class EventTest extends Layer {
     constructor() {
@@ -76,11 +77,11 @@ export class EventTest extends Layer {
             l.y = s.height - 80;
         }
 
-        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
-        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
+        var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
+        var item2 = new MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
+        var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
 
-        var menu = new cc.Menu(item1, item2, item3);
+        var menu = new Menu(item1, item2, item3);
         menu.x = 0;
         menu.y = 0;
         item1.x = s.width / 2 - 100;

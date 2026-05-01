@@ -34,7 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE_BATCH_NODE } from "./sprite-test-c
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { LabelTTF, Rect } from "@aspect/core";
+import { LabelTTF, Rect, Sprite, Sys } from "@aspect/core";
 import { ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeAliased extends SpriteTestDemo {
@@ -51,12 +51,12 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 10);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        var sprite1 = new cc.Sprite(batch.texture, new Rect(85, 121, 85, 121));
+        var sprite1 = new Sprite(batch.texture, new Rect(85, 121, 85, 121));
         sprite1.x = winSize.width / 2 - 100;
         sprite1.y = winSize.height / 2;
         batch.addChild(sprite1, 0, TAG_SPRITE1);
 
-        var sprite2 = new cc.Sprite(batch.texture, new Rect(85, 121, 85, 121));
+        var sprite2 = new Sprite(batch.texture, new Rect(85, 121, 85, 121));
         sprite2.x = winSize.width / 2 + 100;
         sprite2.y = winSize.height / 2;
         batch.addChild(sprite2, 0, TAG_SPRITE2);
@@ -83,7 +83,7 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
         // This change will affect every sprite that uses the same texture
         // So sprite1 and sprite2 will be affected by this change
         //
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
+        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities && cc.rendererConfig.isWebGL)) {
             var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
@@ -97,7 +97,7 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
     }
     onExit() {
         //----start25----onExit
-        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)) {
+        if (Sys.getInstance().isNative || ("opengl" in Sys.getInstance().capabilities && cc.rendererConfig.isWebGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
             sprite.texture.setAntiAliasTexParameters();
         }

@@ -32,7 +32,7 @@
 import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 import { s_pathGrossini } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, log } from "@aspect/core";
 
 export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
   constructor() {
@@ -109,20 +109,20 @@ export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
   }
 
   collisionBegin(arbiter, space) {
-    cc.log("collision begin");
+    log("collision begin");
     return true;
   }
 
   collisionPre(arbiter, space) {
-    cc.log("collision pre");
+    log("collision pre");
     return true;
   }
 
   collisionPost(arbiter, space) {
-    cc.log("collision post");
+    log("collision post");
   }
 
   collisionSeparate(arbiter, space) {
-    cc.log("collision separate");
+    log("collision separate");
   }
 }

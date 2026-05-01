@@ -42,7 +42,8 @@ import {
   restartTextInputTest
 } from "./text-input-test-helpers";
 import { TextInputTestScene } from "./text-input-test-scene";
-import { LabelTTF, Layer } from "@aspect/core";
+import { Director, LabelTTF, Layer } from "@aspect/core";
+import { Menu, MenuItemImage } from "@aspect/menus";
 
 export class TextInputTest extends Layer {
   constructor() {
@@ -55,17 +56,17 @@ export class TextInputTest extends Layer {
   restartCallback(sender) {
     var scene = new TextInputTestScene();
     scene.addChild(restartTextInputTest());
-    cc.director.runScene(scene);
+    Director.getInstance().runScene(scene);
   }
   nextCallback(sender) {
     var scene = new TextInputTestScene();
     scene.addChild(nextTextInputTest());
-    cc.director.runScene(scene);
+    Director.getInstance().runScene(scene);
   }
   backCallback(sender) {
     var scene = new TextInputTestScene();
     scene.addChild(previousTextInputTest());
-    cc.director.runScene(scene);
+    Director.getInstance().runScene(scene);
   }
 
   title() {
@@ -80,7 +81,7 @@ export class TextInputTest extends Layer {
   onEnter() {
     super.onEnter();
 
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var label = new LabelTTF(this.title(), "Arial", 24);
     this.addChild(label);
@@ -95,26 +96,26 @@ export class TextInputTest extends Layer {
       l.y = winSize.height - 80;
     }
 
-    var item1 = new cc.MenuItemImage(
+    var item1 = new MenuItemImage(
       s_pathB1,
       s_pathB2,
       this.backCallback,
       this
     );
-    var item2 = new cc.MenuItemImage(
+    var item2 = new MenuItemImage(
       s_pathR1,
       s_pathR2,
       this.restartCallback,
       this
     );
-    var item3 = new cc.MenuItemImage(
+    var item3 = new MenuItemImage(
       s_pathF1,
       s_pathF2,
       this.nextCallback,
       this
     );
 
-    var menu = new cc.Menu(item1, item2, item3);
+    var menu = new Menu(item1, item2, item3);
     menu.x = 0;
     menu.y = 0;
     item1.x = winSize.width / 2 - 100;

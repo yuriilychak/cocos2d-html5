@@ -41,7 +41,8 @@ import {
   s_pathR1,
   s_pathR2
 } from "../resources";
-import { LabelTTF, Layer } from "@aspect/core";
+import { Director, LabelTTF, Layer, visibleRect } from "@aspect/core";
+import { Menu, MenuItemFont, MenuItemImage, MenuItemToggle } from "@aspect/menus";
 
 export class MotionStreakTest extends Layer {
   constructor() {
@@ -59,7 +60,7 @@ export class MotionStreakTest extends Layer {
   onEnter() {
     super.onEnter();
 
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var label = new LabelTTF(this.title(), "Arial", 32);
     this.addChild(label, 0, TAG_LABEL);
@@ -74,46 +75,46 @@ export class MotionStreakTest extends Layer {
       l.y = winSize.height - 80;
     }
 
-    var item1 = new cc.MenuItemImage(
+    var item1 = new MenuItemImage(
       s_pathB1,
       s_pathB2,
       this.backCallback,
       this
     );
-    var item2 = new cc.MenuItemImage(
+    var item2 = new MenuItemImage(
       s_pathR1,
       s_pathR2,
       this.restartCallback,
       this
     );
-    var item3 = new cc.MenuItemImage(
+    var item3 = new MenuItemImage(
       s_pathF1,
       s_pathF2,
       this.nextCallback,
       this
     );
 
-    var menu = new cc.Menu(item1, item2, item3);
+    var menu = new Menu(item1, item2, item3);
 
     menu.x = 0;
     menu.y = 0;
-    item1.x = cc.visibleRect.center.x - item2.width * 2;
-    item1.y = cc.visibleRect.bottom.y + item2.height / 2;
-    item2.x = cc.visibleRect.center.x;
-    item2.y = cc.visibleRect.bottom.y + item2.height / 2;
-    item3.x = cc.visibleRect.center.x + item2.width * 2;
-    item3.y = cc.visibleRect.bottom.y + item2.height / 2;
+    item1.x = visibleRect.center.x - item2.width * 2;
+    item1.y = visibleRect.bottom.y + item2.height / 2;
+    item2.x = visibleRect.center.x;
+    item2.y = visibleRect.bottom.y + item2.height / 2;
+    item3.x = visibleRect.center.x + item2.width * 2;
+    item3.y = visibleRect.bottom.y + item2.height / 2;
 
     this.addChild(menu, 1);
 
-    var itemMode = new cc.MenuItemToggle(
-      new cc.MenuItemFont("Use High Quality Mode"),
-      new cc.MenuItemFont("Use Fast Mode"),
+    var itemMode = new MenuItemToggle(
+      new MenuItemFont("Use High Quality Mode"),
+      new MenuItemFont("Use Fast Mode"),
       this.modeCallback,
       this
     );
 
-    var menuMode = new cc.Menu(itemMode);
+    var menuMode = new Menu(itemMode);
     this.addChild(menuMode);
 
     menuMode.x = winSize.width / 2;
@@ -123,19 +124,19 @@ export class MotionStreakTest extends Layer {
   restartCallback(sender) {
     var scene = new MotionStreakTestScene();
     scene.addChild(restartMotionAction());
-    cc.director.runScene(scene);
+    Director.getInstance().runScene(scene);
   }
 
   nextCallback(sender) {
     var scene = new MotionStreakTestScene();
     scene.addChild(nextMotionAction());
-    cc.director.runScene(scene);
+    Director.getInstance().runScene(scene);
   }
 
   backCallback(sender) {
     var scene = new MotionStreakTestScene();
     scene.addChild(backMotionAction());
-    cc.director.runScene(scene);
+    Director.getInstance().runScene(scene);
   }
 
   modeCallback(sender) {

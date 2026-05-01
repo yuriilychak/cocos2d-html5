@@ -34,7 +34,7 @@ import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { LabelTTF } from "@aspect/core";
+import { LabelTTF, Sprite } from "@aspect/core";
 import { RotateBy, ScaleBy } from "@aspect/actions";
 
 export class ResumeTest extends ActionManagerTest {
@@ -60,7 +60,7 @@ export class ResumeTest extends ActionManagerTest {
     l.x = s.width / 2;
     l.y = 245;
 
-    var grossini = new cc.Sprite(s_pathGrossini);
+    var grossini = new Sprite(s_pathGrossini);
     this._grossini = grossini;
     this.addChild(grossini, 0, TAG_GROSSINI);
     grossini.x = s.width / 2;

@@ -34,6 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_ghosts, s_ghostsPlist } from "../resources";
 import { winSize } from "../constants";
 import { RotateBy } from "@aspect/actions";
+import { Sprite, SpriteFrameCache, Sys } from "@aspect/core";
 
 export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
@@ -54,7 +55,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
         this.pixel = {"0":153, "1":204, "2":153, "3":255};
 
-        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_ghostsPlist);
 
         var rot = new RotateBy(10, 360);
         var seq = rot.repeatForever();
@@ -66,12 +67,12 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
         // SpriteBatchNode: 3 levels of children
         //
         var aParent = new cc.SpriteBatchNode(s_ghosts);
-        if ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL)
+        if ("opengl" in Sys.getInstance().capabilities && cc.rendererConfig.isWebGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 
         // parent
-        var l1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("father.gif"));
+        var l1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("father.gif"));
         l1.x = winSize.width / 2;
         l1.y = winSize.height / 2;
         l1.runAction(seq.clone());
@@ -79,7 +80,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
         var l1W = l1.width, l1H = l1.height;
 
         // child left
-        var l2a = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("sister1.gif"));
+        var l2a = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("sister1.gif"));
         l2a.x = -50 + l1W / 2;
         l2a.y = 0 + l1H / 2;
         l2a.runAction(rot_back_fe.clone());
@@ -88,7 +89,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
 
         // child right
-        var l2b = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("sister2.gif"));
+        var l2b = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("sister2.gif"));
         l2b.x = 50 + l1W / 2;
         l2b.y = 0 + l1H / 2;
         l2b.runAction(rot_back_fe.clone());
@@ -97,21 +98,21 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
 
         // child left bottom
-        var l3a1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3a1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("child1.gif"));
         l3a1.scale = 0.45;
         l3a1.x = 0 + l2aW / 2;
         l3a1.y = -100 + l2aH / 2;
         l2a.addChild(l3a1);
 
         // child left top
-        var l3a2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3a2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("child1.gif"));
         l3a2.scale = 0.45;
         l3a2.x = 0 + l2aW / 2;
         l3a2.y = +100 + l2aH / 2;
         l2a.addChild(l3a2);
 
         // child right bottom
-        var l3b1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3b1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("child1.gif"));
         l3b1.scale = 0.45;
         l3b1.setFlippedY(true);
         l3b1.x = 0 + l2bW / 2;
@@ -119,7 +120,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
         l2b.addChild(l3b1);
 
         // child right top
-        var l3b2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("child1.gif"));
+        var l3b2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("child1.gif"));
         l3b2.scale = 0.45;
         l3b2.setFlippedY(true);
         l3b2.x = 0 + l2bW / 2;

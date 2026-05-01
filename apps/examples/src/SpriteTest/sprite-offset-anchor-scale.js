@@ -34,6 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, DelayTime, ScaleBy, sequence } from "@aspect/actions";
+import { Sprite, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteOffsetAnchorScale extends SpriteTestDemo {
 
@@ -53,18 +54,18 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
 
 
         this.pixel = {"0":153, "1":0, "2":153, "3":255};
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
-        cc.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         for (var i = 0; i < 3; i++) {
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
-            var point = new cc.Sprite(s_pathR1);
+            var point = new Sprite(s_pathR1);
             point.scale = 0.25;
             point.x = sprite.x;
             point.y = sprite.y;
@@ -93,7 +94,7 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
             var str = "";
             for (var k = 1; k <= 14; k++) {
                 str = "grossini_dance_" + (k < 10 ? ("0" + k) : k) + ".png";
-                var frame = cc.spriteFrameCache.getSpriteFrame(str);
+                var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
                 animFrames.push(frame);
             }
 
@@ -113,8 +114,8 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
     onExit() {
         //----start8----onExit
         super.onExit();
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
-        cc.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
+        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossiniPlist);
+        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossini_grayPlist);
         //----end8----
     }
     //

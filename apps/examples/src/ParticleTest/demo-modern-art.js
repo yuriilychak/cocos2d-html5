@@ -28,13 +28,14 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { director } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, Point, Sys } from "@aspect/core";
+import { ParticleSystem } from "@aspect/particle";
 
 export class DemoModernArt extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this._emitter = new cc.ParticleSystem(("opengl" in cc.sys.capabilities) ? 1000 : 200);
+        this._emitter = new ParticleSystem(("opengl" in Sys.getInstance().capabilities) ? 1000 : 200);
 
         this._background.addChild(this._emitter, 10);
 
@@ -83,7 +84,7 @@ export class DemoModernArt extends ParticleDemo {
 
         // texture
         this._emitter.texture = cc.textureCache.addImage(s_fire);
-        this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
+        this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
         // additive
         this._emitter.setBlendAdditive(false);

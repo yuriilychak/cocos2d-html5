@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, Sprite, SpriteFrameCache } from "@aspect/core";
 import { Animate, MoveBy, RotateBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeChildren extends SpriteTestDemo {
@@ -55,17 +55,17 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
         var batch = new cc.SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
 
-        var sprite1 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        var sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
         sprite1.x = winSize.width / 3;
         sprite1.y = winSize.height / 2;
 
-        var sprite2 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_02.png"));
         sprite2.x = 50;
         sprite2.y = 50;
 
-        var sprite3 = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_03.png"));
         sprite3.x = -50;
         sprite3.y = -50;
 
@@ -78,7 +78,7 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
         var str = "";
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            var frame = cc.spriteFrameCache.getSpriteFrame(str);
+            var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
 

@@ -32,7 +32,7 @@ export class Ripple3DTest extends EffectsBaseLayer {
     return "Ripple3D";
   }
   code() {
-    return "a = cc.ripple3D(duration, gridSize, position, radius, waves, amplitude)";
+    return "a = ripple3D(duration, gridSize, position, radius, waves, amplitude)";
   }
   getEffect(duration) {
     return cc.ripple3D(

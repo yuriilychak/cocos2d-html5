@@ -25,7 +25,8 @@
  ****************************************************************************/
 /** @expose */
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { LabelTTF, Layer, Point, Scene } from "@aspect/core";
+import { Director, LabelTTF, Layer, Point, Scene, log } from "@aspect/core";
+import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
 
 window.io;
 
@@ -49,7 +50,7 @@ export class SocketIOTestLayer extends Layer {
   }
 
   init() {
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
 
     var MARGIN = 40;
     var SPACE = 35;
@@ -58,14 +59,14 @@ export class SocketIOTestLayer extends Layer {
     label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
     this.addChild(label, 0);
 
-    var menuRequest = new cc.Menu();
+    var menuRequest = new Menu();
     menuRequest.setPosition(new Point(0, 0));
     this.addChild(menuRequest);
 
     // Test to create basic client in the default namespace
     var labelSIOClient = new LabelTTF("Open SocketIO Client", "Arial", 22);
     labelSIOClient.setAnchorPoint(new Point(0, 0));
-    var itemSIOClient = new cc.MenuItemLabel(
+    var itemSIOClient = new MenuItemLabel(
       labelSIOClient,
       this.onMenuSIOClientClicked,
       this
@@ -85,7 +86,7 @@ export class SocketIOTestLayer extends Layer {
       22
     );
     labelSIOEndpoint.setAnchorPoint(new Point(0, 0));
-    var itemSIOEndpoint = new cc.MenuItemLabel(
+    var itemSIOEndpoint = new MenuItemLabel(
       labelSIOEndpoint,
       this.onMenuSIOEndpointClicked,
       this
@@ -101,7 +102,7 @@ export class SocketIOTestLayer extends Layer {
     // Test sending message to default namespace
     var labelTestMessage = new LabelTTF("Send Test Message", "Arial", 22);
     labelTestMessage.setAnchorPoint(new Point(0, 0));
-    var itemTestMessage = new cc.MenuItemLabel(
+    var itemTestMessage = new MenuItemLabel(
       labelTestMessage,
       this.onMenuTestMessageClicked,
       this
@@ -121,7 +122,7 @@ export class SocketIOTestLayer extends Layer {
       22
     );
     labelTestMessageEndpoint.setAnchorPoint(new Point(0, 0));
-    var itemTestMessageEndpoint = new cc.MenuItemLabel(
+    var itemTestMessageEndpoint = new MenuItemLabel(
       labelTestMessageEndpoint,
       this.onMenuTestMessageEndpointClicked,
       this
@@ -138,7 +139,7 @@ export class SocketIOTestLayer extends Layer {
     // Test sending event 'echotest' to default namespace
     var labelTestEvent = new LabelTTF("Send Test Event", "Arial", 22);
     labelTestEvent.setAnchorPoint(new Point(0, 0));
-    var itemTestEvent = new cc.MenuItemLabel(
+    var itemTestEvent = new MenuItemLabel(
       labelTestEvent,
       this.onMenuTestEventClicked,
       this
@@ -158,7 +159,7 @@ export class SocketIOTestLayer extends Layer {
       22
     );
     labelTestEventEndpoint.setAnchorPoint(new Point(0, 0));
-    var itemTestEventEndpoint = new cc.MenuItemLabel(
+    var itemTestEventEndpoint = new MenuItemLabel(
       labelTestEventEndpoint,
       this.onMenuTestEventEndpointClicked,
       this
@@ -179,7 +180,7 @@ export class SocketIOTestLayer extends Layer {
       22
     );
     labelTestClientDisconnect.setAnchorPoint(new Point(0, 0));
-    var itemClientDisconnect = new cc.MenuItemLabel(
+    var itemClientDisconnect = new MenuItemLabel(
       labelTestClientDisconnect,
       this.onMenuTestClientDisconnectClicked,
       this
@@ -199,7 +200,7 @@ export class SocketIOTestLayer extends Layer {
       22
     );
     labelTestEndpointDisconnect.setAnchorPoint(new Point(0, 0));
-    var itemTestEndpointDisconnect = new cc.MenuItemLabel(
+    var itemTestEndpointDisconnect = new MenuItemLabel(
       labelTestEndpointDisconnect,
       this.onMenuTestEndpointDisconnectClicked,
       this
@@ -219,13 +220,13 @@ export class SocketIOTestLayer extends Layer {
     this.addChild(this._sioClientStatus);
 
     // Back Menu
-    var itemBack = new cc.MenuItemFont(
+    var itemBack = new MenuItemFont(
       "Back",
       this.toExtensionsMainLayer,
       this
     );
     itemBack.setPosition(new Point(winSize.width - 50, 25));
-    var menuBack = new cc.Menu(itemBack);
+    var menuBack = new Menu(itemBack);
     menuBack.setPosition(new Point(0, 0));
     this.addChild(menuBack);
 
@@ -249,25 +250,25 @@ export class SocketIOTestLayer extends Layer {
   testevent(data) {
     var msg = this.tag + " says 'testevent' with data: " + data;
     this.statusLabel.setString(msg);
-    cc.log(msg);
+    log(msg);
   }
 
   message(data) {
     var msg = this.tag + " received message: " + data;
     this.statusLabel.setString(msg);
-    cc.log(msg);
+    log(msg);
   }
 
   disconnection() {
     var msg = this.tag + " disconnected!";
     this.statusLabel.setString(msg);
-    cc.log(msg);
+    log(msg);
   }
   // Menu Callbacks
   onMenuSIOClientClicked(sender) {
     // Check if SocketIO is available
     if (!SocketIO) {
-      cc.log(
+      log(
         "Socket.IO not available. Please include socket.io-client library."
       );
       this._sioClientStatus.setString("Socket.IO not available!");
@@ -292,7 +293,7 @@ export class SocketIOTestLayer extends Layer {
     sioclient.on("connect", function () {
       var msg = sioclient.tag + " Connected!";
       this.statusLabel.setString(msg);
-      cc.log(msg);
+      log(msg);
       sioclient.send(msg);
     });
 
@@ -300,10 +301,10 @@ export class SocketIOTestLayer extends Layer {
     sioclient.on("message", this.message);
 
     sioclient.on("echotest", function (data) {
-      cc.log("echotest 'on' callback fired!");
+      log("echotest 'on' callback fired!");
       var msg = this.tag + " says 'echotest' with data: " + data;
       this.statusLabel.setString(msg);
-      cc.log(msg);
+      log(msg);
     });
 
     sioclient.on("testevent", this.testevent);
@@ -316,7 +317,7 @@ export class SocketIOTestLayer extends Layer {
   onMenuSIOEndpointClicked(sender) {
     // Check if SocketIO is available, load if needed
     if (!window.SocketIO) {
-      cc.log(
+      log(
         "Socket.IO not available. Please include socket.io-client library."
       );
       this._sioClientStatus.setString("Socket.IO not available!");
@@ -331,7 +332,7 @@ export class SocketIOTestLayer extends Layer {
           this._doSocketIOEndpointConnection();
         })
         .catch((error) => {
-          cc.log("Failed to load Socket.IO: " + error.message);
+          log("Failed to load Socket.IO: " + error.message);
           this._sioClientStatus.setString("Failed to load Socket.IO!");
         });
       return;
@@ -355,16 +356,16 @@ export class SocketIOTestLayer extends Layer {
     sioendpoint.on("connect", function () {
       var msg = sioendpoint.tag + " Connected!";
       this.statusLabel.setString(msg);
-      cc.log(msg);
+      log(msg);
       sioendpoint.send(msg);
     });
 
     //register event callbacks
     sioendpoint.on("echotest", function (data) {
-      cc.log("echotest 'on' callback fired!");
+      log("echotest 'on' callback fired!");
       var msg = this.tag + " says 'echotest' with data: " + data;
       this.statusLabel.setString(msg);
-      cc.log(msg);
+      log(msg);
     });
 
     sioendpoint.on("message", this.message);
@@ -421,5 +422,5 @@ export function runSocketIOTest() {
   var pScene = new Scene();
   var pLayer = new SocketIOTestLayer();
   pScene.addChild(pLayer);
-  cc.director.runScene(pScene);
+  Director.getInstance().runScene(pScene);
 }

@@ -29,8 +29,9 @@
 // S9BatchNodeBasic
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
-import { Point, Rect } from "@aspect/core";
+import { Point, Rect, log } from "@aspect/core";
 import { MoveBy, sequence } from "@aspect/actions";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9BatchNodeBasic extends S9SpriteTestDemo {
   constructor() {
@@ -43,13 +44,13 @@ export class S9BatchNodeBasic extends S9SpriteTestDemo {
     var x = winSize.width / 2;
     var y = 0 + winSize.height / 2;
 
-    cc.log("S9BatchNodeBasic ...");
+    log("S9BatchNodeBasic ...");
 
     var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
-    cc.log("batchNode created with : " + "Images/blocks9.png");
+    log("batchNode created with : " + "Images/blocks9.png");
 
-    var blocks = new cc.Scale9Sprite();
-    cc.log("... created");
+    var blocks = new Scale9Sprite();
+    log("... created");
 
     blocks.updateWithBatchNode(
       batchNode,
@@ -57,16 +58,16 @@ export class S9BatchNodeBasic extends S9SpriteTestDemo {
       false,
       new Rect(0, 0, 96, 96)
     );
-    cc.log("... updateWithBatchNode");
+    log("... updateWithBatchNode");
 
     blocks.x = x;
     blocks.y = y;
-    cc.log("... setPosition");
+    log("... setPosition");
 
     this.addChild(blocks);
-    cc.log("this..addChild");
+    log("this..addChild");
 
-    cc.log("... S9BatchNodeBasic done.");
+    log("... S9BatchNodeBasic done.");
 
     var moveBy = new MoveBy(1, new Point(80, 80));
     var moveByBack = moveBy.reverse();

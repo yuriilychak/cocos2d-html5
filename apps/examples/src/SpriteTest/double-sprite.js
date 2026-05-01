@@ -25,10 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Size } from "@aspect/core";
+import { Size, Sprite } from "@aspect/core";
 
 
-export class DoubleSprite extends cc.Sprite {
+export class DoubleSprite extends Sprite {
 
     constructor(fileName) {
 	    super(fileName);
@@ -36,7 +36,7 @@ export class DoubleSprite extends cc.Sprite {
 
         this.HD = false;
         //var resolutionType = texture.getResolutionType();
-        //this.HD = ( resolutionType == cc.kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
+        //this.HD = ( resolutionType == kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
     }
 
     setContentSize(size) {

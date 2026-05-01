@@ -28,8 +28,10 @@
 import { SceneTestLayer3 } from "./scene-test-layer3";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Layer } from "@aspect/core";
+import { Layer, Sprite } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
+import { TransitionSlideInT } from "@aspect/transitions";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class SceneTestLayer2 extends Layer {
   constructor() {
@@ -43,19 +45,19 @@ export class SceneTestLayer2 extends Layer {
 
     var s = director.getWinSize();
 
-    var item1 = new cc.MenuItemFont("runScene", this.runScene, this);
-    var item2 = new cc.MenuItemFont(
+    var item1 = new MenuItemFont("runScene", this.runScene, this);
+    var item2 = new MenuItemFont(
       "runScene w/transition",
       this.runSceneTran,
       this
     );
-    var item3 = new cc.MenuItemFont("Go Back", this.onGoBack, this);
+    var item3 = new MenuItemFont("Go Back", this.onGoBack, this);
 
-    var menu = new cc.Menu(item1, item2, item3);
+    var menu = new Menu(item1, item2, item3);
     menu.alignItemsVertically();
     this.addChild(menu);
 
-    var sprite = new cc.Sprite(s_pathGrossini);
+    var sprite = new Sprite(s_pathGrossini);
     this.addChild(sprite);
 
     sprite.x = s.width - 40;
@@ -65,7 +67,7 @@ export class SceneTestLayer2 extends Layer {
     sprite.runAction(repeat);
     //----end0----
 
-    //cc.schedule(this.testDealloc);
+    //schedule(this.testDealloc);
   }
 
   testDealloc(dt) {}
@@ -85,7 +87,7 @@ export class SceneTestLayer2 extends Layer {
     var scene = new SceneTestScene();
     var layer = new SceneTestLayer3();
     scene.addChild(layer, 0);
-    director.runScene(new cc.TransitionSlideInT(2, scene));
+    director.runScene(new TransitionSlideInT(2, scene));
   }
 
   //CREATE_NODE(SceneTestLayer2);

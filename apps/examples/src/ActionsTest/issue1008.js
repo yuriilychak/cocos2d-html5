@@ -31,7 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
-import { Point } from "@aspect/core";
+import { Point, log } from "@aspect/core";
 import { BezierTo, CallFunc, DelayTime, Sequence } from "@aspect/actions";
 
 export class Issue1008 extends ActionsDemo {
@@ -77,7 +77,7 @@ export class Issue1008 extends ActionsDemo {
   }
   onTrace(sender) {
     var pos = new Point(sender.x, sender.y);
-    cc.log("Position x: " + pos.x + " y:" + pos.y);
+    log("Position x: " + pos.x + " y:" + pos.y);
     if (Math.round(pos.x) != 428 || Math.round(pos.y) != 279)
       this.log("Error: Issue 1008 is still open");
 
@@ -87,7 +87,7 @@ export class Issue1008 extends ActionsDemo {
     return "Issue 1008";
   }
   subtitle() {
-    return "cc.bezierTo + Repeat. See console";
+    return "bezierTo + Repeat. See console";
   }
   //
   // Automation

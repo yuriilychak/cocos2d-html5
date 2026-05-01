@@ -34,7 +34,7 @@ import { NOT_CRASHED_CONST, TAG_GROSSINI, TAG_SEQUENCE } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { LabelTTF, Point } from "@aspect/core";
+import { LabelTTF, Point, Sprite } from "@aspect/core";
 import { CallFunc, MoveBy, sequence } from "@aspect/actions";
 
 export class RemoveTest extends ActionManagerTest {
@@ -61,7 +61,7 @@ export class RemoveTest extends ActionManagerTest {
     var sequence = sequence(move, callback);
     sequence.tag = TAG_SEQUENCE;
 
-    var child = new cc.Sprite(s_pathGrossini);
+    var child = new Sprite(s_pathGrossini);
     child.x = 200;
     child.y = 200;
 

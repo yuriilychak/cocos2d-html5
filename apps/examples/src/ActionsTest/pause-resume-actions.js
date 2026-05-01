@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
 import { RotateBy } from "@aspect/actions";
+import { log } from "@aspect/core";
 
 export class PauseResumeActions extends ActionsDemo {
   constructor() {
@@ -55,11 +56,11 @@ export class PauseResumeActions extends ActionsDemo {
   }
 
   pause() {
-    cc.log("Pausing");
+    log("Pausing");
     this._pausedTargets = director.getActionManager().pauseAllRunningActions();
   }
   resume() {
-    cc.log("Resuming");
+    log("Resuming");
     director.getActionManager().resumeTargets(this._pausedTargets);
   }
 

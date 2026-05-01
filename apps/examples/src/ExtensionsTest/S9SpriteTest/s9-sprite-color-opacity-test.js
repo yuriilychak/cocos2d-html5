@@ -29,6 +29,7 @@
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
 import { Color, Rect } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9SpriteColorOpacityTest extends S9SpriteTestDemo {
   constructor() {
@@ -42,13 +43,13 @@ export class S9SpriteColorOpacityTest extends S9SpriteTestDemo {
     this.setOpacity(128);
     this.setColor(new Color(255, 0, 0));
 
-    var blocks = new cc.Scale9Sprite("blocks9.png");
+    var blocks = new Scale9Sprite("blocks9.png");
     blocks.x = winSize.width / 2 - 100;
     blocks.y = winSize.height / 2;
     this.addChild(blocks);
 
     var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
-    var blocks2 = new cc.Scale9Sprite();
+    var blocks2 = new Scale9Sprite();
     blocks2.updateWithBatchNode(
       batchNode,
       new Rect(0, 0, 96, 96),

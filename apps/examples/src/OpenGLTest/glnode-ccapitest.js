@@ -31,12 +31,13 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import "./glnode-polyfill";
 import { winSize } from "../constants";
+import { Sys } from "@aspect/core";
 
 export class GLNodeCCAPITest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in cc.sys.capabilities) {
+    if ("opengl" in Sys.getInstance().capabilities) {
       var glnode = new cc.GLNode();
       this.addChild(glnode, 10);
       this.glnode = glnode;

@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Size } from "@aspect/core";
+import { Size, log } from "@aspect/core";
 
 export class UIListViewTest_Horizontal extends UIMainLayer {
   constructor() {
@@ -167,7 +167,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
   selectedItemEvent(sender, type) {
     switch (type) {
       case ccui.ListView.EVENT_SELECTED_ITEM:
-        cc.log("select child index = " + sender.getCurSelectedIndex());
+        log("select child index = " + sender.getCurSelectedIndex());
         break;
       default:
         break;

@@ -26,11 +26,12 @@
 
 import { UIMainLayer } from "./uimain-layer";
 import { TestScene } from "../test-scene";
+import { Director } from "@aspect/core";
 
 export class UIScene extends TestScene {
   runThisTest() {
     var layer = new UIMainLayer();
     this.addChild(layer);
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
 }

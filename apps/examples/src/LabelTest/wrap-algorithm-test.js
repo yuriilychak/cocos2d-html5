@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { AtlasDemo } from "./atlas-demo";
-import { Color, LabelTTF } from "@aspect/core";
+import { Color, LabelTTF, Sys } from "@aspect/core";
 
 export class WrapAlgorithmTest extends AtlasDemo {
   constructor() {
@@ -54,9 +54,9 @@ export class WrapAlgorithmTest extends AtlasDemo {
       LabelTTF.boundingWidth = 120;
       LabelTTF.boundingHeight = 0;
       LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
-      if (cc.sys.os === cc.sys.OS_WP8)
+      if (Sys.getInstance().os === Sys.getInstance().OS_WP8)
         LabelTTF.setFontName("fonts/arialuni.ttf");
-      else if (cc.sys.os === cc.sys.OS_WINRT) LabelTTF.setFontName("DengXian");
+      else if (Sys.getInstance().os === Sys.getInstance().OS_WINRT) LabelTTF.setFontName("DengXian");
       self.addChild(LabelTTF);
     });
 
@@ -71,9 +71,9 @@ export class WrapAlgorithmTest extends AtlasDemo {
       LabelTTF.boundingWidth = 13;
       LabelTTF.boundingHeight = 0;
       LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
-      if (cc.sys.os === cc.sys.OS_WP8)
+      if (Sys.getInstance().os === Sys.getInstance().OS_WP8)
         LabelTTF.setFontName("fonts/arialuni.ttf");
-      else if (cc.sys.os === cc.sys.OS_WINRT) LabelTTF.setFontName("DengXian");
+      else if (Sys.getInstance().os === Sys.getInstance().OS_WINRT) LabelTTF.setFontName("DengXian");
       self.addChild(LabelTTF);
     });
 
@@ -92,9 +92,9 @@ export class WrapAlgorithmTest extends AtlasDemo {
       LabelTTF.boundingWidth = 90;
       LabelTTF.boundingHeight = 0;
       LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
-      if (cc.sys.os === cc.sys.OS_WP8)
+      if (Sys.getInstance().os === Sys.getInstance().OS_WP8)
         LabelTTF.setFontName("fonts/arialuni.ttf");
-      else if (cc.sys.os === cc.sys.OS_WINRT) LabelTTF.setFontName("DengXian");
+      else if (Sys.getInstance().os === Sys.getInstance().OS_WINRT) LabelTTF.setFontName("DengXian");
       self.addChild(LabelTTF);
     });
   }

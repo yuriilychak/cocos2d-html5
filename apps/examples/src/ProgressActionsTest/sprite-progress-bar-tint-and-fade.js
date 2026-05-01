@@ -28,7 +28,7 @@
 import { SpriteDemo } from "./sprite-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { LabelTTF, Point } from "@aspect/core";
+import { LabelTTF, Point, Sprite } from "@aspect/core";
 import { FadeTo, TintTo, sequence } from "@aspect/actions";
 
 export class SpriteProgressBarTintAndFade extends SpriteDemo {
@@ -45,7 +45,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
 
         var fade = sequence(new FadeTo(1.0, 0), new FadeTo(1.0, 255));
 
-        var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
+        var left = new cc.ProgressTimer(new Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
 
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
@@ -60,7 +60,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
 
         left.addChild(new LabelTTF("Tint", "Marker Felt", 20.0));
 
-        var middle = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
+        var middle = new cc.ProgressTimer(new Sprite(s_pathSister2));
         middle.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         middle.midPoint = new Point(0.5, 0.5);
@@ -74,7 +74,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
 
         middle.addChild(new LabelTTF("Fade", "Marker Felt", 20.0));
 
-        var right = new cc.ProgressTimer(new cc.Sprite(s_pathSister2));
+        var right = new cc.ProgressTimer(new Sprite(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         right.midPoint = new Point(0.5, 0.5);

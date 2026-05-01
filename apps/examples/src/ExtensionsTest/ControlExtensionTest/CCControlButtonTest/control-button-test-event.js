@@ -31,7 +31,8 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
-import { Color, LabelTTF, Scene } from "@aspect/core";
+import { Color, Director, LabelTTF, Scene } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class ControlButtonTest_Event extends ControlScene {
   constructor() {
@@ -41,11 +42,11 @@ export class ControlButtonTest_Event extends ControlScene {
 
   init() {
     if (super.init()) {
-      var screenSize = cc.director.getWinSize();
+      var screenSize = Director.getInstance().getWinSize();
 
       // Add the button
-      var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-      var backgroundHighlightedButton = new cc.Scale9Sprite(
+      var backgroundButton = new Scale9Sprite(s_extensions_button);
+      var backgroundHighlightedButton = new Scale9Sprite(
         s_extensions_buttonHighlighted
       );
 
@@ -77,7 +78,7 @@ export class ControlButtonTest_Event extends ControlScene {
       this.addChild(controlButton, 1);
 
       // Add the black background
-      var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
+      var background = new Scale9Sprite(s_extensions_buttonBackground);
       background.width = 300;
       background.height = 170;
       background.x = screenSize.width / 2.0;

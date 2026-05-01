@@ -29,6 +29,7 @@ import { TestNodeDemo } from "./test-node-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
 import { DelayTime, RotateBy, ScaleBy, sequence } from "@aspect/actions";
+import { Sprite } from "@aspect/core";
 
 export class CCNodeTest2 extends TestNodeDemo {
   constructor() {
@@ -42,10 +43,10 @@ export class CCNodeTest2 extends TestNodeDemo {
     //----start0----onEnter
     super.onEnter();
 
-    var sp1 = new cc.Sprite(s_pathSister1);
-    var sp2 = new cc.Sprite(s_pathSister2);
-    var sp3 = new cc.Sprite(s_pathSister1);
-    var sp4 = new cc.Sprite(s_pathSister2);
+    var sp1 = new Sprite(s_pathSister1);
+    var sp2 = new Sprite(s_pathSister2);
+    var sp3 = new Sprite(s_pathSister1);
+    var sp4 = new Sprite(s_pathSister2);
 
     sp1.x = winSize.width / 4;
     sp1.y = winSize.height / 2;

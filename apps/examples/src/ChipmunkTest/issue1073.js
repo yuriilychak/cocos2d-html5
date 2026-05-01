@@ -25,6 +25,7 @@
 import { ChipmunkDemo } from "./chipmunk-demo";
 import { v } from "./chipmunk-test-helpers";
 import { winSize } from "../constants";
+import { log } from "@aspect/core";
 
 export class Issue1073 extends ChipmunkDemo {
   constructor() {
@@ -46,27 +47,27 @@ export class Issue1073 extends ChipmunkDemo {
     var nearestPointQueryInfo = shape.nearestPointQuery(
       cp.v(winSize.width / 2 + 100, winSize.height / 2)
     );
-    cc.log(
+    log(
       "The nearest point on the shape's surface to query point is : (" +
         nearestPointQueryInfo.p.x +
         "," +
         nearestPointQueryInfo.p.y +
         ")"
     );
-    cc.log("And the distance is : " + nearestPointQueryInfo.d);
+    log("And the distance is : " + nearestPointQueryInfo.d);
 
     var segmentQueryInfo = shape.segmentQuery(
       cp.v(winSize.width / 2 - 100, winSize.height / 2),
       cp.v(winSize.width / 2 + 100, winSize.height / 2)
     );
-    cc.log(
+    log(
       "The normal of the surface hit is : (" +
         segmentQueryInfo.n.x +
         "," +
         segmentQueryInfo.n.y +
         ")"
     );
-    cc.log(
+    log(
       "The normalized distance along the query segment in the range [0, 1] is : " +
         segmentQueryInfo.t
     );

@@ -30,12 +30,13 @@ import { s_levelMapTga, s_tilesPng } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { ScaleBy, sequence } from "@aspect/actions";
+import { Sys } from "@aspect/core";
 
 export class TileMapTest extends TileDemo {
   constructor() {
     super();
     var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
-    if ("opengl" in cc.sys.capabilities)
+    if ("opengl" in Sys.getInstance().capabilities)
       map.texture.setAntiAliasTexParameters();
 
     this.log("ContentSize: " + map.width + " " + map.height);

@@ -30,6 +30,7 @@ import { MySprite2 } from "./my-sprite2";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_ghosts, s_ghostsPlist, s_pathGrossini } from "../resources";
 import { winSize } from "../constants";
+import { SpriteFrameCache } from "@aspect/core";
 
 export class SpriteSubclass extends SpriteTestDemo {
 
@@ -52,7 +53,7 @@ export class SpriteSubclass extends SpriteTestDemo {
 
         this.pixel2 = {"0":255, "1":204, "2":153, "3":255};
 
-        cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+        SpriteFrameCache.getInstance().addSpriteFrames(s_ghostsPlist);
 		var aParent = new cc.SpriteBatchNode(s_ghosts);
 
 		// MySprite1

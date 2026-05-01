@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { LabelTTF, Scene } from "@aspect/core";
+import { Director, LabelTTF, Scene } from "@aspect/core";
 
 export class ControlSliderTest extends ControlScene {
   constructor() {
@@ -36,7 +36,7 @@ export class ControlSliderTest extends ControlScene {
 
   init() {
     if (super.init()) {
-      var screenSize = cc.director.getWinSize();
+      var screenSize = Director.getInstance().getWinSize();
 
       // Add a label in which the slider value will be displayed
       this._displayValueLabel = new LabelTTF(

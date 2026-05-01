@@ -28,8 +28,9 @@
 // SchedulerTimeScale
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { s_stars1 } from "../resources";
-import { LabelTTF, Point } from "@aspect/core";
+import { Director, LabelTTF, Point, Sprite } from "@aspect/core";
 import { JumpBy, Repeat, RotateBy, Sequence, Spawn, Speed } from "@aspect/actions";
+import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 
 export class SchedulerTimeScale extends SchedulerTestLayer {
   constructor() {
@@ -60,9 +61,9 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     var action2 = action.clone();
     var action3 = action.clone();
 
-    var grossini = new cc.Sprite("Images/grossini.png");
-    var tamara = new cc.Sprite("Images/grossinis_sister1.png");
-    var kathia = new cc.Sprite("Images/grossinis_sister2.png");
+    var grossini = new Sprite("Images/grossini.png");
+    var tamara = new Sprite("Images/grossinis_sister1.png");
+    var kathia = new Sprite("Images/grossinis_sister2.png");
 
     grossini.setActionManager(this._newActionManager);
     grossini.setScheduler(this._newScheduler);
@@ -79,11 +80,11 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     tamara.runAction(new Speed(action2, 1.5));
     kathia.runAction(new Speed(action3, 1.0));
 
-    cc.director.getScheduler().scheduleUpdate(this._newScheduler, 0, false);
+    Director.getInstance().getScheduler().scheduleUpdate(this._newScheduler, 0, false);
 
     this._newScheduler.scheduleUpdate(this._newActionManager, 0, false);
 
-    var emitter = new cc.ParticleFireworks();
+    var emitter = new ParticleFireworks();
     emitter.setTexture(cc.textureCache.addImage(s_stars1));
     this.addChild(emitter);
 
@@ -147,7 +148,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
       case ccui.Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = (slider.getPercent() / 100.0) * 5;
-        cc.director.getScheduler().setTimeScale(percent);
+        Director.getInstance().getScheduler().setTimeScale(percent);
         break;
       default:
         break;
@@ -155,9 +156,9 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
   }
 
   onExit() {
-    cc.director.getScheduler().setTimeScale(1);
+    Director.getInstance().getScheduler().setTimeScale(1);
     // restore scale
-    cc.director.getScheduler().unscheduleUpdate(this._newScheduler);
+    Director.getInstance().getScheduler().unscheduleUpdate(this._newScheduler);
     super.onExit();
   }
 

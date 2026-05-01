@@ -28,11 +28,12 @@
 //
 //------------------------------------------------------------------
 import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
+import { log } from "@aspect/core";
 
 export class ChipmunkCollisionMemoryLeakTest extends ChipmunkBaseLayer {
   constructor() {
     super();
-    // cc.base(this);
+    // base(this);
 
     this._title = "Chipmunk Memory Leak Test";
     this._subtitle =
@@ -48,16 +49,16 @@ export class ChipmunkCollisionMemoryLeakTest extends ChipmunkBaseLayer {
   }
 
   collisionPost(arbiter, space) {
-    cc.log("collision post");
+    log("collision post");
   }
 
   collisionSeparate(arbiter, space) {
-    cc.log("collision separate");
+    log("collision separate");
   }
 
   onEnter() {
     super.onEnter();
-    // cc.base(this, 'onEnter');
+    // base(this, 'onEnter');
 
     for (var i = 1; i < 100; i++)
       this.space.addCollisionHandler(

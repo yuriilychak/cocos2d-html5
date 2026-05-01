@@ -29,8 +29,9 @@ import { AtlasDemo } from "./atlas-demo";
 import { ArrowsMax, ArrowsMin, CenterAlign, LeftAlign, LineBreaks, LineBreaksExample, LongSentences, LongSentencesExample, Mixed, MixedExample, RightAlign, alignmentItemPadding, chineseExampleText, chineseMixEnglish, chineseMixEnglishText, chineseText, menuItemPaddingCenter, mixAllLanguage, mixAllLanguageText } from "./label-test-helpers";
 import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
-import { Point, Color, Rect } from "@aspect/core";
+import { Color, EventListener, EventManager, Point, Rect, Sprite, Sys } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
+import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     constructor() {
@@ -49,22 +50,22 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
 
         this.lineBreakFlag = false;
 
-        cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        EventManager.getInstance().addListener({
+            event: EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: this.onTouchesBegan.bind(this),
             onTouchesMoved: this.onTouchesMoved.bind(this),
             onTouchesEnded: this.onTouchesEnded.bind(this)
         }, this);
-        if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        if ('touches' in Sys.getInstance().capabilities){
+            EventManager.getInstance().addListener({
+                event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesBegan: this.onTouchesBegan.bind(this),
                 onTouchesMoved: this.onTouchesMoved.bind(this),
                 onTouchesEnded: this.onTouchesEnded.bind(this)
             }, this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
+        } else if ('mouse' in Sys.getInstance().capabilities)
+            EventManager.getInstance().addListener({
+                event: EventListener.MOUSE,
                 onMouseDown: this.onMouseDown.bind(this),
                 onMouseMove: this.onMouseMove.bind(this),
                 onMouseUp: this.onMouseUp.bind(this)
@@ -75,23 +76,23 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
 
         // create and initialize a Label
         this.labelShouldRetain = new LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, new Point(0, 0));
-        this.arrowsBarShouldRetain = new cc.Sprite(s_resprefix + "Images/arrowsBar.png");
-        this.arrowsShouldRetain = new cc.Sprite(s_resprefix + "Images/arrows.png");
+        this.arrowsBarShouldRetain = new Sprite(s_resprefix + "Images/arrowsBar.png");
+        this.arrowsShouldRetain = new Sprite(s_resprefix + "Images/arrows.png");
 
-        cc.MenuItemFont.setFontSize(20);
-        var longSentences = new cc.MenuItemFont("Long Flowing Sentences", this.onStringChanged, this);
-        var lineBreaks = new cc.MenuItemFont("Short Sentences With Intentional Line Breaks", this.onStringChanged, this);
-        var mixed = new cc.MenuItemFont("Long Sentences Mixed With Intentional Line Breaks", this.onStringChanged.bind(this)); // another way to pass 'this'
-        var changeChineseItem = new cc.MenuItemFont("change chinese", this.onStringChanged, this);
-        var mixEnglishItem = new cc.MenuItemFont("change chinesemixEnglish", this.onStringChanged, this);
-        var mixAllLanItem = new cc.MenuItemFont("change mixAllLan", this.onStringChanged, this);
+        MenuItemFont.setFontSize(20);
+        var longSentences = new MenuItemFont("Long Flowing Sentences", this.onStringChanged, this);
+        var lineBreaks = new MenuItemFont("Short Sentences With Intentional Line Breaks", this.onStringChanged, this);
+        var mixed = new MenuItemFont("Long Sentences Mixed With Intentional Line Breaks", this.onStringChanged.bind(this)); // another way to pass 'this'
+        var changeChineseItem = new MenuItemFont("change chinese", this.onStringChanged, this);
+        var mixEnglishItem = new MenuItemFont("change chinesemixEnglish", this.onStringChanged, this);
+        var mixAllLanItem = new MenuItemFont("change mixAllLan", this.onStringChanged, this);
 
-        var stringMenu = new cc.Menu(longSentences, lineBreaks, mixed, changeChineseItem,mixEnglishItem, mixAllLanItem);
+        var stringMenu = new Menu(longSentences, lineBreaks, mixed, changeChineseItem,mixEnglishItem, mixAllLanItem);
         stringMenu.alignItemsVertically();
 
-        var setLineBreakItem = new cc.MenuItemFont("setLineBreakWithoutSpace", this.onLineBreakChanged, this);
-        var setScale = new cc.MenuItemFont("setScale", this.onScaleChange, this);
-        var lineBreakMenu = new cc.Menu(setLineBreakItem, setScale);
+        var setLineBreakItem = new MenuItemFont("setLineBreakWithoutSpace", this.onLineBreakChanged, this);
+        var setScale = new MenuItemFont("setScale", this.onScaleChange, this);
+        var lineBreakMenu = new Menu(setLineBreakItem, setScale);
         lineBreakMenu.x = 100;
         lineBreakMenu.y = winSize.height / 2;
         lineBreakMenu.alignItemsVertically();
@@ -105,12 +106,12 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         mixEnglishItem.tag = chineseMixEnglish;
         mixAllLanItem.tag = mixAllLanguage;
 
-        cc.MenuItemFont.setFontSize(30);
+        MenuItemFont.setFontSize(30);
 
-        var left = new cc.MenuItemFont("Left", this.onAlignmentChanged, this);
-        var center = new cc.MenuItemFont("Center", this.onAlignmentChanged, this);
-        var right = new cc.MenuItemFont("Right", this.onAlignmentChanged.bind(this));    // another way to pass 'this'
-        var alignmentMenu = new cc.Menu(left, center, right);
+        var left = new MenuItemFont("Left", this.onAlignmentChanged, this);
+        var center = new MenuItemFont("Center", this.onAlignmentChanged, this);
+        var right = new MenuItemFont("Right", this.onAlignmentChanged.bind(this));    // another way to pass 'this'
+        var alignmentMenu = new Menu(left, center, right);
         alignmentMenu.alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
         center.color = new Color(255, 0, 0);

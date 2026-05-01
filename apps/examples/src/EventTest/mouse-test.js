@@ -30,12 +30,12 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
-import { Color } from "@aspect/core";
+import { Color, EventListener, EventManager, Sprite, Sys, log } from "@aspect/core";
 
 export class MouseTest extends EventTest {
   init() {
     super.init();
-    var sprite = (this.sprite = new cc.Sprite(s_pathR2));
+    var sprite = (this.sprite = new Sprite(s_pathR2));
     this.addChild(sprite);
     sprite.x = 0;
     sprite.y = 0;
@@ -46,24 +46,24 @@ export class MouseTest extends EventTest {
       Math.random() * 200 + 55
     );
 
-    if ("mouse" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("mouse" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.MOUSE,
+          event: EventListener.MOUSE,
           onMouseDown: function (event) {
             var pos = event.getLocation(),
               target = event.getCurrentTarget();
             if (event.getButton() === cc.EventMouse.BUTTON_RIGHT)
-              cc.log("onRightMouseDown at: " + pos.x + " " + pos.y);
+              log("onRightMouseDown at: " + pos.x + " " + pos.y);
             else if (event.getButton() === cc.EventMouse.BUTTON_LEFT)
-              cc.log("onLeftMouseDown at: " + pos.x + " " + pos.y);
+              log("onLeftMouseDown at: " + pos.x + " " + pos.y);
             target.sprite.x = pos.x;
             target.sprite.y = pos.y;
           },
           onMouseMove: function (event) {
             var pos = event.getLocation(),
               target = event.getCurrentTarget();
-            cc.log("onMouseMove at: " + pos.x + " " + pos.y);
+            log("onMouseMove at: " + pos.x + " " + pos.y);
             target.sprite.x = pos.x;
             target.sprite.y = pos.y;
           },
@@ -72,13 +72,13 @@ export class MouseTest extends EventTest {
               target = event.getCurrentTarget();
             target.sprite.x = pos.x;
             target.sprite.y = pos.y;
-            cc.log("onMouseUp at: " + pos.x + " " + pos.y);
+            log("onMouseUp at: " + pos.x + " " + pos.y);
           }
         },
         this
       );
     } else {
-      cc.log("MOUSE Not supported");
+      log("MOUSE Not supported");
     }
   }
   subtitle() {

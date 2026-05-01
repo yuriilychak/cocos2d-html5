@@ -33,19 +33,20 @@
 import { DrawTestDemo } from "./draw-test-demo";
 import { winSize } from "../constants";
 import { Point, Color } from "@aspect/core";
+import { DrawNode } from "@aspect/shape-nodes";
 
 export class DrawNewAPITest extends DrawTestDemo {
   constructor() {
     super();
-    this._title = "cc.DrawNode";
-    this._subtitle = "Testing cc.DrawNode API";
+    this._title = "DrawNode";
+    this._subtitle = "Testing DrawNode API";
   }
 
   onEnter() {
     //----start1----ctor
     super.onEnter();
 
-    var draw = new cc.DrawNode();
+    var draw = new DrawNode();
     this.addChild(draw, 10);
     //
     // Circles

@@ -31,11 +31,12 @@ import {
   _setclippingNodeTestSceneIdx,
   clippingNodeTestSceneIdx
 } from "./clipping-node-test-constants";
+import { Director } from "@aspect/core";
 
 export class ClippingNodeTestScene extends TestScene {
   runThisTest(num) {
     _setclippingNodeTestSceneIdx(num || num == 0 ? num - 1 : -1);
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
     var layer = nextClippingNodeTest();
     this.addChild(layer);
   }

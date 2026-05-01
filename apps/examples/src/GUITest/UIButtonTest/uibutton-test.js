@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { LabelTTF } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class UIButtonTest extends UIMainLayer {
   constructor() {
@@ -54,8 +55,8 @@ export class UIButtonTest extends UIMainLayer {
       this._mainNode.addChild(button);
 
       var label = new LabelTTF("setOpacity", "Arial", 25);
-      var menuItem = new cc.MenuItemLabel(label, this.setOpacityTest, this);
-      var menu = new cc.Menu(menuItem);
+      var menuItem = new MenuItemLabel(label, this.setOpacityTest, this);
+      var menu = new Menu(menuItem);
       menu.x = 0;
       menu.y = 0;
       menuItem.x = widgetSize.width - 100;

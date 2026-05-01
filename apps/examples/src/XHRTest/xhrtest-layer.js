@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
-import { LabelTTF, Layer } from "@aspect/core";
+import { LabelTTF, Layer, log } from "@aspect/core";
 
 export class XHRTestLayer extends Layer {
   constructor() {
@@ -66,7 +66,7 @@ export class XHRTestLayer extends Layer {
       if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status <= 207) {
         var httpStatus = xhr.statusText;
         var response = xhr.responseText.substring(0, 100) + "...";
-        cc.log("title:" + title + ", response:\n" + xhr.responseText);
+        log("title:" + title + ", response:\n" + xhr.responseText);
         textbox.string = method + " Response (100 chars):\n";
         textbox.string += response;
         label.string += "\nStatus: Got " + method + " response! " + httpStatus;

@@ -33,7 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
-import { Point, Color } from "@aspect/core";
+import { Color, LayerColor, Point } from "@aspect/core";
 import { MoveTo } from "@aspect/actions";
 
 export class TMXIsoTest2 extends TileDemo {
@@ -43,7 +43,7 @@ export class TMXIsoTest2 extends TileDemo {
     this.testDuration = 1.2;
 
     this.pixel = { 0: 0, 1: 0, 2: 0, 3: 255 };
-    var color = new cc.LayerColor(new Color(64, 64, 64, 255));
+    var color = new LayerColor(new Color(64, 64, 64, 255));
     this.addChild(color, -1);
 
     var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test2.tmx");

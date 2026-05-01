@@ -27,6 +27,7 @@
 
 import { TestScene } from "../test-scene";
 import { XHRTestLayer } from "./xhrtest-layer";
+import { Director } from "@aspect/core";
 
 export class XHRTestScene extends TestScene {
   constructor() {
@@ -35,7 +36,7 @@ export class XHRTestScene extends TestScene {
     this.addChild(xhrLayer);
   }
   runThisTest() {
-    cc.director.runScene(this);
+    Director.getInstance().runScene(this);
   }
   MainMenuCallback(sender) {
     super.MainMenuCallback(sender);

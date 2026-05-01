@@ -29,20 +29,20 @@
 //
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
-import { LabelTTF } from "@aspect/core";
+import { Director, EventListener, EventManager, LabelTTF, Sys, log } from "@aspect/core";
 
 export class KeyboardTest extends EventTest {
   init() {
     super.init();
     var self = this;
     var label = new LabelTTF("show key Code");
-    var size = cc.director.getWinSize();
+    var size = Director.getInstance().getWinSize();
     label.setPosition(size.width / 2, size.height / 2);
     this.addChild(label);
-    if ("keyboard" in cc.sys.capabilities) {
-      cc.eventManager.addListener(
+    if ("keyboard" in Sys.getInstance().capabilities) {
+      EventManager.getInstance().addListener(
         {
-          event: cc.EventListener.KEYBOARD,
+          event: EventListener.KEYBOARD,
           onKeyPressed: function (key, event) {
             var strTemp = "Key down:" + key;
             var keyStr = self.getKeyStr(key);
@@ -63,7 +63,7 @@ export class KeyboardTest extends EventTest {
         this
       );
     } else {
-      cc.log("KEYBOARD Not supported");
+      log("KEYBOARD Not supported");
     }
   }
   getKeyStr(keycode) {
@@ -85,6 +85,6 @@ export class KeyboardTest extends EventTest {
   // this callback is only available on JSB + OS X
   // Not supported on cocos2d-html5
   onKeyFlagsChanged(key) {
-    cc.log("Key flags changed:" + key);
+    log("Key flags changed:" + key);
   }
 }

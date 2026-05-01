@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { LabelTTF } from "@aspect/core";
+import { EventListener, EventManager, LabelTTF, Sys } from "@aspect/core";
 
 export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
   onEnter() {
@@ -45,14 +45,14 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
     this.addChild(statusLabel);
 
     var that = this;
-    cc.eventManager.addListener(
+    EventManager.getInstance().addListener(
       {
-        event: cc.EventListener.KEYBOARD,
+        event: EventListener.KEYBOARD,
         onKeyPressed: function (keyCode, event) {
           var label = event.getCurrentTarget();
           label.setString(
             "Key " +
-              (cc.sys.isNative
+              (Sys.getInstance().isNative
                 ? that.getNativeKeyName(keyCode)
                 : String.fromCharCode(keyCode)) +
               "(" +
@@ -64,7 +64,7 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
           var label = event.getCurrentTarget();
           label.setString(
             "Key " +
-              (cc.sys.isNative
+              (Sys.getInstance().isNative
                 ? that.getNativeKeyName(keyCode)
                 : String.fromCharCode(keyCode)) +
               "(" +

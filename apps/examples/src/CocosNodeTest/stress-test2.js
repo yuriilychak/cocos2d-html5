@@ -29,8 +29,9 @@ import { TAG_SPRITE1 } from "./cocos-node-test-constants";
 import { TestNodeDemo } from "./test-node-demo";
 import { s_fire, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
-import { Layer, Point } from "@aspect/core";
+import { Layer, Point, Sprite } from "@aspect/core";
 import { MoveBy, easeInOut, sequence } from "@aspect/actions";
+import { ParticleFire } from "../ParticleTest/ParticleExamples";
 
 export class StressTest2 extends TestNodeDemo {
     constructor() {
@@ -39,7 +40,7 @@ export class StressTest2 extends TestNodeDemo {
 
         var sublayer = new Layer();
 
-        var sp1 = new cc.Sprite(s_pathSister1);
+        var sp1 = new Sprite(s_pathSister1);
         sp1.x = 80;
         sp1.y = winSize.height / 2;
 
@@ -50,7 +51,7 @@ export class StressTest2 extends TestNodeDemo {
         sp1.runAction(seq3.repeatForever());
         sublayer.addChild(sp1, 1);
 
-        var fire = new cc.ParticleFire();
+        var fire = new ParticleFire();
         fire.texture = cc.textureCache.addImage(s_fire);
         fire.x = 80;
         fire.y = winSize.height / 2 - 50;
