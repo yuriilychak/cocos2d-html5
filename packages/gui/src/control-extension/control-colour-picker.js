@@ -7,9 +7,9 @@ import { ControlSaturationBrightnessPicker } from "./control-saturation-brightne
 import { CONTROL_EVENT_VALUE_CHANGED } from "./constants";
 
 export const CCControlColourPickerSpriteSheet_plist =
-    "res/extensions/CCControlColourPickerSpriteSheet.plist";
+    "extensions/CCControlColourPickerSpriteSheet.plist";
 export const CCControlColourPickerSpriteSheet_png =
-    "res/extensions/CCControlColourPickerSpriteSheet.png";
+    "extensions/CCControlColourPickerSpriteSheet.png";
 
 export class ControlColourPicker extends Control {
     _hsv = null;
