@@ -37,6 +37,7 @@ import {
   s_pathSister1
 } from "../resources";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
   constructor() {
@@ -113,12 +114,12 @@ export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
     this.scheduleUpdate();
 
     var sprite1 = this.createPhysicsSprite(
-      new cc.Point(winSize.width / 2, winSize.height - 20),
+      new Point(winSize.width / 2, winSize.height - 20),
       s_pathGrossini,
       1
     );
     var sprite2 = this.createPhysicsSprite(
-      new cc.Point(winSize.width / 2, 50),
+      new Point(winSize.width / 2, 50),
       s_pathSister1,
       2
     );

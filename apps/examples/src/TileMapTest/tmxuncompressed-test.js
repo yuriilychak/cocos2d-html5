@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { Point, Color } from "@aspect/core";
 
 export class TMXUncompressedTest extends TileDemo {
   constructor() {
@@ -41,7 +42,7 @@ export class TMXUncompressedTest extends TileDemo {
     this.testDuration = 1.2;
 
     this.pixel = { 0: 0, 1: 0, 2: 0, 3: 255 };
-    var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
+    var color = new cc.LayerColor(new Color(64, 64, 64, 255));
     this.addChild(color, -1);
 
     var map = new cc.TMXTiledMap(
@@ -55,7 +56,7 @@ export class TMXUncompressedTest extends TileDemo {
     map.runAction(
       new cc.MoveTo(
         1.0,
-        new cc.Point((-ms.width * ts.width) / 2, (-ms.height * ts.height) / 2)
+        new Point((-ms.width * ts.width) / 2, (-ms.height * ts.height) / 2)
       )
     );
 

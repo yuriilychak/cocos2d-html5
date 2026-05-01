@@ -31,6 +31,7 @@
 import { TestNodeDemo } from "./test-node-demo";
 import { s_pathGrossini, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ConvertToNode extends TestNodeDemo {
     constructor() {
@@ -142,7 +143,7 @@ export class ConvertToNode extends TestNodeDemo {
         return JSON.stringify({"p1":this.expectedP1, "p2":this.expectedP2});
     }
     getCurrentResult() {
-        this.processEvent(new cc.Point(0, 0));
+        this.processEvent(new Point(0, 0));
         var ret = {"p1":this.testP1, "p2":this.testP2};
         return JSON.stringify(ret);
     }

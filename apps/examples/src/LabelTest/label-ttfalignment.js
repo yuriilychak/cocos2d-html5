@@ -27,6 +27,7 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
+import { Size } from "@aspect/core";
 
 export class LabelTTFAlignment extends AtlasDemo {
   constructor() {
@@ -37,7 +38,7 @@ export class LabelTTFAlignment extends AtlasDemo {
       "Alignment 0\nnew line",
       "Arial",
       12,
-      new cc.Size(256, 32),
+      new Size(256, 32),
       cc.TEXT_ALIGNMENT_LEFT
     );
     ttf0.x = s.width / 2;
@@ -50,7 +51,7 @@ export class LabelTTFAlignment extends AtlasDemo {
       "Alignment 1\nnew line",
       "Arial",
       12,
-      new cc.Size(256, 32),
+      new Size(256, 32),
       cc.TEXT_ALIGNMENT_CENTER
     );
     ttf1.x = s.width / 2;
@@ -63,7 +64,7 @@ export class LabelTTFAlignment extends AtlasDemo {
       "Alignment 2\nnew line",
       "Arial",
       12,
-      new cc.Size(256, 32),
+      new Size(256, 32),
       cc.TEXT_ALIGNMENT_RIGHT
     );
     ttf2.x = s.width / 2;

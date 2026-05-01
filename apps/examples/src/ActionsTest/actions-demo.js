@@ -41,10 +41,11 @@ import { ActionsTestScene } from "./actions-test-scene";
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class ActionsDemo extends BaseTestLayer {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     this._grossini = null;
 

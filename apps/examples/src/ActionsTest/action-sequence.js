@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionSequence extends ActionsDemo {
   constructor() {
@@ -46,7 +47,7 @@ export class ActionSequence extends ActionsDemo {
     this.alignSpritesLeft(1);
 
     var action = cc.sequence(
-      new cc.MoveBy(1.5, new cc.Point(240, 0)),
+      new cc.MoveBy(1.5, new Point(240, 0)),
       new cc.RotateBy(1.5, 540)
     );
 
@@ -65,7 +66,7 @@ export class ActionSequence extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }

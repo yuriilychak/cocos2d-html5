@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_dragon_animation } from "../resources";
 import { winSize } from "../constants";
+import { Rect } from "@aspect/core";
 
 export class SpriteAnimationSplit extends SpriteTestDemo {
 
@@ -54,12 +55,12 @@ export class SpriteAnimationSplit extends SpriteTestDemo {
         var texture = cc.textureCache.addImage(s_dragon_animation);
 
         // manually add frames to the frame cache
-        var frame0 = new cc.SpriteFrame(texture, new cc.Rect(132 * 0, 132 * 0, 132, 132));
-        var frame1 = new cc.SpriteFrame(texture, new cc.Rect(132 * 1, 132 * 0, 132, 132));
-        var frame2 = new cc.SpriteFrame(texture, new cc.Rect(132 * 2, 132 * 0, 132, 132));
-        var frame3 = new cc.SpriteFrame(texture, new cc.Rect(132 * 3, 132 * 0, 132, 132));
-        var frame4 = new cc.SpriteFrame(texture, new cc.Rect(132 * 0, 132 * 1, 132, 132));
-        var frame5 = new cc.SpriteFrame(texture, new cc.Rect(132 * 1, 132 * 1, 132, 132));
+        var frame0 = new cc.SpriteFrame(texture, new Rect(132 * 0, 132 * 0, 132, 132));
+        var frame1 = new cc.SpriteFrame(texture, new Rect(132 * 1, 132 * 0, 132, 132));
+        var frame2 = new cc.SpriteFrame(texture, new Rect(132 * 2, 132 * 0, 132, 132));
+        var frame3 = new cc.SpriteFrame(texture, new Rect(132 * 3, 132 * 0, 132, 132));
+        var frame4 = new cc.SpriteFrame(texture, new Rect(132 * 0, 132 * 1, 132, 132));
+        var frame5 = new cc.SpriteFrame(texture, new Rect(132 * 1, 132 * 1, 132, 132));
 
         //
         // Animation using Sprite BatchNode

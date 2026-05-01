@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size, Color } from "@aspect/core";
 
 export class UIRichTextTest extends UIMainLayer {
   constructor() {
@@ -48,7 +49,7 @@ export class UIRichTextTest extends UIMainLayer {
       );
       button.setTitleText("switch");
       button.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 + button.getContentSize().height * 2.5
         )
@@ -64,7 +65,7 @@ export class UIRichTextTest extends UIMainLayer {
 
       var re1 = new ccui.RichElementText(
         1,
-        cc.Color.WHITE,
+        Color.WHITE,
         255,
         "This color is white. ",
         "Helvetica",
@@ -72,7 +73,7 @@ export class UIRichTextTest extends UIMainLayer {
       );
       var re2 = new ccui.RichElementText(
         2,
-        cc.Color.YELLOW,
+        Color.YELLOW,
         255,
         "And this is yellow. ",
         "Helvetica",
@@ -80,7 +81,7 @@ export class UIRichTextTest extends UIMainLayer {
       );
       var re3 = new ccui.RichElementText(
         3,
-        cc.Color.BLUE,
+        Color.BLUE,
         255,
         "This one is blue. ",
         "Helvetica",
@@ -88,7 +89,7 @@ export class UIRichTextTest extends UIMainLayer {
       );
       var re4 = new ccui.RichElementText(
         4,
-        cc.Color.GREEN,
+        Color.GREEN,
         255,
         "And green. ",
         "Helvetica",
@@ -96,7 +97,7 @@ export class UIRichTextTest extends UIMainLayer {
       );
       var re5 = new ccui.RichElementText(
         5,
-        cc.Color.RED,
+        Color.RED,
         255,
         "Last one is red ",
         "Helvetica",
@@ -105,7 +106,7 @@ export class UIRichTextTest extends UIMainLayer {
 
       var reimg = new ccui.RichElementImage(
         6,
-        cc.Color.WHITE,
+        Color.WHITE,
         255,
         "ccs-res/cocosui/sliderballnormal.png"
       );
@@ -118,13 +119,13 @@ export class UIRichTextTest extends UIMainLayer {
 
       var recustom = new ccui.RichElementCustomNode(
         1,
-        cc.Color.WHITE,
+        Color.WHITE,
         255,
         pAr
       );
       var re6 = new ccui.RichElementText(
         7,
-        cc.Color.ORANGE,
+        Color.ORANGE,
         255,
         "Have fun!! ",
         "Helvetica",
@@ -152,7 +153,7 @@ export class UIRichTextTest extends UIMainLayer {
     if (type == ccui.Widget.TOUCH_ENDED) {
       if (this._richText.isIgnoreContentAdaptWithSize()) {
         this._richText.ignoreContentAdaptWithSize(false);
-        this._richText.setContentSize(new cc.Size(120, 100));
+        this._richText.setContentSize(new Size(120, 100));
       } else {
         this._richText.ignoreContentAdaptWithSize(true);
       }

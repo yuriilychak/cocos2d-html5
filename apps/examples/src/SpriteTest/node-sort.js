@@ -27,6 +27,7 @@
 
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_piece } from "../resources";
+import { Rect } from "@aspect/core";
 
 export class NodeSort extends SpriteTestDemo {
   constructor() {
@@ -55,27 +56,27 @@ export class NodeSort extends SpriteTestDemo {
     this._node = new cc.Node();
     this.addChild(this._node, 0, 0);
 
-    this._sprite1 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+    this._sprite1 = new cc.Sprite(s_piece, new Rect(128, 0, 64, 64));
     this._sprite1.x = 100;
     this._sprite1.y = 160;
     this._node.addChild(this._sprite1, -6, 1);
 
-    this._sprite2 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+    this._sprite2 = new cc.Sprite(s_piece, new Rect(128, 0, 64, 64));
     this._sprite2.x = 164;
     this._sprite2.y = 160;
     this._node.addChild(this._sprite2, -6, 2);
 
-    this._sprite4 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+    this._sprite4 = new cc.Sprite(s_piece, new Rect(128, 0, 64, 64));
     this._sprite4.x = 292;
     this._sprite4.y = 160;
     this._node.addChild(this._sprite4, -3, 4);
 
-    this._sprite3 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+    this._sprite3 = new cc.Sprite(s_piece, new Rect(128, 0, 64, 64));
     this._sprite3.x = 228;
     this._sprite3.y = 160;
     this._node.addChild(this._sprite3, -4, 3);
 
-    this._sprite5 = new cc.Sprite(s_piece, new cc.Rect(128, 0, 64, 64));
+    this._sprite5 = new cc.Sprite(s_piece, new Rect(128, 0, 64, 64));
     this._sprite5.x = 356;
     this._sprite5.y = 160;
     this._node.addChild(this._sprite5, -3, 5);

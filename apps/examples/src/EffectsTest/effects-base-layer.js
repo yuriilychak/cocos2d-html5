@@ -32,6 +32,7 @@ import { arrayOfEffectsTest, nextEffectsTest, previousEffectsTest, restartEffect
 import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class EffectsBaseLayer extends BaseTestLayer {
     code() {
@@ -65,7 +66,7 @@ export class EffectsBaseLayer extends BaseTestLayer {
         this.addChild( nodeGrid );
 
         // back gradient
-        var gradient = new cc.LayerGradient( new cc.Color(255,0,0,255), new cc.Color(255,255,0,255));
+        var gradient = new cc.LayerGradient( new Color(255,0,0,255), new Color(255,255,0,255));
         node.addChild( gradient );
 
         // back image
@@ -95,7 +96,7 @@ export class EffectsBaseLayer extends BaseTestLayer {
 
     getEffect(duration) {
         // override me
-        return new cc.MoveBy(2, new cc.Point(10,10) );
+        return new cc.MoveBy(2, new Point(10,10) );
     }
 
     // automation

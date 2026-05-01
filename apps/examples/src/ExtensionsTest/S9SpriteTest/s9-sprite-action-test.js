@@ -28,6 +28,7 @@
 
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
+import { Point } from "@aspect/core";
 
 export class S9SpriteActionTest extends S9SpriteTestDemo {
   constructor() {
@@ -52,7 +53,7 @@ export class S9SpriteActionTest extends S9SpriteTestDemo {
     var ScaleTo = new cc.ScaleTo(2, -0.44, 0.47);
     var ScaleToBack = new cc.ScaleTo(2, 1.0, 1.0);
 
-    var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
+    var moveBy = new cc.MoveBy(1, new Point(80, 80));
     var moveByBack = moveBy.reverse();
 
     blocks_with_insets.runAction(cc.sequence(rotateBy, delay, rotateByBack));

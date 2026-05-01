@@ -32,6 +32,7 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../resources";
+import { Color } from "@aspect/core";
 
 export class PauseResumeTargetTest extends EventDispatcherTestDemo {
   constructor() {
@@ -63,7 +64,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     var popup = new cc.MenuItemFont("Popup", function (sender) {
       sprite3.getListener().setEnabled(false);
       cc.eventManager.pauseTarget(_this, true);
-      var colorLayer = new cc.LayerColor(new cc.Color(0, 0, 255, 100));
+      var colorLayer = new cc.LayerColor(new Color(0, 0, 255, 100));
       _this.addChild(colorLayer, 999); //set colorLayer to top
 
       // Add the button
@@ -73,7 +74,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
       );
 
       var titleButton = new cc.LabelTTF("Close Dialog", "Marker Felt", 26);
-      titleButton.color = new cc.Color(159, 168, 176);
+      titleButton.color = new Color(159, 168, 176);
 
       var controlButton = new cc.ControlButton(titleButton, backgroundButton);
       controlButton.setBackgroundSpriteForState(
@@ -81,7 +82,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         cc.CONTROL_STATE_HIGHLIGHTED
       );
       controlButton.setTitleColorForState(
-        cc.Color.WHITE,
+        Color.WHITE,
         cc.CONTROL_STATE_HIGHLIGHTED
       );
 

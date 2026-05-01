@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class ActionCatmullRom extends ActionsDemo {
   get _code() {
@@ -53,11 +54,11 @@ export class ActionCatmullRom extends ActionsDemo {
     this._drawNode1 = new cc.DrawNode();
     this._drawNode1.x = 50;
     this._drawNode1.y = 50;
-    this._drawNode1.setDrawColor(new cc.Color(255, 255, 255, 255));
+    this._drawNode1.setDrawColor(new Color(255, 255, 255, 255));
     this.addChild(this._drawNode1);
 
     this._drawNode2 = new cc.DrawNode();
-    this._drawNode2.setDrawColor(new cc.Color(255, 255, 255, 255));
+    this._drawNode2.setDrawColor(new Color(255, 255, 255, 255));
     this.addChild(this._drawNode2);
   }
 
@@ -79,13 +80,13 @@ export class ActionCatmullRom extends ActionsDemo {
     this._tamara.y = 50;
 
     var array = [
-      new cc.Point(0, 0),
-      new cc.Point(80, 80),
-      new cc.Point(winSize.width - 80, 80),
-      new cc.Point(winSize.width - 80, winSize.height - 80),
-      new cc.Point(80, winSize.height - 80),
-      new cc.Point(80, 80),
-      new cc.Point(winSize.width / 2, winSize.height / 2)
+      new Point(0, 0),
+      new Point(80, 80),
+      new Point(winSize.width - 80, 80),
+      new Point(winSize.width - 80, winSize.height - 80),
+      new Point(80, winSize.height - 80),
+      new Point(80, 80),
+      new Point(winSize.width / 2, winSize.height / 2)
     ];
 
     var action1 = new cc.CatmullRomBy(3, array);
@@ -101,11 +102,11 @@ export class ActionCatmullRom extends ActionsDemo {
     // The initial position will be the 1st point of the Catmull Rom path
     //
     var array2 = [
-      new cc.Point(winSize.width / 2, 30),
-      new cc.Point(winSize.width - 80, 30),
-      new cc.Point(winSize.width - 80, winSize.height - 80),
-      new cc.Point(winSize.width / 2, winSize.height - 80),
-      new cc.Point(winSize.width / 2, 30)
+      new Point(winSize.width / 2, 30),
+      new Point(winSize.width - 80, 30),
+      new Point(winSize.width - 80, winSize.height - 80),
+      new Point(winSize.width / 2, winSize.height - 80),
+      new Point(winSize.width / 2, 30)
     ];
 
     var action2 = new cc.CatmullRomTo(3, array2);
@@ -134,7 +135,7 @@ export class ActionCatmullRom extends ActionsDemo {
     this.scheduleOnce(this.checkControl3, (3 / 4) * 2);
   }
   checkControl1(dt) {
-    this.control1 = new cc.Point(this._kathia.x, this._kathia.y);
+    this.control1 = new Point(this._kathia.x, this._kathia.y);
   }
   verifyControl1(dt) {
     var x = Math.abs(winSize.width / 2 - this.control1.x);
@@ -143,7 +144,7 @@ export class ActionCatmullRom extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl2(dt) {
-    this.control2 = new cc.Point(this._kathia.x, this._kathia.y);
+    this.control2 = new Point(this._kathia.x, this._kathia.y);
   }
   verifyControl2(dt) {
     var x = Math.abs(winSize.width - 80 - this.control2.x);
@@ -152,7 +153,7 @@ export class ActionCatmullRom extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl3(dt) {
-    this.control3 = new cc.Point(this._kathia.x, this._kathia.y);
+    this.control3 = new Point(this._kathia.x, this._kathia.y);
   }
   verifyControl3(dt) {
     var x = Math.abs(winSize.width - 80 - this.control3.x);
@@ -171,7 +172,7 @@ export class ActionCatmullRom extends ActionsDemo {
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
     ret.push(this.verifyControl3());
-    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
+    ret.push(new Point(this._kathia.x, this._kathia.y));
 
     return JSON.stringify(ret);
   }

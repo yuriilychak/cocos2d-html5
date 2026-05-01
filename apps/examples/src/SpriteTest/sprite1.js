@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
+import { Point, Rect } from "@aspect/core";
 
 export class Sprite1 extends SpriteTestDemo {
 
@@ -55,7 +56,7 @@ export class Sprite1 extends SpriteTestDemo {
 
         this.testSprite = null;
 
-        this.addNewSpriteWithCoords(new cc.Point(winSize.width / 2, winSize.height / 2));
+        this.addNewSpriteWithCoords(new Point(winSize.width / 2, winSize.height / 2));
 
         if ('touches' in cc.sys.capabilities) {
             cc.eventManager.addListener({
@@ -86,7 +87,7 @@ export class Sprite1 extends SpriteTestDemo {
         var idx = 0 | (Math.random() * 14);
         var x = (idx % 5) * 85;
         var y = (0 | (idx / 5)) * 121;
-        var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(s_grossini_dance_atlas, new Rect(x, y, 85, 121));
         this.addChild(sprite);
         sprite.x = p.x;
         sprite.y = p.y;
@@ -117,7 +118,7 @@ export class Sprite1 extends SpriteTestDemo {
     //
     setupAutomation() {
         var fun = function () {
-            var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 0, 85, 121));
+            var sprite = new cc.Sprite(s_grossini_dance_atlas, new Rect(0, 0, 85, 121));
             this.addChild(sprite, 999);
             sprite.x = winSize.width / 2;
             sprite.y = winSize.height / 2;

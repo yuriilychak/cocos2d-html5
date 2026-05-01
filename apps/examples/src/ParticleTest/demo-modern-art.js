@@ -28,6 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { director } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class DemoModernArt extends ParticleDemo {
     onEnter() {
@@ -43,7 +44,7 @@ export class DemoModernArt extends ParticleDemo {
         this._emitter.duration = -1;
 
         // gravity
-        this._emitter.gravity = new cc.Point(0, 0);
+        this._emitter.gravity = new Point(0, 0);
 
         // angle
         this._emitter.angle = 0;
@@ -69,10 +70,10 @@ export class DemoModernArt extends ParticleDemo {
         this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;
 
         // color of particles
-        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
-        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
-        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
-        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
+        this._emitter.startColor = new Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new Color(128, 128, 128, 255);
+        this._emitter.endColor = new Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 1.0;

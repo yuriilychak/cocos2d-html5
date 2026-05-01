@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Color } from "@aspect/core";
 
 export class UIButtonNormalDefaultTest extends UIMainLayer {
   init() {
@@ -41,7 +42,7 @@ export class UIButtonNormalDefaultTest extends UIMainLayer {
         "Arial",
         20
       );
-      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setColor(new Color(159, 168, 176));
       alert.setPosition(
         widgetSize.width / 2.0,
         widgetSize.height / 2.0 - alert.height * 1.75

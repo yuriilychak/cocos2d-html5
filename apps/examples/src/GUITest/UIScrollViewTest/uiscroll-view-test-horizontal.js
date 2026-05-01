@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Size } from "@aspect/core";
 
 export class UIScrollViewTest_Horizontal extends UIMainLayer {
   init() {
@@ -46,10 +47,10 @@ export class UIScrollViewTest_Horizontal extends UIMainLayer {
       var scrollView = new ccui.ScrollView();
       scrollView.setDirection(ccui.ScrollView.DIR_HORIZONTAL);
       scrollView.setTouchEnabled(true);
-      scrollView.setContentSize(new cc.Size(280, 150));
+      scrollView.setContentSize(new Size(280, 150));
       var scrollViewRect = scrollView.getContentSize();
       scrollView.setInnerContainerSize(
-        new cc.Size(scrollViewRect.width, scrollViewRect.height)
+        new Size(scrollViewRect.width, scrollViewRect.height)
       );
 
       scrollView.x =
@@ -66,7 +67,7 @@ export class UIScrollViewTest_Horizontal extends UIMainLayer {
       var innerWidth = scrollViewRect.width + imageView.getContentSize().width;
       var innerHeight = scrollViewRect.height;
 
-      scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
+      scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
       var button = new ccui.Button();
       button.setTouchEnabled(true);

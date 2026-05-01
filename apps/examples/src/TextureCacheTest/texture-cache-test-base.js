@@ -33,10 +33,11 @@ import {
   previousTexCacheTest,
   restartTexCacheTest
 } from "./texture-cache-test-helpers";
+import { Color } from "@aspect/core";
 
 export class TextureCacheTestBase extends BaseTestLayer {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     this._title = "";
 

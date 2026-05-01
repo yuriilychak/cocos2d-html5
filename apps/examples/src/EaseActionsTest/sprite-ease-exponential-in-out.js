@@ -32,13 +32,14 @@
 //------------------------------------------------------------------
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class SpriteEaseExponentialInOut extends EaseSpriteDemo {
   onEnter() {
     //----start3----onEnter
     super.onEnter();
 
-    var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
+    var move = new cc.MoveBy(2, new Point(winSize.width - 80, 0));
     var move_back = move.reverse();
 
     var move_ease = move.clone().easing(cc.easeExponentialInOut());

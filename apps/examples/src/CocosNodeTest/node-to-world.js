@@ -27,6 +27,7 @@
 
 import { TestNodeDemo } from "./test-node-demo";
 import { s_back3, s_playNormal, s_playSelect } from "../resources";
+import { Point } from "@aspect/core";
 
 export class NodeToWorld extends TestNodeDemo {
   constructor() {
@@ -54,7 +55,7 @@ export class NodeToWorld extends TestNodeDemo {
     var fe = cc.sequence(rot, delay).repeatForever();
     item.runAction(fe);
 
-    var move = new cc.MoveBy(3, new cc.Point(200, 0));
+    var move = new cc.MoveBy(3, new Point(200, 0));
     var move_back = move.reverse();
     var seq = cc.sequence(move, delay.clone(), move_back);
     var fe2 = seq.repeatForever();

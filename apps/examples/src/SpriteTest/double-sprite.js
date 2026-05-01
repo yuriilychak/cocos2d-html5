@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Size } from "@aspect/core";
+
+
 export class DoubleSprite extends cc.Sprite {
 
     constructor(fileName) {
@@ -37,7 +40,7 @@ export class DoubleSprite extends cc.Sprite {
     }
 
     setContentSize(size) {
-        var newSize = new cc.Size(size.width, size.height);
+        var newSize = new Size(size.width, size.height);
         // If Retina Display and Texture is in HD then scale the vertex rect
         if (cc.contentScaleFactor() == 2 && !this.HD) {
             newSize.width *= 2;

@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size, Color } from "@aspect/core";
 
 export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
   init() {
@@ -51,19 +52,19 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
 
       // Create the page view
       var pageView = new ccui.PageView();
-      pageView.setContentSize(new cc.Size(240.0, 130.0));
-      pageView.setAnchorPoint(new cc.Point(0.5, 0.5));
+      pageView.setContentSize(new Size(240.0, 130.0));
+      pageView.setAnchorPoint(new Point(0.5, 0.5));
       var backgroundSize = background.getContentSize();
       pageView.setPosition(
-        new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
+        new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
       );
-      pageView.setBackGroundColor(cc.Color.GREEN);
+      pageView.setBackGroundColor(Color.GREEN);
       pageView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
         var outerBox = new ccui.HBox();
-        outerBox.setContentSize(new cc.Size(240.0, 130.0));
+        outerBox.setContentSize(new Size(240.0, 130.0));
 
         for (var k = 0; k < 2; ++k) {
           var innerBox = new ccui.VBox();
@@ -97,10 +98,10 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       button.setTitleText("Add A Page");
       button.setZoomScale(0.3);
       button.setPressedActionEnabled(true);
-      button.setTitleColor(cc.Color.RED);
+      button.setTitleColor(Color.RED);
       button.addClickEventListener(function (sender) {
         var outerBox = new ccui.HBox();
-        outerBox.setContentSize(new cc.Size(240.0, 130.0));
+        outerBox.setContentSize(new Size(240.0, 130.0));
 
         for (var k = 0; k < 2; ++k) {
           var innerBox = new ccui.VBox();
@@ -134,7 +135,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       button2.setTitleText("Remove A Page");
       button2.setZoomScale(0.3);
       button2.setPressedActionEnabled(true);
-      button2.setTitleColor(cc.Color.RED);
+      button2.setTitleColor(Color.RED);
       button2.addClickEventListener(function (sender) {
         if (pageView.getPages().length > 0) {
           pageView.removePageAtIndex(pageView.getPages().length - 1);
@@ -150,11 +151,11 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       var button3 = new ccui.Button();
       button3.setAnchorPoint(0, 0.5);
       button3.setTitleFontSize(12);
-      button3.setPosition(new cc.Point(20, 140));
+      button3.setPosition(new Point(20, 140));
       button3.setTitleText("Remove All Pages");
       button3.setZoomScale(0.3);
       button3.setPressedActionEnabled(true);
-      button3.setTitleColor(cc.Color.RED);
+      button3.setTitleColor(Color.RED);
       button3.addClickEventListener(function (sender) {
         pageView.removeAllPages();
         self._topDisplayLabel.setString(

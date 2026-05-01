@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Color } from "@aspect/core";
 
 export class UIListViewTest_ScrollToItem extends UIMainLayer {
   constructor() {
@@ -55,7 +56,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
       listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       listView.setBackGroundImageScale9Enabled(true);
       listView.setContentSize(widgetSize.width / 2, widgetSize.height / 2);
-      listView.setScrollBarPositionFromCorner(new cc.Point(7, 7));
+      listView.setScrollBarPositionFromCorner(new Point(7, 7));
       listView.setItemsMargin(2.0);
 
       listView.x =
@@ -69,22 +70,22 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
       {
         var pNode = new cc.DrawNode();
 
-        var center = new cc.Point(widgetSize.width / 2, widgetSize.height / 2);
+        var center = new Point(widgetSize.width / 2, widgetSize.height / 2);
         if (this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL) {
           var halfY = 110;
           pNode.drawSegment(
-            new cc.Point(center.x, center.y - halfY),
-            new cc.Point(center.x, center.y + halfY),
+            new Point(center.x, center.y - halfY),
+            new Point(center.x, center.y + halfY),
             2,
-            new cc.Color(0, 0, 0, 255)
+            new Color(0, 0, 0, 255)
           );
         } else {
           var halfX = 150;
           pNode.drawSegment(
-            new cc.Point(center.x - halfX, center.y),
-            new cc.Point(center.x + halfX, center.y),
+            new Point(center.x - halfX, center.y),
+            new Point(center.x + halfX, center.y),
             2,
-            new cc.Color(0, 0, 0, 255)
+            new Color(0, 0, 0, 255)
           );
         }
         pNode.setContentSize(listView.getContentSize());
@@ -96,12 +97,12 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
         "ccs-res/cocosui/backtotoppressed.png",
         "ccs-res/cocosui/backtotopnormal.png"
       );
-      pButton.setAnchorPoint(new cc.Point(0, 0.5));
+      pButton.setAnchorPoint(new Point(0, 0.5));
       pButton.setScale(0.8);
       pButton.setPosition(
-        cc.Point.add(
-          new cc.Point(widgetSize.width / 2, widgetSize.height / 2),
-          new cc.Point(120, -60)
+        Point.add(
+          new Point(widgetSize.width / 2, widgetSize.height / 2),
+          new Point(120, -60)
         )
       );
       pButton.setTitleText("Go to '" + this._nextIndex + "'");
@@ -109,8 +110,8 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
         function (pButton) {
           listView.scrollToItem(
             this._nextIndex,
-            new cc.Point(0.5, 0.5),
-            new cc.Point(0.5, 0.5)
+            new Point(0.5, 0.5),
+            new Point(0.5, 0.5)
           );
           this._nextIndex =
             (this._nextIndex + Math.floor(NUMBER_OF_ITEMS / 2)) %

@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { Point } from "@aspect/core";
 
 export class TMXResizeTest extends TileDemo {
   constructor() {
@@ -50,7 +51,7 @@ export class TMXResizeTest extends TileDemo {
     var ls = layer.getLayerSize();
     for (var y = 0; y < ls.height; y++) {
       for (var x = 0; x < ls.width; x++) {
-        layer.setTileGID(1, new cc.Point(x, y));
+        layer.setTileGID(1, new Point(x, y));
       }
     }
   }

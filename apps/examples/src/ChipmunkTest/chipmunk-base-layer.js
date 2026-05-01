@@ -37,6 +37,7 @@ import {
 } from "./chipmunk-test-helpers";
 import { ChipmunkTestScene } from "./chipmunk-test-scene";
 import { director, winSize } from "../constants";
+import { Color } from "@aspect/core";
 
 export class ChipmunkBaseLayer extends BaseTestLayer {
   constructor() {
@@ -47,8 +48,8 @@ export class ChipmunkBaseLayer extends BaseTestLayer {
     // Failure to do so, it will crash.
     //
     super(
-      new cc.Color(0, 0, 0, 255),
-      new cc.Color(98 * 0.5, 99 * 0.5, 117 * 0.5, 255)
+      new Color(0, 0, 0, 255),
+      new Color(98 * 0.5, 99 * 0.5, 117 * 0.5, 255)
     );
 
     this._title = "No title";

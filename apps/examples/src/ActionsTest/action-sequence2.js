@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionSequence2 extends ActionsDemo {
   constructor() {
@@ -45,9 +46,9 @@ export class ActionSequence2 extends ActionsDemo {
     this.centerSprites(1);
     this._grossini.visible = false;
     var action = cc.sequence(
-      new cc.Place(new cc.Point(200, 200)),
+      new cc.Place(new Point(200, 200)),
       new cc.Show(),
-      new cc.MoveBy(1, new cc.Point(100, 0)),
+      new cc.MoveBy(1, new Point(100, 0)),
       new cc.CallFunc(this.onCallback1, this),
       new cc.CallFunc(this.onCallback2.bind(this)),
       new cc.CallFunc(this.onCallback3, this)
@@ -100,7 +101,7 @@ export class ActionSequence2 extends ActionsDemo {
     ret.push(this.called2);
     ret.push(this.called3);
     ret.push(this._grossini.visible);
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
 }

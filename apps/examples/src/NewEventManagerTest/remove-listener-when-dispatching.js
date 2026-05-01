@@ -27,6 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
+import { Color, Rect } from "@aspect/core";
 
 export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
   onEnter() {
@@ -47,16 +48,16 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
       onTouchBegan: function (touch, event) {
         var locationInNode = sprite1.convertToNodeSpace(touch.getLocation());
         var s = sprite1.getContentSize();
-        var rect = new cc.Rect(0, 0, s.width, s.height);
+        var rect = new Rect(0, 0, s.width, s.height);
 
-        if (cc.Rect.containsPoint(rect, locationInNode)) {
-          sprite1.setColor(cc.Color.RED);
+        if (Rect.containsPoint(rect, locationInNode)) {
+          sprite1.setColor(Color.RED);
           return true;
         }
         return false;
       },
       onTouchEnded: function (touch, event) {
-        sprite1.setColor(cc.Color.WHITE);
+        sprite1.setColor(Color.WHITE);
       }
     });
     this.setUserObject(listener1);

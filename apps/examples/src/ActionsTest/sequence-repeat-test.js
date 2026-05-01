@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { ActionsDemo } from "./actions-demo";
+import { Point } from "@aspect/core";
 
 export class SequenceRepeatTest extends ActionsDemo {
   onEnter() {
@@ -37,7 +38,7 @@ export class SequenceRepeatTest extends ActionsDemo {
       new cc.Repeat(cc.sequence(new cc.Blink(2, 3), new cc.DelayTime(2)), 3)
     );
 
-    var move = new cc.MoveBy(1, new cc.Point(50, 0));
+    var move = new cc.MoveBy(1, new Point(50, 0));
     var move_back = move.reverse();
     var move_seq = cc.sequence(
       move,

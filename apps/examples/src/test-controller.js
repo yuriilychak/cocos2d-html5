@@ -41,10 +41,11 @@ import {
   winSize
 } from "./constants";
 import { LINE_SPACE, curPos, testNames } from "./tests-main-helpers";
+import { Color } from "@aspect/core";
 
 export class TestController extends cc.LayerGradient {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(0x46, 0x82, 0xb4, 255));
+    super(new Color(0, 0, 0, 255), new Color(0x46, 0x82, 0xb4, 255));
 
     this._itemMenu = null;
 

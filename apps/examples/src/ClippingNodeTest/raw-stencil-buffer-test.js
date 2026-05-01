@@ -33,6 +33,7 @@ import {
   _set_stencilBits
 } from "./clipping-node-test-helpers";
 import { s_pathGrossini } from "../resources";
+import { Point, Color } from "@aspect/core";
 
 export class RawStencilBufferTest extends BaseClippingNodeTest {
   constructor() {
@@ -70,14 +71,14 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
 
   draw(ctx) {
     var gl = ctx || cc.rendererConfig.renderContext;
-    var winPoint = cc.Point.fromSize(cc.director.getWinSize());
-    var planeSize = cc.Point.mult(winPoint, 1.0 / _PLANE_COUNT);
+    var winPoint = Point.fromSize(cc.director.getWinSize());
+    var planeSize = Point.mult(winPoint, 1.0 / _PLANE_COUNT);
 
     gl.enable(gl.STENCIL_TEST);
     //cc.checkGLErrorDebug();
 
     for (var i = 0; i < _PLANE_COUNT; i++) {
-      var stencilPoint = cc.Point.mult(planeSize, _PLANE_COUNT - i);
+      var stencilPoint = Point.mult(planeSize, _PLANE_COUNT - i);
       stencilPoint.x = winPoint.x;
 
       var x = planeSize.x / 2 + planeSize.x * i,
@@ -89,9 +90,9 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       //cc.checkGLErrorDebug();
 
       cc._drawingUtil.drawSolidRect(
-        new cc.Point(0, 0),
+        new Point(0, 0),
         stencilPoint,
-        new cc.Color(255, 255, 255, 255)
+        new Color(255, 255, 255, 255)
       );
 
       cc.kmGLPushMatrix();
@@ -103,7 +104,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       //cc.checkGLErrorDebug();
 
       cc._drawingUtil.drawSolidRect(
-        new cc.Point(0, 0),
+        new Point(0, 0),
         winPoint,
         _planeColor[i]
       );

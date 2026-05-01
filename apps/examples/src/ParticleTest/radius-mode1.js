@@ -28,12 +28,13 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_starsGrayscale } from "../resources";
 import { director } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class RadiusMode1 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.setColor(new cc.Color(0, 0, 0));
+        this.setColor(new Color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
 
@@ -66,7 +67,7 @@ export class RadiusMode1 extends ParticleDemo {
         var size = director.getWinSize();
         this._emitter.x = size.width / 2;
         this._emitter.y = size.height / 2;
-        this._emitter.posVar = new cc.Point(0, 0);
+        this._emitter.posVar = new Point(0, 0);
 
         // life of particles
         this._emitter.life = 5;
@@ -79,10 +80,10 @@ export class RadiusMode1 extends ParticleDemo {
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
-        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
-        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
-        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
+        this._emitter.startColor = new Color(128, 128, 128, 255);
+        this._emitter.startColorVar = new Color(128, 128, 128, 255);
+        this._emitter.endColor = new Color(26, 26, 26, 50);
+        this._emitter.endColorVar = new Color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 32;

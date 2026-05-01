@@ -27,6 +27,7 @@
  ****************************************************************************/
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
+import { Size } from "@aspect/core";
 
 export var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket;
 
@@ -86,7 +87,7 @@ export class WebSocketTestLayer extends cc.Layer {
       "Send Text WS is waiting...",
       "Arial",
       14,
-      new cc.Size(160, 100),
+      new Size(160, 100),
       cc.TEXT_ALIGNMENT_CENTER,
       cc.VERTICAL_TEXT_ALIGNMENT_TOP
     );
@@ -101,7 +102,7 @@ export class WebSocketTestLayer extends cc.Layer {
       "Send Binary WS is waiting...",
       "Arial",
       14,
-      new cc.Size(160, 100),
+      new Size(160, 100),
       cc.TEXT_ALIGNMENT_CENTER,
       cc.VERTICAL_TEXT_ALIGNMENT_TOP
     );
@@ -116,7 +117,7 @@ export class WebSocketTestLayer extends cc.Layer {
       "Error WS is waiting...",
       "Arial",
       14,
-      new cc.Size(160, 100),
+      new Size(160, 100),
       cc.TEXT_ALIGNMENT_CENTER,
       cc.VERTICAL_TEXT_ALIGNMENT_TOP
     );

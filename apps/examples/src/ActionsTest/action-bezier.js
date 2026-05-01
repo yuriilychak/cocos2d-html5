@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director, winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionBezier extends ActionsDemo {
   constructor() {
@@ -58,9 +59,9 @@ export class ActionBezier extends ActionsDemo {
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints = [
-      new cc.Point(0, 374),
-      new cc.Point(300, -374),
-      new cc.Point(300, 100)
+      new Point(0, 374),
+      new Point(300, -374),
+      new Point(300, 100)
     ];
 
     var bezierForward = new cc.BezierBy(2, controlPoints);
@@ -74,9 +75,9 @@ export class ActionBezier extends ActionsDemo {
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints2 = [
-      new cc.Point(100, s.height / 2),
-      new cc.Point(200, -s.height / 2),
-      new cc.Point(240, 160)
+      new Point(100, s.height / 2),
+      new Point(200, -s.height / 2),
+      new Point(240, 160)
     ];
     var bezierTo1 = new cc.BezierTo(2, controlPoints2);
 
@@ -102,7 +103,7 @@ export class ActionBezier extends ActionsDemo {
     this.scheduleOnce(this.checkControl2, 1.33333);
   }
   checkControl1(dt) {
-    this.control1 = new cc.Point(this._grossini.x, this._grossini.y);
+    this.control1 = new Point(this._grossini.x, this._grossini.y);
   }
   verifyControl1(dt) {
     var x = Math.abs(this.control1.x - 77 - winSize.width / 2);
@@ -111,7 +112,7 @@ export class ActionBezier extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl2(dt) {
-    this.control2 = new cc.Point(this._grossini.x, this._grossini.y);
+    this.control2 = new Point(this._grossini.x, this._grossini.y);
   }
   verifyControl2(dt) {
     var x = Math.abs(this.control2.x - 222 - winSize.width / 2);
@@ -133,7 +134,7 @@ export class ActionBezier extends ActionsDemo {
     var ret = [];
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
 
     return JSON.stringify(ret);
   }

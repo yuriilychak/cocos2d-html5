@@ -27,6 +27,7 @@
 
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class LayerGradientTest extends LayerTest {
   constructor() {
@@ -39,9 +40,9 @@ export class LayerGradientTest extends LayerTest {
 
     this.pixel2 = { 0: 0, 1: 255, 2: 0, 3: 255 };
     var layer1 = new cc.LayerGradient(
-      new cc.Color(255, 0, 0, 255),
-      new cc.Color(0, 255, 0, 255),
-      new cc.Point(0.9, 0.9)
+      new Color(255, 0, 0, 255),
+      new Color(0, 255, 0, 255),
+      new Point(0.9, 0.9)
     );
     this.addChild(layer1, 0, cc.TAG_LAYER);
 
@@ -97,11 +98,11 @@ export class LayerGradientTest extends LayerTest {
 
   updateGradient(pos) {
     //----start7----updateGradient
-    var diff = cc.Point.sub(
-      new cc.Point(winSize.width / 2, winSize.height / 2),
+    var diff = Point.sub(
+      new Point(winSize.width / 2, winSize.height / 2),
       pos
     );
-    diff = cc.Point.normalize(diff);
+    diff = Point.normalize(diff);
 
     var gradient = this.getChildByTag(1);
     gradient.setVector(diff);

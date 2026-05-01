@@ -33,6 +33,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { Point } from "@aspect/core";
 
 export class BMFontSpeedTest extends AtlasDemo {
     constructor() {
@@ -46,7 +47,7 @@ export class BMFontSpeedTest extends AtlasDemo {
 
             var s = director.getWinSize();
 
-            var p = new cc.Point(Math.random() * s.width, Math.random() * s.height);
+            var p = new Point(Math.random() * s.width, Math.random() * s.height);
             label.setPosition(p);
             label.anchorX = 0.5;
             label.anchorY = 0.5;

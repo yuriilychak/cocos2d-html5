@@ -97,11 +97,12 @@ import { UnitTestScene } from "./UnitTest/unit-test-scene";
 import { XHRArrayBufferTestScene } from "./XHRTest/xhrarray-buffer-test-scene";
 import { XHRTestScene } from "./XHRTest/xhrtest-scene";
 import { GUITestScene } from "./GUITest/UISceneManager";
+import { Point } from "@aspect/core";
 
 //Controller stuff
 export var LINE_SPACE = 40;
 
-export var curPos = new cc.Point(0, 0);
+export var curPos = new Point(0, 0);
 
 export var testNames = [
   {

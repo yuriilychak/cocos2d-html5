@@ -39,10 +39,11 @@ import {
 } from "./sys-test-helpers";
 import { SysTestScene } from "./sys-test-scene";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class SysTestBase extends BaseTestLayer {
   constructor() {
-    super(new cc.Color(0, 0, 0, 0), new cc.Color(98, 99, 117, 0));
+    super(new Color(0, 0, 0, 0), new Color(98, 99, 117, 0));
 
     this._title = "";
 

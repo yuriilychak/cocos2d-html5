@@ -35,10 +35,11 @@ import {
   restartDispatcherTest
 } from "./new-event-manager-test-helpers";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class EventDispatcherTestDemo extends BaseTestLayer {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(160, 32, 32, 255));
+    super(new Color(0, 0, 0, 255), new Color(160, 32, 32, 255));
   }
 
   title() {

@@ -30,6 +30,7 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
+import { Color } from "@aspect/core";
 
 export class TouchAllAtOnce extends EventTest {
   init() {
@@ -60,7 +61,7 @@ export class TouchAllAtOnce extends EventTest {
       sprite.x = 0;
       sprite.y = 0;
       sprite.scale = 1;
-      sprite.color = new cc.Color(
+      sprite.color = new Color(
         Math.random() * 200 + 55,
         Math.random() * 200 + 55,
         Math.random() * 200 + 55

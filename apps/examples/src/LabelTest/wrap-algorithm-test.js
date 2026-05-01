@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { AtlasDemo } from "./atlas-demo";
+import { Color } from "@aspect/core";
 
 export class WrapAlgorithmTest extends AtlasDemo {
   constructor() {
@@ -52,7 +53,7 @@ export class WrapAlgorithmTest extends AtlasDemo {
       LabelTTF.setAnchorPoint(0, 1);
       LabelTTF.boundingWidth = 120;
       LabelTTF.boundingHeight = 0;
-      LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
+      LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
       if (cc.sys.os === cc.sys.OS_WP8)
         LabelTTF.setFontName("fonts/arialuni.ttf");
       else if (cc.sys.os === cc.sys.OS_WINRT) LabelTTF.setFontName("DengXian");
@@ -69,7 +70,7 @@ export class WrapAlgorithmTest extends AtlasDemo {
       LabelTTF.setAnchorPoint(0, 1);
       LabelTTF.boundingWidth = 13;
       LabelTTF.boundingHeight = 0;
-      LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
+      LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
       if (cc.sys.os === cc.sys.OS_WP8)
         LabelTTF.setFontName("fonts/arialuni.ttf");
       else if (cc.sys.os === cc.sys.OS_WINRT) LabelTTF.setFontName("DengXian");
@@ -90,7 +91,7 @@ export class WrapAlgorithmTest extends AtlasDemo {
       LabelTTF.setAnchorPoint(0, 1);
       LabelTTF.boundingWidth = 90;
       LabelTTF.boundingHeight = 0;
-      LabelTTF.enableStroke(new cc.Color(0, 0, 0, 1), 3.0);
+      LabelTTF.enableStroke(new Color(0, 0, 0, 1), 3.0);
       if (cc.sys.os === cc.sys.OS_WP8)
         LabelTTF.setFontName("fonts/arialuni.ttf");
       else if (cc.sys.os === cc.sys.OS_WINRT) LabelTTF.setFontName("DengXian");

@@ -33,6 +33,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class BMFontTintTest extends AtlasDemo {
     constructor() {
@@ -48,7 +49,7 @@ export class BMFontTintTest extends AtlasDemo {
 
         var label = null;
         label = new cc.LabelBMFont("Blue", s_resprefix + "fonts/bitmapFontTest5.fnt");
-        label.color = new cc.Color(0, 0, 255);
+        label.color = new Color(0, 0, 255);
         this.addChild(label);
         label.x = s.width / 2;
         label.y = s.height / 4;
@@ -61,7 +62,7 @@ export class BMFontTintTest extends AtlasDemo {
         label.y = 2 * s.height / 4;
         label.anchorX = 0.5;
         label.anchorY = 0.5;
-        label.color = new cc.Color(255, 0, 0);
+        label.color = new Color(255, 0, 0);
 
         label = new cc.LabelBMFont("G", s_resprefix + "fonts/bitmapFontTest5.fnt");
         this.addChild(label);
@@ -69,7 +70,7 @@ export class BMFontTintTest extends AtlasDemo {
         label.y = 3 * s.height / 4;
         label.anchorX = 0.5;
         label.anchorY = 0.5;
-        label.color = new cc.Color(0, 255, 0);
+        label.color = new Color(0, 255, 0);
         label.setString("Green");
         //----end7----
     }

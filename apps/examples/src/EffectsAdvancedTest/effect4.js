@@ -28,6 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Lens3DTarget } from "./lens3-dtarget";
+import { Point, Size } from "@aspect/core";
 
 export class Effect4 extends EffectAdvanceTextLayer {
   title() {
@@ -38,8 +39,8 @@ export class Effect4 extends EffectAdvanceTextLayer {
     super.onEnter();
 
     var bgNodeGrid = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-    var lens = cc.lens3D(10, new cc.Size(32, 24), new cc.Point(100, 180), 150);
-    var move = new cc.JumpBy(5, new cc.Point(380, 0), 100, 4);
+    var lens = cc.lens3D(10, new Size(32, 24), new Point(100, 180), 150);
+    var move = new cc.JumpBy(5, new Point(380, 0), 100, 4);
     var move_back = move.reverse();
     var seq = cc.sequence(move, move_back);
 

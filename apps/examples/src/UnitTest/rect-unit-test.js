@@ -29,6 +29,7 @@
 //
 //------------------------------------------------------------------
 import { UnitTestBase } from "./unit-test-base";
+import { Point, Rect } from "@aspect/core";
 
 export class RectUnitTest extends UnitTestBase {
   constructor() {
@@ -52,66 +53,66 @@ export class RectUnitTest extends UnitTestBase {
     var r;
 
     this.log("Test 1: rectIntersectsRect 1");
-    rectA = new cc.Rect(0, 0, 5, 10);
-    rectB = new cc.Rect(4, 9, 5, 10);
-    r = cc.Rect.intersects(rectA, rectB);
+    rectA = new Rect(0, 0, 5, 10);
+    rectB = new Rect(4, 9, 5, 10);
+    r = Rect.intersects(rectA, rectB);
     if (!r) throw "Fail rectIntersectsRect 1";
     ret.push(r);
 
     this.log("Test 2: rectIntersectsRect 2");
-    rectA = new cc.Rect(0, 0, 5, 10);
-    rectB = new cc.Rect(40, 90, 5, 10);
-    r = cc.Rect.intersects(rectA, rectB);
+    rectA = new Rect(0, 0, 5, 10);
+    rectB = new Rect(40, 90, 5, 10);
+    r = Rect.intersects(rectA, rectB);
     if (r) throw "Fail rectIntersectsRect 2";
     ret.push(r);
 
     this.log("Test 3: rectIntersection");
-    rectA = new cc.Rect(0, 0, 5, 10);
-    rectB = new cc.Rect(4, 9, 5, 10);
-    rectC = cc.Rect.intersection(rectA, rectB);
-    r = cc.Rect.equalTo(rectC, new cc.Rect(4, 9, 1, 1));
+    rectA = new Rect(0, 0, 5, 10);
+    rectB = new Rect(4, 9, 5, 10);
+    rectC = Rect.intersection(rectA, rectB);
+    r = Rect.equalTo(rectC, new Rect(4, 9, 1, 1));
     if (!r) throw "Fail rectIntersection";
     ret.push(r);
 
     this.log("Test 4: rectUnion");
-    rectA = new cc.Rect(0, 0, 5, 10);
-    rectB = new cc.Rect(4, 9, 5, 10);
-    rectC = cc.Rect.union(rectA, rectB);
-    r = cc.Rect.equalTo(rectC, new cc.Rect(0, 0, 9, 19));
+    rectA = new Rect(0, 0, 5, 10);
+    rectB = new Rect(4, 9, 5, 10);
+    rectC = Rect.union(rectA, rectB);
+    r = Rect.equalTo(rectC, new Rect(0, 0, 9, 19));
     if (!r) throw "Fail rectUnion";
     ret.push(r);
 
     this.log("Test 5: rectContainsPoint 1");
-    rectA = new cc.Rect(0, 0, 5, 10);
-    point = new cc.Point(1, 1);
-    r = cc.Rect.containsPoint(rectA, point);
+    rectA = new Rect(0, 0, 5, 10);
+    point = new Point(1, 1);
+    r = Rect.containsPoint(rectA, point);
     if (!r) throw "Fail rectContainsPoint 1";
     ret.push(r);
 
     this.log("Test 6: rectContainsPoint 2");
-    rectA = new cc.Rect(0, 0, 5, 10);
-    point = new cc.Point(1, -1);
-    r = cc.Rect.containsPoint(rectA, point);
+    rectA = new Rect(0, 0, 5, 10);
+    point = new Point(1, -1);
+    r = Rect.containsPoint(rectA, point);
     if (r) throw "Fail rectContainsPoint 2";
     ret.push(r);
 
     this.log("Test 7: rect property x");
-    rectA = new cc.Rect(1, 2, 3, 4);
+    rectA = new Rect(1, 2, 3, 4);
     if (rectA.x != 1) throw "Fail rect property x";
     ret.push(rectA.x);
 
     this.log("Test 8: rect property y");
-    rectA = new cc.Rect(1, 2, 3, 4);
+    rectA = new Rect(1, 2, 3, 4);
     if (rectA.y != 2) throw "Fail rect property y";
     ret.push(rectA.y);
 
     this.log("Test 9: rect property width");
-    rectA = new cc.Rect(1, 2, 3, 4);
+    rectA = new Rect(1, 2, 3, 4);
     if (rectA.width != 3) throw "Fail rect property width";
     ret.push(rectA.width);
 
     this.log("Test 10: rect property height");
-    rectA = new cc.Rect(1, 2, 3, 4);
+    rectA = new Rect(1, 2, 3, 4);
     if (rectA.height != 4) throw "Fail rect property height";
     ret.push(rectA.height);
 

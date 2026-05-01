@@ -28,6 +28,7 @@
 
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_streak } from "../resources";
+import { Color } from "@aspect/core";
 
 export class MotionStreakTest2 extends MotionStreakTest {
   constructor() {
@@ -56,7 +57,7 @@ export class MotionStreakTest2 extends MotionStreakTest {
     );
     var winSize = cc.director.getWinSize();
     // create the streak object and add it to the scene
-    this._streak = new cc.MotionStreak(3, 3, 64, cc.Color.WHITE, s_streak);
+    this._streak = new cc.MotionStreak(3, 3, 64, Color.WHITE, s_streak);
     this.addChild(this._streak);
     this._streak.x = winSize.width / 2;
     this._streak.y = winSize.height / 2;

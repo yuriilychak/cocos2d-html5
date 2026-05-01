@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UISceneManager, GUITestScene } from "./UISceneManager";
+import { Color } from "@aspect/core";
 
 export class UIMainLayer extends cc.Layer {
   constructor() {
@@ -121,7 +122,7 @@ export class UIMainLayer extends cc.Layer {
       string: "INIT",
       fontName: "Marker Felt",
       fontSize: 30,
-      color: new cc.Color(159, 168, 176),
+      color: new Color(159, 168, 176),
       x: widgetSize.width / 2.0
     });
     bottomDisplayText.y =

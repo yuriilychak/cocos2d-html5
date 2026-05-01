@@ -31,6 +31,7 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
 import { winSize } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class RenderTextureSave extends RenderTextureBaseLayer {
     constructor() {
@@ -82,7 +83,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
 
         this._target = target;
 
-        this._lastLocation = new cc.Point(winSize.width / 2, winSize.height / 2);
+        this._lastLocation = new Point(winSize.width / 2, winSize.height / 2);
     }
 
     onExit() {
@@ -110,7 +111,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     }
 
     drawInLocation(location) {
-        var distance = cc.Point.distance(location, this._lastLocation);
+        var distance = Point.distance(location, this._lastLocation);
 
         if (distance > 1) {
             var locLastLocation = this._lastLocation, i;
@@ -125,7 +126,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
                     x: location.x + diffX * delta,
                     y: location.y + diffY * delta,
                     rotation: Math.random() * 360,
-                    color: new cc.Color(Math.random() * 255, 255, 255),
+                    color: new Color(Math.random() * 255, 255, 255),
                     scale: Math.random() + 0.25,
                     opacity: 20
                 });

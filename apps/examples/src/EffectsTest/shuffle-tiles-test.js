@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { EffectsBaseLayer } from "./effects-base-layer";
+import { Size } from "@aspect/core";
 
 export class ShuffleTilesTest extends EffectsBaseLayer {
   title() {
@@ -33,7 +34,7 @@ export class ShuffleTilesTest extends EffectsBaseLayer {
     return "a = cc.shuffleTiles(duration, gridSize, seed)";
   }
   getEffect(duration) {
-    var action = cc.shuffleTiles(duration, new cc.Size(16, 12), 25);
+    var action = cc.shuffleTiles(duration, new Size(16, 12), 25);
     var delay = new cc.DelayTime(2);
     var back = action.reverse();
     var seq = cc.sequence(action, delay, back);

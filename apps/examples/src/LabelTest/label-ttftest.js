@@ -27,6 +27,7 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
+import { Size, Color } from "@aspect/core";
 
 export class LabelTTFTest extends AtlasDemo {
   constructor() {
@@ -38,11 +39,11 @@ export class LabelTTFTest extends AtlasDemo {
     this._horizAlign = null;
 
     this._vertAlign = null;
-    var blockSize = new cc.Size(200, 160);
+    var blockSize = new Size(200, 160);
     var s = director.getWinSize();
 
     var colorLayer = new cc.LayerColor(
-      new cc.Color(100, 100, 100, 255),
+      new Color(100, 100, 100, 255),
       blockSize.width,
       blockSize.height
     );
@@ -83,7 +84,7 @@ export class LabelTTFTest extends AtlasDemo {
   }
   updateAlignment() {
     //----start19----updateAlignment
-    var blockSize = new cc.Size(200, 160);
+    var blockSize = new Size(200, 160);
     var s = director.getWinSize();
 
     if (this._label) {

@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
+import { Point, Size, Color } from "@aspect/core";
 
 export class LabelTTFStrokeShadowTest extends AtlasDemo {
   constructor() {
@@ -49,16 +50,16 @@ export class LabelTTFStrokeShadowTest extends AtlasDemo {
 
   updateLabels() {
     //----start26----updateLabels
-    var blockSize = new cc.Size(400, 100);
+    var blockSize = new Size(400, 100);
     var s = director.getWinSize();
 
     // colors
-    var redColor = new cc.Color(255, 0, 0);
-    var yellowColor = new cc.Color(255, 255, 0);
-    var blueColor = new cc.Color(0, 0, 255);
+    var redColor = new Color(255, 0, 0);
+    var yellowColor = new Color(255, 255, 0);
+    var blueColor = new Color(0, 0, 255);
 
     // shadow offset
-    var shadowOffset = new cc.Point(12, -12);
+    var shadowOffset = new Point(12, -12);
 
     // positioning stuff
     var posX = s.width / 2 - blockSize.width / 2;

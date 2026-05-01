@@ -27,6 +27,7 @@
 
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
+import { Size } from "@aspect/core";
 
 export class Effect5 extends EffectAdvanceTextLayer {
   title() {
@@ -36,7 +37,7 @@ export class Effect5 extends EffectAdvanceTextLayer {
   onEnter() {
     super.onEnter();
 
-    var effect = cc.liquid(2, new cc.Size(32, 24), 1, 20);
+    var effect = cc.liquid(2, new Size(32, 24), 1, 20);
     var stopEffect = cc.sequence(effect, new cc.DelayTime(2), cc.stopGrid());
 
     var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);

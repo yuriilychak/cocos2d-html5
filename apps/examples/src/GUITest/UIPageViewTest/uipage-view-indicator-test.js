@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size, Color } from "@aspect/core";
 
 export class UIPageViewIndicatorTest extends UIMainLayer {
   init() {
@@ -48,7 +49,7 @@ export class UIPageViewIndicatorTest extends UIMainLayer {
       var backgroundSize = background.getContentSize();
 
       var pageView = new ccui.PageView();
-      pageView.setContentSize(new cc.Size(240, 130));
+      pageView.setContentSize(new Size(240, 130));
       pageView.x =
         (widgetSize.width - backgroundSize.width) / 2 +
         (backgroundSize.width - pageView.width) / 2;
@@ -61,25 +62,25 @@ export class UIPageViewIndicatorTest extends UIMainLayer {
       pageView.setIndicatorSpaceBetweenIndexNodes(5);
       pageView.setIndicatorIndexNodesScale(0.5);
       pageView.setIndicatorIndexNodesTexture("ccs-res/cocosui/green_edit.png");
-      pageView.setIndicatorIndexNodesColor(cc.Color.RED);
+      pageView.setIndicatorIndexNodesColor(Color.RED);
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; i++) {
         var layout = new ccui.Layout();
-        layout.setContentSize(new cc.Size(240, 130));
+        layout.setContentSize(new Size(240, 130));
 
         var imageView = new ccui.ImageView();
         imageView.setScale9Enabled(true);
         imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
-        imageView.setContentSize(new cc.Size(240, 130));
+        imageView.setContentSize(new Size(240, 130));
         imageView.x = layout.getContentSize().width / 2;
         imageView.y = layout.getContentSize().height / 2;
         layout.addChild(imageView);
         var pageNumber = i + 1;
         var label = new ccui.Text("page" + pageNumber, "Marker Felt", 30);
-        label.setColor(new cc.Color(192, 192, 192));
+        label.setColor(new Color(192, 192, 192));
         label.setPosition(
-          new cc.Point(
+          new Point(
             layout.getContentSize().width / 2,
             layout.getContentSize().height / 2
           )

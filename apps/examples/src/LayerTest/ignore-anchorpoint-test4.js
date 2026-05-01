@@ -27,6 +27,7 @@
 
 import { LayerTest } from "./layer-test";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class IgnoreAnchorpointTest4 extends LayerTest {
   onEnter() {
@@ -35,13 +36,13 @@ export class IgnoreAnchorpointTest4 extends LayerTest {
     //create layer
     var ws = director.getWinSize();
     var layer1 = new cc.LayerColor(
-      new cc.Color(255, 100, 100, 128),
+      new Color(255, 100, 100, 128),
       ws.width / 2,
       ws.height / 2
     );
     layer1.ignoreAnchorPointForPosition(false);
     var layer2 = new cc.LayerColor(
-      new cc.Color(100, 255, 100, 128),
+      new Color(100, 255, 100, 128),
       ws.width / 4,
       ws.height / 4
     );

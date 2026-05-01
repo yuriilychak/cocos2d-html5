@@ -29,6 +29,7 @@ import { TAG_SPRITE1 } from "./cocos-node-test-constants";
 import { TestNodeDemo } from "./test-node-demo";
 import { s_fire, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class StressTest2 extends TestNodeDemo {
     constructor() {
@@ -41,7 +42,7 @@ export class StressTest2 extends TestNodeDemo {
         sp1.x = 80;
         sp1.y = winSize.height / 2;
 
-        var move = new cc.MoveBy(3, new cc.Point(350, 0));
+        var move = new cc.MoveBy(3, new Point(350, 0));
         var move_ease_inout3 = move.clone().easing(cc.easeInOut(2.0));
         var move_ease_inout_back3 = move_ease_inout3.reverse();
         var seq3 = cc.sequence(move_ease_inout3, move_ease_inout_back3);

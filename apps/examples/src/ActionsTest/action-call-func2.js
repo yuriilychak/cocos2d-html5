@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { SPRITE_GROSSINI_TAG } from "./actions-test-constants";
+import { Point } from "@aspect/core";
 
 export class ActionCallFunc2 extends ActionsDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class ActionCallFunc2 extends ActionsDemo {
     this.centerSprites(1);
 
     var action = cc.sequence(
-      new cc.MoveBy(2.0, new cc.Point(200, 0)),
+      new cc.MoveBy(2.0, new Point(200, 0)),
       new cc.CallFunc(this.removeFromParentAndCleanup, this._grossini, true)
     );
 

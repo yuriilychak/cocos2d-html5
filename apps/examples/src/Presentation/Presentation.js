@@ -35,9 +35,10 @@ import {
 import { TestScene } from "../test-scene";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export var presentationSceneIdx = -1;
-export var centerPos = new cc.Point(0, 0); // will be updated later
+export var centerPos = new Point(0, 0); // will be updated later
 export var images_path = "Presentation/";
 
 //------------------------------------------------------------------
@@ -53,7 +54,7 @@ export class PresentationBaseLayer extends BaseTestLayer {
     // Only subclasses of a native classes MUST call __associateObjectWithNative
     // Failure to do so, it will crash.
     //
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     this._title = "No title";
     this._subtitle = "No Subtitle";
@@ -694,7 +695,7 @@ export class ThanksPage extends PresentationBaseLayer {
 export class PresentationScene extends TestScene {
   runThisTest() {
     presentationSceneIdx = -1;
-    centerPos = new cc.Point(winSize.width / 2, winSize.height / 2);
+    centerPos = new Point(winSize.width / 2, winSize.height / 2);
     var layer = nextPresentationSlide();
     this.addChild(layer);
     director.runScene(this);

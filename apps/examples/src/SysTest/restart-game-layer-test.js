@@ -31,6 +31,7 @@
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class RestartGameLayerTest extends SysTestBase {
   getTitle() {
@@ -42,7 +43,7 @@ export class RestartGameLayerTest extends SysTestBase {
   constructor() {
     super();
     var menu = new cc.Menu();
-    menu.setPosition(new cc.Point(0, 0));
+    menu.setPosition(new Point(0, 0));
     menu.width = winSize.width;
     menu.height = winSize.height;
     this.addChild(menu, 1);
@@ -52,6 +53,6 @@ export class RestartGameLayerTest extends SysTestBase {
       this
     );
     menu.addChild(item1);
-    menu.setPosition(cc.Point.add(cc.visibleRect.left, new cc.Point(+180, 0)));
+    menu.setPosition(Point.add(cc.visibleRect.left, new Point(+180, 0)));
   }
 }

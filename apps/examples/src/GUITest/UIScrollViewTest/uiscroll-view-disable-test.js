@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size } from "@aspect/core";
 
 export class UIScrollViewDisableTest extends UIMainLayer {
   init() {
@@ -45,7 +46,7 @@ export class UIScrollViewDisableTest extends UIMainLayer {
       var backgroundSize = background.getContentSize();
 
       var scrollView = new ccui.ScrollView();
-      scrollView.setContentSize(new cc.Size(280, 150));
+      scrollView.setContentSize(new Size(280, 150));
       scrollView.x =
         (widgetSize.width - backgroundSize.width) / 2 +
         (backgroundSize.width - scrollView.width) / 2;
@@ -62,7 +63,7 @@ export class UIScrollViewDisableTest extends UIMainLayer {
       var innerWidth = scrollView.width;
       var innerHeight = scrollView.height + imageView.height;
 
-      scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
+      scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
       var button = new ccui.Button();
       button.setTouchEnabled(true);
@@ -102,7 +103,7 @@ export class UIScrollViewDisableTest extends UIMainLayer {
       scrollView.addChild(button_scale9);
 
       imageView.setPosition(
-        new cc.Point(innerWidth / 2, imageView.getContentSize().height / 2)
+        new Point(innerWidth / 2, imageView.getContentSize().height / 2)
       );
       scrollView.addChild(imageView);
 

@@ -28,14 +28,15 @@
 import { s_back1 } from "../resources";
 import { TestLayer2 } from "./test-layer2";
 import { TransitionBase } from "./transition-base";
+import { Color } from "@aspect/core";
 
 export class TestLayer1 extends TransitionBase {
   constructor() {
     super(
       s_back1,
       "Scene 1",
-      new cc.Color(0, 0, 0, 255),
-      new cc.Color(160, 99, 117, 255)
+      new Color(0, 0, 0, 255),
+      new Color(160, 99, 117, 255)
     );
   }
 

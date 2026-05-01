@@ -34,6 +34,7 @@ import { NOT_CRASHED_CONST, TAG_GROSSINI, TAG_SEQUENCE } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
+import { Point } from "@aspect/core";
 
 export class RemoveTest extends ActionManagerTest {
   constructor() {
@@ -54,7 +55,7 @@ export class RemoveTest extends ActionManagerTest {
     l.x = s.width / 2;
     l.y = 245;
 
-    var move = new cc.MoveBy(2, new cc.Point(200, 0));
+    var move = new cc.MoveBy(2, new Point(200, 0));
     var callback = new cc.CallFunc(this.stopAction, this);
     var sequence = cc.sequence(move, callback);
     sequence.tag = TAG_SEQUENCE;

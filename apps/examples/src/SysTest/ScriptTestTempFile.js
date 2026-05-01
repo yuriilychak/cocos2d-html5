@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
+import { Size } from "@aspect/core";
 
 export class ScriptTestTempLayer extends cc.Layer {
   constructor() {
@@ -35,7 +36,7 @@ export class ScriptTestTempLayer extends cc.Layer {
       "this is the ScriptTestTempLayer old file",
       "Verdana",
       32,
-      new cc.Size(winSize.width, 50),
+      new Size(winSize.width, 50),
       cc.TEXT_ALIGNMENT_CENTER
     );
     var size = cc.winSize;

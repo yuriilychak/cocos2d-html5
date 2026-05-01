@@ -28,6 +28,7 @@
 // UIRichTextXMLImg
 //
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size } from "@aspect/core";
 
 export class UIRichTextXMLImg extends UIMainLayer {
   constructor() {
@@ -51,7 +52,7 @@ export class UIRichTextXMLImg extends UIMainLayer {
       );
       button.setTitleText("switch");
       button.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 + button.getContentSize().height * 2.5
         )
@@ -82,7 +83,7 @@ export class UIRichTextXMLImg extends UIMainLayer {
     if (type == ccui.Widget.TOUCH_ENDED) {
       if (this._richText.isIgnoreContentAdaptWithSize()) {
         this._richText.ignoreContentAdaptWithSize(false);
-        this._richText.setContentSize(new cc.Size(120, 100));
+        this._richText.setContentSize(new Size(120, 100));
       } else {
         this._richText.ignoreContentAdaptWithSize(true);
       }

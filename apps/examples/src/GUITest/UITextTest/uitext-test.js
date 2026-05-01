@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point } from "@aspect/core";
 
 export class UITextTest extends UIMainLayer {
   init() {
@@ -37,7 +38,7 @@ export class UITextTest extends UIMainLayer {
       // Create the text
       var text = new ccui.Text("Text", "AmericanTypewriter", 30);
       text.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 + text.height / 4
         )

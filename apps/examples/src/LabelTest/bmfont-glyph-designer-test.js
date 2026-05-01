@@ -33,6 +33,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class BMFontGlyphDesignerTest extends AtlasDemo {
     constructor() {
@@ -42,7 +43,7 @@ export class BMFontGlyphDesignerTest extends AtlasDemo {
         this.pixel = {"0": 240, "1": 201, "2": 108, "3": 255};
         var s = director.getWinSize();
 
-        var layer = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
+        var layer = new cc.LayerColor(new Color(128, 128, 128, 255));
         this.addChild(layer, -10);
 
         // cc.LabelBMFont

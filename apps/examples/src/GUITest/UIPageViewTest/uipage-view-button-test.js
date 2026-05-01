@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size } from "@aspect/core";
 
 export class UIPageViewButtonTest extends UIMainLayer {
   init() {
@@ -50,10 +51,10 @@ export class UIPageViewButtonTest extends UIMainLayer {
 
       // Create the page view
       var pageView = new ccui.PageView();
-      pageView.setContentSize(new cc.Size(240.0, 130.0));
+      pageView.setContentSize(new Size(240.0, 130.0));
       var backgroundSize = background.getContentSize();
       pageView.setPosition(
-        new cc.Point(
+        new Point(
           (widgetSize.width - backgroundSize.width) / 2.0 +
             (backgroundSize.width - pageView.getContentSize().width) / 2.0,
           (widgetSize.height - backgroundSize.height) / 2.0 +
@@ -66,7 +67,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
         var outerBox = new ccui.HBox();
-        outerBox.setContentSize(new cc.Size(240.0, 130.0));
+        outerBox.setContentSize(new Size(240.0, 130.0));
 
         for (var k = 0; k < 2; ++k) {
           var innerBox = new ccui.VBox();

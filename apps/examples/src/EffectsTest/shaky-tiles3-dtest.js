@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { EffectsBaseLayer } from "./effects-base-layer";
+import { Size } from "@aspect/core";
 
 export class ShakyTiles3DTest extends EffectsBaseLayer {
   title() {
@@ -33,6 +34,6 @@ export class ShakyTiles3DTest extends EffectsBaseLayer {
     return "a = cc.shakyTiles3D(duration, gridSize, range, shakeZ)";
   }
   getEffect(duration) {
-    return cc.shakyTiles3D(duration, new cc.Size(16, 12), 5, false);
+    return cc.shakyTiles3D(duration, new Size(16, 12), 5, false);
   }
 }

@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { UIFocusTestBase } from "./uifocus-test-base";
+import { Color } from "@aspect/core";
 
 export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
   constructor() {
@@ -99,7 +100,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
 
       this._loopText = new ccui.Text("loop enabled", "Arial", 20);
       this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
-      this._loopText.setColor(cc.Color.GREEN);
+      this._loopText.setColor(Color.GREEN);
       this.addChild(this._loopText);
 
       this._btn.addTouchEventListener(this.toggleFocusLoop, this);

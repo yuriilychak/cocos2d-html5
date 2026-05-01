@@ -28,6 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_particles, s_resprefix } from "../resources";
 import { director } from "../constants";
+import { Color, Rect } from "@aspect/core";
 
 export class Issue870 extends ParticleDemo {
     constructor() {
@@ -38,12 +39,12 @@ export class Issue870 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.setColor(new cc.Color(0, 0, 0));
+        this.setColor(new Color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
 
         var system = new cc.ParticleSystem(s_resprefix + "Particles/SpinningPeas.plist");
-        system.setTextureWithRect(cc.textureCache.addImage(s_particles), new cc.Rect(0, 0, 32, 32));
+        system.setTextureWithRect(cc.textureCache.addImage(s_particles), new Rect(0, 0, 32, 32));
         this.addChild(system, 10);
         this._emitter = system;
         this._emitter.drawMode = cc.ParticleSystem.TEXTURE_MODE;
@@ -60,7 +61,7 @@ export class Issue870 extends ParticleDemo {
     }
     updateQuads(dt) {
         this._index = (this._index + 1) % 4;
-        var rect = new cc.Rect(this._index * 32, 0, 32, 32);
+        var rect = new Rect(this._index * 32, 0, 32, 32);
         this._emitter.setTextureWithRect(this._emitter.texture, rect);
     }
 

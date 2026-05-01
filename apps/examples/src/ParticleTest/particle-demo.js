@@ -31,6 +31,7 @@ import { backParticleAction, nextParticleAction, particleSceneArr } from "./part
 import { ParticleTestScene } from "./particle-test-scene";
 import { s_MovementMenuItem, s_back3, s_fpsImages, s_shapeModeMenuItem, s_textureModeMenuItem } from "../resources";
 import { director } from "../constants";
+import { Point, Color, Rect } from "@aspect/core";
 
 export class ParticleDemo extends BaseTestLayer {
 
@@ -38,7 +39,7 @@ export class ParticleDemo extends BaseTestLayer {
     }
 
     constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+        super(new Color(0,0,0,255), new Color(98,99,117,255));
 
 
         this._emitter = null;
@@ -80,17 +81,17 @@ export class ParticleDemo extends BaseTestLayer {
 
         var s = director.getWinSize();
 
-        var freeBtnNormal = new cc.Sprite(s_MovementMenuItem, new cc.Rect(0, 23 * 2, 123, 23));
-        var freeBtnSelected = new cc.Sprite(s_MovementMenuItem, new cc.Rect(0, 23, 123, 23));
-        var freeBtnDisabled = new cc.Sprite(s_MovementMenuItem, new cc.Rect(0, 0, 123, 23));
+        var freeBtnNormal = new cc.Sprite(s_MovementMenuItem, new Rect(0, 23 * 2, 123, 23));
+        var freeBtnSelected = new cc.Sprite(s_MovementMenuItem, new Rect(0, 23, 123, 23));
+        var freeBtnDisabled = new cc.Sprite(s_MovementMenuItem, new Rect(0, 0, 123, 23));
 
-        var relativeBtnNormal = new cc.Sprite(s_MovementMenuItem, new cc.Rect(123, 23 * 2, 138, 23));
-        var relativeBtnSelected = new cc.Sprite(s_MovementMenuItem, new cc.Rect(123, 23, 138, 23));
-        var relativeBtnDisabled = new cc.Sprite(s_MovementMenuItem, new cc.Rect(123, 0, 138, 23));
+        var relativeBtnNormal = new cc.Sprite(s_MovementMenuItem, new Rect(123, 23 * 2, 138, 23));
+        var relativeBtnSelected = new cc.Sprite(s_MovementMenuItem, new Rect(123, 23, 138, 23));
+        var relativeBtnDisabled = new cc.Sprite(s_MovementMenuItem, new Rect(123, 0, 138, 23));
 
-        var groupBtnNormal = new cc.Sprite(s_MovementMenuItem, new cc.Rect(261, 23 * 2, 136, 23));
-        var groupBtnSelected = new cc.Sprite(s_MovementMenuItem, new cc.Rect(261, 23, 136, 23));
-        var groupBtnDisabled = new cc.Sprite(s_MovementMenuItem, new cc.Rect(261, 0, 136, 23));
+        var groupBtnNormal = new cc.Sprite(s_MovementMenuItem, new Rect(261, 23 * 2, 136, 23));
+        var groupBtnSelected = new cc.Sprite(s_MovementMenuItem, new Rect(261, 23, 136, 23));
+        var groupBtnDisabled = new cc.Sprite(s_MovementMenuItem, new Rect(261, 0, 136, 23));
 
         var selfPoint = this;
         this._freeMovementButton = new cc.MenuItemSprite(freeBtnNormal, freeBtnSelected, freeBtnDisabled,
@@ -128,9 +129,9 @@ export class ParticleDemo extends BaseTestLayer {
         this._groupMovementButton.y = 150;
         this._groupMovementButton.setAnchorPoint(0, 0);
 
-        var spriteNormal = new cc.Sprite(s_shapeModeMenuItem, new cc.Rect(0, 23 * 2, 115, 23));
-        var spriteSelected = new cc.Sprite(s_shapeModeMenuItem, new cc.Rect(0, 23, 115, 23));
-        var spriteDisabled = new cc.Sprite(s_shapeModeMenuItem, new cc.Rect(0, 0, 115, 23));
+        var spriteNormal = new cc.Sprite(s_shapeModeMenuItem, new Rect(0, 23 * 2, 115, 23));
+        var spriteSelected = new cc.Sprite(s_shapeModeMenuItem, new Rect(0, 23, 115, 23));
+        var spriteDisabled = new cc.Sprite(s_shapeModeMenuItem, new Rect(0, 0, 115, 23));
 
         this._shapeModeButton = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled,
             function () {
@@ -144,9 +145,9 @@ export class ParticleDemo extends BaseTestLayer {
         this._shapeModeButton.y = 100;
         this._shapeModeButton.setAnchorPoint(0, 0);
 
-        var spriteNormal_t = new cc.Sprite(s_textureModeMenuItem, new cc.Rect(0, 23 * 2, 115, 23));
-        var spriteSelected_t = new cc.Sprite(s_textureModeMenuItem, new cc.Rect(0, 23, 115, 23));
-        var spriteDisabled_t = new cc.Sprite(s_textureModeMenuItem, new cc.Rect(0, 0, 115, 23));
+        var spriteNormal_t = new cc.Sprite(s_textureModeMenuItem, new Rect(0, 23 * 2, 115, 23));
+        var spriteSelected_t = new cc.Sprite(s_textureModeMenuItem, new Rect(0, 23, 115, 23));
+        var spriteDisabled_t = new cc.Sprite(s_textureModeMenuItem, new Rect(0, 0, 115, 23));
 
         this._textureModeButton = new cc.MenuItemSprite(spriteNormal_t, spriteSelected_t, spriteDisabled_t,
             function () {
@@ -182,7 +183,7 @@ export class ParticleDemo extends BaseTestLayer {
         this._background.x = s.width / 2;
         this._background.y = s.height - 180;
 
-        var move = new cc.MoveBy(4, new cc.Point(300, 0));
+        var move = new cc.MoveBy(4, new Point(300, 0));
         var move_back = move.reverse();
 
         var seq = cc.sequence(move, move_back);
@@ -227,9 +228,9 @@ export class ParticleDemo extends BaseTestLayer {
     }
 
     _moveToTouchPoint(location) {
-        var pos = new cc.Point(0, 0);
+        var pos = new Point(0, 0);
         if (this._background) {
-            pos = this._background.convertToWorldSpace(new cc.Point(0, 0));
+            pos = this._background.convertToWorldSpace(new Point(0, 0));
         }
         this._emitter.x = location.x - pos.x;
         this._emitter.y = location.y - pos.y;

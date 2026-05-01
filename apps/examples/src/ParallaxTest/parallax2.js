@@ -27,6 +27,7 @@
 
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
+import { Point } from "@aspect/core";
 
 export class Parallax2 extends ParallaxDemo {
   constructor() {
@@ -104,19 +105,19 @@ export class Parallax2 extends ParallaxDemo {
     voidNode.addChild(
       background,
       -1,
-      new cc.Point(0.4, 0.5),
-      new cc.Point(0, 0)
+      new Point(0.4, 0.5),
+      new Point(0, 0)
     );
 
     // tiles are moved at a ratio of 1.0, 1.0y
-    voidNode.addChild(tilemap, 1, new cc.Point(1.0, 1.0), new cc.Point(0, 0));
+    voidNode.addChild(tilemap, 1, new Point(1.0, 1.0), new Point(0, 0));
 
     // top image is moved at a ratio of 3.0x, 2.5y
     voidNode.addChild(
       cocosImage,
       2,
-      new cc.Point(3.0, 2.5),
-      new cc.Point(0, 0)
+      new Point(3.0, 2.5),
+      new Point(0, 0)
     );
     this.addChild(voidNode, 0, TAG_NODE);
   }

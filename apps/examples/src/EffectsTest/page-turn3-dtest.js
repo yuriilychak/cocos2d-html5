@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { EffectsBaseLayer } from "./effects-base-layer";
+import { Size } from "@aspect/core";
 
 export class PageTurn3DTest extends EffectsBaseLayer {
   title() {
@@ -33,7 +34,7 @@ export class PageTurn3DTest extends EffectsBaseLayer {
     return "a = cc.pageTurn3D(duration, gridSize)";
   }
   getEffect(duration) {
-    var action = cc.pageTurn3D(duration, new cc.Size(15, 10));
+    var action = cc.pageTurn3D(duration, new Size(15, 10));
     return action;
   }
 }

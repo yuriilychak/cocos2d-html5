@@ -28,6 +28,7 @@ import { nextEffectsTest, previousEffectsTest, restartEffectsTest } from "./effe
 import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
+import { Size, Color, Rect } from "@aspect/core";
 
 export class PageTurn3DInRectTest extends BaseTestLayer {
     title() {
@@ -57,7 +58,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
 
         //var node = new cc.Node();
         var visiableSize = director.getVisibleSize();
-        var gridRect = new cc.Rect(visiableSize.width*0.1,
+        var gridRect = new Rect(visiableSize.width*0.1,
             visiableSize.height*0.1,
             visiableSize.width*0.4,
             visiableSize.height*0.4);
@@ -67,7 +68,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
         this.addChild( gridNodeTarget );
 
         // back gradient
-        var background = new cc.LayerGradient( new cc.Color(255,0,0,255), new cc.Color(255,255,0,255));
+        var background = new cc.LayerGradient( new Color(255,0,0,255), new Color(255,255,0,255));
         gridNodeTarget.addChild( background );
 
         // back image
@@ -96,7 +97,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     }
 
     getEffect(duration) {
-        var action = cc.pageTurn3D(duration, new cc.Size(15,10));
+        var action = cc.pageTurn3D(duration, new Size(15,10));
         return action;
     }
 

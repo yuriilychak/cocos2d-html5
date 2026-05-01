@@ -34,6 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
+import { Rect } from "@aspect/core";
 
 export class SpriteBatchNodeReorderIssue744 extends SpriteTestDemo {
 
@@ -58,7 +59,7 @@ export class SpriteBatchNodeReorderIssue744 extends SpriteTestDemo {
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 15);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        var sprite = new cc.Sprite(batch.texture, new cc.Rect(0, 0, 85, 121));
+        var sprite = new cc.Sprite(batch.texture, new Rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         batch.addChild(sprite, 3);

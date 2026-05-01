@@ -25,6 +25,7 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { PluginXTest } from "./PluginXTest";
+import { Color } from "@aspect/core";
 
 TAG_SETSERVERMODE = 0;
 TAG_GETPRODUCTLIST = 1;
@@ -72,7 +73,7 @@ export class IAPTestLayer extends PluginXTest {
       item.y = cc.winSize.height - 200 - i * 50;
 
       var resultLabel = new cc.LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
-      resultLabel.color = new cc.Color(125, 125, 125);
+      resultLabel.color = new Color(125, 125, 125);
       resultLabel.anchorX = 0;
       resultLabel.tag = s_IAPResultItem[i].tag;
       resultLabel.x = 300;
@@ -96,7 +97,7 @@ export class IAPTestLayer extends PluginXTest {
     this.toastLayer.setTag(TAG_TOAST);
     label.x = cc.winSize.width / 2;
     label.y = cc.winSize.height / 2;
-    this.toastLayer.setColor(new cc.Color(100, 100, 100, 100));
+    this.toastLayer.setColor(new Color(100, 100, 100, 100));
   }
   addTouch(bool) {
     if (bool) {

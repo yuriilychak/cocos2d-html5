@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size } from "@aspect/core";
 
 export class UITextTest_IgnoreContentSize extends UIMainLayer {
   init() {
@@ -36,10 +37,10 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
 
       var leftText = new ccui.Text("ignore content", "Marker Felt", 10);
       leftText.setPosition(
-        new cc.Point(widgetSize.width / 2 - 50, widgetSize.height / 2)
+        new Point(widgetSize.width / 2 - 50, widgetSize.height / 2)
       );
       leftText.ignoreContentAdaptWithSize(false);
-      leftText.setTextAreaSize(new cc.Size(60, 60));
+      leftText.setTextAreaSize(new Size(60, 60));
       leftText.setString(
         "Text line with break\nText line with break\nText line with break\nText line with break\n"
       );
@@ -49,13 +50,13 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
 
       var rightText = new ccui.Text("ignore content", "Marker Felt", 10);
       rightText.setPosition(
-        new cc.Point(widgetSize.width / 2 + 50, widgetSize.height / 2)
+        new Point(widgetSize.width / 2 + 50, widgetSize.height / 2)
       );
       rightText.setString(
         "Text line with break\nText line with break\nText line with break\nText line with break\n"
       );
       //note: setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
-      rightText.setTextAreaSize(new cc.Size(100, 30));
+      rightText.setTextAreaSize(new Size(100, 30));
       rightText.ignoreContentAdaptWithSize(false);
       this._mainNode.addChild(rightText);
 
@@ -66,7 +67,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
         rightText.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_RIGHT);
       });
       halighButton.setPosition(
-        new cc.Point(widgetSize.width / 2 - 50, widgetSize.height / 2 - 50)
+        new Point(widgetSize.width / 2 - 50, widgetSize.height / 2 - 50)
       );
       this._mainNode.addChild(halighButton);
 

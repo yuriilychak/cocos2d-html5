@@ -30,6 +30,7 @@
 //
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { director } from "../constants";
+import { Point } from "@aspect/core";
 
 export class SpriteEaseBezierTest extends EaseSpriteDemo {
   onEnter() {
@@ -43,17 +44,17 @@ export class SpriteEaseBezierTest extends EaseSpriteDemo {
     // is relative to the Bezier curve, make it (0,0)
     //
 
-    this._grossini.setPosition(new cc.Point(size.width / 2, size.height / 2));
-    this._tamara.setPosition(new cc.Point(size.width / 4, size.height / 2));
+    this._grossini.setPosition(new Point(size.width / 2, size.height / 2));
+    this._tamara.setPosition(new Point(size.width / 4, size.height / 2));
     this._kathia.setPosition(
-      new cc.Point((3 * size.width) / 4, size.height / 2)
+      new Point((3 * size.width) / 4, size.height / 2)
     );
 
     // sprite 1
     var bezier = [
-      new cc.Point(0, size.height / 2),
-      new cc.Point((300 / 480) * 800, -size.height / 2),
-      new cc.Point((300 / 480) * 800, (100 / 320) * 450)
+      new Point(0, size.height / 2),
+      new Point((300 / 480) * 800, -size.height / 2),
+      new Point((300 / 480) * 800, (100 / 320) * 450)
     ];
     var bezierForward = new cc.BezierBy(3, bezier);
     var bezierEaseForward = bezierForward.easing(
@@ -66,11 +67,11 @@ export class SpriteEaseBezierTest extends EaseSpriteDemo {
       .repeatForever();
 
     // sprite 2
-    this._tamara.setPosition(new cc.Point(135, 225));
+    this._tamara.setPosition(new Point(135, 225));
     var bezier2 = [
-      new cc.Point((100 / 480) * 800, size.height / 2),
-      new cc.Point((200 / 480) * 800, -size.height / 2),
-      new cc.Point((200 / 480) * 800, (160 / 320) * 450)
+      new Point((100 / 480) * 800, size.height / 2),
+      new Point((200 / 480) * 800, -size.height / 2),
+      new Point((200 / 480) * 800, (160 / 320) * 450)
     ];
     var bezierTo1 = new cc.BezierTo(2, bezier2);
     var bezierEaseTo1 = bezierTo1.easing(
@@ -78,7 +79,7 @@ export class SpriteEaseBezierTest extends EaseSpriteDemo {
     );
 
     // sprite 3
-    this._kathia.setPosition(new cc.Point(667, 225));
+    this._kathia.setPosition(new Point(667, 225));
     var bezierTo2 = new cc.BezierTo(2, bezier2);
     var bezierEaseTo2 = bezierTo2.easing(
       cc.easeBezierAction(0.0, 0.5, -5.0, 1.0)

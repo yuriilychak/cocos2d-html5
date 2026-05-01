@@ -33,6 +33,7 @@ import {
   TEXT_INPUT_FONT_NAME,
   TEXT_INPUT_FONT_SIZE
 } from "./text-input-test-constants";
+import { Point, Color } from "@aspect/core";
 
 export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
   constructor() {
@@ -128,7 +129,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
       TEXT_INPUT_FONT_SIZE
     );
     this.addChild(label);
-    var color = new cc.Color(226, 121, 7);
+    var color = new Color(226, 121, 7);
     label.color = color;
 
     // move the sprite from top to position
@@ -145,7 +146,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
     var seq = cc.sequence(
       cc.spawn(
-        new cc.MoveTo(duration, new cc.Point(endX, endY)),
+        new cc.MoveTo(duration, new Point(endX, endY)),
         new cc.ScaleTo(duration, 1),
         new cc.FadeOut(duration)
       ),
@@ -170,7 +171,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     beginX += (sender.width - label.width) / 2.0;
 
     var winSize = cc.director.getWinSize();
-    var endPos = new cc.Point(
+    var endPos = new Point(
       -winSize.width / 4.0,
       winSize.height * (0.5 + Math.random() / 2.0)
     );

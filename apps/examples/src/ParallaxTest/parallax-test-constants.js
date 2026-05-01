@@ -33,6 +33,7 @@ import {
   restartParallaxTest
 } from "./parallax-test-helpers";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export var TAG_NODE = 9960;
 
@@ -40,7 +41,7 @@ export let parallaxTestSceneIdx = -1;
 
 ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(160, 32, 32, 255));
+    super(new Color(0, 0, 0, 255), new Color(160, 32, 32, 255));
 
     this._atlas = null;
   }

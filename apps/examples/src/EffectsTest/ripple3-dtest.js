@@ -25,6 +25,7 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { winSize } from "../constants";
+import { Point, Size } from "@aspect/core";
 
 export class Ripple3DTest extends EffectsBaseLayer {
   title() {
@@ -36,8 +37,8 @@ export class Ripple3DTest extends EffectsBaseLayer {
   getEffect(duration) {
     return cc.ripple3D(
       duration,
-      new cc.Size(32, 24),
-      new cc.Point(winSize.width / 2, winSize.height / 2),
+      new Size(32, 24),
+      new Point(winSize.width / 2, winSize.height / 2),
       240,
       4,
       160

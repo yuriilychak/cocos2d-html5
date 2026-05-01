@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { s_back, s_power, s_resprefix } from "../resources";
+import { Point } from "@aspect/core";
 
 export class Parallax1 extends ParallaxDemo {
   constructor() {
@@ -79,31 +80,31 @@ export class Parallax1 extends ParallaxDemo {
     this._parentNode.addChild(
       this._background,
       -1,
-      new cc.Point(0.4, 0.5),
-      new cc.Point(0, 0)
+      new Point(0.4, 0.5),
+      new Point(0, 0)
     );
 
     // tiles are moved at a ratio of 2.2x, 1.0y
     this._parentNode.addChild(
       this._tilemap,
       1,
-      new cc.Point(2.2, 1.0),
-      new cc.Point(0, 0)
+      new Point(2.2, 1.0),
+      new Point(0, 0)
     );
 
     // top image is moved at a ratio of 3.0x, 2.5y
     this._parentNode.addChild(
       this._cocosimage,
       2,
-      new cc.Point(3.0, 2.5),
-      new cc.Point(0, 0)
+      new Point(3.0, 2.5),
+      new Point(0, 0)
     );
 
     // now create some actions that will move the '_parent' node
     // and the children of the '_parent' node will move at different
     // speed, thus, simulation the 3D environment
-    var goUp = new cc.MoveBy(2, new cc.Point(0, 100));
-    var goRight = new cc.MoveBy(2, new cc.Point(200, 0));
+    var goUp = new cc.MoveBy(2, new Point(0, 100));
+    var goRight = new cc.MoveBy(2, new Point(200, 0));
     var delay = new cc.DelayTime(2.0);
     var goDown = goUp.reverse();
     var goLeft = goRight.reverse();
@@ -120,29 +121,29 @@ export class Parallax1 extends ParallaxDemo {
   // default values for automation
   getExpectedResult() {
     var ret = {};
-    ret.pos_parent = new cc.Point(200, 100);
-    ret.pos_child1 = new cc.Point(-120, -50);
-    ret.pos_child2 = new cc.Point(240, 0);
-    ret.pos_child3 = new cc.Point(400, 150);
+    ret.pos_parent = new Point(200, 100);
+    ret.pos_child1 = new Point(-120, -50);
+    ret.pos_child2 = new Point(240, 0);
+    ret.pos_child3 = new Point(400, 150);
 
     return JSON.stringify(ret);
   }
 
   getCurrentResult() {
     var ret = {};
-    ret.pos_parent = new cc.Point(
+    ret.pos_parent = new Point(
       Math.round(this._parentNode.x),
       Math.round(this._parentNode.y)
     );
-    ret.pos_child1 = new cc.Point(
+    ret.pos_child1 = new Point(
       Math.round(this._background.x),
       Math.round(this._background.y)
     );
-    ret.pos_child2 = new cc.Point(
+    ret.pos_child2 = new Point(
       Math.round(this._tilemap.x),
       Math.round(this._tilemap.y)
     );
-    ret.pos_child3 = new cc.Point(
+    ret.pos_child3 = new Point(
       Math.round(this._cocosimage.x),
       Math.round(this._cocosimage.y)
     );

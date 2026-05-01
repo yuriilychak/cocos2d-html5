@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { Point } from "@aspect/core";
 
 export class Issue1008 extends ActionsDemo {
   constructor() {
@@ -51,14 +52,14 @@ export class Issue1008 extends ActionsDemo {
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints1 = [
-      new cc.Point(428, 279),
-      new cc.Point(100, 100),
-      new cc.Point(100, 100)
+      new Point(428, 279),
+      new Point(100, 100),
+      new Point(100, 100)
     ];
     var controlPoints2 = [
-      new cc.Point(100, 100),
-      new cc.Point(428, 279),
-      new cc.Point(428, 279)
+      new Point(100, 100),
+      new Point(428, 279),
+      new Point(428, 279)
     ];
 
     var bz1 = new cc.BezierTo(1.5, controlPoints1);
@@ -74,7 +75,7 @@ export class Issue1008 extends ActionsDemo {
     //this._grossini.runAction(cc.sequence(bz1, bz2, trace,delay));
   }
   onTrace(sender) {
-    var pos = new cc.Point(sender.x, sender.y);
+    var pos = new Point(sender.x, sender.y);
     cc.log("Position x: " + pos.x + " y:" + pos.y);
     if (Math.round(pos.x) != 428 || Math.round(pos.y) != 279)
       this.log("Error: Issue 1008 is still open");

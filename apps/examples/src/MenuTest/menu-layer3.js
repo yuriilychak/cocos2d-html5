@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { s_bitmapFontTest3_fnt, s_menuItem } from "../resources";
 import { director } from "../constants";
+import { Point, Rect } from "@aspect/core";
 
 export class MenuLayer3 extends cc.Layer {
 
@@ -56,9 +57,9 @@ export class MenuLayer3 extends cc.Layer {
             this.parent.switchTo(0, false);
         }, this);
 
-        var spriteNormal = new cc.Sprite(s_menuItem, new cc.Rect(0, 23 * 2, 115, 23));
-        var spriteSelected = new cc.Sprite(s_menuItem, new cc.Rect(0, 23, 115, 23));
-        var spriteDisabled = new cc.Sprite(s_menuItem, new cc.Rect(0, 0, 115, 23));
+        var spriteNormal = new cc.Sprite(s_menuItem, new Rect(0, 23 * 2, 115, 23));
+        var spriteSelected = new cc.Sprite(s_menuItem, new Rect(0, 23, 115, 23));
+        var spriteDisabled = new cc.Sprite(s_menuItem, new Rect(0, 0, 115, 23));
 
         var item3 = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled, function(sender){
             cc.log("sprite clicked!");
@@ -79,7 +80,7 @@ export class MenuLayer3 extends cc.Layer {
         item3.x = s.width / 2;
         item3.y = s.height / 2 - 100;
 
-        var jump = new cc.JumpBy(3, new cc.Point(400, 0), 50, 4);
+        var jump = new cc.JumpBy(3, new Point(400, 0), 50, 4);
         item2.runAction(cc.sequence(jump, jump.reverse()).repeatForever());
         var spin1 = new cc.RotateBy(3, 360);
         var spin2 = spin1.clone();

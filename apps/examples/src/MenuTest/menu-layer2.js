@@ -40,6 +40,7 @@ import {
   s_playSelect
 } from "../resources";
 import { director } from "../constants";
+import { Point } from "@aspect/core";
 
 export class MenuLayer2 extends cc.Layer {
   constructor() {
@@ -81,7 +82,7 @@ export class MenuLayer2 extends cc.Layer {
 
       this.addChild(menu, 0, 100 + i);
 
-      this._centeredMenu = new cc.Point(menu.x, menu.y);
+      this._centeredMenu = new Point(menu.x, menu.y);
     }
     this._alignedH = true;
     this.alignMenuH();

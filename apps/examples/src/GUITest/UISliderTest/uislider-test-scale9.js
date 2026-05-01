@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Size, Rect } from "@aspect/core";
 
 export class UISliderTest_Scale9 extends UIMainLayer {
   init() {
@@ -47,8 +48,8 @@ export class UISliderTest_Scale9 extends UIMainLayer {
       slider.loadProgressBarTexture(
         "ccs-res/cocosui/slider_bar_active_9patch.png"
       );
-      slider.setCapInsets(new cc.Rect(0, 0, 0, 0));
-      slider.setContentSize(new cc.Size(250, 10));
+      slider.setCapInsets(new Rect(0, 0, 0, 0));
+      slider.setContentSize(new Size(250, 10));
       slider.x = widgetSize.width / 2.0;
       slider.y = widgetSize.height / 2.0;
       slider.addEventListener(this.sliderEvent, this);

@@ -28,6 +28,7 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { TAG_ACTION1_EASE_ACTIONS } from "./ease-actions-test-constants";
+import { Point } from "@aspect/core";
 
 export class SpeedTest extends EaseSpriteDemo {
   constructor() {
@@ -40,7 +41,7 @@ export class SpeedTest extends EaseSpriteDemo {
     super.onEnter();
 
     // rotate and jump
-    var jump1 = new cc.JumpBy(4, new cc.Point(-winSize.width + 80, 0), 100, 4);
+    var jump1 = new cc.JumpBy(4, new Point(-winSize.width + 80, 0), 100, 4);
     var jump2 = jump1.reverse();
     var rot1 = new cc.RotateBy(4, 360 * 2);
     var rot2 = rot1.reverse();

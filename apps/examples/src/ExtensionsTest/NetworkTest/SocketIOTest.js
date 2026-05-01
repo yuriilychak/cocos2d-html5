@@ -25,6 +25,7 @@
  ****************************************************************************/
 /** @expose */
 import { ExtensionsTestScene } from "../extensions-test-scene";
+import { Point } from "@aspect/core";
 
 window.io;
 
@@ -54,23 +55,23 @@ export class SocketIOTestLayer extends cc.Layer {
     var SPACE = 35;
 
     var label = new cc.LabelTTF("SocketIO Test", "Arial", 28);
-    label.setPosition(new cc.Point(winSize.width / 2, winSize.height - MARGIN));
+    label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
     this.addChild(label, 0);
 
     var menuRequest = new cc.Menu();
-    menuRequest.setPosition(new cc.Point(0, 0));
+    menuRequest.setPosition(new Point(0, 0));
     this.addChild(menuRequest);
 
     // Test to create basic client in the default namespace
     var labelSIOClient = new cc.LabelTTF("Open SocketIO Client", "Arial", 22);
-    labelSIOClient.setAnchorPoint(new cc.Point(0, 0));
+    labelSIOClient.setAnchorPoint(new Point(0, 0));
     var itemSIOClient = new cc.MenuItemLabel(
       labelSIOClient,
       this.onMenuSIOClientClicked,
       this
     );
     itemSIOClient.setPosition(
-      new cc.Point(
+      new Point(
         labelSIOClient.getContentSize().width / 2 + MARGIN,
         winSize.height - MARGIN - SPACE
       )
@@ -83,14 +84,14 @@ export class SocketIOTestLayer extends cc.Layer {
       "Arial",
       22
     );
-    labelSIOEndpoint.setAnchorPoint(new cc.Point(0, 0));
+    labelSIOEndpoint.setAnchorPoint(new Point(0, 0));
     var itemSIOEndpoint = new cc.MenuItemLabel(
       labelSIOEndpoint,
       this.onMenuSIOEndpointClicked,
       this
     );
     itemSIOEndpoint.setPosition(
-      new cc.Point(
+      new Point(
         winSize.width - (labelSIOEndpoint.getContentSize().width / 2 + MARGIN),
         winSize.height - MARGIN - SPACE
       )
@@ -99,14 +100,14 @@ export class SocketIOTestLayer extends cc.Layer {
 
     // Test sending message to default namespace
     var labelTestMessage = new cc.LabelTTF("Send Test Message", "Arial", 22);
-    labelTestMessage.setAnchorPoint(new cc.Point(0, 0));
+    labelTestMessage.setAnchorPoint(new Point(0, 0));
     var itemTestMessage = new cc.MenuItemLabel(
       labelTestMessage,
       this.onMenuTestMessageClicked,
       this
     );
     itemTestMessage.setPosition(
-      new cc.Point(
+      new Point(
         labelTestMessage.getContentSize().width / 2 + MARGIN,
         winSize.height - MARGIN - 2 * SPACE
       )
@@ -119,14 +120,14 @@ export class SocketIOTestLayer extends cc.Layer {
       "Arial",
       22
     );
-    labelTestMessageEndpoint.setAnchorPoint(new cc.Point(0, 0));
+    labelTestMessageEndpoint.setAnchorPoint(new Point(0, 0));
     var itemTestMessageEndpoint = new cc.MenuItemLabel(
       labelTestMessageEndpoint,
       this.onMenuTestMessageEndpointClicked,
       this
     );
     itemTestMessageEndpoint.setPosition(
-      new cc.Point(
+      new Point(
         winSize.width -
           (labelTestMessageEndpoint.getContentSize().width / 2 + MARGIN),
         winSize.height - MARGIN - 2 * SPACE
@@ -136,14 +137,14 @@ export class SocketIOTestLayer extends cc.Layer {
 
     // Test sending event 'echotest' to default namespace
     var labelTestEvent = new cc.LabelTTF("Send Test Event", "Arial", 22);
-    labelTestEvent.setAnchorPoint(new cc.Point(0, 0));
+    labelTestEvent.setAnchorPoint(new Point(0, 0));
     var itemTestEvent = new cc.MenuItemLabel(
       labelTestEvent,
       this.onMenuTestEventClicked,
       this
     );
     itemTestEvent.setPosition(
-      new cc.Point(
+      new Point(
         labelTestEvent.getContentSize().width / 2 + MARGIN,
         winSize.height - MARGIN - 3 * SPACE
       )
@@ -156,14 +157,14 @@ export class SocketIOTestLayer extends cc.Layer {
       "Arial",
       22
     );
-    labelTestEventEndpoint.setAnchorPoint(new cc.Point(0, 0));
+    labelTestEventEndpoint.setAnchorPoint(new Point(0, 0));
     var itemTestEventEndpoint = new cc.MenuItemLabel(
       labelTestEventEndpoint,
       this.onMenuTestEventEndpointClicked,
       this
     );
     itemTestEventEndpoint.setPosition(
-      new cc.Point(
+      new Point(
         winSize.width -
           (labelTestEventEndpoint.getContentSize().width / 2 + MARGIN),
         winSize.height - MARGIN - 3 * SPACE
@@ -177,14 +178,14 @@ export class SocketIOTestLayer extends cc.Layer {
       "Arial",
       22
     );
-    labelTestClientDisconnect.setAnchorPoint(new cc.Point(0, 0));
+    labelTestClientDisconnect.setAnchorPoint(new Point(0, 0));
     var itemClientDisconnect = new cc.MenuItemLabel(
       labelTestClientDisconnect,
       this.onMenuTestClientDisconnectClicked,
       this
     );
     itemClientDisconnect.setPosition(
-      new cc.Point(
+      new Point(
         labelTestClientDisconnect.getContentSize().width / 2 + MARGIN,
         winSize.height - MARGIN - 4 * SPACE
       )
@@ -197,14 +198,14 @@ export class SocketIOTestLayer extends cc.Layer {
       "Arial",
       22
     );
-    labelTestEndpointDisconnect.setAnchorPoint(new cc.Point(0, 0));
+    labelTestEndpointDisconnect.setAnchorPoint(new Point(0, 0));
     var itemTestEndpointDisconnect = new cc.MenuItemLabel(
       labelTestEndpointDisconnect,
       this.onMenuTestEndpointDisconnectClicked,
       this
     );
     itemTestEndpointDisconnect.setPosition(
-      new cc.Point(
+      new Point(
         winSize.width -
           (labelTestEndpointDisconnect.getContentSize().width / 2 + MARGIN),
         winSize.height - MARGIN - 4 * SPACE
@@ -213,8 +214,8 @@ export class SocketIOTestLayer extends cc.Layer {
     menuRequest.addChild(itemTestEndpointDisconnect);
 
     this._sioClientStatus = new cc.LabelTTF("Not connected...", "Arial", 14);
-    this._sioClientStatus.setAnchorPoint(new cc.Point(0, 0));
-    this._sioClientStatus.setPosition(new cc.Point(0, winSize.height * 0.25));
+    this._sioClientStatus.setAnchorPoint(new Point(0, 0));
+    this._sioClientStatus.setPosition(new Point(0, winSize.height * 0.25));
     this.addChild(this._sioClientStatus);
 
     // Back Menu
@@ -223,9 +224,9 @@ export class SocketIOTestLayer extends cc.Layer {
       this.toExtensionsMainLayer,
       this
     );
-    itemBack.setPosition(new cc.Point(winSize.width - 50, 25));
+    itemBack.setPosition(new Point(winSize.width - 50, 25));
     var menuBack = new cc.Menu(itemBack);
-    menuBack.setPosition(new cc.Point(0, 0));
+    menuBack.setPosition(new Point(0, 0));
     this.addChild(menuBack);
 
     return true;

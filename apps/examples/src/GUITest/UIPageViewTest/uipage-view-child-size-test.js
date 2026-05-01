@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size, Color } from "@aspect/core";
 
 export class UIPageViewChildSizeTest extends UIMainLayer {
   init() {
@@ -46,7 +47,7 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
       // Create the page view
       var pageView = new ccui.PageView();
       pageView.setTouchEnabled(true);
-      pageView.setContentSize(new cc.Size(240, 130));
+      pageView.setContentSize(new Size(240, 130));
       pageView.x =
         (widgetSize.width - background.width) / 2 +
         (background.width - pageView.width) / 2;
@@ -62,8 +63,8 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
         var label = new ccui.Text("page " + (i + 1), "Arial", 30);
 
         imageView.setScale9Enabled(true);
-        label.setColor(new cc.Color(192, 192, 192));
-        label.setAnchorPoint(new cc.Point(0, 0));
+        label.setColor(new Color(192, 192, 192));
+        label.setAnchorPoint(new Point(0, 0));
         imageView.addChild(label);
 
         pageView.insertCustomItem(imageView, i);

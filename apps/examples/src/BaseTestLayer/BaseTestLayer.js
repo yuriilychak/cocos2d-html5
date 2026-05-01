@@ -39,6 +39,7 @@ import {
   director,
   winSize
 } from "../constants";
+import { Color } from "@aspect/core";
 
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
 export const BASE_TEST_MENUITEM_RESET_TAG = 2;
@@ -51,16 +52,16 @@ export const BASE_TEST_SUBTITLE_TAG = 12;
 export class BaseTestLayer extends cc.LayerGradient {
   constructor(colorA, colorB) {
     // default gradient colors
-    var a = new cc.Color(98, 99, 117, 255);
-    var b = new cc.Color(0, 0, 0, 255);
+    var a = new Color(98, 99, 117, 255);
+    var b = new Color(0, 0, 0, 255);
 
     if (arguments.length >= 1) a = colorA;
     if (arguments.length == 2) b = colorB;
 
     // for automation, no gradient. helps for grabbing the screen if needed
     if (autoTestEnabled) {
-      a = new cc.Color(0, 0, 0, 255);
-      b = new cc.Color(0, 0, 0, 255);
+      a = new Color(0, 0, 0, 255);
+      b = new Color(0, 0, 0, 255);
     }
 
     super(a, b);

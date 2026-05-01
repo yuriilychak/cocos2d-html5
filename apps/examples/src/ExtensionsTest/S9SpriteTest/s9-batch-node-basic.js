@@ -29,6 +29,7 @@
 // S9BatchNodeBasic
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
+import { Point, Rect } from "@aspect/core";
 
 export class S9BatchNodeBasic extends S9SpriteTestDemo {
   constructor() {
@@ -51,9 +52,9 @@ export class S9BatchNodeBasic extends S9SpriteTestDemo {
 
     blocks.updateWithBatchNode(
       batchNode,
-      new cc.Rect(0, 0, 96, 96),
+      new Rect(0, 0, 96, 96),
       false,
-      new cc.Rect(0, 0, 96, 96)
+      new Rect(0, 0, 96, 96)
     );
     cc.log("... updateWithBatchNode");
 
@@ -66,7 +67,7 @@ export class S9BatchNodeBasic extends S9SpriteTestDemo {
 
     cc.log("... S9BatchNodeBasic done.");
 
-    var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
+    var moveBy = new cc.MoveBy(1, new Point(80, 80));
     var moveByBack = moveBy.reverse();
     blocks.runAction(cc.sequence(moveBy, moveByBack));
   }

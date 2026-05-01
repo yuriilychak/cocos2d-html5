@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { Point } from "@aspect/core";
 
 export class TMXBug987 extends TileDemo {
   constructor() {
@@ -61,7 +62,7 @@ export class TMXBug987 extends TileDemo {
     map.anchorX = 0;
     map.anchorY = 0;
     var layer = map.getLayer("Tile Layer 1");
-    layer.setTileGID(3, new cc.Point(2, 2));
+    layer.setTileGID(3, new Point(2, 2));
   }
   title() {
     return "TMX Bug 987";

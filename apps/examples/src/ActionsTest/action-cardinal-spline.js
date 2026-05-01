@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class ActionCardinalSpline extends ActionsDemo {
   get _code() {
@@ -59,13 +60,13 @@ export class ActionCardinalSpline extends ActionsDemo {
     this.addChild(this._drawNode1);
     this._drawNode1.x = 50;
     this._drawNode1.y = 50;
-    this._drawNode1.setDrawColor(new cc.Color(255, 255, 255, 255));
+    this._drawNode1.setDrawColor(new Color(255, 255, 255, 255));
 
     this._drawNode2 = new cc.DrawNode();
     this.addChild(this._drawNode2);
     this._drawNode2.x = winSize.width * 0.5;
     this._drawNode2.y = 50;
-    this._drawNode2.setDrawColor(new cc.Color(255, 255, 255, 255));
+    this._drawNode2.setDrawColor(new Color(255, 255, 255, 255));
   }
 
   onEnter() {
@@ -77,11 +78,11 @@ export class ActionCardinalSpline extends ActionsDemo {
     var delay = new cc.DelayTime(0.25);
 
     var array = [
-      new cc.Point(0, 0),
-      new cc.Point(winSize.width / 2 - 30, 0),
-      new cc.Point(winSize.width / 2 - 30, winSize.height - 80),
-      new cc.Point(0, winSize.height - 80),
-      new cc.Point(0, 0)
+      new Point(0, 0),
+      new Point(winSize.width / 2 - 30, 0),
+      new Point(winSize.width / 2 - 30, winSize.height - 80),
+      new Point(0, winSize.height - 80),
+      new Point(0, 0)
     ];
 
     //
@@ -130,7 +131,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     this.scheduleOnce(this.checkControl3, 1.5);
   }
   checkControl1(dt) {
-    this.control1 = new cc.Point(this._tamara.x, this._tamara.y);
+    this.control1 = new Point(this._tamara.x, this._tamara.y);
   }
   verifyControl1(dt) {
     var x = Math.abs(50 + winSize.width / 2 - 30 - this.control1.x);
@@ -139,7 +140,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl2(dt) {
-    this.control2 = new cc.Point(this._tamara.x, this._tamara.y);
+    this.control2 = new Point(this._tamara.x, this._tamara.y);
   }
   verifyControl2(dt) {
     var x = Math.abs(50 + winSize.width / 2 - 30 - this.control2.x);
@@ -148,7 +149,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     return x < 5 && y < 5;
   }
   checkControl3(dt) {
-    this.control3 = new cc.Point(this._tamara.x, this._tamara.y);
+    this.control3 = new Point(this._tamara.x, this._tamara.y);
   }
   verifyControl3(dt) {
     var x = Math.abs(50 - this.control3.x);
@@ -167,7 +168,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     ret.push(this.verifyControl1());
     ret.push(this.verifyControl2());
     ret.push(this.verifyControl3());
-    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
+    ret.push(new Point(this._tamara.x, this._tamara.y));
 
     return JSON.stringify(ret);
   }

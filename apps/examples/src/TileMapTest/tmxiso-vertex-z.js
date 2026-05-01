@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
+import { Point } from "@aspect/core";
 
 export class TMXIsoVertexZ extends TMXFixBugLayer {
     constructor() {
@@ -53,9 +54,9 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
         // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
         // can use any cc.Sprite and it will work OK.
         var layer = map.getLayer("Trees");
-        this.tamara = layer.getTileAt(new cc.Point(29, 29));
+        this.tamara = layer.getTileAt(new Point(29, 29));
 
-        var move = new cc.MoveBy(5, cc.Point.mult(new cc.Point(300, 250), 0.75));
+        var move = new cc.MoveBy(5, Point.mult(new Point(300, 250), 0.75));
         var back = move.reverse();
         var delay = new cc.DelayTime(0.5);
         var seq = cc.sequence(move, delay, back);

@@ -27,6 +27,7 @@
 
 import { ActionsDemo } from "./actions-demo";
 import { CustomMoveBy } from "./custom-move-by";
+import { Point } from "@aspect/core";
 
 export class ActionIssue13605 extends ActionsDemo {
   onEnter() {
@@ -34,7 +35,7 @@ export class ActionIssue13605 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var move = new CustomMoveBy(2, new cc.Point(50, 0));
+    var move = new CustomMoveBy(2, new Point(50, 0));
     var move_back = move.reverse();
     var move_seq = cc.sequence(
       move,

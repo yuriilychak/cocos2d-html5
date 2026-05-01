@@ -28,6 +28,7 @@
 
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
+import { Color } from "@aspect/core";
 
 export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
   constructor() {
@@ -36,7 +37,7 @@ export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
     this._title =
       "Test opacity cascade for Scale9Sprite with fade actions\n(fade to opacity 144, then fadeOut, then fadeIn)";
 
-    var colorLayer = new cc.LayerColor(new cc.Color(144, 144, 144));
+    var colorLayer = new cc.LayerColor(new Color(144, 144, 144));
     colorLayer.setContentSize(winSize.width / 2, winSize.height / 2);
     colorLayer.x = winSize.width / 4;
     colorLayer.y = winSize.height / 4;

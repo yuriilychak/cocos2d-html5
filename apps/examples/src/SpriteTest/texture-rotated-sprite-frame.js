@@ -28,6 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_s9s_blocks9_plist } from "../resources";
 import { winSize } from "../constants";
+import { Rect } from "@aspect/core";
 
 export class TextureRotatedSpriteFrame extends SpriteTestDemo {
 
@@ -59,7 +60,7 @@ export class TextureRotatedSpriteFrame extends SpriteTestDemo {
         var x = winSize.width / 2;
         var y = 0 + (winSize.height / 2);
 
-        block.setTextureRect(new cc.Rect(32, 32, 32, 32), true, new cc.Rect(32, 32, 32, 32));
+        block.setTextureRect(new Rect(32, 32, 32, 32), true, new Rect(32, 32, 32, 32));
 
         block.x = x;
 

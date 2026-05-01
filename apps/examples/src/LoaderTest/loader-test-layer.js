@@ -38,10 +38,11 @@ import {
   s_lookup_html5_plist,
   s_lookup_mobile_plist
 } from "../resources";
+import { Color } from "@aspect/core";
 
 export class LoaderTestLayer extends BaseTestLayer {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
     var self = this;
 
     this._title = "Loader Test";

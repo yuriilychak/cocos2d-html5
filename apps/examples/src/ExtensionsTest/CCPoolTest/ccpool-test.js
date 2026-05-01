@@ -30,6 +30,7 @@
 import { MySprite } from "./my-sprite";
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { winSize } from "../../constants";
+import { Point, Color } from "@aspect/core";
 
 export class CCPoolTest extends cc.Layer {
   constructor() {
@@ -43,11 +44,11 @@ export class CCPoolTest extends cc.Layer {
 
     var MARGIN = 40;
     var label = new cc.LabelTTF("CCPoolTest", "Arial", 28);
-    label.setPosition(new cc.Point(winSize.width / 2, winSize.height - MARGIN));
+    label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
     this.addChild(label, 0);
 
     var menuRequest = new cc.Menu();
-    menuRequest.setPosition(new cc.Point(0, 0));
+    menuRequest.setPosition(new Point(0, 0));
     this.initUI();
     return true;
   }
@@ -62,8 +63,8 @@ export class CCPoolTest extends cc.Layer {
       "Arial",
       23
     );
-    reCreateLabel.color = new cc.Color(255, 255, 255, 255);
-    createLabel.color = new cc.Color(255, 255, 255, 255);
+    reCreateLabel.color = new Color(255, 255, 255, 255);
+    createLabel.color = new Color(255, 255, 255, 255);
     var menuItem1 = new cc.MenuItemLabel(
       createLabel,
       this.addSpriteByCreate,
@@ -79,11 +80,11 @@ export class CCPoolTest extends cc.Layer {
     this.directLabel = new cc.LabelTTF("create directly cost:", "Arial", 18);
     this.poolLabel = new cc.LabelTTF("use pool cost:", "Arial", 18);
     this.directLabel.setPosition(
-      cc.Point.add(cc.visibleRect.center, new cc.Point(-190, -65))
+      Point.add(cc.visibleRect.center, new Point(-190, -65))
     );
     this.directLabel.anchorY = 0;
     this.poolLabel.setPosition(
-      cc.Point.add(cc.visibleRect.center, new cc.Point(200, -65))
+      Point.add(cc.visibleRect.center, new Point(200, -65))
     );
     this.poolLabel.anchorY = 0;
     this.addChild(this.directLabel);
@@ -96,9 +97,9 @@ export class CCPoolTest extends cc.Layer {
       this.toExtensionsMainLayer,
       this
     );
-    itemBack.setPosition(new cc.Point(winSize.width - 50, 25));
+    itemBack.setPosition(new Point(winSize.width - 50, 25));
     var menuBack = new cc.Menu(itemBack);
-    menuBack.setPosition(new cc.Point(0, 0));
+    menuBack.setPosition(new Point(0, 0));
     this.addChild(menuBack);
   }
   setDirectLabel(time) {

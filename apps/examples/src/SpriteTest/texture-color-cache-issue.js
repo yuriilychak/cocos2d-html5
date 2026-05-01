@@ -28,6 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_tcc_issue_1, s_tcc_issue_1_plist, s_tcc_issue_2, s_tcc_issue_2_plist } from "../resources";
 import { winSize } from "../constants";
+import { Color } from "@aspect/core";
 
 export class TextureColorCacheIssue extends SpriteTestDemo {
 
@@ -66,8 +67,8 @@ export class TextureColorCacheIssue extends SpriteTestDemo {
         this.addChild(grossini);
         this.addChild(sister);
 
-        grossini.color = new cc.Color(1, 255, 1);
-        sister.color = new cc.Color(1, 1, 255);
+        grossini.color = new Color(1, 255, 1);
+        sister.color = new Color(1, 1, 255);
         //----end55----
     }
     onExit() {

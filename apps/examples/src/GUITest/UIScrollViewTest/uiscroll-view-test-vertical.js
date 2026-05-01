@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Size } from "@aspect/core";
 
 export class UIScrollViewTest_Vertical extends UIMainLayer {
   init() {
@@ -46,7 +47,7 @@ export class UIScrollViewTest_Vertical extends UIMainLayer {
       var scrollView = new ccui.ScrollView();
       scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
       scrollView.setTouchEnabled(true);
-      scrollView.setContentSize(new cc.Size(280, 150));
+      scrollView.setContentSize(new Size(280, 150));
 
       scrollView.x =
         (widgetSize.width - background.width) / 2 +
@@ -62,7 +63,7 @@ export class UIScrollViewTest_Vertical extends UIMainLayer {
       var innerWidth = scrollView.width;
       var innerHeight = scrollView.height + imageView.height;
 
-      scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
+      scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
       var button = new ccui.Button();
       button.setTouchEnabled(true);

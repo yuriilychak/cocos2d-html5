@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export function JumpZoomTransition(t, s) {
   return new cc.TransitionJumpZoom(t, s);
@@ -36,7 +37,7 @@ export function FadeTransition(t, s) {
 }
 
 export function FadeWhiteTransition(t, s) {
-  return new cc.TransitionFade(t, s, new cc.Color(255, 255, 255));
+  return new cc.TransitionFade(t, s, new Color(255, 255, 255));
 }
 
 export function FlipXLeftOver(t, s) {

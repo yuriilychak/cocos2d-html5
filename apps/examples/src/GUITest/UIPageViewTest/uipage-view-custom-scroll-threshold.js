@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size, Color } from "@aspect/core";
 
 export class UIPageViewCustomScrollThreshold extends UIMainLayer {
   init() {
@@ -41,7 +42,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       // Add the black background
       this._bottomDisplayLabel.setString("PageView");
       this._bottomDisplayLabel.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2.0,
           widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
         )
@@ -52,10 +53,10 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
 
       // Create the page view
       var pageView = new ccui.PageView();
-      pageView.setContentSize(new cc.Size(240.0, 100.0));
+      pageView.setContentSize(new Size(240.0, 100.0));
       var backgroundSize = background.getContentSize();
       pageView.setPosition(
-        new cc.Point(
+        new Point(
           (widgetSize.width - backgroundSize.width) / 2.0 +
             (backgroundSize.width - pageView.getContentSize().width) / 2.0,
           (widgetSize.height - backgroundSize.height) / 2.0 +
@@ -67,13 +68,13 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
         var layout = new ccui.Layout();
-        layout.setContentSize(new cc.Size(240.0, 130.0));
+        layout.setContentSize(new Size(240.0, 130.0));
 
         var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
         imageView.setScale9Enabled(true);
-        imageView.setContentSize(new cc.Size(240, 130));
+        imageView.setContentSize(new Size(240, 130));
         imageView.setPosition(
-          new cc.Point(
+          new Point(
             layout.getContentSize().width / 2.0,
             layout.getContentSize().height / 2.0
           )
@@ -81,9 +82,9 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
         layout.addChild(imageView);
 
         var label = new ccui.Text("page " + (i + 1), "Marker Felt", 30);
-        label.setColor(new cc.Color(192, 192, 192));
+        label.setColor(new Color(192, 192, 192));
         label.setPosition(
-          new cc.Point(
+          new Point(
             layout.getContentSize().width / 2.0,
             layout.getContentSize().height / 2.0
           )
@@ -105,7 +106,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       );
       slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
       slider.setPosition(
-        new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0 - 40)
+        new Point(widgetSize.width / 2.0, widgetSize.height / 2.0 - 40)
       );
       slider.addEventListener(this.sliderEvent, this);
       slider.setPercent(50);

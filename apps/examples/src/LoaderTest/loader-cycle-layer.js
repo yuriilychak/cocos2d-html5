@@ -25,6 +25,7 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { LoaderTestLayer } from "./loader-test-layer";
+import { Color } from "@aspect/core";
 
 export class LoaderCycleLayer extends BaseTestLayer {
   constructor() {
@@ -43,10 +44,10 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
     var cb = function (num) {
       if (num === 1) {
-        resultTTF.setColor(cc.Color.GREEN);
+        resultTTF.setColor(Color.GREEN);
         resultTTF.setString("result: success");
       } else {
-        resultTTF.setColor(cc.Color.RED);
+        resultTTF.setColor(Color.RED);
         resultTTF.setString("result: failed");
       }
     };

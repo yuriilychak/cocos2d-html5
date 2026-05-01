@@ -29,6 +29,7 @@
 // S9BatchNodeScaleWithCapInsets
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
+import { Rect } from "@aspect/core";
 
 export class S9BatchNodeScaleWithCapInsets extends S9SpriteTestDemo {
   constructor() {
@@ -55,9 +56,9 @@ export class S9BatchNodeScaleWithCapInsets extends S9SpriteTestDemo {
 
     blocks_scaled_with_insets.updateWithBatchNode(
       batchNode_scaled_with_insets,
-      new cc.Rect(0, 0, 96, 96),
+      new Rect(0, 0, 96, 96),
       false,
-      new cc.Rect(32, 32, 32, 32)
+      new Rect(32, 32, 32, 32)
     );
     cc.log("... updateWithBatchNode");
 

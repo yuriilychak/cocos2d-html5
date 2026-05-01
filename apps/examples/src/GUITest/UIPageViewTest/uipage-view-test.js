@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Size, Color } from "@aspect/core";
 
 export class UIPageViewTest extends UIMainLayer {
   init() {
@@ -45,7 +46,7 @@ export class UIPageViewTest extends UIMainLayer {
       // Create the page view
       var pageView = new ccui.PageView();
       pageView.setTouchEnabled(true);
-      pageView.setContentSize(new cc.Size(240, 130));
+      pageView.setContentSize(new Size(240, 130));
       pageView.x =
         (widgetSize.width - background.width) / 2 +
         (background.width - pageView.width) / 2;
@@ -55,14 +56,14 @@ export class UIPageViewTest extends UIMainLayer {
 
       for (var i = 0; i < 3; ++i) {
         var layout = new ccui.Layout();
-        layout.setContentSize(new cc.Size(240, 130));
+        layout.setContentSize(new Size(240, 130));
         var layoutRect = layout.getContentSize();
 
         var imageView = new ccui.ImageView();
         imageView.setTouchEnabled(true);
         imageView.setScale9Enabled(true);
         imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
-        imageView.setContentSize(new cc.Size(240, 130));
+        imageView.setContentSize(new Size(240, 130));
         imageView.x = layoutRect.width / 2;
         imageView.y = layoutRect.height / 2;
         layout.addChild(imageView);
@@ -70,7 +71,7 @@ export class UIPageViewTest extends UIMainLayer {
         var text = new ccui.Text();
         text.string = "page" + (i + 1);
         text.font = "30px 'Marker Felt'";
-        text.color = new cc.Color(192, 192, 192);
+        text.color = new Color(192, 192, 192);
         text.x = layoutRect.width / 2;
         text.y = layoutRect.height / 2;
         layout.addChild(text);

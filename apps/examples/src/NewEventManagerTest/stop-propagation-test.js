@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { Rect } from "@aspect/core";
 
 export class StopPropagationTest extends EventDispatcherTestDemo {
   constructor() {
@@ -149,8 +150,8 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
   _isPointInNode(pt, node) {
     //----start9----_isPointInNode
     var s = node.getContentSize();
-    return cc.Rect.containsPoint(
-      new cc.Rect(0, 0, s.width, s.height),
+    return Rect.containsPoint(
+      new Rect(0, 0, s.width, s.height),
       node.convertToNodeSpace(pt)
     );
     //----end9----

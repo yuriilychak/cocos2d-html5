@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { SpriteTestDemo } from "./sprite-test-demo";
+import { Size } from "@aspect/core";
 
 export class SpriteBlendFuncTest extends SpriteTestDemo {
   //webgl only
@@ -91,7 +92,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       );
       info.x = 680;
       info.y = 250;
-      info.setDimensions(new cc.Size(200, 200));
+      info.setDimensions(new Size(200, 200));
       this.addChild(info);
     }
 

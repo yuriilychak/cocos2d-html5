@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size, Color } from "@aspect/core";
 
 export class UIPageViewDisableTouchTest extends UIMainLayer {
   init() {
@@ -45,7 +46,7 @@ export class UIPageViewDisableTouchTest extends UIMainLayer {
       var backgroundSize = background.getContentSize();
 
       var pageView = new ccui.PageView();
-      pageView.setContentSize(new cc.Size(240, 130));
+      pageView.setContentSize(new Size(240, 130));
       pageView.x =
         (widgetSize.width - backgroundSize.width) / 2 +
         (backgroundSize.width - pageView.width) / 2;
@@ -58,20 +59,20 @@ export class UIPageViewDisableTouchTest extends UIMainLayer {
       var pageCount = 4;
       for (var i = 0; i < pageCount; i++) {
         var layout = new ccui.Layout();
-        layout.setContentSize(new cc.Size(240, 130));
+        layout.setContentSize(new Size(240, 130));
 
         var imageView = new ccui.ImageView();
         imageView.setScale9Enabled(true);
         imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
-        imageView.setContentSize(new cc.Size(240, 130));
+        imageView.setContentSize(new Size(240, 130));
         imageView.x = layout.getContentSize().width / 2;
         imageView.y = layout.getContentSize().height / 2;
         layout.addChild(imageView);
         var pageNumber = i + 1;
         var label = new ccui.Text("page" + pageNumber, "Marker Felt", 30);
-        label.setColor(new cc.Color(192, 192, 192));
+        label.setColor(new Color(192, 192, 192));
         label.setPosition(
-          new cc.Point(
+          new Point(
             layout.getContentSize().width / 2,
             layout.getContentSize().height / 2
           )

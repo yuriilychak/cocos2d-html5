@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { Point } from "@aspect/core";
 
 export class ActionTargeted extends ActionsDemo {
   constructor() {
@@ -43,7 +44,7 @@ export class ActionTargeted extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var jump1 = new cc.JumpBy(2, new cc.Point(0, 0), 100, 3);
+    var jump1 = new cc.JumpBy(2, new Point(0, 0), 100, 3);
     var jump2 = jump1.clone();
     var rot1 = new cc.RotateBy(1, 360);
     var rot2 = rot1.clone();

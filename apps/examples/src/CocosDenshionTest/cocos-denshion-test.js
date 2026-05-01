@@ -28,14 +28,15 @@
 import { DenshionTests } from "./cocos-denshion-test-constants";
 import { director, winSize } from "../constants";
 import { LINE_SPACE } from "../tests-main-helpers";
+import { Point, Color } from "@aspect/core";
 
 export class CocosDenshionTest extends cc.LayerGradient {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(148, 80, 120, 255));
+    super(new Color(0, 0, 0, 255), new Color(148, 80, 120, 255));
 
     this._itemMenu = null;
 
-    this._beginPos = new cc.Point(0, 0);
+    this._beginPos = new Point(0, 0);
 
     this._testCount = 0;
 

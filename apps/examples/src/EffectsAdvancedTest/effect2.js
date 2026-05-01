@@ -27,6 +27,7 @@
 
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
+import { Size } from "@aspect/core";
 
 export class Effect2 extends EffectAdvanceTextLayer {
   title() {
@@ -42,9 +43,9 @@ export class Effect2 extends EffectAdvanceTextLayer {
     //     ShakyTiles is TiledGrid3D and it's size is (15,10)
     //     Shuffletiles is TiledGrid3D and it's size is (15,10)
     //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-    var shaky = cc.shakyTiles3D(5, new cc.Size(15, 10), 4, false);
-    var shuffle = cc.shuffleTiles(0, new cc.Size(15, 10), 3);
-    var turnoff = cc.turnOffTiles(0, new cc.Size(15, 10), 3);
+    var shaky = cc.shakyTiles3D(5, new Size(15, 10), 4, false);
+    var shuffle = cc.shuffleTiles(0, new Size(15, 10), 3);
+    var turnoff = cc.turnOffTiles(0, new Size(15, 10), 3);
     var turnon = turnoff.reverse();
 
     // reuse 2 times:

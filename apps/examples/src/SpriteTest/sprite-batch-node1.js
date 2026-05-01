@@ -34,6 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
+import { Point, Rect } from "@aspect/core";
 
 export class SpriteBatchNode1 extends SpriteTestDemo {
 
@@ -85,7 +86,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
 
         var batchNode = new cc.SpriteBatchNode(s_grossini_dance_atlas, 50);
         this.addChild(batchNode, 0, TAG_SPRITE_BATCH_NODE);
-        this.addNewSpriteWithCoords(new cc.Point(winSize.width / 2, winSize.height / 2));
+        this.addNewSpriteWithCoords(new Point(winSize.width / 2, winSize.height / 2));
         //----end1----
     }
 
@@ -97,7 +98,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
         var x = (idx % 5) * 85;
         var y = (0 | (idx / 5)) * 121;
 
-        var sprite = new cc.Sprite(batchNode.texture, new cc.Rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(batchNode.texture, new Rect(x, y, 85, 121));
         batchNode.addChild(sprite);
 
         sprite.x = p.x;
@@ -131,7 +132,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
     //
     setupAutomation() {
         var fun = function () {
-            var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(0, 0, 85, 121));
+            var sprite = new cc.Sprite(s_grossini_dance_atlas, new Rect(0, 0, 85, 121));
             this.addChild(sprite, 999);
             sprite.x = winSize.width / 2;
             sprite.y = winSize.height / 2;

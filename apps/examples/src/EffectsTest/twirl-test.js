@@ -25,6 +25,7 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { winSize } from "../constants";
+import { Point, Size } from "@aspect/core";
 
 export class TwirlTest extends EffectsBaseLayer {
   title() {
@@ -36,8 +37,8 @@ export class TwirlTest extends EffectsBaseLayer {
   getEffect(duration) {
     return cc.twirl(
       duration,
-      new cc.Size(12, 8),
-      new cc.Point(winSize.width / 2, winSize.height / 2),
+      new Size(12, 8),
+      new Point(winSize.width / 2, winSize.height / 2),
       1,
       2.5
     );

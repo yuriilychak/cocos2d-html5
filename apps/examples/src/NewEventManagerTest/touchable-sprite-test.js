@@ -27,6 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
+import { Rect } from "@aspect/core";
 
 export class TouchableSpriteTest extends EventDispatcherTestDemo {
   onEnter() {
@@ -62,9 +63,9 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
 
         var locationInNode = target.convertToNodeSpace(touch.getLocation());
         var s = target.getContentSize();
-        var rect = new cc.Rect(0, 0, s.width, s.height);
+        var rect = new Rect(0, 0, s.width, s.height);
 
-        if (cc.Rect.containsPoint(rect, locationInNode)) {
+        if (Rect.containsPoint(rect, locationInNode)) {
           cc.log(
             "sprite began... x = " +
               locationInNode.x +

@@ -25,6 +25,7 @@
 
 import { PluginXTest } from "./PluginXTest";
 import { director } from "../../constants";
+import { Point, Size } from "@aspect/core";
 
 export var g_pAnalytics = null;
 export var s_strAppKey = "";
@@ -140,7 +141,7 @@ export class AnalyticsTestLayer extends PluginXTest {
     loadAnalyticsPlugin();
 
     var pMenu = new cc.Menu();
-    pMenu.setPosition(new cc.Point(0, 0));
+    pMenu.setPosition(new Point(0, 0));
     this.addChild(pMenu, 1);
 
     var yPos = 0;
@@ -149,7 +150,7 @@ export class AnalyticsTestLayer extends PluginXTest {
       var pMenuItem = new cc.MenuItemLabel(label, this.eventMenuCallback, this);
       pMenu.addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
       yPos = size.height - 50 * i - 100;
-      pMenuItem.setPosition(new cc.Point(size.width / 2, yPos));
+      pMenuItem.setPosition(new Point(size.width / 2, yPos));
     }
 
     var strName = g_pAnalytics.getPluginName();
@@ -159,10 +160,10 @@ export class AnalyticsTestLayer extends PluginXTest {
       ret,
       "Arial",
       24,
-      new cc.Size(size.width, 0),
+      new Size(size.width, 0),
       cc.TEXT_ALIGNMENT_CENTER
     );
-    pLabel.setPosition(new cc.Point(size.width / 2, yPos - 100));
+    pLabel.setPosition(new Point(size.width / 2, yPos - 100));
     this.addChild(pLabel);
 
     var label = new cc.LabelTTF("reload all plugins", "Arial", 24);
@@ -171,9 +172,9 @@ export class AnalyticsTestLayer extends PluginXTest {
       this.reloadPluginMenuCallback,
       this
     );
-    pMenuItem.setAnchorPoint(new cc.Point(0.5, 0));
+    pMenuItem.setAnchorPoint(new Point(0.5, 0));
     pMenu.addChild(pMenuItem, 0);
-    pMenuItem.setPosition(new cc.Point(size.width / 2, 0));
+    pMenuItem.setPosition(new Point(size.width / 2, 0));
   }
 
   reloadPluginMenuCallback(pSender) {

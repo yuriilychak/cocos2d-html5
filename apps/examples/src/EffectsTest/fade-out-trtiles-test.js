@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { EffectsBaseLayer } from "./effects-base-layer";
+import { Size } from "@aspect/core";
 
 export class FadeOutTRTilesTest extends EffectsBaseLayer {
   title() {
@@ -33,7 +34,7 @@ export class FadeOutTRTilesTest extends EffectsBaseLayer {
     return "a = cc.fadeOutTRTiles(duration, gridSize)";
   }
   getEffect(duration) {
-    var action = cc.fadeOutTRTiles(duration, new cc.Size(16, 12));
+    var action = cc.fadeOutTRTiles(duration, new Size(16, 12));
     var delay = new cc.DelayTime(0.5);
     var back = action.reverse();
     var seq = cc.sequence(action, delay, back);

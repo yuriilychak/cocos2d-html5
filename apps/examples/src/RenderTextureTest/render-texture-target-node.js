@@ -25,6 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
+import { Color } from "@aspect/core";
 
 export class RenderTextureTargetNode extends RenderTextureBaseLayer {
   constructor() {
@@ -51,7 +52,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
      *  B1: non-premulti sprite
      *  B2: non-premulti render
      */
-    var background = new cc.LayerColor(new cc.Color(40, 40, 40, 255));
+    var background = new cc.LayerColor(new Color(40, 40, 40, 255));
     this.addChild(background);
 
     var winSize = cc.director.getWinSize();
@@ -81,7 +82,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     /* add the sprites to the render texture */
     renderTexture.addChild(this._sprite1);
     renderTexture.addChild(this._sprite2);
-    renderTexture.clearColorVal = new cc.Color(0, 0, 0, 0);
+    renderTexture.clearColorVal = new Color(0, 0, 0, 0);
     renderTexture.clearFlags = cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
 
     /* add the render texture to the scene */
@@ -126,7 +127,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
         cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
     else {
       this._renderTexture.clearFlags = 0;
-      this._renderTexture.clearColorVal = new cc.Color(
+      this._renderTexture.clearColorVal = new Color(
         Math.random() * 255,
         Math.random() * 255,
         Math.random() * 255,

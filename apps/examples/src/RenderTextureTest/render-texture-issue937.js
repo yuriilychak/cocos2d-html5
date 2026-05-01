@@ -25,6 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
+import { Color } from "@aspect/core";
 
 export class RenderTextureIssue937 extends RenderTextureBaseLayer {
   constructor() {
@@ -42,7 +43,7 @@ export class RenderTextureIssue937 extends RenderTextureBaseLayer {
      *  B1: non-premulti sprite
      *  B2: non-premulti render
      */
-    var background = new cc.LayerColor(new cc.Color(200, 200, 200, 255));
+    var background = new cc.LayerColor(new Color(200, 200, 200, 255));
     this.addChild(background);
 
     var spr_premulti = new cc.Sprite(s_fire);

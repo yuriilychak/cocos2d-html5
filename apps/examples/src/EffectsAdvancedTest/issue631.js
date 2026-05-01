@@ -28,6 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { s_pathFog, s_pathGrossini } from "../resources";
+import { Size, Color } from "@aspect/core";
 
 export class Issue631 extends EffectAdvanceTextLayer {
   title() {
@@ -43,7 +44,7 @@ export class Issue631 extends EffectAdvanceTextLayer {
 
     var effect = cc.sequence(
       new cc.DelayTime(2.0),
-      cc.shaky3D(5.0, new cc.Size(5, 5), 16, false)
+      cc.shaky3D(5.0, new Size(5, 5), 16, false)
     );
 
     // cleanup
@@ -51,7 +52,7 @@ export class Issue631 extends EffectAdvanceTextLayer {
     this.removeChild(bg, true);
 
     // background
-    var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
+    var layer = new cc.LayerColor(new Color(255, 0, 0, 255));
     this.addChild(layer, -10);
     var sprite = new cc.Sprite(s_pathGrossini);
     sprite.x = 50;
@@ -59,7 +60,7 @@ export class Issue631 extends EffectAdvanceTextLayer {
     layer.addChild(sprite, 10);
 
     // foreground
-    var layer2 = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
+    var layer2 = new cc.LayerColor(new Color(0, 255, 0, 255));
     var fog = new cc.Sprite(s_pathFog);
 
     fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);

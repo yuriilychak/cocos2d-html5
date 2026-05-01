@@ -27,6 +27,7 @@
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini } from "../resources";
+import { Point, Color } from "@aspect/core";
 
 export class BakeLayerColorTest extends BakeLayerBaseTest {
   title() {
@@ -60,8 +61,8 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     this.addChild(rootLayer);
 
     var bakeLayer = new cc.LayerGradient(
-      new cc.Color(128, 0, 128, 255),
-      new cc.Color(0, 0, 128, 255)
+      new Color(128, 0, 128, 255),
+      new Color(0, 0, 128, 255)
     );
     bakeLayer.setPosition(60, 80);
     bakeLayer.setContentSize(700, 300);
@@ -85,8 +86,8 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     bakeLayer.bake();
     bakeLayer.runAction(
       cc.sequence(
-        new cc.MoveBy(2, new cc.Point(100, 100)),
-        new cc.MoveBy(2, new cc.Point(-100, -100))
+        new cc.MoveBy(2, new Point(100, 100)),
+        new cc.MoveBy(2, new Point(-100, -100))
       )
     );
   }

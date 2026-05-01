@@ -34,6 +34,7 @@ import { TAG_SPRITE1 } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
+import { Color, Rect } from "@aspect/core";
 
 export class SpriteZOrder extends SpriteTestDemo {
     constructor() {
@@ -52,25 +53,25 @@ export class SpriteZOrder extends SpriteTestDemo {
         var sprite;
         var step = winSize.width / 11;
         for (var i = 0; i < 5; i++) {
-            sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 0, 121 * 1, 85, 121));
+            sprite = new cc.Sprite(s_grossini_dance_atlas, new Rect(85 * 0, 121 * 1, 85, 121));
             sprite.x = (i + 1) * step;
             sprite.y = winSize.height / 2;
             this.addChild(sprite, i);
         }
 
         for (i = 5; i < 10; i++) {
-            sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 1, 121 * 0, 85, 121));
+            sprite = new cc.Sprite(s_grossini_dance_atlas, new Rect(85 * 1, 121 * 0, 85, 121));
             sprite.x = (i + 1) * step;
             sprite.y = winSize.height / 2;
             this.addChild(sprite, 14 - i);
         }
 
-        sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * 3, 121 * 0, 85, 121));
+        sprite = new cc.Sprite(s_grossini_dance_atlas, new Rect(85 * 3, 121 * 0, 85, 121));
         this.addChild(sprite, -1, TAG_SPRITE1);
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2 - 20;
         sprite.scaleX = 10;
-        sprite.color = cc.Color.RED;
+        sprite.color = Color.RED;
 
         this.schedule(this.reorderSprite, 1);
         //----end13----

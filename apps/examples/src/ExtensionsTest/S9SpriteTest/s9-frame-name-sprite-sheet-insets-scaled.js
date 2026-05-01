@@ -29,6 +29,7 @@
 // S9FrameNameSpriteSheetInsetsScaled
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
+import { Rect } from "@aspect/core";
 
 export class S9FrameNameSpriteSheetInsetsScaled extends S9SpriteTestDemo {
   constructor() {
@@ -46,7 +47,7 @@ export class S9FrameNameSpriteSheetInsetsScaled extends S9SpriteTestDemo {
 
     var blocks_scaled_with_insets = new cc.Scale9Sprite(
       "blocks9.png",
-      new cc.Rect(32, 32, 32, 32)
+      new Rect(32, 32, 32, 32)
     );
     cc.log("... created");
 

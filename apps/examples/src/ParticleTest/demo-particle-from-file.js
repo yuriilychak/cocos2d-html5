@@ -28,6 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class DemoParticleFromFile extends ParticleDemo {
     constructor(filename) {
@@ -38,7 +39,7 @@ export class DemoParticleFromFile extends ParticleDemo {
     }
     onEnter() {
         super.onEnter();
-        this.setColor(new cc.Color(0, 0, 0));
+        this.setColor(new Color(0, 0, 0));
         this.removeChild(this._background, true);
         this._background = null;
 

@@ -28,6 +28,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { s_resprefix } from "../resources";
 import { winSize } from "../constants";
+import { Color } from "@aspect/core";
 
 export class BMFontColorParentChild extends AtlasDemo {
     constructor() {
@@ -38,19 +39,19 @@ export class BMFontColorParentChild extends AtlasDemo {
         this.addChild(this.label);
         this.label.x = winSize.width / 2;
         this.label.y = winSize.height / 2;
-        this.label.color = cc.Color.YELLOW;
+        this.label.color = Color.YELLOW;
 
         // R
         var letter = this.label.getChildByTag(1);
-        letter.color = cc.Color.RED;
+        letter.color = Color.RED;
 
         // G
         letter = this.label.getChildByTag(2);
-        letter.color = cc.Color.GREEN;
+        letter.color = Color.GREEN;
 
         // B
         letter = this.label.getChildByTag(3);
-        letter.color = cc.Color.BLUE;
+        letter.color = Color.BLUE;
 
         this.scheduleUpdate();
 

@@ -37,6 +37,7 @@ import { ShapeTest } from "./shape-test";
 import { SpriteInvertedTest } from "./sprite-inverted-test";
 import { SpriteNoAlphaTest } from "./sprite-no-alpha-test";
 import { SpriteTest } from "./sprite-test";
+import { Color } from "@aspect/core";
 
 export let _stencilBits = -1;
 
@@ -45,14 +46,14 @@ export var _alphaThreshold = 0.05;
 export var _PLANE_COUNT = 8;
 
 export var _planeColor = [
-  new cc.Color(0, 0, 0, 166),
-  new cc.Color(179, 0, 0, 153),
-  new cc.Color(0, 179, 0, 140),
-  new cc.Color(0, 0, 179, 128),
-  new cc.Color(179, 179, 0, 115),
-  new cc.Color(0, 179, 179, 102),
-  new cc.Color(179, 0, 179, 89),
-  new cc.Color(179, 179, 179, 77)
+  new Color(0, 0, 0, 166),
+  new Color(179, 0, 0, 153),
+  new Color(0, 179, 0, 140),
+  new Color(0, 0, 179, 128),
+  new Color(179, 179, 0, 115),
+  new Color(0, 179, 179, 102),
+  new Color(179, 0, 179, 89),
+  new Color(179, 179, 179, 77)
 ];
 
 export var arrayOfClippingNodeTest = [ScrollViewDemo, ShapeTest, SpriteTest];

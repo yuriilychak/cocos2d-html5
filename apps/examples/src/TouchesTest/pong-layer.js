@@ -33,6 +33,7 @@ import {
   LOW_PLAYER,
   STATUS_BAR_HEIGHT
 } from "./touches-test-constants";
+import { Point } from "@aspect/core";
 
 export class PongLayer extends cc.Layer {
   constructor() {
@@ -45,7 +46,7 @@ export class PongLayer extends cc.Layer {
     this._ballStartingVelocity = null;
 
     this._winSize = null;
-    this._ballStartingVelocity = new cc.Point(20.0, -100.0);
+    this._ballStartingVelocity = new Point(20.0, -100.0);
     this._winSize = cc.director.getWinSize();
 
     this._ball = Ball.ballWithTexture(cc.textureCache.addImage(s_ball));
@@ -88,12 +89,12 @@ export class PongLayer extends cc.Layer {
   }
   resetAndScoreBallForPlayer(player) {
     if (Math.abs(this._ball.getVelocity().y) < 300) {
-      this._ballStartingVelocity = cc.Point.mult(
+      this._ballStartingVelocity = Point.mult(
         this._ballStartingVelocity,
         -1.1
       );
     } else {
-      this._ballStartingVelocity = cc.Point.mult(
+      this._ballStartingVelocity = Point.mult(
         this._ballStartingVelocity,
         -1
       );

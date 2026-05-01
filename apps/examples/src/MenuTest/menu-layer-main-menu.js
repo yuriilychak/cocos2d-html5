@@ -37,6 +37,7 @@ import {
   s_pressSendScore,
   s_sendScore
 } from "../resources";
+import { Point, Color, Rect } from "@aspect/core";
 
 export class MenuLayerMainMenu extends cc.Layer {
   constructor() {
@@ -50,10 +51,10 @@ export class MenuLayerMainMenu extends cc.Layer {
     // Font Item
     var spriteNormal = new cc.Sprite(
       s_menuItem,
-      new cc.Rect(0, 23 * 2, 115, 23)
+      new Rect(0, 23 * 2, 115, 23)
     );
-    var spriteSelected = new cc.Sprite(s_menuItem, new cc.Rect(0, 23, 115, 23));
-    var spriteDisabled = new cc.Sprite(s_menuItem, new cc.Rect(0, 0, 115, 23));
+    var spriteSelected = new cc.Sprite(s_menuItem, new Rect(0, 23, 115, 23));
+    var spriteDisabled = new cc.Sprite(s_menuItem, new Rect(0, 0, 115, 23));
 
     var item1 = new cc.MenuItemSprite(
       spriteNormal,
@@ -66,7 +67,7 @@ export class MenuLayerMainMenu extends cc.Layer {
     // Image Item
     var sendScoreSF = new cc.SpriteFrame(
       s_sendScore,
-      new cc.Rect(0, 0, 145, 26)
+      new Rect(0, 0, 145, 26)
     );
     cc.spriteFrameCache.addSpriteFrame(sendScoreSF, "send_score_sf");
     var item2 = new cc.MenuItemImage(
@@ -83,8 +84,8 @@ export class MenuLayerMainMenu extends cc.Layer {
       this.onMenuCallbackDisabled,
       this
     );
-    item3.setDisabledColor(new cc.Color(32, 32, 64));
-    item3.color = new cc.Color(200, 200, 255);
+    item3.setDisabledColor(new Color(32, 32, 64));
+    item3.color = new Color(200, 200, 255);
     cc.log("test MenuItemLabel getString()" + item3.getString());
 
     // Font Item
@@ -142,7 +143,7 @@ export class MenuLayerMainMenu extends cc.Layer {
     var winSize = cc.director.getWinSize();
 
     var locChildren = menu.children;
-    var dstPoint = new cc.Point(0, 0);
+    var dstPoint = new Point(0, 0);
     for (var i = 0; i < locChildren.length; i++) {
       var selChild = locChildren[i];
       if (selChild) {
@@ -154,7 +155,7 @@ export class MenuLayerMainMenu extends cc.Layer {
         selChild.x = dstPoint.x + offset;
         selChild.y = dstPoint.y;
         selChild.runAction(
-          new cc.MoveBy(2, new cc.Point(dstPoint.x - offset, 0)).easing(
+          new cc.MoveBy(2, new Point(dstPoint.x - offset, 0)).easing(
             cc.easeElasticOut(0.35)
           )
         );

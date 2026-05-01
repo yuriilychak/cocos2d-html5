@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Size } from "@aspect/core";
 
 export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
   constructor() {
@@ -55,7 +56,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       var scrollView = (this._scrollView = new ccui.ScrollView());
       scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
       scrollView.setTouchEnabled(true);
-      scrollView.setContentSize(new cc.Size(280, 150));
+      scrollView.setContentSize(new Size(280, 150));
 
       scrollView.x =
         (widgetSize.width - background.width) / 2 +
@@ -102,7 +103,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
     var start = new ccui.Text("---start---", "Thonburi", 10);
     var innerWidth = scrollView.width;
     var innerHeight = n * start.height;
-    scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
+    scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
     start.x = innerWidth / 2;
     start.y = scrollView.getInnerContainerSize().height - start.height / 2;
@@ -135,7 +136,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       button.x = innerWidth / 2;
       if (j === 0) {
         var innerHeight = n * button.height;
-        scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
+        scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
         button.y =
           scrollView.getInnerContainerSize().height - button.height / 2;
       } else button.y = Buttons[j - 1].getBottomBoundary() - button.height / 2;
@@ -164,7 +165,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       button_scale9.x = innerWidth / 2;
       if (j === 0) {
         var innerHeight = n * 32;
-        scrollView.setInnerContainerSize(new cc.Size(innerWidth, innerHeight));
+        scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
         button_scale9.y =
           scrollView.getInnerContainerSize().height - button_scale9.height / 2;
       } else

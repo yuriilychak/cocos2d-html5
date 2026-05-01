@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Size } from "@aspect/core";
 
 export class UIListViewTest_Horizontal extends UIMainLayer {
   constructor() {
@@ -53,7 +54,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       listView.setBounceEnabled(true);
       listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       listView.setBackGroundImageScale9Enabled(true);
-      listView.setContentSize(new cc.Size(240, 130));
+      listView.setContentSize(new Size(240, 130));
       listView.x =
         (widgetSize.width - backgroundSize.width) / 2 +
         (backgroundSize.width - listView.width) / 2;

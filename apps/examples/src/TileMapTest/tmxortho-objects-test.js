@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { Point, Color } from "@aspect/core";
 
 export class TMXOrthoObjectsTest extends TileDemo {
   constructor() {
@@ -41,7 +42,7 @@ export class TMXOrthoObjectsTest extends TileDemo {
     this.testObjects = null;
     var drawNode = new cc.DrawNode();
     drawNode.setLineWidth(3);
-    drawNode.setDrawColor(new cc.Color(255, 255, 255, 255));
+    drawNode.setDrawColor(new Color(255, 255, 255, 255));
 
     var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-objects.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
@@ -62,16 +63,16 @@ export class TMXOrthoObjectsTest extends TileDemo {
       var width = dict["width"],
         height = dict["height"];
 
-      drawNode.drawSegment(new cc.Point(x, y), new cc.Point(x + width, y));
+      drawNode.drawSegment(new Point(x, y), new Point(x + width, y));
       drawNode.drawSegment(
-        new cc.Point(x + width, y),
-        new cc.Point(x + width, y + height)
+        new Point(x + width, y),
+        new Point(x + width, y + height)
       );
       drawNode.drawSegment(
-        new cc.Point(x + width, y + height),
-        new cc.Point(x, y + height)
+        new Point(x + width, y + height),
+        new Point(x, y + height)
       );
-      drawNode.drawSegment(new cc.Point(x, y + height), new cc.Point(x, y));
+      drawNode.drawSegment(new Point(x, y + height), new Point(x, y));
     }
     map.addChild(drawNode);
     //Automation parameters

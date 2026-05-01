@@ -33,6 +33,7 @@
 import { LayerTest } from "./layer-test";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
+import { Color } from "@aspect/core";
 
 export class LayerTestBlend extends LayerTest {
 
@@ -42,7 +43,7 @@ export class LayerTestBlend extends LayerTest {
 
 
         this._blend = true;
-        var layer1 = new cc.LayerColor(new cc.Color(255, 255, 255, 80));
+        var layer1 = new cc.LayerColor(new Color(255, 255, 255, 80));
 
         var sister1 = new cc.Sprite(s_pathSister1);
         var sister2 = new cc.Sprite(s_pathSister2);

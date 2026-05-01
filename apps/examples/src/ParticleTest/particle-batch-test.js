@@ -28,6 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_resprefix } from "../resources";
 import { winSize } from "../constants";
+import { Color } from "@aspect/core";
 
 export class ParticleBatchTest extends ParticleDemo {
     constructor() {
@@ -39,11 +40,11 @@ export class ParticleBatchTest extends ParticleDemo {
         super.onEnter();
 
         var emitter1 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
-        emitter1.startColor = new cc.Color(255, 0, 0, 255);
+        emitter1.startColor = new Color(255, 0, 0, 255);
         var emitter2 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
-        emitter2.startColor = new cc.Color(0, 255, 0, 255);
+        emitter2.startColor = new Color(0, 255, 0, 255);
         var emitter3 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
-        emitter3.startColor = new cc.Color(0, 0, 255, 255);
+        emitter3.startColor = new Color(0, 0, 255, 255);
 
         emitter1.x = winSize.width / 1.25;
 

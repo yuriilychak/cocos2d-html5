@@ -33,10 +33,11 @@ import {
 } from "./render-texture-test-helpers";
 import { RenderTextureTestScene } from "./render-texture-test-scene";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class RenderTextureBaseLayer extends BaseTestLayer {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
   }
 
   title() {

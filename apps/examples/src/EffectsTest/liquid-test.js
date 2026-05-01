@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { EffectsBaseLayer } from "./effects-base-layer";
+import { Size } from "@aspect/core";
 
 export class LiquidTest extends EffectsBaseLayer {
   title() {
@@ -33,6 +34,6 @@ export class LiquidTest extends EffectsBaseLayer {
     return "a = cc.liquid(duration, gridSize, waves, amplitude)";
   }
   getEffect(duration) {
-    return cc.liquid(duration, new cc.Size(16, 12), 4, 20);
+    return cc.liquid(duration, new Size(16, 12), 4, 20);
   }
 }

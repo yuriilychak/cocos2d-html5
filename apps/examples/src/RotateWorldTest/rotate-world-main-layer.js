@@ -28,6 +28,7 @@
 import { SpriteLayer } from "./sprite-layer";
 import { TestLayer } from "./test-layer";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class RotateWorldMainLayer extends cc.Layer {
   constructor() {
@@ -43,10 +44,10 @@ export class RotateWorldMainLayer extends cc.Layer {
     x = size.width;
     y = size.height;
 
-    var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
-    var red = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
-    var green = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
-    var white = new cc.LayerColor(new cc.Color(255, 255, 255, 255));
+    var blue = new cc.LayerColor(new Color(0, 0, 255, 255));
+    var red = new cc.LayerColor(new Color(255, 0, 0, 255));
+    var green = new cc.LayerColor(new Color(0, 255, 0, 255));
+    var white = new cc.LayerColor(new Color(255, 255, 255, 255));
 
     blue.scale = 0.5;
     blue.x = -x / 4;

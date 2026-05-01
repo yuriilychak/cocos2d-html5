@@ -28,6 +28,7 @@
 
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_image_icon } from "../resources";
+import { Point, Color } from "@aspect/core";
 
 export class Issue1358 extends MotionStreakTest {
   constructor() {
@@ -54,12 +55,12 @@ export class Issue1358 extends MotionStreakTest {
       2.0,
       1.0,
       50.0,
-      new cc.Color(255, 255, 0),
+      new Color(255, 255, 0),
       s_image_icon
     );
     this.addChild(this._streak);
 
-    this._center = new cc.Point(size.width / 2, size.height / 2);
+    this._center = new Point(size.width / 2, size.height / 2);
     this._radius = size.width / 3;
     this._angle = 0.0;
     this.schedule(this.update, 0);

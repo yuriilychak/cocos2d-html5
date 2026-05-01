@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
+import { Color } from "@aspect/core";
 
 export class LayerTest1 extends LayerTest {
   constructor() {
@@ -66,7 +67,7 @@ export class LayerTest1 extends LayerTest {
       );
 
     var s = director.getWinSize();
-    var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 128));
+    var layer = new cc.LayerColor(new Color(255, 0, 0, 128));
 
     layer.ignoreAnchor = false;
     layer.anchorX = 0.5;

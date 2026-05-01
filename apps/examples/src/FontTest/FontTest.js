@@ -27,6 +27,7 @@
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
 import { director } from "../constants";
+import { Size, Color } from "@aspect/core";
 
 export var TAG_LABEL1 = 550;
 export var TAG_LABEL2 = 551;
@@ -101,7 +102,7 @@ export class FontTestScene extends TestScene {
 
 export class FontTest extends BaseTestLayer {
   constructor() {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     this.showFont(restartFontTestAction());
   }
@@ -118,21 +119,21 @@ export class FontTest extends BaseTestLayer {
       "alignment left",
       pFont,
       32,
-      new cc.Size(winSize.width, 50),
+      new Size(winSize.width, 50),
       cc.TEXT_ALIGNMENT_LEFT
     );
     var center = new cc.LabelTTF(
       "alignment center",
       pFont,
       32,
-      new cc.Size(winSize.width, 50),
+      new Size(winSize.width, 50),
       cc.TEXT_ALIGNMENT_CENTER
     );
     var right = new cc.LabelTTF(
       "alignment right",
       pFont,
       32,
-      new cc.Size(winSize.width, 50),
+      new Size(winSize.width, 50),
       cc.TEXT_ALIGNMENT_RIGHT
     );
 

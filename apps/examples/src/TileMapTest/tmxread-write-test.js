@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { Point } from "@aspect/core";
 
 export class TMXReadWriteTest extends TileDemo {
   constructor() {
@@ -55,10 +56,10 @@ export class TMXReadWriteTest extends TileDemo {
 
     map.scale = 1;
 
-    var tile0 = layer.getTileAt(new cc.Point(1, 63));
-    var tile1 = layer.getTileAt(new cc.Point(2, 63));
-    var tile2 = layer.getTileAt(new cc.Point(3, 62)); //new cc.Point(1,62));
-    var tile3 = layer.getTileAt(new cc.Point(2, 62));
+    var tile0 = layer.getTileAt(new Point(1, 63));
+    var tile1 = layer.getTileAt(new Point(2, 63));
+    var tile2 = layer.getTileAt(new Point(3, 62)); //new Point(1,62));
+    var tile3 = layer.getTileAt(new Point(2, 62));
 
     tile0.anchorX = 0.5;
     tile0.anchorY = 0.5;
@@ -69,7 +70,7 @@ export class TMXReadWriteTest extends TileDemo {
     tile3.anchorX = 0.5;
     tile3.anchorY = 0.5;
 
-    var move = new cc.MoveBy(0.5, new cc.Point(0, 160));
+    var move = new cc.MoveBy(0.5, new Point(0, 160));
     var rotate = new cc.RotateBy(2, 360);
     var scale = new cc.ScaleBy(2, 5);
     var opacity = new cc.FadeOut(2);
@@ -92,7 +93,7 @@ export class TMXReadWriteTest extends TileDemo {
     tile2.runAction(seq0.clone());
     tile3.runAction(seq0.clone());
 
-    this.gid = layer.getTileGIDAt(new cc.Point(0, 63));
+    this.gid = layer.getTileGIDAt(new Point(0, 63));
 
     this.schedule(this.updateCol, 2.0);
     this.schedule(this.repaintWithGID, 2.0);
@@ -113,7 +114,7 @@ export class TMXReadWriteTest extends TileDemo {
     var s = layer.getLayerSize();
 
     for (var y = 0; y < s.height; y++) {
-      layer.setTileGID(this.gid2, new cc.Point(3, y));
+      layer.setTileGID(this.gid2, new Point(3, y));
     }
 
     this.gid2 = (this.gid2 + 1) % 80;
@@ -125,8 +126,8 @@ export class TMXReadWriteTest extends TileDemo {
     var s = layer.getLayerSize();
     for (var x = 0; x < s.width; x++) {
       var y = s.height - 1;
-      var tmpgid = layer.getTileGIDAt(new cc.Point(x, y));
-      layer.setTileGID(tmpgid + 1, new cc.Point(x, y));
+      var tmpgid = layer.getTileGIDAt(new Point(x, y));
+      layer.setTileGID(tmpgid + 1, new Point(x, y));
     }
   }
   removeTiles(dt) {
@@ -138,7 +139,7 @@ export class TMXReadWriteTest extends TileDemo {
     var s = layer.getLayerSize();
 
     for (var y = 0; y < s.height; y++) {
-      layer.removeTileAt(new cc.Point(5.0, y));
+      layer.removeTileAt(new Point(5.0, y));
     }
   }
   title() {

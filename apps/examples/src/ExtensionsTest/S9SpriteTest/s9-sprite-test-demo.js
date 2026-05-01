@@ -35,11 +35,12 @@ import { nextS9SpriteTest, previousS9SpriteTest, restartS9SpriteTest } from "./s
 import { S9SpriteTestScene } from "./s9-sprite-test-scene";
 import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_s9s_blocks9_plist } from "../../resources";
 import { director, winSize } from "../../constants";
+import { Color } from "@aspect/core";
 
 export class S9SpriteTestDemo extends cc.LayerGradient {
 
     constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+        super(new Color(0,0,0,255), new Color(98,99,117,255));
 
 
         this._title = "";

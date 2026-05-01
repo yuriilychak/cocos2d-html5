@@ -27,13 +27,14 @@
 
 import { s_fire, s_pathGrossini } from "../resources";
 import { director } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class IntervalLayer extends cc.LayerGradient {
 
 
 
     constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+        super(new Color(0,0,0,255), new Color(98,99,117,255));
 
 
 
@@ -133,7 +134,7 @@ export class IntervalLayer extends cc.LayerGradient {
         sprite.x = 40;
         sprite.y = 50;
 
-        var jump = new cc.JumpBy(3, new cc.Point(s.width - 80, 0), 50, 4);
+        var jump = new cc.JumpBy(3, new Point(s.width - 80, 0), 50, 4);
 
         this.addChild(sprite);
         sprite.runAction(cc.sequence(jump, jump.reverse()).repeatForever());

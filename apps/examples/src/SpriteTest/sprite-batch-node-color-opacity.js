@@ -34,6 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE3, TAG_SPRITE4, TAG_SPRITE5, TAG_SP
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
+import { Rect } from "@aspect/core";
 
 export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
 
@@ -70,15 +71,15 @@ export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
         var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        var sprite1 = new cc.Sprite(batch.texture, new cc.Rect(0, 121, 85, 121));
-        var sprite2 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
-        var sprite3 = new cc.Sprite(batch.texture, new cc.Rect(85 * 2, 121, 85, 121));
-        var sprite4 = new cc.Sprite(batch.texture, new cc.Rect(85 * 3, 121, 85, 121));
+        var sprite1 = new cc.Sprite(batch.texture, new Rect(0, 121, 85, 121));
+        var sprite2 = new cc.Sprite(batch.texture, new Rect(85, 121, 85, 121));
+        var sprite3 = new cc.Sprite(batch.texture, new Rect(85 * 2, 121, 85, 121));
+        var sprite4 = new cc.Sprite(batch.texture, new Rect(85 * 3, 121, 85, 121));
 
-        var sprite5 = new cc.Sprite(batch.texture, new cc.Rect(0, 121, 85, 121));
-        var sprite6 = new cc.Sprite(batch.texture, new cc.Rect(85, 121, 85, 121));
-        var sprite7 = new cc.Sprite(batch.texture, new cc.Rect(85 * 2, 121, 85, 121));
-        var sprite8 = new cc.Sprite(batch.texture, new cc.Rect(85 * 3, 121, 85, 121));
+        var sprite5 = new cc.Sprite(batch.texture, new Rect(0, 121, 85, 121));
+        var sprite6 = new cc.Sprite(batch.texture, new Rect(85, 121, 85, 121));
+        var sprite7 = new cc.Sprite(batch.texture, new Rect(85 * 2, 121, 85, 121));
+        var sprite8 = new cc.Sprite(batch.texture, new Rect(85 * 3, 121, 85, 121));
 
 
         sprite1.x = (winSize.width / 5) * 1;

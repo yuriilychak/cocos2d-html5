@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionStackableMove extends ActionsDemo {
   constructor() {
@@ -48,7 +49,7 @@ export class ActionStackableMove extends ActionsDemo {
     this._grossini.y = winSize.height / 2;
 
     // shake
-    var move = new cc.MoveBy(0.2, new cc.Point(0, 50));
+    var move = new cc.MoveBy(0.2, new Point(0, 50));
     var move_back = move.reverse();
     var delay = new cc.DelayTime(0.25);
     var move_seq = cc.sequence(move, move_back);
@@ -56,7 +57,7 @@ export class ActionStackableMove extends ActionsDemo {
     this._grossini.runAction(move_rep);
 
     // move
-    var action = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
+    var action = new cc.MoveBy(2, new Point(winSize.width - 80, 0));
     var back = action.reverse();
     var seq = cc.sequence(action, back);
     var repeat = seq.repeatForever();

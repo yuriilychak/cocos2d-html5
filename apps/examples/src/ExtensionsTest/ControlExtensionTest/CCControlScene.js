@@ -37,6 +37,7 @@ import {
   s_pathR1,
   s_pathR2
 } from "../../resources";
+import { Rect } from "@aspect/core";
 
 export class ControlScene extends cc.Layer {
   constructor() {
@@ -80,7 +81,7 @@ export class ControlScene extends cc.Layer {
       // Add the ribbon
       var ribbon = new cc.Scale9Sprite(
         s_extensions_ribbon,
-        new cc.Rect(1, 1, 48, 55)
+        new Rect(1, 1, 48, 55)
       );
       ribbon.width = screensize.width;
       ribbon.height = 57;

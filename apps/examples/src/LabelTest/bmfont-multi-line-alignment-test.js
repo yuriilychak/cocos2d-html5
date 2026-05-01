@@ -29,6 +29,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { ArrowsMax, ArrowsMin, CenterAlign, LeftAlign, LineBreaks, LineBreaksExample, LongSentences, LongSentencesExample, Mixed, MixedExample, RightAlign, alignmentItemPadding, chineseExampleText, chineseMixEnglish, chineseMixEnglishText, chineseText, menuItemPaddingCenter, mixAllLanguage, mixAllLanguageText } from "./label-test-helpers";
 import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
+import { Point, Color, Rect } from "@aspect/core";
 
 export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     constructor() {
@@ -72,7 +73,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         var size = director.getWinSize();
 
         // create and initialize a Label
-        this.labelShouldRetain = new cc.LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, new cc.Point(0, 0));
+        this.labelShouldRetain = new cc.LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, new Point(0, 0));
         this.arrowsBarShouldRetain = new cc.Sprite(s_resprefix + "Images/arrowsBar.png");
         this.arrowsShouldRetain = new cc.Sprite(s_resprefix + "Images/arrows.png");
 
@@ -94,7 +95,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         lineBreakMenu.y = winSize.height / 2;
         lineBreakMenu.alignItemsVertically();
 
-        longSentences.color = new cc.Color(255, 0, 0);
+        longSentences.color = new Color(255, 0, 0);
         this.lastSentenceItem = longSentences;
         longSentences.tag = LongSentences;
         lineBreaks.tag = LineBreaks;
@@ -111,7 +112,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         var alignmentMenu = new cc.Menu(left, center, right);
         alignmentMenu.alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
-        center.color = new cc.Color(255, 0, 0);
+        center.color = new Color(255, 0, 0);
         this.lastAlignmentItem = center;
         left.tag = LeftAlign;
         center.tag = CenterAlign;
@@ -174,8 +175,8 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         this.labelShouldRetain.setLineBreakWithoutSpace(this.lineBreakFlag);
     }
     onStringChanged(sender) {
-        this.lastSentenceItem.color = new cc.Color(255, 255, 255);
-        sender.color = new cc.Color(255, 0, 0);
+        this.lastSentenceItem.color = new Color(255, 255, 255);
+        sender.color = new Color(255, 0, 0);
         this.lastSentenceItem = sender;
 
         switch (sender.tag) {
@@ -211,8 +212,8 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     }
     onAlignmentChanged(sender) {
         var item = sender;
-        this.lastAlignmentItem.color = new cc.Color(255, 255, 255);
-        item.color = new cc.Color(255, 0, 0);
+        this.lastAlignmentItem.color = new Color(255, 255, 255);
+        item.color = new Color(255, 0, 0);
         this.lastAlignmentItem = item;
 
         switch (item.tag) {
@@ -235,7 +236,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         var touch = touches[0];
         var location = touch.getLocation();
 
-        if (cc.Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
+        if (Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
             this.arrowsBarShouldRetain.visible = true;
         }
     }
@@ -256,7 +257,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     onMouseDown(event) {
         var location = event.getLocation();
 
-        if (cc.Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
+        if (Rect.containsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
             this.arrowsBarShouldRetain.visible = true;
         }
     }

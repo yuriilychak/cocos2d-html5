@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionJump extends ActionsDemo {
   constructor() {
@@ -51,9 +52,9 @@ export class ActionJump extends ActionsDemo {
     super.onEnter();
     this.centerSprites(3);
 
-    var actionTo = new cc.JumpTo(2, new cc.Point(300, 300), 50, 4);
-    var actionBy = new cc.JumpBy(2, new cc.Point(300, 0), 50, 4);
-    var actionUp = new cc.JumpBy(2, new cc.Point(0, 0), 80, 4);
+    var actionTo = new cc.JumpTo(2, new Point(300, 300), 50, 4);
+    var actionBy = new cc.JumpBy(2, new Point(300, 0), 50, 4);
+    var actionUp = new cc.JumpBy(2, new Point(0, 0), 80, 4);
     var actionByBack = actionBy.reverse();
 
     var delay = new cc.DelayTime(0.25);
@@ -86,9 +87,9 @@ export class ActionJump extends ActionsDemo {
 
   getCurrentResult() {
     var ret = [];
-    ret.push(new cc.Point(this._tamara.x, this._tamara.y));
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
-    ret.push(new cc.Point(this._kathia.x, this._kathia.y));
+    ret.push(new Point(this._tamara.x, this._tamara.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._kathia.x, this._kathia.y));
 
     return JSON.stringify(ret);
   }

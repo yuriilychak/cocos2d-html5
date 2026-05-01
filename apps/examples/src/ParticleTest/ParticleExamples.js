@@ -24,6 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Point, Color } from "@aspect/core";
+
+
 /**
  * A fire particle system
  *
@@ -55,7 +58,7 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
 
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, 0));
+            this.setGravity(new Point(0, 0));
 
             // Gravity Mode: radial acceleration
             this.setRadialAccel(0);
@@ -72,7 +75,7 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, 60);
-            this.setPosVar(new cc.Point(40, 20));
+            this.setPosVar(new Point(40, 20));
 
             // life of particles
             this.setLife(3);
@@ -88,10 +91,10 @@ cc.ParticleFire = class ParticleFire extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(new cc.Color(194,64,31,255));
-            this.setStartColorVar(new cc.Color(0,0,0,0));
-            this.setEndColor(new cc.Color(0,0,0,255));
-            this.setEndColorVar(new cc.Color(0,0,0,0));
+            this.setStartColor(new Color(194,64,31,255));
+            this.setStartColorVar(new Color(0,0,0,0));
+            this.setEndColor(new Color(0,0,0,255));
+            this.setEndColorVar(new Color(0,0,0,0));
 
             // additive
             this.setBlendAdditive(true);
@@ -132,7 +135,7 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, -90));
+            this.setGravity(new Point(0, -90));
 
             // Gravity Mode:  radial
             this.setRadialAccel(0);
@@ -158,10 +161,10 @@ cc.ParticleFireworks = class ParticleFireworks extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(new cc.Color(128,128,128,255));
-            this.setStartColorVar(new cc.Color(128,128,128,255));
-            this.setEndColor(new cc.Color(26,26,26,51));
-            this.setEndColorVar(new cc.Color(26,26,26,51));
+            this.setStartColor(new Color(128,128,128,255));
+            this.setStartColorVar(new Color(128,128,128,255));
+            this.setEndColor(new Color(26,26,26,51));
+            this.setEndColorVar(new Color(26,26,26,51));
 
             // size, in pixels
             this.setStartSize(8.0);
@@ -210,7 +213,7 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, 0));
+            this.setGravity(new Point(0, 0));
 
             // Gravity mode: radial acceleration
             this.setRadialAccel(0);
@@ -227,7 +230,7 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new cc.Point(0,0));
+            this.setPosVar(new Point(0,0));
 
             // life of particles
             this.setLife(1);
@@ -242,10 +245,10 @@ cc.ParticleSun = class ParticleSun extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(new cc.Color(194, 64, 31, 255));
-            this.setStartColorVar(new cc.Color(0, 0, 0, 0));
-            this.setEndColor(new cc.Color(0, 0, 0, 255));
-            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
+            this.setStartColor(new Color(194, 64, 31, 255));
+            this.setStartColorVar(new Color(0, 0, 0, 0));
+            this.setEndColor(new Color(0, 0, 0, 255));
+            this.setEndColorVar(new Color(0, 0, 0, 0));
 
             return true;
         }
@@ -285,7 +288,7 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, 0));
+            this.setGravity(new Point(0, 0));
 
             // Gravity Mode: speed of particles
             this.setSpeed(60);
@@ -306,7 +309,7 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new cc.Point(0,0));
+            this.setPosVar(new Point(0,0));
 
             // life of particles
             this.setLife(4);
@@ -321,10 +324,10 @@ cc.ParticleGalaxy = class ParticleGalaxy extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(new cc.Color(31, 64, 194, 255));
-            this.setStartColorVar(new cc.Color(0, 0, 0, 0));
-            this.setEndColor(new cc.Color(0, 0, 0, 255));
-            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
+            this.setStartColor(new Color(31, 64, 194, 255));
+            this.setStartColorVar(new Color(0, 0, 0, 0));
+            this.setEndColor(new Color(0, 0, 0, 255));
+            this.setEndColorVar(new Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -364,7 +367,7 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, 0));
+            this.setGravity(new Point(0, 0));
 
             // Gravity Mode: speed of particles
             this.setSpeed(80);
@@ -385,7 +388,7 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new cc.Point(0,0));
+            this.setPosVar(new Point(0,0));
 
             // life of particles
             this.setLife(4);
@@ -400,10 +403,10 @@ cc.ParticleFlower = class ParticleFlower extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(new cc.Color(128, 128, 128, 255));
-            this.setStartColorVar(new cc.Color(128, 128, 128, 128));
-            this.setEndColor(new cc.Color(0, 0, 0, 255));
-            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
+            this.setStartColor(new Color(128, 128, 128, 255));
+            this.setStartColorVar(new Color(128, 128, 128, 128));
+            this.setEndColor(new Color(0, 0, 0, 255));
+            this.setEndColorVar(new Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -445,7 +448,7 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(-200, 200));
+            this.setGravity(new Point(-200, 200));
 
             // Gravity Mode: speed of particles
             this.setSpeed(15);
@@ -466,7 +469,7 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new cc.Point(0,0));
+            this.setPosVar(new Point(0,0));
 
             // life of particles
             this.setLife(2);
@@ -481,10 +484,10 @@ cc.ParticleMeteor = class ParticleMeteor extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(new cc.Color(51, 102, 179));
-            this.setStartColorVar(new cc.Color(0, 0, 51, 26));
-            this.setEndColor(new cc.Color(0, 0, 0, 255));
-            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
+            this.setStartColor(new Color(51, 102, 179));
+            this.setStartColorVar(new Color(0, 0, 51, 26));
+            this.setEndColor(new Color(0, 0, 0, 255));
+            this.setEndColorVar(new Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -526,7 +529,7 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, 0));
+            this.setGravity(new Point(0, 0));
 
             // Gravity Mode: speed of particles
             this.setSpeed(150);
@@ -547,7 +550,7 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new cc.Point(0,0));
+            this.setPosVar(new Point(0,0));
 
             // life of particles
             this.setLife(12);
@@ -562,10 +565,10 @@ cc.ParticleSpiral = class ParticleSpiral extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(new cc.Color(128,128,128,255));
-            this.setStartColorVar(new cc.Color(128,128,128,0));
-            this.setEndColor(new cc.Color(128,128,128,255));
-            this.setEndColorVar(new cc.Color(128,128,128,0));
+            this.setStartColor(new Color(128,128,128,255));
+            this.setStartColorVar(new Color(128,128,128,0));
+            this.setEndColor(new Color(128,128,128,255));
+            this.setEndColorVar(new Color(128,128,128,0));
 
             // additive
             this.setBlendAdditive(false);
@@ -605,7 +608,7 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, 0));
+            this.setGravity(new Point(0, 0));
 
             // Gravity Mode: speed of particles
             this.setSpeed(70);
@@ -626,7 +629,7 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new cc.Point(0,0));
+            this.setPosVar(new Point(0,0));
 
             // life of particles
             this.setLife(5.0);
@@ -641,10 +644,10 @@ cc.ParticleExplosion = class ParticleExplosion extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getDuration());
 
             // color of particles
-            this.setStartColor(new cc.Color(179, 26, 51, 255));
-            this.setStartColorVar(new cc.Color(128, 128, 128, 0));
-            this.setEndColor(new cc.Color(128, 128, 128, 0));
-            this.setEndColorVar(new cc.Color(128, 128, 128, 0));
+            this.setStartColor(new Color(179, 26, 51, 255));
+            this.setStartColorVar(new Color(128, 128, 128, 0));
+            this.setEndColor(new Color(128, 128, 128, 0));
+            this.setEndColorVar(new Color(128, 128, 128, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -686,7 +689,7 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, 0));
+            this.setGravity(new Point(0, 0));
 
             // Gravity Mode: radial acceleration
             this.setRadialAccel(0);
@@ -703,7 +706,7 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, 0);
-            this.setPosVar(new cc.Point(20, 0));
+            this.setPosVar(new Point(20, 0));
 
             // life of particles
             this.setLife(4);
@@ -718,10 +721,10 @@ cc.ParticleSmoke = class ParticleSmoke extends cc.ParticleSystem {
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(new cc.Color(204, 204, 204, 255));
-            this.setStartColorVar(new cc.Color(5, 5, 5, 0));
-            this.setEndColor(new cc.Color(0, 0, 0, 255));
-            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
+            this.setStartColor(new Color(204, 204, 204, 255));
+            this.setStartColorVar(new Color(5, 5, 5, 0));
+            this.setEndColor(new Color(0, 0, 0, 255));
+            this.setEndColorVar(new Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -763,7 +766,7 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(0, -1));
+            this.setGravity(new Point(0, -1));
 
             // Gravity Mode: speed of particles
             this.setSpeed(5);
@@ -780,7 +783,7 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height + 10);
-            this.setPosVar(new cc.Point(winSize.width / 2, 0));
+            this.setPosVar(new Point(winSize.width / 2, 0));
 
             // angle
             this.setAngle(-90);
@@ -799,10 +802,10 @@ cc.ParticleSnow = class ParticleSnow extends cc.ParticleSystem {
             this.setEmissionRate(10);
 
             // color of particles
-            this.setStartColor(new cc.Color(255, 255, 255, 255));
-            this.setStartColorVar(new cc.Color(0, 0, 0, 0));
-            this.setEndColor(new cc.Color(255, 255, 255, 0));
-            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
+            this.setStartColor(new Color(255, 255, 255, 255));
+            this.setStartColorVar(new Color(0, 0, 0, 0));
+            this.setEndColor(new Color(255, 255, 255, 0));
+            this.setEndColorVar(new Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -844,7 +847,7 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
             this.setEmitterMode(cc.ParticleSystem.MODE_GRAVITY);
 
             // Gravity Mode: gravity
-            this.setGravity(new cc.Point(10, -10));
+            this.setGravity(new Point(10, -10));
 
             // Gravity Mode: radial
             this.setRadialAccel(0);
@@ -866,7 +869,7 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
             // emitter position
             var winSize = cc.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height);
-            this.setPosVar(new cc.Point(winSize.width / 2, 0));
+            this.setPosVar(new Point(winSize.width / 2, 0));
 
             // life of particles
             this.setLife(4.5);
@@ -881,10 +884,10 @@ cc.ParticleRain = class ParticleRain extends cc.ParticleSystem {
             this.setEmissionRate(20);
 
             // color of particles
-            this.setStartColor(new cc.Color(179, 204, 255, 255));
-            this.setStartColorVar(new cc.Color(0, 0, 0, 0));
-            this.setEndColor(new cc.Color(179, 204, 255, 128));
-            this.setEndColorVar(new cc.Color(0, 0, 0, 0));
+            this.setStartColor(new Color(179, 204, 255, 255));
+            this.setStartColorVar(new Color(0, 0, 0, 0));
+            this.setEndColor(new Color(179, 204, 255, 128));
+            this.setEndColorVar(new Color(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);

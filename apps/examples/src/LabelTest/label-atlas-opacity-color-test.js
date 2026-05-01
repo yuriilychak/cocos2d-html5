@@ -33,6 +33,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { TAG_LABEL_SPRITE1, TAG_LABEL_SPRITE12 } from "./label-test-constants";
 import { s_resprefix } from "../resources";
+import { Color } from "@aspect/core";
 
 export class LabelAtlasOpacityColorTest extends AtlasDemo {
   constructor() {
@@ -64,7 +65,7 @@ export class LabelAtlasOpacityColorTest extends AtlasDemo {
     this.addChild(label2, 0, TAG_LABEL_SPRITE12);
     label2.x = 10;
     label2.y = 200;
-    label2.color = new cc.Color(255, 0, 0);
+    label2.color = new Color(255, 0, 0);
 
     var fade = new cc.FadeOut(1.0);
     var fade_in = fade.reverse();

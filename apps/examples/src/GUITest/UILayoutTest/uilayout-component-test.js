@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Color } from "@aspect/core";
 
 export class UILayoutComponentTest extends UIMainLayer {
   constructor() {
@@ -37,7 +38,7 @@ export class UILayoutComponentTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       this._baseLayer = new cc.LayerColor();
-      this._baseLayer.setColor(new cc.Color(50, 100, 0));
+      this._baseLayer.setColor(new Color(50, 100, 0));
       this._baseLayer.setOpacity(100);
       this._baseLayer.setContentSize(200, 200);
       this._mainNode.addChild(this._baseLayer);

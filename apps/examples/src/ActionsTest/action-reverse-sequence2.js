@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { Point } from "@aspect/core";
 
 export class ActionReverseSequence2 extends ActionsDemo {
   onEnter() {
@@ -40,8 +41,8 @@ export class ActionReverseSequence2 extends ActionsDemo {
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-    var move1 = new cc.MoveBy(3, new cc.Point(250, 0));
-    var move2 = new cc.MoveBy(3, new cc.Point(0, 50));
+    var move1 = new cc.MoveBy(3, new Point(250, 0));
+    var move2 = new cc.MoveBy(3, new Point(0, 50));
     var tog1 = new cc.ToggleVisibility();
     var tog2 = new cc.ToggleVisibility();
     var seq = cc.sequence(move1, tog1, move2, tog2, move1.reverse());
@@ -52,8 +53,8 @@ export class ActionReverseSequence2 extends ActionsDemo {
     //   Also test that the reverse of Hide is Show, and vice-versa
     this._kathia.runAction(action);
 
-    var move_tamara = new cc.MoveBy(1, new cc.Point(100, 0));
-    var move_tamara2 = new cc.MoveBy(1, new cc.Point(50, 0));
+    var move_tamara = new cc.MoveBy(1, new Point(100, 0));
+    var move_tamara2 = new cc.MoveBy(1, new Point(50, 0));
     var hide = new cc.Hide();
     var seq_tamara = cc.sequence(move_tamara, hide, move_tamara2);
     var seq_back = seq_tamara.reverse();

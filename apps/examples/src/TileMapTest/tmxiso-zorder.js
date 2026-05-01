@@ -33,6 +33,7 @@
 import { s_pathSister1, s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { Point } from "@aspect/core";
 
 export class TMXIsoZorder extends TileDemo {
   constructor() {
@@ -57,7 +58,7 @@ export class TMXIsoZorder extends TileDemo {
     this.tamara.anchorX = 0.5;
     this.tamara.anchorY = 0;
 
-    var move = new cc.MoveBy(5, new cc.Point(300, 250));
+    var move = new cc.MoveBy(5, new Point(300, 250));
     var back = move.reverse();
     var delay = new cc.DelayTime(0.5);
     var seq = cc.sequence(move, delay, back);

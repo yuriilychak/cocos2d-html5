@@ -31,6 +31,7 @@
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
 import { winSize } from "../constants";
+import { Color } from "@aspect/core";
 
 export class TouchOneByOneTest extends EventTest {
     init() {
@@ -57,7 +58,7 @@ export class TouchOneByOneTest extends EventTest {
             sprite.x = 0;
             sprite.y = 0;
             sprite.scale = 1;
-            sprite.color = new cc.Color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
+            sprite.color = new Color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
             this.unused_sprites.push(sprite);
         }
     }

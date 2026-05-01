@@ -31,6 +31,7 @@ import {
   s_hole_stencil_png,
   s_pathBlock
 } from "../resources";
+import { Point, Size, Color, Rect } from "@aspect/core";
 
 export class HoleDemo extends BaseClippingNodeTest {
   constructor() {
@@ -47,16 +48,16 @@ export class HoleDemo extends BaseClippingNodeTest {
     var stencil = new cc.DrawNode();
 
     var rectangle = [
-      new cc.Point(0, 0),
-      new cc.Point(target.width * scale, 0),
-      new cc.Point(target.width * scale, target.height * scale),
-      new cc.Point(0, target.height * scale)
+      new Point(0, 0),
+      new Point(target.width * scale, 0),
+      new Point(target.width * scale, target.height * scale),
+      new Point(0, target.height * scale)
     ];
     stencil.drawPoly(
       rectangle,
-      new cc.Color(255, 0, 0, 255),
+      new Color(255, 0, 0, 255),
       0,
-      new cc.Color(255, 255, 255, 0)
+      new Color(255, 255, 255, 0)
     );
 
     this._outerClipper = new cc.ClippingNode();
@@ -64,7 +65,7 @@ export class HoleDemo extends BaseClippingNodeTest {
     transform = cc.AffineTransform.scale(transform, target.scale, target.scale);
 
     var ocsize = cc.AffineTransform.applyToSize(
-      new cc.Size(target.width, target.height),
+      new Size(target.width, target.height),
       transform
     );
     this._outerClipper.width = ocsize.width;
@@ -102,13 +103,13 @@ export class HoleDemo extends BaseClippingNodeTest {
           var point = target._outerClipper.convertToNodeSpace(
             touch.getLocation()
           );
-          var rect = new cc.Rect(
+          var rect = new Rect(
             0,
             0,
             target._outerClipper.width,
             target._outerClipper.height
           );
-          if (!cc.Rect.containsPoint(rect, point)) return;
+          if (!Rect.containsPoint(rect, point)) return;
           target.pokeHoleAtPoint(point);
         }
       }),

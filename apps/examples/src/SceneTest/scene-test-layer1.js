@@ -28,6 +28,7 @@
 import { SceneTestLayer2 } from "./scene-test-layer2";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class SceneTestLayer1 extends cc.Layer {
   constructor() {
@@ -52,9 +53,9 @@ export class SceneTestLayer1 extends cc.Layer {
     var item4 = new cc.MenuItemFont(
       "setNotificationNode",
       function () {
-        var layerTemp = new cc.LayerColor(new cc.Color(0, 255, 255, 120));
+        var layerTemp = new cc.LayerColor(new Color(0, 255, 255, 120));
         var sprite = new cc.Sprite(s_pathGrossini);
-        sprite.setPosition(new cc.Point(winSize.width / 2, winSize.height / 2));
+        sprite.setPosition(new Point(winSize.width / 2, winSize.height / 2));
         layerTemp.addChild(sprite);
         cc.director.setNotificationNode(layerTemp);
         var rotation = new cc.RotateBy(2, 360);

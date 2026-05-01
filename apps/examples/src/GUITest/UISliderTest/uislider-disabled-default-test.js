@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size, Color, Rect } from "@aspect/core";
 
 export class UISliderDisabledDefaultTest extends UIMainLayer {
   init() {
@@ -40,9 +41,9 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
         "Marker Felt",
         20
       );
-      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setColor(new Color(159, 168, 176));
       alert.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.height * 3.75
         )
@@ -56,7 +57,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       slider.setEnabled(false);
       slider.setBright(false);
       slider.setPosition(
-        new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 50)
+        new Point(widgetSize.width / 2, widgetSize.height / 2 + 50)
       );
       this._mainNode.addChild(slider);
 
@@ -67,10 +68,10 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       sliderScale9.setScale9Enabled(true);
       sliderScale9.setEnabled(false);
       sliderScale9.setBright(false);
-      sliderScale9.setCapInsets(new cc.Rect(0, 0, 0, 0));
-      sliderScale9.setContentSize(new cc.Size(250, 10));
+      sliderScale9.setCapInsets(new Rect(0, 0, 0, 0));
+      sliderScale9.setContentSize(new Size(250, 10));
       sliderScale9.setPosition(
-        new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - 20)
+        new Point(widgetSize.width / 2, widgetSize.height / 2 - 20)
       );
       this._mainNode.addChild(sliderScale9);
 

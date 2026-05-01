@@ -28,6 +28,7 @@ import { ScriptTestTempLayer } from "./ScriptTestTempFile";
 import { SysTestBase } from "./sys-test-base";
 import { tempJSFileName } from "./sys-test-helpers";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ScriptTestLayer extends SysTestBase {
   startDownload() {
@@ -123,7 +124,7 @@ export class ScriptTestLayer extends SysTestBase {
     this._am = null;
 
     var menu = new cc.Menu();
-    menu.setPosition(new cc.Point(0, 0));
+    menu.setPosition(new Point(0, 0));
     menu.width = winSize.width;
     menu.height = winSize.height;
     this.addChild(menu, 1);
@@ -142,7 +143,7 @@ export class ScriptTestLayer extends SysTestBase {
     menu.addChild(item2);
 
     menu.alignItemsVerticallyWithPadding(8);
-    menu.setPosition(cc.Point.add(cc.visibleRect.left, new cc.Point(+180, 0)));
+    menu.setPosition(Point.add(cc.visibleRect.left, new Point(+180, 0)));
   }
 
   getTitle() {

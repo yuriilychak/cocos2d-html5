@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
+import { Point } from "@aspect/core";
 
 export class Issue1288_2 extends ActionsDemo {
   onEnter() {
@@ -44,7 +45,7 @@ export class Issue1288_2 extends ActionsDemo {
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = new cc.MoveBy(0.5, new cc.Point(100, 0));
+    var act1 = new cc.MoveBy(0.5, new Point(100, 0));
     spr.runAction(act1.repeat(1));
     //----end42----
   }

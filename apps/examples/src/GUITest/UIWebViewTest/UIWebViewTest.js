@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Color } from "@aspect/core";
 
 export class UIWebViewTest extends UIMainLayer {
   onEnter() {
@@ -119,7 +120,7 @@ export class UIWebViewTest extends UIMainLayer {
       i + 1 !== list.length ? button.setScale(1.3) : button.setScale(1);
       button.setPosition(140 + ((i / 4) | 0) * 530, 320 - (i % 4) * 50);
       button.setTitleText(item.name);
-      button.setTitleColor(cc.Color.YELLOW);
+      button.setTitleColor(Color.YELLOW);
       button.setZoomScale(0.3);
       button.setPressedActionEnabled(true);
       button.addClickEventListener(item.func);

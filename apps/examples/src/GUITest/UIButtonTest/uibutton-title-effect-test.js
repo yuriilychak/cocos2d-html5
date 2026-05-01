@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Size, Color } from "@aspect/core";
 
 export class UIButtonTitleEffectTest extends UIMainLayer {
   init() {
@@ -47,8 +48,8 @@ export class UIButtonTitleEffectTest extends UIMainLayer {
       button.setScale(2.0);
       button.setPressedActionEnabled(true);
       var title = button.getTitleRenderer();
-      button.setTitleColor(cc.Color.RED);
-      title.enableShadow(cc.Color.BLACK, new cc.Size(2, -2));
+      button.setTitleColor(Color.RED);
+      title.enableShadow(Color.BLACK, new Size(2, -2));
       this.addChild(button);
 
       // Create the button
@@ -59,7 +60,7 @@ export class UIButtonTitleEffectTest extends UIMainLayer {
       button2.setNormalizedPosition(0.8, 0.5);
       button2.setTitleText("PLAY GAME");
       var title2 = button2.getTitleRenderer();
-      title2.enableStroke(cc.Color.GREEN, 3);
+      title2.enableStroke(Color.GREEN, 3);
       this.addChild(button2);
       return true;
     }

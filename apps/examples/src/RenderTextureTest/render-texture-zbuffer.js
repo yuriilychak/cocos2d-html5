@@ -25,6 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_circle_plist, s_circle_png } from "../resources";
+import { Color } from "@aspect/core";
 
 export class RenderTextureZbuffer extends RenderTextureBaseLayer {
   constructor() {
@@ -114,7 +115,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     this.sp9.vertexZ = -400;
 
     this.sp9.scale = 2;
-    this.sp9.color = cc.Color.YELLOW;
+    this.sp9.color = Color.YELLOW;
   }
 
   onTouchesBegan(touches, event) {
@@ -201,7 +202,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     sprite.opacity = 182;
     sprite.flippedY = 1;
     this.addChild(sprite, 999999);
-    sprite.color = cc.Color.GREEN;
+    sprite.color = Color.GREEN;
 
     sprite.runAction(cc.sequence(new cc.FadeTo(2, 0), new cc.Hide()));
   }

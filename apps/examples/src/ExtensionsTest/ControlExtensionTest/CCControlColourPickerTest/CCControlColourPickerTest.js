@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
+import { Color } from "@aspect/core";
 
 export class ControlColourPickerTest extends ControlScene {
   constructor() {
@@ -46,7 +47,7 @@ export class ControlColourPickerTest extends ControlScene {
 
       // Create the colour picker
       var colourPicker = new cc.ControlColourPicker();
-      colourPicker.color = new cc.Color(37, 46, 252);
+      colourPicker.color = new Color(37, 46, 252);
       colourPicker.x = colourPicker.width / 2;
       colourPicker.y = 0;
 

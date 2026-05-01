@@ -29,6 +29,7 @@
 //------------------------------------------------------------------
 import { ChipmunkDemo } from "./chipmunk-demo";
 import { v } from "./chipmunk-test-helpers";
+import { Point, Color } from "@aspect/core";
 
 export class Query extends ChipmunkDemo {
   constructor() {
@@ -123,8 +124,8 @@ export class Query extends ChipmunkDemo {
 
   drawBB(bb, fillColor, lineColor) {
     this.drawNode.drawRect(
-      new cc.Point(bb.l, bb.b),
-      new cc.Point(bb.r, bb.t),
+      new Point(bb.l, bb.b),
+      new Point(bb.r, bb.t),
       fillColor,
       1,
       lineColor
@@ -136,10 +137,10 @@ export class Query extends ChipmunkDemo {
     var drawNode = target.drawNode;
     drawNode.clear();
 
-    var start = new cc.Point(320, 240);
+    var start = new Point(320, 240);
     var end = touch.getLocation();
     var radius = 10;
-    drawNode.drawSegment(start, end, 1, new cc.Color(0, 255, 0, 255));
+    drawNode.drawSegment(start, end, 1, new Color(0, 255, 0, 255));
 
     // WARNING: API changed in Chipmunk v7.0
     var info = target.space.segmentQueryFirst(
@@ -154,7 +155,7 @@ export class Query extends ChipmunkDemo {
         cp.v.lerp(start, end, info.alpha),
         end,
         1,
-        new cc.Color(0, 0, 255, 255)
+        new Color(0, 0, 255, 255)
       );
 
       // Draw a little red surface normal
@@ -162,11 +163,11 @@ export class Query extends ChipmunkDemo {
         info.point,
         cp.v.add(info.point, cp.v.mult(info.normal, 16)),
         1,
-        new cc.Color(255, 0, 0, 255)
+        new Color(255, 0, 0, 255)
       );
 
       // Draw a little red dot on the hit point.
-      drawNode.drawDot(info.point, 3, new cc.Color(255, 0, 0, 255));
+      drawNode.drawDot(info.point, 3, new Color(255, 0, 0, 255));
 
       cc.log(
         "Segment Query: Dist(" +
@@ -179,7 +180,7 @@ export class Query extends ChipmunkDemo {
       );
 
       // Draw a fat green line over the unoccluded part of the query
-      // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, new cc.Color(0,255,0,255));
+      // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, new Color(0,255,0,255));
     } else {
       cc.log("Segment Query (None)");
     }
@@ -194,13 +195,13 @@ export class Query extends ChipmunkDemo {
       drawNode.drawDot(
         touch.getLocation(),
         3,
-        new cc.Color(128, 128, 128, 255)
+        new Color(128, 128, 128, 255)
       );
       drawNode.drawSegment(
         touch.getLocation(),
         nearestInfo.p,
         1,
-        new cc.Color(128, 128, 128, 255)
+        new Color(128, 128, 128, 255)
       );
 
       // Draw a red bounding box around the shape under the mouse.

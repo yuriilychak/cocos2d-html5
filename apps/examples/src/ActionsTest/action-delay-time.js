@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionDelayTime extends ActionsDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class ActionDelayTime extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move = new cc.MoveBy(1, new cc.Point(150, 0));
+    var move = new cc.MoveBy(1, new Point(150, 0));
     var action = cc.sequence(move, new cc.DelayTime(2), move.clone());
 
     this._grossini.runAction(action);
@@ -63,7 +64,7 @@ export class ActionDelayTime extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
 }

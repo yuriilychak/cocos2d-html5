@@ -27,6 +27,7 @@
 
 import { ParticleDemo } from "./particle-demo";
 import { s_snow } from "../resources";
+import { Point } from "@aspect/core";
 
 export class DemoSnow extends ParticleDemo {
   onEnter() {
@@ -39,7 +40,7 @@ export class DemoSnow extends ParticleDemo {
     this._emitter.lifeVar = 1;
 
     // gravity
-    this._emitter.gravity = new cc.Point(0, -10);
+    this._emitter.gravity = new Point(0, -10);
 
     // speed of particles
     this._emitter.speed = 130;

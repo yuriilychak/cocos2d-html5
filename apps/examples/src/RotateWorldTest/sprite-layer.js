@@ -27,6 +27,7 @@
 
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
+import { Point } from "@aspect/core";
 
 export class SpriteLayer extends cc.Layer {
     constructor() {
@@ -66,7 +67,7 @@ export class SpriteLayer extends cc.Layer {
 
         sprite.runAction(rot);
 
-        var jump1 = new cc.JumpBy(4, new cc.Point(-400, 0), 100, 4);
+        var jump1 = new cc.JumpBy(4, new Point(-400, 0), 100, 4);
         var jump2 = jump1.reverse();
 
         var rot1 = new cc.RotateBy(4, 360 * 2);

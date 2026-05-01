@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { EffectsBaseLayer } from "./effects-base-layer";
+import { Size } from "@aspect/core";
 
 export class FadeOutDownTilesTest extends EffectsBaseLayer {
   title() {
@@ -33,7 +34,7 @@ export class FadeOutDownTilesTest extends EffectsBaseLayer {
     return "a = cc.fadeOutDownTiles(duration, gridSize)";
   }
   getEffect(duration) {
-    var action = cc.fadeOutDownTiles(duration, new cc.Size(16, 12));
+    var action = cc.fadeOutDownTiles(duration, new Size(16, 12));
     var delay = new cc.DelayTime(0.5);
     var back = action.reverse();
     var seq = cc.sequence(action, delay, back);

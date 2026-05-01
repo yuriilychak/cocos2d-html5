@@ -29,6 +29,7 @@ import { ActionsDemo } from "./actions-demo";
 import { createCustomAction } from "./actions-test-helpers";
 import { CustomMoveBy } from "./custom-move-by";
 import { s_pathGrossini } from "../resources";
+import { Point } from "@aspect/core";
 
 export class ActionCustomTest extends ActionsDemo {
   constructor() {
@@ -58,13 +59,13 @@ export class ActionCustomTest extends ActionsDemo {
     );
     var buttonTemp = new cc.Menu(label1, label2);
     buttonTemp.alignItemsVerticallyWithPadding(10);
-    buttonTemp.setPosition(new cc.Point(100, cc.winSize.height / 2 + 100));
+    buttonTemp.setPosition(new Point(100, cc.winSize.height / 2 + 100));
     this.addChild(buttonTemp);
 
     this.createActionInterval();
   }
   initActionProperty() {
-    this._spritePos = new cc.Point(25, 50);
+    this._spritePos = new Point(25, 50);
     this._layer.removeAllChildren();
   }
   createActionInstant() {
@@ -114,21 +115,21 @@ export class ActionCustomTest extends ActionsDemo {
      * group 1
      */
     var spriteTemp = this.addandCreateSpriteTemp("cc.MoveBy");
-    var move = new CustomMoveBy(5, new cc.Point(50, 0));
+    var move = new CustomMoveBy(5, new Point(50, 0));
     spriteTemp.runAction(move);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.MoveTo");
     var customMoveTo = new (createCustomAction(cc.MoveTo))(
       5,
-      new cc.Point(spriteTemp.getPosition().x + 50, spriteTemp.getPosition().y)
+      new Point(spriteTemp.getPosition().x + 50, spriteTemp.getPosition().y)
     );
     spriteTemp.runAction(customMoveTo);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.sequence");
     var moveSeq = cc.sequence(
-      new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
+      new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
       new cc.DelayTime(1),
-      new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
+      new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
       new cc.DelayTime(1)
     );
     spriteTemp.runAction(moveSeq);
@@ -137,7 +138,7 @@ export class ActionCustomTest extends ActionsDemo {
      */
     spriteTemp = this.addandCreateSpriteTemp("cc.repeat");
     var moveRepeat = new cc.Repeat(
-      new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
+      new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
       2
     );
     spriteTemp.runAction(moveRepeat);
@@ -145,15 +146,15 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("cc.repeatForever");
     var moveRepeatForever = new cc.RepeatForever(
       cc.sequence(
-        new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
-        new (createCustomAction(cc.MoveBy))(5, new cc.Point(-50, 0))
+        new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
+        new (createCustomAction(cc.MoveBy))(5, new Point(-50, 0))
       )
     );
     spriteTemp.runAction(moveRepeatForever);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.spawn");
     var moveRoationSpawn = cc.spawn(
-      new (createCustomAction(cc.MoveBy))(5, new cc.Point(50, 0)),
+      new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
       new (createCustomAction(cc.RotateBy))(5, 360)
     );
     spriteTemp.runAction(moveRoationSpawn);
@@ -204,17 +205,17 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("cc.BezierBy");
     var bezierBy = new (createCustomAction(cc.BezierBy))(5, [
       spriteTemp.getPosition(),
-      new cc.Point(0, spriteTemp.getPosition().y),
-      new cc.Point(cc.winSize.x, spriteTemp.getPosition().y),
+      new Point(0, spriteTemp.getPosition().y),
+      new Point(cc.winSize.x, spriteTemp.getPosition().y),
       spriteTemp.getPosition()
     ]);
     spriteTemp.runAction(bezierBy);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.BezierTo");
     var bezierTo = new (createCustomAction(cc.BezierTo))(5, [
-      new cc.Point(0, cc.winSize.height / 2),
-      new cc.Point(300, -cc.winSize.height / 2),
-      new cc.Point(300, 100)
+      new Point(0, cc.winSize.height / 2),
+      new Point(300, -cc.winSize.height / 2),
+      new Point(300, 100)
     ]);
     spriteTemp.runAction(bezierTo);
 

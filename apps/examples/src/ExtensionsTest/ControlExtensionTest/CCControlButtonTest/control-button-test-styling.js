@@ -31,6 +31,7 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
+import { Size, Color } from "@aspect/core";
 
 export class ControlButtonTest_Styling extends ControlScene {
   init() {
@@ -82,15 +83,15 @@ export class ControlButtonTest_Styling extends ControlScene {
   standardButtonWithTitle(title) {
     /** Creates and return a button with a default background and title color. */
     var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-    backgroundButton.setPreferredSize(new cc.Size(45, 45)); // Set the prefered size
+    backgroundButton.setPreferredSize(new Size(45, 45)); // Set the prefered size
     var backgroundHighlightedButton = new cc.Scale9Sprite(
       s_extensions_buttonHighlighted
     );
-    backgroundHighlightedButton.setPreferredSize(new cc.Size(45, 45)); // Set the prefered size
+    backgroundHighlightedButton.setPreferredSize(new Size(45, 45)); // Set the prefered size
 
     var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
-    titleButton.color = new cc.Color(159, 168, 176);
+    titleButton.color = new Color(159, 168, 176);
 
     var button = new cc.ControlButton(
       titleButton,
@@ -103,7 +104,7 @@ export class ControlButtonTest_Styling extends ControlScene {
       backgroundHighlightedButton,
       cc.CONTROL_STATE_HIGHLIGHTED
     );
-    button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+    button.setTitleColorForState(Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
     return button;
   }

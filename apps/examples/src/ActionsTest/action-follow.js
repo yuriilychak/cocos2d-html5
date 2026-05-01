@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
+import { Point, Rect } from "@aspect/core";
 
 export class ActionFollow extends ActionsDemo {
   onEnter() {
@@ -42,7 +43,7 @@ export class ActionFollow extends ActionsDemo {
 
     this._grossini.x = -(s.width / 2);
     this._grossini.y = s.height / 2;
-    var move = new cc.MoveBy(2, new cc.Point(s.width * 3, 0));
+    var move = new cc.MoveBy(2, new Point(s.width * 3, 0));
     var move_back = move.reverse();
     var seq = cc.sequence(move, move_back);
 
@@ -53,7 +54,7 @@ export class ActionFollow extends ActionsDemo {
     this.runAction(
       new cc.Follow(
         this._grossini,
-        new cc.Rect(0, 0, s.width * 2 - 100, s.height)
+        new Rect(0, 0, s.width * 2 - 100, s.height)
       )
     );
     //----end30----

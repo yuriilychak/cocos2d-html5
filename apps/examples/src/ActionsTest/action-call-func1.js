@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionCallFunc1 extends ActionsDemo {
   constructor() {
@@ -53,7 +54,7 @@ export class ActionCallFunc1 extends ActionsDemo {
 
     // Testing different ways to pass "this"
     var action = cc.sequence(
-      new cc.MoveBy(2, new cc.Point(200, 0)),
+      new cc.MoveBy(2, new Point(200, 0)),
       new cc.CallFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
     );
 

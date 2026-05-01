@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Color } from "@aspect/core";
 
 export class UIListViewTest_Magnetic extends UIMainLayer {
   constructor() {
@@ -59,9 +60,9 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
         widgetSize.width / 2,
         widgetSize.height / 2
       );
-      this._listView.setScrollBarPositionFromCorner(new cc.Point(7, 7));
+      this._listView.setScrollBarPositionFromCorner(new Point(7, 7));
       this._listView.setItemsMargin(2.0);
-      this._listView.setAnchorPoint(new cc.Point(0.5, 0.5));
+      this._listView.setAnchorPoint(new Point(0.5, 0.5));
 
       this._listView.x = widgetSize.width / 2;
       this._listView.y = widgetSize.height / 2;
@@ -73,22 +74,22 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
       {
         var pNode = new cc.DrawNode();
 
-        var center = new cc.Point(widgetSize.width / 2, widgetSize.height / 2);
+        var center = new Point(widgetSize.width / 2, widgetSize.height / 2);
         if (this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL) {
           var halfY = 110;
           pNode.drawSegment(
-            new cc.Point(center.x, center.y - halfY),
-            new cc.Point(center.x, center.y + halfY),
+            new Point(center.x, center.y - halfY),
+            new Point(center.x, center.y + halfY),
             1,
-            new cc.Color(0, 0, 0, 255)
+            new Color(0, 0, 0, 255)
           );
         } else {
           var halfX = 150;
           pNode.drawSegment(
-            new cc.Point(center.x - halfX, center.y),
-            new cc.Point(center.x + halfX, center.y),
+            new Point(center.x - halfX, center.y),
+            new Point(center.x + halfX, center.y),
             1,
-            new cc.Color(0, 0, 0, 255)
+            new Color(0, 0, 0, 255)
           );
         }
         pNode.setContentSize(this._listView.getContentSize());
@@ -104,12 +105,12 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
         "ccs-res/cocosui/backtotoppressed.png",
         "ccs-res/cocosui/backtotopnormal.png"
       );
-      pButton.setAnchorPoint(new cc.Point(0.5, 0.5));
+      pButton.setAnchorPoint(new Point(0.5, 0.5));
       pButton.setScale(0.8);
       pButton.setPosition(
-        cc.Point.add(
-          new cc.Point(widgetSize.width / 2, widgetSize.height / 2),
-          new cc.Point(130, -60)
+        Point.add(
+          new Point(widgetSize.width / 2, widgetSize.height / 2),
+          new Point(130, -60)
         )
       );
       pButton.setTitleText("Next Magnetic");

@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Size } from "@aspect/core";
 
 export class UITextTest_LineWrap extends UIMainLayer {
   init() {
@@ -41,16 +42,16 @@ export class UITextTest_LineWrap extends UIMainLayer {
         32
       );
       text.ignoreContentAdaptWithSize(false);
-      text.setContentSize(new cc.Size(280, 150));
+      text.setContentSize(new Size(280, 150));
       text.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
       text.setTouchScaleChangeEnabled(true);
       text.setTouchEnabled(true);
       text.addTouchEventListener(function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
           if (text.width == 280) {
-            text.setContentSize(new cc.Size(380, 100));
+            text.setContentSize(new Size(380, 100));
           } else {
-            text.setContentSize(new cc.Size(280, 150));
+            text.setContentSize(new Size(280, 150));
           }
         }
       });

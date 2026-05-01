@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Color, Rect } from "@aspect/core";
+
+
 export class TouchableSprite extends cc.Sprite {
 
     constructor(priority){
@@ -55,10 +58,10 @@ export class TouchableSprite extends cc.Sprite {
             onTouchBegan: function (touch, event) {
                 var locationInNode = selfPointer.convertToNodeSpace(touch.getLocation());
                 var s = selfPointer.getContentSize();
-                var rect = new cc.Rect(0, 0, s.width, s.height);
+                var rect = new Rect(0, 0, s.width, s.height);
 
-                if (cc.Rect.containsPoint(rect, locationInNode)) {
-                    selfPointer.setColor(cc.Color.RED);
+                if (Rect.containsPoint(rect, locationInNode)) {
+                    selfPointer.setColor(Color.RED);
                     return true;
                 }
                 return false;
@@ -67,7 +70,7 @@ export class TouchableSprite extends cc.Sprite {
                 //this.setPosition(this.getPosition() + touch.getDelta());
             },
             onTouchEnded: function (touch, event) {
-                selfPointer.setColor(cc.Color.WHITE);
+                selfPointer.setColor(Color.WHITE);
                 if(selfPointer._removeListenerOnTouchEnded) {
                     cc.eventManager.removeListener(selfPointer._listener);
                     selfPointer._listener = null;

@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Color } from "@aspect/core";
 
 export class UILabelTest_Effect extends UIMainLayer {
   init() {
@@ -38,7 +39,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       alert.setString("Label Effect");
       alert.setFontName("Marker Felt");
       alert.setFontSize(30);
-      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setColor(new Color(159, 168, 176));
       alert.setPosition(
         widgetSize.width / 2,
         widgetSize.height / 2 - alert.height * 3.05
@@ -48,7 +49,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       // create the shadow only label
       var shadow_label = new ccui.Text();
 
-      shadow_label.enableShadow(cc.Color.GRAY, new cc.Point(10, -10));
+      shadow_label.enableShadow(Color.GRAY, new Point(10, -10));
       shadow_label.setString("Shadow");
       shadow_label.setPosition(
         widgetSize.width / 2,
@@ -61,13 +62,13 @@ export class UILabelTest_Effect extends UIMainLayer {
       var glow_label = new ccui.Text();
       glow_label.setFontName("Marker Felt");
       glow_label.setString("Glow");
-      glow_label.enableGlow(cc.Color.RED);
+      glow_label.enableGlow(Color.RED);
       glow_label.setPosition(widgetSize.width / 2, widgetSize.height / 2);
       this._mainNode.addChild(glow_label);
 
       // create the label stroke and shadow
       var outline_label = new ccui.Text();
-      outline_label.enableOutline(cc.Color.BLUE, 2);
+      outline_label.enableOutline(Color.BLUE, 2);
       outline_label.setString("Outline");
       outline_label.setPosition(
         widgetSize.width / 2,

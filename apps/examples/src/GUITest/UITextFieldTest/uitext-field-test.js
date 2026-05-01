@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Color } from "@aspect/core";
 
 export class UITextFieldTest extends UIMainLayer {
   init() {
@@ -32,9 +33,9 @@ export class UITextFieldTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
       //init text
       this._topDisplayLabel.setString("No Event");
-      this._topDisplayLabel.setAnchorPoint(new cc.Point(0.5, -1));
+      this._topDisplayLabel.setAnchorPoint(new Point(0.5, -1));
       this._topDisplayLabel.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2.0,
           widgetSize.height / 2.0 +
             this._topDisplayLabel.getContentSize().height * 1.5
@@ -43,13 +44,13 @@ export class UITextFieldTest extends UIMainLayer {
 
       this._bottomDisplayLabel.setString("TextField");
       this._bottomDisplayLabel.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2.0,
           widgetSize.height / 2.0 -
             this._bottomDisplayLabel.getContentSize().height * 3.4
         )
       );
-      this._bottomDisplayLabel.setColor(new cc.Color(255, 255, 255, 255));
+      this._bottomDisplayLabel.setColor(new Color(255, 255, 255, 255));
 
       // Create the textfield
       var textField = new ccui.TextField("PlaceHolder", "Marker Felt", 30);
@@ -70,7 +71,7 @@ export class UITextFieldTest extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.225,
-            new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
+            new Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
           )
         );
         this._topDisplayLabel.setString("attach with IME");
@@ -80,7 +81,7 @@ export class UITextFieldTest extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.175,
-            new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
+            new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
           )
         );
         this._topDisplayLabel.setString("detach with IME");

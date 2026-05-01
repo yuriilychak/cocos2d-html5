@@ -36,6 +36,7 @@ import {
 } from "./layer-test-constants";
 import { LayerTest } from "./layer-test";
 import { autoTestEnabled, director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class LayerTest2 extends LayerTest {
   constructor() {
@@ -49,13 +50,13 @@ export class LayerTest2 extends LayerTest {
     super.onEnter();
 
     var s = director.getWinSize();
-    var layer1 = new cc.LayerColor(new cc.Color(255, 255, 0, 80), 100, 300);
+    var layer1 = new cc.LayerColor(new Color(255, 255, 0, 80), 100, 300);
     layer1.x = s.width / 3;
     layer1.y = s.height / 2;
     layer1.ignoreAnchorPointForPosition(false);
     this.addChild(layer1, 1, LAYERTEST2_LAYER1_TAG);
 
-    var layer2 = new cc.LayerColor(new cc.Color(0, 0, 255, 255), 100, 300);
+    var layer2 = new cc.LayerColor(new Color(0, 0, 255, 255), 100, 300);
     layer2.x = (s.width / 3) * 2;
     layer2.y = s.height / 2;
     layer2.ignoreAnchorPointForPosition(false);

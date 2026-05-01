@@ -24,10 +24,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+import { Point, Rect } from "@aspect/core";
+
 export class Ball extends cc.Sprite {
     constructor() {
         super();
-        this._velocity = new cc.Point(0,0);
+        this._velocity = new Point(0,0);
         this._radius = 0;
     }
 
@@ -55,12 +58,12 @@ export class Ball extends cc.Sprite {
         paddleRect.x += paddle.x;
         paddleRect.y += paddle.y;
 
-        var lowY = cc.Rect.getMinY(paddleRect);
-        var midY = cc.Rect.getMidY(paddleRect);
-        var highY = cc.Rect.getMaxY(paddleRect);
+        var lowY = Rect.getMinY(paddleRect);
+        var midY = Rect.getMidY(paddleRect);
+        var highY = Rect.getMaxY(paddleRect);
 
-        var leftX = cc.Rect.getMinX(paddleRect);
-        var rightX = cc.Rect.getMaxX(paddleRect);
+        var leftX = Rect.getMinX(paddleRect);
+        var rightX = Rect.getMaxX(paddleRect);
 
         if ((this.x > leftX) && (this.x < rightX)) {
             var hit = false;
@@ -76,12 +79,12 @@ export class Ball extends cc.Sprite {
             }
 
             if (hit) {
-                var hitAngle = cc.Point.toAngle(new cc.Point(paddle.x - this.x, paddle.y - this.y)) + angleOffset;
+                var hitAngle = Point.toAngle(new Point(paddle.x - this.x, paddle.y - this.y)) + angleOffset;
 
-                var scalarVelocity = cc.Point.length(this._velocity) * 1.00000005;
-                var velocityAngle = -cc.Point.toAngle(this._velocity) + 0.00000005 * hitAngle;
+                var scalarVelocity = Point.length(this._velocity) * 1.00000005;
+                var velocityAngle = -Point.toAngle(this._velocity) + 0.00000005 * hitAngle;
                 //this._velocity = -this._velocity.y;
-                this._velocity = cc.Point.mult(cc.Point.forAngle(velocityAngle), scalarVelocity);
+                this._velocity = Point.mult(Point.forAngle(velocityAngle), scalarVelocity);
             }
         }
     }

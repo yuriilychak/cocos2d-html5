@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionReverse extends ActionsDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class ActionReverse extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var jump = new cc.JumpBy(2, new cc.Point(300, 0), 50, 4);
+    var jump = new cc.JumpBy(2, new Point(300, 0), 50, 4);
     var delay = new cc.DelayTime(0.25);
     var action = cc.sequence(jump, delay, jump.reverse());
 
@@ -63,7 +64,7 @@ export class ActionReverse extends ActionsDemo {
     this.scheduleOnce(this.checkControl1, 2.1);
   }
   checkControl1(dt) {
-    this.control1 = new cc.Point(this._grossini.x, this._grossini.y);
+    this.control1 = new Point(this._grossini.x, this._grossini.y);
   }
   getExpectedResult() {
     var ret = [
@@ -75,7 +76,7 @@ export class ActionReverse extends ActionsDemo {
   getCurrentResult() {
     var ret = [];
     ret.push(this.control1);
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
 }

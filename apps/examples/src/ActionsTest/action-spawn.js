@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionSpawn extends ActionsDemo {
   constructor() {
@@ -46,7 +47,7 @@ export class ActionSpawn extends ActionsDemo {
     this.alignSpritesLeft(1);
 
     var action = cc.spawn(
-      new cc.JumpBy(2, new cc.Point(300, 0), 50, 4),
+      new cc.JumpBy(2, new Point(300, 0), 50, 4),
       new cc.RotateBy(2, 720)
     );
 
@@ -65,7 +66,7 @@ export class ActionSpawn extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(new cc.Point(this._grossini.x, this._grossini.y));
+    ret.push(new Point(this._grossini.x, this._grossini.y));
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }

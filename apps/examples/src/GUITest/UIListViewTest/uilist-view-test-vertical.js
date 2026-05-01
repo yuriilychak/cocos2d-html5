@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Size } from "@aspect/core";
 
 export class UIListViewTest_Vertical extends UIMainLayer {
   constructor() {
@@ -63,7 +64,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       this.listView.setBounceEnabled(true);
       this.listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       this.listView.setBackGroundImageScale9Enabled(true);
-      this.listView.setContentSize(new cc.Size(240, 130));
+      this.listView.setContentSize(new Size(240, 130));
       this.listView.x =
         (widgetSize.width - backgroundSize.width) / 2 +
         (backgroundSize.width - this.listView.width) / 2;
@@ -127,7 +128,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
     this.listView
       .getInnerContainer()
       .setContentSize(
-        new cc.Size(this.listView.getInnerContainerSize().width, totalHeight)
+        new Size(this.listView.getInnerContainerSize().width, totalHeight)
       );
     this.listView.jumpToTop();
   }

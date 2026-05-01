@@ -30,13 +30,14 @@
 //
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class SpriteEaseCircleInOutTest extends EaseSpriteDemo {
   onEnter() {
     super.onEnter();
     //----start22----onEnter
 
-    var move = new cc.MoveBy(3, new cc.Point(winSize.width - 130, 0));
+    var move = new cc.MoveBy(3, new Point(winSize.width - 130, 0));
     var move_back = move.reverse();
 
     var move_ease = move.clone().easing(cc.easeCircleActionInOut());

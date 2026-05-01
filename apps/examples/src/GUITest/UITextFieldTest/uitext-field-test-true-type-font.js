@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point } from "@aspect/core";
 
 export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
   init() {
@@ -35,7 +36,7 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
       // Add a label in which the textfield events will be displayed
       this._topDisplayLabel.setString("True Type Font Test - No Event");
       this._topDisplayLabel.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 + this._topDisplayLabel.height * 1.5
         )
@@ -64,7 +65,7 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.225,
-            new cc.Point(
+            new Point(
               widgetSize.width / 2,
               widgetSize.height / 2 + textField.height / 2
             )
@@ -77,7 +78,7 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.175,
-            new cc.Point(widgetSize.width / 2, widgetSize.height / 2)
+            new Point(widgetSize.width / 2, widgetSize.height / 2)
           )
         );
         this._topDisplayLabel.setString("detach with IME");

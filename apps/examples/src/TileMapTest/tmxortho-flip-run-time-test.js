@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { Point } from "@aspect/core";
 
 export class TMXOrthoFlipRunTimeTest extends TileDemo {
   constructor() {
@@ -66,7 +67,7 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     var layer = map.getLayer("Layer 0");
 
     //blue diamond
-    var tileCoord = new cc.Point(1, 10);
+    var tileCoord = new Point(1, 10);
     var flags = layer.getTileFlagsAt(tileCoord);
     var GID = layer.getTileGIDAt(tileCoord);
     // Vertical
@@ -77,7 +78,7 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     }
     layer.setTileGID(GID, tileCoord, flags);
 
-    tileCoord = new cc.Point(1, 8);
+    tileCoord = new Point(1, 8);
     flags = layer.getTileFlagsAt(tileCoord);
     GID = layer.getTileGIDAt(tileCoord);
     // Vertical
@@ -86,7 +87,7 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     else flags = (flags | cc.TMX_TILE_VERTICAL_FLAG) >>> 0;
     layer.setTileGID(GID, tileCoord, flags);
 
-    tileCoord = new cc.Point(2, 8);
+    tileCoord = new Point(2, 8);
     flags = layer.getTileFlagsAt(tileCoord);
     GID = layer.getTileGIDAt(tileCoord);
     // Horizontal

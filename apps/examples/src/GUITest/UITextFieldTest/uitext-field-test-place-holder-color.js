@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Color } from "@aspect/core";
 
 export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
   init() {
@@ -42,7 +43,7 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
       // Add the alert
       this._bottomDisplayLabel.setString("TextField");
       this._bottomDisplayLabel.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075
         )
@@ -51,10 +52,10 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
       // Create the textfield
       var textField = new ccui.TextField("input words here", "Arial", 30);
       textField.setPlaceHolder("input text here");
-      textField.setPlaceHolderColor(cc.Color.GREEN);
-      textField.setTextColor(cc.Color.RED);
+      textField.setPlaceHolderColor(Color.GREEN);
+      textField.setTextColor(Color.RED);
       textField.setPosition(
-        new cc.Point(widgetSize.width / 2, widgetSize.height / 2)
+        new Point(widgetSize.width / 2, widgetSize.height / 2)
       );
       textField.addEventListener(this.textFieldEvent, this);
       this._mainNode.addChild(textField);
@@ -69,7 +70,7 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.225,
-            new cc.Point(
+            new Point(
               widgetSize.width / 2,
               widgetSize.height / 2 + textField.height / 2
             )
@@ -81,7 +82,7 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.175,
-            new cc.Point(widgetSize.width / 2, widgetSize.height / 2)
+            new Point(widgetSize.width / 2, widgetSize.height / 2)
           )
         );
         this._topDisplayLabel.setString("detach with IME");

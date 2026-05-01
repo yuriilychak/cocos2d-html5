@@ -25,13 +25,14 @@
  ****************************************************************************/
 
 import { UILayoutTestBase } from "./uilayout-test-base";
+import { Size } from "@aspect/core";
 
 export class UILayoutTest_Layout_Linear_Horizontal extends UILayoutTestBase {
   createLayout() {
     var layout = new ccui.Layout();
     layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
     layout.setClippingEnabled(true);
-    layout.setContentSize(new cc.Size(280, 150));
+    layout.setContentSize(new Size(280, 150));
     return layout;
   }
   getText() {

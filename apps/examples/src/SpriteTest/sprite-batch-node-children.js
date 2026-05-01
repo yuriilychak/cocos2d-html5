@@ -34,6 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class SpriteBatchNodeChildren extends SpriteTestDemo {
 
@@ -84,7 +85,7 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
         sprite1.runAction(new cc.Animate(animation).repeatForever());
         // END NEW CODE
 
-        var action = new cc.MoveBy(2, new cc.Point(200, 0));
+        var action = new cc.MoveBy(2, new Point(200, 0));
         var action_back = action.reverse();
         var action_rot = new cc.RotateBy(2, 360);
         var action_s = new cc.ScaleBy(2, 2);

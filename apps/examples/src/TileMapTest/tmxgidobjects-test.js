@@ -28,6 +28,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { Point, Color } from "@aspect/core";
 
 export class TMXGIDObjectsTest extends TileDemo {
   constructor() {
@@ -37,7 +38,7 @@ export class TMXGIDObjectsTest extends TileDemo {
 
     var drawNode = new cc.DrawNode();
     drawNode.setLineWidth(3);
-    drawNode.setDrawColor(new cc.Color(255, 255, 255, 255));
+    drawNode.setDrawColor(new Color(255, 255, 255, 255));
     this.addChild(drawNode);
 
     var map = new cc.TMXTiledMap(
@@ -64,16 +65,16 @@ export class TMXGIDObjectsTest extends TileDemo {
         height = dict["height"];
 
       if (width != 0 && height != 0) {
-        drawNode.drawSegment(new cc.Point(x, y), new cc.Point(x + width, y));
+        drawNode.drawSegment(new Point(x, y), new Point(x + width, y));
         drawNode.drawSegment(
-          new cc.Point(x + width, y),
-          new cc.Point(x + width, y + height)
+          new Point(x + width, y),
+          new Point(x + width, y + height)
         );
         drawNode.drawSegment(
-          new cc.Point(x + width, y + height),
-          new cc.Point(x, y + height)
+          new Point(x + width, y + height),
+          new Point(x, y + height)
         );
-        drawNode.drawSegment(new cc.Point(x, y + height), new cc.Point(x, y));
+        drawNode.drawSegment(new Point(x, y + height), new Point(x, y));
       }
     }
     this.testObjects = array;

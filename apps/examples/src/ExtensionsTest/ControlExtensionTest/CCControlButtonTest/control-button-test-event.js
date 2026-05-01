@@ -31,6 +31,7 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
+import { Color } from "@aspect/core";
 
 export class ControlButtonTest_Event extends ControlScene {
   constructor() {
@@ -57,7 +58,7 @@ export class ControlButtonTest_Event extends ControlScene {
       this.addChild(this._displayValueLabel, 10);
 
       var titleButton = new cc.LabelTTF("Touch Me!", "Marker Felt", 30);
-      titleButton.color = new cc.Color(159, 168, 176);
+      titleButton.color = new Color(159, 168, 176);
 
       var controlButton = new cc.ControlButton(titleButton, backgroundButton);
       controlButton.setBackgroundSpriteForState(
@@ -65,7 +66,7 @@ export class ControlButtonTest_Event extends ControlScene {
         cc.CONTROL_STATE_HIGHLIGHTED
       );
       controlButton.setTitleColorForState(
-        cc.Color.WHITE,
+        Color.WHITE,
         cc.CONTROL_STATE_HIGHLIGHTED
       );
 

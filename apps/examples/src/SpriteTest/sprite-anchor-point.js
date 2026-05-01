@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
+import { Rect } from "@aspect/core";
 
 export class SpriteAnchorPoint extends SpriteTestDemo {
 
@@ -52,7 +53,7 @@ export class SpriteAnchorPoint extends SpriteTestDemo {
         for (var i = 0; i < 3; i++) {
             var rotate = new cc.RotateBy(10, 360);
             var action = rotate.repeatForever();
-            var sprite = new cc.Sprite(s_grossini_dance_atlas, new cc.Rect(85 * i, 121, 85, 121));
+            var sprite = new cc.Sprite(s_grossini_dance_atlas, new Rect(85 * i, 121, 85, 121));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 

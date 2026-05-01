@@ -34,6 +34,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { TAG_BITMAP_ATLAS2 } from "./label-test-constants";
 import { s_resprefix } from "../resources";
 import { autoTestEnabled, director } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class BMFontSubSpriteTest extends AtlasDemo {
     constructor() {
@@ -49,9 +50,9 @@ export class BMFontSubSpriteTest extends AtlasDemo {
 
         var drawNode = new cc.DrawNode();
         this.addChild(drawNode);
-        drawNode.setDrawColor(new cc.Color(255,0,0,128));
-        drawNode.drawSegment(new cc.Point(0, s.height / 2), new cc.Point(s.width, s.height / 2), 2);
-        drawNode.drawSegment(new cc.Point(s.width / 2, 0), new cc.Point(s.width / 2, s.height), 2);
+        drawNode.setDrawColor(new Color(255,0,0,128));
+        drawNode.drawSegment(new Point(0, s.height / 2), new Point(s.width, s.height / 2), 2);
+        drawNode.drawSegment(new Point(s.width / 2, 0), new Point(s.width / 2, s.height), 2);
 
         // Upper Label
         var label = new cc.LabelBMFont("Bitmap Font Atlas", s_resprefix + "fonts/bitmapFontTest.fnt");
@@ -68,7 +69,7 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         var AChar = label.getChildByTag(12);
 
         if(autoTestEnabled) {
-            var jump = new cc.JumpBy(0.5, new cc.Point(0,0), 60, 1);
+            var jump = new cc.JumpBy(0.5, new Point(0,0), 60, 1);
             var jump_4ever = cc.sequence(jump, new cc.DelayTime(0.25)).repeatForever();
             var fade_out = new cc.FadeOut(0.5);
             var rotate = new cc.RotateBy(0.5, 180);
@@ -76,7 +77,7 @@ export class BMFontSubSpriteTest extends AtlasDemo {
 
             var scale = new cc.ScaleBy(0.5, 1.5);
         } else {
-            var jump = new cc.JumpBy(4, new cc.Point(0,0), 60, 1);
+            var jump = new cc.JumpBy(4, new Point(0,0), 60, 1);
             var jump_4ever = jump.repeatForever();
             var fade_out = new cc.FadeOut(1);
             var rotate = new cc.RotateBy(2, 360);

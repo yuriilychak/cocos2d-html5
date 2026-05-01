@@ -27,12 +27,13 @@
 
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class SceneTestLayer3 extends cc.LayerColor {
   constructor() {
     //----start0----Scene3-ctor
     super();
-    this.init(new cc.Color(0, 128, 255, 255));
+    this.init(new Color(0, 128, 255, 255));
 
     var label = new cc.LabelTTF("Touch to popScene", "Arial", 28);
     this.addChild(label);

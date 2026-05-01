@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Color } from "@aspect/core";
 
 export class UITextFieldTest_LineWrap extends UIMainLayer {
   init() {
@@ -42,9 +43,9 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
 
       // Add the alert
       var alert = new ccui.Text("TextField line wrap", "Marker Felt", 30);
-      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setColor(new Color(159, 168, 176));
       alert.setPosition(
-        new cc.Point(
+        new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.height * 3.075
         )
@@ -73,7 +74,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.225,
-            new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
+            new Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
           )
         );
         textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT);
@@ -84,7 +85,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.175,
-            new cc.Point(widgetSize.width / 2, widgetSize.height / 2)
+            new Point(widgetSize.width / 2, widgetSize.height / 2)
           )
         );
         textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);

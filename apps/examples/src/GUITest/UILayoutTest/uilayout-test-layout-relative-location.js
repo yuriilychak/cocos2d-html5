@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Color } from "@aspect/core";
 
 export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
   init() {
@@ -33,7 +34,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
 
       // Add the alert
       var alert = new ccui.Text("Layout Relative Location", "Marker Felt", 20);
-      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setColor(new Color(159, 168, 176));
       alert.setPosition(
         widgetSize.width / 2.0,
         widgetSize.height / 2.0 - alert.height * 4.5

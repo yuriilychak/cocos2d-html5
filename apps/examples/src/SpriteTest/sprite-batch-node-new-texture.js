@@ -34,6 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas, s_grossini_dance_atlas_mono } from "../resources";
 import { winSize } from "../constants";
+import { Point, Rect } from "@aspect/core";
 
 export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
 
@@ -85,7 +86,7 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
         //----start27----addNewSprite
         var s = winSize;
 
-        var p = new cc.Point(Math.random() * winSize.width, Math.random() * winSize.height);
+        var p = new Point(Math.random() * winSize.width, Math.random() * winSize.height);
 
         var batch = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
 
@@ -93,7 +94,7 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
         var x = (idx % 5) * 85;
         var y = (0 | (idx / 5)) * 121;
 
-        var sprite = new cc.Sprite(batch.texture, new cc.Rect(x, y, 85, 121));
+        var sprite = new cc.Sprite(batch.texture, new Rect(x, y, 85, 121));
         batch.addChild(sprite);
 
         sprite.x = p.x;
@@ -138,7 +139,7 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
     }
     addTestSprite() {
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-        var sprite = new cc.Sprite(this._texture1, new cc.Rect(0, 0, 85, 121));
+        var sprite = new cc.Sprite(this._texture1, new Rect(0, 0, 85, 121));
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         node.addChild(sprite);

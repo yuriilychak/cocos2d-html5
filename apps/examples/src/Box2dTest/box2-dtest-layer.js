@@ -27,6 +27,7 @@
 
 import { PTM_RATIO, TAG_SPRITE_MANAGER } from "./box2d-test-constants";
 import { s_pathBlock } from "../resources";
+import { Point, Color, Rect } from "@aspect/core";
 
 export class Box2DTestLayer extends cc.LayerColor {
   constructor() {
@@ -34,7 +35,7 @@ export class Box2DTestLayer extends cc.LayerColor {
       window.sideIndexBar.changeTest(0, 2);
     }
     //----start0----ctor
-    super(new cc.Color(0, 0, 0, 255));
+    super(new Color(0, 0, 0, 255));
 
     this.world = null;
     // External map from body pointer -> cc.Sprite (box2d-wasm doesn't support userData)
@@ -54,7 +55,7 @@ export class Box2DTestLayer extends cc.LayerColor {
 
     var label = new cc.LabelTTF("Tap screen", "Marker Felt", 32);
     this.addChild(label, 0);
-    label.color = new cc.Color(0, 0, 255);
+    label.color = new Color(0, 0, 255);
     label.x = cc.director.getWinSize().width / 2;
     label.y = cc.director.getWinSize().height - 50;
 
@@ -118,7 +119,7 @@ export class Box2DTestLayer extends cc.LayerColor {
     this.addChild(mgr, 0, TAG_SPRITE_MANAGER);
 
     this.addNewSpriteWithCoords(
-      new cc.Point(screenSize.width / 2, screenSize.height / 2)
+      new Point(screenSize.width / 2, screenSize.height / 2)
     );
   }
 
@@ -141,7 +142,7 @@ export class Box2DTestLayer extends cc.LayerColor {
     var idy = Math.random() > 0.5 ? 0 : 1;
     var sprite = new cc.Sprite(
       batch.texture,
-      new cc.Rect(32 * idx, 32 * idy, 32, 32)
+      new Rect(32 * idx, 32 * idy, 32, 32)
     );
     batch.addChild(sprite);
     sprite.x = p.x;

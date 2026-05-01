@@ -34,6 +34,7 @@ import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled, director } from "../constants";
+import { Point } from "@aspect/core";
 
 export class PauseTest extends ActionManagerTest {
   constructor() {
@@ -70,7 +71,7 @@ export class PauseTest extends ActionManagerTest {
     grossini.x = 200;
     grossini.y = 200;
 
-    var action = new cc.MoveBy(1, new cc.Point(150, 0));
+    var action = new cc.MoveBy(1, new Point(150, 0));
 
     director.getActionManager().addAction(action, grossini, true);
 
@@ -99,10 +100,10 @@ export class PauseTest extends ActionManagerTest {
   // Automation
   //
   checkControl1(dt) {
-    this.control1 = new cc.Point(this._grossini.x, this._grossini.y);
+    this.control1 = new Point(this._grossini.x, this._grossini.y);
   }
   checkControl2(dt) {
-    this.control2 = new cc.Point(this._grossini.x, this._grossini.y);
+    this.control2 = new Point(this._grossini.x, this._grossini.y);
   }
   getExpectedResult() {
     var ret = [

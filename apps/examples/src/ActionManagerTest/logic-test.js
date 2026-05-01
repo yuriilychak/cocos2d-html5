@@ -33,6 +33,7 @@
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled } from "../constants";
+import { Point } from "@aspect/core";
 
 export class LogicTest extends ActionManagerTest {
   constructor() {
@@ -54,7 +55,7 @@ export class LogicTest extends ActionManagerTest {
 
     grossini.runAction(
       cc.sequence(
-        new cc.MoveBy(1, new cc.Point(150, 0)),
+        new cc.MoveBy(1, new Point(150, 0)),
         new cc.CallFunc(this.onBugMe, this)
       )
     );

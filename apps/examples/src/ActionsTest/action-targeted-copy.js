@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { Point } from "@aspect/core";
 
 export class ActionTargetedCopy extends ActionsDemo {
   onEnter() {
@@ -38,7 +39,7 @@ export class ActionTargetedCopy extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var jump1 = new cc.JumpBy(2, new cc.Point(0, 0), 100, 3);
+    var jump1 = new cc.JumpBy(2, new Point(0, 0), 100, 3);
     var jump2 = jump1.clone();
 
     var t1 = new cc.TargetedAction(this._kathia, jump2);

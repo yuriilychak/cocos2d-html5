@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class SpriteEase extends EaseSpriteDemo {
   constructor() {
@@ -43,7 +44,7 @@ export class SpriteEase extends EaseSpriteDemo {
     //----start0----onEnter
     super.onEnter();
 
-    var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
+    var move = new cc.MoveBy(2, new Point(winSize.width - 80, 0));
     var move_back = move.reverse();
 
     var move_ease_in = move.clone().easing(cc.easeIn(2.0));

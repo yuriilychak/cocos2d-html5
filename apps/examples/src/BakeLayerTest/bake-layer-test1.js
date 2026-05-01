@@ -27,6 +27,7 @@
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini } from "../resources";
+import { Point } from "@aspect/core";
 
 export class BakeLayerTest1 extends BakeLayerBaseTest {
   title() {
@@ -76,8 +77,8 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
     this._bakeLayer = bakeLayer;
     bakeLayer.runAction(
       cc.sequence(
-        new cc.MoveBy(2, new cc.Point(100, 100)),
-        new cc.MoveBy(2, new cc.Point(-100, -100))
+        new cc.MoveBy(2, new Point(100, 100)),
+        new cc.MoveBy(2, new Point(-100, -100))
       )
     );
   }

@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
+import { Point } from "@aspect/core";
 
 export class ActionBezierToCopy extends ActionsDemo {
   onEnter() {
@@ -51,9 +52,9 @@ export class ActionBezierToCopy extends ActionsDemo {
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints2 = [
-      new cc.Point(100, winSize.height / 2),
-      new cc.Point(200, -winSize.height / 2),
-      new cc.Point(240, 160)
+      new Point(100, winSize.height / 2),
+      new Point(200, -winSize.height / 2),
+      new Point(240, 160)
     ];
     var bezierTo1 = new cc.BezierTo(2, controlPoints2);
 

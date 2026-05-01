@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { DrawTestDemo } from "./draw-test-demo";
 import { winSize } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class DrawNewAPITest extends DrawTestDemo {
   constructor() {
@@ -51,9 +52,9 @@ export class DrawNewAPITest extends DrawTestDemo {
     //
     for (var i = 0; i < 10; i++) {
       draw.drawDot(
-        new cc.Point(winSize.width / 2, winSize.height / 2),
+        new Point(winSize.width / 2, winSize.height / 2),
         10 * (10 - i),
-        new cc.Color(
+        new Color(
           Math.random() * 255,
           Math.random() * 255,
           Math.random() * 255,
@@ -66,15 +67,15 @@ export class DrawNewAPITest extends DrawTestDemo {
     // Polygons
     //
     var points = [
-      new cc.Point(winSize.height / 4, 0),
-      new cc.Point(winSize.width, winSize.height / 5),
-      new cc.Point((winSize.width / 3) * 2, winSize.height)
+      new Point(winSize.height / 4, 0),
+      new Point(winSize.width, winSize.height / 5),
+      new Point((winSize.width / 3) * 2, winSize.height)
     ];
     draw.drawPoly(
       points,
-      new cc.Color(255, 0, 0, 128),
+      new Color(255, 0, 0, 128),
       8,
-      new cc.Color(0, 128, 128, 255)
+      new Color(0, 128, 128, 255)
     );
 
     // star poly (triggers bugs)
@@ -82,20 +83,20 @@ export class DrawNewAPITest extends DrawTestDemo {
     var w = 20;
     var h = 50;
     var star = [
-      new cc.Point(o + w, o - h),
-      new cc.Point(o + w * 2, o), // lower spike
-      new cc.Point(o + w * 2 + h, o + w),
-      new cc.Point(o + w * 2, o + w * 2), // right spike
-      new cc.Point(o + w, o + w * 2 + h),
-      new cc.Point(o, o + w * 2), // top spike
-      new cc.Point(o - h, o + w),
-      new cc.Point(o, o) // left spike
+      new Point(o + w, o - h),
+      new Point(o + w * 2, o), // lower spike
+      new Point(o + w * 2 + h, o + w),
+      new Point(o + w * 2, o + w * 2), // right spike
+      new Point(o + w, o + w * 2 + h),
+      new Point(o, o + w * 2), // top spike
+      new Point(o - h, o + w),
+      new Point(o, o) // left spike
     ];
     draw.drawPoly(
       star,
-      new cc.Color(255, 0, 0, 128),
+      new Color(255, 0, 0, 128),
       2,
-      new cc.Color(0, 0, 255, 255)
+      new Color(0, 0, 255, 255)
     );
 
     // star poly (doesn't trigger bug... order is important un tesselation is supported.
@@ -103,36 +104,36 @@ export class DrawNewAPITest extends DrawTestDemo {
     w = 20;
     h = 50;
     star = [
-      new cc.Point(o, o),
-      new cc.Point(o + w, o - h),
-      new cc.Point(o + w * 2, o), // lower spike
-      new cc.Point(o + w * 2 + h, o + w),
-      new cc.Point(o + w * 2, o + w * 2), // right spike
-      new cc.Point(o + w, o + w * 2 + h),
-      new cc.Point(o, o + w * 2), // top spike
-      new cc.Point(o - h, o + w) // left spike
+      new Point(o, o),
+      new Point(o + w, o - h),
+      new Point(o + w * 2, o), // lower spike
+      new Point(o + w * 2 + h, o + w),
+      new Point(o + w * 2, o + w * 2), // right spike
+      new Point(o + w, o + w * 2 + h),
+      new Point(o, o + w * 2), // top spike
+      new Point(o - h, o + w) // left spike
     ];
     draw.drawPoly(
       star,
-      new cc.Color(255, 0, 0, 128),
+      new Color(255, 0, 0, 128),
       2,
-      new cc.Color(0, 0, 255, 255)
+      new Color(0, 0, 255, 255)
     );
 
     //
     // Segments
     //
     draw.drawSegment(
-      new cc.Point(20, winSize.height),
-      new cc.Point(20, winSize.height / 2),
+      new Point(20, winSize.height),
+      new Point(20, winSize.height / 2),
       10,
-      new cc.Color(0, 255, 0, 255)
+      new Color(0, 255, 0, 255)
     );
     draw.drawSegment(
-      new cc.Point(10, winSize.height / 2),
-      new cc.Point(winSize.width / 2, winSize.height / 2),
+      new Point(10, winSize.height / 2),
+      new Point(winSize.width / 2, winSize.height / 2),
       40,
-      new cc.Color(255, 0, 255, 128)
+      new Color(255, 0, 255, 128)
     );
     //----end1----
   }

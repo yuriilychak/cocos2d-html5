@@ -31,6 +31,7 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
+import { Color } from "@aspect/core";
 
 export class ControlButtonTest_HelloVariableSize extends ControlScene {
   init() {
@@ -53,15 +54,15 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
         if (i == 0) {
           button.opacity = 50;
           //todo setColor not work in canvas
-          //button.color = new cc.Color(0, 255, 0);
+          //button.color = new Color(0, 255, 0);
         } else if (i == 1) {
           button.opacity = 200;
           //todo setColor not work in canvas
-          //button.color = new cc.Color(0, 255, 0);
+          //button.color = new Color(0, 255, 0);
         } else if (i == 2) {
           button.opacity = 100;
           //todo setColor not work in canvas
-          //button.color = new cc.Color(0, 0, 255);
+          //button.color = new Color(0, 0, 255);
         }
 
         button.x = total_width + button.width / 2;
@@ -101,14 +102,14 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
 
     var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
-    titleButton.color = new cc.Color(159, 168, 176);
+    titleButton.color = new Color(159, 168, 176);
 
     var button = new cc.ControlButton(titleButton, backgroundButton);
     button.setBackgroundSpriteForState(
       backgroundHighlightedButton,
       cc.CONTROL_STATE_HIGHLIGHTED
     );
-    button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+    button.setTitleColorForState(Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
     return button;
   }

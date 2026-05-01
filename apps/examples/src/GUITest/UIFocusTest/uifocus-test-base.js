@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Color } from "@aspect/core";
 
 export class UIFocusTestBase extends UIMainLayer {
   constructor() {
@@ -70,7 +71,7 @@ export class UIFocusTestBase extends UIMainLayer {
       this._btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
       this._btn.setTitleText("Toggle Loop");
       this._btn.setPosition(60, winSize.height - 50);
-      this._btn.setTitleColor(cc.Color.RED);
+      this._btn.setTitleColor(Color.RED);
       this._btn.addTouchEventListener(this.toggleFocusLoop, this);
       this._btn.setFocusEnabled(false);
       this.addChild(this._btn);
@@ -106,10 +107,10 @@ export class UIFocusTestBase extends UIMainLayer {
   }
   onFocusChanged(widgetLostFocus, widgetGetFocus) {
     if (widgetGetFocus && widgetGetFocus.isFocusEnabled())
-      widgetGetFocus.setColor(cc.Color.RED);
+      widgetGetFocus.setColor(Color.RED);
 
     if (widgetLostFocus && widgetLostFocus.isFocusEnabled())
-      widgetLostFocus.setColor(cc.Color.WHITE);
+      widgetLostFocus.setColor(Color.WHITE);
 
     if (widgetLostFocus && widgetGetFocus)
       cc.log(
@@ -123,10 +124,10 @@ export class UIFocusTestBase extends UIMainLayer {
     if (touchType == ccui.Widget.TOUCH_ENDED) {
       if (widget.isFocusEnabled()) {
         widget.setFocusEnabled(false);
-        widget.setColor(cc.Color.YELLOW);
+        widget.setColor(Color.YELLOW);
       } else {
         widget.setFocusEnabled(true);
-        widget.setColor(cc.Color.WHITE);
+        widget.setColor(Color.WHITE);
       }
     }
   }

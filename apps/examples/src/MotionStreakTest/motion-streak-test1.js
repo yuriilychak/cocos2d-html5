@@ -28,6 +28,7 @@
 
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_pathR1, s_streak } from "../resources";
+import { Point, Color } from "@aspect/core";
 
 export class MotionStreakTest1 extends MotionStreakTest {
   constructor() {
@@ -53,7 +54,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
     this._target.y = 0;
 
     // create the streak object and add it to the scene
-    this._streak = new cc.MotionStreak(2, 3, 32, cc.Color.GREEN, s_streak);
+    this._streak = new cc.MotionStreak(2, 3, 32, Color.GREEN, s_streak);
     this.addChild(this._streak);
     // schedule an update on each frame so we can synchronize the streak with the target
     this.schedule(this.onUpdate);
@@ -61,7 +62,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
     var a1 = new cc.RotateBy(2, 360);
 
     var action1 = a1.repeatForever();
-    var motion = new cc.MoveBy(2, new cc.Point(100, 0));
+    var motion = new cc.MoveBy(2, new Point(100, 0));
     this._root.runAction(cc.sequence(motion, motion.reverse()).repeatForever());
     this._root.runAction(action1);
 
@@ -82,7 +83,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
 
   onUpdate(delta) {
     var pos = this._target.convertToWorldSpace(
-      new cc.Point(this._target.width / 2, 0)
+      new Point(this._target.width / 2, 0)
     );
     this._streak.x = pos.x;
     this._streak.y = pos.y;

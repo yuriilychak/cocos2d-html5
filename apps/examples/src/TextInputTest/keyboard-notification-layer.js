@@ -30,6 +30,7 @@
 //////////////////////////////////////////////////////////////////////////
 import { textInputGetRect } from "./text-input-test-constants";
 import { TextInputTest } from "./text-input-test";
+import { Rect } from "@aspect/core";
 
 export class KeyboardNotificationLayer extends TextInputTest {
   constructor() {
@@ -92,10 +93,10 @@ export class KeyboardNotificationLayer extends TextInputTest {
     );
 
     // if the keyboard area doesn't intersect with the tracking node area, nothing need to do.
-    if (!cc.Rect.intersects(rectTracked, info.end)) return;
+    if (!Rect.intersects(rectTracked, info.end)) return;
 
     // assume keyboard at the bottom of screen, calculate the vertical adjustment.
-    var adjustVert = cc.Rect.getMaxY(info.end) - cc.Rect.getMinY(rectTracked);
+    var adjustVert = Rect.getMaxY(info.end) - Rect.getMinY(rectTracked);
     cc.log("TextInputTest:needAdjustVerticalPosition(" + adjustVert + ")");
 
     // move all the children node of KeyboardNotificationLayer
@@ -134,7 +135,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
         ")"
     );
 
-    target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
+    target.onClickTrackNode(Rect.containsPoint(rect, point));
     cc.log("----------------------------------");
   }
 
@@ -162,7 +163,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
         ")"
     );
 
-    target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
+    target.onClickTrackNode(Rect.containsPoint(rect, point));
     cc.log("----------------------------------");
   }
 }

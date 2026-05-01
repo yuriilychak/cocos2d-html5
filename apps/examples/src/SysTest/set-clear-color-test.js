@@ -32,6 +32,7 @@
 import { SysTestBase } from "./sys-test-base";
 import { s_back } from "../resources";
 import { director, winSize } from "../constants";
+import { Color, Rect } from "@aspect/core";
 
 export class setClearColorTest extends SysTestBase {
     constructor()
@@ -39,7 +40,7 @@ export class setClearColorTest extends SysTestBase {
         super();
 
         this._title = "Set clearColor to red with alpha = 0 ";
-        var bg = new cc.Sprite(s_back,new cc.Rect(0,0, 200, 200));
+        var bg = new cc.Sprite(s_back,new Rect(0,0, 200, 200));
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         this.addChild(bg);
@@ -47,12 +48,12 @@ export class setClearColorTest extends SysTestBase {
     onEnter()
     {
         super.onEnter();
-        var clearColor = new cc.Color(255, 0, 0, 0);
+        var clearColor = new Color(255, 0, 0, 0);
         director.setClearColor(clearColor);
     }
     onExit()
     {
-        director.setClearColor(new cc.Color(0, 0, 0, 255));
+        director.setClearColor(new Color(0, 0, 0, 255));
         super.onExit();
     }
 

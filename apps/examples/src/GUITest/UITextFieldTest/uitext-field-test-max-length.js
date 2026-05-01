@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point } from "@aspect/core";
 
 export class UITextFieldTest_MaxLength extends UIMainLayer {
   init() {
@@ -60,7 +61,7 @@ export class UITextFieldTest_MaxLength extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.225,
-            new cc.Point(
+            new Point(
               widgetSize.width / 2,
               widgetSize.height / 2 + textField.height / 2
             )
@@ -74,7 +75,7 @@ export class UITextFieldTest_MaxLength extends UIMainLayer {
         textField.runAction(
           new cc.MoveTo(
             0.175,
-            new cc.Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
+            new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
           )
         );
         this._topDisplayLabel.setString(

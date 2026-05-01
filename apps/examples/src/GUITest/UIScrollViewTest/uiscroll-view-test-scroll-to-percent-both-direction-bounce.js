@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Point, Size, Color } from "@aspect/core";
 
 export class UIScrollViewTest_ScrollToPercentBothDirection_Bounce extends UIMainLayer {
   init() {
@@ -45,11 +46,11 @@ export class UIScrollViewTest_ScrollToPercentBothDirection_Bounce extends UIMain
       var scrollView = new ccui.ScrollView();
       scrollView.setTouchEnabled(true);
       scrollView.setBounceEnabled(true);
-      scrollView.setBackGroundColor(cc.Color.GREEN);
+      scrollView.setBackGroundColor(Color.GREEN);
       scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
       scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
-      scrollView.setInnerContainerSize(new cc.Size(480, 320));
-      scrollView.setContentSize(new cc.Size(100, 100));
+      scrollView.setInnerContainerSize(new Size(480, 320));
+      scrollView.setContentSize(new Size(100, 100));
       var scrollViewSize = scrollView.getContentSize();
 
       scrollView.x =
@@ -58,7 +59,7 @@ export class UIScrollViewTest_ScrollToPercentBothDirection_Bounce extends UIMain
       scrollView.y =
         (widgetSize.height - background.height) / 2 +
         (background.height - scrollViewSize.height) / 2;
-      scrollView.scrollToPercentBothDirection(new cc.Point(50, 50), 1, true);
+      scrollView.scrollToPercentBothDirection(new Point(50, 50), 1, true);
 
       this._mainNode.addChild(scrollView);
 

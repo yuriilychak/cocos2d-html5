@@ -40,11 +40,12 @@ import {
 } from "./sprite-test-helpers";
 import { SpriteTestScene } from "./sprite-test-scene";
 import { director } from "../constants";
+import { Color } from "@aspect/core";
 
 export class SpriteTestDemo extends BaseTestLayer {
   constructor() {
     if (arguments.length === 0) {
-      super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+      super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
     } else {
       super(...arguments);
     }

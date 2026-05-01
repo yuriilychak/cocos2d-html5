@@ -31,6 +31,7 @@ import {
   TAG_STENCILNODE
 } from "./clipping-node-test-constants";
 import { s_pathGrossini } from "../resources";
+import { Point, Color } from "@aspect/core";
 
 export class BasicTest extends BaseClippingNodeTest {
   title() {
@@ -79,12 +80,12 @@ export class BasicTest extends BaseClippingNodeTest {
   shape() {
     var shape = new cc.DrawNode();
     var triangle = [
-      new cc.Point(-100, -100),
-      new cc.Point(100, -100),
-      new cc.Point(0, 100)
+      new Point(-100, -100),
+      new Point(100, -100),
+      new Point(0, 100)
     ];
 
-    var green = new cc.Color(0, 255, 0, 255);
+    var green = new Color(0, 255, 0, 255);
     shape.drawPoly(triangle, green, 3, green);
     return shape;
   }

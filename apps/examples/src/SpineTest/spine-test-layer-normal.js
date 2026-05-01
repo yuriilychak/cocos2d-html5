@@ -28,10 +28,11 @@
 import { SkeletonAnimation, ANIMATION_EVENT_TYPE } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
 import { director } from "../constants";
+import { Point, Color } from "@aspect/core";
 
 export class SpineTestLayerNormal extends SpineTestLayer {
   constructor(idx) {
-    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     this._spineboy = null;
 
@@ -52,7 +53,7 @@ export class SpineTestLayerNormal extends SpineTestLayer {
       "spine/spineboy.atlas",
       0.6
     );
-    spineBoy.setPosition(new cc.Point(size.width / 2, size.height / 2 - 150));
+    spineBoy.setPosition(new Point(size.width / 2, size.height / 2 - 150));
     spineBoy.setMix("walk", "jump", 0.2);
     spineBoy.setMix("jump", "run", 0.2);
     spineBoy.setAnimation(0, "walk", true);

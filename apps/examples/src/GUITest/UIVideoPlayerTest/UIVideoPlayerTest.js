@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Color } from "@aspect/core";
 
 export class UIVideoPlayerTest extends UIMainLayer {
   onEnter() {
@@ -120,7 +121,7 @@ export class UIVideoPlayerTest extends UIMainLayer {
       i + 1 !== list.length ? button.setScale(1.3) : button.setScale(1);
       button.setPosition(140 + ((i / 5) | 0) * 530, 320 - (i % 5) * 50);
       button.setTitleText(item.name);
-      button.setTitleColor(cc.Color.YELLOW);
+      button.setTitleColor(Color.YELLOW);
       button.setZoomScale(0.3);
       button.setPressedActionEnabled(true);
       button.addClickEventListener(item.func);

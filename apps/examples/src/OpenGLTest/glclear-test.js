@@ -30,13 +30,14 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { winSize } from "../constants";
+import { Color } from "@aspect/core";
 
 export class GLClearTest extends OpenGLTestLayer {
   constructor() {
     super();
 
     if ("opengl" in cc.sys.capabilities) {
-      var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
+      var blue = new cc.LayerColor(new Color(0, 0, 255, 255));
       this.addChild(blue, 1);
 
       var node = new cc.GLNode();

@@ -25,6 +25,7 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { winSize } from "../constants";
+import { Point, Size } from "@aspect/core";
 
 export class Lens3DTest extends EffectsBaseLayer {
   title() {
@@ -36,8 +37,8 @@ export class Lens3DTest extends EffectsBaseLayer {
   getEffect(duration) {
     return cc.lens3D(
       duration,
-      new cc.Size(15, 10),
-      new cc.Point(winSize.width / 2, winSize.height / 2),
+      new Size(15, 10),
+      new Point(winSize.width / 2, winSize.height / 2),
       240
     );
   }

@@ -28,6 +28,7 @@
 // SchedulerTimeScale
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { s_stars1 } from "../resources";
+import { Point } from "@aspect/core";
 
 export class SchedulerTimeScale extends SchedulerTestLayer {
   constructor() {
@@ -45,7 +46,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     var s = cc.winSize;
 
     // rotate and jump
-    var jump1 = new cc.JumpBy(4, new cc.Point(-s.width + 80, 0), 100, 4);
+    var jump1 = new cc.JumpBy(4, new Point(-s.width + 80, 0), 100, 4);
     var jump2 = jump1.reverse();
     var rot1 = new cc.RotateBy(4, 360 * 2);
     var rot2 = rot1.reverse();
@@ -65,9 +66,9 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     grossini.setActionManager(this._newActionManager);
     grossini.setScheduler(this._newScheduler);
 
-    grossini.setPosition(new cc.Point(40, 80));
-    tamara.setPosition(new cc.Point(40, 80));
-    kathia.setPosition(new cc.Point(40, 80));
+    grossini.setPosition(new Point(40, 80));
+    tamara.setPosition(new Point(40, 80));
+    kathia.setPosition(new Point(40, 80));
 
     this.addChild(grossini);
     this.addChild(tamara);

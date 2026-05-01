@@ -25,6 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Rect } from "@aspect/core";
+
+
 export var TEXT_INPUT_FONT_NAME = "Thonburi";
 
 export var TEXT_INPUT_FONT_SIZE = 36;
@@ -32,7 +35,7 @@ export var TEXT_INPUT_FONT_SIZE = 36;
 export let sceneIdx = -1;
 
 export function textInputGetRect(node) {
-    var rc = new cc.Rect(node.x, node.y, node.width, node.height);
+    var rc = new Rect(node.x, node.y, node.width, node.height);
     rc.x -= rc.width / 2;
     rc.y -= rc.height / 2;
     return rc;

@@ -76,6 +76,7 @@ import { Issue1438 } from "./issue1438";
 import { Issue1446 } from "./issue1446";
 import { PauseResumeActions } from "./pause-resume-actions";
 import { SequenceRepeatTest } from "./sequence-repeat-test";
+import { Color } from "@aspect/core";
 
 // special code, just for reduce code redundancy
 export function createCustomAction(ActionObject) {
@@ -85,7 +86,7 @@ export function createCustomAction(ActionObject) {
       if (this.getTarget()) {
         // rand color
         this.getTarget().setColor(
-          new cc.Color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
+          new Color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
         );
       }
     }
