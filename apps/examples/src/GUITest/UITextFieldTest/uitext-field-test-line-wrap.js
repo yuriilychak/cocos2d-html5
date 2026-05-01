@@ -25,65 +25,81 @@
  ****************************************************************************/
 
 //2015-01-14
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UITextFieldTest_LineWrap extends UIMainLayer {
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-    init(){
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
+      // Add a label in which the textfield events will be displayed
+      this._topDisplayLabel.setString("No Event");
+      this._topDisplayLabel.setPosition(
+        widgetSize.width / 2,
+        widgetSize.height / 2 + this._topDisplayLabel.height * 1.5
+      );
+      this._bottomDisplayLabel.setString("");
 
-            // Add a label in which the textfield events will be displayed
-            this._topDisplayLabel.setString("No Event");
-            this._topDisplayLabel.setPosition(widgetSize.width / 2, widgetSize.height / 2 + this._topDisplayLabel.height * 1.5);
-            this._bottomDisplayLabel.setString("");
+      // Add the alert
+      var alert = new ccui.Text("TextField line wrap", "Marker Felt", 30);
+      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setPosition(
+        new cc.Point(
+          widgetSize.width / 2,
+          widgetSize.height / 2 - alert.height * 3.075
+        )
+      );
+      this._mainNode.addChild(alert);
 
-            // Add the alert
-            var alert = new ccui.Text("TextField line wrap","Marker Felt",30);
-            alert.setColor(new cc.Color(159, 168, 176));
-            alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.075));
-            this._mainNode.addChild(alert);
-
-            // Create the textfield
-            var textField = new ccui.TextField("input words here", "Marker Felt",30);
-            textField.ignoreContentAdaptWithSize(false);
-            //textField.getVirtualRenderer().setLineBreakWithoutSpace(true);
-            textField.setContentSize(240, 120);
-            textField.setString("input words here");
-            textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
-            textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
-            textField.setPosition(widgetSize.width / 2, widgetSize.height / 2);
-            textField.addEventListener(this.textFieldEvent, this);
-            this._mainNode.addChild(textField);
-            return true;
-        }
+      // Create the textfield
+      var textField = new ccui.TextField("input words here", "Marker Felt", 30);
+      textField.ignoreContentAdaptWithSize(false);
+      //textField.getVirtualRenderer().setLineBreakWithoutSpace(true);
+      textField.setContentSize(240, 120);
+      textField.setString("input words here");
+      textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+      textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+      textField.setPosition(widgetSize.width / 2, widgetSize.height / 2);
+      textField.addEventListener(this.textFieldEvent, this);
+      this._mainNode.addChild(textField);
+      return true;
     }
+  }
 
-    textFieldEvent(textField, type){
-        var widgetSize = this._widget.getContentSize();
-        switch (type){
-            case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(new cc.MoveTo(0.225, new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 30)));
-                textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT);
-                textField.setTextVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP);
-                this._topDisplayLabel.setString("attach with IME");
-                break;
-            case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(new cc.MoveTo(0.175, new cc.Point(widgetSize.width / 2, widgetSize.height / 2)));
-                textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
-                textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
-                this._topDisplayLabel.setString("detach with IME");
-                break;
-            case ccui.TextField.EVENT_INSERT_TEXT:
-                this._topDisplayLabel.setString("insert words");
-                break;
-            case ccui.TextField.EVENT_DELETE_BACKWARD:
-                this._topDisplayLabel.setString("delete word");
-                break;
-            default:
-                break;
-        }
-        this._bottomDisplayLabel.setString(textField.getString());
+  textFieldEvent(textField, type) {
+    var widgetSize = this._widget.getContentSize();
+    switch (type) {
+      case ccui.TextField.EVENT_ATTACH_WITH_IME:
+        textField.runAction(
+          new cc.MoveTo(
+            0.225,
+            new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
+          )
+        );
+        textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT);
+        textField.setTextVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        this._topDisplayLabel.setString("attach with IME");
+        break;
+      case ccui.TextField.EVENT_DETACH_WITH_IME:
+        textField.runAction(
+          new cc.MoveTo(
+            0.175,
+            new cc.Point(widgetSize.width / 2, widgetSize.height / 2)
+          )
+        );
+        textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+        textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+        this._topDisplayLabel.setString("detach with IME");
+        break;
+      case ccui.TextField.EVENT_INSERT_TEXT:
+        this._topDisplayLabel.setString("insert words");
+        break;
+      case ccui.TextField.EVENT_DELETE_BACKWARD:
+        this._topDisplayLabel.setString("delete word");
+        break;
+      default:
+        break;
     }
-
+    this._bottomDisplayLabel.setString(textField.getString());
+  }
 }

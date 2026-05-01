@@ -30,14 +30,14 @@
 // ActionRepeat
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionRepeat extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 4.3;
-    }
+  constructor() {
+    super();
+    this.testDuration = 4.3;
+  }
 
   onEnter() {
     //----start21----onEnter
@@ -74,5 +74,4 @@ export class ActionRepeat extends ActionsDemo {
     ret.push(new cc.Point(this._tamara.x, this._tamara.y));
     return JSON.stringify(ret);
   }
-
 }

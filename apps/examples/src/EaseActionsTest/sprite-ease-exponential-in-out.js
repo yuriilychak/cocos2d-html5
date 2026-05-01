@@ -30,33 +30,37 @@
 // SpriteEaseExponentialInOut
 //
 //------------------------------------------------------------------
-import { EaseSpriteDemo } from "./ease-sprite-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { EaseSpriteDemo } from "./ease-sprite-demo";
+import { winSize } from "../constants";
 
 export class SpriteEaseExponentialInOut extends EaseSpriteDemo {
-    onEnter() {
-        //----start3----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start3----onEnter
+    super.onEnter();
 
-        var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
-        var move_back = move.reverse();
+    var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
+    var move_back = move.reverse();
 
-        var move_ease = move.clone().easing(cc.easeExponentialInOut());
-        var move_ease_back = move_ease.reverse();
+    var move_ease = move.clone().easing(cc.easeExponentialInOut());
+    var move_ease_back = move_ease.reverse();
 
-        var delay = new cc.DelayTime(0.1);
+    var delay = new cc.DelayTime(0.1);
 
-        var seq1 = cc.sequence(move, delay, move_back, delay.clone());
-        var seq2 = cc.sequence(move_ease, delay.clone(), move_ease_back, delay.clone());
+    var seq1 = cc.sequence(move, delay, move_back, delay.clone());
+    var seq2 = cc.sequence(
+      move_ease,
+      delay.clone(),
+      move_ease_back,
+      delay.clone()
+    );
 
-        this.positionForTwo();
+    this.positionForTwo();
 
-        this._grossini.runAction(seq1.repeatForever());
-        this._tamara.runAction(seq2.repeatForever());
-        //----end3----
-    }
-    title() {
-        return "EaseExponentialInOut action";
-    }
-
+    this._grossini.runAction(seq1.repeatForever());
+    this._tamara.runAction(seq2.repeatForever());
+    //----end3----
+  }
+  title() {
+    return "EaseExponentialInOut action";
+  }
 }

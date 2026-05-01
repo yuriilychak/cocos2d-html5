@@ -30,15 +30,14 @@
 // ActionBlink
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionBlink extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = new cc.Blink( time, #_of_blinks );";
-        this.testDuration = 2.1;
-    }
-
+  constructor() {
+    super();
+    this._code = "a = new cc.Blink( time, #_of_blinks );";
+    this.testDuration = 2.1;
+  }
 
   onEnter() {
     //----start13----onEnter
@@ -75,5 +74,4 @@ export class ActionBlink extends ActionsDemo {
     ret.push(this._kathia.visible);
     return JSON.stringify(ret);
   }
-
 }

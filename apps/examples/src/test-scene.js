@@ -26,45 +26,43 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestController } from "./test-controller.js";
-import { director, winSize } from "./tests-main-constants.js";
+import { TestController } from "./test-controller";
+import { director, winSize } from "./constants";
 
 export class TestScene extends cc.Scene {
-    constructor(bPortrait) {
-        super();
+  constructor(bPortrait) {
+    super();
 
-        this._mainMenu = null;
-        this.init();
+    this._mainMenu = null;
+    this.init();
 
-        var label = new cc.LabelTTF("Main Menu", "Arial", 20);
-        var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
+    var label = new cc.LabelTTF("Main Menu", "Arial", 20);
+    var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
 
-        var menu = new cc.Menu(menuItem);
-        this._mainMenu = menu;
-        menu.x = 0;
-        menu.y = 0;
-        menuItem.x = winSize.width - 50;
-        menuItem.y = 25;
+    var menu = new cc.Menu(menuItem);
+    this._mainMenu = menu;
+    menu.x = 0;
+    menu.y = 0;
+    menuItem.x = winSize.width - 50;
+    menuItem.y = 25;
 
-        if(!window.sideIndexBar){
-            this.addChild(menu, 1);
-        }
+    if (!window.sideIndexBar) {
+      this.addChild(menu, 1);
     }
-    onMainMenuCallback() {
-        if (director.isPaused()) {
-            director.resume();
-        } 
-        this._mainMenu.enabled = false;
-        var scene = new cc.Scene();
-        var layer = new TestController();
-        scene.addChild(layer);
-        var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
-        director.runScene(transition);
+  }
+  onMainMenuCallback() {
+    if (director.isPaused()) {
+      director.resume();
     }
+    this._mainMenu.enabled = false;
+    var scene = new cc.Scene();
+    var layer = new TestController();
+    scene.addChild(layer);
+    var transition = new cc.TransitionProgressRadialCCW(0.5, scene);
+    director.runScene(transition);
+  }
 
-    runThisTest() {
-        // override me
-    }
-
-
+  runThisTest() {
+    // override me
+  }
 }

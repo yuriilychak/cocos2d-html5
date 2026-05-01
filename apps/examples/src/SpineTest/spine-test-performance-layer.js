@@ -25,35 +25,38 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { sp } from "./spine-test-constants.js";
-import { SpineTestLayer } from "./spine-test-layer.js";
+import { SkeletonAnimation } from "@aspect/extensions";
+import { SpineTestLayer } from "./spine-test-layer";
 
 export class SpineTestPerformanceLayer extends SpineTestLayer {
-    constructor(){
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
-        var self = this;
-        var listener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan: function(touch, event){
-                var pos = self.convertToNodeSpace(touch.getLocation());
-                var skeletonNode = new sp.SkeletonAnimation("spine/goblins-pro.json", "spine/goblins.atlas", 1.5);
-                skeletonNode.setAnimation(0, "walk", true);
-                skeletonNode.setSkin("goblin");
+    var self = this;
+    var listener = cc.EventListener.create({
+      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+      onTouchBegan: function (touch, event) {
+        var pos = self.convertToNodeSpace(touch.getLocation());
+        var skeletonNode = new SkeletonAnimation(
+          "spine/goblins-pro.json",
+          "spine/goblins.atlas",
+          1.5
+        );
+        skeletonNode.setAnimation(0, "walk", true);
+        skeletonNode.setSkin("goblin");
 
-                skeletonNode.setScale(0.2);
-                skeletonNode.setPosition(pos);
-                self.addChild(skeletonNode);
-                return true;
-            }
-        });
-        cc.eventManager.addListener(listener, this);
-    }
-    title(){
-        return "Spine Test";
-    }
-    subtitle() {
-        return "Performance Test for Spine";
-    }
-
+        skeletonNode.setScale(0.2);
+        skeletonNode.setPosition(pos);
+        self.addChild(skeletonNode);
+        return true;
+      }
+    });
+    cc.eventManager.addListener(listener, this);
+  }
+  title() {
+    return "Spine Test";
+  }
+  subtitle() {
+    return "Performance Test for Spine";
+  }
 }

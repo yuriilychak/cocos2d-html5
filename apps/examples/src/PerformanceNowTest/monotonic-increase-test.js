@@ -22,55 +22,58 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { PerformanceNowBaseLayer } from "./performance-now-base-layer.js";
+import { PerformanceNowBaseLayer } from "./performance-now-base-layer";
 
 export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
-    constructor() {
-        super();
-        if (performance && typeof performance.now !== 'function') {
-             var errLabel = new cc.LabelTTF("On browser that does not support performance.now");
-            this.addChild(errLabel);   
-            errLabel.attr({
-                x: cc.winSize.width/2,
-                y: cc.winSize.height/2
-            });          
-            return;
-        }
-
-
-        var performanceValues = [];
-        for (var i = 0; i < 20; ++i) {
-            performanceValues.push(performance.now().toFixed(3));
-        }
-
-        var monotonicIncrease = false;
-        for (var i = 1; i < performanceValues.length; ++i) {
-            monotonicIncrease = performanceValues[i] >= performanceValues[i - 1];
-        }
-
-        var label = new cc.LabelTTF("Result that values are montonically increasing : " + monotonicIncrease);
-        label.attr({
-            x: cc.winSize.width/2,
-            y: cc.winSize.height/2 + 50
-        });
-        this.addChild(label);
-
-        var values = new cc.LabelTTF("Result Values : " + JSON.stringify(performanceValues));
-        values.attr({
-            x: cc.winSize.width/2,
-            y: (cc.winSize.height/2) - 50
-        });
-        values.setDimensions(cc.winSize.width/2, 100);
-        this.addChild(values);
-
+  constructor() {
+    super();
+    if (performance && typeof performance.now !== "function") {
+      var errLabel = new cc.LabelTTF(
+        "On browser that does not support performance.now"
+      );
+      this.addChild(errLabel);
+      errLabel.attr({
+        x: cc.winSize.width / 2,
+        y: cc.winSize.height / 2
+      });
+      return;
     }
 
-    title() {
-        return "Testing monotonic increase of performance.now";
+    var performanceValues = [];
+    for (var i = 0; i < 20; ++i) {
+      performanceValues.push(performance.now().toFixed(3));
     }
 
-    subtitle() {
-        return "Listed values should all be increasing";
+    var monotonicIncrease = false;
+    for (var i = 1; i < performanceValues.length; ++i) {
+      monotonicIncrease = performanceValues[i] >= performanceValues[i - 1];
     }
 
+    var label = new cc.LabelTTF(
+      "Result that values are montonically increasing : " + monotonicIncrease
+    );
+    label.attr({
+      x: cc.winSize.width / 2,
+      y: cc.winSize.height / 2 + 50
+    });
+    this.addChild(label);
+
+    var values = new cc.LabelTTF(
+      "Result Values : " + JSON.stringify(performanceValues)
+    );
+    values.attr({
+      x: cc.winSize.width / 2,
+      y: cc.winSize.height / 2 - 50
+    });
+    values.setDimensions(cc.winSize.width / 2, 100);
+    this.addChild(values);
+  }
+
+  title() {
+    return "Testing monotonic increase of performance.now";
+  }
+
+  subtitle() {
+    return "Listed values should all be increasing";
+  }
 }

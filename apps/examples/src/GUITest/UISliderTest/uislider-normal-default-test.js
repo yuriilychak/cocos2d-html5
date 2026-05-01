@@ -25,40 +25,54 @@
  ****************************************************************************/
 
 //2015-01-14
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UISliderNormalDefaultTest extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-            this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("");
 
-            // Add the alert
-            var alert = new ccui.Text("when pressed, the slider ball should scale","Marker Felt",20);
-            alert.setColor(new cc.Color(159, 168, 176));
-            alert.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
-            this._mainNode.addChild(alert);
+      // Add the alert
+      var alert = new ccui.Text(
+        "when pressed, the slider ball should scale",
+        "Marker Felt",
+        20
+      );
+      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setPosition(
+        new cc.Point(
+          widgetSize.width / 2,
+          widgetSize.height / 2 - alert.height * 3.75
+        )
+      );
+      this._mainNode.addChild(alert);
 
-            // Create the slider
-            var slider = new ccui.Slider();
-            slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
-            slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png");
-            slider.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 50));
-            this._mainNode.addChild(slider);
+      // Create the slider
+      var slider = new ccui.Slider();
+      slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+      slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png");
+      slider.setPosition(
+        new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + 50)
+      );
+      this._mainNode.addChild(slider);
 
-            var sliderScale9 = new ccui.Slider("ccs-res/cocosui/sliderTrack2.png", "ccs-res/cocosui/sliderThumb.png");
-            sliderScale9.setScale9Enabled(true);
-            sliderScale9.setCapInsets(new cc.Rect(0, 0, 0, 0));
-            sliderScale9.setZoomScale(1);
-            sliderScale9.setContentSize(new cc.Size(250, 19));
-            sliderScale9.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - 20));
-            this._mainNode.addChild(sliderScale9);
+      var sliderScale9 = new ccui.Slider(
+        "ccs-res/cocosui/sliderTrack2.png",
+        "ccs-res/cocosui/sliderThumb.png"
+      );
+      sliderScale9.setScale9Enabled(true);
+      sliderScale9.setCapInsets(new cc.Rect(0, 0, 0, 0));
+      sliderScale9.setZoomScale(1);
+      sliderScale9.setContentSize(new cc.Size(250, 19));
+      sliderScale9.setPosition(
+        new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - 20)
+      );
+      this._mainNode.addChild(sliderScale9);
 
-
-            return true;
-        }
-        return false;
+      return true;
     }
-
+    return false;
+  }
 }

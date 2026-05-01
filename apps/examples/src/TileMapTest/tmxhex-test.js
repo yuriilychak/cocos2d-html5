@@ -30,40 +30,41 @@
 // TMXHexTest
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXHexTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.pixel1 = {"0":250, "1":202, "2":73, "3":255};
+    this.pixel1 = { 0: 250, 1: 202, 2: 73, 3: 255 };
 
-        this.pixel2 = {"0":150, "1":219, "2":10, "3":255};
-        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
-        this.addChild(color, -1);
+    this.pixel2 = { 0: 150, 1: 219, 2: 10, 3: 255 };
+    var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
+    this.addChild(color, -1);
 
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/hexa-test.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
-    }
-    title() {
-        return "TMX Hex test";
-    }
+    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/hexa-test.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
+  }
+  title() {
+    return "TMX Hex test";
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(438, 226, 10, 10);
-        var ret2 = this.readPixels(195, 0, 10, 10);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(438, 226, 10, 10);
+    var ret2 = this.readPixels(195, 0, 10, 10);
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

@@ -26,46 +26,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Issue1358 } from "./issue1358.js";
-import { sceneIdx , _setsceneIdx} from "./motion-streak-test-constants.js";
-import { MotionStreakTest1 } from "./motion-streak-test1.js";
-import { MotionStreakTest2 } from "./motion-streak-test2.js";
-
-;
-
-;
-
-;
-
-;
+import { Issue1358 } from "./issue1358";
+import { sceneIdx, _setsceneIdx } from "./motion-streak-test-constants";
+import { MotionStreakTest1 } from "./motion-streak-test1";
+import { MotionStreakTest2 } from "./motion-streak-test2";
 
 export var arrayOfMotionStreakTest = [
-    MotionStreakTest1,
-    MotionStreakTest2,
-    Issue1358
+  MotionStreakTest1,
+  MotionStreakTest2,
+  Issue1358
 ];
 
 export function nextMotionAction() {
-    _setsceneIdx(sceneIdx + 1);
-    _setsceneIdx(sceneIdx % arrayOfMotionStreakTest.length);
-    return new arrayOfMotionStreakTest[sceneIdx]();
+  _setsceneIdx(sceneIdx + 1);
+  _setsceneIdx(sceneIdx % arrayOfMotionStreakTest.length);
+  return new arrayOfMotionStreakTest[sceneIdx]();
 }
-
-;
 
 export function backMotionAction() {
-    _setsceneIdx(sceneIdx - 1);
-    if (sceneIdx < 0)
-        _setsceneIdx(sceneIdx + (arrayOfMotionStreakTest.length));
-    return new arrayOfMotionStreakTest[sceneIdx]();
+  _setsceneIdx(sceneIdx - 1);
+  if (sceneIdx < 0) _setsceneIdx(sceneIdx + arrayOfMotionStreakTest.length);
+  return new arrayOfMotionStreakTest[sceneIdx]();
 }
-
-;
 
 export function restartMotionAction() {
-    return new arrayOfMotionStreakTest[sceneIdx]();
+  return new arrayOfMotionStreakTest[sceneIdx]();
 }
-
-;
-
-;

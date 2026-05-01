@@ -24,19 +24,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UILoadingBarTest } from "./uiloading-bar-test.js";
+import { UILoadingBarTest } from "./uiloading-bar-test";
 
 export class UILoadingBarTest_Left extends UILoadingBarTest {
-    createLoadingBar() {
-        var widgetSize = this._widget.getContentSize();
-        var loadingBar = new ccui.LoadingBar();
-        loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("ccs-res/cocosui/sliderProgress.png");
-        loadingBar.setPercent(0);
-        loadingBar.x = widgetSize.width / 2;
-        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
-        this._mainNode.addChild(loadingBar);
-        this._loadingBar = loadingBar;
-    }
-
+  createLoadingBar() {
+    var widgetSize = this._widget.getContentSize();
+    var loadingBar = new ccui.LoadingBar();
+    loadingBar.setName("LoadingBar");
+    loadingBar.loadTexture("ccs-res/cocosui/sliderProgress.png");
+    loadingBar.setPercent(0);
+    loadingBar.x = widgetSize.width / 2;
+    loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
+    this._mainNode.addChild(loadingBar);
+    this._loadingBar = loadingBar;
+  }
 }

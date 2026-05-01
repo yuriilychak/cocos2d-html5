@@ -25,59 +25,55 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer.js";
-import { AssetsManagerLoaderScene } from "./assets-manager-loader-scene.js";
-import { currentScene, sceneManifests , _setcurrentScene} from "./assets-manager-test-constants.js";
+import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
+import { AssetsManagerLoaderScene } from "./assets-manager-loader-scene";
+import {
+  currentScene,
+  sceneManifests,
+  _setcurrentScene
+} from "./assets-manager-test-constants";
 
 export class AssetsManagerTestLayer extends BaseTestLayer {
+  constructor(spritePath) {
+    super();
 
-    constructor(spritePath) {
-        super();
+    this._background = null;
 
+    this._spritePath = "";
+    this._spritePath = spritePath;
+    cc.loader.resPath = "res/";
+  }
 
-        this._background = null;
+  getTitle() {
+    return "AssetsManagerTest";
+  }
 
+  onEnter() {
+    super.onEnter();
+    this._background = new cc.Sprite(this._spritePath);
+    this.addChild(this._background, 1);
+    this._background.x = cc.winSize.width / 2;
+    this._background.y = cc.winSize.height / 2;
+  }
 
-        this._spritePath = "";
-        this._spritePath = spritePath;
-        cc.loader.resPath = "res/";
-    }
+  onExit() {
+    cc.loader.resPath = "";
+    super.onExit();
+  }
 
-    getTitle() {
-        return "AssetsManagerTest";
-    }
+  onNextCallback() {
+    if (currentScene < sceneManifests.length - 1) {
+      _setcurrentScene(currentScene + 1);
+    } else _setcurrentScene(0);
+    var scene = new AssetsManagerLoaderScene();
+    scene.runThisTest();
+  }
 
-    onEnter() {
-        super.onEnter();
-        this._background = new cc.Sprite(this._spritePath);
-        this.addChild(this._background, 1);
-        this._background.x = cc.winSize.width/2;
-        this._background.y = cc.winSize.height/2;
-    }
-
-    onExit(){
-        cc.loader.resPath = "";
-        super.onExit();
-    }
-
-    onNextCallback() {
-        if (currentScene < sceneManifests.length - 1)
-        {
-            _setcurrentScene(currentScene + 1);
-        }
-        else _setcurrentScene(0);
-        var scene = new AssetsManagerLoaderScene();
-        scene.runThisTest();
-    }
-
-    onBackCallback() {
-        if (currentScene > 0)
-        {
-            _setcurrentScene(currentScene - 1);
-        }
-        else _setcurrentScene(sceneManifests.length - 1);
-        var scene = new AssetsManagerLoaderScene();
-        scene.runThisTest();
-    }
-
+  onBackCallback() {
+    if (currentScene > 0) {
+      _setcurrentScene(currentScene - 1);
+    } else _setcurrentScene(sceneManifests.length - 1);
+    var scene = new AssetsManagerLoaderScene();
+    scene.runThisTest();
+  }
 }

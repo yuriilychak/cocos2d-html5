@@ -30,9 +30,9 @@
 // Sprite1
 //
 //------------------------------------------------------------------
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_grossini_dance_atlas } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_grossini_dance_atlas } from "../resources";
+import { winSize } from "../constants";
 
 export class Sprite1 extends SpriteTestDemo {
 

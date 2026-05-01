@@ -25,79 +25,85 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
-import { TAG_CLIPPERNODE, TAG_STENCILNODE } from "./clipping-node-test-constants.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { BaseClippingNodeTest } from "./base-clipping-node-test";
+import {
+  TAG_CLIPPERNODE,
+  TAG_STENCILNODE
+} from "./clipping-node-test-constants";
+import { s_pathGrossini } from "../resources";
 
 export class BasicTest extends BaseClippingNodeTest {
-    title() {
-        return "Basic Test";
-    }
+  title() {
+    return "Basic Test";
+  }
 
-    subtitle() {
-        return "";
-    }
+  subtitle() {
+    return "";
+  }
 
-    setup() {
-        var winSize = cc.director.getWinSize();
+  setup() {
+    var winSize = cc.director.getWinSize();
 
-        var stencil = this.stencil();
-        stencil.tag = TAG_STENCILNODE;
-        stencil.x = 50;
-        stencil.y = 50;
+    var stencil = this.stencil();
+    stencil.tag = TAG_STENCILNODE;
+    stencil.x = 50;
+    stencil.y = 50;
 
-        var clipper = this.clipper();
-        clipper.tag = TAG_CLIPPERNODE;
-        clipper.anchorX = 0.5;
-        clipper.anchorY = 0.5;
-        clipper.x = winSize.width / 2 - 50;
-        clipper.y = winSize.height / 2 - 50;
-        clipper.stencil = stencil;
-        this.addChild(clipper);
+    var clipper = this.clipper();
+    clipper.tag = TAG_CLIPPERNODE;
+    clipper.anchorX = 0.5;
+    clipper.anchorY = 0.5;
+    clipper.x = winSize.width / 2 - 50;
+    clipper.y = winSize.height / 2 - 50;
+    clipper.stencil = stencil;
+    this.addChild(clipper);
 
-        var content = this.content();
-        content.x = 50;
-        content.y = 50;
-        clipper.addChild(content);
-        //content.x = 400;
-        //content.y = 225;
-        //this.addChild(content);
-    }
+    var content = this.content();
+    content.x = 50;
+    content.y = 50;
+    clipper.addChild(content);
+    //content.x = 400;
+    //content.y = 225;
+    //this.addChild(content);
+  }
 
-    actionRotate() {
-        return new cc.RotateBy(1.0, 90.0).repeatForever();
-    }
+  actionRotate() {
+    return new cc.RotateBy(1.0, 90.0).repeatForever();
+  }
 
-    actionScale() {
-        var scale = new cc.ScaleBy(1.33, 1.5);
-        return cc.sequence(scale, scale.reverse()).repeatForever();
-    }
+  actionScale() {
+    var scale = new cc.ScaleBy(1.33, 1.5);
+    return cc.sequence(scale, scale.reverse()).repeatForever();
+  }
 
-    shape() {
-        var shape = new cc.DrawNode();
-        var triangle = [new cc.Point(-100, -100),new cc.Point(100, -100), new cc.Point(0, 100)];
+  shape() {
+    var shape = new cc.DrawNode();
+    var triangle = [
+      new cc.Point(-100, -100),
+      new cc.Point(100, -100),
+      new cc.Point(0, 100)
+    ];
 
-        var green = new cc.Color(0, 255, 0, 255);
-        shape.drawPoly(triangle, green, 3, green);
-        return shape;
-    }
+    var green = new cc.Color(0, 255, 0, 255);
+    shape.drawPoly(triangle, green, 3, green);
+    return shape;
+  }
 
-    grossini() {
-        var grossini = new cc.Sprite(s_pathGrossini);
-        grossini.scale = 1.5;
-        return grossini;
-    }
+  grossini() {
+    var grossini = new cc.Sprite(s_pathGrossini);
+    grossini.scale = 1.5;
+    return grossini;
+  }
 
-    stencil() {
-        return null;
-    }
+  stencil() {
+    return null;
+  }
 
-    clipper() {
-        return new cc.ClippingNode();
-    }
+  clipper() {
+    return new cc.ClippingNode();
+  }
 
-    content() {
-        return null;
-    }
-
+  content() {
+    return null;
+  }
 }

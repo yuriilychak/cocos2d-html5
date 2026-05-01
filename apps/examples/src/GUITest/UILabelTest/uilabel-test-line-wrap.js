@@ -24,32 +24,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UILabelTest_LineWrap extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
-            //init text
-            this._topDisplayLabel.string = "";
-            this._bottomDisplayLabel.string = "Label line wrap";
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
+      //init text
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "Label line wrap";
 
-            // Create the text area
-            var text = new ccui.Text();
-            text.boundingWidth = 280;
-	        text.boundingHeight = 150;
-            text.attr({
-	            textAlign: cc.TEXT_ALIGNMENT_CENTER,
-	            string: "Label can line wrap",
-	            font: "32px AmericanTypewriter",
-	            x: this._widget.width / 2
-            });
-	        text.y = this._widget.height / 2 - text.height / 8;
-            this._mainNode.addChild(text);
+      // Create the text area
+      var text = new ccui.Text();
+      text.boundingWidth = 280;
+      text.boundingHeight = 150;
+      text.attr({
+        textAlign: cc.TEXT_ALIGNMENT_CENTER,
+        string: "Label can line wrap",
+        font: "32px AmericanTypewriter",
+        x: this._widget.width / 2
+      });
+      text.y = this._widget.height / 2 - text.height / 8;
+      this._mainNode.addChild(text);
 
-            return true;
-        }
-        return false;
+      return true;
     }
-
+    return false;
+  }
 }

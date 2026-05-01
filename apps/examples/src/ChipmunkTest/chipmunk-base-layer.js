@@ -27,91 +27,97 @@
 // ChipmunkBaseLayer
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { chipmunkTestSceneIdx } from "./chipmunk-test-constants.js";
-import { arrayOfChipmunkTest, nextChipmunkTest, previousChipmunkTest, restartChipmunkTest } from "./chipmunk-test-helpers.js";
-import { ChipmunkTestScene } from "./chipmunk-test-scene.js";
-import { director, winSize } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { chipmunkTestSceneIdx } from "./chipmunk-test-constants";
+import {
+  arrayOfChipmunkTest,
+  nextChipmunkTest,
+  previousChipmunkTest,
+  restartChipmunkTest
+} from "./chipmunk-test-helpers";
+import { ChipmunkTestScene } from "./chipmunk-test-scene";
+import { director, winSize } from "../constants";
 
 export class ChipmunkBaseLayer extends BaseTestLayer {
-    constructor() {
-        //
-        // VERY IMPORTANT
-        //
-        // Only subclasses of a native classes MUST call cc.associateWithNative
-        // Failure to do so, it will crash.
-        //
-        super( new cc.Color(0,0,0,255), new cc.Color(98*0.5,99*0.5,117*0.5,255) );
+  constructor() {
+    //
+    // VERY IMPORTANT
+    //
+    // Only subclasses of a native classes MUST call cc.associateWithNative
+    // Failure to do so, it will crash.
+    //
+    super(
+      new cc.Color(0, 0, 0, 255),
+      new cc.Color(98 * 0.5, 99 * 0.5, 117 * 0.5, 255)
+    );
 
-        this._title =  "No title";
-        this._subtitle = "No Subtitle";
+    this._title = "No title";
+    this._subtitle = "No Subtitle";
 
-        // Menu to toggle debug physics on / off
-        var item = new cc.MenuItemFont("Physics On/Off", this.onToggleDebug, this);
-        item.fontSize = 24;
-        var menu = new cc.Menu( item );
-        this.addChild( menu );
-        menu.x = winSize.width-100;
-        menu.y = winSize.height-90;
+    // Menu to toggle debug physics on / off
+    var item = new cc.MenuItemFont("Physics On/Off", this.onToggleDebug, this);
+    item.fontSize = 24;
+    var menu = new cc.Menu(item);
+    this.addChild(menu);
+    menu.x = winSize.width - 100;
+    menu.y = winSize.height - 90;
 
-        // Create the initial space
-        this.space = new cp.Space();
+    // Create the initial space
+    this.space = new cp.Space();
 
-        this.setupDebugNode();
-    }
+    this.setupDebugNode();
+  }
 
-    setupDebugNode()
-    {
-        // debug only
-        this._debugNode = new cc.PhysicsDebugNode(this.space );
-        this._debugNode.visible = false ;
-        this.addChild( this._debugNode );
-    }
+  setupDebugNode() {
+    // debug only
+    this._debugNode = new cc.PhysicsDebugNode(this.space);
+    this._debugNode.visible = false;
+    this.addChild(this._debugNode);
+  }
 
-    onToggleDebug(sender) {
-        var state = this._debugNode.visible;
-        this._debugNode.visible = !state ;
-    }
+  onToggleDebug(sender) {
+    var state = this._debugNode.visible;
+    this._debugNode.visible = !state;
+  }
 
-    onEnter() {
-        super.onEnter();
-        //cc.base(this, 'onEnter');
+  onEnter() {
+    super.onEnter();
+    //cc.base(this, 'onEnter');
 
-        cc.sys.garbageCollect();
-    }
+    cc.sys.garbageCollect();
+  }
 
-    onCleanup() {
-        // Not compulsory, but recommended: cleanup the scene
-        this.unscheduleUpdate();
-    }
+  onCleanup() {
+    // Not compulsory, but recommended: cleanup the scene
+    this.unscheduleUpdate();
+  }
 
-    onRestartCallback(sender) {
-        this.onCleanup();
-        var s = new ChipmunkTestScene();
-        s.addChild(restartChipmunkTest());
-        director.runScene(s);
-    }
+  onRestartCallback(sender) {
+    this.onCleanup();
+    var s = new ChipmunkTestScene();
+    s.addChild(restartChipmunkTest());
+    director.runScene(s);
+  }
 
-    onNextCallback(sender) {
-        this.onCleanup();
-        var s = new ChipmunkTestScene();
-        s.addChild(nextChipmunkTest());
-        director.runScene(s);
-    }
+  onNextCallback(sender) {
+    this.onCleanup();
+    var s = new ChipmunkTestScene();
+    s.addChild(nextChipmunkTest());
+    director.runScene(s);
+  }
 
-    onBackCallback(sender) {
-        this.onCleanup();
-        var s = new ChipmunkTestScene();
-        s.addChild(previousChipmunkTest());
-        director.runScene(s);
-    }
+  onBackCallback(sender) {
+    this.onCleanup();
+    var s = new ChipmunkTestScene();
+    s.addChild(previousChipmunkTest());
+    director.runScene(s);
+  }
 
-    numberOfPendingTests() {
-        return ( (arrayOfChipmunkTest.length-1) - chipmunkTestSceneIdx );
-    }
+  numberOfPendingTests() {
+    return arrayOfChipmunkTest.length - 1 - chipmunkTestSceneIdx;
+  }
 
-    getTestNumber() {
-        return chipmunkTestSceneIdx;
-    }
-
+  getTestNumber() {
+    return chipmunkTestSceneIdx;
+  }
 }

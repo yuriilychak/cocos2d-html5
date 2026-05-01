@@ -24,80 +24,83 @@
 
  */
 
-import { ControlScene } from "../CCControlScene.js";
+import { ControlScene } from "../CCControlScene";
 
 export class ControlStepperTest extends ControlScene {
-    constructor() {
-        super();
-        this._displayValueLabel = null;
+  constructor() {
+    super();
+    this._displayValueLabel = null;
+  }
+
+  init() {
+    if (super.init()) {
+      var screenSize = cc.director.getWinSize();
+
+      var layer = new cc.Node();
+      layer.x = screenSize.width / 2;
+      layer.y = screenSize.height / 2;
+      this.addChild(layer, 1);
+      var layer_width = 0;
+
+      // Add the black background for the text
+      var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
+      background.width = 100;
+      background.height = 50;
+      background.x = layer_width + background.width / 2.0;
+      background.y = 0;
+      layer.addChild(background);
+
+      this._displayValueLabel = new cc.LabelTTF("0", "HelveticaNeue-Bold", 30);
+
+      this._displayValueLabel.x = background.x;
+      this._displayValueLabel.y = background.y;
+      layer.addChild(this._displayValueLabel);
+
+      layer_width += background.width;
+
+      var stepper = this.makeControlStepper();
+      stepper.x = layer_width + 10 + stepper.width / 2;
+      stepper.y = 0;
+      stepper.addTargetWithActionForControlEvents(
+        this,
+        this.valueChanged,
+        cc.CONTROL_EVENT_VALUECHANGED
+      );
+      layer.addChild(stepper);
+
+      layer_width += stepper.width;
+
+      // Set the layer size
+      layer.width = layer_width;
+      layer.height = 0;
+      layer.anchorX = 0.5;
+      layer.anchorY = 0.5;
+
+      // Update the value label
+      this.valueChanged(stepper, cc.CONTROL_EVENT_VALUECHANGED);
+      return true;
     }
+    return false;
+  }
+  makeControlStepper() {
+    var minusSprite = new cc.Sprite("extensions/stepper-minus.png");
+    var plusSprite = new cc.Sprite("extensions/stepper-plus.png");
 
-    init() {
-        if (super.init()) {
-            var screenSize = cc.director.getWinSize();
+    return new cc.ControlStepper(minusSprite, plusSprite);
+  }
 
-            var layer = new cc.Node();
-            layer.x = screenSize.width / 2;
-            layer.y = screenSize.height / 2;
-            this.addChild(layer, 1);
-            var layer_width = 0;
-
-            // Add the black background for the text
-            var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
-            background.width = 100;
-	        background.height = 50;
-            background.x = layer_width + background.width / 2.0;
-            background.y = 0;
-            layer.addChild(background);
-
-            this._displayValueLabel = new cc.LabelTTF("0", "HelveticaNeue-Bold", 30);
-
-            this._displayValueLabel.x = background.x;
-            this._displayValueLabel.y = background.y;
-            layer.addChild(this._displayValueLabel);
-
-            layer_width += background.width;
-
-            var stepper = this.makeControlStepper();
-            stepper.x = layer_width + 10 + stepper.width / 2;
-            stepper.y = 0;
-            stepper.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
-            layer.addChild(stepper);
-
-            layer_width += stepper.width;
-
-            // Set the layer size
-            layer.width = layer_width;
-	        layer.height = 0;
-            layer.anchorX = 0.5;
-	        layer.anchorY = 0.5;
-
-            // Update the value label
-            this.valueChanged(stepper, cc.CONTROL_EVENT_VALUECHANGED);
-            return true;
-        }
-        return false;
-    }
-    makeControlStepper() {
-        var minusSprite = new cc.Sprite("extensions/stepper-minus.png");
-        var plusSprite = new cc.Sprite("extensions/stepper-plus.png");
-
-        return new cc.ControlStepper(minusSprite, plusSprite);
-    }
-
-    valueChanged(sender, controlEvent) {
-        // Change value of label.
-        this._displayValueLabel.setString(sender.getValue().toString());
-    }
-
-};
+  valueChanged(sender, controlEvent) {
+    // Change value of label.
+    this._displayValueLabel.setString(sender.getValue().toString());
+  }
+}
 
 ControlStepperTest.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlStepperTest();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlStepperTest();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };

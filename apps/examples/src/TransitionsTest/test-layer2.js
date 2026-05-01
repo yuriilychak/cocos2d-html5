@@ -25,17 +25,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_back2 } from "../tests_resources.js";
-import { TestLayer1 } from "./test-layer1.js";
-import { TransitionBase } from "./transition-base.js";
+import { s_back2 } from "../resources";
+import { TestLayer1 } from "./test-layer1";
+import { TransitionBase } from "./transition-base";
 
 export class TestLayer2 extends TransitionBase {
-    constructor() {
-        super(s_back2, "Scene 2", new cc.Color(0,0,0,255), new cc.Color(99,160,117,255));
-    }
+  constructor() {
+    super(
+      s_back2,
+      "Scene 2",
+      new cc.Color(0, 0, 0, 255),
+      new cc.Color(99, 160, 117, 255)
+    );
+  }
 
-    createNextScene() {
-        return new TestLayer1();
-    }
-
+  createNextScene() {
+    return new TestLayer1();
+  }
 }

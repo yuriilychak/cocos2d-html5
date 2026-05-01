@@ -25,67 +25,66 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EaseSpriteDemo } from "./ease-sprite-demo.js";
-import { winSize } from "../tests-main-constants.js";
-import { TAG_ACTION1_EASE_ACTIONS } from "./ease-actions-test-constants.js";
+import { EaseSpriteDemo } from "./ease-sprite-demo";
+import { winSize } from "../constants";
+import { TAG_ACTION1_EASE_ACTIONS } from "./ease-actions-test-constants";
 
 export class SpeedTest extends EaseSpriteDemo {
-    constructor() {
-        super();
-        this.testDuration = 0.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 0.1;
+  }
 
-    onEnter() {
-        //----start12----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start12----onEnter
+    super.onEnter();
 
-        // rotate and jump
-        var jump1 = new cc.JumpBy(4, new cc.Point(-winSize.width + 80, 0), 100, 4);
-        var jump2 = jump1.reverse();
-        var rot1 = new cc.RotateBy(4, 360 * 2);
-        var rot2 = rot1.reverse();
+    // rotate and jump
+    var jump1 = new cc.JumpBy(4, new cc.Point(-winSize.width + 80, 0), 100, 4);
+    var jump2 = jump1.reverse();
+    var rot1 = new cc.RotateBy(4, 360 * 2);
+    var rot2 = rot1.reverse();
 
-        var seq3_1 = cc.sequence(jump2, jump1);
-        var seq3_2 = cc.sequence(rot1, rot2);
-        var spawn = cc.spawn(seq3_1, seq3_2);
+    var seq3_1 = cc.sequence(jump2, jump1);
+    var seq3_2 = cc.sequence(rot1, rot2);
+    var spawn = cc.spawn(seq3_1, seq3_2);
 
-        var action = spawn.repeatForever().speed(2);
-        action.tag = TAG_ACTION1_EASE_ACTIONS;
+    var action = spawn.repeatForever().speed(2);
+    action.tag = TAG_ACTION1_EASE_ACTIONS;
 
-        var action2 = action.clone();
-        var action3 = action.clone();
+    var action2 = action.clone();
+    var action3 = action.clone();
 
-        action2.tag = TAG_ACTION1_EASE_ACTIONS;
-        action3.tag = TAG_ACTION1_EASE_ACTIONS;
+    action2.tag = TAG_ACTION1_EASE_ACTIONS;
+    action3.tag = TAG_ACTION1_EASE_ACTIONS;
 
-        this._grossini.runAction(action2);
-        this._tamara.runAction(action3);
-        this._kathia.runAction(action);
+    this._grossini.runAction(action2);
+    this._tamara.runAction(action3);
+    this._kathia.runAction(action);
 
-        this.schedule(this.altertime, 1.0);
-        //----end12----
-    }
-    title() {
-        return "Speed action";
-    }
+    this.schedule(this.altertime, 1.0);
+    //----end12----
+  }
+  title() {
+    return "Speed action";
+  }
 
-    altertime(dt) {
-        //----start12----altertime
-        var action1 = this._grossini.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
-        var action2 = this._tamara.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
-        var action3 = this._kathia.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
+  altertime(dt) {
+    //----start12----altertime
+    var action1 = this._grossini.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
+    var action2 = this._tamara.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
+    var action3 = this._kathia.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
 
-        action1.setSpeed(Math.random() * 2);
-        action2.setSpeed(Math.random() * 2);
-        action3.setSpeed(Math.random() * 2);
-        //----end12----
-    }
-    // automation
-    getExpectedResult() {
-        throw "Not Implemented";
-    }
-    getCurrentResult() {
-        throw "Not Implemented";
-    }
-
+    action1.setSpeed(Math.random() * 2);
+    action2.setSpeed(Math.random() * 2);
+    action3.setSpeed(Math.random() * 2);
+    //----end12----
+  }
+  // automation
+  getExpectedResult() {
+    throw "Not Implemented";
+  }
+  getCurrentResult() {
+    throw "Not Implemented";
+  }
 }

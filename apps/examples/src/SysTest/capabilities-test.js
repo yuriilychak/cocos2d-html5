@@ -29,23 +29,17 @@
 // CapabilitiesTest
 //
 //------------------------------------------------------------------
-import { SysTestBase } from "./sys-test-base.js";
+import { SysTestBase } from "./sys-test-base";
 
 export class CapabilitiesTest extends SysTestBase {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._title = "Capabilities Test ";
 
+    this._subtitle = "See the console";
 
-        this._title = "Capabilities Test ";
-
-
-        this._subtitle = "See the console";
-
-        var c = cc.sys.capabilities;
-        for( var i in c )
-            cc.log( i + " = " + c[i] );
-    }
-
-
+    var c = cc.sys.capabilities;
+    for (var i in c) cc.log(i + " = " + c[i]);
+  }
 }

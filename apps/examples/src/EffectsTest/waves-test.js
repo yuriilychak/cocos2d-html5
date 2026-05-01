@@ -23,17 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class WavesTest extends EffectsBaseLayer {
-    title() {
-        return "Waves";
-    }
-    code() {
-        return "a = cc.waves(duration, gridSize, waves, amplitude, horizontal, vertical)";
-    }
-    getEffect(duration) {
-        return cc.waves( duration, new cc.Size(16,12), 4, 20, true, true);
-    }
-
+  title() {
+    return "Waves";
+  }
+  code() {
+    return "a = cc.waves(duration, gridSize, waves, amplitude, horizontal, vertical)";
+  }
+  getEffect(duration) {
+    return cc.waves(duration, new cc.Size(16, 12), 4, 20, true, true);
+  }
 }

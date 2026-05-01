@@ -25,129 +25,149 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { addEffectsVolume, addMusicVolume, isMusicPlaying, pauseAllEffects, pauseEffect, pauseMusic, playEffect, playEffectRepeatly, playMusic, resumeAllEffects, resumeEffect, resumeMusic, rewindMusic, stopAllEffects, stopEffect, stopMusic, subEffectsVolume, subMusicVolume, unloadEffect } from "./cocos-denshion-test-helpers.js";
+import {
+  addEffectsVolume,
+  addMusicVolume,
+  isMusicPlaying,
+  pauseAllEffects,
+  pauseEffect,
+  pauseMusic,
+  playEffect,
+  playEffectRepeatly,
+  playMusic,
+  resumeAllEffects,
+  resumeEffect,
+  resumeMusic,
+  rewindMusic,
+  stopAllEffects,
+  stopEffect,
+  stopMusic,
+  subEffectsVolume,
+  subMusicVolume,
+  unloadEffect
+} from "./cocos-denshion-test-helpers";
 
-export var MUSIC_FILE = cc.sys.os == cc.sys.OS_WINRT ? "background.wav" : "background.mp3";
+export var MUSIC_FILE =
+  cc.sys.os == cc.sys.OS_WINRT ? "background.wav" : "background.mp3";
 
-export var EFFECT_FILE = cc.sys.os == cc.sys.OS_WINRT ? "effect1.wav" : "effect2.mp3";
+export var EFFECT_FILE =
+  cc.sys.os == cc.sys.OS_WINRT ? "effect1.wav" : "effect2.mp3";
 
-export var _DenshionTests = [
-    'Music Test'
-];
+export var _DenshionTests = ["Music Test"];
 
 export var DenshionTests = [
-    {
-        title:"Play Music",
-        playFunc:function () {
-            return new playMusic();
-        }
-    },
-    {
-        title:"Stop Music",
-        playFunc:function () {
-            return new stopMusic();
-        }
-    },
-    {
-        title:"Pause Music",
-        playFunc:function () {
-            return new pauseMusic();
-        }
-    },
-    {
-        title:"Resume Music",
-        playFunc:function () {
-            return new resumeMusic();
-        }
-    },
-    {
-        title:"Rewind Music",
-        playFunc:function () {
-            return new rewindMusic();
-        }
-    },
-    {
-        title:"is Music Playing",
-        playFunc:function () {
-            return new isMusicPlaying();
-        }
-    },
-    {
-        title:"Increase Music Volume",
-        playFunc:function () {
-            return new addMusicVolume();
-        }
-    },
-    {
-        title:"Decrease Music Volume",
-        playFunc:function () {
-            return new subMusicVolume();
-        }
-    },
-    {
-        title:"Play Sound Effect",
-        playFunc:function () {
-            return new playEffect();
-        }
-    },
-    {
-        title:"Repeat Sound Effect",
-        playFunc:function () {
-            return new playEffectRepeatly();
-        }
-    },
-    {
-        title:"Stop Sound Effect",
-        playFunc:function () {
-            return new stopEffect();
-        }
-    },
-    {
-        title:"Unload Sound Effect",
-        playFunc:function () {
-            return new unloadEffect();
-        }
-    },
-    {
-        title:"Increase Sound Effect Volume",
-        playFunc:function () {
-            return new addEffectsVolume();
-        }
-    },
-    {
-        title:"Decrease Sound Effect Volume",
-        playFunc:function () {
-            return new subEffectsVolume();
-        }
-    },
-    {
-        title:"Pause Sound Effect",
-        playFunc:function () {
-            return new pauseEffect();
-        }
-    },
-    {
-        title:"Resume Sound Effect",
-        playFunc:function () {
-            return new resumeEffect();
-        }
-    },
-    {
-        title:"Pause All Sound Effects",
-        playFunc:function () {
-            return new pauseAllEffects();
-        }
-    },
-    {
-        title:"Resume All Sound Effects",
-        playFunc:function () {
-            return new resumeAllEffects();
-        }
-    },
-    {
-        title:"Stop All Sound Effects",
-        playFunc:function () {
-            return new stopAllEffects();
-        }
+  {
+    title: "Play Music",
+    playFunc: function () {
+      return new playMusic();
     }
+  },
+  {
+    title: "Stop Music",
+    playFunc: function () {
+      return new stopMusic();
+    }
+  },
+  {
+    title: "Pause Music",
+    playFunc: function () {
+      return new pauseMusic();
+    }
+  },
+  {
+    title: "Resume Music",
+    playFunc: function () {
+      return new resumeMusic();
+    }
+  },
+  {
+    title: "Rewind Music",
+    playFunc: function () {
+      return new rewindMusic();
+    }
+  },
+  {
+    title: "is Music Playing",
+    playFunc: function () {
+      return new isMusicPlaying();
+    }
+  },
+  {
+    title: "Increase Music Volume",
+    playFunc: function () {
+      return new addMusicVolume();
+    }
+  },
+  {
+    title: "Decrease Music Volume",
+    playFunc: function () {
+      return new subMusicVolume();
+    }
+  },
+  {
+    title: "Play Sound Effect",
+    playFunc: function () {
+      return new playEffect();
+    }
+  },
+  {
+    title: "Repeat Sound Effect",
+    playFunc: function () {
+      return new playEffectRepeatly();
+    }
+  },
+  {
+    title: "Stop Sound Effect",
+    playFunc: function () {
+      return new stopEffect();
+    }
+  },
+  {
+    title: "Unload Sound Effect",
+    playFunc: function () {
+      return new unloadEffect();
+    }
+  },
+  {
+    title: "Increase Sound Effect Volume",
+    playFunc: function () {
+      return new addEffectsVolume();
+    }
+  },
+  {
+    title: "Decrease Sound Effect Volume",
+    playFunc: function () {
+      return new subEffectsVolume();
+    }
+  },
+  {
+    title: "Pause Sound Effect",
+    playFunc: function () {
+      return new pauseEffect();
+    }
+  },
+  {
+    title: "Resume Sound Effect",
+    playFunc: function () {
+      return new resumeEffect();
+    }
+  },
+  {
+    title: "Pause All Sound Effects",
+    playFunc: function () {
+      return new pauseAllEffects();
+    }
+  },
+  {
+    title: "Resume All Sound Effects",
+    playFunc: function () {
+      return new resumeAllEffects();
+    }
+  },
+  {
+    title: "Stop All Sound Effects",
+    playFunc: function () {
+      return new stopAllEffects();
+    }
+  }
 ];

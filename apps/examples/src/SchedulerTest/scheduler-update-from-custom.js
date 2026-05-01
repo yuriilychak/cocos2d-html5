@@ -28,40 +28,39 @@
 /*
     SchedulerUpdateFromCustom
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
 
 export class SchedulerUpdateFromCustom extends SchedulerTestLayer {
-    onEnter() {
-        //----start7----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start7----onEnter
+    super.onEnter();
 
-        this.schedule(this.onSchedUpdate, 2.0);
-        //----end7----
-    }
-    title() {
-        return "Schedule Update in 2 sec";
-    }
-    subtitle() {
-        return "Update schedules in 2 secs. Stops 2 sec later. See console";
-    }
+    this.schedule(this.onSchedUpdate, 2.0);
+    //----end7----
+  }
+  title() {
+    return "Schedule Update in 2 sec";
+  }
+  subtitle() {
+    return "Update schedules in 2 secs. Stops 2 sec later. See console";
+  }
 
-    update(dt) {
-        //----start7----update
-        cc.log("update called:" + dt);
-        //----end7----
-    }
-    onSchedUpdate(dt) {
-        //----start7----onSchedUpdate
-        this.unschedule(this.onSchedUpdate);
-        this.scheduleUpdate();
-        this.schedule(this.onStopUpdate, 2.0);
-        //----end7----
-    }
-    onStopUpdate(dt) {
-        //----start7----onStopUpdate
-        this.unscheduleUpdate();
-        this.unschedule(this.onStopUpdate);
-        //----end7----
-    }
-
+  update(dt) {
+    //----start7----update
+    cc.log("update called:" + dt);
+    //----end7----
+  }
+  onSchedUpdate(dt) {
+    //----start7----onSchedUpdate
+    this.unschedule(this.onSchedUpdate);
+    this.scheduleUpdate();
+    this.schedule(this.onStopUpdate, 2.0);
+    //----end7----
+  }
+  onStopUpdate(dt) {
+    //----start7----onStopUpdate
+    this.unscheduleUpdate();
+    this.unschedule(this.onStopUpdate);
+    //----end7----
+  }
 }

@@ -28,66 +28,62 @@
 // Keyboard test
 //
 //------------------------------------------------------------------
-import { EventTest } from "./event-test.js";
+import { EventTest } from "./event-test";
 
 export class KeyboardTest extends EventTest {
-    init() {
-        super.init();
-        var self = this;
-        var label = new cc.LabelTTF("show key Code");
-        var size = cc.director.getWinSize();
-        label.setPosition(size.width / 2, size.height / 2);
-        this.addChild(label);
-        if ('keyboard' in cc.sys.capabilities) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.KEYBOARD,
-                onKeyPressed: function (key, event) {
-                    var strTemp = "Key down:" + key;
-                    var keyStr = self.getKeyStr(key);
-                    if (keyStr.length > 0)
-                    {
-                        strTemp += " the key name is:" + keyStr;
-                    }
-                    label.setString(strTemp);
-                },
-                onKeyReleased: function (key, event) {
-                    var strTemp = "Key up:" + key;
-                    var keyStr = self.getKeyStr(key);
-                    if (keyStr.length > 0)
-                    {
-                        strTemp += " the key name is:" + keyStr;
-                    }
-                    label.setString(strTemp);
-                }
-            }, this);
-        } else {
-            cc.log("KEYBOARD Not supported");
-        }
-    }
-    getKeyStr(keycode)
-    {
-        if (keycode == cc.KEY.none)
+  init() {
+    super.init();
+    var self = this;
+    var label = new cc.LabelTTF("show key Code");
+    var size = cc.director.getWinSize();
+    label.setPosition(size.width / 2, size.height / 2);
+    this.addChild(label);
+    if ("keyboard" in cc.sys.capabilities) {
+      cc.eventManager.addListener(
         {
-            return "";
-        }
-
-        for (var keyTemp in cc.KEY)
-        {
-            if (cc.KEY[keyTemp] == keycode)
-            {
-                return keyTemp;
+          event: cc.EventListener.KEYBOARD,
+          onKeyPressed: function (key, event) {
+            var strTemp = "Key down:" + key;
+            var keyStr = self.getKeyStr(key);
+            if (keyStr.length > 0) {
+              strTemp += " the key name is:" + keyStr;
             }
-        }
-        return "";
+            label.setString(strTemp);
+          },
+          onKeyReleased: function (key, event) {
+            var strTemp = "Key up:" + key;
+            var keyStr = self.getKeyStr(key);
+            if (keyStr.length > 0) {
+              strTemp += " the key name is:" + keyStr;
+            }
+            label.setString(strTemp);
+          }
+        },
+        this
+      );
+    } else {
+      cc.log("KEYBOARD Not supported");
     }
-    subtitle() {
-        return "Keyboard test. Press keyboard and see console";
+  }
+  getKeyStr(keycode) {
+    if (keycode == cc.KEY.none) {
+      return "";
     }
 
-    // this callback is only available on JSB + OS X
-    // Not supported on cocos2d-html5
-    onKeyFlagsChanged(key) {
-        cc.log("Key flags changed:" + key);
+    for (var keyTemp in cc.KEY) {
+      if (cc.KEY[keyTemp] == keycode) {
+        return keyTemp;
+      }
     }
+    return "";
+  }
+  subtitle() {
+    return "Keyboard test. Press keyboard and see console";
+  }
 
+  // this callback is only available on JSB + OS X
+  // Not supported on cocos2d-html5
+  onKeyFlagsChanged(key) {
+    cc.log("Key flags changed:" + key);
+  }
 }

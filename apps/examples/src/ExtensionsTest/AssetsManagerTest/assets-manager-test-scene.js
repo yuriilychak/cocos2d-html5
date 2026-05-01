@@ -25,18 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { AssetsManagerTestLayer } from "./assets-manager-test-layer.js";
-import { TestScene } from "../../test-scene.js";
+import { AssetsManagerTestLayer } from "./assets-manager-test-layer";
+import { TestScene } from "../../test-scene";
 
 export class AssetsManagerTestScene extends TestScene {
+  constructor(background) {
+    super();
 
-    constructor(background) {
-        super();
-
-
-        this._background = "";
-        var layer = new AssetsManagerTestLayer(background);
-        this.addChild(layer);
-    }
-
+    this._background = "";
+    var layer = new AssetsManagerTestLayer(background);
+    this.addChild(layer);
+  }
 }

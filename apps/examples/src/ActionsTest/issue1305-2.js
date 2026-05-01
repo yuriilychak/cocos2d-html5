@@ -30,9 +30,9 @@
 // Issue1305_2
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { s_pathGrossini } from "../resources";
+import { director } from "../constants";
 
 export class Issue1305_2 extends ActionsDemo {
   onEnter() {
@@ -79,5 +79,4 @@ export class Issue1305_2 extends ActionsDemo {
   subtitle() {
     return "See console. You should only see one message for each block";
   }
-
 }

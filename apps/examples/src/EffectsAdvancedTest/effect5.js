@@ -25,22 +25,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectAdvanceTextLayer } from "./effect-advance-text-layer.js";
-import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
+import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 
 export class Effect5 extends EffectAdvanceTextLayer {
-    title() {
-        return "Test Stop-Copy-Restar";
-    }
+  title() {
+    return "Test Stop-Copy-Restar";
+  }
 
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        var effect = cc.liquid(2, new cc.Size(32, 24), 1, 20);
-        var stopEffect = cc.sequence(effect, new cc.DelayTime(2), cc.stopGrid());
+    var effect = cc.liquid(2, new cc.Size(32, 24), 1, 20);
+    var stopEffect = cc.sequence(effect, new cc.DelayTime(2), cc.stopGrid());
 
-        var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        bg.runAction(stopEffect);
-    }
-
+    var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
+    bg.runAction(stopEffect);
+  }
 }

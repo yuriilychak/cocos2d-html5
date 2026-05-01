@@ -24,18 +24,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UILayoutTestBase } from "./uilayout-test-base.js";
+import { UILayoutTestBase } from "./uilayout-test-base";
 
 export class UILayoutTest_BackGroundImage extends UILayoutTestBase {
-    createLayout() {
-        var layout = new ccui.Layout();
-        layout.setClippingEnabled(true);
-        layout.setBackGroundImage("ccs-res/cocosui/Hello.png");
-        layout.setContentSize(new cc.Size(280, 150));
-        return layout;
-    }
-    getText() {
-        return "Layout background image";
-    }
-
+  createLayout() {
+    var layout = new ccui.Layout();
+    layout.setClippingEnabled(true);
+    layout.setBackGroundImage("ccs-res/cocosui/Hello.png");
+    layout.setContentSize(new cc.Size(280, 150));
+    return layout;
+  }
+  getText() {
+    return "Layout background image";
+  }
 }

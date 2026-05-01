@@ -30,14 +30,13 @@
 // ActionTargeted
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionTargeted extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = new cc.TargetedAction( target, action );";
-    }
-
+  constructor() {
+    super();
+    this._code = "a = new cc.TargetedAction( target, action );";
+  }
 
   onEnter() {
     //----start31----onEnter
@@ -65,5 +64,4 @@ export class ActionTargeted extends ActionsDemo {
   subtitle() {
     return "ActionTargeted";
   }
-
 }

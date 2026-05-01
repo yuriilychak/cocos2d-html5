@@ -25,54 +25,62 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
-import { director } from "../tests-main-constants.js";
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { director } from "../constants";
 
 export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
-    onEnter(){
-        //----start5----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start5----onEnter
+    super.onEnter();
 
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
+    var origin = director.getVisibleOrigin();
+    var size = director.getVisibleSize();
 
-        cc.inputManager.setAccelerometerEnabled(true);
+    cc.inputManager.setAccelerometerEnabled(true);
 
-        var sprite = new cc.Sprite("Images/ball.png");
-        sprite.setPosition(origin.x + size.width/2, origin.y + size.height/2);
-        this.addChild(sprite);
+    var sprite = new cc.Sprite("Images/ball.png");
+    sprite.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
+    this.addChild(sprite);
 
-        cc.eventManager.addListener({
-            event: cc.EventListener.ACCELERATION,
-            callback: function(acc, event){
-                var target = event.getCurrentTarget();
-                var ballSize  = target.getContentSize();
-                var ptNow  = target.getPosition();
+    cc.eventManager.addListener(
+      {
+        event: cc.EventListener.ACCELERATION,
+        callback: function (acc, event) {
+          var target = event.getCurrentTarget();
+          var ballSize = target.getContentSize();
+          var ptNow = target.getPosition();
 
-                //cc.log("acc: x = " + acc.x + ", y = " + acc.y);
+          //cc.log("acc: x = " + acc.x + ", y = " + acc.y);
 
-                target.x = SpriteAccelerationEventTest._fix_pos(ptNow.x + acc.x * 9.81,
-                    (cc.visibleRect.left.x + ballSize.width / 2.0), (cc.visibleRect.right.x - ballSize.width / 2.0));
-                target.y = SpriteAccelerationEventTest._fix_pos(ptNow.y + acc.y * 9.81,
-                    (cc.visibleRect.bottom.y + ballSize.height / 2.0), (cc.visibleRect.top.y - ballSize.height / 2.0));
-            }
-        }, sprite);
-        //----end5----
-    }
+          target.x = SpriteAccelerationEventTest._fix_pos(
+            ptNow.x + acc.x * 9.81,
+            cc.visibleRect.left.x + ballSize.width / 2.0,
+            cc.visibleRect.right.x - ballSize.width / 2.0
+          );
+          target.y = SpriteAccelerationEventTest._fix_pos(
+            ptNow.y + acc.y * 9.81,
+            cc.visibleRect.bottom.y + ballSize.height / 2.0,
+            cc.visibleRect.top.y - ballSize.height / 2.0
+          );
+        }
+      },
+      sprite
+    );
+    //----end5----
+  }
 
-    onExit(){
-        //----start5----onEnter
-        cc.inputManager.setAccelerometerEnabled(false);
-        super.onExit();
-        //----end----
-    }
+  onExit() {
+    //----start5----onEnter
+    cc.inputManager.setAccelerometerEnabled(false);
+    super.onExit();
+    //----end----
+  }
 
-    title(){
-        return "Sprite Receives Acceleration Event";
-    }
+  title() {
+    return "Sprite Receives Acceleration Event";
+  }
 
-    subtitle(){
-        return "Please move your device\n(Only available on mobile)";
-    }
-
+  subtitle() {
+    return "Please move your device\n(Only available on mobile)";
+  }
 }

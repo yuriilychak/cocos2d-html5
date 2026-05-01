@@ -25,23 +25,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_fire } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_fire } from "../resources";
 
 export class DemoGalaxy extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new cc.ParticleGalaxy();
-        this._background.addChild(this._emitter, 10);
-        this._emitter.texture = cc.textureCache.addImage(s_fire);
-        if (this._emitter.setShapeType)
-            this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
+    this._emitter = new cc.ParticleGalaxy();
+    this._background.addChild(this._emitter, 10);
+    this._emitter.texture = cc.textureCache.addImage(s_fire);
+    if (this._emitter.setShapeType)
+      this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
 
-        this.setEmitterPosition();
-    }
-    title() {
-        return "ParticleGalaxy";
-    }
-
+    this.setEmitterPosition();
+  }
+  title() {
+    return "ParticleGalaxy";
+  }
 }

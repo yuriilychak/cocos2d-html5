@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_fire } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_fire } from "../resources";
+import { director } from "../constants";
 
 export class Issue704 extends ParticleDemo {
     onEnter() {

@@ -25,78 +25,83 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
-import { director } from "../tests-main-constants.js";
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { director } from "../constants";
 
 export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
-    onEnter(){
-        //----start2----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start2----onEnter
+    super.onEnter();
 
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
+    var origin = director.getVisibleOrigin();
+    var size = director.getVisibleSize();
 
-        var sprite1 = new cc.Sprite("Images/CyanSquare.png");
-        sprite1.setPosition(origin.x + size.width/2, origin.y + size.height/2);
-        this.addChild(sprite1, 10);
+    var sprite1 = new cc.Sprite("Images/CyanSquare.png");
+    sprite1.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
+    this.addChild(sprite1, 10);
 
-        // Make sprite1 touchable
-        var listener1 = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches: true,
-            onTouchBegan: function (touch, event) {
-                var locationInNode = sprite1.convertToNodeSpace(touch.getLocation());
-                var s = sprite1.getContentSize();
-                var rect = new cc.Rect(0, 0, s.width, s.height);
+    // Make sprite1 touchable
+    var listener1 = cc.EventListener.create({
+      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+      swallowTouches: true,
+      onTouchBegan: function (touch, event) {
+        var locationInNode = sprite1.convertToNodeSpace(touch.getLocation());
+        var s = sprite1.getContentSize();
+        var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                if (cc.Rect.containsPoint(rect, locationInNode)) {
-                    sprite1.setColor(cc.Color.RED);
-                    return true;
-                }
-                return false;
-            },
-            onTouchEnded: function (touch, event) {
-                sprite1.setColor(cc.Color.WHITE);
-            }
-        });
-        this.setUserObject(listener1);
+        if (cc.Rect.containsPoint(rect, locationInNode)) {
+          sprite1.setColor(cc.Color.RED);
+          return true;
+        }
+        return false;
+      },
+      onTouchEnded: function (touch, event) {
+        sprite1.setColor(cc.Color.WHITE);
+      }
+    });
+    this.setUserObject(listener1);
 
-        cc.eventManager.addListener(listener1, sprite1);
+    cc.eventManager.addListener(listener1, sprite1);
 
-        var statusLabel = new cc.LabelTTF("The sprite could be touched!", "", 20);
-        statusLabel.setPosition(origin.x + size.width/2, origin.y + size.height-90 );
-        this.addChild(statusLabel);
+    var statusLabel = new cc.LabelTTF("The sprite could be touched!", "", 20);
+    statusLabel.setPosition(
+      origin.x + size.width / 2,
+      origin.y + size.height - 90
+    );
+    this.addChild(statusLabel);
 
-        var enable = true;
+    var enable = true;
 
-        // Enable/Disable item
-        var toggleItem = new cc.MenuItemToggle(new cc.MenuItemFont("Enabled"), new cc.MenuItemFont("Disabled"),
-            function (sender) {
-                if (enable) {
-                    cc.eventManager.removeListener(listener1);
-                    statusLabel.setString("The sprite could not be touched!");
-                    enable = false;
-                } else {
-                    cc.eventManager.addListener(listener1, sprite1);
-                    statusLabel.setString("The sprite could be touched!");
-                    enable = true;
-                }
-            });
+    // Enable/Disable item
+    var toggleItem = new cc.MenuItemToggle(
+      new cc.MenuItemFont("Enabled"),
+      new cc.MenuItemFont("Disabled"),
+      function (sender) {
+        if (enable) {
+          cc.eventManager.removeListener(listener1);
+          statusLabel.setString("The sprite could not be touched!");
+          enable = false;
+        } else {
+          cc.eventManager.addListener(listener1, sprite1);
+          statusLabel.setString("The sprite could be touched!");
+          enable = true;
+        }
+      }
+    );
 
-        toggleItem.setPosition(origin.x + size.width/2, origin.y + 80);
-        var menu = new cc.Menu(toggleItem);
-        menu.setPosition(0, 0);
-        menu.setAnchorPoint(0, 0);
-        this.addChild(menu, 1);
-        //----end2----
-    }
+    toggleItem.setPosition(origin.x + size.width / 2, origin.y + 80);
+    var menu = new cc.Menu(toggleItem);
+    menu.setPosition(0, 0);
+    menu.setAnchorPoint(0, 0);
+    this.addChild(menu, 1);
+    //----end2----
+  }
 
-    title(){
-        return "Add and remove listener\n when dispatching event";
-    }
+  title() {
+    return "Add and remove listener\n when dispatching event";
+  }
 
-    subtitle(){
-        return "";
-    }
-
+  subtitle() {
+    return "";
+  }
 }

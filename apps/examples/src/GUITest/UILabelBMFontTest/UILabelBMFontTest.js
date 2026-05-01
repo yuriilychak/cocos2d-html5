@@ -24,27 +24,25 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UILabelBMFontTest extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("LabelBMFont");
+  init() {
+    if (super.init()) {
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("LabelBMFont");
 
-            // Create the LabelBMFont
-            var labelBMFont = new ccui.TextBMFont();
-            labelBMFont.setFntFile("ccs-res/cocosui/bitmapFontTest2.fnt");
-            labelBMFont.setString("BMFont");
-            labelBMFont.x = this._widget.width / 2;
-	        labelBMFont.y = this._widget.height / 2.0 + labelBMFont.height / 8.0;
-            this._mainNode.addChild(labelBMFont);
+      // Create the LabelBMFont
+      var labelBMFont = new ccui.TextBMFont();
+      labelBMFont.setFntFile("ccs-res/cocosui/bitmapFontTest2.fnt");
+      labelBMFont.setString("BMFont");
+      labelBMFont.x = this._widget.width / 2;
+      labelBMFont.y = this._widget.height / 2.0 + labelBMFont.height / 8.0;
+      this._mainNode.addChild(labelBMFont);
 
-            return true;
-        }
-        return false;
+      return true;
     }
-
-};
+    return false;
+  }
+}

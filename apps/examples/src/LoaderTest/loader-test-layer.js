@@ -28,75 +28,77 @@
 // LoaderTestLayer
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { LoaderCycleLayer } from "./loader-cycle-layer.js";
-import { s_ghosts, s_ghostsPlist, s_helloWorld, s_lookup_desktop_plist, s_lookup_html5_plist, s_lookup_mobile_plist } from "../tests_resources.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { LoaderCycleLayer } from "./loader-cycle-layer";
+import {
+  s_ghosts,
+  s_ghostsPlist,
+  s_helloWorld,
+  s_lookup_desktop_plist,
+  s_lookup_html5_plist,
+  s_lookup_mobile_plist
+} from "../resources";
 
 export class LoaderTestLayer extends BaseTestLayer {
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    var self = this;
 
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
-        var self = this;
+    this._title = "Loader Test";
 
+    this._subtitle = "";
 
-        this._title = "Loader Test";
+    var winSize = cc.winSize;
+    cc.loader.load(s_helloWorld, function (err, results) {
+      if (err) {
+        cc.log("Failed to load %s.", s_helloWorld);
+        return;
+      }
+      cc.log(s_helloWorld + "--->");
+      cc.log(results[0]);
+      var bg = new cc.Sprite(s_helloWorld);
+      self.addChild(bg);
+      bg.x = winSize.width / 2;
+      bg.y = winSize.height / 2;
+    });
 
+    cc.loader.load([s_ghostsPlist, s_ghosts], function (err, results) {
+      if (err) {
+        cc.log("Failed to load %s, %s .", s_ghostsPlist, s_ghosts);
+        return;
+      }
 
-        this._subtitle = "";
+      cc.log(s_ghostsPlist + "--->");
+      cc.log(results[0]);
+      cc.log(s_ghosts + "--->");
+      cc.log(results[1]);
+      cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+      var frame = new cc.Sprite("#sister1.gif");
+      self.addChild(frame);
+      frame.x = winSize.width / 4;
+      frame.y = winSize.height / 4;
+    });
 
-        var winSize = cc.winSize;
-        cc.loader.load(s_helloWorld, function(err, results){
-            if(err){
-                cc.log("Failed to load %s.", s_helloWorld);
-                return;
-            }
-            cc.log(s_helloWorld + "--->");
-            cc.log(results[0]);
-            var bg = new cc.Sprite(s_helloWorld);
-            self.addChild(bg);
-            bg.x = winSize.width/2;
-            bg.y = winSize.height/2;
-        });
-
-        cc.loader.load([s_ghostsPlist, s_ghosts], function(err, results){
-            if(err){
-                cc.log("Failed to load %s, %s .", s_ghostsPlist, s_ghosts);
-                return;
-            }
-
-            cc.log(s_ghostsPlist + "--->");
-            cc.log(results[0]);
-            cc.log(s_ghosts + "--->");
-            cc.log(results[1]);
-            cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
-            var frame = new cc.Sprite("#sister1.gif");
-            self.addChild(frame);
-            frame.x = winSize.width/4;
-            frame.y = winSize.height/4;
-        });
-
-
-        var str;
-        if(cc.sys.isNative)  {
-            str = s_lookup_desktop_plist;
-        } else if(cc.sys.isMobile) {
-            str = s_lookup_mobile_plist;
-        } else {
-            str = s_lookup_html5_plist;
-        }
-
-        cc.loader.loadAliases(str, function(){
-            var sprite = new cc.Sprite("grossini.bmp");
-            self.addChild( sprite, 100);
-            sprite.x = winSize.width/2;
-            sprite.y = winSize.height/2;
-        });
+    var str;
+    if (cc.sys.isNative) {
+      str = s_lookup_desktop_plist;
+    } else if (cc.sys.isMobile) {
+      str = s_lookup_mobile_plist;
+    } else {
+      str = s_lookup_html5_plist;
     }
 
-    onNextCallback(){
-        var parent = this.getParent();
-        parent.removeChild(this);
-        parent.addChild(new LoaderCycleLayer());
-    }
+    cc.loader.loadAliases(str, function () {
+      var sprite = new cc.Sprite("grossini.bmp");
+      self.addChild(sprite, 100);
+      sprite.x = winSize.width / 2;
+      sprite.y = winSize.height / 2;
+    });
+  }
 
+  onNextCallback() {
+    var parent = this.getParent();
+    parent.removeChild(this);
+    parent.addChild(new LoaderCycleLayer());
+  }
 }

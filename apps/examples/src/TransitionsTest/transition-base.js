@@ -25,114 +25,121 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { director } from "../tests-main-constants.js";
-import { arrayOfTransitionsTest, transitionsIdx , _settransitionsIdx, TRANSITION_DURATION } from "./transitions-test-constants.js";
-import { TransitionsTestScene } from "./transitions-test-scene.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { director } from "../constants";
+import {
+  arrayOfTransitionsTest,
+  transitionsIdx,
+  _settransitionsIdx,
+  TRANSITION_DURATION
+} from "./transitions-test-constants";
+import { TransitionsTestScene } from "./transitions-test-scene";
 
 export class TransitionBase extends BaseTestLayer {
+  title() {
+    return arrayOfTransitionsTest[transitionsIdx].title;
+  }
+  constructor(backgroundImage, sceneName, colorA, colorB) {
+    super(colorA, colorB);
 
-    title() {
-        return arrayOfTransitionsTest[transitionsIdx].title;
-    }
-    constructor(backgroundImage, sceneName, colorA, colorB) {
-        super(colorA, colorB);
+    this.backgroundImage = backgroundImage || "";
+    this.sceneName = sceneName || "";
+    this.testDuration = TRANSITION_DURATION + 0.1;
 
-        this.backgroundImage = backgroundImage || "";
-        this.sceneName = sceneName || "";
-        this.testDuration = TRANSITION_DURATION + 0.1;
+    var x, y;
+    var size = director.getWinSize();
+    x = size.width;
+    y = size.height;
 
-        var x, y;
-        var size = director.getWinSize();
-        x = size.width;
-        y = size.height;
+    var bg1 = new cc.Sprite(this.backgroundImage);
+    bg1.x = size.width / 2;
+    bg1.y = size.height / 2;
+    bg1.scale = 1.7;
+    this.addChild(bg1);
 
-        var bg1 = new cc.Sprite(this.backgroundImage);
-        bg1.x = size.width / 2;
-        bg1.y = size.height / 2;
-        bg1.scale = 1.7;
-        this.addChild(bg1);
+    var title = new cc.LabelTTF(this.title(), "Thonburi", 32);
+    this.addChild(title);
+    title.color = new cc.Color(255, 32, 32);
+    title.x = x / 2;
+    title.y = y - 100;
 
-        var title = new cc.LabelTTF(this.title(), "Thonburi", 32);
-        this.addChild(title);
-        title.color = new cc.Color(255, 32, 32);
-        title.x = x / 2;
-        title.y = y - 100;
+    var label = new cc.LabelTTF(this.sceneName, "Marker Felt", 38);
+    label.color = new cc.Color(16, 16, 255);
+    label.x = x / 2;
+    label.y = y / 2;
+    this.addChild(label);
 
-        var label = new cc.LabelTTF(this.sceneName, "Marker Felt", 38);
-        label.color = new cc.Color(16, 16, 255);
-        label.x = x / 2;
-        label.y = y / 2;
-        this.addChild(label);
+    // this.schedule(this.step, 1.0);
+  }
+  onRestartCallback(sender) {
+    var s = new TransitionsTestScene();
 
-        // this.schedule(this.step, 1.0);
-    }
-    onRestartCallback(sender) {
-        var s = new TransitionsTestScene();
+    var layer = this.createNextScene();
+    s.addChild(layer);
+    var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(
+      TRANSITION_DURATION,
+      s
+    );
 
-        var layer = this.createNextScene();
-        s.addChild(layer);
-        var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(TRANSITION_DURATION, s);
+    if (scene) director.runScene(scene);
+  }
+  onNextCallback(sender) {
+    _settransitionsIdx(transitionsIdx + 1);
+    _settransitionsIdx(transitionsIdx % arrayOfTransitionsTest.length);
 
-        if (scene)
-            director.runScene(scene);
-    }
-    onNextCallback(sender) {
-        _settransitionsIdx(transitionsIdx + 1);
-        _settransitionsIdx(transitionsIdx % arrayOfTransitionsTest.length);
+    var s = new TransitionsTestScene();
 
-        var s = new TransitionsTestScene();
+    var layer = this.createNextScene();
+    s.addChild(layer);
 
-        var layer = this.createNextScene();
-        s.addChild(layer);
+    var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(
+      TRANSITION_DURATION,
+      s
+    );
+    if (scene) director.runScene(scene);
+  }
+  onBackCallback(sender) {
+    _settransitionsIdx(transitionsIdx - 1);
+    if (transitionsIdx < 0)
+      _settransitionsIdx(transitionsIdx + arrayOfTransitionsTest.length);
 
-        var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(TRANSITION_DURATION, s);
-        if (scene)
-            director.runScene(scene);
-    }
-    onBackCallback(sender) {
-        _settransitionsIdx(transitionsIdx - 1);
-        if (transitionsIdx < 0)
-            _settransitionsIdx(transitionsIdx + (arrayOfTransitionsTest.length));
+    var s = new TransitionsTestScene();
+    var layer = this.createNextScene();
+    s.addChild(layer);
 
-        var s = new TransitionsTestScene();
-        var layer = this.createNextScene();
-        s.addChild(layer);
+    var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(
+      TRANSITION_DURATION,
+      s
+    );
+    if (scene) director.runScene(scene);
+  }
 
-        var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(TRANSITION_DURATION, s);
-        if (scene)
-            director.runScene(scene);
-    }
+  step(dt) {}
 
-    step(dt) {
-    }
+  onEnter() {
+    super.onEnter();
+    this.log("" + this.sceneName + " onEnter");
+  }
+  onEnterTransitionDidFinish() {
+    super.onEnterTransitionDidFinish();
+    this.log("" + this.sceneName + " onEnterTransitionDidFinish");
+  }
 
-    onEnter() {
-        super.onEnter();
-        this.log("" + this.sceneName + " onEnter");
-    }
-    onEnterTransitionDidFinish() {
-        super.onEnterTransitionDidFinish();
-        this.log("" + this.sceneName + " onEnterTransitionDidFinish");
-    }
+  onExitTransitionDidStart() {
+    super.onExitTransitionDidStart();
+    this.log("" + this.sceneName + " onExitTransitionDidStart");
+  }
 
-    onExitTransitionDidStart() {
-        super.onExitTransitionDidStart();
-        this.log("" + this.sceneName + " onExitTransitionDidStart");
-    }
+  onExit() {
+    super.onExit();
+    this.log("" + this.sceneName + " onExit");
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfTransitionsTest.length - 1 - transitionsIdx;
+  }
 
-    onExit() {
-        super.onExit();
-        this.log("" + this.sceneName + " onExit");
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfTransitionsTest.length-1) - transitionsIdx );
-    }
-
-    getTestNumber() {
-        return transitionsIdx;
-    }
-
-
+  getTestNumber() {
+    return transitionsIdx;
+  }
 }

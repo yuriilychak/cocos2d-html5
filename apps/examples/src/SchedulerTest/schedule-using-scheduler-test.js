@@ -28,67 +28,72 @@
 /*
     ScheduleUsingSchedulerTest
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
-import { director } from "../tests-main-constants.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
+import { director } from "../constants";
 
 export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
-    constructor() {
-        super();
-        this._accum = 0;
-    }
+  constructor() {
+    super();
+    this._accum = 0;
+  }
 
+  onEnter() {
+    //----start9----onEnter
+    super.onEnter();
 
-    onEnter() {
-        //----start9----onEnter
-        super.onEnter();
+    this._accum = 0;
+    var scheduler = director.getScheduler();
 
-        this._accum = 0;
-        var scheduler = director.getScheduler();
+    var priority = 0; // priority 0. default.
+    var paused = false; // not paused, queue it now.
+    scheduler.scheduleUpdate(this, priority, paused);
 
-        var priority = 0;  // priority 0. default.
-        var paused = false; // not paused, queue it now.
-        scheduler.scheduleUpdate(this, priority, paused);
+    var interval = 0.25; // every 1/4 of second
+    var repeat = cc.REPEAT_FOREVER; // how many repeats. cc.REPEAT_FOREVER means forever
+    var delay = 2; // start after 2 seconds;
+    paused = false; // not paused. queue it now.
+    scheduler.schedule(
+      this.onSchedUpdate,
+      this,
+      interval,
+      repeat,
+      delay,
+      paused
+    );
+    //----end9----
+  }
+  onExit() {
+    // should unschedule here if it is not unscheduled before exit
+    this.unscheduleAll();
+    super.onExit();
+  }
+  title() {
+    return "Schedule / Unschedule using Scheduler";
+  }
+  subtitle() {
+    return "After 5 seconds all callbacks should be removed";
+  }
 
-        var interval = 0.25; // every 1/4 of second
-        var repeat = cc.REPEAT_FOREVER; // how many repeats. cc.REPEAT_FOREVER means forever
-        var delay = 2; // start after 2 seconds;
-        paused = false; // not paused. queue it now.
-        scheduler.schedule(this.onSchedUpdate, this, interval, repeat, delay, paused);
-        //----end9----
-    }
-    onExit() {
-        // should unschedule here if it is not unscheduled before exit
-        this.unscheduleAll();
-        super.onExit();
-    }
-    title() {
-        return "Schedule / Unschedule using Scheduler";
-    }
-    subtitle() {
-        return "After 5 seconds all callbacks should be removed";
-    }
+  // callbacks
+  update(dt) {
+    //----start9----update
+    cc.log("update: " + dt);
+    //----end9----
+  }
+  onSchedUpdate(dt) {
+    //----start9----onSchedUpdate
+    cc.log("onSchedUpdate delta: " + dt);
 
-    // callbacks
-    update(dt) {
-        //----start9----update
-        cc.log("update: " + dt);
-        //----end9----
+    this._accum += dt;
+    if (this._accum > 3) {
+      this.unscheduleAll();
     }
-    onSchedUpdate(dt) {
-        //----start9----onSchedUpdate
-        cc.log("onSchedUpdate delta: " + dt);
-
-        this._accum += dt;
-        if( this._accum > 3 ) {
-            this.unscheduleAll();
-        }
-        cc.log("onSchedUpdate accum: " + this._accum);
-        //----end9----
-    }
-    unscheduleAll() {
-        var scheduler = director.getScheduler();
-        scheduler.unscheduleUpdate(this);
-        scheduler.unscheduleAllCallbacksForTarget(this);
-    }
-
+    cc.log("onSchedUpdate accum: " + this._accum);
+    //----end9----
+  }
+  unscheduleAll() {
+    var scheduler = director.getScheduler();
+    scheduler.unscheduleUpdate(this);
+    scheduler.unscheduleAllCallbacksForTarget(this);
+  }
 }

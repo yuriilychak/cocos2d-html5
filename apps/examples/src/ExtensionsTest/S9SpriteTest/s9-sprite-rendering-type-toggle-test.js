@@ -26,46 +26,42 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
-import { winSize } from "../../tests-main-constants.js";
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
+import { winSize } from "../../constants";
 
 export class S9SpriteRenderingTypeToggleTest extends S9SpriteTestDemo {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._title = "Test Toggle Scale9Sprite RenderingType";
 
+    var blocks = new ccui.Scale9Sprite("blocks9.png");
+    blocks.x = winSize.width / 2;
+    blocks.y = winSize.height / 2 + 50;
 
-        this._title = "Test Toggle Scale9Sprite RenderingType";
+    blocks.width = blocks.width * 2;
 
+    var button = (this._button = new ccui.Button());
+    button.setTouchEnabled(true);
+    button.x = winSize.width / 2.0;
+    button.y = winSize.height / 2.0 - 50;
+    button.setTitleText("Toggle SIMPLE");
+    button.addTouchEventListener(function (sender, type) {
+      if (type === ccui.Widget.TOUCH_ENDED) {
+        if (
+          blocks.getRenderingType() === ccui.Scale9Sprite.RenderingType.SLICED
+        ) {
+          blocks.setRenderingType(ccui.Scale9Sprite.RenderingType.SIMPLE);
+          button.setTitleText("Toggle SLICED");
+        } else {
+          blocks.setRenderingType(ccui.Scale9Sprite.RenderingType.SLICED);
+          button.setTitleText("Toggle SIMPLE");
+        }
+      }
+    }, this);
 
-        var blocks = new ccui.Scale9Sprite('blocks9.png');
-        blocks.x = winSize.width / 2;
-        blocks.y = winSize.height / 2 + 50;
+    this.addChild(button);
 
-        blocks.width = blocks.width * 2;
-
-
-        var button = this._button = new ccui.Button();
-        button.setTouchEnabled(true);
-        button.x = winSize.width / 2.0;
-        button.y = winSize.height / 2.0 - 50;
-        button.setTitleText("Toggle SIMPLE");
-        button.addTouchEventListener(function (sender, type) {
-            if(type === ccui.Widget.TOUCH_ENDED) {
-                if(blocks.getRenderingType() === ccui.Scale9Sprite.RenderingType.SLICED) {
-                    blocks.setRenderingType(ccui.Scale9Sprite.RenderingType.SIMPLE);
-                    button.setTitleText("Toggle SLICED");
-                } else {
-                    blocks.setRenderingType(ccui.Scale9Sprite.RenderingType.SLICED);
-                    button.setTitleText("Toggle SIMPLE");
-                }
-            }
-        } , this);
-
-        this.addChild(button);
-
-
-        this.addChild(blocks);
-    }
-
+    this.addChild(blocks);
+  }
 }

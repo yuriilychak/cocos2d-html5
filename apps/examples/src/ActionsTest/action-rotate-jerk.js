@@ -30,7 +30,7 @@
 // ActionRotateJerk
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionRotateJerk extends ActionsDemo {
   onEnter() {
@@ -48,5 +48,4 @@ export class ActionRotateJerk extends ActionsDemo {
   title() {
     return "RepeatForever / Repeat + Rotate";
   }
-
 }

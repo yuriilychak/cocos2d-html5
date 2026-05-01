@@ -23,18 +23,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextRenderTextureTest } from "./render-texture-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setsceneRenderTextureIdx, sceneRenderTextureIdx } from "./render-texture-test-constants.js";
+import { nextRenderTextureTest } from "./render-texture-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _setsceneRenderTextureIdx,
+  sceneRenderTextureIdx
+} from "./render-texture-test-constants";
 
 export class RenderTextureTestScene extends TestScene {
-    runThisTest(num) {
-        _setsceneRenderTextureIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextRenderTextureTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _setsceneRenderTextureIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextRenderTextureTest();
+    this.addChild(layer);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

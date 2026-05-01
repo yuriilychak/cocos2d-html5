@@ -23,72 +23,74 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIFocusTestBase } from "./uifocus-test-base.js";
+import { UIFocusTestBase } from "./uifocus-test-base";
 
 export class UIFocusTestListView extends UIFocusTestBase {
-    constructor() {
-        super();
-        this._listView = null;
-        this._loopText = null;
+  constructor() {
+    super();
+    this._listView = null;
+    this._loopText = null;
+  }
+
+  init() {
+    if (super.init()) {
+      var winSize = cc.director.getVisibleSize();
+
+      this._listView = new ccui.ListView();
+      this._listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+      this._listView.setBounceEnabled(true);
+      this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
+      this._listView.setBackGroundImageScale9Enabled(true);
+      this._listView.setContentSize(240, 130);
+
+      this._listView.setPosition(40, 70);
+      this.addChild(this._listView);
+      this._listView.setScale(0.8);
+
+      this._listView.setFocused(true);
+      this._listView.setLoopFocus(true);
+      this._listView.setTag(-1000);
+      this._firstFocusedWidget = this._listView;
+
+      // create model
+      var default_button = new ccui.Button(
+        "ccs-res/cocosui/backtotoppressed.png",
+        "ccs-res/cocosui/backtotopnormal.png"
+      );
+      default_button.setName("Title Button");
+
+      // set model
+      this._listView.setItemModel(default_button);
+
+      // add default item
+      var count = 20,
+        i;
+      for (i = 0; i < count / 4; ++i) {
+        this._listView.pushBackDefaultItem();
+      }
+      // insert default item
+      for (i = 0; i < count / 4; ++i) {
+        this._listView.insertDefaultItem(0);
+      }
+      this._loopText = new ccui.Text("loop enabled", "Arial", 20);
+      this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
+      this._loopText.setColor(cc.Color.GREEN);
+      this.addChild(this._loopText);
+
+      this._btn.addTouchEventListener(this.toggleFocusLoop, this);
+      return true;
     }
+    return false;
+  }
 
-
-    init(){
-        if (super.init()) {
-            var winSize = cc.director.getVisibleSize();
-
-            this._listView = new ccui.ListView();
-            this._listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
-            this._listView.setBounceEnabled(true);
-            this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
-            this._listView.setBackGroundImageScale9Enabled(true);
-            this._listView.setContentSize(240, 130);
-
-            this._listView.setPosition(40, 70);
-            this.addChild(this._listView);
-            this._listView.setScale(0.8);
-
-            this._listView.setFocused(true);
-            this._listView.setLoopFocus(true);
-            this._listView.setTag(-1000);
-            this._firstFocusedWidget = this._listView;
-
-            // create model
-            var default_button = new ccui.Button("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png");
-            default_button.setName("Title Button");
-
-            // set model
-            this._listView.setItemModel(default_button);
-
-            // add default item
-            var count = 20, i;
-            for (i = 0; i < count / 4; ++i) {
-                this._listView.pushBackDefaultItem();
-            }
-            // insert default item
-            for (i = 0; i < count / 4; ++i) {
-                this._listView.insertDefaultItem(0);
-            }
-            this._loopText = new ccui.Text("loop enabled", "Arial", 20);
-            this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.Color.GREEN);
-            this.addChild(this._loopText);
-
-            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
-            return true;
-        }
-        return false;
+  toggleFocusLoop(ref, touchType) {
+    if (touchType == ccui.Widget.TOUCH_ENDED) {
+      this._listView.setLoopFocus(!this._listView.isLoopFocus());
+      if (this._listView.isLoopFocus()) {
+        this._loopText.setString("loop enabled");
+      } else {
+        this._loopText.setString("loop disabled");
+      }
     }
-
-    toggleFocusLoop(ref, touchType){
-        if (touchType == ccui.Widget.TOUCH_ENDED) {
-            this._listView.setLoopFocus(!this._listView.isLoopFocus());
-            if (this._listView.isLoopFocus()) {
-                this._loopText.setString("loop enabled");
-            }else{
-                this._loopText.setString("loop disabled");
-            }
-        }
-    }
-
+  }
 }

@@ -30,16 +30,15 @@
 // ActionDelayTime
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionDelayTime extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = new cc.DelayTime( time );";
-        this.testDuration = 2.9;
-    }
-
+  constructor() {
+    super();
+    this._code = "a = new cc.DelayTime( time );";
+    this.testDuration = 2.9;
+  }
 
   onEnter() {
     //----start20----onEnter
@@ -67,5 +66,4 @@ export class ActionDelayTime extends ActionsDemo {
     ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
-
 }

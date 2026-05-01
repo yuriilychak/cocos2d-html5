@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist } from "../resources";
+import { winSize } from "../constants";
 
 export class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
 

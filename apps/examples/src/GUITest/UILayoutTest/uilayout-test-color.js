@@ -24,18 +24,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UILayoutTestBase } from "./uilayout-test-base.js";
+import { UILayoutTestBase } from "./uilayout-test-base";
 
 export class UILayoutTest_Color extends UILayoutTestBase {
-    createLayout() {
-        var layout = new ccui.Layout();
-        layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
-        layout.setBackGroundColor(new cc.Color(128, 128, 128));
-        layout.setContentSize(new cc.Size(280, 150));
-        return layout;
-    }
-    getText() {
-        return "Layout color render";
-    }
-
+  createLayout() {
+    var layout = new ccui.Layout();
+    layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+    layout.setBackGroundColor(new cc.Color(128, 128, 128));
+    layout.setContentSize(new cc.Size(280, 150));
+    return layout;
+  }
+  getText() {
+    return "Layout color render";
+  }
 }

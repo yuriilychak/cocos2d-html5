@@ -25,75 +25,101 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nodeTestSceneIdx } from "./cocos-node-test-constants.js";
-import { arrayOfNodeTest, nextNodeTest, previousNodeTest, restartNodeTest } from "./cocos-node-test-helpers.js";
-import { NodeTestScene } from "./node-test-scene.js";
-import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { nodeTestSceneIdx } from "./cocos-node-test-constants";
+import {
+  arrayOfNodeTest,
+  nextNodeTest,
+  previousNodeTest,
+  restartNodeTest
+} from "./cocos-node-test-helpers";
+import { NodeTestScene } from "./node-test-scene";
+import {
+  s_pathB1,
+  s_pathB2,
+  s_pathF1,
+  s_pathF2,
+  s_pathR1,
+  s_pathR2
+} from "../resources";
+import { director } from "../constants";
 
 export class TestNodeDemo extends cc.Layer {
-    constructor() {
-        super();
-        this.init();
-    }
-    title() {
-        return "No title";
-    }
-    subtitle() {
-        return "";
-    }
-    onRestartCallback(sender) {
-        var s = new NodeTestScene();
-        s.addChild(restartNodeTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new NodeTestScene();
-        s.addChild(nextNodeTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new NodeTestScene();
-        s.addChild(previousNodeTest());
-        director.runScene(s);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfNodeTest.length - 1) - nodeTestSceneIdx );
-    }
-    getTestNumber() {
-        return nodeTestSceneIdx;
-    }
-    onEnter(){
-        super.onEnter();
-        var s = director.getWinSize();
-        var label = new cc.LabelTTF(this.title(), "Arial", 24);
-        this.addChild(label);
-        label.x = s.width / 2;
-        label.y = s.height - 50;
+  constructor() {
+    super();
+    this.init();
+  }
+  title() {
+    return "No title";
+  }
+  subtitle() {
+    return "";
+  }
+  onRestartCallback(sender) {
+    var s = new NodeTestScene();
+    s.addChild(restartNodeTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new NodeTestScene();
+    s.addChild(nextNodeTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new NodeTestScene();
+    s.addChild(previousNodeTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfNodeTest.length - 1 - nodeTestSceneIdx;
+  }
+  getTestNumber() {
+    return nodeTestSceneIdx;
+  }
+  onEnter() {
+    super.onEnter();
+    var s = director.getWinSize();
+    var label = new cc.LabelTTF(this.title(), "Arial", 24);
+    this.addChild(label);
+    label.x = s.width / 2;
+    label.y = s.height - 50;
 
-        var subTitle = this.subtitle();
-        if (subTitle && subTitle !== "") {
-            var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
-            this.addChild(l, 1);
-            l.x = s.width / 2;
-            l.y = s.height - 80;
-        }
-        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
-        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
-        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
-
-        var menu = new cc.Menu(item1, item2, item3);
-        menu.x = 0;
-        menu.y = 0;
-        item1.x = s.width / 2 - 100;
-        item1.y = 30;
-        item2.x = s.width / 2;
-        item2.y = 30;
-        item3.x = s.width / 2 + 100;
-        item3.y = 30;
-
-        this.addChild(menu, 1);
+    var subTitle = this.subtitle();
+    if (subTitle && subTitle !== "") {
+      var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
+      this.addChild(l, 1);
+      l.x = s.width / 2;
+      l.y = s.height - 80;
     }
+    var item1 = new cc.MenuItemImage(
+      s_pathB1,
+      s_pathB2,
+      this.onBackCallback,
+      this
+    );
+    var item2 = new cc.MenuItemImage(
+      s_pathR1,
+      s_pathR2,
+      this.onRestartCallback,
+      this
+    );
+    var item3 = new cc.MenuItemImage(
+      s_pathF1,
+      s_pathF2,
+      this.onNextCallback,
+      this
+    );
 
+    var menu = new cc.Menu(item1, item2, item3);
+    menu.x = 0;
+    menu.y = 0;
+    item1.x = s.width / 2 - 100;
+    item1.y = 30;
+    item2.x = s.width / 2;
+    item2.y = 30;
+    item3.x = s.width / 2 + 100;
+    item3.y = 30;
+
+    this.addChild(menu, 1);
+  }
 }

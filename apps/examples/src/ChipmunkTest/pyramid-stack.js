@@ -27,53 +27,54 @@
 // Chipmunk Demo: Pyramid Stack
 //
 //------------------------------------------------------------------
-import { ChipmunkDemo } from "./chipmunk-demo.js";
-import { v } from "./chipmunk-test-helpers.js";
+import { ChipmunkDemo } from "./chipmunk-demo";
+import { v } from "./chipmunk-test-helpers";
 
 export class PyramidStack extends ChipmunkDemo {
+  constructor() {
+    super();
+    // cc.base(this);
+    this._subtitle = "Chipmunk Demo";
+    this._title = "Pyramid Stack";
 
-    constructor() {
-        super();
-        // cc.base(this);
-        this._subtitle = 'Chipmunk Demo';
-        this._title = 'Pyramid Stack';
+    var space = this.space;
+    //space.iterations = 30;
+    space.gravity = v(0, -100);
+    space.sleepTimeThreshold = 0.5;
+    space.collisionSlop = 0.5;
 
-        var space = this.space;
-        //space.iterations = 30;
-        space.gravity = v(0, -100);
-        space.sleepTimeThreshold = 0.5;
-        space.collisionSlop = 0.5;
+    var body,
+      staticBody = space.staticBody;
+    var shape;
 
-        var body, staticBody = space.staticBody;
-        var shape;
+    this.addFloor();
+    this.addWalls();
 
-        this.addFloor();
-        this.addWalls();
+    // Add lots of boxes.
+    for (var i = 0; i < 14; i++) {
+      for (var j = 0; j <= i; j++) {
+        body = space.addBody(new cp.Body(1, cp.momentForBox(1, 30, 30)));
+        body.setPos(v(j * 32 - i * 16 + 320, 540 - i * 32));
 
-        // Add lots of boxes.
-        for(var i=0; i<14; i++){
-            for(var j=0; j<=i; j++){
-                body = space.addBody(new cp.Body(1, cp.momentForBox(1, 30, 30)));
-                body.setPos(v(j*32 - i*16 + 320, 540 - i*32));
-
-                shape = space.addShape(new cp.BoxShape(body, 30, 30));
-                shape.setElasticity(0);
-                shape.setFriction(0.8);
-            }
-        }
-
-        // Add a ball to make things more interesting
-        var radius = 15;
-        body = space.addBody(new cp.Body(10, cp.momentForCircle(10, 0, radius, v(0,0))));
-        body.setPos(v(320, radius+5));
-
-        shape = space.addShape(new cp.CircleShape(body, radius, v(0,0)));
+        shape = space.addShape(new cp.BoxShape(body, 30, 30));
         shape.setElasticity(0);
-        shape.setFriction(0.9);
+        shape.setFriction(0.8);
+      }
     }
 
-    title(){
-        return 'Pyramid Stack';
-    }
+    // Add a ball to make things more interesting
+    var radius = 15;
+    body = space.addBody(
+      new cp.Body(10, cp.momentForCircle(10, 0, radius, v(0, 0)))
+    );
+    body.setPos(v(320, radius + 5));
 
+    shape = space.addShape(new cp.CircleShape(body, radius, v(0, 0)));
+    shape.setElasticity(0);
+    shape.setFriction(0.9);
+  }
+
+  title() {
+    return "Pyramid Stack";
+  }
 }

@@ -30,14 +30,14 @@
 // ActionStackableMove
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionStackableMove extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 0.2;
-    }
+  constructor() {
+    super();
+    this.testDuration = 0.2;
+  }
 
   onEnter() {
     //----start33----onEnter
@@ -90,5 +90,4 @@ export class ActionStackableMove extends ActionsDemo {
     ret.push(ret_y);
     return JSON.stringify(ret);
   }
-
 }

@@ -25,17 +25,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextParticleAction } from "./particle-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setparticleSceneIdx, particleSceneIdx } from "./particle-test-constants.js";
+import { nextParticleAction } from "./particle-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _setparticleSceneIdx,
+  particleSceneIdx
+} from "./particle-test-constants";
 
 export class ParticleTestScene extends TestScene {
-    runThisTest(num) {
-        _setparticleSceneIdx((num || num == 0) ? (num - 1) : -1);
+  runThisTest(num) {
+    _setparticleSceneIdx(num || num == 0 ? num - 1 : -1);
 
-        this.addChild(nextParticleAction());
-        director.runScene(this);
-    }
-
+    this.addChild(nextParticleAction());
+    director.runScene(this);
+  }
 }

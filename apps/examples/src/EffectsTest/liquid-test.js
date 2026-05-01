@@ -23,17 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class LiquidTest extends EffectsBaseLayer {
-    title() {
-        return "Liquid";
-    }
-    code() {
-        return "a = cc.liquid(duration, gridSize, waves, amplitude)";
-    }
-    getEffect(duration) {
-        return cc.liquid( duration, new cc.Size(16,12), 4, 20);
-    }
-
+  title() {
+    return "Liquid";
+  }
+  code() {
+    return "a = cc.liquid(duration, gridSize, waves, amplitude)";
+  }
+  getEffect(duration) {
+    return cc.liquid(duration, new cc.Size(16, 12), 4, 20);
+  }
 }

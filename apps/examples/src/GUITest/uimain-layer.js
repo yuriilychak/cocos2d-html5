@@ -24,133 +24,139 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UISceneManager, GUITestScene } from "./UISceneManager.js";
+import { UISceneManager, GUITestScene } from "./UISceneManager";
 
 export class UIMainLayer extends cc.Layer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._widget = null;
 
+    this._sceneTitle = null;
 
-        this._widget = null;
+    this._topDisplayLabel = null;
 
+    this._bottomDisplayLabel = null;
 
-        this._sceneTitle = null;
+    this._mainNode = null;
+    this._widget = null;
+    //this.init();
+  }
+  init() {
+    super.init();
 
+    var winSize = cc.winSize;
+    var mainNode = new cc.Node();
+    var scale = winSize.height / 320;
+    mainNode.attr({
+      anchorX: 0,
+      anchorY: 0,
+      scale: scale,
+      x: (winSize.width - 480 * scale) / 2,
+      y: (winSize.height - 320 * scale) / 2
+    });
+    this.addChild(mainNode);
 
-        this._topDisplayLabel = null;
+    var widget;
+    var json = ccs.load("ccs-res/cocosui/UITest/UITest.json");
+    widget = json.node;
 
-
-        this._bottomDisplayLabel = null;
-
-
-        this._mainNode = null;
-        this._widget = null;
-        //this.init();
-    }
-    init() {
-        super.init();
-
-        var winSize = cc.winSize;
-        var mainNode = new cc.Node();
-        var scale = winSize.height/320;
-        mainNode.attr({anchorX: 0, anchorY: 0, scale: scale, x: (winSize.width - 480 * scale) / 2, y: (winSize.height - 320 * scale) / 2});
-        this.addChild(mainNode);
-
-        var widget;
-        var json = ccs.load("ccs-res/cocosui/UITest/UITest.json");
-        widget = json.node;
-
-        // If the JSON couldn't be parsed (legacy widgetTree format not yet
-        // supported), widget will be an empty Node with no children.
-        // Return false so subclass init() blocks are skipped entirely.
-        if (!widget || widget.getChildrenCount() === 0) {
-            return false;
-        }
-
-        mainNode.addChild(widget,-1);
-
-        this._sceneTitle = widget.getChildByName("UItest");
-
-        var back_label = widget.getChildByName("back");
-        if(back_label){
-            back_label.addTouchEventListener(this.toExtensionsMainLayer, this);
-        }
-        else{
-            var label = new cc.LabelTTF("Back", "Arial", 20);
-            var menuItem = new cc.MenuItemLabel(label, this.toExtensionsMainLayer, this);
-            var menu = new cc.Menu(menuItem);
-            menu.x = 0;
-            menu.y = 0;
-            menuItem.x = winSize.width - 50;
-            menuItem.y = 25;
-            this.addChild(menu, 1);
-        }
-        var left_button = widget.getChildByName("left_Button");
-        if (left_button) left_button.addTouchEventListener(this.previousCallback ,this);
-
-        var middle_button = widget.getChildByName("middle_Button");
-        if (middle_button) middle_button.addTouchEventListener(this.restartCallback ,this);
-
-        var right_button = widget.getChildByName("right_Button");
-        if (right_button) right_button.addTouchEventListener(this.nextCallback ,this);
-
-        //add topDisplayLabel
-        var widgetSize = widget.getContentSize();
-        var topDisplayText = new ccui.Text();
-        topDisplayText.attr({
-            string: "",
-            fontName: "Marker Felt",
-            fontSize: 32,
-            anchorX: 0.5,
-            anchorY: -1,
-            x: widgetSize.width / 2.0,
-            y: widgetSize.height / 2.0
-        });
-        mainNode.addChild(topDisplayText);
-
-        //add bottomDisplayLabel
-        var bottomDisplayText = new ccui.Text();
-        bottomDisplayText.attr({
-            string: "INIT",
-            fontName: "Marker Felt",
-            fontSize: 30,
-            color: new cc.Color(159, 168, 176),
-            x: widgetSize.width / 2.0
-        });
-        bottomDisplayText.y = widgetSize.height / 2.0 - bottomDisplayText.height * 1.75;
-        mainNode.addChild(bottomDisplayText);
-
-        this._topDisplayLabel = topDisplayText;
-        this._bottomDisplayLabel = bottomDisplayText;
-        this._mainNode = mainNode;
-        this._widget = widget;
-        return true;
-    }
-    setSceneTitle(title) {
-        if (this._sceneTitle) this._sceneTitle.setString(title);
-    }
-    toExtensionsMainLayer(sender) {
-        UISceneManager.purge();
-        GUITestScene.prototype.runThisTest();
+    // If the JSON couldn't be parsed (legacy widgetTree format not yet
+    // supported), widget will be an empty Node with no children.
+    // Return false so subclass init() blocks are skipped entirely.
+    if (!widget || widget.getChildrenCount() === 0) {
+      return false;
     }
 
-    previousCallback(sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
-            cc.director.runScene(UISceneManager.getInstance().previousUIScene());
-        }
-    }
+    mainNode.addChild(widget, -1);
 
-    restartCallback(sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
-            cc.director.runScene(UISceneManager.getInstance().currentUIScene());
-        }
-    }
+    this._sceneTitle = widget.getChildByName("UItest");
 
-    nextCallback(sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
-            cc.director.runScene(UISceneManager.getInstance().nextUIScene());
-        }
+    var back_label = widget.getChildByName("back");
+    if (back_label) {
+      back_label.addTouchEventListener(this.toExtensionsMainLayer, this);
+    } else {
+      var label = new cc.LabelTTF("Back", "Arial", 20);
+      var menuItem = new cc.MenuItemLabel(
+        label,
+        this.toExtensionsMainLayer,
+        this
+      );
+      var menu = new cc.Menu(menuItem);
+      menu.x = 0;
+      menu.y = 0;
+      menuItem.x = winSize.width - 50;
+      menuItem.y = 25;
+      this.addChild(menu, 1);
     }
+    var left_button = widget.getChildByName("left_Button");
+    if (left_button)
+      left_button.addTouchEventListener(this.previousCallback, this);
 
+    var middle_button = widget.getChildByName("middle_Button");
+    if (middle_button)
+      middle_button.addTouchEventListener(this.restartCallback, this);
+
+    var right_button = widget.getChildByName("right_Button");
+    if (right_button)
+      right_button.addTouchEventListener(this.nextCallback, this);
+
+    //add topDisplayLabel
+    var widgetSize = widget.getContentSize();
+    var topDisplayText = new ccui.Text();
+    topDisplayText.attr({
+      string: "",
+      fontName: "Marker Felt",
+      fontSize: 32,
+      anchorX: 0.5,
+      anchorY: -1,
+      x: widgetSize.width / 2.0,
+      y: widgetSize.height / 2.0
+    });
+    mainNode.addChild(topDisplayText);
+
+    //add bottomDisplayLabel
+    var bottomDisplayText = new ccui.Text();
+    bottomDisplayText.attr({
+      string: "INIT",
+      fontName: "Marker Felt",
+      fontSize: 30,
+      color: new cc.Color(159, 168, 176),
+      x: widgetSize.width / 2.0
+    });
+    bottomDisplayText.y =
+      widgetSize.height / 2.0 - bottomDisplayText.height * 1.75;
+    mainNode.addChild(bottomDisplayText);
+
+    this._topDisplayLabel = topDisplayText;
+    this._bottomDisplayLabel = bottomDisplayText;
+    this._mainNode = mainNode;
+    this._widget = widget;
+    return true;
+  }
+  setSceneTitle(title) {
+    if (this._sceneTitle) this._sceneTitle.setString(title);
+  }
+  toExtensionsMainLayer(sender) {
+    UISceneManager.purge();
+    GUITestScene.prototype.runThisTest();
+  }
+
+  previousCallback(sender, type) {
+    if (type == ccui.Widget.TOUCH_ENDED) {
+      cc.director.runScene(UISceneManager.getInstance().previousUIScene());
+    }
+  }
+
+  restartCallback(sender, type) {
+    if (type == ccui.Widget.TOUCH_ENDED) {
+      cc.director.runScene(UISceneManager.getInstance().currentUIScene());
+    }
+  }
+
+  nextCallback(sender, type) {
+    if (type == ccui.Widget.TOUCH_ENDED) {
+      cc.director.runScene(UISceneManager.getInstance().nextUIScene());
+    }
+  }
 }

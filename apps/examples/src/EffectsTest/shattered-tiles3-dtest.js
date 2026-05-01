@@ -23,17 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class ShatteredTiles3DTest extends EffectsBaseLayer {
-    title() {
-        return "ShatteredTiles3D";
-    }
-    code() {
-        return "a = cc.shatteredTiles3D(duration, gridSize, range, shatterZ)";
-    }
-    getEffect(duration) {
-        return cc.shatteredTiles3D( duration, new cc.Size(16,12), 5, false);
-    }
-
+  title() {
+    return "ShatteredTiles3D";
+  }
+  code() {
+    return "a = cc.shatteredTiles3D(duration, gridSize, range, shatterZ)";
+  }
+  getEffect(duration) {
+    return cc.shatteredTiles3D(duration, new cc.Size(16, 12), 5, false);
+  }
 }

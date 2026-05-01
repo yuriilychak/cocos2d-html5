@@ -28,17 +28,16 @@
 // Tests
 //
 //------------------------------------------------------------------
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class Shaky3DTest extends EffectsBaseLayer {
-    title() {
-        return "Shaky 3D";
-    }
-    code() {
-        return "a = cc.shaky3D(duration, gridSize, range, shakeZ)";
-    }
-    getEffect(duration) {
-        return cc.shaky3D( duration, new cc.Size(15,10), 5, false );
-    }
-
+  title() {
+    return "Shaky 3D";
+  }
+  code() {
+    return "a = cc.shaky3D(duration, gridSize, range, shakeZ)";
+  }
+  getEffect(duration) {
+    return cc.shaky3D(duration, new cc.Size(15, 10), 5, false);
+  }
 }

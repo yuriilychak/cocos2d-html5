@@ -25,16 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { IntervalLayer } from "./interval-layer.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { IntervalLayer } from "./interval-layer";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class IntervalTestScene extends TestScene {
-
-    runThisTest() {
-        var layer = new IntervalLayer();
-        this.addChild(layer);
-        director.runScene(this);
-    }
-
+  runThisTest() {
+    var layer = new IntervalLayer();
+    this.addChild(layer);
+    director.runScene(this);
+  }
 }

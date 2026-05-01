@@ -25,36 +25,37 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectAdvanceTextLayer } from "./effect-advance-text-layer.js";
-import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
+import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 
 export class Effect2 extends EffectAdvanceTextLayer {
-    title() {
-        return "ShakyTiles + ShuffleTiles + TurnOffTiles";
-    }
+  title() {
+    return "ShakyTiles + ShuffleTiles + TurnOffTiles";
+  }
 
-    onEnter() {
-        super.onEnter();
-        var target = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
+  onEnter() {
+    super.onEnter();
+    var target = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
 
-        // To reuse a grid the grid size and the grid type must be the same.
-        // in this case:
-        //     ShakyTiles is TiledGrid3D and it's size is (15,10)
-        //     Shuffletiles is TiledGrid3D and it's size is (15,10)
-        //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-        var shaky = cc.shakyTiles3D(5, new cc.Size(15, 10), 4, false);
-        var shuffle = cc.shuffleTiles(0, new cc.Size(15, 10), 3);
-        var turnoff = cc.turnOffTiles(0, new cc.Size(15, 10), 3);
-        var turnon = turnoff.reverse();
+    // To reuse a grid the grid size and the grid type must be the same.
+    // in this case:
+    //     ShakyTiles is TiledGrid3D and it's size is (15,10)
+    //     Shuffletiles is TiledGrid3D and it's size is (15,10)
+    //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
+    var shaky = cc.shakyTiles3D(5, new cc.Size(15, 10), 4, false);
+    var shuffle = cc.shuffleTiles(0, new cc.Size(15, 10), 3);
+    var turnoff = cc.turnOffTiles(0, new cc.Size(15, 10), 3);
+    var turnon = turnoff.reverse();
 
-        // reuse 2 times:
-        //   1 for shuffle
-        //   2 for turn off
-        //   turnon tiles will use a new grid
-        var reuse = cc.reuseGrid(2);
-        var delay = new cc.DelayTime(1);
+    // reuse 2 times:
+    //   1 for shuffle
+    //   2 for turn off
+    //   turnon tiles will use a new grid
+    var reuse = cc.reuseGrid(2);
+    var delay = new cc.DelayTime(1);
 
-        target.runAction(cc.sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon));
-    }
-
+    target.runAction(
+      cc.sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon)
+    );
+  }
 }

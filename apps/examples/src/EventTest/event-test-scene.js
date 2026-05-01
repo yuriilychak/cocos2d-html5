@@ -23,20 +23,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextEventsTest } from "./event-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { sceneIdx , _setsceneIdx} from "./event-test-constants.js";
+import { nextEventsTest } from "./event-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { sceneIdx, _setsceneIdx } from "./event-test-constants";
 
 export class EventTestScene extends TestScene {
-    runThisTest(num) {
-        _setsceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextEventsTest();
-        // var menu = new EventTest();
-        // menu.addKeyboardNotificationLayer( layer );
+  runThisTest(num) {
+    _setsceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextEventsTest();
+    // var menu = new EventTest();
+    // menu.addKeyboardNotificationLayer( layer );
 
-        this.addChild(layer);
-        director.runScene(this);
-    }
-
+    this.addChild(layer);
+    director.runScene(this);
+  }
 }

@@ -25,82 +25,81 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { winSize } from "../tests-main-constants.js";
-import { TextureCacheTestBase } from "./texture-cache-test-base.js";
+import { winSize } from "../constants";
+import { TextureCacheTestBase } from "./texture-cache-test-base";
 
 export class TextureLoadImgTest extends TextureCacheTestBase {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this._title = "Load Same Image Twice";
+    this._title = "Load Same Image Twice";
 
-        this._labelFirst = null;
+    this._labelFirst = null;
 
-        this._labelSecond = null;
+    this._labelSecond = null;
 
-        if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
-            var label = new cc.LabelTTF("Not support Loading texture from remote site on HTML5-WebGL", "Times New Roman", 28);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-            this.addChild(label, 100);
-            return;
-        }
-
-        this._labelFirst = new cc.LabelTTF("load first image");
-        this._labelFirst.attr({
-            x:cc.winSize.width/2,
-            y:cc.winSize.height/2 + 30
-        });
-        this.addChild(this._labelFirst, 1);
-
-
-        this._labelSecond = new cc.LabelTTF("load second image");
-        this._labelSecond.attr({
-            x:cc.winSize.width/2,
-            y:cc.winSize.height/2 - 30
-        });
-        this.addChild(this._labelSecond, 1);
-
-        var url = "http://www.cocos2d-x.org/images/logo.png";
-        cc.textureCache.addImageAsync(url, this.texFirstLoaded, this);
-        cc.textureCache.addImageAsync(url, this.texSecondLoaded, this);
+    if ("opengl" in cc.sys.capabilities && !cc.sys.isNative) {
+      var label = new cc.LabelTTF(
+        "Not support Loading texture from remote site on HTML5-WebGL",
+        "Times New Roman",
+        28
+      );
+      label.x = winSize.width / 2;
+      label.y = winSize.height / 2;
+      this.addChild(label, 100);
+      return;
     }
 
-    texFirstLoaded(texture) {
-        if (!texture)
-        {
-            this._labelFirst.setString("texFirstLoaded fail");
-            return;
-        }
+    this._labelFirst = new cc.LabelTTF("load first image");
+    this._labelFirst.attr({
+      x: cc.winSize.width / 2,
+      y: cc.winSize.height / 2 + 30
+    });
+    this.addChild(this._labelFirst, 1);
 
-        if (this.sprite) {
-            this.removeChild(this.sprite);
-        }
-        this.sprite = new cc.Sprite(texture);
-        this.sprite.x = cc.winSize.width/2;
-        this.sprite.y = cc.winSize.height/2;
-        this.addChild(this.sprite);
+    this._labelSecond = new cc.LabelTTF("load second image");
+    this._labelSecond.attr({
+      x: cc.winSize.width / 2,
+      y: cc.winSize.height / 2 - 30
+    });
+    this.addChild(this._labelSecond, 1);
 
-        this._labelFirst.setString("texFirstLoaded successful");
+    var url = "http://www.cocos2d-x.org/images/logo.png";
+    cc.textureCache.addImageAsync(url, this.texFirstLoaded, this);
+    cc.textureCache.addImageAsync(url, this.texSecondLoaded, this);
+  }
+
+  texFirstLoaded(texture) {
+    if (!texture) {
+      this._labelFirst.setString("texFirstLoaded fail");
+      return;
     }
 
-    texSecondLoaded(texture) {
+    if (this.sprite) {
+      this.removeChild(this.sprite);
+    }
+    this.sprite = new cc.Sprite(texture);
+    this.sprite.x = cc.winSize.width / 2;
+    this.sprite.y = cc.winSize.height / 2;
+    this.addChild(this.sprite);
 
-        if (!texture)
-        {
-            this._labelSecond.setString("texSecondLoaded fail");
-            return;
-        }
+    this._labelFirst.setString("texFirstLoaded successful");
+  }
 
-        if (this.sprite2) {
-            this.removeChild(this.sprite2);
-        }
-        this.sprite2 = new cc.Sprite(texture);
-        this.sprite2.x = cc.winSize.width/2;
-        this.sprite2.y = cc.winSize.height/2 + 70;
-        this.addChild(this.sprite2);
-
-        this._labelSecond.setString("texSecondLoaded successful");
+  texSecondLoaded(texture) {
+    if (!texture) {
+      this._labelSecond.setString("texSecondLoaded fail");
+      return;
     }
 
+    if (this.sprite2) {
+      this.removeChild(this.sprite2);
+    }
+    this.sprite2 = new cc.Sprite(texture);
+    this.sprite2.x = cc.winSize.width / 2;
+    this.sprite2.y = cc.winSize.height / 2 + 70;
+    this.addChild(this.sprite2);
+
+    this._labelSecond.setString("texSecondLoaded successful");
+  }
 }

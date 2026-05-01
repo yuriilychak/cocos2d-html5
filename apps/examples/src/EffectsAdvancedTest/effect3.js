@@ -25,30 +25,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectAdvanceTextLayer } from "./effect-advance-text-layer.js";
-import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
+import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 
 export class Effect3 extends EffectAdvanceTextLayer {
-    title() {
-        return "Effects on 2 sprites";
-    }
+  title() {
+    return "Effects on 2 sprites";
+  }
 
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        var target1 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE1);
-        var target2 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE2);
+    var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
+    var target1 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE1);
+    var target2 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE2);
 
-        var waves = cc.waves(5, new cc.Size(15, 10), 5, 20, true, false);
-        var shaky = cc.shaky3D(5, new cc.Size(15, 10), 4, false);
+    var waves = cc.waves(5, new cc.Size(15, 10), 5, 20, true, false);
+    var shaky = cc.shaky3D(5, new cc.Size(15, 10), 4, false);
 
-	    target1.runAction(waves.repeatForever());
-	    target2.runAction(shaky.repeatForever());
+    target1.runAction(waves.repeatForever());
+    target2.runAction(shaky.repeatForever());
 
-        // moving background. Testing issue #244
-        var move = new cc.MoveBy(3, new cc.Point(200, 0));
-        bg.runAction(cc.sequence(move, move.reverse()).repeatForever());
-    }
-
+    // moving background. Testing issue #244
+    var move = new cc.MoveBy(3, new cc.Point(200, 0));
+    bg.runAction(cc.sequence(move, move.reverse()).repeatForever());
+  }
 }

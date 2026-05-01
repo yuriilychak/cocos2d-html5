@@ -31,10 +31,10 @@
 // S9SpriteTestDemo
 //
 //------------------------------------------------------------------
-import { nextS9SpriteTest, previousS9SpriteTest, restartS9SpriteTest } from "./s9-sprite-test-helpers.js";
-import { S9SpriteTestScene } from "./s9-sprite-test-scene.js";
-import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_s9s_blocks9_plist } from "../../tests_resources.js";
-import { director, winSize } from "../../tests-main-constants.js";
+import { nextS9SpriteTest, previousS9SpriteTest, restartS9SpriteTest } from "./s9-sprite-test-helpers";
+import { S9SpriteTestScene } from "./s9-sprite-test-scene";
+import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_s9s_blocks9_plist } from "../../resources";
+import { director, winSize } from "../../constants";
 
 export class S9SpriteTestDemo extends cc.LayerGradient {
 

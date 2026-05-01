@@ -30,19 +30,21 @@
 //	ActionCallFunc1
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { director } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { director } from "../constants";
 
 export class ActionCallFunc1 extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 5.05;
-    }
+  constructor() {
+    super();
+    this.testDuration = 5.05;
+  }
 
-      get _code() { 
-        return "a = new cc.CallFunc( this.callback );\n" +
-        "a = new cc.CallFunc( this.callback, this, optional_arg );";
-      }
+  get _code() {
+    return (
+      "a = new cc.CallFunc( this.callback );\n" +
+      "a = new cc.CallFunc( this.callback, this, optional_arg );"
+    );
+  }
 
   onEnter() {
     //----start25----onEnter
@@ -121,5 +123,4 @@ export class ActionCallFunc1 extends ActionsDemo {
     ret.push(this.control3);
     return JSON.stringify(ret);
   }
-
 }

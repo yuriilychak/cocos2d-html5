@@ -25,42 +25,39 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
 
 export class unScheduleAndRepeatTest extends SchedulerTestLayer {
-    constructor() {
-        super();
-        this._times = 5;
-    }
+  constructor() {
+    super();
+    this._times = 5;
+  }
 
+  onEnter() {
+    super.onEnter();
+    cc.log("start schedule 'repeat': run once and repeat 4 times");
+    this.schedule(this.repeat, 0.5, 4);
+    cc.log("start schedule 'forever': repeat forever (stop in 8s)");
+    this.schedule(this.forever, 0.5);
+    this.schedule(function () {
+      cc.log("stop the 'forever'");
+      this.unschedule(this.forever);
+    }, 8);
+  }
 
-    onEnter(){
-        super.onEnter();
-        cc.log("start schedule 'repeat': run once and repeat 4 times");
-        this.schedule(this.repeat, 0.5, 4);
-        cc.log("start schedule 'forever': repeat forever (stop in 8s)");
-        this.schedule(this.forever, 0.5);
-        this.schedule(function(){
-            cc.log("stop the 'forever'");
-            this.unschedule(this.forever);
-        }, 8);
-    }
+  repeat() {
+    cc.log("Repeat - the remaining number: " + this._times--);
+  }
 
+  forever() {
+    cc.log("Repeat Forever...");
+  }
 
-    repeat(){
-        cc.log("Repeat - the remaining number: " + this._times--);
-    }
+  title() {
+    return "Repeat And unschedule Test";
+  }
 
-    forever(){
-        cc.log("Repeat Forever...");
-    }
-
-    title(){
-        return "Repeat And unschedule Test";
-    }
-
-    subtitle(){
-        return "Repeat will print 5 times\nForever will stop in 8 seconds.";
-    }
-
+  subtitle() {
+    return "Repeat will print 5 times\nForever will stop in 8 seconds.";
+  }
 }

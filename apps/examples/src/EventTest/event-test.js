@@ -26,10 +26,10 @@
 /**
  @brief EventTest for retain prev, reset, next, main menu buttons.
  */
-import { nextEventsTest, previousEventsTest, restartEventsTest } from "./event-test-helpers.js";
-import { EventTestScene } from "./event-test-scene.js";
-import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { nextEventsTest, previousEventsTest, restartEventsTest } from "./event-test-helpers";
+import { EventTestScene } from "./event-test-scene";
+import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../resources";
+import { director } from "../constants";
 
 export class EventTest extends cc.Layer {
     constructor() {

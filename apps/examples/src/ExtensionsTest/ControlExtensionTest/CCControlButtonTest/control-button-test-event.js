@@ -25,107 +25,149 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene.js";
-import { s_extensions_button, s_extensions_buttonBackground, s_extensions_buttonHighlighted } from "../../../tests_resources.js";
+import { ControlScene } from "../CCControlScene";
+import {
+  s_extensions_button,
+  s_extensions_buttonBackground,
+  s_extensions_buttonHighlighted
+} from "../../../resources";
 
 export class ControlButtonTest_Event extends ControlScene {
-    constructor() {
-        super();
-        this._displayValueLabel = null;
-    }
+  constructor() {
+    super();
+    this._displayValueLabel = null;
+  }
 
+  init() {
+    if (super.init()) {
+      var screenSize = cc.director.getWinSize();
 
-    init() {
-        if (super.init()) {
-            var screenSize = cc.director.getWinSize();
+      // Add the button
+      var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+      var backgroundHighlightedButton = new cc.Scale9Sprite(
+        s_extensions_buttonHighlighted
+      );
 
-            // Add the button
-            var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-            var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
+      // Add a label in which the button events will be displayed
+      this.setDisplayValueLabel(new cc.LabelTTF("No Event", "Marker Felt", 32));
+      this._displayValueLabel.anchorX = 0.5;
+      this._displayValueLabel.anchorY = -1;
+      this._displayValueLabel.x = screenSize.width / 2.0;
+      this._displayValueLabel.y = screenSize.height / 2.0;
+      this.addChild(this._displayValueLabel, 10);
 
-            // Add a label in which the button events will be displayed
-            this.setDisplayValueLabel(new cc.LabelTTF("No Event", "Marker Felt", 32));
-            this._displayValueLabel.anchorX = 0.5;
-            this._displayValueLabel.anchorY = -1;
-            this._displayValueLabel.x = screenSize.width / 2.0;
-            this._displayValueLabel.y = screenSize.height / 2.0;
-            this.addChild(this._displayValueLabel, 10);
+      var titleButton = new cc.LabelTTF("Touch Me!", "Marker Felt", 30);
+      titleButton.color = new cc.Color(159, 168, 176);
 
-            var titleButton = new cc.LabelTTF("Touch Me!", "Marker Felt", 30);
-            titleButton.color = new cc.Color(159, 168, 176);
+      var controlButton = new cc.ControlButton(titleButton, backgroundButton);
+      controlButton.setBackgroundSpriteForState(
+        backgroundHighlightedButton,
+        cc.CONTROL_STATE_HIGHLIGHTED
+      );
+      controlButton.setTitleColorForState(
+        cc.Color.WHITE,
+        cc.CONTROL_STATE_HIGHLIGHTED
+      );
 
-            var controlButton = new cc.ControlButton(titleButton, backgroundButton);
-            controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-            controlButton.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+      controlButton.anchorX = 0.5;
+      controlButton.anchorY = 1;
+      controlButton.x = screenSize.width / 2.0;
+      controlButton.y = screenSize.height / 2.0;
+      this.addChild(controlButton, 1);
 
-            controlButton.anchorX = 0.5;
-            controlButton.anchorY = 1;
-            controlButton.x = screenSize.width / 2.0;
-            controlButton.y = screenSize.height / 2.0;
-            this.addChild(controlButton, 1);
+      // Add the black background
+      var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
+      background.width = 300;
+      background.height = 170;
+      background.x = screenSize.width / 2.0;
+      background.y = screenSize.height / 2.0;
+      this.addChild(background);
 
-            // Add the black background
-            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
-            background.width = 300;
-            background.height = 170;
-            background.x = screenSize.width / 2.0;
-            background.y = screenSize.height / 2.0;
-            this.addChild(background);
+      // Sets up event handlers
+      controlButton.addTargetWithActionForControlEvents(
+        this,
+        this.touchDownAction,
+        cc.CONTROL_EVENT_TOUCH_DOWN
+      );
+      controlButton.addTargetWithActionForControlEvents(
+        this,
+        this.touchDragInsideAction,
+        cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE
+      );
+      controlButton.addTargetWithActionForControlEvents(
+        this,
+        this.touchDragOutsideAction,
+        cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE
+      );
+      controlButton.addTargetWithActionForControlEvents(
+        this,
+        this.touchDragEnterAction,
+        cc.CONTROL_EVENT_TOUCH_DRAG_ENTER
+      );
+      controlButton.addTargetWithActionForControlEvents(
+        this,
+        this.touchDragExitAction,
+        cc.CONTROL_EVENT_TOUCH_DRAG_EXIT
+      );
+      controlButton.addTargetWithActionForControlEvents(
+        this,
+        this.touchUpInsideAction,
+        cc.CONTROL_EVENT_TOUCH_UP_INSIDE
+      );
+      controlButton.addTargetWithActionForControlEvents(
+        this,
+        this.touchUpOutsideAction,
+        cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE
+      );
+      controlButton.addTargetWithActionForControlEvents(
+        this,
+        this.touchCancelAction,
+        cc.CONTROL_EVENT_TOUCH_CANCEL
+      );
+      return true;
+    }
+    return false;
+  }
 
-            // Sets up event handlers
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDownAction, cc.CONTROL_EVENT_TOUCH_DOWN);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDragInsideAction, cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDragOutsideAction, cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDragEnterAction, cc.CONTROL_EVENT_TOUCH_DRAG_ENTER);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchDragExitAction, cc.CONTROL_EVENT_TOUCH_DRAG_EXIT);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchUpInsideAction, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchUpOutsideAction, cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE);
-            controlButton.addTargetWithActionForControlEvents(this, this.touchCancelAction, cc.CONTROL_EVENT_TOUCH_CANCEL);
-            return true;
-        }
-        return false;
-    }
+  getDisplayValueLabel() {
+    return this._displayValueLabel;
+  }
+  setDisplayValueLabel(displayValueLabel) {
+    this._displayValueLabel = displayValueLabel;
+  }
 
-    getDisplayValueLabel() {
-        return this._displayValueLabel;
-    }
-    setDisplayValueLabel(displayValueLabel) {
-        this._displayValueLabel = displayValueLabel;
-    }
-
-    touchDownAction(sender, controlEvent) {
-        this._displayValueLabel.setString("Touch Down");
-    }
-    touchDragInsideAction(sender, controlEvent) {
-        this._displayValueLabel.setString("Drag Inside");
-    }
-    touchDragOutsideAction(sender, controlEvent) {
-        this._displayValueLabel.setString("Drag Outside");
-    }
-    touchDragEnterAction(sender, controlEvent) {
-        this._displayValueLabel.setString("Drag Enter");
-    }
-    touchDragExitAction(sender, controlEvent) {
-        this._displayValueLabel.setString("Drag Exit");
-    }
-    touchUpInsideAction(sender, controlEvent) {
-        this._displayValueLabel.setString("Touch Up Inside.");
-    }
-    touchUpOutsideAction(sender, controlEvent) {
-        this._displayValueLabel.setString("Touch Up Outside.");
-    }
-    touchCancelAction(sender, controlEvent) {
-        this._displayValueLabel.setString("Touch Cancel");
-    }
-
+  touchDownAction(sender, controlEvent) {
+    this._displayValueLabel.setString("Touch Down");
+  }
+  touchDragInsideAction(sender, controlEvent) {
+    this._displayValueLabel.setString("Drag Inside");
+  }
+  touchDragOutsideAction(sender, controlEvent) {
+    this._displayValueLabel.setString("Drag Outside");
+  }
+  touchDragEnterAction(sender, controlEvent) {
+    this._displayValueLabel.setString("Drag Enter");
+  }
+  touchDragExitAction(sender, controlEvent) {
+    this._displayValueLabel.setString("Drag Exit");
+  }
+  touchUpInsideAction(sender, controlEvent) {
+    this._displayValueLabel.setString("Touch Up Inside.");
+  }
+  touchUpOutsideAction(sender, controlEvent) {
+    this._displayValueLabel.setString("Touch Up Outside.");
+  }
+  touchCancelAction(sender, controlEvent) {
+    this._displayValueLabel.setString("Touch Cancel");
+  }
 }
 
 ControlButtonTest_Event.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlButtonTest_Event();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlButtonTest_Event();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };

@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteDemo } from "./sprite-demo.js";
-import { s_grossiniPlist } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteDemo } from "./sprite-demo";
+import { s_grossiniPlist } from "../resources";
+import { winSize } from "../constants";
 
 export class SpriteProgressWithSpriteFrame extends SpriteDemo {
     onEnter() {

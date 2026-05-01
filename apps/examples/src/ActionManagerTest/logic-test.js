@@ -30,59 +30,61 @@
 // Test2
 //
 //------------------------------------------------------------------
-import { ActionManagerTest } from "./action-manager-test.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { autoTestEnabled } from "../tests-main-constants.js";
+import { ActionManagerTest } from "./action-manager-test";
+import { s_pathGrossini } from "../resources";
+import { autoTestEnabled } from "../constants";
 
 export class LogicTest extends ActionManagerTest {
-    constructor() {
-        super();
-        this.testDuration = 4.0;
-    }
+  constructor() {
+    super();
+    this.testDuration = 4.0;
+  }
 
-    title() {
-        return "Logic test";
-    }
-    onEnter() {
-        //----start1----onEnter
-        super.onEnter();
+  title() {
+    return "Logic test";
+  }
+  onEnter() {
+    //----start1----onEnter
+    super.onEnter();
 
-        var grossini = new cc.Sprite(s_pathGrossini);
-        this.addChild(grossini, 0, 2);
-        grossini.x = 200;
-	    grossini.y = 200;
+    var grossini = new cc.Sprite(s_pathGrossini);
+    this.addChild(grossini, 0, 2);
+    grossini.x = 200;
+    grossini.y = 200;
 
-        grossini.runAction(cc.sequence(
-            new cc.MoveBy(1, new cc.Point(150, 0)),
-            new cc.CallFunc(this.onBugMe, this))
-        );
-
-
-        //
-        // only for automation
-        //
-        if ( autoTestEnabled ) {
-            this._grossini = grossini;
-        }
-        //----end1----
-    }
-    onBugMe(node) {
-        //----start1----onBugMe
-        node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
-        node.runAction(new cc.ScaleTo(2, 2));
-        //----end1----
-    }
+    grossini.runAction(
+      cc.sequence(
+        new cc.MoveBy(1, new cc.Point(150, 0)),
+        new cc.CallFunc(this.onBugMe, this)
+      )
+    );
 
     //
-    // Automation
+    // only for automation
     //
-    getExpectedResult() {
-        var ret = [ {"scaleX":2, "scaleY":2} ];
-        return JSON.stringify(ret);
+    if (autoTestEnabled) {
+      this._grossini = grossini;
     }
-    getCurrentResult() {
-        var ret = [ {"scaleX":this._grossini.scaleX, "scaleY":this._grossini.scaleY} ];
-        return JSON.stringify(ret);
-    }
+    //----end1----
+  }
+  onBugMe(node) {
+    //----start1----onBugMe
+    node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
+    node.runAction(new cc.ScaleTo(2, 2));
+    //----end1----
+  }
 
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = [{ scaleX: 2, scaleY: 2 }];
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret = [
+      { scaleX: this._grossini.scaleX, scaleY: this._grossini.scaleY }
+    ];
+    return JSON.stringify(ret);
+  }
 }

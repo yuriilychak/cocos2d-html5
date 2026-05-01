@@ -25,35 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { clippingNodeTestSceneIdx , _setclippingNodeTestSceneIdx} from "./clipping-node-test-constants.js";
-import { HoleDemo } from "./hole-demo.js";
-import { NestedTest } from "./nested-test.js";
-import { ScrollViewDemo } from "./scroll-view-demo.js";
-import { ShapeInvertedTest } from "./shape-inverted-test.js";
-import { ShapeTest } from "./shape-test.js";
-import { SpriteInvertedTest } from "./sprite-inverted-test.js";
-import { SpriteNoAlphaTest } from "./sprite-no-alpha-test.js";
-import { SpriteTest } from "./sprite-test.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import {
+  clippingNodeTestSceneIdx,
+  _setclippingNodeTestSceneIdx
+} from "./clipping-node-test-constants";
+import { HoleDemo } from "./hole-demo";
+import { NestedTest } from "./nested-test";
+import { ScrollViewDemo } from "./scroll-view-demo";
+import { ShapeInvertedTest } from "./shape-inverted-test";
+import { ShapeTest } from "./shape-test";
+import { SpriteInvertedTest } from "./sprite-inverted-test";
+import { SpriteNoAlphaTest } from "./sprite-no-alpha-test";
+import { SpriteTest } from "./sprite-test";
 
 export let _stencilBits = -1;
 
@@ -62,93 +45,79 @@ export var _alphaThreshold = 0.05;
 export var _PLANE_COUNT = 8;
 
 export var _planeColor = [
-    new cc.Color(0, 0, 0, 166),
-    new cc.Color(179, 0, 0, 153),
-    new cc.Color(0, 179, 0, 140),
-    new cc.Color(0, 0, 179, 128),
-    new cc.Color(179, 179, 0, 115),
-    new cc.Color(0, 179, 179, 102),
-    new cc.Color(179, 0, 179, 89),
-    new cc.Color(179, 179, 179, 77)
+  new cc.Color(0, 0, 0, 166),
+  new cc.Color(179, 0, 0, 153),
+  new cc.Color(0, 179, 0, 140),
+  new cc.Color(0, 0, 179, 128),
+  new cc.Color(179, 179, 0, 115),
+  new cc.Color(0, 179, 179, 102),
+  new cc.Color(179, 0, 179, 89),
+  new cc.Color(179, 179, 179, 77)
 ];
 
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-export var arrayOfClippingNodeTest = [
-    ScrollViewDemo,
-    ShapeTest,
-    SpriteTest
-];
+export var arrayOfClippingNodeTest = [ScrollViewDemo, ShapeTest, SpriteTest];
 
 if (!cc.sys.isNative && !cc.rendererConfig.isCanvas) {
-    arrayOfClippingNodeTest.push(
-        ShapeInvertedTest,
-        SpriteNoAlphaTest,
-        SpriteInvertedTest
-        //TODO re-open them later.
-        /*    RawStencilBufferTest,
+  arrayOfClippingNodeTest.push(
+    ShapeInvertedTest,
+    SpriteNoAlphaTest,
+    SpriteInvertedTest
+    //TODO re-open them later.
+    /*    RawStencilBufferTest,
          RawStencilBufferTest2,
          RawStencilBufferTest3,
          RawStencilBufferTest4,
          RawStencilBufferTest5,
          RawStencilBufferTest6*/
-    );
+  );
 }
 
-if ( cc.sys.isNative){
-    arrayOfClippingNodeTest.push(
-        ShapeInvertedTest,
-        SpriteNoAlphaTest,
-        SpriteInvertedTest,
-        NestedTest);
+if (cc.sys.isNative) {
+  arrayOfClippingNodeTest.push(
+    ShapeInvertedTest,
+    SpriteNoAlphaTest,
+    SpriteInvertedTest,
+    NestedTest
+  );
 } else {
-    arrayOfClippingNodeTest.push(HoleDemo
-    );
+  arrayOfClippingNodeTest.push(HoleDemo);
 }
 
 export function nextClippingNodeTest() {
-    _setclippingNodeTestSceneIdx(clippingNodeTestSceneIdx + 1);
-    _setclippingNodeTestSceneIdx(clippingNodeTestSceneIdx % arrayOfClippingNodeTest.length);
+  _setclippingNodeTestSceneIdx(clippingNodeTestSceneIdx + 1);
+  _setclippingNodeTestSceneIdx(
+    clippingNodeTestSceneIdx % arrayOfClippingNodeTest.length
+  );
 
-    if(window.sideIndexBar){
-        _setclippingNodeTestSceneIdx(window.sideIndexBar.changeTest(clippingNodeTestSceneIdx, 5));
-    }
+  if (window.sideIndexBar) {
+    _setclippingNodeTestSceneIdx(
+      window.sideIndexBar.changeTest(clippingNodeTestSceneIdx, 5)
+    );
+  }
 
-    return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
+  return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 }
-
-;
 
 export function previousClippingNodeTest() {
-    _setclippingNodeTestSceneIdx(clippingNodeTestSceneIdx - 1);
-    if (clippingNodeTestSceneIdx < 0)
-        _setclippingNodeTestSceneIdx(clippingNodeTestSceneIdx + (arrayOfClippingNodeTest.length));
+  _setclippingNodeTestSceneIdx(clippingNodeTestSceneIdx - 1);
+  if (clippingNodeTestSceneIdx < 0)
+    _setclippingNodeTestSceneIdx(
+      clippingNodeTestSceneIdx + arrayOfClippingNodeTest.length
+    );
 
-    if(window.sideIndexBar){
-        _setclippingNodeTestSceneIdx(window.sideIndexBar.changeTest(clippingNodeTestSceneIdx, 5));
-    }
+  if (window.sideIndexBar) {
+    _setclippingNodeTestSceneIdx(
+      window.sideIndexBar.changeTest(clippingNodeTestSceneIdx, 5)
+    );
+  }
 
-    return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
+  return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 }
-
-;
 
 export function restartClippingNodeTest() {
-    return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
+  return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 }
 
-;
-
-;
-
-export function _set_stencilBits(v) { _stencilBits = v; }
+export function _set_stencilBits(v) {
+  _stencilBits = v;
+}

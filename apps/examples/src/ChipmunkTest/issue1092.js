@@ -25,46 +25,53 @@
 //
 // Flow control
 //
-import { ChipmunkDemo } from "./chipmunk-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ChipmunkDemo } from "./chipmunk-demo";
+import { winSize } from "../constants";
 
 export class Issue1092 extends ChipmunkDemo {
-    constructor(){
-        super();
-        this._subtitle = 'Chipmunk Demo';
-        this._title = 'Issue 1092';
+  constructor() {
+    super();
+    this._subtitle = "Chipmunk Demo";
+    this._title = "Issue 1092";
 
-        var space = this.space;
+    var space = this.space;
 
-        var body = space.addBody(new cp.Body(100, 50));
-        body.setPos(cp.v(winSize.width/2, winSize.height/2));
-        space.addShape(cp.BoxShape(body, 50, 50));
+    var body = space.addBody(new cp.Body(100, 50));
+    body.setPos(cp.v(winSize.width / 2, winSize.height / 2));
+    space.addShape(cp.BoxShape(body, 50, 50));
 
-        cc.assert(body.vx == 0, "assertion failed : vx");
-        cc.assert(body.vy == 0, "assertion failed : vy");
-        cc.assert(body.v_limit == Infinity, "assertion failed : v_limit");
-        cc.assert(body.w_limit == Infinity, "assertion failed : w_limit");
-        cc.assert(body.f.x == 0, "assertion failed : f");
-        cc.assert(body.t == 0, "assertion failed : t");
-        cc.assert(body.m == 100, "assertion failed : m");
-        cc.assert(body.m_inv == 0.01, "assertion failed : m_inv");
-        cc.assert(body.i == 50, "assertion failed : i");
-        cc.assert(body.i_inv == 0.02, "assertion failed : i_inv");
-        cc.assert(body.rot.x == Math.cos(0), "assertion failed : rot");
+    cc.assert(body.vx == 0, "assertion failed : vx");
+    cc.assert(body.vy == 0, "assertion failed : vy");
+    cc.assert(body.v_limit == Infinity, "assertion failed : v_limit");
+    cc.assert(body.w_limit == Infinity, "assertion failed : w_limit");
+    cc.assert(body.f.x == 0, "assertion failed : f");
+    cc.assert(body.t == 0, "assertion failed : t");
+    cc.assert(body.m == 100, "assertion failed : m");
+    cc.assert(body.m_inv == 0.01, "assertion failed : m_inv");
+    cc.assert(body.i == 50, "assertion failed : i");
+    cc.assert(body.i_inv == 0.02, "assertion failed : i_inv");
+    cc.assert(body.rot.x == Math.cos(0), "assertion failed : rot");
 
+    space.addConstraint(
+      new cp.PivotJoint(
+        body,
+        space.staticBody,
+        cp.v(winSize.width / 2, winSize.height / 2)
+      )
+    );
+    body.applyImpulse(
+      cp.v(winSize.width / 2, winSize.height / 2 - 20),
+      cp.v(1, -1)
+    );
 
-        space.addConstraint(new cp.PivotJoint(body, space.staticBody, cp.v(winSize.width/2, winSize.height/2)));
-        body.applyImpulse(cp.v(winSize.width/2, winSize.height/2-20), cp.v(1, -1));
-
-        body.eachShape(function(shape){
-            cc.log(shape);
-        });
-        body.eachConstraint(function(joint){
-            cc.log(joint);
-        });
-        body.eachArbiter(function(arbiter){
-            cc.log(arbiter);
-        })
-    }
-
+    body.eachShape(function (shape) {
+      cc.log(shape);
+    });
+    body.eachConstraint(function (joint) {
+      cc.log(joint);
+    });
+    body.eachArbiter(function (arbiter) {
+      cc.log(arbiter);
+    });
+  }
 }

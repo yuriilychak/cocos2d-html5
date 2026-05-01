@@ -23,21 +23,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class ShuffleTilesTest extends EffectsBaseLayer {
-    title() {
-        return "ShuffleTiles";
-    }
-    code() {
-        return "a = cc.shuffleTiles(duration, gridSize, seed)";
-    }
-    getEffect(duration) {
-        var action = cc.shuffleTiles( duration, new cc.Size(16,12), 25);
-        var delay = new cc.DelayTime(2);
-        var back = action.reverse();
-        var seq = cc.sequence( action, delay, back);
-        return seq;
-    }
-
+  title() {
+    return "ShuffleTiles";
+  }
+  code() {
+    return "a = cc.shuffleTiles(duration, gridSize, seed)";
+  }
+  getEffect(duration) {
+    var action = cc.shuffleTiles(duration, new cc.Size(16, 12), 25);
+    var delay = new cc.DelayTime(2);
+    var back = action.reverse();
+    var seq = cc.sequence(action, delay, back);
+    return seq;
+  }
 }

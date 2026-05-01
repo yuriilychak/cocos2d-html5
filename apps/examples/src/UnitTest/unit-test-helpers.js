@@ -23,49 +23,30 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { DictionaryToFromTest } from "./dictionary-to-from-test.js";
-import { RectUnitTest } from "./rect-unit-test.js";
-import { unitTestSceneIdx , _setunitTestSceneIdx} from "./unit-test-constants.js";
-
-;
-
-;
-
-;
-
-;
+import { DictionaryToFromTest } from "./dictionary-to-from-test";
+import { RectUnitTest } from "./rect-unit-test";
+import { unitTestSceneIdx, _setunitTestSceneIdx } from "./unit-test-constants";
 
 //
 // Flow control
 //
-export var arrayOfUnitTest = [
-
-    RectUnitTest,
-    DictionaryToFromTest
-
-];
+export var arrayOfUnitTest = [RectUnitTest, DictionaryToFromTest];
 
 export function nextUnitTest() {
-    _setunitTestSceneIdx(unitTestSceneIdx + 1);
-    _setunitTestSceneIdx(unitTestSceneIdx % arrayOfUnitTest.length);
+  _setunitTestSceneIdx(unitTestSceneIdx + 1);
+  _setunitTestSceneIdx(unitTestSceneIdx % arrayOfUnitTest.length);
 
-    return new arrayOfUnitTest[unitTestSceneIdx]();
+  return new arrayOfUnitTest[unitTestSceneIdx]();
 }
-
-;
 
 export function previousUnitTest() {
-    _setunitTestSceneIdx(unitTestSceneIdx - 1);
-    if (unitTestSceneIdx < 0)
-        _setunitTestSceneIdx(unitTestSceneIdx + (arrayOfUnitTest.length));
+  _setunitTestSceneIdx(unitTestSceneIdx - 1);
+  if (unitTestSceneIdx < 0)
+    _setunitTestSceneIdx(unitTestSceneIdx + arrayOfUnitTest.length);
 
-    return new arrayOfUnitTest[unitTestSceneIdx]();
+  return new arrayOfUnitTest[unitTestSceneIdx]();
 }
-
-;
 
 export function restartUnitTest() {
-    return new arrayOfUnitTest[unitTestSceneIdx]();
+  return new arrayOfUnitTest[unitTestSceneIdx]();
 }
-
-;

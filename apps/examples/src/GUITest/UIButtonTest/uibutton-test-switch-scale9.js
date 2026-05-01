@@ -24,54 +24,55 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIButtonTestSwitchScale9 extends UIMainLayer {
-    init(){
-        if (super.init()){
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-            // Add a label in which the button events will be displayed
-            this._topDisplayLabel.setString("No Event");
-            this._bottomDisplayLabel.setString("");
+      // Add a label in which the button events will be displayed
+      this._topDisplayLabel.setString("No Event");
+      this._bottomDisplayLabel.setString("");
 
-            // Create the button
-            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png",
-                "ccs-res/cocosui/animationbuttonpressed.png");
-            button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
-            button.addTouchEventListener(this.touchEvent, this);
-            button.setTitleText("Button Title");
-            button.ignoreContentAdaptWithSize(false);
+      // Create the button
+      var button = new ccui.Button(
+        "ccs-res/cocosui/animationbuttonnormal.png",
+        "ccs-res/cocosui/animationbuttonpressed.png"
+      );
+      button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
+      button.addTouchEventListener(this.touchEvent, this);
+      button.setTitleText("Button Title");
+      button.ignoreContentAdaptWithSize(false);
 
-            this._mainNode.addChild(button);
-            return true;
-        }
-        return false;
+      this._mainNode.addChild(button);
+      return true;
     }
+    return false;
+  }
 
-    touchEvent(sender, type){
-        switch (type) {
-            case ccui.Widget.TOUCH_BEGAN:
-                this._topDisplayLabel.setString("Touch Down");
-                break;
+  touchEvent(sender, type) {
+    switch (type) {
+      case ccui.Widget.TOUCH_BEGAN:
+        this._topDisplayLabel.setString("Touch Down");
+        break;
 
-            case ccui.Widget.TOUCH_MOVED:
-                this._topDisplayLabel.setString("Touch Move");
-                break;
+      case ccui.Widget.TOUCH_MOVED:
+        this._topDisplayLabel.setString("Touch Move");
+        break;
 
-            case ccui.Widget.TOUCH_ENDED:
-                this._topDisplayLabel.setString("Touch Up");
-                sender.setScale9Enabled(!sender.isScale9Enabled());
-                sender.setContentSize(200,100);
-                break;
+      case ccui.Widget.TOUCH_ENDED:
+        this._topDisplayLabel.setString("Touch Up");
+        sender.setScale9Enabled(!sender.isScale9Enabled());
+        sender.setContentSize(200, 100);
+        break;
 
-            case ccui.Widget.TOUCH_CANCELED:
-                this._topDisplayLabel.setString("Touch Cancelled");
-                break;
+      case ccui.Widget.TOUCH_CANCELED:
+        this._topDisplayLabel.setString("Touch Cancelled");
+        break;
 
-            default:
-                break;
-        }
+      default:
+        break;
     }
-
+  }
 }

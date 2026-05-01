@@ -25,45 +25,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { sp } from "./spine-test-constants.js";
-import { SpineTestLayer } from "./spine-test-layer.js";
+import { SkeletonAnimation } from "@aspect/extensions";
+import { SpineTestLayer } from "./spine-test-layer";
 
 export class SpineTestLayerFFD extends SpineTestLayer {
-    constructor(){
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
-        var skeletonNode = new sp.SkeletonAnimation("spine/goblins-pro.json", "spine/goblins.atlas", 1.5);
-        skeletonNode.setAnimation(0, "walk", true);
-        skeletonNode.setSkin("goblin");
+    var skeletonNode = new SkeletonAnimation(
+      "spine/goblins-pro.json",
+      "spine/goblins.atlas",
+      1.5
+    );
+    skeletonNode.setAnimation(0, "walk", true);
+    skeletonNode.setSkin("goblin");
 
-        skeletonNode.setScale(0.5);
-        var winSize = cc.director.getWinSize();
-        skeletonNode.setPosition(winSize.width /2, 20);
-        this.addChild(skeletonNode);
+    skeletonNode.setScale(0.5);
+    var winSize = cc.director.getWinSize();
+    skeletonNode.setPosition(winSize.width / 2, 20);
+    this.addChild(skeletonNode);
 
-        var listener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan : function(touch, event){
-                if(!skeletonNode.getDebugBonesEnabled())
-                    skeletonNode.setDebugBonesEnabled(true);
-                else if(skeletonNode.getTimeScale() === 1.0)
-                    skeletonNode.setTimeScale(0.3);
-                else{
-                    skeletonNode.setTimeScale(1);
-                    skeletonNode.setDebugBonesEnabled(false);
-                }
-                return true;
-            }
-        });
-        cc.eventManager.addListener(listener, this);
-    }
+    var listener = cc.EventListener.create({
+      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+      onTouchBegan: function (touch, event) {
+        if (!skeletonNode.getDebugBonesEnabled())
+          skeletonNode.setDebugBonesEnabled(true);
+        else if (skeletonNode.getTimeScale() === 1.0)
+          skeletonNode.setTimeScale(0.3);
+        else {
+          skeletonNode.setTimeScale(1);
+          skeletonNode.setDebugBonesEnabled(false);
+        }
+        return true;
+      }
+    });
+    cc.eventManager.addListener(listener, this);
+  }
 
-    title(){
-       return "Spine Test";
-    }
+  title() {
+    return "Spine Test";
+  }
 
-    subtitle(){
-        return "FFD Spine";
-    }
-
+  subtitle() {
+    return "FFD Spine";
+  }
 }

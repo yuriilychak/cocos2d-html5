@@ -25,21 +25,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_fire } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_fire } from "../resources";
 
 export class DemoSmoke extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new cc.ParticleSmoke();
-        this._background.addChild(this._emitter, 10);
-        this._emitter.texture = cc.textureCache.addImage(s_fire);
+    this._emitter = new cc.ParticleSmoke();
+    this._background.addChild(this._emitter, 10);
+    this._emitter.texture = cc.textureCache.addImage(s_fire);
 
-        this.setEmitterPosition();
-    }
-    title() {
-        return "ParticleSmoke";
-    }
-
+    this.setEmitterPosition();
+  }
+  title() {
+    return "ParticleSmoke";
+  }
 }

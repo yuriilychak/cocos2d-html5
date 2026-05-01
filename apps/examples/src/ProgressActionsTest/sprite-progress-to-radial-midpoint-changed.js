@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteDemo } from "./sprite-demo.js";
-import { s_pathBlock } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteDemo } from "./sprite-demo";
+import { s_pathBlock } from "../resources";
+import { winSize } from "../constants";
 
 export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
     onEnter() {

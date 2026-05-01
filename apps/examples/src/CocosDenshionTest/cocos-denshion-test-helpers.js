@@ -25,149 +25,106 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EFFECT_FILE, MUSIC_FILE } from "./cocos-denshion-test-constants.js";
-
-;
-
-;
+import { EFFECT_FILE, MUSIC_FILE } from "./cocos-denshion-test-constants";
 
 export var soundId = null;
 
 export function playMusic() {
-    cc.log("play background music");
-    var musicFile = MUSIC_FILE;
-    audioEngine.playMusic(musicFile, false);
+  cc.log("play background music");
+  var musicFile = MUSIC_FILE;
+  audioEngine.playMusic(musicFile, false);
 }
-
-;
 
 export function stopMusic() {
-    cc.log("stop background music");
-    audioEngine.stopMusic();
+  cc.log("stop background music");
+  audioEngine.stopMusic();
 }
-
-;
 
 export function pauseMusic() {
-    cc.log("pause background music");
-    audioEngine.pauseMusic();
+  cc.log("pause background music");
+  audioEngine.pauseMusic();
 }
-
-;
 
 export function resumeMusic() {
-    cc.log("resume background music");
-    audioEngine.resumeMusic();
+  cc.log("resume background music");
+  audioEngine.resumeMusic();
 }
-
-;
 
 export function rewindMusic() {
-    cc.log("rewind background music");
-    audioEngine.rewindMusic();
+  cc.log("rewind background music");
+  audioEngine.rewindMusic();
 }
-
-;
 
 // is background music playing
 export function isMusicPlaying() {
-    if (audioEngine.isMusicPlaying()) {
-        cc.log("background music is playing");
-    }
-    else {
-        cc.log("background music is not playing");
-    }
+  if (audioEngine.isMusicPlaying()) {
+    cc.log("background music is playing");
+  } else {
+    cc.log("background music is not playing");
+  }
 }
-
-;
 
 export function playEffect() {
-    cc.log("play effect");
-    soundId = audioEngine.playEffect(EFFECT_FILE);
+  cc.log("play effect");
+  soundId = audioEngine.playEffect(EFFECT_FILE);
 }
-
-;
 
 export function playEffectRepeatly() {
-    cc.log("play effect repeatly");
-    soundId = audioEngine.playEffect(EFFECT_FILE, true);
+  cc.log("play effect repeatly");
+  soundId = audioEngine.playEffect(EFFECT_FILE, true);
 }
-
-;
 
 export function stopEffect() {
-    cc.log("stop effect");
-    audioEngine.stopEffect(soundId);
+  cc.log("stop effect");
+  audioEngine.stopEffect(soundId);
 }
-
-;
 
 export function unloadEffect() {
-    cc.log("unload effect");
-    audioEngine.unloadEffect(EFFECT_FILE);
+  cc.log("unload effect");
+  audioEngine.unloadEffect(EFFECT_FILE);
 }
-
-;
 
 export function addMusicVolume() {
-    cc.log("add bakcground music volume");
-    audioEngine.setMusicVolume(audioEngine.getMusicVolume() + 0.1);
+  cc.log("add bakcground music volume");
+  audioEngine.setMusicVolume(audioEngine.getMusicVolume() + 0.1);
 }
-
-;
 
 export function subMusicVolume() {
-    cc.log("sub backgroud music volume");
-    audioEngine.setMusicVolume(audioEngine.getMusicVolume() - 0.1);
+  cc.log("sub backgroud music volume");
+  audioEngine.setMusicVolume(audioEngine.getMusicVolume() - 0.1);
 }
-
-;
 
 export function addEffectsVolume() {
-    cc.log("add effects volume");
-    audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.1);
+  cc.log("add effects volume");
+  audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.1);
 }
-
-;
 
 export function subEffectsVolume() {
-    cc.log("sub effects volume");
-    audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() - 0.1);
+  cc.log("sub effects volume");
+  audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() - 0.1);
 }
-
-;
 
 export function pauseEffect() {
-    cc.log("pause effect");
-    audioEngine.pauseEffect(soundId);
+  cc.log("pause effect");
+  audioEngine.pauseEffect(soundId);
 }
-
-;
 
 export function resumeEffect() {
-    cc.log("resume effect");
-    audioEngine.resumeEffect(soundId);
+  cc.log("resume effect");
+  audioEngine.resumeEffect(soundId);
 }
-
-;
 
 export function pauseAllEffects() {
-    cc.log("pause all effects");
-    audioEngine.pauseAllEffects();
+  cc.log("pause all effects");
+  audioEngine.pauseAllEffects();
 }
-
-;
 
 export function resumeAllEffects() {
-    cc.log("resume all effects");
-    audioEngine.resumeAllEffects();
+  cc.log("resume all effects");
+  audioEngine.resumeAllEffects();
 }
-
-;
 
 export function stopAllEffects() {
-    cc.log("stop all effects");
-    audioEngine.stopAllEffects();
+  cc.log("stop all effects");
+  audioEngine.stopAllEffects();
 }
-
-;

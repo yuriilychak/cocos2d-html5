@@ -30,17 +30,17 @@
 // ActionScale
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionScale extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
-      get _code() { 
-        return "a = new cc.ScaleBy( time, scale );\na = new cc.ScaleTo( time, scaleX, scaleY );";
-      }
+  get _code() {
+    return "a = new cc.ScaleBy( time, scale );\na = new cc.ScaleTo( time, scaleX, scaleY );";
+  }
 
   onEnter() {
     //----start2----onEnter
@@ -83,5 +83,4 @@ export class ActionScale extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

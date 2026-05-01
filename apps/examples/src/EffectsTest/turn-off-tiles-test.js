@@ -23,21 +23,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class TurnOffTilesTest extends EffectsBaseLayer {
-    title() {
-        return "TurnOffTiles";
-    }
-    code() {
-        return "a = cc.turnOffTiles(duration, gridSize, seed)";
-    }
-    getEffect(duration) {
-        var action = cc.turnOffTiles( duration, new cc.Size(48,32), 25);
-        var delay = new cc.DelayTime(0.5);
-        var back = action.reverse();
-        var seq = cc.sequence( action, delay, back);
-        return seq;
-    }
-
+  title() {
+    return "TurnOffTiles";
+  }
+  code() {
+    return "a = cc.turnOffTiles(duration, gridSize, seed)";
+  }
+  getEffect(duration) {
+    var action = cc.turnOffTiles(duration, new cc.Size(48, 32), 25);
+    var delay = new cc.DelayTime(0.5);
+    var back = action.reverse();
+    var seq = cc.sequence(action, delay, back);
+    return seq;
+  }
 }

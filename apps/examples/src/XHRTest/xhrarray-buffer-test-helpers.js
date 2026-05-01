@@ -25,17 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { XHRArrayBufferTestLayer } from "./xhrarray-buffer-test-layer.js";
-
-;
-
-;
+import { XHRArrayBufferTestLayer } from "./xhrarray-buffer-test-layer";
 
 export function runXHRArrayBufferTest() {
-    var pScene = new cc.Scene();
-    var pLayer = new XHRArrayBufferTestLayer();
-    pScene.addChild(pLayer);
-    cc.director.runScene(pScene);
+  var pScene = new cc.Scene();
+  var pLayer = new XHRArrayBufferTestLayer();
+  pScene.addChild(pLayer);
+  cc.director.runScene(pScene);
 }
-
-;

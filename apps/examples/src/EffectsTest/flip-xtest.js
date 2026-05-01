@@ -23,20 +23,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class FlipXTest extends EffectsBaseLayer {
-    title() {
-        return "FlipX3D";
-    }
-    code() {
-        return "a = cc.flipX3D(duration )";
-    }
-    getEffect(duration) {
-        var a = cc.flipX3D(duration);
-        var delay = new cc.DelayTime(2);
-        var r = a.reverse();
-        return cc.sequence( a, delay, r );
-    }
-
+  title() {
+    return "FlipX3D";
+  }
+  code() {
+    return "a = cc.flipX3D(duration )";
+  }
+  getEffect(duration) {
+    var a = cc.flipX3D(duration);
+    var delay = new cc.DelayTime(2);
+    var r = a.reverse();
+    return cc.sequence(a, delay, r);
+  }
 }

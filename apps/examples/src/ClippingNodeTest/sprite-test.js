@@ -25,32 +25,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BasicTest } from "./basic-test.js";
+import { BasicTest } from "./basic-test";
 
 export class SpriteTest extends BasicTest {
-    title() {
-        return "Sprite Basic Test";
-    }
-    subtitle() {
-        return "A Sprite as stencil and DrawNode as content";
-    }
+  title() {
+    return "Sprite Basic Test";
+  }
+  subtitle() {
+    return "A Sprite as stencil and DrawNode as content";
+  }
 
-    stencil() {
-        var node = this.grossini();
-        node.runAction(this.actionRotate());
-        return node;
-    }
+  stencil() {
+    var node = this.grossini();
+    node.runAction(this.actionRotate());
+    return node;
+  }
 
-    clipper() {
-        var clipper = super.clipper();
-        clipper.alphaThreshold = 0.05;
-        return clipper;
-    }
+  clipper() {
+    var clipper = super.clipper();
+    clipper.alphaThreshold = 0.05;
+    return clipper;
+  }
 
-    content() {
-        var node = this.shape();
-        node.runAction(this.actionScale());
-        return node;
-    }
-
+  content() {
+    var node = this.shape();
+    node.runAction(this.actionScale());
+    return node;
+  }
 }

@@ -23,66 +23,52 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Issue1464 } from "./issue1464.js";
-import { RenderTextureIssue937 } from "./render-texture-issue937.js";
-import { RenderTextureSave } from "./render-texture-save.js";
-import { RenderTextureTargetNode } from "./render-texture-target-node.js";
-import { sceneRenderTextureIdx , _setsceneRenderTextureIdx} from "./render-texture-test-constants.js";
-import { RenderTextureTestDepthStencil } from "./render-texture-test-depth-stencil.js";
-import { RenderTextureZbuffer } from "./render-texture-zbuffer.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import { Issue1464 } from "./issue1464";
+import { RenderTextureIssue937 } from "./render-texture-issue937";
+import { RenderTextureSave } from "./render-texture-save";
+import { RenderTextureTargetNode } from "./render-texture-target-node";
+import {
+  sceneRenderTextureIdx,
+  _setsceneRenderTextureIdx
+} from "./render-texture-test-constants";
+import { RenderTextureTestDepthStencil } from "./render-texture-test-depth-stencil";
+import { RenderTextureZbuffer } from "./render-texture-zbuffer";
 
 //
 // Flow control
 //
-export var arrayOfRenderTextureTest = [
-    RenderTextureSave,
-    Issue1464
-];
+export var arrayOfRenderTextureTest = [RenderTextureSave, Issue1464];
 
-if(('opengl' in cc.sys.capabilities) && cc.rendererConfig.isWebGL && (!cc.sys.isNative) ){
-    arrayOfRenderTextureTest.push(RenderTextureIssue937);
-    arrayOfRenderTextureTest.push(RenderTextureZbuffer);
-    arrayOfRenderTextureTest.push(RenderTextureTestDepthStencil);
-    arrayOfRenderTextureTest.push(RenderTextureTargetNode);
+if (
+  "opengl" in cc.sys.capabilities &&
+  cc.rendererConfig.isWebGL &&
+  !cc.sys.isNative
+) {
+  arrayOfRenderTextureTest.push(RenderTextureIssue937);
+  arrayOfRenderTextureTest.push(RenderTextureZbuffer);
+  arrayOfRenderTextureTest.push(RenderTextureTestDepthStencil);
+  arrayOfRenderTextureTest.push(RenderTextureTargetNode);
 }
 
 export function nextRenderTextureTest() {
-    _setsceneRenderTextureIdx(sceneRenderTextureIdx + 1);
-    _setsceneRenderTextureIdx(sceneRenderTextureIdx % arrayOfRenderTextureTest.length);
+  _setsceneRenderTextureIdx(sceneRenderTextureIdx + 1);
+  _setsceneRenderTextureIdx(
+    sceneRenderTextureIdx % arrayOfRenderTextureTest.length
+  );
 
-    return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
+  return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
 }
-
-;
 
 export function previousRenderTextureTest() {
-    _setsceneRenderTextureIdx(sceneRenderTextureIdx - 1);
-    if (sceneRenderTextureIdx < 0)
-        _setsceneRenderTextureIdx(sceneRenderTextureIdx + (arrayOfRenderTextureTest.length));
+  _setsceneRenderTextureIdx(sceneRenderTextureIdx - 1);
+  if (sceneRenderTextureIdx < 0)
+    _setsceneRenderTextureIdx(
+      sceneRenderTextureIdx + arrayOfRenderTextureTest.length
+    );
 
-    return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
+  return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
 }
-
-;
 
 export function restartRenderTextureTest() {
-    return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
+  return new arrayOfRenderTextureTest[sceneRenderTextureIdx]();
 }
-
-;

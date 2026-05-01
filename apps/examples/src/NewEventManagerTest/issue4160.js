@@ -25,43 +25,42 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
-import { TouchableSprite } from "./touchable-sprite.js";
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { TouchableSprite } from "./touchable-sprite";
 
 export class Issue4160 extends EventDispatcherTestDemo {
-    constructor(){
-        //----start10----ctor
-        super();
-        var origin = cc.director.getVisibleOrigin();
-        var size = cc.director.getVisibleSize();
+  constructor() {
+    //----start10----ctor
+    super();
+    var origin = cc.director.getVisibleOrigin();
+    var size = cc.director.getVisibleSize();
 
-        var sprite1 = TouchableSprite.create(-30);
-        sprite1.setTexture("Images/CyanSquare.png");
-        sprite1.x = origin.x + (size.width/2) - 80;
-        sprite1.y = origin.y + (size.height/2) + 40;
-        this.addChild(sprite1, 5);
+    var sprite1 = TouchableSprite.create(-30);
+    sprite1.setTexture("Images/CyanSquare.png");
+    sprite1.x = origin.x + size.width / 2 - 80;
+    sprite1.y = origin.y + size.height / 2 + 40;
+    this.addChild(sprite1, 5);
 
-        var sprite2 = TouchableSprite.create(-20);
-        sprite2.setTexture("Images/MagentaSquare.png");
-        sprite2.removeListenerOnTouchEnded(true);
-        sprite2.x = origin.x + (size.width/2);
-        sprite2.y = origin.y + (size.height/2);
-        this.addChild(sprite2, 10);
+    var sprite2 = TouchableSprite.create(-20);
+    sprite2.setTexture("Images/MagentaSquare.png");
+    sprite2.removeListenerOnTouchEnded(true);
+    sprite2.x = origin.x + size.width / 2;
+    sprite2.y = origin.y + size.height / 2;
+    this.addChild(sprite2, 10);
 
-        var sprite3 = TouchableSprite.create(-10);
-        sprite3.setTexture("Images/YellowSquare.png");
-        sprite3.x = 0;
-        sprite3.y = 0;
-        sprite2.addChild(sprite3, 21);
-        //----end10----
-    }
+    var sprite3 = TouchableSprite.create(-10);
+    sprite3.setTexture("Images/YellowSquare.png");
+    sprite3.x = 0;
+    sprite3.y = 0;
+    sprite2.addChild(sprite3, 21);
+    //----end10----
+  }
 
-    title(){
-        return "Issue 4160: Out of range exception";
-    }
+  title() {
+    return "Issue 4160: Out of range exception";
+  }
 
-    subtitle() {
-        return "Touch the red block twice \n should not crash and the red one couldn't be touched";
-    }
-
+  subtitle() {
+    return "Touch the red block twice \n should not crash and the red one couldn't be touched";
+  }
 }

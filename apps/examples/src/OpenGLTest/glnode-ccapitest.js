@@ -28,125 +28,148 @@
 // GLNodeCCAPITest
 //
 //------------------------------------------------------------------
-import { OpenGLTestLayer } from "./open-gltest-layer.js";
-import "./glnode-polyfill.js";
-import { winSize } from "../tests-main-constants.js";
+import { OpenGLTestLayer } from "./open-gltest-layer";
+import "./glnode-polyfill";
+import { winSize } from "../constants";
 
 export class GLNodeCCAPITest extends OpenGLTestLayer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    if ("opengl" in cc.sys.capabilities) {
+      var glnode = new cc.GLNode();
+      this.addChild(glnode, 10);
+      this.glnode = glnode;
 
-        if( 'opengl' in cc.sys.capabilities ) {
+      this.shader = cc.shaderCache.getProgram("ShaderPositionColor");
+      this.initBuffers();
 
+      glnode.draw = function () {
+        this.shader.use();
+        this.shader.setUniformsForBuiltins();
+        gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
+        gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
 
-            var glnode = new cc.GLNode();
-            this.addChild(glnode,10);
-            this.glnode = glnode;
+        // Draw fullscreen Square
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
+        gl.vertexAttribPointer(
+          cc.VERTEX_ATTRIB_POSITION,
+          2,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        );
 
-            this.shader = cc.shaderCache.getProgram("ShaderPositionColor");
-            this.initBuffers();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexColorBuffer);
+        gl.vertexAttribPointer(
+          cc.VERTEX_ATTRIB_COLOR,
+          4,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        );
 
-            glnode.draw = function() {
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-                this.shader.use();
-                this.shader.setUniformsForBuiltins();
-                gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
-                gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
+        // Draw fullscreen Triangle
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
+        gl.vertexAttribPointer(
+          cc.VERTEX_ATTRIB_POSITION,
+          2,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        );
 
-                // Draw fullscreen Square
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
-                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
+        gl.vertexAttribPointer(
+          cc.VERTEX_ATTRIB_COLOR,
+          4,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        );
 
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexColorBuffer);
-                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_COLOR, 4, gl.FLOAT, false, 0, 0);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
 
-                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
-                // Draw fullscreen Triangle
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
-                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
-
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
-                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_COLOR, 4, gl.FLOAT, false, 0, 0);
-
-                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
-
-                gl.bindBuffer(gl.ARRAY_BUFFER, null);
-
-            }.bind(this);
-
-        }
-    }
-
-    initBuffers() {
-        //
-        // Triangle
-        //
-        var triangleVertexPositionBuffer = this.triangleVertexPositionBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
-        var vertices = [
-                winSize.width/2,   winSize.height,
-            0,                 0,
-            winSize.width,     0
-        ];
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-
-        var triangleVertexColorBuffer = this.triangleVertexColorBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
-        var colors = [
-            1.0, 0.0, 0.0, 1.0,
-            1.0, 0.0, 0.0, 1.0,
-            1.0, 0.0, 0.0, 1.0
-        ];
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
-
-        //
-        // Square
-        //
-        var squareVertexPositionBuffer = this.squareVertexPositionBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
-        var vertices = [
-            winSize.width,  winSize.height,
-            0,              winSize.height,
-            winSize.width,  0,
-            0,              0
-        ];
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-
-        var squareVertexColorBuffer = this.squareVertexColorBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
-        var colors = [
-            0.0, 0.0, 1.0, 1.0,
-            0.0, 0.0, 1.0, 1.0,
-            0.0, 0.0, 1.0, 1.0,
-            0.0, 0.0, 1.0, 1.0
-        ];
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
+      }.bind(this);
     }
-    title() {
-        return "GLNode + cocos2d API";
-    }
-    subtitle() {
-        return "blue background with a red triangle in the middle";
-    }
+  }
+
+  initBuffers() {
+    //
+    // Triangle
+    //
+    var triangleVertexPositionBuffer = (this.triangleVertexPositionBuffer =
+      gl.createBuffer());
+    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
+    var vertices = [winSize.width / 2, winSize.height, 0, 0, winSize.width, 0];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+    var triangleVertexColorBuffer = (this.triangleVertexColorBuffer =
+      gl.createBuffer());
+    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
+    var colors = [1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 
     //
-    // Automation
+    // Square
     //
-    getExpectedResult() {
-        // blue, red, blue
-        var ret = [{"0":0,"1":0,"2":255,"3":255},{"0":0,"1":0,"2":255,"3":255},{"0":255,"1":0,"2":0,"3":255}];
-        return JSON.stringify(ret);
-    }
+    var squareVertexPositionBuffer = (this.squareVertexPositionBuffer =
+      gl.createBuffer());
+    gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
+    var vertices = [
+      winSize.width,
+      winSize.height,
+      0,
+      winSize.height,
+      winSize.width,
+      0,
+      0,
+      0
+    ];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-    getCurrentResult() {
-        var ret1 = this.readPixels(10, winSize.height-1,  1, 1);
-        var ret2 = this.readPixels(winSize.width-10, winSize.height-1,  1, 1);
-        var ret3 = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
+    var squareVertexColorBuffer = (this.squareVertexColorBuffer =
+      gl.createBuffer());
+    gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
+    var colors = [
+      0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0,
+      1.0
+    ];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+  }
+  title() {
+    return "GLNode + cocos2d API";
+  }
+  subtitle() {
+    return "blue background with a red triangle in the middle";
+  }
 
-        return JSON.stringify([ret1,ret2,ret3]);
-    }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    // blue, red, blue
+    var ret = [
+      { 0: 0, 1: 0, 2: 255, 3: 255 },
+      { 0: 0, 1: 0, 2: 255, 3: 255 },
+      { 0: 255, 1: 0, 2: 0, 3: 255 }
+    ];
+    return JSON.stringify(ret);
+  }
 
+  getCurrentResult() {
+    var ret1 = this.readPixels(10, winSize.height - 1, 1, 1);
+    var ret2 = this.readPixels(winSize.width - 10, winSize.height - 1, 1, 1);
+    var ret3 = this.readPixels(winSize.width / 2, winSize.height / 2, 1, 1);
+
+    return JSON.stringify([ret1, ret2, ret3]);
+  }
 }

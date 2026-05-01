@@ -25,157 +25,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ActionAnimate } from "./action-animate.js";
-import { ActionBezierToCopy } from "./action-bezier-to-copy.js";
-import { ActionBezier } from "./action-bezier.js";
-import { ActionBlink } from "./action-blink.js";
-import { ActionCallFunc1 } from "./action-call-func1.js";
-import { ActionCallFunc2 } from "./action-call-func2.js";
-import { ActionCallFunc3 } from "./action-call-func3.js";
-import { ActionCardinalSpline } from "./action-cardinal-spline.js";
-import { ActionCatmullRom } from "./action-catmull-rom.js";
-import { ActionCustomTest } from "./action-custom-test.js";
-import { ActionDelayTime } from "./action-delay-time.js";
-import { ActionFade } from "./action-fade.js";
-import { ActionFollow } from "./action-follow.js";
-import { ActionIssue13605 } from "./action-issue13605.js";
-import { ActionJump } from "./action-jump.js";
-import { ActionManual } from "./action-manual.js";
-import { ActionMove } from "./action-move.js";
-import { ActionRepeatForever } from "./action-repeat-forever.js";
-import { ActionRepeat } from "./action-repeat.js";
-import { ActionReverseSequence } from "./action-reverse-sequence.js";
-import { ActionReverseSequence2 } from "./action-reverse-sequence2.js";
-import { ActionReverse } from "./action-reverse.js";
-import { ActionRotateJerk } from "./action-rotate-jerk.js";
-import { ActionRotateToRepeat } from "./action-rotate-to-repeat.js";
-import { ActionRotateXY } from "./action-rotate-xy.js";
-import { ActionRotate } from "./action-rotate.js";
-import { ActionScale } from "./action-scale.js";
-import { ActionSequence } from "./action-sequence.js";
-import { ActionSequence2 } from "./action-sequence2.js";
-import { ActionSkewRotateScale } from "./action-skew-rotate-scale.js";
-import { ActionSkew } from "./action-skew.js";
-import { ActionSpawn } from "./action-spawn.js";
-import { ActionStackableBezier } from "./action-stackable-bezier.js";
-import { ActionStackableCardinalSpline } from "./action-stackable-cardinal-spline.js";
-import { ActionStackableCatmullRom } from "./action-stackable-catmull-rom.js";
-import { ActionStackableJump } from "./action-stackable-jump.js";
-import { ActionStackableMove } from "./action-stackable-move.js";
-import { ActionTargetedCopy } from "./action-targeted-copy.js";
-import { ActionTargeted } from "./action-targeted.js";
-import { ActionTint } from "./action-tint.js";
-import { actionsTestIdx , _setactionsTestIdx} from "./actions-test-constants.js";
-import { Issue1008 } from "./issue1008.js";
-import { Issue1288_2 } from "./issue1288-2.js";
-import { Issue1288 } from "./issue1288.js";
-import { Issue1305_2 } from "./issue1305-2.js";
-import { Issue1305 } from "./issue1305.js";
-import { Issue1327 } from "./issue1327.js";
-import { Issue1438 } from "./issue1438.js";
-import { Issue1446 } from "./issue1446.js";
-import { PauseResumeActions } from "./pause-resume-actions.js";
-import { SequenceRepeatTest } from "./sequence-repeat-test.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import { ActionAnimate } from "./action-animate";
+import { ActionBezierToCopy } from "./action-bezier-to-copy";
+import { ActionBezier } from "./action-bezier";
+import { ActionBlink } from "./action-blink";
+import { ActionCallFunc1 } from "./action-call-func1";
+import { ActionCallFunc2 } from "./action-call-func2";
+import { ActionCallFunc3 } from "./action-call-func3";
+import { ActionCardinalSpline } from "./action-cardinal-spline";
+import { ActionCatmullRom } from "./action-catmull-rom";
+import { ActionCustomTest } from "./action-custom-test";
+import { ActionDelayTime } from "./action-delay-time";
+import { ActionFade } from "./action-fade";
+import { ActionFollow } from "./action-follow";
+import { ActionIssue13605 } from "./action-issue13605";
+import { ActionJump } from "./action-jump";
+import { ActionManual } from "./action-manual";
+import { ActionMove } from "./action-move";
+import { ActionRepeatForever } from "./action-repeat-forever";
+import { ActionRepeat } from "./action-repeat";
+import { ActionReverseSequence } from "./action-reverse-sequence";
+import { ActionReverseSequence2 } from "./action-reverse-sequence2";
+import { ActionReverse } from "./action-reverse";
+import { ActionRotateJerk } from "./action-rotate-jerk";
+import { ActionRotateToRepeat } from "./action-rotate-to-repeat";
+import { ActionRotateXY } from "./action-rotate-xy";
+import { ActionRotate } from "./action-rotate";
+import { ActionScale } from "./action-scale";
+import { ActionSequence } from "./action-sequence";
+import { ActionSequence2 } from "./action-sequence2";
+import { ActionSkewRotateScale } from "./action-skew-rotate-scale";
+import { ActionSkew } from "./action-skew";
+import { ActionSpawn } from "./action-spawn";
+import { ActionStackableBezier } from "./action-stackable-bezier";
+import { ActionStackableCardinalSpline } from "./action-stackable-cardinal-spline";
+import { ActionStackableCatmullRom } from "./action-stackable-catmull-rom";
+import { ActionStackableJump } from "./action-stackable-jump";
+import { ActionStackableMove } from "./action-stackable-move";
+import { ActionTargetedCopy } from "./action-targeted-copy";
+import { ActionTargeted } from "./action-targeted";
+import { ActionTint } from "./action-tint";
+import { actionsTestIdx, _setactionsTestIdx } from "./actions-test-constants";
+import { Issue1008 } from "./issue1008";
+import { Issue1288_2 } from "./issue1288-2";
+import { Issue1288 } from "./issue1288";
+import { Issue1305_2 } from "./issue1305-2";
+import { Issue1305 } from "./issue1305";
+import { Issue1327 } from "./issue1327";
+import { Issue1438 } from "./issue1438";
+import { Issue1446 } from "./issue1446";
+import { PauseResumeActions } from "./pause-resume-actions";
+import { SequenceRepeatTest } from "./sequence-repeat-test";
 
 // special code, just for reduce code redundancy
 export function createCustomAction(ActionObject) {
@@ -193,12 +93,6 @@ export function createCustomAction(ActionObject) {
 
   return CustomAction;
 }
-
-;
-
-;
-
-;
 
 //-
 //
@@ -271,11 +165,10 @@ export function nextActionsTest() {
   return new arrayOfActionsTest[actionsTestIdx]();
 }
 
-;
-
 export function previousActionsTest() {
   _setactionsTestIdx(actionsTestIdx - 1);
-  if (actionsTestIdx < 0) _setactionsTestIdx(actionsTestIdx + (arrayOfActionsTest.length));
+  if (actionsTestIdx < 0)
+    _setactionsTestIdx(actionsTestIdx + arrayOfActionsTest.length);
 
   if (window.sideIndexBar) {
     _setactionsTestIdx(window.sideIndexBar.changeTest(actionsTestIdx, 1));
@@ -284,10 +177,6 @@ export function previousActionsTest() {
   return new arrayOfActionsTest[actionsTestIdx]();
 }
 
-;
-
 export function restartActionsTest() {
   return new arrayOfActionsTest[actionsTestIdx]();
 }
-
-;

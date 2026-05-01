@@ -25,120 +25,136 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ExtensionsTestScene } from "../extensions-test-scene.js";
-import { winSize } from "../../tests-main-constants.js";
+import { ExtensionsTestScene } from "../extensions-test-scene";
+import { winSize } from "../../constants";
 
 export class EditBoxTestLayer extends cc.Layer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._box1 = null;
 
+    this._box2 = null;
 
-        this._box1 = null;
+    this._box3 = null;
 
+    this._box4 = null;
+    cc.associateWithNative(this, cc.Layer);
+    this.init();
+  }
 
-        this._box2 = null;
+  init() {
+    this._box1 = new cc.EditBox(
+      new cc.Size(170, 50),
+      new cc.Scale9Sprite("extensions/green_edit.png"),
+      new cc.Scale9Sprite("extensions/orange_edit.png")
+    );
+    this._box1.setString("EditBoxs");
+    this._box1.x = 220;
+    this._box1.y = 50;
+    this._box1.setFontColor(new cc.Color(251, 250, 0));
+    this._box1.setDelegate(this);
+    this.addChild(this._box1);
 
+    this._box2 = new cc.EditBox(
+      new cc.Size(130, 50),
+      new cc.Scale9Sprite("extensions/green_edit.png")
+    );
+    this._box2.setString("EditBox Sample");
+    this._box2.x = 220;
+    this._box2.y = 190;
+    this._box2.setInputFlag(cc.EDITBOX_INPUT_FLAG_PASSWORD);
+    this._box2.setFontColor(new cc.Color(255, 250, 0));
+    this._box2.setPlaceHolder("please enter password");
+    this._box2.setPlaceholderFontColor(new cc.Color(255, 255, 255));
+    this._box2.setDelegate(this);
+    this.addChild(this._box2);
 
-        this._box3 = null;
+    this._box3 = new cc.EditBox(
+      new cc.Size(65, 50),
+      new cc.Scale9Sprite("extensions/orange_edit.png")
+    );
+    this._box3.setString("Image");
+    this._box3.x = 220;
+    this._box3.y = 250;
+    this._box3.setFontColor(new cc.Color(15, 250, 245));
+    this._box3.setDelegate(this);
+    this._box3.setTouchEnabled(false);
+    this._box3.setTouchEnabled(true);
+    this.addChild(this._box3);
 
+    this._box4 = new cc.EditBox(
+      new cc.Size(180, 50),
+      new cc.Scale9Sprite("extensions/yellow_edit.png")
+    );
+    this._box4.setPlaceholderFontColor(new cc.Color(255, 0, 0));
+    this._box4.setPlaceHolder("This editBox can't be touched!");
+    this._box4.x = 40;
+    this._box4.y = -100;
+    this._box4.setDelegate(this);
+    this._box4.setFontColor(new cc.Color(5, 4, 10));
+    this._box4.setMaxLength(10);
+    this._box4.setTouchEnabled(false);
+    this._box3.addChild(this._box4);
 
-        this._box4 = null;
-        cc.associateWithNative(this, cc.Layer);
-        this.init();
+    var itemBack = new cc.MenuItemFont(
+      "Back",
+      this.toExtensionsMainLayer,
+      this
+    );
+    itemBack.x = winSize.width - 50;
+    itemBack.y = 25;
+    var menuBack = new cc.Menu(itemBack);
+    menuBack.x = 0;
+    menuBack.y = 0;
+    this.addChild(menuBack);
+
+    return true;
+  }
+
+  toExtensionsMainLayer(sender) {
+    var scene = new ExtensionsTestScene();
+    scene.runThisTest();
+  }
+
+  editBoxEditingDidBegin(editBox) {
+    cc.log("editBox " + this._getEditBoxName(editBox) + " DidBegin !");
+  }
+
+  editBoxEditingDidEnd(editBox) {
+    cc.log("editBox " + this._getEditBoxName(editBox) + " DidEnd !");
+  }
+
+  editBoxTextChanged(editBox, text) {
+    cc.log(
+      "editBox " +
+        this._getEditBoxName(editBox) +
+        ", TextChanged, text: " +
+        text
+    );
+  }
+
+  editBoxReturn(editBox) {
+    cc.log("editBox " + this._getEditBoxName(editBox) + " was returned !");
+  }
+
+  _getEditBoxName(editBox) {
+    if (this._box1 == editBox) {
+      return "box1";
+    } else if (this._box2 == editBox) {
+      return "box2";
+    } else if (this._box3 == editBox) {
+      return "box3";
+    } else if (this._box4 == editBox) {
+      return "box4";
     }
-
-    init() {
-        this._box1 = new cc.EditBox(new cc.Size(170, 50), new cc.Scale9Sprite("extensions/green_edit.png"), new cc.Scale9Sprite("extensions/orange_edit.png"));
-        this._box1.setString("EditBoxs");
-        this._box1.x = 220;
-        this._box1.y = 50;
-        this._box1.setFontColor(new cc.Color(251, 250, 0));
-        this._box1.setDelegate(this);
-        this.addChild(this._box1);
-
-        this._box2 = new cc.EditBox(new cc.Size(130, 50), new cc.Scale9Sprite("extensions/green_edit.png"));
-        this._box2.setString("EditBox Sample");
-        this._box2.x = 220;
-        this._box2.y = 190;
-        this._box2.setInputFlag(cc.EDITBOX_INPUT_FLAG_PASSWORD);
-        this._box2.setFontColor(new cc.Color(255, 250, 0));
-        this._box2.setPlaceHolder("please enter password");
-        this._box2.setPlaceholderFontColor(new cc.Color(255, 255, 255));
-        this._box2.setDelegate(this);
-        this.addChild(this._box2);
-
-        this._box3 = new cc.EditBox(new cc.Size(65, 50), new cc.Scale9Sprite("extensions/orange_edit.png"));
-        this._box3.setString("Image");
-        this._box3.x = 220;
-        this._box3.y = 250;
-        this._box3.setFontColor(new cc.Color(15, 250, 245));
-        this._box3.setDelegate(this);
-        this._box3.setTouchEnabled(false);
-        this._box3.setTouchEnabled(true);
-        this.addChild(this._box3);
-
-        this._box4 = new cc.EditBox(new cc.Size(180, 50), new cc.Scale9Sprite("extensions/yellow_edit.png"));
-        this._box4.setPlaceholderFontColor(new cc.Color(255, 0, 0));
-        this._box4.setPlaceHolder("This editBox can't be touched!");
-        this._box4.x = 40;
-        this._box4.y = -100;
-        this._box4.setDelegate(this);
-        this._box4.setFontColor(new cc.Color(5, 4, 10));
-        this._box4.setMaxLength(10);
-        this._box4.setTouchEnabled(false);
-        this._box3.addChild(this._box4);
-
-        var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
-        itemBack.x = winSize.width - 50;
-        itemBack.y = 25;
-        var menuBack = new cc.Menu(itemBack);
-        menuBack.x = 0;
-        menuBack.y = 0;
-        this.addChild(menuBack);
-
-        return true;
-    }
-
-    toExtensionsMainLayer(sender) {
-        var scene = new ExtensionsTestScene();
-        scene.runThisTest();
-    }
-
-    editBoxEditingDidBegin(editBox) {
-        cc.log("editBox " + this._getEditBoxName(editBox) + " DidBegin !");
-    }
-
-    editBoxEditingDidEnd(editBox) {
-        cc.log("editBox " + this._getEditBoxName(editBox) + " DidEnd !");
-    }
-
-    editBoxTextChanged(editBox, text) {
-        cc.log("editBox " + this._getEditBoxName(editBox) + ", TextChanged, text: " + text);
-    }
-
-    editBoxReturn(editBox) {
-        cc.log("editBox " + this._getEditBoxName(editBox) + " was returned !");
-    }
-
-    _getEditBoxName(editBox){
-        if (this._box1 == editBox) {
-            return "box1";
-        } else if (this._box2 == editBox) {
-            return "box2";
-        } else if (this._box3 == editBox) {
-            return "box3";
-        } else if (this._box4 == editBox) {
-            return "box4";
-        }
-        return "Unknown EditBox";
-    }
-
-};
+    return "Unknown EditBox";
+  }
+}
 
 export function runEditBoxTest() {
-    var pScene = new cc.Scene();
-    var pLayer = new EditBoxTestLayer();
-    pScene.addChild(pLayer);
-	cc.director.runScene(pScene);
-};
+  var pScene = new cc.Scene();
+  var pLayer = new EditBoxTestLayer();
+  pScene.addChild(pLayer);
+  cc.director.runScene(pScene);
+}

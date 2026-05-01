@@ -30,8 +30,8 @@
 // Issue1327
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { ActionsDemo } from "./actions-demo";
+import { s_pathGrossini } from "../resources";
 
 export class Issue1327 extends ActionsDemo {
   onEnter() {
@@ -77,5 +77,4 @@ export class Issue1327 extends ActionsDemo {
   subtitle() {
     return "See console: You should see: 0, 45, 90, 135, 180";
   }
-
 }

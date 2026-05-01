@@ -24,22 +24,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UILoadingBarTest } from "./uiloading-bar-test.js";
+import { UILoadingBarTest } from "./uiloading-bar-test";
 
 export class UILoadingBarTest_Left_Scale9 extends UILoadingBarTest {
-    createLoadingBar() {
-        var widgetSize = this._widget.getContentSize();
-        var loadingBar = new ccui.LoadingBar();
-        loadingBar.setName("LoadingBar");
-        loadingBar.setScale9Enabled(true);
-        loadingBar.loadTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
-        loadingBar.setCapInsets(new cc.Rect(0, 0, 0, 0));
-        loadingBar.setContentSize(new cc.Size(300, 30));
-        loadingBar.setPercent(0);
-        loadingBar.x = widgetSize.width / 2;
-        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
-        this._mainNode.addChild(loadingBar);
-        this._loadingBar = loadingBar;
-    }
-
+  createLoadingBar() {
+    var widgetSize = this._widget.getContentSize();
+    var loadingBar = new ccui.LoadingBar();
+    loadingBar.setName("LoadingBar");
+    loadingBar.setScale9Enabled(true);
+    loadingBar.loadTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
+    loadingBar.setCapInsets(new cc.Rect(0, 0, 0, 0));
+    loadingBar.setContentSize(new cc.Size(300, 30));
+    loadingBar.setPercent(0);
+    loadingBar.x = widgetSize.width / 2;
+    loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
+    this._mainNode.addChild(loadingBar);
+    this._loadingBar = loadingBar;
+  }
 }

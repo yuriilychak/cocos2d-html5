@@ -26,16 +26,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextMotionAction } from "./motion-streak-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { sceneIdx , _setsceneIdx} from "./motion-streak-test-constants.js";
+import { nextMotionAction } from "./motion-streak-test-helpers";
+import { TestScene } from "../test-scene";
+import { sceneIdx, _setsceneIdx } from "./motion-streak-test-constants";
 
 export class MotionStreakTestScene extends TestScene {
-    runThisTest(num) {
-        _setsceneIdx((num || num == 0) ? (num - 1) : -1);
-        var pLayer = nextMotionAction();
-        this.addChild(pLayer);
-        cc.director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _setsceneIdx(num || num == 0 ? num - 1 : -1);
+    var pLayer = nextMotionAction();
+    this.addChild(pLayer);
+    cc.director.runScene(this);
+  }
 }

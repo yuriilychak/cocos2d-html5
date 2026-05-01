@@ -30,43 +30,44 @@
 // TMXOrthoTest
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXOrthoTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testDuration = 2.1;
+    this.testDuration = 2.1;
 
-        this.pixel1 = {"0":218, "1":218, "2":208, "3":255};
+    this.pixel1 = { 0: 218, 1: 218, 2: 208, 3: 255 };
 
-        this.pixel2 = {"0":193, "1":143, "2":72, "3":255};
+    this.pixel2 = { 0: 193, 1: 143, 2: 72, 3: 255 };
 
-        this.pixel3 = {"0":200, "1":15, "2":160, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test1.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.pixel3 = { 0: 200, 1: 15, 2: 160, 3: 255 };
+    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test1.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        map.runAction(new cc.ScaleBy(2, 0.5));
-    }
-    title() {
-        return "TMX Ortho test";
-    }
+    map.runAction(new cc.ScaleBy(2, 0.5));
+  }
+  title() {
+    return "TMX Ortho test";
+  }
 
-    // Automation
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(82, 114, 10, 10);
-        var ret2 = this.readPixels(475, 100, 10, 10);
-        var ret3 = this.readPixels(312, 196, 10, 10);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no",
-            "pixel3":this.containsPixel(ret3, this.pixel3, true,5) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+  // Automation
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes", pixel3: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(82, 114, 10, 10);
+    var ret2 = this.readPixels(475, 100, 10, 10);
+    var ret3 = this.readPixels(312, 196, 10, 10);
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no",
+      pixel3: this.containsPixel(ret3, this.pixel3, true, 5) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

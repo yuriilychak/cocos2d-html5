@@ -23,17 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class Waves3DTest extends EffectsBaseLayer {
-    title() {
-        return "Waves 3D";
-    }
-    code() {
-        return "a = cc.waves3D(duration, gridSize, range, shakeZ)";
-    }
-    getEffect(duration) {
-        return cc.waves3D(duration, new cc.Size(15,10), 5, 40 );
-    }
-
+  title() {
+    return "Waves 3D";
+  }
+  code() {
+    return "a = cc.waves3D(duration, gridSize, range, shakeZ)";
+  }
+  getEffect(duration) {
+    return cc.waves3D(duration, new cc.Size(15, 10), 5, 40);
+  }
 }

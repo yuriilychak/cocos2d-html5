@@ -30,13 +30,13 @@
 // ActionCallFunc3
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionCallFunc3 extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 0.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 0.1;
+  }
 
   onEnter() {
     //----start27----onEnter
@@ -75,5 +75,4 @@ export class ActionCallFunc3 extends ActionsDemo {
     ret.push(this.control1);
     return JSON.stringify(ret);
   }
-
 }

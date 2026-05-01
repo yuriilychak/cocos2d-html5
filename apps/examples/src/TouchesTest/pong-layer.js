@@ -25,96 +25,101 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_ball, s_paddle } from "../tests_resources.js";
-import { Ball } from "./Ball.js";
-import { Paddle } from "./Paddle.js";
-import { HIGH_PLAYER, LOW_PLAYER, STATUS_BAR_HEIGHT } from "./touches-test-constants.js";
+import { s_ball, s_paddle } from "../resources";
+import { Ball } from "./Ball";
+import { Paddle } from "./Paddle";
+import {
+  HIGH_PLAYER,
+  LOW_PLAYER,
+  STATUS_BAR_HEIGHT
+} from "./touches-test-constants";
 
 export class PongLayer extends cc.Layer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._ball = null;
 
+    this._paddles = [];
 
-        this._ball = null;
+    this._ballStartingVelocity = null;
 
+    this._winSize = null;
+    this._ballStartingVelocity = new cc.Point(20.0, -100.0);
+    this._winSize = cc.director.getWinSize();
 
-        this._paddles = [];
+    this._ball = Ball.ballWithTexture(cc.textureCache.addImage(s_ball));
+    this._ball.x = this._winSize.width / 2;
+    this._ball.y = this._winSize.height / 2;
+    this._ball.setVelocity(this._ballStartingVelocity);
+    this.addChild(this._ball);
 
+    var paddleTexture = cc.textureCache.addImage(s_paddle);
 
-        this._ballStartingVelocity = null;
+    this._paddles = [];
 
+    var paddle = Paddle.paddleWithTexture(paddleTexture);
+    paddle.x = this._winSize.width / 2;
+    paddle.y = 15;
+    this._paddles.push(paddle);
 
-        this._winSize = null;
-        this._ballStartingVelocity = new cc.Point(20.0, -100.0);
-        this._winSize = cc.director.getWinSize();
+    paddle = Paddle.paddleWithTexture(paddleTexture);
+    paddle.x = this._winSize.width / 2;
+    paddle.y = this._winSize.height - STATUS_BAR_HEIGHT - 15;
+    this._paddles.push(paddle);
 
-        this._ball = Ball.ballWithTexture(cc.textureCache.addImage(s_ball));
-        this._ball.x = this._winSize.width / 2;
-        this._ball.y = this._winSize.height / 2;
-        this._ball.setVelocity(this._ballStartingVelocity);
-        this.addChild(this._ball);
+    paddle = Paddle.paddleWithTexture(paddleTexture);
+    paddle.x = this._winSize.width / 2;
+    paddle.y = 100;
+    this._paddles.push(paddle);
 
-        var paddleTexture = cc.textureCache.addImage(s_paddle);
+    paddle = Paddle.paddleWithTexture(paddleTexture);
+    paddle.x = this._winSize.width / 2;
+    paddle.y = this._winSize.height - STATUS_BAR_HEIGHT - 100;
+    this._paddles.push(paddle);
 
-        this._paddles = [];
+    for (var i = 0; i < this._paddles.length; i++) {
+      if (!this._paddles[i]) break;
 
-        var paddle = Paddle.paddleWithTexture(paddleTexture);
-        paddle.x = this._winSize.width / 2;
-        paddle.y = 15;
-        this._paddles.push(paddle);
-
-        paddle = Paddle.paddleWithTexture(paddleTexture);
-        paddle.x = this._winSize.width / 2;
-        paddle.y = this._winSize.height - STATUS_BAR_HEIGHT - 15;
-        this._paddles.push(paddle);
-
-        paddle = Paddle.paddleWithTexture(paddleTexture);
-        paddle.x = this._winSize.width / 2;
-        paddle.y = 100;
-        this._paddles.push(paddle);
-
-        paddle = Paddle.paddleWithTexture(paddleTexture);
-        paddle.x = this._winSize.width / 2;
-        paddle.y = this._winSize.height - STATUS_BAR_HEIGHT - 100;
-        this._paddles.push(paddle);
-
-        for (var i = 0; i < this._paddles.length; i++) {
-            if (!this._paddles[i])
-                break;
-
-            this.addChild(this._paddles[i]);
-        }
-
-        this.schedule(this.doStep);
-    }
-    resetAndScoreBallForPlayer(player) {
-        if (Math.abs(this._ball.getVelocity().y) < 300) {
-            this._ballStartingVelocity = cc.Point.mult(this._ballStartingVelocity, -1.1);
-        } else {
-            this._ballStartingVelocity = cc.Point.mult(this._ballStartingVelocity, -1);
-        }
-        this._ball.setVelocity(this._ballStartingVelocity);
-        this._ball.x = this._winSize.width / 2;
-        this._ball.y = this._winSize.height / 2;
-
-        // TODO -- scoring
-    }
-    doStep(delta) {
-        this._ball.move(delta);
-
-        for (var i = 0; i < this._paddles.length; i++) {
-            if (!this._paddles[i])
-                break;
-
-            this._ball.collideWithPaddle(this._paddles[i]);
-        }
-
-        if (this._ball.y > this._winSize.height - STATUS_BAR_HEIGHT + this._ball.radius())
-            this.resetAndScoreBallForPlayer(LOW_PLAYER);
-        else if (this._ball.y < -this._ball.radius())
-            this.resetAndScoreBallForPlayer(HIGH_PLAYER);
-        this._ball.draw();
+      this.addChild(this._paddles[i]);
     }
 
+    this.schedule(this.doStep);
+  }
+  resetAndScoreBallForPlayer(player) {
+    if (Math.abs(this._ball.getVelocity().y) < 300) {
+      this._ballStartingVelocity = cc.Point.mult(
+        this._ballStartingVelocity,
+        -1.1
+      );
+    } else {
+      this._ballStartingVelocity = cc.Point.mult(
+        this._ballStartingVelocity,
+        -1
+      );
+    }
+    this._ball.setVelocity(this._ballStartingVelocity);
+    this._ball.x = this._winSize.width / 2;
+    this._ball.y = this._winSize.height / 2;
+
+    // TODO -- scoring
+  }
+  doStep(delta) {
+    this._ball.move(delta);
+
+    for (var i = 0; i < this._paddles.length; i++) {
+      if (!this._paddles[i]) break;
+
+      this._ball.collideWithPaddle(this._paddles[i]);
+    }
+
+    if (
+      this._ball.y >
+      this._winSize.height - STATUS_BAR_HEIGHT + this._ball.radius()
+    )
+      this.resetAndScoreBallForPlayer(LOW_PLAYER);
+    else if (this._ball.y < -this._ball.radius())
+      this.resetAndScoreBallForPlayer(HIGH_PLAYER);
+    this._ball.draw();
+  }
 }

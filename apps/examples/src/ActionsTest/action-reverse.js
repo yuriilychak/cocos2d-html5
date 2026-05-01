@@ -30,16 +30,15 @@
 // ActionReverse
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionReverse extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = action.reverse();";
-        this.testDuration = 4.4;
-    }
-
+  constructor() {
+    super();
+    this._code = "a = action.reverse();";
+    this.testDuration = 4.4;
+  }
 
   onEnter() {
     //----start19----onEnter
@@ -79,5 +78,4 @@ export class ActionReverse extends ActionsDemo {
     ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
-
 }

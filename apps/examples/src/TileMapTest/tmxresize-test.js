@@ -30,47 +30,48 @@
 // TMXResizeTest
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXResizeTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testDuration = 0.25;
+    this.testDuration = 0.25;
 
-        this.pixel = {"0":169, "1":120, "2":76, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.pixel = { 0: 169, 1: 120, 2: 76, 3: 255 };
+    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        var layer;
-        layer = map.getLayer("Layer 0");
+    var layer;
+    layer = map.getLayer("Layer 0");
 
-        var ls = layer.getLayerSize();
-        for (var y = 0; y < ls.height; y++) {
-            for (var x = 0; x < ls.width; x++) {
-                layer.setTileGID(1, new cc.Point(x, y));
-            }
-        }
+    var ls = layer.getLayerSize();
+    for (var y = 0; y < ls.height; y++) {
+      for (var x = 0; x < ls.width; x++) {
+        layer.setTileGID(1, new cc.Point(x, y));
+      }
     }
-    title() {
-        return "TMX resize test";
-    }
-    subtitle() {
-        return "Should not crash. Testing issue #740";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(156, 156, 5, 5);
-        var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+  }
+  title() {
+    return "TMX resize test";
+  }
+  subtitle() {
+    return "Should not crash. Testing issue #740";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(156, 156, 5, 5);
+    var ret = {
+      pixel: this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

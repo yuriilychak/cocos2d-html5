@@ -8,18 +8,13 @@ import { SkeletonWebGLRenderCmd } from "./skeleton-webgl-render-cmd";
 Skeleton.CanvasRenderCmd = SkeletonCanvasRenderCmd;
 Skeleton.WebGLRenderCmd = SkeletonWebGLRenderCmd;
 
-// Expose spine runtime on sp namespace for direct access
-import * as spineRuntime from "@esotericsoftware/spine-core";
-const sp = globalThis.sp || (globalThis.sp = {});
-sp.spine = spineRuntime;
-
 // Backward compatibility
-sp.Skeleton = Skeleton;
-sp.SkeletonAnimation = SkeletonAnimation;
-sp.SkeletonTexture = SkeletonTexture;
-sp.TrackEntryListeners = TrackEntryListeners;
-sp.ANIMATION_EVENT_TYPE = ANIMATION_EVENT_TYPE;
-sp._atlasLoader = _atlasLoader;
+cc.Skeleton = Skeleton;
+cc.SkeletonAnimation = SkeletonAnimation;
+cc.SkeletonTexture = SkeletonTexture;
+cc.TrackEntryListeners = TrackEntryListeners;
+cc.ANIMATION_EVENT_TYPE = ANIMATION_EVENT_TYPE;
+cc._atlasLoader = _atlasLoader;
 
 export {
     Skeleton,

@@ -24,55 +24,85 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
-import { director } from "../../tests-main-constants.js";
+import { UIMainLayer } from "../uimain-layer";
+import { director } from "../../constants";
 
 export class UIS9NinePatchTest extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("");
+  init() {
+    if (super.init()) {
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("");
 
-            cc.spriteFrameCache.addSpriteFrames("ccs-res/cocosui/android9patch.plist");
-    
-            var winSize = director.getWinSize();
-            var x = winSize.width / 2;
-            var y = 0 + (winSize.height / 2 + 50);
-    
-            var preferedSize = new cc.Size(99,99);
-    
-            //9-patch sprite with filename
-            var playerSprite = new cc.Scale9Sprite("ccs-res/cocosui/player.9.png");
-            playerSprite.setPosition(x, y);
-            playerSprite.setContentSize(preferedSize);
-            var capInsets = playerSprite.getCapInsets();
-            cc.log("player sprite capInset = " + capInsets.x + ", " + capInsets.y + " " + capInsets.width + ", " + capInsets.height);
-            this.addChild(playerSprite);
-    
-            var animationBtnSprite = new cc.Scale9Sprite("animationbuttonpressed.png");
-            animationBtnSprite.setPosition(x-100, y-100);
-            capInsets = animationBtnSprite.getCapInsets();
-            cc.log("animationBtnSprite capInset = " + capInsets.x + ", " + capInsets.y + " " + capInsets.width + ", " + capInsets.height);
-            this.addChild(animationBtnSprite);
-            
-            
-            var monsterSprite = new cc.Scale9Sprite("monster.9.png");
-            monsterSprite.setPosition(x+100, y-100);
-            capInsets = monsterSprite.getCapInsets();
-            monsterSprite.setContentSize(preferedSize);
-            cc.log("monsterSprite capInset = ", + capInsets.x + ", " + capInsets.y + " " + capInsets.width + ", " + capInsets.height);
-            this.addChild(monsterSprite);
-    
-            var spriteFrame = cc.spriteFrameCache.getSpriteFrame("buttonnormal.9.png");
-            var buttonScale9Sprite = new cc.Scale9Sprite(spriteFrame);
-            buttonScale9Sprite.setContentSize(new cc.Size(150,80));
-            buttonScale9Sprite.setPosition(new cc.Point(100,200));
-            this.addChild(buttonScale9Sprite);
+      cc.spriteFrameCache.addSpriteFrames(
+        "ccs-res/cocosui/android9patch.plist"
+      );
 
-            return true;
-        }
-        return false;
+      var winSize = director.getWinSize();
+      var x = winSize.width / 2;
+      var y = 0 + (winSize.height / 2 + 50);
+
+      var preferedSize = new cc.Size(99, 99);
+
+      //9-patch sprite with filename
+      var playerSprite = new cc.Scale9Sprite("ccs-res/cocosui/player.9.png");
+      playerSprite.setPosition(x, y);
+      playerSprite.setContentSize(preferedSize);
+      var capInsets = playerSprite.getCapInsets();
+      cc.log(
+        "player sprite capInset = " +
+          capInsets.x +
+          ", " +
+          capInsets.y +
+          " " +
+          capInsets.width +
+          ", " +
+          capInsets.height
+      );
+      this.addChild(playerSprite);
+
+      var animationBtnSprite = new cc.Scale9Sprite(
+        "animationbuttonpressed.png"
+      );
+      animationBtnSprite.setPosition(x - 100, y - 100);
+      capInsets = animationBtnSprite.getCapInsets();
+      cc.log(
+        "animationBtnSprite capInset = " +
+          capInsets.x +
+          ", " +
+          capInsets.y +
+          " " +
+          capInsets.width +
+          ", " +
+          capInsets.height
+      );
+      this.addChild(animationBtnSprite);
+
+      var monsterSprite = new cc.Scale9Sprite("monster.9.png");
+      monsterSprite.setPosition(x + 100, y - 100);
+      capInsets = monsterSprite.getCapInsets();
+      monsterSprite.setContentSize(preferedSize);
+      cc.log(
+        "monsterSprite capInset = ",
+        +capInsets.x +
+          ", " +
+          capInsets.y +
+          " " +
+          capInsets.width +
+          ", " +
+          capInsets.height
+      );
+      this.addChild(monsterSprite);
+
+      var spriteFrame =
+        cc.spriteFrameCache.getSpriteFrame("buttonnormal.9.png");
+      var buttonScale9Sprite = new cc.Scale9Sprite(spriteFrame);
+      buttonScale9Sprite.setContentSize(new cc.Size(150, 80));
+      buttonScale9Sprite.setPosition(new cc.Point(100, 200));
+      this.addChild(buttonScale9Sprite);
+
+      return true;
     }
-
-};
+    return false;
+  }
+}

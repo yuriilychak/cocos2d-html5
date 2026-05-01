@@ -25,87 +25,101 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SceneTestLayer2 } from "./scene-test-layer2.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { director, winSize } from "../tests-main-constants.js";
+import { SceneTestLayer2 } from "./scene-test-layer2";
+import { s_pathGrossini } from "../resources";
+import { director, winSize } from "../constants";
 
 export class SceneTestLayer1 extends cc.Layer {
-    constructor() {
-        //----start0----Scene1-ctor
-        super();
-        this.init();
+  constructor() {
+    //----start0----Scene1-ctor
+    super();
+    this.init();
 
-        var s = director.getWinSize();
-        var item1 = new cc.MenuItemFont("Test pushScene", this.onPushScene, this);
-        var item2 = new cc.MenuItemFont("Test pushScene w/transition", this.onPushSceneTran, this);
-        var item3 = new cc.MenuItemFont("Quit", function () {
-            cc.log("quit!");
-        }, this);
-        var item4 = new cc.MenuItemFont("setNotificationNode", function () {
-            var layerTemp = new cc.LayerColor(new cc.Color(0, 255, 255, 120));
-            var sprite = new cc.Sprite(s_pathGrossini);
-            sprite.setPosition(new cc.Point(winSize.width/2,winSize.height/2));
-            layerTemp.addChild(sprite);
-            cc.director.setNotificationNode(layerTemp);
-            var rotation = new cc.RotateBy(2,360);
-            sprite.runAction(rotation.repeatForever());
-            cc.log("setNotificationNode!");
-        }, this);
-        var item5 = new cc.MenuItemFont("clearNotificationNode", function () {
-            cc.log("clearNotificationNode!");
-            cc.director.setNotificationNode(null);
-        }, this);
-
-        var menu = new cc.Menu(item1, item2, item3, item4, item5);
-        menu.alignItemsVertically();
-        this.addChild(menu);
-
+    var s = director.getWinSize();
+    var item1 = new cc.MenuItemFont("Test pushScene", this.onPushScene, this);
+    var item2 = new cc.MenuItemFont(
+      "Test pushScene w/transition",
+      this.onPushSceneTran,
+      this
+    );
+    var item3 = new cc.MenuItemFont(
+      "Quit",
+      function () {
+        cc.log("quit!");
+      },
+      this
+    );
+    var item4 = new cc.MenuItemFont(
+      "setNotificationNode",
+      function () {
+        var layerTemp = new cc.LayerColor(new cc.Color(0, 255, 255, 120));
         var sprite = new cc.Sprite(s_pathGrossini);
-        this.addChild(sprite);
-        sprite.x = s.width - 40;
-        sprite.y = s.height / 2;
-        var rotate = new cc.RotateBy(2, 360);
-        var repeat = rotate.repeatForever();
-        sprite.runAction(repeat);
-        //----end0----
-
-        //cc.schedule(this.testDealloc);
-    }
-
-
-    onEnter() {
-        cc.log("SceneTestLayer1#onEnter");
-        super.onEnter();
-    }
-
-    onEnterTransitionDidFinish() {
-        cc.log("SceneTestLayer1#onEnterTransitionDidFinish");
-        super.onEnterTransitionDidFinish();
-    }
-
-    testDealloc(dt) {
-        //cc.log("SceneTestLayer1:testDealloc");
-    }
-
-    onPushScene(sender) {
-        var scene = new SceneTestScene();
-        var layer = new SceneTestLayer2();
-        scene.addChild(layer, 0);
-        director.pushScene(scene);
-    }
-
-    onPushSceneTran(sender) {
-        var scene = new SceneTestScene();
-        var layer = new SceneTestLayer2();
-        scene.addChild(layer, 0);
-
-        director.pushScene(new cc.TransitionSlideInT(1, scene));
-    }
-    onExit(sender) {
+        sprite.setPosition(new cc.Point(winSize.width / 2, winSize.height / 2));
+        layerTemp.addChild(sprite);
+        cc.director.setNotificationNode(layerTemp);
+        var rotation = new cc.RotateBy(2, 360);
+        sprite.runAction(rotation.repeatForever());
+        cc.log("setNotificationNode!");
+      },
+      this
+    );
+    var item5 = new cc.MenuItemFont(
+      "clearNotificationNode",
+      function () {
+        cc.log("clearNotificationNode!");
         cc.director.setNotificationNode(null);
-        super.onExit();
-    }
+      },
+      this
+    );
 
-    //CREATE_NODE(SceneTestLayer1);
+    var menu = new cc.Menu(item1, item2, item3, item4, item5);
+    menu.alignItemsVertically();
+    this.addChild(menu);
 
+    var sprite = new cc.Sprite(s_pathGrossini);
+    this.addChild(sprite);
+    sprite.x = s.width - 40;
+    sprite.y = s.height / 2;
+    var rotate = new cc.RotateBy(2, 360);
+    var repeat = rotate.repeatForever();
+    sprite.runAction(repeat);
+    //----end0----
+
+    //cc.schedule(this.testDealloc);
+  }
+
+  onEnter() {
+    cc.log("SceneTestLayer1#onEnter");
+    super.onEnter();
+  }
+
+  onEnterTransitionDidFinish() {
+    cc.log("SceneTestLayer1#onEnterTransitionDidFinish");
+    super.onEnterTransitionDidFinish();
+  }
+
+  testDealloc(dt) {
+    //cc.log("SceneTestLayer1:testDealloc");
+  }
+
+  onPushScene(sender) {
+    var scene = new SceneTestScene();
+    var layer = new SceneTestLayer2();
+    scene.addChild(layer, 0);
+    director.pushScene(scene);
+  }
+
+  onPushSceneTran(sender) {
+    var scene = new SceneTestScene();
+    var layer = new SceneTestLayer2();
+    scene.addChild(layer, 0);
+
+    director.pushScene(new cc.TransitionSlideInT(1, scene));
+  }
+  onExit(sender) {
+    cc.director.setNotificationNode(null);
+    super.onExit();
+  }
+
+  //CREATE_NODE(SceneTestLayer1);
 }

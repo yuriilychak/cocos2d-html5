@@ -25,97 +25,72 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RescheduleCallback } from "./reschedule-callback.js";
-import { ScheduleUsingSchedulerTest } from "./schedule-using-scheduler-test.js";
-import { SchedulerAutoremove } from "./scheduler-autoremove.js";
-import { SchedulerPauseResume } from "./scheduler-pause-resume.js";
-import { SchedulerSchedulesAndRemove } from "./scheduler-schedules-and-remove.js";
-import { schedulerTestSceneIdx , _setschedulerTestSceneIdx} from "./scheduler-test-constants.js";
-import { SchedulerTimeScale } from "./scheduler-time-scale.js";
-import { SchedulerUnscheduleAllHard } from "./scheduler-unschedule-all-hard.js";
-import { SchedulerUnscheduleAll } from "./scheduler-unschedule-all.js";
-import { SchedulerUpdateAndCustom } from "./scheduler-update-and-custom.js";
-import { SchedulerUpdateFromCustom } from "./scheduler-update-from-custom.js";
-import { SchedulerUpdate } from "./scheduler-update.js";
-import { unScheduleAndRepeatTest } from "./un-schedule-and-repeat-test.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import { RescheduleCallback } from "./reschedule-callback";
+import { ScheduleUsingSchedulerTest } from "./schedule-using-scheduler-test";
+import { SchedulerAutoremove } from "./scheduler-autoremove";
+import { SchedulerPauseResume } from "./scheduler-pause-resume";
+import { SchedulerSchedulesAndRemove } from "./scheduler-schedules-and-remove";
+import {
+  schedulerTestSceneIdx,
+  _setschedulerTestSceneIdx
+} from "./scheduler-test-constants";
+import { SchedulerTimeScale } from "./scheduler-time-scale";
+import { SchedulerUnscheduleAllHard } from "./scheduler-unschedule-all-hard";
+import { SchedulerUnscheduleAll } from "./scheduler-unschedule-all";
+import { SchedulerUpdateAndCustom } from "./scheduler-update-and-custom";
+import { SchedulerUpdateFromCustom } from "./scheduler-update-from-custom";
+import { SchedulerUpdate } from "./scheduler-update";
+import { unScheduleAndRepeatTest } from "./un-schedule-and-repeat-test";
 
 //
 // Flow control
 //
 export var arrayOfSchedulerTest = [
-    SchedulerTimeScale,
-    SchedulerAutoremove,
-    SchedulerPauseResume,
-    SchedulerUnscheduleAll,
-    SchedulerUnscheduleAllHard,
-    SchedulerSchedulesAndRemove,
-    SchedulerUpdate,
-    SchedulerUpdateAndCustom,
-    SchedulerUpdateFromCustom,
-    RescheduleCallback,
-    ScheduleUsingSchedulerTest,
-    unScheduleAndRepeatTest
+  SchedulerTimeScale,
+  SchedulerAutoremove,
+  SchedulerPauseResume,
+  SchedulerUnscheduleAll,
+  SchedulerUnscheduleAllHard,
+  SchedulerSchedulesAndRemove,
+  SchedulerUpdate,
+  SchedulerUpdateAndCustom,
+  SchedulerUpdateFromCustom,
+  RescheduleCallback,
+  ScheduleUsingSchedulerTest,
+  unScheduleAndRepeatTest
 ];
 
 export function nextSchedulerTest() {
-    _setschedulerTestSceneIdx(schedulerTestSceneIdx + 1);
-    _setschedulerTestSceneIdx(schedulerTestSceneIdx % arrayOfSchedulerTest.length);
+  _setschedulerTestSceneIdx(schedulerTestSceneIdx + 1);
+  _setschedulerTestSceneIdx(
+    schedulerTestSceneIdx % arrayOfSchedulerTest.length
+  );
 
-    if(window.sideIndexBar){
-        _setschedulerTestSceneIdx(window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34));
-    }
+  if (window.sideIndexBar) {
+    _setschedulerTestSceneIdx(
+      window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34)
+    );
+  }
 
-    return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
+  return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
 }
-
-;
 
 export function previousSchedulerTest() {
-    _setschedulerTestSceneIdx(schedulerTestSceneIdx - 1);
-    if (schedulerTestSceneIdx < 0)
-        _setschedulerTestSceneIdx(schedulerTestSceneIdx + (arrayOfSchedulerTest.length));
+  _setschedulerTestSceneIdx(schedulerTestSceneIdx - 1);
+  if (schedulerTestSceneIdx < 0)
+    _setschedulerTestSceneIdx(
+      schedulerTestSceneIdx + arrayOfSchedulerTest.length
+    );
 
-    if(window.sideIndexBar){
-        _setschedulerTestSceneIdx(window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34));
-    }
+  if (window.sideIndexBar) {
+    _setschedulerTestSceneIdx(
+      window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34)
+    );
+  }
 
-    return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
+  return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
 }
-
-;
 
 export function restartSchedulerTest() {
-    return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
+  return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
 }
-
-;

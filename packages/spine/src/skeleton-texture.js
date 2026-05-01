@@ -2,7 +2,7 @@ import { Texture } from "@esotericsoftware/spine-core";
 import { RendererConfig, glBindTexture2D } from "@aspect/core";
 
 export class SkeletonTexture extends Texture {
-    name = 'sp.SkeletonTexture';
+    name = 'SkeletonTexture';
     _texture = null;
 
     constructor(image) {

@@ -24,9 +24,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export var TAG_LABEL1 = 550;
 export var TAG_LABEL2 = 551;
@@ -36,133 +36,142 @@ export var TAG_LABEL4 = 553;
 export var fontIdx = 0;
 
 export var fontList = [
+  // System Fonts
+  "sans-serif",
+  "sans-serif-light",
+  "Verdana",
+  "Lucida Sans Unicode",
+  "Bookman Old Style",
+  "Symbol",
+  "Georgia",
+  "Trebuchet MS",
+  "Comic Sans MS",
+  "Arial Black",
+  "Tahoma",
+  "Impact",
 
-    // System Fonts
-    "sans-serif",
-    "sans-serif-light",
-    "Verdana",
-    "Lucida Sans Unicode",
-    "Bookman Old Style",
-    "Symbol",
-    "Georgia",
-    "Trebuchet MS",
-    "Comic Sans MS",
-    "Arial Black",
-    "Tahoma",
-    "Impact",
-
-    // custom TTF
-    "American Typewriter",
-    "Marker Felt",
-    "A Damn Mess",
-    "Abberancy",
-    "Abduction",
-    "Paint Boy",
-    "Schwarzwald",
-    "Scissor Cuts"
+  // custom TTF
+  "American Typewriter",
+  "Marker Felt",
+  "A Damn Mess",
+  "Abberancy",
+  "Abduction",
+  "Paint Boy",
+  "Schwarzwald",
+  "Scissor Cuts"
 ];
 
-
 export function nextFontTestAction() {
-    fontIdx++;
-    fontIdx = fontIdx % fontList.length;
+  fontIdx++;
+  fontIdx = fontIdx % fontList.length;
 
-    if(window.sideIndexBar){
-        fontIdx = window.sideIndexBar.changeTest(fontIdx, 16);
-    }
+  if (window.sideIndexBar) {
+    fontIdx = window.sideIndexBar.changeTest(fontIdx, 16);
+  }
 
-    return fontList[fontIdx];
+  return fontList[fontIdx];
 }
 
 export function backFontTestAction() {
-    fontIdx--;
-    if (fontIdx < 0) {
-        fontIdx += fontList.length;
-    }
+  fontIdx--;
+  if (fontIdx < 0) {
+    fontIdx += fontList.length;
+  }
 
-    if(window.sideIndexBar){
-        fontIdx = window.sideIndexBar.changeTest(fontIdx, 16);
-    }
+  if (window.sideIndexBar) {
+    fontIdx = window.sideIndexBar.changeTest(fontIdx, 16);
+  }
 
-    return fontList[fontIdx];
+  return fontList[fontIdx];
 }
 
 export function restartFontTestAction() {
-    return fontList[fontIdx];
+  return fontList[fontIdx];
 }
 export class FontTestScene extends TestScene {
+  runThisTest(num) {
+    fontIdx = num || fontIdx;
 
-    runThisTest(num) {
+    var layer = new FontTest();
+    this.addChild(layer);
 
-        fontIdx = num || fontIdx;
-
-        var layer = new FontTest();
-        this.addChild(layer);
-
-        director.runScene(this);
-    }
-
-};
+    director.runScene(this);
+  }
+}
 
 export class FontTest extends BaseTestLayer {
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
-        this.showFont(restartFontTestAction());
+    this.showFont(restartFontTestAction());
+  }
+  showFont(pFont) {
+    this.removeChildByTag(TAG_LABEL1, true);
+    this.removeChildByTag(TAG_LABEL2, true);
+    this.removeChildByTag(TAG_LABEL3, true);
+    this.removeChildByTag(TAG_LABEL4, true);
 
-    }
-    showFont(pFont) {
-        this.removeChildByTag(TAG_LABEL1, true);
-        this.removeChildByTag(TAG_LABEL2, true);
-        this.removeChildByTag(TAG_LABEL3, true);
-        this.removeChildByTag(TAG_LABEL4, true);
+    var winSize = director.getWinSize();
 
-        var winSize = director.getWinSize();
+    var top = new cc.LabelTTF(pFont, pFont, 24);
+    var left = new cc.LabelTTF(
+      "alignment left",
+      pFont,
+      32,
+      new cc.Size(winSize.width, 50),
+      cc.TEXT_ALIGNMENT_LEFT
+    );
+    var center = new cc.LabelTTF(
+      "alignment center",
+      pFont,
+      32,
+      new cc.Size(winSize.width, 50),
+      cc.TEXT_ALIGNMENT_CENTER
+    );
+    var right = new cc.LabelTTF(
+      "alignment right",
+      pFont,
+      32,
+      new cc.Size(winSize.width, 50),
+      cc.TEXT_ALIGNMENT_RIGHT
+    );
 
-        var top = new cc.LabelTTF(pFont, pFont, 24);
-        var left = new cc.LabelTTF("alignment left", pFont, 32, new cc.Size(winSize.width, 50), cc.TEXT_ALIGNMENT_LEFT);
-        var center = new cc.LabelTTF("alignment center", pFont, 32, new cc.Size(winSize.width, 50), cc.TEXT_ALIGNMENT_CENTER);
-        var right = new cc.LabelTTF("alignment right", pFont, 32, new cc.Size(winSize.width, 50), cc.TEXT_ALIGNMENT_RIGHT);
+    top.x = winSize.width / 2;
+    top.y = (winSize.height * 3) / 4;
+    left.x = winSize.width / 2;
+    left.y = winSize.height / 2;
+    center.x = winSize.width / 2;
+    center.y = (winSize.height * 3) / 8;
+    right.x = winSize.width / 2;
+    right.y = winSize.height / 4;
 
-        top.x = winSize.width / 2;
-        top.y = winSize.height * 3 / 4;
-        left.x = winSize.width / 2;
-        left.y = winSize.height / 2;
-        center.x = winSize.width / 2;
-        center.y = winSize.height * 3 / 8;
-        right.x = winSize.width / 2;
-        right.y = winSize.height / 4;
+    this.addChild(left, 0, TAG_LABEL1);
+    this.addChild(right, 0, TAG_LABEL2);
+    this.addChild(center, 0, TAG_LABEL3);
+    this.addChild(top, 0, TAG_LABEL4);
+  }
 
-        this.addChild(left, 0, TAG_LABEL1);
-        this.addChild(right, 0, TAG_LABEL2);
-        this.addChild(center, 0, TAG_LABEL3);
-        this.addChild(top, 0, TAG_LABEL4);
+  onBackCallback(sender) {
+    this.showFont(backFontTestAction());
+  }
+  onRestartCallback(sender) {
+    this.showFont(restartFontTestAction());
+  }
+  onNextCallback(sender) {
+    this.showFont(nextFontTestAction());
+  }
+  subtitle() {
+    return "Font test";
+  }
+  title() {
+    return "" + fontList[fontIdx];
+  }
 
-    }
-
-    onBackCallback(sender) {
-        this.showFont(backFontTestAction());
-    }
-    onRestartCallback(sender) {
-        this.showFont(restartFontTestAction());
-    }
-    onNextCallback(sender) {
-        this.showFont(nextFontTestAction());
-    }
-    subtitle() {
-        return "Font test";
-    }
-    title() {
-        return "" + fontList[fontIdx];
-    }
-
-    // automation
-    numberOfPendingTests() {
-        return ( (fontList.length-1) - fontIdx );
-    }
-    getTestNumber() {
-        return fontIdx;
-    }
-
-
-};
+  // automation
+  numberOfPendingTests() {
+    return fontList.length - 1 - fontIdx;
+  }
+  getTestNumber() {
+    return fontIdx;
+  }
+}

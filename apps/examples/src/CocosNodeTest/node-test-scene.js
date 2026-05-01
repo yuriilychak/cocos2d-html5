@@ -28,18 +28,17 @@
 //
 // MAIN ENTRY POINT
 //
-import { nextNodeTest } from "./cocos-node-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setnodeTestSceneIdx } from "./cocos-node-test-constants.js";
+import { nextNodeTest } from "./cocos-node-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { _setnodeTestSceneIdx } from "./cocos-node-test-constants";
 
 export class NodeTestScene extends TestScene {
-    runThisTest(num) {
-        _setnodeTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextNodeTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _setnodeTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextNodeTest();
+    this.addChild(layer);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

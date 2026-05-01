@@ -25,50 +25,58 @@
  ****************************************************************************/
 
 //2015-01-14
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UILabelTest_Effect extends UIMainLayer {
-    init(){
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-            this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("");
 
-            var alert = new ccui.Text();
-            alert.setString("Label Effect");
-            alert.setFontName("Marker Felt");
-            alert.setFontSize(30);
-            alert.setColor(new cc.Color(159, 168, 176));
-            alert.setPosition(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.05);
-            this._mainNode.addChild(alert);
+      var alert = new ccui.Text();
+      alert.setString("Label Effect");
+      alert.setFontName("Marker Felt");
+      alert.setFontSize(30);
+      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setPosition(
+        widgetSize.width / 2,
+        widgetSize.height / 2 - alert.height * 3.05
+      );
+      this._mainNode.addChild(alert);
 
-            // create the shadow only label
-            var shadow_label = new ccui.Text();
+      // create the shadow only label
+      var shadow_label = new ccui.Text();
 
-            shadow_label.enableShadow(cc.Color.GRAY, new cc.Point(10, -10));
-            shadow_label.setString("Shadow");
-            shadow_label.setPosition(widgetSize.width / 2, widgetSize.height / 2 + shadow_label.height);
+      shadow_label.enableShadow(cc.Color.GRAY, new cc.Point(10, -10));
+      shadow_label.setString("Shadow");
+      shadow_label.setPosition(
+        widgetSize.width / 2,
+        widgetSize.height / 2 + shadow_label.height
+      );
 
-            this._mainNode.addChild(shadow_label);
+      this._mainNode.addChild(shadow_label);
 
-            // create the stroke only label
-            var glow_label = new ccui.Text();
-            glow_label.setFontName("Marker Felt");
-            glow_label.setString("Glow");
-            glow_label.enableGlow(cc.Color.RED);
-            glow_label.setPosition(widgetSize.width / 2, widgetSize.height / 2);
-            this._mainNode.addChild(glow_label);
+      // create the stroke only label
+      var glow_label = new ccui.Text();
+      glow_label.setFontName("Marker Felt");
+      glow_label.setString("Glow");
+      glow_label.enableGlow(cc.Color.RED);
+      glow_label.setPosition(widgetSize.width / 2, widgetSize.height / 2);
+      this._mainNode.addChild(glow_label);
 
-            // create the label stroke and shadow
-            var outline_label = new ccui.Text();
-            outline_label.enableOutline(cc.Color.BLUE, 2);
-            outline_label.setString("Outline");
-            outline_label.setPosition(widgetSize.width / 2, widgetSize.height / 2 - shadow_label.height);
+      // create the label stroke and shadow
+      var outline_label = new ccui.Text();
+      outline_label.enableOutline(cc.Color.BLUE, 2);
+      outline_label.setString("Outline");
+      outline_label.setPosition(
+        widgetSize.width / 2,
+        widgetSize.height / 2 - shadow_label.height
+      );
 
-            this._mainNode.addChild(outline_label);
+      this._mainNode.addChild(outline_label);
 
-            return true;
-        }
+      return true;
     }
-
+  }
 }

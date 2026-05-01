@@ -25,18 +25,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextSpriteTest } from "./sprite-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setspriteTestIdx, spriteTestIdx } from "./sprite-test-constants.js";
+import { nextSpriteTest } from "./sprite-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { _setspriteTestIdx, spriteTestIdx } from "./sprite-test-constants";
 
 export class SpriteTestScene extends TestScene {
-    runThisTest(num) {
-        _setspriteTestIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextSpriteTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _setspriteTestIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextSpriteTest();
+    this.addChild(layer);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

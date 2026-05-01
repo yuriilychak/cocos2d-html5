@@ -30,39 +30,40 @@
 // TMXBug787
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXBug787 extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testDuration = 0.25;
+    this.testDuration = 0.25;
 
-        this.pixel = {"0":255, "1":255, "2":255, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-bug787.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.pixel = { 0: 255, 1: 255, 2: 255, 3: 255 };
+    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-bug787.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        map.scale = 0.25;
-    }
-    title() {
-        return "TMX Bug 787";
-    }
-    subtitle() {
-        return "You should see a map";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(364, 243, 5, 5);
-        var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    map.scale = 0.25;
+  }
+  title() {
+    return "TMX Bug 787";
+  }
+  subtitle() {
+    return "You should see a map";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(364, 243, 5, 5);
+    var ret = {
+      pixel: this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

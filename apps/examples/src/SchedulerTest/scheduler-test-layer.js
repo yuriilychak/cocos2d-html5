@@ -28,50 +28,52 @@
 /*
     Base Layer
 */
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { schedulerTestSceneIdx } from "./scheduler-test-constants.js";
-import { arrayOfSchedulerTest, nextSchedulerTest, previousSchedulerTest, restartSchedulerTest } from "./scheduler-test-helpers.js";
-import { SchedulerTestScene } from "./scheduler-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { schedulerTestSceneIdx } from "./scheduler-test-constants";
+import {
+  arrayOfSchedulerTest,
+  nextSchedulerTest,
+  previousSchedulerTest,
+  restartSchedulerTest
+} from "./scheduler-test-helpers";
+import { SchedulerTestScene } from "./scheduler-test-scene";
+import { director } from "../constants";
 
 export class SchedulerTestLayer extends BaseTestLayer {
+  title() {
+    return "No title";
+  }
+  subtitle() {
+    return "";
+  }
 
-    title() {
-        return "No title";
-    }
-    subtitle() {
-        return "";
-    }
+  onBackCallback(sender) {
+    var scene = new SchedulerTestScene();
+    var layer = previousSchedulerTest();
 
-    onBackCallback(sender) {
-        var scene = new SchedulerTestScene();
-        var layer = previousSchedulerTest();
+    scene.addChild(layer);
+    director.runScene(scene);
+  }
+  onNextCallback(sender) {
+    var scene = new SchedulerTestScene();
+    var layer = nextSchedulerTest();
 
-        scene.addChild(layer);
-        director.runScene(scene);
-    }
-    onNextCallback(sender) {
-        var scene = new SchedulerTestScene();
-        var layer = nextSchedulerTest();
+    scene.addChild(layer);
+    director.runScene(scene);
+  }
+  onRestartCallback(sender) {
+    var scene = new SchedulerTestScene();
+    var layer = restartSchedulerTest();
 
-        scene.addChild(layer);
-        director.runScene(scene);
-    }
-    onRestartCallback(sender) {
-        var scene = new SchedulerTestScene();
-        var layer = restartSchedulerTest();
+    scene.addChild(layer);
+    director.runScene(scene);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfSchedulerTest.length - 1 - schedulerTestSceneIdx;
+  }
 
-        scene.addChild(layer);
-        director.runScene(scene);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfSchedulerTest.length-1) - schedulerTestSceneIdx );
-    }
-
-    getTestNumber() {
-        return schedulerTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return schedulerTestSceneIdx;
+  }
 }

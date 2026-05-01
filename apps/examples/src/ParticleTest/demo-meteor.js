@@ -25,23 +25,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_fire } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_fire } from "../resources";
 
 export class DemoMeteor extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new cc.ParticleMeteor();
-        this._background.addChild(this._emitter, 10);
+    this._emitter = new cc.ParticleMeteor();
+    this._background.addChild(this._emitter, 10);
 
-        this._emitter.texture = cc.textureCache.addImage(s_fire);
-        this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
+    this._emitter.texture = cc.textureCache.addImage(s_fire);
+    this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
 
-        this.setEmitterPosition();
-    }
-    title() {
-        return "ParticleMeteor";
-    }
-
+    this.setEmitterPosition();
+  }
+  title() {
+    return "ParticleMeteor";
+  }
 }

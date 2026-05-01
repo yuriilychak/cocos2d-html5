@@ -24,28 +24,28 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIImageViewTest_Scale9 extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("ImageView scale9 render");
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("ImageView scale9 render");
 
-            // Create the imageview
-            var imageView = new ccui.ImageView();
-            imageView.setScale9Enabled(true);
-            imageView.loadTexture("ccs-res/cocosui/buttonHighlighted.png");
-            imageView.setContentSize(new cc.Size(200, 85));
-            imageView.x = widgetSize.width / 2;
-	        imageView.y = widgetSize.height / 2 + imageView.getContentSize().height / 4;
-            this._mainNode.addChild(imageView);
+      // Create the imageview
+      var imageView = new ccui.ImageView();
+      imageView.setScale9Enabled(true);
+      imageView.loadTexture("ccs-res/cocosui/buttonHighlighted.png");
+      imageView.setContentSize(new cc.Size(200, 85));
+      imageView.x = widgetSize.width / 2;
+      imageView.y =
+        widgetSize.height / 2 + imageView.getContentSize().height / 4;
+      this._mainNode.addChild(imageView);
 
-            return true;
-        }
-        return false;
+      return true;
     }
-
+    return false;
+  }
 }

@@ -30,8 +30,8 @@
 // ActionAnimate
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { s_animations2Plist } from "../tests_resources.js";
+import { ActionsDemo } from "./actions-demo";
+import { s_animations2Plist } from "../resources";
 
 export class ActionAnimate extends ActionsDemo {
   onEnter() {
@@ -85,5 +85,4 @@ export class ActionAnimate extends ActionsDemo {
   subtitle() {
     return "Center: Manual animation. Border: using file format animation";
   }
-
 }

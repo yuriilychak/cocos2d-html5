@@ -25,76 +25,91 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXGIDObjectsTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testObjects = [];
+    this.testObjects = [];
 
-        var drawNode = new cc.DrawNode();
-        drawNode.setLineWidth(3);
-        drawNode.setDrawColor(new cc.Color(255,255,255,255));
-        this.addChild(drawNode);
+    var drawNode = new cc.DrawNode();
+    drawNode.setLineWidth(3);
+    drawNode.setDrawColor(new cc.Color(255, 255, 255, 255));
+    this.addChild(drawNode);
 
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/test-object-layer.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    var map = new cc.TMXTiledMap(
+      s_resprefix + "TileMaps/test-object-layer.tmx"
+    );
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        this.log("ContentSize:" + map.width + "," + map.height);
-        this.log("---. Iterating over all the group objects");
+    this.log("ContentSize:" + map.width + "," + map.height);
+    this.log("---. Iterating over all the group objects");
 
-        var group = map.getObjectGroup("Object Layer 1");
-        var array = group.getObjects();
-        var dict;
-        for (var i = 0, len = array.length; i < len; i++) {
-            dict = array[i];
-            if (!dict)
-                break;
-            for (var k in dict) {
-                this.log(k + ' = ' + dict[k]);
-            }
+    var group = map.getObjectGroup("Object Layer 1");
+    var array = group.getObjects();
+    var dict;
+    for (var i = 0, len = array.length; i < len; i++) {
+      dict = array[i];
+      if (!dict) break;
+      for (var k in dict) {
+        this.log(k + " = " + dict[k]);
+      }
 
-            var x = dict["x"], y = dict["y"];
-            var width = dict["width"], height = dict["height"];
+      var x = dict["x"],
+        y = dict["y"];
+      var width = dict["width"],
+        height = dict["height"];
 
-            if (width != 0 && height != 0) {
-                drawNode.drawSegment(new cc.Point(x, y), new cc.Point((x + width), y));
-                drawNode.drawSegment(new cc.Point((x + width), y), new cc.Point((x + width), (y + height)));
-                drawNode.drawSegment(new cc.Point((x + width), (y + height)), new cc.Point(x, (y + height)));
-                drawNode.drawSegment(new cc.Point(x, (y + height)), new cc.Point(x, y));
-            }
-        }
-        this.testObjects = array;
+      if (width != 0 && height != 0) {
+        drawNode.drawSegment(new cc.Point(x, y), new cc.Point(x + width, y));
+        drawNode.drawSegment(
+          new cc.Point(x + width, y),
+          new cc.Point(x + width, y + height)
+        );
+        drawNode.drawSegment(
+          new cc.Point(x + width, y + height),
+          new cc.Point(x, y + height)
+        );
+        drawNode.drawSegment(new cc.Point(x, y + height), new cc.Point(x, y));
+      }
     }
-    title() {
-        return "TMX GID objects";
+    this.testObjects = array;
+  }
+  title() {
+    return "TMX GID objects";
+  }
+  subtitle() {
+    return "Tiles are created from an object group";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = [];
+    ret.push({ name: "sandro", type: "", x: 97, y: 6, width: 0, height: 0 });
+    ret.push({ name: "", type: "", x: 119, y: 19, width: 0, height: 0 });
+    ret.push({ name: "", type: "", x: 140, y: 38, width: 0, height: 0 });
+    ret.push({ name: "", type: "", x: 160, y: 57, width: 0, height: 0 });
+    ret.push({ name: "", type: "", x: 180, y: 71, width: 0, height: 0 });
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret = [];
+    var obj = null;
+    for (var i = 0; i < this.testObjects.length; i++) {
+      obj = this.testObjects[i];
+      ret.push({
+        name: obj["name"] || "",
+        type: obj["type"] || "",
+        x: parseFloat(obj["x"]),
+        y: parseFloat(obj["y"]),
+        width: parseFloat(obj["width"] || 0),
+        height: parseFloat(obj["height"] || 0)
+      });
     }
-    subtitle() {
-        return "Tiles are created from an object group";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = [];
-        ret.push({"name":"sandro", "type":"", "x":97, "y":6, "width":0, "height":0});
-        ret.push({"name":"", "type":"", "x":119, "y":19, "width":0, "height":0});
-        ret.push({"name":"", "type":"", "x":140, "y":38, "width":0, "height":0});
-        ret.push({"name":"", "type":"", "x":160, "y":57, "width":0, "height":0});
-        ret.push({"name":"", "type":"", "x":180, "y":71, "width":0, "height":0});
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret = [];
-        var obj = null;
-        for (var i = 0; i < this.testObjects.length; i++) {
-            obj = this.testObjects[i];
-            ret.push({"name":obj["name"] || "", "type":obj["type"] || "", "x":parseFloat(obj["x"]), "y":parseFloat(obj["y"]), "width":parseFloat(obj["width"] || 0), "height":parseFloat(obj["height"] || 0)});
-        }
-        return JSON.stringify(ret);
-    }
-
+    return JSON.stringify(ret);
+  }
 }

@@ -28,78 +28,74 @@
 // ShaderNode
 //
 //------------------------------------------------------------------
-import "./glnode-polyfill.js";
+import "./glnode-polyfill";
 
 export class ShaderNode extends cc.GLNode {
-    constructor(vertexShader, framentShader) {
-        super();
-        this.init();
+  constructor(vertexShader, framentShader) {
+    super();
+    this.init();
 
-        if( 'opengl' in cc.sys.capabilities ) {
-            this.width = 256;
-            this.height = 256;
-            this.anchorX = 0.5;
-            this.anchorY = 0.5;
+    if ("opengl" in cc.sys.capabilities) {
+      this.width = 256;
+      this.height = 256;
+      this.anchorX = 0.5;
+      this.anchorY = 0.5;
 
-            this.shader = new cc.GLProgram(vertexShader, framentShader);
-            this.shader.addAttribute("aVertex", cc.VERTEX_ATTRIB_POSITION);
-            this.shader.link();
-            this.shader.updateUniforms();
+      this.shader = new cc.GLProgram(vertexShader, framentShader);
+      this.shader.addAttribute("aVertex", cc.VERTEX_ATTRIB_POSITION);
+      this.shader.link();
+      this.shader.updateUniforms();
 
-            var program = this.shader.getProgram();
-            this.uniformCenter = gl.getUniformLocation( program, "center");
-            this.uniformResolution = gl.getUniformLocation( program, "resolution");
-            this.initBuffers();
+      var program = this.shader.getProgram();
+      this.uniformCenter = gl.getUniformLocation(program, "center");
+      this.uniformResolution = gl.getUniformLocation(program, "resolution");
+      this.initBuffers();
 
-            this.scheduleUpdate();
-            this._time = 0;
-        }
+      this.scheduleUpdate();
+      this._time = 0;
     }
-    draw() {
-        this.shader.use();
-        this.shader.setUniformsForBuiltins();
+  }
+  draw() {
+    this.shader.use();
+    this.shader.setUniformsForBuiltins();
 
-        //
-        // Uniforms
-        //
-        var frameSize = cc.view.getFrameSize();
-        var visibleSize = cc.view.getVisibleSize();
-        var retinaFactor = cc.view.getDevicePixelRatio();
-        var position = this.getPosition();
+    //
+    // Uniforms
+    //
+    var frameSize = cc.view.getFrameSize();
+    var visibleSize = cc.view.getVisibleSize();
+    var retinaFactor = cc.view.getDevicePixelRatio();
+    var position = this.getPosition();
 
-        var centerx = position.x * frameSize.width/visibleSize.width * retinaFactor;
-        var centery = position.y * frameSize.height/visibleSize.height * retinaFactor;
-        this.shader.setUniformLocationF32( this.uniformCenter, centerx, centery);
-        this.shader.setUniformLocationF32( this.uniformResolution, 256, 256);
+    var centerx =
+      ((position.x * frameSize.width) / visibleSize.width) * retinaFactor;
+    var centery =
+      ((position.y * frameSize.height) / visibleSize.height) * retinaFactor;
+    this.shader.setUniformLocationF32(this.uniformCenter, centerx, centery);
+    this.shader.setUniformLocationF32(this.uniformResolution, 256, 256);
 
-        gl.enableVertexAttribArray( cc.VERTEX_ATTRIB_POSITION );
+    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
 
-        // Draw fullscreen Square
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
-        gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    // Draw fullscreen Square
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
+    gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    }
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+  }
 
-    update(dt) {
-        this._time += dt;
-    }
-    initBuffers() {
-
-        //
-        // Square
-        //
-        var squareVertexPositionBuffer = this.squareVertexPositionBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
-        var vertices = [
-            256,            256,
-            0,              256,
-            256,            0,
-            0,              0
-        ];
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-        gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    }
-
+  update(dt) {
+    this._time += dt;
+  }
+  initBuffers() {
+    //
+    // Square
+    //
+    var squareVertexPositionBuffer = (this.squareVertexPositionBuffer =
+      gl.createBuffer());
+    gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
+    var vertices = [256, 256, 0, 256, 256, 0, 0, 0];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+  }
 }

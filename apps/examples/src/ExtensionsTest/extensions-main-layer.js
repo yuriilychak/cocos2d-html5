@@ -25,32 +25,39 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ITEM_TAG_BASIC, LINE_SPACE, extensionsTestItemNames } from "./extensions-test-constants.js";
+import {
+  ITEM_TAG_BASIC,
+  LINE_SPACE,
+  extensionsTestItemNames
+} from "./extensions-test-constants";
 
 export class ExtensionsMainLayer extends cc.Layer {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        var winSize = cc.director.getWinSize();
+    var winSize = cc.director.getWinSize();
 
-        var pMenu = new cc.Menu();
-        pMenu.x = 0;
-        pMenu.y = 0;
-        cc.MenuItemFont.setFontName("Arial");
-        cc.MenuItemFont.setFontSize(24);
-        for (var i = 0; i < extensionsTestItemNames.length; ++i) {
-            var selItem = extensionsTestItemNames[i];
-            var pItem = new cc.MenuItemFont(selItem.itemTitle, this.menuCallback, this);
-            pItem.x = winSize.width / 2;
-            pItem.y = winSize.height - (i + 1) * LINE_SPACE;
-            pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
-        }
-        this.addChild(pMenu);
+    var pMenu = new cc.Menu();
+    pMenu.x = 0;
+    pMenu.y = 0;
+    cc.MenuItemFont.setFontName("Arial");
+    cc.MenuItemFont.setFontSize(24);
+    for (var i = 0; i < extensionsTestItemNames.length; ++i) {
+      var selItem = extensionsTestItemNames[i];
+      var pItem = new cc.MenuItemFont(
+        selItem.itemTitle,
+        this.menuCallback,
+        this
+      );
+      pItem.x = winSize.width / 2;
+      pItem.y = winSize.height - (i + 1) * LINE_SPACE;
+      pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
     }
+    this.addChild(pMenu);
+  }
 
-    menuCallback(sender) {
-        var nIndex = sender.zIndex - ITEM_TAG_BASIC;
-        extensionsTestItemNames[nIndex].testScene();
-    }
-
+  menuCallback(sender) {
+    var nIndex = sender.zIndex - ITEM_TAG_BASIC;
+    extensionsTestItemNames[nIndex].testScene();
+  }
 }

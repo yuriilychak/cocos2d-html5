@@ -25,37 +25,37 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { director } from "../tests-main-constants.js";
-import { TexCacheTestScene } from "./tex-cache-test-scene.js";
-import { nextTexCacheTest, previousTexCacheTest, restartTexCacheTest } from "./texture-cache-test-helpers.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { director } from "../constants";
+import { TexCacheTestScene } from "./tex-cache-test-scene";
+import {
+  nextTexCacheTest,
+  previousTexCacheTest,
+  restartTexCacheTest
+} from "./texture-cache-test-helpers";
 
 export class TextureCacheTestBase extends BaseTestLayer {
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+    this._title = "";
 
+    this._subtitle = "";
+  }
 
-        this._title = "";
-
-
-        this._subtitle = "";
-    }
-
-    onRestartCallback(sender) {
-        var s = new TexCacheTestScene();
-        s.addChild(restartTexCacheTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new TexCacheTestScene();
-        s.addChild(nextTexCacheTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new TexCacheTestScene();
-        s.addChild(previousTexCacheTest());
-        director.runScene(s);
-    }
-
+  onRestartCallback(sender) {
+    var s = new TexCacheTestScene();
+    s.addChild(restartTexCacheTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new TexCacheTestScene();
+    s.addChild(nextTexCacheTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new TexCacheTestScene();
+    s.addChild(previousTexCacheTest());
+    director.runScene(s);
+  }
 }

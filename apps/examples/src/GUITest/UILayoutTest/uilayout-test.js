@@ -24,16 +24,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UILayoutTestBase } from "./uilayout-test-base.js";
+import { UILayoutTestBase } from "./uilayout-test-base";
 
 export class UILayoutTest extends UILayoutTestBase {
-    createLayout() {
-        var layout = new ccui.Layout();
-        layout.setContentSize(new cc.Size(280, 150));
-        return layout;
-    }
-    getText() {
-        return "Layout";
-    }
-
+  createLayout() {
+    var layout = new ccui.Layout();
+    layout.setContentSize(new cc.Size(280, 150));
+    return layout;
+  }
+  getText() {
+    return "Layout";
+  }
 }

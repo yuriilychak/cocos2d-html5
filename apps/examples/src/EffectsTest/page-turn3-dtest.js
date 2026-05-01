@@ -23,18 +23,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class PageTurn3DTest extends EffectsBaseLayer {
-    title() {
-        return "PageTurn3D";
-    }
-    code() {
-        return "a = cc.pageTurn3D(duration, gridSize)";
-    }
-    getEffect(duration) {
-        var action = cc.pageTurn3D(duration, new cc.Size(15,10));
-        return action;
-    }
-
+  title() {
+    return "PageTurn3D";
+  }
+  code() {
+    return "a = cc.pageTurn3D(duration, gridSize)";
+  }
+  getEffect(duration) {
+    var action = cc.pageTurn3D(duration, new cc.Size(15, 10));
+    return action;
+  }
 }

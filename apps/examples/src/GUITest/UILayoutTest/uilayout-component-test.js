@@ -24,56 +24,61 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UILayoutComponentTest extends UIMainLayer {
-    constructor() {
-        super();
-        this._baseLayer = null;
+  constructor() {
+    super();
+    this._baseLayer = null;
+  }
+
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
+
+      this._baseLayer = new cc.LayerColor();
+      this._baseLayer.setColor(new cc.Color(50, 100, 0));
+      this._baseLayer.setOpacity(100);
+      this._baseLayer.setContentSize(200, 200);
+      this._mainNode.addChild(this._baseLayer);
+
+      var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
+      cc.log(
+        "content size should be greater than 0:  width = %f, height = %f",
+        button.width,
+        button.height
+      );
+      button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
+      button.addTouchEventListener(this.touchEvent, this);
+      button.setZoomScale(0.4);
+      button.setPressedActionEnabled(true);
+      this._mainNode.addChild(button);
+
+      return true;
     }
-
-    init(){
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
-
-            this._baseLayer = new cc.LayerColor();
-            this._baseLayer.setColor(new cc.Color(50, 100, 0));
-            this._baseLayer.setOpacity(100);
-            this._baseLayer.setContentSize(200, 200);
-            this._mainNode.addChild(this._baseLayer);
-
-            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
-            cc.log("content size should be greater than 0:  width = %f, height = %f", button.width, button.height);
-            button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
-            button.addTouchEventListener(this.touchEvent, this);
-            button.setZoomScale(0.4);
-            button.setPressedActionEnabled(true);
-            this._mainNode.addChild(button);
-
-            return true;
-        }
-        return false;
+    return false;
+  }
+  touchEvent(sender, type) {
+    switch (type) {
+      case ccui.Widget.TOUCH_BEGAN:
+        break;
+      case ccui.Widget.TOUCH_MOVED:
+        break;
+      case ccui.Widget.TOUCH_ENDED:
+        var widgetSize = this._widget.getContentSize();
+        var layerSize = this._baseLayer.getContentSize();
+        if (
+          layerSize.width == widgetSize.width &&
+          layerSize.height == widgetSize.height
+        )
+          this._baseLayer.setContentSize(200, 200);
+        else this._baseLayer.setContentSize(widgetSize);
+        ccui.helper.doLayout(this._baseLayer);
+        break;
+      case ccui.Widget.TOUCH_CANCELED:
+        break;
+      default:
+        break;
     }
-    touchEvent(sender, type){
-        switch (type) {
-            case ccui.Widget.TOUCH_BEGAN:
-                break;
-            case ccui.Widget.TOUCH_MOVED:
-                break;
-            case ccui.Widget.TOUCH_ENDED:
-                var widgetSize = this._widget.getContentSize();
-                var layerSize = this._baseLayer.getContentSize();
-                if (layerSize.width == widgetSize.width && layerSize.height == widgetSize.height)
-                    this._baseLayer.setContentSize(200, 200);
-                else
-                    this._baseLayer.setContentSize(widgetSize);
-                ccui.helper.doLayout(this._baseLayer);
-                break;
-            case ccui.Widget.TOUCH_CANCELED:
-                break;
-            default:
-                break;
-        }
-    }
-
+  }
 }

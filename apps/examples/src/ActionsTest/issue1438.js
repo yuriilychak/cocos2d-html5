@@ -30,8 +30,8 @@
 // Issue1438
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { s_animations2Plist } from "../tests_resources.js";
+import { ActionsDemo } from "./actions-demo";
+import { s_animations2Plist } from "../resources";
 
 export class Issue1438 extends ActionsDemo {
   onEnter() {
@@ -79,5 +79,4 @@ export class Issue1438 extends ActionsDemo {
   subtitle() {
     return "Issue 1438. Set FPS to 30 to test this bug.";
   }
-
 }

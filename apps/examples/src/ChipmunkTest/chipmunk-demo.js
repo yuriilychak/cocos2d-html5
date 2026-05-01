@@ -22,45 +22,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
-import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers.js";
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
+import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers";
 
 export class ChipmunkDemo extends ChipmunkBaseLayer {
-    constructor() {
-        super();
-        //cc.base(this);
+  constructor() {
+    super();
+    //cc.base(this);
 
-        this.remainder = 0;
+    this.remainder = 0;
 
-        // debug only
-        this._debugNode.visible = true ;
+    // debug only
+    this._debugNode.visible = true;
 
-        this.scheduleUpdate();
-    }
+    this.scheduleUpdate();
+  }
 
-    update(dt) {
-        this.space.step(dt);
-    }
+  update(dt) {
+    this.space.step(dt);
+  }
 
-    addFloor() {
-        var space = this.space;
-        var floor = space.addShape(new cp.SegmentShape(space.staticBody, v(0, 0), v(640, 0), 0));
-        floor.setElasticity(1);
-        floor.setFriction(1);
-        floor.setLayers(NOT_GRABABLE_MASK);
-    }
+  addFloor() {
+    var space = this.space;
+    var floor = space.addShape(
+      new cp.SegmentShape(space.staticBody, v(0, 0), v(640, 0), 0)
+    );
+    floor.setElasticity(1);
+    floor.setFriction(1);
+    floor.setLayers(NOT_GRABABLE_MASK);
+  }
 
-    addWalls() {
-        var space = this.space;
-        var wall1 = space.addShape(new cp.SegmentShape(space.staticBody, v(0, 0), v(0, 480), 0));
-        wall1.setElasticity(1);
-        wall1.setFriction(1);
-        wall1.setLayers(NOT_GRABABLE_MASK);
+  addWalls() {
+    var space = this.space;
+    var wall1 = space.addShape(
+      new cp.SegmentShape(space.staticBody, v(0, 0), v(0, 480), 0)
+    );
+    wall1.setElasticity(1);
+    wall1.setFriction(1);
+    wall1.setLayers(NOT_GRABABLE_MASK);
 
-        var wall2 = space.addShape(new cp.SegmentShape(space.staticBody, v(640, 0), v(640, 480), 0));
-        wall2.setElasticity(1);
-        wall2.setFriction(1);
-        wall2.setLayers(NOT_GRABABLE_MASK);
-    }
-
+    var wall2 = space.addShape(
+      new cp.SegmentShape(space.staticBody, v(640, 0), v(640, 480), 0)
+    );
+    wall2.setElasticity(1);
+    wall2.setFriction(1);
+    wall2.setLayers(NOT_GRABABLE_MASK);
+  }
 }

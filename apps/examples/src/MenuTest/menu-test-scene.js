@@ -25,28 +25,34 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { MenuBugsTest } from "./menu-bugs-test.js";
-import { MenuLayerMainMenu } from "./menu-layer-main-menu.js";
-import { MenuLayer2 } from "./menu-layer2.js";
-import { MenuLayer3 } from "./menu-layer3.js";
-import { MenuLayer4 } from "./menu-layer4.js";
-import { RemoveMenuItemWhenMove } from "./remove-menu-item-when-move.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { MenuBugsTest } from "./menu-bugs-test";
+import { MenuLayerMainMenu } from "./menu-layer-main-menu";
+import { MenuLayer2 } from "./menu-layer2";
+import { MenuLayer3 } from "./menu-layer3";
+import { MenuLayer4 } from "./menu-layer4";
+import { RemoveMenuItemWhenMove } from "./remove-menu-item-when-move";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class MenuTestScene extends TestScene {
-    runThisTest() {
-        var layer1 = new MenuLayerMainMenu();
-        var layer2 = new MenuLayer2();
-        var layer3 = new MenuLayer3();
-        var layer4 = new MenuLayer4();
-        var layer5 = new MenuBugsTest();
-        var layer6 = new RemoveMenuItemWhenMove();
+  runThisTest() {
+    var layer1 = new MenuLayerMainMenu();
+    var layer2 = new MenuLayer2();
+    var layer3 = new MenuLayer3();
+    var layer4 = new MenuLayer4();
+    var layer5 = new MenuBugsTest();
+    var layer6 = new RemoveMenuItemWhenMove();
 
-        var layer = new cc.LayerMultiplex(layer1, layer2, layer3, layer4, layer5, layer6);
-        this.addChild(layer, 0);
+    var layer = new cc.LayerMultiplex(
+      layer1,
+      layer2,
+      layer3,
+      layer4,
+      layer5,
+      layer6
+    );
+    this.addChild(layer, 0);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

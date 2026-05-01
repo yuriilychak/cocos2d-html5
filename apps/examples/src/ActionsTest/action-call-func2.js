@@ -30,14 +30,14 @@
 // ActionCallFunc2
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { SPRITE_GROSSINI_TAG } from "./actions-test-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { SPRITE_GROSSINI_TAG } from "./actions-test-constants";
 
 export class ActionCallFunc2 extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
   onEnter() {
     //----start26----onEnter
@@ -76,5 +76,4 @@ export class ActionCallFunc2 extends ActionsDemo {
     ret.push(this.getChildByTag(SPRITE_GROSSINI_TAG));
     return JSON.stringify(ret);
   }
-
 }

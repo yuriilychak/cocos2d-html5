@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ActionsDemo } from "./actions-demo.js";
-import { CustomMoveBy } from "./custom-move-by.js";
+import { ActionsDemo } from "./actions-demo";
+import { CustomMoveBy } from "./custom-move-by";
 
 export class ActionIssue13605 extends ActionsDemo {
   onEnter() {
@@ -63,5 +63,4 @@ export class ActionIssue13605 extends ActionsDemo {
   subtitle() {
     return "action move and back will change rand color";
   }
-
 }

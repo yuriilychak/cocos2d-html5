@@ -24,12 +24,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIListViewTest_Magnetic } from "./uilist-view-test-magnetic.js";
+import { UIListViewTest_Magnetic } from "./uilist-view-test-magnetic";
 
 export class UIListViewTest_MagneticHorizontal extends UIListViewTest_Magnetic {
-    _getListViewDirection()
-    {
-        return ccui.ScrollView.DIR_HORIZONTAL;
-    }
-
+  _getListViewDirection() {
+    return ccui.ScrollView.DIR_HORIZONTAL;
+  }
 }

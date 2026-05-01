@@ -30,14 +30,14 @@
 // Issue1305
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { ActionsDemo } from "./actions-demo";
+import { s_pathGrossini } from "../resources";
 
 export class Issue1305 extends ActionsDemo {
-    constructor() {
-        super();
-        this._spriteTemp = null;
-    }
+  constructor() {
+    super();
+    this._spriteTemp = null;
+  }
 
   onEnter() {
     //----start39----onEnter
@@ -80,5 +80,4 @@ export class Issue1305 extends ActionsDemo {
   subtitle() {
     return "In two seconds you should see a message on the console. NOT BEFORE.";
   }
-
 }

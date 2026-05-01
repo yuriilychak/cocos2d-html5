@@ -26,33 +26,36 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
-import { winSize } from "../../tests-main-constants.js";
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
+import { winSize } from "../../constants";
 
 export class S9SpriteColorOpacityTest extends S9SpriteTestDemo {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._title =
+      "Test color/opacity cascade for Scale9Sprite (red with 128 opacity)";
 
+    this.setCascadeColorEnabled(true);
+    this.setCascadeOpacityEnabled(true);
+    this.setOpacity(128);
+    this.setColor(new cc.Color(255, 0, 0));
 
-        this._title = "Test color/opacity cascade for Scale9Sprite (red with 128 opacity)";
+    var blocks = new cc.Scale9Sprite("blocks9.png");
+    blocks.x = winSize.width / 2 - 100;
+    blocks.y = winSize.height / 2;
+    this.addChild(blocks);
 
-        this.setCascadeColorEnabled(true);
-        this.setCascadeOpacityEnabled(true);
-        this.setOpacity(128);
-        this.setColor(new cc.Color(255, 0, 0));
-
-        var blocks = new cc.Scale9Sprite('blocks9.png');
-        blocks.x = winSize.width / 2 - 100;
-        blocks.y = winSize.height / 2;
-        this.addChild(blocks);
-
-        var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
-        var blocks2 = new cc.Scale9Sprite();
-        blocks2.updateWithBatchNode(batchNode, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(0, 0, 96, 96));
-        blocks2.x = winSize.width / 2 + 100;
-        blocks2.y = winSize.height / 2;
-        this.addChild(blocks2);
-    }
-
+    var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
+    var blocks2 = new cc.Scale9Sprite();
+    blocks2.updateWithBatchNode(
+      batchNode,
+      new cc.Rect(0, 0, 96, 96),
+      false,
+      new cc.Rect(0, 0, 96, 96)
+    );
+    blocks2.x = winSize.width / 2 + 100;
+    blocks2.y = winSize.height / 2;
+    this.addChild(blocks2);
+  }
 }

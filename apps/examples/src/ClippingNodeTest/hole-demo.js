@@ -25,106 +25,130 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
-import { s_hole_effect_png, s_hole_stencil_png, s_pathBlock } from "../tests_resources.js";
+import { BaseClippingNodeTest } from "./base-clipping-node-test";
+import {
+  s_hole_effect_png,
+  s_hole_stencil_png,
+  s_pathBlock
+} from "../resources";
 
 export class HoleDemo extends BaseClippingNodeTest {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
+  setup() {
+    var target = new cc.Sprite(s_pathBlock);
+    target.anchorX = 0;
+    target.anchorY = 0;
+    target.scale = 3;
 
-    setup() {
-        var target = new cc.Sprite(s_pathBlock);
-        target.anchorX = 0;
-        target.anchorY = 0;
-        target.scale = 3;
+    var scale = target.scale;
+    var stencil = new cc.DrawNode();
 
-        var scale = target.scale;
-        var stencil = new cc.DrawNode();
+    var rectangle = [
+      new cc.Point(0, 0),
+      new cc.Point(target.width * scale, 0),
+      new cc.Point(target.width * scale, target.height * scale),
+      new cc.Point(0, target.height * scale)
+    ];
+    stencil.drawPoly(
+      rectangle,
+      new cc.Color(255, 0, 0, 255),
+      0,
+      new cc.Color(255, 255, 255, 0)
+    );
 
-        var rectangle = [new cc.Point(0, 0),new cc.Point(target.width*scale, 0),
-            new cc.Point(target.width*scale, target.height*scale),
-            new cc.Point(0, target.height*scale)];
-        stencil.drawPoly(rectangle, new cc.Color(255, 0, 0, 255), 0, new cc.Color(255, 255, 255, 0));
+    this._outerClipper = new cc.ClippingNode();
+    var transform = cc.AffineTransform.makeIdentity();
+    transform = cc.AffineTransform.scale(transform, target.scale, target.scale);
 
-        this._outerClipper = new cc.ClippingNode();
-        var transform = cc.AffineTransform.makeIdentity();
-        transform = cc.AffineTransform.scale(transform, target.scale, target.scale);
+    var ocsize = cc.AffineTransform.applyToSize(
+      new cc.Size(target.width, target.height),
+      transform
+    );
+    this._outerClipper.width = ocsize.width;
+    this._outerClipper.height = ocsize.height;
+    this._outerClipper.anchorX = 0.5;
+    this._outerClipper.anchorY = 0.5;
+    this._outerClipper.x = this.width * 0.5;
+    this._outerClipper.y = this.height * 0.5;
+    this._outerClipper.runAction(new cc.RotateBy(1, 45).repeatForever());
 
-	    var ocsize = cc.AffineTransform.applyToSize(new cc.Size(target.width, target.height), transform);
-        this._outerClipper.width = ocsize.width;
-	    this._outerClipper.height = ocsize.height;
-        this._outerClipper.anchorX = 0.5;
-        this._outerClipper.anchorY = 0.5;
-        this._outerClipper.x = this.width * 0.5;
-	    this._outerClipper.y = this.height * 0.5;
-        this._outerClipper.runAction(new cc.RotateBy(1, 45).repeatForever());
+    this._outerClipper.stencil = stencil;
 
-        this._outerClipper.stencil = stencil;
+    var holesClipper = new cc.ClippingNode();
+    holesClipper.inverted = true;
+    holesClipper.alphaThreshold = 0.05;
 
-        var holesClipper = new cc.ClippingNode();
-        holesClipper.inverted = true;
-        holesClipper.alphaThreshold = 0.05;
+    holesClipper.addChild(target);
 
-        holesClipper.addChild(target);
+    this._holes = new cc.Node();
 
-        this._holes = new cc.Node();
+    holesClipper.addChild(this._holes);
 
-        holesClipper.addChild(this._holes);
+    this._holesStencil = new cc.Node();
 
-        this._holesStencil = new cc.Node();
+    holesClipper.stencil = this._holesStencil;
+    this._outerClipper.addChild(holesClipper);
+    this.addChild(this._outerClipper);
 
-        holesClipper.stencil = this._holesStencil;
-        this._outerClipper.addChild(holesClipper);
-        this.addChild(this._outerClipper);
+    cc.eventManager.addListener(
+      cc.EventListener.create({
+        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        onTouchesBegan: function (touches, event) {
+          var target = event.getCurrentTarget();
+          var touch = touches[0];
+          var point = target._outerClipper.convertToNodeSpace(
+            touch.getLocation()
+          );
+          var rect = new cc.Rect(
+            0,
+            0,
+            target._outerClipper.width,
+            target._outerClipper.height
+          );
+          if (!cc.Rect.containsPoint(rect, point)) return;
+          target.pokeHoleAtPoint(point);
+        }
+      }),
+      this
+    );
+  }
 
-        cc.eventManager.addListener(cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-            onTouchesBegan:function (touches, event) {
-                var target = event.getCurrentTarget();
-                var touch = touches[0];
-                var point = target._outerClipper.convertToNodeSpace(touch.getLocation());
-                var rect = new cc.Rect(0, 0, target._outerClipper.width, target._outerClipper.height);
-                if (!cc.Rect.containsPoint(rect,point))
-                    return;
-                target.pokeHoleAtPoint(point);
-            }
-        }), this);
-    }
+  title() {
+    return "Hole Demo";
+  }
 
-    title() {
-        return "Hole Demo";
-    }
+  subtitle() {
+    return "Touch/click to poke holes";
+  }
 
-    subtitle() {
-        return "Touch/click to poke holes";
-    }
+  pokeHoleAtPoint(point) {
+    var scale = Math.random() * 0.2 + 0.9;
+    var rotation = Math.random() * 360;
 
-    pokeHoleAtPoint(point) {
-        var scale = Math.random() * 0.2 + 0.9;
-        var rotation = Math.random() * 360;
+    var hole = new cc.Sprite(s_hole_effect_png);
+    hole.attr({
+      x: point.x,
+      y: point.y,
+      rotation: rotation,
+      scale: scale
+    });
 
-        var hole = new cc.Sprite(s_hole_effect_png);
-        hole.attr({
-	        x: point.x,
-	        y: point.y,
-	        rotation: rotation,
-	        scale: scale
-        });
+    this._holes.addChild(hole);
 
-        this._holes.addChild(hole);
+    var holeStencil = new cc.Sprite(s_hole_stencil_png);
+    holeStencil.attr({
+      x: point.x,
+      y: point.y,
+      rotation: rotation,
+      scale: scale
+    });
 
-        var holeStencil = new cc.Sprite(s_hole_stencil_png);
-        holeStencil.attr({
-	        x: point.x,
-	        y: point.y,
-	        rotation: rotation,
-	        scale: scale
-        });
-
-        this._holesStencil.addChild(holeStencil);
-        this._outerClipper.runAction(cc.sequence(new cc.ScaleBy(0.05, 0.95), new cc.ScaleTo(0.125, 1)));
-    }
-
+    this._holesStencil.addChild(holeStencil);
+    this._outerClipper.runAction(
+      cc.sequence(new cc.ScaleBy(0.05, 0.95), new cc.ScaleTo(0.125, 1))
+    );
+  }
 }

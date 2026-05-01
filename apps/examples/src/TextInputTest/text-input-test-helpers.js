@@ -25,49 +25,32 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TextFieldTTFActionTest } from "./text-field-ttfaction-test.js";
-import { TextFieldTTFDefaultTest } from "./text-field-ttfdefault-test.js";
-import { sceneIdx , _setsceneIdx} from "./text-input-test-constants.js";
-
-;
-
-;
-
-;
-
-;
-
-;
+import { TextFieldTTFActionTest } from "./text-field-ttfaction-test";
+import { TextFieldTTFDefaultTest } from "./text-field-ttfdefault-test";
+import { sceneIdx, _setsceneIdx } from "./text-input-test-constants";
 
 //
 // Flow control
 //
 export var arrayOfTextInputTest = [
-    TextFieldTTFDefaultTest,
-    TextFieldTTFActionTest
+  TextFieldTTFDefaultTest,
+  TextFieldTTFActionTest
 ];
 
 export function nextTextInputTest() {
-    _setsceneIdx(sceneIdx + 1);
-    _setsceneIdx(sceneIdx % arrayOfTextInputTest.length);
+  _setsceneIdx(sceneIdx + 1);
+  _setsceneIdx(sceneIdx % arrayOfTextInputTest.length);
 
-    return new arrayOfTextInputTest[sceneIdx]();
+  return new arrayOfTextInputTest[sceneIdx]();
 }
-
-;
 
 export function previousTextInputTest() {
-    _setsceneIdx(sceneIdx - 1);
-    if (sceneIdx < 0)
-        _setsceneIdx(sceneIdx + (arrayOfTextInputTest.length));
+  _setsceneIdx(sceneIdx - 1);
+  if (sceneIdx < 0) _setsceneIdx(sceneIdx + arrayOfTextInputTest.length);
 
-    return new arrayOfTextInputTest[sceneIdx]();
+  return new arrayOfTextInputTest[sceneIdx]();
 }
-
-;
 
 export function restartTextInputTest() {
-    return new arrayOfTextInputTest[sceneIdx]();
+  return new arrayOfTextInputTest[sceneIdx]();
 }
-
-;

@@ -28,76 +28,101 @@
 /**
  @brief    TextInputTest for retain prev, reset, next, main menu buttons.
  */
-import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../tests_resources.js";
-import { nextTextInputTest, previousTextInputTest, restartTextInputTest } from "./text-input-test-helpers.js";
-import { TextInputTestScene } from "./text-input-test-scene.js";
+import {
+  s_pathB1,
+  s_pathB2,
+  s_pathF1,
+  s_pathF2,
+  s_pathR1,
+  s_pathR2
+} from "../resources";
+import {
+  nextTextInputTest,
+  previousTextInputTest,
+  restartTextInputTest
+} from "./text-input-test-helpers";
+import { TextInputTestScene } from "./text-input-test-scene";
 
 export class TextInputTest extends cc.Layer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.notificationLayer = null;
-        this.init();
+    this.notificationLayer = null;
+    this.init();
+  }
+
+  restartCallback(sender) {
+    var scene = new TextInputTestScene();
+    scene.addChild(restartTextInputTest());
+    cc.director.runScene(scene);
+  }
+  nextCallback(sender) {
+    var scene = new TextInputTestScene();
+    scene.addChild(nextTextInputTest());
+    cc.director.runScene(scene);
+  }
+  backCallback(sender) {
+    var scene = new TextInputTestScene();
+    scene.addChild(previousTextInputTest());
+    cc.director.runScene(scene);
+  }
+
+  title() {
+    return "text input test";
+  }
+
+  addKeyboardNotificationLayer(layer) {
+    this.notificationLayer = layer;
+    this.addChild(layer);
+  }
+
+  onEnter() {
+    super.onEnter();
+
+    var winSize = cc.director.getWinSize();
+
+    var label = new cc.LabelTTF(this.title(), "Arial", 24);
+    this.addChild(label);
+    label.x = winSize.width / 2;
+    label.y = winSize.height - 50;
+
+    var subTitle = this.subtitle();
+    if (subTitle && subTitle !== "") {
+      var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
+      this.addChild(l, 1);
+      l.x = winSize.width / 2;
+      l.y = winSize.height - 80;
     }
 
-    restartCallback(sender) {
-        var scene = new TextInputTestScene();
-        scene.addChild(restartTextInputTest());
-        cc.director.runScene(scene);
-    }
-    nextCallback(sender) {
-        var scene = new TextInputTestScene();
-        scene.addChild(nextTextInputTest());
-        cc.director.runScene(scene);
-    }
-    backCallback(sender) {
-        var scene = new TextInputTestScene();
-        scene.addChild(previousTextInputTest());
-        cc.director.runScene(scene);
-    }
+    var item1 = new cc.MenuItemImage(
+      s_pathB1,
+      s_pathB2,
+      this.backCallback,
+      this
+    );
+    var item2 = new cc.MenuItemImage(
+      s_pathR1,
+      s_pathR2,
+      this.restartCallback,
+      this
+    );
+    var item3 = new cc.MenuItemImage(
+      s_pathF1,
+      s_pathF2,
+      this.nextCallback,
+      this
+    );
 
-    title() {
-        return "text input test";
-    }
+    var menu = new cc.Menu(item1, item2, item3);
+    menu.x = 0;
+    menu.y = 0;
+    item1.x = winSize.width / 2 - 100;
+    item1.y = 30;
+    item2.x = winSize.width / 2;
+    item2.y = 30;
+    item3.x = winSize.width / 2 + 100;
+    item3.y = 30;
 
-    addKeyboardNotificationLayer(layer) {
-        this.notificationLayer = layer;
-        this.addChild(layer);
-    }
-
-    onEnter() {
-        super.onEnter();
-
-        var winSize = cc.director.getWinSize();
-
-        var label = new cc.LabelTTF(this.title(), "Arial", 24);
-        this.addChild(label);
-        label.x = winSize.width / 2;
-        label.y = winSize.height - 50;
-
-        var subTitle = this.subtitle();
-        if (subTitle && subTitle !== "") {
-            var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
-            this.addChild(l, 1);
-            l.x = winSize.width / 2;
-            l.y = winSize.height - 80;
-        }
-
-        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
-        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
-
-        var menu = new cc.Menu(item1, item2, item3);
-        menu.x = 0;
-        menu.y = 0;
-        item1.x = winSize.width / 2 - 100;
-        item1.y = 30;
-        item2.x = winSize.width / 2;
-        item2.y = 30;
-        item3.x = winSize.width / 2 + 100;
-        item3.y = 30;
-
-        this.addChild(menu, 1);
-    }
-
+    this.addChild(menu, 1);
+  }
 }

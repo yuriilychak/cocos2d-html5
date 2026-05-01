@@ -25,44 +25,43 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
-import { TouchableSprite } from "./touchable-sprite.js";
-import { director } from "../tests-main-constants.js";
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { TouchableSprite } from "./touchable-sprite";
+import { director } from "../constants";
 
 export class FixedPriorityTest extends EventDispatcherTestDemo {
-    onEnter(){
-        //----start1----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start1----onEnter
+    super.onEnter();
 
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
+    var origin = director.getVisibleOrigin();
+    var size = director.getVisibleSize();
 
-        var sprite1 = TouchableSprite.create(30);
-        sprite1.setTexture("Images/CyanSquare.png");
-        sprite1.x = origin.x + size.width / 2 - 80;
-        sprite1.y = origin.y + size.height / 2 + 40;
-        this.addChild(sprite1, 10);
+    var sprite1 = TouchableSprite.create(30);
+    sprite1.setTexture("Images/CyanSquare.png");
+    sprite1.x = origin.x + size.width / 2 - 80;
+    sprite1.y = origin.y + size.height / 2 + 40;
+    this.addChild(sprite1, 10);
 
-        var sprite2 = TouchableSprite.create(20);
-        sprite2.setTexture("Images/MagentaSquare.png");
-        sprite2.x = origin.x + size.width / 2;
-        sprite2.y = origin.y + size.height / 2;
-        this.addChild(sprite2, 20);
+    var sprite2 = TouchableSprite.create(20);
+    sprite2.setTexture("Images/MagentaSquare.png");
+    sprite2.x = origin.x + size.width / 2;
+    sprite2.y = origin.y + size.height / 2;
+    this.addChild(sprite2, 20);
 
-        var sprite3 = TouchableSprite.create(10);
-        sprite3.setTexture("Images/YellowSquare.png");
-        sprite3.x = 0;
-        sprite3.y = 0;
-        sprite2.addChild(sprite3, 1);
-        //----end1----
-    }
+    var sprite3 = TouchableSprite.create(10);
+    sprite3.setTexture("Images/YellowSquare.png");
+    sprite3.x = 0;
+    sprite3.y = 0;
+    sprite2.addChild(sprite3, 1);
+    //----end1----
+  }
 
-    title(){
-        return "Fixed priority test";
-    }
+  title() {
+    return "Fixed priority test";
+  }
 
-    subtitle(){
-        return "Fixed Priority, Blue: 30, Red: 20, Yellow: 10\n The lower value the higher priority will be.";
-    }
-
+  subtitle() {
+    return "Fixed Priority, Blue: 30, Red: 20, Yellow: 10\n The lower value the higher priority will be.";
+  }
 }

@@ -25,75 +25,81 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BakeLayerBaseTest } from "./bake-layer-base-test.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { BakeLayerBaseTest } from "./bake-layer-base-test";
+import { s_pathGrossini } from "../resources";
 
 export class BakeLayerColorTest extends BakeLayerBaseTest {
+  title() {
+    return "Test 3. Bake Layer Gradient (Canvas only)";
+  }
 
-    title() {
-        return "Test 3. Bake Layer Gradient (Canvas only)";
+  constructor() {
+    super();
+
+    this._bakeLayer = null;
+
+    this._actionSprite = null;
+
+    var winSize = cc.winSize;
+    var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
+    var unbakeItem = new cc.MenuItemFont("unbake", this.onUnbake, this);
+    var runActionItem = new cc.MenuItemFont(
+      "run action",
+      this.onRunAction,
+      this
+    );
+    var menu = new cc.Menu(bakeItem, unbakeItem, runActionItem);
+
+    menu.alignItemsVertically();
+    menu.x = winSize.width - 70;
+    menu.y = winSize.height - 120;
+    this.addChild(menu, 10);
+
+    var rootLayer = new cc.Layer();
+    rootLayer.setPosition(20, 20);
+    this.addChild(rootLayer);
+
+    var bakeLayer = new cc.LayerGradient(
+      new cc.Color(128, 0, 128, 255),
+      new cc.Color(0, 0, 128, 255)
+    );
+    bakeLayer.setPosition(60, 80);
+    bakeLayer.setContentSize(700, 300);
+    bakeLayer.setRotation(30);
+
+    rootLayer.addChild(bakeLayer);
+
+    for (var i = 0; i < 9; i++) {
+      var sprite1 = new cc.Sprite(s_pathGrossini);
+      if (i % 2 === 0) {
+        sprite1.setPosition(20 + i * 80, 100);
+      } else {
+        sprite1.setPosition(20 + i * 80, 200);
+      }
+      if (i === 4) this._actionSprite = sprite1;
+      sprite1.rotation = 180 * Math.random();
+      bakeLayer.addChild(sprite1);
     }
 
-    constructor(){
-        super();
+    this._bakeLayer = bakeLayer;
+    bakeLayer.bake();
+    bakeLayer.runAction(
+      cc.sequence(
+        new cc.MoveBy(2, new cc.Point(100, 100)),
+        new cc.MoveBy(2, new cc.Point(-100, -100))
+      )
+    );
+  }
 
+  onBake() {
+    this._bakeLayer.bake();
+  }
 
-        this._bakeLayer = null;
+  onUnbake() {
+    this._bakeLayer.unbake();
+  }
 
-
-        this._actionSprite = null;
-
-        var winSize = cc.winSize;
-        var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
-        var unbakeItem = new cc.MenuItemFont("unbake", this.onUnbake, this);
-        var runActionItem = new cc.MenuItemFont("run action", this.onRunAction, this);
-        var menu = new cc.Menu(bakeItem, unbakeItem, runActionItem);
-
-        menu.alignItemsVertically();
-        menu.x = winSize.width - 70;
-        menu.y = winSize.height - 120;
-        this.addChild(menu, 10);
-
-        var rootLayer = new cc.Layer();
-        rootLayer.setPosition(20,20);
-        this.addChild(rootLayer);
-
-
-        var bakeLayer = new cc.LayerGradient(new cc.Color(128,0, 128, 255), new cc.Color(0, 0, 128, 255));
-        bakeLayer.setPosition(60, 80);
-        bakeLayer.setContentSize(700, 300);
-        bakeLayer.setRotation(30);
-
-        rootLayer.addChild(bakeLayer);
-
-        for(var i = 0; i < 9; i++){
-            var sprite1 = new cc.Sprite(s_pathGrossini);
-            if (i % 2 === 0) {
-                sprite1.setPosition(20 + i * 80, 100);
-            } else {
-                sprite1.setPosition(20 + i * 80, 200);
-            }
-            if(i === 4)
-                this._actionSprite = sprite1;
-            sprite1.rotation = 180 * Math.random();
-            bakeLayer.addChild(sprite1);
-        }
-
-        this._bakeLayer = bakeLayer;
-        bakeLayer.bake();
-        bakeLayer.runAction(cc.sequence(new cc.MoveBy(2, new cc.Point(100,100)), new cc.MoveBy(2, new cc.Point(-100,-100))));
-    }
-
-    onBake(){
-        this._bakeLayer.bake();
-    }
-
-    onUnbake(){
-        this._bakeLayer.unbake();
-    }
-
-    onRunAction(){
-        this._actionSprite.runAction(new cc.RotateBy(2, 180));
-    }
-
+  onRunAction() {
+    this._actionSprite.runAction(new cc.RotateBy(2, 180));
+  }
 }

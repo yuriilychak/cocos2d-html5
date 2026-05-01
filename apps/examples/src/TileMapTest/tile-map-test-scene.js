@@ -25,18 +25,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { nextTileMapTest } from "./tile-map-test-helpers.js";
-import { _settileTestSceneIdx, tileTestSceneIdx } from "./tile-map-test-constants.js";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { nextTileMapTest } from "./tile-map-test-helpers";
+import {
+  _settileTestSceneIdx,
+  tileTestSceneIdx
+} from "./tile-map-test-constants";
 
 export class TileMapTestScene extends TestScene {
-    runThisTest(num) {
-        _settileTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextTileMapTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _settileTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextTileMapTest();
+    this.addChild(layer);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

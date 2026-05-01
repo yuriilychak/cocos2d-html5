@@ -25,48 +25,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { clippingNodeTestSceneIdx } from "./clipping-node-test-constants.js";
-import { arrayOfClippingNodeTest, nextClippingNodeTest, previousClippingNodeTest, restartClippingNodeTest } from "./clipping-node-test-helpers.js";
-import { ClippingNodeTestScene } from "./clipping-node-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { clippingNodeTestSceneIdx } from "./clipping-node-test-constants";
+import {
+  arrayOfClippingNodeTest,
+  nextClippingNodeTest,
+  previousClippingNodeTest,
+  restartClippingNodeTest
+} from "./clipping-node-test-helpers";
+import { ClippingNodeTestScene } from "./clipping-node-test-scene";
+import { director } from "../constants";
 
 export class BaseClippingNodeTest extends BaseTestLayer {
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+    this._title = "";
 
+    this._subtitle = "";
+    this.setup();
+  }
 
-        this._title = "";
+  onRestartCallback(sender) {
+    var s = new ClippingNodeTestScene();
+    s.addChild(restartClippingNodeTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new ClippingNodeTestScene();
+    s.addChild(nextClippingNodeTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new ClippingNodeTestScene();
+    s.addChild(previousClippingNodeTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfClippingNodeTest.length - 1 - clippingNodeTestSceneIdx;
+  }
 
-
-        this._subtitle = "";
-        this.setup();
-    }
-
-    onRestartCallback(sender) {
-        var s = new ClippingNodeTestScene();
-        s.addChild(restartClippingNodeTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new ClippingNodeTestScene();
-        s.addChild(nextClippingNodeTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new ClippingNodeTestScene();
-        s.addChild(previousClippingNodeTest());
-        director.runScene(s);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfClippingNodeTest.length-1) - clippingNodeTestSceneIdx );
-    }
-
-    getTestNumber() {
-        return clippingNodeTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return clippingNodeTestSceneIdx;
+  }
 }

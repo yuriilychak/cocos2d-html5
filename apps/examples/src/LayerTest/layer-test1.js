@@ -30,78 +30,83 @@
 // LayerTest1
 //
 //------------------------------------------------------------------
-import { LayerTest } from "./layer-test.js";
-import { director, winSize } from "../tests-main-constants.js";
+import { LayerTest } from "./layer-test";
+import { director, winSize } from "../constants";
 
 export class LayerTest1 extends LayerTest {
-    constructor() {
-        super();
-        this.pixel = {"0": 190, "1": 0, "2": 0, "3": 128};
-    }
+  constructor() {
+    super();
+    this.pixel = { 0: 190, 1: 0, 2: 0, 3: 128 };
+  }
 
-    onEnter() {
-        //----start0----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start0----onEnter
+    super.onEnter();
 
-        if( 'touches' in cc.sys.capabilities )
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-                onTouchesMoved:function (touches, event) {
-                    event.getCurrentTarget().updateSize(touches[0].getLocation());
-                }
-            }, this);
-        else if ('mouse' in cc.sys.capabilities )
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
-                onMouseMove: function(event){
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
-                        event.getCurrentTarget().updateSize(event.getLocation());
-                }
-            }, this);
+    if ("touches" in cc.sys.capabilities)
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          onTouchesMoved: function (touches, event) {
+            event.getCurrentTarget().updateSize(touches[0].getLocation());
+          }
+        },
+        this
+      );
+    else if ("mouse" in cc.sys.capabilities)
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.MOUSE,
+          onMouseMove: function (event) {
+            if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+              event.getCurrentTarget().updateSize(event.getLocation());
+          }
+        },
+        this
+      );
 
-        var s = director.getWinSize();
-        var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 128));
+    var s = director.getWinSize();
+    var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 128));
 
-        layer.ignoreAnchor = false;
-        layer.anchorX = 0.5;
-        layer.anchorY = 0.5;
-        layer.setContentSize(200, 200);
-        layer.x = s.width / 2;
-        layer.y = s.height / 2;
-        this.addChild(layer, 1, cc.TAG_LAYER);
-        //----end0----
-    }
-    title() {
-        return "ColorLayer resize (tap & move)";
-    }
+    layer.ignoreAnchor = false;
+    layer.anchorX = 0.5;
+    layer.anchorY = 0.5;
+    layer.setContentSize(200, 200);
+    layer.x = s.width / 2;
+    layer.y = s.height / 2;
+    this.addChild(layer, 1, cc.TAG_LAYER);
+    //----end0----
+  }
+  title() {
+    return "ColorLayer resize (tap & move)";
+  }
 
-    updateSize(location) {
-        //----start0----updateSize
-        var l = this.getChildByTag(cc.TAG_LAYER);
+  updateSize(location) {
+    //----start0----updateSize
+    var l = this.getChildByTag(cc.TAG_LAYER);
 
-        l.width = Math.abs(location.x - winSize.width / 2) * 2;
-	    l.height = Math.abs(location.y - winSize.height / 2) * 2;
-        //----end0----
-    }
+    l.width = Math.abs(location.x - winSize.width / 2) * 2;
+    l.height = Math.abs(location.y - winSize.height / 2) * 2;
+    //----end0----
+  }
 
-    //
-    // Automation
-    //
+  //
+  // Automation
+  //
 
-    getExpectedResult() {
+  getExpectedResult() {
+    var s = director.getWinSize();
+    var ret = { center: "yes" };
+    return JSON.stringify(ret);
+  }
 
-        var s = director.getWinSize();
-        var ret = {"center": "yes"};
-        return JSON.stringify(ret);
-    }
+  getCurrentResult() {
+    var s = director.getWinSize();
+    var ret2 = this.readPixels(s.width / 2, s.height / 2, 5, 5);
+    var ret = {
+      center: this.containsPixel(ret2, this.pixel, true, 100) ? "yes" : "no"
+    };
 
-    getCurrentResult() {
-
-        var s = director.getWinSize();
-        var ret2 =  this.readPixels(s.width/2, s.height/2, 5, 5);
-        var ret = {"center": this.containsPixel(ret2, this.pixel, true, 100) ? "yes" : "no"};
-
-        return JSON.stringify(ret);
-    }
-
+    return JSON.stringify(ret);
+  }
 }

@@ -25,10 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TAG_SPRITE1 } from "./cocos-node-test-constants.js";
-import { TestNodeDemo } from "./test-node-demo.js";
-import { s_fire, s_pathSister1 } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { TAG_SPRITE1 } from "./cocos-node-test-constants";
+import { TestNodeDemo } from "./test-node-demo";
+import { s_fire, s_pathSister1 } from "../resources";
+import { winSize } from "../constants";
 
 export class StressTest2 extends TestNodeDemo {
     constructor() {

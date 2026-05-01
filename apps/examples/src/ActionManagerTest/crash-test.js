@@ -30,58 +30,59 @@
 // Test1
 //
 //------------------------------------------------------------------
-import { NOT_CRASHED_CONST } from "./action-manager-test-constants.js";
-import { ActionManagerTest } from "./action-manager-test.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { NOT_CRASHED_CONST } from "./constants";
+import { ActionManagerTest } from "./action-manager-test";
+import { s_pathGrossini } from "../resources";
 
 export class CrashTest extends ActionManagerTest {
-    title() {
-        return "Test 1. Should not crash";
-    }
-    onEnter() {
-        //----start0----onEnter
-        super.onEnter();
+  title() {
+    return "Test 1. Should not crash";
+  }
+  onEnter() {
+    //----start0----onEnter
+    super.onEnter();
 
-        var child = new cc.Sprite(s_pathGrossini);
-        child.x = 200;
-        child.y = 200;
-        this.addChild(child, 1);
+    var child = new cc.Sprite(s_pathGrossini);
+    child.x = 200;
+    child.y = 200;
+    this.addChild(child, 1);
 
-        //Sum of all action's duration is 1.5 second.
-        child.runAction(new cc.RotateBy(1.5, 90));
-        // child.runAction(cc.sequence(
-        //     new cc.DelayTime(1.4),
-        //     new cc.FadeOut(1.1))
-        // );
+    //Sum of all action's duration is 1.5 second.
+    child.runAction(new cc.RotateBy(1.5, 90));
+    // child.runAction(cc.sequence(
+    //     new cc.DelayTime(1.4),
+    //     new cc.FadeOut(1.1))
+    // );
 
-        //After 1.5 second, self will be removed.
-        this.runAction(cc.sequence(
-           new cc.DelayTime(1.4),
-           new cc.CallFunc(this.onRemoveThis, this))
-        );
-        //----end0----
-    }
+    //After 1.5 second, self will be removed.
+    this.runAction(
+      cc.sequence(
+        new cc.DelayTime(1.4),
+        new cc.CallFunc(this.onRemoveThis, this)
+      )
+    );
+    //----end0----
+  }
 
-    onExitTransitionDidStart() {
-        this.stopAllActions();
-        super.onExitTransitionDidStart();
-    }
+  onExitTransitionDidStart() {
+    this.stopAllActions();
+    super.onExitTransitionDidStart();
+  }
 
-    onRemoveThis() {
-        //----start0----onRemoveThis
-        this.parent.removeChild(this);
-        this.onNextCallback(this);
-        //----end0----
-    }
+  onRemoveThis() {
+    //----start0----onRemoveThis
+    this.parent.removeChild(this);
+    this.onNextCallback(this);
+    //----end0----
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        return NOT_CRASHED_CONST;
-    }
-    getCurrentResult() {
-        return NOT_CRASHED_CONST;
-    }
-
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    return NOT_CRASHED_CONST;
+  }
+  getCurrentResult() {
+    return NOT_CRASHED_CONST;
+  }
 }

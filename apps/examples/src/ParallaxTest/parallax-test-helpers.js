@@ -25,51 +25,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { parallaxTestSceneIdx , _setparallaxTestSceneIdx} from "./parallax-test-constants.js";
-import { Parallax1 } from "./parallax1.js";
-import { Parallax2 } from "./parallax2.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-
-;
-
-;
+import {
+  parallaxTestSceneIdx,
+  _setparallaxTestSceneIdx
+} from "./parallax-test-constants";
+import { Parallax1 } from "./parallax1";
+import { Parallax2 } from "./parallax2";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class ParallaxTestScene extends TestScene {
-    runThisTest(num) {
-        _setparallaxTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        this.addChild(nextParallaxTest());
-        director.runScene(this);
-    }
+  runThisTest(num) {
+    _setparallaxTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    this.addChild(nextParallaxTest());
+    director.runScene(this);
+  }
+}
 
-};
-
-export var arrayOfParallaxTest = [
-    Parallax1,
-    Parallax2
-];
+export var arrayOfParallaxTest = [Parallax1, Parallax2];
 
 export function nextParallaxTest() {
-    _setparallaxTestSceneIdx(parallaxTestSceneIdx + 1);
-    _setparallaxTestSceneIdx(parallaxTestSceneIdx % arrayOfParallaxTest.length);
+  _setparallaxTestSceneIdx(parallaxTestSceneIdx + 1);
+  _setparallaxTestSceneIdx(parallaxTestSceneIdx % arrayOfParallaxTest.length);
 
-    return new arrayOfParallaxTest[parallaxTestSceneIdx]();
+  return new arrayOfParallaxTest[parallaxTestSceneIdx]();
 }
-
-;
 
 export function previousParallaxTest() {
-    _setparallaxTestSceneIdx(parallaxTestSceneIdx - 1);
-    if (parallaxTestSceneIdx < 0)
-        _setparallaxTestSceneIdx(parallaxTestSceneIdx + (arrayOfParallaxTest.length));
+  _setparallaxTestSceneIdx(parallaxTestSceneIdx - 1);
+  if (parallaxTestSceneIdx < 0)
+    _setparallaxTestSceneIdx(parallaxTestSceneIdx + arrayOfParallaxTest.length);
 
-    return new arrayOfParallaxTest[parallaxTestSceneIdx]();
+  return new arrayOfParallaxTest[parallaxTestSceneIdx]();
 }
-
-;
 
 export function restartParallaxTest() {
-    return new arrayOfParallaxTest[parallaxTestSceneIdx]();
+  return new arrayOfParallaxTest[parallaxTestSceneIdx]();
 }
-
-;

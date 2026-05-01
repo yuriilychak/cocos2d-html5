@@ -30,68 +30,78 @@
 // TileDemo
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { director } from "../tests-main-constants.js";
-import { TAG_TILE_MAP, tileTestSceneIdx } from "./tile-map-test-constants.js";
-import { arrayOfTileMapTest, nextTileMapTest, previousTileMapTest, restartTileMapTest } from "./tile-map-test-helpers.js";
-import { TileMapTestScene } from "./tile-map-test-scene.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { director } from "../constants";
+import { TAG_TILE_MAP, tileTestSceneIdx } from "./tile-map-test-constants";
+import {
+  arrayOfTileMapTest,
+  nextTileMapTest,
+  previousTileMapTest,
+  restartTileMapTest
+} from "./tile-map-test-helpers";
+import { TileMapTestScene } from "./tile-map-test-scene";
 
 export class TileDemo extends BaseTestLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-                onTouchesMoved: function (touches, event) {
-                    var touch = touches[0];
-                    var delta = touch.getDelta();
+    if ("touches" in cc.sys.capabilities) {
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          onTouchesMoved: function (touches, event) {
+            var touch = touches[0];
+            var delta = touch.getDelta();
 
-                    var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
-                    node.x += delta.x;
-                    node.y += delta.y;
-                }
-            }, this);
-        } else if ('mouse' in cc.sys.capabilities)
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
-                onMouseMove: function(event){
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT){
-                        var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
-                        node.x += event.getDeltaX();
-                        node.y += event.getDeltaY();
-                    }
-                }
-            }, this);
-    }
-    title() {
-        return "No title";
-    }
-    subtitle() {
-        return "drag the screen";
-    }
+            var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
+            node.x += delta.x;
+            node.y += delta.y;
+          }
+        },
+        this
+      );
+    } else if ("mouse" in cc.sys.capabilities)
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.MOUSE,
+          onMouseMove: function (event) {
+            if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
+              var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
+              node.x += event.getDeltaX();
+              node.y += event.getDeltaY();
+            }
+          }
+        },
+        this
+      );
+  }
+  title() {
+    return "No title";
+  }
+  subtitle() {
+    return "drag the screen";
+  }
 
-    onRestartCallback(sender) {
-        var s = new TileMapTestScene();
-        s.addChild(restartTileMapTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new TileMapTestScene();
-        s.addChild(nextTileMapTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new TileMapTestScene();
-        s.addChild(previousTileMapTest());
-        director.runScene(s);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfTileMapTest.length - 1) - tileTestSceneIdx );
-    }
-    getTestNumber() {
-        return tileTestSceneIdx;
-    }
-
+  onRestartCallback(sender) {
+    var s = new TileMapTestScene();
+    s.addChild(restartTileMapTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new TileMapTestScene();
+    s.addChild(nextTileMapTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new TileMapTestScene();
+    s.addChild(previousTileMapTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfTileMapTest.length - 1 - tileTestSceneIdx;
+  }
+  getTestNumber() {
+    return tileTestSceneIdx;
+  }
 }

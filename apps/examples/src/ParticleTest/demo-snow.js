@@ -25,46 +25,45 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_snow } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_snow } from "../resources";
 
 export class DemoSnow extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new cc.ParticleSnow();
-        this._background.addChild(this._emitter, 10);
+    this._emitter = new cc.ParticleSnow();
+    this._background.addChild(this._emitter, 10);
 
-        this._emitter.life = 3;
-        this._emitter.lifeVar = 1;
+    this._emitter.life = 3;
+    this._emitter.lifeVar = 1;
 
-        // gravity
-        this._emitter.gravity = new cc.Point(0, -10);
+    // gravity
+    this._emitter.gravity = new cc.Point(0, -10);
 
-        // speed of particles
-        this._emitter.speed = 130;
-        this._emitter.speedVar = 30;
+    // speed of particles
+    this._emitter.speed = 130;
+    this._emitter.speedVar = 30;
 
+    var startColor = this._emitter.startColor;
+    startColor.r = 230;
+    startColor.g = 230;
+    startColor.b = 230;
+    this._emitter.startColor = startColor;
 
-        var startColor = this._emitter.startColor;
-        startColor.r = 230;
-        startColor.g = 230;
-        startColor.b = 230;
-        this._emitter.startColor = startColor;
+    var startColorVar = this._emitter.startColorVar;
+    startColorVar.b = 26;
+    this._emitter.startColorVar = startColorVar;
 
-        var startColorVar = this._emitter.startColorVar;
-        startColorVar.b = 26;
-        this._emitter.startColorVar = startColorVar;
+    this._emitter.emissionRate =
+      this._emitter.totalParticles / this._emitter.life;
 
-        this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;
+    this._emitter.texture = cc.textureCache.addImage(s_snow);
+    this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
 
-        this._emitter.texture = cc.textureCache.addImage(s_snow);
-        this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
-
-        this.setEmitterPosition();
-    }
-    title() {
-        return "ParticleSnow";
-    }
-
+    this.setEmitterPosition();
+  }
+  title() {
+    return "ParticleSnow";
+  }
 }

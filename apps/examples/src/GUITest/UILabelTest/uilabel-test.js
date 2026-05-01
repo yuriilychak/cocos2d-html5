@@ -24,28 +24,27 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UILabelTest extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("Label");
+  init() {
+    if (super.init()) {
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("Label");
 
-            // Create the label
-            var text = new ccui.Text();
-            text.attr({
-	            string: "Label",
-	            font: "30px AmericanTypewriter",
-	            x: this._widget.width / 2,
-	            y: this._widget.height / 2 + text.height / 4
-            });
-            this._mainNode.addChild(text);
+      // Create the label
+      var text = new ccui.Text();
+      text.attr({
+        string: "Label",
+        font: "30px AmericanTypewriter",
+        x: this._widget.width / 2,
+        y: this._widget.height / 2 + text.height / 4
+      });
+      this._mainNode.addChild(text);
 
-            return true;
-        }
-        return false;
+      return true;
     }
-
+    return false;
+  }
 }

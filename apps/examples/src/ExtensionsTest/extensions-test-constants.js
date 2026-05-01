@@ -25,12 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { runCCPoolTest } from "./CCPoolTest/ccpool-test-helpers.js";
-import { ControlSceneManager } from "./ControlExtensionTest/CCControlSceneManager.js";
-import { runEditBoxTest } from "./EditBoxTest/EditBoxTest.js";
-import { runSocketIOTest } from "./NetworkTest/SocketIOTest_simple.js";
-import { runWebSocketTest } from "./NetworkTest/WebSocketTest.js";
-import { runTableViewTest } from "./TableViewTest/table-view-test-scene-helpers.js";
+import { runCCPoolTest } from "./CCPoolTest/ccpool-test-helpers";
+import { ControlSceneManager } from "./ControlExtensionTest/CCControlSceneManager";
+import { runEditBoxTest } from "./EditBoxTest/EditBoxTest";
+import { runSocketIOTest } from "./NetworkTest/SocketIOTest_simple";
+import { runWebSocketTest } from "./NetworkTest/WebSocketTest";
+import { runTableViewTest } from "./TableViewTest/table-view-test-scene-helpers";
 
 export var LINE_SPACE = 40;
 
@@ -45,45 +45,45 @@ export var TEST_COCOSBUILDER = 2;
 export var TEST_HTTPCLIENT = 3;
 
 export var extensionsTestItemNames = [
-    {
-        itemTitle:"CCControlButtonTest",
-        testScene:function () {
-            var pManager = ControlSceneManager.getInstance();
-            var pScene = pManager.currentControlScene();
-	        cc.director.runScene(pScene);
-        }
-    },
-    {
-        itemTitle:"TableViewTest",
-        testScene:function () {
-            runTableViewTest();
-        }
-    },
-    {
-        itemTitle:"WebSocketTest",
-        testScene:function () {
-            runWebSocketTest();
-        }
-    },
-    {
-        itemTitle:"SocketIOTest",
-        testScene:function () {
-            runSocketIOTest();
-        }
-    },
-    {
-        itemTitle:"CCPoolTest",
-        testScene:function () {
-            runCCPoolTest();
-        }
+  {
+    itemTitle: "CCControlButtonTest",
+    testScene: function () {
+      var pManager = ControlSceneManager.getInstance();
+      var pScene = pManager.currentControlScene();
+      cc.director.runScene(pScene);
     }
+  },
+  {
+    itemTitle: "TableViewTest",
+    testScene: function () {
+      runTableViewTest();
+    }
+  },
+  {
+    itemTitle: "WebSocketTest",
+    testScene: function () {
+      runWebSocketTest();
+    }
+  },
+  {
+    itemTitle: "SocketIOTest",
+    testScene: function () {
+      runSocketIOTest();
+    }
+  },
+  {
+    itemTitle: "CCPoolTest",
+    testScene: function () {
+      runCCPoolTest();
+    }
+  }
 ];
 
-if (!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os){
-    extensionsTestItemNames.push({
-        itemTitle:"EditBoxTest",
-        testScene:function () {
-            runEditBoxTest();
-        }
-    });
+if (!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os) {
+  extensionsTestItemNames.push({
+    itemTitle: "EditBoxTest",
+    testScene: function () {
+      runEditBoxTest();
+    }
+  });
 }

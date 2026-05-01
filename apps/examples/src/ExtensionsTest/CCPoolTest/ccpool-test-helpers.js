@@ -27,36 +27,30 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CCPoolTest } from "./ccpool-test.js";
-import { MySprite } from "./my-sprite.js";
-
-;
+import { CCPoolTest } from "./ccpool-test";
+import { MySprite } from "./my-sprite";
 
 CCPoolTest.create = function () {
-    var retObj = new CCPoolTest();
-    if (retObj && retObj.init()) {
-        return retObj;
-    }
-    return null;
+  var retObj = new CCPoolTest();
+  if (retObj && retObj.init()) {
+    return retObj;
+  }
+  return null;
 };
 
 export function runCCPoolTest() {
-    var pScene = new cc.Scene();
-    var pLayer = CCPoolTest.create();
-    pScene.addChild(pLayer);
-    cc.director.runScene(pScene);
+  var pScene = new cc.Scene();
+  var pLayer = CCPoolTest.create();
+  pScene.addChild(pLayer);
+  cc.director.runScene(pScene);
 }
-
-;
-
-;
 
 MySprite.create = function (f1, f2, f3) {
-    return new MySprite(f1, f2, f3)
-}
+  return new MySprite(f1, f2, f3);
+};
 
 MySprite.reCreate = function (f1, f2, f3) {
-    var pool = cc.pool;
-    if (pool.hasObject(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
-    return  MySprite.create(f1, f2, f3);
-}
+  var pool = cc.pool;
+  if (pool.hasObject(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
+  return MySprite.create(f1, f2, f3);
+};

@@ -25,44 +25,41 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { spineSceneIdx, _setspineSceneIdx } from "./spine-test-constants.js";
-import { SpineTestLayerFFD } from "./spine-test-layer-ffd.js";
-import { SpineTestLayerNormal } from "./spine-test-layer-normal.js";
-import { SpineTestPerformanceLayer } from "./spine-test-performance-layer.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { spineSceneIdx, _setspineSceneIdx } from "./spine-test-constants";
+import { SpineTestLayerFFD } from "./spine-test-layer-ffd";
+import { SpineTestLayerNormal } from "./spine-test-layer-normal";
+import { SpineTestPerformanceLayer } from "./spine-test-performance-layer";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class SpineTestScene extends TestScene {
-    runThisTest() {
-        var layer = SpineTestScene.nextSpineTestLayer();
-        this.addChild(layer);
-        director.runScene(this);
-    }
+  runThisTest() {
+    var layer = SpineTestScene.nextSpineTestLayer();
+    this.addChild(layer);
+    director.runScene(this);
+  }
 
-    static nextSpineTestLayer() {
-        _setspineSceneIdx(spineSceneIdx + 1);
-        var layers = SpineTestScene.testLayers;
-        _setspineSceneIdx(spineSceneIdx % layers.length);
-        return new layers[spineSceneIdx](spineSceneIdx);
-    }
+  static nextSpineTestLayer() {
+    _setspineSceneIdx(spineSceneIdx + 1);
+    var layers = SpineTestScene.testLayers;
+    _setspineSceneIdx(spineSceneIdx % layers.length);
+    return new layers[spineSceneIdx](spineSceneIdx);
+  }
 
-    static backSpineTestLayer() {
-        _setspineSceneIdx(spineSceneIdx - 1);
-        var layers = SpineTestScene.testLayers;
-        if (spineSceneIdx < 0)
-            _setspineSceneIdx(layers.length - 1);
-        return new layers[spineSceneIdx](spineSceneIdx);
-    }
+  static backSpineTestLayer() {
+    _setspineSceneIdx(spineSceneIdx - 1);
+    var layers = SpineTestScene.testLayers;
+    if (spineSceneIdx < 0) _setspineSceneIdx(layers.length - 1);
+    return new layers[spineSceneIdx](spineSceneIdx);
+  }
 
-    static restartSpineTestLayer() {
-        return new SpineTestScene.testLayers[spineSceneIdx](spineSceneIdx);
-    }
+  static restartSpineTestLayer() {
+    return new SpineTestScene.testLayers[spineSceneIdx](spineSceneIdx);
+  }
 }
 
-SpineTestScene.testLayers = [SpineTestLayerNormal];
-
-if (cc.sys.isNative || cc.rendererConfig.isWebGL) {
-    SpineTestScene.testLayers.push(SpineTestLayerFFD);
-    SpineTestScene.testLayers.push(SpineTestPerformanceLayer);
-}
-
+SpineTestScene.testLayers = [
+  SpineTestLayerNormal,
+  SpineTestLayerFFD,
+  SpineTestPerformanceLayer
+];

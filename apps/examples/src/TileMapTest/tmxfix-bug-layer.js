@@ -26,6 +26,6 @@
  ****************************************************************************/
 
 // TMXFixBugLayer: FixBugBaseTest with TileDemo methods mixed in
-import { FixBugBaseTest } from "./fix-bug-base-test.js";
+import { FixBugBaseTest } from "./fix-bug-base-test";
 
 export class TMXFixBugLayer extends FixBugBaseTest {}

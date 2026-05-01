@@ -25,23 +25,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_fire } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_fire } from "../resources";
 
 export class DemoPause extends ParticleDemo {
-    onEnter() {
+  onEnter() {
     super.onEnter();
 
     this._emitter = new cc.ParticleSmoke();
     this._background.addChild(this._emitter, 10);
     this._emitter.texture = cc.textureCache.addImage(s_fire);
     if (this._emitter.setShapeType)
-    this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
+      this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
 
     this.setEmitterPosition();
-    }
-    title() {
+  }
+  title() {
     return "Pause Particle";
-    }
-    
+  }
 }

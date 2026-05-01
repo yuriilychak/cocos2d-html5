@@ -26,35 +26,34 @@
  ****************************************************************************/
 
 /***********************************************************/
-import { s_levelMapTga, s_tilesPng } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_levelMapTga, s_tilesPng } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TileMapTest extends TileDemo {
-    constructor() {
-        super();
-        var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
-        if ("opengl" in cc.sys.capabilities)
-            map.texture.setAntiAliasTexParameters();
+  constructor() {
+    super();
+    var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
+    if ("opengl" in cc.sys.capabilities)
+      map.texture.setAntiAliasTexParameters();
 
-        this.log("ContentSize: " + map.width + " " + map.height);
+    this.log("ContentSize: " + map.width + " " + map.height);
 
-        map.releaseMap();
+    map.releaseMap();
 
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        map.anchorX = 0;
-        map.anchorY = 0.5;
+    map.anchorX = 0;
+    map.anchorY = 0.5;
 
-        var scale = new cc.ScaleBy(4, 0.8);
-        var scaleBack = scale.reverse();
+    var scale = new cc.ScaleBy(4, 0.8);
+    var scaleBack = scale.reverse();
 
-        var seq = cc.sequence(scale, scaleBack);
+    var seq = cc.sequence(scale, scaleBack);
 
-        map.runAction(seq.repeatForever());
-    }
-    title() {
-        return "TileMapAtlas";
-    }
-
+    map.runAction(seq.repeatForever());
+  }
+  title() {
+    return "TileMapAtlas";
+  }
 }

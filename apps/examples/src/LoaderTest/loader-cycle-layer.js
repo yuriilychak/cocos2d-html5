@@ -23,117 +23,106 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { LoaderTestLayer } from "./loader-test-layer.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { LoaderTestLayer } from "./loader-test-layer";
 
 export class LoaderCycleLayer extends BaseTestLayer {
+  constructor() {
+    super();
 
-    constructor(){
-        super();
+    this._title = "Failed to load Test";
 
+    this._subtitle = "";
 
-        this._title = "Failed to load Test";
+    var winSize = cc.director.getWinSize();
 
+    var resultTTF = new cc.LabelTTF("result: unknown");
+    resultTTF.x = winSize.width / 2;
+    resultTTF.y = winSize.height / 2;
+    this.addChild(resultTTF);
 
-        this._subtitle = "";
+    var cb = function (num) {
+      if (num === 1) {
+        resultTTF.setColor(cc.Color.GREEN);
+        resultTTF.setString("result: success");
+      } else {
+        resultTTF.setColor(cc.Color.RED);
+        resultTTF.setString("result: failed");
+      }
+    };
+    this.createInfo();
+    this.regLoad();
+    this.test(cb);
+  }
 
-        var winSize = cc.director.getWinSize();
+  regLoad() {
+    cc.loader.register(["_test1"], {
+      load: function (realUrl, url, res, cb) {
+        cc.loader.cache[url] = {};
+        setTimeout(function () {
+          cb && cb(null, cc.loader.cache[url]);
+          return cc.loader.cache[url];
+        }, Math.random() * 1000);
+      }
+    });
+    cc.loader.register(["_test2"], {
+      load: function (realUrl, url, res, cb) {
+        cb && cb({}, null);
+        return null;
+      }
+    });
+  }
 
-        var resultTTF = new cc.LabelTTF("result: unknown");
-        resultTTF.x = winSize.width / 2;
-        resultTTF.y = winSize.height / 2;
-        this.addChild(resultTTF);
+  get list() {
+    return ["1._test2", "1._test1", "2._test1", "3._test1", "4._test1"];
+  }
 
-        var cb = function(num){
-            if(num === 1) {
-                resultTTF.setColor(cc.Color.GREEN);
-                resultTTF.setString("result: success");
-            } else {
-                resultTTF.setColor(cc.Color.RED);
-                resultTTF.setString("result: failed");
-            }
-        };
-        this.createInfo();
-        this.regLoad();
-        this.test(cb);
-    }
+  createInfo() {
+    var winSize = cc.director.getWinSize();
+    var info1 = new cc.LabelTTF("Load 5 files");
+    info1.x = winSize.width / 2;
+    info1.y = winSize.height / 2 + 80;
+    var info2 = new cc.LabelTTF("1 file does not exist");
+    info2.x = winSize.width / 2;
+    info2.y = winSize.height / 2 + 60;
+    var info3 = new cc.LabelTTF("The other 4 files should be loaded.");
+    info3.x = winSize.width / 2;
+    info3.y = winSize.height / 2 + 40;
 
-    regLoad(){
-        cc.loader.register(["_test1"], {
-            load: function(realUrl, url, res, cb){
-                cc.loader.cache[url] = {};
-                setTimeout(function(){
-                    cb && cb(null, cc.loader.cache[url]);
-                    return cc.loader.cache[url];
-                }, Math.random()*1000);
+    this.addChild(info1);
+    this.addChild(info2);
+    this.addChild(info3);
+  }
 
-            }
-        });
-        cc.loader.register(["_test2"], {
-            load: function(realUrl, url, res, cb){
-                cb && cb({}, null);
-                return null;
-            }
-        });
-    }
+  test(cb) {
+    this.clearRes();
+    var layer = this;
+    cc.loader.load(layer.list, function () {
+      var num = 0;
+      layer.list.forEach(function (item) {
+        if (!cc.loader.getRes(item)) {
+          num++;
+        }
+      });
+      cb(num);
+    });
+  }
 
-    get list() {
-        return [
-            "1._test2",
-            "1._test1",
-            "2._test1",
-            "3._test1",
-            "4._test1"
-        ];
-    }
+  clearRes() {
+    this.list.forEach(function (item) {
+      cc.loader.release(item);
+    });
+  }
 
-    createInfo(){
-        var winSize = cc.director.getWinSize();
-        var info1 = new cc.LabelTTF("Load 5 files");
-        info1.x = winSize.width / 2;
-        info1.y = winSize.height / 2 + 80;
-        var info2 = new cc.LabelTTF("1 file does not exist");
-        info2.x = winSize.width / 2;
-        info2.y = winSize.height / 2 + 60;
-        var info3 = new cc.LabelTTF("The other 4 files should be loaded.");
-        info3.x = winSize.width / 2;
-        info3.y = winSize.height / 2 + 40;
+  onRestartCallback() {
+    var parent = this.getParent();
+    parent.removeChild(this);
+    parent.addChild(new LoaderCycleLayer());
+  }
 
-        this.addChild(info1);
-        this.addChild(info2);
-        this.addChild(info3);
-    }
-
-    test(cb){
-        this.clearRes();
-        var layer = this;
-        cc.loader.load(layer.list, function(){
-            var num = 0;
-            layer.list.forEach(function(item){
-                if(!cc.loader.getRes(item)){
-                    num++;
-                }
-            });
-            cb(num);
-        });
-    }
-
-    clearRes(){
-        this.list.forEach(function(item){
-            cc.loader.release(item);
-        });
-    }
-
-    onRestartCallback(){
-        var parent = this.getParent();
-        parent.removeChild(this);
-        parent.addChild(new LoaderCycleLayer());
-    }
-
-    onBackCallback(){
-        var parent = this.getParent();
-        parent.removeChild(this);
-        parent.addChild(new LoaderTestLayer());
-    }
-
+  onBackCallback() {
+    var parent = this.getParent();
+    parent.removeChild(this);
+    parent.addChild(new LoaderTestLayer());
+  }
 }

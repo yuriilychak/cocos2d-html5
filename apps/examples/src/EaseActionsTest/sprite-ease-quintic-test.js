@@ -28,38 +28,46 @@
 //
 // SpriteEaseQuintic
 //
-import { EaseSpriteDemo } from "./ease-sprite-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { EaseSpriteDemo } from "./ease-sprite-demo";
+import { winSize } from "../constants";
 
 export class SpriteEaseQuinticTest extends EaseSpriteDemo {
-    onEnter(){
-        super.onEnter();
-        //----start19----onEnter
+  onEnter() {
+    super.onEnter();
+    //----start19----onEnter
 
-        var move = new cc.MoveBy(3, new cc.Point(winSize.width - 130, 0));
-        var move_back = move.reverse();
+    var move = new cc.MoveBy(3, new cc.Point(winSize.width - 130, 0));
+    var move_back = move.reverse();
 
-        var move_ease_in = move.clone().easing(cc.easeQuinticActionIn());
-        var move_ease_in_back = move_ease_in.reverse();
+    var move_ease_in = move.clone().easing(cc.easeQuinticActionIn());
+    var move_ease_in_back = move_ease_in.reverse();
 
-        var move_ease_out = move.clone().easing(cc.easeQuinticActionOut());
-        var move_ease_out_back = move_ease_out.reverse();
+    var move_ease_out = move.clone().easing(cc.easeQuinticActionOut());
+    var move_ease_out_back = move_ease_out.reverse();
 
-        var delay = new cc.DelayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
-        var seq1 = cc.sequence(move, delay, move_back, delay.clone());
-        var seq2 = cc.sequence(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
-        var seq3 = cc.sequence(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
+    var seq1 = cc.sequence(move, delay, move_back, delay.clone());
+    var seq2 = cc.sequence(
+      move_ease_in,
+      delay.clone(),
+      move_ease_in_back,
+      delay.clone()
+    );
+    var seq3 = cc.sequence(
+      move_ease_out,
+      delay.clone(),
+      move_ease_out_back,
+      delay.clone()
+    );
 
-        this._grossini.runAction( seq1.repeatForever() );
-        this._tamara.runAction( seq2.repeatForever() );
-        this._kathia.runAction( seq3.repeatForever() );
+    this._grossini.runAction(seq1.repeatForever());
+    this._tamara.runAction(seq2.repeatForever());
+    this._kathia.runAction(seq3.repeatForever());
 
-
-        //----end19----
-    }
-    title(){
-        return "SpriteEaseQuintic action";
-    }
-
+    //----end19----
+  }
+  title() {
+    return "SpriteEaseQuintic action";
+  }
 }

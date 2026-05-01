@@ -25,93 +25,97 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
-import { TAG_CLIPPERNODE, TAG_CONTENTNODE } from "./clipping-node-test-constants.js";
-import { s_back2 } from "../tests_resources.js";
+import { BaseClippingNodeTest } from "./base-clipping-node-test";
+import {
+  TAG_CLIPPERNODE,
+  TAG_CONTENTNODE
+} from "./clipping-node-test-constants";
+import { s_back2 } from "../resources";
 
 export class ScrollViewDemo extends BaseClippingNodeTest {
-    constructor() {
-        super();
-        this._scrolling = false;
-        this._lastPoint = null;
-    }
+  constructor() {
+    super();
+    this._scrolling = false;
+    this._lastPoint = null;
+  }
 
+  title() {
+    return "Scroll View Demo";
+  }
 
-    title() {
-        return "Scroll View Demo";
-    }
+  subtitle() {
+    return "Move/drag to scroll the content";
+  }
 
-    subtitle() {
-        return "Move/drag to scroll the content";
-    }
+  setup() {
+    var clipper = new cc.ClippingNode();
+    clipper.tag = TAG_CLIPPERNODE;
+    clipper.width = 200;
+    clipper.height = 200;
+    clipper.anchorX = 0.5;
+    clipper.anchorY = 0.5;
+    clipper.x = this.width / 2;
+    clipper.y = this.height / 2;
+    clipper.runAction(new cc.RotateBy(1, 45).repeatForever());
+    this.addChild(clipper);
 
-    setup() {
-        var clipper = new cc.ClippingNode();
-        clipper.tag = TAG_CLIPPERNODE;
-        clipper.width = 200;
-	    clipper.height = 200;
-        clipper.anchorX = 0.5;
-        clipper.anchorY = 0.5;
-        clipper.x = this.width / 2;
-        clipper.y = this.height / 2;
-        clipper.runAction(new cc.RotateBy(1, 45).repeatForever());
-        this.addChild(clipper);
+    var stencil = new cc.DrawNode();
+    var rectangle = [
+      new cc.Point(0, 0),
+      new cc.Point(clipper.width, 0),
+      new cc.Point(clipper.width, clipper.height),
+      new cc.Point(0, clipper.height)
+    ];
 
-        var stencil = new cc.DrawNode();
-        var rectangle = [new cc.Point(0, 0),new cc.Point(clipper.width, 0),
-            new cc.Point(clipper.width, clipper.height),
-            new cc.Point(0, clipper.height)];
+    var white = new cc.Color(255, 255, 255, 255);
+    stencil.drawPoly(rectangle, white, 1, white);
+    clipper.stencil = stencil;
 
-        var white = new cc.Color(255, 255, 255, 255);
-        stencil.drawPoly(rectangle, white, 1, white);
-        clipper.stencil = stencil;
+    var content = new cc.Sprite(s_back2);
+    content.tag = TAG_CONTENTNODE;
+    content.anchorX = 0.5;
+    content.anchorY = 0.5;
+    content.x = clipper.width / 2;
+    content.y = clipper.height / 2;
+    clipper.addChild(content);
 
-        var content = new cc.Sprite(s_back2);
-        content.tag = TAG_CONTENTNODE;
-        content.anchorX = 0.5;
-        content.anchorY = 0.5;
-        content.x = clipper.width / 2;
-	    content.y = clipper.height / 2;
-        clipper.addChild(content);
+    this._scrolling = false;
+    cc.eventManager.addListener(
+      cc.EventListener.create({
+        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        onTouchesBegan: function (touches, event) {
+          if (!touches || touches.length == 0) return;
+          var target = event.getCurrentTarget();
 
-        this._scrolling = false;
-        cc.eventManager.addListener(cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-            onTouchesBegan: function (touches, event) {
-                if (!touches || touches.length == 0)
-                    return;
-	            var target = event.getCurrentTarget();
+          var touch = touches[0];
+          var clipper = target.getChildByTag(TAG_CLIPPERNODE);
+          var point = clipper.convertToNodeSpace(touch.getLocation());
+          var rect = new cc.Rect(0, 0, clipper.width, clipper.height);
+          target._scrolling = cc.Rect.containsPoint(rect, point);
+          target._lastPoint = point;
+        },
 
-                var touch = touches[0];
-                var clipper = target.getChildByTag(TAG_CLIPPERNODE);
-                var point = clipper.convertToNodeSpace(touch.getLocation());
-                var rect = new cc.Rect(0, 0, clipper.width, clipper.height);
-                target._scrolling = cc.Rect.containsPoint(rect, point);
-                target._lastPoint = point;
-            },
+        onTouchesMoved: function (touches, event) {
+          var target = event.getCurrentTarget();
+          if (!target._scrolling) return;
 
-            onTouchesMoved: function (touches, event) {
-                var target = event.getCurrentTarget();
-                if (!target._scrolling)
-                    return;
+          if (!touches || touches.length == 0) return;
+          var touch = touches[0];
+          var clipper = target.getChildByTag(TAG_CLIPPERNODE);
+          var point = clipper.convertToNodeSpace(touch.getLocation());
+          var diff = cc.Point.sub(point, target._lastPoint);
+          var content = clipper.getChildByTag(TAG_CONTENTNODE);
+          content.setPosition(cc.Point.add(content.getPosition(), diff));
+          target._lastPoint = point;
+        },
 
-                if (!touches || touches.length == 0)
-                    return;
-                var touch = touches[0];
-                var clipper = target.getChildByTag(TAG_CLIPPERNODE);
-                var point = clipper.convertToNodeSpace(touch.getLocation());
-                var diff = cc.Point.sub(point, target._lastPoint);
-                var content = clipper.getChildByTag(TAG_CONTENTNODE);
-                content.setPosition(cc.Point.add(content.getPosition(), diff));
-                target._lastPoint = point;
-            },
-
-            onTouchesEnded: function (touches, event) {
-                var target = event.getCurrentTarget();
-                if (!target._scrolling) return;
-                target._scrolling = false;
-            }
-        }), this);
-    }
-
+        onTouchesEnded: function (touches, event) {
+          var target = event.getCurrentTarget();
+          if (!target._scrolling) return;
+          target._scrolling = false;
+        }
+      }),
+      this
+    );
+  }
 }

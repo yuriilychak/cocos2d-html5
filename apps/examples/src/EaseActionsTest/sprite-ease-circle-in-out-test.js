@@ -28,34 +28,38 @@
 //
 // SpriteEaseCircleInOut
 //
-import { EaseSpriteDemo } from "./ease-sprite-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { EaseSpriteDemo } from "./ease-sprite-demo";
+import { winSize } from "../constants";
 
 export class SpriteEaseCircleInOutTest extends EaseSpriteDemo {
-    onEnter(){
-        super.onEnter();
-        //----start22----onEnter
+  onEnter() {
+    super.onEnter();
+    //----start22----onEnter
 
-        var move = new cc.MoveBy(3, new cc.Point(winSize.width - 130, 0));
-        var move_back = move.reverse();
+    var move = new cc.MoveBy(3, new cc.Point(winSize.width - 130, 0));
+    var move_back = move.reverse();
 
-        var move_ease = move.clone().easing(cc.easeCircleActionInOut());
-        var move_ease_back = move_ease.reverse();
+    var move_ease = move.clone().easing(cc.easeCircleActionInOut());
+    var move_ease_back = move_ease.reverse();
 
-        var delay = new cc.DelayTime(0.25);
+    var delay = new cc.DelayTime(0.25);
 
-        var seq1 = cc.sequence(move, delay, move_back, delay.clone());
-        var seq2 = cc.sequence(move_ease, delay.clone(), move_ease_back, delay.clone());
+    var seq1 = cc.sequence(move, delay, move_back, delay.clone());
+    var seq2 = cc.sequence(
+      move_ease,
+      delay.clone(),
+      move_ease_back,
+      delay.clone()
+    );
 
-        this.positionForTwo();
+    this.positionForTwo();
 
-        this._grossini.runAction( seq1.repeatForever() );
-        this._tamara.runAction( seq2.repeatForever() );
+    this._grossini.runAction(seq1.repeatForever());
+    this._tamara.runAction(seq2.repeatForever());
 
-        //----end22----
-    }
-    title(){
-        return "SpriteEaseCircleInOut action";
-    }
-
+    //----end22----
+  }
+  title() {
+    return "SpriteEaseCircleInOut action";
+  }
 }

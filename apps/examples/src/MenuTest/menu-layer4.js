@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_bitmapFontTest3_fnt } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { s_bitmapFontTest3_fnt } from "../resources";
+import { director } from "../constants";
 
 export class MenuLayer4 extends cc.Layer {
     constructor() {

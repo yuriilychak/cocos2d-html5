@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_fire, s_pathGrossini } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { s_fire, s_pathGrossini } from "../resources";
+import { director } from "../constants";
 
 export class IntervalLayer extends cc.LayerGradient {
 

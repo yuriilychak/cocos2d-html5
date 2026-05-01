@@ -30,16 +30,15 @@
 //	ActionSequence
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionSequence extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = cc.sequence( a1, a2, a3,..., aN);";
-        this.testDuration = 3.1;
-    }
-
+  constructor() {
+    super();
+    this._code = "a = cc.sequence( a1, a2, a3,..., aN);";
+    this.testDuration = 3.1;
+  }
 
   onEnter() {
     //----start16----onEnter
@@ -70,5 +69,4 @@ export class ActionSequence extends ActionsDemo {
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }
-
 }

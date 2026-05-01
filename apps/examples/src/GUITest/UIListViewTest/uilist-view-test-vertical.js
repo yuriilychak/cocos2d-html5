@@ -24,157 +24,179 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIListViewTest_Vertical extends UIMainLayer {
-    constructor() {
-        super();
-        this._spawnCount = 8;
-        this._totalCount = 100;
-        this._bufferZone = 50;
-        this._updateInterval = 0.01;
-        this._updateTimer = 0;
-        this._lastContentPosY = 0;
-        this._reuseItemOffset = 0;
-        this._initializeListSize = false;
-    }
+  constructor() {
+    super();
+    this._spawnCount = 8;
+    this._totalCount = 100;
+    this._bufferZone = 50;
+    this._updateInterval = 0.01;
+    this._updateTimer = 0;
+    this._lastContentPosY = 0;
+    this._reuseItemOffset = 0;
+    this._initializeListSize = false;
+  }
 
-    init() {
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
-            var background = this._widget.getChildByName("background_Panel");
-            var backgroundSize = background.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
+      var background = this._widget.getChildByName("background_Panel");
+      var backgroundSize = background.getContentSize();
 
-            this._topDisplayLabel.setString("We only create 8 item templates here.");
-            this._topDisplayLabel.x = widgetSize.width / 2.0;
-            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
+      this._topDisplayLabel.setString("We only create 8 item templates here.");
+      this._topDisplayLabel.x = widgetSize.width / 2.0;
+      this._topDisplayLabel.y =
+        widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
 
-            this._array = [];
-            for (var i = 0; i < this._totalCount; ++i) {
-                this._array.push("item_" + i);
-            }
+      this._array = [];
+      for (var i = 0; i < this._totalCount; ++i) {
+        this._array.push("item_" + i);
+      }
 
-            // Create the list view
-            this.listView = new ccui.ListView();
-            // set list view ex direction
-            this.listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
-            this.listView.setTouchEnabled(true);
-            this.listView.setBounceEnabled(true);
-            this.listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
-            this.listView.setBackGroundImageScale9Enabled(true);
-            this.listView.setContentSize(new cc.Size(240, 130));
-            this.listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - this.listView.width) / 2;
-            this.listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - this.listView.height) / 2;
-            this.listView.addEventListener(this.selectedItemEvent, this);
-            this._mainNode.addChild(this.listView);
+      // Create the list view
+      this.listView = new ccui.ListView();
+      // set list view ex direction
+      this.listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+      this.listView.setTouchEnabled(true);
+      this.listView.setBounceEnabled(true);
+      this.listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
+      this.listView.setBackGroundImageScale9Enabled(true);
+      this.listView.setContentSize(new cc.Size(240, 130));
+      this.listView.x =
+        (widgetSize.width - backgroundSize.width) / 2 +
+        (backgroundSize.width - this.listView.width) / 2;
+      this.listView.y =
+        (widgetSize.height - backgroundSize.height) / 2 +
+        (backgroundSize.height - this.listView.height) / 2;
+      this.listView.addEventListener(this.selectedItemEvent, this);
+      this._mainNode.addChild(this.listView);
 
-            // create model
-            var default_button = new ccui.Button();
-            default_button.setName("TextButton");
-            default_button.setTouchEnabled(true);
-            default_button.loadTextures("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png", "");
+      // create model
+      var default_button = new ccui.Button();
+      default_button.setName("TextButton");
+      default_button.setTouchEnabled(true);
+      default_button.loadTextures(
+        "ccs-res/cocosui/backtotoppressed.png",
+        "ccs-res/cocosui/backtotopnormal.png",
+        ""
+      );
 
-            var default_item = new ccui.Layout();
-            default_item.setTouchEnabled(true);
-            default_item.setContentSize(default_button.getContentSize());
-            default_item.width = this.listView.width;
-            default_button.x = default_item.width / 2;
-            default_button.y = default_item.height / 2;
-            default_item.addChild(default_button);
+      var default_item = new ccui.Layout();
+      default_item.setTouchEnabled(true);
+      default_item.setContentSize(default_button.getContentSize());
+      default_item.width = this.listView.width;
+      default_button.x = default_item.width / 2;
+      default_button.y = default_item.height / 2;
+      default_item.addChild(default_button);
 
-            // set model
-            this.listView.setItemModel(default_item);
-            // set all items layout gravity
-            this.listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
+      // set model
+      this.listView.setItemModel(default_item);
+      // set all items layout gravity
+      this.listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
 
-            for(i = 0; i < this._totalCount; ++i) {
-                if (i < this._spawnCount) {
-                    var item = default_item.clone();
-                    item.setTag(i);
-                    var btn = item.getChildByName('TextButton');
-                    btn.setTitleText(this._array[i]);
-                    this.listView.pushBackCustomItem(item);
-                }
-            }
-
-            var spacing = 4;
-            this.listView.setItemsMargin(spacing);
-            this._itemTemplateHeight = default_item.getContentSize().height;
-            this._reuseItemOffset = (this._itemTemplateHeight + spacing) * this._spawnCount;
-
-            this.scheduleUpdate();
-            return true;
+      for (i = 0; i < this._totalCount; ++i) {
+        if (i < this._spawnCount) {
+          var item = default_item.clone();
+          item.setTag(i);
+          var btn = item.getChildByName("TextButton");
+          btn.setTitleText(this._array[i]);
+          this.listView.pushBackCustomItem(item);
         }
-        return false;
-    }
+      }
 
-    onEnter() {
-        cc.Node.prototype.onEnter.call(this);
-        //we must call foreceDoLayout in onEnter method in h5.
-        this.listView.forceDoLayout();
-        var totalHeight = this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
-        this.listView.getInnerContainer().setContentSize(new cc.Size(this.listView.getInnerContainerSize().width, totalHeight));
-        this.listView.jumpToTop();
-    }
+      var spacing = 4;
+      this.listView.setItemsMargin(spacing);
+      this._itemTemplateHeight = default_item.getContentSize().height;
+      this._reuseItemOffset =
+        (this._itemTemplateHeight + spacing) * this._spawnCount;
 
-    getItemPositionYInView(item) {
-        var worldPos = item.getParent().convertToWorldSpaceAR(item.getPosition());
-        var viewPos = this.listView.convertToNodeSpaceAR(worldPos);
-        return viewPos.y;
+      this.scheduleUpdate();
+      return true;
     }
+    return false;
+  }
 
-    updateItem(itemID, templateID) {
-        var itemTemplate = this.listView.getItems()[templateID];
-        var btn = itemTemplate.getChildByName('TextButton');
-        itemTemplate.setTag(itemID);
-        btn.setTitleText(this._array[itemID]);
+  onEnter() {
+    cc.Node.prototype.onEnter.call(this);
+    //we must call foreceDoLayout in onEnter method in h5.
+    this.listView.forceDoLayout();
+    var totalHeight =
+      this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
+    this.listView
+      .getInnerContainer()
+      .setContentSize(
+        new cc.Size(this.listView.getInnerContainerSize().width, totalHeight)
+      );
+    this.listView.jumpToTop();
+  }
+
+  getItemPositionYInView(item) {
+    var worldPos = item.getParent().convertToWorldSpaceAR(item.getPosition());
+    var viewPos = this.listView.convertToNodeSpaceAR(worldPos);
+    return viewPos.y;
+  }
+
+  updateItem(itemID, templateID) {
+    var itemTemplate = this.listView.getItems()[templateID];
+    var btn = itemTemplate.getChildByName("TextButton");
+    itemTemplate.setTag(itemID);
+    btn.setTitleText(this._array[itemID]);
+  }
+
+  update(dt) {
+    this._updateTimer += dt;
+    if (this._updateTimer < this._updateInterval) {
+      return;
     }
+    this._updateTimer = 0;
 
-    update(dt){
-        this._updateTimer += dt;
-        if (this._updateTimer < this._updateInterval) {
-            return;
+    //here 4 is the spacing between items
+    var totalHeight =
+      this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
+    var listViewHeight = this.listView.getContentSize().height;
+    var items = this.listView.getItems();
+    var isDown =
+      this.listView.getInnerContainer().getPosition().y < this._lastContentPosY;
+
+    for (var i = 0; i < this._spawnCount && i < this._totalCount; ++i) {
+      var item = items[i];
+      var itemPos = this.getItemPositionYInView(item);
+      if (isDown) {
+        if (
+          itemPos < -this._bufferZone &&
+          item.getPosition().y + this._reuseItemOffset < totalHeight
+        ) {
+          var itemID = item.getTag() - items.length;
+          item.setPositionY(item.getPositionY() + this._reuseItemOffset);
+          this.updateItem(itemID, i);
         }
-        this._updateTimer = 0;
-
-        //here 4 is the spacing between items
-        var totalHeight = this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
-        var listViewHeight = this.listView.getContentSize().height;
-        var items = this.listView.getItems();
-        var isDown = this.listView.getInnerContainer().getPosition().y < this._lastContentPosY;
-
-        for (var i = 0; i < this._spawnCount && i < this._totalCount; ++i) {
-            var item = items[i];
-            var itemPos = this.getItemPositionYInView(item);
-            if (isDown) {
-                if (itemPos < -this._bufferZone && item.getPosition().y + this._reuseItemOffset < totalHeight) {
-                    var itemID = item.getTag() - items.length;
-                    item.setPositionY(item.getPositionY() + this._reuseItemOffset);
-                    this.updateItem(itemID, i);
-                }
-            } else {
-                if (itemPos > this._bufferZone + listViewHeight && item.getPositionY() - this._reuseItemOffset >= 0){
-                    item.setPositionY(item.getPositionY() - this._reuseItemOffset);
-                    itemID = item.getTag() + items.length;
-                    this.updateItem(itemID, i);
-                }
-            }
+      } else {
+        if (
+          itemPos > this._bufferZone + listViewHeight &&
+          item.getPositionY() - this._reuseItemOffset >= 0
+        ) {
+          item.setPositionY(item.getPositionY() - this._reuseItemOffset);
+          itemID = item.getTag() + items.length;
+          this.updateItem(itemID, i);
         }
-
-        this._lastContentPosY = this.listView.getInnerContainer().getPosition().y;
+      }
     }
 
-    selectedItemEvent(sender, type) {
-        switch (type) {
-            case ccui.ListView.EVENT_SELECTED_ITEM:
-                var listViewEx = sender;
-                var item = listViewEx.getItem(listViewEx.getCurSelectedIndex());
-                cc.log("select child index = " + item.getTag());
-                break;
+    this._lastContentPosY = this.listView.getInnerContainer().getPosition().y;
+  }
 
-            default:
-                break;
-        }
+  selectedItemEvent(sender, type) {
+    switch (type) {
+      case ccui.ListView.EVENT_SELECTED_ITEM:
+        var listViewEx = sender;
+        var item = listViewEx.getItem(listViewEx.getCurSelectedIndex());
+        cc.log("select child index = " + item.getTag());
+        break;
+
+      default:
+        break;
     }
-
+  }
 }

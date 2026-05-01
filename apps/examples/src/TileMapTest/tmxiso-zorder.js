@@ -30,74 +30,75 @@
 // TMXIsoZorder
 //
 //------------------------------------------------------------------
-import { s_pathSister1, s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_pathSister1, s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXIsoZorder extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.tamara = null;
+    this.tamara = null;
 
-        this.testDuration = 5.2;
+    this.testDuration = 5.2;
 
-        this.pixel = {"0":255, "1":255, "2":255, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-zorder.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.pixel = { 0: 255, 1: 255, 2: 255, 3: 255 };
+    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-zorder.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        map.x = -map.width / 2;
-        map.y = 0;
+    map.x = -map.width / 2;
+    map.y = 0;
 
-        this.tamara = new cc.Sprite(s_pathSister1);
-        map.addChild(this.tamara, map.children.length);
-        var mapWidth = map.getMapSize().width * map.getTileSize().width;
-        this.tamara.x = mapWidth / 2;
-        this.tamara.y = 0;
-        this.tamara.anchorX = 0.5;
-        this.tamara.anchorY = 0;
+    this.tamara = new cc.Sprite(s_pathSister1);
+    map.addChild(this.tamara, map.children.length);
+    var mapWidth = map.getMapSize().width * map.getTileSize().width;
+    this.tamara.x = mapWidth / 2;
+    this.tamara.y = 0;
+    this.tamara.anchorX = 0.5;
+    this.tamara.anchorY = 0;
 
-        var move = new cc.MoveBy(5, new cc.Point(300, 250));
-        var back = move.reverse();
-        var delay = new cc.DelayTime(0.5);
-        var seq = cc.sequence(move, delay, back);
-        this.tamara.runAction(seq.repeatForever());
+    var move = new cc.MoveBy(5, new cc.Point(300, 250));
+    var back = move.reverse();
+    var delay = new cc.DelayTime(0.5);
+    var seq = cc.sequence(move, delay, back);
+    this.tamara.runAction(seq.repeatForever());
 
-        this.schedule(this.repositionSprite);
-    }
-    title() {
-        return "TMX Iso Zorder";
-    }
-    subtitle() {
-        return "Sprite should hide behind the trees";
-    }
-    onExit() {
-        this.unschedule(this.repositionSprite);
-        super.onExit();
-    }
-    repositionSprite(dt) {
-        var map = this.getChildByTag(TAG_TILE_MAP);
+    this.schedule(this.repositionSprite);
+  }
+  title() {
+    return "TMX Iso Zorder";
+  }
+  subtitle() {
+    return "Sprite should hide behind the trees";
+  }
+  onExit() {
+    this.unschedule(this.repositionSprite);
+    super.onExit();
+  }
+  repositionSprite(dt) {
+    var map = this.getChildByTag(TAG_TILE_MAP);
 
-        // there are only 4 layers. (grass and 3 trees layers)
-        // if tamara < 48, z=4
-        // if tamara < 96, z=3
-        // if tamara < 144, z=2
+    // there are only 4 layers. (grass and 3 trees layers)
+    // if tamara < 48, z=4
+    // if tamara < 96, z=3
+    // if tamara < 144, z=2
 
-        var newZ = 4 - Math.floor((this.tamara.y / 48));
-        newZ = parseInt(Math.max(newZ, 0), 10);
-        map.reorderChild(this.tamara, newZ);
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(223, 247, 5, 5);
-        var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    var newZ = 4 - Math.floor(this.tamara.y / 48);
+    newZ = parseInt(Math.max(newZ, 0), 10);
+    map.reorderChild(this.tamara, newZ);
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(223, 247, 5, 5);
+    var ret = {
+      pixel: this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

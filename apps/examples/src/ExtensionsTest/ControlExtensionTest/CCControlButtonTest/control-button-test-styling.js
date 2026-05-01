@@ -25,79 +25,96 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene.js";
-import { s_extensions_button, s_extensions_buttonBackground, s_extensions_buttonHighlighted } from "../../../tests_resources.js";
+import { ControlScene } from "../CCControlScene";
+import {
+  s_extensions_button,
+  s_extensions_buttonBackground,
+  s_extensions_buttonHighlighted
+} from "../../../resources";
 
 export class ControlButtonTest_Styling extends ControlScene {
-    init() {
-        if (super.init()) {
-            var screenSize = cc.director.getWinSize();
+  init() {
+    if (super.init()) {
+      var screenSize = cc.director.getWinSize();
 
-            var layer = new cc.Node();
-            this.addChild(layer, 1);
+      var layer = new cc.Node();
+      this.addChild(layer, 1);
 
-            var space = 10; // px
+      var space = 10; // px
 
-            var max_w = 0, max_h = 0;
-            for (var i = 0; i < 3; i++) {
-                for (var j = 0; j < 3; j++) {
-                    // Add the buttons
-                    var button = this.standardButtonWithTitle((0 | (Math.random() * 30)) + "");
-                    button.setAdjustBackgroundImage(false);  // Tells the button that the background image must not be adjust
-                    // It'll use the prefered size of the background image
-                    button.x = button.width / 2 + (button.width + space) * i;
-                    button.y = button.height / 2 + (button.height + space) * j;
-                    layer.addChild(button);
+      var max_w = 0,
+        max_h = 0;
+      for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+          // Add the buttons
+          var button = this.standardButtonWithTitle(
+            (0 | (Math.random() * 30)) + ""
+          );
+          button.setAdjustBackgroundImage(false); // Tells the button that the background image must not be adjust
+          // It'll use the prefered size of the background image
+          button.x = button.width / 2 + (button.width + space) * i;
+          button.y = button.height / 2 + (button.height + space) * j;
+          layer.addChild(button);
 
-                    max_w = Math.max(button.width * (i + 1) + space * i, max_w);
-                    max_h = Math.max(button.height * (j + 1) + space * j, max_h);
-                }
-            }
-
-            layer.anchorX = 0.5;
-            layer.anchorY = 0.5;
-            layer.width = max_w;
-            layer.height = max_h;
-            layer.x = screenSize.width / 2.0;
-            layer.y = screenSize.height / 2.0;
-
-            // Add the black background
-            var backgroundButton = new cc.Scale9Sprite(s_extensions_buttonBackground);
-            backgroundButton.width = max_w + 14;
-            backgroundButton.height = max_h + 14;
-            backgroundButton.x = screenSize.width / 2.0;
-            backgroundButton.y = screenSize.height / 2.0;
-            this.addChild(backgroundButton);
-            return true;
+          max_w = Math.max(button.width * (i + 1) + space * i, max_w);
+          max_h = Math.max(button.height * (j + 1) + space * j, max_h);
         }
-        return false;
+      }
+
+      layer.anchorX = 0.5;
+      layer.anchorY = 0.5;
+      layer.width = max_w;
+      layer.height = max_h;
+      layer.x = screenSize.width / 2.0;
+      layer.y = screenSize.height / 2.0;
+
+      // Add the black background
+      var backgroundButton = new cc.Scale9Sprite(s_extensions_buttonBackground);
+      backgroundButton.width = max_w + 14;
+      backgroundButton.height = max_h + 14;
+      backgroundButton.x = screenSize.width / 2.0;
+      backgroundButton.y = screenSize.height / 2.0;
+      this.addChild(backgroundButton);
+      return true;
     }
-    standardButtonWithTitle(title) {
-        /** Creates and return a button with a default background and title color. */
-        var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-        backgroundButton.setPreferredSize(new cc.Size(45, 45));  // Set the prefered size
-        var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
-        backgroundHighlightedButton.setPreferredSize(new cc.Size(45, 45));  // Set the prefered size
+    return false;
+  }
+  standardButtonWithTitle(title) {
+    /** Creates and return a button with a default background and title color. */
+    var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+    backgroundButton.setPreferredSize(new cc.Size(45, 45)); // Set the prefered size
+    var backgroundHighlightedButton = new cc.Scale9Sprite(
+      s_extensions_buttonHighlighted
+    );
+    backgroundHighlightedButton.setPreferredSize(new cc.Size(45, 45)); // Set the prefered size
 
-        var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
+    var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
-        titleButton.color = new cc.Color(159, 168, 176);
+    titleButton.color = new cc.Color(159, 168, 176);
 
-        var button = new cc.ControlButton(titleButton, backgroundButton, null, null, false);
-        button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-        button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+    var button = new cc.ControlButton(
+      titleButton,
+      backgroundButton,
+      null,
+      null,
+      false
+    );
+    button.setBackgroundSpriteForState(
+      backgroundHighlightedButton,
+      cc.CONTROL_STATE_HIGHLIGHTED
+    );
+    button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
-        return button;
-    }
-
+    return button;
+  }
 }
 
 ControlButtonTest_Styling.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlButtonTest_Styling();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlButtonTest_Styling();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };

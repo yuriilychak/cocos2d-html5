@@ -24,45 +24,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UISliderTest_Scale9 extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
-            //init text
-            this._topDisplayLabel.setString("Move the slider thumb");
-            this._bottomDisplayLabel.setString("Slider scale9 render");
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
+      //init text
+      this._topDisplayLabel.setString("Move the slider thumb");
+      this._bottomDisplayLabel.setString("Slider scale9 render");
 
-            // Create the slider
-            var slider = new ccui.Slider();
-            slider.setTouchEnabled(true);
-            slider.setScale9Enabled(true);
-            slider.loadBarTexture("ccs-res/cocosui/sliderTrack2.png");
-            slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
-            slider.setCapInsets(new cc.Rect(0, 0, 0, 0));
-            slider.setContentSize(new cc.Size(250, 10));
-            slider.x = widgetSize.width / 2.0;
-            slider.y = widgetSize.height / 2.0;
-            slider.addEventListener(this.sliderEvent, this);
-            this._mainNode.addChild(slider);
+      // Create the slider
+      var slider = new ccui.Slider();
+      slider.setTouchEnabled(true);
+      slider.setScale9Enabled(true);
+      slider.loadBarTexture("ccs-res/cocosui/sliderTrack2.png");
+      slider.loadSlidBallTextures(
+        "ccs-res/cocosui/sliderThumb.png",
+        "ccs-res/cocosui/sliderThumb.png",
+        ""
+      );
+      slider.loadProgressBarTexture(
+        "ccs-res/cocosui/slider_bar_active_9patch.png"
+      );
+      slider.setCapInsets(new cc.Rect(0, 0, 0, 0));
+      slider.setContentSize(new cc.Size(250, 10));
+      slider.x = widgetSize.width / 2.0;
+      slider.y = widgetSize.height / 2.0;
+      slider.addEventListener(this.sliderEvent, this);
+      this._mainNode.addChild(slider);
 
-            return true;
-        }
-        return false;
+      return true;
     }
+    return false;
+  }
 
-    sliderEvent(sender, type) {
-        switch (type) {
-            case ccui.Slider.EVENT_PERCENT_CHANGED:
-                var slider = sender;
-                var percent = slider.getPercent();
-                this._topDisplayLabel.setString("Percent " + percent.toFixed(0));
-                break;
-            default:
-                break;
-        }
+  sliderEvent(sender, type) {
+    switch (type) {
+      case ccui.Slider.EVENT_PERCENT_CHANGED:
+        var slider = sender;
+        var percent = slider.getPercent();
+        this._topDisplayLabel.setString("Percent " + percent.toFixed(0));
+        break;
+      default:
+        break;
     }
-
+  }
 }

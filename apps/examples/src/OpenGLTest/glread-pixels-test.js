@@ -28,86 +28,88 @@
 // ReadPixelsTest
 //
 //------------------------------------------------------------------
-import { OpenGLTestLayer } from "./open-gltest-layer.js";
-import { winSize } from "../tests-main-constants.js";
+import { OpenGLTestLayer } from "./open-gltest-layer";
+import { winSize } from "../constants";
 
 export class GLReadPixelsTest extends OpenGLTestLayer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    if ("opengl" in cc.sys.capabilities) {
+      var x = winSize.width;
+      var y = winSize.height;
 
-        if( 'opengl' in cc.sys.capabilities ) {
-            var x = winSize.width;
-            var y = winSize.height;
+      var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
+      var red = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
+      var green = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
+      var white = new cc.LayerColor(new cc.Color(255, 255, 255, 255));
 
-            var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
-            var red = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
-            var green = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
-            var white = new cc.LayerColor(new cc.Color(255, 255, 255, 255));
+      blue.scale = 0.5;
+      blue.x = -x / 4;
+      blue.y = -y / 4;
 
-            blue.scale = 0.5;
-            blue.x = -x / 4;
-            blue.y = -y / 4;
+      red.scale = 0.5;
+      red.x = x / 4;
+      red.y = -y / 4;
 
-            red.scale = 0.5;
-            red.x = x / 4;
-            red.y = -y / 4;
+      green.scale = 0.5;
+      green.x = -x / 4;
+      green.y = y / 4;
 
-            green.scale = 0.5;
-            green.x = -x / 4;
-            green.y = y / 4;
+      white.scale = 0.5;
+      white.x = x / 4;
+      white.y = y / 4;
 
-            white.scale = 0.5;
-            white.x = x / 4;
-            white.y = y / 4;
-
-            this.addChild(blue,10);
-            this.addChild(white,11);
-            this.addChild(green,12);
-            this.addChild(red,13);
-        }
+      this.addChild(blue, 10);
+      this.addChild(white, 11);
+      this.addChild(green, 12);
+      this.addChild(red, 13);
     }
+  }
 
-    title() {
-        return "gl.ReadPixels()";
-    }
-    subtitle() {
-        return "Tests ReadPixels. See console";
-    }
+  title() {
+    return "gl.ReadPixels()";
+  }
+  subtitle() {
+    return "Tests ReadPixels. See console";
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        // red, green, blue, white
-        var ret = [{"0":255,"1":0,"2":0,"3":255},{"0":0,"1":255,"2":0,"3":255},{"0":0,"1":0,"2":255,"3":255},{"0":255,"1":255,"2":255,"3":255}];
-        return JSON.stringify(ret);
-    }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    // red, green, blue, white
+    var ret = [
+      { 0: 255, 1: 0, 2: 0, 3: 255 },
+      { 0: 0, 1: 255, 2: 0, 3: 255 },
+      { 0: 0, 1: 0, 2: 255, 3: 255 },
+      { 0: 255, 1: 255, 2: 255, 3: 255 }
+    ];
+    return JSON.stringify(ret);
+  }
 
-    getCurrentResult() {
-        var x = winSize.width;
-        var y = winSize.height;
+  getCurrentResult() {
+    var x = winSize.width;
+    var y = winSize.height;
 
-        var rPixels = new Uint8Array(4);
-        var gPixels = new Uint8Array(4);
-        var bPixels = new Uint8Array(4);
-        var wPixels = new Uint8Array(4);
+    var rPixels = new Uint8Array(4);
+    var gPixels = new Uint8Array(4);
+    var bPixels = new Uint8Array(4);
+    var wPixels = new Uint8Array(4);
 
-        // blue
-        gl.readPixels(0,   0,   1, 1, gl.RGBA, gl.UNSIGNED_BYTE, bPixels);
+    // blue
+    gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, bPixels);
 
-        // red
-        gl.readPixels(x-1, 0,   1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rPixels);
+    // red
+    gl.readPixels(x - 1, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rPixels);
 
-        // green
-        gl.readPixels(0,   y-1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, gPixels);
+    // green
+    gl.readPixels(0, y - 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, gPixels);
 
-        // white
-        gl.readPixels(x-1, y-1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, wPixels);
+    // white
+    gl.readPixels(x - 1, y - 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, wPixels);
 
-        var ret = [ rPixels, gPixels, bPixels, wPixels];
-        return JSON.stringify(ret);
-    }
-
-
+    var ret = [rPixels, gPixels, bPixels, wPixels];
+    return JSON.stringify(ret);
+  }
 }

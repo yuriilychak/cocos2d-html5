@@ -23,18 +23,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { nextUnitTest } from "./unit-test-helpers.js";
-import { _setunitTestSceneIdx, unitTestSceneIdx } from "./unit-test-constants.js";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { nextUnitTest } from "./unit-test-helpers";
+import { _setunitTestSceneIdx, unitTestSceneIdx } from "./unit-test-constants";
 
 export class UnitTestScene extends TestScene {
-    runThisTest(num) {
-        _setunitTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextUnitTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _setunitTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextUnitTest();
+    this.addChild(layer);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

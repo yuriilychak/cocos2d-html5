@@ -30,48 +30,52 @@
 // TMXIsoTest
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXIsoTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.pixel = {"0":0, "1":0, "2":0, "3":255};
-        var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
-        this.addChild(color, -1);
+    this.pixel = { 0: 0, 1: 0, 2: 0, 3: 255 };
+    var color = new cc.LayerColor(new cc.Color(64, 64, 64, 255));
+    this.addChild(color, -1);
 
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        // move map to the center of the screen
-        var ms = map.getMapSize();
-        var ts = map.getTileSize();
-        // map.setPosition(-ms.width * ts.width / 2, -ms.height * ts.height / 2);
-        map.runAction(new cc.MoveTo(1.0, new cc.Point(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
+    // move map to the center of the screen
+    var ms = map.getMapSize();
+    var ts = map.getTileSize();
+    // map.setPosition(-ms.width * ts.width / 2, -ms.height * ts.height / 2);
+    map.runAction(
+      new cc.MoveTo(
+        1.0,
+        new cc.Point((-ms.width * ts.width) / 2, (-ms.height * ts.height) / 2)
+      )
+    );
+  }
+  title() {
+    return "TMX Isometric test 0";
+  }
+
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = true;
+    for (var i = 0; i < 6; i++) {
+      var item = this.readPixels(438, 226, 3, 3);
+      if (!this.containsPixel(item, this.pixel, false)) {
+        ret1 = false;
+      }
     }
-    title() {
-        return "TMX Isometric test 0";
-    }
-
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = true;
-        for (var i = 0; i < 6; i++) {
-            var item = this.readPixels(438, 226, 3, 3);
-            if (!this.containsPixel(item, this.pixel, false)) {
-                ret1 = false;
-            }
-        }
-        var ret = { "pixel":ret1 == true ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    var ret = { pixel: ret1 == true ? "yes" : "no" };
+    return JSON.stringify(ret);
+  }
 }

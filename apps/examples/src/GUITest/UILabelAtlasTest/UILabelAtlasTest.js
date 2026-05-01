@@ -24,26 +24,30 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UILabelAtlasTest extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("LabelAtlas");
+  init() {
+    if (super.init()) {
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("LabelAtlas");
 
-            // Create the label atlas
-            var textAtlas = new ccui.TextAtlas();
-            textAtlas.setProperty("1234567890", "ccs-res/cocosui/labelatlas.png", 17, 22, "0");
-            textAtlas.x = this._widget.width / 2;
-	        textAtlas.y = this._widget.height / 2;
+      // Create the label atlas
+      var textAtlas = new ccui.TextAtlas();
+      textAtlas.setProperty(
+        "1234567890",
+        "ccs-res/cocosui/labelatlas.png",
+        17,
+        22,
+        "0"
+      );
+      textAtlas.x = this._widget.width / 2;
+      textAtlas.y = this._widget.height / 2;
 
-            this._mainNode.addChild(textAtlas);
-            return true;
-        }
-        return false;
+      this._mainNode.addChild(textAtlas);
+      return true;
     }
-
-};
+    return false;
+  }
+}

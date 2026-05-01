@@ -28,44 +28,42 @@
 /*
     SchedulerAutoremove
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
 
 export class SchedulerAutoremove extends SchedulerTestLayer {
-    constructor() {
-        super();
-        this._accum = 0;
-    }
+  constructor() {
+    super();
+    this._accum = 0;
+  }
 
+  onEnter() {
+    //----start0----onEnter
+    super.onEnter();
 
-    onEnter() {
-        //----start0----onEnter
-        super.onEnter();
+    this.schedule(this.onAutoremove, 0.5);
+    this.schedule(this.onTick, 0.5);
+    this._accum = 0;
+    //----end0----
+  }
+  title() {
+    return "Self-remove an scheduler";
+  }
+  subtitle() {
+    return "1 scheduler will be autoremoved in 3 seconds. See console";
+  }
 
-        this.schedule(this.onAutoremove, 0.5);
-        this.schedule(this.onTick, 0.5);
-        this._accum = 0;
-        //----end0----
-    }
-    title() {
-        return "Self-remove an scheduler";
-    }
-    subtitle() {
-        return "1 scheduler will be autoremoved in 3 seconds. See console";
-    }
+  onAutoremove(dt) {
+    //----start0----onAutoremove
+    this._accum += dt;
+    cc.log("Time: " + this._accum);
 
-    onAutoremove(dt) {
-        //----start0----onAutoremove
-        this._accum += dt;
-        cc.log("Time: " + this._accum);
-
-        if (this._accum > 3) {
-            this.unschedule(this.onAutoremove);
-            cc.log("scheduler removed");
-        }
-        //----end0----
+    if (this._accum > 3) {
+      this.unschedule(this.onAutoremove);
+      cc.log("scheduler removed");
     }
-    onTick(dt) {
-        cc.log("This scheduler should not be removed");
-    }
-
+    //----end0----
+  }
+  onTick(dt) {
+    cc.log("This scheduler should not be removed");
+  }
 }

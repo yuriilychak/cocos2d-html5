@@ -23,14 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { PathTestLayer } from "./path-test-layer.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { PathTestLayer } from "./path-test-layer";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class PathTestScene extends TestScene {
-    runThisTest() {
-        this.addChild(new PathTestLayer());
-        director.runScene(this);
-    }
-
+  runThisTest() {
+    this.addChild(new PathTestLayer());
+    director.runScene(this);
+  }
 }

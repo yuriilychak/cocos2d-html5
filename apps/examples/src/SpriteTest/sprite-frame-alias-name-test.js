@@ -30,9 +30,9 @@
 // SpriteFrameAliasNameTest
 //
 //------------------------------------------------------------------
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_grossini_aliases, s_grossini_aliasesPlist } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_grossini_aliases, s_grossini_aliasesPlist } from "../resources";
+import { winSize } from "../constants";
 
 export class SpriteFrameAliasNameTest extends SpriteTestDemo {
     constructor() {

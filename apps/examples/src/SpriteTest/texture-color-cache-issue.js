@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_tcc_issue_1, s_tcc_issue_1_plist, s_tcc_issue_2, s_tcc_issue_2_plist } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_tcc_issue_1, s_tcc_issue_1_plist, s_tcc_issue_2, s_tcc_issue_2_plist } from "../resources";
+import { winSize } from "../constants";
 
 export class TextureColorCacheIssue extends SpriteTestDemo {
 

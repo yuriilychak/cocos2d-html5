@@ -24,30 +24,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIButtonTextOnly extends UIMainLayer {
-    init(){
-        if (super.init()) {
-            // Add a label in which the button events will be displayed
-            this._topDisplayLabel.setString("Text Only Button");
-            this._bottomDisplayLabel.setString("");
+  init() {
+    if (super.init()) {
+      // Add a label in which the button events will be displayed
+      this._topDisplayLabel.setString("Text Only Button");
+      this._bottomDisplayLabel.setString("");
 
-            // Create the button
-            var button = new ccui.Button();
-            button.setNormalizedPosition(0.5, 0.5);
+      // Create the button
+      var button = new ccui.Button();
+      button.setNormalizedPosition(0.5, 0.5);
 
-            button.setTitleText("PLAY GAME");
-            cc.log("content size should be greater than 0:  width = %f, height = %f", button.width, button.height);
-            button.setZoomScale(0.3);
-            button.setPressedActionEnabled(true);
-            button.addClickEventListener(function () {
-                cc.log("clicked!");
-            });
-            this.addChild(button);
-            return true;
-        }
-        return false;
+      button.setTitleText("PLAY GAME");
+      cc.log(
+        "content size should be greater than 0:  width = %f, height = %f",
+        button.width,
+        button.height
+      );
+      button.setZoomScale(0.3);
+      button.setPressedActionEnabled(true);
+      button.addClickEventListener(function () {
+        cc.log("clicked!");
+      });
+      this.addChild(button);
+      return true;
     }
-
+    return false;
+  }
 }

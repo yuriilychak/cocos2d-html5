@@ -26,38 +26,44 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
-import { winSize } from "../../tests-main-constants.js";
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
+import { winSize } from "../../constants";
 
 export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._title =
+      "Test opacity cascade for Scale9Sprite with fade actions\n(fade to opacity 144, then fadeOut, then fadeIn)";
 
+    var colorLayer = new cc.LayerColor(new cc.Color(144, 144, 144));
+    colorLayer.setContentSize(winSize.width / 2, winSize.height / 2);
+    colorLayer.x = winSize.width / 4;
+    colorLayer.y = winSize.height / 4;
 
-        this._title = "Test opacity cascade for Scale9Sprite with fade actions\n(fade to opacity 144, then fadeOut, then fadeIn)";
+    colorLayer.setCascadeOpacityEnabled(true);
 
-        var colorLayer = new cc.LayerColor(new cc.Color(144,144,144));
-        colorLayer.setContentSize(winSize.width / 2, winSize.height / 2);
-        colorLayer.x = winSize.width / 4;
-        colorLayer.y = winSize.height / 4;
+    var blocks = new ccui.Scale9Sprite("blocks9.png");
+    blocks.x = winSize.width / 4;
+    blocks.y = winSize.height / 4;
 
-        colorLayer.setCascadeOpacityEnabled(true);
+    colorLayer.addChild(blocks);
 
-        var blocks = new ccui.Scale9Sprite('blocks9.png');
-        blocks.x = winSize.width / 4;
-        blocks.y = winSize.height / 4;
+    var fadeToAction = new cc.FadeTo(1, 144);
+    var delay = new cc.DelayTime(0.5);
+    var fadeOutAction = new cc.FadeOut(0.8);
+    var fadeInAction = new cc.FadeIn(0.8);
 
-        colorLayer.addChild(blocks);
+    colorLayer.runAction(
+      cc.sequence(
+        fadeToAction,
+        delay,
+        fadeOutAction,
+        delay.clone(),
+        fadeInAction
+      )
+    );
 
-        var fadeToAction = new cc.FadeTo(1, 144);
-        var delay = new cc.DelayTime(0.5);
-        var fadeOutAction = new cc.FadeOut(0.8);
-        var fadeInAction = new cc.FadeIn(0.8);
-
-        colorLayer.runAction(cc.sequence(fadeToAction, delay, fadeOutAction, delay.clone(), fadeInAction));
-
-        this.addChild(colorLayer);
-    }
-
+    this.addChild(colorLayer);
+  }
 }

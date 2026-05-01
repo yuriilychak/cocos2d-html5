@@ -28,10 +28,10 @@
 // ShaderMonjoriTest
 //
 //------------------------------------------------------------------
-import { OpenGLTestLayer } from "./open-gltest-layer.js";
-import { ShaderNode } from "./shader-node.js";
-import { ccbjs } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { OpenGLTestLayer } from "./open-gltest-layer";
+import { ShaderNode } from "./shader-node";
+import { ccbjs } from "../resources";
+import { winSize } from "../constants";
 
 export class ShaderMonjoriTest extends OpenGLTestLayer {
     constructor() {

@@ -30,18 +30,21 @@
 //	ActionMove
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { director, winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { director, winSize } from "../constants";
 
 export class ActionMove extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
-      get _code() { 
-        return "a =new cc.MoveBy( time, new cc.Point(x,y) );\n" + "a = new cc.MoveTo( time, new cc.Point(x,y) );";
-      }
+  get _code() {
+    return (
+      "a =new cc.MoveBy( time, new cc.Point(x,y) );\n" +
+      "a = new cc.MoveTo( time, new cc.Point(x,y) );"
+    );
+  }
 
   onEnter() {
     //----start1----onEnter
@@ -84,5 +87,4 @@ export class ActionMove extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

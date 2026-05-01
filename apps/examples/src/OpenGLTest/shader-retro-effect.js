@@ -33,9 +33,9 @@
 // The implemetation of LabelBMFont is quite defferent between html5 and native
 // That is why we use 'if (cc.sys.isNative){...}else{...}' in this test case
 // It should be fixed in the future.
-import { OpenGLTestLayer } from "./open-gltest-layer.js";
-import { ccbjs } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { OpenGLTestLayer } from "./open-gltest-layer";
+import { ccbjs } from "../resources";
+import { winSize } from "../constants";
 
 export class ShaderRetroEffect extends OpenGLTestLayer {
     constructor() {

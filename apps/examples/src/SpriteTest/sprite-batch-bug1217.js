@@ -25,82 +25,69 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_grossini_dance_atlas } from "../tests_resources.js";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_grossini_dance_atlas } from "../resources";
 
 export class SpriteBatchBug1217 extends SpriteTestDemo {
+  constructor() {
+    //----start53----ctor
+    super();
 
+    this._title = "SpriteBatch - Bug 1217";
 
-    constructor() {
-        //----start53----ctor
-        super();
+    this._subtitle = "Adding big family to spritebatch. You shall see 3 heads";
 
+    this.testDuration = 2.1;
 
+    this.pixel1 = { 0: 51, 1: 0, 2: 0, 3: 255 };
 
-        this._title = "SpriteBatch - Bug 1217";
+    this.pixel2 = { 0: 0, 1: 0, 2: 0, 3: 255 };
 
+    this.pixel3 = { 0: 0, 1: 0, 2: 51, 3: 255 };
+    var bn = new cc.SpriteBatchNode(s_grossini_dance_atlas, 15);
 
+    var s1 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
+    var s2 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
+    var s3 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
 
-        this._subtitle = "Adding big family to spritebatch. You shall see 3 heads";
+    s1.color = new cc.Color(255, 0, 0);
+    s2.color = new cc.Color(0, 255, 0);
+    s3.color = new cc.Color(0, 0, 255);
 
+    s1.x = 20;
 
+    s1.y = 200;
+    s2.x = 100;
+    s2.y = 0;
+    s3.x = 100;
+    s3.y = 0;
 
-        this.testDuration = 2.1;
+    bn.x = 0;
 
+    bn.y = 0;
 
+    //!!!!!
+    s1.addChild(s2);
+    s2.addChild(s3);
+    bn.addChild(s1);
 
-        this.pixel1 = {"0":51, "1":0, "2":0, "3":255};
-
-
-
-        this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
-
-
-
-        this.pixel3 = {"0":0, "1":0, "2":51, "3":255};
-        var bn = new cc.SpriteBatchNode(s_grossini_dance_atlas, 15);
-
-        var s1 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
-        var s2 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
-        var s3 = new cc.Sprite(bn.texture, new cc.Rect(0, 0, 57, 57));
-
-        s1.color = new cc.Color(255, 0, 0);
-        s2.color = new cc.Color(0, 255, 0);
-        s3.color = new cc.Color(0, 0, 255);
-
-        s1.x = 20;
-
-        s1.y = 200;
-        s2.x = 100;
-        s2.y = 0;
-        s3.x = 100;
-        s3.y = 0;
-
-        bn.x = 0;
-
-        bn.y = 0;
-
-        //!!!!!
-        s1.addChild(s2);
-        s2.addChild(s3);
-        bn.addChild(s1);
-
-        this.addChild(bn);
-        //----end53----
-    }
-    // Automation
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(20, 174, 3, 3);
-        var ret2 = this.readPixels(90, 145, 3, 3);
-        var ret3 = this.readPixels(163, 116, 3, 3);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no",
-            "pixel3":this.containsPixel(ret3, this.pixel3, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    this.addChild(bn);
+    //----end53----
+  }
+  // Automation
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes", pixel3: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(20, 174, 3, 3);
+    var ret2 = this.readPixels(90, 145, 3, 3);
+    var ret3 = this.readPixels(163, 116, 3, 3);
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no",
+      pixel3: this.containsPixel(ret3, this.pixel3, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

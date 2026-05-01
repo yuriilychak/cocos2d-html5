@@ -23,14 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { LoaderTestLayer } from "./loader-test-layer.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { LoaderTestLayer } from "./loader-test-layer";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class LoaderTestScene extends TestScene {
-    runThisTest() {
-        this.addChild(new LoaderTestLayer());
-        director.runScene(this);
-    }
-
+  runThisTest() {
+    this.addChild(new LoaderTestLayer());
+    director.runScene(this);
+  }
 }

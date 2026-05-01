@@ -25,206 +25,175 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CustomEventTest } from "./custom-event-test.js";
-import { DirectorEventTest } from "./director-event-test.js";
-import { FixedPriorityTest } from "./fixed-priority-test.js";
-import { GlobalZTouchTest } from "./global-ztouch-test.js";
-import { Issue4160 } from "./issue4160.js";
-import { Issue9898 } from "./issue9898.js";
-import { LabelKeyboardEventTest } from "./label-keyboard-event-test.js";
-import { eventDispatcherSceneIdx , _seteventDispatcherSceneIdx} from "./new-event-manager-test-constants.js";
-import { PauseResumeTargetTest } from "./pause-resume-target-test.js";
-import { RemoveAndRetainNodeTest } from "./remove-and-retain-node-test.js";
-import { RemoveListenerAfterAddingTest } from "./remove-listener-after-adding-test.js";
-import { RemoveListenerWhenDispatching } from "./remove-listener-when-dispatching.js";
-import { SpriteAccelerationEventTest } from "./sprite-acceleration-event-test.js";
-import { StopPropagationTest } from "./stop-propagation-test.js";
-import { TouchableSpriteTest } from "./touchable-sprite-test.js";
-import { TouchableSprite } from "./touchable-sprite.js";
+import { CustomEventTest } from "./custom-event-test";
+import { DirectorEventTest } from "./director-event-test";
+import { FixedPriorityTest } from "./fixed-priority-test";
+import { GlobalZTouchTest } from "./global-ztouch-test";
+import { Issue4160 } from "./issue4160";
+import { Issue9898 } from "./issue9898";
+import { LabelKeyboardEventTest } from "./label-keyboard-event-test";
+import {
+  eventDispatcherSceneIdx,
+  _seteventDispatcherSceneIdx
+} from "./new-event-manager-test-constants";
+import { PauseResumeTargetTest } from "./pause-resume-target-test";
+import { RemoveAndRetainNodeTest } from "./remove-and-retain-node-test";
+import { RemoveListenerAfterAddingTest } from "./remove-listener-after-adding-test";
+import { RemoveListenerWhenDispatching } from "./remove-listener-when-dispatching";
+import { SpriteAccelerationEventTest } from "./sprite-acceleration-event-test";
+import { StopPropagationTest } from "./stop-propagation-test";
+import { TouchableSpriteTest } from "./touchable-sprite-test";
+import { TouchableSprite } from "./touchable-sprite";
 
-;
-
-;
-
-TouchableSpriteTest.create = function(){
-    var test = new TouchableSpriteTest();
-    test.init();
-    return test;
+TouchableSpriteTest.create = function () {
+  var test = new TouchableSpriteTest();
+  test.init();
+  return test;
 };
 
-;
-
-TouchableSprite.create = function(priority){
-    var test = new TouchableSprite(priority);
-    test.init();
-    return test;
+TouchableSprite.create = function (priority) {
+  var test = new TouchableSprite(priority);
+  test.init();
+  return test;
 };
 
-;
-
-FixedPriorityTest.create = function(){
-    var test = new FixedPriorityTest();
-    test.init();
-    return test;
+FixedPriorityTest.create = function () {
+  var test = new FixedPriorityTest();
+  test.init();
+  return test;
 };
 
-;
-
-RemoveListenerWhenDispatching.create = function(){
-    var test = new RemoveListenerWhenDispatching();
-    test.init();
-    return test;
+RemoveListenerWhenDispatching.create = function () {
+  var test = new RemoveListenerWhenDispatching();
+  test.init();
+  return test;
 };
 
-;
-
-CustomEventTest.create = function(){
-    var test = new CustomEventTest();
-    test.init();
-    return test;
+CustomEventTest.create = function () {
+  var test = new CustomEventTest();
+  test.init();
+  return test;
 };
 
-;
-
-LabelKeyboardEventTest.create = function(){
-    var test = new LabelKeyboardEventTest();
-    test.init();
-    return test;
+LabelKeyboardEventTest.create = function () {
+  var test = new LabelKeyboardEventTest();
+  test.init();
+  return test;
 };
 
-;
-
-SpriteAccelerationEventTest._fix_pos = function(pos, min, max){
-    var ret = pos;
-     if(pos < min)
-         ret = min;
-    else if(pos > max)
-         ret = max;
-    return ret;
+SpriteAccelerationEventTest._fix_pos = function (pos, min, max) {
+  var ret = pos;
+  if (pos < min) ret = min;
+  else if (pos > max) ret = max;
+  return ret;
 };
 
-SpriteAccelerationEventTest.create = function(){
-    var test = new SpriteAccelerationEventTest();
-    test.init();
-    return test;
+SpriteAccelerationEventTest.create = function () {
+  var test = new SpriteAccelerationEventTest();
+  test.init();
+  return test;
 };
 
-;
-
-RemoveAndRetainNodeTest.create = function(){
-    var test = new RemoveAndRetainNodeTest();
-    test.init();
-    return test;
+RemoveAndRetainNodeTest.create = function () {
+  var test = new RemoveAndRetainNodeTest();
+  test.init();
+  return test;
 };
 
-;
-
-RemoveListenerAfterAddingTest.create = function(){
-    var test = new RemoveListenerAfterAddingTest();
-    test.init();
-    return test;
+RemoveListenerAfterAddingTest.create = function () {
+  var test = new RemoveListenerAfterAddingTest();
+  test.init();
+  return test;
 };
 
-;
-
-DirectorEventTest.create = function(){
-    var test = new DirectorEventTest();
-    test.init();
-    return test;
+DirectorEventTest.create = function () {
+  var test = new DirectorEventTest();
+  test.init();
+  return test;
 };
 
-;
-
-GlobalZTouchTest.create = function(){
-    var test = new GlobalZTouchTest();
-    test.init();
-    return test;
+GlobalZTouchTest.create = function () {
+  var test = new GlobalZTouchTest();
+  test.init();
+  return test;
 };
-
-;
 
 StopPropagationTest._TAG_BLUE_SPRITE = 101;
 
 StopPropagationTest._TAG_BLUE_SPRITE2 = 102;
 
-StopPropagationTest.create = function(){
-    var test = new StopPropagationTest();
-    test.init();
-    return test;
+StopPropagationTest.create = function () {
+  var test = new StopPropagationTest();
+  test.init();
+  return test;
 };
 
-;
-
-Issue4160.create = function(){
-    var test = new Issue4160();
-    test.init();
-    return test;
+Issue4160.create = function () {
+  var test = new Issue4160();
+  test.init();
+  return test;
 };
 
-;
-
-PauseResumeTargetTest.create = function(){
-    var test = new Issue4160();
-    test.init();
-    return test;
+PauseResumeTargetTest.create = function () {
+  var test = new Issue4160();
+  test.init();
+  return test;
 };
 
-;
-
-Issue9898.create = function(){
-    var test = new Issue9898();
-    test.init();
-    return test;
+Issue9898.create = function () {
+  var test = new Issue9898();
+  test.init();
+  return test;
 };
-
-;
 
 export var arrayOfEventDispatcherTest = [
-    TouchableSpriteTest,
-    FixedPriorityTest,
-    RemoveListenerWhenDispatching,
-    CustomEventTest,
-    LabelKeyboardEventTest,
-    SpriteAccelerationEventTest,
-    RemoveAndRetainNodeTest,
-    RemoveListenerAfterAddingTest,
-    DirectorEventTest,
-    //GlobalZTouchTest,
-    StopPropagationTest,
-    Issue4160,
-    PauseResumeTargetTest,
-    Issue9898
+  TouchableSpriteTest,
+  FixedPriorityTest,
+  RemoveListenerWhenDispatching,
+  CustomEventTest,
+  LabelKeyboardEventTest,
+  SpriteAccelerationEventTest,
+  RemoveAndRetainNodeTest,
+  RemoveListenerAfterAddingTest,
+  DirectorEventTest,
+  //GlobalZTouchTest,
+  StopPropagationTest,
+  Issue4160,
+  PauseResumeTargetTest,
+  Issue9898
 ];
 
 export function nextDispatcherTest() {
-    _seteventDispatcherSceneIdx(eventDispatcherSceneIdx + 1);
-    _seteventDispatcherSceneIdx(eventDispatcherSceneIdx % arrayOfEventDispatcherTest.length);
+  _seteventDispatcherSceneIdx(eventDispatcherSceneIdx + 1);
+  _seteventDispatcherSceneIdx(
+    eventDispatcherSceneIdx % arrayOfEventDispatcherTest.length
+  );
 
-    if(window.sideIndexBar){
-        _seteventDispatcherSceneIdx(window.sideIndexBar.changeTest(eventDispatcherSceneIdx, 11));
-    }
+  if (window.sideIndexBar) {
+    _seteventDispatcherSceneIdx(
+      window.sideIndexBar.changeTest(eventDispatcherSceneIdx, 11)
+    );
+  }
 
-    return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
+  return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
 }
-
-;
 
 export function previousDispatcherTest() {
-    _seteventDispatcherSceneIdx(eventDispatcherSceneIdx - 1);
-    if (eventDispatcherSceneIdx < 0)
-        _seteventDispatcherSceneIdx(eventDispatcherSceneIdx + (arrayOfEventDispatcherTest.length));
+  _seteventDispatcherSceneIdx(eventDispatcherSceneIdx - 1);
+  if (eventDispatcherSceneIdx < 0)
+    _seteventDispatcherSceneIdx(
+      eventDispatcherSceneIdx + arrayOfEventDispatcherTest.length
+    );
 
-    if(window.sideIndexBar){
-        _seteventDispatcherSceneIdx(window.sideIndexBar.changeTest(eventDispatcherSceneIdx, 11));
-    }
+  if (window.sideIndexBar) {
+    _seteventDispatcherSceneIdx(
+      window.sideIndexBar.changeTest(eventDispatcherSceneIdx, 11)
+    );
+  }
 
-    return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
+  return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
 }
-
-;
 
 export function restartDispatcherTest() {
-    return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
+  return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
 }
-
-;

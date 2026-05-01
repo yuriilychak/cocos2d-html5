@@ -25,70 +25,66 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SceneTestLayer3 } from "./scene-test-layer3.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { SceneTestLayer3 } from "./scene-test-layer3";
+import { s_pathGrossini } from "../resources";
+import { director } from "../constants";
 
 export class SceneTestLayer2 extends cc.Layer {
+  constructor() {
+    //----start0----Scene2-ctor
+    super();
 
+    this.timeCounter = 0;
+    this.init();
 
-    constructor() {
-        //----start0----Scene2-ctor
-        super();
+    this.timeCounter = 0;
 
+    var s = director.getWinSize();
 
+    var item1 = new cc.MenuItemFont("runScene", this.runScene, this);
+    var item2 = new cc.MenuItemFont(
+      "runScene w/transition",
+      this.runSceneTran,
+      this
+    );
+    var item3 = new cc.MenuItemFont("Go Back", this.onGoBack, this);
 
-        this.timeCounter = 0;
-        this.init();
+    var menu = new cc.Menu(item1, item2, item3);
+    menu.alignItemsVertically();
+    this.addChild(menu);
 
-        this.timeCounter = 0;
+    var sprite = new cc.Sprite(s_pathGrossini);
+    this.addChild(sprite);
 
-        var s = director.getWinSize();
+    sprite.x = s.width - 40;
+    sprite.y = s.height / 2;
+    var rotate = new cc.RotateBy(2, 360);
+    var repeat = rotate.repeatForever();
+    sprite.runAction(repeat);
+    //----end0----
 
-        var item1 = new cc.MenuItemFont("runScene", this.runScene, this);
-        var item2 = new cc.MenuItemFont("runScene w/transition", this.runSceneTran, this);
-        var item3 = new cc.MenuItemFont("Go Back", this.onGoBack, this);
+    //cc.schedule(this.testDealloc);
+  }
 
-        var menu = new cc.Menu(item1, item2, item3);
-        menu.alignItemsVertically();
-        this.addChild(menu);
+  testDealloc(dt) {}
 
-        var sprite = new cc.Sprite(s_pathGrossini);
-        this.addChild(sprite);
+  onGoBack(sender) {
+    director.popScene();
+  }
 
-        sprite.x = s.width - 40;
-        sprite.y = s.height / 2;
-        var rotate = new cc.RotateBy(2, 360);
-        var repeat = rotate.repeatForever();
-        sprite.runAction(repeat);
-        //----end0----
+  runScene(sender) {
+    var scene = new SceneTestScene();
+    var layer = new SceneTestLayer3();
+    scene.addChild(layer, 0);
+    director.runScene(scene);
+  }
 
-        //cc.schedule(this.testDealloc);
-    }
+  runSceneTran(sender) {
+    var scene = new SceneTestScene();
+    var layer = new SceneTestLayer3();
+    scene.addChild(layer, 0);
+    director.runScene(new cc.TransitionSlideInT(2, scene));
+  }
 
-    testDealloc(dt) {
-
-    }
-
-    onGoBack(sender) {
-        director.popScene();
-    }
-
-    runScene(sender) {
-        var scene = new SceneTestScene();
-        var layer = new SceneTestLayer3();
-        scene.addChild(layer, 0);
-        director.runScene(scene);
-
-    }
-
-    runSceneTran(sender) {
-        var scene = new SceneTestScene();
-        var layer = new SceneTestLayer3();
-        scene.addChild(layer, 0);
-        director.runScene(new cc.TransitionSlideInT(2, scene));
-    }
-
-    //CREATE_NODE(SceneTestLayer2);
-
+  //CREATE_NODE(SceneTestLayer2);
 }

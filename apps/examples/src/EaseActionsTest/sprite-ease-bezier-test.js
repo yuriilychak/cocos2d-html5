@@ -28,62 +28,69 @@
 //
 // SpriteEaseBezier action
 //
-import { EaseSpriteDemo } from "./ease-sprite-demo.js";
-import { director } from "../tests-main-constants.js";
+import { EaseSpriteDemo } from "./ease-sprite-demo";
+import { director } from "../constants";
 
 export class SpriteEaseBezierTest extends EaseSpriteDemo {
+  onEnter() {
+    super.onEnter();
+    //----start14----onEnter
 
-    onEnter(){
-        super.onEnter();
-        //----start14----onEnter
+    var size = director.getWinSize();
 
-        var size = director.getWinSize();
+    //
+    // startPosition can be any coordinate, but since the movement
+    // is relative to the Bezier curve, make it (0,0)
+    //
 
-        //
-        // startPosition can be any coordinate, but since the movement
-        // is relative to the Bezier curve, make it (0,0)
-        //
+    this._grossini.setPosition(new cc.Point(size.width / 2, size.height / 2));
+    this._tamara.setPosition(new cc.Point(size.width / 4, size.height / 2));
+    this._kathia.setPosition(
+      new cc.Point((3 * size.width) / 4, size.height / 2)
+    );
 
-        this._grossini.setPosition( new cc.Point(size.width/2, size.height/2));
-        this._tamara.setPosition( new cc.Point(size.width/4, size.height/2));
-        this._kathia.setPosition( new cc.Point(3 * size.width/4, size.height/2));
+    // sprite 1
+    var bezier = [
+      new cc.Point(0, size.height / 2),
+      new cc.Point((300 / 480) * 800, -size.height / 2),
+      new cc.Point((300 / 480) * 800, (100 / 320) * 450)
+    ];
+    var bezierForward = new cc.BezierBy(3, bezier);
+    var bezierEaseForward = bezierForward.easing(
+      cc.easeBezierAction(0.5, 0.5, 1.0, 1.0)
+    );
 
-        // sprite 1
-        var bezier = [
-            new cc.Point(0, size.height / 2),
-            new cc.Point(300 / 480 * 800, -size.height / 2),
-            new cc.Point(300 / 480 * 800, 100 / 320 * 450)
-        ];
-        var bezierForward = new cc.BezierBy(3, bezier);
-        var bezierEaseForward = bezierForward.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
+    var bezierEaseBack = bezierEaseForward.reverse();
+    var bezierEaseTo = cc
+      .sequence(bezierEaseForward, bezierEaseBack)
+      .repeatForever();
 
-        var bezierEaseBack = bezierEaseForward.reverse();
-        var bezierEaseTo = cc.sequence(bezierEaseForward, bezierEaseBack).repeatForever();
+    // sprite 2
+    this._tamara.setPosition(new cc.Point(135, 225));
+    var bezier2 = [
+      new cc.Point((100 / 480) * 800, size.height / 2),
+      new cc.Point((200 / 480) * 800, -size.height / 2),
+      new cc.Point((200 / 480) * 800, (160 / 320) * 450)
+    ];
+    var bezierTo1 = new cc.BezierTo(2, bezier2);
+    var bezierEaseTo1 = bezierTo1.easing(
+      cc.easeBezierAction(0.5, 0.5, 1.0, 1.0)
+    );
 
-        // sprite 2
-        this._tamara.setPosition(new cc.Point(135,225));
-        var bezier2 = [
-            new cc.Point(100 / 480 * 800, size.height / 2),
-            new cc.Point(200 / 480 * 800, -size.height / 2),
-            new cc.Point(200 / 480 * 800, 160 / 320 * 450)
-        ];
-        var bezierTo1 = new cc.BezierTo(2, bezier2);
-        var bezierEaseTo1 = bezierTo1.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
+    // sprite 3
+    this._kathia.setPosition(new cc.Point(667, 225));
+    var bezierTo2 = new cc.BezierTo(2, bezier2);
+    var bezierEaseTo2 = bezierTo2.easing(
+      cc.easeBezierAction(0.0, 0.5, -5.0, 1.0)
+    );
 
-        // sprite 3
-        this._kathia.setPosition(new cc.Point(667, 225));
-        var bezierTo2 = new cc.BezierTo(2, bezier2);
-        var bezierEaseTo2 = bezierTo2.easing(cc.easeBezierAction(0.0, 0.5, -5.0, 1.0));
+    this._grossini.runAction(bezierEaseTo);
+    this._tamara.runAction(bezierEaseTo1);
+    this._kathia.runAction(bezierEaseTo2);
 
-
-        this._grossini.runAction(bezierEaseTo);
-        this._tamara.runAction(bezierEaseTo1);
-        this._kathia.runAction(bezierEaseTo2);
-
-        //----end14----
-    }
-    title(){
-        return "SpriteEaseBezier action";
-    }
-
+    //----end14----
+  }
+  title() {
+    return "SpriteEaseBezier action";
+  }
 }

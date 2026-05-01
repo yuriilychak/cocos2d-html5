@@ -26,103 +26,60 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { S9BatchNodeBasic } from "./s9-batch-node-basic.js";
-import { S9BatchNodeScaleWithCapInsets } from "./s9-batch-node-scale-with-cap-insets.js";
-import { S9BatchNodeScaledNoInsets } from "./s9-batch-node-scaled-no-insets.js";
-import { S9FrameNameSpriteSheetInsetsScaled } from "./s9-frame-name-sprite-sheet-insets-scaled.js";
-import { S9FrameNameSpriteSheetInsets } from "./s9-frame-name-sprite-sheet-insets.js";
-import { S9FrameNameSpriteSheetRotatedInsetsScaled } from "./s9-frame-name-sprite-sheet-rotated-insets-scaled.js";
-import { S9FrameNameSpriteSheetRotatedInsets } from "./s9-frame-name-sprite-sheet-rotated-insets.js";
-import { S9FrameNameSpriteSheetRotatedScaledNoInsets } from "./s9-frame-name-sprite-sheet-rotated-scaled-no-insets.js";
-import { S9FrameNameSpriteSheetRotated } from "./s9-frame-name-sprite-sheet-rotated.js";
-import { S9FrameNameSpriteSheetScaledNoInsets } from "./s9-frame-name-sprite-sheet-scaled-no-insets.js";
-import { S9FrameNameSpriteSheet } from "./s9-frame-name-sprite-sheet.js";
-import { S9SpriteActionTest } from "./s9-sprite-action-test.js";
-import { S9SpriteColorOpacityTest } from "./s9-sprite-color-opacity-test.js";
-import { S9SpriteOpacityWithFadeActionsTest } from "./s9-sprite-opacity-with-fade-actions-test.js";
-import { S9SpriteRenderingTypeToggleTest } from "./s9-sprite-rendering-type-toggle-test.js";
-import { sceneIdx , _setsceneIdx} from "./s9-sprite-test-constants.js";
-import { S9_TexturePacker } from "./s9-texture-packer.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import { S9BatchNodeBasic } from "./s9-batch-node-basic";
+import { S9BatchNodeScaleWithCapInsets } from "./s9-batch-node-scale-with-cap-insets";
+import { S9BatchNodeScaledNoInsets } from "./s9-batch-node-scaled-no-insets";
+import { S9FrameNameSpriteSheetInsetsScaled } from "./s9-frame-name-sprite-sheet-insets-scaled";
+import { S9FrameNameSpriteSheetInsets } from "./s9-frame-name-sprite-sheet-insets";
+import { S9FrameNameSpriteSheetRotatedInsetsScaled } from "./s9-frame-name-sprite-sheet-rotated-insets-scaled";
+import { S9FrameNameSpriteSheetRotatedInsets } from "./s9-frame-name-sprite-sheet-rotated-insets";
+import { S9FrameNameSpriteSheetRotatedScaledNoInsets } from "./s9-frame-name-sprite-sheet-rotated-scaled-no-insets";
+import { S9FrameNameSpriteSheetRotated } from "./s9-frame-name-sprite-sheet-rotated";
+import { S9FrameNameSpriteSheetScaledNoInsets } from "./s9-frame-name-sprite-sheet-scaled-no-insets";
+import { S9FrameNameSpriteSheet } from "./s9-frame-name-sprite-sheet";
+import { S9SpriteActionTest } from "./s9-sprite-action-test";
+import { S9SpriteColorOpacityTest } from "./s9-sprite-color-opacity-test";
+import { S9SpriteOpacityWithFadeActionsTest } from "./s9-sprite-opacity-with-fade-actions-test";
+import { S9SpriteRenderingTypeToggleTest } from "./s9-sprite-rendering-type-toggle-test";
+import { sceneIdx, _setsceneIdx } from "./s9-sprite-test-constants";
+import { S9_TexturePacker } from "./s9-texture-packer";
 
 //
 // Flow control
 //
 export var arrayOfS9SpriteTest = [
-    S9BatchNodeBasic,
-    S9FrameNameSpriteSheet,
-    S9FrameNameSpriteSheetRotated,
-    S9BatchNodeScaledNoInsets,
-    S9FrameNameSpriteSheetScaledNoInsets,
-    S9FrameNameSpriteSheetRotatedScaledNoInsets,
-    S9BatchNodeScaleWithCapInsets,
-    S9FrameNameSpriteSheetInsets,
-    S9FrameNameSpriteSheetInsetsScaled,
-    S9FrameNameSpriteSheetRotatedInsets,
-    S9FrameNameSpriteSheetRotatedInsetsScaled,
-    S9_TexturePacker,
-    S9SpriteActionTest,
-    S9SpriteColorOpacityTest,
-    S9SpriteOpacityWithFadeActionsTest,
-    S9SpriteRenderingTypeToggleTest
+  S9BatchNodeBasic,
+  S9FrameNameSpriteSheet,
+  S9FrameNameSpriteSheetRotated,
+  S9BatchNodeScaledNoInsets,
+  S9FrameNameSpriteSheetScaledNoInsets,
+  S9FrameNameSpriteSheetRotatedScaledNoInsets,
+  S9BatchNodeScaleWithCapInsets,
+  S9FrameNameSpriteSheetInsets,
+  S9FrameNameSpriteSheetInsetsScaled,
+  S9FrameNameSpriteSheetRotatedInsets,
+  S9FrameNameSpriteSheetRotatedInsetsScaled,
+  S9_TexturePacker,
+  S9SpriteActionTest,
+  S9SpriteColorOpacityTest,
+  S9SpriteOpacityWithFadeActionsTest,
+  S9SpriteRenderingTypeToggleTest
 ];
 
 export function nextS9SpriteTest() {
-    _setsceneIdx(sceneIdx + 1);
-    _setsceneIdx(sceneIdx % arrayOfS9SpriteTest.length);
+  _setsceneIdx(sceneIdx + 1);
+  _setsceneIdx(sceneIdx % arrayOfS9SpriteTest.length);
 
-    return new arrayOfS9SpriteTest[sceneIdx]();
+  return new arrayOfS9SpriteTest[sceneIdx]();
 }
-
-;
 
 export function previousS9SpriteTest() {
-    _setsceneIdx(sceneIdx - 1);
-    if (sceneIdx < 0)
-        _setsceneIdx(sceneIdx + (arrayOfS9SpriteTest.length));
+  _setsceneIdx(sceneIdx - 1);
+  if (sceneIdx < 0) _setsceneIdx(sceneIdx + arrayOfS9SpriteTest.length);
 
-    return new arrayOfS9SpriteTest[sceneIdx]();
+  return new arrayOfS9SpriteTest[sceneIdx]();
 }
-
-;
 
 export function restartS9SpriteTest() {
-    return new arrayOfS9SpriteTest[sceneIdx]();
+  return new arrayOfS9SpriteTest[sceneIdx]();
 }
-
-;

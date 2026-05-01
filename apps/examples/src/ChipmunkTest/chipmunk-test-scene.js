@@ -25,16 +25,19 @@
 //
 // Entry point
 //
-import { nextChipmunkTest } from "./chipmunk-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setchipmunkTestSceneIdx, chipmunkTestSceneIdx } from "./chipmunk-test-constants.js";
+import { nextChipmunkTest } from "./chipmunk-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _setchipmunkTestSceneIdx,
+  chipmunkTestSceneIdx
+} from "./chipmunk-test-constants";
 
 export class ChipmunkTestScene extends TestScene {
-    runThisTest(num) {
-        _setchipmunkTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextChipmunkTest();
-        this.addChild(layer);
-        director.runScene(this);
-    }
+  runThisTest(num) {
+    _setchipmunkTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextChipmunkTest();
+    this.addChild(layer);
+    director.runScene(this);
+  }
 }

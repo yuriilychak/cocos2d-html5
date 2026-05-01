@@ -27,129 +27,185 @@
 // Query
 //
 //------------------------------------------------------------------
-import { ChipmunkDemo } from "./chipmunk-demo.js";
-import { v } from "./chipmunk-test-helpers.js";
+import { ChipmunkDemo } from "./chipmunk-demo";
+import { v } from "./chipmunk-test-helpers";
 
 export class Query extends ChipmunkDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.drawNode = null;
-        this._subtitle = 'Chipmunk Demo';
-        this._title = 'Query';
+    this.drawNode = null;
+    this._subtitle = "Chipmunk Demo";
+    this._title = "Query";
 
-        this.drawNode = new cc.DrawNode();
-        this.addChild(this.drawNode, 10);
+    this.drawNode = new cc.DrawNode();
+    this.addChild(this.drawNode, 10);
 
-        if( 'mouse' in cc.sys.capabilities ) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
-                onMouseMove: this.drawQuery
-            }, this);
-        }
-        else if( 'touches' in cc.sys.capabilities ) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                swallowTouches: true,
-                onTouchBegan:function(){
-                    return true;
-                },
-                onTouchMoved: this.drawQuery
-            }, this);
-        }
-
-        var space = this.space;
-
-        { // add a fat segment
-            var mass = 1;
-            var length = 100;
-            var a = v(-length/2, 0), b = v(length/2, 0);
-            
-            var body = space.addBody(new cp.Body(mass, cp.momentForSegment(mass, a, b)));
-            body.setPos(v(320, 340));
-            
-            space.addShape(new cp.SegmentShape(body, a, b, 20));
-        }
-
-        { // add a static segment
-            space.addShape(new cp.SegmentShape(space.staticBody, v(320, 540), v(620, 240), 0));
-        }
-
-        { // add a pentagon
-            var mass = 1;
-            var NUM_VERTS = 5;
-            
-            var verts = new Array(NUM_VERTS * 2);
-            for(var i=0; i<NUM_VERTS*2; i+=2){
-                var angle = -Math.PI*i/NUM_VERTS;
-                verts[i]   = 30*Math.cos(angle);
-                verts[i+1] = 30*Math.sin(angle);
-            }
-            
-            var body = space.addBody(new cp.Body(mass, cp.momentForPoly(mass, verts, v(0,0))));
-            body.setPos(v(350+60, 220+60));
-
-            space.addShape(new cp.PolyShape(body, verts, v(0,0)));
-        }
-        
-        { // add a circle
-            var mass = 1;
-            var r = 20;
-            
-            var body = space.addBody(new cp.Body(mass, cp.momentForCircle(mass, 0, r, v(0,0))));
-            body.setPos(v(320+100, 240+120));
-            
-            space.addShape(new cp.CircleShape(body, r, v(0,0)));
-        }
-
+    if ("mouse" in cc.sys.capabilities) {
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.MOUSE,
+          onMouseMove: this.drawQuery
+        },
+        this
+      );
+    } else if ("touches" in cc.sys.capabilities) {
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.TOUCH_ONE_BY_ONE,
+          swallowTouches: true,
+          onTouchBegan: function () {
+            return true;
+          },
+          onTouchMoved: this.drawQuery
+        },
+        this
+      );
     }
 
-    drawBB(bb, fillColor, lineColor){
-        this.drawNode.drawRect(new cc.Point(bb.l, bb.b), new cc.Point(bb.r, bb.t), fillColor, 1, lineColor);
+    var space = this.space;
+
+    {
+      // add a fat segment
+      var mass = 1;
+      var length = 100;
+      var a = v(-length / 2, 0),
+        b = v(length / 2, 0);
+
+      var body = space.addBody(
+        new cp.Body(mass, cp.momentForSegment(mass, a, b))
+      );
+      body.setPos(v(320, 340));
+
+      space.addShape(new cp.SegmentShape(body, a, b, 20));
     }
 
-    drawQuery(touch, event){
-        var target = !!event ? event.getCurrentTarget() : touch.getCurrentTarget();
-        var drawNode = target.drawNode;
-        drawNode.clear();
-
-        var start = new cc.Point(320, 240);
-        var end = touch.getLocation();
-        var radius = 10;
-        drawNode.drawSegment(start, end, 1, new cc.Color(0, 255, 0, 255));
-
-        // WARNING: API changed in Chipmunk v7.0
-        var info = target.space.segmentQueryFirst(start, end, radius, cp.SHAPE_FILTER_ALL);
-        if(info) {
-
-            // Draw blue over the occluded part of the query
-            drawNode.drawSegment(cp.v.lerp(start, end, info.alpha), end, 1, new cc.Color(0,0,255,255));
-            
-            // Draw a little red surface normal
-            drawNode.drawSegment(info.point, cp.v.add(info.point, cp.v.mult(info.normal, 16)), 1, new cc.Color(255,0,0,255));
-        
-            // Draw a little red dot on the hit point.
-            drawNode.drawDot(info.point, 3, new cc.Color(255,0,0,255));
-
-            cc.log("Segment Query: Dist(" + info.alpha * cp.v.dist(start,end) + ") Normal:(" + info.normal.x + "," + info.normal.y + ")");
-
-            // Draw a fat green line over the unoccluded part of the query
-            // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, new cc.Color(0,255,0,255));
-        } else {
-            cc.log("Segment Query (None)");
-        }
-
-        var nearestInfo = target.space.pointQueryNearest(touch.getLocation(), 100.0, cp.SHAPE_FILTER_ALL);
-        if(nearestInfo){
-            // Draw a grey line to the closest shape.
-            drawNode.drawDot(touch.getLocation(), 3, new cc.Color(128, 128, 128, 255));
-            drawNode.drawSegment(touch.getLocation(), nearestInfo.p, 1, new cc.Color(128, 128, 128, 255));
-            
-            // Draw a red bounding box around the shape under the mouse.
-//            if(nearestInfo.d < 0)
-//                drawNode.drawBB(cpShapeGetBB(nearestInfo.shape), RGBAColor(1,0,0,1));
-        }
-        
+    {
+      // add a static segment
+      space.addShape(
+        new cp.SegmentShape(space.staticBody, v(320, 540), v(620, 240), 0)
+      );
     }
 
+    {
+      // add a pentagon
+      var mass = 1;
+      var NUM_VERTS = 5;
+
+      var verts = new Array(NUM_VERTS * 2);
+      for (var i = 0; i < NUM_VERTS * 2; i += 2) {
+        var angle = (-Math.PI * i) / NUM_VERTS;
+        verts[i] = 30 * Math.cos(angle);
+        verts[i + 1] = 30 * Math.sin(angle);
+      }
+
+      var body = space.addBody(
+        new cp.Body(mass, cp.momentForPoly(mass, verts, v(0, 0)))
+      );
+      body.setPos(v(350 + 60, 220 + 60));
+
+      space.addShape(new cp.PolyShape(body, verts, v(0, 0)));
+    }
+
+    {
+      // add a circle
+      var mass = 1;
+      var r = 20;
+
+      var body = space.addBody(
+        new cp.Body(mass, cp.momentForCircle(mass, 0, r, v(0, 0)))
+      );
+      body.setPos(v(320 + 100, 240 + 120));
+
+      space.addShape(new cp.CircleShape(body, r, v(0, 0)));
+    }
+  }
+
+  drawBB(bb, fillColor, lineColor) {
+    this.drawNode.drawRect(
+      new cc.Point(bb.l, bb.b),
+      new cc.Point(bb.r, bb.t),
+      fillColor,
+      1,
+      lineColor
+    );
+  }
+
+  drawQuery(touch, event) {
+    var target = !!event ? event.getCurrentTarget() : touch.getCurrentTarget();
+    var drawNode = target.drawNode;
+    drawNode.clear();
+
+    var start = new cc.Point(320, 240);
+    var end = touch.getLocation();
+    var radius = 10;
+    drawNode.drawSegment(start, end, 1, new cc.Color(0, 255, 0, 255));
+
+    // WARNING: API changed in Chipmunk v7.0
+    var info = target.space.segmentQueryFirst(
+      start,
+      end,
+      radius,
+      cp.SHAPE_FILTER_ALL
+    );
+    if (info) {
+      // Draw blue over the occluded part of the query
+      drawNode.drawSegment(
+        cp.v.lerp(start, end, info.alpha),
+        end,
+        1,
+        new cc.Color(0, 0, 255, 255)
+      );
+
+      // Draw a little red surface normal
+      drawNode.drawSegment(
+        info.point,
+        cp.v.add(info.point, cp.v.mult(info.normal, 16)),
+        1,
+        new cc.Color(255, 0, 0, 255)
+      );
+
+      // Draw a little red dot on the hit point.
+      drawNode.drawDot(info.point, 3, new cc.Color(255, 0, 0, 255));
+
+      cc.log(
+        "Segment Query: Dist(" +
+          info.alpha * cp.v.dist(start, end) +
+          ") Normal:(" +
+          info.normal.x +
+          "," +
+          info.normal.y +
+          ")"
+      );
+
+      // Draw a fat green line over the unoccluded part of the query
+      // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, new cc.Color(0,255,0,255));
+    } else {
+      cc.log("Segment Query (None)");
+    }
+
+    var nearestInfo = target.space.pointQueryNearest(
+      touch.getLocation(),
+      100.0,
+      cp.SHAPE_FILTER_ALL
+    );
+    if (nearestInfo) {
+      // Draw a grey line to the closest shape.
+      drawNode.drawDot(
+        touch.getLocation(),
+        3,
+        new cc.Color(128, 128, 128, 255)
+      );
+      drawNode.drawSegment(
+        touch.getLocation(),
+        nearestInfo.p,
+        1,
+        new cc.Color(128, 128, 128, 255)
+      );
+
+      // Draw a red bounding box around the shape under the mouse.
+      //            if(nearestInfo.d < 0)
+      //                drawNode.drawBB(cpShapeGetBB(nearestInfo.shape), RGBAColor(1,0,0,1));
+    }
+  }
 }

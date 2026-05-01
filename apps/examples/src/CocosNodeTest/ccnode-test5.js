@@ -25,80 +25,87 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TAG_SPRITE1, TAG_SPRITE2 } from "./cocos-node-test-constants.js";
-import { TestNodeDemo } from "./test-node-demo.js";
-import { s_pathSister1, s_pathSister2 } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { TAG_SPRITE1, TAG_SPRITE2 } from "./cocos-node-test-constants";
+import { TestNodeDemo } from "./test-node-demo";
+import { s_pathSister1, s_pathSister2 } from "../resources";
+import { winSize } from "../constants";
 
 export class CCNodeTest5 extends TestNodeDemo {
-    constructor() {
-        //----start2----ctor
-        super();
+  constructor() {
+    //----start2----ctor
+    super();
 
-        this.testDuration = 2.5;
+    this.testDuration = 2.5;
 
-        this.testSP1 = null;
+    this.testSP1 = null;
 
-        this.testSP2 = null;
+    this.testSP2 = null;
 
-        this.pixel1 = {"0":0, "1":0, "2":0, "3":255};
+    this.pixel1 = { 0: 0, 1: 0, 2: 0, 3: 255 };
 
-        this.pixel2 = {"0":51, "1":0, "2":0, "3":255};
-        var sp1 = new cc.Sprite(s_pathSister1);
-        var sp2 = new cc.Sprite(s_pathSister2);
-        sp1.x = 150;
-        sp1.y = winSize.height / 2;
-        sp2.x = winSize.width - 150;
-        sp2.y = winSize.height / 2;
+    this.pixel2 = { 0: 51, 1: 0, 2: 0, 3: 255 };
+    var sp1 = new cc.Sprite(s_pathSister1);
+    var sp2 = new cc.Sprite(s_pathSister2);
+    sp1.x = 150;
+    sp1.y = winSize.height / 2;
+    sp2.x = winSize.width - 150;
+    sp2.y = winSize.height / 2;
 
-        var rot = new cc.RotateBy(2, 360);
-        var rot_back = rot.reverse();
-        var forever = cc.sequence(rot, rot_back).repeatForever();
-        var forever2 = forever.clone();
-        forever.tag = 101;
-        forever2.tag = 102;
+    var rot = new cc.RotateBy(2, 360);
+    var rot_back = rot.reverse();
+    var forever = cc.sequence(rot, rot_back).repeatForever();
+    var forever2 = forever.clone();
+    forever.tag = 101;
+    forever2.tag = 102;
 
-        this.addChild(sp1, 0, TAG_SPRITE1);
-        this.addChild(sp2, 0, TAG_SPRITE2);
+    this.addChild(sp1, 0, TAG_SPRITE1);
+    this.addChild(sp2, 0, TAG_SPRITE2);
 
-        sp1.runAction(forever);
-        sp2.runAction(forever2);
+    sp1.runAction(forever);
+    sp2.runAction(forever2);
 
-        this.schedule(this.onAddAndRemove, 2.0);
-        //----end2----
-    }
-    onAddAndRemove(dt) {
-        //----start2----onAddAndRemove
-        var sp1 = this.getChildByTag(TAG_SPRITE1);
-        var sp2 = this.getChildByTag(TAG_SPRITE2);
+    this.schedule(this.onAddAndRemove, 2.0);
+    //----end2----
+  }
+  onAddAndRemove(dt) {
+    //----start2----onAddAndRemove
+    var sp1 = this.getChildByTag(TAG_SPRITE1);
+    var sp2 = this.getChildByTag(TAG_SPRITE2);
 
-        this.removeChild(sp1, false);
-        this.removeChild(sp2, true);
+    this.removeChild(sp1, false);
+    this.removeChild(sp2, true);
 
-        this.testSP1 = this.getChildByTag(TAG_SPRITE1);
-        this.testSP2 = this.getChildByTag(TAG_SPRITE2);
+    this.testSP1 = this.getChildByTag(TAG_SPRITE1);
+    this.testSP2 = this.getChildByTag(TAG_SPRITE2);
 
-        this.addChild(sp1, 0, TAG_SPRITE1);
-        this.addChild(sp2, 0, TAG_SPRITE2);
-        //----end2----
-    }
-    title() {
-        return "remove and cleanup";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"sp1":null, "sp2":null, "pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(134, 164, 5, 5);
-        var ret2 = this.readPixels(winSize.width - 148, winSize.height / 2 + 51, 5, 5);
-        var ret = {"sp1":this.testSP1, "sp2":this.testSP2,
-            "pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, true, 3) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    this.addChild(sp1, 0, TAG_SPRITE1);
+    this.addChild(sp2, 0, TAG_SPRITE2);
+    //----end2----
+  }
+  title() {
+    return "remove and cleanup";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { sp1: null, sp2: null, pixel1: "yes", pixel2: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(134, 164, 5, 5);
+    var ret2 = this.readPixels(
+      winSize.width - 148,
+      winSize.height / 2 + 51,
+      5,
+      5
+    );
+    var ret = {
+      sp1: this.testSP1,
+      sp2: this.testSP2,
+      pixel1: this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel2, true, 3) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

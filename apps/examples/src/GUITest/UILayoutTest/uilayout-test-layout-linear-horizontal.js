@@ -24,34 +24,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UILayoutTestBase } from "./uilayout-test-base.js";
+import { UILayoutTestBase } from "./uilayout-test-base";
 
 export class UILayoutTest_Layout_Linear_Horizontal extends UILayoutTestBase {
-    createLayout() {
-        var layout = new ccui.Layout();
-        layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
-        layout.setClippingEnabled(true);
-        layout.setContentSize(new cc.Size(280, 150));
-        return layout;
-    }
-    getText() {
-        return "Layout Layout Linear Horizontal";
-    }
-    setLayoutParameter() {
-        var lp1 = new ccui.LinearLayoutParameter();
-        this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
-        lp1.setMargin(new ccui.Margin(0, 10, 0, 10));
+  createLayout() {
+    var layout = new ccui.Layout();
+    layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
+    layout.setClippingEnabled(true);
+    layout.setContentSize(new cc.Size(280, 150));
+    return layout;
+  }
+  getText() {
+    return "Layout Layout Linear Horizontal";
+  }
+  setLayoutParameter() {
+    var lp1 = new ccui.LinearLayoutParameter();
+    this.button.setLayoutParameter(lp1);
+    lp1.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
+    lp1.setMargin(new ccui.Margin(0, 10, 0, 10));
 
-        var lp2 = new ccui.LinearLayoutParameter();
-        this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
-        lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
+    var lp2 = new ccui.LinearLayoutParameter();
+    this.textButton.setLayoutParameter(lp2);
+    lp2.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
+    lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
 
-        var lp3 = new ccui.LinearLayoutParameter();
-        this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
-        lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
-    }
-
+    var lp3 = new ccui.LinearLayoutParameter();
+    this.button_scale9.setLayoutParameter(lp3);
+    lp3.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
+    lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
+  }
 }

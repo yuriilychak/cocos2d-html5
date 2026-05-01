@@ -25,18 +25,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { winSize } from "../tests-main-constants.js";
+import { winSize } from "../constants";
 
 export class ScriptTestTempLayer extends cc.Layer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        var labelTest = new cc.LabelTTF("this is the ScriptTestTempLayer old file", "Verdana", 32, new cc.Size(winSize.width, 50), cc.TEXT_ALIGNMENT_CENTER);
-        var size = cc.winSize;
-        labelTest.setPosition(size.width / 2, size.height / 4);
-        this.addChild(labelTest);
-
-    }
-
-
-};
+    var labelTest = new cc.LabelTTF(
+      "this is the ScriptTestTempLayer old file",
+      "Verdana",
+      32,
+      new cc.Size(winSize.width, 50),
+      cc.TEXT_ALIGNMENT_CENTER
+    );
+    var size = cc.winSize;
+    labelTest.setPosition(size.width / 2, size.height / 4);
+    this.addChild(labelTest);
+  }
+}

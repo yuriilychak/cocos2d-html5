@@ -25,16 +25,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestScene } from "../test-scene.js";
-import { nextTexCacheTest , texCacheTestSceneIdx, _settexCacheTestSceneIdx} from "./texture-cache-test-helpers.js";
+import { TestScene } from "../test-scene";
+import {
+  nextTexCacheTest,
+  texCacheTestSceneIdx,
+  _settexCacheTestSceneIdx
+} from "./texture-cache-test-helpers";
 
 export class TexCacheTestScene extends TestScene {
-    runThisTest(num) {
-        _settexCacheTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextTexCacheTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _settexCacheTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextTexCacheTest();
+    this.addChild(layer);
 
-        cc.director.runScene(this);
-    }
-
+    cc.director.runScene(this);
+  }
 }

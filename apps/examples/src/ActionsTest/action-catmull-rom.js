@@ -30,27 +30,25 @@
 // ActionCatmullRom
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionCatmullRom extends ActionsDemo {
-
-      get _code() { 
-        return "a = new cc.CatmullRomBy( time, array_of_points );\n" +
-        " a = new cc.CatmullRomTo( time, array_of_points );";
-      }
+  get _code() {
+    return (
+      "a = new cc.CatmullRomBy( time, array_of_points );\n" +
+      " a = new cc.CatmullRomTo( time, array_of_points );"
+    );
+  }
 
   constructor() {
     super();
 
+    this._drawNode1 = null;
 
-      this._drawNode1 = null;
+    this._drawNode2 = null;
 
-
-      this._drawNode2 = null;
-
-
-      this.testDuration = 3.1;
+    this.testDuration = 3.1;
 
     this._drawNode1 = new cc.DrawNode();
     this._drawNode1.x = 50;
@@ -177,5 +175,4 @@ export class ActionCatmullRom extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

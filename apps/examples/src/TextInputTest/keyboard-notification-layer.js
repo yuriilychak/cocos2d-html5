@@ -28,105 +28,141 @@
 //////////////////////////////////////////////////////////////////////////
 // KeyboardNotificationLayer for test IME keyboard notification.
 //////////////////////////////////////////////////////////////////////////
-import { textInputGetRect } from "./text-input-test-constants.js";
-import { TextInputTest } from "./text-input-test.js";
+import { textInputGetRect } from "./text-input-test-constants";
+import { TextInputTest } from "./text-input-test";
 
 export class KeyboardNotificationLayer extends TextInputTest {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._trackNode = null;
 
+    this._beginPos = null;
 
-        this._trackNode = null;
+    if ("touches" in cc.sys.capabilities) {
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          onTouchesEnded: this.onTouchesEnded
+        },
+        this
+      );
+    } else if ("mouse" in cc.sys.capabilities)
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.MOUSE,
+          onMouseUp: this.onMouseUp
+        },
+        this
+      );
+  }
 
+  subtitle() {
+    return "";
+  }
 
-        this._beginPos = null;
+  onClickTrackNode(clicked) {}
 
-        if( 'touches' in cc.sys.capabilities ){
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-                onTouchesEnded: this.onTouchesEnded
-            }, this);
-        } else if ('mouse' in cc.sys.capabilities )
-            cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
-                onMouseUp: this.onMouseUp
-            }, this);
+  keyboardWillShow(info) {
+    cc.log(
+      "TextInputTest:keyboardWillShowAt(origin:" +
+        info.end.x +
+        "," +
+        info.end.y +
+        ", size:" +
+        info.end.width +
+        "," +
+        info.end.height +
+        ")"
+    );
+
+    if (!this._trackNode) return;
+
+    var rectTracked = textInputGetRect(this._trackNode);
+    cc.log(
+      "TextInputTest:trackingNodeAt(origin:" +
+        info.end.x +
+        "," +
+        info.end.y +
+        ", size:" +
+        info.end.width +
+        "," +
+        info.end.height +
+        ")"
+    );
+
+    // if the keyboard area doesn't intersect with the tracking node area, nothing need to do.
+    if (!cc.Rect.intersects(rectTracked, info.end)) return;
+
+    // assume keyboard at the bottom of screen, calculate the vertical adjustment.
+    var adjustVert = cc.Rect.getMaxY(info.end) - cc.Rect.getMinY(rectTracked);
+    cc.log("TextInputTest:needAdjustVerticalPosition(" + adjustVert + ")");
+
+    // move all the children node of KeyboardNotificationLayer
+    var children = this.children;
+    for (var i = 0; i < children.length; ++i) {
+      var node = children[i];
+      node.y += adjustVert;
     }
+  }
 
-    subtitle() {
-        return "";
-    }
+  onTouchesEnded(touches, event) {
+    var target = event.getCurrentTarget();
+    if (!target._trackNode) return;
 
-    onClickTrackNode(clicked) {
-    }
+    // grab first touch
+    if (touches.length == 0) return;
 
-    keyboardWillShow(info) {
-        cc.log("TextInputTest:keyboardWillShowAt(origin:" + info.end.x + "," + info.end.y
-            + ", size:" + info.end.width + "," + info.end.height + ")");
+    var touch = touches[0];
+    var point = touch.getLocation();
 
-        if (!this._trackNode)
-            return;
+    // decide the trackNode is clicked.
+    cc.log(
+      "KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")"
+    );
 
-        var rectTracked = textInputGetRect(this._trackNode);
-        cc.log("TextInputTest:trackingNodeAt(origin:" + info.end.x + "," + info.end.y
-            + ", size:" + info.end.width + "," + info.end.height + ")");
+    var rect = textInputGetRect(target._trackNode);
+    cc.log(
+      "KeyboardNotificationLayer:TrackNode at(origin:" +
+        rect.x +
+        "," +
+        rect.y +
+        ", size:" +
+        rect.width +
+        "," +
+        rect.height +
+        ")"
+    );
 
-        // if the keyboard area doesn't intersect with the tracking node area, nothing need to do.
-        if (!cc.Rect.intersects(rectTracked, info.end))
-            return;
+    target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
+    cc.log("----------------------------------");
+  }
 
-        // assume keyboard at the bottom of screen, calculate the vertical adjustment.
-        var adjustVert = cc.Rect.getMaxY(info.end) - cc.Rect.getMinY(rectTracked);
-        cc.log("TextInputTest:needAdjustVerticalPosition(" + adjustVert + ")");
+  onMouseUp(event) {
+    var target = event.getCurrentTarget();
+    if (!target._trackNode) return;
 
-        // move all the children node of KeyboardNotificationLayer
-        var children = this.children;
-        for (var i = 0; i < children.length; ++i) {
-            var node = children[i];
-            node.y += adjustVert;
-        }
-    }
+    var point = event.getLocation();
 
-    onTouchesEnded(touches, event) {
-        var target = event.getCurrentTarget();
-        if (!target._trackNode)
-            return;
+    // decide the trackNode is clicked.
+    cc.log(
+      "KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")"
+    );
 
-        // grab first touch
-        if(touches.length == 0)
-            return;
+    var rect = textInputGetRect(target._trackNode);
+    cc.log(
+      "KeyboardNotificationLayer:TrackNode at(origin:" +
+        rect.x +
+        "," +
+        rect.y +
+        ", size:" +
+        rect.width +
+        "," +
+        rect.height +
+        ")"
+    );
 
-        var touch = touches[0];
-        var point = touch.getLocation();
-
-        // decide the trackNode is clicked.
-        cc.log("KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")");
-
-        var rect = textInputGetRect(target._trackNode);
-        cc.log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
-            + ", size:" + rect.width + "," + rect.height + ")");
-
-        target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
-        cc.log("----------------------------------");
-    }
-
-    onMouseUp(event) {
-        var target = event.getCurrentTarget();
-        if (!target._trackNode)
-            return;
-
-        var point = event.getLocation();
-
-        // decide the trackNode is clicked.
-        cc.log("KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")");
-
-        var rect = textInputGetRect(target._trackNode);
-        cc.log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
-            + ", size:" + rect.width + "," + rect.height + ")");
-
-        target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
-        cc.log("----------------------------------");
-    }
-
+    target.onClickTrackNode(cc.Rect.containsPoint(rect, point));
+    cc.log("----------------------------------");
+  }
 }

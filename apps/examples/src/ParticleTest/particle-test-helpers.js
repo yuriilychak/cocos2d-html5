@@ -25,218 +25,163 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { DemoBigFlower } from "./demo-big-flower.js";
-import { DemoExplosion } from "./demo-explosion.js";
-import { DemoFire } from "./demo-fire.js";
-import { DemoFirework } from "./demo-firework.js";
-import { DemoFlower } from "./demo-flower.js";
-import { DemoGalaxy } from "./demo-galaxy.js";
-import { DemoMeteor } from "./demo-meteor.js";
-import { DemoModernArt } from "./demo-modern-art.js";
-import { DemoParticleFromFile } from "./demo-particle-from-file.js";
-import { DemoPause } from "./demo-pause.js";
-import { DemoRain } from "./demo-rain.js";
-import { DemoRing } from "./demo-ring.js";
-import { DemoRotFlower } from "./demo-rot-flower.js";
-import { DemoSmoke } from "./demo-smoke.js";
-import { DemoSnow } from "./demo-snow.js";
-import { DemoSpiral } from "./demo-spiral.js";
-import { DemoSun } from "./demo-sun.js";
-import { Issue704 } from "./issue704.js";
-import { Issue870 } from "./issue870.js";
-import { ParallaxParticle } from "./parallax-particle.js";
-import { ParticleBatchTest } from "./particle-batch-test.js";
-import { ParticleResizeTest } from "./particle-resize-test.js";
-import { particleSceneIdx , _setparticleSceneIdx} from "./particle-test-constants.js";
-import { RadiusMode1 } from "./radius-mode1.js";
-import { RadiusMode2 } from "./radius-mode2.js";
-
-;
+import { DemoBigFlower } from "./demo-big-flower";
+import { DemoExplosion } from "./demo-explosion";
+import { DemoFire } from "./demo-fire";
+import { DemoFirework } from "./demo-firework";
+import { DemoFlower } from "./demo-flower";
+import { DemoGalaxy } from "./demo-galaxy";
+import { DemoMeteor } from "./demo-meteor";
+import { DemoModernArt } from "./demo-modern-art";
+import { DemoParticleFromFile } from "./demo-particle-from-file";
+import { DemoPause } from "./demo-pause";
+import { DemoRain } from "./demo-rain";
+import { DemoRing } from "./demo-ring";
+import { DemoRotFlower } from "./demo-rot-flower";
+import { DemoSmoke } from "./demo-smoke";
+import { DemoSnow } from "./demo-snow";
+import { DemoSpiral } from "./demo-spiral";
+import { DemoSun } from "./demo-sun";
+import { Issue704 } from "./issue704";
+import { Issue870 } from "./issue870";
+import { ParallaxParticle } from "./parallax-particle";
+import { ParticleBatchTest } from "./particle-batch-test";
+import { ParticleResizeTest } from "./particle-resize-test";
+import {
+  particleSceneIdx,
+  _setparticleSceneIdx
+} from "./particle-test-constants";
+import { RadiusMode1 } from "./radius-mode1";
+import { RadiusMode2 } from "./radius-mode2";
 
 export var particleSceneArr = [
-    function () {
-        return new DemoFlower();
-    },
-    function () {
-        return new DemoGalaxy();
-    },
-    function () {
-        return new DemoFirework();
-    },
-    function () {
-        return new DemoSpiral();
-    },
-    function () {
-        return new DemoSun();
-    },
-    function () {
-        return new DemoMeteor();
-    },
-    function () {
-        return new DemoFire();
-    },
-    function () {
-        return new DemoSmoke();
-    },
-    function () {
-        return new DemoExplosion();
-    },
-    function () {
-        return new DemoSnow();
-    },
-    function () {
-        return new DemoRain();
-    },
-    function () {
-        return new DemoBigFlower();
-    },
-    function () {
-        return new DemoRotFlower();
-    },
-    function () {
-        return new DemoModernArt();
-    },
-    function () {
-        return new DemoRing();
-    },
-    function () {
-        return new DemoParticleFromFile("BoilingFoam");
-    },
-    function () {
-        return new DemoParticleFromFile("BurstPipe");
-    },
-    function () {
-        return new DemoParticleFromFile("Comet");
-    },
-    function () {
-        return new DemoParticleFromFile("debian");
-    },
-    function () {
-        return new DemoParticleFromFile("ExplodingRing");
-    },
-    function () {
-        return new DemoParticleFromFile("LavaFlow");
-    },
-    function(){
-        return new DemoParticleFromFile("SpinningPeas");
-    },
-    function () {
-        return new DemoParticleFromFile("SpookyPeas");
-    },
-    function () {
-        return new DemoParticleFromFile("Upsidedown");
-    },
-    function () {
-        return new DemoParticleFromFile("Flower");
-    },
-    function () {
-        return new DemoParticleFromFile("Spiral");
-    },
-    function () {
-        return new DemoParticleFromFile("Galaxy");
-    },
-    function () {
-        return new RadiusMode1();
-    },
-    function () {
-        return new RadiusMode2();
-    },
-    function () {
-        return new Issue704();
-    },
-    function () {
-        return new Issue870();
-    },
-    function () {
-        return new DemoParticleFromFile("Phoenix");
-    },
-    function() {
-        return new ParticleResizeTest();
-    },
-    function() {
-        return new DemoPause();
-    }
+  function () {
+    return new DemoFlower();
+  },
+  function () {
+    return new DemoGalaxy();
+  },
+  function () {
+    return new DemoFirework();
+  },
+  function () {
+    return new DemoSpiral();
+  },
+  function () {
+    return new DemoSun();
+  },
+  function () {
+    return new DemoMeteor();
+  },
+  function () {
+    return new DemoFire();
+  },
+  function () {
+    return new DemoSmoke();
+  },
+  function () {
+    return new DemoExplosion();
+  },
+  function () {
+    return new DemoSnow();
+  },
+  function () {
+    return new DemoRain();
+  },
+  function () {
+    return new DemoBigFlower();
+  },
+  function () {
+    return new DemoRotFlower();
+  },
+  function () {
+    return new DemoModernArt();
+  },
+  function () {
+    return new DemoRing();
+  },
+  function () {
+    return new DemoParticleFromFile("BoilingFoam");
+  },
+  function () {
+    return new DemoParticleFromFile("BurstPipe");
+  },
+  function () {
+    return new DemoParticleFromFile("Comet");
+  },
+  function () {
+    return new DemoParticleFromFile("debian");
+  },
+  function () {
+    return new DemoParticleFromFile("ExplodingRing");
+  },
+  function () {
+    return new DemoParticleFromFile("LavaFlow");
+  },
+  function () {
+    return new DemoParticleFromFile("SpinningPeas");
+  },
+  function () {
+    return new DemoParticleFromFile("SpookyPeas");
+  },
+  function () {
+    return new DemoParticleFromFile("Upsidedown");
+  },
+  function () {
+    return new DemoParticleFromFile("Flower");
+  },
+  function () {
+    return new DemoParticleFromFile("Spiral");
+  },
+  function () {
+    return new DemoParticleFromFile("Galaxy");
+  },
+  function () {
+    return new RadiusMode1();
+  },
+  function () {
+    return new RadiusMode2();
+  },
+  function () {
+    return new Issue704();
+  },
+  function () {
+    return new Issue870();
+  },
+  function () {
+    return new DemoParticleFromFile("Phoenix");
+  },
+  function () {
+    return new ParticleResizeTest();
+  },
+  function () {
+    return new DemoPause();
+  }
 ];
 
-if( 'opengl' in cc.sys.capabilities && cc.rendererConfig.isWebGL){
-    particleSceneArr.push( function () {
-        return new ParallaxParticle();
-    });
-    particleSceneArr.push(function () {
-        return new ParticleBatchTest();
-    });
+if ("opengl" in cc.sys.capabilities && cc.rendererConfig.isWebGL) {
+  particleSceneArr.push(function () {
+    return new ParallaxParticle();
+  });
+  particleSceneArr.push(function () {
+    return new ParticleBatchTest();
+  });
 }
 
 export function nextParticleAction() {
-    _setparticleSceneIdx(particleSceneIdx + 1);
-    _setparticleSceneIdx(particleSceneIdx % particleSceneArr.length);
-    return particleSceneArr[particleSceneIdx]();
+  _setparticleSceneIdx(particleSceneIdx + 1);
+  _setparticleSceneIdx(particleSceneIdx % particleSceneArr.length);
+  return particleSceneArr[particleSceneIdx]();
 }
-
-;
 
 export function backParticleAction() {
-    _setparticleSceneIdx(particleSceneIdx - 1);
-    if (particleSceneIdx < 0)
-        _setparticleSceneIdx(particleSceneIdx + (particleSceneArr.length));
+  _setparticleSceneIdx(particleSceneIdx - 1);
+  if (particleSceneIdx < 0)
+    _setparticleSceneIdx(particleSceneIdx + particleSceneArr.length);
 
-    return particleSceneArr[particleSceneIdx]();
+  return particleSceneArr[particleSceneIdx]();
 }
-
-;
 
 export function restartParticleAction() {
-    return particleSceneArr[particleSceneIdx]();
+  return particleSceneArr[particleSceneIdx]();
 }
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;

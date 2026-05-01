@@ -28,54 +28,53 @@
 /*
     SchedulerSchedulesAndRemove
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
 
 export class SchedulerSchedulesAndRemove extends SchedulerTestLayer {
-    onEnter() {
-        //----start4----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start4----onEnter
+    super.onEnter();
 
-        this.schedule(this.onTick1, 0.5);
-        this.schedule(this.onTick2, 1.0);
-        this.schedule(this.onScheduleAndUnschedule, 4.0);
-        //----end4----
-    }
-    title() {
-        return "Schedule from Schedule";
-    }
-    subtitle() {
-        return "Will unschedule and schedule callbacks in 4s. See console";
-    }
+    this.schedule(this.onTick1, 0.5);
+    this.schedule(this.onTick2, 1.0);
+    this.schedule(this.onScheduleAndUnschedule, 4.0);
+    //----end4----
+  }
+  title() {
+    return "Schedule from Schedule";
+  }
+  subtitle() {
+    return "Will unschedule and schedule callbacks in 4s. See console";
+  }
 
-    onTick1(dt) {
-        //----start4----onTick1
-        cc.log("SchedulerSchedulesAndRemove tick1");
-        //----end4----
-    }
-    onTick2(dt) {
-        //----start4----onTick2
-        cc.log("SchedulerSchedulesAndRemove tick2");
-        //----end4----
-    }
-    onTick3(dt) {
-        //----start4----onTick3
-        cc.log("SchedulerSchedulesAndRemove tick3");
-        //----end4----
-    }
-    onTick4(dt) {
-        //----start4----onTick4
-        cc.log("SchedulerSchedulesAndRemove tick4");
-        //----end4----
-    }
-    onScheduleAndUnschedule(dt) {
-        //----start4----onScheduleAndUnschedule
-        this.unschedule(this.onTick1);
-        this.unschedule(this.onTick2);
-        this.unschedule(this.onScheduleAndUnschedule);
+  onTick1(dt) {
+    //----start4----onTick1
+    cc.log("SchedulerSchedulesAndRemove tick1");
+    //----end4----
+  }
+  onTick2(dt) {
+    //----start4----onTick2
+    cc.log("SchedulerSchedulesAndRemove tick2");
+    //----end4----
+  }
+  onTick3(dt) {
+    //----start4----onTick3
+    cc.log("SchedulerSchedulesAndRemove tick3");
+    //----end4----
+  }
+  onTick4(dt) {
+    //----start4----onTick4
+    cc.log("SchedulerSchedulesAndRemove tick4");
+    //----end4----
+  }
+  onScheduleAndUnschedule(dt) {
+    //----start4----onScheduleAndUnschedule
+    this.unschedule(this.onTick1);
+    this.unschedule(this.onTick2);
+    this.unschedule(this.onScheduleAndUnschedule);
 
-        this.schedule(this.onTick3, 1.0);
-        this.schedule(this.onTick4, 1.0)
-        //----end4----
-    }
-
+    this.schedule(this.onTick3, 1.0);
+    this.schedule(this.onTick4, 1.0);
+    //----end4----
+  }
 }

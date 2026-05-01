@@ -25,71 +25,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ActionMgrTestIdx , _setActionMgrTestIdx} from "./action-manager-test-constants.js";
-import { CrashTest } from "./crash-test.js";
-import { LogicTest } from "./logic-test.js";
-import { PauseTest } from "./pause-test.js";
-import { RemoveTest } from "./remove-test.js";
-import { ResumeTest } from "./resume-test.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import { ActionMgrTestIdx, _setActionMgrTestIdx } from "./constants";
+import { CrashTest } from "./crash-test";
+import { LogicTest } from "./logic-test";
+import { PauseTest } from "./pause-test";
+import { RemoveTest } from "./remove-test";
+import { ResumeTest } from "./resume-test";
 
 //-
 //
 // Flow control
 //
 export var arrayOfActionMgrTest = [
-    CrashTest,
-    LogicTest,
-    PauseTest,
-    RemoveTest,
-    ResumeTest
+  CrashTest,
+  LogicTest,
+  PauseTest,
+  RemoveTest,
+  ResumeTest
 ];
 
 export function nextActionMgrTest(num) {
+  _setActionMgrTestIdx(num ? num - 1 : ActionMgrTestIdx);
 
-    _setActionMgrTestIdx(num ? num - 1 : ActionMgrTestIdx);
+  _setActionMgrTestIdx(ActionMgrTestIdx + 1);
+  _setActionMgrTestIdx(ActionMgrTestIdx % arrayOfActionMgrTest.length);
 
-    _setActionMgrTestIdx(ActionMgrTestIdx + 1);
-    _setActionMgrTestIdx(ActionMgrTestIdx % arrayOfActionMgrTest.length);
+  if (window.sideIndexBar) {
+    _setActionMgrTestIdx(window.sideIndexBar.changeTest(ActionMgrTestIdx, 0));
+  }
 
-    if(window.sideIndexBar){
-        _setActionMgrTestIdx(window.sideIndexBar.changeTest(ActionMgrTestIdx, 0));
-    }
-
-    return new arrayOfActionMgrTest[ActionMgrTestIdx]();
+  return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 }
-
-;
 
 export function previousActionMgrTest() {
-    _setActionMgrTestIdx(ActionMgrTestIdx - 1);
-    if (ActionMgrTestIdx < 0)
-        _setActionMgrTestIdx(ActionMgrTestIdx + (arrayOfActionMgrTest.length));
+  _setActionMgrTestIdx(ActionMgrTestIdx - 1);
+  if (ActionMgrTestIdx < 0)
+    _setActionMgrTestIdx(ActionMgrTestIdx + arrayOfActionMgrTest.length);
 
-    if(window.sideIndexBar){
-        _setActionMgrTestIdx(window.sideIndexBar.changeTest(ActionMgrTestIdx, 0));
-    }
+  if (window.sideIndexBar) {
+    _setActionMgrTestIdx(window.sideIndexBar.changeTest(ActionMgrTestIdx, 0));
+  }
 
-    return new arrayOfActionMgrTest[ActionMgrTestIdx]();
+  return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 }
-
-;
 
 export function restartActionMgrTest() {
-    return new arrayOfActionMgrTest[ActionMgrTestIdx]();
+  return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 }
-
-;

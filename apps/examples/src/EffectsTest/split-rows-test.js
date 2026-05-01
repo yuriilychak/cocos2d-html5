@@ -23,21 +23,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class SplitRowsTest extends EffectsBaseLayer {
-    title() {
-        return "SplitRows";
-    }
-    code() {
-        return "a = cc.splitRows(duration, rows)";
-    }
-    getEffect(duration) {
-        var action = cc.splitRows(duration, 9);
-        var delay = new cc.DelayTime(0.5);
-        var back = action.reverse();
-        var seq = cc.sequence( action, delay, back);
-        return seq;
-    }
-
+  title() {
+    return "SplitRows";
+  }
+  code() {
+    return "a = cc.splitRows(duration, rows)";
+  }
+  getEffect(duration) {
+    var action = cc.splitRows(duration, 9);
+    var delay = new cc.DelayTime(0.5);
+    var back = action.reverse();
+    var seq = cc.sequence(action, delay, back);
+    return seq;
+  }
 }

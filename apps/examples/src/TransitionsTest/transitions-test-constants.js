@@ -25,122 +25,241 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CCTransitionCrossFade, CCTransitionRadialCCW, CCTransitionRadialCW, FadeBLTransition, FadeDownTransition, FadeTRTransition, FadeTransition, FadeUpTransition, FadeWhiteTransition, JumpZoomTransition, MoveInBTransition, MoveInLTransition, MoveInRTransition, MoveInTTransition, PageTransitionBackward, PageTransitionForward, RotoZoomTransition, ShrinkGrowTransition, SlideInBTransition, SlideInLTransition, SlideInRTransition, SlideInTTransition, SplitColsTransition, SplitRowsTransition, TurnOffTilesTransition } from "./transitions-test-helpers.js";
+import {
+  CCTransitionCrossFade,
+  CCTransitionRadialCCW,
+  CCTransitionRadialCW,
+  FadeBLTransition,
+  FadeDownTransition,
+  FadeTRTransition,
+  FadeTransition,
+  FadeUpTransition,
+  FadeWhiteTransition,
+  JumpZoomTransition,
+  MoveInBTransition,
+  MoveInLTransition,
+  MoveInRTransition,
+  MoveInTTransition,
+  PageTransitionBackward,
+  PageTransitionForward,
+  RotoZoomTransition,
+  ShrinkGrowTransition,
+  SlideInBTransition,
+  SlideInLTransition,
+  SlideInRTransition,
+  SlideInTTransition,
+  SplitColsTransition,
+  SplitRowsTransition,
+  TurnOffTilesTransition
+} from "./transitions-test-helpers";
 
 export var TRANSITION_DURATION = 1.2;
 
 export var arrayOfTransitionsTest = [
+  {
+    title: "JumpZoomTransition",
+    transitionFunc: function (t, s) {
+      return new JumpZoomTransition(t, s);
+    }
+  },
 
-    {title:"JumpZoomTransition", transitionFunc:function (t, s) {
-        return new JumpZoomTransition(t, s);
-    }},
+  {
+    title: "TransitionProgressRadialCCW",
+    transitionFunc: function (t, s) {
+      return new cc.TransitionProgressRadialCCW(t, s);
+    }
+  },
 
-    {title:"TransitionProgressRadialCCW", transitionFunc:function (t, s) {
-        return new cc.TransitionProgressRadialCCW(t, s);
-    }},
+  {
+    title: "TransitionProgressRadialCW",
+    transitionFunc: function (t, s) {
+      return new cc.TransitionProgressRadialCW(t, s);
+    }
+  },
 
-    {title:"TransitionProgressRadialCW", transitionFunc:function (t, s) {
-        return new cc.TransitionProgressRadialCW(t, s);
-    }},
+  {
+    title: "TransitionProgressHorizontal",
+    transitionFunc: function (t, s) {
+      return new cc.TransitionProgressHorizontal(t, s);
+    }
+  },
 
-    {title:"TransitionProgressHorizontal", transitionFunc:function (t, s) {
-        return new cc.TransitionProgressHorizontal(t, s);
-    }},
+  {
+    title: "TransitionProgressVertical",
+    transitionFunc: function (t, s) {
+      return new cc.TransitionProgressVertical(t, s);
+    }
+  },
 
-    {title:"TransitionProgressVertical", transitionFunc:function (t, s) {
-        return new cc.TransitionProgressVertical(t, s);
-    }},
+  {
+    title: "TransitionProgressInOut",
+    transitionFunc: function (t, s) {
+      return new cc.TransitionProgressInOut(t, s);
+    }
+  },
 
-    {title:"TransitionProgressInOut", transitionFunc:function (t, s) {
-        return new cc.TransitionProgressInOut(t, s);
-    }},
+  {
+    title: "TransitionProgressOutIn",
+    transitionFunc: function (t, s) {
+      return new cc.TransitionProgressOutIn(t, s);
+    }
+  },
 
-    {title:"TransitionProgressOutIn", transitionFunc:function (t, s) {
-        return new cc.TransitionProgressOutIn(t, s);
-    }},
+  //ok
+  {
+    title: "FadeTransition",
+    transitionFunc: function (t, s) {
+      return FadeTransition(t, s);
+    }
+  },
+  {
+    title: "FadeWhiteTransition",
+    transitionFunc: function (t, s) {
+      return FadeWhiteTransition(t, s);
+    }
+  },
 
-    //ok
-    {title:"FadeTransition", transitionFunc:function (t, s) {
-        return FadeTransition(t, s);
-    }},
-    {title:"FadeWhiteTransition", transitionFunc:function (t, s) {
-        return FadeWhiteTransition(t, s);
-    }},
-
-    {title:"ShrinkGrowTransition", transitionFunc:function (t, s) {
-        return ShrinkGrowTransition(t, s);
-    }},
-    {title:"RotoZoomTransition", transitionFunc:function (t, s) {
-        return RotoZoomTransition(t, s);
-    }},
-    {title:"MoveInLTransition", transitionFunc:function (t, s) {
-        return MoveInLTransition(t, s);
-    }},
-    {title:"MoveInRTransition", transitionFunc:function (t, s) {
-        return MoveInRTransition(t, s);
-    }},
-    {title:"MoveInTTransition", transitionFunc:function (t, s) {
-        return MoveInTTransition(t, s);
-    }},
-    {title:"MoveInBTransition", transitionFunc:function (t, s) {
-        return MoveInBTransition(t, s);
-    }},
-    {title:"SlideInLTransition", transitionFunc:function (t, s) {
-        return SlideInLTransition(t, s);
-    }},
-    {title:"SlideInRTransition", transitionFunc:function (t, s) {
-        return SlideInRTransition(t, s);
-    }},
-    {title:"SlideInTTransition", transitionFunc:function (t, s) {
-        return SlideInTTransition(t, s);
-    }},
-    {title:"SlideInBTransition", transitionFunc:function (t, s) {
-        return SlideInBTransition(t, s);
-    }},
-    {title:"CCTransitionRadialCCW", transitionFunc:function (t, s) {
-        return CCTransitionRadialCCW(t, s);
-    }},
-    {title:"CCTransitionRadialCW", transitionFunc:function (t, s) {
-        return CCTransitionRadialCW(t, s);
-    }}
+  {
+    title: "ShrinkGrowTransition",
+    transitionFunc: function (t, s) {
+      return ShrinkGrowTransition(t, s);
+    }
+  },
+  {
+    title: "RotoZoomTransition",
+    transitionFunc: function (t, s) {
+      return RotoZoomTransition(t, s);
+    }
+  },
+  {
+    title: "MoveInLTransition",
+    transitionFunc: function (t, s) {
+      return MoveInLTransition(t, s);
+    }
+  },
+  {
+    title: "MoveInRTransition",
+    transitionFunc: function (t, s) {
+      return MoveInRTransition(t, s);
+    }
+  },
+  {
+    title: "MoveInTTransition",
+    transitionFunc: function (t, s) {
+      return MoveInTTransition(t, s);
+    }
+  },
+  {
+    title: "MoveInBTransition",
+    transitionFunc: function (t, s) {
+      return MoveInBTransition(t, s);
+    }
+  },
+  {
+    title: "SlideInLTransition",
+    transitionFunc: function (t, s) {
+      return SlideInLTransition(t, s);
+    }
+  },
+  {
+    title: "SlideInRTransition",
+    transitionFunc: function (t, s) {
+      return SlideInRTransition(t, s);
+    }
+  },
+  {
+    title: "SlideInTTransition",
+    transitionFunc: function (t, s) {
+      return SlideInTTransition(t, s);
+    }
+  },
+  {
+    title: "SlideInBTransition",
+    transitionFunc: function (t, s) {
+      return SlideInBTransition(t, s);
+    }
+  },
+  {
+    title: "CCTransitionRadialCCW",
+    transitionFunc: function (t, s) {
+      return CCTransitionRadialCCW(t, s);
+    }
+  },
+  {
+    title: "CCTransitionRadialCW",
+    transitionFunc: function (t, s) {
+      return CCTransitionRadialCW(t, s);
+    }
+  }
 ];
 
 if (!cc.rendererConfig.isCanvas) {
-    arrayOfTransitionsTest = arrayOfTransitionsTest.concat(
-        [
-            {title: "PageTransitionForward", transitionFunc: function (t, s) {
-                return PageTransitionForward(t, s);
-            }},
-            {title: "PageTransitionBackward", transitionFunc: function (t, s) {
-                return PageTransitionBackward(t, s);
-            }},
-            {title: "FadeTRTransition", transitionFunc: function (t, s) {
-                return FadeTRTransition(t, s);
-            }},
-            {title: "FadeBLTransition", transitionFunc: function (t, s) {
-                return FadeBLTransition(t, s);
-            }},
-            {title: "FadeUpTransition", transitionFunc: function (t, s) {
-                return FadeUpTransition(t, s);
-            }},
-            {title: "FadeDownTransition", transitionFunc: function (t, s) {
-                return FadeDownTransition(t, s);
-            }},
-            {title: "TurnOffTilesTransition", transitionFunc: function (t, s) {
-                return TurnOffTilesTransition(t, s);
-            }},
-            {title: "SplitRowsTransition", transitionFunc: function (t, s) {
-                return SplitRowsTransition(t, s);
-            }},
-            {title: "CCTransitionCrossFade", transitionFunc: function (t, s) {
-                return CCTransitionCrossFade(t, s);
-            }},
-            {title: "SplitColsTransition", transitionFunc: function (t, s) {
-                return SplitColsTransition(t, s);
-            }}
-        ]);
+  arrayOfTransitionsTest = arrayOfTransitionsTest.concat([
+    {
+      title: "PageTransitionForward",
+      transitionFunc: function (t, s) {
+        return PageTransitionForward(t, s);
+      }
+    },
+    {
+      title: "PageTransitionBackward",
+      transitionFunc: function (t, s) {
+        return PageTransitionBackward(t, s);
+      }
+    },
+    {
+      title: "FadeTRTransition",
+      transitionFunc: function (t, s) {
+        return FadeTRTransition(t, s);
+      }
+    },
+    {
+      title: "FadeBLTransition",
+      transitionFunc: function (t, s) {
+        return FadeBLTransition(t, s);
+      }
+    },
+    {
+      title: "FadeUpTransition",
+      transitionFunc: function (t, s) {
+        return FadeUpTransition(t, s);
+      }
+    },
+    {
+      title: "FadeDownTransition",
+      transitionFunc: function (t, s) {
+        return FadeDownTransition(t, s);
+      }
+    },
+    {
+      title: "TurnOffTilesTransition",
+      transitionFunc: function (t, s) {
+        return TurnOffTilesTransition(t, s);
+      }
+    },
+    {
+      title: "SplitRowsTransition",
+      transitionFunc: function (t, s) {
+        return SplitRowsTransition(t, s);
+      }
+    },
+    {
+      title: "CCTransitionCrossFade",
+      transitionFunc: function (t, s) {
+        return CCTransitionCrossFade(t, s);
+      }
+    },
+    {
+      title: "SplitColsTransition",
+      transitionFunc: function (t, s) {
+        return SplitColsTransition(t, s);
+      }
+    }
+  ]);
 }
 
 export let transitionsIdx = 0;
 
-export function _settransitionsIdx(v) { transitionsIdx = v; }
+export function _settransitionsIdx(v) {
+  transitionsIdx = v;
+}

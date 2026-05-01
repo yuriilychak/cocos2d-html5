@@ -25,22 +25,26 @@
  ****************************************************************************/
 
 //2015-01-14
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UITextTest extends UIMainLayer {
-    init(){
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-            this._bottomDisplayLabel.setString("Text");
+      this._bottomDisplayLabel.setString("Text");
 
-            // Create the text
-            var text = new ccui.Text("Text", "AmericanTypewriter", 30);
-            text.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + text.height / 4));
-            this._mainNode.addChild(text);
+      // Create the text
+      var text = new ccui.Text("Text", "AmericanTypewriter", 30);
+      text.setPosition(
+        new cc.Point(
+          widgetSize.width / 2,
+          widgetSize.height / 2 + text.height / 4
+        )
+      );
+      this._mainNode.addChild(text);
 
-            return true;
-        }
+      return true;
     }
-
+  }
 }

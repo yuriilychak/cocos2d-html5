@@ -30,30 +30,27 @@
 // ActionCardinalSpline
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionCardinalSpline extends ActionsDemo {
-
-      get _code() { 
-        return " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
-        " a = cc.cadinalSplineTo( time, array_of_points, tension );";
-      }
+  get _code() {
+    return (
+      " a = cc.cadinalSplineBy( time, array_of_points, tension );\n" +
+      " a = cc.cadinalSplineTo( time, array_of_points, tension );"
+    );
+  }
 
   constructor() {
     super();
 
+    this._array = null;
 
-      this._array = null;
+    this._drawNode1 = null;
 
+    this._drawNode2 = null;
 
-      this._drawNode1 = null;
-
-
-      this._drawNode2 = null;
-
-
-      this.testDuration = 2.1;
+    this.testDuration = 2.1;
     this._array = [];
 
     //add draw node
@@ -174,5 +171,4 @@ export class ActionCardinalSpline extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

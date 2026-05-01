@@ -30,7 +30,7 @@
 // ActionReverseSequence
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionReverseSequence extends ActionsDemo {
   onEnter() {
@@ -49,5 +49,4 @@ export class ActionReverseSequence extends ActionsDemo {
   subtitle() {
     return "Reverse a sequence";
   }
-
 }

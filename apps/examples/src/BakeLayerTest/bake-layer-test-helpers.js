@@ -25,59 +25,46 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BakeLayerColorTest } from "./bake-layer-color-test.js";
-import { _bakeLayerTestIdx , _set_bakeLayerTestIdx} from "./bake-layer-test-constants.js";
-import { BakeLayerTest1 } from "./bake-layer-test1.js";
-import { BakeLayerTest2 } from "./bake-layer-test2.js";
-
-;
-
-;
-
-;
-
-;
-
-;
+import { BakeLayerColorTest } from "./bake-layer-color-test";
+import {
+  _bakeLayerTestIdx,
+  _set_bakeLayerTestIdx
+} from "./bake-layer-test-constants";
+import { BakeLayerTest1 } from "./bake-layer-test1";
+import { BakeLayerTest2 } from "./bake-layer-test2";
 
 //-
 //
 // Flow control
 //
 export var arrayOfBakeLayerTest = [
-    BakeLayerTest1,
-    BakeLayerTest2,
-    BakeLayerColorTest
+  BakeLayerTest1,
+  BakeLayerTest2,
+  BakeLayerColorTest
 ];
 
 export function nextBakeLayerTest(num) {
-    _set_bakeLayerTestIdx(num ? num - 1 : _bakeLayerTestIdx);
-    _set_bakeLayerTestIdx(_bakeLayerTestIdx + 1);
-    _set_bakeLayerTestIdx(_bakeLayerTestIdx % arrayOfBakeLayerTest.length);
+  _set_bakeLayerTestIdx(num ? num - 1 : _bakeLayerTestIdx);
+  _set_bakeLayerTestIdx(_bakeLayerTestIdx + 1);
+  _set_bakeLayerTestIdx(_bakeLayerTestIdx % arrayOfBakeLayerTest.length);
 
-    if(window.sideIndexBar){
-        _set_bakeLayerTestIdx(window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0));
-    }
-    return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
+  if (window.sideIndexBar) {
+    _set_bakeLayerTestIdx(window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0));
+  }
+  return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 }
-
-;
 
 export function previousBakeLayerTest() {
-    _set_bakeLayerTestIdx(_bakeLayerTestIdx - 1);
-    if (_bakeLayerTestIdx < 0)
-        _set_bakeLayerTestIdx(_bakeLayerTestIdx + (arrayOfBakeLayerTest.length));
+  _set_bakeLayerTestIdx(_bakeLayerTestIdx - 1);
+  if (_bakeLayerTestIdx < 0)
+    _set_bakeLayerTestIdx(_bakeLayerTestIdx + arrayOfBakeLayerTest.length);
 
-    if(window.sideIndexBar){
-        _set_bakeLayerTestIdx(window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0));
-    }
-    return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
+  if (window.sideIndexBar) {
+    _set_bakeLayerTestIdx(window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0));
+  }
+  return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 }
-
-;
 
 export function restartBakeLayerTest() {
-    return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
+  return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 }
-
-;

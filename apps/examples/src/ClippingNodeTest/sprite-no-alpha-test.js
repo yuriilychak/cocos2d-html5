@@ -25,21 +25,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteTest } from "./sprite-test.js";
+import { SpriteTest } from "./sprite-test";
 
 export class SpriteNoAlphaTest extends SpriteTest {
-    title() {
-        return "Sprite No Alpha Basic Test";
-    }
+  title() {
+    return "Sprite No Alpha Basic Test";
+  }
 
-    subtitle() {
-        return "A Sprite as stencil and DrawNode as content, no alpha";
-    }
+  subtitle() {
+    return "A Sprite as stencil and DrawNode as content, no alpha";
+  }
 
-    clipper() {
-        var clipper = super.clipper();
-        clipper.alphaThreshold = 1;
-        return clipper;
-    }
-
+  clipper() {
+    var clipper = super.clipper();
+    clipper.alphaThreshold = 1;
+    return clipper;
+  }
 }

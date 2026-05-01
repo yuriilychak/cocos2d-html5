@@ -30,9 +30,9 @@
 // SpriteChildrenVisibility
 //
 //------------------------------------------------------------------
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_grossini, s_grossiniPlist } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_grossini, s_grossiniPlist } from "../resources";
+import { winSize } from "../constants";
 
 export class SpriteChildrenVisibility extends SpriteTestDemo {
 

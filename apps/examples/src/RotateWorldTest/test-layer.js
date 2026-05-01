@@ -25,32 +25,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { director } from "../tests-main-constants.js";
+import { director } from "../constants";
 
 export class TestLayer extends cc.Layer {
-    constructor() {
-        super();
-        this.init();
-    }
+  constructor() {
+    super();
+    this.init();
+  }
 
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        var x, y;
+    var x, y;
 
-        var size = director.getWinSize();
-        x = size.width;
-        y = size.height;
+    var size = director.getWinSize();
+    x = size.width;
+    y = size.height;
 
-        //cc.MutableArray *array = [UIFont familyNames];
-        //for( cc.String *s in array )
-        //	NSLog( s );
-        var label = new cc.LabelTTF("cocos2d", "Tahoma", 64);
+    //cc.MutableArray *array = [UIFont familyNames];
+    //for( cc.String *s in array )
+    //	NSLog( s );
+    var label = new cc.LabelTTF("cocos2d", "Tahoma", 64);
 
-        label.x = x / 2;
-        label.y = y / 2;
+    label.x = x / 2;
+    label.y = y / 2;
 
-        this.addChild(label);
-    }
-
+    this.addChild(label);
+  }
 }

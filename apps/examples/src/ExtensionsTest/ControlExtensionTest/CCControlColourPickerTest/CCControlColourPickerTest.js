@@ -25,81 +25,82 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene.js";
+import { ControlScene } from "../CCControlScene";
 
 export class ControlColourPickerTest extends ControlScene {
-    constructor() {
-        super();
-        this._colorLabel = null;
+  constructor() {
+    super();
+    this._colorLabel = null;
+  }
+
+  init() {
+    if (super.init()) {
+      var screenSize = cc.director.getWinSize();
+
+      var layer = new cc.Node();
+      layer.x = screenSize.width / 2;
+      layer.y = screenSize.height / 2;
+      this.addChild(layer, 1);
+
+      var layer_width = 0;
+
+      // Create the colour picker
+      var colourPicker = new cc.ControlColourPicker();
+      colourPicker.color = new cc.Color(37, 46, 252);
+      colourPicker.x = colourPicker.width / 2;
+      colourPicker.y = 0;
+
+      // Add it to the layer
+      layer.addChild(colourPicker);
+
+      // Add the target-action pair
+      colourPicker.addTargetWithActionForControlEvents(
+        this,
+        this.colourValueChanged,
+        cc.CONTROL_EVENT_VALUECHANGED
+      );
+
+      layer_width += colourPicker.width;
+
+      // Add the black background for the text
+      var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
+      background.width = 150;
+      background.height = 50;
+      background.x = layer_width + background.width / 2.0;
+      background.y = 0;
+      layer.addChild(background);
+
+      layer_width += background.width;
+
+      this._colorLabel = new cc.LabelTTF("#color", "Marker Felt", 30);
+
+      this._colorLabel.x = background.x;
+      this._colorLabel.y = background.y;
+      layer.addChild(this._colorLabel);
+
+      // Set the layer size
+      layer.width = layer_width;
+      layer.height = 0;
+      layer.anchorX = 0.5;
+      layer.anchorY = 0.5;
+
+      // Update the color text
+      this.colourValueChanged(colourPicker, cc.CONTROL_EVENT_VALUECHANGED);
+      return true;
     }
-
-    init() {
-        if (super.init()) {
-            var screenSize = cc.director.getWinSize();
-
-            var layer  = new cc.Node();
-            layer.x = screenSize.width / 2;
-            layer.y = screenSize.height / 2;
-            this.addChild(layer, 1);
-
-            var layer_width = 0;
-
-            // Create the colour picker
-            var colourPicker = new cc.ControlColourPicker();
-            colourPicker.color = new cc.Color(37, 46, 252);
-            colourPicker.x = colourPicker.width / 2;
-            colourPicker.y = 0;
-
-            // Add it to the layer
-            layer.addChild(colourPicker);
-
-            // Add the target-action pair
-            colourPicker.addTargetWithActionForControlEvents(this,this.colourValueChanged,  cc.CONTROL_EVENT_VALUECHANGED);
-
-
-            layer_width += colourPicker.width;
-
-            // Add the black background for the text
-            var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
-            background.width = 150;
-	        background.height = 50;
-            background.x = layer_width + background.width / 2.0;
-            background.y = 0;
-            layer.addChild(background);
-
-            layer_width += background.width;
-
-            this._colorLabel = new cc.LabelTTF("#color", "Marker Felt", 30);
-
-
-            this._colorLabel.x = background.x;
-            this._colorLabel.y = background.y;
-            layer.addChild(this._colorLabel);
-
-            // Set the layer size
-            layer.width = layer_width;
-	        layer.height = 0;
-            layer.anchorX = 0.5;
-	        layer.anchorY = 0.5;
-
-            // Update the color text
-            this.colourValueChanged(colourPicker, cc.CONTROL_EVENT_VALUECHANGED);
-            return true;
-        }
-        return false;
-    }
-    colourValueChanged(sender, controlEvent) {
-        // Change value of label.
-        this._colorLabel.setString(cc.colorToHex(sender.color).toUpperCase());
-    }
-
-};
+    return false;
+  }
+  colourValueChanged(sender, controlEvent) {
+    // Change value of label.
+    this._colorLabel.setString(cc.colorToHex(sender.color).toUpperCase());
+  }
+}
 ControlColourPickerTest.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlColourPickerTest();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlColourPickerTest();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };

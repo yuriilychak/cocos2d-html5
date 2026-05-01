@@ -27,57 +27,56 @@
 // Chipmunk Collision Memory Leak Test
 //
 //------------------------------------------------------------------
-import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 
 export class ChipmunkCollisionMemoryLeakTest extends ChipmunkBaseLayer {
+  constructor() {
+    super();
+    // cc.base(this);
 
-    constructor() {
-        super();
-        // cc.base(this);
+    this._title = "Chipmunk Memory Leak Test";
+    this._subtitle =
+      "Testing possible memory leak on the collision handler. No visual feedback";
+  }
 
-        this._title = 'Chipmunk Memory Leak Test';
-        this._subtitle = 'Testing possible memory leak on the collision handler. No visual feedback';
-    }
+  collisionBegin(arbiter, space) {
+    return true;
+  }
 
-    collisionBegin( arbiter, space ) {
-        return true;
-    }
+  collisionPre(arbiter, space) {
+    return true;
+  }
 
-    collisionPre( arbiter, space ) {
-        return true;
-    }
+  collisionPost(arbiter, space) {
+    cc.log("collision post");
+  }
 
-    collisionPost( arbiter, space ) {
-        cc.log('collision post');
-    }
+  collisionSeparate(arbiter, space) {
+    cc.log("collision separate");
+  }
 
-    collisionSeparate( arbiter, space ) {
-        cc.log('collision separate');
-    }
+  onEnter() {
+    super.onEnter();
+    // cc.base(this, 'onEnter');
 
-    onEnter() {
-        super.onEnter();
-        // cc.base(this, 'onEnter');
+    for (var i = 1; i < 100; i++)
+      this.space.addCollisionHandler(
+        i,
+        i + 1,
+        this.collisionBegin.bind(this),
+        this.collisionPre.bind(this),
+        this.collisionPost.bind(this),
+        this.collisionSeparate.bind(this)
+      );
+  }
 
-        for( var i=1 ; i < 100 ; i++ )
-            this.space.addCollisionHandler( i, i+1,
-                this.collisionBegin.bind(this),
-                this.collisionPre.bind(this),
-                this.collisionPost.bind(this),
-                this.collisionSeparate.bind(this)
-                );
+  onExit() {
+    super.onExit();
 
-    }
+    for (var i = 1; i < 100; i++) this.space.removeCollisionHandler(i, i + 1);
+  }
 
-    onExit() {
-        super.onExit();
-
-        for( var i=1 ; i < 100 ; i++ )
-            this.space.removeCollisionHandler( i, i+1 );
-    }
-
-    title(){
-        return 'Chipmunk Memory Leak Test';
-    }
-
+  title() {
+    return "Chipmunk Memory Leak Test";
+  }
 }

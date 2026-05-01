@@ -25,31 +25,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectAdvanceTextLayer } from "./effect-advance-text-layer.js";
-import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
+import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 
 export class Effect1 extends EffectAdvanceTextLayer {
-    title() {
-        return "Lens + Waves3d";
-    }
+  title() {
+    return "Lens + Waves3d";
+  }
 
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        var target = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
+    var target = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
 
-        // To reuse a grid the grid size and the grid type must be the same.
-        // in this case:
-        //     Lens3D is Grid3D and it's size is (15,10)
-        //     Waves3D is Grid3D and it's size is (15,10)
-        var size = cc.director.getWinSize();
-        var lens = cc.lens3D(0.0, new cc.Size(15, 10), new cc.Point(size.width / 2, size.height / 2), 240);
-        var waves = cc.waves3D(10, new cc.Size(15, 10), 18, 15);
+    // To reuse a grid the grid size and the grid type must be the same.
+    // in this case:
+    //     Lens3D is Grid3D and it's size is (15,10)
+    //     Waves3D is Grid3D and it's size is (15,10)
+    var size = cc.director.getWinSize();
+    var lens = cc.lens3D(
+      0.0,
+      new cc.Size(15, 10),
+      new cc.Point(size.width / 2, size.height / 2),
+      240
+    );
+    var waves = cc.waves3D(10, new cc.Size(15, 10), 18, 15);
 
-        var reuse = cc.reuseGrid(1);
-        var delay = new cc.DelayTime(8);
+    var reuse = cc.reuseGrid(1);
+    var delay = new cc.DelayTime(8);
 
-        target.runAction(cc.sequence(lens, delay, reuse, waves));
-    }
-
+    target.runAction(cc.sequence(lens, delay, reuse, waves));
+  }
 }

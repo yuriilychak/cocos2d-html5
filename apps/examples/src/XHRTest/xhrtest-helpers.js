@@ -25,17 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { XHRTestLayer } from "./xhrtest-layer.js";
-
-;
-
-;
+import { XHRTestLayer } from "./xhrtest-layer";
 
 export function runXHRTest() {
-    var pScene = new cc.Scene();
-    var pLayer = new XHRTestLayer();
-    pScene.addChild(pLayer);
-    cc.director.runScene(pScene);
+  var pScene = new cc.Scene();
+  var pLayer = new XHRTestLayer();
+  pScene.addChild(pLayer);
+  cc.director.runScene(pScene);
 }
-
-;

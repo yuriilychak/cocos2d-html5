@@ -25,21 +25,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ShapeTest } from "./shape-test.js";
+import { ShapeTest } from "./shape-test";
 
 export class ShapeInvertedTest extends ShapeTest {
-    title() {
-        return "Shape Inverted Basic Test";
-    }
+  title() {
+    return "Shape Inverted Basic Test";
+  }
 
-    subtitle() {
-        return "A DrawNode as stencil and Sprite as content, inverted";
-    }
+  subtitle() {
+    return "A DrawNode as stencil and Sprite as content, inverted";
+  }
 
-    clipper() {
-        var clipper = super.clipper();
-        clipper.setInverted(true);
-        return clipper;
-    }
-
+  clipper() {
+    var clipper = super.clipper();
+    clipper.setInverted(true);
+    return clipper;
+  }
 }

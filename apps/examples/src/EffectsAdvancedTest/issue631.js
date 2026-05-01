@@ -25,47 +25,49 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectAdvanceTextLayer } from "./effect-advance-text-layer.js";
-import { EffectsAdvancedTest } from "./effects-advanced-test-constants.js";
-import { s_pathFog, s_pathGrossini } from "../tests_resources.js";
+import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
+import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
+import { s_pathFog, s_pathGrossini } from "../resources";
 
 export class Issue631 extends EffectAdvanceTextLayer {
-    title() {
-        return "Testing Opacity";
-    }
+  title() {
+    return "Testing Opacity";
+  }
 
-    subtitle() {
-        return "Effect image should be 100% opaque. Testing issue #631";
-    }
+  subtitle() {
+    return "Effect image should be 100% opaque. Testing issue #631";
+  }
 
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        var effect = cc.sequence(new cc.DelayTime(2.0), cc.shaky3D(5.0, new cc.Size(5, 5), 16, false));
+    var effect = cc.sequence(
+      new cc.DelayTime(2.0),
+      cc.shaky3D(5.0, new cc.Size(5, 5), 16, false)
+    );
 
-        // cleanup
-        var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        this.removeChild(bg, true);
+    // cleanup
+    var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
+    this.removeChild(bg, true);
 
-        // background
-        var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
-        this.addChild(layer, -10);
-        var sprite = new cc.Sprite(s_pathGrossini);
-        sprite.x = 50;
-        sprite.y = 80;
-        layer.addChild(sprite, 10);
+    // background
+    var layer = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
+    this.addChild(layer, -10);
+    var sprite = new cc.Sprite(s_pathGrossini);
+    sprite.x = 50;
+    sprite.y = 80;
+    layer.addChild(sprite, 10);
 
-        // foreground
-        var layer2 = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
-        var fog = new cc.Sprite(s_pathFog);
+    // foreground
+    var layer2 = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
+    var fog = new cc.Sprite(s_pathFog);
 
-        fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
-	    var nodeGrid = new cc.NodeGrid();
-        layer2.addChild(fog, 1);
-	    nodeGrid.addChild(layer2);
-        this.addChild(nodeGrid, 1);
+    fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
+    var nodeGrid = new cc.NodeGrid();
+    layer2.addChild(fog, 1);
+    nodeGrid.addChild(layer2);
+    this.addChild(nodeGrid, 1);
 
-	    nodeGrid.runAction(effect.repeatForever());
-    }
-
+    nodeGrid.runAction(effect.repeatForever());
+  }
 }

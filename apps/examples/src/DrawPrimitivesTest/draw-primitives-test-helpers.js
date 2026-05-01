@@ -25,63 +25,49 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { DrawNewAPITest } from "./draw-new-apitest.js";
-import { DrawNewAPITest2 } from "./draw-new-apitest2.js";
-import { drawTestSceneIdx , _setdrawTestSceneIdx} from "./draw-primitives-test-constants.js";
+import { DrawNewAPITest } from "./draw-new-apitest";
+import { DrawNewAPITest2 } from "./draw-new-apitest2";
+import {
+  drawTestSceneIdx,
+  _setdrawTestSceneIdx
+} from "./draw-primitives-test-constants";
 
-;
-
-;
-
-DrawNewAPITest2.prototype.title = function(){
-    return 'cc.DrawNode 2';
+DrawNewAPITest2.prototype.title = function () {
+  return "cc.DrawNode 2";
 };
 
-;
-
-DrawNewAPITest.prototype.title = function(){
-    return 'cc.DrawNode 1';
+DrawNewAPITest.prototype.title = function () {
+  return "cc.DrawNode 1";
 };
-
-;
 
 //
 // Flow control
 //
-export var arrayOfDrawTest = [
-    DrawNewAPITest,
-    DrawNewAPITest2
-];
+export var arrayOfDrawTest = [DrawNewAPITest, DrawNewAPITest2];
 
 export function nextDrawTest() {
-    _setdrawTestSceneIdx(drawTestSceneIdx + 1);
-    _setdrawTestSceneIdx(drawTestSceneIdx % arrayOfDrawTest.length);
+  _setdrawTestSceneIdx(drawTestSceneIdx + 1);
+  _setdrawTestSceneIdx(drawTestSceneIdx % arrayOfDrawTest.length);
 
-    if(window.sideIndexBar){
-        _setdrawTestSceneIdx(window.sideIndexBar.changeTest(drawTestSceneIdx, 9));
-    }
+  if (window.sideIndexBar) {
+    _setdrawTestSceneIdx(window.sideIndexBar.changeTest(drawTestSceneIdx, 9));
+  }
 
-    return new arrayOfDrawTest[drawTestSceneIdx]();
+  return new arrayOfDrawTest[drawTestSceneIdx]();
 }
-
-;
 
 export function previousDrawTest() {
-    _setdrawTestSceneIdx(drawTestSceneIdx - 1);
-    if (drawTestSceneIdx < 0)
-        _setdrawTestSceneIdx(drawTestSceneIdx + (arrayOfDrawTest.length));
+  _setdrawTestSceneIdx(drawTestSceneIdx - 1);
+  if (drawTestSceneIdx < 0)
+    _setdrawTestSceneIdx(drawTestSceneIdx + arrayOfDrawTest.length);
 
-    if(window.sideIndexBar){
-        _setdrawTestSceneIdx(window.sideIndexBar.changeTest(drawTestSceneIdx, 9));
-    }
+  if (window.sideIndexBar) {
+    _setdrawTestSceneIdx(window.sideIndexBar.changeTest(drawTestSceneIdx, 9));
+  }
 
-    return new arrayOfDrawTest[drawTestSceneIdx]();
+  return new arrayOfDrawTest[drawTestSceneIdx]();
 }
-
-;
 
 export function restartDrawTest() {
-    return new arrayOfDrawTest[drawTestSceneIdx]();
+  return new arrayOfDrawTest[drawTestSceneIdx]();
 }
-
-;

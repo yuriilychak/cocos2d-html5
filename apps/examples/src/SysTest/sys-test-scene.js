@@ -24,17 +24,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextSysTest } from "./sys-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setsysTestSceneIdx, sysTestSceneIdx } from "./sys-test-constants.js";
+import { nextSysTest } from "./sys-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { _setsysTestSceneIdx, sysTestSceneIdx } from "./sys-test-constants";
 
 export class SysTestScene extends TestScene {
-    runThisTest(num) {
-        _setsysTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextSysTest();
-        this.addChild(layer);
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _setsysTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextSysTest();
+    this.addChild(layer);
+    director.runScene(this);
+  }
 }

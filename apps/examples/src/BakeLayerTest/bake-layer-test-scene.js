@@ -25,16 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextBakeLayerTest } from "./bake-layer-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _bakeLayerTestIdx, _set_bakeLayerTestIdx } from "./bake-layer-test-constants.js";
+import { nextBakeLayerTest } from "./bake-layer-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _bakeLayerTestIdx,
+  _set_bakeLayerTestIdx
+} from "./bake-layer-test-constants";
 
 export class BakeLayerTestScene extends TestScene {
-    runThisTest(num) {
-        _set_bakeLayerTestIdx((num || 0) - 1);
-        this.addChild(nextBakeLayerTest());
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _set_bakeLayerTestIdx((num || 0) - 1);
+    this.addChild(nextBakeLayerTest());
+    director.runScene(this);
+  }
 }

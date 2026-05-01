@@ -23,9 +23,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestController } from "../test-controller.js";
-import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../tests_resources.js";
-import { _initGlobals, autoTestCurrentTestName, autoTestEnabled, director, winSize } from "../tests-main-constants.js";
+import { TestController } from "../test-controller";
+import {
+  s_pathB1,
+  s_pathB2,
+  s_pathF1,
+  s_pathF2,
+  s_pathR1,
+  s_pathR2
+} from "../resources";
+import {
+  _initGlobals,
+  autoTestCurrentTestName,
+  autoTestEnabled,
+  director,
+  winSize
+} from "../constants";
 
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
 export const BASE_TEST_MENUITEM_RESET_TAG = 2;
@@ -35,298 +48,336 @@ export const BASE_TEST_MENU_TAG = 10;
 export const BASE_TEST_TITLE_TAG = 11;
 export const BASE_TEST_SUBTITLE_TAG = 12;
 
-
-
 export class BaseTestLayer extends cc.LayerGradient {
+  constructor(colorA, colorB) {
+    // default gradient colors
+    var a = new cc.Color(98, 99, 117, 255);
+    var b = new cc.Color(0, 0, 0, 255);
 
-    constructor(colorA, colorB ) {
+    if (arguments.length >= 1) a = colorA;
+    if (arguments.length == 2) b = colorB;
 
-        // default gradient colors
-        var a = new cc.Color(98,99,117,255);
-        var b = new cc.Color(0,0,0,255);
-
-        if( arguments.length >= 1 )
-            a = colorA;
-        if( arguments.length == 2 )
-            b = colorB;
-
-        // for automation, no gradient. helps for grabbing the screen if needed
-        if( autoTestEnabled ) {
-            a = new cc.Color(0,0,0,255);
-            b = new cc.Color(0,0,0,255);
-        }
-
-        super( a, b );
-
-
-        this.testDuration = 0.25;
-
-        // Update winsize in case it was resized
-        _initGlobals();
-
-        if( autoTestEnabled ) {
-            this.totalNumberOfTests = this.numberOfPendingTests();
-            this.scheduleOnce( this.endTest, this.testDuration );
-
-            this.setupAutomation();
-        }
+    // for automation, no gradient. helps for grabbing the screen if needed
+    if (autoTestEnabled) {
+      a = new cc.Color(0, 0, 0, 255);
+      b = new cc.Color(0, 0, 0, 255);
     }
 
-    setupAutomation() {
-        // override me
-        // Will be called only if automation is activated
+    super(a, b);
+
+    this.testDuration = 0.25;
+
+    // Update winsize in case it was resized
+    _initGlobals();
+
+    if (autoTestEnabled) {
+      this.totalNumberOfTests = this.numberOfPendingTests();
+      this.scheduleOnce(this.endTest, this.testDuration);
+
+      this.setupAutomation();
+    }
+  }
+
+  setupAutomation() {
+    // override me
+    // Will be called only if automation is activated
+  }
+
+  getTitle() {
+    var t = "";
+
+    // some tests use "this.title()" and others use "this._title";
+    if ("title" in this) t = this.title();
+    else if ("_title" in this || this._title) t = this._title;
+    return t;
+  }
+  getSubtitle() {
+    var st = "";
+    // some tests use "this.subtitle()" and others use "this._subtitle";
+    if (this.subtitle) st = this.subtitle();
+    else if (this._subtitle) st = this._subtitle;
+
+    return st;
+  }
+  log(str) {
+    if (!autoTestEnabled) cc.log(str);
+  }
+  //
+  // Menu
+  //
+  onEnter() {
+    super.onEnter();
+
+    cc.sys.garbageCollect();
+
+    var t = this.getTitle();
+    var label = new cc.LabelTTF(t, "Arial", 28);
+    this.addChild(label, 100, BASE_TEST_TITLE_TAG);
+    label.x = winSize.width / 2;
+    label.y = winSize.height - 50;
+
+    var st = this.getSubtitle();
+    if (st) {
+      var l = new cc.LabelTTF(st.toString(), "Thonburi", 16);
+      this.addChild(l, 101, BASE_TEST_SUBTITLE_TAG);
+      l.x = winSize.width / 2;
+      l.y = winSize.height - 80;
     }
 
-    getTitle() {
-        var t = "";
+    var item1 = new cc.MenuItemImage(
+      s_pathB1,
+      s_pathB2,
+      this.onBackCallback,
+      this
+    );
+    var item2 = new cc.MenuItemImage(
+      s_pathR1,
+      s_pathR2,
+      this.onRestartCallback,
+      this
+    );
+    var item3 = new cc.MenuItemImage(
+      s_pathF1,
+      s_pathF2,
+      this.onNextCallback,
+      this
+    );
 
-        // some tests use "this.title()" and others use "this._title";
-        if( 'title' in this )
-            t = this.title();
-        else if('_title' in this || this._title)
-            t = this._title;
-        return t;
+    item1.tag = BASE_TEST_MENUITEM_PREV_TAG;
+    item2.tag = BASE_TEST_MENUITEM_RESET_TAG;
+    item3.tag = BASE_TEST_MENUITEM_NEXT_TAG;
+
+    var menu = new cc.Menu(item1, item2, item3);
+
+    menu.x = 0;
+    menu.y = 0;
+    var width = item2.width,
+      height = item2.height;
+    item1.x = winSize.width / 2 - width * 2;
+    item1.y = height / 2;
+    item2.x = winSize.width / 2;
+    item2.y = height / 2;
+    item3.x = winSize.width / 2 + width * 2;
+    item3.y = height / 2;
+
+    this.addChild(menu, 102, BASE_TEST_MENU_TAG);
+  }
+  onRestartCallback(sender) {
+    // override me
+  }
+  onNextCallback(sender) {
+    // override me
+  }
+  onBackCallback(sender) {
+    // override me
+  }
+  //------------------------------------------
+  //
+  // Automation Test code
+  //
+  //------------------------------------------
+
+  // How many seconds should this test run
+
+  // Automated test
+  getExpectedResult() {
+    // Override me
+    throw "Not Implemented";
+  }
+
+  // Automated test
+  getCurrentResult() {
+    // Override me
+    throw "Not Implemented";
+  }
+
+  compareResults(current, expected) {
+    return current == expected;
+  }
+
+  tearDown(dt) {
+    // Override to have a different behavior
+    var current = this.getCurrentResult();
+    var expected = this.getExpectedResult();
+
+    var ret = this.compareResults(current, expected);
+    if (!ret)
+      this.errorDescription =
+        "Expected value: '" + expected + "'. Current value'" + current + "'.";
+
+    return ret;
+  }
+
+  endTest(dt) {
+    this.errorDescription = "";
+    var title = this.getTitle();
+
+    try {
+      if (this.tearDown(dt)) {
+        // Test OK
+        cc.log(
+          autoTestCurrentTestName +
+            " - " +
+            this.getTestNumber() +
+            ": Test '" +
+            title +
+            "':' OK"
+        );
+      } else {
+        // Test failed
+        cc.log(
+          autoTestCurrentTestName +
+            " - " +
+            this.getTestNumber() +
+            ": Test '" +
+            title +
+            "': Error: " +
+            this.errorDescription
+        );
+      }
+    } catch (err) {
+      cc.log(
+        autoTestCurrentTestName +
+          " - " +
+          this.getTestNumber() +
+          ": Test '" +
+          title +
+          "':'" +
+          err
+      );
     }
-    getSubtitle() {
-        var st = "";
-        // some tests use "this.subtitle()" and others use "this._subtitle";
-        if(this.subtitle)
-            st = this.subtitle();
-        else if(this._subtitle)
-            st = this._subtitle;
 
-        return st;
-    }
-    log(str) {
-        if( !autoTestEnabled )
-            cc.log(str);
-    }
-    //
-    // Menu
-    //
-    onEnter() {
-        super.onEnter();
+    this.runNextTest();
+  }
 
-        cc.sys.garbageCollect();
+  numberOfPendingTests() {
+    // override me. Should return true if the last test was executed
+    throw "Override me: numberOfPendingTests";
+  }
 
-        var t = this.getTitle();
-        var label = new cc.LabelTTF(t, "Arial", 28);
-        this.addChild(label, 100, BASE_TEST_TITLE_TAG);
-        label.x = winSize.width / 2;
-        label.y = winSize.height - 50;
+  getTestNumber() {
+    throw "Override me: getTestNumber";
+  }
 
-        var st = this.getSubtitle();
-        if (st) {
-            var l = new cc.LabelTTF(st.toString(), "Thonburi", 16);
-            this.addChild(l, 101, BASE_TEST_SUBTITLE_TAG);
-            l.x = winSize.width / 2;
-            l.y = winSize.height - 80;
-        }
-
-        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
-        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
-        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
-
-        item1.tag = BASE_TEST_MENUITEM_PREV_TAG;
-        item2.tag = BASE_TEST_MENUITEM_RESET_TAG;
-        item3.tag = BASE_TEST_MENUITEM_NEXT_TAG;
-
-        var menu = new cc.Menu(item1, item2, item3);
-
-        menu.x = 0;
-        menu.y = 0;
-        var width = item2.width, height = item2.height;
-        item1.x =  winSize.width/2 - width*2;
-        item1.y = height/2 ;
-        item2.x =  winSize.width/2;
-        item2.y = height/2 ;
-        item3.x =  winSize.width/2 + width*2;
-        item3.y = height/2 ;
-
-        this.addChild(menu, 102, BASE_TEST_MENU_TAG);
-    }
-    onRestartCallback(sender) {
-        // override me
-    }
-    onNextCallback(sender) {
-        // override me
-    }
-    onBackCallback(sender) {
-        // override me
-    }
-    //------------------------------------------
-    //
-    // Automation Test code
-    //
-    //------------------------------------------
-
-    // How many seconds should this test run
-
-    // Automated test
-    getExpectedResult() {
-        // Override me
-        throw "Not Implemented";
-    }
-
-    // Automated test
-    getCurrentResult() {
-        // Override me
-        throw "Not Implemented";
-    }
-
-    compareResults(current, expected) {
-        return (current == expected);
-    }
-
-    tearDown(dt) {
-
-        // Override to have a different behavior
-        var current = this.getCurrentResult();
-        var expected = this.getExpectedResult();
-
-        var ret = this.compareResults(current, expected);
-        if( ! ret )
-            this.errorDescription = "Expected value: '" + expected + "'. Current value'" + current +  "'.";
-
-        return ret;
-    }
-
-    endTest(dt) {
-
-        this.errorDescription = "";
-        var title = this.getTitle();
-
-        try {
-            if( this.tearDown(dt) ) {
-                // Test OK
-                cc.log( autoTestCurrentTestName + " - " + this.getTestNumber() + ": Test '" + title + "':' OK");
-            } else {
-                // Test failed
-                cc.log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + title + "': Error: " + this.errorDescription );
-            }
-        } catch(err) {
-            cc.log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + title + "':'" + err);
-        }
-
+  runNextTest() {
+    if (this.numberOfPendingTests() <= 0) {
+      var scene = new cc.Scene();
+      var layer = new TestController();
+      scene.addChild(layer);
+      director.runScene(scene);
+    } else
+      try {
+        this.onNextCallback(this);
+      } catch (err) {
+        cc.log(
+          autoTestCurrentTestName +
+            " - " +
+            this.getTestNumber() +
+            ": Test '" +
+            this.getTitle() +
+            "':'" +
+            err
+        );
         this.runNextTest();
-    }
+      }
+  }
 
-    numberOfPendingTests() {
-        // override me. Should return true if the last test was executed
-        throw "Override me: numberOfPendingTests";
-    }
-
-    getTestNumber() {
-        throw "Override me: getTestNumber";
-    }
-
-    runNextTest() {
-        if( this.numberOfPendingTests() <= 0 ) {
-            var scene = new cc.Scene();
-            var layer = new TestController();
-            scene.addChild(layer);
-            director.runScene(scene);
-        } else
-            try {
-                this.onNextCallback(this);
-            } catch (err) {
-                cc.log( autoTestCurrentTestName + " - " +this.getTestNumber() + ": Test '" + this.getTitle() + "':'" + err);
-                this.runNextTest();
-            }
-    }
-
-
-    containsPixel(arr, pix, approx, range) {
-
+  containsPixel(arr, pix, approx, range) {
     range = range || 50.0;
     approx = approx || false;
 
-        var abs = function(a,b) {
-        return ((a-b) > 0) ? (a-b) : (b-a);
+    var abs = function (a, b) {
+      return a - b > 0 ? a - b : b - a;
     };
 
-    var pixelEqual = function(pix1, pix2) {
-        if(approx && abs(pix1, pix2) < range) return true;
-        else if(!approx && pix1 == pix2) return true;
-        return false;
+    var pixelEqual = function (pix1, pix2) {
+      if (approx && abs(pix1, pix2) < range) return true;
+      else if (!approx && pix1 == pix2) return true;
+      return false;
     };
 
+    for (var i = 0; i < arr.length; i += 4) {
+      if (
+        pixelEqual(arr[i], pix[0]) &&
+        pixelEqual(arr[i + 1], pix[1]) &&
+        pixelEqual(arr[i + 2], pix[2]) &&
+        pixelEqual(arr[i + 3], pix[3])
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-        for(var i=0; i < arr.length; i += 4) {
-        if(pixelEqual(arr[i], pix[0]) && pixelEqual(arr[i + 1], pix[1]) &&
-           pixelEqual(arr[i + 2], pix[2]) && pixelEqual(arr[i + 3], pix[3])) {
-                return true;
-            }
-        }
-        return false;
+  readPixels(x, y, w, h) {
+    if ("opengl" in cc.sys.capabilities) {
+      var size = 4 * w * h;
+      var array = new Uint8Array(size);
+      gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, array);
+      return array;
+    } else {
+      // implement a canvas-html5 readpixels
+      return cc.rendererConfig.renderContext.getImageData(
+        x,
+        winSize.height - y - h,
+        w,
+        h
+      ).data;
+    }
+  }
+
+  //
+  // Useful for comparing results
+  // From: http://stackoverflow.com/a/1359808
+  //
+  sortObject(o) {
+    var sorted = {},
+      key,
+      a = [];
+
+    for (key in o) {
+      if (o.hasOwnProperty(key)) {
+        a.push(key);
+      }
     }
 
-    readPixels(x,y,w,h) {
-        if( 'opengl' in cc.sys.capabilities) {
-            var size = 4 * w * h;
-            var array = new Uint8Array(size);
-            gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, array);
-            return array;
-        } else {
-            // implement a canvas-html5 readpixels
-            return cc.rendererConfig.renderContext.getImageData(x, winSize.height-y-h, w, h).data;
-        }
+    a.sort();
+
+    for (key = 0; key < a.length; key++) {
+      sorted[a[key]] = o[a[key]];
     }
-
-    //
-    // Useful for comparing results
-    // From: http://stackoverflow.com/a/1359808
-    //
-    sortObject(o) {
-        var sorted = {},
-        key, a = [];
-
-        for (key in o) {
-            if (o.hasOwnProperty(key)) {
-                a.push(key);
-            }
-        }
-
-        a.sort();
-
-        for (key = 0; key < a.length; key++) {
-            sorted[a[key]] = o[a[key]];
-        }
-        return sorted;
-    }
-
-};
+    return sorted;
+  }
+}
 
 export var FlowControl = function (testArray) {
+  var sceneIdx = 0;
 
-    var sceneIdx = 0;
+  return {
+    length: testArray.length,
+    getId: function () {
+      return sceneIdx;
+    },
+    next: function () {
+      sceneIdx++;
+      sceneIdx = sceneIdx % testArray.length;
 
-    return {
-        length: testArray.length,
-        getId: function () {
-            return sceneIdx;
-        },
-        next: function () {
-            sceneIdx++;
-            sceneIdx = sceneIdx % testArray.length;
+      return new testArray[sceneIdx]();
+    },
+    previous: function () {
+      sceneIdx--;
+      if (sceneIdx < 0) sceneIdx += testArray.length;
 
-            return new testArray[sceneIdx]();
-        },
-        previous: function () {
-            sceneIdx--;
-            if (sceneIdx < 0)
-                sceneIdx += testArray.length;
-
-            return new testArray[sceneIdx]();
-        },
-        current: function () {
-            return new testArray[sceneIdx]();
-        },
-        start: function() {
-            sceneIdx = 0;
-            var s = new cc.Scene();
-            s.addChild(this.current());
-            cc.director.runScene(s);
-        }
+      return new testArray[sceneIdx]();
+    },
+    current: function () {
+      return new testArray[sceneIdx]();
+    },
+    start: function () {
+      sceneIdx = 0;
+      var s = new cc.Scene();
+      s.addChild(this.current());
+      cc.director.runScene(s);
     }
+  };
 };

@@ -25,16 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextClippingNodeTest } from "./clipping-node-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { _setclippingNodeTestSceneIdx, clippingNodeTestSceneIdx } from "./clipping-node-test-constants.js";
+import { nextClippingNodeTest } from "./clipping-node-test-helpers";
+import { TestScene } from "../test-scene";
+import {
+  _setclippingNodeTestSceneIdx,
+  clippingNodeTestSceneIdx
+} from "./clipping-node-test-constants";
 
 export class ClippingNodeTestScene extends TestScene {
-    runThisTest(num) {
-        _setclippingNodeTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        cc.director.runScene(this);
-	    var layer = nextClippingNodeTest();
-	    this.addChild(layer);
-    }
-
+  runThisTest(num) {
+    _setclippingNodeTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    cc.director.runScene(this);
+    var layer = nextClippingNodeTest();
+    this.addChild(layer);
+  }
 }

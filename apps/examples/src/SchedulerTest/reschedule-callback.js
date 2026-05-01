@@ -28,43 +28,41 @@
 /*
     RescheduleCallback
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
 
 export class RescheduleCallback extends SchedulerTestLayer {
-    constructor() {
-        super();
-        this._interval = 1.0;
-        this._ticks = 0;
+  constructor() {
+    super();
+    this._interval = 1.0;
+    this._ticks = 0;
+  }
+
+  onEnter() {
+    //----start8----onEnter
+    super.onEnter();
+
+    this._interval = 1.0;
+    this._ticks = 0;
+    this.schedule(this.onSchedUpdate, this._interval);
+    //----end8----
+  }
+  title() {
+    return "Reschedule Callback";
+  }
+  subtitle() {
+    return "Interval is 1 second, then 2, then 3...";
+  }
+
+  onSchedUpdate(dt) {
+    //----start8----onSchedUpdate
+    this._ticks++;
+
+    cc.log("schedUpdate: " + dt.toFixed(2));
+    if (this._ticks > 3) {
+      this._interval += 1.0;
+      this.schedule(this.onSchedUpdate, this._interval);
+      this._ticks = 0;
     }
-
-
-    onEnter() {
-        //----start8----onEnter
-        super.onEnter();
-
-        this._interval = 1.0;
-        this._ticks = 0;
-        this.schedule(this.onSchedUpdate, this._interval);
-        //----end8----
-    }
-    title() {
-        return "Reschedule Callback";
-    }
-    subtitle() {
-        return "Interval is 1 second, then 2, then 3...";
-    }
-
-    onSchedUpdate(dt) {
-        //----start8----onSchedUpdate
-        this._ticks++;
-
-        cc.log("schedUpdate: " + dt.toFixed(2));
-        if (this._ticks > 3) {
-            this._interval += 1.0;
-            this.schedule(this.onSchedUpdate, this._interval);
-            this._ticks = 0;
-        }
-        //----end8----
-    }
-
+    //----end8----
+  }
 }

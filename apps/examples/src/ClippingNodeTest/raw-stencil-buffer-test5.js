@@ -25,31 +25,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { _alphaThreshold } from "./clipping-node-test-helpers.js";
-import { RawStencilBufferTest } from "./raw-stencil-buffer-test.js";
+import { _alphaThreshold } from "./clipping-node-test-helpers";
+import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
 
 export class RawStencilBufferTest5 extends RawStencilBufferTest {
-    subtitle() {
-        return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
-    }
+  subtitle() {
+    return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
+  }
 
-    setupStencilForClippingOnPlane(plane) {
-        var gl = cc.rendererConfig.renderContext;
-        super.setupStencilForClippingOnPlane(plane);
-        gl.disable(gl.DEPTH_TEST);
-        gl.depthMask(false);
+  setupStencilForClippingOnPlane(plane) {
+    var gl = cc.rendererConfig.renderContext;
+    super.setupStencilForClippingOnPlane(plane);
+    gl.disable(gl.DEPTH_TEST);
+    gl.depthMask(false);
 
-        var program = cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
-        var alphaValueLocation = gl.getUniformLocation(program.getProgram(), cc.UNIFORM_ALPHA_TEST_VALUE_S);
-        cc.glUseProgram(program.getProgram());
-        program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-        this._sprite.shaderProgram = program;
-    }
+    var program = cc.shaderCache.programForKey(
+      cc.SHADER_POSITION_TEXTURECOLORALPHATEST
+    );
+    var alphaValueLocation = gl.getUniformLocation(
+      program.getProgram(),
+      cc.UNIFORM_ALPHA_TEST_VALUE_S
+    );
+    cc.glUseProgram(program.getProgram());
+    program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+    this._sprite.shaderProgram = program;
+  }
 
-    setupStencilForDrawingOnPlane(plane) {
-        cc.rendererConfig.renderContext.depthMask(true);
-        //cc.rendererConfig.renderContext.enable(cc.rendererConfig.renderContext.DEPTH_TEST);
-        super.setupStencilForDrawingOnPlane(plane);
-    }
-
+  setupStencilForDrawingOnPlane(plane) {
+    cc.rendererConfig.renderContext.depthMask(true);
+    //cc.rendererConfig.renderContext.enable(cc.rendererConfig.renderContext.DEPTH_TEST);
+    super.setupStencilForDrawingOnPlane(plane);
+  }
 }

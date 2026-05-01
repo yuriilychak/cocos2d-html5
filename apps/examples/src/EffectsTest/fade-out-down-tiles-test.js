@@ -23,21 +23,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class FadeOutDownTilesTest extends EffectsBaseLayer {
-    title() {
-        return "FadeOutDownTilesTest";
-    }
-    code() {
-        return "a = cc.fadeOutDownTiles(duration, gridSize)";
-    }
-    getEffect(duration) {
-        var action = cc.fadeOutDownTiles( duration, new cc.Size(16,12));
-        var delay = new cc.DelayTime(0.5);
-        var back = action.reverse();
-        var seq = cc.sequence( action, delay, back);
-        return seq;
-    }
-
+  title() {
+    return "FadeOutDownTilesTest";
+  }
+  code() {
+    return "a = cc.fadeOutDownTiles(duration, gridSize)";
+  }
+  getEffect(duration) {
+    var action = cc.fadeOutDownTiles(duration, new cc.Size(16, 12));
+    var delay = new cc.DelayTime(0.5);
+    var back = action.reverse();
+    var seq = cc.sequence(action, delay, back);
+    return seq;
+  }
 }

@@ -28,9 +28,9 @@
 // GLTexParamterTest
 //
 //------------------------------------------------------------------
-import { OpenGLTestLayer } from "./open-gltest-layer.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { autoTestEnabled } from "../tests-main-constants.js";
+import { OpenGLTestLayer } from "./open-gltest-layer";
+import { s_pathGrossini } from "../resources";
+import { autoTestEnabled } from "../constants";
 
 export class GLTexParamterTest extends OpenGLTestLayer {
 

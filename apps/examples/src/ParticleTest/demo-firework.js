@@ -25,22 +25,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_stars1 } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_stars1 } from "../resources";
 
 export class DemoFirework extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new cc.ParticleFireworks();
-        this._background.addChild(this._emitter, 10);
-        this._emitter.texture = cc.textureCache.addImage(s_stars1);
-        if (this._emitter.setShapeType)
-            this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
-        this.setEmitterPosition();
-    }
-    title() {
-        return "ParticleFireworks";
-    }
-
+    this._emitter = new cc.ParticleFireworks();
+    this._background.addChild(this._emitter, 10);
+    this._emitter.texture = cc.textureCache.addImage(s_stars1);
+    if (this._emitter.setShapeType)
+      this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
+    this.setEmitterPosition();
+  }
+  title() {
+    return "ParticleFireworks";
+  }
 }

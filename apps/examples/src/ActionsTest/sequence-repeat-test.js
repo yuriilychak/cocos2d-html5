@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class SequenceRepeatTest extends ActionsDemo {
   onEnter() {
@@ -56,5 +56,4 @@ export class SequenceRepeatTest extends ActionsDemo {
   subtitle() {
     return "Tests sequence.repeat function.";
   }
-
 }

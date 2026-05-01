@@ -25,42 +25,36 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlButtonTest_Event } from "./control-button-test-event.js";
-import { ControlButtonTest_HelloVariableSize } from "./control-button-test-hello-variable-size.js";
-import { ControlButtonTest_Styling } from "./control-button-test-styling.js";
-
-;
+import { ControlButtonTest_Event } from "./control-button-test-event";
+import { ControlButtonTest_HelloVariableSize } from "./control-button-test-hello-variable-size";
+import { ControlButtonTest_Styling } from "./control-button-test-styling";
 
 ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlButtonTest_HelloVariableSize();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlButtonTest_HelloVariableSize();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };
-
-;
 
 ControlButtonTest_Event.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlButtonTest_Event();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlButtonTest_Event();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };
 
-;
-
 ControlButtonTest_Styling.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlButtonTest_Styling();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlButtonTest_Styling();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };

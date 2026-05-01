@@ -23,59 +23,58 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { OpenGLTestIdx } from "./open-gltest-constants.js";
-import { arrayOfOpenGLTest, nextOpenGLTest, previousOpenGLTest, restartOpenGLTest } from "./open-gltest-helpers.js";
-import { OpenGLTestScene } from "./open-gltest-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { OpenGLTestIdx } from "./open-gltest-constants";
+import {
+  arrayOfOpenGLTest,
+  nextOpenGLTest,
+  previousOpenGLTest,
+  restartOpenGLTest
+} from "./open-gltest-helpers";
+import { OpenGLTestScene } from "./open-gltest-scene";
+import { director } from "../constants";
 
 export class OpenGLTestLayer extends BaseTestLayer {
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );
+    this._grossini = null;
 
+    this._tamara = null;
 
-        this._grossini = null;
+    this._kathia = null;
 
+    this._code = null;
+  }
 
-        this._tamara = null;
+  title() {
+    return "OpenGLTest";
+  }
+  subtitle() {
+    return "";
+  }
+  onBackCallback(sender) {
+    var s = new OpenGLTestScene();
+    s.addChild(previousOpenGLTest());
+    director.runScene(s);
+  }
+  onRestartCallback(sender) {
+    var s = new OpenGLTestScene();
+    s.addChild(restartOpenGLTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new OpenGLTestScene();
+    s.addChild(nextOpenGLTest());
+    director.runScene(s);
+  }
 
+  // automation
+  numberOfPendingTests() {
+    return arrayOfOpenGLTest.length - 1 - OpenGLTestIdx;
+  }
 
-        this._kathia = null;
-
-
-        this._code = null;
-    }
-
-    title() {
-        return "OpenGLTest";
-    }
-    subtitle() {
-        return "";
-    }
-    onBackCallback(sender) {
-        var s = new OpenGLTestScene();
-        s.addChild(previousOpenGLTest());
-        director.runScene(s);
-    }
-    onRestartCallback(sender) {
-        var s = new OpenGLTestScene();
-        s.addChild(restartOpenGLTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new OpenGLTestScene();
-        s.addChild(nextOpenGLTest());
-        director.runScene(s);
-    }
-
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfOpenGLTest.length-1) - OpenGLTestIdx );
-    }
-
-    getTestNumber() {
-        return OpenGLTestIdx;
-    }
-
+  getTestNumber() {
+    return OpenGLTestIdx;
+  }
 }

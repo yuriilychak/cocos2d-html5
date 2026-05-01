@@ -25,70 +25,83 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestNodeDemo } from "./test-node-demo.js";
-import { s_pathSister1, s_pathSister2 } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { TestNodeDemo } from "./test-node-demo";
+import { s_pathSister1, s_pathSister2 } from "../resources";
+import { winSize } from "../constants";
 
 export class CCNodeTest2 extends TestNodeDemo {
-    constructor() {
-        super();
-        this.testDuration = 4.1;
-        this.pixel1 = {"0":255, "1":230, "2":204, "3":255};
-        this.pixel2 = {"0":204, "1":153, "2":102, "3":255};
-    }
+  constructor() {
+    super();
+    this.testDuration = 4.1;
+    this.pixel1 = { 0: 255, 1: 230, 2: 204, 3: 255 };
+    this.pixel2 = { 0: 204, 1: 153, 2: 102, 3: 255 };
+  }
 
-    onEnter() {
-        //----start0----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start0----onEnter
+    super.onEnter();
 
-        var sp1 = new cc.Sprite(s_pathSister1);
-        var sp2 = new cc.Sprite(s_pathSister2);
-        var sp3 = new cc.Sprite(s_pathSister1);
-        var sp4 = new cc.Sprite(s_pathSister2);
+    var sp1 = new cc.Sprite(s_pathSister1);
+    var sp2 = new cc.Sprite(s_pathSister2);
+    var sp3 = new cc.Sprite(s_pathSister1);
+    var sp4 = new cc.Sprite(s_pathSister2);
 
-        sp1.x = winSize.width / 4;
-        sp1.y = winSize.height / 2;
-        sp2.x = winSize.width / 4 * 3;
-        sp2.y = winSize.height / 2;
-        this.addChild(sp1);
-        this.addChild(sp2);
+    sp1.x = winSize.width / 4;
+    sp1.y = winSize.height / 2;
+    sp2.x = (winSize.width / 4) * 3;
+    sp2.y = winSize.height / 2;
+    this.addChild(sp1);
+    this.addChild(sp2);
 
-        sp3.scale = 0.25;
-        sp4.scale = 0.25;
+    sp3.scale = 0.25;
+    sp4.scale = 0.25;
 
-        sp1.addChild(sp3);
-        sp2.addChild(sp4);
+    sp1.addChild(sp3);
+    sp2.addChild(sp4);
 
-        var a1 = new cc.RotateBy(2, 360);
-        var a2 = new cc.ScaleBy(2, 2);
-        var delay = new cc.DelayTime(0.2);
+    var a1 = new cc.RotateBy(2, 360);
+    var a2 = new cc.ScaleBy(2, 2);
+    var delay = new cc.DelayTime(0.2);
 
-        var action1 = cc.sequence(a1, a2, delay, a2.reverse()).repeatForever();
-        var action2 = cc.sequence(a1.clone(), a2.clone(), delay.clone(), a2.reverse()).repeatForever();
+    var action1 = cc.sequence(a1, a2, delay, a2.reverse()).repeatForever();
+    var action2 = cc
+      .sequence(a1.clone(), a2.clone(), delay.clone(), a2.reverse())
+      .repeatForever();
 
-        sp2.anchorX = 0;
-        sp2.anchorY = 0;
+    sp2.anchorX = 0;
+    sp2.anchorY = 0;
 
-        sp1.runAction(action1);
-        sp2.runAction(action2);
-        //----end0----
-    }
-    title() {
-        return "anchorPoint and children";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(winSize.width / 4 - 54, winSize.height / 2 - 146, 5, 5);
-        var ret2 = this.readPixels(winSize.width / 4 * 3 + 93, winSize.height / 2 + 113, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, true, 5) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, true, 5) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    sp1.runAction(action1);
+    sp2.runAction(action2);
+    //----end0----
+  }
+  title() {
+    return "anchorPoint and children";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(
+      winSize.width / 4 - 54,
+      winSize.height / 2 - 146,
+      5,
+      5
+    );
+    var ret2 = this.readPixels(
+      (winSize.width / 4) * 3 + 93,
+      winSize.height / 2 + 113,
+      5,
+      5
+    );
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel1, true, 5) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel2, true, 5) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

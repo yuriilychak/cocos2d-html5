@@ -25,49 +25,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 
 export class Issue9898 extends EventDispatcherTestDemo {
+  title() {
+    return "Issue9898";
+  }
 
-    title(){
-        return "Issue9898";
-    }
+  subtitle() {
+    return "Should not crash if dispatch event after remove\n event listener in callback";
+  }
 
-    subtitle(){
-        return "Should not crash if dispatch event after remove\n event listener in callback";
-    }
+  constructor() {
+    super();
+    //----start12----ctor
 
-    constructor(){
-        super();
-        //----start12----ctor
+    var origin = cc.director.getVisibleOrigin();
+    var size = cc.director.getVisibleSize();
 
-        var origin = cc.director.getVisibleOrigin();
-        var size = cc.director.getVisibleSize();
+    var node = new cc.Node();
+    this.addChild(node);
 
-        var node = new cc.Node();
-        this.addChild(node);
+    var _listener = cc.EventListener.create({
+      event: cc.EventListener.CUSTOM,
+      eventName: "Issue9898",
+      callback: function (event) {
+        cc.eventManager.removeListener(_listener);
+        event = new cc.EventCustom("Issue9898");
+        cc.eventManager.dispatchEvent(event);
+      }
+    });
+    cc.eventManager.addListener(_listener, 1);
+    var menuItem = new cc.MenuItemFont("Dispatch Custom Event1", function (
+      sender
+    ) {
+      var event = new cc.EventCustom("Issue9898");
+      cc.eventManager.dispatchEvent(event);
+    });
+    menuItem.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
 
-        var _listener = cc.EventListener.create({
-            event: cc.EventListener.CUSTOM,
-            eventName: "Issue9898",
-            callback: function(event){
-                cc.eventManager.removeListener(_listener);
-                event = new cc.EventCustom("Issue9898");
-                cc.eventManager.dispatchEvent(event);
-            }
-        });
-        cc.eventManager.addListener(_listener, 1);
-        var menuItem  = new cc.MenuItemFont("Dispatch Custom Event1", function(sender){
-            var event = new cc.EventCustom("Issue9898");
-            cc.eventManager.dispatchEvent(event);
-        });
-        menuItem.setPosition(origin.x + size.width/2, origin.y + size.height/2);
-
-        var menu = new cc.Menu(menuItem);
-        menu.setPosition(0, 0);
-        this.addChild(menu);
-        //----end12----
-    }
-
-
+    var menu = new cc.Menu(menuItem);
+    menu.setPosition(0, 0);
+    this.addChild(menu);
+    //----end12----
+  }
 }

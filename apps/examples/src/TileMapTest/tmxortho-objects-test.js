@@ -30,76 +30,103 @@
 // TMXOrthoObjectsTest
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXOrthoObjectsTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testObjects = null;
-        var drawNode = new cc.DrawNode();
-        drawNode.setLineWidth(3);
-        drawNode.setDrawColor(new cc.Color(255,255,255,255));
+    this.testObjects = null;
+    var drawNode = new cc.DrawNode();
+    drawNode.setLineWidth(3);
+    drawNode.setDrawColor(new cc.Color(255, 255, 255, 255));
 
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-objects.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-objects.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        var group = map.getObjectGroup("Object Group 1");
-        var array = group.getObjects();
-        var dict;
+    var group = map.getObjectGroup("Object Group 1");
+    var array = group.getObjects();
+    var dict;
 
-        for (var i = 0, len = array.length; i < len; i++) {
-            dict = array[i];
-            if (!dict)
-                break;
-            for (var k in dict) {
-                this.log(k + ' = ' + dict[k]);
-            }
+    for (var i = 0, len = array.length; i < len; i++) {
+      dict = array[i];
+      if (!dict) break;
+      for (var k in dict) {
+        this.log(k + " = " + dict[k]);
+      }
 
-            var x = dict["x"], y = dict["y"];
-            var width = dict["width"], height = dict["height"];
+      var x = dict["x"],
+        y = dict["y"];
+      var width = dict["width"],
+        height = dict["height"];
 
-            drawNode.drawSegment(new cc.Point(x, y), new cc.Point((x + width), y));
-            drawNode.drawSegment(new cc.Point((x + width), y), new cc.Point((x + width), (y + height)));
-            drawNode.drawSegment(new cc.Point((x + width), (y + height)), new cc.Point(x, (y + height)));
-            drawNode.drawSegment(new cc.Point(x, (y + height)), new cc.Point(x, y));
-        }
-        map.addChild(drawNode);
-        //Automation parameters
-        this.testObjects = array;
+      drawNode.drawSegment(new cc.Point(x, y), new cc.Point(x + width, y));
+      drawNode.drawSegment(
+        new cc.Point(x + width, y),
+        new cc.Point(x + width, y + height)
+      );
+      drawNode.drawSegment(
+        new cc.Point(x + width, y + height),
+        new cc.Point(x, y + height)
+      );
+      drawNode.drawSegment(new cc.Point(x, y + height), new cc.Point(x, y));
     }
-    onEnter() {
-        super.onEnter();
-        this.anchorX = 0;
-        this.anchorY = 0;
-    }
-    title() {
-        return "TMX Ortho object test";
-    }
-    subtitle() {
-        return "You should see a white box around the 3 platforms";
-    }
+    map.addChild(drawNode);
+    //Automation parameters
+    this.testObjects = array;
+  }
+  onEnter() {
+    super.onEnter();
+    this.anchorX = 0;
+    this.anchorY = 0;
+  }
+  title() {
+    return "TMX Ortho object test";
+  }
+  subtitle() {
+    return "You should see a white box around the 3 platforms";
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = [];
-        ret.push({"name":"Object", "type":"", "x":0, "y":0, "width":352, "height":32});
-        ret.push({"name":"Object", "type":"", "x":224, "y":64, "width":160, "height":32 });
-        ret.push({"name":"platform", "type":"platform", "x":2, "y":131, "width":125, "height":60});
-        return JSON.stringify(ret);
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = [];
+    ret.push({ name: "Object", type: "", x: 0, y: 0, width: 352, height: 32 });
+    ret.push({
+      name: "Object",
+      type: "",
+      x: 224,
+      y: 64,
+      width: 160,
+      height: 32
+    });
+    ret.push({
+      name: "platform",
+      type: "platform",
+      x: 2,
+      y: 131,
+      width: 125,
+      height: 60
+    });
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret = [];
+    var obj = null;
+    for (var i = 0; i < this.testObjects.length; i++) {
+      obj = this.testObjects[i];
+      ret.push({
+        name: obj["name"] || "",
+        type: obj["type"] || "",
+        x: parseFloat(obj["x"]),
+        y: parseFloat(obj["y"]),
+        width: parseFloat(obj["width"]),
+        height: parseFloat(obj["height"])
+      });
     }
-    getCurrentResult() {
-        var ret = [];
-        var obj = null;
-        for (var i = 0; i < this.testObjects.length; i++) {
-            obj = this.testObjects[i];
-            ret.push({"name":obj["name"] || "", "type":obj["type"] || "", "x":parseFloat(obj["x"]), "y":parseFloat(obj["y"]), "width":parseFloat(obj["width"]), "height":parseFloat(obj["height"])});
-        }
-        return JSON.stringify(ret);
-    }
-
+    return JSON.stringify(ret);
+  }
 }

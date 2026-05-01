@@ -28,40 +28,44 @@
 //////////////////////////////////////////////////////////////////////////
 // TextFieldTTFDefaultTest for test TextFieldTTF default behavior.
 //////////////////////////////////////////////////////////////////////////
-import { KeyboardNotificationLayer } from "./keyboard-notification-layer.js";
-import { TEXT_INPUT_FONT_NAME, TEXT_INPUT_FONT_SIZE } from "./text-input-test-constants.js";
+import { KeyboardNotificationLayer } from "./keyboard-notification-layer";
+import {
+  TEXT_INPUT_FONT_NAME,
+  TEXT_INPUT_FONT_SIZE
+} from "./text-input-test-constants";
 
 export class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
-    subtitle() {
-        return "TextFieldTTF with default behavior test";
+  subtitle() {
+    return "TextFieldTTF with default behavior test";
+  }
+  onClickTrackNode(clicked) {
+    var textField = this._trackNode;
+    if (clicked) {
+      // TextFieldTTFTest be clicked
+      cc.log("TextFieldTTFDefaultTest:CCTextFieldTTF attachWithIME");
+      textField.attachWithIME();
+    } else {
+      // TextFieldTTFTest not be clicked
+      cc.log("TextFieldTTFDefaultTest:CCTextFieldTTF detachWithIME");
+      textField.detachWithIME();
     }
-    onClickTrackNode(clicked) {
-        var textField = this._trackNode;
-        if (clicked) {
-            // TextFieldTTFTest be clicked
-            cc.log("TextFieldTTFDefaultTest:CCTextFieldTTF attachWithIME");
-            textField.attachWithIME();
-        } else {
-            // TextFieldTTFTest not be clicked
-            cc.log("TextFieldTTFDefaultTest:CCTextFieldTTF detachWithIME");
-            textField.detachWithIME();
-        }
-    }
+  }
 
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        // add CCTextFieldTTF
-        var winSize = cc.director.getWinSize();
+    // add CCTextFieldTTF
+    var winSize = cc.director.getWinSize();
 
-        var textField = new cc.TextFieldTTF("<click here for input>",
-            TEXT_INPUT_FONT_NAME,
-            TEXT_INPUT_FONT_SIZE);
-        this.addChild(textField);
-        textField.x = winSize.width / 2;
-        textField.y = winSize.height / 2;
+    var textField = new cc.TextFieldTTF(
+      "<click here for input>",
+      TEXT_INPUT_FONT_NAME,
+      TEXT_INPUT_FONT_SIZE
+    );
+    this.addChild(textField);
+    textField.x = winSize.width / 2;
+    textField.y = winSize.height / 2;
 
-        this._trackNode = textField;
-    }
-
+    this._trackNode = textField;
+  }
 }

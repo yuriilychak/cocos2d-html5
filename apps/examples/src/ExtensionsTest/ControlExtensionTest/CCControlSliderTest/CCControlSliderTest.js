@@ -25,77 +25,100 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene.js";
+import { ControlScene } from "../CCControlScene";
 
 export class ControlSliderTest extends ControlScene {
-    constructor() {
-        super();
-        this._displayValueLabel = null;
+  constructor() {
+    super();
+    this._displayValueLabel = null;
+  }
+
+  init() {
+    if (super.init()) {
+      var screenSize = cc.director.getWinSize();
+
+      // Add a label in which the slider value will be displayed
+      this._displayValueLabel = new cc.LabelTTF(
+        "Move the slider thumb!\nThe lower slider is restricted.",
+        "Marker Felt",
+        32
+      );
+      this._displayValueLabel.anchorX = 0.5;
+      this._displayValueLabel.anchorY = -1.0;
+      this._displayValueLabel.x = screenSize.width / 1.7;
+      this._displayValueLabel.y = screenSize.height / 2.0;
+      this.addChild(this._displayValueLabel);
+
+      // Add the slider
+      var slider = new cc.ControlSlider(
+        "extensions/sliderTrack.png",
+        "extensions/sliderProgress.png",
+        "extensions/sliderThumb.png"
+      );
+      slider.anchorX = 0.5;
+      slider.anchorY = 1.0;
+      slider.setMinimumValue(0.0); // Sets the min value of range
+      slider.setMaximumValue(5.0); // Sets the max value of range
+      slider.x = screenSize.width / 2.0;
+      slider.y = screenSize.height / 2.0 + 16;
+      slider.tag = 1;
+
+      // When the value of the slider will change, the given selector will be call
+      slider.addTargetWithActionForControlEvents(
+        this,
+        this.upperValueChanged,
+        cc.CONTROL_EVENT_VALUECHANGED
+      );
+
+      var restrictSlider = new cc.ControlSlider(
+        "extensions/sliderTrack.png",
+        "extensions/sliderProgress.png",
+        "extensions/sliderThumb.png"
+      );
+      restrictSlider.anchorX = 0.5;
+      restrictSlider.anchorY = 1.0;
+      restrictSlider.setMinimumValue(0.0); // Sets the min value of range
+      restrictSlider.setMaximumValue(5.0); // Sets the max value of range
+      restrictSlider.setMaximumAllowedValue(4.0);
+      restrictSlider.setMinimumAllowedValue(1.5);
+      restrictSlider.setValue(3.0);
+      restrictSlider.x = screenSize.width / 2.0;
+      restrictSlider.y = screenSize.height / 2.0 - 24;
+      restrictSlider.tag = 2;
+
+      //same with restricted
+      restrictSlider.addTargetWithActionForControlEvents(
+        this,
+        this.lowerValueChanged,
+        cc.CONTROL_EVENT_VALUECHANGED
+      );
+
+      this.addChild(slider);
+      this.addChild(restrictSlider);
+      return true;
     }
-
-    init() {
-        if (super.init()) {
-            var screenSize = cc.director.getWinSize();
-
-            // Add a label in which the slider value will be displayed
-            this._displayValueLabel = new cc.LabelTTF("Move the slider thumb!\nThe lower slider is restricted.", "Marker Felt", 32);
-            this._displayValueLabel.anchorX = 0.5;
-            this._displayValueLabel.anchorY = -1.0;
-            this._displayValueLabel.x = screenSize.width / 1.7;
-            this._displayValueLabel.y = screenSize.height / 2.0;
-            this.addChild(this._displayValueLabel);
-
-            // Add the slider
-            var slider = new cc.ControlSlider("extensions/sliderTrack.png", "extensions/sliderProgress.png", "extensions/sliderThumb.png");
-            slider.anchorX = 0.5;
-            slider.anchorY = 1.0;
-            slider.setMinimumValue(0.0); // Sets the min value of range
-            slider.setMaximumValue(5.0); // Sets the max value of range
-            slider.x = screenSize.width / 2.0;
-            slider.y = screenSize.height / 2.0 + 16;
-            slider.tag = 1;
-
-            // When the value of the slider will change, the given selector will be call
-            slider.addTargetWithActionForControlEvents(this, this.upperValueChanged, cc.CONTROL_EVENT_VALUECHANGED);
-
-            var restrictSlider = new cc.ControlSlider("extensions/sliderTrack.png", "extensions/sliderProgress.png", "extensions/sliderThumb.png");
-            restrictSlider.anchorX = 0.5;
-	        restrictSlider.anchorY = 1.0;
-            restrictSlider.setMinimumValue(0.0); // Sets the min value of range
-            restrictSlider.setMaximumValue(5.0); // Sets the max value of range
-            restrictSlider.setMaximumAllowedValue(4.0);
-            restrictSlider.setMinimumAllowedValue(1.5);
-            restrictSlider.setValue(3.0);
-            restrictSlider.x = screenSize.width / 2.0;
-            restrictSlider.y = screenSize.height / 2.0 - 24;
-            restrictSlider.tag = 2;
-
-            //same with restricted
-            restrictSlider.addTargetWithActionForControlEvents(this, this.lowerValueChanged, cc.CONTROL_EVENT_VALUECHANGED);
-
-            this.addChild(slider);
-            this.addChild(restrictSlider);
-            return true;
-        }
-        return false;
-    }
-    upperValueChanged(sender, controlEvent) {
-        // Change value of label.
-        this._displayValueLabel.setString("Upper slider value = " + sender.getValue().toFixed(2));
-    }
-    lowerValueChanged(sender, controlEvent) {
-        // Change value of label.
-        this._displayValueLabel.setString("Lower slider value = " + sender.getValue().toFixed(2));
-    }
-
-};
+    return false;
+  }
+  upperValueChanged(sender, controlEvent) {
+    // Change value of label.
+    this._displayValueLabel.setString(
+      "Upper slider value = " + sender.getValue().toFixed(2)
+    );
+  }
+  lowerValueChanged(sender, controlEvent) {
+    // Change value of label.
+    this._displayValueLabel.setString(
+      "Lower slider value = " + sender.getValue().toFixed(2)
+    );
+  }
+}
 
 ControlSliderTest.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlSliderTest();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlSliderTest();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };

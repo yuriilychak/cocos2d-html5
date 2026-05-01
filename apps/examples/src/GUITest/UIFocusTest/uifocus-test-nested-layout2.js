@@ -23,91 +23,96 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIFocusTestBase } from "./uifocus-test-base.js";
+import { UIFocusTestBase } from "./uifocus-test-base";
 
 export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
-    constructor() {
-        super();
-        this._horizontalLayout = null;
-        this._loopText = null;
+  constructor() {
+    super();
+    this._horizontalLayout = null;
+    this._loopText = null;
+  }
+
+  init() {
+    if (super.init()) {
+      var winSize = cc.director.getVisibleSize();
+
+      this._horizontalLayout = new ccui.HBox();
+      this._horizontalLayout.setPosition(
+        winSize.width / 2 - 160,
+        winSize.height - 120
+      );
+      this.addChild(this._horizontalLayout);
+      //this._horizontalLayout.setScale(0.6);
+
+      this._horizontalLayout.setFocused(true);
+      this._horizontalLayout.setLoopFocus(true);
+      this._horizontalLayout.setTag(100);
+      this._firstFocusedWidget = this._horizontalLayout;
+
+      var count1 = 2,
+        i,
+        w;
+      for (i = 0; i < count1; ++i) {
+        w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        w.setAnchorPoint(0, 1);
+        w.setTouchEnabled(true);
+        w.setTag(i + count1);
+        w.setScaleY(2.4);
+        w.addTouchEventListener(this.onImageViewClicked, this);
+        this._horizontalLayout.addChild(w);
+      }
+
+      //add HBox into VBox
+      var vbox = new ccui.VBox();
+      vbox.setScale(0.8);
+      vbox.setTag(101);
+      this._horizontalLayout.addChild(vbox);
+      var count2 = 2;
+      for (i = 0; i < count2; ++i) {
+        w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        w.setAnchorPoint(0, 1);
+        w.setScaleX(2.0);
+        w.setTouchEnabled(true);
+        w.setTag(i + count1 + count2);
+        w.addTouchEventListener(this.onImageViewClicked, this);
+        vbox.addChild(w);
+      }
+
+      var innerHBox = new ccui.HBox();
+      vbox.addChild(innerHBox);
+      innerHBox.setTag(102);
+      //innerVBox.setPassFocusToChild(false);
+      //innerVBox.setFocusEnabled(false);
+      var count3 = 2;
+      for (i = 0; i < count3; ++i) {
+        w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        w.setTouchEnabled(true);
+        w.setTag(i + count1 + count2 + count3);
+        w.addTouchEventListener(this.onImageViewClicked, this);
+        innerHBox.addChild(w);
+      }
+
+      this._loopText = new ccui.Text("loop enabled", "Arial", 20);
+      this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
+      this._loopText.setColor(cc.Color.GREEN);
+      this.addChild(this._loopText);
+
+      this._btn.addTouchEventListener(this.toggleFocusLoop, this);
+      return true;
     }
+    return false;
+  }
 
-
-    init(){
-        if (super.init()) {
-            var winSize = cc.director.getVisibleSize();
-
-            this._horizontalLayout = new ccui.HBox();
-            this._horizontalLayout.setPosition(winSize.width/2 - 160, winSize.height - 120);
-            this.addChild(this._horizontalLayout);
-            //this._horizontalLayout.setScale(0.6);
-
-            this._horizontalLayout.setFocused(true);
-            this._horizontalLayout.setLoopFocus(true);
-            this._horizontalLayout.setTag(100);
-            this._firstFocusedWidget = this._horizontalLayout;
-
-            var count1 = 2, i, w;
-            for (i=0; i<count1; ++i) {
-                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
-                w.setAnchorPoint(0,1);
-                w.setTouchEnabled(true);
-                w.setTag(i+count1);
-                w.setScaleY(2.4);
-                w.addTouchEventListener(this.onImageViewClicked, this);
-                this._horizontalLayout.addChild(w);
-            }
-
-            //add HBox into VBox
-            var vbox = new ccui.VBox();
-            vbox.setScale(0.8);
-            vbox.setTag(101);
-            this._horizontalLayout.addChild(vbox);
-            var count2 = 2;
-            for (i=0; i < count2; ++i) {
-                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
-                w.setAnchorPoint(0,1);
-                w.setScaleX(2.0);
-                w.setTouchEnabled(true);
-                w.setTag(i+count1+count2);
-                w.addTouchEventListener(this.onImageViewClicked, this);
-                vbox.addChild(w);
-            }
-
-            var innerHBox = new ccui.HBox();
-            vbox.addChild(innerHBox);
-            innerHBox.setTag(102);
-            //innerVBox.setPassFocusToChild(false);
-            //innerVBox.setFocusEnabled(false);
-            var count3 = 2;
-            for (i = 0; i < count3; ++i) {
-                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
-                w.setTouchEnabled(true);
-                w.setTag(i + count1 + count2 + count3);
-                w.addTouchEventListener(this.onImageViewClicked, this);
-                innerHBox.addChild(w);
-            }
-
-            this._loopText = new ccui.Text("loop enabled", "Arial", 20);
-            this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.Color.GREEN);
-            this.addChild(this._loopText);
-
-            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
-            return true;
-        }
-        return false;
+  toggleFocusLoop(ref, touchType) {
+    if (touchType == ccui.Widget.TOUCH_ENDED) {
+      this._horizontalLayout.setLoopFocus(
+        !this._horizontalLayout.isLoopFocus()
+      );
+      if (this._horizontalLayout.isLoopFocus()) {
+        this._loopText.setString("loop enabled");
+      } else {
+        this._loopText.setString("loop disabled");
+      }
     }
-
-    toggleFocusLoop(ref, touchType) {
-        if (touchType == ccui.Widget.TOUCH_ENDED) {
-            this._horizontalLayout.setLoopFocus(!this._horizontalLayout.isLoopFocus());
-            if (this._horizontalLayout.isLoopFocus()) {
-                this._loopText.setString("loop enabled");
-            } else {
-                this._loopText.setString("loop disabled");
-            }
-        }
-    }
-
+  }
 }

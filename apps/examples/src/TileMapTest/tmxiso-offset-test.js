@@ -25,38 +25,38 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXIsoOffsetTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testDuration = 0.25;
+    this.testDuration = 0.25;
 
-        this.pixel = {"0":168, "1":168, "2":168, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/tile_iso_offset.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
-
-    }
-    title() {
-        return "TMX Tile Offset";
-    }
-    subtitle() {
-        return "Testing offset of tiles";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(150, 260, 5, 5);
-        var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    this.pixel = { 0: 168, 1: 168, 2: 168, 3: 255 };
+    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/tile_iso_offset.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
+  }
+  title() {
+    return "TMX Tile Offset";
+  }
+  subtitle() {
+    return "Testing offset of tiles";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(150, 260, 5, 5);
+    var ret = {
+      pixel: this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

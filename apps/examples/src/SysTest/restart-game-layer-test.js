@@ -29,27 +29,29 @@
 // Restart game test
 //
 //------------------------------------------------------------------
-import { SysTestBase } from "./sys-test-base.js";
-import { winSize } from "../tests-main-constants.js";
+import { SysTestBase } from "./sys-test-base";
+import { winSize } from "../constants";
 
 export class RestartGameLayerTest extends SysTestBase {
-    getTitle() {
-        return "RestartGameTest only used in native";
-    }
-    restartGame()
-    {
-        cc.game.restart();
-    }
-    constructor() {
-        super();
-        var menu = new cc.Menu();
-        menu.setPosition(new cc.Point(0, 0));
-        menu.width = winSize.width;
-        menu.height = winSize.height;
-        this.addChild(menu, 1);
-        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("restartGame", "Arial", 22), this.restartGame, this);
-        menu.addChild(item1);
-        menu.setPosition(cc.Point.add(cc.visibleRect.left, new cc.Point(+180, 0)));
-    }
-
+  getTitle() {
+    return "RestartGameTest only used in native";
+  }
+  restartGame() {
+    cc.game.restart();
+  }
+  constructor() {
+    super();
+    var menu = new cc.Menu();
+    menu.setPosition(new cc.Point(0, 0));
+    menu.width = winSize.width;
+    menu.height = winSize.height;
+    this.addChild(menu, 1);
+    var item1 = new cc.MenuItemLabel(
+      new cc.LabelTTF("restartGame", "Arial", 22),
+      this.restartGame,
+      this
+    );
+    menu.addChild(item1);
+    menu.setPosition(cc.Point.add(cc.visibleRect.left, new cc.Point(+180, 0)));
+  }
 }

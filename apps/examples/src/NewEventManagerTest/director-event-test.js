@@ -25,103 +25,114 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
-import { director } from "../tests-main-constants.js";
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { director } from "../constants";
 
 export class DirectorEventTest extends EventDispatcherTestDemo {
-    constructor() {
-        super();
-        this._count1 = 0;
-        this._count2 = 0;
-        this._count3 = 0;
-        this._count4 = 0;
-        this._label1 = null;
-        this._label2 = null;
-        this._label3 = null;
-        this._label4 = null;
-        this._event1 = null;
-        this._event2 = null;
-        this._event3 = null;
-        this._event4 = null;
-        this._time = 0;
+  constructor() {
+    super();
+    this._count1 = 0;
+    this._count2 = 0;
+    this._count3 = 0;
+    this._count4 = 0;
+    this._label1 = null;
+    this._label2 = null;
+    this._label3 = null;
+    this._label4 = null;
+    this._event1 = null;
+    this._event2 = null;
+    this._event3 = null;
+    this._event4 = null;
+    this._time = 0;
+  }
+
+  onEnter() {
+    //----start8----onEnter
+    super.onEnter();
+    var s = director.getWinSize(),
+      selfPointer = this;
+
+    this._label1 = new cc.LabelTTF("Update: 0", "Arial", 20);
+    this._label1.setPosition(80, s.height / 2 + 60);
+    this.addChild(this._label1);
+
+    this._label2 = new cc.LabelTTF("Visit: 0", "Arial", 20);
+    this._label2.setPosition(80, s.height / 2 + 20);
+    this.addChild(this._label2);
+
+    this._label3 = new cc.LabelTTF("Draw: 0", "Arial", 20);
+    this._label3.setPosition(80, s.height / 2 - 20);
+    this.addChild(this._label3);
+
+    this._label4 = new cc.LabelTTF("Projection: 0", "Arial", 20);
+    this._label4.setPosition(80, s.height / 2 - 60);
+    this.addChild(this._label4);
+
+    var dispatcher = cc.eventManager;
+
+    this._event1 = dispatcher.addCustomListener(
+      cc.Director.EVENT_AFTER_UPDATE,
+      this.onEvent1.bind(this)
+    );
+    this._event2 = dispatcher.addCustomListener(
+      cc.Director.EVENT_AFTER_VISIT,
+      this.onEvent2.bind(this)
+    );
+    this._event3 = dispatcher.addCustomListener(
+      cc.Director.EVENT_AFTER_DRAW,
+      function (event) {
+        selfPointer._label3.setString("Draw: " + selfPointer._count3++);
+      }
+    );
+    this._event4 = dispatcher.addCustomListener(
+      cc.Director.EVENT_PROJECTION_CHANGED,
+      function (event) {
+        selfPointer._label4.setString("Projection: " + selfPointer._count4++);
+      }
+    );
+
+    this.scheduleUpdate();
+  }
+
+  onExit() {
+    //----start8----onExit
+    super.onExit();
+
+    var eventManager = cc.eventManager;
+    eventManager.removeListener(this._event1);
+    eventManager.removeListener(this._event2);
+    eventManager.removeListener(this._event3);
+    eventManager.removeListener(this._event4);
+    //----end8----
+  }
+
+  update(dt) {
+    //----start8----update
+    this._time += dt;
+    if (this._time > 0.5) {
+      cc.director.setProjection(cc.Director.PROJECTION_2D);
+      this._time = 0;
     }
+    //----end8----
+  }
 
+  onEvent1(event) {
+    //----start8----onExit
+    this._label1.setString("Update: " + this._count1++);
+    //----end8----
+  }
 
-    onEnter(){
-        //----start8----onEnter
-        super.onEnter();
-        var s = director.getWinSize(), selfPointer = this;
+  onEvent2(event) {
+    //----start8----onExit
+    this._label2.setString("Visit: " + this._count2++);
+    //----end8----
+  }
 
-        this._label1 = new cc.LabelTTF("Update: 0", "Arial", 20);
-        this._label1.setPosition(80,s.height/2 + 60);
-        this.addChild(this._label1);
+  title() {
+    return "Testing Director Events";
+  }
 
-        this._label2 = new cc.LabelTTF("Visit: 0", "Arial", 20);
-        this._label2.setPosition(80,s.height/2 + 20);
-        this.addChild(this._label2);
-
-        this._label3 = new cc.LabelTTF("Draw: 0", "Arial", 20);
-        this._label3.setPosition(80,s.height/2 - 20);
-        this.addChild(this._label3);
-
-        this._label4 = new cc.LabelTTF("Projection: 0", "Arial", 20);
-        this._label4.setPosition(80,s.height/2 - 60);
-        this.addChild(this._label4);
-
-        var dispatcher = cc.eventManager;
-
-        this._event1 = dispatcher.addCustomListener(cc.Director.EVENT_AFTER_UPDATE, this.onEvent1.bind(this));
-        this._event2 = dispatcher.addCustomListener(cc.Director.EVENT_AFTER_VISIT, this.onEvent2.bind(this));
-        this._event3 = dispatcher.addCustomListener(cc.Director.EVENT_AFTER_DRAW, function(event) {
-            selfPointer._label3.setString("Draw: " + selfPointer._count3++);
-        });
-        this._event4 = dispatcher.addCustomListener(cc.Director.EVENT_PROJECTION_CHANGED, function(event) {
-            selfPointer._label4.setString("Projection: " + selfPointer._count4++);
-        });
-
-        this.scheduleUpdate();
-    }
-
-    onExit(){
-        //----start8----onExit
-        super.onExit();
-
-        var eventManager = cc.eventManager;
-        eventManager.removeListener(this._event1);
-        eventManager.removeListener(this._event2);
-        eventManager.removeListener(this._event3);
-        eventManager.removeListener(this._event4);
-        //----end8----
-    }
-
-    update(dt){
-        //----start8----update
-        this._time += dt;
-        if(this._time > 0.5) {
-            cc.director.setProjection(cc.Director.PROJECTION_2D);
-            this._time = 0;
-        }
-        //----end8----
-    }
-
-    onEvent1(event){
-        //----start8----onExit
-        this._label1.setString("Update: " + this._count1++);
-        //----end8----
-    }
-
-    onEvent2(event){
-        //----start8----onExit
-        this._label2.setString("Visit: " + this._count2++);
-        //----end8----
-    }
-
-    title(){
-        return "Testing Director Events";
-    }
-
-    subtitle(){
-        return "after visit, after draw, after update, projection changed";
-    }
-
+  subtitle() {
+    return "after visit, after draw, after update, projection changed";
+  }
 }

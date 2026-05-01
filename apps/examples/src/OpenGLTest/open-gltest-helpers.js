@@ -23,111 +23,64 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { GetSupportedExtensionsTest } from "./get-supported-extensions-test.js";
-import { GLClearTest } from "./glclear-test.js";
-import { GLGetActiveTest } from "./glget-active-test.js";
-import { GLGetUniformTest } from "./glget-uniform-test.js";
-import { GLNodeCCAPITest } from "./glnode-ccapitest.js";
-import { GLNodeWebGLAPITest } from "./glnode-web-glapitest.js";
-import { GLReadPixelsTest } from "./glread-pixels-test.js";
-import { GLTexParamterTest } from "./gltex-paramter-test.js";
-import { OpenGLTestIdx , _setOpenGLTestIdx} from "./open-gltest-constants.js";
-import { ShaderFlowerTest } from "./shader-flower-test.js";
-import { ShaderHeartTest } from "./shader-heart-test.js";
-import { ShaderJuliaTest } from "./shader-julia-test.js";
-import { ShaderMandelbrotTest } from "./shader-mandelbrot-test.js";
-import { ShaderMonjoriTest } from "./shader-monjori-test.js";
-import { ShaderOutlineEffect } from "./shader-outline-effect.js";
-import { ShaderPlasmaTest } from "./shader-plasma-test.js";
-import { ShaderRetroEffect } from "./shader-retro-effect.js";
-import { TexImage2DTest } from "./tex-image2-dtest.js";
-
-;
-
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import { GetSupportedExtensionsTest } from "./get-supported-extensions-test";
+import { GLClearTest } from "./glclear-test";
+import { GLGetActiveTest } from "./glget-active-test";
+import { GLGetUniformTest } from "./glget-uniform-test";
+import { GLNodeCCAPITest } from "./glnode-ccapitest";
+import { GLNodeWebGLAPITest } from "./glnode-web-glapitest";
+import { GLReadPixelsTest } from "./glread-pixels-test";
+import { GLTexParamterTest } from "./gltex-paramter-test";
+import { OpenGLTestIdx, _setOpenGLTestIdx } from "./open-gltest-constants";
+import { ShaderFlowerTest } from "./shader-flower-test";
+import { ShaderHeartTest } from "./shader-heart-test";
+import { ShaderJuliaTest } from "./shader-julia-test";
+import { ShaderMandelbrotTest } from "./shader-mandelbrot-test";
+import { ShaderMonjoriTest } from "./shader-monjori-test";
+import { ShaderOutlineEffect } from "./shader-outline-effect";
+import { ShaderPlasmaTest } from "./shader-plasma-test";
+import { ShaderRetroEffect } from "./shader-retro-effect";
+import { TexImage2DTest } from "./tex-image2-dtest";
 
 //-
 //
 // Flow control
 //
 export var arrayOfOpenGLTest = [
-    ShaderOutlineEffect,
-    ShaderRetroEffect,
-    ShaderMonjoriTest,
-    ShaderMandelbrotTest,
-    ShaderHeartTest,
-    ShaderPlasmaTest,
-    ShaderFlowerTest,
-    ShaderJuliaTest,
-    GLGetActiveTest,
-    TexImage2DTest,
-    GetSupportedExtensionsTest,
-    GLReadPixelsTest,
-    GLClearTest,
-    GLNodeWebGLAPITest,
-    GLNodeCCAPITest,
-    GLTexParamterTest,
-    GLGetUniformTest
+  ShaderOutlineEffect,
+  ShaderRetroEffect,
+  ShaderMonjoriTest,
+  ShaderMandelbrotTest,
+  ShaderHeartTest,
+  ShaderPlasmaTest,
+  ShaderFlowerTest,
+  ShaderJuliaTest,
+  GLGetActiveTest,
+  TexImage2DTest,
+  GetSupportedExtensionsTest,
+  GLReadPixelsTest,
+  GLClearTest,
+  GLNodeWebGLAPITest,
+  GLNodeCCAPITest,
+  GLTexParamterTest,
+  GLGetUniformTest
 ];
 
 export function nextOpenGLTest() {
-    _setOpenGLTestIdx(OpenGLTestIdx + 1);
-    _setOpenGLTestIdx(OpenGLTestIdx % arrayOfOpenGLTest.length);
+  _setOpenGLTestIdx(OpenGLTestIdx + 1);
+  _setOpenGLTestIdx(OpenGLTestIdx % arrayOfOpenGLTest.length);
 
-    return new arrayOfOpenGLTest[OpenGLTestIdx]();
+  return new arrayOfOpenGLTest[OpenGLTestIdx]();
 }
-
-;
 
 export function previousOpenGLTest() {
-    _setOpenGLTestIdx(OpenGLTestIdx - 1);
-    if (OpenGLTestIdx < 0)
-        _setOpenGLTestIdx(OpenGLTestIdx + (arrayOfOpenGLTest.length));
+  _setOpenGLTestIdx(OpenGLTestIdx - 1);
+  if (OpenGLTestIdx < 0)
+    _setOpenGLTestIdx(OpenGLTestIdx + arrayOfOpenGLTest.length);
 
-    return new arrayOfOpenGLTest[OpenGLTestIdx]();
+  return new arrayOfOpenGLTest[OpenGLTestIdx]();
 }
-
-;
 
 export function restartOpenGLTest() {
-    return new arrayOfOpenGLTest[OpenGLTestIdx]();
+  return new arrayOfOpenGLTest[OpenGLTestIdx]();
 }
-
-;

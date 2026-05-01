@@ -30,8 +30,8 @@
 // ActionStackableBezier
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionStackableBezier extends ActionsDemo {
   onEnter() {
@@ -69,5 +69,4 @@ export class ActionStackableBezier extends ActionsDemo {
   subtitle() {
     return "Grossini shall shake while he moves along a bezier path";
   }
-
 }

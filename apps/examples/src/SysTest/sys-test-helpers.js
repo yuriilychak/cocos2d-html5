@@ -24,73 +24,51 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CapabilitiesTest } from "./capabilities-test.js";
-import { LocalStorageTest } from "./local-storage-test.js";
-import { OpenURLTest } from "./open-urltest.js";
-import { RestartGameLayerTest } from "./restart-game-layer-test.js";
-import { ScriptTestLayer } from "./script-test-layer.js";
-import { setClearColorTest } from "./set-clear-color-test.js";
-import { sysTestSceneIdx , _setsysTestSceneIdx} from "./sys-test-constants.js";
-
-;
-
-;
-
-;
-
-;
-
-;
+import { CapabilitiesTest } from "./capabilities-test";
+import { LocalStorageTest } from "./local-storage-test";
+import { OpenURLTest } from "./open-urltest";
+import { RestartGameLayerTest } from "./restart-game-layer-test";
+import { ScriptTestLayer } from "./script-test-layer";
+import { setClearColorTest } from "./set-clear-color-test";
+import { sysTestSceneIdx, _setsysTestSceneIdx } from "./sys-test-constants";
 
 //------------------------------------------------------------------
 //
 // Script dynamic reload test
 //
 //------------------------------------------------------------------
-export var tempJSFileName = "ScriptTestTempFile.js";
-
-;
-
-;
-
-;
+export var tempJSFileName = "ScriptTestTempFile";
 
 //
 // Flow control
 //
 export var arrayOfSysTest = [
-    LocalStorageTest,
-    CapabilitiesTest,
-    OpenURLTest,
-    setClearColorTest
+  LocalStorageTest,
+  CapabilitiesTest,
+  OpenURLTest,
+  setClearColorTest
 ];
 
 if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
-    arrayOfSysTest.push(ScriptTestLayer);
-    arrayOfSysTest.push(RestartGameLayerTest);
+  arrayOfSysTest.push(ScriptTestLayer);
+  arrayOfSysTest.push(RestartGameLayerTest);
 }
 
 export function nextSysTest() {
-    _setsysTestSceneIdx(sysTestSceneIdx + 1);
-    _setsysTestSceneIdx(sysTestSceneIdx % arrayOfSysTest.length);
+  _setsysTestSceneIdx(sysTestSceneIdx + 1);
+  _setsysTestSceneIdx(sysTestSceneIdx % arrayOfSysTest.length);
 
-    return new arrayOfSysTest[sysTestSceneIdx]();
+  return new arrayOfSysTest[sysTestSceneIdx]();
 }
-
-;
 
 export function previousSysTest() {
-    _setsysTestSceneIdx(sysTestSceneIdx - 1);
-    if (sysTestSceneIdx < 0)
-        _setsysTestSceneIdx(sysTestSceneIdx + (arrayOfSysTest.length));
+  _setsysTestSceneIdx(sysTestSceneIdx - 1);
+  if (sysTestSceneIdx < 0)
+    _setsysTestSceneIdx(sysTestSceneIdx + arrayOfSysTest.length);
 
-    return new arrayOfSysTest[sysTestSceneIdx]();
+  return new arrayOfSysTest[sysTestSceneIdx]();
 }
-
-;
 
 export function restartSysTest() {
-    return new arrayOfSysTest[sysTestSceneIdx]();
+  return new arrayOfSysTest[sysTestSceneIdx]();
 }
-
-;

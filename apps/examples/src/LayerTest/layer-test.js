@@ -30,53 +30,51 @@
 // LayerTest
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { layerTestSceneIdx } from "./layer-test-constants.js";
-import { arrayOfLayerTest, nextLayerTest, previousLayerTest, restartLayerTest } from "./layer-test-helpers.js";
-import { LayerTestScene } from "./layer-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { layerTestSceneIdx } from "./layer-test-constants";
+import {
+  arrayOfLayerTest,
+  nextLayerTest,
+  previousLayerTest,
+  restartLayerTest
+} from "./layer-test-helpers";
+import { LayerTestScene } from "./layer-test-scene";
+import { director } from "../constants";
 
 export class LayerTest extends BaseTestLayer {
-    constructor() {
-        super();
-        this._title = null;
-    }
+  constructor() {
+    super();
+    this._title = null;
+  }
 
+  title() {
+    return "No title";
+  }
+  subtitle() {
+    return "";
+  }
 
+  onRestartCallback(sender) {
+    var s = new LayerTestScene();
+    s.addChild(restartLayerTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new LayerTestScene();
+    s.addChild(nextLayerTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new LayerTestScene();
+    s.addChild(previousLayerTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfLayerTest.length - 1 - layerTestSceneIdx;
+  }
 
-    title() {
-        return "No title";
-    }
-    subtitle() {
-        return "";
-    }
-
-    onRestartCallback(sender) {
-        var s = new LayerTestScene();
-        s.addChild(restartLayerTest());
-        director.runScene(s);
-
-    }
-    onNextCallback(sender) {
-        var s = new LayerTestScene();
-        s.addChild(nextLayerTest());
-        director.runScene(s);
-
-    }
-    onBackCallback(sender) {
-        var s = new LayerTestScene();
-        s.addChild(previousLayerTest());
-        director.runScene(s);
-
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfLayerTest.length-1) - layerTestSceneIdx );
-    }
-
-    getTestNumber() {
-        return layerTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return layerTestSceneIdx;
+  }
 }

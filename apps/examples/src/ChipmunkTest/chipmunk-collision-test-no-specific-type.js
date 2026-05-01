@@ -23,102 +23,105 @@
  ****************************************************************************/
 
 //------------------------------------------------------------------
- //
- // Chipmunk Collision Test
- // Using setDefaultCollisionHandler
- // The default collision handler is invoked for each colliding pair of shapes that isn't explicitly handled by a specific collision handler.
- //
- //------------------------------------------------------------------
-import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+//
+// Chipmunk Collision Test
+// Using setDefaultCollisionHandler
+// The default collision handler is invoked for each colliding pair of shapes that isn't explicitly handled by a specific collision handler.
+//
+//------------------------------------------------------------------
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
+import { s_pathGrossini } from "../resources";
+import { winSize } from "../constants";
 
 export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this._title = 'Chipmunk Collision test';
-        this._subtitle = 'Using setDefaultCollisionHandler';
+    this._title = "Chipmunk Collision test";
+    this._subtitle = "Using setDefaultCollisionHandler";
+  }
+
+  // init physics
+  initPhysics() {
+    var staticBody = this.space.staticBody;
+
+    // Walls
+    var walls = [
+      new cp.SegmentShape(staticBody, cp.v(0, 0), cp.v(winSize.width, 0), 0) // bottom
+      // new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
+      // new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
+      // new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
+    ];
+    for (var i = 0; i < walls.length; i++) {
+      var wall = walls[i];
+      wall.setElasticity(1);
+      wall.setFriction(1);
+      this.space.addStaticShape(wall);
     }
 
-    // init physics
-    initPhysics() {
-        var staticBody = this.space.staticBody;
+    // Gravity:
+    // testing properties
+    this.space.gravity = cp.v(0, -100);
+    this.space.iterations = 15;
+  }
 
-        // Walls
-        var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 )               // bottom
-            // new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
-            // new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
-            // new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
-        ];
-        for( var i=0; i < walls.length; i++ ) {
-            var wall = walls[i];
-            wall.setElasticity(1);
-            wall.setFriction(1);
-            this.space.addStaticShape( wall );
-        }
+  createPhysicsSprite(pos, file) {
+    var body = new cp.Body(1, cp.momentForBox(1, 48, 108));
+    body.setPos(pos);
+    this.space.addBody(body);
+    var shape = new cp.BoxShape(body, 48, 108);
+    shape.setElasticity(0.5);
+    shape.setFriction(0.5);
+    this.space.addShape(shape);
 
-        // Gravity:
-        // testing properties
-        this.space.gravity = cp.v(0,-100);
-        this.space.iterations = 15;
-    }
+    var sprite = new cc.PhysicsSprite(file);
+    sprite.setBody(body);
+    return sprite;
+  }
 
-    createPhysicsSprite( pos, file ) {
-        var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
-        body.setPos(pos);
-        this.space.addBody(body);
-        var shape = new cp.BoxShape( body, 48, 108);
-        shape.setElasticity( 0.5 );
-        shape.setFriction( 0.5 );
-        this.space.addShape( shape );
+  onEnter() {
+    super.onEnter();
 
-        var sprite = new cc.PhysicsSprite(file);
-        sprite.setBody( body );
-        return sprite;
-    }
+    this.initPhysics();
+    this.scheduleUpdate();
 
-    onEnter() {
-        super.onEnter();
+    var sprite1 = this.createPhysicsSprite(
+      new cc.Point(winSize.width / 2, winSize.height - 20),
+      s_pathGrossini
+    );
+    this.addChild(sprite1);
 
-        this.initPhysics();
-        this.scheduleUpdate();
+    this.space.setDefaultCollisionHandler(
+      this.collisionBegin.bind(this),
+      this.collisionPre.bind(this),
+      this.collisionPost.bind(this),
+      this.collisionSeparate.bind(this)
+    );
+  }
 
-        var sprite1 = this.createPhysicsSprite( new cc.Point(winSize.width/2, winSize.height-20), s_pathGrossini);
-        this.addChild( sprite1 );
+  onExit() {
+    super.onExit();
+  }
 
-        this.space.setDefaultCollisionHandler(
-            this.collisionBegin.bind(this),
-            this.collisionPre.bind(this),
-            this.collisionPost.bind(this),
-            this.collisionSeparate.bind(this)
-        );
-    }
+  update(delta) {
+    this.space.step(delta);
+  }
 
-    onExit() {
-        super.onExit();
-    }
+  collisionBegin(arbiter, space) {
+    cc.log("collision begin");
+    return true;
+  }
 
-    update( delta ) {
-        this.space.step( delta );
-    }
+  collisionPre(arbiter, space) {
+    cc.log("collision pre");
+    return true;
+  }
 
-    collisionBegin( arbiter, space ) {
-        cc.log('collision begin');
-        return true;
-    }
+  collisionPost(arbiter, space) {
+    cc.log("collision post");
+  }
 
-    collisionPre( arbiter, space ) {
-        cc.log('collision pre');
-        return true;
-    }
-
-    collisionPost( arbiter, space ) {
-        cc.log('collision post');
-    }
-
-    collisionSeparate( arbiter, space ) {
-        cc.log('collision separate');
-    }
-
+  collisionSeparate(arbiter, space) {
+    cc.log("collision separate");
+  }
 }

@@ -28,51 +28,53 @@
 // GLGetActiveTest
 //
 //------------------------------------------------------------------
-import { OpenGLTestLayer } from "./open-gltest-layer.js";
-import { winSize } from "../tests-main-constants.js";
+import { OpenGLTestLayer } from "./open-gltest-layer";
+import { winSize } from "../constants";
 
 export class GLGetActiveTest extends OpenGLTestLayer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    if ("opengl" in cc.sys.capabilities) {
+      var sprite = (this.sprite = new cc.Sprite("Images/grossini.png"));
+      sprite.x = winSize.width / 2;
+      sprite.y = winSize.height / 2;
+      this.addChild(sprite);
 
-        if( 'opengl' in cc.sys.capabilities ) {
-            var sprite = this.sprite = new cc.Sprite("Images/grossini.png");
-            sprite.x = winSize.width/2;
-            sprite.y = winSize.height/2;
-            this.addChild( sprite );
-
-            // after auto test
-            this.scheduleOnce( this.onTest, 0.5 );
-        }
+      // after auto test
+      this.scheduleOnce(this.onTest, 0.5);
     }
+  }
 
-    onTest(dt) {
-        cc.log( this.getCurrentResult() );
-    }
+  onTest(dt) {
+    cc.log(this.getCurrentResult());
+  }
 
-    title() {
-        return "gl.getActiveXXX Function Test";
-    }
-    subtitle() {
-        return "Tests gl.getActiveUniform / getActiveAttrib. See console";
-    }
+  title() {
+    return "gl.getActiveXXX Function Test";
+  }
+  subtitle() {
+    return "Tests gl.getActiveUniform / getActiveAttrib. See console";
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        // redish pixel
-        var ret = [{"size":1,"type":35666,"name":"a_position"},{"size":1,"type":35678,"name":"CC_Texture"},[2,3]];
-        return JSON.stringify(ret);
-    }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    // redish pixel
+    var ret = [
+      { size: 1, type: 35666, name: "a_position" },
+      { size: 1, type: 35678, name: "CC_Texture" },
+      [2, 3]
+    ];
+    return JSON.stringify(ret);
+  }
 
-    getCurrentResult() {
-        var ret = [];
-        var p = this.sprite.shaderProgram.getProgram();
-        ret.push( gl.getActiveAttrib( p, 0 ) );
-        ret.push( gl.getActiveUniform( p, 0 ) );
-        return JSON.stringify(ret);
-    }
-
+  getCurrentResult() {
+    var ret = [];
+    var p = this.sprite.shaderProgram.getProgram();
+    ret.push(gl.getActiveAttrib(p, 0));
+    ret.push(gl.getActiveUniform(p, 0));
+    return JSON.stringify(ret);
+  }
 }

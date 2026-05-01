@@ -23,59 +23,60 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIFocusTestBase } from "./uifocus-test-base.js";
+import { UIFocusTestBase } from "./uifocus-test-base";
 
 export class UIFocusTestVertical extends UIFocusTestBase {
-    constructor() {
-        super();
-        this._verticalLayout = null;
-        this._loopText = null;
+  constructor() {
+    super();
+    this._verticalLayout = null;
+    this._loopText = null;
+  }
+
+  init() {
+    if (super.init()) {
+      var winSize = cc.director.getVisibleSize();
+
+      this._verticalLayout = new ccui.VBox();
+      this._verticalLayout.setPosition(
+        winSize.width / 2 - 50,
+        winSize.height - 80
+      );
+      this.addChild(this._verticalLayout);
+      this._verticalLayout.setTag(100);
+      //this._verticalLayout.setScale(0.8);
+
+      this._verticalLayout.setFocused(true);
+      this._verticalLayout.setLoopFocus(true);
+      this._firstFocusedWidget = this._verticalLayout;
+
+      var count = 3;
+      for (var i = 0; i < count; ++i) {
+        var w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        w.setTouchEnabled(true);
+        w.setTag(i);
+        w.addTouchEventListener(this.onImageViewClicked, this);
+        this._verticalLayout.addChild(w);
+      }
+
+      this._loopText = new ccui.Text("loop enabled", "Arial", 20);
+      this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
+      this._loopText.setColor(cc.Color.GREEN);
+      this.addChild(this._loopText);
+
+      this._btn.addTouchEventListener(this.toggleFocusLoop, this);
+      return true;
     }
+    return false;
+  }
 
-
-    init(){
-        if (super.init()) {
-            var winSize = cc.director.getVisibleSize();
-
-            this._verticalLayout = new ccui.VBox();
-            this._verticalLayout.setPosition(winSize.width/2 - 50, winSize.height - 80);
-            this.addChild(this._verticalLayout);
-            this._verticalLayout.setTag(100);
-            //this._verticalLayout.setScale(0.8);
-
-            this._verticalLayout.setFocused(true);
-            this._verticalLayout.setLoopFocus(true);
-            this._firstFocusedWidget = this._verticalLayout;
-
-            var count = 3;
-            for (var i=0; i<count; ++i) {
-                var w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
-                w.setTouchEnabled(true);
-                w.setTag(i);
-                w.addTouchEventListener(this.onImageViewClicked, this);
-                this._verticalLayout.addChild(w);
-            }
-
-            this._loopText = new ccui.Text("loop enabled", "Arial", 20);
-            this._loopText.setPosition(winSize.width/2, winSize.height - 50);
-            this._loopText.setColor(cc.Color.GREEN);
-            this.addChild(this._loopText);
-
-            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
-            return true;
-        }
-        return false;
+  toggleFocusLoop(ref, touchType) {
+    if (touchType == ccui.Widget.TOUCH_ENDED) {
+      this._verticalLayout.setLoopFocus(!this._verticalLayout.isLoopFocus());
+      if (this._verticalLayout.isLoopFocus()) {
+        this._loopText.setString("loop enabled");
+      } else {
+        this._loopText.setString("loop disabled");
+      }
     }
-
-    toggleFocusLoop(ref, touchType){
-        if (touchType == ccui.Widget.TOUCH_ENDED) {
-            this._verticalLayout.setLoopFocus(!this._verticalLayout.isLoopFocus());
-            if (this._verticalLayout.isLoopFocus()) {
-                this._loopText.setString("loop enabled");
-            } else {
-                this._loopText.setString("loop disabled");
-            }
-        }
-    }
-
+  }
 }

@@ -25,22 +25,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteTest } from "./sprite-test.js";
+import { SpriteTest } from "./sprite-test";
 
 export class SpriteInvertedTest extends SpriteTest {
-    title() {
-        return "Sprite Inverted Basic Test";
-    }
+  title() {
+    return "Sprite Inverted Basic Test";
+  }
 
-    subtitle() {
-        return "A Sprite as stencil and DrawNode as content, inverted";
-    }
+  subtitle() {
+    return "A Sprite as stencil and DrawNode as content, inverted";
+  }
 
-    clipper() {
-        var clipper = super.clipper();
-        clipper.alphaThreshold = 0.05;
-        clipper.inverted = true;
-        return clipper;
-    }
-
+  clipper() {
+    var clipper = super.clipper();
+    clipper.alphaThreshold = 0.05;
+    clipper.inverted = true;
+    return clipper;
+  }
 }

@@ -24,46 +24,58 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIButtonDisableDefaultTest extends UIMainLayer {
-    init(){
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("");
 
-            // Add the alert
-            var alert = new ccui.Text("Left button will turn normal when clicked","Arial",20);
-            alert.setColor(new cc.Color(159, 168, 176));
-            alert.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.height * 1.75);
-            this._mainNode.addChild(alert);
+      // Add the alert
+      var alert = new ccui.Text(
+        "Left button will turn normal when clicked",
+        "Arial",
+        20
+      );
+      alert.setColor(new cc.Color(159, 168, 176));
+      alert.setPosition(
+        widgetSize.width / 2.0,
+        widgetSize.height / 2.0 - alert.height * 1.75
+      );
+      this._mainNode.addChild(alert);
 
-            // Create the button
-            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
-            button.setPosition(widgetSize.width / 2.0 - 80, widgetSize.height / 2.0 + 40);
-            button.setZoomScale(0.4);
-            button.setPressedActionEnabled(true);
-            button.setBright(false);
-            button.addClickEventListener(function () {
-                button.setBright(true);
-            });
-            this._mainNode.addChild(button);
+      // Create the button
+      var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
+      button.setPosition(
+        widgetSize.width / 2.0 - 80,
+        widgetSize.height / 2.0 + 40
+      );
+      button.setZoomScale(0.4);
+      button.setPressedActionEnabled(true);
+      button.setBright(false);
+      button.addClickEventListener(function () {
+        button.setBright(true);
+      });
+      this._mainNode.addChild(button);
 
-            // Create the button
-            var buttonScale9 = new ccui.Button("ccs-res/cocosui/button.png");
-            // open scale9 render
-            buttonScale9.setScale9Enabled(true);
-            buttonScale9.setPosition(widgetSize.width / 2.0 + 50, widgetSize.height / 2.0 + 40);
-            buttonScale9.setContentSize(150, 70);
-            buttonScale9.setPressedActionEnabled(true);
-            buttonScale9.setEnabled(false);
-            buttonScale9.setBright(false);
-            this._mainNode.addChild(buttonScale9);
-            return true;
-        }
-        return false;
+      // Create the button
+      var buttonScale9 = new ccui.Button("ccs-res/cocosui/button.png");
+      // open scale9 render
+      buttonScale9.setScale9Enabled(true);
+      buttonScale9.setPosition(
+        widgetSize.width / 2.0 + 50,
+        widgetSize.height / 2.0 + 40
+      );
+      buttonScale9.setContentSize(150, 70);
+      buttonScale9.setPressedActionEnabled(true);
+      buttonScale9.setEnabled(false);
+      buttonScale9.setBright(false);
+      this._mainNode.addChild(buttonScale9);
+      return true;
     }
-
+    return false;
+  }
 }

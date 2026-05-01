@@ -25,49 +25,53 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { EventDispatcherTestScene } from "./event-dispatcher-test-scene.js";
-import { eventDispatcherSceneIdx } from "./new-event-manager-test-constants.js";
-import { arrayOfEventDispatcherTest, nextDispatcherTest, previousDispatcherTest, restartDispatcherTest } from "./new-event-manager-test-helpers.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { EventDispatcherTestScene } from "./event-dispatcher-test-scene";
+import { eventDispatcherSceneIdx } from "./new-event-manager-test-constants";
+import {
+  arrayOfEventDispatcherTest,
+  nextDispatcherTest,
+  previousDispatcherTest,
+  restartDispatcherTest
+} from "./new-event-manager-test-helpers";
+import { director } from "../constants";
 
 export class EventDispatcherTestDemo extends BaseTestLayer {
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(160,32,32,255));
-    }
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(160, 32, 32, 255));
+  }
 
-    title() {
-        return "No title";
-    }
+  title() {
+    return "No title";
+  }
 
-    subtitle() {
-        return "";
-    }
+  subtitle() {
+    return "";
+  }
 
-    onBackCallback(sender) {
-        var s = new EventDispatcherTestScene();
-        s.addChild(previousDispatcherTest());
-        director.runScene(s);
-    }
+  onBackCallback(sender) {
+    var s = new EventDispatcherTestScene();
+    s.addChild(previousDispatcherTest());
+    director.runScene(s);
+  }
 
-    onRestartCallback(sender) {
-        var s = new EventDispatcherTestScene();
-        s.addChild(restartDispatcherTest());
-        director.runScene(s);
-    }
+  onRestartCallback(sender) {
+    var s = new EventDispatcherTestScene();
+    s.addChild(restartDispatcherTest());
+    director.runScene(s);
+  }
 
-    onNextCallback(sender) {
-        var s = new EventDispatcherTestScene();
-        s.addChild(nextDispatcherTest());
-        director.runScene(s);
-    }
-    // varmation
-    numberOfPendingTests() {
-        return ( (arrayOfEventDispatcherTest.length-1) - eventDispatcherSceneIdx );
-    }
+  onNextCallback(sender) {
+    var s = new EventDispatcherTestScene();
+    s.addChild(nextDispatcherTest());
+    director.runScene(s);
+  }
+  // varmation
+  numberOfPendingTests() {
+    return arrayOfEventDispatcherTest.length - 1 - eventDispatcherSceneIdx;
+  }
 
-    getTestNumber() {
-        return eventDispatcherSceneIdx;
-    }
-
+  getTestNumber() {
+    return eventDispatcherSceneIdx;
+  }
 }

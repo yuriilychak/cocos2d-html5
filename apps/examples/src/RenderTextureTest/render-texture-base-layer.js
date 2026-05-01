@@ -23,53 +23,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { sceneRenderTextureIdx } from "./render-texture-test-constants.js";
-import { arrayOfRenderTextureTest, nextRenderTextureTest, previousRenderTextureTest, restartRenderTextureTest } from "./render-texture-test-helpers.js";
-import { RenderTextureTestScene } from "./render-texture-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { sceneRenderTextureIdx } from "./render-texture-test-constants";
+import {
+  arrayOfRenderTextureTest,
+  nextRenderTextureTest,
+  previousRenderTextureTest,
+  restartRenderTextureTest
+} from "./render-texture-test-helpers";
+import { RenderTextureTestScene } from "./render-texture-test-scene";
+import { director } from "../constants";
 
 export class RenderTextureBaseLayer extends BaseTestLayer {
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );
-    }
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+  }
 
-    title() {
-        return "Render Texture";
-    }
+  title() {
+    return "Render Texture";
+  }
 
-    subtitle() {
-        return "";
-    }
+  subtitle() {
+    return "";
+  }
 
-    code() {
-        return "";
-    }
+  code() {
+    return "";
+  }
 
-    // callbacks
-    onRestartCallback(sender) {
-        var s = new RenderTextureTestScene();
-        s.addChild(restartRenderTextureTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new RenderTextureTestScene();
-        s.addChild(nextRenderTextureTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new RenderTextureTestScene();
-        s.addChild(previousRenderTextureTest());
-        director.runScene(s);
-    }
+  // callbacks
+  onRestartCallback(sender) {
+    var s = new RenderTextureTestScene();
+    s.addChild(restartRenderTextureTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new RenderTextureTestScene();
+    s.addChild(nextRenderTextureTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new RenderTextureTestScene();
+    s.addChild(previousRenderTextureTest());
+    director.runScene(s);
+  }
 
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfRenderTextureTest.length-1) - sceneRenderTextureIdx );
-    }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfRenderTextureTest.length - 1 - sceneRenderTextureIdx;
+  }
 
-    getTestNumber() {
-        return sceneRenderTextureIdx;
-    }
-
+  getTestNumber() {
+    return sceneRenderTextureIdx;
+  }
 }

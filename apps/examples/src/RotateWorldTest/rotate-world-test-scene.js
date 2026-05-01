@@ -25,16 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RotateWorldMainLayer } from "./rotate-world-main-layer.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { RotateWorldMainLayer } from "./rotate-world-main-layer";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class RotateWorldTestScene extends TestScene {
-    runThisTest() {
-        var layer = new RotateWorldMainLayer();
-        this.addChild(layer);
-        this.runAction(new cc.RotateBy(4, -360));
-        director.runScene(this);
-    }
-
+  runThisTest() {
+    var layer = new RotateWorldMainLayer();
+    this.addChild(layer);
+    this.runAction(new cc.RotateBy(4, -360));
+    director.runScene(this);
+  }
 }

@@ -28,39 +28,38 @@
 /*
     SchedulerUpdateAndCustom
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
 
 export class SchedulerUpdateAndCustom extends SchedulerTestLayer {
-    onEnter() {
-        //----start6----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start6----onEnter
+    super.onEnter();
 
-        this.scheduleUpdate();
-        this.schedule(this.onTick);
-        this.schedule(this.onStopCallbacks, 4);
-        //----end6----
-    }
-    title() {
-        return "Schedule Update + custom callback";
-    }
-    subtitle() {
-        return "Update + custom callback at the same time. Stops in 4s. See console";
-    }
+    this.scheduleUpdate();
+    this.schedule(this.onTick);
+    this.schedule(this.onStopCallbacks, 4);
+    //----end6----
+  }
+  title() {
+    return "Schedule Update + custom callback";
+  }
+  subtitle() {
+    return "Update + custom callback at the same time. Stops in 4s. See console";
+  }
 
-    update(dt) {
-        //----start6----update
-        cc.log("update called:" + dt);
-        //----end6----
-    }
-    onTick(dt) {
-        //----start6----onTick
-        cc.log("custom callback called:" + dt);
-        //----end6----
-    }
-    onStopCallbacks(dt) {
-        //----start6----onStopCallbacks
-        this.unscheduleAllCallbacks();
-        //----end6----
-    }
-
+  update(dt) {
+    //----start6----update
+    cc.log("update called:" + dt);
+    //----end6----
+  }
+  onTick(dt) {
+    //----start6----onTick
+    cc.log("custom callback called:" + dt);
+    //----end6----
+  }
+  onStopCallbacks(dt) {
+    //----start6----onStopCallbacks
+    this.unscheduleAllCallbacks();
+    //----end6----
+  }
 }

@@ -30,49 +30,52 @@
 // SpriteTestDemo
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { spriteTestIdx } from "./sprite-test-constants.js";
-import { arrayOfSpriteTest, nextSpriteTest, previousSpriteTest, restartSpriteTest } from "./sprite-test-helpers.js";
-import { SpriteTestScene } from "./sprite-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { spriteTestIdx } from "./sprite-test-constants";
+import {
+  arrayOfSpriteTest,
+  nextSpriteTest,
+  previousSpriteTest,
+  restartSpriteTest
+} from "./sprite-test-helpers";
+import { SpriteTestScene } from "./sprite-test-scene";
+import { director } from "../constants";
 
 export class SpriteTestDemo extends BaseTestLayer {
-
-    constructor() {
-        if (arguments.length === 0) {
-            super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
-        } else {
-            super(...arguments);
-        }
-        this._title = "";
-        this._subtitle = "";
+  constructor() {
+    if (arguments.length === 0) {
+      super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+    } else {
+      super(...arguments);
     }
+    this._title = "";
+    this._subtitle = "";
+  }
 
-    onRestartCallback(sender) {
-        var s = new SpriteTestScene();
-        s.addChild(restartSpriteTest());
-        director.runScene(s);
-    }
+  onRestartCallback(sender) {
+    var s = new SpriteTestScene();
+    s.addChild(restartSpriteTest());
+    director.runScene(s);
+  }
 
-    onNextCallback(sender) {
-        var s = new SpriteTestScene();
-        s.addChild(nextSpriteTest());
-        director.runScene(s);
-    }
+  onNextCallback(sender) {
+    var s = new SpriteTestScene();
+    s.addChild(nextSpriteTest());
+    director.runScene(s);
+  }
 
-    onBackCallback(sender) {
-        var s = new SpriteTestScene();
-        s.addChild(previousSpriteTest());
-        director.runScene(s);
-    }
+  onBackCallback(sender) {
+    var s = new SpriteTestScene();
+    s.addChild(previousSpriteTest());
+    director.runScene(s);
+  }
 
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfSpriteTest.length - 1) - spriteTestIdx );
-    }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfSpriteTest.length - 1 - spriteTestIdx;
+  }
 
-    getTestNumber() {
-        return spriteTestIdx;
-    }
-
+  getTestNumber() {
+    return spriteTestIdx;
+  }
 }

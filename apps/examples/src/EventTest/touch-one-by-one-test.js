@@ -28,9 +28,9 @@
 // OneByOne Touches
 //
 //------------------------------------------------------------------
-import { EventTest } from "./event-test.js";
-import { s_pathR2 } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { EventTest } from "./event-test";
+import { s_pathR2 } from "../resources";
+import { winSize } from "../constants";
 
 export class TouchOneByOneTest extends EventTest {
     init() {

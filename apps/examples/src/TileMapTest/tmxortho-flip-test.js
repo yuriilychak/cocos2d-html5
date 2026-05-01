@@ -30,40 +30,43 @@
 // TMXOrthoFlipTest
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXOrthoFlipTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testDuration = 2.2;
+    this.testDuration = 2.2;
 
-        this.pixel = {"0":41, "1":42, "2":54, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-rotation-test.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
-        this.log("ContentSize:" + map.width + "," + map.height);
+    this.pixel = { 0: 41, 1: 42, 2: 54, 3: 255 };
+    var map = new cc.TMXTiledMap(
+      s_resprefix + "TileMaps/ortho-rotation-test.tmx"
+    );
+    this.addChild(map, 0, TAG_TILE_MAP);
+    this.log("ContentSize:" + map.width + "," + map.height);
 
-        var action = new cc.ScaleBy(2, 0.5);
-        map.runAction(action);
-    }
-    title() {
-        return "TMX tile flip test";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(93, 153, 5, 5);
-        var ret2 = this.readPixels(105, 153, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    var action = new cc.ScaleBy(2, 0.5);
+    map.runAction(action);
+  }
+  title() {
+    return "TMX tile flip test";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(93, 153, 5, 5);
+    var ret2 = this.readPixels(105, 153, 5, 5);
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel, false) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

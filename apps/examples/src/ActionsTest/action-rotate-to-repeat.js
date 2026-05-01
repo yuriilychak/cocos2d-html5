@@ -30,15 +30,14 @@
 // ActionRotateToRepeat
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionRotateToRepeat extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = action_to_repeat.repeat(#_of_times);";
-        this.testDuration = 4.5;
-    }
-
+  constructor() {
+    super();
+    this._code = "a = action_to_repeat.repeat(#_of_times);";
+    this.testDuration = 4.5;
+  }
 
   onEnter() {
     //----start23----onEnter
@@ -73,5 +72,4 @@ export class ActionRotateToRepeat extends ActionsDemo {
     ret.push(r < expected + error && r > expected - error);
     return JSON.stringify(ret);
   }
-
 }

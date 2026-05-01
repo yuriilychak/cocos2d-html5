@@ -22,47 +22,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BasicPerformanceNowTest } from "./basic-performance-now-test.js";
-import { MonotonicIncreaseTest } from "./monotonic-increase-test.js";
-import { scenePerformanceNowTestIdx , _setscenePerformanceNowTestIdx} from "./performance-now-test-constants.js";
-
-;
-
-;
-
-;
-
-;
+import { BasicPerformanceNowTest } from "./basic-performance-now-test";
+import { MonotonicIncreaseTest } from "./monotonic-increase-test";
+import {
+  scenePerformanceNowTestIdx,
+  _setscenePerformanceNowTestIdx
+} from "./performance-now-test-constants";
 
 //
 // Flow control
 //
 export var arrayOfPerformanceNowTest = [
-    BasicPerformanceNowTest,
-    MonotonicIncreaseTest
+  BasicPerformanceNowTest,
+  MonotonicIncreaseTest
 ];
 
 export function nextPerformanceNowTest() {
-    _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx + 1);
-    _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx % arrayOfPerformanceNowTest.length);
+  _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx + 1);
+  _setscenePerformanceNowTestIdx(
+    scenePerformanceNowTestIdx % arrayOfPerformanceNowTest.length
+  );
 
-    return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
+  return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
 }
-
-;
 
 export function previousPerformanceNowTest() {
-    _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx - 1);
-    if (scenePerformanceNowTestIdx < 0)
-        _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx + (arrayOfPerformanceNowTest.length));
+  _setscenePerformanceNowTestIdx(scenePerformanceNowTestIdx - 1);
+  if (scenePerformanceNowTestIdx < 0)
+    _setscenePerformanceNowTestIdx(
+      scenePerformanceNowTestIdx + arrayOfPerformanceNowTest.length
+    );
 
-    return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
+  return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
 }
-
-;
 
 export function restartPerformanceNowTest() {
-    return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
+  return new arrayOfPerformanceNowTest[scenePerformanceNowTestIdx]();
 }
-
-;

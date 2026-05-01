@@ -25,16 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextLabelTest } from "./label-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setlabelTestIdx, labelTestIdx } from "./label-test-constants.js";
+import { nextLabelTest } from "./label-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { _setlabelTestIdx, labelTestIdx } from "./label-test-constants";
 
 export class LabelTestScene extends TestScene {
-    runThisTest(num) {
-        _setlabelTestIdx((num || num == 0) ? (num - 1) : -1);
-        this.addChild(nextLabelTest());
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _setlabelTestIdx(num || num == 0 ? num - 1 : -1);
+    this.addChild(nextLabelTest());
+    director.runScene(this);
+  }
 }

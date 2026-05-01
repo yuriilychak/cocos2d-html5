@@ -30,14 +30,14 @@
 //	ActionSequence2
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { director } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { director } from "../constants";
 
 export class ActionSequence2 extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 1.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 1.1;
+  }
 
   onEnter() {
     //----start17----onEnter
@@ -103,5 +103,4 @@ export class ActionSequence2 extends ActionsDemo {
     ret.push(new cc.Point(this._grossini.x, this._grossini.y));
     return JSON.stringify(ret);
   }
-
 }

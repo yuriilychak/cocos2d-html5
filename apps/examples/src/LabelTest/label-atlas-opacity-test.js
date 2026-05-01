@@ -30,71 +30,76 @@
 // LabelAtlasOpacityTest
 //
 //------------------------------------------------------------------
-import { AtlasDemo } from "./atlas-demo.js";
-import { TAG_LABEL_SPRITE1, TAG_LABEL_SPRITE12 } from "./label-test-constants.js";
-import { s_resprefix } from "../tests_resources.js";
+import { AtlasDemo } from "./atlas-demo";
+import { TAG_LABEL_SPRITE1, TAG_LABEL_SPRITE12 } from "./label-test-constants";
+import { s_resprefix } from "../resources";
 
 export class LabelAtlasOpacityTest extends AtlasDemo {
-    constructor() {
-        //----start0----ctor
-        super();
+  constructor() {
+    //----start0----ctor
+    super();
 
-        this.time = null;
-        this.time = 0;
+    this.time = null;
+    this.time = 0;
 
-        var label1 = new cc.LabelAtlas("123 Test", s_resprefix + "fonts/tuffy_bold_italic-charmap.plist");
-        this.addChild(label1, 0, TAG_LABEL_SPRITE1);
-        label1.x = 10;
-        label1.y = 100;
-        label1.opacity = 200;
+    var label1 = new cc.LabelAtlas(
+      "123 Test",
+      s_resprefix + "fonts/tuffy_bold_italic-charmap.plist"
+    );
+    this.addChild(label1, 0, TAG_LABEL_SPRITE1);
+    label1.x = 10;
+    label1.y = 100;
+    label1.opacity = 200;
 
-        var label2 = new cc.LabelAtlas("0123456789", s_resprefix + "fonts/tuffy_bold_italic-charmap.plist");
-        this.addChild(label2, 0, TAG_LABEL_SPRITE12);
-        label2.x = 10;
-        label2.y = 200;
-        label2.opacity = 32;
+    var label2 = new cc.LabelAtlas(
+      "0123456789",
+      s_resprefix + "fonts/tuffy_bold_italic-charmap.plist"
+    );
+    this.addChild(label2, 0, TAG_LABEL_SPRITE12);
+    label2.x = 10;
+    label2.y = 200;
+    label2.opacity = 32;
 
-        this.schedule(this.step);
-        //----end0----
+    this.schedule(this.step);
+    //----end0----
+  }
+  step(dt) {
+    //----start0----step
+    this.time += dt;
+
+    var label1 = this.getChildByTag(TAG_LABEL_SPRITE1);
+    var string1 = this.time.toFixed(2) + " Test";
+    label1.setString(string1);
+
+    var label2 = this.getChildByTag(TAG_LABEL_SPRITE12);
+    var string2 = parseInt(this.time, 10).toString();
+    label2.setString(string2);
+    //----end0----
+  }
+  title() {
+    return "LabelAtlas Opacity";
+  }
+  subtitle() {
+    return "Updating label should be fast";
+  }
+
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    // yellow, red, green, blue, yellow
+    var ret = [200, 32];
+    return JSON.stringify(ret);
+  }
+
+  getCurrentResult() {
+    var ret = [];
+    var tags = [TAG_LABEL_SPRITE1, TAG_LABEL_SPRITE12];
+
+    for (var i in tags) {
+      var t = tags[i];
+      ret.push(this.getChildByTag(t).opacity);
     }
-    step(dt) {
-        //----start0----step
-        this.time += dt;
-
-        var label1 = this.getChildByTag(TAG_LABEL_SPRITE1);
-        var string1 = this.time.toFixed(2) + " Test";
-        label1.setString(string1);
-
-        var label2 = this.getChildByTag(TAG_LABEL_SPRITE12);
-        var string2 = parseInt(this.time, 10).toString();
-        label2.setString(string2);
-        //----end0----
-    }
-    title() {
-        return "LabelAtlas Opacity";
-    }
-    subtitle() {
-        return "Updating label should be fast";
-    }
-
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        // yellow, red, green, blue, yellow
-        var ret = [200,32];
-        return JSON.stringify(ret);
-    }
-
-    getCurrentResult() {
-        var ret = [];
-        var tags = [TAG_LABEL_SPRITE1, TAG_LABEL_SPRITE12];
-
-        for( var i in tags ) {
-            var t = tags[i];
-            ret.push( this.getChildByTag(t).opacity );
-        }
-        return JSON.stringify(ret);
-    }
-
+    return JSON.stringify(ret);
+  }
 }

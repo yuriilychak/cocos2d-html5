@@ -25,17 +25,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ActionsDemo } from "./actions-demo.js";
-import { createCustomAction } from "./actions-test-helpers.js";
-import { CustomMoveBy } from "./custom-move-by.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { ActionsDemo } from "./actions-demo";
+import { createCustomAction } from "./actions-test-helpers";
+import { CustomMoveBy } from "./custom-move-by";
+import { s_pathGrossini } from "../resources";
 
 export class ActionCustomTest extends ActionsDemo {
-    constructor() {
-        super();
-        this._spritePos = null;
-        this._layer = null;
-    }
+  constructor() {
+    super();
+    this._spritePos = null;
+    this._layer = null;
+  }
 
   onEnter() {
     //----start47----onEnter
@@ -307,5 +307,4 @@ export class ActionCustomTest extends ActionsDemo {
   subtitle() {
     return "Tests custom action, every sprite changing rand color when they run actions";
   }
-
 }

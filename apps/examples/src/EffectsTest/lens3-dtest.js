@@ -23,18 +23,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
-import { winSize } from "../tests-main-constants.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
+import { winSize } from "../constants";
 
 export class Lens3DTest extends EffectsBaseLayer {
-    title() {
-        return "Lens3D";
-    }
-    code() {
-        return "a = cc.lens3D(duration, gridSize, position, radius)";
-    }
-    getEffect(duration) {
-        return cc.lens3D( duration, new cc.Size(15,10), new cc.Point(winSize.width/2, winSize.height/2), 240);
-    }
-
+  title() {
+    return "Lens3D";
+  }
+  code() {
+    return "a = cc.lens3D(duration, gridSize, position, radius)";
+  }
+  getEffect(duration) {
+    return cc.lens3D(
+      duration,
+      new cc.Size(15, 10),
+      new cc.Point(winSize.width / 2, winSize.height / 2),
+      240
+    );
+  }
 }

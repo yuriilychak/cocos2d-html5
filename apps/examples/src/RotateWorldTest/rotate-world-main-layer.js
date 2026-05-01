@@ -25,58 +25,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteLayer } from "./sprite-layer.js";
-import { TestLayer } from "./test-layer.js";
-import { director } from "../tests-main-constants.js";
+import { SpriteLayer } from "./sprite-layer";
+import { TestLayer } from "./test-layer";
+import { director } from "../constants";
 
 export class RotateWorldMainLayer extends cc.Layer {
-    constructor() {
-        super();
-        this.init();
-    }
+  constructor() {
+    super();
+    this.init();
+  }
 
-    onEnter() {
-        super.onEnter();
-        var x, y;
+  onEnter() {
+    super.onEnter();
+    var x, y;
 
-        var size = director.getWinSize();
-        x = size.width;
-        y = size.height;
+    var size = director.getWinSize();
+    x = size.width;
+    y = size.height;
 
-        var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
-        var red = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
-        var green = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
-        var white = new cc.LayerColor(new cc.Color(255, 255, 255, 255));
+    var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
+    var red = new cc.LayerColor(new cc.Color(255, 0, 0, 255));
+    var green = new cc.LayerColor(new cc.Color(0, 255, 0, 255));
+    var white = new cc.LayerColor(new cc.Color(255, 255, 255, 255));
 
-        blue.scale = 0.5;
-        blue.x = -x / 4;
-        blue.y = -y / 4;
-        blue.addChild(new SpriteLayer());
+    blue.scale = 0.5;
+    blue.x = -x / 4;
+    blue.y = -y / 4;
+    blue.addChild(new SpriteLayer());
 
-        red.scale = 0.5;
-        red.x = x / 4;
-        red.y = -y / 4;
+    red.scale = 0.5;
+    red.x = x / 4;
+    red.y = -y / 4;
 
-        green.scale = 0.5;
-        green.x = -x / 4;
-        green.y = y / 4;
-        green.addChild(new TestLayer());
+    green.scale = 0.5;
+    green.x = -x / 4;
+    green.y = y / 4;
+    green.addChild(new TestLayer());
 
-        white.scale = 0.5;
-        white.x = x / 4;
-        white.y = y / 4;
+    white.scale = 0.5;
+    white.x = x / 4;
+    white.y = y / 4;
 
-        this.addChild(blue, -1);
-        this.addChild(white);
-        this.addChild(green);
-        this.addChild(red);
+    this.addChild(blue, -1);
+    this.addChild(white);
+    this.addChild(green);
+    this.addChild(red);
 
-        var rot = new cc.RotateBy(8, 720);
+    var rot = new cc.RotateBy(8, 720);
 
-        blue.runAction(rot);
-        red.runAction(rot.clone());
-        green.runAction(rot.clone());
-        white.runAction(rot.clone());
-    }
-
+    blue.runAction(rot);
+    red.runAction(rot.clone());
+    green.runAction(rot.clone());
+    white.runAction(rot.clone());
+  }
 }

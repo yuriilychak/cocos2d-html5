@@ -30,8 +30,8 @@
 // Issue1288
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { ActionsDemo } from "./actions-demo";
+import { s_pathGrossini } from "../resources";
 
 export class Issue1288 extends ActionsDemo {
   onEnter() {
@@ -58,5 +58,4 @@ export class Issue1288 extends ActionsDemo {
   subtitle() {
     return "Sprite should end at the position where it started.";
   }
-
 }

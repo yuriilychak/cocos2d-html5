@@ -26,27 +26,26 @@
  ****************************************************************************/
 
 // LabelTTFFontInitTest
-import { AtlasDemo } from "./atlas-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { AtlasDemo } from "./atlas-demo";
+import { winSize } from "../constants";
 
 export class LabelTTFFontInitTest extends AtlasDemo {
-    constructor() {
-        //----start23----ctor
-        super();
-        var font = new cc.LabelTTF();
-        font.font = "48px 'Courier New'";
-        //font.setFontName("Arial");
-        font.string = "It is working!";
-        this.addChild(font);
-        font.x = winSize.width / 2;
-        font.y = winSize.height / 2;
-        //----end23----
-    }
-    title() {
-        return "cc.LabelTTF init";
-    }
-    subtitle() {
-        return "Test for support of init method without parameters.";
-    }
-
+  constructor() {
+    //----start23----ctor
+    super();
+    var font = new cc.LabelTTF();
+    font.font = "48px 'Courier New'";
+    //font.setFontName("Arial");
+    font.string = "It is working!";
+    this.addChild(font);
+    font.x = winSize.width / 2;
+    font.y = winSize.height / 2;
+    //----end23----
+  }
+  title() {
+    return "cc.LabelTTF init";
+  }
+  subtitle() {
+    return "Test for support of init method without parameters.";
+  }
 }

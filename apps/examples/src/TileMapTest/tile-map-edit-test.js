@@ -25,51 +25,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_levelMapTga, s_tilesPng } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_levelMapTga, s_tilesPng } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TileMapEditTest extends TileDemo {
-    constructor() {
-        super();
-        var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
-        // Create an Aliased Atlas
-        map.texture.setAliasTexParameters();
-        this.log("ContentSize: " + map.width + " " + map.height);
+  constructor() {
+    super();
+    var map = new cc.TileMapAtlas(s_tilesPng, s_levelMapTga, 16, 16);
+    // Create an Aliased Atlas
+    map.texture.setAliasTexParameters();
+    this.log("ContentSize: " + map.width + " " + map.height);
 
-        // If you are not going to use the Map, you can free it now
-        // [tilemap releaseMap);
-        // And if you are going to use, it you can access the data with:
+    // If you are not going to use the Map, you can free it now
+    // [tilemap releaseMap);
+    // And if you are going to use, it you can access the data with:
 
-        this.schedule(this.updateMap, 0.2);//:@selector(updateMap:) interval:0.2f);
+    this.schedule(this.updateMap, 0.2); //:@selector(updateMap:) interval:0.2f);
 
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        map.anchorX = 0;
-        map.anchorY = 0;
-        map.x = -20;
-        map.y = -200;
+    map.anchorX = 0;
+    map.anchorY = 0;
+    map.x = -20;
+    map.y = -200;
+  }
+  title() {
+    return "Editable TileMapAtlas";
+  }
+  updateMap(dt) {
+    // IMPORTANT
+    //   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
+    //   The value 0 not rendered so don't assign or change a tile with value 0
 
-    }
-    title() {
-        return "Editable TileMapAtlas";
-    }
-    updateMap(dt) {
-        // IMPORTANT
-        //   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
-        //   The value 0 not rendered so don't assign or change a tile with value 0
+    var tilemap = this.getChildByTag(TAG_TILE_MAP);
 
-        var tilemap = this.getChildByTag(TAG_TILE_MAP);
+    // NEW since v0.7
+    var c = tilemap.getTileAt(new cc.Point(13, 21));
+    c.r++;
+    c.r %= 50;
+    if (c.r == 0) c.r = 1;
 
-        // NEW since v0.7
-        var c = tilemap.getTileAt(new cc.Point(13, 21));
-        c.r++;
-        c.r %= 50;
-        if (c.r == 0)
-            c.r = 1;
-
-        // NEW since v0.7
-        tilemap.setTile(c, new cc.Point(13, 21));
-    }
-
+    // NEW since v0.7
+    tilemap.setTile(c, new cc.Point(13, 21));
+  }
 }

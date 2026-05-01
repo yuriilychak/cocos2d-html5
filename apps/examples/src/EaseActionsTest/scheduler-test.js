@@ -30,58 +30,57 @@
 // SchedulerTest
 //
 //------------------------------------------------------------------
-import { EaseSpriteDemo } from "./ease-sprite-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { EaseSpriteDemo } from "./ease-sprite-demo";
+import { winSize } from "../constants";
 
 export class SchedulerTest extends EaseSpriteDemo {
-    constructor() {
-        super();
-        this.testDuration = 0.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 0.1;
+  }
 
-    onEnter() {
-        //----start13----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start13----onEnter
+    super.onEnter();
 
-        // rotate and jump
-        var jump1 = new cc.JumpBy(4, new cc.Point(-winSize.width + 80, 0), 100, 4);
-        var jump2 = jump1.reverse();
-        var rot1 = new cc.RotateBy(4, 360 * 2);
-        var rot2 = rot1.reverse();
+    // rotate and jump
+    var jump1 = new cc.JumpBy(4, new cc.Point(-winSize.width + 80, 0), 100, 4);
+    var jump2 = jump1.reverse();
+    var rot1 = new cc.RotateBy(4, 360 * 2);
+    var rot2 = rot1.reverse();
 
-        var seq3_1 = cc.sequence(jump2, jump1);
-        var seq3_2 = cc.sequence(rot1, rot2);
-        var spawn = cc.spawn(seq3_1, seq3_2);
-        var action = spawn.repeatForever();
+    var seq3_1 = cc.sequence(jump2, jump1);
+    var seq3_2 = cc.sequence(rot1, rot2);
+    var spawn = cc.spawn(seq3_1, seq3_2);
+    var action = spawn.repeatForever();
 
-        var action2 = action.clone();
-        var action3 = action.clone();
+    var action2 = action.clone();
+    var action3 = action.clone();
 
-        //old api
-        //this._grossini.runAction(new cc.Speed(action, 0.5));
-        //this._tamara.runAction(new cc.Speed(action2, 1.5));
-        //this._kathia.runAction(new cc.Speed(action3, 1.0));
+    //old api
+    //this._grossini.runAction(new cc.Speed(action, 0.5));
+    //this._tamara.runAction(new cc.Speed(action2, 1.5));
+    //this._kathia.runAction(new cc.Speed(action3, 1.0));
 
-        this._grossini.runAction(action.speed(0.5));
-        this._tamara.runAction(action2.speed(1.5));
-        this._kathia.runAction(action3.speed(1.0));
+    this._grossini.runAction(action.speed(0.5));
+    this._tamara.runAction(action2.speed(1.5));
+    this._kathia.runAction(action3.speed(1.0));
 
-        var emitter = new cc.ParticleFireworks();
-        emitter.setTotalParticles(250);
-        emitter.texture = cc.textureCache.addImage("Images/fire.png");
-        this.addChild(emitter);
-        //----end13----
-    }
-    title() {
-        return "Scheduler scaleTime Test";
-    }
+    var emitter = new cc.ParticleFireworks();
+    emitter.setTotalParticles(250);
+    emitter.texture = cc.textureCache.addImage("Images/fire.png");
+    this.addChild(emitter);
+    //----end13----
+  }
+  title() {
+    return "Scheduler scaleTime Test";
+  }
 
-    // automation
-    getExpectedResult() {
-        throw "Not Implemented";
-    }
-    getCurrentResult() {
-        throw "Not Implemented";
-    }
-
+  // automation
+  getExpectedResult() {
+    throw "Not Implemented";
+  }
+  getCurrentResult() {
+    throw "Not Implemented";
+  }
 }

@@ -25,88 +25,97 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo.js";
-import { director } from "../tests-main-constants.js";
+import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { director } from "../constants";
 
 export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
-    constructor() {
-        super();
-        this._sprite = null;
-        this._spriteSaved = false;
-    }
+  constructor() {
+    super();
+    this._sprite = null;
+    this._spriteSaved = false;
+  }
 
+  onEnter() {
+    //----start6----onEnter
+    super.onEnter();
 
-    onEnter(){
-        //----start6----onEnter
-        super.onEnter();
+    var origin = director.getVisibleOrigin();
+    var size = director.getVisibleSize();
 
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
+    this._sprite = new cc.Sprite("Images/CyanSquare.png");
+    this._sprite.setPosition(
+      origin.x + size.width / 2,
+      origin.y + size.height / 2
+    );
+    this.addChild(this._sprite, 10);
 
-        this._sprite = new cc.Sprite("Images/CyanSquare.png");
-        this._sprite.setPosition(origin.x + size.width/2, origin.y + size.height/2);
-        this.addChild(this._sprite, 10);
+    // Make sprite1 touchable
+    var listener1 = cc.EventListener.create({
+      event: cc.EventListener.TOUCH_ONE_BY_ONE,
+      swallowTouches: true,
+      onTouchBegan: function (touch, event) {
+        var target = event.getCurrentTarget();
 
-        // Make sprite1 touchable
-        var listener1 = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches: true,
-            onTouchBegan: function (touch, event) {
-                var target = event.getCurrentTarget();
+        var locationInNode = target.convertToNodeSpace(touch.getLocation());
+        var s = target.getContentSize();
+        var rect = new cc.Rect(0, 0, s.width, s.height);
 
-                var locationInNode = target.convertToNodeSpace(touch.getLocation());
-                var s = target.getContentSize();
-                var rect = new cc.Rect(0, 0, s.width, s.height);
+        if (cc.Rect.containsPoint(rect, locationInNode)) {
+          cc.log(
+            "sprite began... x = " +
+              locationInNode.x +
+              ", y = " +
+              locationInNode.y
+          );
+          target.opacity = 180;
+          return true;
+        }
+        return false;
+      },
+      onTouchMoved: function (touch, event) {
+        var target = event.getCurrentTarget();
+        var delta = touch.getDelta();
+        target.x += delta.x;
+        target.y += delta.y;
+      },
+      onTouchEnded: function (touch, event) {
+        var target = event.getCurrentTarget();
+        cc.log("sprite onTouchesEnded.. ");
+        target.opacity = 255;
+      }
+    });
+    cc.eventManager.addListener(listener1, this._sprite);
 
-                if (cc.Rect.containsPoint(rect, locationInNode)) {
-                    cc.log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
-                    target.opacity = 180;
-                    return true;
-                }
-                return false;
-            },
-            onTouchMoved: function (touch, event) {
-                var target = event.getCurrentTarget();
-                var delta = touch.getDelta();
-                target.x += delta.x;
-                target.y += delta.y;
-            },
-            onTouchEnded: function (touch, event) {
-                var target = event.getCurrentTarget();
-                cc.log("sprite onTouchesEnded.. ");
-                target.opacity = 255;
-            }
-        });
-        cc.eventManager.addListener(listener1, this._sprite);
+    this.runAction(
+      cc.sequence(
+        new cc.DelayTime(5.0),
+        new cc.CallFunc(function () {
+          this._spriteSaved = true;
+          this._sprite.removeFromParent(false);
+        }, this),
+        new cc.DelayTime(5.0),
+        new cc.CallFunc(function () {
+          this._spriteSaved = false;
+          this.addChild(this._sprite);
+          if (!cc.sys.isNative)
+            cc.eventManager.addListener(listener1, this._sprite);
+        }, this)
+      )
+    );
+    //----end6----
+  }
 
-        this.runAction(cc.sequence(new cc.DelayTime(5.0),
-            new cc.CallFunc(function () {
-                this._spriteSaved = true;
-                this._sprite.removeFromParent(false);
-            }, this),
-            new cc.DelayTime(5.0),
-            new cc.CallFunc(function () {
-                this._spriteSaved = false;
-                this.addChild(this._sprite);
-                if(!cc.sys.isNative)
-                    cc.eventManager.addListener(listener1, this._sprite);
-            }, this)
-        ));
-        //----end6----
-    }
+  onExit() {
+    //----start6----onExit
+    super.onExit();
+    //----end6----
+  }
 
-    onExit(){
-        //----start6----onExit
-        super.onExit();
-        //----end6----
-    }
+  title() {
+    return "RemoveAndRetainNodeTest";
+  }
 
-    title(){
-        return "RemoveAndRetainNodeTest";
-    }
-
-    subtitle(){
-        return "Sprite should be removed after 5s, add to scene again after 5s";
-    }
-
+  subtitle() {
+    return "Sprite should be removed after 5s, add to scene again after 5s";
+  }
 }

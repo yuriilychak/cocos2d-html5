@@ -30,14 +30,14 @@
 // ActionBezier
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { director, winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { director, winSize } from "../constants";
 
 export class ActionBezier extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
   onEnter() {
     //----start8----onEnter
@@ -57,7 +57,11 @@ export class ActionBezier extends ActionsDemo {
     var delay = new cc.DelayTime(0.25);
 
     // 3 and only 3 control points should be used for Bezier actions.
-    var controlPoints = [new cc.Point(0, 374), new cc.Point(300, -374), new cc.Point(300, 100)];
+    var controlPoints = [
+      new cc.Point(0, 374),
+      new cc.Point(300, -374),
+      new cc.Point(300, 100)
+    ];
 
     var bezierForward = new cc.BezierBy(2, controlPoints);
     var rep = cc
@@ -133,5 +137,4 @@ export class ActionBezier extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ExtensionsTestScene } from "../extensions-test-scene.js";
-import { PluginXTest } from "./PluginXTest.js";
+import { ExtensionsTestScene } from "../extensions-test-scene";
+import { PluginXTest } from "./PluginXTest";
 
 TAG_SETSERVERMODE = 0;
 TAG_GETPRODUCTLIST = 1;
@@ -36,188 +36,196 @@ TAG_GETPRODUCTLIST_RESULT = 5;
 TAG_PAYMENT_RESULT = 6;
 
 export var s_IAPFunctionItem = [
-    {name: "setServerMode", tag: TAG_SETSERVERMODE},
-    {name: "getProductList", tag: TAG_GETPRODUCTLIST},
-    {name: "PayForProduct", tag: TAG_PAYMENT}
+  { name: "setServerMode", tag: TAG_SETSERVERMODE },
+  { name: "getProductList", tag: TAG_GETPRODUCTLIST },
+  { name: "PayForProduct", tag: TAG_PAYMENT }
 ];
 export var s_IAPResultItem = [
-    {name: "false", tag: TAG_SETSERVERMODE_RESULT},
-    {name: "[ ]", tag: TAG_GETPRODUCTLIST_RESULT},
-    {name: "didn't call payFunction yet", tag: TAG_PAYMENT_RESULT}
+  { name: "false", tag: TAG_SETSERVERMODE_RESULT },
+  { name: "[ ]", tag: TAG_GETPRODUCTLIST_RESULT },
+  { name: "didn't call payFunction yet", tag: TAG_PAYMENT_RESULT }
 ];
 export class IAPTestLayer extends PluginXTest {
-    constructor() {
-        super();
-        this._serverMode = false;
-    }
+  constructor() {
+    super();
+    this._serverMode = false;
+  }
 
-    onEnter() {
-        super.onEnter();
-        this.initPlugin();
-        this.addMenuItem();
-        this.initToast();
-    }
-    initPlugin() {
-        var pluginManager = plugin.PluginManager.getInstance();
-        this.PluginIAP = pluginManager.loadPlugin("IOSIAP");
-        this.PluginIAP.setListener(this);
-    }
-    addMenuItem() {
-        var payMenu = new cc.Menu();
-        for (var i = 0; i < s_IAPFunctionItem.length; i++) {
-            var text = new cc.LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
-            var item = new cc.MenuItemLabel(text, this.menuCallBack, this);
-            item.tag = s_IAPFunctionItem[i].tag;
-            item.x = 200;
-            item.y = cc.winSize.height - 200 - i * 50;
+  onEnter() {
+    super.onEnter();
+    this.initPlugin();
+    this.addMenuItem();
+    this.initToast();
+  }
+  initPlugin() {
+    var pluginManager = plugin.PluginManager.getInstance();
+    this.PluginIAP = pluginManager.loadPlugin("IOSIAP");
+    this.PluginIAP.setListener(this);
+  }
+  addMenuItem() {
+    var payMenu = new cc.Menu();
+    for (var i = 0; i < s_IAPFunctionItem.length; i++) {
+      var text = new cc.LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
+      var item = new cc.MenuItemLabel(text, this.menuCallBack, this);
+      item.tag = s_IAPFunctionItem[i].tag;
+      item.x = 200;
+      item.y = cc.winSize.height - 200 - i * 50;
 
-            var resultLabel = new cc.LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
-            resultLabel.color = new cc.Color(125, 125, 125);
-            resultLabel.anchorX = 0;
-            resultLabel.tag = s_IAPResultItem[i].tag;
-            resultLabel.x = 300;
-            resultLabel.y = cc.winSize.height - 200 - i * 50;
-            payMenu.addChild(item);
-            this.addChild(resultLabel);
-        }
-        payMenu.x = 0;
-        payMenu.y = 0;
-        this.addChild(payMenu);
+      var resultLabel = new cc.LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
+      resultLabel.color = new cc.Color(125, 125, 125);
+      resultLabel.anchorX = 0;
+      resultLabel.tag = s_IAPResultItem[i].tag;
+      resultLabel.x = 300;
+      resultLabel.y = cc.winSize.height - 200 - i * 50;
+      payMenu.addChild(item);
+      this.addChild(resultLabel);
     }
-    closeFunction(sender) {
-        var scene = new ExtensionsTestScene();
-        scene.runThisTest();
-        cc.director.runScene(scene);
+    payMenu.x = 0;
+    payMenu.y = 0;
+    this.addChild(payMenu);
+  }
+  closeFunction(sender) {
+    var scene = new ExtensionsTestScene();
+    scene.runThisTest();
+    cc.director.runScene(scene);
+  }
+  initToast() {
+    this.toastLayer = new cc.LayerColor();
+    var label = new cc.LabelTTF("loading", "Arial", 16);
+    this.toastLayer.addChild(label);
+    this.toastLayer.setTag(TAG_TOAST);
+    label.x = cc.winSize.width / 2;
+    label.y = cc.winSize.height / 2;
+    this.toastLayer.setColor(new cc.Color(100, 100, 100, 100));
+  }
+  addTouch(bool) {
+    if (bool) {
+      var self = this.toastLayer;
+      this.listener = cc.EventListener.create({
+        event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        swallowTouches: true,
+        onTouchBegan: function (touch, event) {
+          return true;
+        },
+        onTouchMoved: function (touch, event) {},
+        onTouchEnded: function (touch, event) {},
+        onTouchCancelled: function (touch, event) {}
+      });
+      cc.eventManager.addListener(this.listener, self);
+    } else {
+      cc.eventManager.removeListener(this.listener);
     }
-    initToast() {
-        this.toastLayer = new cc.LayerColor();
-        var label = new cc.LabelTTF("loading", "Arial", 16);
-        this.toastLayer.addChild(label);
-        this.toastLayer.setTag(TAG_TOAST);
-        label.x = cc.winSize.width / 2;
-        label.y = cc.winSize.height / 2;
-        this.toastLayer.setColor(new cc.Color(100, 100, 100, 100));
+  }
+  toggleToast(show) {
+    if (show) {
+      if (!this.getChildByTag(TAG_TOAST)) {
+        this.addChild(this.toastLayer);
+        this.addTouch(true);
+      }
+    } else {
+      this.toastLayer.removeFromParent(true);
+      this.addTouch(false);
     }
-    addTouch(bool) {
-        if (bool) {
-            var self = this.toastLayer;
-            this.listener = cc.EventListener.create({
-                event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                swallowTouches: true,
-                onTouchBegan: function (touch, event) {
-                    return true;
-                },
-                onTouchMoved: function (touch, event) {
-                },
-                onTouchEnded: function (touch, event) {
-                },
-                onTouchCancelled: function (touch, event) {
-                }
-            });
-            cc.eventManager.addListener(this.listener, self);
-        } else {
-            cc.eventManager.removeListener(this.listener);
-        }
-    }
-    toggleToast(show) {
-        if (show) {
-            if (!this.getChildByTag(TAG_TOAST)) {
-                this.addChild(this.toastLayer);
-                this.addTouch(true);
-            }
-        } else {
-            this.toastLayer.removeFromParent(true);
-            this.addTouch(false);
-        }
-    }
-    menuCallBack(sender) {
-        this.toggleToast(true);
-        if (sender.tag === TAG_SETSERVERMODE) {
-            this.PluginIAP.callFuncWithParam("setServerMode");
-            var label = this.getChildByTag(TAG_SETSERVERMODE_RESULT);
-            this._serverMode = true;
-            if (label) {
-                label.setString("true");
-                this.toggleToast(false);
-            }
-        } else if (sender.tag == TAG_GETPRODUCTLIST) {
-            //replace these ids to your own productIdentifiers
-            var pidList = ["001", "002"];
-            this.PluginIAP.callFuncWithParam("requestProducts", plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, pidList.toString()));
-        } else if (sender.tag == TAG_PAYMENT) {
-            if (!this.product) {
-                var label = this.getChildByTag(TAG_PAYMENT_RESULT);
-                if (label) {
-                    label.setString("please call requestProducts first");
-                    this.toggleToast(false);
-                    return;
-                }
-            }
-            this.PluginIAP.payForProduct(this.product[0]);
-        }
-    }
-
-    onPayResult(ret, msg, productInfo) {
+  }
+  menuCallBack(sender) {
+    this.toggleToast(true);
+    if (sender.tag === TAG_SETSERVERMODE) {
+      this.PluginIAP.callFuncWithParam("setServerMode");
+      var label = this.getChildByTag(TAG_SETSERVERMODE_RESULT);
+      this._serverMode = true;
+      if (label) {
+        label.setString("true");
         this.toggleToast(false);
-        cc.log("onPayResult ret is " + ret);
-        var str = "";
-        if (ret == plugin.ProtocolIAP.PayResultCode.PaySuccess) {
-            str = "payment Success pid is " + productInfo.productId;
-            //if you use server mode get the receive message and post to your server
-            if (this._serverMode && msg) {
-                str = "payment verify from server";
-                cc.log(str);
-                this.postServerData(msg);
-            }
-        } else if (ret == plugin.ProtocolIAP.PayResultCode.PayFail) {
-            str = "payment fail";
-        }
+      }
+    } else if (sender.tag == TAG_GETPRODUCTLIST) {
+      //replace these ids to your own productIdentifiers
+      var pidList = ["001", "002"];
+      this.PluginIAP.callFuncWithParam(
+        "requestProducts",
+        plugin.PluginParam(
+          plugin.PluginParam.ParamType.TypeString,
+          pidList.toString()
+        )
+      );
+    } else if (sender.tag == TAG_PAYMENT) {
+      if (!this.product) {
         var label = this.getChildByTag(TAG_PAYMENT_RESULT);
         if (label) {
-            label.setString(str);
+          label.setString("please call requestProducts first");
+          this.toggleToast(false);
+          return;
         }
+      }
+      this.PluginIAP.payForProduct(this.product[0]);
     }
-    onRequestProductResult(ret, productInfo) {
-        var msgStr = "";
-        if (ret == plugin.ProtocolIAP.RequestProductCode.RequestFail) {
-            msgStr = "request error";
-            this.toggleToast(false);
-        } else if (ret == plugin.ProtocolIAP.RequestProductCode.RequestSuccess) {
-            cc.log("request RequestSuccees " + productInfo[0].productName);
-            this.product = productInfo;
-            msgStr = "list: [";
-            for (var i = 0; i < productInfo.length; i++) {
-                var product = productInfo[i];
-                msgStr += product.productName + " ";
-            }
-            msgStr += " ]";
-            this.toggleToast(false);
-        }
-        var label = this.getChildByTag(TAG_GETPRODUCTLIST_RESULT);
-        if (label) {
-            label.setString(msgStr);
-        }
-    }
-    postServerData(data) {
-        var that = this;
-        var xhr = cc.loader.getXMLHttpRequest();
+  }
 
-        //replace to your own server address
-        xhr.open("POST", "http://localhost/");
-        that.toggleToast(true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                that.toggleToast(false);
-                var result = JSON.parse(xhr.responseText);
-                that.PluginIAP.callFuncWithParam("finishTransaction", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, result.receipt.in_app[0].product_id));
-            }
-        };
-        // you can add your data and post them to your server;
-        var result = {userid: 100, receipt: data};
-        xhr.send(JSON.stringify(result));
+  onPayResult(ret, msg, productInfo) {
+    this.toggleToast(false);
+    cc.log("onPayResult ret is " + ret);
+    var str = "";
+    if (ret == plugin.ProtocolIAP.PayResultCode.PaySuccess) {
+      str = "payment Success pid is " + productInfo.productId;
+      //if you use server mode get the receive message and post to your server
+      if (this._serverMode && msg) {
+        str = "payment verify from server";
+        cc.log(str);
+        this.postServerData(msg);
+      }
+    } else if (ret == plugin.ProtocolIAP.PayResultCode.PayFail) {
+      str = "payment fail";
     }
-    onExit() {
-        super.onExit();
+    var label = this.getChildByTag(TAG_PAYMENT_RESULT);
+    if (label) {
+      label.setString(str);
     }
+  }
+  onRequestProductResult(ret, productInfo) {
+    var msgStr = "";
+    if (ret == plugin.ProtocolIAP.RequestProductCode.RequestFail) {
+      msgStr = "request error";
+      this.toggleToast(false);
+    } else if (ret == plugin.ProtocolIAP.RequestProductCode.RequestSuccess) {
+      cc.log("request RequestSuccees " + productInfo[0].productName);
+      this.product = productInfo;
+      msgStr = "list: [";
+      for (var i = 0; i < productInfo.length; i++) {
+        var product = productInfo[i];
+        msgStr += product.productName + " ";
+      }
+      msgStr += " ]";
+      this.toggleToast(false);
+    }
+    var label = this.getChildByTag(TAG_GETPRODUCTLIST_RESULT);
+    if (label) {
+      label.setString(msgStr);
+    }
+  }
+  postServerData(data) {
+    var that = this;
+    var xhr = cc.loader.getXMLHttpRequest();
 
-};
+    //replace to your own server address
+    xhr.open("POST", "http://localhost/");
+    that.toggleToast(true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        that.toggleToast(false);
+        var result = JSON.parse(xhr.responseText);
+        that.PluginIAP.callFuncWithParam(
+          "finishTransaction",
+          new plugin.PluginParam(
+            plugin.PluginParam.ParamType.TypeString,
+            result.receipt.in_app[0].product_id
+          )
+        );
+      }
+    };
+    // you can add your data and post them to your server;
+    var result = { userid: 100, receipt: data };
+    xhr.send(JSON.stringify(result));
+  }
+  onExit() {
+    super.onExit();
+  }
+}

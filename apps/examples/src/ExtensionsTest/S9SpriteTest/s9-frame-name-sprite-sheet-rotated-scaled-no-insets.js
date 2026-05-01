@@ -27,43 +27,37 @@
  ****************************************************************************/
 
 // S9FrameNameSpriteSheetRotatedScaledNoInsets
-import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
-import { winSize } from "../../tests-main-constants.js";
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
+import { winSize } from "../../constants";
 
 export class S9FrameNameSpriteSheetRotatedScaledNoInsets extends S9SpriteTestDemo {
+  constructor() {
+    super();
 
+    this._title = "Scale9Sprite from sprite sheet (stored rotated)";
 
-    constructor() {
-        super();
+    this._subtitle =
+      "createWithSpriteFrameName(); default cap insets; rendered 4 X width, 2 X height";
 
+    var x = winSize.width / 2;
+    var y = 0 + winSize.height / 2;
 
+    cc.log("S9FrameNameSpriteSheetRotatedScaledNoInsets ...");
 
-        this._title = "Scale9Sprite from sprite sheet (stored rotated)";
+    var blocks_scaled = new cc.Scale9Sprite("blocks9r.png");
+    cc.log("... created");
 
+    blocks_scaled.x = x;
+    blocks_scaled.y = y;
+    cc.log("... setPosition");
 
+    blocks_scaled.width = 96 * 4;
+    blocks_scaled.height = 96 * 2;
+    cc.log("... setContentSize");
 
-        this._subtitle = "createWithSpriteFrameName(); default cap insets; rendered 4 X width, 2 X height";
+    this.addChild(blocks_scaled);
+    cc.log("this..addChild");
 
-        var x = winSize.width / 2;
-        var y = 0 + (winSize.height / 2);
-
-        cc.log("S9FrameNameSpriteSheetRotatedScaledNoInsets ...");
-
-        var blocks_scaled = new cc.Scale9Sprite('blocks9r.png');
-        cc.log("... created");
-
-        blocks_scaled.x = x;
-        blocks_scaled.y = y;
-        cc.log("... setPosition");
-
-        blocks_scaled.width = 96 * 4;
-        blocks_scaled.height = 96*2;
-        cc.log("... setContentSize");
-
-        this.addChild(blocks_scaled);
-        cc.log("this..addChild");
-
-        cc.log("... S9FrameNameSpriteSheetRotatedScaledNoInsets done.");
-    }
-
+    cc.log("... S9FrameNameSpriteSheetRotatedScaledNoInsets done.");
+  }
 }

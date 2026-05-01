@@ -25,28 +25,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SceneTestLayer1 } from "./scene-test-layer1.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-
-;
-
-;
-
-;
+import { SceneTestLayer1 } from "./scene-test-layer1";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class SceneTestScene extends TestScene {
+  runThisTest() {
+    var layer = new SceneTestLayer1();
+    this.addChild(layer);
 
-    runThisTest() {
-        var layer = new SceneTestLayer1();
-        this.addChild(layer);
+    director.runScene(this);
+  }
+}
 
-        director.runScene(this);
-
-    }
-
-};
-
-export var arrayOfSceneTest = [
-    SceneTestLayer1
-];
+export var arrayOfSceneTest = [SceneTestLayer1];

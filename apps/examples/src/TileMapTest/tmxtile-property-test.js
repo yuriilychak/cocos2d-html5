@@ -30,47 +30,48 @@
 // TMXTilePropertyTest
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXTilePropertyTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testDuration = 0.25;
+    this.testDuration = 0.25;
 
-        this.propertiesList = [];
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-tile-property.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.propertiesList = [];
+    var map = new cc.TMXTiledMap(
+      s_resprefix + "TileMaps/ortho-tile-property.tmx"
+    );
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        for (var i = 1; i <= 6; i++) {
-            var properties = map.getPropertiesForGID(i);
-            this.log("GID:" + i + ", Properties:" + JSON.stringify(properties));
-            this.propertiesList.push(properties)
-        }
+    for (var i = 1; i <= 6; i++) {
+      var properties = map.getPropertiesForGID(i);
+      this.log("GID:" + i + ", Properties:" + JSON.stringify(properties));
+      this.propertiesList.push(properties);
     }
-    title() {
-        return "TMX Tile Property Test";
-    }
-    subtitle() {
-        return "In the console you should see tile properties";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = [];
-        ret.push({"test":"sss", "type":"object"});
-        ret.push({"type":"object"});
-        ret.push({"type":"object"});
-        ret.push({"type":"platform"});
-        ret.push({"type":"platform"});
-        ret.push({"type":"platform"});
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        return JSON.stringify(this.propertiesList);
-    }
-
+  }
+  title() {
+    return "TMX Tile Property Test";
+  }
+  subtitle() {
+    return "In the console you should see tile properties";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = [];
+    ret.push({ test: "sss", type: "object" });
+    ret.push({ type: "object" });
+    ret.push({ type: "object" });
+    ret.push({ type: "platform" });
+    ret.push({ type: "platform" });
+    ret.push({ type: "platform" });
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    return JSON.stringify(this.propertiesList);
+  }
 }

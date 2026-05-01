@@ -23,67 +23,46 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { AccelerometerTest } from "./accelerometer-test.js";
-import { sceneIdx , _setsceneIdx} from "./event-test-constants.js";
-import { KeyboardTest } from "./keyboard-test.js";
-import { MouseTest } from "./mouse-test.js";
-import { TouchAllAtOnce } from "./touch-all-at-once.js";
-import { TouchOneByOneTest } from "./touch-one-by-one-test.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import { AccelerometerTest } from "./accelerometer-test";
+import { sceneIdx, _setsceneIdx } from "./event-test-constants";
+import { KeyboardTest } from "./keyboard-test";
+import { MouseTest } from "./mouse-test";
+import { TouchAllAtOnce } from "./touch-all-at-once";
+import { TouchOneByOneTest } from "./touch-one-by-one-test";
 
 //
 // Flow control
 //
 export var arrayOfEventsTest = [
-    TouchOneByOneTest,
-    TouchAllAtOnce,
-    AccelerometerTest,
-    MouseTest,
-    KeyboardTest
+  TouchOneByOneTest,
+  TouchAllAtOnce,
+  AccelerometerTest,
+  MouseTest,
+  KeyboardTest
 ];
 
 export function nextEventsTest() {
-    _setsceneIdx(sceneIdx + 1);
-    _setsceneIdx(sceneIdx % arrayOfEventsTest.length);
+  _setsceneIdx(sceneIdx + 1);
+  _setsceneIdx(sceneIdx % arrayOfEventsTest.length);
 
-    if(window.sideIndexBar){
-        _setsceneIdx(window.sideIndexBar.changeTest(sceneIdx, 12));
-    }
+  if (window.sideIndexBar) {
+    _setsceneIdx(window.sideIndexBar.changeTest(sceneIdx, 12));
+  }
 
-    return new arrayOfEventsTest[sceneIdx]();
+  return new arrayOfEventsTest[sceneIdx]();
 }
-
-;
 
 export function previousEventsTest() {
-    _setsceneIdx(sceneIdx - 1);
-    if (sceneIdx < 0)
-        _setsceneIdx(sceneIdx + (arrayOfEventsTest.length));
+  _setsceneIdx(sceneIdx - 1);
+  if (sceneIdx < 0) _setsceneIdx(sceneIdx + arrayOfEventsTest.length);
 
-    if(window.sideIndexBar){
-        _setsceneIdx(window.sideIndexBar.changeTest(sceneIdx, 12));
-    }
+  if (window.sideIndexBar) {
+    _setsceneIdx(window.sideIndexBar.changeTest(sceneIdx, 12));
+  }
 
-    return new arrayOfEventsTest[sceneIdx]();
+  return new arrayOfEventsTest[sceneIdx]();
 }
-
-;
 
 export function restartEventsTest() {
-    return new arrayOfEventsTest[sceneIdx]();
+  return new arrayOfEventsTest[sceneIdx]();
 }
-
-;

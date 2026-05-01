@@ -30,9 +30,9 @@
 // BMFontPaddingTest
 //
 //------------------------------------------------------------------
-import { AtlasDemo } from "./atlas-demo.js";
-import { s_resprefix } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { AtlasDemo } from "./atlas-demo";
+import { s_resprefix } from "../resources";
+import { director } from "../constants";
 
 export class BMFontPaddingTest extends AtlasDemo {
     constructor() {

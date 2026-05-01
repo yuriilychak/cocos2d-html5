@@ -28,106 +28,134 @@
 // PathTestLayer
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 
 export class PathTestLayer extends BaseTestLayer {
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+    this._title = "cc.path";
 
+    this._subtitle = "See the console please!";
 
-        this._title = "cc.path";
+    this._join([
+      ["a", "b.png"],
+      ["a", "b", "c.png"],
+      ["a", "b"],
+      ["a", "b", "/"],
+      ["a", "b/", "/"]
+    ]);
 
+    this._extname([
+      "a/b.png",
+      "a/b.png?a=1&b=2",
+      "a/b",
+      "a/b?a=1&b=2",
+      ".a/b.png",
+      ".a/b.png?a=1&b=2",
+      ".a/b",
+      ".a/b?a=1&b=2"
+    ]);
 
-        this._subtitle = "See the console please!";
+    this._basename([
+      ["a/b.png"],
+      ["a/b.png?a=1&b=2"],
+      ["a/b.png", ".png"],
+      ["a/b.png?a=1&b=2", ".png"],
+      ["a/b.png", ".txt"]
+    ]);
 
-        this._join([
-            ["a", "b.png"],
-            ["a", "b", "c.png"],
-            ["a", "b"],
-            ["a", "b", "/"],
-            ["a", "b/", "/"]
-        ]);
+    this._dirname(["a/b/c.png", "a/b/c.png?a=1&b=2"]);
 
-        this._extname(["a/b.png", "a/b.png?a=1&b=2", "a/b", "a/b?a=1&b=2", ".a/b.png", ".a/b.png?a=1&b=2", ".a/b", ".a/b?a=1&b=2"]);
+    this._changeExtname([
+      ["a/b.png", ".plist"],
+      ["a/b.png?a=1&b=2", ".plist"]
+    ]);
 
-        this._basename([
-            ["a/b.png"],
-            ["a/b.png?a=1&b=2"],
-            ["a/b.png", ".png"],
-            ["a/b.png?a=1&b=2", ".png"],
-            ["a/b.png", ".txt"]
-        ]);
+    this._changeBasename([
+      ["a/b/c.plist", "b.plist"],
+      ["a/b/c.plist?a=1&b=2", "b.plist"],
+      ["a/b/c.plist", ".png"],
+      ["a/b/c.plist", "b"],
+      ["a/b/c.plist", "b", true]
+    ]);
+  }
 
-        this._dirname(["a/b/c.png", "a/b/c.png?a=1&b=2"]);
-
-        this._changeExtname([
-            ["a/b.png", ".plist"],
-            ["a/b.png?a=1&b=2", ".plist"]
-        ]);
-
-        this._changeBasename([
-            ["a/b/c.plist", "b.plist"],
-            ["a/b/c.plist?a=1&b=2", "b.plist"],
-            ["a/b/c.plist", ".png"],
-            ["a/b/c.plist", "b"],
-            ["a/b/c.plist", "b", true]
-        ]);
+  _join(args) {
+    cc.log("-----------cc.path.join begin----------");
+    for (var i = 0, li = args.length; i < li; i++) {
+      var obj = args[i];
+      cc.log(
+        "cc.path.join('" +
+          obj.join("','") +
+          "') ---> " +
+          cc.path.join.apply(cc.path, obj)
+      );
     }
+    cc.log("-----------cc.path.join end------------");
+  }
 
-    _join(args){
-        cc.log("-----------cc.path.join begin----------")
-        for(var i = 0, li = args.length; i < li; i++){
-            var obj = args[i];
-            cc.log("cc.path.join('" + obj.join("','") + "') ---> " + cc.path.join.apply(cc.path, obj));
-        }
-        cc.log("-----------cc.path.join end------------")
+  _extname(args) {
+    cc.log("-----------cc.path.extname begin----------");
+    for (var i = 0, li = args.length; i < li; i++) {
+      var obj = args[i];
+      cc.log("cc.path.extname('" + obj + "') ---> " + cc.path.extname(obj));
     }
+    cc.log("-----------cc.path.extname end------------");
+  }
 
-    _extname(args){
-        cc.log("-----------cc.path.extname begin----------")
-        for(var i = 0, li = args.length; i < li; i++){
-            var obj = args[i];
-            cc.log("cc.path.extname('" + obj + "') ---> " + cc.path.extname(obj));
-        }
-        cc.log("-----------cc.path.extname end------------")
+  _basename(args) {
+    cc.log("-----------cc.path.basename begin----------");
+    for (var i = 0, li = args.length; i < li; i++) {
+      var obj = args[i];
+      cc.log(
+        "cc.path.basename('" +
+          obj.join("','") +
+          "') ---> " +
+          cc.path.basename.apply(cc.path, obj)
+      );
     }
+    cc.log("-----------cc.path.basename end------------");
+  }
 
-    _basename(args){
-        cc.log("-----------cc.path.basename begin----------")
-        for(var i = 0, li = args.length; i < li; i++){
-            var obj = args[i];
-            cc.log("cc.path.basename('" + obj.join("','") + "') ---> " + cc.path.basename.apply(cc.path, obj));
-        }
-        cc.log("-----------cc.path.basename end------------")
+  _dirname(args) {
+    cc.log("-----------cc.path.dirname begin----------");
+    for (var i = 0, li = args.length; i < li; i++) {
+      var obj = args[i];
+      cc.log("cc.path.dirname('" + obj + "') ---> " + cc.path.dirname(obj));
     }
+    cc.log("-----------cc.path.dirname end------------");
+  }
 
-    _dirname(args){
-        cc.log("-----------cc.path.dirname begin----------")
-        for(var i = 0, li = args.length; i < li; i++){
-            var obj = args[i];
-            cc.log("cc.path.dirname('" + obj + "') ---> " + cc.path.dirname(obj));
-        }
-        cc.log("-----------cc.path.dirname end------------")
+  _changeExtname(args) {
+    cc.log("-----------cc.path.changeExtname begin----------");
+    for (var i = 0, li = args.length; i < li; i++) {
+      var obj = args[i];
+      cc.log(
+        "cc.path.changeExtname('" +
+          obj.join("','") +
+          "') ---> " +
+          cc.path.changeExtname.apply(cc.path, obj)
+      );
     }
+    cc.log("-----------cc.path.changeExtname end------------");
+  }
 
-    _changeExtname(args){
-        cc.log("-----------cc.path.changeExtname begin----------")
-        for(var i = 0, li = args.length; i < li; i++){
-            var obj = args[i];
-            cc.log("cc.path.changeExtname('" + obj.join("','") + "') ---> " + cc.path.changeExtname.apply(cc.path, obj));
-        }
-        cc.log("-----------cc.path.changeExtname end------------")
+  _changeBasename(args) {
+    cc.log("-----------cc.path.changeBasename begin----------");
+    for (var i = 0, li = args.length; i < li; i++) {
+      var obj = args[i];
+      var str =
+        obj.length == 3
+          ? "'" + obj[0] + "','" + obj[1] + "'," + obj[2]
+          : "" + obj.join("','") + "'";
+      cc.log(
+        "cc.path.changeBasename(" +
+          str +
+          ") ---> " +
+          cc.path.changeBasename.apply(cc.path, obj)
+      );
     }
-
-    _changeBasename(args){
-        cc.log("-----------cc.path.changeBasename begin----------")
-        for(var i = 0, li = args.length; i < li; i++){
-            var obj = args[i];
-            var str = obj.length == 3 ? "'" + obj[0] + "','" + obj[1] + "'," + obj[2] : "" + obj.join("','") + "'"
-            cc.log("cc.path.changeBasename(" + str + ") ---> " + cc.path.changeBasename.apply(cc.path, obj));
-        }
-        cc.log("-----------cc.path.changeBasename end------------")
-    }
-
+    cc.log("-----------cc.path.changeBasename end------------");
+  }
 }

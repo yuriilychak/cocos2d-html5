@@ -25,54 +25,55 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClippingNodeTest } from "./base-clipping-node-test.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { BaseClippingNodeTest } from "./base-clipping-node-test";
+import { s_pathGrossini } from "../resources";
 
 export class NestedTest extends BaseClippingNodeTest {
-    title() {
-        return "Nested Test";
+  title() {
+    return "Nested Test";
+  }
+
+  subtitle() {
+    return "Nest 9 Clipping Nodes, max is usually 8";
+  }
+
+  setup() {
+    var depth = 9;
+
+    var parent = this;
+
+    for (var i = 0; i < depth; i++) {
+      var size = 225 - i * (225 / (depth * 2));
+
+      var clipper = new cc.ClippingNode();
+      clipper.attr({
+        width: size,
+        height: size,
+        anchorX: 0.5,
+        anchorY: 0.5,
+        x: parent.width / 2,
+        y: parent.height / 2
+      });
+      clipper.alphaThreshold = 0.05;
+      clipper.runAction(
+        new cc.RotateBy(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90).repeatForever()
+      );
+      parent.addChild(clipper);
+
+      var stencil = new cc.Sprite(s_pathGrossini);
+      stencil.attr({
+        scale: 2.5 - i * (2.5 / depth),
+        anchorX: 0.5,
+        anchorY: 0.5,
+        x: clipper.width / 2,
+        y: clipper.height / 2,
+        visible: false
+      });
+      stencil.runAction(cc.sequence(new cc.DelayTime(i), new cc.Show()));
+      clipper.stencil = stencil;
+
+      clipper.addChild(stencil);
+      parent = clipper;
     }
-
-    subtitle() {
-        return "Nest 9 Clipping Nodes, max is usually 8";
-    }
-
-    setup() {
-        var depth = 9;
-
-        var parent = this;
-
-        for (var i = 0;  i < depth; i++ ) {
-            var size = 225 - i * (225 / (depth * 2));
-
-            var clipper = new cc.ClippingNode();
-            clipper.attr({
-	            width: size,
-	            height: size,
-	            anchorX: 0.5,
-	            anchorY: 0.5,
-	            x: parent.width / 2,
-	            y: parent.height / 2
-            });
-            clipper.alphaThreshold = 0.05;
-            clipper.runAction(new cc.RotateBy((i % 3) ? 1.33 : 1.66, (i % 2) ? 90 : -90).repeatForever());
-            parent.addChild(clipper);
-
-            var stencil = new cc.Sprite(s_pathGrossini);
-            stencil.attr({
-	            scale: 2.5 - (i * (2.5 / depth)),
-	            anchorX: 0.5,
-	            anchorY: 0.5,
-	            x: clipper.width / 2,
-	            y: clipper.height / 2,
-	            visible: false
-            });
-            stencil.runAction(cc.sequence(new cc.DelayTime(i), new cc.Show()));
-            clipper.stencil = stencil;
-
-            clipper.addChild(stencil);
-            parent = clipper;
-        }
-    }
-
+  }
 }

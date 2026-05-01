@@ -25,65 +25,73 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { winSize } from "../tests-main-constants.js";
-import { TextureCacheTestBase } from "./texture-cache-test-base.js";
+import { winSize } from "../constants";
+import { TextureCacheTestBase } from "./texture-cache-test-base";
 
 export class RemoteTextureTest extends TextureCacheTestBase {
-    constructor() {
-        super();
-        this._title = "Remote Texture Test";
-        this._subtitle = "";
-        this._remoteTex = "http://www.cocos2d-x.org/images/logo.png";
+  constructor() {
+    super();
+    this._title = "Remote Texture Test";
+    this._subtitle = "";
+    this._remoteTex = "http://www.cocos2d-x.org/images/logo.png";
+  }
+
+  onEnter() {
+    super.onEnter();
+    if ("opengl" in cc.sys.capabilities && !cc.sys.isNative) {
+      var label = new cc.LabelTTF(
+        "Not support Loading texture from remote site on HTML5-WebGL",
+        "Times New Roman",
+        28
+      );
+      label.x = winSize.width / 2;
+      label.y = winSize.height / 2;
+      this.addChild(label, 100);
+    } else this.scheduleOnce(this.startDownload, 0.1);
+  }
+
+  startDownload() {
+    var imageUrlArray = [
+      "http://www.cocos2d-x.org/s/upload/v35.jpg",
+      "http://www.cocos2d-x.org/s/upload/testin.jpg",
+      "http://www.cocos2d-x.org/s/upload/geometry_dash.jpg",
+      "http://www.cocos2d-x.org/images/logo.png"
+    ];
+
+    for (var i = 0; i < imageUrlArray.length; i++) {
+      cc.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
     }
 
-    onEnter() {
-        super.onEnter();
-        if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
-            var label = new cc.LabelTTF("Not support Loading texture from remote site on HTML5-WebGL", "Times New Roman", 28);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-            this.addChild(label, 100);
-        } else
-            this.scheduleOnce(this.startDownload, 0.1);
+    cc.loader.loadImg(
+      "http://www.cocos2d-x.org/no_such_file.jpg",
+      this.failLoaded.bind(this)
+    );
+  }
+
+  texLoaded(texture) {
+    if (texture instanceof cc.Texture2D) {
+      cc.log("Remote texture loaded");
+
+      var sprite = new cc.Sprite(texture);
+      sprite.x = cc.winSize.width / 2;
+      sprite.y = cc.winSize.height / 2;
+      this.addChild(sprite);
+    } else {
+      cc.log("Fail to load remote texture");
+    }
+  }
+
+  failLoaded(err, img) {
+    var str = "";
+    if (err) {
+      str = "Correct behavior: failed to download from wrong url";
+    } else {
+      str = "!!! Wrong behavior: succeed to download from wrong url";
     }
 
-    startDownload() {
-        var imageUrlArray = ["http://www.cocos2d-x.org/s/upload/v35.jpg", "http://www.cocos2d-x.org/s/upload/testin.jpg", "http://www.cocos2d-x.org/s/upload/geometry_dash.jpg", "http://www.cocos2d-x.org/images/logo.png"];
-
-        for (var i = 0; i < imageUrlArray.length; i++) {
-            cc.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
-        }
-
-        cc.loader.loadImg("http://www.cocos2d-x.org/no_such_file.jpg", this.failLoaded.bind(this));
-    }
-
-    texLoaded(texture) {
-        if (texture instanceof cc.Texture2D) {
-            cc.log("Remote texture loaded");
-            
-            var sprite = new cc.Sprite(texture);
-            sprite.x = cc.winSize.width/2;
-            sprite.y = cc.winSize.height/2;
-            this.addChild(sprite);
-        }
-        else {
-            cc.log("Fail to load remote texture");
-        }
-    }
-
-    failLoaded(err, img) {
-        var str = "";
-        if (err) {
-            str = "Correct behavior: failed to download from wrong url";
-        }
-        else {
-            str = "!!! Wrong behavior: succeed to download from wrong url";
-        }
-
-        var label = new cc.LabelTTF(str, "Times New Roman", 28);
-        label.x = winSize.width / 2;
-        label.y = winSize.height / 2;
-        this.addChild(label, 100);
-    }
-
+    var label = new cc.LabelTTF(str, "Times New Roman", 28);
+    label.x = winSize.width / 2;
+    label.y = winSize.height / 2;
+    this.addChild(label, 100);
+  }
 }

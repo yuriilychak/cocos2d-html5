@@ -25,80 +25,85 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene.js";
+import { ControlScene } from "../CCControlScene";
 
 export class ControlPotentiometerTest extends ControlScene {
-    constructor() {
-        super();
-        this._displayValueLabel = null;
+  constructor() {
+    super();
+    this._displayValueLabel = null;
+  }
+
+  init() {
+    if (super.init()) {
+      var screenSize = cc.director.getWinSize();
+
+      var layer = new cc.Node();
+      layer.x = screenSize.width / 2;
+      layer.y = screenSize.height / 2;
+      this.addChild(layer, 1);
+
+      var layer_width = 0;
+
+      // Add the black background for the text
+      var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
+      background.width = 80;
+      background.height = 50;
+      background.x = layer_width + background.width / 2.0;
+      background.y = 0;
+      layer.addChild(background);
+
+      layer_width += background.width;
+
+      this._displayValueLabel = new cc.LabelTTF("", "HelveticaNeue-Bold", 30);
+
+      this._displayValueLabel.x = background.x;
+      this._displayValueLabel.y = background.y;
+      layer.addChild(this._displayValueLabel);
+
+      // Add the slider
+      var potentiometer = new cc.ControlPotentiometer(
+        "extensions/potentiometerTrack.png",
+        "extensions/potentiometerProgress.png",
+        "extensions/potentiometerButton.png"
+      );
+      potentiometer.x = layer_width + 10 + potentiometer.width / 2;
+      potentiometer.y = 0;
+
+      // When the value of the slider will change, the given selector will be call
+      potentiometer.addTargetWithActionForControlEvents(
+        this,
+        this.valueChanged,
+        cc.CONTROL_EVENT_VALUECHANGED
+      );
+
+      layer.addChild(potentiometer);
+
+      layer_width += potentiometer.width;
+
+      // Set the layer size
+      layer.width = layer_width;
+      layer.height = 0;
+      layer.anchorX = 0.5;
+      layer.anchorY = 0.5;
+
+      // Update the value label
+      this.valueChanged(potentiometer, cc.CONTROL_EVENT_VALUECHANGED);
+
+      return true;
     }
-
-    init() {
-        if (super.init()) {
-            var screenSize = cc.director.getWinSize();
-
-            var layer = new cc.Node();
-            layer.x = screenSize.width / 2;
-            layer.y = screenSize.height / 2;
-            this.addChild(layer, 1);
-
-            var layer_width = 0;
-
-            // Add the black background for the text
-            var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
-            background.width = 80;
-	        background.height = 50;
-            background.x = layer_width + background.width / 2.0;
-            background.y = 0;
-            layer.addChild(background);
-
-            layer_width += background.width;
-
-            this._displayValueLabel = new cc.LabelTTF("", "HelveticaNeue-Bold", 30);
-
-            this._displayValueLabel.x = background.x;
-            this._displayValueLabel.y = background.y;
-            layer.addChild(this._displayValueLabel);
-
-            // Add the slider
-            var potentiometer = new cc.ControlPotentiometer("extensions/potentiometerTrack.png"
-                , "extensions/potentiometerProgress.png"
-                , "extensions/potentiometerButton.png");
-            potentiometer.x = layer_width + 10 + potentiometer.width / 2;
-            potentiometer.y = 0;
-
-            // When the value of the slider will change, the given selector will be call
-            potentiometer.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
-
-            layer.addChild(potentiometer);
-
-            layer_width += potentiometer.width;
-
-            // Set the layer size
-            layer.width = layer_width;
-	        layer.height = 0;
-            layer.anchorX = 0.5;
-	        layer.anchorY = 0.5;
-
-            // Update the value label
-            this.valueChanged(potentiometer, cc.CONTROL_EVENT_VALUECHANGED);
-
-            return true;
-        }
-        return false;
-    }
-    valueChanged(sender, controlEvent) {
-        // Change value of label.
-        this._displayValueLabel.setString(sender.getValue().toFixed(2));
-    }
-
-};
+    return false;
+  }
+  valueChanged(sender, controlEvent) {
+    // Change value of label.
+    this._displayValueLabel.setString(sender.getValue().toFixed(2));
+  }
+}
 ControlPotentiometerTest.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlPotentiometerTest();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlPotentiometerTest();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };

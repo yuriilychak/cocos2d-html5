@@ -28,50 +28,47 @@
 // GLClearTest
 //
 //------------------------------------------------------------------
-import { OpenGLTestLayer } from "./open-gltest-layer.js";
-import { winSize } from "../tests-main-constants.js";
+import { OpenGLTestLayer } from "./open-gltest-layer";
+import { winSize } from "../constants";
 
 export class GLClearTest extends OpenGLTestLayer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    if ("opengl" in cc.sys.capabilities) {
+      var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
+      this.addChild(blue, 1);
 
-        if( 'opengl' in cc.sys.capabilities ) {
+      var node = new cc.GLNode();
+      node.init();
+      node.draw = function () {
+        gl.clear(gl.COLOR_BUFFER_BIT);
+      };
 
-            var blue = new cc.LayerColor(new cc.Color(0, 0, 255, 255));
-            this.addChild( blue, 1 );
-
-            var node = new cc.GLNode();
-            node.init();
-            node.draw = function() {
-                gl.clear( gl.COLOR_BUFFER_BIT );
-            };
-
-            this.addChild( node, 10 );
-            node.x = winSize.width/2;
-            node.y = winSize.height/2 ;
-        }
+      this.addChild(node, 10);
+      node.x = winSize.width / 2;
+      node.y = winSize.height / 2;
     }
+  }
 
-    title() {
-        return "gl.clear(gl.COLOR_BUFFER_BIT)";
-    }
-    subtitle() {
-        return "Testing gl.clear() with cc.GLNode\n The layer should be in black";
-    }
+  title() {
+    return "gl.clear(gl.COLOR_BUFFER_BIT)";
+  }
+  subtitle() {
+    return "Testing gl.clear() with cc.GLNode\n The layer should be in black";
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        // black pixel, not a blue pixel
-        var ret = {"0":0,"1":0,"2":0,"3":255};
-        return JSON.stringify(ret);
-    }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    // black pixel, not a blue pixel
+    var ret = { 0: 0, 1: 0, 2: 0, 3: 255 };
+    return JSON.stringify(ret);
+  }
 
-    getCurrentResult() {
-        var ret = this.readPixels(winSize.width/2,  winSize.height/2,  1, 1);
-        return JSON.stringify(ret);
-    }
-
+  getCurrentResult() {
+    var ret = this.readPixels(winSize.width / 2, winSize.height / 2, 1, 1);
+    return JSON.stringify(ret);
+  }
 }

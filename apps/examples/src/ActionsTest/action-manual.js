@@ -30,18 +30,18 @@
 // ActionManual
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionManual extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 0.1;
-        this._code =
-            "sprite.x = 10; sprite.y = 20;\n" +
-            "sprite.rotation = 90;\n" +
-            "sprite.scale = 2;";
-    }
+  constructor() {
+    super();
+    this.testDuration = 0.1;
+    this._code =
+      "sprite.x = 10; sprite.y = 20;\n" +
+      "sprite.rotation = 90;\n" +
+      "sprite.scale = 2;";
+  }
 
   onEnter() {
     //----start0----onEnter
@@ -107,5 +107,4 @@ export class ActionManual extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

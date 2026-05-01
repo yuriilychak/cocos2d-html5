@@ -24,64 +24,70 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIPageViewChildSizeTest extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
-            //init text
-            this._topDisplayLabel.setString("Move by horizontal direction");
-            this._topDisplayLabel.setFontSize(14);
-            this._topDisplayLabel.x = widgetSize.width / 2.0;
-            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 4;
-            this._bottomDisplayLabel.setString("");
-            this._bottomDisplayLabel.x = widgetSize.width / 2;
-            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
+      //init text
+      this._topDisplayLabel.setString("Move by horizontal direction");
+      this._topDisplayLabel.setFontSize(14);
+      this._topDisplayLabel.x = widgetSize.width / 2.0;
+      this._topDisplayLabel.y =
+        widgetSize.height / 2.0 + this._topDisplayLabel.height * 4;
+      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.x = widgetSize.width / 2;
+      this._bottomDisplayLabel.y =
+        widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-            var background = this._widget.getChildByName("background_Panel");
+      var background = this._widget.getChildByName("background_Panel");
 
-            // Create the page view
-            var pageView = new ccui.PageView();
-            pageView.setTouchEnabled(true);
-            pageView.setContentSize(new cc.Size(240, 130));
-            pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
-            pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
-            pageView.setIndicatorEnabled(true);
-            pageView.removeAllItems();
+      // Create the page view
+      var pageView = new ccui.PageView();
+      pageView.setTouchEnabled(true);
+      pageView.setContentSize(new cc.Size(240, 130));
+      pageView.x =
+        (widgetSize.width - background.width) / 2 +
+        (background.width - pageView.width) / 2;
+      pageView.y =
+        (widgetSize.height - background.height) / 2 +
+        (background.height - pageView.height) / 2;
+      pageView.setIndicatorEnabled(true);
+      pageView.removeAllItems();
 
-            var pageCount = 4;
-            for (var i = 0; i < pageCount; ++i)
-            {
-                var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
-                var label = new ccui.Text("page " + (i + 1), "Arial", 30);
+      var pageCount = 4;
+      for (var i = 0; i < pageCount; ++i) {
+        var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        var label = new ccui.Text("page " + (i + 1), "Arial", 30);
 
-                imageView.setScale9Enabled(true);
-                label.setColor(new cc.Color(192, 192, 192));
-                label.setAnchorPoint(new cc.Point(0,0));
-                imageView.addChild(label);
+        imageView.setScale9Enabled(true);
+        label.setColor(new cc.Color(192, 192, 192));
+        label.setAnchorPoint(new cc.Point(0, 0));
+        imageView.addChild(label);
 
-                pageView.insertCustomItem(imageView, i);
-            }
+        pageView.insertCustomItem(imageView, i);
+      }
 
-            pageView.addEventListener(this.pageViewEvent, this);
+      pageView.addEventListener(this.pageViewEvent, this);
 
-            this._mainNode.addChild(pageView);
+      this._mainNode.addChild(pageView);
 
-            return true;
-        }
-        return false;
+      return true;
     }
+    return false;
+  }
 
-    pageViewEvent(sender, type) {
-        switch (type) {
-            case ccui.PageView.EVENT_TURNING:
-                var pageView = sender;
-                this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex().valueOf()-0 + 1));
-                break;
-            default:
-                break;
-        }
+  pageViewEvent(sender, type) {
+    switch (type) {
+      case ccui.PageView.EVENT_TURNING:
+        var pageView = sender;
+        this._topDisplayLabel.setString(
+          "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1)
+        );
+        break;
+      default:
+        break;
     }
-
+  }
 }

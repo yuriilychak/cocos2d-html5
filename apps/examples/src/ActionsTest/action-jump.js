@@ -30,19 +30,21 @@
 // ActionJump
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionJump extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
-      get _code() { 
-        return "a = new cc.JumpBy( time, point, height, #_of_jumps );\n" +
-        "a = new cc.JumpTo( time, point, height, #_of_jumps );";
-      }
+  get _code() {
+    return (
+      "a = new cc.JumpBy( time, point, height, #_of_jumps );\n" +
+      "a = new cc.JumpTo( time, point, height, #_of_jumps );"
+    );
+  }
 
   onEnter() {
     //----start7----onEnter
@@ -90,5 +92,4 @@ export class ActionJump extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

@@ -25,17 +25,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestScene } from "../test-scene.js";
-import { nextTextInputTest } from "./text-input-test-helpers.js";
-import { _setsceneIdx, sceneIdx } from "./text-input-test-constants.js";
+import { TestScene } from "../test-scene";
+import { nextTextInputTest } from "./text-input-test-helpers";
+import { _setsceneIdx, sceneIdx } from "./text-input-test-constants";
 
 export class TextInputTestScene extends TestScene {
-    runThisTest(num) {
-        _setsceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextTextInputTest();
+  runThisTest(num) {
+    _setsceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextTextInputTest();
 
-        this.addChild(layer);
-        cc.director.runScene(this);
-    }
-
+    this.addChild(layer);
+    cc.director.runScene(this);
+  }
 }

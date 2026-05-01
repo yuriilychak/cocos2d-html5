@@ -30,50 +30,53 @@
 // ActionManagerTest
 //
 //------------------------------------------------------------------
-import { _bakeLayerTestIdx } from "./bake-layer-test-constants.js";
-import { arrayOfBakeLayerTest, nextBakeLayerTest, previousBakeLayerTest, restartBakeLayerTest } from "./bake-layer-test-helpers.js";
-import { BakeLayerTestScene } from "./bake-layer-test-scene.js";
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { director } from "../tests-main-constants.js";
+import { _bakeLayerTestIdx } from "./bake-layer-test-constants";
+import {
+  arrayOfBakeLayerTest,
+  nextBakeLayerTest,
+  previousBakeLayerTest,
+  restartBakeLayerTest
+} from "./bake-layer-test-helpers";
+import { BakeLayerTestScene } from "./bake-layer-test-scene";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { director } from "../constants";
 
 export class BakeLayerBaseTest extends BaseTestLayer {
-    constructor() {
-        super();
-        this._atlas = null;
-        this._title = "";
-    }
+  constructor() {
+    super();
+    this._atlas = null;
+    this._title = "";
+  }
 
+  title() {
+    return "No title";
+  }
 
-    title() {
-        return "No title";
-    }
+  subtitle() {
+    return "";
+  }
 
-    subtitle() {
-        return "";
-    }
+  onBackCallback(sender) {
+    var s = new BakeLayerTestScene();
+    s.addChild(previousBakeLayerTest());
+    director.runScene(s);
+  }
+  onRestartCallback(sender) {
+    var s = new BakeLayerTestScene();
+    s.addChild(restartBakeLayerTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new BakeLayerTestScene();
+    s.addChild(nextBakeLayerTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfBakeLayerTest.length - 1 - _bakeLayerTestIdx;
+  }
 
-    onBackCallback(sender) {
-        var s = new BakeLayerTestScene();
-        s.addChild(previousBakeLayerTest());
-        director.runScene(s);
-    }
-    onRestartCallback(sender) {
-        var s = new BakeLayerTestScene();
-        s.addChild(restartBakeLayerTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new BakeLayerTestScene();
-        s.addChild(nextBakeLayerTest());
-        director.runScene(s);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfBakeLayerTest.length-1) - _bakeLayerTestIdx );
-    }
-
-    getTestNumber() {
-        return _bakeLayerTestIdx;
-    }
-
+  getTestNumber() {
+    return _bakeLayerTestIdx;
+  }
 }

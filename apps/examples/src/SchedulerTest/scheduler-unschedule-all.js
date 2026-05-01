@@ -28,51 +28,50 @@
 /*
     SchedulerUnscheduleAll
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
 
 export class SchedulerUnscheduleAll extends SchedulerTestLayer {
-    onEnter() {
-        //----start2----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start2----onEnter
+    super.onEnter();
 
-        this.schedule(this.onTick1, 0.5);
-        this.schedule(this.onTick2, 1.0);
-        this.schedule(this.onTick3, 1.5);
-        this.schedule(this.onTick4, 1.5);
-        this.schedule(this.onUnscheduleAll, 4);
-        //----end2----
-    }
-    title() {
-        return "Unschedule All callbacks";
-    }
-    subtitle() {
-        return "All scheduled callbacks will be unscheduled in 4 seconds. See console";
-    }
+    this.schedule(this.onTick1, 0.5);
+    this.schedule(this.onTick2, 1.0);
+    this.schedule(this.onTick3, 1.5);
+    this.schedule(this.onTick4, 1.5);
+    this.schedule(this.onUnscheduleAll, 4);
+    //----end2----
+  }
+  title() {
+    return "Unschedule All callbacks";
+  }
+  subtitle() {
+    return "All scheduled callbacks will be unscheduled in 4 seconds. See console";
+  }
 
-    onTick1(dt) {
-        //----start2----onTick1
-        cc.log("SchedulerUnscheduleAll tick1");
-        //----end2----
-    }
-    onTick2(dt) {
-        //----start2----onTick2
-        cc.log("SchedulerUnscheduleAll tick2");
-        //----end2----
-    }
-    onTick3(dt) {
-        //----start2----onTick3
-        cc.log("SchedulerUnscheduleAll tick3");
-        //----end2----
-    }
-    onTick4(dt) {
-        //----start2----onTick4
-        cc.log("SchedulerUnscheduleAll tick4");
-        //----end2----
-    }
-    onUnscheduleAll(dt) {
-        //----start2----onUnscheduleAll
-        this.unscheduleAllCallbacks();
-        //----end2----
-    }
-
+  onTick1(dt) {
+    //----start2----onTick1
+    cc.log("SchedulerUnscheduleAll tick1");
+    //----end2----
+  }
+  onTick2(dt) {
+    //----start2----onTick2
+    cc.log("SchedulerUnscheduleAll tick2");
+    //----end2----
+  }
+  onTick3(dt) {
+    //----start2----onTick3
+    cc.log("SchedulerUnscheduleAll tick3");
+    //----end2----
+  }
+  onTick4(dt) {
+    //----start2----onTick4
+    cc.log("SchedulerUnscheduleAll tick4");
+    //----end2----
+  }
+  onUnscheduleAll(dt) {
+    //----start2----onUnscheduleAll
+    this.unscheduleAllCallbacks();
+    //----end2----
+  }
 }

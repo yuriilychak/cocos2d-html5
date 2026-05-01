@@ -25,20 +25,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestScene } from "../test-scene.js";
-import { XHRTestLayer } from "./xhrtest-layer.js";
+import { TestScene } from "../test-scene";
+import { XHRTestLayer } from "./xhrtest-layer";
 
 export class XHRTestScene extends TestScene {
-    constructor() {
-        super(true);
-        var xhrLayer = new XHRTestLayer();
-        this.addChild(xhrLayer);
-    }
-    runThisTest() {
-        cc.director.runScene(this);
-    }
-    MainMenuCallback(sender) {
-        super.MainMenuCallback(sender);
-    }
-
+  constructor() {
+    super(true);
+    var xhrLayer = new XHRTestLayer();
+    this.addChild(xhrLayer);
+  }
+  runThisTest() {
+    cc.director.runScene(this);
+  }
+  MainMenuCallback(sender) {
+    super.MainMenuCallback(sender);
+  }
 }

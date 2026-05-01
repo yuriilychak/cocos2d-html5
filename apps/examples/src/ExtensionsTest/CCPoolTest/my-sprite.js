@@ -27,34 +27,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_grossini } from "../../tests_resources.js";
+import { s_grossini } from "../../resources";
 
 export class MySprite extends cc.Sprite {
-    constructor(f1, f2, f3) {
-        super(s_grossini);
+  constructor(f1, f2, f3) {
+    super(s_grossini);
 
-        this._hp = 0;
+    this._hp = 0;
 
-        this._sp = 0;
+    this._sp = 0;
 
-        this._mp = 0;
-        this.initData(f1, f2, f3);
-    }
-    initData(f1, f2, f3) {
-        this._hp = f1;
-        this._mp = f2;
-        this._sp = f3;
-    }
-    unuse() {
-        this._hp = 0;
-        this._mp = 0;
-        this._sp = 0;
-        this.setVisible(false);
-        this.removeFromParent(true);
-    }
-    reuse(f1, f2, f3) {
-        this.initData(f1, f2, f3);
-        this.setVisible(true);
-    }
-
+    this._mp = 0;
+    this.initData(f1, f2, f3);
+  }
+  initData(f1, f2, f3) {
+    this._hp = f1;
+    this._mp = f2;
+    this._sp = f3;
+  }
+  unuse() {
+    this._hp = 0;
+    this._mp = 0;
+    this._sp = 0;
+    this.setVisible(false);
+    this.removeFromParent(true);
+  }
+  reuse(f1, f2, f3) {
+    this.initData(f1, f2, f3);
+    this.setVisible(true);
+  }
 }

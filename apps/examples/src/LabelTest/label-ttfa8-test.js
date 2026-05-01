@@ -26,37 +26,36 @@
  ****************************************************************************/
 
 /// LabelTTFA8Test
-import { AtlasDemo } from "./atlas-demo.js";
-import { director } from "../tests-main-constants.js";
+import { AtlasDemo } from "./atlas-demo";
+import { director } from "../constants";
 
 export class LabelTTFA8Test extends AtlasDemo {
-    constructor() {
-        //----start22----ctor
-        super();
-        var s = director.getWinSize();
+  constructor() {
+    //----start22----ctor
+    super();
+    var s = director.getWinSize();
 
-        var layer = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
-        this.addChild(layer, -10);
+    var layer = new cc.LayerColor(new cc.Color(128, 128, 128, 255));
+    this.addChild(layer, -10);
 
-        // cc.LabelBMFont
-        var label1 = new cc.LabelTTF("Testing A8 Format", "Arial", 48);
-        this.addChild(label1);
-        label1.color = new cc.Color(255, 0, 0);
-        label1.x = s.width / 2;
-        label1.y = s.height / 2;
+    // cc.LabelBMFont
+    var label1 = new cc.LabelTTF("Testing A8 Format", "Arial", 48);
+    this.addChild(label1);
+    label1.color = new cc.Color(255, 0, 0);
+    label1.x = s.width / 2;
+    label1.y = s.height / 2;
 
-        var fadeOut = new cc.FadeOut(2);
-        var fadeIn = new cc.FadeIn(2);
-        var seq = cc.sequence(fadeOut, fadeIn);
-        var forever = seq.repeatForever();
-        label1.runAction(forever);
-        //----end22----
-    }
-    title() {
-        return "Testing A8 Format";
-    }
-    subtitle() {
-        return "RED label, fading In and Out in the center of the screen";
-    }
-
+    var fadeOut = new cc.FadeOut(2);
+    var fadeIn = new cc.FadeIn(2);
+    var seq = cc.sequence(fadeOut, fadeIn);
+    var forever = seq.repeatForever();
+    label1.runAction(forever);
+    //----end22----
+  }
+  title() {
+    return "Testing A8 Format";
+  }
+  subtitle() {
+    return "RED label, fading In and Out in the center of the screen";
+  }
 }

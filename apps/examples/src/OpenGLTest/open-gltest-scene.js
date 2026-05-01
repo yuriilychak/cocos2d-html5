@@ -26,16 +26,15 @@
 // the class inherit from TestScene
 // every Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-import { nextOpenGLTest } from "./open-gltest-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { OpenGLTestIdx, _setOpenGLTestIdx } from "./open-gltest-constants.js";
+import { nextOpenGLTest } from "./open-gltest-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { OpenGLTestIdx, _setOpenGLTestIdx } from "./open-gltest-constants";
 
 export class OpenGLTestScene extends TestScene {
-    runThisTest(num) {
-        _setOpenGLTestIdx((num || num == 0) ? (num - 1) : -1);
-        this.addChild(nextOpenGLTest());
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _setOpenGLTestIdx(num || num == 0 ? num - 1 : -1);
+    this.addChild(nextOpenGLTest());
+    director.runScene(this);
+  }
 }

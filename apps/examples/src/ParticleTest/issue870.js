@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_particles, s_resprefix } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_particles, s_resprefix } from "../resources";
+import { director } from "../constants";
 
 export class Issue870 extends ParticleDemo {
     constructor() {

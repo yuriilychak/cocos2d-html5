@@ -25,39 +25,37 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { AtlasDemo } from "./atlas-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { AtlasDemo } from "./atlas-demo";
+import { winSize } from "../constants";
 
 export class labelTTFDrawModeTest extends AtlasDemo {
-    constructor() {
-        super();
-        var cacheLabel = new cc.LabelTTF();
-        cacheLabel.font = "32px 'Courier New'";
-        cacheLabel.string = "This is a labelTTF \ndrawn On cached Canvas!";
-        cacheLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
-        this.addChild(cacheLabel);
-        cacheLabel.x = winSize.width / 2;
-        cacheLabel.y = 3*winSize.height / 4 - cacheLabel.height;
+  constructor() {
+    super();
+    var cacheLabel = new cc.LabelTTF();
+    cacheLabel.font = "32px 'Courier New'";
+    cacheLabel.string = "This is a labelTTF \ndrawn On cached Canvas!";
+    cacheLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+    this.addChild(cacheLabel);
+    cacheLabel.x = winSize.width / 2;
+    cacheLabel.y = (3 * winSize.height) / 4 - cacheLabel.height;
 
-
-        var directLabel = new cc.LabelTTF();
-        if(cc.rendererConfig.isCanvas) {
-            directLabel.setDrawMode(false);
-            directLabel.string = "This is a labelTTF \ndrawn On Screen";
-        }
-        else
-            directLabel.string = "WebGL does NOT support to \ndraw labelTTF on Screen";
-        directLabel.font = "32px 'Courier New'";
-        directLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
-        this.addChild(directLabel);
-        directLabel.x = winSize.width / 2;
-        directLabel.y = winSize.height / 4 ;
-    }
-    title() {
-        return "LabelTTF DrawMode Test";
-    }
-    subtitle() {
-        return "Compare cacheMode to directMode";
-    }
-
+    var directLabel = new cc.LabelTTF();
+    if (cc.rendererConfig.isCanvas) {
+      directLabel.setDrawMode(false);
+      directLabel.string = "This is a labelTTF \ndrawn On Screen";
+    } else
+      directLabel.string =
+        "WebGL does NOT support to \ndraw labelTTF on Screen";
+    directLabel.font = "32px 'Courier New'";
+    directLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+    this.addChild(directLabel);
+    directLabel.x = winSize.width / 2;
+    directLabel.y = winSize.height / 4;
+  }
+  title() {
+    return "LabelTTF DrawMode Test";
+  }
+  subtitle() {
+    return "Compare cacheMode to directMode";
+  }
 }

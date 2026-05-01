@@ -27,43 +27,40 @@
  ****************************************************************************/
 
 // S9FrameNameSpriteSheetInsetsScaled
-import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
-import { winSize } from "../../tests-main-constants.js";
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
+import { winSize } from "../../constants";
 
 export class S9FrameNameSpriteSheetInsetsScaled extends S9SpriteTestDemo {
+  constructor() {
+    super();
 
+    this._title = "Scale9Sprite scaled with insets sprite sheet";
 
-    constructor() {
-        super();
+    this._subtitle =
+      "createWithSpriteFrameName(); default cap insets; rendered scaled 4.5 X width, 2.5 X height";
 
+    var x = winSize.width / 2;
+    var y = 0 + winSize.height / 2;
 
+    cc.log("S9FrameNameSpriteSheetInsetsScaled ...");
 
-        this._title = "Scale9Sprite scaled with insets sprite sheet";
+    var blocks_scaled_with_insets = new cc.Scale9Sprite(
+      "blocks9.png",
+      new cc.Rect(32, 32, 32, 32)
+    );
+    cc.log("... created");
 
+    blocks_scaled_with_insets.width = 96 * 4.5;
+    blocks_scaled_with_insets.height = 96 * 2.5;
+    cc.log("... setContentSize");
 
+    blocks_scaled_with_insets.x = x;
+    blocks_scaled_with_insets.y = y;
+    cc.log("... setPosition");
 
-        this._subtitle = "createWithSpriteFrameName(); default cap insets; rendered scaled 4.5 X width, 2.5 X height";
+    this.addChild(blocks_scaled_with_insets);
+    cc.log("this..addChild");
 
-        var x = winSize.width / 2;
-        var y = 0 + (winSize.height / 2);
-
-        cc.log("S9FrameNameSpriteSheetInsetsScaled ...");
-
-        var blocks_scaled_with_insets = new cc.Scale9Sprite('blocks9.png', new cc.Rect(32, 32, 32, 32));
-        cc.log("... created");
-
-        blocks_scaled_with_insets.width = 96 * 4.5;
-        blocks_scaled_with_insets.height = 96 * 2.5;
-        cc.log("... setContentSize");
-
-        blocks_scaled_with_insets.x = x;
-        blocks_scaled_with_insets.y = y;
-        cc.log("... setPosition");
-
-        this.addChild(blocks_scaled_with_insets);
-        cc.log("this..addChild");
-
-        cc.log("... S9FrameNameSpriteSheetInsetsScaled done.");
-    }
-
+    cc.log("... S9FrameNameSpriteSheetInsetsScaled done.");
+  }
 }

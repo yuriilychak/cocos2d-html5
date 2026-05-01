@@ -24,18 +24,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UILayoutTestBase } from "./uilayout-test-base.js";
+import { UILayoutTestBase } from "./uilayout-test-base";
 
 export class UILayoutTest_Gradient extends UILayoutTestBase {
-    createLayout() {
-        var layout = new ccui.Layout();
-        layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
-        layout.setBackGroundColor(new cc.Color(64, 64, 64), new cc.Color(192, 192, 192));
-        layout.setContentSize(new cc.Size(280, 150));
-        return layout;
-    }
-    getText() {
-        return "Layout gradient render";
-    }
-
+  createLayout() {
+    var layout = new ccui.Layout();
+    layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
+    layout.setBackGroundColor(
+      new cc.Color(64, 64, 64),
+      new cc.Color(192, 192, 192)
+    );
+    layout.setContentSize(new cc.Size(280, 150));
+    return layout;
+  }
+  getText() {
+    return "Layout gradient render";
+  }
 }

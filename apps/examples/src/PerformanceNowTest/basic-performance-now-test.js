@@ -27,35 +27,37 @@
 // Tests
 //
 //------------------------------------------------------------------
-import { PerformanceNowBaseLayer } from "./performance-now-base-layer.js";
+import { PerformanceNowBaseLayer } from "./performance-now-base-layer";
 
 export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
-    onEnter() {
-        super.onEnter();
-        if (performance && typeof performance.now === 'function') {
-            var currentPerformanceNow = new cc.LabelTTF("Current time since start : " + performance.now());
-            this.addChild(currentPerformanceNow);   
-            currentPerformanceNow.attr({
-                x: cc.winSize.width/2,
-                y: cc.winSize.height/2
-            });            
-        } else {
-            var errLabel = new cc.LabelTTF("On browser that does not support performance.now");
-            this.addChild(errLabel);   
-            errLabel.attr({
-                x: cc.winSize.width/2,
-                y: cc.winSize.height/2
-            });            
-
-        }
+  onEnter() {
+    super.onEnter();
+    if (performance && typeof performance.now === "function") {
+      var currentPerformanceNow = new cc.LabelTTF(
+        "Current time since start : " + performance.now()
+      );
+      this.addChild(currentPerformanceNow);
+      currentPerformanceNow.attr({
+        x: cc.winSize.width / 2,
+        y: cc.winSize.height / 2
+      });
+    } else {
+      var errLabel = new cc.LabelTTF(
+        "On browser that does not support performance.now"
+      );
+      this.addChild(errLabel);
+      errLabel.attr({
+        x: cc.winSize.width / 2,
+        y: cc.winSize.height / 2
+      });
     }
+  }
 
-    title() {
-        return "Basic performance.now functionality";
-    }
+  title() {
+    return "Basic performance.now functionality";
+  }
 
-    subtitle() {
-        return "Should display number, or say not supported";
-    }
-
+  subtitle() {
+    return "Should display number, or say not supported";
+  }
 }

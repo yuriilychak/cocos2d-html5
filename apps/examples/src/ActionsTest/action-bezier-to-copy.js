@@ -30,8 +30,8 @@
 // ActionBezierToCopy
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionBezierToCopy extends ActionsDemo {
   onEnter() {
@@ -72,5 +72,4 @@ export class ActionBezierToCopy extends ActionsDemo {
   subtitle() {
     return "Both sprites should move across the same path";
   }
-
 }

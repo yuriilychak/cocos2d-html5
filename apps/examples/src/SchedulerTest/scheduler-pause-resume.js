@@ -28,40 +28,39 @@
 /*
     SchedulerPauseResume
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
-import { director } from "../tests-main-constants.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
+import { director } from "../constants";
 
 export class SchedulerPauseResume extends SchedulerTestLayer {
-    onEnter() {
-        //----start1----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start1----onEnter
+    super.onEnter();
 
-        this.schedule(this.onTick1, 0.5);
-        this.schedule(this.onTick2, 0.5);
-        this.schedule(this.onPause, 3);
-        //----end1----
-    }
-    title() {
-        return "Pause / Resume";
-    }
-    subtitle() {
-        return "Scheduler should be paused after 3 seconds. See console";
-    }
+    this.schedule(this.onTick1, 0.5);
+    this.schedule(this.onTick2, 0.5);
+    this.schedule(this.onPause, 3);
+    //----end1----
+  }
+  title() {
+    return "Pause / Resume";
+  }
+  subtitle() {
+    return "Scheduler should be paused after 3 seconds. See console";
+  }
 
-    onTick1(dt) {
-        //----start1----onTick1
-        cc.log("SchedulerPauseResume tick1");
-        //----end1----
-    }
-    onTick2(dt) {
-        //----start1----onTick2
-        cc.log("SchedulerPauseResume tick2");
-        //----end1----
-    }
-    onPause(dt) {
-        //----start1----onPause
-        director.getScheduler().pauseTarget(this);
-        //----end1----
-    }
-
+  onTick1(dt) {
+    //----start1----onTick1
+    cc.log("SchedulerPauseResume tick1");
+    //----end1----
+  }
+  onTick2(dt) {
+    //----start1----onTick2
+    cc.log("SchedulerPauseResume tick2");
+    //----end1----
+  }
+  onPause(dt) {
+    //----start1----onPause
+    director.getScheduler().pauseTarget(this);
+    //----end1----
+  }
 }

@@ -144,8 +144,31 @@ export function createAppConfig({ outputFile = 'dist/cocos2d.min.js' } = {}) {
 }
 
 /**
+ * Workspace packages that have no dist/index.js (meta-packages).
+ * These are resolved to their src/index.js and inlined in the test bundle.
+ * Their own @aspect/* sub-dependencies are resolved as externals (see below).
+ */
+const META_PACKAGES = new Set(['extensions']);
+
+/**
+ * Maps @aspect/* package names to their runtime global variable.
+ * Only valid where the exported symbol names exactly match the global's
+ * property names (e.g. sp.SkeletonAnimation === exported SkeletonAnimation).
+ * Packages with renamed globals (e.g. gui's GScrollView → cc.ScrollView)
+ * must NOT be added here until they are fully migrated to consistent naming.
+ */
+const ASPECT_GLOBALS = {
+  cocostudio: 'ccs'
+};
+
+/**
  * ES module bundle for app source (entry-based). Produces a single IIFE
- * minified bundle that depends on the engine bundle's `cc.*` globals.
+ * minified bundle that depends on the engine bundle's globals.
+ *
+ * Supports direct `import { X } from "@aspect/pkg"` in source files:
+ * - Meta-packages (no dist) are resolved to their src and inlined.
+ * - All other @aspect/* packages (already in engine bundle) are treated as
+ *   externals mapped to their runtime global (sp, ccs, cc).
  *
  * Use this for apps that have migrated to a real ES module entry
  * (typically `src/index.js`).
@@ -154,9 +177,27 @@ export function createTestsBundleConfig({
   input = 'src/index.js',
   outputFile = 'dist/tests.min.js'
 } = {}) {
+  const appDir = process.cwd();
+  const rootDir = join(appDir, '..', '..');
+
   return {
     input,
     plugins: [
+      {
+        name: 'aspect-workspace-resolver',
+        resolveId(id) {
+          if (!id.startsWith('@aspect/')) return null;
+          const pkgName = id.replace('@aspect/', '');
+
+          if (META_PACKAGES.has(pkgName)) {
+            const srcFile = join(rootDir, 'packages', pkgName, 'src', 'index.js');
+            if (existsSync(srcFile)) return srcFile;
+          }
+
+          // All other @aspect/* packages live in the engine bundle → external.
+          return { id, external: true };
+        }
+      },
       terser({
         ecma: 2020,
         module: false,
@@ -178,7 +219,12 @@ export function createTestsBundleConfig({
       format: 'iife',
       strict: false,
       sourcemap: true,
-      inlineDynamicImports: true
+      inlineDynamicImports: true,
+      globals(id) {
+        if (!id.startsWith('@aspect/')) return undefined;
+        const pkgName = id.replace('@aspect/', '');
+        return ASPECT_GLOBALS[pkgName] ?? 'cc';
+      }
     }
   };
 }

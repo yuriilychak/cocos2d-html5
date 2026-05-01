@@ -27,18 +27,20 @@
 
 //
 //
-import { nextDrawTest } from "./draw-primitives-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setdrawTestSceneIdx, drawTestSceneIdx } from "./draw-primitives-test-constants.js";
+import { nextDrawTest } from "./draw-primitives-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _setdrawTestSceneIdx,
+  drawTestSceneIdx
+} from "./draw-primitives-test-constants";
 
 export class DrawPrimitivesTestScene extends TestScene {
-    runThisTest(num) {
-        _setdrawTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextDrawTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _setdrawTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextDrawTest();
+    this.addChild(layer);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

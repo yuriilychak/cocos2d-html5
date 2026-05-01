@@ -29,46 +29,46 @@
 // SysTestBase
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { sysTestSceneIdx } from "./sys-test-constants.js";
-import { arrayOfSysTest, nextSysTest, previousSysTest, restartSysTest } from "./sys-test-helpers.js";
-import { SysTestScene } from "./sys-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { sysTestSceneIdx } from "./sys-test-constants";
+import {
+  arrayOfSysTest,
+  nextSysTest,
+  previousSysTest,
+  restartSysTest
+} from "./sys-test-helpers";
+import { SysTestScene } from "./sys-test-scene";
+import { director } from "../constants";
 
 export class SysTestBase extends BaseTestLayer {
+  constructor() {
+    super(new cc.Color(0, 0, 0, 0), new cc.Color(98, 99, 117, 0));
 
-    constructor() {
-        super(new cc.Color(0,0,0,0), new cc.Color(98,99,117,0));
+    this._title = "";
 
+    this._subtitle = "";
+  }
+  onRestartCallback(sender) {
+    var s = new SysTestScene();
+    s.addChild(restartSysTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new SysTestScene();
+    s.addChild(nextSysTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new SysTestScene();
+    s.addChild(previousSysTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfSysTest.length - 1 - sysTestSceneIdx;
+  }
 
-        this._title = "";
-
-
-        this._subtitle = "";
-    }
-    onRestartCallback(sender) {
-        var s = new SysTestScene();
-        s.addChild(restartSysTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new SysTestScene();
-        s.addChild(nextSysTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new SysTestScene();
-        s.addChild(previousSysTest());
-        director.runScene(s);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfSysTest.length-1) - sysTestSceneIdx );
-    }
-
-    getTestNumber() {
-        return sysTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return sysTestSceneIdx;
+  }
 }

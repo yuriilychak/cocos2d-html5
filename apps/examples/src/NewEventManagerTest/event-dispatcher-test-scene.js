@@ -25,16 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextDispatcherTest } from "./new-event-manager-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _seteventDispatcherSceneIdx, eventDispatcherSceneIdx } from "./new-event-manager-test-constants.js";
+import { nextDispatcherTest } from "./new-event-manager-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _seteventDispatcherSceneIdx,
+  eventDispatcherSceneIdx
+} from "./new-event-manager-test-constants";
 
 export class EventDispatcherTestScene extends TestScene {
-    runThisTest(num) {
-        _seteventDispatcherSceneIdx((num || num == 0) ? (num - 1) : -1);
-        this.addChild(nextDispatcherTest());
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _seteventDispatcherSceneIdx(num || num == 0 ? num - 1 : -1);
+    this.addChild(nextDispatcherTest());
+    director.runScene(this);
+  }
 }

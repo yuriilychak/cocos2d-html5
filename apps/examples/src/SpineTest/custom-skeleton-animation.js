@@ -25,11 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { sp } from "./spine-test-constants.js";
+import { SkeletonAnimation } from "@aspect/extensions";
 
-export class customSkeletonAnimation extends sp.SkeletonAnimation {
+export class customSkeletonAnimation extends SkeletonAnimation {
     constructor() {
         super(...arguments);
     }
-
 }

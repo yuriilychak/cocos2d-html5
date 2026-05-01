@@ -30,69 +30,72 @@
 // TMXOrthoZorder
 //
 //------------------------------------------------------------------
-import { s_pathSister1, s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_pathSister1, s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXOrthoZorder extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.tamara = null;
+    this.tamara = null;
 
-        this.testDuration = 2;
+    this.testDuration = 2;
 
-        this.pixel1 = {"0":117, "1":185, "2":63, "3":255};
+    this.pixel1 = { 0: 117, 1: 185, 2: 63, 3: 255 };
 
-        this.pixel2 = {"0":91, "1":55, "2":20, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-zorder.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.pixel2 = { 0: 91, 1: 55, 2: 20, 3: 255 };
+    var map = new cc.TMXTiledMap(
+      s_resprefix + "TileMaps/orthogonal-test-zorder.tmx"
+    );
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        this.tamara = new cc.Sprite(s_pathSister1);
-        map.addChild(this.tamara, map.children.length, TAG_TILE_MAP);
-        this.tamara.anchorX = 0.5;
-        this.tamara.anchorY = 0;
+    this.tamara = new cc.Sprite(s_pathSister1);
+    map.addChild(this.tamara, map.children.length, TAG_TILE_MAP);
+    this.tamara.anchorX = 0.5;
+    this.tamara.anchorY = 0;
 
-        var move = new cc.MoveBy(5, cc.Point.mult(new cc.Point(400, 450), 0.58));
-        var back = move.reverse();
-        var seq = cc.sequence(move, back);
-        this.tamara.runAction(seq.repeatForever());
+    var move = new cc.MoveBy(5, cc.Point.mult(new cc.Point(400, 450), 0.58));
+    var back = move.reverse();
+    var seq = cc.sequence(move, back);
+    this.tamara.runAction(seq.repeatForever());
 
-        this.schedule(this.repositionSprite);
-    }
-    title() {
-        return "TMX Ortho Zorder";
-    }
-    subtitle() {
-        return "Sprite should hide behind the trees";
-    }
-    repositionSprite(dt) {
-        var map = this.getChildByTag(TAG_TILE_MAP);
+    this.schedule(this.repositionSprite);
+  }
+  title() {
+    return "TMX Ortho Zorder";
+  }
+  subtitle() {
+    return "Sprite should hide behind the trees";
+  }
+  repositionSprite(dt) {
+    var map = this.getChildByTag(TAG_TILE_MAP);
 
-        // there are only 4 layers. (grass and 3 trees layers)
-        // if tamara < 81, z=4
-        // if tamara < 162, z=3
-        // if tamara < 243,z=2
+    // there are only 4 layers. (grass and 3 trees layers)
+    // if tamara < 81, z=4
+    // if tamara < 162, z=3
+    // if tamara < 243,z=2
 
-        // -10: customization for this particular sample
-        var newZ = 4 - ((this.tamara.y - 10) / 81);
-        newZ = Math.max(newZ, 0);
+    // -10: customization for this particular sample
+    var newZ = 4 - (this.tamara.y - 10) / 81;
+    newZ = Math.max(newZ, 0);
 
-        map.reorderChild(this.tamara, newZ);
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(86, 131, 5, 5);
-        var ret2 = this.readPixels(84, 200, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, true, 5) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    map.reorderChild(this.tamara, newZ);
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(86, 131, 5, 5);
+    var ret2 = this.readPixels(84, 200, 5, 5);
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel2, true, 5) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

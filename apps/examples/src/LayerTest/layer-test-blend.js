@@ -30,9 +30,9 @@
 // LayerTestBlend
 //
 //------------------------------------------------------------------
-import { LayerTest } from "./layer-test.js";
-import { s_pathSister1, s_pathSister2 } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { LayerTest } from "./layer-test";
+import { s_pathSister1, s_pathSister2 } from "../resources";
+import { winSize } from "../constants";
 
 export class LayerTestBlend extends LayerTest {
 

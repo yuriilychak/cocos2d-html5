@@ -27,38 +27,37 @@
 // Chipmunk + Sprite + Batch
 //
 //------------------------------------------------------------------
-import { ChipmunkSprite } from "./chipmunk-sprite.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { ChipmunkSprite } from "./chipmunk-sprite";
+import { s_pathGrossini } from "../resources";
 
 export class ChipmunkSpriteBatchTest extends ChipmunkSprite {
-    constructor() {
-        super();
-        // cc.base(this);
+  constructor() {
+    super();
+    // cc.base(this);
 
-        // batch node
-        this.batch = new cc.SpriteBatchNode(s_pathGrossini, 50 );
-        this.addChild( this.batch );
+    // batch node
+    this.batch = new cc.SpriteBatchNode(s_pathGrossini, 50);
+    this.addChild(this.batch);
 
-        this.addSprite = function( pos ) {
-            var sprite =  this.createPhysicsSprite( pos );
-            var child = new cc.Sprite(s_pathGrossini);
-            child.attr({
-                scale: 0.4,
-                anchorX: 0,
-                anchorY: 0,
-                x: sprite.width/2,
-                y: sprite.height/2
-            });
-            sprite.addChild(child);
-            this.batch.addChild( sprite );
-        };
+    this.addSprite = function (pos) {
+      var sprite = this.createPhysicsSprite(pos);
+      var child = new cc.Sprite(s_pathGrossini);
+      child.attr({
+        scale: 0.4,
+        anchorX: 0,
+        anchorY: 0,
+        x: sprite.width / 2,
+        y: sprite.height / 2
+      });
+      sprite.addChild(child);
+      this.batch.addChild(sprite);
+    };
 
-        this._title = 'Chipmunk SpriteBatch Test';
-        this._subtitle = 'Chipmunk + cocos2d sprite batch tests. Tap screen.';
-    }
+    this._title = "Chipmunk SpriteBatch Test";
+    this._subtitle = "Chipmunk + cocos2d sprite batch tests. Tap screen.";
+  }
 
-    title(){
-        return 'Chipmunk SpriteBatch Test';
-    }
-
+  title() {
+    return "Chipmunk SpriteBatch Test";
+  }
 }

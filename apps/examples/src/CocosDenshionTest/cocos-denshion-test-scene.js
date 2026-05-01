@@ -25,16 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CocosDenshionTest } from "./cocos-denshion-test.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { CocosDenshionTest } from "./cocos-denshion-test";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
 
 export class CocosDenshionTestScene extends TestScene {
-    runThisTest() {
-
-        var layer = new CocosDenshionTest();
-        this.addChild(layer);
-        director.runScene(this);
-    }
-
+  runThisTest() {
+    var layer = new CocosDenshionTest();
+    this.addChild(layer);
+    director.runScene(this);
+  }
 }

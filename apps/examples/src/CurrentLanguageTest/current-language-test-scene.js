@@ -25,19 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CurrentLanguageTest } from "./current-language-test.js";
-import { TestScene } from "../test-scene.js";
+import { CurrentLanguageTest } from "./current-language-test";
+import { TestScene } from "../test-scene";
 
 export class CurrentLanguageTestScene extends TestScene {
-    runThisTest() {
-        if(window.sideIndexBar){
-            window.sideIndexBar.changeTest(0, 8);
-        }
-
-        var layer = new CurrentLanguageTest();
-        this.addChild(layer);
-
-        cc.director.runScene(this);
+  runThisTest() {
+    if (window.sideIndexBar) {
+      window.sideIndexBar.changeTest(0, 8);
     }
 
+    var layer = new CurrentLanguageTest();
+    this.addChild(layer);
+
+    cc.director.runScene(this);
+  }
 }

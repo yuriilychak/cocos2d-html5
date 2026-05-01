@@ -30,17 +30,20 @@
 //  ActionRotate
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionRotate extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
-      get _code() { 
-        return "a = new cc.RotateBy( time, degrees );\n" + "a = new cc.RotateTo( time, degrees );";
-      }
+  get _code() {
+    return (
+      "a = new cc.RotateBy( time, degrees );\n" +
+      "a = new cc.RotateTo( time, degrees );"
+    );
+  }
 
   onEnter() {
     //----start3----onEnter
@@ -84,5 +87,4 @@ export class ActionRotate extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

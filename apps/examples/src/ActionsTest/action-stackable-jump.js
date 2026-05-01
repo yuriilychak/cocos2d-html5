@@ -30,8 +30,8 @@
 // ActionStackableJump
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionStackableJump extends ActionsDemo {
   onEnter() {
@@ -63,5 +63,4 @@ export class ActionStackableJump extends ActionsDemo {
   subtitle() {
     return "Grossini shall shake while he is jumping";
   }
-
 }

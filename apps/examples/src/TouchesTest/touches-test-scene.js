@@ -25,20 +25,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestScene } from "../test-scene.js";
-import { PongLayer } from "./pong-layer.js";
+import { TestScene } from "../test-scene";
+import { PongLayer } from "./pong-layer";
 
 export class TouchesTestScene extends TestScene {
-    constructor() {
-        super(true);
-        var pongLayer = new PongLayer();
-        this.addChild(pongLayer);
-    }
-    runThisTest() {
-        cc.director.runScene(this);
-    }
-    MainMenuCallback(sender) {
-        super.MainMenuCallback(sender);
-    }
-
+  constructor() {
+    super(true);
+    var pongLayer = new PongLayer();
+    this.addChild(pongLayer);
+  }
+  runThisTest() {
+    cc.director.runScene(this);
+  }
+  MainMenuCallback(sender) {
+    super.MainMenuCallback(sender);
+  }
 }

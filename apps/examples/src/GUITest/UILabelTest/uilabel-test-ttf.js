@@ -24,31 +24,30 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UILabelTest_TTF extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("Label set TTF font");
+  init() {
+    if (super.init()) {
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("Label set TTF font");
 
-            // Create the text area
-            var text = new ccui.Text();
-            text.boundingWidth = 280;
-	        text.boundingHeight = 150;
-            text.attr({
-	            textAlign: cc.TEXT_ALIGNMENT_CENTER,
-	            string: "Label TTF",
-	            font: "32px mericanTypewriter",
-	            x: this._widget.width / 2,
-	            y: this._widget.height / 2 - text.height / 8
-            });
-            this._mainNode.addChild(text);
+      // Create the text area
+      var text = new ccui.Text();
+      text.boundingWidth = 280;
+      text.boundingHeight = 150;
+      text.attr({
+        textAlign: cc.TEXT_ALIGNMENT_CENTER,
+        string: "Label TTF",
+        font: "32px mericanTypewriter",
+        x: this._widget.width / 2,
+        y: this._widget.height / 2 - text.height / 8
+      });
+      this._mainNode.addChild(text);
 
-            return true;
-        }
-        return false;
+      return true;
     }
-
+    return false;
+  }
 }

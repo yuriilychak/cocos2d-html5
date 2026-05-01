@@ -27,49 +27,47 @@
  ****************************************************************************/
 
 // S9BatchNodeBasic
-import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
-import { winSize } from "../../tests-main-constants.js";
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
+import { winSize } from "../../constants";
 
 export class S9BatchNodeBasic extends S9SpriteTestDemo {
+  constructor() {
+    super();
 
+    this._title = "Scale9Sprite created empty and updated from SpriteBatchNode";
 
-    constructor() {
-        super();
+    this._subtitle = "updateWithBatchNode(); capInsets=full size";
 
+    var x = winSize.width / 2;
+    var y = 0 + winSize.height / 2;
 
+    cc.log("S9BatchNodeBasic ...");
 
-        this._title = "Scale9Sprite created empty and updated from SpriteBatchNode";
+    var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
+    cc.log("batchNode created with : " + "Images/blocks9.png");
 
+    var blocks = new cc.Scale9Sprite();
+    cc.log("... created");
 
+    blocks.updateWithBatchNode(
+      batchNode,
+      new cc.Rect(0, 0, 96, 96),
+      false,
+      new cc.Rect(0, 0, 96, 96)
+    );
+    cc.log("... updateWithBatchNode");
 
-        this._subtitle = "updateWithBatchNode(); capInsets=full size";
+    blocks.x = x;
+    blocks.y = y;
+    cc.log("... setPosition");
 
-        var x = winSize.width / 2;
-        var y = 0 + (winSize.height / 2);
+    this.addChild(blocks);
+    cc.log("this..addChild");
 
-        cc.log("S9BatchNodeBasic ...");
+    cc.log("... S9BatchNodeBasic done.");
 
-        var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
-        cc.log("batchNode created with : " + "Images/blocks9.png");
-
-        var blocks = new cc.Scale9Sprite();
-        cc.log("... created");
-
-        blocks.updateWithBatchNode(batchNode, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(0, 0, 96, 96));
-        cc.log("... updateWithBatchNode");
-
-        blocks.x = x;
-        blocks.y = y;
-        cc.log("... setPosition");
-
-        this.addChild(blocks);
-        cc.log("this..addChild");
-
-        cc.log("... S9BatchNodeBasic done.");
-
-        var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
-        var moveByBack = moveBy.reverse();
-        blocks.runAction(cc.sequence(moveBy,moveByBack));
-    }
-
+    var moveBy = new cc.MoveBy(1, new cc.Point(80, 80));
+    var moveByBack = moveBy.reverse();
+    blocks.runAction(cc.sequence(moveBy, moveByBack));
+  }
 }

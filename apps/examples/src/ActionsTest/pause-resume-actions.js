@@ -30,14 +30,14 @@
 // PauseResumeActions
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { director } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { director } from "../constants";
 
 export class PauseResumeActions extends ActionsDemo {
-    constructor() {
-        super();
-        this._pausedTargets = [];
-    }
+  constructor() {
+    super();
+    this._pausedTargets = [];
+  }
 
   onEnter() {
     //----start38----onEnter
@@ -68,5 +68,4 @@ export class PauseResumeActions extends ActionsDemo {
   subtitle() {
     return "All actions pause at 3s and resume at 5s";
   }
-
 }

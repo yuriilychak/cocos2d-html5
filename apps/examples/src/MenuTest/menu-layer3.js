@@ -30,8 +30,8 @@
 // MenuLayer3
 //
 //------------------------------------------------------------------
-import { s_bitmapFontTest3_fnt, s_menuItem } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { s_bitmapFontTest3_fnt, s_menuItem } from "../resources";
+import { director } from "../constants";
 
 export class MenuLayer3 extends cc.Layer {
 

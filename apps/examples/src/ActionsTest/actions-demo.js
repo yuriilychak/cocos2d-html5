@@ -25,26 +25,32 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SPRITE_GROSSINI_TAG, SPRITE_KATHIA_TAG, SPRITE_TAMARA_TAG, actionsTestIdx } from "./actions-test-constants.js";
-import { arrayOfActionsTest, nextActionsTest, previousActionsTest, restartActionsTest } from "./actions-test-helpers.js";
-import { ActionsTestScene } from "./actions-test-scene.js";
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import {
+  SPRITE_GROSSINI_TAG,
+  SPRITE_KATHIA_TAG,
+  SPRITE_TAMARA_TAG,
+  actionsTestIdx
+} from "./actions-test-constants";
+import {
+  arrayOfActionsTest,
+  nextActionsTest,
+  previousActionsTest,
+  restartActionsTest
+} from "./actions-test-helpers";
+import { ActionsTestScene } from "./actions-test-scene";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
+import { director } from "../constants";
 
 export class ActionsDemo extends BaseTestLayer {
-
   constructor() {
     super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
+    this._grossini = null;
 
-      this._grossini = null;
+    this._tamara = null;
 
-
-      this._tamara = null;
-
-
-      this._kathia = null;
+    this._kathia = null;
 
     this._grossini = new cc.Sprite(s_pathGrossini);
     this._tamara = new cc.Sprite(s_pathSister1);
@@ -141,5 +147,4 @@ export class ActionsDemo extends BaseTestLayer {
   getTestNumber() {
     return actionsTestIdx;
   }
-
 }

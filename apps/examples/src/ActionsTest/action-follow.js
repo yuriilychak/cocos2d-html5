@@ -30,8 +30,8 @@
 // ActionFollow
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { director } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { director } from "../constants";
 
 export class ActionFollow extends ActionsDemo {
   onEnter() {
@@ -51,12 +51,14 @@ export class ActionFollow extends ActionsDemo {
     this._grossini.runAction(rep);
 
     this.runAction(
-      new cc.Follow(this._grossini, new cc.Rect(0, 0, s.width * 2 - 100, s.height))
+      new cc.Follow(
+        this._grossini,
+        new cc.Rect(0, 0, s.width * 2 - 100, s.height)
+      )
     );
     //----end30----
   }
   subtitle() {
     return "Follow action";
   }
-
 }

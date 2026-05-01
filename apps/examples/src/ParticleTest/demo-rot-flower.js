@@ -25,77 +25,79 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_stars2 } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_stars2 } from "../resources";
 
 export class DemoRotFlower extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new cc.ParticleSystem(("opengl" in cc.sys.capabilities) ? 300 : 150);
+    this._emitter = new cc.ParticleSystem(
+      "opengl" in cc.sys.capabilities ? 300 : 150
+    );
 
-        this._background.addChild(this._emitter, 10);
-        this._emitter.texture = cc.textureCache.addImage(s_stars2);
-        if (this._emitter.setShapeType)
-            this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
+    this._background.addChild(this._emitter, 10);
+    this._emitter.texture = cc.textureCache.addImage(s_stars2);
+    if (this._emitter.setShapeType)
+      this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
 
-        // duration
-        this._emitter.duration = -1;
+    // duration
+    this._emitter.duration = -1;
 
-        // gravity
-        this._emitter.gravity = new cc.Point(0, 0);
+    // gravity
+    this._emitter.gravity = new cc.Point(0, 0);
 
-        // angle
-        this._emitter.angle = 90;
-        this._emitter.angleVar = 360;
+    // angle
+    this._emitter.angle = 90;
+    this._emitter.angleVar = 360;
 
-        // speed of particles
-        this._emitter.speed = 160;
-        this._emitter.speedVar = 20;
+    // speed of particles
+    this._emitter.speed = 160;
+    this._emitter.speedVar = 20;
 
-        // radial
-        this._emitter.radialAccel = -120;
-        this._emitter.radialAccelVar = 0;
+    // radial
+    this._emitter.radialAccel = -120;
+    this._emitter.radialAccelVar = 0;
 
-        // tangential
-        this._emitter.tangentialAccel = 30;
-        this._emitter.tangentialAccelVar = 0;
+    // tangential
+    this._emitter.tangentialAccel = 30;
+    this._emitter.tangentialAccelVar = 0;
 
-        // emitter position
-        this._emitter.x = 160;
-        this._emitter.y = 240;
-        this._emitter.posVar = new cc.Point(0, 0);
+    // emitter position
+    this._emitter.x = 160;
+    this._emitter.y = 240;
+    this._emitter.posVar = new cc.Point(0, 0);
 
-        // life of particles
-        this._emitter.life = 3;
-        this._emitter.lifeVar = 1;
+    // life of particles
+    this._emitter.life = 3;
+    this._emitter.lifeVar = 1;
 
-        // spin of particles
-        this._emitter.startSpin = 0;
-        this._emitter.startSpinVar = 0;
-        this._emitter.endSpin = 0;
-        this._emitter.endSpinVar = 2000;
+    // spin of particles
+    this._emitter.startSpin = 0;
+    this._emitter.startSpinVar = 0;
+    this._emitter.endSpin = 0;
+    this._emitter.endSpinVar = 2000;
 
-        this._emitter.startColor = new cc.Color(128, 128, 128, 255);
-        this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
-        this._emitter.endColor = new cc.Color(26, 26, 26, 50);
-        this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
+    this._emitter.startColor = new cc.Color(128, 128, 128, 255);
+    this._emitter.startColorVar = new cc.Color(128, 128, 128, 255);
+    this._emitter.endColor = new cc.Color(26, 26, 26, 50);
+    this._emitter.endColorVar = new cc.Color(26, 26, 26, 50);
 
-        // size, in pixels
-        this._emitter.startSize = 30.0;
-        this._emitter.startSizeVar = 0;
-        this._emitter.endSize = cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
+    // size, in pixels
+    this._emitter.startSize = 30.0;
+    this._emitter.startSizeVar = 0;
+    this._emitter.endSize = cc.ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE;
 
-        // emits per second
-        this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;
+    // emits per second
+    this._emitter.emissionRate =
+      this._emitter.totalParticles / this._emitter.life;
 
-        // additive
-        this._emitter.setBlendAdditive(false);
+    // additive
+    this._emitter.setBlendAdditive(false);
 
-        this.setEmitterPosition();
-    }
-    title() {
-        return "ParticleRotFlower";
-    }
-
+    this.setEmitterPosition();
+  }
+  title() {
+    return "ParticleRotFlower";
+  }
 }

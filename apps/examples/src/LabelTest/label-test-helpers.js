@@ -25,90 +25,54 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BMFontChineseTest } from "./bmfont-chinese-test.js";
-import { BMFontColorParentChild } from "./bmfont-color-parent-child.js";
-import { BMFontGlyphDesignerTest } from "./bmfont-glyph-designer-test.js";
-import { BMFontHDTest } from "./bmfont-hdtest.js";
-import { BMFontInit } from "./bmfont-init.js";
-import { BMFontMultiLineAlignmentTest } from "./bmfont-multi-line-alignment-test.js";
-import { BMFontMultiLineTest } from "./bmfont-multi-line-test.js";
-import { BMFontMultiLine2Test } from "./bmfont-multi-line2-test.js";
-import { BMFontOffsetTest } from "./bmfont-offset-test.js";
-import { BMFontOneAtlas } from "./bmfont-one-atlas.js";
-import { BMFontOpacityColorAlignmentTest } from "./bmfont-opacity-color-alignment-test.js";
-import { BMFontPaddingTest } from "./bmfont-padding-test.js";
-import { BMFontSpeedTest } from "./bmfont-speed-test.js";
-import { BMFontSubSpriteTest } from "./bmfont-sub-sprite-test.js";
-import { BMFontTintTest } from "./bmfont-tint-test.js";
-import { BMFontUnicode } from "./bmfont-unicode.js";
-import { LabelAtlasHD } from "./label-atlas-hd.js";
-import { LabelAtlasOpacityColorTest } from "./label-atlas-opacity-color-test.js";
-import { LabelAtlasOpacityTest } from "./label-atlas-opacity-test.js";
-import { labelTestIdx , _setlabelTestIdx} from "./label-test-constants.js";
-import { LabelTTFA8Test } from "./label-ttfa8-test.js";
-import { LabelTTFAlignment } from "./label-ttfalignment.js";
-import { LabelTTFChinese } from "./label-ttfchinese.js";
-import { labelTTFDrawModeTest } from "./label-ttfdraw-mode-test.js";
-import { LabelTTFFontInitTest } from "./label-ttffont-init-test.js";
-import { LabelTTFMultiline } from "./label-ttfmultiline.js";
-import { LabelTTFStrokeShadowTest } from "./label-ttfstroke-shadow-test.js";
-import { LabelTTFTest } from "./label-ttftest.js";
-import { LabelsEmpty } from "./labels-empty.js";
-import { WrapAlgorithmTest } from "./wrap-algorithm-test.js";
+import { BMFontChineseTest } from "./bmfont-chinese-test";
+import { BMFontColorParentChild } from "./bmfont-color-parent-child";
+import { BMFontGlyphDesignerTest } from "./bmfont-glyph-designer-test";
+import { BMFontHDTest } from "./bmfont-hdtest";
+import { BMFontInit } from "./bmfont-init";
+import { BMFontMultiLineAlignmentTest } from "./bmfont-multi-line-alignment-test";
+import { BMFontMultiLineTest } from "./bmfont-multi-line-test";
+import { BMFontMultiLine2Test } from "./bmfont-multi-line2-test";
+import { BMFontOffsetTest } from "./bmfont-offset-test";
+import { BMFontOneAtlas } from "./bmfont-one-atlas";
+import { BMFontOpacityColorAlignmentTest } from "./bmfont-opacity-color-alignment-test";
+import { BMFontPaddingTest } from "./bmfont-padding-test";
+import { BMFontSpeedTest } from "./bmfont-speed-test";
+import { BMFontSubSpriteTest } from "./bmfont-sub-sprite-test";
+import { BMFontTintTest } from "./bmfont-tint-test";
+import { BMFontUnicode } from "./bmfont-unicode";
+import { LabelAtlasHD } from "./label-atlas-hd";
+import { LabelAtlasOpacityColorTest } from "./label-atlas-opacity-color-test";
+import { LabelAtlasOpacityTest } from "./label-atlas-opacity-test";
+import { labelTestIdx, _setlabelTestIdx } from "./label-test-constants";
+import { LabelTTFA8Test } from "./label-ttfa8-test";
+import { LabelTTFAlignment } from "./label-ttfalignment";
+import { LabelTTFChinese } from "./label-ttfchinese";
+import { labelTTFDrawModeTest } from "./label-ttfdraw-mode-test";
+import { LabelTTFFontInitTest } from "./label-ttffont-init-test";
+import { LabelTTFMultiline } from "./label-ttfmultiline";
+import { LabelTTFStrokeShadowTest } from "./label-ttfstroke-shadow-test";
+import { LabelTTFTest } from "./label-ttftest";
+import { LabelsEmpty } from "./labels-empty";
+import { WrapAlgorithmTest } from "./wrap-algorithm-test";
 
-;
+export var LongSentencesExample =
+  "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
-;
+export var chineseExampleText =
+  "美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天";
 
-;
+export var chineseMixEnglishText =
+  "美好的一天bdgpy美b好b的d一b天d美好bd的p一g天美好b的d一d天bdgpybdgpybdgpybdg美好的一天bdgpy美好的一天美好的一天";
 
-;
+export var mixAllLanguageText =
+  "美好良い一日を一Buen díabdgpy美b好b的d一b天d美Buen い一日を好b的d一d天Buen py美好的一天bdgpy美好的一天美好的一天";
 
-;
+export var LineBreaksExample =
+  "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah";
 
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-export var LongSentencesExample = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-
-export var chineseExampleText = "美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天";
-
-export var chineseMixEnglishText = "美好的一天bdgpy美b好b的d一b天d美好bd的p一g天美好b的d一d天bdgpybdgpybdgpybdg美好的一天bdgpy美好的一天美好的一天";
-
-export var mixAllLanguageText = "美好良い一日を一Buen díabdgpy美b好b的d一b天d美Buen い一日を好b的d一d天Buen py美好的一天bdgpy美好的一天美好的一天";
-
-export var LineBreaksExample = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah";
-
-export var MixedExample = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF";
+export var MixedExample =
+  "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF";
 
 export var ArrowsMax = 0.95;
 
@@ -136,96 +100,70 @@ export var alignmentItemPadding = 40;
 
 export var menuItemPaddingCenter = 80;
 
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
 //
 // Flow control
 //
 export var arrayOfLabelTest = [
-    LabelAtlasOpacityTest,
-    LabelAtlasOpacityColorTest,
-    LabelAtlasHD,
+  LabelAtlasOpacityTest,
+  LabelAtlasOpacityColorTest,
+  LabelAtlasHD,
 
-    BMFontOpacityColorAlignmentTest,
-    BMFontSubSpriteTest,
-    BMFontPaddingTest,
-    BMFontOffsetTest,
-    BMFontTintTest,
-    BMFontSpeedTest,
-    BMFontMultiLineTest,
-    BMFontMultiLine2Test,
-    BMFontMultiLineAlignmentTest,
-    BMFontOneAtlas,
-    BMFontUnicode,
-    BMFontInit,
-    BMFontColorParentChild,
-    BMFontHDTest,
-    BMFontGlyphDesignerTest,
-    BMFontChineseTest,
+  BMFontOpacityColorAlignmentTest,
+  BMFontSubSpriteTest,
+  BMFontPaddingTest,
+  BMFontOffsetTest,
+  BMFontTintTest,
+  BMFontSpeedTest,
+  BMFontMultiLineTest,
+  BMFontMultiLine2Test,
+  BMFontMultiLineAlignmentTest,
+  BMFontOneAtlas,
+  BMFontUnicode,
+  BMFontInit,
+  BMFontColorParentChild,
+  BMFontHDTest,
+  BMFontGlyphDesignerTest,
+  BMFontChineseTest,
 
-    LabelTTFTest,
-    LabelTTFMultiline,
-    LabelTTFChinese,
-    LabelTTFA8Test,
-    LabelTTFFontInitTest,
-    LabelTTFAlignment,
+  LabelTTFTest,
+  LabelTTFMultiline,
+  LabelTTFChinese,
+  LabelTTFA8Test,
+  LabelTTFFontInitTest,
+  LabelTTFAlignment,
 
-    LabelsEmpty,
-    LabelTTFStrokeShadowTest,
-    labelTTFDrawModeTest
+  LabelsEmpty,
+  LabelTTFStrokeShadowTest,
+  labelTTFDrawModeTest
 ];
 
 if (!cc.sys.isNative || cc.sys.isMobile) {
-    arrayOfLabelTest.push(WrapAlgorithmTest);
+  arrayOfLabelTest.push(WrapAlgorithmTest);
 }
 
 export function nextLabelTest() {
-    _setlabelTestIdx(labelTestIdx + 1);
-    _setlabelTestIdx(labelTestIdx % arrayOfLabelTest.length);
+  _setlabelTestIdx(labelTestIdx + 1);
+  _setlabelTestIdx(labelTestIdx % arrayOfLabelTest.length);
 
-    if(window.sideIndexBar){
-        _setlabelTestIdx(window.sideIndexBar.changeTest(labelTestIdx, 19));
-    }
+  if (window.sideIndexBar) {
+    _setlabelTestIdx(window.sideIndexBar.changeTest(labelTestIdx, 19));
+  }
 
-    return new arrayOfLabelTest[labelTestIdx]();
+  return new arrayOfLabelTest[labelTestIdx]();
 }
-
-;
 
 export function previousLabelTest() {
-    _setlabelTestIdx(labelTestIdx - 1);
-    if (labelTestIdx < 0)
-        _setlabelTestIdx(labelTestIdx + (arrayOfLabelTest.length));
+  _setlabelTestIdx(labelTestIdx - 1);
+  if (labelTestIdx < 0)
+    _setlabelTestIdx(labelTestIdx + arrayOfLabelTest.length);
 
-    if(window.sideIndexBar){
-        _setlabelTestIdx(window.sideIndexBar.changeTest(labelTestIdx, 19));
-    }
+  if (window.sideIndexBar) {
+    _setlabelTestIdx(window.sideIndexBar.changeTest(labelTestIdx, 19));
+  }
 
-    return new arrayOfLabelTest[labelTestIdx]();
+  return new arrayOfLabelTest[labelTestIdx]();
 }
-
-;
 
 export function restartLabelTest() {
-    return new arrayOfLabelTest[labelTestIdx]();
+  return new arrayOfLabelTest[labelTestIdx]();
 }
-
-;

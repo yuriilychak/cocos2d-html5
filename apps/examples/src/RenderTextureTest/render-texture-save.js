@@ -28,9 +28,9 @@
 // Tests
 //
 //------------------------------------------------------------------
-import { RenderTextureBaseLayer } from "./render-texture-base-layer.js";
-import { s_fire } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { RenderTextureBaseLayer } from "./render-texture-base-layer";
+import { s_fire } from "../resources";
+import { winSize } from "../constants";
 
 export class RenderTextureSave extends RenderTextureBaseLayer {
     constructor() {

@@ -24,48 +24,53 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
-    init(){
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-            // Add a label in which the button events will be displayed
-            this._topDisplayLabel.setString("Button IgnoreContent Size Test");
-            this._bottomDisplayLabel.setString("");
+      // Add a label in which the button events will be displayed
+      this._topDisplayLabel.setString("Button IgnoreContent Size Test");
+      this._bottomDisplayLabel.setString("");
 
-            // Create the button
-            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
-            button.ignoreContentAdaptWithSize(false);
-            button.setContentSize(200,100);
-            button.setNormalizedPosition(0.3, 0.5);
-            button.setTitleText("PLAY GAME");
-            button.setZoomScale(0.3);
-            button.setPressedActionEnabled(true);
-            button.addClickEventListener(function () {
-                cc.log("clicked!");
-                button.setScale(1.2);
-            });
-            this.addChild(button);
+      // Create the button
+      var button = new ccui.Button(
+        "ccs-res/cocosui/animationbuttonnormal.png",
+        "ccs-res/cocosui/animationbuttonpressed.png"
+      );
+      button.ignoreContentAdaptWithSize(false);
+      button.setContentSize(200, 100);
+      button.setNormalizedPosition(0.3, 0.5);
+      button.setTitleText("PLAY GAME");
+      button.setZoomScale(0.3);
+      button.setPressedActionEnabled(true);
+      button.addClickEventListener(function () {
+        cc.log("clicked!");
+        button.setScale(1.2);
+      });
+      this.addChild(button);
 
-            // Create the button
-            var button2 = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
-            button2.ignoreContentAdaptWithSize(false);
-            button2.setContentSize(200,100);
-            button2.setNormalizedPosition(0.8, 0.5);
-            button2.setTitleText("PLAY GAME");
-            button2.setZoomScale(0.3);
-            button2.setPressedActionEnabled(true);
-            button2.addClickEventListener(function () {
-                button2.runAction(new cc.ScaleTo(1.0, 1.2));
-                cc.log("clicked!");
-            });
-            this.addChild(button2);
+      // Create the button
+      var button2 = new ccui.Button(
+        "ccs-res/cocosui/animationbuttonnormal.png",
+        "ccs-res/cocosui/animationbuttonpressed.png"
+      );
+      button2.ignoreContentAdaptWithSize(false);
+      button2.setContentSize(200, 100);
+      button2.setNormalizedPosition(0.8, 0.5);
+      button2.setTitleText("PLAY GAME");
+      button2.setZoomScale(0.3);
+      button2.setPressedActionEnabled(true);
+      button2.addClickEventListener(function () {
+        button2.runAction(new cc.ScaleTo(1.0, 1.2));
+        cc.log("clicked!");
+      });
+      this.addChild(button2);
 
-            return true;
-        }
-        return false;
+      return true;
     }
-
+    return false;
+  }
 }

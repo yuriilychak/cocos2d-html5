@@ -25,54 +25,76 @@
  ****************************************************************************/
 
 //2015-01-14
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
-    init(){
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-            // Add a label in which the textfield events will be displayed
-            this._topDisplayLabel.setString("Set place hold color");
-            this._topDisplayLabel.setPosition(widgetSize.width / 2, widgetSize.height / 2 + this._topDisplayLabel.height * 1.5);
+      // Add a label in which the textfield events will be displayed
+      this._topDisplayLabel.setString("Set place hold color");
+      this._topDisplayLabel.setPosition(
+        widgetSize.width / 2,
+        widgetSize.height / 2 + this._topDisplayLabel.height * 1.5
+      );
 
-            // Add the alert
-            this._bottomDisplayLabel.setString("TextField");
-            this._bottomDisplayLabel.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075));
+      // Add the alert
+      this._bottomDisplayLabel.setString("TextField");
+      this._bottomDisplayLabel.setPosition(
+        new cc.Point(
+          widgetSize.width / 2,
+          widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075
+        )
+      );
 
-            // Create the textfield
-            var textField = new ccui.TextField("input words here","Arial",30);
-            textField.setPlaceHolder("input text here");
-            textField.setPlaceHolderColor(cc.Color.GREEN);
-            textField.setTextColor(cc.Color.RED);
-            textField.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
-            textField.addEventListener(this.textFieldEvent, this);
-            this._mainNode.addChild(textField);
-            return true;
-        }
+      // Create the textfield
+      var textField = new ccui.TextField("input words here", "Arial", 30);
+      textField.setPlaceHolder("input text here");
+      textField.setPlaceHolderColor(cc.Color.GREEN);
+      textField.setTextColor(cc.Color.RED);
+      textField.setPosition(
+        new cc.Point(widgetSize.width / 2, widgetSize.height / 2)
+      );
+      textField.addEventListener(this.textFieldEvent, this);
+      this._mainNode.addChild(textField);
+      return true;
     }
+  }
 
-    textFieldEvent(textField, type){
-        var widgetSize = this._widget.getContentSize();
-        switch (type){
-            case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(new cc.MoveTo(0.225, new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
-                this._topDisplayLabel.setString("attach with IME");
-                break;
-            case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(new cc.MoveTo(0.175, new cc.Point(widgetSize.width / 2, widgetSize.height / 2)));
-                this._topDisplayLabel.setString("detach with IME");
-                break;
-            case ccui.TextField.EVENT_INSERT_TEXT:
-                this._topDisplayLabel.setString("insert words");
-                break;
-            case ccui.TextField.EVENT_DELETE_BACKWARD:
-                this._topDisplayLabel.setString("delete word");
-                break;
-            default:
-                break;
-        }
-        this._bottomDisplayLabel.setString(textField.getString());
+  textFieldEvent(textField, type) {
+    var widgetSize = this._widget.getContentSize();
+    switch (type) {
+      case ccui.TextField.EVENT_ATTACH_WITH_IME:
+        textField.runAction(
+          new cc.MoveTo(
+            0.225,
+            new cc.Point(
+              widgetSize.width / 2,
+              widgetSize.height / 2 + textField.height / 2
+            )
+          )
+        );
+        this._topDisplayLabel.setString("attach with IME");
+        break;
+      case ccui.TextField.EVENT_DETACH_WITH_IME:
+        textField.runAction(
+          new cc.MoveTo(
+            0.175,
+            new cc.Point(widgetSize.width / 2, widgetSize.height / 2)
+          )
+        );
+        this._topDisplayLabel.setString("detach with IME");
+        break;
+      case ccui.TextField.EVENT_INSERT_TEXT:
+        this._topDisplayLabel.setString("insert words");
+        break;
+      case ccui.TextField.EVENT_DELETE_BACKWARD:
+        this._topDisplayLabel.setString("delete word");
+        break;
+      default:
+        break;
     }
-
+    this._bottomDisplayLabel.setString(textField.getString());
+  }
 }

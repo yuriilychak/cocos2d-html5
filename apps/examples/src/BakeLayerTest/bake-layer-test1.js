@@ -25,67 +25,72 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BakeLayerBaseTest } from "./bake-layer-base-test.js";
-import { s_pathGrossini } from "../tests_resources.js";
+import { BakeLayerBaseTest } from "./bake-layer-base-test";
+import { s_pathGrossini } from "../resources";
 
 export class BakeLayerTest1 extends BakeLayerBaseTest {
+  title() {
+    return "Test 1. Bake Layer (Canvas only)";
+  }
 
-    title() {
-        return "Test 1. Bake Layer (Canvas only)";
+  constructor() {
+    super();
+
+    this._bakeLayer = null;
+
+    var winSize = cc.winSize;
+    var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
+    var unbakeItem = new cc.MenuItemFont("unbake", this.onUnbake, this);
+    var runActionItem = new cc.MenuItemFont(
+      "run action",
+      this.onRunAction,
+      this
+    );
+    var menu = new cc.Menu(bakeItem, unbakeItem, runActionItem);
+
+    menu.alignItemsVertically();
+    menu.x = winSize.width - 70;
+    menu.y = winSize.height - 120;
+    this.addChild(menu, 10);
+
+    var rootLayer = new cc.Layer();
+    rootLayer.setPosition(20, 20);
+    this.addChild(rootLayer);
+
+    var bakeLayer = new cc.Layer();
+    bakeLayer.bake();
+    bakeLayer.setRotation(30);
+    rootLayer.addChild(bakeLayer);
+
+    for (var i = 0; i < 9; i++) {
+      var sprite1 = new cc.Sprite(s_pathGrossini);
+      if (i % 2 === 0) {
+        sprite1.setPosition(90 + i * 80, winSize.height / 2 - 50);
+      } else {
+        sprite1.setPosition(90 + i * 80, winSize.height / 2 + 50);
+      }
+      if (i === 4) this._actionSprite = sprite1;
+      sprite1.rotation = 360 * Math.random();
+      bakeLayer.addChild(sprite1);
     }
+    this._bakeLayer = bakeLayer;
+    bakeLayer.runAction(
+      cc.sequence(
+        new cc.MoveBy(2, new cc.Point(100, 100)),
+        new cc.MoveBy(2, new cc.Point(-100, -100))
+      )
+    );
+  }
 
-    constructor(){
-        super();
+  onBake() {
+    this._bakeLayer.bake();
+  }
 
+  onUnbake() {
+    this._bakeLayer.unbake();
+  }
 
-        this._bakeLayer = null;
-
-        var winSize = cc.winSize;
-        var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
-        var unbakeItem = new cc.MenuItemFont("unbake", this.onUnbake, this);
-        var runActionItem = new cc.MenuItemFont("run action", this.onRunAction, this);
-        var menu = new cc.Menu(bakeItem, unbakeItem, runActionItem);
-
-        menu.alignItemsVertically();
-        menu.x = winSize.width - 70;
-        menu.y = winSize.height - 120;
-        this.addChild(menu, 10);
-
-        var rootLayer = new cc.Layer();
-        rootLayer.setPosition(20,20);
-        this.addChild(rootLayer);
-
-        var bakeLayer = new cc.Layer();
-        bakeLayer.bake();
-        bakeLayer.setRotation(30);
-        rootLayer.addChild(bakeLayer);
-
-        for(var i = 0; i < 9; i++){
-            var sprite1 = new cc.Sprite(s_pathGrossini);
-            if (i % 2 === 0) {
-                sprite1.setPosition(90 + i * 80, winSize.height / 2 - 50);
-            } else {
-                sprite1.setPosition(90 + i * 80, winSize.height / 2 + 50);
-            }
-            if(i === 4)
-                this._actionSprite = sprite1;
-            sprite1.rotation = 360 * Math.random();
-            bakeLayer.addChild(sprite1);
-        }
-        this._bakeLayer = bakeLayer;
-        bakeLayer.runAction(cc.sequence(new cc.MoveBy(2, new cc.Point(100,100)), new cc.MoveBy(2, new cc.Point(-100,-100))));
-    }
-
-    onBake(){
-        this._bakeLayer.bake();
-    }
-
-    onUnbake(){
-        this._bakeLayer.unbake();
-    }
-
-    onRunAction(){
-        this._actionSprite.runAction(new cc.RotateBy(1, 180));
-    }
-
+  onRunAction() {
+    this._actionSprite.runAction(new cc.RotateBy(1, 180));
+  }
 }

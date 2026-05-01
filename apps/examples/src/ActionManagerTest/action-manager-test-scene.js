@@ -25,16 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextActionMgrTest } from "./action-manager-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { ActionMgrTestIdx, _setActionMgrTestIdx } from "./action-manager-test-constants.js";
+import { nextActionMgrTest } from "./utils";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { ActionMgrTestIdx, _setActionMgrTestIdx } from "./constants";
 
 export class ActionManagerTestScene extends TestScene {
-    runThisTest(num) {
-        _setActionMgrTestIdx((num || 0) - 1);
-        this.addChild(nextActionMgrTest());
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _setActionMgrTestIdx((num || 0) - 1);
+    this.addChild(nextActionMgrTest());
+    director.runScene(this);
+  }
 }

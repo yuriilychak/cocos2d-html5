@@ -30,8 +30,8 @@
 // ActionStackableCardinalSpline
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionStackableCardinalSpline extends ActionsDemo {
   onEnter() {
@@ -73,5 +73,4 @@ export class ActionStackableCardinalSpline extends ActionsDemo {
   subtitle() {
     return "Grossini shall shake while he moves along a CardinalSpline path";
   }
-
 }

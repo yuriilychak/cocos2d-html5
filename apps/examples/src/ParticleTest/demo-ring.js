@@ -25,30 +25,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_stars1 } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_stars1 } from "../resources";
 
 export class DemoRing extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new cc.ParticleFlower();
+    this._emitter = new cc.ParticleFlower();
 
-        this._background.addChild(this._emitter, 10);
+    this._background.addChild(this._emitter, 10);
 
-        this._emitter.texture = cc.textureCache.addImage(s_stars1);
-        this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
+    this._emitter.texture = cc.textureCache.addImage(s_stars1);
+    this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
 
-        this._emitter.lifeVar = 0;
-        this._emitter.life = 10;
-        this._emitter.speed = 100;
-        this._emitter.speedVar = 0;
-        this._emitter.emissionRate = 10000;
+    this._emitter.lifeVar = 0;
+    this._emitter.life = 10;
+    this._emitter.speed = 100;
+    this._emitter.speedVar = 0;
+    this._emitter.emissionRate = 10000;
 
-        this.setEmitterPosition();
-    }
-    title() {
-        return "Ring Demo";
-    }
-
+    this.setEmitterPosition();
+  }
+  title() {
+    return "Ring Demo";
+  }
 }

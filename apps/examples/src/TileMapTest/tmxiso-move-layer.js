@@ -30,23 +30,24 @@
 // TMXIsoMoveLayer
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXIsoMoveLayer extends TileDemo {
-    constructor() {
-        super();
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-movelayer.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
-        map.x = -700;
-        map.y = -50;
-    }
-    title() {
-        return "TMX Iso Move Layer";
-    }
-    subtitle() {
-        return "Trees should be horizontally aligned";
-    }
-
+  constructor() {
+    super();
+    var map = new cc.TMXTiledMap(
+      s_resprefix + "TileMaps/iso-test-movelayer.tmx"
+    );
+    this.addChild(map, 0, TAG_TILE_MAP);
+    map.x = -700;
+    map.y = -50;
+  }
+  title() {
+    return "TMX Iso Move Layer";
+  }
+  subtitle() {
+    return "Trees should be horizontally aligned";
+  }
 }

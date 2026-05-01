@@ -27,55 +27,65 @@
 //
 // UIRichTextXMLSUIB
 //
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIRichTextXMLSUIB extends UIMainLayer {
-    constructor() {
-        super();
-        this._richText = null;
+  constructor() {
+    super();
+    this._richText = null;
+  }
+
+  init() {
+    if (super.init()) {
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("RichText");
+
+      var widgetSize = this._widget.getContentSize();
+      var button = new ccui.Button();
+      button.setTouchEnabled(true);
+      button.loadTextures(
+        "ccs-res/cocosui/animationbuttonnormal.png",
+        "ccs-res/cocosui/animationbuttonpressed.png",
+        ""
+      );
+      button.setTitleText("switch");
+      button.setPosition(
+        new cc.Point(
+          widgetSize.width / 2,
+          widgetSize.height / 2 + button.getContentSize().height * 2.5
+        )
+      );
+      button.addTouchEventListener(this.touchEvent, this);
+      this._mainNode.addChild(button);
+
+      // RichText
+      var richText = new ccui.RichText();
+      richText.initWithXML(
+        "system font: <u>underline</u><i>italics</i><b>bold</b><del>strike-through</del>"
+      );
+
+      richText.ignoreContentAdaptWithSize(false);
+      richText.width = 120;
+      richText.height = 100;
+
+      richText.x = widgetSize.width / 2;
+      richText.y = widgetSize.height / 2;
+
+      this._mainNode.addChild(richText);
+      this._richText = richText;
+      return true;
     }
-
-    init() {
-        if (super.init()) {
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("RichText");
-
-            var widgetSize = this._widget.getContentSize();
-            var button = new ccui.Button();
-            button.setTouchEnabled(true);
-            button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
-            button.setTitleText("switch");
-            button.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
-            button.addTouchEventListener(this.touchEvent,this);
-            this._mainNode.addChild(button);
-
-            // RichText
-            var richText = new ccui.RichText();
-            richText.initWithXML("system font: <u>underline</u><i>italics</i><b>bold</b><del>strike-through</del>");
-
-            richText.ignoreContentAdaptWithSize(false);
-            richText.width = 120;
-            richText.height = 100;
-
-            richText.x = widgetSize.width / 2;
-            richText.y = widgetSize.height / 2;
-
-            this._mainNode.addChild(richText);
-            this._richText = richText;
-            return true;
-        }
-        return false;
+    return false;
+  }
+  touchEvent(sender, type) {
+    if (type == ccui.Widget.TOUCH_ENDED) {
+      if (this._richText.isIgnoreContentAdaptWithSize()) {
+        this._richText.ignoreContentAdaptWithSize(false);
+        this._richText.setContentSize(new cc.Size(120, 100));
+      } else {
+        this._richText.ignoreContentAdaptWithSize(true);
+      }
     }
-    touchEvent(sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
-            if (this._richText.isIgnoreContentAdaptWithSize()) {
-                this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setContentSize(new cc.Size(120, 100));
-            } else {
-                this._richText.ignoreContentAdaptWithSize(true);
-            }
-        }
-    }
-
+  }
 }

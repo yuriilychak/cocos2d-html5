@@ -28,16 +28,18 @@
 // the class inherit from TestScene
 // every .Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-import { nextEaseActionsTest } from "./ease-actions-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _seteaseActionsTestIdx, easeActionsTestIdx } from "./ease-actions-test-constants.js";
+import { nextEaseActionsTest } from "./ease-actions-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _seteaseActionsTestIdx,
+  easeActionsTestIdx
+} from "./ease-actions-test-constants";
 
 export class EaseActionsTestScene extends TestScene {
-    runThisTest(num) {
-        _seteaseActionsTestIdx((num || num == 0) ? (num - 1) : -1);
-        this.addChild(nextEaseActionsTest());
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _seteaseActionsTestIdx(num || num == 0 ? num - 1 : -1);
+    this.addChild(nextEaseActionsTest());
+    director.runScene(this);
+  }
 }

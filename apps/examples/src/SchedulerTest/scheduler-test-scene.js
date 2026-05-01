@@ -28,18 +28,20 @@
 /*
     main entry
 */
-import { nextSchedulerTest } from "./scheduler-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setschedulerTestSceneIdx, schedulerTestSceneIdx } from "./scheduler-test-constants.js";
+import { nextSchedulerTest } from "./scheduler-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _setschedulerTestSceneIdx,
+  schedulerTestSceneIdx
+} from "./scheduler-test-constants";
 
 export class SchedulerTestScene extends TestScene {
-    runThisTest(num) {
-        _setschedulerTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextSchedulerTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _setschedulerTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextSchedulerTest();
+    this.addChild(layer);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

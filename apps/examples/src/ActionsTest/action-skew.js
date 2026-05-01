@@ -30,17 +30,20 @@
 //	ActionSkew
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionSkew extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
-      get _code() { 
-        return "a = new cc.SkewBy( time, skew );\n" + "a = new cc.SkewTo( time, skewX, skewY );";
-      }
+  get _code() {
+    return (
+      "a = new cc.SkewBy( time, skew );\n" +
+      "a = new cc.SkewTo( time, skewX, skewY );"
+    );
+  }
 
   onEnter() {
     //----start5----onEnter
@@ -86,5 +89,4 @@ export class ActionSkew extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

@@ -30,47 +30,47 @@
 // DrawTestDemo
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { drawTestSceneIdx } from "./draw-primitives-test-constants.js";
-import { arrayOfDrawTest, nextDrawTest, previousDrawTest, restartDrawTest } from "./draw-primitives-test-helpers.js";
-import { DrawPrimitivesTestScene } from "./draw-primitives-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { drawTestSceneIdx } from "./draw-primitives-test-constants";
+import {
+  arrayOfDrawTest,
+  nextDrawTest,
+  previousDrawTest,
+  restartDrawTest
+} from "./draw-primitives-test-helpers";
+import { DrawPrimitivesTestScene } from "./draw-primitives-test-scene";
+import { director } from "../constants";
 
 export class DrawTestDemo extends BaseTestLayer {
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
 
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255));
+    this._title = "";
 
+    this._subtitle = "";
+  }
 
-        this._title = "";
+  onRestartCallback(sender) {
+    var s = new DrawPrimitivesTestScene();
+    s.addChild(restartDrawTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new DrawPrimitivesTestScene();
+    s.addChild(nextDrawTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new DrawPrimitivesTestScene();
+    s.addChild(previousDrawTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfDrawTest.length - 1 - drawTestSceneIdx;
+  }
 
-
-        this._subtitle = "";
-    }
-
-    onRestartCallback(sender) {
-        var s = new DrawPrimitivesTestScene();
-        s.addChild(restartDrawTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new DrawPrimitivesTestScene();
-        s.addChild(nextDrawTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new DrawPrimitivesTestScene();
-        s.addChild(previousDrawTest());
-        director.runScene(s);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfDrawTest.length-1) - drawTestSceneIdx );
-    }
-
-    getTestNumber() {
-        return drawTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return drawTestSceneIdx;
+  }
 }

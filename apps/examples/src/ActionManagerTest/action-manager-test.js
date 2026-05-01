@@ -30,50 +30,53 @@
 // ActionManagerTest
 //
 //------------------------------------------------------------------
-import { ActionMgrTestIdx } from "./action-manager-test-constants.js";
-import { arrayOfActionMgrTest, nextActionMgrTest, previousActionMgrTest, restartActionMgrTest } from "./action-manager-test-helpers.js";
-import { ActionManagerTestScene } from "./action-manager-test-scene.js";
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { director } from "../tests-main-constants.js";
+import { ActionMgrTestIdx } from "./constants";
+import {
+  arrayOfActionMgrTest,
+  nextActionMgrTest,
+  previousActionMgrTest,
+  restartActionMgrTest
+} from "./utils";
+import { ActionManagerTestScene } from "./action-manager-test-scene";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { director } from "../constants";
 
 export class ActionManagerTest extends BaseTestLayer {
-    constructor() {
-        super();
-        this._atlas = null;
-        this._title = "";
-    }
+  constructor() {
+    super();
+    this._atlas = null;
+    this._title = "";
+  }
 
+  title() {
+    return "No title";
+  }
 
-    title() {
-        return "No title";
-    }
+  subtitle() {
+    return "";
+  }
 
-    subtitle() {
-        return "";
-    }
+  onBackCallback(sender) {
+    var s = new ActionManagerTestScene();
+    s.addChild(previousActionMgrTest());
+    director.runScene(s);
+  }
+  onRestartCallback(sender) {
+    var s = new ActionManagerTestScene();
+    s.addChild(restartActionMgrTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new ActionManagerTestScene();
+    s.addChild(nextActionMgrTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfActionMgrTest.length - 1 - ActionMgrTestIdx;
+  }
 
-    onBackCallback(sender) {
-        var s = new ActionManagerTestScene();
-        s.addChild(previousActionMgrTest());
-        director.runScene(s);
-    }
-    onRestartCallback(sender) {
-        var s = new ActionManagerTestScene();
-        s.addChild(restartActionMgrTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new ActionManagerTestScene();
-        s.addChild(nextActionMgrTest());
-        director.runScene(s);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfActionMgrTest.length-1) - ActionMgrTestIdx );
-    }
-
-    getTestNumber() {
-        return ActionMgrTestIdx;
-    }
-
+  getTestNumber() {
+    return ActionMgrTestIdx;
+  }
 }

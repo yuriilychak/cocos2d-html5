@@ -30,9 +30,9 @@
 // SpriteAnimationSplit
 //
 //------------------------------------------------------------------
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_dragon_animation } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_dragon_animation } from "../resources";
+import { winSize } from "../constants";
 
 export class SpriteAnimationSplit extends SpriteTestDemo {
 

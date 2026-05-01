@@ -30,56 +30,56 @@
 // TMXOrthoFromXMLTest
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { TileDemo } from "./tile-demo.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
+import { s_resprefix } from "../resources";
+import { TileDemo } from "./tile-demo";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
 
 export class TMXOrthoFromXMLTest extends TileDemo {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.testDuration = 2.2;
+    this.testDuration = 2.2;
 
-        this.pixel1 = {"0":210, "1":210, "2":200, "3":255};
+    this.pixel1 = { 0: 210, 1: 210, 2: 200, 3: 255 };
 
-        this.pixel2 = {"0":243, "1":202, "2":86, "3":255};
+    this.pixel2 = { 0: 243, 1: 202, 2: 86, 3: 255 };
 
-        var resources = s_resprefix + "TileMaps";
-        var filePath = s_resprefix + "TileMaps/orthogonal-test1.tmx";
-        var xmlStr = cc.loader.getRes(filePath);
-        var map = new cc.TMXTiledMap(xmlStr, resources);
-        this.addChild(map, 0, TAG_TILE_MAP);
+    var resources = s_resprefix + "TileMaps";
+    var filePath = s_resprefix + "TileMaps/orthogonal-test1.tmx";
+    var xmlStr = cc.loader.getRes(filePath);
+    var map = new cc.TMXTiledMap(xmlStr, resources);
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        cc.log("ContentSize: " + map.width + ", " + map.height);
+    cc.log("ContentSize: " + map.width + ", " + map.height);
 
-        if ("opengl" in cc.sys.capabilities) {
-            var mapChildren = map.children;
-            for (var i = 0; i < mapChildren.length; i++) {
-                var child = mapChildren[i];
-                if (child)
-                    child.texture.setAntiAliasTexParameters();
-            }
-        }
-
-        var action = new cc.ScaleBy(2, 0.5);
-        map.runAction(action);
-    }
-    title() {
-        return "TMX created from XML test";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(326, 120, 5, 5);
-        var ret2 = this.readPixels(124, 246, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
+    if ("opengl" in cc.sys.capabilities) {
+      var mapChildren = map.children;
+      for (var i = 0; i < mapChildren.length; i++) {
+        var child = mapChildren[i];
+        if (child) child.texture.setAntiAliasTexParameters();
+      }
     }
 
+    var action = new cc.ScaleBy(2, 0.5);
+    map.runAction(action);
+  }
+  title() {
+    return "TMX created from XML test";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(326, 120, 5, 5);
+    var ret2 = this.readPixels(124, 246, 5, 5);
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

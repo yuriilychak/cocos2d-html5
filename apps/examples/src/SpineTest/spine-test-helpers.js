@@ -25,51 +25,38 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { spineSceneIdx , _setspineSceneIdx} from "./spine-test-constants.js";
-import { SpineTestLayerFFD } from "./spine-test-layer-ffd.js";
-import { SpineTestLayerNormal } from "./spine-test-layer-normal.js";
-import { SpineTestPerformanceLayer } from "./spine-test-performance-layer.js";
-import { SpineTestScene } from "./spine-test-scene.js";
+import { spineSceneIdx, _setspineSceneIdx } from "./spine-test-constants";
+import { SpineTestLayerFFD } from "./spine-test-layer-ffd";
+import { SpineTestLayerNormal } from "./spine-test-layer-normal";
+import { SpineTestPerformanceLayer } from "./spine-test-performance-layer";
+import { SpineTestScene } from "./spine-test-scene";
 
-;
-
-SpineTestScene.nextSpineTestLayer = function() {
-    _setspineSceneIdx(spineSceneIdx + 1);
-    var layers = SpineTestScene.testLayers;
-    _setspineSceneIdx(spineSceneIdx % layers.length);
-    return new layers[spineSceneIdx](spineSceneIdx);
+SpineTestScene.nextSpineTestLayer = function () {
+  _setspineSceneIdx(spineSceneIdx + 1);
+  var layers = SpineTestScene.testLayers;
+  _setspineSceneIdx(spineSceneIdx % layers.length);
+  return new layers[spineSceneIdx](spineSceneIdx);
 };
 
-SpineTestScene.backSpineTestLayer = function() {
-    _setspineSceneIdx(spineSceneIdx - 1);
-    var layers = SpineTestScene.testLayers;
-    if(spineSceneIdx < 0)
-        _setspineSceneIdx(layers.length - 1);
-    return new layers[spineSceneIdx](spineSceneIdx);
+SpineTestScene.backSpineTestLayer = function () {
+  _setspineSceneIdx(spineSceneIdx - 1);
+  var layers = SpineTestScene.testLayers;
+  if (spineSceneIdx < 0) _setspineSceneIdx(layers.length - 1);
+  return new layers[spineSceneIdx](spineSceneIdx);
 };
 
-SpineTestScene.restartSpineTestLayer = function(){
-    return new SpineTestScene.testLayers[spineSceneIdx](spineSceneIdx);
+SpineTestScene.restartSpineTestLayer = function () {
+  return new SpineTestScene.testLayers[spineSceneIdx](spineSceneIdx);
 };
-
-;
-
-;
-
-;
-
-;
-
-;
 
 SpineTestScene.testLayers = [
-    SpineTestLayerNormal,
-    //SpineTestLayerNormal // custom spine,diff code in sample
-    //SpineTestLayerFFD,        //it doesn't support mesh on Canvas.
-    //SpineTestPerformanceLayer //it doesn't support mesh on Canvas.
+  SpineTestLayerNormal
+  //SpineTestLayerNormal // custom spine,diff code in sample
+  //SpineTestLayerFFD,        //it doesn't support mesh on Canvas.
+  //SpineTestPerformanceLayer //it doesn't support mesh on Canvas.
 ];
 
-if(cc.sys.isNative || cc.rendererConfig.isWebGL){
-    SpineTestScene.testLayers.push(SpineTestLayerFFD);
-    SpineTestScene.testLayers.push(SpineTestPerformanceLayer);
+if (cc.sys.isNative || cc.rendererConfig.isWebGL) {
+  SpineTestScene.testLayers.push(SpineTestLayerFFD);
+  SpineTestScene.testLayers.push(SpineTestPerformanceLayer);
 }

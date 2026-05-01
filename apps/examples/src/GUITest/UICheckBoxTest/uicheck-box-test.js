@@ -24,46 +24,47 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UICheckBoxTest extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            //init text
-            this._topDisplayLabel.setString("No Event");
-            this._bottomDisplayLabel.setString("CheckBox");
+  init() {
+    if (super.init()) {
+      //init text
+      this._topDisplayLabel.setString("No Event");
+      this._bottomDisplayLabel.setString("CheckBox");
 
-            var widgetSize = this._widget.getContentSize();
-            // Create the checkbox
-            var checkBox = new ccui.CheckBox();
-            checkBox.setTouchEnabled(true);
-            checkBox.loadTextures("ccs-res/cocosui/check_box_normal.png",
-                "ccs-res/cocosui/check_box_normal_press.png",
-                "ccs-res/cocosui/check_box_active.png",
-                "ccs-res/cocosui/check_box_normal_disable.png",
-                "ccs-res/cocosui/check_box_active_disable.png");
-            checkBox.x = widgetSize.width / 2.0;
-	        checkBox.y = widgetSize.height / 2.0;
-            checkBox.addEventListener(this.selectedStateEvent, this);
-            this._mainNode.addChild(checkBox);
+      var widgetSize = this._widget.getContentSize();
+      // Create the checkbox
+      var checkBox = new ccui.CheckBox();
+      checkBox.setTouchEnabled(true);
+      checkBox.loadTextures(
+        "ccs-res/cocosui/check_box_normal.png",
+        "ccs-res/cocosui/check_box_normal_press.png",
+        "ccs-res/cocosui/check_box_active.png",
+        "ccs-res/cocosui/check_box_normal_disable.png",
+        "ccs-res/cocosui/check_box_active_disable.png"
+      );
+      checkBox.x = widgetSize.width / 2.0;
+      checkBox.y = widgetSize.height / 2.0;
+      checkBox.addEventListener(this.selectedStateEvent, this);
+      this._mainNode.addChild(checkBox);
 
-            return true;
-        }
-        return false;
+      return true;
     }
+    return false;
+  }
 
-    selectedStateEvent(sender, type) {
-        switch (type) {
-            case  ccui.CheckBox.EVENT_UNSELECTED:
-                this._topDisplayLabel.setString("Unselected");
-                break;
-            case ccui.CheckBox.EVENT_SELECTED:
-                this._topDisplayLabel.setString("Selected");
-                break;
+  selectedStateEvent(sender, type) {
+    switch (type) {
+      case ccui.CheckBox.EVENT_UNSELECTED:
+        this._topDisplayLabel.setString("Unselected");
+        break;
+      case ccui.CheckBox.EVENT_SELECTED:
+        this._topDisplayLabel.setString("Selected");
+        break;
 
-            default:
-                break;
-        }
+      default:
+        break;
     }
-
+  }
 }

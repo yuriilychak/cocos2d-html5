@@ -30,7 +30,7 @@
 // ActionTargetedCopy
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionTargetedCopy extends ActionsDemo {
   onEnter() {
@@ -55,5 +55,4 @@ export class ActionTargetedCopy extends ActionsDemo {
   subtitle() {
     return "Testing copy on TargetedAction";
   }
-
 }

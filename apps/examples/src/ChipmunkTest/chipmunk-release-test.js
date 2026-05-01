@@ -27,59 +27,58 @@
 // ChipmunkReleaseTest
 //
 //------------------------------------------------------------------
-import { ChipmunkBaseLayer } from "./chipmunk-base-layer.js";
+import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 
 export class ChipmunkReleaseTest extends ChipmunkBaseLayer {
+  constructor() {
+    super();
+    // cc.base(this);
 
-    constructor() {
-        super();
-        // cc.base(this);
+    this._title = "Chipmunk Release Test";
+    this._subtitle = "Space finalizer should be called";
+  }
 
-        this._title = 'Chipmunk Release Test';
-        this._subtitle = 'Space finalizer should be called';
-    }
+  collisionBegin(arbiter, space) {
+    return true;
+  }
 
-    collisionBegin( arbiter, space ) {
-        return true;
-    }
+  collisionPre(arbiter, space) {
+    return true;
+  }
 
-    collisionPre( arbiter, space ) {
-        return true;
-    }
+  collisionPost(arbiter, space) {
+    cc.log("collision post");
+  }
 
-    collisionPost( arbiter, space ) {
-        cc.log('collision post');
-    }
+  collisionSeparate(arbiter, space) {
+    cc.log("collision separate");
+  }
 
-    collisionSeparate( arbiter, space ) {
-        cc.log('collision separate');
-    }
+  onEnter() {
+    super.onEnter();
+    // cc.base(this, 'onEnter');
 
-    onEnter() {
-        super.onEnter();
-        // cc.base(this, 'onEnter');
+    cc.log("OnEnter");
+    cc.sys.garbageCollect();
 
-        cc.log("OnEnter");
-        cc.sys.garbageCollect();
+    this.space.addCollisionHandler(
+      10,
+      11,
+      this.collisionBegin.bind(this),
+      this.collisionPre.bind(this),
+      this.collisionPost.bind(this),
+      this.collisionSeparate.bind(this)
+    );
+  }
 
-        this.space.addCollisionHandler( 10, 11,
-            this.collisionBegin.bind(this),
-            this.collisionPre.bind(this),
-            this.collisionPost.bind(this),
-            this.collisionSeparate.bind(this)
-            );
+  onExit() {
+    cc.log("OnExit");
 
-    }
+    // not calling this on purpose
+    this.space.removeCollisionHandler(10, 11);
+    this.space = null;
 
-    onExit() {
-        cc.log("OnExit");
-
-        // not calling this on purpose
-        this.space.removeCollisionHandler( 10, 11 );
-        this.space = null;
-
-        // cc.base(this, 'onExit');
-        super.onExit();
-    }
-
+    // cc.base(this, 'onExit');
+    super.onExit();
+  }
 }

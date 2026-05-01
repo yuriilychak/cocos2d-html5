@@ -25,20 +25,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestScene } from "../test-scene.js";
-import { XHRArrayBufferTestLayer } from "./xhrarray-buffer-test-layer.js";
+import { TestScene } from "../test-scene";
+import { XHRArrayBufferTestLayer } from "./xhrarray-buffer-test-layer";
 
 export class XHRArrayBufferTestScene extends TestScene {
-    constructor() {
-        super(true);
-        var xhrLayer = new XHRArrayBufferTestLayer();
-        this.addChild(xhrLayer);
-    }
-    runThisTest() {
-        cc.director.runScene(this);
-    }
-    MainMenuCallback(sender) {
-        super.MainMenuCallback(sender);
-    }
-
+  constructor() {
+    super(true);
+    var xhrLayer = new XHRArrayBufferTestLayer();
+    this.addChild(xhrLayer);
+  }
+  runThisTest() {
+    cc.director.runScene(this);
+  }
+  MainMenuCallback(sender) {
+    super.MainMenuCallback(sender);
+  }
 }

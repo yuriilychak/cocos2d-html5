@@ -25,28 +25,27 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_stars1 } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_stars1 } from "../resources";
 
 export class DemoExplosion extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new cc.ParticleExplosion();
-        this._background.addChild(this._emitter, 10);
+    this._emitter = new cc.ParticleExplosion();
+    this._background.addChild(this._emitter, 10);
 
-        this._emitter.texture = cc.textureCache.addImage(s_stars1);
-        this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
+    this._emitter.texture = cc.textureCache.addImage(s_stars1);
+    this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
 
-        this._emitter.setAutoRemoveOnFinish(true);
+    this._emitter.setAutoRemoveOnFinish(true);
 
-        this.setEmitterPosition();
-    }
-    onExit() {
-        super.onExit();
-    }
-    title() {
-        return "ParticleExplosion";
-    }
-
+    this.setEmitterPosition();
+  }
+  onExit() {
+    super.onExit();
+  }
+  title() {
+    return "ParticleExplosion";
+  }
 }

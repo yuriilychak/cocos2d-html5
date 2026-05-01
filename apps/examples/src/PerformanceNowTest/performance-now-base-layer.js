@@ -22,53 +22,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { scenePerformanceNowTestIdx } from "./performance-now-test-constants.js";
-import { arrayOfPerformanceNowTest, nextPerformanceNowTest, previousPerformanceNowTest, restartPerformanceNowTest } from "./performance-now-test-helpers.js";
-import { PerformanceNowTestScene } from "./performance-now-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { scenePerformanceNowTestIdx } from "./performance-now-test-constants";
+import {
+  arrayOfPerformanceNowTest,
+  nextPerformanceNowTest,
+  previousPerformanceNowTest,
+  restartPerformanceNowTest
+} from "./performance-now-test-helpers";
+import { PerformanceNowTestScene } from "./performance-now-test-scene";
+import { director } from "../constants";
 
 export class PerformanceNowBaseLayer extends BaseTestLayer {
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(98,99,117,255) );
-    }
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(98, 99, 117, 255));
+  }
 
-    title() {
-        return "performance.now";
-    }
+  title() {
+    return "performance.now";
+  }
 
-    subtitle() {
-        return "";
-    }
+  subtitle() {
+    return "";
+  }
 
-    code() {
-        return "";
-    }
+  code() {
+    return "";
+  }
 
-    // callbacks
-    onRestartCallback(sender) {
-        var s = new PerformanceNowTestScene();
-        s.addChild(restartPerformanceNowTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new PerformanceNowTestScene();
-        s.addChild(nextPerformanceNowTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new PerformanceNowTestScene();
-        s.addChild(previousPerformanceNowTest());
-        director.runScene(s);
-    }
+  // callbacks
+  onRestartCallback(sender) {
+    var s = new PerformanceNowTestScene();
+    s.addChild(restartPerformanceNowTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new PerformanceNowTestScene();
+    s.addChild(nextPerformanceNowTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new PerformanceNowTestScene();
+    s.addChild(previousPerformanceNowTest());
+    director.runScene(s);
+  }
 
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfPerformanceNowTest.length-1) - scenePerformanceNowTestIdx );
-    }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfPerformanceNowTest.length - 1 - scenePerformanceNowTestIdx;
+  }
 
-    getTestNumber() {
-        return scenePerformanceNowTestIdx;
-    }
-
+  getTestNumber() {
+    return scenePerformanceNowTestIdx;
+  }
 }

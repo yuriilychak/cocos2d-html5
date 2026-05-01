@@ -25,48 +25,58 @@
  ****************************************************************************/
 
 //2015-01-14
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIImageViewFlipTest extends UIMainLayer {
-    init(){
-        if (super.init()) {
-            cc.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      cc.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
+      var widgetSize = this._widget.getContentSize();
 
-            this._bottomDisplayLabel.setString("ImageView flip test");
+      this._bottomDisplayLabel.setString("ImageView flip test");
 
-            // Create the imageview
-            var imageView = new ccui.ImageView("blocks9r.png", ccui.Widget.PLIST_TEXTURE);
-            imageView.setScale9Enabled(true);
-            imageView.setContentSize(new cc.Size(250, 115));
-            imageView.setFlippedX(true);
-            imageView.setScale(0.5);
-            imageView.ignoreContentAdaptWithSize(false);
-            imageView.setPosition(new cc.Point(widgetSize.width / 2, widgetSize.height / 2));
+      // Create the imageview
+      var imageView = new ccui.ImageView(
+        "blocks9r.png",
+        ccui.Widget.PLIST_TEXTURE
+      );
+      imageView.setScale9Enabled(true);
+      imageView.setContentSize(new cc.Size(250, 115));
+      imageView.setFlippedX(true);
+      imageView.setScale(0.5);
+      imageView.ignoreContentAdaptWithSize(false);
+      imageView.setPosition(
+        new cc.Point(widgetSize.width / 2, widgetSize.height / 2)
+      );
 
-            this._mainNode.addChild(imageView);
+      this._mainNode.addChild(imageView);
 
-            var toggleButton = new ccui.Button();
-            toggleButton.setTitleText("Toggle FlipX");
-            var ip = imageView.getPosition();
-            toggleButton.setPosition(ip.x - 50, ip.y - imageView.getContentSize().height/2 - 20);
-            this.addChild(toggleButton);
-            toggleButton.addClickEventListener(function(){
-                imageView.setFlippedX(!imageView.isFlippedX());
-            });
+      var toggleButton = new ccui.Button();
+      toggleButton.setTitleText("Toggle FlipX");
+      var ip = imageView.getPosition();
+      toggleButton.setPosition(
+        ip.x - 50,
+        ip.y - imageView.getContentSize().height / 2 - 20
+      );
+      this.addChild(toggleButton);
+      toggleButton.addClickEventListener(function () {
+        imageView.setFlippedX(!imageView.isFlippedX());
+      });
 
-            var toggleScale9 = new ccui.Button();
-            toggleScale9.setTitleText("Toggle Scale9");
-            var ip9 = imageView.getPosition();
-            toggleScale9.setPosition(ip9.x + 50, ip9.y - imageView.getContentSize().height/2- 20);
-            this.addChild(toggleScale9);
-            toggleScale9.addClickEventListener(function(){
-                imageView.setScale9Enabled(!imageView.isScale9Enabled());
-                //after switching scale9, you must call setContentSize to keep the size not change
-                imageView.setContentSize(new cc.Size(250, 115));
-            });
-            return true;
-        }
+      var toggleScale9 = new ccui.Button();
+      toggleScale9.setTitleText("Toggle Scale9");
+      var ip9 = imageView.getPosition();
+      toggleScale9.setPosition(
+        ip9.x + 50,
+        ip9.y - imageView.getContentSize().height / 2 - 20
+      );
+      this.addChild(toggleScale9);
+      toggleScale9.addClickEventListener(function () {
+        imageView.setScale9Enabled(!imageView.isScale9Enabled());
+        //after switching scale9, you must call setContentSize to keep the size not change
+        imageView.setContentSize(new cc.Size(250, 115));
+      });
+      return true;
     }
-
+  }
 }

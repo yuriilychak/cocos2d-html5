@@ -30,78 +30,85 @@
 // ResumeTest
 //
 //------------------------------------------------------------------
-import { TAG_GROSSINI } from "./action-manager-test-constants.js";
-import { ActionManagerTest } from "./action-manager-test.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { TAG_GROSSINI } from "./constants";
+import { ActionManagerTest } from "./action-manager-test";
+import { s_pathGrossini } from "../resources";
+import { director } from "../constants";
 
 export class ResumeTest extends ActionManagerTest {
-    constructor() {
-        super();
-        this.testDuration = 6.0;
-    }
+  constructor() {
+    super();
+    this.testDuration = 6.0;
+  }
 
-    title() {
-        return "Resume Test";
-    }
-    onEnter() {
-        //----start4----onEnter
-        super.onEnter();
+  title() {
+    return "Resume Test";
+  }
+  onEnter() {
+    //----start4----onEnter
+    super.onEnter();
 
-        var s = director.getWinSize();
-        var l = new cc.LabelTTF("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
-        this.addChild(l);
-        l.x = s.width / 2;
-	    l.y = 245;
+    var s = director.getWinSize();
+    var l = new cc.LabelTTF(
+      "Grossini only rotate/scale in 3 seconds",
+      "Thonburi",
+      16
+    );
+    this.addChild(l);
+    l.x = s.width / 2;
+    l.y = 245;
 
-        var grossini = new cc.Sprite(s_pathGrossini);
-        this._grossini = grossini;
-        this.addChild(grossini, 0, TAG_GROSSINI);
-        grossini.x = s.width / 2;
-	    grossini.y = s.height / 2;
+    var grossini = new cc.Sprite(s_pathGrossini);
+    this._grossini = grossini;
+    this.addChild(grossini, 0, TAG_GROSSINI);
+    grossini.x = s.width / 2;
+    grossini.y = s.height / 2;
 
-        grossini.runAction(new cc.ScaleBy(2, 2));
+    grossini.runAction(new cc.ScaleBy(2, 2));
 
-        director.getActionManager().pauseTarget(grossini);
-        grossini.runAction(new cc.RotateBy(2, 360));
+    director.getActionManager().pauseTarget(grossini);
+    grossini.runAction(new cc.RotateBy(2, 360));
 
-        this.schedule(this.resumeGrossini, 3.0);
-        //----end4----
+    this.schedule(this.resumeGrossini, 3.0);
+    //----end4----
+  }
+  resumeGrossini(time) {
+    //----start4----resumeGrossini
+    this.unschedule(this.resumeGrossini);
 
-    }
-    resumeGrossini(time) {
-        //----start4----resumeGrossini
-        this.unschedule(this.resumeGrossini);
+    var grossini = this.getChildByTag(TAG_GROSSINI);
+    director.getActionManager().resumeTarget(grossini);
+    //----end4----
+  }
 
-        var grossini = this.getChildByTag(TAG_GROSSINI);
-        director.getActionManager().resumeTarget(grossini);
-        //----end4----
-    }
-
-    //
-    // Automation
-    //
-    setupAutomation() {
-        this.scheduleOnce(this.checkControl1, 1.0);
-        this.scheduleOnce(this.checkControl2, 5.5);
-    }
-    checkControl1(dt) {
-        this.control1ScaleX    = this._grossini.scaleX;
-        this.control1ScaleY    = this._grossini.scaleY;
-        this.control1Rotation  = this._grossini.rotation;
-    }
-    checkControl2(dt) {
-        this.control2ScaleX    = this._grossini.scaleX;
-        this.control2ScaleY    = this._grossini.scaleY;
-        this.control2Rotation  = this._grossini.rotation;
-    }
-    getExpectedResult() {
-        var ret = [ {"Rot":0 }, {"sX":1, "sY":1}, {"Rot":360 }, {"sX":2, "sY":2} ];
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret = [ {"Rot": this.control1Rotation }, {"sX": this.control1ScaleX, "sY": this.control1ScaleY}, {"Rot": this.control2Rotation }, {"sX": this.control2ScaleX, "sY": this.control2ScaleY} ];
-        return JSON.stringify(ret);
-    }
-
+  //
+  // Automation
+  //
+  setupAutomation() {
+    this.scheduleOnce(this.checkControl1, 1.0);
+    this.scheduleOnce(this.checkControl2, 5.5);
+  }
+  checkControl1(dt) {
+    this.control1ScaleX = this._grossini.scaleX;
+    this.control1ScaleY = this._grossini.scaleY;
+    this.control1Rotation = this._grossini.rotation;
+  }
+  checkControl2(dt) {
+    this.control2ScaleX = this._grossini.scaleX;
+    this.control2ScaleY = this._grossini.scaleY;
+    this.control2Rotation = this._grossini.rotation;
+  }
+  getExpectedResult() {
+    var ret = [{ Rot: 0 }, { sX: 1, sY: 1 }, { Rot: 360 }, { sX: 2, sY: 2 }];
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret = [
+      { Rot: this.control1Rotation },
+      { sX: this.control1ScaleX, sY: this.control1ScaleY },
+      { Rot: this.control2Rotation },
+      { sX: this.control2ScaleX, sY: this.control2ScaleY }
+    ];
+    return JSON.stringify(ret);
+  }
 }

@@ -25,52 +25,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { arrayOfParallaxTest, nextParallaxTest, previousParallaxTest, restartParallaxTest } from "./parallax-test-helpers.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import {
+  arrayOfParallaxTest,
+  nextParallaxTest,
+  previousParallaxTest,
+  restartParallaxTest
+} from "./parallax-test-helpers";
+import { director } from "../constants";
 
 export var TAG_NODE = 9960;
 
 export let parallaxTestSceneIdx = -1;
 
 ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
-    constructor() {
-        super(new cc.Color(0,0,0,255), new cc.Color(160,32,32,255));
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(160, 32, 32, 255));
 
-        this._atlas = null;
-    }
+    this._atlas = null;
+  }
 
-    title() {
-        return "No title";
-    }
+  title() {
+    return "No title";
+  }
 
-    onBackCallback(sender) {
-        var s = new ParallaxTestScene();
-        s.addChild(previousParallaxTest());
-        director.runScene(s);
-    }
+  onBackCallback(sender) {
+    var s = new ParallaxTestScene();
+    s.addChild(previousParallaxTest());
+    director.runScene(s);
+  }
 
-    onRestartCallback(sender) {
-        var s = new ParallaxTestScene();
-        s.addChild(restartParallaxTest());
-        director.runScene(s);
-    }
+  onRestartCallback(sender) {
+    var s = new ParallaxTestScene();
+    s.addChild(restartParallaxTest());
+    director.runScene(s);
+  }
 
-    onNextCallback(sender) {
-        var s = new ParallaxTestScene();
-        s.addChild(nextParallaxTest());
-        director.runScene(s);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfParallaxTest.length-1) - parallaxTestSceneIdx );
-    }
+  onNextCallback(sender) {
+    var s = new ParallaxTestScene();
+    s.addChild(nextParallaxTest());
+    director.runScene(s);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfParallaxTest.length - 1 - parallaxTestSceneIdx;
+  }
 
-    getTestNumber() {
-        return parallaxTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return parallaxTestSceneIdx;
+  }
 };
 
-export function _setparallaxTestSceneIdx(v) { parallaxTestSceneIdx = v; }
+export function _setparallaxTestSceneIdx(v) {
+  parallaxTestSceneIdx = v;
+}

@@ -30,16 +30,15 @@
 // ActionSpawn
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionSpawn extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = cc.spawn( a1, a2, ..., aN );";
-        this.testDuration = 2.1;
-    }
-
+  constructor() {
+    super();
+    this._code = "a = cc.spawn( a1, a2, ..., aN );";
+    this.testDuration = 2.1;
+  }
 
   onEnter() {
     //----start18----onEnter
@@ -70,5 +69,4 @@ export class ActionSpawn extends ActionsDemo {
     ret.push(this._grossini.rotation);
     return JSON.stringify(ret);
   }
-
 }

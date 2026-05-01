@@ -25,54 +25,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RemoteTextureTest } from "./remote-texture-test.js";
-import { TextureCacheTest } from "./texture-cache-test.js";
-import { TextureLoadImgTest } from "./texture-load-img-test.js";
-
-;
-
-;
-
-;
-
-;
+import { RemoteTextureTest } from "./remote-texture-test";
+import { TextureCacheTest } from "./texture-cache-test";
+import { TextureLoadImgTest } from "./texture-load-img-test";
 
 //
 // Flow control
 //
 export var texCacheTestSceneIdx = -1;
 
-;
-
 export var arrayOfTexCacheTest = [
-    TextureLoadImgTest,
-    TextureCacheTest,
-    RemoteTextureTest
+  TextureLoadImgTest,
+  TextureCacheTest,
+  RemoteTextureTest
 ];
 
 export function nextTexCacheTest() {
-    texCacheTestSceneIdx++;
-    texCacheTestSceneIdx = texCacheTestSceneIdx % arrayOfTexCacheTest.length;
+  texCacheTestSceneIdx++;
+  texCacheTestSceneIdx = texCacheTestSceneIdx % arrayOfTexCacheTest.length;
 
-    return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
+  return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
 }
-
-;
 
 export function previousTexCacheTest() {
-    texCacheTestSceneIdx--;
-    if (texCacheTestSceneIdx < 0)
-        texCacheTestSceneIdx += arrayOfTexCacheTest.length;
+  texCacheTestSceneIdx--;
+  if (texCacheTestSceneIdx < 0)
+    texCacheTestSceneIdx += arrayOfTexCacheTest.length;
 
-    return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
+  return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
 }
-
-;
 
 export function restartTexCacheTest() {
-    return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
+  return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
 }
 
-;
-
-export function _settexCacheTestSceneIdx(v) { texCacheTestSceneIdx = v; }
+export function _settexCacheTestSceneIdx(v) {
+  texCacheTestSceneIdx = v;
+}

@@ -25,59 +25,58 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
-import { TestNode } from "./test-node.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
+import { TestNode } from "./test-node";
 
 export class SchedulerUpdate extends SchedulerTestLayer {
-    onEnter() {
-        //----start5----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start5----onEnter
+    super.onEnter();
 
-        var str = "---";
-        var d = new TestNode(str,50);
-        this.addChild(d);
+    var str = "---";
+    var d = new TestNode(str, 50);
+    this.addChild(d);
 
-        str = "3rd";
-        var b = new TestNode(str,0);
-        this.addChild(b);
+    str = "3rd";
+    var b = new TestNode(str, 0);
+    this.addChild(b);
 
-        str = "1st";
-        var a = new TestNode(str, -10);
-        this.addChild(a);
+    str = "1st";
+    var a = new TestNode(str, -10);
+    this.addChild(a);
 
-        str = "4th";
-        var c = new TestNode(str,10);
-        this.addChild(c);
+    str = "4th";
+    var c = new TestNode(str, 10);
+    this.addChild(c);
 
-        str = "5th";
-        var e = new TestNode(str,20);
-        this.addChild(e);
+    str = "5th";
+    var e = new TestNode(str, 20);
+    this.addChild(e);
 
-        str = "2nd";
-        var f = new TestNode(str,-5);
-        this.addChild(f);
+    str = "2nd";
+    var f = new TestNode(str, -5);
+    this.addChild(f);
 
-        this.schedule(this.onRemoveUpdates, 4.0);
-        //----end5----
+    this.schedule(this.onRemoveUpdates, 4.0);
+    //----end5----
+  }
+  title() {
+    return "Schedule update with priority";
+  }
+  subtitle() {
+    return "3 scheduled updates. Priority should work. Stops in 4s. See console";
+  }
+
+  onRemoveUpdates(dt) {
+    //----start5----onRemoveUpdates
+    var children = this.children;
+
+    for (var i = 0; i < children.length; i++) {
+      var node = children[i];
+      if (node) {
+        node.unscheduleAllCallbacks();
+      }
     }
-    title() {
-        return "Schedule update with priority";
-    }
-    subtitle() {
-        return "3 scheduled updates. Priority should work. Stops in 4s. See console";
-    }
-
-    onRemoveUpdates(dt) {
-        //----start5----onRemoveUpdates
-        var children = this.children;
-
-        for (var i = 0; i < children.length; i++) {
-            var node = children[i];
-            if (node) {
-                node.unscheduleAllCallbacks();
-            }
-        }
-        //----end5----
-    }
-
+    //----end5----
+  }
 }

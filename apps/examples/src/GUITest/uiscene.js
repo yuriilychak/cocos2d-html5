@@ -24,14 +24,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "./uimain-layer.js";
-import { TestScene } from "../test-scene.js";
+import { UIMainLayer } from "./uimain-layer";
+import { TestScene } from "../test-scene";
 
 export class UIScene extends TestScene {
-    runThisTest(){
-        var layer = new UIMainLayer();
-        this.addChild(layer);
-        cc.director.runScene(this);
-    }
-
+  runThisTest() {
+    var layer = new UIMainLayer();
+    this.addChild(layer);
+    cc.director.runScene(this);
+  }
 }

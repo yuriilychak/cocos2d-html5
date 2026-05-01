@@ -28,65 +28,67 @@
 // DictionaryToFromTest
 //
 //------------------------------------------------------------------
-import { s_animations2Plist, s_grossiniPlist } from "../tests_resources.js";
-import { UnitTestBase } from "./unit-test-base.js";
+import { s_animations2Plist, s_grossiniPlist } from "../resources";
+import { UnitTestBase } from "./unit-test-base";
 
 export class DictionaryToFromTest extends UnitTestBase {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._title = "Dictionary To/From Test";
 
+    this._subtitle = "Sends and receives a dictionary to JSB";
 
-        this._title = "Dictionary To/From Test";
+    this.testDuration = 0.1;
 
+    this.runTest();
+  }
 
-        this._subtitle = "Sends and receives a dictionary to JSB";
+  runTest() {
+    var frameCache = cc.spriteFrameCache;
+    frameCache.addSpriteFrames(s_grossiniPlist);
 
+    // Purge previously loaded animation
+    var animCache = cc.animationCache;
+    animCache.addAnimations(s_animations2Plist);
 
-        this.testDuration = 0.1;
+    var normal = animCache.getAnimation("dance_1");
+    var frame = normal.getFrames()[0];
+    var dict = frame.getUserInfo();
+    this.log(JSON.stringify(dict));
+    frame.setUserInfo({
+      array: [1, 2, 3, "hello world"],
+      bool0: 0, // false  XXX
+      bool1: 1, // true   XXX
+      dict: { key1: "value1", key2: 2 },
+      number: 42,
+      string: "hello!"
+    });
 
-        this.runTest();
-    }
+    dict = frame.getUserInfo();
+    this.log(JSON.stringify(dict));
+    return dict;
+  }
 
-    runTest() {
-        var frameCache = cc.spriteFrameCache;
-        frameCache.addSpriteFrames(s_grossiniPlist);
+  //
+  // Automation
+  //
 
-        // Purge previously loaded animation
-        var animCache = cc.animationCache;
-        animCache.addAnimations(s_animations2Plist);
+  getExpectedResult() {
+    var ret = this.sortObject({
+      array: [1, 2, 3, "hello world"],
+      bool0: 0,
+      bool1: 1,
+      dict: { key1: "value1", key2: 2 },
+      number: 42,
+      string: "hello!"
+    });
 
-        var normal = animCache.getAnimation("dance_1");
-        var frame = normal.getFrames()[0];
-        var dict = frame.getUserInfo();
-        this.log( JSON.stringify(dict) );
-        frame.setUserInfo( {
-                            "array":[1,2,3,"hello world"],
-                            "bool0":0,  // false  XXX
-                            "bool1":1,  // true   XXX
-                            "dict":{"key1":"value1", "key2":2},
-                            "number":42,
-                            "string":"hello!"
-                        });
+    return JSON.stringify(ret);
+  }
 
-        dict = frame.getUserInfo();
-        this.log(JSON.stringify(dict));
-        return dict;
-    }
-
-    //
-    // Automation
-    //
-
-    getExpectedResult() {
-        var ret = this.sortObject( {"array":[1,2,3,"hello world"],"bool0":0,"bool1":1,"dict":{"key1":"value1","key2":2},"number":42,"string":"hello!"} );
-
-        return JSON.stringify(ret);
-    }
-
-    getCurrentResult() {
-        var ret = this.sortObject( this.runTest() );
-        return JSON.stringify(ret);
-    }
-
+  getCurrentResult() {
+    var ret = this.sortObject(this.runTest());
+    return JSON.stringify(ret);
+  }
 }

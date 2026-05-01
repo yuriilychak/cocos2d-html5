@@ -25,31 +25,37 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { LayerTest } from "./layer-test.js";
-import { director } from "../tests-main-constants.js";
+import { LayerTest } from "./layer-test";
+import { director } from "../constants";
 
 export class IgnoreAnchorpointTest4 extends LayerTest {
-    onEnter() {
-        //----start6----onEnter
-        super.onEnter();
-        //create layer
-        var ws = director.getWinSize();
-        var layer1 = new cc.LayerColor(new cc.Color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
-        layer1.ignoreAnchorPointForPosition(false);
-        var layer2 = new cc.LayerColor(new cc.Color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
-        layer2.ignoreAnchorPointForPosition(true);
-        layer1.addChild(layer2);
-        layer1.x = ws.width / 2;
-        layer1.y = ws.height / 2;
-        this.addChild(layer1);
-        //----end6----
-    }
-    title() {
-        return "ignore Anchorpoint Test #4";
-    }
-    subtitle() {
-        return "red:false  green:true";
-    }
-
-
+  onEnter() {
+    //----start6----onEnter
+    super.onEnter();
+    //create layer
+    var ws = director.getWinSize();
+    var layer1 = new cc.LayerColor(
+      new cc.Color(255, 100, 100, 128),
+      ws.width / 2,
+      ws.height / 2
+    );
+    layer1.ignoreAnchorPointForPosition(false);
+    var layer2 = new cc.LayerColor(
+      new cc.Color(100, 255, 100, 128),
+      ws.width / 4,
+      ws.height / 4
+    );
+    layer2.ignoreAnchorPointForPosition(true);
+    layer1.addChild(layer2);
+    layer1.x = ws.width / 2;
+    layer1.y = ws.height / 2;
+    this.addChild(layer1);
+    //----end6----
+  }
+  title() {
+    return "ignore Anchorpoint Test #4";
+  }
+  subtitle() {
+    return "red:false  green:true";
+  }
 }

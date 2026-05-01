@@ -30,10 +30,10 @@
 // SpriteBatchNodeChildren
 //
 //------------------------------------------------------------------
-import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants.js";
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_grossini, s_grossiniPlist } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_grossini, s_grossiniPlist } from "../resources";
+import { winSize } from "../constants";
 
 export class SpriteBatchNodeChildren extends SpriteTestDemo {
 

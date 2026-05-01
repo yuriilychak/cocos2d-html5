@@ -25,72 +25,55 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ProgressTestSceneIdx , _setProgressTestSceneIdx} from "./progress-actions-test-constants.js";
-import { SpriteProgressBarTintAndFade } from "./sprite-progress-bar-tint-and-fade.js";
-import { SpriteProgressBarVarious } from "./sprite-progress-bar-various.js";
-import { SpriteProgressToHorizontal } from "./sprite-progress-to-horizontal.js";
-import { SpriteProgressToRadialMidpointChanged } from "./sprite-progress-to-radial-midpoint-changed.js";
-import { SpriteProgressToRadial } from "./sprite-progress-to-radial.js";
-import { SpriteProgressToVertical } from "./sprite-progress-to-vertical.js";
-import { SpriteProgressWithSpriteFrame } from "./sprite-progress-with-sprite-frame.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import {
+  ProgressTestSceneIdx,
+  _setProgressTestSceneIdx
+} from "./progress-actions-test-constants";
+import { SpriteProgressBarTintAndFade } from "./sprite-progress-bar-tint-and-fade";
+import { SpriteProgressBarVarious } from "./sprite-progress-bar-various";
+import { SpriteProgressToHorizontal } from "./sprite-progress-to-horizontal";
+import { SpriteProgressToRadialMidpointChanged } from "./sprite-progress-to-radial-midpoint-changed";
+import { SpriteProgressToRadial } from "./sprite-progress-to-radial";
+import { SpriteProgressToVertical } from "./sprite-progress-to-vertical";
+import { SpriteProgressWithSpriteFrame } from "./sprite-progress-with-sprite-frame";
 
 export var arrayOfProgressTest = [
-    SpriteProgressToRadial,
-    SpriteProgressToHorizontal,
-    SpriteProgressToVertical,
-    SpriteProgressToRadialMidpointChanged,
-    SpriteProgressBarVarious,
-    SpriteProgressBarTintAndFade,
-    SpriteProgressWithSpriteFrame
+  SpriteProgressToRadial,
+  SpriteProgressToHorizontal,
+  SpriteProgressToVertical,
+  SpriteProgressToRadialMidpointChanged,
+  SpriteProgressBarVarious,
+  SpriteProgressBarTintAndFade,
+  SpriteProgressWithSpriteFrame
 ];
 
 export function nextProgressTest() {
-    _setProgressTestSceneIdx(ProgressTestSceneIdx + 1);
-    _setProgressTestSceneIdx(ProgressTestSceneIdx % arrayOfProgressTest.length);
+  _setProgressTestSceneIdx(ProgressTestSceneIdx + 1);
+  _setProgressTestSceneIdx(ProgressTestSceneIdx % arrayOfProgressTest.length);
 
-    if(window.sideIndexBar){
-        _setProgressTestSceneIdx(window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30));
-    }
+  if (window.sideIndexBar) {
+    _setProgressTestSceneIdx(
+      window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30)
+    );
+  }
 
-    return new arrayOfProgressTest[ProgressTestSceneIdx]();
+  return new arrayOfProgressTest[ProgressTestSceneIdx]();
 }
-
-;
 
 export function previousProgressTest() {
-    _setProgressTestSceneIdx(ProgressTestSceneIdx - 1);
-    if (ProgressTestSceneIdx < 0)
-        _setProgressTestSceneIdx(ProgressTestSceneIdx + (arrayOfProgressTest.length));
+  _setProgressTestSceneIdx(ProgressTestSceneIdx - 1);
+  if (ProgressTestSceneIdx < 0)
+    _setProgressTestSceneIdx(ProgressTestSceneIdx + arrayOfProgressTest.length);
 
-    if(window.sideIndexBar){
-        _setProgressTestSceneIdx(window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30));
-    }
+  if (window.sideIndexBar) {
+    _setProgressTestSceneIdx(
+      window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30)
+    );
+  }
 
-    return new arrayOfProgressTest[ProgressTestSceneIdx]();
+  return new arrayOfProgressTest[ProgressTestSceneIdx]();
 }
-
-;
 
 export function restartProgressTest() {
-    return new arrayOfProgressTest[ProgressTestSceneIdx]();
+  return new arrayOfProgressTest[ProgressTestSceneIdx]();
 }
-
-;

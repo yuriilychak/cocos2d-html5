@@ -26,43 +26,43 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { MotionStreakTest } from "./motion-streak-test.js";
-import { s_streak } from "../tests_resources.js";
+import { MotionStreakTest } from "./motion-streak-test";
+import { s_streak } from "../resources";
 
 export class MotionStreakTest2 extends MotionStreakTest {
-    constructor() {
-        super();
-        this._root = null;
-        this._target = null;
-    }
+  constructor() {
+    super();
+    this._root = null;
+    this._target = null;
+  }
 
+  onEnter() {
+    super.onEnter();
 
-    onEnter() {
-        super.onEnter();
+    cc.eventManager.addListener(
+      {
+        event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+        onTouchesMoved: function (touches, event) {
+          if (touches.length == 0) return;
 
-        cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-            onTouchesMoved:function (touches, event) {
-                if (touches.length == 0)
-                    return;
+          var touch = touches[0];
+          var touchLocation = touch.getLocation();
+          var streak = event.getCurrentTarget()._streak;
+          streak.x = touchLocation.x;
+          streak.y = touchLocation.y;
+        }
+      },
+      this
+    );
+    var winSize = cc.director.getWinSize();
+    // create the streak object and add it to the scene
+    this._streak = new cc.MotionStreak(3, 3, 64, cc.Color.WHITE, s_streak);
+    this.addChild(this._streak);
+    this._streak.x = winSize.width / 2;
+    this._streak.y = winSize.height / 2;
+  }
 
-                var touch = touches[0];
-                var touchLocation = touch.getLocation();
-                var streak = event.getCurrentTarget()._streak;
-                streak.x = touchLocation.x;
-                streak.y = touchLocation.y;
-            }
-        }, this);
-        var winSize = cc.director.getWinSize();
-        // create the streak object and add it to the scene
-        this._streak = new cc.MotionStreak(3, 3, 64, cc.Color.WHITE, s_streak);
-        this.addChild(this._streak);
-        this._streak.x = winSize.width / 2;
-        this._streak.y = winSize.height / 2;
-    }
-
-    title() {
-        return "MotionStreak test";
-    }
-
+  title() {
+    return "MotionStreak test";
+  }
 }

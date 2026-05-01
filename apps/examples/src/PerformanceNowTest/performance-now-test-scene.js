@@ -22,18 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextPerformanceNowTest } from "./performance-now-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setscenePerformanceNowTestIdx, scenePerformanceNowTestIdx } from "./performance-now-test-constants.js";
+import { nextPerformanceNowTest } from "./performance-now-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _setscenePerformanceNowTestIdx,
+  scenePerformanceNowTestIdx
+} from "./performance-now-test-constants";
 
 export class PerformanceNowTestScene extends TestScene {
-    runThisTest(num) {
-        _setscenePerformanceNowTestIdx((num || num == 0) ? (num - 1) : -1);
-        var layer = nextPerformanceNowTest();
-        this.addChild(layer);
+  runThisTest(num) {
+    _setscenePerformanceNowTestIdx(num || num == 0 ? num - 1 : -1);
+    var layer = nextPerformanceNowTest();
+    this.addChild(layer);
 
-        director.runScene(this);
-    }
-
+    director.runScene(this);
+  }
 }

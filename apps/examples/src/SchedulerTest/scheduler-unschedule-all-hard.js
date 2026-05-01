@@ -28,52 +28,51 @@
 /*
     SchedulerUnscheduleAllHard
 */
-import { SchedulerTestLayer } from "./scheduler-test-layer.js";
-import { director } from "../tests-main-constants.js";
+import { SchedulerTestLayer } from "./scheduler-test-layer";
+import { director } from "../constants";
 
 export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
-    onEnter() {
-        //----start3----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start3----onEnter
+    super.onEnter();
 
-        this.schedule(this.onTick1, 0.5);
-        this.schedule(this.onTick2, 1.0);
-        this.schedule(this.onTick3, 1.5);
-        this.schedule(this.onTick4, 1.5);
-        this.schedule(this.onUnscheduleAll, 4);
-        //----end3----
-    }
-    title() {
-        return "Unschedule All callbacks #2";
-    }
-    subtitle() {
-        return "Unschedules all callbacks after 4s. Uses CCScheduler. See console";
-    }
+    this.schedule(this.onTick1, 0.5);
+    this.schedule(this.onTick2, 1.0);
+    this.schedule(this.onTick3, 1.5);
+    this.schedule(this.onTick4, 1.5);
+    this.schedule(this.onUnscheduleAll, 4);
+    //----end3----
+  }
+  title() {
+    return "Unschedule All callbacks #2";
+  }
+  subtitle() {
+    return "Unschedules all callbacks after 4s. Uses CCScheduler. See console";
+  }
 
-    onTick1(dt) {
-        //----start3----onTick1
-        cc.log("SchedulerUnscheduleAllHard tick1");
-        //----end3----
-    }
-    onTick2(dt) {
-        //----start3----onTick2
-        cc.log("SchedulerUnscheduleAllHard tick2");
-        //----end3----
-    }
-    onTick3(dt) {
-        //----start3----onTick3
-        cc.log("SchedulerUnscheduleAllHard tick3");
-        //----end3----
-    }
-    onTick4(dt) {
-        //----start3----onTick4
-        cc.log("SchedulerUnscheduleAllHard tick4");
-        //----end3----
-    }
-    onUnscheduleAll(dt) {
-        //----start3----onUnscheduleAll
-        director.getScheduler().unscheduleAllCallbacks();
-        //----end3----
-    }
-
+  onTick1(dt) {
+    //----start3----onTick1
+    cc.log("SchedulerUnscheduleAllHard tick1");
+    //----end3----
+  }
+  onTick2(dt) {
+    //----start3----onTick2
+    cc.log("SchedulerUnscheduleAllHard tick2");
+    //----end3----
+  }
+  onTick3(dt) {
+    //----start3----onTick3
+    cc.log("SchedulerUnscheduleAllHard tick3");
+    //----end3----
+  }
+  onTick4(dt) {
+    //----start3----onTick4
+    cc.log("SchedulerUnscheduleAllHard tick4");
+    //----end3----
+  }
+  onUnscheduleAll(dt) {
+    //----start3----onUnscheduleAll
+    director.getScheduler().unscheduleAllCallbacks();
+    //----end3----
+  }
 }

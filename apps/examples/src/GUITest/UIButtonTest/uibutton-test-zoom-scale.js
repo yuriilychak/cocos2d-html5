@@ -24,49 +24,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIButtonTestZoomScale extends UIMainLayer {
-    init(){
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
 
-            // Add a label in which the button events will be displayed
-            this._topDisplayLabel.setString("Zoom Scale: -0.5");
-            this._bottomDisplayLabel.setString("");
+      // Add a label in which the button events will be displayed
+      this._topDisplayLabel.setString("Zoom Scale: -0.5");
+      this._bottomDisplayLabel.setString("");
 
-            // Create the button
-            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
-            button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 );
-            button.setPressedActionEnabled(true);
-            button.addClickEventListener(function () {
-                cc.log("Button clicked, position = (" + button.x + ", " + button.y + ")");
-            });
-            button.setName("button");
-            this._mainNode.addChild(button);
-            button.setZoomScale(-0.5);
+      // Create the button
+      var button = new ccui.Button(
+        "ccs-res/cocosui/animationbuttonnormal.png",
+        "ccs-res/cocosui/animationbuttonpressed.png"
+      );
+      button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
+      button.setPressedActionEnabled(true);
+      button.addClickEventListener(function () {
+        cc.log(
+          "Button clicked, position = (" + button.x + ", " + button.y + ")"
+        );
+      });
+      button.setName("button");
+      this._mainNode.addChild(button);
+      button.setZoomScale(-0.5);
 
-            var slider = new ccui.Slider();
-            slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
-            slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
-            slider.setPosition(widgetSize.width / 2.0 , widgetSize.height / 2.0 - 50);
-            slider.addEventListener(this.sliderEvent, this);
-            slider.setPercent(button.getZoomScale() * 100);
-            this._mainNode.addChild(slider);
-            return true;
-        }
-        return false;
+      var slider = new ccui.Slider();
+      slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+      slider.loadSlidBallTextures(
+        "ccs-res/cocosui/sliderThumb.png",
+        "ccs-res/cocosui/sliderThumb.png",
+        ""
+      );
+      slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
+      slider.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - 50);
+      slider.addEventListener(this.sliderEvent, this);
+      slider.setPercent(button.getZoomScale() * 100);
+      this._mainNode.addChild(slider);
+      return true;
     }
+    return false;
+  }
 
-    sliderEvent(slider, type){
-        if (type == ccui.Slider.EVENT_PERCENT_CHANGED){
-            var percent = slider.getPercent();
-            var btn = this._mainNode.getChildByName("button");
-            var zoomScale = percent * 0.01;
-            btn.setZoomScale(zoomScale);
-            this._topDisplayLabel.setString("Zoom Scale: "+ zoomScale.toFixed(2));
-        }
+  sliderEvent(slider, type) {
+    if (type == ccui.Slider.EVENT_PERCENT_CHANGED) {
+      var percent = slider.getPercent();
+      var btn = this._mainNode.getChildByName("button");
+      var zoomScale = percent * 0.01;
+      btn.setZoomScale(zoomScale);
+      this._topDisplayLabel.setString("Zoom Scale: " + zoomScale.toFixed(2));
     }
-
+  }
 }

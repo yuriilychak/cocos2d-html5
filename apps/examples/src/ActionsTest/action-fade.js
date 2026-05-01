@@ -30,15 +30,14 @@
 // ActionFade
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionFade extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = new cc.FadeIn( time );\n" + "a = new cc.FadeOut( time );";
-        this.testDuration = 1.1;
-    }
-
+  constructor() {
+    super();
+    this._code = "a = new cc.FadeIn( time );\n" + "a = new cc.FadeOut( time );";
+    this.testDuration = 1.1;
+  }
 
   onEnter() {
     //----start14----onEnter
@@ -72,5 +71,4 @@ export class ActionFade extends ActionsDemo {
     ret.push(this._kathia.opacity);
     return JSON.stringify(ret);
   }
-
 }

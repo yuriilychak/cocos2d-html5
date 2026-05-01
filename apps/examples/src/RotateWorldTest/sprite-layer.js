@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
+import { director } from "../constants";
 
 export class SpriteLayer extends cc.Layer {
     constructor() {

@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_resprefix } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_resprefix } from "../resources";
+import { winSize } from "../constants";
 
 export class ParticleResizeTest extends ParticleDemo {
     constructor() {

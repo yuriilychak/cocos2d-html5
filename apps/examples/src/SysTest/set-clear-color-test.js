@@ -29,9 +29,9 @@
 // setClearColorTest
 //
 //------------------------------------------------------------------
-import { SysTestBase } from "./sys-test-base.js";
-import { s_back } from "../tests_resources.js";
-import { director, winSize } from "../tests-main-constants.js";
+import { SysTestBase } from "./sys-test-base";
+import { s_back } from "../resources";
+import { director, winSize } from "../constants";
 
 export class setClearColorTest extends SysTestBase {
     constructor()

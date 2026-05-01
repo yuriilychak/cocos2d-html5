@@ -25,27 +25,26 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BasicTest } from "./basic-test.js";
+import { BasicTest } from "./basic-test";
 
 export class ShapeTest extends BasicTest {
-    title() {
-        return "Shape Basic Test";
-    }
+  title() {
+    return "Shape Basic Test";
+  }
 
-    subtitle() {
-        return "A DrawNode as stencil and Sprite as content";
-    }
+  subtitle() {
+    return "A DrawNode as stencil and Sprite as content";
+  }
 
-    stencil() {
-        var node = this.shape();
-        node.runAction(this.actionRotate());
-        return node;
-    }
+  stencil() {
+    var node = this.shape();
+    node.runAction(this.actionRotate());
+    return node;
+  }
 
-    content() {
-        var node = this.grossini();
-        node.runAction(this.actionScale());
-        return node;
-    }
-
+  content() {
+    var node = this.grossini();
+    node.runAction(this.actionScale());
+    return node;
+  }
 }

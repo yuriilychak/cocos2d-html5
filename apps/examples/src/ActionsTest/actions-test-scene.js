@@ -28,10 +28,10 @@
 // the class inherit from TestScene
 // every Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
-import { nextActionsTest } from "./actions-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setactionsTestIdx, actionsTestIdx } from "./actions-test-constants.js";
+import { nextActionsTest } from "./actions-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import { _setactionsTestIdx, actionsTestIdx } from "./actions-test-constants";
 
 export class ActionsTestScene extends TestScene {
   runThisTest(num) {
@@ -39,5 +39,4 @@ export class ActionsTestScene extends TestScene {
     this.addChild(nextActionsTest());
     director.runScene(this);
   }
-
 }

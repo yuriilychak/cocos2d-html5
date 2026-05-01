@@ -23,18 +23,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
-import { winSize } from "../tests-main-constants.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
+import { winSize } from "../constants";
 
 export class TwirlTest extends EffectsBaseLayer {
-    title() {
-        return "Twirl";
-    }
-    code() {
-        return "a = cc.twirl(duration, gridSize, position, twirls, amplitude)";
-    }
-    getEffect(duration) {
-        return cc.twirl( duration, new cc.Size(12,8), new cc.Point(winSize.width/2, winSize.height/2), 1, 2.5);
-    }
-
+  title() {
+    return "Twirl";
+  }
+  code() {
+    return "a = cc.twirl(duration, gridSize, position, twirls, amplitude)";
+  }
+  getEffect(duration) {
+    return cc.twirl(
+      duration,
+      new cc.Size(12, 8),
+      new cc.Point(winSize.width / 2, winSize.height / 2),
+      1,
+      2.5
+    );
+  }
 }

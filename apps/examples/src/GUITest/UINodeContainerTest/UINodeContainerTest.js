@@ -24,30 +24,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIWidgetAddNodeTest extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("NodeContainer");
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("NodeContainer");
 
-            // Create the ui node container
-            var nodeContainer = new ccui.Widget();
-            nodeContainer.x = widgetSize.width / 2;
-            nodeContainer.y = widgetSize.height / 2;
-            this._mainNode.addChild(nodeContainer);
+      // Create the ui node container
+      var nodeContainer = new ccui.Widget();
+      nodeContainer.x = widgetSize.width / 2;
+      nodeContainer.y = widgetSize.height / 2;
+      this._mainNode.addChild(nodeContainer);
 
-            var sprite = new cc.Sprite("ccs-res/cocosui/ccicon.png");
-            sprite.x = 0;
-            sprite.y = sprite.getBoundingBox().height / 4;
-            nodeContainer.addNode(sprite);
+      var sprite = new cc.Sprite("ccs-res/cocosui/ccicon.png");
+      sprite.x = 0;
+      sprite.y = sprite.getBoundingBox().height / 4;
+      nodeContainer.addNode(sprite);
 
-            return true;
-        }
-        return false;
+      return true;
     }
-
-};
+    return false;
+  }
+}

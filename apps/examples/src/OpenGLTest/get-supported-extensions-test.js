@@ -28,44 +28,42 @@
 // GetSupportedExtensionsTest
 //
 //------------------------------------------------------------------
-import { OpenGLTestLayer } from "./open-gltest-layer.js";
-import { autoTestEnabled } from "../tests-main-constants.js";
+import { OpenGLTestLayer } from "./open-gltest-layer";
+import { autoTestEnabled } from "../constants";
 
 export class GetSupportedExtensionsTest extends OpenGLTestLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        if( 'opengl' in cc.sys.capabilities ) {
-            if( ! autoTestEnabled ) {
-                var array = gl.getSupportedExtensions();
-                cc.log( JSON.stringify( array ) );
-                if( array.length > 0 )
-                    cc.log( gl.getExtension( array[0] ) );
-            }
-        }
+    if ("opengl" in cc.sys.capabilities) {
+      if (!autoTestEnabled) {
+        var array = gl.getSupportedExtensions();
+        cc.log(JSON.stringify(array));
+        if (array.length > 0) cc.log(gl.getExtension(array[0]));
+      }
     }
+  }
 
-    title() {
-        return "GetSupportedExtensionsTest";
-    }
-    subtitle() {
-        return "See console for the supported GL extensions";
-    }
+  title() {
+    return "GetSupportedExtensionsTest";
+  }
+  subtitle() {
+    return "See console for the supported GL extensions";
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = ["[object Array]",null];
-        return JSON.stringify(ret);
-    }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = ["[object Array]", null];
+    return JSON.stringify(ret);
+  }
 
-    getCurrentResult() {
-        // Extensions varies from machine to machine. Just check for typeof Array
-        var ext = gl.getSupportedExtensions();
-        var type = Object.prototype.toString.call( ext );
-        var n = gl.getExtension('do_no_exist');
-        return JSON.stringify([type,n]);
-    }
-
+  getCurrentResult() {
+    // Extensions varies from machine to machine. Just check for typeof Array
+    var ext = gl.getSupportedExtensions();
+    var type = Object.prototype.toString.call(ext);
+    var n = gl.getExtension("do_no_exist");
+    return JSON.stringify([type, n]);
+  }
 }

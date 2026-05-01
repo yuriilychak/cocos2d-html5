@@ -30,14 +30,14 @@
 //  ActionRotateXY
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class ActionRotateXY extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
   onEnter() {
     //----start4----onEnter
@@ -94,5 +94,4 @@ export class ActionRotateXY extends ActionsDemo {
 
     return JSON.stringify(ret);
   }
-
 }

@@ -25,17 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TableViewTestLayer } from "./table-view-test-layer.js";
-
-;
-
-;
+import { TableViewTestLayer } from "./table-view-test-layer";
 
 export function runTableViewTest() {
-    var pScene = new cc.Scene();
-    var pLayer = new TableViewTestLayer();
-    pScene.addChild(pLayer);
-    cc.director.runScene(pScene);
+  var pScene = new cc.Scene();
+  var pLayer = new TableViewTestLayer();
+  pScene.addChild(pLayer);
+  cc.director.runScene(pScene);
 }
-
-;

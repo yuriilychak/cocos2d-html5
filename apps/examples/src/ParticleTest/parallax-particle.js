@@ -25,44 +25,43 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ParticleDemo } from "./particle-demo.js";
-import { s_back3, s_fire } from "../tests_resources.js";
+import { ParticleDemo } from "./particle-demo";
+import { s_back3, s_fire } from "../resources";
 
 export class ParallaxParticle extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._background.getParent().removeChild(this._background, true);
-        this._background = null;
+    this._background.getParent().removeChild(this._background, true);
+    this._background = null;
 
-        //TODO
-        var p = new cc.ParallaxNode();
-        this.addChild(p, 5);
+    //TODO
+    var p = new cc.ParallaxNode();
+    this.addChild(p, 5);
 
-        var p1 = new cc.Sprite(s_back3);
-        var p2 = new cc.Sprite(s_back3);
+    var p1 = new cc.Sprite(s_back3);
+    var p2 = new cc.Sprite(s_back3);
 
-        p.addChild(p1, 1, new cc.Point(0.5, 1), new cc.Point(0, 250));
-        p.addChild(p2, 2, new cc.Point(1.5, 1), new cc.Point(0, 50));
+    p.addChild(p1, 1, new cc.Point(0.5, 1), new cc.Point(0, 250));
+    p.addChild(p2, 2, new cc.Point(1.5, 1), new cc.Point(0, 50));
 
-        this._emitter = new cc.ParticleFlower();
-        this._emitter.texture = cc.textureCache.addImage(s_fire);
+    this._emitter = new cc.ParticleFlower();
+    this._emitter.texture = cc.textureCache.addImage(s_fire);
 
-        p1.addChild(this._emitter, 10);
-        this._emitter.x = 250;
-        this._emitter.y = 200;
+    p1.addChild(this._emitter, 10);
+    this._emitter.x = 250;
+    this._emitter.y = 200;
 
-        var par = new cc.ParticleSun();
-        p2.addChild(par, 10);
-        par.texture = cc.textureCache.addImage(s_fire);
+    var par = new cc.ParticleSun();
+    p2.addChild(par, 10);
+    par.texture = cc.textureCache.addImage(s_fire);
 
-        var move = new cc.MoveBy(4, new cc.Point(300, 0));
-        var move_back = move.reverse();
-        var seq = cc.sequence(move, move_back);
-        p.runAction(seq.repeatForever());
-    }
-    title() {
-        return "Parallax + Particles";
-    }
-
+    var move = new cc.MoveBy(4, new cc.Point(300, 0));
+    var move_back = move.reverse();
+    var seq = cc.sequence(move, move_back);
+    p.runAction(seq.repeatForever());
+  }
+  title() {
+    return "Parallax + Particles";
+  }
 }

@@ -28,9 +28,9 @@
 //
 // ConvertToNode
 //
-import { TestNodeDemo } from "./test-node-demo.js";
-import { s_pathGrossini, s_pathR1 } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { TestNodeDemo } from "./test-node-demo";
+import { s_pathGrossini, s_pathR1 } from "../resources";
+import { winSize } from "../constants";
 
 export class ConvertToNode extends TestNodeDemo {
     constructor() {

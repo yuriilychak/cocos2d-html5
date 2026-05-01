@@ -28,9 +28,9 @@
 // Issue1464
 //
 //------------------------------------------------------------------
-import { RenderTextureBaseLayer } from "./render-texture-base-layer.js";
-import { s_grossini } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { RenderTextureBaseLayer } from "./render-texture-base-layer";
+import { s_grossini } from "../resources";
+import { winSize } from "../constants";
 
 export class Issue1464 extends RenderTextureBaseLayer {
 

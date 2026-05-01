@@ -25,76 +25,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { IgnoreAnchorpointTest1 } from "./ignore-anchorpoint-test1.js";
-import { IgnoreAnchorpointTest2 } from "./ignore-anchorpoint-test2.js";
-import { IgnoreAnchorpointTest3 } from "./ignore-anchorpoint-test3.js";
-import { IgnoreAnchorpointTest4 } from "./ignore-anchorpoint-test4.js";
-import { LayerGradientTest } from "./layer-gradient-test.js";
-import { LayerTestBlend } from "./layer-test-blend.js";
-import { layerTestSceneIdx , _setlayerTestSceneIdx} from "./layer-test-constants.js";
-import { LayerTest1 } from "./layer-test1.js";
-import { LayerTest2 } from "./layer-test2.js";
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
-
-;
+import { IgnoreAnchorpointTest1 } from "./ignore-anchorpoint-test1";
+import { IgnoreAnchorpointTest2 } from "./ignore-anchorpoint-test2";
+import { IgnoreAnchorpointTest3 } from "./ignore-anchorpoint-test3";
+import { IgnoreAnchorpointTest4 } from "./ignore-anchorpoint-test4";
+import { LayerGradientTest } from "./layer-gradient-test";
+import { LayerTestBlend } from "./layer-test-blend";
+import {
+  layerTestSceneIdx,
+  _setlayerTestSceneIdx
+} from "./layer-test-constants";
+import { LayerTest1 } from "./layer-test1";
+import { LayerTest2 } from "./layer-test2";
 
 export var arrayOfLayerTest = [
-    LayerTest1,
-    LayerTest2,
-    LayerGradientTest,
-    LayerTestBlend,
-    IgnoreAnchorpointTest1,
-    IgnoreAnchorpointTest2,
-    IgnoreAnchorpointTest3,
-    IgnoreAnchorpointTest4
+  LayerTest1,
+  LayerTest2,
+  LayerGradientTest,
+  LayerTestBlend,
+  IgnoreAnchorpointTest1,
+  IgnoreAnchorpointTest2,
+  IgnoreAnchorpointTest3,
+  IgnoreAnchorpointTest4
 ];
 
 export function nextLayerTest() {
-    _setlayerTestSceneIdx(layerTestSceneIdx + 1);
-    _setlayerTestSceneIdx(layerTestSceneIdx % arrayOfLayerTest.length);
+  _setlayerTestSceneIdx(layerTestSceneIdx + 1);
+  _setlayerTestSceneIdx(layerTestSceneIdx % arrayOfLayerTest.length);
 
-    if(window.sideIndexBar){
-        _setlayerTestSceneIdx(window.sideIndexBar.changeTest(layerTestSceneIdx, 20));
-    }
+  if (window.sideIndexBar) {
+    _setlayerTestSceneIdx(
+      window.sideIndexBar.changeTest(layerTestSceneIdx, 20)
+    );
+  }
 
-    return new arrayOfLayerTest[layerTestSceneIdx]();
+  return new arrayOfLayerTest[layerTestSceneIdx]();
 }
-
-;
 
 export function previousLayerTest() {
-    _setlayerTestSceneIdx(layerTestSceneIdx - 1);
-    if (layerTestSceneIdx < 0)
-        _setlayerTestSceneIdx(layerTestSceneIdx + (arrayOfLayerTest.length));
+  _setlayerTestSceneIdx(layerTestSceneIdx - 1);
+  if (layerTestSceneIdx < 0)
+    _setlayerTestSceneIdx(layerTestSceneIdx + arrayOfLayerTest.length);
 
-    if(window.sideIndexBar){
-        _setlayerTestSceneIdx(window.sideIndexBar.changeTest(layerTestSceneIdx, 20));
-    }
+  if (window.sideIndexBar) {
+    _setlayerTestSceneIdx(
+      window.sideIndexBar.changeTest(layerTestSceneIdx, 20)
+    );
+  }
 
-    return new arrayOfLayerTest[layerTestSceneIdx]();
+  return new arrayOfLayerTest[layerTestSceneIdx]();
 }
-
-;
 
 export function restartLayerTest() {
-    return new arrayOfLayerTest[layerTestSceneIdx]();
+  return new arrayOfLayerTest[layerTestSceneIdx]();
 }
-
-;

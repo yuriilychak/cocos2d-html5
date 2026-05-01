@@ -25,47 +25,49 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { ProgressTestSceneIdx } from "./progress-actions-test-constants.js";
-import { arrayOfProgressTest, nextProgressTest, previousProgressTest, restartProgressTest } from "./progress-actions-test-helpers.js";
-import { ProgressActionsTestScene } from "./progress-actions-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { ProgressTestSceneIdx } from "./progress-actions-test-constants";
+import {
+  arrayOfProgressTest,
+  nextProgressTest,
+  previousProgressTest,
+  restartProgressTest
+} from "./progress-actions-test-helpers";
+import { ProgressActionsTestScene } from "./progress-actions-test-scene";
+import { director } from "../constants";
 
 export class SpriteDemo extends BaseTestLayer {
+  title() {
+    return "ProgressActionsTest";
+  }
 
-    title() {
-        return "ProgressActionsTest";
-    }
+  subtitle() {
+    return "";
+  }
 
-    subtitle() {
-        return "";
-    }
+  onBackCallback(sender) {
+    var scene = new ProgressActionsTestScene();
+    scene.addChild(previousProgressTest());
+    director.runScene(scene);
+  }
 
-    onBackCallback(sender) {
-        var scene = new ProgressActionsTestScene();
-        scene.addChild(previousProgressTest());
-        director.runScene(scene);
-    }
+  onRestartCallback(sender) {
+    var scene = new ProgressActionsTestScene();
+    scene.addChild(restartProgressTest());
+    director.runScene(scene);
+  }
 
-    onRestartCallback(sender) {
-        var scene = new ProgressActionsTestScene();
-        scene.addChild(restartProgressTest());
-        director.runScene(scene);
-    }
+  onNextCallback(sender) {
+    var scene = new ProgressActionsTestScene();
+    scene.addChild(nextProgressTest());
+    director.runScene(scene);
+  }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfProgressTest.length - 1 - ProgressTestSceneIdx;
+  }
 
-    onNextCallback(sender) {
-        var scene = new ProgressActionsTestScene();
-        scene.addChild(nextProgressTest());
-        director.runScene(scene);
-    }
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfProgressTest.length-1) - ProgressTestSceneIdx );
-    }
-
-    getTestNumber() {
-        return ProgressTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return ProgressTestSceneIdx;
+  }
 }

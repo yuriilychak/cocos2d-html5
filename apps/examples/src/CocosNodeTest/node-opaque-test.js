@@ -25,31 +25,30 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestNodeDemo } from "./test-node-demo.js";
-import { s_back1 } from "../tests_resources.js";
+import { TestNodeDemo } from "./test-node-demo";
+import { s_back1 } from "../resources";
 
 export class NodeOpaqueTest extends TestNodeDemo {
-    constructor() {
-        //----start13----ctor
-        super();
-        var winSize = cc.director.getWinSize();
-        var background;
-        for (var i = 0; i < 50; i++) {
-            background = new cc.Sprite(s_back1);
-            background.setBlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA);
-            background.x = winSize.width / 2;
-            background.y = winSize.height / 2;
-            this.addChild(background);
-        }
-        //----end13----
+  constructor() {
+    //----start13----ctor
+    super();
+    var winSize = cc.director.getWinSize();
+    var background;
+    for (var i = 0; i < 50; i++) {
+      background = new cc.Sprite(s_back1);
+      background.setBlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA);
+      background.x = winSize.width / 2;
+      background.y = winSize.height / 2;
+      this.addChild(background);
     }
+    //----end13----
+  }
 
-    title() {
-        return "Node Opaque Test";
-    }
+  title() {
+    return "Node Opaque Test";
+  }
 
-    subtitle() {
-        return "Node rendered with GL_BLEND disabled";
-    }
-
+  subtitle() {
+    return "Node rendered with GL_BLEND disabled";
+  }
 }

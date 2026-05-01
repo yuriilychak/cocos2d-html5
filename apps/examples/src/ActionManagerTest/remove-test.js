@@ -30,59 +30,58 @@
 // RemoveTest
 //
 //------------------------------------------------------------------
-import { NOT_CRASHED_CONST, TAG_GROSSINI, TAG_SEQUENCE } from "./action-manager-test-constants.js";
-import { ActionManagerTest } from "./action-manager-test.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { director } from "../tests-main-constants.js";
+import { NOT_CRASHED_CONST, TAG_GROSSINI, TAG_SEQUENCE } from "./constants";
+import { ActionManagerTest } from "./action-manager-test";
+import { s_pathGrossini } from "../resources";
+import { director } from "../constants";
 
 export class RemoveTest extends ActionManagerTest {
-    constructor() {
-        super();
-        this.testDuration = 3.5;
-    }
+  constructor() {
+    super();
+    this.testDuration = 3.5;
+  }
 
-    title() {
-        return "Stop Action Test";
-    }
-    onEnter() {
-        //----start3----onEnter
-        super.onEnter();
+  title() {
+    return "Stop Action Test";
+  }
+  onEnter() {
+    //----start3----onEnter
+    super.onEnter();
 
-        var s = director.getWinSize();
-        var l = new cc.LabelTTF("Should not crash", "Thonburi", 16);
-        this.addChild(l);
-        l.x = s.width / 2;
-	    l.y = 245;
+    var s = director.getWinSize();
+    var l = new cc.LabelTTF("Should not crash", "Thonburi", 16);
+    this.addChild(l);
+    l.x = s.width / 2;
+    l.y = 245;
 
-        var move = new cc.MoveBy(2, new cc.Point(200, 0));
-        var callback = new cc.CallFunc(this.stopAction, this);
-        var sequence = cc.sequence(move, callback);
-        sequence.tag = TAG_SEQUENCE;
+    var move = new cc.MoveBy(2, new cc.Point(200, 0));
+    var callback = new cc.CallFunc(this.stopAction, this);
+    var sequence = cc.sequence(move, callback);
+    sequence.tag = TAG_SEQUENCE;
 
-        var child = new cc.Sprite(s_pathGrossini);
-        child.x = 200;
-	    child.y = 200;
+    var child = new cc.Sprite(s_pathGrossini);
+    child.x = 200;
+    child.y = 200;
 
-        this.addChild(child, 1, TAG_GROSSINI);
-        child.runAction(sequence);
-        //----end3----
-    }
+    this.addChild(child, 1, TAG_GROSSINI);
+    child.runAction(sequence);
+    //----end3----
+  }
 
-    stopAction() {
-        //----start3----onEnter
-        var sprite = this.getChildByTag(TAG_GROSSINI);
-        sprite.stopActionByTag(TAG_SEQUENCE);
-        //----end3----
-    }
+  stopAction() {
+    //----start3----onEnter
+    var sprite = this.getChildByTag(TAG_GROSSINI);
+    sprite.stopActionByTag(TAG_SEQUENCE);
+    //----end3----
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        return NOT_CRASHED_CONST;
-    }
-    getCurrentResult() {
-        return NOT_CRASHED_CONST;
-    }
-
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    return NOT_CRASHED_CONST;
+  }
+  getCurrentResult() {
+    return NOT_CRASHED_CONST;
+  }
 }

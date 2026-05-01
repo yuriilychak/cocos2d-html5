@@ -27,49 +27,51 @@
  ****************************************************************************/
 
 // S9BatchNodeScaleWithCapInsets
-import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
-import { winSize } from "../../tests-main-constants.js";
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
+import { winSize } from "../../constants";
 
 export class S9BatchNodeScaleWithCapInsets extends S9SpriteTestDemo {
+  constructor() {
+    super();
 
+    this._title = "Scale9Sprite created empty and updated from SpriteBatchNode";
 
-    constructor() {
-        super();
+    this._subtitle = "updateWithBatchNode(); capInsets=(32, 32, 32, 32)";
 
+    var x = winSize.width / 2;
+    var y = 0 + winSize.height / 2;
 
+    cc.log("S9BatchNodeScaleWithCapInsets ...");
 
-        this._title = "Scale9Sprite created empty and updated from SpriteBatchNode";
+    var batchNode_scaled_with_insets = new cc.SpriteBatchNode(
+      "Images/blocks9.png"
+    );
+    cc.log(
+      "batchNode_scaled_with_insets created with : " + "Images/blocks9.png"
+    );
 
+    var blocks_scaled_with_insets = new cc.Scale9Sprite();
+    cc.log("... created");
 
+    blocks_scaled_with_insets.updateWithBatchNode(
+      batchNode_scaled_with_insets,
+      new cc.Rect(0, 0, 96, 96),
+      false,
+      new cc.Rect(32, 32, 32, 32)
+    );
+    cc.log("... updateWithBatchNode");
 
-        this._subtitle = "updateWithBatchNode(); capInsets=(32, 32, 32, 32)";
+    blocks_scaled_with_insets.width = 96 * 4.5;
+    blocks_scaled_with_insets.height = 96 * 2.5;
+    cc.log("... setContentSize");
 
-        var x = winSize.width / 2;
-        var y = 0 + (winSize.height / 2);
+    blocks_scaled_with_insets.x = x;
+    blocks_scaled_with_insets.y = y;
+    cc.log("... setPosition");
 
-        cc.log("S9BatchNodeScaleWithCapInsets ...");
+    this.addChild(blocks_scaled_with_insets);
+    cc.log("this..addChild");
 
-        var batchNode_scaled_with_insets = new cc.SpriteBatchNode("Images/blocks9.png");
-        cc.log("batchNode_scaled_with_insets created with : " + "Images/blocks9.png");
-
-        var blocks_scaled_with_insets = new cc.Scale9Sprite();
-        cc.log("... created");
-
-        blocks_scaled_with_insets.updateWithBatchNode(batchNode_scaled_with_insets, new cc.Rect(0, 0, 96, 96), false, new cc.Rect(32, 32, 32, 32));
-        cc.log("... updateWithBatchNode");
-
-        blocks_scaled_with_insets.width = 96 * 4.5;
-        blocks_scaled_with_insets.height = 96 * 2.5;
-        cc.log("... setContentSize");
-
-        blocks_scaled_with_insets.x = x;
-        blocks_scaled_with_insets.y = y;
-        cc.log("... setPosition");
-
-        this.addChild(blocks_scaled_with_insets);
-        cc.log("this..addChild");
-
-        cc.log("... S9BatchNodeScaleWithCapInsets done.");
-    }
-
+    cc.log("... S9BatchNodeScaleWithCapInsets done.");
+  }
 }

@@ -26,67 +26,69 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { MotionStreakTest } from "./motion-streak-test.js";
-import { s_pathR1, s_streak } from "../tests_resources.js";
+import { MotionStreakTest } from "./motion-streak-test";
+import { s_pathR1, s_streak } from "../resources";
 
 export class MotionStreakTest1 extends MotionStreakTest {
-    constructor() {
-        super();
-        this._root = null;
-        this._target = null;
-    }
+  constructor() {
+    super();
+    this._root = null;
+    this._target = null;
+  }
 
+  onEnter() {
+    super.onEnter();
 
-    onEnter() {
-        super.onEnter();
+    var winSize = cc.director.getWinSize();
+    // the root object just rotates around
+    this._root = new cc.Sprite(s_pathR1);
+    this.addChild(this._root, 1);
+    this._root.x = winSize.width / 2;
+    this._root.y = winSize.height / 2;
 
-        var winSize = cc.director.getWinSize();
-        // the root object just rotates around
-        this._root = new cc.Sprite(s_pathR1);
-        this.addChild(this._root, 1);
-        this._root.x = winSize.width / 2;
-        this._root.y = winSize.height / 2;
+    // the target object is offset from root, and the streak is moved to follow it
+    this._target = new cc.Sprite(s_pathR1);
+    this._root.addChild(this._target);
+    this._target.x = winSize.width / 4;
+    this._target.y = 0;
 
-        // the target object is offset from root, and the streak is moved to follow it
-        this._target = new cc.Sprite(s_pathR1);
-        this._root.addChild(this._target);
-        this._target.x = winSize.width / 4;
-        this._target.y = 0;
+    // create the streak object and add it to the scene
+    this._streak = new cc.MotionStreak(2, 3, 32, cc.Color.GREEN, s_streak);
+    this.addChild(this._streak);
+    // schedule an update on each frame so we can synchronize the streak with the target
+    this.schedule(this.onUpdate);
 
-        // create the streak object and add it to the scene
-        this._streak = new cc.MotionStreak(2, 3, 32, cc.Color.GREEN, s_streak);
-        this.addChild(this._streak);
-        // schedule an update on each frame so we can synchronize the streak with the target
-        this.schedule(this.onUpdate);
+    var a1 = new cc.RotateBy(2, 360);
 
-        var a1 = new cc.RotateBy(2, 360);
+    var action1 = a1.repeatForever();
+    var motion = new cc.MoveBy(2, new cc.Point(100, 0));
+    this._root.runAction(cc.sequence(motion, motion.reverse()).repeatForever());
+    this._root.runAction(action1);
 
-        var action1 = a1.repeatForever();
-        var motion = new cc.MoveBy(2, new cc.Point(100, 0));
-        this._root.runAction(cc.sequence(motion, motion.reverse()).repeatForever());
-        this._root.runAction(action1);
+    var colorAction = cc
+      .sequence(
+        new cc.TintTo(0.2, 255, 0, 0),
+        new cc.TintTo(0.2, 0, 255, 0),
+        new cc.TintTo(0.2, 0, 0, 255),
+        new cc.TintTo(0.2, 0, 255, 255),
+        new cc.TintTo(0.2, 255, 255, 0),
+        new cc.TintTo(0.2, 255, 0, 255),
+        new cc.TintTo(0.2, 255, 255, 255)
+      )
+      .repeatForever();
 
-        var colorAction = cc.sequence(
-            new cc.TintTo(0.2, 255, 0, 0),
-            new cc.TintTo(0.2, 0, 255, 0),
-            new cc.TintTo(0.2, 0, 0, 255),
-            new cc.TintTo(0.2, 0, 255, 255),
-            new cc.TintTo(0.2, 255, 255, 0),
-            new cc.TintTo(0.2, 255, 0, 255),
-            new cc.TintTo(0.2, 255, 255, 255)
-        ).repeatForever();
+    this._streak.runAction(colorAction);
+  }
 
-        this._streak.runAction(colorAction);
-    }
+  onUpdate(delta) {
+    var pos = this._target.convertToWorldSpace(
+      new cc.Point(this._target.width / 2, 0)
+    );
+    this._streak.x = pos.x;
+    this._streak.y = pos.y;
+  }
 
-    onUpdate(delta) {
-	    var pos = this._target.convertToWorldSpace(new cc.Point(this._target.width/2, 0));
-        this._streak.x = pos.x;
-        this._streak.y = pos.y;
-    }
-
-    title() {
-        return "MotionStreak test 1";
-    }
-
+  title() {
+    return "MotionStreak test 1";
+  }
 }

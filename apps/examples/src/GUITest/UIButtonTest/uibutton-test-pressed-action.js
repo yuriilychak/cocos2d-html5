@@ -24,47 +24,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIButtonTest_PressedAction extends UIMainLayer {
-    init() {
-        if (super.init()) {
-            //init text
-            this._topDisplayLabel.setString("No Event");
-            this._bottomDisplayLabel.setString("Button Pressed Action");
+  init() {
+    if (super.init()) {
+      //init text
+      this._topDisplayLabel.setString("No Event");
+      this._bottomDisplayLabel.setString("Button Pressed Action");
 
-            var widgetSize = this._widget.getContentSize();
-            // Create the button
-            var button = new ccui.Button();
-            button.setTouchEnabled(true);
-            button.setPressedActionEnabled(true);
-            button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
-            button.x = widgetSize.width / 2;
-            button.y = widgetSize.height / 2;
-            button.addTouchEventListener(this.touchEvent ,this);
-            this._mainNode.addChild(button);
-            return true;
-        }
-        return false;
+      var widgetSize = this._widget.getContentSize();
+      // Create the button
+      var button = new ccui.Button();
+      button.setTouchEnabled(true);
+      button.setPressedActionEnabled(true);
+      button.loadTextures(
+        "ccs-res/cocosui/animationbuttonnormal.png",
+        "ccs-res/cocosui/animationbuttonpressed.png",
+        ""
+      );
+      button.x = widgetSize.width / 2;
+      button.y = widgetSize.height / 2;
+      button.addTouchEventListener(this.touchEvent, this);
+      this._mainNode.addChild(button);
+      return true;
     }
+    return false;
+  }
 
-    touchEvent(sender, type) {
-        switch (type) {
-            case ccui.Widget.TOUCH_BEGAN:
-                this._topDisplayLabel.setString("Touch Down");
-                break;
-            case ccui.Widget.TOUCH_MOVED:
-                this._topDisplayLabel.setString("Touch Move");
-                break;
-            case ccui.Widget.TOUCH_ENDED:
-                this._topDisplayLabel.setString("Touch Up");
-                break;
-            case ccui.Widget.TOUCH_CANCELED:
-                this._topDisplayLabel.setString("Touch Cancelled");
-                break;
-            default:
-                break;
-        }
+  touchEvent(sender, type) {
+    switch (type) {
+      case ccui.Widget.TOUCH_BEGAN:
+        this._topDisplayLabel.setString("Touch Down");
+        break;
+      case ccui.Widget.TOUCH_MOVED:
+        this._topDisplayLabel.setString("Touch Move");
+        break;
+      case ccui.Widget.TOUCH_ENDED:
+        this._topDisplayLabel.setString("Touch Up");
+        break;
+      case ccui.Widget.TOUCH_CANCELED:
+        this._topDisplayLabel.setString("Touch Cancelled");
+        break;
+      default:
+        break;
     }
-
+  }
 }

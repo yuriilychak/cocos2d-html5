@@ -24,56 +24,55 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UILoadingBarTest extends UIMainLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this._count = 0;
+    this._count = 0;
 
-        this._loadingBar = null;
-        this._count = 0;
+    this._loadingBar = null;
+    this._count = 0;
+  }
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.getContentSize();
+      //init text
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("LoadingBar");
+
+      this.createLoadingBar();
+
+      this.scheduleUpdate();
+      return true;
     }
-    init() {
-        if (super.init()) {
-            var widgetSize = this._widget.getContentSize();
-            //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("LoadingBar");
-
-            this.createLoadingBar();
-
-            this.scheduleUpdate();
-            return true;
-        }
-        return false;
-    }
-    createLoadingBar() {
-        // override me
-    }
-    update(dt) {
-        this._count++;
-        if (this._count > 100) {
-            this._count = 0;
-        }
-
-        this._loadingBar && this._loadingBar.setPercent(this._count);
+    return false;
+  }
+  createLoadingBar() {
+    // override me
+  }
+  update(dt) {
+    this._count++;
+    if (this._count > 100) {
+      this._count = 0;
     }
 
-    previousCallback(sender, type) {
-        this.unscheduleUpdate();
-        super.previousCallback(sender, type)
-    }
+    this._loadingBar && this._loadingBar.setPercent(this._count);
+  }
 
-    restartCallback(sender, type) {
-        this.unscheduleUpdate();
-        super.restartCallback(sender, type)
-    }
+  previousCallback(sender, type) {
+    this.unscheduleUpdate();
+    super.previousCallback(sender, type);
+  }
 
-    nextCallback(sender, type) {
-        this.unscheduleUpdate();
-        super.nextCallback(sender, type)
-    }
+  restartCallback(sender, type) {
+    this.unscheduleUpdate();
+    super.restartCallback(sender, type);
+  }
 
+  nextCallback(sender, type) {
+    this.unscheduleUpdate();
+    super.nextCallback(sender, type);
+  }
 }

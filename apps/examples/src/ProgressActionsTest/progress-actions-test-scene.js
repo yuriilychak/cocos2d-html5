@@ -25,17 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextProgressTest } from "./progress-actions-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { ProgressTestSceneIdx, _setProgressTestSceneIdx } from "./progress-actions-test-constants.js";
+import { nextProgressTest } from "./progress-actions-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  ProgressTestSceneIdx,
+  _setProgressTestSceneIdx
+} from "./progress-actions-test-constants";
 
 export class ProgressActionsTestScene extends TestScene {
-
-    runThisTest(num) {
-        _setProgressTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        this.addChild(nextProgressTest());
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _setProgressTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    this.addChild(nextProgressTest());
+    director.runScene(this);
+  }
 }

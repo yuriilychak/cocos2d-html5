@@ -24,44 +24,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIMainLayer } from "../uimain-layer.js";
+import { UIMainLayer } from "../uimain-layer";
 
 export class UIButtonFlipTest extends UIMainLayer {
-    init(){
-        if (super.init()) {
+  init() {
+    if (super.init()) {
+      // Add a label in which the button events will be displayed
+      this._topDisplayLabel.setString("");
+      this._bottomDisplayLabel.setString("");
 
-            // Add a label in which the button events will be displayed
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("");
+      // Create the button
+      var button = new ccui.Button(
+        "ccs-res/cocosui/animationbuttonnormal.png",
+        "ccs-res/cocosui/animationbuttonpressed.png"
+      );
+      button.setNormalizedPosition(0.3, 0.5);
+      button.setTitleText("PLAY GAME");
+      //button.setTitleFontName("Marker Felt");
+      button.setZoomScale(0.3);
+      button.setScale(2.0);
+      button.setFlippedX(true);
+      button.setPressedActionEnabled(true);
+      this.addChild(button);
 
-            // Create the button
-            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
-            button.setNormalizedPosition(0.3, 0.5);
-            button.setTitleText("PLAY GAME");
-            //button.setTitleFontName("Marker Felt");
-            button.setZoomScale(0.3);
-            button.setScale(2.0);
-            button.setFlippedX(true);
-            button.setPressedActionEnabled(true);
-            this.addChild(button);
+      var titleLabel = new ccui.Text("Button X flipped", "Arial", 20);
+      titleLabel.setNormalizedPosition(0.3, 0.7);
+      this.addChild(titleLabel);
 
-            var titleLabel = new ccui.Text("Button X flipped", "Arial", 20);
-            titleLabel.setNormalizedPosition(0.3, 0.7);
-            this.addChild(titleLabel);
+      // Create the button
+      var button2 = new ccui.Button(
+        "ccs-res/cocosui/animationbuttonnormal.png",
+        "ccs-res/cocosui/animationbuttonpressed.png"
+      );
+      button2.setNormalizedPosition(0.8, 0.5);
+      button2.setTitleText("PLAY GAME");
+      button2.setFlippedY(true);
+      this.addChild(button2);
 
-            // Create the button
-            var button2 = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
-            button2.setNormalizedPosition(0.8, 0.5);
-            button2.setTitleText("PLAY GAME");
-            button2.setFlippedY(true);
-            this.addChild(button2);
-
-            titleLabel = new ccui.Text("Button Y flipped", "Arial", 20);
-            titleLabel.setNormalizedPosition(0.8, 0.7);
-            this.addChild(titleLabel);
-            return true;
-        }
-        return false;
+      titleLabel = new ccui.Text("Button Y flipped", "Arial", 20);
+      titleLabel.setNormalizedPosition(0.8, 0.7);
+      this.addChild(titleLabel);
+      return true;
     }
-
+    return false;
+  }
 }

@@ -27,39 +27,32 @@
  ****************************************************************************/
 
 // S9FrameNameSpriteSheetRotated
-import { S9SpriteTestDemo } from "./s9-sprite-test-demo.js";
-import { winSize } from "../../tests-main-constants.js";
+import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
+import { winSize } from "../../constants";
 
 export class S9FrameNameSpriteSheetRotated extends S9SpriteTestDemo {
+  constructor() {
+    super();
 
+    this._title = "Scale9Sprite from sprite sheet (stored rotated)";
 
-    constructor() {
-        super();
+    this._subtitle = "createWithSpriteFrameName(); default cap insets";
 
+    var x = winSize.width / 2;
+    var y = 0 + winSize.height / 2;
 
+    cc.log("S9FrameNameSpriteSheetRotated ...");
 
-        this._title = "Scale9Sprite from sprite sheet (stored rotated)";
+    var blocks = new cc.Scale9Sprite("blocks9r.png");
+    cc.log("... created");
 
+    blocks.x = x;
+    blocks.y = y;
+    cc.log("... setPosition");
 
+    this.addChild(blocks);
+    cc.log("this..addChild");
 
-        this._subtitle = "createWithSpriteFrameName(); default cap insets";
-
-        var x = winSize.width / 2;
-        var y = 0 + (winSize.height / 2);
-
-        cc.log("S9FrameNameSpriteSheetRotated ...");
-
-        var blocks = new cc.Scale9Sprite('blocks9r.png');
-        cc.log("... created");
-
-        blocks.x = x;
-        blocks.y = y;
-        cc.log("... setPosition");
-
-        this.addChild(blocks);
-        cc.log("this..addChild");
-
-        cc.log("... S9FrameNameSpriteSheetRotated done.");
-    }
-
+    cc.log("... S9FrameNameSpriteSheetRotated done.");
+  }
 }

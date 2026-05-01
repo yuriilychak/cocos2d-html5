@@ -28,44 +28,46 @@
 // UnitTestBase
 //
 //------------------------------------------------------------------
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { director } from "../tests-main-constants.js";
-import { unitTestSceneIdx } from "./unit-test-constants.js";
-import { arrayOfUnitTest, nextUnitTest, previousUnitTest, restartUnitTest } from "./unit-test-helpers.js";
-import { UnitTestScene } from "./unit-test-scene.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { director } from "../constants";
+import { unitTestSceneIdx } from "./unit-test-constants";
+import {
+  arrayOfUnitTest,
+  nextUnitTest,
+  previousUnitTest,
+  restartUnitTest
+} from "./unit-test-helpers";
+import { UnitTestScene } from "./unit-test-scene";
 
 export class UnitTestBase extends BaseTestLayer {
-    constructor() {
-        super();
-        this._title = "";
-        this._subtitle = "";
-    }
+  constructor() {
+    super();
+    this._title = "";
+    this._subtitle = "";
+  }
 
+  onRestartCallback(sender) {
+    var s = new UnitTestScene();
+    s.addChild(restartUnitTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new UnitTestScene();
+    s.addChild(nextUnitTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new UnitTestScene();
+    s.addChild(previousUnitTest());
+    director.runScene(s);
+  }
 
-    onRestartCallback(sender) {
-        var s = new UnitTestScene();
-        s.addChild(restartUnitTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new UnitTestScene();
-        s.addChild(nextUnitTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new UnitTestScene();
-        s.addChild(previousUnitTest());
-        director.runScene(s);
-    }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfUnitTest.length - 1 - unitTestSceneIdx;
+  }
 
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfUnitTest.length-1) - unitTestSceneIdx );
-    }
-
-    getTestNumber() {
-        return unitTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return unitTestSceneIdx;
+  }
 }

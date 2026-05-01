@@ -30,18 +30,20 @@
 // ActionTint
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionTint extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 2.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 2.1;
+  }
 
-      get _code() { 
-        return "a = new cc.TintBy( time, red, green, blue );\n" +
-        "a = new cc.TintTo( time, red, green, blue );";
-      }
+  get _code() {
+    return (
+      "a = new cc.TintBy( time, red, green, blue );\n" +
+      "a = new cc.TintTo( time, red, green, blue );"
+    );
+  }
 
   onEnter() {
     //----start15----onEnter
@@ -77,5 +79,4 @@ export class ActionTint extends ActionsDemo {
     ret.push(this._kathia.color);
     return JSON.stringify(ret);
   }
-
 }

@@ -25,27 +25,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestController } from "./test-controller.js";
-import { _initGlobals } from "./tests-main-constants.js";
-import { g_resources } from "./tests_resources.js";
+import { TestController } from "./test-controller";
+import { _initGlobals } from "./constants";
+import { g_resources } from "./resources";
 
-cc.game.onStart = function(){
-    cc.view.enableRetina(true);
-    cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
-    cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
-    cc.view.resizeWithBrowserSize(true);
+cc.game.onStart = function () {
+  cc.view.enableRetina(true);
+  cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
+  cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
+  cc.view.resizeWithBrowserSize(true);
 
-    cc.loader.resPath = 'res';
+  cc.loader.resPath = "res";
 
-    cc.LoaderScene.preload(g_resources, function () {
-        _initGlobals();
-        if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
-            sideIndexBar.start();
-        }else{
-            var scene = new cc.Scene();
-            scene.addChild(new TestController());
-            cc.director.runScene(scene);
-        }
-    }, this);
+  cc.LoaderScene.preload(
+    g_resources,
+    function () {
+      _initGlobals();
+      if (window.sideIndexBar && typeof sideIndexBar.start === "function") {
+        sideIndexBar.start();
+      } else {
+        var scene = new cc.Scene();
+        scene.addChild(new TestController());
+        cc.director.runScene(scene);
+      }
+    },
+    this
+  );
 };
 cc.game.run();

@@ -30,8 +30,8 @@
 // Issue1438
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { ActionsDemo } from "./actions-demo";
+import { winSize } from "../constants";
 
 export class Issue1446 extends ActionsDemo {
   title() {
@@ -55,7 +55,11 @@ export class Issue1446 extends ActionsDemo {
     this.addChild(label);
 
     this.backwardsFade = new cc.Speed(
-      cc.sequence(new cc.DelayTime(2), new cc.FadeTo(1, 255), new cc.DelayTime(2)),
+      cc.sequence(
+        new cc.DelayTime(2),
+        new cc.FadeTo(1, 255),
+        new cc.DelayTime(2)
+      ),
       1
     );
     label.runAction(this.backwardsFade);
@@ -72,5 +76,4 @@ export class Issue1446 extends ActionsDemo {
     // Try with -10.0f and you can see the opacity not fully faded out. Try with lower values to see it 'almost' fade out
     this.backwardsFade.setSpeed(-10);
   }
-
 }

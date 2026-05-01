@@ -25,79 +25,54 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Effect1 } from "./effect1.js";
-import { Effect2 } from "./effect2.js";
-import { Effect3 } from "./effect3.js";
-import { Effect4 } from "./effect4.js";
-import { Effect5 } from "./effect5.js";
-import { sceneIndex , _setsceneIndex} from "./effects-advanced-test-constants.js";
-import { Issue631 } from "./issue631.js";
-import { Lens3DTarget } from "./lens3-dtarget.js";
-
-;
-
-;
-
-;
-
-;
-
-;
+import { Effect1 } from "./effect1";
+import { Effect2 } from "./effect2";
+import { Effect3 } from "./effect3";
+import { Effect4 } from "./effect4";
+import { Effect5 } from "./effect5";
+import { sceneIndex, _setsceneIndex } from "./effects-advanced-test-constants";
+import { Issue631 } from "./issue631";
+import { Lens3DTarget } from "./lens3-dtarget";
 
 Lens3DTarget.create = function (action) {
-    var target = new Lens3DTarget();
-    target._lens3D = action;
-    return target;
+  var target = new Lens3DTarget();
+  target._lens3D = action;
+  return target;
 };
 
-;
-
-;
-
-;
-
 export var arrayOfEffectsAdvancedTest = [
-    Effect3,
-    Effect2,
-    Effect1,
-    Effect5,
-    Issue631
+  Effect3,
+  Effect2,
+  Effect1,
+  Effect5,
+  Issue631
 ];
 
-if (!cc.sys.isNative)
-	arrayOfEffectsAdvancedTest.push(Effect4);
+if (!cc.sys.isNative) arrayOfEffectsAdvancedTest.push(Effect4);
 
 export function nextEffectAdvanceAction() {
-    _setsceneIndex(sceneIndex + 1);
-    _setsceneIndex(sceneIndex % arrayOfEffectsAdvancedTest.length);
+  _setsceneIndex(sceneIndex + 1);
+  _setsceneIndex(sceneIndex % arrayOfEffectsAdvancedTest.length);
 
-    if(window.sideIndexBar){
-        _setsceneIndex(window.sideIndexBar.changeTest(sceneIndex, 15));
-    }
+  if (window.sideIndexBar) {
+    _setsceneIndex(window.sideIndexBar.changeTest(sceneIndex, 15));
+  }
 
-    return new arrayOfEffectsAdvancedTest[sceneIndex]();
+  return new arrayOfEffectsAdvancedTest[sceneIndex]();
 }
-
-;
 
 export function backEffectAdvanceAction() {
-    _setsceneIndex(sceneIndex - 1);
-    if (sceneIndex < 0)
-        _setsceneIndex(sceneIndex + (arrayOfEffectsAdvancedTest.length));
+  _setsceneIndex(sceneIndex - 1);
+  if (sceneIndex < 0)
+    _setsceneIndex(sceneIndex + arrayOfEffectsAdvancedTest.length);
 
-    if(window.sideIndexBar){
-        _setsceneIndex(window.sideIndexBar.changeTest(sceneIndex, 15));
-    }
+  if (window.sideIndexBar) {
+    _setsceneIndex(window.sideIndexBar.changeTest(sceneIndex, 15));
+  }
 
-    return new arrayOfEffectsAdvancedTest[sceneIndex]();
+  return new arrayOfEffectsAdvancedTest[sceneIndex]();
 }
-
-;
 
 export function restartEffectAdvanceAction() {
-    return new arrayOfEffectsAdvancedTest[sceneIndex]();
+  return new arrayOfEffectsAdvancedTest[sceneIndex]();
 }
-
-;
-
-;

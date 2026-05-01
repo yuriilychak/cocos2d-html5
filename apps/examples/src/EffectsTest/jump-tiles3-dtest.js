@@ -23,18 +23,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class JumpTiles3DTest extends EffectsBaseLayer {
-    title() {
-        return "JumpTiles3D";
-    }
-    code() {
-        return "a = cc.jumpTiles3D(duration, gridSize, jumps, amplitude)";
-    }
-    getEffect(duration) {
-        var action = cc.jumpTiles3D(duration, new cc.Size(16,12), 2, 30);
-        return action;
-    }
-
+  title() {
+    return "JumpTiles3D";
+  }
+  code() {
+    return "a = cc.jumpTiles3D(duration, gridSize, jumps, amplitude)";
+  }
+  getEffect(duration) {
+    var action = cc.jumpTiles3D(duration, new cc.Size(16, 12), 2, 30);
+    return action;
+  }
 }

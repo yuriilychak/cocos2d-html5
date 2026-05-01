@@ -25,51 +25,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestNodeDemo } from "./test-node-demo.js";
+import { TestNodeDemo } from "./test-node-demo";
 
 export class SchedulerTest1 extends TestNodeDemo {
-    constructor() {
-        //----start7----ctor
-        super();
+  constructor() {
+    //----start7----ctor
+    super();
 
-        this.testDuration = 0.5;
+    this.testDuration = 0.5;
 
-        this.testBool = true;
-        var layer = new cc.Layer();
-        //UXLOG("retain count after init is %d", layer->retainCount());
-        // 1
+    this.testBool = true;
+    var layer = new cc.Layer();
+    //UXLOG("retain count after init is %d", layer->retainCount());
+    // 1
 
-        this.addChild(layer, 0);
-        //UXLOG("retain count after addChild is %d", layer->retainCount());
-        // 2
+    this.addChild(layer, 0);
+    //UXLOG("retain count after addChild is %d", layer->retainCount());
+    // 2
 
-        layer.schedule(this.doSomething);
-        //UXLOG("retain count after schedule is %d", layer->retainCount());
-        // 3 : (objective-c version), but win32 version is still 2, because CCTimer class don't save target.
+    layer.schedule(this.doSomething);
+    //UXLOG("retain count after schedule is %d", layer->retainCount());
+    // 3 : (objective-c version), but win32 version is still 2, because CCTimer class don't save target.
 
-        layer.unschedule(this.doSomething);
-        //UXLOG("retain count after unschedule is %d", layer->retainCount());
-        // STILL 3!  (win32 is '2')
-        //----end7----
-    }
+    layer.unschedule(this.doSomething);
+    //UXLOG("retain count after unschedule is %d", layer->retainCount());
+    // STILL 3!  (win32 is '2')
+    //----end7----
+  }
 
-    doSomething(dt) {
-        //----start7----doSomething
-        this.testBool = false;
-        //----end7----
-    }
+  doSomething(dt) {
+    //----start7----doSomething
+    this.testBool = false;
+    //----end7----
+  }
 
-    title() {
-        return "cocosnode scheduler test #1";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        return true;
-    }
-    getCurrentResult() {
-        return this.testBool;
-    }
-
+  title() {
+    return "cocosnode scheduler test #1";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    return true;
+  }
+  getCurrentResult() {
+    return this.testBool;
+  }
 }

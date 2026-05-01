@@ -24,38 +24,37 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UILayoutTestBase } from "./uilayout-test-base.js";
+import { UILayoutTestBase } from "./uilayout-test-base";
 
 export class UILayoutTest_Layout_Relative extends UILayoutTestBase {
-    createLayout() {
-        var layout = new ccui.Layout();
-        layout.ignoreContentAdaptWithSize(false);
-        layout.setLayoutType(ccui.Layout.RELATIVE);
-        layout.sizeType = ccui.Widget.SIZE_PERCENT;
-        layout.setSizePercent(new cc.Point(0.5, 0.5));
-        //layout.setContentSize(new cc.Size(280, 150));
-        layout.setPositionType(ccui.Widget.POSITION_PERCENT);
-        layout.setPositionPercent(new cc.Point(0.25, 0.25));
-        //layout.setPosition(new cc.Point(cc.winSize.width/2, cc.winSize.height/2));
-        layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
-        layout.setBackGroundColor(cc.Color.GREEN);
-        return layout;
-    }
-    getText() {
-        return "Layout Layout Relative";
-    }
-    setLayoutParameter() {
-        var lp1 = new ccui.RelativeLayoutParameter();
-        this.button.setLayoutParameter(lp1);
-        lp1.setAlign(ccui.RelativeLayoutParameter.PARENT_TOP_LEFT);
+  createLayout() {
+    var layout = new ccui.Layout();
+    layout.ignoreContentAdaptWithSize(false);
+    layout.setLayoutType(ccui.Layout.RELATIVE);
+    layout.sizeType = ccui.Widget.SIZE_PERCENT;
+    layout.setSizePercent(new cc.Point(0.5, 0.5));
+    //layout.setContentSize(new cc.Size(280, 150));
+    layout.setPositionType(ccui.Widget.POSITION_PERCENT);
+    layout.setPositionPercent(new cc.Point(0.25, 0.25));
+    //layout.setPosition(new cc.Point(cc.winSize.width/2, cc.winSize.height/2));
+    layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+    layout.setBackGroundColor(cc.Color.GREEN);
+    return layout;
+  }
+  getText() {
+    return "Layout Layout Relative";
+  }
+  setLayoutParameter() {
+    var lp1 = new ccui.RelativeLayoutParameter();
+    this.button.setLayoutParameter(lp1);
+    lp1.setAlign(ccui.RelativeLayoutParameter.PARENT_TOP_LEFT);
 
-        var lp2 = new ccui.RelativeLayoutParameter();
-        this.textButton.setLayoutParameter(lp2);
-        lp2.setAlign(ccui.RelativeLayoutParameter.CENTER_IN_PARENT);
+    var lp2 = new ccui.RelativeLayoutParameter();
+    this.textButton.setLayoutParameter(lp2);
+    lp2.setAlign(ccui.RelativeLayoutParameter.CENTER_IN_PARENT);
 
-        var lp3 = new ccui.RelativeLayoutParameter();
-        this.button_scale9.setLayoutParameter(lp3);
-        lp3.setAlign(ccui.RelativeLayoutParameter.PARENT_RIGHT_BOTTOM);
-    }
-
+    var lp3 = new ccui.RelativeLayoutParameter();
+    this.button_scale9.setLayoutParameter(lp3);
+    lp3.setAlign(ccui.RelativeLayoutParameter.PARENT_RIGHT_BOTTOM);
+  }
 }

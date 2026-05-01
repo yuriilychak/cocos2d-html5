@@ -30,72 +30,76 @@
 // SpriteEase
 //
 //------------------------------------------------------------------
-import { EaseSpriteDemo } from "./ease-sprite-demo.js";
-import { winSize } from "../tests-main-constants.js";
+import { EaseSpriteDemo } from "./ease-sprite-demo";
+import { winSize } from "../constants";
 
 export class SpriteEase extends EaseSpriteDemo {
-    constructor() {
-        super();
-        this.testDuration = 4.2;
-    }
+  constructor() {
+    super();
+    this.testDuration = 4.2;
+  }
 
+  onEnter() {
+    //----start0----onEnter
+    super.onEnter();
 
-    onEnter() {
-        //----start0----onEnter
-        super.onEnter();
+    var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
+    var move_back = move.reverse();
 
-        var move = new cc.MoveBy(2, new cc.Point(winSize.width - 80, 0));
-        var move_back = move.reverse();
+    var move_ease_in = move.clone().easing(cc.easeIn(2.0));
+    var move_ease_in_back = move_ease_in.reverse();
 
+    var move_ease_out = move.clone().easing(cc.easeOut(2.0));
+    var move_ease_out_back = move_ease_out.reverse();
 
-        var move_ease_in = move.clone().easing(cc.easeIn(2.0));
-        var move_ease_in_back = move_ease_in.reverse();
+    var delay = new cc.DelayTime(0.1);
 
-        var move_ease_out = move.clone().easing(cc.easeOut(2.0));
-        var move_ease_out_back = move_ease_out.reverse();
+    var seq1 = cc.sequence(move, delay, move_back, delay.clone());
+    var seq2 = cc.sequence(
+      move_ease_in,
+      delay.clone(),
+      move_ease_in_back,
+      delay.clone()
+    );
+    var seq3 = cc.sequence(
+      move_ease_out,
+      delay.clone(),
+      move_ease_out_back,
+      delay.clone()
+    );
 
+    var a2 = this._grossini.runAction(seq1.repeatForever());
+    a2.tag = 1;
 
-        var delay = new cc.DelayTime(0.10);
+    var a1 = this._tamara.runAction(seq2.repeatForever());
+    a1.tag = 1;
 
-        var seq1 = cc.sequence(move, delay, move_back, delay.clone());
-        var seq2 = cc.sequence(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
-        var seq3 = cc.sequence(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
+    var a = this._kathia.runAction(seq3.repeatForever());
+    a.tag = 1;
 
+    this.scheduleOnce(this.testStopAction, 4.1);
+    //----end0----
+  }
+  title() {
+    return "EaseIn - EaseOut - Stop";
+  }
 
-        var a2 = this._grossini.runAction(seq1.repeatForever());
-        a2.tag = 1;
+  testStopAction(dt) {
+    this._tamara.stopActionByTag(1);
+    this._kathia.stopActionByTag(1);
+    this._grossini.stopActionByTag(1);
+  }
 
-        var a1 = this._tamara.runAction(seq2.repeatForever());
-        a1.tag = 1;
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = [60, 60, 60];
+    return JSON.stringify(ret);
+  }
 
-        var a = this._kathia.runAction(seq3.repeatForever());
-        a.tag = 1;
-
-        this.scheduleOnce(this.testStopAction, 4.1);
-        //----end0----
-    }
-    title() {
-        return "EaseIn - EaseOut - Stop";
-    }
-
-    testStopAction(dt) {
-        this._tamara.stopActionByTag(1);
-        this._kathia.stopActionByTag(1);
-        this._grossini.stopActionByTag(1);
-    }
-
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = [60,60,60];
-        return JSON.stringify(ret);
-    }
-
-    getCurrentResult() {
-        var ret = [ this._grossini.x, this._tamara.x, this._kathia.x ];
-        return JSON.stringify(ret);
-    }
-
-
+  getCurrentResult() {
+    var ret = [this._grossini.x, this._tamara.x, this._kathia.x];
+    return JSON.stringify(ret);
+  }
 }

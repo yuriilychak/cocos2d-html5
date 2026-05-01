@@ -25,94 +25,101 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene.js";
-import { s_extensions_button, s_extensions_buttonBackground, s_extensions_buttonHighlighted } from "../../../tests_resources.js";
+import { ControlScene } from "../CCControlScene";
+import {
+  s_extensions_button,
+  s_extensions_buttonBackground,
+  s_extensions_buttonHighlighted
+} from "../../../resources";
 
 export class ControlButtonTest_HelloVariableSize extends ControlScene {
-    init() {
-        if (super.init()) {
-            var screenSize = cc.director.getWinSize();
+  init() {
+    if (super.init()) {
+      var screenSize = cc.director.getWinSize();
 
-            // Defines an array of title to create buttons dynamically
-            var stringArray = ["Hello", "Variable", "Size", "!"];
+      // Defines an array of title to create buttons dynamically
+      var stringArray = ["Hello", "Variable", "Size", "!"];
 
-            var layer = new cc.Node();
-            this.addChild(layer, 1);
+      var layer = new cc.Node();
+      this.addChild(layer, 1);
 
-            var total_width = 0, height = 0;
+      var total_width = 0,
+        height = 0;
 
-            // For each title in the array
-            for (var i = 0; i < stringArray.length; i++) {
-                var button = this.standardButtonWithTitle(stringArray[i]);
+      // For each title in the array
+      for (var i = 0; i < stringArray.length; i++) {
+        var button = this.standardButtonWithTitle(stringArray[i]);
 
-                if (i == 0) {
-                    button.opacity = 50;
-                    //todo setColor not work in canvas
-                    //button.color = new cc.Color(0, 255, 0);
-                }
-                else if (i == 1) {
-                    button.opacity = 200;
-                    //todo setColor not work in canvas
-                    //button.color = new cc.Color(0, 255, 0);
-                }
-                else if (i == 2) {
-                    button.opacity = 100;
-                    //todo setColor not work in canvas
-                    //button.color = new cc.Color(0, 0, 255);
-                }
-
-                button.x = total_width + button.width / 2;
-                button.y = button.height / 2;
-                layer.addChild(button);
-
-                // Compute the size of the layer
-                height = button.height;
-                total_width += button.width;
-            }
-
-            layer.anchorX = 0.5;
-            layer.anchorY = 0.5;
-            layer.width = total_width;
-            layer.height = height;
-            layer.x = screenSize.width / 2.0;
-            layer.y = screenSize.height / 2.0;
-
-            // Add the black background
-            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
-            background.width = total_width + 14;
-            background.height = height + 14;
-            background.x = screenSize.width / 2.0;
-            background.y = screenSize.height / 2.0;
-            this.addChild(background);
-            return true;
+        if (i == 0) {
+          button.opacity = 50;
+          //todo setColor not work in canvas
+          //button.color = new cc.Color(0, 255, 0);
+        } else if (i == 1) {
+          button.opacity = 200;
+          //todo setColor not work in canvas
+          //button.color = new cc.Color(0, 255, 0);
+        } else if (i == 2) {
+          button.opacity = 100;
+          //todo setColor not work in canvas
+          //button.color = new cc.Color(0, 0, 255);
         }
-        return false;
+
+        button.x = total_width + button.width / 2;
+        button.y = button.height / 2;
+        layer.addChild(button);
+
+        // Compute the size of the layer
+        height = button.height;
+        total_width += button.width;
+      }
+
+      layer.anchorX = 0.5;
+      layer.anchorY = 0.5;
+      layer.width = total_width;
+      layer.height = height;
+      layer.x = screenSize.width / 2.0;
+      layer.y = screenSize.height / 2.0;
+
+      // Add the black background
+      var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
+      background.width = total_width + 14;
+      background.height = height + 14;
+      background.x = screenSize.width / 2.0;
+      background.y = screenSize.height / 2.0;
+      this.addChild(background);
+      return true;
     }
+    return false;
+  }
+  // Creates and return a button with a default background and title color.
+  standardButtonWithTitle(title) {
     // Creates and return a button with a default background and title color.
-    standardButtonWithTitle(title) {
-        // Creates and return a button with a default background and title color.
-        var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
-        var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
+    var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+    var backgroundHighlightedButton = new cc.Scale9Sprite(
+      s_extensions_buttonHighlighted
+    );
 
-        var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
+    var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
-        titleButton.color = new cc.Color(159, 168, 176);
+    titleButton.color = new cc.Color(159, 168, 176);
 
-        var button = new cc.ControlButton(titleButton, backgroundButton);
-        button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-        button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+    var button = new cc.ControlButton(titleButton, backgroundButton);
+    button.setBackgroundSpriteForState(
+      backgroundHighlightedButton,
+      cc.CONTROL_STATE_HIGHLIGHTED
+    );
+    button.setTitleColorForState(cc.Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
-        return button;
-    }
-
+    return button;
+  }
 }
 
 ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
-    var scene = new cc.Scene();
-    var controlLayer = new ControlButtonTest_HelloVariableSize();
-    if (controlLayer && controlLayer.init()) {
-        controlLayer.getSceneTitleLabel().setString(sceneTitle);
-        scene.addChild(controlLayer);
-    }
-    return scene;
+  var scene = new cc.Scene();
+  var controlLayer = new ControlButtonTest_HelloVariableSize();
+  if (controlLayer && controlLayer.init()) {
+    controlLayer.getSceneTitleLabel().setString(sceneTitle);
+    scene.addChild(controlLayer);
+  }
+  return scene;
 };

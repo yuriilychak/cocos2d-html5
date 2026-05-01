@@ -25,21 +25,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RawStencilBufferTest } from "./raw-stencil-buffer-test.js";
+import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
 
 export class RawStencilBufferTest2 extends RawStencilBufferTest {
-    subtitle() {
-        return "2:DepthMask:FALSE";
-    }
+  subtitle() {
+    return "2:DepthMask:FALSE";
+  }
 
-    setupStencilForClippingOnPlane(plane) {
-        super.setupStencilForClippingOnPlane(plane);
-        cc.rendererConfig.renderContext.depthMask(false);
-    }
+  setupStencilForClippingOnPlane(plane) {
+    super.setupStencilForClippingOnPlane(plane);
+    cc.rendererConfig.renderContext.depthMask(false);
+  }
 
-    setupStencilForDrawingOnPlane(plane) {
-        cc.rendererConfig.renderContext.depthMask(true);
-        super.setupStencilForDrawingOnPlane(plane);
-    }
-
+  setupStencilForDrawingOnPlane(plane) {
+    cc.rendererConfig.renderContext.depthMask(true);
+    super.setupStencilForDrawingOnPlane(plane);
+  }
 }

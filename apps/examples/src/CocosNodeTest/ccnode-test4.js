@@ -25,58 +25,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TestNodeDemo } from "./test-node-demo.js";
-import { s_pathSister1, s_pathSister2 } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { TestNodeDemo } from "./test-node-demo";
+import { s_pathSister1, s_pathSister2 } from "../resources";
+import { winSize } from "../constants";
 
 export class CCNodeTest4 extends TestNodeDemo {
-    constructor() {
-        //----start1----ctor
-        super();
+  constructor() {
+    //----start1----ctor
+    super();
 
-        this.testDuration = 1;
-        var sp1 = new cc.Sprite(s_pathSister1);
-        var sp2 = new cc.Sprite(s_pathSister2);
-        sp1.x = 150;
-        sp1.y = winSize.height / 2;
-        sp2.x = winSize.width - 150;
-        sp2.y = winSize.height / 2;
+    this.testDuration = 1;
+    var sp1 = new cc.Sprite(s_pathSister1);
+    var sp2 = new cc.Sprite(s_pathSister2);
+    sp1.x = 150;
+    sp1.y = winSize.height / 2;
+    sp2.x = winSize.width - 150;
+    sp2.y = winSize.height / 2;
 
-        this.addChild(sp1, 0, 2);
-        this.addChild(sp2, 0, 3);
+    this.addChild(sp1, 0, 2);
+    this.addChild(sp2, 0, 3);
 
-        this.schedule(this.delay2, 2.0);
-        this.schedule(this.delay4, 4.0);
+    this.schedule(this.delay2, 2.0);
+    this.schedule(this.delay4, 4.0);
 
-        //Automation param
-        this.autoParam = sp1;
-        //----end1----
-    }
-    delay2(dt) {
-        //----start1----delay2
-        var node = this.getChildByTag(2);
-        var action1 = new cc.RotateBy(1, 360);
-        node.runAction(action1);
-        //----end1----
-    }
-    delay4(dt) {
-        //----start1----delay4
-        this.unschedule(this.delay4);
-        this.removeChildByTag(3, false);
-        //----end1----
-    }
-    title() {
-        return "tags";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        return this.autoParam;
-    }
-    getCurrentResult() {
-        var node = this.getChildByTag(2);
-        return node;
-    }
-
+    //Automation param
+    this.autoParam = sp1;
+    //----end1----
+  }
+  delay2(dt) {
+    //----start1----delay2
+    var node = this.getChildByTag(2);
+    var action1 = new cc.RotateBy(1, 360);
+    node.runAction(action1);
+    //----end1----
+  }
+  delay4(dt) {
+    //----start1----delay4
+    this.unschedule(this.delay4);
+    this.removeChildByTag(3, false);
+    //----end1----
+  }
+  title() {
+    return "tags";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    return this.autoParam;
+  }
+  getCurrentResult() {
+    var node = this.getChildByTag(2);
+    return node;
+  }
 }

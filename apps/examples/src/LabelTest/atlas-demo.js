@@ -25,46 +25,46 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer.js";
-import { labelTestIdx } from "./label-test-constants.js";
-import { arrayOfLabelTest, nextLabelTest, previousLabelTest, restartLabelTest } from "./label-test-helpers.js";
-import { LabelTestScene } from "./label-test-scene.js";
-import { director } from "../tests-main-constants.js";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { labelTestIdx } from "./label-test-constants";
+import {
+  arrayOfLabelTest,
+  nextLabelTest,
+  previousLabelTest,
+  restartLabelTest
+} from "./label-test-helpers";
+import { LabelTestScene } from "./label-test-scene";
+import { director } from "../constants";
 
 export class AtlasDemo extends BaseTestLayer {
+  title() {
+    return "No title";
+  }
+  subtitle() {
+    return "";
+  }
+  onRestartCallback(sender) {
+    var s = new LabelTestScene();
+    s.addChild(restartLabelTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new LabelTestScene();
+    s.addChild(nextLabelTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new LabelTestScene();
+    s.addChild(previousLabelTest());
+    director.runScene(s);
+  }
 
-    title() {
-        return "No title";
-    }
-    subtitle() {
-        return "";
-    }
-    onRestartCallback(sender) {
-        var s = new LabelTestScene();
-        s.addChild(restartLabelTest());
-        director.runScene(s);
+  // automation
+  numberOfPendingTests() {
+    return arrayOfLabelTest.length - 1 - labelTestIdx;
+  }
 
-    }
-    onNextCallback(sender) {
-        var s = new LabelTestScene();
-        s.addChild(nextLabelTest());
-        director.runScene(s);
-
-    }
-    onBackCallback(sender) {
-        var s = new LabelTestScene();
-        s.addChild(previousLabelTest());
-        director.runScene(s);
-    }
-
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfLabelTest.length-1) - labelTestIdx );
-    }
-
-    getTestNumber() {
-        return labelTestIdx;
-    }
-
-
+  getTestNumber() {
+    return labelTestIdx;
+  }
 }

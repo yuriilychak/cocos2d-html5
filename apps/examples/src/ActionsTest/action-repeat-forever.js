@@ -30,21 +30,23 @@
 // ActionRepeatForever
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class ActionRepeatForever extends ActionsDemo {
-    constructor() {
-        super();
-        this._code = "a = action.repeatForever();";
-        this.testDuration = 3.5;
-    }
-
+  constructor() {
+    super();
+    this._code = "a = action.repeatForever();";
+    this.testDuration = 3.5;
+  }
 
   onEnter() {
     //----start22----onEnter
     super.onEnter();
     this.centerSprites(1);
-    var action = cc.sequence(new cc.DelayTime(1), new cc.CallFunc(this.repeatForever)); // not passing 'this' since it is not used by the callback func
+    var action = cc.sequence(
+      new cc.DelayTime(1),
+      new cc.CallFunc(this.repeatForever)
+    ); // not passing 'this' since it is not used by the callback func
 
     this._grossini.runAction(action);
     //----end22----
@@ -78,5 +80,4 @@ export class ActionRepeatForever extends ActionsDemo {
     ret.push(r < expected + error && r > expected - error);
     return JSON.stringify(ret);
   }
-
 }

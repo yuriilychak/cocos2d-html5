@@ -25,16 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { nextLayerTest } from "./layer-test-helpers.js";
-import { TestScene } from "../test-scene.js";
-import { director } from "../tests-main-constants.js";
-import { _setlayerTestSceneIdx, layerTestSceneIdx } from "./layer-test-constants.js";
+import { nextLayerTest } from "./layer-test-helpers";
+import { TestScene } from "../test-scene";
+import { director } from "../constants";
+import {
+  _setlayerTestSceneIdx,
+  layerTestSceneIdx
+} from "./layer-test-constants";
 
 export class LayerTestScene extends TestScene {
-    runThisTest(num) {
-        _setlayerTestSceneIdx((num || num == 0) ? (num - 1) : -1);
-        this.addChild(nextLayerTest());
-        director.runScene(this);
-    }
-
+  runThisTest(num) {
+    _setlayerTestSceneIdx(num || num == 0 ? num - 1 : -1);
+    this.addChild(nextLayerTest());
+    director.runScene(this);
+  }
 }

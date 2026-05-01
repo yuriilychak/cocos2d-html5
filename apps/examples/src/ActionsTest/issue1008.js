@@ -30,13 +30,13 @@
 // Issue1008
 //
 //------------------------------------------------------------------
-import { ActionsDemo } from "./actions-demo.js";
+import { ActionsDemo } from "./actions-demo";
 
 export class Issue1008 extends ActionsDemo {
-    constructor() {
-        super();
-        this.testDuration = 3.1;
-    }
+  constructor() {
+    super();
+    this.testDuration = 3.1;
+  }
 
   onEnter() {
     //----start10----onEnter
@@ -50,8 +50,16 @@ export class Issue1008 extends ActionsDemo {
     this._grossini.y = 279;
 
     // 3 and only 3 control points should be used for Bezier actions.
-    var controlPoints1 = [new cc.Point(428, 279), new cc.Point(100, 100), new cc.Point(100, 100)];
-    var controlPoints2 = [new cc.Point(100, 100), new cc.Point(428, 279), new cc.Point(428, 279)];
+    var controlPoints1 = [
+      new cc.Point(428, 279),
+      new cc.Point(100, 100),
+      new cc.Point(100, 100)
+    ];
+    var controlPoints2 = [
+      new cc.Point(100, 100),
+      new cc.Point(428, 279),
+      new cc.Point(428, 279)
+    ];
 
     var bz1 = new cc.BezierTo(1.5, controlPoints1);
     var bz2 = new cc.BezierTo(1.5, controlPoints2);
@@ -90,5 +98,4 @@ export class Issue1008 extends ActionsDemo {
   getCurrentResult() {
     return JSON.stringify(this.tracePos);
   }
-
 }

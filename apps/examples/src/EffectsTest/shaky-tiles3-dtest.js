@@ -23,17 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EffectsBaseLayer } from "./effects-base-layer.js";
+import { EffectsBaseLayer } from "./effects-base-layer";
 
 export class ShakyTiles3DTest extends EffectsBaseLayer {
-    title() {
-        return "ShakyTiles3D";
-    }
-    code() {
-        return "a = cc.shakyTiles3D(duration, gridSize, range, shakeZ)";
-    }
-    getEffect(duration) {
-        return cc.shakyTiles3D( duration, new cc.Size(16,12), 5, false);
-    }
-
+  title() {
+    return "ShakyTiles3D";
+  }
+  code() {
+    return "a = cc.shakyTiles3D(duration, gridSize, range, shakeZ)";
+  }
+  getEffect(duration) {
+    return cc.shakyTiles3D(duration, new cc.Size(16, 12), 5, false);
+  }
 }

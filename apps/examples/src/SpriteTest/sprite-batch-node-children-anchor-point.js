@@ -30,9 +30,9 @@
 // SpriteBatchNodeChildrenAnchorPoint
 //
 //------------------------------------------------------------------
-import { SpriteTestDemo } from "./sprite-test-demo.js";
-import { s_grossini, s_grossiniPlist, s_pathR1 } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { SpriteTestDemo } from "./sprite-test-demo";
+import { s_grossini, s_grossiniPlist, s_pathR1 } from "../resources";
+import { winSize } from "../constants";
 
 export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
 

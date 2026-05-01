@@ -25,78 +25,82 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { DenshionTests } from "./cocos-denshion-test-constants.js";
-import { director, winSize } from "../tests-main-constants.js";
-import { LINE_SPACE } from "../tests-main-helpers.js";
+import { DenshionTests } from "./cocos-denshion-test-constants";
+import { director, winSize } from "../constants";
+import { LINE_SPACE } from "../tests-main-helpers";
 
 export class CocosDenshionTest extends cc.LayerGradient {
-    constructor() {
-        super(new cc.Color(0, 0, 0, 255), new cc.Color(148, 80, 120, 255));
+  constructor() {
+    super(new cc.Color(0, 0, 0, 255), new cc.Color(148, 80, 120, 255));
 
-        this._itemMenu = null;
+    this._itemMenu = null;
 
-        this._beginPos = new cc.Point(0, 0);
+    this._beginPos = new cc.Point(0, 0);
 
-        this._testCount = 0;
+    this._testCount = 0;
 
-        this._itemMenu = new cc.Menu();
-        var winSize = director.getWinSize();
-        for (var i = 0; i < DenshionTests.length; i++) {
-            var label = new cc.LabelTTF(DenshionTests[i].title, "Arial", 24);
-            var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
-            this._itemMenu.addChild(menuItem, i + 10000);
-            menuItem.x = winSize.width / 2;
-            menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
-        }
-        this._testCount = i;
-        this._itemMenu.width = winSize.width;
-	    this._itemMenu.height = (this._testCount + 1) * LINE_SPACE;
-        this._itemMenu.x = 0;
-        this._itemMenu.y = 0;
-        this.addChild(this._itemMenu);
-
-        if( 'touches' in cc.sys.capabilities ) {
-            cc.eventManager.addListener({
-                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-                onTouchesMoved: function (touches, event) {
-                    event.getCurrentTarget().moveMenu(touches[0].getDelta());
-                }
-            }, this);
-        } else if ('mouse' in cc.sys.capabilities )
-             cc.eventManager.addListener({
-                event: cc.EventListener.MOUSE,
-                 onMouseMove: function(event){
-                     if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
-                        event.getCurrentTarget().moveMenu(event.getDelta());
-                 }
-             }, this);
-
-        // set default volume
-        audioEngine.setEffectsVolume(0.5);
-        audioEngine.setMusicVolume(0.5);
+    this._itemMenu = new cc.Menu();
+    var winSize = director.getWinSize();
+    for (var i = 0; i < DenshionTests.length; i++) {
+      var label = new cc.LabelTTF(DenshionTests[i].title, "Arial", 24);
+      var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
+      this._itemMenu.addChild(menuItem, i + 10000);
+      menuItem.x = winSize.width / 2;
+      menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
     }
-    onExit() {
-        super.onExit();
-        audioEngine.stopMusic();
-        audioEngine.stopAllEffects();
-    }
+    this._testCount = i;
+    this._itemMenu.width = winSize.width;
+    this._itemMenu.height = (this._testCount + 1) * LINE_SPACE;
+    this._itemMenu.x = 0;
+    this._itemMenu.y = 0;
+    this.addChild(this._itemMenu);
 
-    onMenuCallback(sender) {
-        var idx = sender.zIndex - 10000;
-        // create the test scene and run it
-        var scene = DenshionTests[idx].playFunc();
-    }
+    if ("touches" in cc.sys.capabilities) {
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+          onTouchesMoved: function (touches, event) {
+            event.getCurrentTarget().moveMenu(touches[0].getDelta());
+          }
+        },
+        this
+      );
+    } else if ("mouse" in cc.sys.capabilities)
+      cc.eventManager.addListener(
+        {
+          event: cc.EventListener.MOUSE,
+          onMouseMove: function (event) {
+            if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+              event.getCurrentTarget().moveMenu(event.getDelta());
+          }
+        },
+        this
+      );
 
-    moveMenu(delta) {
-        var newY = this._itemMenu.y + delta.y;
+    // set default volume
+    audioEngine.setEffectsVolume(0.5);
+    audioEngine.setMusicVolume(0.5);
+  }
+  onExit() {
+    super.onExit();
+    audioEngine.stopMusic();
+    audioEngine.stopAllEffects();
+  }
 
-        if (newY < 0)
-            newY = 0;
+  onMenuCallback(sender) {
+    var idx = sender.zIndex - 10000;
+    // create the test scene and run it
+    var scene = DenshionTests[idx].playFunc();
+  }
 
-        if (newY > ((DenshionTests.length + 1) * LINE_SPACE - winSize.height))
-            newY = ((DenshionTests.length + 1) * LINE_SPACE - winSize.height);
+  moveMenu(delta) {
+    var newY = this._itemMenu.y + delta.y;
 
-        this._itemMenu.y = newY;
-    }
+    if (newY < 0) newY = 0;
 
+    if (newY > (DenshionTests.length + 1) * LINE_SPACE - winSize.height)
+      newY = (DenshionTests.length + 1) * LINE_SPACE - winSize.height;
+
+    this._itemMenu.y = newY;
+  }
 }

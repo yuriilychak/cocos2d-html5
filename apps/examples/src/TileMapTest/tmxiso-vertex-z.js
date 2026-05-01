@@ -30,10 +30,10 @@
 // TMXIsoVertexZ
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../tests_resources.js";
-import { director, winSize } from "../tests-main-constants.js";
-import { TAG_TILE_MAP } from "./tile-map-test-constants.js";
-import { TMXFixBugLayer } from "./tmxfix-bug-layer.js";
+import { s_resprefix } from "../resources";
+import { director, winSize } from "../constants";
+import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { TMXFixBugLayer } from "./tmxfix-bug-layer";
 
 export class TMXIsoVertexZ extends TMXFixBugLayer {
     constructor() {

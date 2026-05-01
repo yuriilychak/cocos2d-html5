@@ -28,48 +28,57 @@
 //
 // BoundingBox Test
 //
-import { TestNodeDemo } from "./test-node-demo.js";
-import { s_pathGrossini } from "../tests_resources.js";
-import { winSize } from "../tests-main-constants.js";
+import { TestNodeDemo } from "./test-node-demo";
+import { s_pathGrossini } from "../resources";
+import { winSize } from "../constants";
 
 export class BoundingBoxTest extends TestNodeDemo {
-    constructor() {
-        //----start8----ctor
-        super();
+  constructor() {
+    //----start8----ctor
+    super();
 
-        this.testDuration = 0.5;
+    this.testDuration = 0.5;
 
-        this.testBB = null;
-        var sprite = new cc.Sprite(s_pathGrossini);
-        this.addChild(sprite);
-        sprite.x = winSize.width / 2;
-        sprite.y = winSize.height / 2;
-        var bb = sprite.getBoundingBox();
-        cc.log('BoundingBox:');
-        //for( var i in bb )
-        //    cc.log( i + " = " + bb[i] );
-        cc.log('origin = [ ' + bb.x + "," + bb.y + "]");
-        cc.log('size = [ ' + bb.width + "," + bb.height + "]");
+    this.testBB = null;
+    var sprite = new cc.Sprite(s_pathGrossini);
+    this.addChild(sprite);
+    sprite.x = winSize.width / 2;
+    sprite.y = winSize.height / 2;
+    var bb = sprite.getBoundingBox();
+    cc.log("BoundingBox:");
+    //for( var i in bb )
+    //    cc.log( i + " = " + bb[i] );
+    cc.log("origin = [ " + bb.x + "," + bb.y + "]");
+    cc.log("size = [ " + bb.width + "," + bb.height + "]");
 
-        this.testBB = bb;
-        //----end8----
-    }
-    title() {
-        return "Bounding Box Test";
-    }
-    subtitle() {
-        return "Testing getBoundingBox(). See console";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"x":0 | (winSize.width / 2 - 42.5), "y":0 | (winSize.height / 2 - 60.5), "w":85, "h":121};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret = {"x":0 | this.testBB.x, "y":0 | this.testBB.y, "w":this.testBB.width, "h":this.testBB.height};
-        return JSON.stringify(ret);
-    }
-
+    this.testBB = bb;
+    //----end8----
+  }
+  title() {
+    return "Bounding Box Test";
+  }
+  subtitle() {
+    return "Testing getBoundingBox(). See console";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = {
+      x: 0 | (winSize.width / 2 - 42.5),
+      y: 0 | (winSize.height / 2 - 60.5),
+      w: 85,
+      h: 121
+    };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret = {
+      x: 0 | this.testBB.x,
+      y: 0 | this.testBB.y,
+      w: this.testBB.width,
+      h: this.testBB.height
+    };
+    return JSON.stringify(ret);
+  }
 }

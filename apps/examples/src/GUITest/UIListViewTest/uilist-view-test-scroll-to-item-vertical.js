@@ -24,12 +24,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { UIListViewTest_ScrollToItem } from "./uilist-view-test-scroll-to-item.js";
+import { UIListViewTest_ScrollToItem } from "./uilist-view-test-scroll-to-item";
 
 export class UIListViewTest_ScrollToItemVertical extends UIListViewTest_ScrollToItem {
-    _getListViewDirection()
-    {
-        return ccui.ScrollView.DIR_VERTICAL;
-    }
-
+  _getListViewDirection() {
+    return ccui.ScrollView.DIR_VERTICAL;
+  }
 }
