@@ -62,7 +62,7 @@ export class ControlColourPicker extends Control {
             var plist = locRes.CCControlColourPickerSpriteSheet_plist || CCControlColourPickerSpriteSheet_plist;
             var png = locRes.CCControlColourPickerSpriteSheet_png || CCControlColourPickerSpriteSheet_png;
 
-            SpriteFrameCache.getInstance().addSpriteFrames(plist);
+            SpriteFrameCache.getInstance().addSpriteFrames(plist, png);
             var spriteSheet = new SpriteBatchNode(png);
             this.addChild(spriteSheet);
 
