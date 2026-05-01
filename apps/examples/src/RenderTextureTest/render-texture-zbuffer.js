@@ -26,6 +26,7 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_circle_plist, s_circle_png } from "../resources";
 import { Color, LabelTTF } from "@aspect/core";
+import { FadeTo, Hide, sequence } from "@aspect/actions";
 
 export class RenderTextureZbuffer extends RenderTextureBaseLayer {
   constructor() {
@@ -204,6 +205,6 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     this.addChild(sprite, 999999);
     sprite.color = Color.GREEN;
 
-    sprite.runAction(cc.sequence(new cc.FadeTo(2, 0), new cc.Hide()));
+    sprite.runAction(sequence(new FadeTo(2, 0), new Hide()));
   }
 }

@@ -35,6 +35,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas, s_grossini_dance_atlas_mono } from "../resources";
 import { winSize } from "../constants";
 import { Point, Rect } from "@aspect/core";
+import { Blink, FadeOut, RotateBy, ScaleBy, TintBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
 
@@ -105,17 +106,17 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
         var random = Math.random();
 
         if (random < 0.20)
-            action = new cc.ScaleBy(3, 2);
+            action = new ScaleBy(3, 2);
         else if (random < 0.40)
-            action = new cc.RotateBy(3, 360);
+            action = new RotateBy(3, 360);
         else if (random < 0.60)
-            action = new cc.Blink(1, 3);
+            action = new Blink(1, 3);
         //else if (random < 0.8)
-        //    action = new cc.TintBy(2, 0, -255, -255);
+        //    action = new TintBy(2, 0, -255, -255);
         else
-            action = new cc.FadeOut(2);
+            action = new FadeOut(2);
         var action_back = action.reverse();
-        var seq = cc.sequence(action, action_back);
+        var seq = sequence(action, action_back);
 
         sprite.runAction(seq.repeatForever());
         //----end27----

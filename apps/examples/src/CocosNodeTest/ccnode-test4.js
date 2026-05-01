@@ -28,6 +28,7 @@
 import { TestNodeDemo } from "./test-node-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
+import { RotateBy } from "@aspect/actions";
 
 export class CCNodeTest4 extends TestNodeDemo {
   constructor() {
@@ -55,7 +56,7 @@ export class CCNodeTest4 extends TestNodeDemo {
   delay2(dt) {
     //----start1----delay2
     var node = this.getChildByTag(2);
-    var action1 = new cc.RotateBy(1, 360);
+    var action1 = new RotateBy(1, 360);
     node.runAction(action1);
     //----end1----
   }

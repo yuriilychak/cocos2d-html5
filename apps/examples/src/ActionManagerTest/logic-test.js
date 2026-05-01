@@ -34,6 +34,7 @@ import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled } from "../constants";
 import { Point } from "@aspect/core";
+import { CallFunc, MoveBy, ScaleTo, sequence } from "@aspect/actions";
 
 export class LogicTest extends ActionManagerTest {
   constructor() {
@@ -54,9 +55,9 @@ export class LogicTest extends ActionManagerTest {
     grossini.y = 200;
 
     grossini.runAction(
-      cc.sequence(
-        new cc.MoveBy(1, new Point(150, 0)),
-        new cc.CallFunc(this.onBugMe, this)
+      sequence(
+        new MoveBy(1, new Point(150, 0)),
+        new CallFunc(this.onBugMe, this)
       )
     );
 
@@ -71,7 +72,7 @@ export class LogicTest extends ActionManagerTest {
   onBugMe(node) {
     //----start1----onBugMe
     node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
-    node.runAction(new cc.ScaleTo(2, 2));
+    node.runAction(new ScaleTo(2, 2));
     //----end1----
   }
 

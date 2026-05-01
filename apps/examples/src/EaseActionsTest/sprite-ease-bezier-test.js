@@ -31,6 +31,7 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { director } from "../constants";
 import { Point } from "@aspect/core";
+import { BezierBy, BezierTo, easeBezierAction } from "@aspect/actions";
 
 export class SpriteEaseBezierTest extends EaseSpriteDemo {
   onEnter() {
@@ -56,9 +57,9 @@ export class SpriteEaseBezierTest extends EaseSpriteDemo {
       new Point((300 / 480) * 800, -size.height / 2),
       new Point((300 / 480) * 800, (100 / 320) * 450)
     ];
-    var bezierForward = new cc.BezierBy(3, bezier);
+    var bezierForward = new BezierBy(3, bezier);
     var bezierEaseForward = bezierForward.easing(
-      cc.easeBezierAction(0.5, 0.5, 1.0, 1.0)
+      easeBezierAction(0.5, 0.5, 1.0, 1.0)
     );
 
     var bezierEaseBack = bezierEaseForward.reverse();
@@ -73,16 +74,16 @@ export class SpriteEaseBezierTest extends EaseSpriteDemo {
       new Point((200 / 480) * 800, -size.height / 2),
       new Point((200 / 480) * 800, (160 / 320) * 450)
     ];
-    var bezierTo1 = new cc.BezierTo(2, bezier2);
+    var bezierTo1 = new BezierTo(2, bezier2);
     var bezierEaseTo1 = bezierTo1.easing(
-      cc.easeBezierAction(0.5, 0.5, 1.0, 1.0)
+      easeBezierAction(0.5, 0.5, 1.0, 1.0)
     );
 
     // sprite 3
     this._kathia.setPosition(new Point(667, 225));
-    var bezierTo2 = new cc.BezierTo(2, bezier2);
+    var bezierTo2 = new BezierTo(2, bezier2);
     var bezierEaseTo2 = bezierTo2.easing(
-      cc.easeBezierAction(0.0, 0.5, -5.0, 1.0)
+      easeBezierAction(0.0, 0.5, -5.0, 1.0)
     );
 
     this._grossini.runAction(bezierEaseTo);

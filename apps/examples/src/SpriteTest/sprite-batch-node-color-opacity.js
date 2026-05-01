@@ -35,6 +35,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
 import { Rect } from "@aspect/core";
+import { DelayTime, FadeOut, TintBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
 
@@ -99,21 +100,21 @@ export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
         sprite8.x = (winSize.width / 5) * 4;
         sprite8.y = (winSize.height / 3) * 2;
 
-        var delay = new cc.DelayTime(0.25);
-        var action = new cc.FadeOut(2);
+        var delay = new DelayTime(0.25);
+        var action = new FadeOut(2);
         var action_back = action.reverse();
-        var fade = cc.sequence(action, delay.clone(), action_back).repeatForever();
+        var fade = sequence(action, delay.clone(), action_back).repeatForever();
 
-        var tintRed = new cc.TintBy(2, 0, -255, -255);
-        var red = cc.sequence(tintRed, delay.clone(), tintRed.reverse()).repeatForever();
+        var tintRed = new TintBy(2, 0, -255, -255);
+        var red = sequence(tintRed, delay.clone(), tintRed.reverse()).repeatForever();
 
-        var tintGreen = new cc.TintBy(2, -255, 0, -255);
+        var tintGreen = new TintBy(2, -255, 0, -255);
         var tintGreenBack = tintGreen.reverse();
-        var green = cc.sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
+        var green = sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
 
-        var tintBlue = new cc.TintBy(2, -255, -255, 0);
+        var tintBlue = new TintBy(2, -255, -255, 0);
         var tintBlueBack = tintBlue.reverse();
-        var blue = cc.sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
+        var blue = sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
 
         // late add: test dirtyColor and dirtyPosition
         batch.addChild(sprite1, 0, TAG_SPRITE1);

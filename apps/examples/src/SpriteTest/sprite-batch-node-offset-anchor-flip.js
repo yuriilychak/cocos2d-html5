@@ -31,6 +31,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
+import { Animate, DelayTime, FlipY, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
 
@@ -101,14 +102,14 @@ export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(new Animate(animation).repeatForever());
 
             animFrames = null;
 
-            var flip = new cc.FlipY(true);
-            var flip_back = new cc.FlipY(false);
-            var delay = new cc.DelayTime(1);
-            var seq = cc.sequence(delay, flip, delay.clone(), flip_back);
+            var flip = new FlipY(true);
+            var flip_back = new FlipY(false);
+            var delay = new DelayTime(1);
+            var seq = sequence(delay, flip, delay.clone(), flip_back);
             sprite.runAction(seq.repeatForever());
 
             spritebatch.addChild(sprite, i);

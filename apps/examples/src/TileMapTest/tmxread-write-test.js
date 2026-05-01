@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point } from "@aspect/core";
+import { CallFunc, FadeIn, FadeOut, MoveBy, RotateBy, ScaleBy, ScaleTo, sequence } from "@aspect/actions";
 
 export class TMXReadWriteTest extends TileDemo {
   constructor() {
@@ -70,15 +71,15 @@ export class TMXReadWriteTest extends TileDemo {
     tile3.anchorX = 0.5;
     tile3.anchorY = 0.5;
 
-    var move = new cc.MoveBy(0.5, new Point(0, 160));
-    var rotate = new cc.RotateBy(2, 360);
-    var scale = new cc.ScaleBy(2, 5);
-    var opacity = new cc.FadeOut(2);
-    var fadein = new cc.FadeIn(2);
-    var scaleback = new cc.ScaleTo(1, 1);
-    var finish = new cc.CallFunc(this.onRemoveSprite); // 'this' is optional. Since it is not used, it is not passed.
+    var move = new MoveBy(0.5, new Point(0, 160));
+    var rotate = new RotateBy(2, 360);
+    var scale = new ScaleBy(2, 5);
+    var opacity = new FadeOut(2);
+    var fadein = new FadeIn(2);
+    var scaleback = new ScaleTo(1, 1);
+    var finish = new CallFunc(this.onRemoveSprite); // 'this' is optional. Since it is not used, it is not passed.
 
-    var seq0 = cc.sequence(
+    var seq0 = sequence(
       move,
       rotate,
       scale,

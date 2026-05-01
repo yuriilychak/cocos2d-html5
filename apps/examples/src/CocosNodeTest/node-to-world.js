@@ -28,6 +28,7 @@
 import { TestNodeDemo } from "./test-node-demo";
 import { s_back3, s_playNormal, s_playSelect } from "../resources";
 import { Point } from "@aspect/core";
+import { DelayTime, MoveBy, RotateBy, sequence } from "@aspect/actions";
 
 export class NodeToWorld extends TestNodeDemo {
   constructor() {
@@ -50,14 +51,14 @@ export class NodeToWorld extends TestNodeDemo {
     menu.y = back.height / 2;
     back.addChild(menu);
 
-    var rot = new cc.RotateBy(3, 360);
-    var delay = new cc.DelayTime(0.3);
-    var fe = cc.sequence(rot, delay).repeatForever();
+    var rot = new RotateBy(3, 360);
+    var delay = new DelayTime(0.3);
+    var fe = sequence(rot, delay).repeatForever();
     item.runAction(fe);
 
-    var move = new cc.MoveBy(3, new Point(200, 0));
+    var move = new MoveBy(3, new Point(200, 0));
     var move_back = move.reverse();
-    var seq = cc.sequence(move, delay.clone(), move_back);
+    var seq = sequence(move, delay.clone(), move_back);
     var fe2 = seq.repeatForever();
     back.runAction(fe2);
 

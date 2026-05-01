@@ -29,6 +29,7 @@ import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
 import { Size, Color, Rect } from "@aspect/core";
+import { ScaleBy, sequence } from "@aspect/actions";
 
 export class PageTurn3DInRectTest extends BaseTestLayer {
     title() {
@@ -87,9 +88,9 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
         sister2.y = winSize.height/2;
         gridNodeTarget.addChild( sister2, 1 );
 
-        var sc = new cc.ScaleBy(2, 5);
+        var sc = new ScaleBy(2, 5);
         var sc_back = sc.reverse();
-        var seq = cc.sequence( sc, sc_back );
+        var seq = sequence( sc, sc_back );
         var repeat = seq.repeatForever();
 
         sister1.runAction( repeat );

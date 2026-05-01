@@ -32,6 +32,7 @@ import { TestNodeDemo } from "./test-node-demo";
 import { s_pathGrossini, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { RotateBy } from "@aspect/actions";
 
 export class ConvertToNode extends TestNodeDemo {
     constructor() {
@@ -67,7 +68,7 @@ export class ConvertToNode extends TestNodeDemo {
                 }
             }, this);
 
-        var rotate = new cc.RotateBy(10, 360);
+        var rotate = new RotateBy(10, 360);
         var action = rotate.repeatForever();
         for (var i = 0; i < 3; i++) {
             var sprite = new cc.Sprite(s_pathGrossini);

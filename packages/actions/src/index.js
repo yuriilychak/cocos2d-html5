@@ -287,6 +287,20 @@ cc.spawn = spawn;
 // ─── Re-exports ─────────────────────────────────────
 export { sequence, spawn };
 export {
+  easeIn, easeOut, easeInOut,
+  easeExponentialIn, easeExponentialOut, easeExponentialInOut,
+  easeSineIn, easeSineOut, easeSineInOut,
+  easeElasticIn, easeElasticOut, easeElasticInOut,
+  easeBounceIn, easeBounceOut, easeBounceInOut,
+  easeBackIn, easeBackOut, easeBackInOut,
+  easeBezierAction,
+  easeQuadraticActionIn, easeQuadraticActionOut, easeQuadraticActionInOut,
+  easeQuarticActionIn, easeQuarticActionOut, easeQuarticActionInOut,
+  easeQuinticActionIn, easeQuinticActionOut, easeQuinticActionInOut,
+  easeCircleActionIn, easeCircleActionOut, easeCircleActionInOut,
+  easeCubicActionIn, easeCubicActionOut, easeCubicActionInOut
+};
+export {
   bezierAt, bounceTime,
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,
   getControlPointAt, reverseControlPointsInline

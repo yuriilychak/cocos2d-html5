@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { s_animations2Plist } from "../resources";
+import { Animate, Sequence } from "@aspect/actions";
 
 export class ActionAnimate extends ActionsDemo {
   onEnter() {
@@ -51,8 +52,8 @@ export class ActionAnimate extends ActionsDemo {
     animation.setDelayPerUnit(2.8 / 14);
     animation.setRestoreOriginalFrame(true);
 
-    var action = new cc.Animate(animation);
-    this._grossini.runAction(new cc.Sequence(action, action.reverse()));
+    var action = new Animate(animation);
+    this._grossini.runAction(new Sequence(action, action.reverse()));
 
     //
     // File animation
@@ -63,8 +64,8 @@ export class ActionAnimate extends ActionsDemo {
     animCache.addAnimations(s_animations2Plist);
     var animation2 = animCache.getAnimation("dance_1");
 
-    var action2 = new cc.Animate(animation2);
-    this._tamara.runAction(new cc.Sequence(action2, action2.reverse()));
+    var action2 = new Animate(animation2);
+    this._tamara.runAction(new Sequence(action2, action2.reverse()));
 
     //
     // File animation
@@ -73,7 +74,7 @@ export class ActionAnimate extends ActionsDemo {
     var animation3 = animation2.clone();
     animation3.setLoops(4);
 
-    var action3 = new cc.Animate(animation3);
+    var action3 = new Animate(animation3);
     this._kathia.runAction(action3);
     //----end44----
   }

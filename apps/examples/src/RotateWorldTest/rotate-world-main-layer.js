@@ -29,6 +29,7 @@ import { SpriteLayer } from "./sprite-layer";
 import { TestLayer } from "./test-layer";
 import { director } from "../constants";
 import { Color, Layer } from "@aspect/core";
+import { RotateBy } from "@aspect/actions";
 
 export class RotateWorldMainLayer extends Layer {
   constructor() {
@@ -72,7 +73,7 @@ export class RotateWorldMainLayer extends Layer {
     this.addChild(green);
     this.addChild(red);
 
-    var rot = new cc.RotateBy(8, 720);
+    var rot = new RotateBy(8, 720);
 
     blue.runAction(rot);
     red.runAction(rot.clone());

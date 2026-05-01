@@ -33,11 +33,12 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 
 export class ActionDelayTime extends ActionsDemo {
   constructor() {
     super();
-    this._code = "a = new cc.DelayTime( time );";
+    this._code = "a = new DelayTime( time );";
     this.testDuration = 2.9;
   }
 
@@ -46,8 +47,8 @@ export class ActionDelayTime extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move = new cc.MoveBy(1, new Point(150, 0));
-    var action = new cc.Sequence(move, new cc.DelayTime(2), move.clone());
+    var move = new MoveBy(1, new Point(150, 0));
+    var action = new Sequence(move, new DelayTime(2), move.clone());
 
     this._grossini.runAction(action);
     //----end20----

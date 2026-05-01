@@ -31,22 +31,23 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { DelayTime, MoveBy, easeQuarticActionInOut, sequence } from "@aspect/actions";
 
 export class SpriteEaseQuarticInOutTest extends EaseSpriteDemo {
   onEnter() {
     super.onEnter();
     //----start18----onEnter
 
-    var move = new cc.MoveBy(3, new Point(winSize.width - 130, 0));
+    var move = new MoveBy(3, new Point(winSize.width - 130, 0));
     var move_back = move.reverse();
 
-    var move_ease = move.clone().easing(cc.easeQuarticActionInOut());
+    var move_ease = move.clone().easing(easeQuarticActionInOut());
     var move_ease_back = move_ease.reverse();
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
-    var seq1 = cc.sequence(move, delay, move_back, delay.clone());
-    var seq2 = cc.sequence(
+    var seq1 = sequence(move, delay, move_back, delay.clone());
+    var seq2 = sequence(
       move_ease,
       delay.clone(),
       move_ease_back,

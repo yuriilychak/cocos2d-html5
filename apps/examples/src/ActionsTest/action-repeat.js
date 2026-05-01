@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { DelayTime, MoveBy, Place, Sequence } from "@aspect/actions";
 
 export class ActionRepeat extends ActionsDemo {
   constructor() {
@@ -45,13 +46,13 @@ export class ActionRepeat extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(2);
 
-    var a1 = new cc.MoveBy(1, new Point(150, 0));
+    var a1 = new MoveBy(1, new Point(150, 0));
 
-    var action1 = new cc.Sequence(new cc.Place(new Point(60, 60)), a1).repeat(
+    var action1 = new Sequence(new Place(new Point(60, 60)), a1).repeat(
       3
     );
     var action2 = cc
-      .sequence(a1.clone(), a1.reverse(), new cc.DelayTime(0.25))
+      .sequence(a1.clone(), a1.reverse(), new DelayTime(0.25))
       .repeatForever();
 
     this._kathia.runAction(action1);

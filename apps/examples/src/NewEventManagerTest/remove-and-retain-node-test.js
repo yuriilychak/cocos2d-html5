@@ -28,6 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
 import { Rect } from "@aspect/core";
+import { CallFunc, DelayTime, sequence } from "@aspect/actions";
 
 export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
   constructor() {
@@ -88,14 +89,14 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     cc.eventManager.addListener(listener1, this._sprite);
 
     this.runAction(
-      cc.sequence(
-        new cc.DelayTime(5.0),
-        new cc.CallFunc(function () {
+      sequence(
+        new DelayTime(5.0),
+        new CallFunc(function () {
           this._spriteSaved = true;
           this._sprite.removeFromParent(false);
         }, this),
-        new cc.DelayTime(5.0),
-        new cc.CallFunc(function () {
+        new DelayTime(5.0),
+        new CallFunc(function () {
           this._spriteSaved = false;
           this.addChild(this._sprite);
           if (!cc.sys.isNative)

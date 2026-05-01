@@ -28,6 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Point, Size } from "@aspect/core";
+import { DelayTime, sequence } from "@aspect/actions";
 
 export class Effect1 extends EffectAdvanceTextLayer {
   title() {
@@ -53,8 +54,8 @@ export class Effect1 extends EffectAdvanceTextLayer {
     var waves = cc.waves3D(10, new Size(15, 10), 18, 15);
 
     var reuse = cc.reuseGrid(1);
-    var delay = new cc.DelayTime(8);
+    var delay = new DelayTime(8);
 
-    target.runAction(cc.sequence(lens, delay, reuse, waves));
+    target.runAction(sequence(lens, delay, reuse, waves));
   }
 }

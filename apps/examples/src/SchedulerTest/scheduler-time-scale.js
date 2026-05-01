@@ -29,6 +29,7 @@
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { s_stars1 } from "../resources";
 import { LabelTTF, Point } from "@aspect/core";
+import { JumpBy, Repeat, RotateBy, Sequence, Spawn, Speed } from "@aspect/actions";
 
 export class SchedulerTimeScale extends SchedulerTestLayer {
   constructor() {
@@ -46,15 +47,15 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     var s = cc.winSize;
 
     // rotate and jump
-    var jump1 = new cc.JumpBy(4, new Point(-s.width + 80, 0), 100, 4);
+    var jump1 = new JumpBy(4, new Point(-s.width + 80, 0), 100, 4);
     var jump2 = jump1.reverse();
-    var rot1 = new cc.RotateBy(4, 360 * 2);
+    var rot1 = new RotateBy(4, 360 * 2);
     var rot2 = rot1.reverse();
 
-    var seq3_1 = new cc.Sequence(jump2, jump1);
-    var seq3_2 = new cc.Sequence(rot1, rot2);
-    var spawn = new cc.Spawn(seq3_1, seq3_2);
-    var action = new cc.Repeat(spawn, 50);
+    var seq3_1 = new Sequence(jump2, jump1);
+    var seq3_2 = new Sequence(rot1, rot2);
+    var spawn = new Spawn(seq3_1, seq3_2);
+    var action = new Repeat(spawn, 50);
 
     var action2 = action.clone();
     var action3 = action.clone();
@@ -74,9 +75,9 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     this.addChild(tamara);
     this.addChild(kathia);
 
-    grossini.runAction(new cc.Speed(action, 0.5));
-    tamara.runAction(new cc.Speed(action2, 1.5));
-    kathia.runAction(new cc.Speed(action3, 1.0));
+    grossini.runAction(new Speed(action, 0.5));
+    tamara.runAction(new Speed(action2, 1.5));
+    kathia.runAction(new Speed(action3, 1.0));
 
     cc.director.getScheduler().scheduleUpdate(this._newScheduler, 0, false);
 

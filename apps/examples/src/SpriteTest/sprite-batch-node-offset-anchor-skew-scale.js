@@ -31,6 +31,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
+import { Animate, ScaleBy, SkewBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
 
@@ -98,23 +99,23 @@ export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(new Animate(animation).repeatForever());
 
             animFrames = null;
 
             // skew
-            var skewX = new cc.SkewBy(2, 45, 0);
+            var skewX = new SkewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new cc.SkewBy(2, 0, 45);
+            var skewY = new SkewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
-            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
             // scale
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = new ScaleBy(2, 2);
             var scale_back = scale.reverse();
-            var seq_scale = cc.sequence(scale, scale_back);
+            var seq_scale = sequence(scale, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             spritebatch.addChild(sprite, i);

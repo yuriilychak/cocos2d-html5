@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { BezierTo } from "@aspect/actions";
 
 export class ActionBezierToCopy extends ActionsDemo {
   onEnter() {
@@ -56,7 +57,7 @@ export class ActionBezierToCopy extends ActionsDemo {
       new Point(200, -winSize.height / 2),
       new Point(240, 160)
     ];
-    var bezierTo1 = new cc.BezierTo(2, controlPoints2);
+    var bezierTo1 = new BezierTo(2, controlPoints2);
 
     // sprite 2
     this._kathia.x = 80;

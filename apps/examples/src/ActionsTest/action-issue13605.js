@@ -28,6 +28,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { CustomMoveBy } from "./custom-move-by";
 import { Point } from "@aspect/core";
+import { DelayTime, Sequence } from "@aspect/actions";
 
 export class ActionIssue13605 extends ActionsDemo {
   onEnter() {
@@ -37,21 +38,21 @@ export class ActionIssue13605 extends ActionsDemo {
 
     var move = new CustomMoveBy(2, new Point(50, 0));
     var move_back = move.reverse();
-    var move_seq = new cc.Sequence(
+    var move_seq = new Sequence(
       move,
-      new cc.DelayTime(1),
+      new DelayTime(1),
       move_back,
-      new cc.DelayTime(1)
+      new DelayTime(1)
     );
     this._kathia.runAction(move_seq.repeat(2));
 
     var moveClone = move.clone();
     var moveCloneBack = moveClone.reverse();
-    var moveCloneSeq = new cc.Sequence(
+    var moveCloneSeq = new Sequence(
       moveClone,
-      new cc.DelayTime(1),
+      new DelayTime(1),
       moveCloneBack,
-      new cc.DelayTime(1)
+      new DelayTime(1)
     );
     this._tamara.runAction(moveCloneSeq.repeat(2));
     //----end47----

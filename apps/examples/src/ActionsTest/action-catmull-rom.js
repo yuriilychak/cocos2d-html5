@@ -33,12 +33,13 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point, Color } from "@aspect/core";
+import { CatmullRomBy, CatmullRomTo, DelayTime, Sequence } from "@aspect/actions";
 
 export class ActionCatmullRom extends ActionsDemo {
   get _code() {
     return (
-      "a = new cc.CatmullRomBy( time, array_of_points );\n" +
-      " a = new cc.CatmullRomTo( time, array_of_points );"
+      "a = new CatmullRomBy( time, array_of_points );\n" +
+      " a = new CatmullRomTo( time, array_of_points );"
     );
   }
 
@@ -68,7 +69,7 @@ export class ActionCatmullRom extends ActionsDemo {
 
     this.centerSprites(2);
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
     //
     // sprite 1 (By)
@@ -89,9 +90,9 @@ export class ActionCatmullRom extends ActionsDemo {
       new Point(winSize.width / 2, winSize.height / 2)
     ];
 
-    var action1 = new cc.CatmullRomBy(3, array);
+    var action1 = new CatmullRomBy(3, array);
     var reverse1 = action1.reverse();
-    var seq1 = new cc.Sequence(action1, delay, reverse1);
+    var seq1 = new Sequence(action1, delay, reverse1);
 
     this._tamara.runAction(seq1);
 
@@ -109,10 +110,10 @@ export class ActionCatmullRom extends ActionsDemo {
       new Point(winSize.width / 2, 30)
     ];
 
-    var action2 = new cc.CatmullRomTo(3, array2);
+    var action2 = new CatmullRomTo(3, array2);
     var reverse2 = action2.reverse();
 
-    var seq2 = new cc.Sequence(action2, delay.clone(), reverse2);
+    var seq2 = new Sequence(action2, delay.clone(), reverse2);
 
     this._kathia.runAction(seq2);
 

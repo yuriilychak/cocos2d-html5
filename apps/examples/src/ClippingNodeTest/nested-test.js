@@ -27,6 +27,7 @@
 
 import { BaseClippingNodeTest } from "./base-clipping-node-test";
 import { s_pathGrossini } from "../resources";
+import { DelayTime, RotateBy, Show, sequence } from "@aspect/actions";
 
 export class NestedTest extends BaseClippingNodeTest {
   title() {
@@ -56,7 +57,7 @@ export class NestedTest extends BaseClippingNodeTest {
       });
       clipper.alphaThreshold = 0.05;
       clipper.runAction(
-        new cc.RotateBy(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90).repeatForever()
+        new RotateBy(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90).repeatForever()
       );
       parent.addChild(clipper);
 
@@ -69,7 +70,7 @@ export class NestedTest extends BaseClippingNodeTest {
         y: clipper.height / 2,
         visible: false
       });
-      stencil.runAction(cc.sequence(new cc.DelayTime(i), new cc.Show()));
+      stencil.runAction(sequence(new DelayTime(i), new Show()));
       clipper.stencil = stencil;
 
       clipper.addChild(stencil);

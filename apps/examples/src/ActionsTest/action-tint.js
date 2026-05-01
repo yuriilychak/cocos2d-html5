@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { DelayTime, Sequence, TintBy, TintTo } from "@aspect/actions";
 
 export class ActionTint extends ActionsDemo {
   constructor() {
@@ -40,8 +41,8 @@ export class ActionTint extends ActionsDemo {
 
   get _code() {
     return (
-      "a = new cc.TintBy( time, red, green, blue );\n" +
-      "a = new cc.TintTo( time, red, green, blue );"
+      "a = new TintBy( time, red, green, blue );\n" +
+      "a = new TintTo( time, red, green, blue );"
     );
   }
 
@@ -50,13 +51,13 @@ export class ActionTint extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var action1 = new cc.TintTo(2, 255, 0, 255);
-    var action2 = new cc.TintBy(2, -127, -255, -127);
+    var action1 = new TintTo(2, 255, 0, 255);
+    var action2 = new TintBy(2, -127, -255, -127);
     var action2Back = action2.reverse();
 
     this._tamara.runAction(action1);
     this._kathia.runAction(
-      new cc.Sequence(action2, new cc.DelayTime(0.25), action2Back)
+      new Sequence(action2, new DelayTime(0.25), action2Back)
     );
     //----end15----
   }

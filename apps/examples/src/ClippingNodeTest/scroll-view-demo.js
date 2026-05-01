@@ -32,6 +32,7 @@ import {
 } from "./clipping-node-test-constants";
 import { s_back2 } from "../resources";
 import { Point, Color, Rect } from "@aspect/core";
+import { RotateBy } from "@aspect/actions";
 
 export class ScrollViewDemo extends BaseClippingNodeTest {
   constructor() {
@@ -57,7 +58,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
     clipper.anchorY = 0.5;
     clipper.x = this.width / 2;
     clipper.y = this.height / 2;
-    clipper.runAction(new cc.RotateBy(1, 45).repeatForever());
+    clipper.runAction(new RotateBy(1, 45).repeatForever());
     this.addChild(clipper);
 
     var stencil = new cc.DrawNode();

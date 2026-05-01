@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { DelayTime, ScaleBy, ScaleTo, Sequence } from "@aspect/actions";
 
 export class ActionScale extends ActionsDemo {
   constructor() {
@@ -39,7 +40,7 @@ export class ActionScale extends ActionsDemo {
   }
 
   get _code() {
-    return "a = new cc.ScaleBy( time, scale );\na = new cc.ScaleTo( time, scaleX, scaleY );";
+    return "a = new ScaleBy( time, scale );\na = new ScaleTo( time, scaleX, scaleY );";
   }
 
   onEnter() {
@@ -48,16 +49,16 @@ export class ActionScale extends ActionsDemo {
 
     this.centerSprites(3);
 
-    var actionTo = new cc.ScaleTo(2, 0.5);
-    var actionBy = new cc.ScaleBy(2, 2);
-    var actionBy2 = new cc.ScaleBy(2, 0.25, 4.5);
+    var actionTo = new ScaleTo(2, 0.5);
+    var actionBy = new ScaleBy(2, 2);
+    var actionBy2 = new ScaleBy(2, 0.25, 4.5);
 
     this._tamara.runAction(actionTo);
     this._kathia.runAction(
-      new cc.Sequence(actionBy2, new cc.DelayTime(0.25), actionBy2.reverse())
+      new Sequence(actionBy2, new DelayTime(0.25), actionBy2.reverse())
     );
     this._grossini.runAction(
-      new cc.Sequence(actionBy, new cc.DelayTime(0.25), actionBy.reverse())
+      new Sequence(actionBy, new DelayTime(0.25), actionBy.reverse())
     );
 
     //----end2----

@@ -29,6 +29,7 @@ import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { director } from "../constants";
 import { Point, Color } from "@aspect/core";
+import { RotateBy } from "@aspect/actions";
 
 export class Issue704 extends ParticleDemo {
     onEnter() {
@@ -96,7 +97,7 @@ export class Issue704 extends ParticleDemo {
         // additive
         this._emitter.setBlendAdditive(false);
 
-        var rot = new cc.RotateBy(16, 360);
+        var rot = new RotateBy(16, 360);
         this._emitter.runAction(rot.repeatForever());
     }
     title() {

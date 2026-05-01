@@ -29,6 +29,7 @@
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_pathR1, s_streak } from "../resources";
 import { Point, Color } from "@aspect/core";
+import { MoveBy, RotateBy, TintTo, sequence } from "@aspect/actions";
 
 export class MotionStreakTest1 extends MotionStreakTest {
   constructor() {
@@ -59,22 +60,22 @@ export class MotionStreakTest1 extends MotionStreakTest {
     // schedule an update on each frame so we can synchronize the streak with the target
     this.schedule(this.onUpdate);
 
-    var a1 = new cc.RotateBy(2, 360);
+    var a1 = new RotateBy(2, 360);
 
     var action1 = a1.repeatForever();
-    var motion = new cc.MoveBy(2, new Point(100, 0));
-    this._root.runAction(cc.sequence(motion, motion.reverse()).repeatForever());
+    var motion = new MoveBy(2, new Point(100, 0));
+    this._root.runAction(sequence(motion, motion.reverse()).repeatForever());
     this._root.runAction(action1);
 
     var colorAction = cc
       .sequence(
-        new cc.TintTo(0.2, 255, 0, 0),
-        new cc.TintTo(0.2, 0, 255, 0),
-        new cc.TintTo(0.2, 0, 0, 255),
-        new cc.TintTo(0.2, 0, 255, 255),
-        new cc.TintTo(0.2, 255, 255, 0),
-        new cc.TintTo(0.2, 255, 0, 255),
-        new cc.TintTo(0.2, 255, 255, 255)
+        new TintTo(0.2, 255, 0, 0),
+        new TintTo(0.2, 0, 255, 0),
+        new TintTo(0.2, 0, 0, 255),
+        new TintTo(0.2, 0, 255, 255),
+        new TintTo(0.2, 255, 255, 0),
+        new TintTo(0.2, 255, 0, 255),
+        new TintTo(0.2, 255, 255, 255)
       )
       .repeatForever();
 

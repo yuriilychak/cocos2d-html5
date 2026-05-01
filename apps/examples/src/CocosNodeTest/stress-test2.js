@@ -30,6 +30,7 @@ import { TestNodeDemo } from "./test-node-demo";
 import { s_fire, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
 import { Layer, Point } from "@aspect/core";
+import { MoveBy, easeInOut, sequence } from "@aspect/actions";
 
 export class StressTest2 extends TestNodeDemo {
     constructor() {
@@ -42,10 +43,10 @@ export class StressTest2 extends TestNodeDemo {
         sp1.x = 80;
         sp1.y = winSize.height / 2;
 
-        var move = new cc.MoveBy(3, new Point(350, 0));
-        var move_ease_inout3 = move.clone().easing(cc.easeInOut(2.0));
+        var move = new MoveBy(3, new Point(350, 0));
+        var move_ease_inout3 = move.clone().easing(easeInOut(2.0));
         var move_ease_inout_back3 = move_ease_inout3.reverse();
-        var seq3 = cc.sequence(move_ease_inout3, move_ease_inout_back3);
+        var seq3 = sequence(move_ease_inout3, move_ease_inout_back3);
         sp1.runAction(seq3.repeatForever());
         sublayer.addChild(sp1, 1);
 

@@ -35,6 +35,7 @@ import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
 import { LabelTTF } from "@aspect/core";
+import { RotateBy, ScaleBy } from "@aspect/actions";
 
 export class ResumeTest extends ActionManagerTest {
   constructor() {
@@ -65,10 +66,10 @@ export class ResumeTest extends ActionManagerTest {
     grossini.x = s.width / 2;
     grossini.y = s.height / 2;
 
-    grossini.runAction(new cc.ScaleBy(2, 2));
+    grossini.runAction(new ScaleBy(2, 2));
 
     director.getActionManager().pauseTarget(grossini);
-    grossini.runAction(new cc.RotateBy(2, 360));
+    grossini.runAction(new RotateBy(2, 360));
 
     this.schedule(this.resumeGrossini, 3.0);
     //----end4----

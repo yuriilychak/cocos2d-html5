@@ -35,6 +35,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
 import { LabelTTF, Rect } from "@aspect/core";
+import { ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteAliased extends SpriteTestDemo {
 
@@ -57,14 +58,14 @@ export class SpriteAliased extends SpriteTestDemo {
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);
 
-        var scale = new cc.ScaleBy(2, 5);
+        var scale = new ScaleBy(2, 5);
         var scale_back = scale.reverse();
-        var seq = cc.sequence(scale, scale_back);
+        var seq = sequence(scale, scale_back);
         var repeat = seq.repeatForever();
 
-        var scale2 = new cc.ScaleBy(2, 5);
+        var scale2 = new ScaleBy(2, 5);
         var scale_back2 = scale2.reverse();
-        var seq2 = cc.sequence(scale2, scale_back2);
+        var seq2 = sequence(scale2, scale_back2);
         var repeat2 = seq2.repeatForever();
 
         sprite1.runAction(repeat);

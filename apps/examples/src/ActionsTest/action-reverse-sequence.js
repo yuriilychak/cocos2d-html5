@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { Point } from "@aspect/core";
+import { MoveBy, Sequence } from "@aspect/actions";
 
 export class ActionReverseSequence extends ActionsDemo {
   onEnter() {
@@ -39,10 +40,10 @@ export class ActionReverseSequence extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var move1 = new cc.MoveBy(1, new Point(250, 0));
-    var move2 = new cc.MoveBy(1, new Point(0, 50));
-    var seq = new cc.Sequence(move1, move2, move1.reverse());
-    var action = new cc.Sequence(seq, seq.reverse());
+    var move1 = new MoveBy(1, new Point(250, 0));
+    var move2 = new MoveBy(1, new Point(0, 50));
+    var seq = new Sequence(move1, move2, move1.reverse());
+    var action = new Sequence(seq, seq.reverse());
 
     this._grossini.runAction(action);
     //----end28----

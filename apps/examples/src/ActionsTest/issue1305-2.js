@@ -34,6 +34,7 @@ import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
 import { Point } from "@aspect/core";
+import { CallFunc, MoveBy, Sequence } from "@aspect/actions";
 
 export class Issue1305_2 extends ActionsDemo {
   onEnter() {
@@ -46,17 +47,17 @@ export class Issue1305_2 extends ActionsDemo {
     spr.y = 200;
     this.addChild(spr);
 
-    var act1 = new cc.MoveBy(2, new Point(0, 100));
+    var act1 = new MoveBy(2, new Point(0, 100));
 
-    var act2 = new cc.CallFunc(this.onLog1);
-    var act3 = new cc.MoveBy(2, new Point(0, -100));
-    var act4 = new cc.CallFunc(this.onLog2, this);
-    var act5 = new cc.MoveBy(2, new Point(100, -100));
-    var act6 = new cc.CallFunc(this.onLog3.bind(this));
-    var act7 = new cc.MoveBy(2, new Point(-100, 0));
-    var act8 = new cc.CallFunc(this.onLog4, this);
+    var act2 = new CallFunc(this.onLog1);
+    var act3 = new MoveBy(2, new Point(0, -100));
+    var act4 = new CallFunc(this.onLog2, this);
+    var act5 = new MoveBy(2, new Point(100, -100));
+    var act6 = new CallFunc(this.onLog3.bind(this));
+    var act7 = new MoveBy(2, new Point(-100, 0));
+    var act8 = new CallFunc(this.onLog4, this);
 
-    var actF = new cc.Sequence(act1, act2, act3, act4, act5, act6, act7, act8);
+    var actF = new Sequence(act1, act2, act3, act4, act5, act6, act7, act8);
 
     //    [spr runAction:actF];
     director.getActionManager().addAction(actF, spr, false);

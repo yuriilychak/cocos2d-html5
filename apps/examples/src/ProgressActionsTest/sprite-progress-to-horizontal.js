@@ -29,14 +29,15 @@ import { SpriteDemo } from "./sprite-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { sequence } from "@aspect/actions";
 
 export class SpriteProgressToHorizontal extends SpriteDemo {
     onEnter() {
         //----start1----onEnter
         super.onEnter();
 
-        var to1 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
-        var to2 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
+        var to1 = sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
+        var to2 = sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;

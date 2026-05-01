@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_bluePlist, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
+import { Animate, sequence } from "@aspect/actions";
 
 export class AnimationCacheTest extends SpriteTestDemo {
 
@@ -137,11 +138,11 @@ export class AnimationCacheTest extends SpriteTestDemo {
         var dance_blue = animCache.getAnimation("dance_blue");
         dance_blue.setRestoreOriginalFrame(true);
 
-        var animN = new cc.Animate(normal);
-        var animG = new cc.Animate(dance_grey);
-        var animB = new cc.Animate(dance_blue);
+        var animN = new Animate(normal);
+        var animG = new Animate(dance_grey);
+        var animB = new Animate(dance_blue);
 
-        var seq = cc.sequence(animN, animG, animB);
+        var seq = sequence(animN, animG, animB);
 
         frame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
         var grossini = new cc.Sprite(frame);

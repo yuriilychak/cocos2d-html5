@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { LabelTTF } from "@aspect/core";
+import { DelayTime, FadeTo, Sequence, Speed } from "@aspect/actions";
 
 export class Issue1446 extends ActionsDemo {
   title() {
@@ -55,11 +56,11 @@ export class Issue1446 extends ActionsDemo {
 
     this.addChild(label);
 
-    this.backwardsFade = new cc.Speed(
-      new cc.Sequence(
-        new cc.DelayTime(2),
-        new cc.FadeTo(1, 255),
-        new cc.DelayTime(2)
+    this.backwardsFade = new Speed(
+      new Sequence(
+        new DelayTime(2),
+        new FadeTo(1, 255),
+        new DelayTime(2)
       ),
       1
     );

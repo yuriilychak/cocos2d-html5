@@ -28,6 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Point, Size } from "@aspect/core";
+import { MoveBy, sequence } from "@aspect/actions";
 
 export class Effect3 extends EffectAdvanceTextLayer {
   title() {
@@ -48,7 +49,7 @@ export class Effect3 extends EffectAdvanceTextLayer {
     target2.runAction(shaky.repeatForever());
 
     // moving background. Testing issue #244
-    var move = new cc.MoveBy(3, new Point(200, 0));
-    bg.runAction(cc.sequence(move, move.reverse()).repeatForever());
+    var move = new MoveBy(3, new Point(200, 0));
+    bg.runAction(sequence(move, move.reverse()).repeatForever());
   }
 }

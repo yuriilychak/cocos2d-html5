@@ -33,6 +33,7 @@ import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
 import { Point, Color } from "@aspect/core";
+import { MoveBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class EffectsBaseLayer extends BaseTestLayer {
     code() {
@@ -85,9 +86,9 @@ export class EffectsBaseLayer extends BaseTestLayer {
         sister2.y = winSize.height/2;
         node.addChild( sister2, 1 );
 
-        var sc = new cc.ScaleBy(2, 5);
+        var sc = new ScaleBy(2, 5);
         var sc_back = sc.reverse();
-        var seq = cc.sequence( sc, sc_back );
+        var seq = sequence( sc, sc_back );
         var repeat = seq.repeatForever();
 
         sister1.runAction( repeat );
@@ -96,7 +97,7 @@ export class EffectsBaseLayer extends BaseTestLayer {
 
     getEffect(duration) {
         // override me
-        return new cc.MoveBy(2, new Point(10,10) );
+        return new MoveBy(2, new Point(10,10) );
     }
 
     // automation

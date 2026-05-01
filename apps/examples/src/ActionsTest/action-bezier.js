@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { director, winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { BezierBy, BezierTo, DelayTime } from "@aspect/actions";
 
 export class ActionBezier extends ActionsDemo {
   constructor() {
@@ -55,7 +56,7 @@ export class ActionBezier extends ActionsDemo {
 
     // sprite 1
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
     // 3 and only 3 control points should be used for Bezier actions.
     var controlPoints = [
@@ -64,7 +65,7 @@ export class ActionBezier extends ActionsDemo {
       new Point(300, 100)
     ];
 
-    var bezierForward = new cc.BezierBy(2, controlPoints);
+    var bezierForward = new BezierBy(2, controlPoints);
     var rep = new cc
       .Sequence(bezierForward, delay, bezierForward.reverse(), delay.clone())
       .repeatForever();
@@ -79,13 +80,13 @@ export class ActionBezier extends ActionsDemo {
       new Point(200, -s.height / 2),
       new Point(240, 160)
     ];
-    var bezierTo1 = new cc.BezierTo(2, controlPoints2);
+    var bezierTo1 = new BezierTo(2, controlPoints2);
 
     // // sprite 3
     var controlPoints3 = controlPoints2.slice();
     this._kathia.x = 400;
     this._kathia.y = 160;
-    var bezierTo2 = new cc.BezierTo(2, controlPoints3);
+    var bezierTo2 = new BezierTo(2, controlPoints3);
 
     this._grossini.runAction(rep);
     this._tamara.runAction(bezierTo1);

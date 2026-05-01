@@ -34,6 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_dragon_animation } from "../resources";
 import { winSize } from "../constants";
 import { Rect } from "@aspect/core";
+import { Animate, DelayTime, FlipX, sequence } from "@aspect/actions";
 
 export class SpriteAnimationSplit extends SpriteTestDemo {
 
@@ -79,13 +80,13 @@ export class SpriteAnimationSplit extends SpriteTestDemo {
         animFrames.push(frame5);
 
         var animation = new cc.Animation(animFrames, 0.2);
-        var animate = new cc.Animate(animation);
-        var delay = new cc.DelayTime(0.5);
-        var seq = cc.sequence(animate,
-            new cc.FlipX(true),
+        var animate = new Animate(animation);
+        var delay = new DelayTime(0.5);
+        var seq = sequence(animate,
+            new FlipX(true),
             animate.clone(),
             delay,
-            new cc.FlipX(false));
+            new FlipX(false));
 
         sprite.runAction(seq.repeatForever());
         //----end10----

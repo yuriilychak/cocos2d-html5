@@ -31,11 +31,12 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { DelayTime, FadeIn, FadeOut, Sequence } from "@aspect/actions";
 
 export class ActionFade extends ActionsDemo {
   constructor() {
     super();
-    this._code = "a = new cc.FadeIn( time );\n" + "a = new cc.FadeOut( time );";
+    this._code = "a = new FadeIn( time );\n" + "a = new FadeOut( time );";
     this.testDuration = 1.1;
   }
 
@@ -43,17 +44,17 @@ export class ActionFade extends ActionsDemo {
     //----start14----onEnter
     super.onEnter();
     this.centerSprites(2);
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
     this._tamara.opacity = 0;
-    var action1 = new cc.FadeIn(1.0);
+    var action1 = new FadeIn(1.0);
     var action1Back = action1.reverse();
 
-    var action2 = new cc.FadeOut(1.0);
+    var action2 = new FadeOut(1.0);
     var action2Back = action2.reverse();
 
-    this._tamara.runAction(new cc.Sequence(action1, delay, action1Back));
+    this._tamara.runAction(new Sequence(action1, delay, action1Back));
     this._kathia.runAction(
-      new cc.Sequence(action2, delay.clone(), action2Back)
+      new Sequence(action2, delay.clone(), action2Back)
     );
     //----end14----
   }

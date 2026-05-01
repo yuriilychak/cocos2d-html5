@@ -28,6 +28,7 @@
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini } from "../resources";
 import { Color, Layer, Point } from "@aspect/core";
+import { MoveBy, RotateBy, sequence } from "@aspect/actions";
 
 export class BakeLayerColorTest extends BakeLayerBaseTest {
   title() {
@@ -85,9 +86,9 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     this._bakeLayer = bakeLayer;
     bakeLayer.bake();
     bakeLayer.runAction(
-      cc.sequence(
-        new cc.MoveBy(2, new Point(100, 100)),
-        new cc.MoveBy(2, new Point(-100, -100))
+      sequence(
+        new MoveBy(2, new Point(100, 100)),
+        new MoveBy(2, new Point(-100, -100))
       )
     );
   }
@@ -101,6 +102,6 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
   }
 
   onRunAction() {
-    this._actionSprite.runAction(new cc.RotateBy(2, 180));
+    this._actionSprite.runAction(new RotateBy(2, 180));
   }
 }

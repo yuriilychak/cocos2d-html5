@@ -27,6 +27,7 @@
 
 import { s_back, s_power, s_resprefix } from "../resources";
 import { Point } from "@aspect/core";
+import { DelayTime, MoveBy, sequence } from "@aspect/actions";
 
 export class Parallax1 extends ParallaxDemo {
   constructor() {
@@ -103,12 +104,12 @@ export class Parallax1 extends ParallaxDemo {
     // now create some actions that will move the '_parent' node
     // and the children of the '_parent' node will move at different
     // speed, thus, simulation the 3D environment
-    var goUp = new cc.MoveBy(2, new Point(0, 100));
-    var goRight = new cc.MoveBy(2, new Point(200, 0));
-    var delay = new cc.DelayTime(2.0);
+    var goUp = new MoveBy(2, new Point(0, 100));
+    var goRight = new MoveBy(2, new Point(200, 0));
+    var delay = new DelayTime(2.0);
     var goDown = goUp.reverse();
     var goLeft = goRight.reverse();
-    var seq = cc.sequence(goUp, goRight, delay, goDown, goLeft);
+    var seq = sequence(goUp, goRight, delay, goDown, goLeft);
     this._parentNode.runAction(seq.repeatForever());
 
     this.addChild(this._parentNode);

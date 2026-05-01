@@ -29,6 +29,7 @@ import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Lens3DTarget } from "./lens3-dtarget";
 import { Point, Size } from "@aspect/core";
+import { CallFunc, JumpBy, sequence } from "@aspect/actions";
 
 export class Effect4 extends EffectAdvanceTextLayer {
   title() {
@@ -40,9 +41,9 @@ export class Effect4 extends EffectAdvanceTextLayer {
 
     var bgNodeGrid = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
     var lens = cc.lens3D(10, new Size(32, 24), new Point(100, 180), 150);
-    var move = new cc.JumpBy(5, new Point(380, 0), 100, 4);
+    var move = new JumpBy(5, new Point(380, 0), 100, 4);
     var move_back = move.reverse();
-    var seq = cc.sequence(move, move_back);
+    var seq = sequence(move, move_back);
 
     /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'CCLens3D' as its target.
          While in cocos2d-x, the target of action only supports CCNode or its subclass,
@@ -56,9 +57,9 @@ export class Effect4 extends EffectAdvanceTextLayer {
 
     director.getActionManager().addAction(seq, target, false);
     bgNodeGrid.runAction(
-      cc.sequence(
+      sequence(
         lens,
-        new cc.CallFunc(function (sender) {
+        new CallFunc(function (sender) {
           sender.removeChild(target, true);
         })
       )

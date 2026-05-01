@@ -31,31 +31,32 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { DelayTime, MoveBy, easeQuarticActionIn, easeQuarticActionOut, sequence } from "@aspect/actions";
 
 export class SpriteEaseQuarticTest extends EaseSpriteDemo {
   onEnter() {
     super.onEnter();
     //----start17----onEnter
 
-    var move = new cc.MoveBy(3, new Point(winSize.width - 130, 0));
+    var move = new MoveBy(3, new Point(winSize.width - 130, 0));
     var move_back = move.reverse();
 
-    var move_ease_in = move.clone().easing(cc.easeQuarticActionIn());
+    var move_ease_in = move.clone().easing(easeQuarticActionIn());
     var move_ease_in_back = move_ease_in.reverse();
 
-    var move_ease_out = move.clone().easing(cc.easeQuarticActionOut());
+    var move_ease_out = move.clone().easing(easeQuarticActionOut());
     var move_ease_out_back = move_ease_out.reverse();
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
-    var seq1 = cc.sequence(move, delay, move_back, delay.clone());
-    var seq2 = cc.sequence(
+    var seq1 = sequence(move, delay, move_back, delay.clone());
+    var seq2 = sequence(
       move_ease_in,
       delay.clone(),
       move_ease_in_back,
       delay.clone()
     );
-    var seq3 = cc.sequence(
+    var seq3 = sequence(
       move_ease_out,
       delay.clone(),
       move_ease_out_back,

@@ -29,6 +29,7 @@ import { SpriteDemo } from "./sprite-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
 import { LabelTTF, Point } from "@aspect/core";
+import { FadeTo, TintTo, sequence } from "@aspect/actions";
 
 export class SpriteProgressBarTintAndFade extends SpriteDemo {
     onEnter() {
@@ -36,13 +37,13 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
         super.onEnter();
 
         var to = cc.progressFromTo(6, 0, 100);
-        var tint = cc.sequence(
-            new cc.TintTo(1, 255, 0, 0),
-            new cc.TintTo(1, 0, 255, 0),
-            new cc.TintTo(1, 0, 0, 255)
+        var tint = sequence(
+            new TintTo(1, 255, 0, 0),
+            new TintTo(1, 0, 255, 0),
+            new TintTo(1, 0, 0, 255)
         );
 
-        var fade = cc.sequence(new cc.FadeTo(1.0, 0), new cc.FadeTo(1.0, 255));
+        var fade = sequence(new FadeTo(1.0, 0), new FadeTo(1.0, 255));
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;

@@ -36,6 +36,7 @@ import { s_resprefix } from "../resources";
 import { autoTestEnabled, director } from "../constants";
 import { Point, Color } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
+import { DelayTime, FadeIn, FadeOut, JumpBy, RotateBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class BMFontSubSpriteTest extends AtlasDemo {
     constructor() {
@@ -70,29 +71,29 @@ export class BMFontSubSpriteTest extends AtlasDemo {
         var AChar = label.getChildByTag(12);
 
         if(autoTestEnabled) {
-            var jump = new cc.JumpBy(0.5, new Point(0,0), 60, 1);
-            var jump_4ever = cc.sequence(jump, new cc.DelayTime(0.25)).repeatForever();
-            var fade_out = new cc.FadeOut(0.5);
-            var rotate = new cc.RotateBy(0.5, 180);
-            var rot_4ever = cc.sequence(rotate, new cc.DelayTime(0.25), rotate.clone()).repeatForever();
+            var jump = new JumpBy(0.5, new Point(0,0), 60, 1);
+            var jump_4ever = sequence(jump, new DelayTime(0.25)).repeatForever();
+            var fade_out = new FadeOut(0.5);
+            var rotate = new RotateBy(0.5, 180);
+            var rot_4ever = sequence(rotate, new DelayTime(0.25), rotate.clone()).repeatForever();
 
-            var scale = new cc.ScaleBy(0.5, 1.5);
+            var scale = new ScaleBy(0.5, 1.5);
         } else {
-            var jump = new cc.JumpBy(4, new Point(0,0), 60, 1);
+            var jump = new JumpBy(4, new Point(0,0), 60, 1);
             var jump_4ever = jump.repeatForever();
-            var fade_out = new cc.FadeOut(1);
-            var rotate = new cc.RotateBy(2, 360);
+            var fade_out = new FadeOut(1);
+            var rotate = new RotateBy(2, 360);
             var rot_4ever = rotate.repeatForever();
 
-            var scale = new cc.ScaleBy(2, 1.5);
+            var scale = new ScaleBy(2, 1.5);
         }
 
         var scale_back = scale.reverse();
-        var scale_seq = cc.sequence(scale, new cc.DelayTime(0.25), scale_back);
+        var scale_seq = sequence(scale, new DelayTime(0.25), scale_back);
         var scale_4ever = scale_seq.repeatForever();
 
-        var fade_in = new cc.FadeIn(1);
-        var seq = cc.sequence(fade_out, new cc.DelayTime(0.25), fade_in);
+        var fade_in = new FadeIn(1);
+        var seq = sequence(fade_out, new DelayTime(0.25), fade_in);
         var fade_4ever = seq.repeatForever();
 
         BChar.runAction(rot_4ever);

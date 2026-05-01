@@ -32,6 +32,7 @@ import {
   s_pathBlock
 } from "../resources";
 import { Point, Size, Color, Rect } from "@aspect/core";
+import { RotateBy, ScaleBy, ScaleTo, sequence } from "@aspect/actions";
 
 export class HoleDemo extends BaseClippingNodeTest {
   constructor() {
@@ -74,7 +75,7 @@ export class HoleDemo extends BaseClippingNodeTest {
     this._outerClipper.anchorY = 0.5;
     this._outerClipper.x = this.width * 0.5;
     this._outerClipper.y = this.height * 0.5;
-    this._outerClipper.runAction(new cc.RotateBy(1, 45).repeatForever());
+    this._outerClipper.runAction(new RotateBy(1, 45).repeatForever());
 
     this._outerClipper.stencil = stencil;
 
@@ -149,7 +150,7 @@ export class HoleDemo extends BaseClippingNodeTest {
 
     this._holesStencil.addChild(holeStencil);
     this._outerClipper.runAction(
-      cc.sequence(new cc.ScaleBy(0.05, 0.95), new cc.ScaleTo(0.125, 1))
+      sequence(new ScaleBy(0.05, 0.95), new ScaleTo(0.125, 1))
     );
   }
 }

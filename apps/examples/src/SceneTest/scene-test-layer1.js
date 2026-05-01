@@ -29,6 +29,7 @@ import { SceneTestLayer2 } from "./scene-test-layer2";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
 import { Color, Layer, Point } from "@aspect/core";
+import { RotateBy } from "@aspect/actions";
 
 export class SceneTestLayer1 extends Layer {
   constructor() {
@@ -58,7 +59,7 @@ export class SceneTestLayer1 extends Layer {
         sprite.setPosition(new Point(winSize.width / 2, winSize.height / 2));
         layerTemp.addChild(sprite);
         cc.director.setNotificationNode(layerTemp);
-        var rotation = new cc.RotateBy(2, 360);
+        var rotation = new RotateBy(2, 360);
         sprite.runAction(rotation.repeatForever());
         cc.log("setNotificationNode!");
       },
@@ -81,7 +82,7 @@ export class SceneTestLayer1 extends Layer {
     this.addChild(sprite);
     sprite.x = s.width - 40;
     sprite.y = s.height / 2;
-    var rotate = new cc.RotateBy(2, 360);
+    var rotate = new RotateBy(2, 360);
     var repeat = rotate.repeatForever();
     sprite.runAction(repeat);
     //----end0----

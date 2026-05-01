@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
+import { CallFunc } from "@aspect/actions";
 
 export class Issue1305 extends ActionsDemo {
   constructor() {
@@ -51,7 +52,7 @@ export class Issue1305 extends ActionsDemo {
          }] ];
          */
 
-    this._spriteTmp.runAction(new cc.CallFunc(this.onLog, this));
+    this._spriteTmp.runAction(new CallFunc(this.onLog, this));
     this.scheduleOnce(this.onAddSprite, 2);
     //----end39----
   }

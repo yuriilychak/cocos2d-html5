@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Color } from "@aspect/core";
+import { MoveTo } from "@aspect/actions";
 
 export class TMXIsoTest extends TileDemo {
   constructor() {
@@ -51,7 +52,7 @@ export class TMXIsoTest extends TileDemo {
     var ts = map.getTileSize();
     // map.setPosition(-ms.width * ts.width / 2, -ms.height * ts.height / 2);
     map.runAction(
-      new cc.MoveTo(
+      new MoveTo(
         1.0,
         new Point((-ms.width * ts.width) / 2, (-ms.height * ts.height) / 2)
       )

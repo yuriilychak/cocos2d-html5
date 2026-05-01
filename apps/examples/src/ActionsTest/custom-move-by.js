@@ -26,10 +26,11 @@
  ****************************************************************************/
 
 import { Color } from "@aspect/core";
+import { MoveBy } from "@aspect/actions";
 
 
 // custom action sample code
-export class CustomMoveBy extends cc.MoveBy {
+export class CustomMoveBy extends MoveBy {
   update(dt) {
     super.update(dt);
 

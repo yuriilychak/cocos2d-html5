@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point, Color } from "@aspect/core";
+import { CardinalSplineBy, DelayTime, Sequence } from "@aspect/actions";
 
 export class ActionCardinalSpline extends ActionsDemo {
   get _code() {
@@ -75,7 +76,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     var winSize = cc.director.getWinSize();
     this.centerSprites(2);
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
     var array = [
       new Point(0, 0),
@@ -90,9 +91,9 @@ export class ActionCardinalSpline extends ActionsDemo {
     //
     // Spline with no tension (tension==0)
     //
-    var action1 = new cc.CardinalSplineBy(2, array, 0);
+    var action1 = new CardinalSplineBy(2, array, 0);
     var reverse1 = action1.reverse();
-    var seq = new cc.Sequence(action1, delay, reverse1, delay.clone());
+    var seq = new Sequence(action1, delay, reverse1, delay.clone());
 
     this._tamara.x = 50;
     this._tamara.y = 50;
@@ -103,9 +104,9 @@ export class ActionCardinalSpline extends ActionsDemo {
     //
     // Spline with high tension (tension==1)
     //
-    var action2 = new cc.CardinalSplineBy(2, array, 1);
+    var action2 = new CardinalSplineBy(2, array, 1);
     var reverse2 = action2.reverse();
-    var seq2 = new cc.Sequence(action2, delay.clone(), reverse2, delay.clone());
+    var seq2 = new Sequence(action2, delay.clone(), reverse2, delay.clone());
 
     this._kathia.x = winSize.width / 2;
     this._kathia.y = 50;

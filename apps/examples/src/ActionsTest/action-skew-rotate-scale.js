@@ -28,6 +28,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Color } from "@aspect/core";
+import { DelayTime, RotateTo, ScaleTo, Sequence, SkewTo } from "@aspect/actions";
 
 export class ActionSkewRotateScale extends ActionsDemo {
   constructor() {
@@ -71,20 +72,20 @@ export class ActionSkewRotateScale extends ActionsDemo {
     uR.anchorY = 0;
 
     this.addChild(box);
-    var actionTo = new cc.SkewTo(2, 0, 2);
-    var rotateTo = new cc.RotateTo(2, 61.0);
-    var actionScaleTo = new cc.ScaleTo(2, -0.44, 0.47);
+    var actionTo = new SkewTo(2, 0, 2);
+    var rotateTo = new RotateTo(2, 61.0);
+    var actionScaleTo = new ScaleTo(2, -0.44, 0.47);
 
-    var actionScaleToBack = new cc.ScaleTo(2, 1.0, 1.0);
-    var rotateToBack = new cc.RotateTo(2, 0);
-    var actionToBack = new cc.SkewTo(2, 0, 0);
+    var actionScaleToBack = new ScaleTo(2, 1.0, 1.0);
+    var rotateToBack = new RotateTo(2, 0);
+    var actionToBack = new SkewTo(2, 0, 0);
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
-    box.runAction(new cc.Sequence(actionTo, delay, actionToBack));
-    box.runAction(new cc.Sequence(rotateTo, delay.clone(), rotateToBack));
+    box.runAction(new Sequence(actionTo, delay, actionToBack));
+    box.runAction(new Sequence(rotateTo, delay.clone(), rotateToBack));
     box.runAction(
-      new cc.Sequence(actionScaleTo, delay.clone(), actionScaleToBack)
+      new Sequence(actionScaleTo, delay.clone(), actionScaleToBack)
     );
 
     this.box = box;

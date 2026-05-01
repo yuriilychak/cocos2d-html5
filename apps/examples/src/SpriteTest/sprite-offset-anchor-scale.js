@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
+import { Animate, DelayTime, ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteOffsetAnchorScale extends SpriteTestDemo {
 
@@ -97,12 +98,12 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(new Animate(animation).repeatForever());
 
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = new ScaleBy(2, 2);
             var scale_back = scale.reverse();
-            var delay = new cc.DelayTime(0.25);
-            var seq_scale = cc.sequence(scale, delay, scale_back);
+            var delay = new DelayTime(0.25);
+            var seq_scale = sequence(scale, delay, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             this.addChild(sprite, 0);

@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_aliases, s_grossini_aliasesPlist } from "../resources";
 import { winSize } from "../constants";
+import { Animate } from "@aspect/actions";
 
 export class SpriteFrameAliasNameTest extends SpriteTestDemo {
     constructor() {
@@ -85,7 +86,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
 
         var animation = new cc.Animation(animFrames, 0.3);
         // 14 frames * 1sec = 14 seconds
-        sprite.runAction(new cc.Animate(animation).repeatForever());
+        sprite.runAction(new Animate(animation).repeatForever());
         this.testSprite = sprite;
         //----end3----
     }

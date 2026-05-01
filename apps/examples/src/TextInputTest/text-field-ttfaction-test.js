@@ -34,6 +34,7 @@ import {
   TEXT_INPUT_FONT_SIZE
 } from "./text-input-test-constants";
 import { Color, LabelTTF, Point } from "@aspect/core";
+import { CallFunc, FadeIn, FadeOut, MoveTo, RotateBy, ScaleTo, sequence, spawn } from "@aspect/actions";
 
 export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
   constructor() {
@@ -75,7 +76,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
     this._charLimit = 20;
     this._textFieldAction = cc
-      .sequence(new cc.FadeOut(0.25), new cc.FadeIn(0.25))
+      .sequence(new FadeOut(0.25), new FadeIn(0.25))
       .repeatForever();
     this._action = false;
 
@@ -144,13 +145,13 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     label.y = cc.director.getWinSize().height - label.height * 2;
     label.scale = 8;
 
-    var seq = cc.sequence(
-      cc.spawn(
-        new cc.MoveTo(duration, new Point(endX, endY)),
-        new cc.ScaleTo(duration, 1),
-        new cc.FadeOut(duration)
+    var seq = sequence(
+      spawn(
+        new MoveTo(duration, new Point(endX, endY)),
+        new ScaleTo(duration, 1),
+        new FadeOut(duration)
       ),
-      new cc.CallFunc(this.callbackRemoveNodeWhenDidAction, this)
+      new CallFunc(this.callbackRemoveNodeWhenDidAction, this)
     );
     label.runAction(seq);
     return false;
@@ -182,15 +183,15 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     label.x = beginX;
     label.y = beginY;
 
-    var seq = cc.sequence(
-      cc.spawn(
-        new cc.MoveTo(duration, endPos),
-        new cc.RotateBy(rotateDuration, Math.random() % 2 ? 360 : -360).repeat(
+    var seq = sequence(
+      spawn(
+        new MoveTo(duration, endPos),
+        new RotateBy(rotateDuration, Math.random() % 2 ? 360 : -360).repeat(
           repeatTime
         ),
-        new cc.FadeOut(duration)
+        new FadeOut(duration)
       ),
-      new cc.CallFunc(this.callbackRemoveNodeWhenDidAction, this)
+      new CallFunc(this.callbackRemoveNodeWhenDidAction, this)
     );
     label.runAction(seq);
     return false;

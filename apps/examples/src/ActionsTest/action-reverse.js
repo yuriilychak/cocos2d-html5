@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { DelayTime, JumpBy, Sequence } from "@aspect/actions";
 
 export class ActionReverse extends ActionsDemo {
   constructor() {
@@ -46,9 +47,9 @@ export class ActionReverse extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var jump = new cc.JumpBy(2, new Point(300, 0), 50, 4);
-    var delay = new cc.DelayTime(0.25);
-    var action = new cc.Sequence(jump, delay, jump.reverse());
+    var jump = new JumpBy(2, new Point(300, 0), 50, 4);
+    var delay = new DelayTime(0.25);
+    var action = new Sequence(jump, delay, jump.reverse());
 
     this._grossini.runAction(action);
     //----end19----

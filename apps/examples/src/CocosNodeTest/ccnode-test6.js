@@ -29,6 +29,7 @@ import { TAG_SPRITE1, TAG_SPRITE2 } from "./cocos-node-test-constants";
 import { TestNodeDemo } from "./test-node-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
+import { RotateBy, sequence } from "@aspect/actions";
 
 export class CCNodeTest6 extends TestNodeDemo {
     constructor() {
@@ -47,9 +48,9 @@ export class CCNodeTest6 extends TestNodeDemo {
         sp2.x = winSize.width - 150;
         sp2.y = winSize.height / 2;
 
-        var rot = new cc.RotateBy(2, 360);
+        var rot = new RotateBy(2, 360);
         var rot_back = rot.reverse();
-        var forever1 = cc.sequence(rot, rot_back).repeatForever();
+        var forever1 = sequence(rot, rot_back).repeatForever();
         var forever11 = forever1.clone();
 
         var forever2 = forever1.clone();

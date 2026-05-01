@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point } from "@aspect/core";
+import { ScaleBy } from "@aspect/actions";
 
 export class TMXOrthoFlipRunTimeTest extends TileDemo {
   constructor() {
@@ -51,7 +52,7 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
 
     this.log("ContentSize:" + map.width + "," + map.height);
 
-    var action = new cc.ScaleBy(2, 0.5);
+    var action = new ScaleBy(2, 0.5);
     map.runAction(action);
 
     this.schedule(this.onFlipIt, 1);

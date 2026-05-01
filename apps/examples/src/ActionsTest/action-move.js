@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { director, winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { MoveBy, MoveTo, Sequence } from "@aspect/actions";
 
 export class ActionMove extends ActionsDemo {
   constructor() {
@@ -42,8 +43,8 @@ export class ActionMove extends ActionsDemo {
 
   get _code() {
     return (
-      "a =new cc.MoveBy( time, new Point(x,y) );\n" +
-      "a = new cc.MoveTo( time, new Point(x,y) );"
+      "a =new MoveBy( time, new Point(x,y) );\n" +
+      "a = new MoveTo( time, new Point(x,y) );"
     );
   }
 
@@ -54,14 +55,14 @@ export class ActionMove extends ActionsDemo {
     this.centerSprites(3);
     var s = director.getWinSize();
 
-    var actionTo = new cc.MoveTo(2, new Point(s.width - 40, s.height - 40));
+    var actionTo = new MoveTo(2, new Point(s.width - 40, s.height - 40));
 
-    var actionBy = new cc.MoveBy(1, new Point(80, 80));
+    var actionBy = new MoveBy(1, new Point(80, 80));
     var actionByBack = actionBy.reverse();
 
     this._tamara.runAction(actionTo);
-    this._grossini.runAction(new cc.Sequence(actionBy, actionByBack));
-    this._kathia.runAction(new cc.MoveTo(1, new Point(40, 40)));
+    this._grossini.runAction(new Sequence(actionBy, actionByBack));
+    this._kathia.runAction(new MoveTo(1, new Point(40, 40)));
     //----end1----
   }
   title() {

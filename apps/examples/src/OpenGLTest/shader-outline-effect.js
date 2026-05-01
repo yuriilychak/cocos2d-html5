@@ -34,6 +34,7 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
+import { RotateTo, sequence } from "@aspect/actions";
 
 export class ShaderOutlineEffect extends OpenGLTestLayer {
     constructor() {
@@ -63,7 +64,7 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
                 x: winSize.width / 2,
                 y: winSize.height / 2
             });
-            this.sprite.runAction(cc.sequence(new cc.RotateTo(1.0, 10), new cc.RotateTo(1.0, -10)).repeatForever());
+            this.sprite.runAction(sequence(new RotateTo(1.0, 10), new RotateTo(1.0, -10)).repeatForever());
 
             if(cc.sys.isNative){
                 var glProgram_state = cc.GLProgramState.getOrCreateWithGLProgram(this.shader);

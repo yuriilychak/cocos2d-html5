@@ -33,6 +33,7 @@ import { s_MovementMenuItem, s_back3, s_fpsImages, s_shapeModeMenuItem, s_textur
 import { director } from "../constants";
 import { Point, Color, Rect } from "@aspect/core";
 import { LabelAtlas } from "@aspect/labels";
+import { MoveBy, sequence } from "@aspect/actions";
 
 export class ParticleDemo extends BaseTestLayer {
 
@@ -184,10 +185,10 @@ export class ParticleDemo extends BaseTestLayer {
         this._background.x = s.width / 2;
         this._background.y = s.height - 180;
 
-        var move = new cc.MoveBy(4, new Point(300, 0));
+        var move = new MoveBy(4, new Point(300, 0));
         var move_back = move.reverse();
 
-        var seq = cc.sequence(move, move_back);
+        var seq = sequence(move, move_back);
         this._background.runAction(seq.repeatForever());
         this.scheduleUpdate();
     }

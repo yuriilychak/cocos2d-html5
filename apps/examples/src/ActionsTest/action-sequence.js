@@ -33,11 +33,12 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { MoveBy, RotateBy, Sequence, sequence } from "@aspect/actions";
 
 export class ActionSequence extends ActionsDemo {
   constructor() {
     super();
-    this._code = "a = new cc.Sequence( a1, a2, a3,..., aN);";
+    this._code = "a = new Sequence( a1, a2, a3,..., aN);";
     this.testDuration = 3.1;
   }
 
@@ -46,16 +47,16 @@ export class ActionSequence extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var action = new cc.Sequence(
-      new cc.MoveBy(1.5, new Point(240, 0)),
-      new cc.RotateBy(1.5, 540)
+    var action = new Sequence(
+      new MoveBy(1.5, new Point(240, 0)),
+      new RotateBy(1.5, 540)
     );
 
     this._grossini.runAction(action);
     //----end16----
   }
   title() {
-    return "cc.sequence: Move + Rotate";
+    return "sequence: Move + Rotate";
   }
   //
   // Automation

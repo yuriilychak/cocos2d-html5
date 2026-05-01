@@ -32,6 +32,7 @@ import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_grossini } from "../resources";
 import { winSize } from "../constants";
 import { LabelTTF } from "@aspect/core";
+import { DelayTime, FadeOut, sequence } from "@aspect/actions";
 
 export class Issue1464 extends RenderTextureBaseLayer {
 
@@ -68,10 +69,10 @@ export class Issue1464 extends RenderTextureBaseLayer {
         sprite.visit();
         rend.end();
 
-        var fadeout = new cc.FadeOut(2);
+        var fadeout = new FadeOut(2);
         var fadein = fadeout.reverse();
-        var delay = new cc.DelayTime(0.25);
-        var seq = cc.sequence(fadeout, delay, fadein, delay.clone());
+        var delay = new DelayTime(0.25);
+        var seq = sequence(fadeout, delay, fadein, delay.clone());
         var fe = seq.repeatForever();
         rend.getSprite().runAction(fe);
 

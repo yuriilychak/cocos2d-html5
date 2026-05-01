@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
 import { LabelTTF, Point } from "@aspect/core";
+import { CallFunc, FadeOut, MoveBy, RotateBy, ScaleBy, Sequence } from "@aspect/actions";
 
 export class ActionCallFunc1 extends ActionsDemo {
   constructor() {
@@ -42,8 +43,8 @@ export class ActionCallFunc1 extends ActionsDemo {
 
   get _code() {
     return (
-      "a = new cc.CallFunc( this.callback );\n" +
-      "a = new cc.CallFunc( this.callback, this, optional_arg );"
+      "a = new CallFunc( this.callback );\n" +
+      "a = new CallFunc( this.callback, this, optional_arg );"
     );
   }
 
@@ -53,21 +54,21 @@ export class ActionCallFunc1 extends ActionsDemo {
     this.centerSprites(3);
 
     // Testing different ways to pass "this"
-    var action = new cc.Sequence(
-      new cc.MoveBy(2, new Point(200, 0)),
-      new cc.CallFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
+    var action = new Sequence(
+      new MoveBy(2, new Point(200, 0)),
+      new CallFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
     );
 
-    var action2 = new cc.Sequence(
-      new cc.ScaleBy(2, 2),
-      new cc.FadeOut(2),
-      new cc.CallFunc(this.onCallback2, this) // 'this' is passed as 2nd argument.
+    var action2 = new Sequence(
+      new ScaleBy(2, 2),
+      new FadeOut(2),
+      new CallFunc(this.onCallback2, this) // 'this' is passed as 2nd argument.
     );
 
-    var action3 = new cc.Sequence(
-      new cc.RotateBy(3, 360),
-      new cc.FadeOut(2),
-      new cc.CallFunc(this.onCallback3, this, "Hi!") // If you want to pass a optional value, like "Hi!", then you should pass 'this' too
+    var action3 = new Sequence(
+      new RotateBy(3, 360),
+      new FadeOut(2),
+      new CallFunc(this.onCallback3, this, "Hi!") // If you want to pass a optional value, like "Hi!", then you should pass 'this' too
     );
 
     this._grossini.runAction(action);

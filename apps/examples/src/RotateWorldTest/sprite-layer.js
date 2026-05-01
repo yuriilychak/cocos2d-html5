@@ -28,6 +28,7 @@
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
 import { Layer, Point } from "@aspect/core";
+import { JumpBy, RotateBy, sequence } from "@aspect/actions";
 
 export class SpriteLayer extends Layer {
     constructor() {
@@ -59,7 +60,7 @@ export class SpriteLayer extends Layer {
         spriteSister2.x = x - 40;
         spriteSister2.y = y / 2;
 
-        var rot = new cc.RotateBy(16, -3600);
+        var rot = new RotateBy(16, -3600);
 
         this.addChild(sprite);
         this.addChild(spriteSister1);
@@ -67,17 +68,17 @@ export class SpriteLayer extends Layer {
 
         sprite.runAction(rot);
 
-        var jump1 = new cc.JumpBy(4, new Point(-400, 0), 100, 4);
+        var jump1 = new JumpBy(4, new Point(-400, 0), 100, 4);
         var jump2 = jump1.reverse();
 
-        var rot1 = new cc.RotateBy(4, 360 * 2);
+        var rot1 = new RotateBy(4, 360 * 2);
         var rot2 = rot1.reverse();
 
-        spriteSister1.runAction(cc.sequence(jump2, jump1).repeat(5));
-        spriteSister2.runAction(cc.sequence(jump1.clone(), jump2.clone()).repeat(5));
+        spriteSister1.runAction(sequence(jump2, jump1).repeat(5));
+        spriteSister2.runAction(sequence(jump1.clone(), jump2.clone()).repeat(5));
 
-        spriteSister1.runAction(cc.sequence(rot1, rot2).repeat(5));
-        spriteSister2.runAction(cc.sequence(rot2.clone(), rot1.clone()).repeat(5));
+        spriteSister1.runAction(sequence(rot1, rot2).repeat(5));
+        spriteSister2.runAction(sequence(rot2.clone(), rot1.clone()).repeat(5));
     }
 
 }

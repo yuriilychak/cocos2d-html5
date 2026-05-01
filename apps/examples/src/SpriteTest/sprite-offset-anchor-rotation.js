@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
+import { Animate, RotateBy } from "@aspect/actions";
 
 export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
 
@@ -93,8 +94,8 @@ export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
-            sprite.runAction(new cc.RotateBy(10, 360).repeatForever());
+            sprite.runAction(new Animate(animation).repeatForever());
+            sprite.runAction(new RotateBy(10, 360).repeatForever());
 
             this.addChild(sprite, 0);
         }

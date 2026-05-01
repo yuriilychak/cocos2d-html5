@@ -27,6 +27,7 @@
 
 import { ActionsDemo } from "./actions-demo";
 import { Point } from "@aspect/core";
+import { Blink, DelayTime, MoveBy, Repeat, Sequence } from "@aspect/actions";
 
 export class SequenceRepeatTest extends ActionsDemo {
   onEnter() {
@@ -35,16 +36,16 @@ export class SequenceRepeatTest extends ActionsDemo {
     this.centerSprites(2);
 
     this._kathia.runAction(
-      new cc.Repeat(new cc.Sequence(new cc.Blink(2, 3), new cc.DelayTime(2)), 3)
+      new Repeat(new Sequence(new Blink(2, 3), new DelayTime(2)), 3)
     );
 
-    var move = new cc.MoveBy(1, new Point(50, 0));
+    var move = new MoveBy(1, new Point(50, 0));
     var move_back = move.reverse();
-    var move_seq = new cc.Sequence(
+    var move_seq = new Sequence(
       move,
-      new cc.DelayTime(1),
+      new DelayTime(1),
       move_back,
-      new cc.DelayTime(1)
+      new DelayTime(1)
     );
     this._tamara.runAction(move_seq.repeat(3));
     //----end47----

@@ -31,6 +31,7 @@ import { backEffectAdvanceAction, nextEffectAdvanceAction, restartEffectAdvanceA
 import { s_back3, s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
 import { Color, LabelTTF, Layer } from "@aspect/core";
+import { ScaleBy, sequence } from "@aspect/actions";
 
 export class EffectAdvanceTextLayer extends Layer {
 
@@ -69,9 +70,9 @@ export class EffectAdvanceTextLayer extends Layer {
 	    this.rootNode.addChild(grossiniGrid, 1, EffectsAdvancedTest.TAG_SPRITE1);
         grossini.x = winSize.width / 3;
         grossini.y = winSize.height / 2;
-        var sc = new cc.ScaleBy(2, 5);
+        var sc = new ScaleBy(2, 5);
         var sc_back = sc.reverse();
-        grossini.runAction(cc.sequence(sc, sc_back).repeatForever());
+        grossini.runAction(sequence(sc, sc_back).repeatForever());
 
         var tamara = new cc.Sprite(s_pathSister1);
 	    var tamaraGrid = new cc.NodeGrid();
@@ -79,9 +80,9 @@ export class EffectAdvanceTextLayer extends Layer {
 	    this.rootNode.addChild(tamaraGrid, 1, EffectsAdvancedTest.TAG_SPRITE2);
         tamara.x = winSize.width * 2 / 3;
         tamara.y = winSize.height / 2;
-        var sc2 = new cc.ScaleBy(2, 5);
+        var sc2 = new ScaleBy(2, 5);
         var sc2_back = sc2.reverse();
-        tamara.runAction(cc.sequence(sc2, sc2_back).repeatForever());
+        tamara.runAction(sequence(sc2, sc2_back).repeatForever());
 
         var label = new LabelTTF(this.title(), "Arial", 28);
         label.x = cc.visibleRect.center.x;

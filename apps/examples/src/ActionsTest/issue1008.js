@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { Point } from "@aspect/core";
+import { BezierTo, CallFunc, DelayTime, Sequence } from "@aspect/actions";
 
 export class Issue1008 extends ActionsDemo {
   constructor() {
@@ -62,17 +63,17 @@ export class Issue1008 extends ActionsDemo {
       new Point(428, 279)
     ];
 
-    var bz1 = new cc.BezierTo(1.5, controlPoints1);
-    var bz2 = new cc.BezierTo(1.5, controlPoints2);
-    var trace = new cc.CallFunc(this.onTrace, this);
-    var delay = new cc.DelayTime(0.25);
+    var bz1 = new BezierTo(1.5, controlPoints1);
+    var bz2 = new BezierTo(1.5, controlPoints2);
+    var trace = new CallFunc(this.onTrace, this);
+    var delay = new DelayTime(0.25);
 
-    var rep = new cc.Sequence(bz1, bz2, trace, delay).repeatForever();
+    var rep = new Sequence(bz1, bz2, trace, delay).repeatForever();
     this._grossini.runAction(rep);
 
     //----end10----
 
-    //this._grossini.runAction(new cc.Sequence(bz1, bz2, trace,delay));
+    //this._grossini.runAction(new Sequence(bz1, bz2, trace,delay));
   }
   onTrace(sender) {
     var pos = new Point(sender.x, sender.y);

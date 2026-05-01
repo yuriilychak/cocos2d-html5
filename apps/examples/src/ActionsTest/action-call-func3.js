@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { CallFunc } from "@aspect/actions";
 
 export class ActionCallFunc3 extends ActionsDemo {
   constructor() {
@@ -43,7 +44,7 @@ export class ActionCallFunc3 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
 
-    var action = new cc.CallFunc(
+    var action = new CallFunc(
       function (nodeExecutingAction, value) {
         this.control1 = "Value is: " + value;
         this.log("Object:" + nodeExecutingAction + ". " + this.control1);
@@ -57,10 +58,10 @@ export class ActionCallFunc3 extends ActionsDemo {
   }
 
   title() {
-    return "cc.CallFunc + parameters";
+    return "CallFunc + parameters";
   }
   subtitle() {
-    return "cc.CallFunc + parameters. Take a look at the console";
+    return "CallFunc + parameters. Take a look at the console";
   }
   //
   // Automation

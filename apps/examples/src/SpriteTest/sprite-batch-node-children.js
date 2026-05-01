@@ -35,6 +35,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { Animate, MoveBy, RotateBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeChildren extends SpriteTestDemo {
 
@@ -82,21 +83,21 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
         }
 
         var animation = new cc.Animation(animFrames, 0.2);
-        sprite1.runAction(new cc.Animate(animation).repeatForever());
+        sprite1.runAction(new Animate(animation).repeatForever());
         // END NEW CODE
 
-        var action = new cc.MoveBy(2, new Point(200, 0));
+        var action = new MoveBy(2, new Point(200, 0));
         var action_back = action.reverse();
-        var action_rot = new cc.RotateBy(2, 360);
-        var action_s = new cc.ScaleBy(2, 2);
+        var action_rot = new RotateBy(2, 360);
+        var action_s = new ScaleBy(2, 2);
         var action_s_back = action_s.reverse();
 
         var seq2 = action_rot.reverse();
         sprite2.runAction(seq2.repeatForever());
 
         sprite1.runAction(action_rot.repeatForever());
-        sprite1.runAction(cc.sequence(action, action_back).repeatForever());
-        sprite1.runAction(cc.sequence(action_s, action_s_back).repeatForever());
+        sprite1.runAction(sequence(action, action_back).repeatForever());
+        sprite1.runAction(sequence(action_s, action_s_back).repeatForever());
         //----end29----
     }
     //

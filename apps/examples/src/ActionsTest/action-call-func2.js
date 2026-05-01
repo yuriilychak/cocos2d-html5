@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { SPRITE_GROSSINI_TAG } from "./actions-test-constants";
 import { Point } from "@aspect/core";
+import { CallFunc, MoveBy, Sequence } from "@aspect/actions";
 
 export class ActionCallFunc2 extends ActionsDemo {
   constructor() {
@@ -45,9 +46,9 @@ export class ActionCallFunc2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
 
-    var action = new cc.Sequence(
-      new cc.MoveBy(2.0, new Point(200, 0)),
-      new cc.CallFunc(this.removeFromParentAndCleanup, this._grossini, true)
+    var action = new Sequence(
+      new MoveBy(2.0, new Point(200, 0)),
+      new CallFunc(this.removeFromParentAndCleanup, this._grossini, true)
     );
 
     this._grossini.runAction(action);
@@ -59,10 +60,10 @@ export class ActionCallFunc2 extends ActionsDemo {
   }
 
   title() {
-    return "cc.CallFunc + auto remove";
+    return "CallFunc + auto remove";
   }
   subtitle() {
-    return "cc.CallFunc + removeFromParentAndCleanup. Grossini dissapears in 2s";
+    return "CallFunc + removeFromParentAndCleanup. Grossini dissapears in 2s";
   }
   //
   // Automation

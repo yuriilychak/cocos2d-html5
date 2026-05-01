@@ -34,6 +34,7 @@ import { s_bitmapFontTest3_fnt, s_menuItem } from "../resources";
 import { director } from "../constants";
 import { Layer, Point, Rect } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
+import { JumpBy, RotateBy, sequence } from "@aspect/actions";
 
 export class MenuLayer3 extends Layer {
 
@@ -81,9 +82,9 @@ export class MenuLayer3 extends Layer {
         item3.x = s.width / 2;
         item3.y = s.height / 2 - 100;
 
-        var jump = new cc.JumpBy(3, new Point(400, 0), 50, 4);
-        item2.runAction(cc.sequence(jump, jump.reverse()).repeatForever());
-        var spin1 = new cc.RotateBy(3, 360);
+        var jump = new JumpBy(3, new Point(400, 0), 50, 4);
+        item2.runAction(sequence(jump, jump.reverse()).repeatForever());
+        var spin1 = new RotateBy(3, 360);
         var spin2 = spin1.clone();
         var spin3 = spin1.clone();
 

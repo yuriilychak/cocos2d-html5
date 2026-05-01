@@ -33,6 +33,7 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { JumpBy, RotateBy, Speed, sequence, spawn } from "@aspect/actions";
 
 export class SchedulerTest extends EaseSpriteDemo {
   constructor() {
@@ -45,23 +46,23 @@ export class SchedulerTest extends EaseSpriteDemo {
     super.onEnter();
 
     // rotate and jump
-    var jump1 = new cc.JumpBy(4, new Point(-winSize.width + 80, 0), 100, 4);
+    var jump1 = new JumpBy(4, new Point(-winSize.width + 80, 0), 100, 4);
     var jump2 = jump1.reverse();
-    var rot1 = new cc.RotateBy(4, 360 * 2);
+    var rot1 = new RotateBy(4, 360 * 2);
     var rot2 = rot1.reverse();
 
-    var seq3_1 = cc.sequence(jump2, jump1);
-    var seq3_2 = cc.sequence(rot1, rot2);
-    var spawn = cc.spawn(seq3_1, seq3_2);
+    var seq3_1 = sequence(jump2, jump1);
+    var seq3_2 = sequence(rot1, rot2);
+    var spawn = spawn(seq3_1, seq3_2);
     var action = spawn.repeatForever();
 
     var action2 = action.clone();
     var action3 = action.clone();
 
     //old api
-    //this._grossini.runAction(new cc.Speed(action, 0.5));
-    //this._tamara.runAction(new cc.Speed(action2, 1.5));
-    //this._kathia.runAction(new cc.Speed(action3, 1.0));
+    //this._grossini.runAction(new Speed(action, 0.5));
+    //this._tamara.runAction(new Speed(action2, 1.5));
+    //this._kathia.runAction(new Speed(action3, 1.0));
 
     this._grossini.runAction(action.speed(0.5));
     this._tamara.runAction(action2.speed(1.5));

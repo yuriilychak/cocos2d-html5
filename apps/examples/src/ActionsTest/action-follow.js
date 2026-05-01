@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
 import { Point, Rect } from "@aspect/core";
+import { Follow, MoveBy, Sequence } from "@aspect/actions";
 
 export class ActionFollow extends ActionsDemo {
   onEnter() {
@@ -43,16 +44,16 @@ export class ActionFollow extends ActionsDemo {
 
     this._grossini.x = -(s.width / 2);
     this._grossini.y = s.height / 2;
-    var move = new cc.MoveBy(2, new Point(s.width * 3, 0));
+    var move = new MoveBy(2, new Point(s.width * 3, 0));
     var move_back = move.reverse();
-    var seq = new cc.Sequence(move, move_back);
+    var seq = new Sequence(move, move_back);
 
     var rep = seq.repeatForever();
 
     this._grossini.runAction(rep);
 
     this.runAction(
-      new cc.Follow(this._grossini, new Rect(0, 0, s.width * 2 - 100, s.height))
+      new Follow(this._grossini, new Rect(0, 0, s.width * 2 - 100, s.height))
     );
     //----end30----
   }

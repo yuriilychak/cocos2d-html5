@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { EffectsBaseLayer } from "./effects-base-layer";
+import { DelayTime, sequence } from "@aspect/actions";
 
 export class SplitColsTest extends EffectsBaseLayer {
   title() {
@@ -34,9 +35,9 @@ export class SplitColsTest extends EffectsBaseLayer {
   }
   getEffect(duration) {
     var action = cc.splitCols(duration, 9);
-    var delay = new cc.DelayTime(0.5);
+    var delay = new DelayTime(0.5);
     var back = action.reverse();
-    var seq = cc.sequence(action, delay, back);
+    var seq = sequence(action, delay, back);
     return seq;
   }
 }

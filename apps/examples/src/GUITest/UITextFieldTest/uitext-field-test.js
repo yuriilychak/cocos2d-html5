@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Color } from "@aspect/core";
+import { MoveTo } from "@aspect/actions";
 
 export class UITextFieldTest extends UIMainLayer {
   init() {
@@ -69,7 +70,7 @@ export class UITextFieldTest extends UIMainLayer {
       case ccui.TextField.EVENT_ATTACH_WITH_IME:
         var widgetSize = this._widget.getContentSize();
         textField.runAction(
-          new cc.MoveTo(
+          new MoveTo(
             0.225,
             new Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
           )
@@ -79,7 +80,7 @@ export class UITextFieldTest extends UIMainLayer {
       case ccui.TextField.EVENT_DETACH_WITH_IME:
         var widgetSize = this._widget.getContentSize();
         textField.runAction(
-          new cc.MoveTo(
+          new MoveTo(
             0.175,
             new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
           )

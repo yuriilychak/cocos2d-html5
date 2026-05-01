@@ -39,6 +39,7 @@ import {
 } from "../resources";
 import { Color, Layer, Point, Rect } from "@aspect/core";
 import { LabelAtlas, LabelBMFont } from "@aspect/labels";
+import { MoveBy, TintBy, easeElasticOut, sequence } from "@aspect/actions";
 
 export class MenuLayerMainMenu extends Layer {
   constructor() {
@@ -123,9 +124,9 @@ export class MenuLayerMainMenu extends Layer {
       this
     );
 
-    var color_action = new cc.TintBy(0.5, 0, -255, -255);
+    var color_action = new TintBy(0.5, 0, -255, -255);
     var color_back = color_action.reverse();
-    var seq = cc.sequence(color_action, color_back);
+    var seq = sequence(color_action, color_back);
     item8.runAction(seq.repeatForever());
 
     var menu = new cc.Menu(
@@ -156,8 +157,8 @@ export class MenuLayerMainMenu extends Layer {
         selChild.x = dstPoint.x + offset;
         selChild.y = dstPoint.y;
         selChild.runAction(
-          new cc.MoveBy(2, new Point(dstPoint.x - offset, 0)).easing(
-            cc.easeElasticOut(0.35)
+          new MoveBy(2, new Point(dstPoint.x - offset, 0)).easing(
+            easeElasticOut(0.35)
           )
         );
       }

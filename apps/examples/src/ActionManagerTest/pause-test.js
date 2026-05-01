@@ -35,6 +35,7 @@ import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled, director } from "../constants";
 import { LabelTTF, Point } from "@aspect/core";
+import { MoveBy } from "@aspect/actions";
 
 export class PauseTest extends ActionManagerTest {
   constructor() {
@@ -71,7 +72,7 @@ export class PauseTest extends ActionManagerTest {
     grossini.x = 200;
     grossini.y = 200;
 
-    var action = new cc.MoveBy(1, new Point(150, 0));
+    var action = new MoveBy(1, new Point(150, 0));
 
     director.getActionManager().addAction(action, grossini, true);
 

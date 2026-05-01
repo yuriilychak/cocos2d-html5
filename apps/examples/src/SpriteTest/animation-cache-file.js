@@ -28,6 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_animationsPlist, s_grossiniPlist, s_grossini_bluePlist, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
+import { Animate, sequence } from "@aspect/actions";
 
 export class AnimationCacheFile extends SpriteTestDemo {
 
@@ -93,11 +94,11 @@ export class AnimationCacheFile extends SpriteTestDemo {
         var dance_blue = animCache.getAnimation("dance_3");
         dance_blue.setRestoreOriginalFrame(true);
 
-        var animN = new cc.Animate(normal);
-        var animG = new cc.Animate(dance_grey);
-        var animB = new cc.Animate(dance_blue);
+        var animN = new Animate(normal);
+        var animG = new Animate(dance_grey);
+        var animB = new Animate(dance_blue);
 
-        var seq = cc.sequence(animN, animG, animB);
+        var seq = sequence(animN, animG, animB);
 
         // create an sprite with frame name
         // texture-less sprites are not supported

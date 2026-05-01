@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { ScaleBy } from "@aspect/actions";
 
 export class TMXOrthoFromXMLTest extends TileDemo {
   constructor() {
@@ -60,7 +61,7 @@ export class TMXOrthoFromXMLTest extends TileDemo {
       }
     }
 
-    var action = new cc.ScaleBy(2, 0.5);
+    var action = new ScaleBy(2, 0.5);
     map.runAction(action);
   }
   title() {

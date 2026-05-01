@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { DelayTime, RotateBy, RotateTo, Sequence } from "@aspect/actions";
 
 export class ActionRotate extends ActionsDemo {
   constructor() {
@@ -40,8 +41,8 @@ export class ActionRotate extends ActionsDemo {
 
   get _code() {
     return (
-      "a = new cc.RotateBy( time, degrees );\n" +
-      "a = new cc.RotateTo( time, degrees );"
+      "a = new RotateBy( time, degrees );\n" +
+      "a = new RotateTo( time, degrees );"
     );
   }
 
@@ -49,21 +50,21 @@ export class ActionRotate extends ActionsDemo {
     //----start3----onEnter
     super.onEnter();
     this.centerSprites(3);
-    var actionTo = new cc.RotateTo(2, 45);
-    var actionTo2 = new cc.RotateTo(2, -45);
-    var actionTo0 = new cc.RotateTo(2, 0);
+    var actionTo = new RotateTo(2, 45);
+    var actionTo2 = new RotateTo(2, -45);
+    var actionTo0 = new RotateTo(2, 0);
     this._tamara.runAction(
-      new cc.Sequence(actionTo, new cc.DelayTime(0.25), actionTo0)
+      new Sequence(actionTo, new DelayTime(0.25), actionTo0)
     );
 
-    var actionBy = new cc.RotateBy(2, 360);
+    var actionBy = new RotateBy(2, 360);
     var actionByBack = actionBy.reverse();
     this._grossini.runAction(
-      new cc.Sequence(actionBy, new cc.DelayTime(0.25), actionByBack)
+      new Sequence(actionBy, new DelayTime(0.25), actionByBack)
     );
 
     this._kathia.runAction(
-      new cc.Sequence(actionTo2, new cc.DelayTime(0.25), actionTo0.clone())
+      new Sequence(actionTo2, new DelayTime(0.25), actionTo0.clone())
     );
 
     //----end3----

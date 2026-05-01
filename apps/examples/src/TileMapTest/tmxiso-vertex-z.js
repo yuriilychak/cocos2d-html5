@@ -35,6 +35,7 @@ import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
 import { LabelTTF, Point } from "@aspect/core";
+import { DelayTime, MoveBy, sequence } from "@aspect/actions";
 
 export class TMXIsoVertexZ extends TMXFixBugLayer {
     constructor() {
@@ -56,10 +57,10 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
         var layer = map.getLayer("Trees");
         this.tamara = layer.getTileAt(new Point(29, 29));
 
-        var move = new cc.MoveBy(5, Point.mult(new Point(300, 250), 0.75));
+        var move = new MoveBy(5, Point.mult(new Point(300, 250), 0.75));
         var back = move.reverse();
-        var delay = new cc.DelayTime(0.5);
-        var seq = cc.sequence(move, delay, back);
+        var delay = new DelayTime(0.5);
+        var seq = sequence(move, delay, back);
         this.tamara.runAction(seq.repeatForever());
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {

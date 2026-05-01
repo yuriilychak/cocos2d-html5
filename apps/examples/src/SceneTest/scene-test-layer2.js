@@ -29,6 +29,7 @@ import { SceneTestLayer3 } from "./scene-test-layer3";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
 import { Layer } from "@aspect/core";
+import { RotateBy } from "@aspect/actions";
 
 export class SceneTestLayer2 extends Layer {
   constructor() {
@@ -59,7 +60,7 @@ export class SceneTestLayer2 extends Layer {
 
     sprite.x = s.width - 40;
     sprite.y = s.height / 2;
-    var rotate = new cc.RotateBy(2, 360);
+    var rotate = new RotateBy(2, 360);
     var repeat = rotate.repeatForever();
     sprite.runAction(repeat);
     //----end0----

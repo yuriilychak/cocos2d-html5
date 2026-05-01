@@ -29,13 +29,14 @@ import { SpriteDemo } from "./sprite-demo";
 import { s_pathBlock } from "../resources";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { sequence } from "@aspect/actions";
 
 export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
     onEnter() {
         //----start3----onEnter
         super.onEnter();
 
-        var action = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
+        var action = sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
 
         /**
          *  Our image on the left should be a radial progress indicator, clockwise

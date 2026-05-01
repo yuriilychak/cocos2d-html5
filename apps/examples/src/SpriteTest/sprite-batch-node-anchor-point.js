@@ -35,6 +35,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Rect } from "@aspect/core";
+import { RotateBy } from "@aspect/actions";
 
 export class SpriteBatchNodeAnchorPoint extends SpriteTestDemo {
 
@@ -56,7 +57,7 @@ export class SpriteBatchNodeAnchorPoint extends SpriteTestDemo {
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         for (var i = 0; i < 3; i++) {
-            var rotate = new cc.RotateBy(10, 360);
+            var rotate = new RotateBy(10, 360);
             var action = rotate.repeatForever();
             var sprite = new cc.Sprite(batch.texture, new Rect(85 * i, 121, 85, 121));
             sprite.x = winSize.width / 4 * (i + 1);

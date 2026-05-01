@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { ScaleTo } from "@aspect/actions";
 
 export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
   init() {
@@ -64,7 +65,7 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
       button2.setZoomScale(0.3);
       button2.setPressedActionEnabled(true);
       button2.addClickEventListener(function () {
-        button2.runAction(new cc.ScaleTo(1.0, 1.2));
+        button2.runAction(new ScaleTo(1.0, 1.2));
         cc.log("clicked!");
       });
       this.addChild(button2);

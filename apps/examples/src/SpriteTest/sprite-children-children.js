@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_ghostsPlist } from "../resources";
 import { winSize } from "../constants";
+import { RotateBy } from "@aspect/actions";
 
 export class SpriteChildrenChildren extends SpriteTestDemo {
 
@@ -51,7 +52,7 @@ export class SpriteChildrenChildren extends SpriteTestDemo {
 
         cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 
-        var rot = new cc.RotateBy(10, 360);
+        var rot = new RotateBy(10, 360);
         var seq = rot.repeatForever();
 
         var rot_back = rot.reverse();

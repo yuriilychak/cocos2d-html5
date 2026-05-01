@@ -25,6 +25,7 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
+import { DelayTime, sequence } from "@aspect/actions";
 
 export class TurnOffTilesTest extends EffectsBaseLayer {
   title() {
@@ -35,9 +36,9 @@ export class TurnOffTilesTest extends EffectsBaseLayer {
   }
   getEffect(duration) {
     var action = cc.turnOffTiles(duration, new Size(48, 32), 25);
-    var delay = new cc.DelayTime(0.5);
+    var delay = new DelayTime(0.5);
     var back = action.reverse();
-    var seq = cc.sequence(action, delay, back);
+    var seq = sequence(action, delay, back);
     return seq;
   }
 }

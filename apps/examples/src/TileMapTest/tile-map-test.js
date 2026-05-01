@@ -29,6 +29,7 @@
 import { s_levelMapTga, s_tilesPng } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { ScaleBy, sequence } from "@aspect/actions";
 
 export class TileMapTest extends TileDemo {
   constructor() {
@@ -46,10 +47,10 @@ export class TileMapTest extends TileDemo {
     map.anchorX = 0;
     map.anchorY = 0.5;
 
-    var scale = new cc.ScaleBy(4, 0.8);
+    var scale = new ScaleBy(4, 0.8);
     var scaleBack = scale.reverse();
 
-    var seq = cc.sequence(scale, scaleBack);
+    var seq = sequence(scale, scaleBack);
 
     map.runAction(seq.repeatForever());
   }

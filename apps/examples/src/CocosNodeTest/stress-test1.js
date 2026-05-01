@@ -29,6 +29,7 @@ import { TAG_SPRITE1 } from "./cocos-node-test-constants";
 import { TestNodeDemo } from "./test-node-demo";
 import { s_fire, s_pathSister1 } from "../resources";
 import { autoTestEnabled, winSize } from "../constants";
+import { CallFunc, RotateBy, sequence } from "@aspect/actions";
 
 export class StressTest1 extends TestNodeDemo {
     constructor() {
@@ -62,9 +63,9 @@ export class StressTest1 extends TestNodeDemo {
         explosion.y = winSize.height / 2;
 
         this.runAction(
-            cc.sequence(
-                new cc.RotateBy(2, 360),
-                new cc.CallFunc(this.onRemoveMe, this)
+            sequence(
+                new RotateBy(2, 360),
+                new CallFunc(this.onRemoveMe, this)
             )
         );
 

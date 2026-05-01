@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Color } from "@aspect/core";
+import { MoveTo } from "@aspect/actions";
 
 export class TMXUncompressedTest extends TileDemo {
   constructor() {
@@ -54,7 +55,7 @@ export class TMXUncompressedTest extends TileDemo {
     var ms = map.getMapSize();
     var ts = map.getTileSize();
     map.runAction(
-      new cc.MoveTo(
+      new MoveTo(
         1.0,
         new Point((-ms.width * ts.width) / 2, (-ms.height * ts.height) / 2)
       )

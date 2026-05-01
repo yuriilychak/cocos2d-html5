@@ -28,6 +28,7 @@
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
 import { Color, LabelTTF } from "@aspect/core";
+import { RotateBy } from "@aspect/actions";
 
 export class SceneTestLayer3 extends cc.LayerColor {
   constructor() {
@@ -47,7 +48,7 @@ export class SceneTestLayer3 extends cc.LayerColor {
     sprite.x = s.width - 40;
 
     sprite.y = s.height / 2;
-    var rotate = new cc.RotateBy(2, 360);
+    var rotate = new RotateBy(2, 360);
     var repeat = rotate.repeatForever();
     sprite.runAction(repeat);
     //----end0----

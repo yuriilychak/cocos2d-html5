@@ -31,15 +31,16 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { RotateTo, Sequence } from "@aspect/actions";
 
 export class ActionRotateJerk extends ActionsDemo {
   onEnter() {
     //----start24----onEnter
     super.onEnter();
     this.centerSprites(2);
-    var seq = new cc.Sequence(
-      new cc.RotateTo(0.5, -20),
-      new cc.RotateTo(0.5, 20)
+    var seq = new Sequence(
+      new RotateTo(0.5, -20),
+      new RotateTo(0.5, 20)
     );
 
     var rep1 = seq.repeat(10);

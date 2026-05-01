@@ -28,12 +28,13 @@
 import { RotateWorldMainLayer } from "./rotate-world-main-layer";
 import { TestScene } from "../test-scene";
 import { director } from "../constants";
+import { RotateBy } from "@aspect/actions";
 
 export class RotateWorldTestScene extends TestScene {
   runThisTest() {
     var layer = new RotateWorldMainLayer();
     this.addChild(layer);
-    this.runAction(new cc.RotateBy(4, -360));
+    this.runAction(new RotateBy(4, -360));
     director.runScene(this);
   }
 }

@@ -35,6 +35,7 @@ import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
 import { LabelTTF, Point } from "@aspect/core";
+import { CallFunc, MoveBy, sequence } from "@aspect/actions";
 
 export class RemoveTest extends ActionManagerTest {
   constructor() {
@@ -55,9 +56,9 @@ export class RemoveTest extends ActionManagerTest {
     l.x = s.width / 2;
     l.y = 245;
 
-    var move = new cc.MoveBy(2, new Point(200, 0));
-    var callback = new cc.CallFunc(this.stopAction, this);
-    var sequence = cc.sequence(move, callback);
+    var move = new MoveBy(2, new Point(200, 0));
+    var callback = new CallFunc(this.stopAction, this);
+    var sequence = sequence(move, callback);
     sequence.tag = TAG_SEQUENCE;
 
     var child = new cc.Sprite(s_pathGrossini);

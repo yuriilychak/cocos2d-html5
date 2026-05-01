@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { CallFunc, DelayTime, RepeatForever, RotateBy, Sequence, easeElasticInOut } from "@aspect/actions";
 
 export class ActionRepeatForever extends ActionsDemo {
   constructor() {
@@ -43,9 +44,9 @@ export class ActionRepeatForever extends ActionsDemo {
     //----start22----onEnter
     super.onEnter();
     this.centerSprites(1);
-    var action = new cc.Sequence(
-      new cc.DelayTime(1),
-      new cc.CallFunc(this.repeatForever)
+    var action = new Sequence(
+      new DelayTime(1),
+      new CallFunc(this.repeatForever)
     ); // not passing 'this' since it is not used by the callback func
 
     this._grossini.runAction(action);
@@ -55,15 +56,15 @@ export class ActionRepeatForever extends ActionsDemo {
     sender.runAction(
       cc
         .sequence(
-          new cc.RotateBy(2, 90).easing(cc.easeElasticInOut(0.5)),
-          new cc.RotateBy(0.5, 90)
+          new RotateBy(2, 90).easing(easeElasticInOut(0.5)),
+          new RotateBy(0.5, 90)
         )
         .repeatForever()
     );
     cc.sys.garbageCollect();
   }
   title() {
-    return "cc.CallFunc + cc.RepeatForever";
+    return "CallFunc + RepeatForever";
   }
   //
   // Automation

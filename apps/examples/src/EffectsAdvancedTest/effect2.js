@@ -28,6 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Size } from "@aspect/core";
+import { DelayTime, sequence } from "@aspect/actions";
 
 export class Effect2 extends EffectAdvanceTextLayer {
   title() {
@@ -53,10 +54,10 @@ export class Effect2 extends EffectAdvanceTextLayer {
     //   2 for turn off
     //   turnon tiles will use a new grid
     var reuse = cc.reuseGrid(2);
-    var delay = new cc.DelayTime(1);
+    var delay = new DelayTime(1);
 
     target.runAction(
-      cc.sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon)
+      sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon)
     );
   }
 }

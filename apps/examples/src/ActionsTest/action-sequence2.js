@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
 import { LabelTTF, Point } from "@aspect/core";
+import { CallFunc, MoveBy, Place, Sequence, Show } from "@aspect/actions";
 
 export class ActionSequence2 extends ActionsDemo {
   constructor() {
@@ -45,13 +46,13 @@ export class ActionSequence2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
     this._grossini.visible = false;
-    var action = new cc.Sequence(
-      new cc.Place(new Point(200, 200)),
-      new cc.Show(),
-      new cc.MoveBy(1, new Point(100, 0)),
-      new cc.CallFunc(this.onCallback1, this),
-      new cc.CallFunc(this.onCallback2.bind(this)),
-      new cc.CallFunc(this.onCallback3, this)
+    var action = new Sequence(
+      new Place(new Point(200, 200)),
+      new Show(),
+      new MoveBy(1, new Point(100, 0)),
+      new CallFunc(this.onCallback1, this),
+      new CallFunc(this.onCallback2.bind(this)),
+      new CallFunc(this.onCallback3, this)
     );
     this._grossini.runAction(action);
 

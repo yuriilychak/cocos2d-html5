@@ -29,6 +29,7 @@ import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { s_pathFog, s_pathGrossini } from "../resources";
 import { Size, Color } from "@aspect/core";
+import { DelayTime, sequence } from "@aspect/actions";
 
 export class Issue631 extends EffectAdvanceTextLayer {
   title() {
@@ -42,8 +43,8 @@ export class Issue631 extends EffectAdvanceTextLayer {
   onEnter() {
     super.onEnter();
 
-    var effect = cc.sequence(
-      new cc.DelayTime(2.0),
+    var effect = sequence(
+      new DelayTime(2.0),
       cc.shaky3D(5.0, new Size(5, 5), 16, false)
     );
 

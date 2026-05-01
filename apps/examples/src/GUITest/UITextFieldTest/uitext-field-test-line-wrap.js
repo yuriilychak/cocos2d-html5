@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Color } from "@aspect/core";
+import { MoveTo } from "@aspect/actions";
 
 export class UITextFieldTest_LineWrap extends UIMainLayer {
   init() {
@@ -72,7 +73,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
     switch (type) {
       case ccui.TextField.EVENT_ATTACH_WITH_IME:
         textField.runAction(
-          new cc.MoveTo(
+          new MoveTo(
             0.225,
             new Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
           )
@@ -83,7 +84,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
         break;
       case ccui.TextField.EVENT_DETACH_WITH_IME:
         textField.runAction(
-          new cc.MoveTo(
+          new MoveTo(
             0.175,
             new Point(widgetSize.width / 2, widgetSize.height / 2)
           )

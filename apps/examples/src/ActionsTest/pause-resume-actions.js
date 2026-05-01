@@ -32,6 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
+import { RotateBy } from "@aspect/actions";
 
 export class PauseResumeActions extends ActionsDemo {
   constructor() {
@@ -44,9 +45,9 @@ export class PauseResumeActions extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    this._tamara.runAction(new cc.RotateBy(3, 360).repeatForever());
-    this._grossini.runAction(new cc.RotateBy(3, -360).repeatForever());
-    this._kathia.runAction(new cc.RotateBy(3, 360).repeatForever());
+    this._tamara.runAction(new RotateBy(3, 360).repeatForever());
+    this._grossini.runAction(new RotateBy(3, -360).repeatForever());
+    this._kathia.runAction(new RotateBy(3, 360).repeatForever());
 
     this.schedule(this.pause, 3, false, 0);
     this.schedule(this.resume, 5, false, 0);

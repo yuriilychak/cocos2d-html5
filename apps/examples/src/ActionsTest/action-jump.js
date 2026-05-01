@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { DelayTime, JumpBy, JumpTo, Sequence } from "@aspect/actions";
 
 export class ActionJump extends ActionsDemo {
   constructor() {
@@ -42,8 +43,8 @@ export class ActionJump extends ActionsDemo {
 
   get _code() {
     return (
-      "a = new cc.JumpBy( time, point, height, #_of_jumps );\n" +
-      "a = new cc.JumpTo( time, point, height, #_of_jumps );"
+      "a = new JumpBy( time, point, height, #_of_jumps );\n" +
+      "a = new JumpTo( time, point, height, #_of_jumps );"
     );
   }
 
@@ -52,17 +53,17 @@ export class ActionJump extends ActionsDemo {
     super.onEnter();
     this.centerSprites(3);
 
-    var actionTo = new cc.JumpTo(2, new Point(300, 300), 50, 4);
-    var actionBy = new cc.JumpBy(2, new Point(300, 0), 50, 4);
-    var actionUp = new cc.JumpBy(2, new Point(0, 0), 80, 4);
+    var actionTo = new JumpTo(2, new Point(300, 300), 50, 4);
+    var actionBy = new JumpBy(2, new Point(300, 0), 50, 4);
+    var actionUp = new JumpBy(2, new Point(0, 0), 80, 4);
     var actionByBack = actionBy.reverse();
 
-    var delay = new cc.DelayTime(0.25);
+    var delay = new DelayTime(0.25);
 
     this._tamara.runAction(actionTo);
-    this._grossini.runAction(new cc.Sequence(actionBy, delay, actionByBack));
+    this._grossini.runAction(new Sequence(actionBy, delay, actionByBack));
 
-    var action = new cc.Sequence(actionUp, delay.clone()).repeatForever();
+    var action = new Sequence(actionUp, delay.clone()).repeatForever();
     this._kathia.runAction(action);
     //----end7----
   }

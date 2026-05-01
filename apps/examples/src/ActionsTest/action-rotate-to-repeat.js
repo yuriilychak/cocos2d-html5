@@ -31,6 +31,7 @@
 //
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
+import { RotateTo, Sequence } from "@aspect/actions";
 
 export class ActionRotateToRepeat extends ActionsDemo {
   constructor() {
@@ -44,9 +45,9 @@ export class ActionRotateToRepeat extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    var act1 = new cc.RotateTo(0.5, 90);
-    var act2 = new cc.RotateTo(0.5, 0);
-    var seq = new cc.Sequence(act1, act2);
+    var act1 = new RotateTo(0.5, 90);
+    var act2 = new RotateTo(0.5, 0);
+    var seq = new Sequence(act1, act2);
     var seq2 = seq.clone();
 
     this._tamara.runAction(seq.repeatForever());

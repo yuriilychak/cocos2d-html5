@@ -35,6 +35,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
 import { Rect } from "@aspect/core";
+import { RotateBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class Sprite6 extends SpriteTestDemo {
 
@@ -63,14 +64,14 @@ export class Sprite6 extends SpriteTestDemo {
 	    batch.height = winSize.height;
 
         // SpriteBatchNode actions
-        var rotate1 = new cc.RotateBy(5, 360);
+        var rotate1 = new RotateBy(5, 360);
         var rotate_back = rotate1.reverse();
-        var rotate_seq = cc.sequence(rotate1, rotate_back);
+        var rotate_seq = sequence(rotate1, rotate_back);
         var rotate_forever = rotate_seq.repeatForever();
 
-        var scale = new cc.ScaleBy(5, 1.5);
+        var scale = new ScaleBy(5, 1.5);
         var scale_back = scale.reverse();
-        var scale_seq = cc.sequence(scale, scale_back);
+        var scale_seq = sequence(scale, scale_back);
         var scale_forever = scale_seq.repeatForever();
 
         for (var i = 0; i < 3; i++) {
@@ -89,7 +90,7 @@ export class Sprite6 extends SpriteTestDemo {
                     sprite.y = winSize.height / 2;
                     break;
             }
-            var rotate = new cc.RotateBy(5, 360);
+            var rotate = new RotateBy(5, 360);
             var action = rotate.repeatForever();
             sprite.runAction(action.clone());
             batch.addChild(sprite, i);

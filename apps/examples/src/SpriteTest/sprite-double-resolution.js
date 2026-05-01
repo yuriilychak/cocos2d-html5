@@ -29,6 +29,7 @@ import { DoubleSprite } from "./double-sprite";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniDance08, s_pathGrossini } from "../resources";
 import { winSize } from "../constants";
+import { ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteDoubleResolution extends SpriteTestDemo {
 
@@ -85,9 +86,9 @@ export class SpriteDoubleResolution extends SpriteTestDemo {
 
 
         // Actions
-        var scale = new cc.ScaleBy(2, 0.5);
+        var scale = new ScaleBy(2, 0.5);
         var scale_back = scale.reverse();
-        var seq = cc.sequence(scale, scale_back);
+        var seq = sequence(scale, scale_back);
 
         var seq_copy = seq.clone();
 

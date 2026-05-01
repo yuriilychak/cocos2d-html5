@@ -33,6 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
 import { Point } from "@aspect/core";
+import { MoveBy, Sequence } from "@aspect/actions";
 
 export class Issue1288 extends ActionsDemo {
   onEnter() {
@@ -45,9 +46,9 @@ export class Issue1288 extends ActionsDemo {
     spr.y = 100;
     this.addChild(spr);
 
-    var act1 = new cc.MoveBy(0.5, new Point(100, 0));
+    var act1 = new MoveBy(0.5, new Point(100, 0));
     var act2 = act1.reverse();
-    var act3 = new cc.Sequence(act1, act2);
+    var act3 = new Sequence(act1, act2);
     var act4 = act3.repeat(2);
 
     spr.runAction(act4);

@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { ScaleBy } from "@aspect/actions";
 
 export class TMXOrthoTest extends TileDemo {
   constructor() {
@@ -48,7 +49,7 @@ export class TMXOrthoTest extends TileDemo {
     var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test1.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
-    map.runAction(new cc.ScaleBy(2, 0.5));
+    map.runAction(new ScaleBy(2, 0.5));
   }
   title() {
     return "TMX Ortho test";

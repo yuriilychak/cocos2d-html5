@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
+import { Animate, ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
 
@@ -99,11 +100,11 @@ export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(new Animate(animation).repeatForever());
 
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = new ScaleBy(2, 2);
             var scale_back = scale.reverse();
-            var seq_scale = cc.sequence(scale, scale_back);
+            var seq_scale = sequence(scale, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             batch.addChild(sprite, i);

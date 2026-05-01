@@ -33,38 +33,39 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
+import { DelayTime, MoveBy, easeInOut, sequence } from "@aspect/actions";
 
 export class SpriteEaseInOut extends EaseSpriteDemo {
   onEnter() {
     //----start1----onEnter
     super.onEnter();
 
-    var move = new cc.MoveBy(2, new Point(winSize.width - 80, 0));
+    var move = new MoveBy(2, new Point(winSize.width - 80, 0));
 
-    var move_ease_inout1 = move.clone().easing(cc.easeInOut(2.0));
+    var move_ease_inout1 = move.clone().easing(easeInOut(2.0));
     var move_ease_inout_back1 = move_ease_inout1.reverse();
 
-    var move_ease_inout2 = move.clone().easing(cc.easeInOut(3.0));
+    var move_ease_inout2 = move.clone().easing(easeInOut(3.0));
     var move_ease_inout_back2 = move_ease_inout2.reverse();
 
-    var move_ease_inout3 = move.clone().easing(cc.easeInOut(4.0));
+    var move_ease_inout3 = move.clone().easing(easeInOut(4.0));
     var move_ease_inout_back3 = move_ease_inout3.reverse();
 
-    var delay = new cc.DelayTime(0.1);
+    var delay = new DelayTime(0.1);
 
-    var seq1 = cc.sequence(
+    var seq1 = sequence(
       move_ease_inout1,
       delay,
       move_ease_inout_back1,
       delay.clone()
     );
-    var seq2 = cc.sequence(
+    var seq2 = sequence(
       move_ease_inout2,
       delay.clone(),
       move_ease_inout_back2,
       delay.clone()
     );
-    var seq3 = cc.sequence(
+    var seq3 = sequence(
       move_ease_inout3,
       delay.clone(),
       move_ease_inout_back3,

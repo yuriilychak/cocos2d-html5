@@ -30,6 +30,7 @@
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
 import { Point } from "@aspect/core";
+import { MoveBy, sequence } from "@aspect/actions";
 
 export class S9FrameNameSpriteSheet extends S9SpriteTestDemo {
   constructor() {
@@ -56,8 +57,8 @@ export class S9FrameNameSpriteSheet extends S9SpriteTestDemo {
 
     cc.log("... S9FrameNameSpriteSheet done.");
 
-    var moveBy = new cc.MoveBy(1, new Point(80, 80));
+    var moveBy = new MoveBy(1, new Point(80, 80));
     var moveByBack = moveBy.reverse();
-    blocks.runAction(cc.sequence(moveBy, moveByBack));
+    blocks.runAction(sequence(moveBy, moveByBack));
   }
 }

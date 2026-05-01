@@ -33,6 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_family, s_grossini_familyPlist } from "../resources";
 import { winSize } from "../constants";
+import { RotateBy } from "@aspect/actions";
 
 export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
 
@@ -58,7 +59,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
         cc.spriteFrameCache.addSpriteFrames(s_grossini_familyPlist);
 
-        var rot = new cc.RotateBy(10, 360);
+        var rot = new RotateBy(10, 360);
         var seq = rot.repeatForever();
 
         //
@@ -82,7 +83,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = new RotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using SpriteBatchNode
@@ -104,7 +105,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = new RotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using Sprite
@@ -126,7 +127,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = new RotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using Sprite

@@ -36,6 +36,7 @@ import { s_resprefix } from "../resources";
 import { director } from "../constants";
 import { Color } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
+import { DelayTime, FadeOut, sequence } from "@aspect/actions";
 
 export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
     constructor() {
@@ -54,9 +55,9 @@ export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
         label1.anchorX = 0;
         label1.anchorY = 0;
         this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
-        var fade = new cc.FadeOut(1.0);
+        var fade = new FadeOut(1.0);
         var fade_in = fade.reverse();
-        var seq = cc.sequence(fade, new cc.DelayTime(0.25), fade_in);
+        var seq = sequence(fade, new DelayTime(0.25), fade_in);
         var repeat = seq.repeatForever();
         label1.runAction(repeat);
 

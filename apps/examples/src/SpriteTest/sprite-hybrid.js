@@ -34,6 +34,7 @@ import { TAG_NODE, TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
+import { RotateBy } from "@aspect/actions";
 
 export class SpriteHybrid extends SpriteTestDemo {
 
@@ -90,7 +91,7 @@ export class SpriteHybrid extends SpriteTestDemo {
             sprite.x = x;
             sprite.y = y;
 
-            var action = new cc.RotateBy(4, 360);
+            var action = new RotateBy(4, 360);
             sprite.runAction(action.repeatForever());
         }
 
