@@ -90,7 +90,7 @@ export function backFontTestAction() {
 export function restartFontTestAction() {
     return fontList[fontIdx];
 }
-FontTestScene = class FontTestScene extends TestScene {
+export class FontTestScene extends TestScene {
 
     runThisTest(num) {
 

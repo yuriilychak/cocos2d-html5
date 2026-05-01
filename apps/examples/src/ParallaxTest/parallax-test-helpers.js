@@ -35,7 +35,7 @@ import { director } from "../tests-main-constants.js";
 
 ;
 
-ParallaxTestScene = class ParallaxTestScene extends TestScene {
+export class ParallaxTestScene extends TestScene {
     runThisTest(num) {
         _setparallaxTestSceneIdx((num || num == 0) ? (num - 1) : -1);
         this.addChild(nextParallaxTest());

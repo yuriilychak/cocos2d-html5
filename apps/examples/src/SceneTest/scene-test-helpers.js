@@ -35,7 +35,7 @@ import { director } from "../tests-main-constants.js";
 
 ;
 
-SceneTestScene = class SceneTestScene extends TestScene {
+export class SceneTestScene extends TestScene {
 
     runThisTest() {
         var layer = new SceneTestLayer1();

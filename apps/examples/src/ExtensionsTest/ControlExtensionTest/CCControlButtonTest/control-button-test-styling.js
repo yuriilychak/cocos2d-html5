@@ -91,3 +91,13 @@ export class ControlButtonTest_Styling extends ControlScene {
     }
 
 }
+
+ControlButtonTest_Styling.create = function (sceneTitle) {
+    var scene = new cc.Scene();
+    var controlLayer = new ControlButtonTest_Styling();
+    if (controlLayer && controlLayer.init()) {
+        controlLayer.getSceneTitleLabel().setString(sceneTitle);
+        scene.addChild(controlLayer);
+    }
+    return scene;
+};

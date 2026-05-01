@@ -26,6 +26,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { FontTestScene } from "./FontTest/FontTest.js";
+import { ParallaxTestScene } from "./ParallaxTest/parallax-test-helpers.js";
+import { SceneTestScene } from "./SceneTest/scene-test-helpers.js";
 import { ActionManagerTestScene } from "./ActionManagerTest/action-manager-test-scene.js";
 import { ActionsTestScene } from "./ActionsTest/actions-test-scene.js";
 import { BakeLayerTestScene } from "./BakeLayerTest/bake-layer-test-scene.js";
