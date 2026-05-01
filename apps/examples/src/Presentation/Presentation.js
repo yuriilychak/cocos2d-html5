@@ -724,25 +724,19 @@ export var arrayOfPresentation = [
 	ThanksPage
 ];
 
-export class nextPresentationSlide {
-	constructor() {
+export function nextPresentationSlide() {
     presentationSceneIdx++;
     presentationSceneIdx = presentationSceneIdx % arrayOfPresentation.length;
-
     return new arrayOfPresentation[presentationSceneIdx]();
-	}
-};
-export class previousPresentationSlide {
-	constructor() {
+}
+
+export function previousPresentationSlide() {
     presentationSceneIdx--;
     if (presentationSceneIdx < 0)
         presentationSceneIdx += arrayOfPresentation.length;
+    return new arrayOfPresentation[presentationSceneIdx]();
+}
 
+export function restartPresentationSlide() {
     return new arrayOfPresentation[presentationSceneIdx]();
-	}
-};
-export class restartPresentationSlide {
-	constructor() {
-    return new arrayOfPresentation[presentationSceneIdx]();
-	}
-};
+}
