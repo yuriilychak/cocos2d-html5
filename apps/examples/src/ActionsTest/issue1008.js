@@ -67,12 +67,12 @@ export class Issue1008 extends ActionsDemo {
     var trace = new cc.CallFunc(this.onTrace, this);
     var delay = new cc.DelayTime(0.25);
 
-    var rep = cc.sequence(bz1, bz2, trace, delay).repeatForever();
+    var rep = new cc.Sequence(bz1, bz2, trace, delay).repeatForever();
     this._grossini.runAction(rep);
 
     //----end10----
 
-    //this._grossini.runAction(cc.sequence(bz1, bz2, trace,delay));
+    //this._grossini.runAction(new cc.Sequence(bz1, bz2, trace,delay));
   }
   onTrace(sender) {
     var pos = new Point(sender.x, sender.y);

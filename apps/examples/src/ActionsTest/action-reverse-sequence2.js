@@ -45,9 +45,9 @@ export class ActionReverseSequence2 extends ActionsDemo {
     var move2 = new cc.MoveBy(3, new Point(0, 50));
     var tog1 = new cc.ToggleVisibility();
     var tog2 = new cc.ToggleVisibility();
-    var seq = cc.sequence(move1, tog1, move2, tog2, move1.reverse());
+    var seq = new cc.Sequence(move1, tog1, move2, tog2, move1.reverse());
 
-    var action = cc.sequence(seq, seq.reverse()).repeat(3);
+    var action = new cc.Sequence(seq, seq.reverse()).repeat(3);
 
     // Test:
     //   Also test that the reverse of Hide is Show, and vice-versa
@@ -56,9 +56,9 @@ export class ActionReverseSequence2 extends ActionsDemo {
     var move_tamara = new cc.MoveBy(1, new Point(100, 0));
     var move_tamara2 = new cc.MoveBy(1, new Point(50, 0));
     var hide = new cc.Hide();
-    var seq_tamara = cc.sequence(move_tamara, hide, move_tamara2);
+    var seq_tamara = new cc.Sequence(move_tamara, hide, move_tamara2);
     var seq_back = seq_tamara.reverse();
-    this._tamara.runAction(cc.sequence(seq_tamara, seq_back));
+    this._tamara.runAction(new cc.Sequence(seq_tamara, seq_back));
     //----end29----
   }
   subtitle() {

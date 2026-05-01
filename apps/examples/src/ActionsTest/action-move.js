@@ -60,7 +60,7 @@ export class ActionMove extends ActionsDemo {
     var actionByBack = actionBy.reverse();
 
     this._tamara.runAction(actionTo);
-    this._grossini.runAction(cc.sequence(actionBy, actionByBack));
+    this._grossini.runAction(new cc.Sequence(actionBy, actionByBack));
     this._kathia.runAction(new cc.MoveTo(1, new Point(40, 40)));
     //----end1----
   }

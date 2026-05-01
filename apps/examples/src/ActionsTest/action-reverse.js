@@ -48,7 +48,7 @@ export class ActionReverse extends ActionsDemo {
 
     var jump = new cc.JumpBy(2, new Point(300, 0), 50, 4);
     var delay = new cc.DelayTime(0.25);
-    var action = cc.sequence(jump, delay, jump.reverse());
+    var action = new cc.Sequence(jump, delay, jump.reverse());
 
     this._grossini.runAction(action);
     //----end19----

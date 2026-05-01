@@ -47,7 +47,7 @@ export class Issue1288 extends ActionsDemo {
 
     var act1 = new cc.MoveBy(0.5, new Point(100, 0));
     var act2 = act1.reverse();
-    var act3 = cc.sequence(act1, act2);
+    var act3 = new cc.Sequence(act1, act2);
     var act4 = act3.repeat(2);
 
     spr.runAction(act4);

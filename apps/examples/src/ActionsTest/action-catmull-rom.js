@@ -91,7 +91,7 @@ export class ActionCatmullRom extends ActionsDemo {
 
     var action1 = new cc.CatmullRomBy(3, array);
     var reverse1 = action1.reverse();
-    var seq1 = cc.sequence(action1, delay, reverse1);
+    var seq1 = new cc.Sequence(action1, delay, reverse1);
 
     this._tamara.runAction(seq1);
 
@@ -112,7 +112,7 @@ export class ActionCatmullRom extends ActionsDemo {
     var action2 = new cc.CatmullRomTo(3, array2);
     var reverse2 = action2.reverse();
 
-    var seq2 = cc.sequence(action2, delay.clone(), reverse2);
+    var seq2 = new cc.Sequence(action2, delay.clone(), reverse2);
 
     this._kathia.runAction(seq2);
 

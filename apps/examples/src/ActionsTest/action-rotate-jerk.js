@@ -37,7 +37,10 @@ export class ActionRotateJerk extends ActionsDemo {
     //----start24----onEnter
     super.onEnter();
     this.centerSprites(2);
-    var seq = cc.sequence(new cc.RotateTo(0.5, -20), new cc.RotateTo(0.5, 20));
+    var seq = new cc.Sequence(
+      new cc.RotateTo(0.5, -20),
+      new cc.RotateTo(0.5, 20)
+    );
 
     var rep1 = seq.repeat(10);
     var rep2 = seq.clone().repeatForever();

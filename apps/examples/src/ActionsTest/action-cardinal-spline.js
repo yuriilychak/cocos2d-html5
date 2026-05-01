@@ -92,7 +92,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     //
     var action1 = new cc.CardinalSplineBy(2, array, 0);
     var reverse1 = action1.reverse();
-    var seq = cc.sequence(action1, delay, reverse1, delay.clone());
+    var seq = new cc.Sequence(action1, delay, reverse1, delay.clone());
 
     this._tamara.x = 50;
     this._tamara.y = 50;
@@ -105,7 +105,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     //
     var action2 = new cc.CardinalSplineBy(2, array, 1);
     var reverse2 = action2.reverse();
-    var seq2 = cc.sequence(action2, delay.clone(), reverse2, delay.clone());
+    var seq2 = new cc.Sequence(action2, delay.clone(), reverse2, delay.clone());
 
     this._kathia.x = winSize.width / 2;
     this._kathia.y = 50;

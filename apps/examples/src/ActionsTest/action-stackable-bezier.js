@@ -46,7 +46,7 @@ export class ActionStackableBezier extends ActionsDemo {
     // shake
     var move = new cc.MoveBy(0.05, new Point(8, 8));
     var move_back = move.reverse();
-    var move_seq = cc.sequence(move, move_back);
+    var move_seq = new cc.Sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 

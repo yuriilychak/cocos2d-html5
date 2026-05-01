@@ -56,7 +56,7 @@ export class ActionTint extends ActionsDemo {
 
     this._tamara.runAction(action1);
     this._kathia.runAction(
-      cc.sequence(action2, new cc.DelayTime(0.25), action2Back)
+      new cc.Sequence(action2, new cc.DelayTime(0.25), action2Back)
     );
     //----end15----
   }

@@ -68,7 +68,7 @@ export class Issue1438 extends ActionsDemo {
     animation2.setDelayPerUnit(1 / 60);
 
     var action2 = new cc.Animate(animation2);
-    this._tamara.runAction(cc.sequence(action2, action2.reverse()));
+    this._tamara.runAction(new cc.Sequence(action2, action2.reverse()));
     //----end45----
   }
 

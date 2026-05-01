@@ -56,12 +56,12 @@ export class ActionSkew extends ActionsDemo {
 
     var delay = new cc.DelayTime(0.25);
 
-    this._tamara.runAction(cc.sequence(actionTo, delay, actionToBack));
+    this._tamara.runAction(new cc.Sequence(actionTo, delay, actionToBack));
     this._grossini.runAction(
-      cc.sequence(actionBy, delay.clone(), actionBy.reverse())
+      new cc.Sequence(actionBy, delay.clone(), actionBy.reverse())
     );
     this._kathia.runAction(
-      cc.sequence(actionBy2, delay.clone(), actionBy2.reverse())
+      new cc.Sequence(actionBy2, delay.clone(), actionBy2.reverse())
     );
     //----end5----
   }

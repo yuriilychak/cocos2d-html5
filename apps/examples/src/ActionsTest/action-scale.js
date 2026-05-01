@@ -54,10 +54,10 @@ export class ActionScale extends ActionsDemo {
 
     this._tamara.runAction(actionTo);
     this._kathia.runAction(
-      cc.sequence(actionBy2, new cc.DelayTime(0.25), actionBy2.reverse())
+      new cc.Sequence(actionBy2, new cc.DelayTime(0.25), actionBy2.reverse())
     );
     this._grossini.runAction(
-      cc.sequence(actionBy, new cc.DelayTime(0.25), actionBy.reverse())
+      new cc.Sequence(actionBy, new cc.DelayTime(0.25), actionBy.reverse())
     );
 
     //----end2----

@@ -53,18 +53,18 @@ export class ActionCallFunc1 extends ActionsDemo {
     this.centerSprites(3);
 
     // Testing different ways to pass "this"
-    var action = cc.sequence(
+    var action = new cc.Sequence(
       new cc.MoveBy(2, new Point(200, 0)),
       new cc.CallFunc(this.onCallback1.bind(this)) // 'this' is bound to the callback function using "bind"
     );
 
-    var action2 = cc.sequence(
+    var action2 = new cc.Sequence(
       new cc.ScaleBy(2, 2),
       new cc.FadeOut(2),
       new cc.CallFunc(this.onCallback2, this) // 'this' is passed as 2nd argument.
     );
 
-    var action3 = cc.sequence(
+    var action3 = new cc.Sequence(
       new cc.RotateBy(3, 360),
       new cc.FadeOut(2),
       new cc.CallFunc(this.onCallback3, this, "Hi!") // If you want to pass a optional value, like "Hi!", then you should pass 'this' too
@@ -94,11 +94,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback3(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new LabelTTF(
-      "callback 3 called:" + value,
-      "Marker Felt",
-      16
-    );
+    var label = new LabelTTF("callback 3 called:" + value, "Marker Felt", 16);
     label.x = (s.width / 4) * 3;
     label.y = s.height / 2;
     this.addChild(label);

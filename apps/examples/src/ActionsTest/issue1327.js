@@ -54,7 +54,7 @@ export class Issue1327 extends ActionsDemo {
     var act8 = new cc.RotateBy(0.25, 45);
     var act9 = new cc.CallFunc(this.onLogSprRotation);
 
-    var actF = cc.sequence(
+    var actF = new cc.Sequence(
       act1,
       act2,
       act3,

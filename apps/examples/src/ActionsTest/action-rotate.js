@@ -53,17 +53,17 @@ export class ActionRotate extends ActionsDemo {
     var actionTo2 = new cc.RotateTo(2, -45);
     var actionTo0 = new cc.RotateTo(2, 0);
     this._tamara.runAction(
-      cc.sequence(actionTo, new cc.DelayTime(0.25), actionTo0)
+      new cc.Sequence(actionTo, new cc.DelayTime(0.25), actionTo0)
     );
 
     var actionBy = new cc.RotateBy(2, 360);
     var actionByBack = actionBy.reverse();
     this._grossini.runAction(
-      cc.sequence(actionBy, new cc.DelayTime(0.25), actionByBack)
+      new cc.Sequence(actionBy, new cc.DelayTime(0.25), actionByBack)
     );
 
     this._kathia.runAction(
-      cc.sequence(actionTo2, new cc.DelayTime(0.25), actionTo0.clone())
+      new cc.Sequence(actionTo2, new cc.DelayTime(0.25), actionTo0.clone())
     );
 
     //----end3----

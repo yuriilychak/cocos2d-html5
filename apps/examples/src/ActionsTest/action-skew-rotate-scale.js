@@ -81,9 +81,11 @@ export class ActionSkewRotateScale extends ActionsDemo {
 
     var delay = new cc.DelayTime(0.25);
 
-    box.runAction(cc.sequence(actionTo, delay, actionToBack));
-    box.runAction(cc.sequence(rotateTo, delay.clone(), rotateToBack));
-    box.runAction(cc.sequence(actionScaleTo, delay.clone(), actionScaleToBack));
+    box.runAction(new cc.Sequence(actionTo, delay, actionToBack));
+    box.runAction(new cc.Sequence(rotateTo, delay.clone(), rotateToBack));
+    box.runAction(
+      new cc.Sequence(actionScaleTo, delay.clone(), actionScaleToBack)
+    );
 
     this.box = box;
     //----end6----

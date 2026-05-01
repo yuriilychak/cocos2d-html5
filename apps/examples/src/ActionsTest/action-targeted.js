@@ -52,7 +52,7 @@ export class ActionTargeted extends ActionsDemo {
     var t1 = new cc.TargetedAction(this._kathia, jump2);
     var t2 = new cc.TargetedAction(this._kathia, rot2);
 
-    var seq = cc.sequence(jump1, t1, rot1, t2);
+    var seq = new cc.Sequence(jump1, t1, rot1, t2);
 
     var always = seq.repeatForever();
 

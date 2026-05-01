@@ -37,7 +37,7 @@ export class ActionIssue13605 extends ActionsDemo {
 
     var move = new CustomMoveBy(2, new Point(50, 0));
     var move_back = move.reverse();
-    var move_seq = cc.sequence(
+    var move_seq = new cc.Sequence(
       move,
       new cc.DelayTime(1),
       move_back,
@@ -47,7 +47,7 @@ export class ActionIssue13605 extends ActionsDemo {
 
     var moveClone = move.clone();
     var moveCloneBack = moveClone.reverse();
-    var moveCloneSeq = cc.sequence(
+    var moveCloneSeq = new cc.Sequence(
       moveClone,
       new cc.DelayTime(1),
       moveCloneBack,

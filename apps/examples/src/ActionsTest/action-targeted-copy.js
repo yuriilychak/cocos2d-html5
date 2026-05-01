@@ -45,7 +45,7 @@ export class ActionTargetedCopy extends ActionsDemo {
     var t1 = new cc.TargetedAction(this._kathia, jump2);
     var t_copy = t1.clone();
 
-    var seq = cc.sequence(jump1, t_copy);
+    var seq = new cc.Sequence(jump1, t_copy);
 
     this._tamara.runAction(seq);
     //----end32----

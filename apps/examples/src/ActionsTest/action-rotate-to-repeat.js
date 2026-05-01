@@ -46,7 +46,7 @@ export class ActionRotateToRepeat extends ActionsDemo {
 
     var act1 = new cc.RotateTo(0.5, 90);
     var act2 = new cc.RotateTo(0.5, 0);
-    var seq = cc.sequence(act1, act2);
+    var seq = new cc.Sequence(act1, act2);
     var seq2 = seq.clone();
 
     this._tamara.runAction(seq.repeatForever());

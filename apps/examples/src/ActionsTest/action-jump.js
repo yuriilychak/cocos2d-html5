@@ -60,9 +60,9 @@ export class ActionJump extends ActionsDemo {
     var delay = new cc.DelayTime(0.25);
 
     this._tamara.runAction(actionTo);
-    this._grossini.runAction(cc.sequence(actionBy, delay, actionByBack));
+    this._grossini.runAction(new cc.Sequence(actionBy, delay, actionByBack));
 
-    var action = cc.sequence(actionUp, delay.clone()).repeatForever();
+    var action = new cc.Sequence(actionUp, delay.clone()).repeatForever();
     this._kathia.runAction(action);
     //----end7----
   }

@@ -41,8 +41,8 @@ export class ActionReverseSequence extends ActionsDemo {
 
     var move1 = new cc.MoveBy(1, new Point(250, 0));
     var move2 = new cc.MoveBy(1, new Point(0, 50));
-    var seq = cc.sequence(move1, move2, move1.reverse());
-    var action = cc.sequence(seq, seq.reverse());
+    var seq = new cc.Sequence(move1, move2, move1.reverse());
+    var action = new cc.Sequence(seq, seq.reverse());
 
     this._grossini.runAction(action);
     //----end28----

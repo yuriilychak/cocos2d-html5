@@ -56,7 +56,7 @@ export class Issue1305_2 extends ActionsDemo {
     var act7 = new cc.MoveBy(2, new Point(-100, 0));
     var act8 = new cc.CallFunc(this.onLog4, this);
 
-    var actF = cc.sequence(act1, act2, act3, act4, act5, act6, act7, act8);
+    var actF = new cc.Sequence(act1, act2, act3, act4, act5, act6, act7, act8);
 
     //    [spr runAction:actF];
     director.getActionManager().addAction(actF, spr, false);

@@ -65,8 +65,8 @@ export class ActionBezier extends ActionsDemo {
     ];
 
     var bezierForward = new cc.BezierBy(2, controlPoints);
-    var rep = cc
-      .sequence(bezierForward, delay, bezierForward.reverse(), delay.clone())
+    var rep = new cc
+      .Sequence(bezierForward, delay, bezierForward.reverse(), delay.clone())
       .repeatForever();
 
     // sprite 2

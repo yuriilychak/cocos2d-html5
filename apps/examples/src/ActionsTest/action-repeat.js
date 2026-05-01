@@ -47,7 +47,9 @@ export class ActionRepeat extends ActionsDemo {
 
     var a1 = new cc.MoveBy(1, new Point(150, 0));
 
-    var action1 = cc.sequence(new cc.Place(new Point(60, 60)), a1).repeat(3);
+    var action1 = new cc.Sequence(new cc.Place(new Point(60, 60)), a1).repeat(
+      3
+    );
     var action2 = cc
       .sequence(a1.clone(), a1.reverse(), new cc.DelayTime(0.25))
       .repeatForever();

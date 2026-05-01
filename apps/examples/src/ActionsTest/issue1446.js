@@ -56,7 +56,7 @@ export class Issue1446 extends ActionsDemo {
     this.addChild(label);
 
     this.backwardsFade = new cc.Speed(
-      cc.sequence(
+      new cc.Sequence(
         new cc.DelayTime(2),
         new cc.FadeTo(1, 255),
         new cc.DelayTime(2)

@@ -46,7 +46,7 @@ export class ActionStackableCatmullRom extends ActionsDemo {
     // shake
     var move = new cc.MoveBy(0.05, new Point(8, 8));
     var move_back = move.reverse();
-    var move_seq = cc.sequence(move, move_back);
+    var move_seq = new cc.Sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
     this._grossini.runAction(move_rep);
 
@@ -63,7 +63,7 @@ export class ActionStackableCatmullRom extends ActionsDemo {
 
     var action1 = new cc.CatmullRomBy(6, array);
     var reverse1 = action1.reverse();
-    var seq1 = cc.sequence(action1, reverse1);
+    var seq1 = new cc.Sequence(action1, reverse1);
     var repeat = seq1.repeatForever();
     this._grossini.runAction(repeat);
     //----end36----

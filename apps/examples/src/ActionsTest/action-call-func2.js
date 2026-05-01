@@ -45,7 +45,7 @@ export class ActionCallFunc2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
 
-    var action = cc.sequence(
+    var action = new cc.Sequence(
       new cc.MoveBy(2.0, new Point(200, 0)),
       new cc.CallFunc(this.removeFromParentAndCleanup, this._grossini, true)
     );

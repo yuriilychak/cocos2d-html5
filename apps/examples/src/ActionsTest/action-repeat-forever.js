@@ -43,7 +43,7 @@ export class ActionRepeatForever extends ActionsDemo {
     //----start22----onEnter
     super.onEnter();
     this.centerSprites(1);
-    var action = cc.sequence(
+    var action = new cc.Sequence(
       new cc.DelayTime(1),
       new cc.CallFunc(this.repeatForever)
     ); // not passing 'this' since it is not used by the callback func

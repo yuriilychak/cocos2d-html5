@@ -45,7 +45,7 @@ export class ActionSequence2 extends ActionsDemo {
     super.onEnter();
     this.centerSprites(1);
     this._grossini.visible = false;
-    var action = cc.sequence(
+    var action = new cc.Sequence(
       new cc.Place(new Point(200, 200)),
       new cc.Show(),
       new cc.MoveBy(1, new Point(100, 0)),

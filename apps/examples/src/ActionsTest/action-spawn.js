@@ -37,7 +37,7 @@ import { Point } from "@aspect/core";
 export class ActionSpawn extends ActionsDemo {
   constructor() {
     super();
-    this._code = "a = cc.spawn( a1, a2, ..., aN );";
+    this._code = "a = new cc.Spawn( a1, a2, ..., aN );";
     this.testDuration = 2.1;
   }
 
@@ -46,7 +46,7 @@ export class ActionSpawn extends ActionsDemo {
     super.onEnter();
     this.alignSpritesLeft(1);
 
-    var action = cc.spawn(
+    var action = new cc.Spawn(
       new cc.JumpBy(2, new Point(300, 0), 50, 4),
       new cc.RotateBy(2, 720)
     );

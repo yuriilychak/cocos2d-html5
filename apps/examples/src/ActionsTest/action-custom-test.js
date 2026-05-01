@@ -126,7 +126,7 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp.runAction(customMoveTo);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.sequence");
-    var moveSeq = cc.sequence(
+    var moveSeq = new cc.Sequence(
       new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
       new cc.DelayTime(1),
       new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
@@ -145,7 +145,7 @@ export class ActionCustomTest extends ActionsDemo {
 
     spriteTemp = this.addandCreateSpriteTemp("cc.repeatForever");
     var moveRepeatForever = new cc.RepeatForever(
-      cc.sequence(
+      new cc.Sequence(
         new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
         new (createCustomAction(cc.MoveBy))(5, new Point(-50, 0))
       )
@@ -153,7 +153,7 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp.runAction(moveRepeatForever);
 
     spriteTemp = this.addandCreateSpriteTemp("cc.spawn");
-    var moveRoationSpawn = cc.spawn(
+    var moveRoationSpawn = new cc.Spawn(
       new (createCustomAction(cc.MoveBy))(5, new Point(50, 0)),
       new (createCustomAction(cc.RotateBy))(5, 360)
     );

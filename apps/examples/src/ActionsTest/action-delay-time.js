@@ -47,7 +47,7 @@ export class ActionDelayTime extends ActionsDemo {
     this.alignSpritesLeft(1);
 
     var move = new cc.MoveBy(1, new Point(150, 0));
-    var action = cc.sequence(move, new cc.DelayTime(2), move.clone());
+    var action = new cc.Sequence(move, new cc.DelayTime(2), move.clone());
 
     this._grossini.runAction(action);
     //----end20----
