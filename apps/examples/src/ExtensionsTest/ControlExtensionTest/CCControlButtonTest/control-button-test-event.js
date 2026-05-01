@@ -119,3 +119,13 @@ export class ControlButtonTest_Event extends ControlScene {
     }
 
 }
+
+ControlButtonTest_Event.create = function (sceneTitle) {
+    var scene = new cc.Scene();
+    var controlLayer = new ControlButtonTest_Event();
+    if (controlLayer && controlLayer.init()) {
+        controlLayer.getSceneTitleLabel().setString(sceneTitle);
+        scene.addChild(controlLayer);
+    }
+    return scene;
+};

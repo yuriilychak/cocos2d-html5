@@ -106,3 +106,13 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
     }
 
 }
+
+ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
+    var scene = new cc.Scene();
+    var controlLayer = new ControlButtonTest_HelloVariableSize();
+    if (controlLayer && controlLayer.init()) {
+        controlLayer.getSceneTitleLabel().setString(sceneTitle);
+        scene.addChild(controlLayer);
+    }
+    return scene;
+};
