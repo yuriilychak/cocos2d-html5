@@ -901,6 +901,7 @@ export {
   KM_GL_MODELVIEW,
   KM_GL_PROJECTION,
   kmGLMatrixMode,
+  kmGLLoadMatrix,
   kmGLLoadIdentity,
   kmGLMultMatrix,
   kmGLPushMatrix,
@@ -1022,3 +1023,5 @@ export { ZERO, REPEAT, LINEAR } from "./platform/macro/constants";
 export { GLProgram } from "./shaders";
 export { default as AnimationCache } from "./sprites/animation-cache";
 export { inputManager } from "./platform/input-manager";
+export { Scheduler } from "./scheduler";
+export { ActionManager } from "./action-manager";

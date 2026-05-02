@@ -28,7 +28,7 @@
 // SchedulerTimeScale
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { s_stars1 } from "../resources";
-import { Director, LabelTTF, Point, Sprite, textureCache } from "@aspect/core";
+import { Director, LabelTTF, Point, Scheduler, ActionManager, Sprite, textureCache } from "@aspect/core";
 import { JumpBy, Repeat, RotateBy, Sequence, Spawn, Speed } from "@aspect/actions";
 import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 import { winSize } from "../constants";
@@ -43,8 +43,8 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
   onEnter() {
     super.onEnter();
 
-    this._newScheduler = new cc.Scheduler();
-    this._newActionManager = new cc.ActionManager();
+    this._newScheduler = new Scheduler();
+    this._newActionManager = new ActionManager();
 
     var s = winSize;
 

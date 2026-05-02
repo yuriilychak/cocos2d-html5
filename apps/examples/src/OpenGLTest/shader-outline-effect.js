@@ -35,7 +35,7 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { RotateTo, sequence } from "@aspect/actions";
-import { GLProgram, Sprite, Sys, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ATTRIBUTE_NAME_COLOR, ATTRIBUTE_NAME_POSITION, ATTRIBUTE_NAME_TEX_COORD } from "@aspect/core";
+import { GLProgram, GLProgramState, Sprite, Sys, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ATTRIBUTE_NAME_COLOR, ATTRIBUTE_NAME_POSITION, ATTRIBUTE_NAME_TEX_COORD } from "@aspect/core";
 export class ShaderOutlineEffect extends OpenGLTestLayer {
     constructor() {
         super();
@@ -67,7 +67,7 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
             this.sprite.runAction(sequence(new RotateTo(1.0, 10), new RotateTo(1.0, -10)).repeatForever());
 
             if(Sys.getInstance().isNative){
-                var glProgram_state = cc.GLProgramState.getOrCreateWithGLProgram(this.shader);
+                var glProgram_state = GLProgramState.getOrCreateWithGLProgram(this.shader);
                 glProgram_state.setUniformFloat("u_threshold", 1.75);
                 glProgram_state.setUniformVec3("u_outlineColor", {x: 0/255, y: 255/255, z: 0/255});
                 this.sprite.setGLProgramState(glProgram_state);

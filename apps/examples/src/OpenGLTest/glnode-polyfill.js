@@ -1,4 +1,4 @@
-import { Node, KM_GL_MODELVIEW, kmGLPopMatrix, kmGLPushMatrix } from "@aspect/core";
+import { Node, KM_GL_MODELVIEW, Matrix4, kmGLLoadMatrix, kmGLMatrixMode, kmGLPopMatrix, kmGLPushMatrix } from "@aspect/core";
 
 export class GLNode extends Node {
     constructor() {
@@ -7,7 +7,7 @@ export class GLNode extends Node {
     }
     init() {
         this._renderCmd._needDraw = true;
-        this._renderCmd._matrix = new cc.math.Matrix4();
+        this._renderCmd._matrix = new Matrix4();
         this._renderCmd._matrix.identity();
         this._renderCmd.rendering =  function(ctx){
             var wt = this._worldTransform;
@@ -18,9 +18,9 @@ export class GLNode extends Node {
             this._matrix.mat[5] = wt.d;
             this._matrix.mat[13] = wt.ty;
 
-            cc.kmGLMatrixMode(KM_GL_MODELVIEW);
+            kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLPushMatrix();
-            cc.kmGLLoadMatrix(this._matrix);
+            kmGLLoadMatrix(this._matrix);
 
             this._node.draw(ctx);
 
