@@ -29,7 +29,7 @@ import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { TAG_ACTION1_EASE_ACTIONS } from "./ease-actions-test-constants";
 import { Point } from "@aspect/core";
-import { JumpBy, RotateBy, Sequence, spawn } from "@aspect/actions";
+import { JumpBy, RotateBy, Sequence, Spawn } from "@aspect/actions";
 
 export class SpeedTest extends EaseSpriteDemo {
   constructor() {

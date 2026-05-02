@@ -31,6 +31,8 @@ import SpriteFrameCache from './sprite-frame-cache';
 import {
   REPEAT_FOREVER
 } from "../platform/macro/constants";
+import { AnimationFrame } from "./animation/animation-frame";
+import { Animation } from "./animation/animation";
 
 /**
  * <p>
@@ -169,7 +171,7 @@ export default class AnimationCache {
           );
           continue;
         }
-        var animFrame = new cc.AnimationFrame();
+        var animFrame = new AnimationFrame();
         animFrame.initWithSpriteFrame(spriteFrame, 1, null);
         frames.push(animFrame);
       }
@@ -180,7 +182,7 @@ export default class AnimationCache {
       } else if (frames.length !== frameNames.length) {
         log(_LogInfos.animationCache__parseVersion1_4, key);
       }
-      animation = new cc.Animation(frames, delay, 1);
+      animation = new Animation(frames, delay, 1);
       this.addAnimation(animation, key);
     }
   }
@@ -223,13 +225,13 @@ export default class AnimationCache {
 
         var delayUnits = parseFloat(entry["delayUnits"]) || 0;
         var userInfo = entry["notification"];
-        var animFrame = new cc.AnimationFrame();
+        var animFrame = new AnimationFrame();
         animFrame.initWithSpriteFrame(spriteFrame, delayUnits, userInfo);
         arr.push(animFrame);
       }
 
       var delayPerUnit = parseFloat(animationDict["delayPerUnit"]) || 0;
-      var animation = new cc.Animation();
+      var animation = new Animation();
       animation.initWithAnimationFrames(arr, delayPerUnit, loops);
       animation.setRestoreOriginalFrame(restoreOriginalFrame);
       this.addAnimation(animation, key);

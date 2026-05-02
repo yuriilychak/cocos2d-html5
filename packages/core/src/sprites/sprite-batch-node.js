@@ -32,6 +32,8 @@ import {
   BLEND_DST,
   BLEND_SRC
 } from "../platform/macro/constants";
+import { BlendFunc } from "../platform/types/blend-func";
+import { isString } from "../boot/utils";
 
 /**
  * <p>
@@ -67,10 +69,10 @@ export class SpriteBatchNode extends Node {
     // all descendants: chlidren, gran children, etc...
     this._texture = null;
     this._className = "SpriteBatchNode";
-    this._blendFunc = new cc.BlendFunc(BLEND_SRC, BLEND_DST);
+    this._blendFunc = new BlendFunc(BLEND_SRC, BLEND_DST);
 
     var texture2D;
-    if (cc.isString(fileImage)) {
+    if (isString(fileImage)) {
       texture2D = TextureCache.getInstance().getTextureForKey(fileImage);
       if (!texture2D) texture2D = TextureCache.getInstance().addImage(fileImage);
     } else if (fileImage instanceof Texture2D) texture2D = fileImage;
@@ -137,7 +139,7 @@ export class SpriteBatchNode extends Node {
    * @return {BlendFunc}
    */
   getBlendFunc() {
-    return new cc.BlendFunc(this._blendFunc.src, this._blendFunc.dst);
+    return new BlendFunc(this._blendFunc.src, this._blendFunc.dst);
   }
 
   /**

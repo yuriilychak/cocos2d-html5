@@ -33,7 +33,7 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point, textureCache } from "@aspect/core";
-import { JumpBy, RotateBy, Speed, Sequence, spawn } from "@aspect/actions";
+import { JumpBy, RotateBy, Speed, Sequence, Spawn } from "@aspect/actions";
 import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 
 export class SchedulerTest extends EaseSpriteDemo {

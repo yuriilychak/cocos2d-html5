@@ -35,6 +35,12 @@ import Sys from '../boot/sys';
 import Game from '../boot/game';
 import { Director } from '../director/director';
 import EventKeyboard from '../event-manager/event-extension/event-keyboard';
+import { Acceleration } from '../platform/types/color';
+import {
+  UIInterfaceOrientationLandscapeRight,
+  UIInterfaceOrientationLandscapeLeft,
+  UIInterfaceOrientationPortraitUpsideDown
+} from '../platform/input-manager';
 
 export function initInputExtension(_p) {
 
@@ -87,7 +93,7 @@ export function initInputExtension(_p) {
 
     _p._registerAccelerometerEvent = function(){
         var w = window, _t = this;
-        _t._acceleration = new cc.Acceleration();
+        _t._acceleration = new Acceleration();
         _t._accelDeviceEvent = w.DeviceMotionEvent || w.DeviceOrientationEvent;
 
         //TODO fix DeviceMotionEvent bug on QQ Browser version 4.1 and below.
@@ -96,7 +102,7 @@ export function initInputExtension(_p) {
 
         var _deviceEventType = (_t._accelDeviceEvent === w.DeviceMotionEvent) ? "devicemotion" : "deviceorientation";
         var ua = navigator.userAgent;
-        if (/Android/.test(ua) || (/Adr/.test(ua) && Sys.getInstance().browserType === cc.BROWSER_TYPE_UC)) {
+        if (/Android/.test(ua) || (/Adr/.test(ua) && Sys.getInstance().browserType === Sys.getInstance().BROWSER_TYPE_UC)) {
             _t._minus = -1;
         }
 
@@ -137,13 +143,13 @@ export function initInputExtension(_p) {
         mAcceleration.timestamp = eventData.timeStamp || Date.now();
 
         var tmpX = mAcceleration.x;
-        if(w.orientation === cc.UIInterfaceOrientationLandscapeRight){
+        if(w.orientation === UIInterfaceOrientationLandscapeRight){
             mAcceleration.x = -mAcceleration.y;
             mAcceleration.y = tmpX;
-        }else if(w.orientation === cc.UIInterfaceOrientationLandscapeLeft){
+        }else if(w.orientation === UIInterfaceOrientationLandscapeLeft){
             mAcceleration.x = mAcceleration.y;
             mAcceleration.y = -tmpX;
-        }else if(w.orientation === cc.UIInterfaceOrientationPortraitUpsideDown){
+        }else if(w.orientation === UIInterfaceOrientationPortraitUpsideDown){
             mAcceleration.x = -mAcceleration.x;
             mAcceleration.y = -mAcceleration.y;
         }

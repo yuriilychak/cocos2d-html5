@@ -33,7 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
-import { JumpBy, RotateBy, Spawn, spawn } from "@aspect/actions";
+import { JumpBy, RotateBy, Spawn } from "@aspect/actions";
 
 export class ActionSpawn extends ActionsDemo {
   constructor() {

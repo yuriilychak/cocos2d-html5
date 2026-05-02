@@ -26,6 +26,7 @@
 import Loader from '../boot/loader';
 import Path from '../boot/path';
 import TextureCache from '../textures/texture-cache';
+import { isString } from '../boot/utils';
 
 export const _txtLoader = {
     load: function (realUrl, url, res, cb) {
@@ -128,7 +129,7 @@ export const _fontLoader = {
     load: function (realUrl, url, res, cb) {
         var self = this;
         var type = res.type, name = res.name, srcs = res.srcs;
-        if (cc.isString(res)) {
+        if (isString(res)) {
             type = Path.extname(res);
             name = Path.basename(res, type);
             self._loadFont(name, res, type);

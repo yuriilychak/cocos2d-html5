@@ -34,6 +34,7 @@ import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
 import { RendererConfig } from "../renderer/renderer-config";
+import { isString } from "../boot/utils";
 
 /**
  * <p>
@@ -211,7 +212,7 @@ export default class SpriteFrameCache {
       texture = TextureCache.getInstance().addImage(texturePath);
     } else if (texture instanceof Texture2D) {
       //do nothing
-    } else if (cc.isString(texture)) {
+    } else if (isString(texture)) {
       //string
       texture = TextureCache.getInstance().addImage(texture);
     } else {

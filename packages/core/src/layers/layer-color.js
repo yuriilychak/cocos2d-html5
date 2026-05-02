@@ -31,6 +31,7 @@ import Game from "../boot/game";
 import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from "./renderer";
 import { RendererConfig } from "../renderer/renderer-config";
 import { Director } from "../director/director";
+import { BlendFunc } from "../platform/types/blend-func";
 
 /**
  * LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
@@ -51,7 +52,7 @@ export class LayerColor extends Layer {
     this._blendFunc = null;
     this._className = "LayerColor";
 
-    this._blendFunc = cc.BlendFunc.ALPHA_NON_PREMULTIPLIED;
+    this._blendFunc = BlendFunc.ALPHA_NON_PREMULTIPLIED;
     LayerColor.prototype.init.call(this, color, width, height);
   }
 
