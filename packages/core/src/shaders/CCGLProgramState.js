@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { log } from "../boot/debugger";
-import { glBindTexture2DN } from "./CCGLStateCache";
+import { GLStateCache } from "./CCGLStateCache";
 
 const types = {
   GL_FLOAT: 0,
@@ -152,7 +152,7 @@ export class UniformValue {
           this._uniform._location,
           this._value
         );
-        glBindTexture2DN(this._value, this._textureId);
+        GLStateCache.getInstance().bindTexture2DN(this._value, this._textureId);
         break;
       default:
     }

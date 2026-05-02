@@ -29,7 +29,7 @@ import { Node } from "./node";
 import Matrix4 from "../kazmath/mat4";
 import ShaderCache from "../shaders/CCShaderCache";
 import { TextureAtlas } from "../textures/texture-atlas";
-import { glBlendFunc } from "../shaders/CCGLStateCache";
+import { GLStateCache } from "../shaders/CCGLStateCache";
 import { RendererConfig } from "../renderer/renderer-config";
 import {
   SHADER_POSITION_TEXTURE_UCOLOR,
@@ -92,7 +92,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     this._glProgramState.apply(this._matrix);
 
-    glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
     if (this._uniformColor && this._colorF32Array) {
       context.uniform4fv(this._uniformColor, this._colorF32Array);
       this._textureAtlas.drawNumberOfQuads(node.quadsToDraw, 0);

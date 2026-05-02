@@ -25,6 +25,7 @@ import {
 } from "../platform/macro/constants";
 import Game from "../boot/game";
 import { EGLView } from "../platform/egl-view/egl-view";
+import { GLStateCache } from "../shaders/CCGLStateCache";
 
 /**
  * OpenGL projection protocol
@@ -125,7 +126,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     }
     director._projection = projection;
     EventManager.getInstance().dispatchEvent(director._eventProjectionChanged);
-    cc.setProjectionMatrixDirty();
+    GLStateCache.getInstance().setProjectionMatrixDirty();
     RendererConfig.getInstance().renderer.childrenOrderDirty = true;
   }
 
@@ -178,9 +179,9 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   setAlphaBlending(on) {
-    if (on) cc.glBlendFunc(BLEND_SRC, BLEND_DST);
+    if (on) GLStateCache.getInstance().blendFunc(BLEND_SRC, BLEND_DST);
     else
-      cc.glBlendFunc(
+      GLStateCache.getInstance().blendFunc(
         RendererConfig.getInstance().renderContext.ONE,
         RendererConfig.getInstance().renderContext.ZERO
       );

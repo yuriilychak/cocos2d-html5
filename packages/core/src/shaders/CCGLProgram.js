@@ -50,6 +50,7 @@ import {
 import { KMGLMatrix } from "../kazmath/gl/km-gl-matrix";
 import Matrix4, { kmMat4Multiply, getMat4MultiplyValue } from "../kazmath/mat4";
 import { checkGLErrorDebug } from "../platform/macro/utils";
+import { GLStateCache } from "./CCGLStateCache";
 
 /**
  * Class that implements a WebGL program
@@ -306,7 +307,7 @@ export default class GLProgram extends NewClass {
           "cocos2d: ERROR: Failed to link program: " +
             this._glContext.getProgramInfoLog(this._programObj)
         );
-        cc.glDeleteProgram(this._programObj);
+        GLStateCache.getInstance().deleteProgram(this._programObj);
         this._programObj = null;
         return false;
       }
@@ -319,7 +320,7 @@ export default class GLProgram extends NewClass {
    * it will call glUseProgram()
    */
   use() {
-    cc.glUseProgram(this._programObj);
+    GLStateCache.getInstance().useProgram(this._programObj);
   }
 
   /**

@@ -37,6 +37,7 @@ import { AffineTransform } from "../cocoa/affine-transform";
 import ShaderCache from "../shaders/CCShaderCache";
 import { EGLView } from "../platform/egl-view/egl-view";
 import { radiansToDegrees } from "../platform/macro/utils";
+import { GLStateCache } from "../shaders/CCGLStateCache";
 
 /**
  * Layer's WebGL render command
@@ -145,7 +146,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     }
 
     this._glProgramState.apply(this._matrix);
-    cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
@@ -306,7 +307,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
       node = this._node;
 
     if (!this._matrix) {
-      this._matrix = new cc.math.Matrix4();
+      this._matrix = new Matrix4();
       this._matrix.identity();
     }
 
@@ -337,7 +338,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     }
 
     this._glProgramState.apply(this._matrix);
-    cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);

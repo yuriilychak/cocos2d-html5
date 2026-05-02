@@ -32,7 +32,8 @@ import {
   VERTEX_ATTRIB_POSITION,
   VERTEX_ATTRIB_TEX_COORDS
 } from "../platform/macro/constants";
-import { glBlendFunc, glBindTexture2DN } from "../shaders/CCGLStateCache";
+import { GLStateCache } from "../shaders/CCGLStateCache";
+import Matrix4 from "../kazmath/mat4";
 
 // Internal variables
 // Batching general informations
@@ -144,7 +145,7 @@ var rendererWebGL = {
     gl.disable(gl.CULL_FACE);
     gl.disable(gl.DEPTH_TEST);
 
-    this.mat4Identity = new cc.math.Matrix4();
+    this.mat4Identity = new Matrix4();
     this.mat4Identity.identity();
     initQuadBuffer(BATCH_VERTEX_COUNT);
     if (Sys.getInstance().os === Sys.getInstance().OS_IOS) {
@@ -401,8 +402,8 @@ var rendererWebGL = {
       glProgramState.getGLProgram()._updateProjectionUniform();
     }
 
-    glBlendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
-    glBindTexture2DN(0, texture); // = glBindTexture2D(texture);
+    GLStateCache.getInstance().blendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
+    GLStateCache.getInstance().bindTexture2DN(0, texture); // = glBindTexture2D(texture);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer);
     // upload the vertex data to the gl buffer

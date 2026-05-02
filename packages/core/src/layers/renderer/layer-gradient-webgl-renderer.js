@@ -35,7 +35,7 @@ import { AffineTransform } from "../../cocoa/affine-transform";
 import { radiansToDegrees } from "../../platform/macro/utils";
 import Matrix4 from "../../kazmath/mat4";
 import { EGLView } from "../../platform/egl-view/egl-view";
-import { glBlendFunc } from "../../shaders/CCGLStateCache";
+import { GLStateCache } from "../../shaders/CCGLStateCache";
 
 /**
  * LayerGradient's WebGL render command
@@ -207,7 +207,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
     }
 
     this._glProgramState.apply(this._matrix);
-    glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);

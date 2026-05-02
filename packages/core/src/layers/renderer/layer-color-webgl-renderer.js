@@ -30,6 +30,8 @@ import {
   VERTEX_ATTRIB_POSITION
 } from "../../platform/macro/constants";
 import ShaderCache from "../../shaders/CCShaderCache";
+import Matrix4 from "../../kazmath/mat4";
+import { GLStateCache } from "../../shaders/CCGLStateCache";
 
 /**
  * LayerColor's WebGL render command
@@ -100,7 +102,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     const node = this._node;
 
     if (!this._matrix) {
-      this._matrix = new cc.math.Matrix4();
+      this._matrix = new Matrix4();
       this._matrix.identity();
     }
 
@@ -122,7 +124,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     }
 
     this._glProgramState.apply(this._matrix);
-    cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);

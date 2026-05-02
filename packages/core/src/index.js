@@ -147,6 +147,7 @@ import { Point, pointEqualToPoint } from "./cocoa/geometry/point";
 import { Size } from "./cocoa/geometry/size";
 import { Rect } from "./cocoa/geometry/rect";
 import { AffineTransform } from "./cocoa/affine-transform";
+import { cardinalSplineAt, getControlPointAt } from "./cocoa/geometry/spline-utils";
 
 // ======================================================================
 // Support
@@ -294,6 +295,7 @@ import AnimationCache from "./sprites/animation-cache";
 import { SpriteFrame } from "./sprites/sprite-frame";
 import SpriteFrameCache from "./sprites/sprite-frame-cache";
 import {
+  GLStateCache,
   glInvalidateStateCache,
   glUseProgram,
   glDeleteProgram,
@@ -601,6 +603,8 @@ cc.DENSITYDPI_LOW = DENSITYDPI_LOW;
 // Cocoa — Geometry
 cc.Point = Point;
 cc.pointEqualToPoint = pointEqualToPoint;
+cc.cardinalSplineAt = cardinalSplineAt;
+cc.getControlPointAt = getControlPointAt;
 cc.Size = Size;
 cc.Rect = Rect;
 
@@ -814,17 +818,8 @@ cc.kmGLRotatef = kmGLRotatef;
 cc.kmGLScalef = kmGLScalef;
 cc.kmGLGetMatrix = kmGLGetMatrix;
 
-// GL State Cache — property initializations
-cc._currentProjectionMatrix = -1;
-cc.MAX_ACTIVETEXTURE = 16;
-cc._currentShaderProgram = -1;
-cc._currentBoundTexture = [
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-];
-cc._blendingSource = -1;
-cc._blendingDest = -1;
-cc._GLServerState = 0;
-if (cc.TEXTURE_ATLAS_USE_VAO) cc._uVAO = 0;
+// GL State Cache — singleton
+cc.GLStateCache = GLStateCache;
 
 // GL State Cache — function aliases
 cc.glInvalidateStateCache = glInvalidateStateCache;
@@ -932,6 +927,7 @@ export {
 export { default as TextureCache } from "./textures/texture-cache";
 export const textureCache = TextureCache.getInstance();
 export { GLProgramState, ShaderCache } from "./shaders";
+export { GLStateCache } from "./shaders/CCGLStateCache";
 export {
   glBlendFunc,
   glBindTexture2D,
