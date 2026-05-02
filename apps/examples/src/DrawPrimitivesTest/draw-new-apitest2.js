@@ -31,7 +31,7 @@
 //
 //------------------------------------------------------------------
 import { DrawTestDemo } from "./draw-test-demo";
-import { Color, Director, Point } from "@aspect/core";
+import { Color, Director, Point, degreesToRadians } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
 
 export class DrawNewAPITest2 extends DrawTestDemo {
@@ -90,7 +90,7 @@ export class DrawNewAPITest2 extends DrawTestDemo {
     draw.drawCircle(
       new Point(winSize.width / 2, winSize.height / 2),
       50,
-      cc.degreesToRadians(90),
+      degreesToRadians(90),
       50,
       true,
       2,

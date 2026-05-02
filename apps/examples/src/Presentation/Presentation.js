@@ -40,7 +40,7 @@ import { TransitionSlideInL, TransitionSlideInR } from "@aspect/transitions";
 import { Menu, MenuItemFont } from "@aspect/menus";
 import { ParticleFireworks, ParticleMeteor, ParticleSun } from "../ParticleTest/ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
-import { PhysicsSprite } from "@aspect/physics";
+import { PhysicsSprite, PhysicsDebugNode } from "@aspect/physics";
 
 export var presentationSceneIdx = -1;
 export var centerPos = new Point(0, 0); // will be updated later
@@ -380,7 +380,7 @@ export class ChipmunkPage extends PresentationBaseLayer {
     this.space.gravity = cp.v(0, -100);
 
     // Physics debug layer
-    this.debugNode = new cc.PhysicsDebugNode(this.space.handle);
+    this.debugNode = new PhysicsDebugNode(this.space.handle);
     this.debugNode.visible = false;
     this.addChild(this.debugNode, 100);
   }

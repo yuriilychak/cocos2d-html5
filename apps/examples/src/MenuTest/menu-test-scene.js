@@ -33,6 +33,7 @@ import { MenuLayer4 } from "./menu-layer4";
 import { RemoveMenuItemWhenMove } from "./remove-menu-item-when-move";
 import { TestScene } from "../test-scene";
 import { director } from "../constants";
+import { LayerMultiplex } from "@aspect/core";
 
 export class MenuTestScene extends TestScene {
   runThisTest() {
@@ -43,7 +44,7 @@ export class MenuTestScene extends TestScene {
     var layer5 = new MenuBugsTest();
     var layer6 = new RemoveMenuItemWhenMove();
 
-    var layer = new cc.LayerMultiplex(
+    var layer = new LayerMultiplex(
       layer1,
       layer2,
       layer3,

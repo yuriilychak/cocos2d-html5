@@ -41,7 +41,7 @@ import {
   winSize
 } from "./constants";
 import { LINE_SPACE, curPos, testNames } from "./tests-main-helpers";
-import { Color, Director, EventListener, EventManager, EventMouse, Game, LabelTTF, LayerGradient, RendererConfig, Sys } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, EventMouse, Game, LabelTTF, LayerGradient, LoaderScene, RendererConfig, Sys } from "@aspect/core";
 import { Menu, MenuItemFont, MenuItemImage, MenuItemLabel, MenuItemToggle } from "@aspect/menus";
 
 export class TestController extends LayerGradient {
@@ -188,7 +188,7 @@ export class TestController extends LayerGradient {
 
     var testCase = testNames[idx];
     var res = testCase.resource || [];
-    cc.LoaderScene.preload(
+    LoaderScene.preload(
       res,
       function () {
         var scene = testCase.testScene();

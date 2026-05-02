@@ -26,7 +26,7 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
-import { Director, LabelTTF } from "@aspect/core";
+import { Device, Director, LabelTTF } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class VibrateTest extends BaseTestLayer {
@@ -83,7 +83,7 @@ export class VibrateTest extends BaseTestLayer {
     this.addChild(durationSlider);
   }
   startVibrate(sender) {
-    cc.Device.vibrate(this._duration);
+    Device.vibrate(this._duration);
   }
   durationSliderEvent(sender, type) {
     switch (type) {

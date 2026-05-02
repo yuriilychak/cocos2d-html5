@@ -106,10 +106,8 @@ export class WrapAlgorithmTest extends AtlasDemo {
   }
   onEnter() {
     super.onEnter();
-    cc.SPRITE_DEBUG_DRAW = 1;
   }
   onExit() {
     super.onExit();
-    cc.SPRITE_DEBUG_DRAW = 0;
   }
 }

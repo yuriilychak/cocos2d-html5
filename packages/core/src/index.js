@@ -129,6 +129,7 @@ import { EGLView } from "./platform/egl-view/egl-view";
 import { ContainerStrategy } from "./platform/egl-view/container-strategy";
 import { ContentStrategy } from "./platform/egl-view/content-strategy";
 import { ResolutionPolicy } from "./platform/egl-view/resolution-policy";
+import { Device } from "./platform/device";
 import {
   Touches,
   TouchesIntergerDict,
@@ -570,6 +571,7 @@ cc.EGLView = EGLView;
 cc.ContainerStrategy = ContainerStrategy;
 cc.ContentStrategy = ContentStrategy;
 cc.ResolutionPolicy = ResolutionPolicy;
+cc.Device = Device;
 cc.Touches = Touches;
 cc.TouchesIntergerDict = TouchesIntergerDict;
 cc.DENSITYDPI_DEVICE = DENSITYDPI_DEVICE;
@@ -1025,3 +1027,5 @@ export { default as AnimationCache } from "./sprites/animation-cache";
 export { inputManager } from "./platform/input-manager";
 export { Scheduler } from "./scheduler";
 export { ActionManager } from "./action-manager";
+export { LayerMultiplex } from "./layers/layer-multiplex";
+export { Device } from "./platform/device";

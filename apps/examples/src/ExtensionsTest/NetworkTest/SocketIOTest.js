@@ -27,15 +27,7 @@
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { Director, LabelTTF, Layer, Point, Scene, log } from "@aspect/core";
 import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
-
-window.io;
-
-// SocketIO is now provided by the socketio package
-// If it's not available, handle gracefully
-
-if (!window.SocketIO && !cc.SocketIO) {
-  console.warn("Socket.IO not available for SocketIOTest");
-}
+import { SocketIO } from "@aspect/socketio";
 
 export class SocketIOTestLayer extends Layer {
   constructor() {
@@ -315,15 +307,6 @@ export class SocketIOTestLayer extends Layer {
   }
 
   onMenuSIOEndpointClicked(sender) {
-    // Check if SocketIO is available, load if needed
-    if (!window.SocketIO) {
-      log(
-        "Socket.IO not available. Please include socket.io-client library."
-      );
-      this._sioClientStatus.setString("Socket.IO not available!");
-      return;
-    }
-
     // If socket.io isn't loaded yet, load it from CDN first
     if (!window.io) {
       this._sioClientStatus.setString("Loading Socket.IO from CDN...");

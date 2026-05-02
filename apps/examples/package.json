@@ -10,6 +10,7 @@
     "@aspect/cocos2d": "*",
     "@aspect/extensions": "*",
     "@aspect/external": "*",
+    "@aspect/socketio": "*",
     "@aspect/tilemap": "*"
   }
 }

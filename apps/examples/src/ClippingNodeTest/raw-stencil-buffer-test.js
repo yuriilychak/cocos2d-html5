@@ -33,7 +33,7 @@ import {
   _set_stencilBits
 } from "./clipping-node-test-helpers";
 import { s_pathGrossini } from "../resources";
-import { Color, Director, Point, RendererConfig, Sprite, kmGLPopMatrix, kmGLPushMatrix, log } from "@aspect/core";
+import { Color, CustomRenderCmd, Director, Game, Point, RendererConfig, Sprite, kmGLPopMatrix, kmGLPushMatrix, log } from "@aspect/core";
 export class RawStencilBufferTest extends BaseClippingNodeTest {
   constructor() {
     super();
@@ -41,7 +41,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   _initRendererCmd() {
-    this._rendererCmd = new cc.CustomRenderCmdWebGL(this, this.draw);
+    this._rendererCmd = new CustomRenderCmd(this, this.draw);
   }
 
   title() {
@@ -88,7 +88,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       this.setupStencilForClippingOnPlane(i);
       //checkGLErrorDebug();
 
-      cc._drawingUtil.drawSolidRect(
+      Game.getInstance().drawingUtils.drawSolidRect(
         new Point(0, 0),
         stencilPoint,
         new Color(255, 255, 255, 255)
@@ -102,7 +102,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       this.setupStencilForDrawingOnPlane(i);
       //checkGLErrorDebug();
 
-      cc._drawingUtil.drawSolidRect(
+      Game.getInstance().drawingUtils.drawSolidRect(
         new Point(0, 0),
         winPoint,
         _planeColor[i]

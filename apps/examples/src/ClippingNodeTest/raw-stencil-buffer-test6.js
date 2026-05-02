@@ -27,7 +27,7 @@
 
 import { _alphaThreshold } from "./clipping-node-test-helpers";
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
-import { Color, Director, Point, RendererConfig, SHADER_POSITION_TEXTURECOLORALPHATEST, ShaderCache, UNIFORM_ALPHA_TEST_VALUE_S, glUseProgram } from "@aspect/core";
+import { Color, Director, Game, Point, RendererConfig, SHADER_POSITION_TEXTURECOLORALPHATEST, ShaderCache, UNIFORM_ALPHA_TEST_VALUE_S, glUseProgram } from "@aspect/core";
 export class RawStencilBufferTest6 extends RawStencilBufferTest {
   subtitle() {
     return "6:ManualClear,AlphaTest:ENABLE";
@@ -44,7 +44,7 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
     gl.stencilMask(planeMask);
     gl.stencilFunc(gl.NEVER, 0, planeMask);
     gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
-    cc._drawingUtil.drawSolidRect(
+    Game.getInstance().drawingUtils.drawSolidRect(
       new Point(0, 0),
       Point.fromSize(Director.getInstance().getWinSize()),
       new Color(255, 255, 255, 255)

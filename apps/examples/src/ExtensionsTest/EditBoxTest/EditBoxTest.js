@@ -27,7 +27,7 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { winSize } from "../../constants";
-import { Color, Director, Layer, Scene, Size, log } from "@aspect/core";
+import { Color, Director, Layer, Scene, Size, associateWithNative, log } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
@@ -43,7 +43,7 @@ export class EditBoxTestLayer extends Layer {
     this._box3 = null;
 
     this._box4 = null;
-    cc.associateWithNative(this, Layer);
+    associateWithNative(this, Layer);
     this.init();
   }
 

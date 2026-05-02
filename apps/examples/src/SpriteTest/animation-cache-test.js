@@ -34,7 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_bluePlist, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate, sequence } from "@aspect/actions";
-import { Animation, AnimationCache, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Animation, AnimationCache, AnimationFrame, Sprite, SpriteFrameCache } from "@aspect/core";
 export class AnimationCacheTest extends SpriteTestDemo {
 
 
@@ -90,7 +90,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
             frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
-            animFrame = new cc.AnimationFrame(frame, 1);
+            animFrame = new AnimationFrame(frame, 1);
             animFrames.push(animFrame);
         }
 

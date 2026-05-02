@@ -38,6 +38,7 @@ import {
 import { ChipmunkTestScene } from "./chipmunk-test-scene";
 import { director, winSize } from "../constants";
 import { Color, Sys } from "@aspect/core";
+import { PhysicsDebugNode } from "@aspect/physics";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class ChipmunkBaseLayer extends BaseTestLayer {
@@ -72,7 +73,7 @@ export class ChipmunkBaseLayer extends BaseTestLayer {
 
   setupDebugNode() {
     // debug only
-    this._debugNode = new cc.PhysicsDebugNode(this.space);
+    this._debugNode = new PhysicsDebugNode(this.space);
     this._debugNode.visible = false;
     this.addChild(this._debugNode);
   }
