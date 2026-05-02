@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Color, Point, Size, log } from "@aspect/core";
+import { Button, HBox, Layout, LinearLayoutParameter, PageView, VBox } from "@aspect/ccui";
 
 export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
   init() {
@@ -51,7 +52,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       var background = root.getChildByName("background_Panel");
 
       // Create the page view
-      var pageView = new ccui.PageView();
+      var pageView = new PageView();
       pageView.setContentSize(new Size(240.0, 130.0));
       pageView.setAnchorPoint(new Point(0.5, 0.5));
       var backgroundSize = background.getContentSize();
@@ -59,17 +60,17 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
         new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
       );
       pageView.setBackGroundColor(Color.GREEN);
-      pageView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+      pageView.setBackGroundColorType(Layout.BG_COLOR_SOLID);
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
-        var outerBox = new ccui.HBox();
+        var outerBox = new HBox();
         outerBox.setContentSize(new Size(240.0, 130.0));
 
         for (var k = 0; k < 2; ++k) {
-          var innerBox = new ccui.VBox();
+          var innerBox = new VBox();
           for (var j = 0; j < 3; j++) {
-            var btn = new ccui.Button(
+            var btn = new Button(
               "ccs-res/cocosui/animationbuttonnormal.png",
               "ccs-res/cocosui/animationbuttonpressed.png"
             );
@@ -77,7 +78,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
             innerBox.addChild(btn);
           }
 
-          var parameter = new ccui.LinearLayoutParameter();
+          var parameter = new LinearLayoutParameter();
           parameter.setMargin({ left: 0, top: 0, right: 100, bottom: 0 });
           innerBox.setLayoutParameter(parameter);
 
@@ -91,7 +92,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       this._mainNode.addChild(pageView);
 
       //add buttons
-      var button = new ccui.Button();
+      var button = new Button();
       button.setAnchorPoint(0, 0.5);
       button.setTitleFontSize(12);
       button.setPosition(20, 220);
@@ -100,13 +101,13 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       button.setPressedActionEnabled(true);
       button.setTitleColor(Color.RED);
       button.addClickEventListener(function (sender) {
-        var outerBox = new ccui.HBox();
+        var outerBox = new HBox();
         outerBox.setContentSize(new Size(240.0, 130.0));
 
         for (var k = 0; k < 2; ++k) {
-          var innerBox = new ccui.VBox();
+          var innerBox = new VBox();
           for (var j = 0; j < 3; j++) {
-            var btn = new ccui.Button(
+            var btn = new Button(
               "ccs-res/cocosui/animationbuttonnormal.png",
               "ccs-res/cocosui/animationbuttonpressed.png"
             );
@@ -114,7 +115,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
             innerBox.addChild(btn);
           }
 
-          var parameter = new ccui.LinearLayoutParameter();
+          var parameter = new LinearLayoutParameter();
           parameter.setMargin({ left: 0, top: 0, right: 100, bottom: 0 });
           innerBox.setLayoutParameter(parameter);
 
@@ -128,7 +129,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       });
       this._mainNode.addChild(button);
 
-      var button2 = new ccui.Button();
+      var button2 = new Button();
       button2.setAnchorPoint(0, 0.5);
       button2.setTitleFontSize(12);
       button2.setPosition(20, 180);
@@ -148,7 +149,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       });
       this._mainNode.addChild(button2);
 
-      var button3 = new ccui.Button();
+      var button3 = new Button();
       button3.setAnchorPoint(0, 0.5);
       button3.setTitleFontSize(12);
       button3.setPosition(new Point(20, 140));
@@ -170,7 +171,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
 
   pageViewEvent(pageView, type) {
     switch (type) {
-      case ccui.PageView.EVENT_TURNING:
+      case PageView.EVENT_TURNING:
         this._topDisplayLabel.setString(
           "page = " + (pageView.getCurPageIndex() + 1)
         );

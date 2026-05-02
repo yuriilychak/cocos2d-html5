@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { TextAtlas } from "@aspect/ccui";
 
 export class UILabelAtlasTest extends UIMainLayer {
   init() {
@@ -34,7 +35,7 @@ export class UILabelAtlasTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("LabelAtlas");
 
       // Create the label atlas
-      var textAtlas = new ccui.TextAtlas();
+      var textAtlas = new TextAtlas();
       textAtlas.setProperty(
         "1234567890",
         "ccs-res/cocosui/labelatlas.png",

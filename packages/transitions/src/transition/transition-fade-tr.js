@@ -1,7 +1,7 @@
 import { Director, Node, Size } from "@aspect/core";
 import { NodeGrid } from "@aspect/node-grid";
 import { fadeOutTRTiles, stopGrid } from "@aspect/actions3d";
-import { sequence, CallFunc } from "@aspect/actions";
+import { Sequence, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
 export class TransitionFadeTR extends TransitionScene {
@@ -30,7 +30,7 @@ export class TransitionFadeTR extends TransitionScene {
 
     var action = this.actionWithSize(new Size(x, y));
     this._gridProxy.runAction(
-      sequence(
+      new Sequence(
         this.easeActionWithAction(action),
         new CallFunc(this.finish, this),
         stopGrid()

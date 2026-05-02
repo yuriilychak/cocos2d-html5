@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Color, LayerColor, log } from "@aspect/core";
+import { Button, Widget, helper } from "@aspect/ccui";
 
 export class UILayoutComponentTest extends UIMainLayer {
   constructor() {
@@ -43,7 +44,7 @@ export class UILayoutComponentTest extends UIMainLayer {
       this._baseLayer.setContentSize(200, 200);
       this._mainNode.addChild(this._baseLayer);
 
-      var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
+      var button = new Button("ccs-res/cocosui/animationbuttonnormal.png");
       log(
         "content size should be greater than 0:  width = %f, height = %f",
         button.width,
@@ -61,11 +62,11 @@ export class UILayoutComponentTest extends UIMainLayer {
   }
   touchEvent(sender, type) {
     switch (type) {
-      case ccui.Widget.TOUCH_BEGAN:
+      case Widget.TOUCH_BEGAN:
         break;
-      case ccui.Widget.TOUCH_MOVED:
+      case Widget.TOUCH_MOVED:
         break;
-      case ccui.Widget.TOUCH_ENDED:
+      case Widget.TOUCH_ENDED:
         var widgetSize = this._widget.getContentSize();
         var layerSize = this._baseLayer.getContentSize();
         if (
@@ -74,9 +75,9 @@ export class UILayoutComponentTest extends UIMainLayer {
         )
           this._baseLayer.setContentSize(200, 200);
         else this._baseLayer.setContentSize(widgetSize);
-        ccui.helper.doLayout(this._baseLayer);
+        helper.doLayout(this._baseLayer);
         break;
-      case ccui.Widget.TOUCH_CANCELED:
+      case Widget.TOUCH_CANCELED:
         break;
       default:
         break;

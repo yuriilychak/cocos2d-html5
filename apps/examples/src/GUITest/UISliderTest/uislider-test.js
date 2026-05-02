@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Slider } from "@aspect/ccui";
 
 export class UISliderTest extends UIMainLayer {
   init() {
@@ -35,7 +36,7 @@ export class UISliderTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("Slider");
 
       // Create the slider
-      var slider = new ccui.Slider();
+      var slider = new Slider();
       slider.setTouchEnabled(true);
       slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
       slider.loadSlidBallTextures(
@@ -56,7 +57,7 @@ export class UISliderTest extends UIMainLayer {
 
   sliderEvent(sender, type) {
     switch (type) {
-      case ccui.Slider.EVENT_PERCENT_CHANGED:
+      case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = slider.getPercent();
         this._topDisplayLabel.setString("Percent " + percent.toFixed(0));

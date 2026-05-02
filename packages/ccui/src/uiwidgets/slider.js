@@ -761,7 +761,7 @@ export class Slider extends Widget {
   }
 
   /**
-   * Returns the "class name" of ccui.LoadingBar.
+   * Returns the "class name" of LoadingBar.
    * @returns {string}
    */
   getDescription() {

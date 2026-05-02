@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { ImageView, Layout, PageView, Text } from "@aspect/ccui";
 import { Color, Size, log } from "@aspect/core";
 
 export class UIPageViewTest extends UIMainLayer {
@@ -44,7 +45,7 @@ export class UIPageViewTest extends UIMainLayer {
       var background = this._widget.getChildByName("background_Panel");
 
       // Create the page view
-      var pageView = new ccui.PageView();
+      var pageView = new PageView();
       pageView.setTouchEnabled(true);
       pageView.setContentSize(new Size(240, 130));
       pageView.x =
@@ -55,11 +56,11 @@ export class UIPageViewTest extends UIMainLayer {
         (background.height - pageView.height) / 2;
 
       for (var i = 0; i < 3; ++i) {
-        var layout = new ccui.Layout();
+        var layout = new Layout();
         layout.setContentSize(new Size(240, 130));
         var layoutRect = layout.getContentSize();
 
-        var imageView = new ccui.ImageView();
+        var imageView = new ImageView();
         imageView.setTouchEnabled(true);
         imageView.setScale9Enabled(true);
         imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
@@ -68,7 +69,7 @@ export class UIPageViewTest extends UIMainLayer {
         imageView.y = layoutRect.height / 2;
         layout.addChild(imageView);
 
-        var text = new ccui.Text();
+        var text = new Text();
         text.string = "page" + (i + 1);
         text.font = "30px 'Marker Felt'";
         text.color = new Color(192, 192, 192);
@@ -93,7 +94,7 @@ export class UIPageViewTest extends UIMainLayer {
 
   pageViewEvent(sender, type) {
     switch (type) {
-      case ccui.PageView.EVENT_TURNING:
+      case PageView.EVENT_TURNING:
         var pageView = sender;
         this._topDisplayLabel.setString(
           "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1)

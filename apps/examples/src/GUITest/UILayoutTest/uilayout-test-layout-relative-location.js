@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Color } from "@aspect/core";
+import { ImageView, Layout, RelativeLayoutParameter, Text } from "@aspect/ccui";
 
 export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
   init() {
@@ -33,7 +34,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add the alert
-      var alert = new ccui.Text("Layout Relative Location", "Marker Felt", 20);
+      var alert = new Text("Layout Relative Location", "Marker Felt", 20);
       alert.setColor(new Color(159, 168, 176));
       alert.setPosition(
         widgetSize.width / 2.0,
@@ -45,8 +46,8 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       var background = root.getChildByName("background_Panel");
 
       // Create the layout
-      var layout = new ccui.Layout();
-      layout.setLayoutType(ccui.Layout.RELATIVE);
+      var layout = new Layout();
+      layout.setLayoutType(Layout.RELATIVE);
       layout.setContentSize(280, 150);
       var backgroundSize = background.getContentSize();
       layout.setPosition(
@@ -58,60 +59,60 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       this._mainNode.addChild(layout);
 
       // center
-      var imageView_Center = new ccui.ImageView(
+      var imageView_Center = new ImageView(
         "ccs-res/cocosui/scrollviewbg.png"
       );
       layout.addChild(imageView_Center);
-      var rp_Center = new ccui.RelativeLayoutParameter();
+      var rp_Center = new RelativeLayoutParameter();
       rp_Center.setRelativeName("rp_Center");
-      rp_Center.setAlign(ccui.RelativeLayoutParameter.CENTER_IN_PARENT);
+      rp_Center.setAlign(RelativeLayoutParameter.CENTER_IN_PARENT);
       imageView_Center.setLayoutParameter(rp_Center);
 
       // above center
-      var imageView_AboveCenter = new ccui.ImageView(
+      var imageView_AboveCenter = new ImageView(
         "ccs-res/cocosui/switch-mask.png"
       );
       layout.addChild(imageView_AboveCenter);
-      var rp_AboveCenter = new ccui.RelativeLayoutParameter();
+      var rp_AboveCenter = new RelativeLayoutParameter();
       rp_AboveCenter.setRelativeToWidgetName("rp_Center");
       rp_AboveCenter.setAlign(
-        ccui.RelativeLayoutParameter.LOCATION_ABOVE_CENTER
+        RelativeLayoutParameter.LOCATION_ABOVE_CENTER
       );
       imageView_AboveCenter.setLayoutParameter(rp_AboveCenter);
 
       // below center
-      var imageView_BelowCenter = new ccui.ImageView(
+      var imageView_BelowCenter = new ImageView(
         "ccs-res/cocosui/switch-mask.png"
       );
       layout.addChild(imageView_BelowCenter);
-      var rp_BelowCenter = new ccui.RelativeLayoutParameter();
+      var rp_BelowCenter = new RelativeLayoutParameter();
       rp_BelowCenter.setRelativeToWidgetName("rp_Center");
       rp_BelowCenter.setAlign(
-        ccui.RelativeLayoutParameter.LOCATION_BELOW_CENTER
+        RelativeLayoutParameter.LOCATION_BELOW_CENTER
       );
       imageView_BelowCenter.setLayoutParameter(rp_BelowCenter);
 
       // left center
-      var imageView_LeftCenter = new ccui.ImageView(
+      var imageView_LeftCenter = new ImageView(
         "ccs-res/cocosui/switch-mask.png"
       );
       layout.addChild(imageView_LeftCenter);
-      var rp_LeftCenter = new ccui.RelativeLayoutParameter();
+      var rp_LeftCenter = new RelativeLayoutParameter();
       rp_LeftCenter.setRelativeToWidgetName("rp_Center");
       rp_LeftCenter.setAlign(
-        ccui.RelativeLayoutParameter.LOCATION_LEFT_OF_CENTER
+        RelativeLayoutParameter.LOCATION_LEFT_OF_CENTER
       );
       imageView_LeftCenter.setLayoutParameter(rp_LeftCenter);
 
       // right center
-      var imageView_RightCenter = new ccui.ImageView(
+      var imageView_RightCenter = new ImageView(
         "ccs-res/cocosui/switch-mask.png"
       );
       layout.addChild(imageView_RightCenter);
-      var rp_RightCenter = new ccui.RelativeLayoutParameter();
+      var rp_RightCenter = new RelativeLayoutParameter();
       rp_RightCenter.setRelativeToWidgetName("rp_Center");
       rp_RightCenter.setAlign(
-        ccui.RelativeLayoutParameter.LOCATION_RIGHT_OF_CENTER
+        RelativeLayoutParameter.LOCATION_RIGHT_OF_CENTER
       );
       imageView_RightCenter.setLayoutParameter(rp_RightCenter);
 

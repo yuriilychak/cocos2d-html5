@@ -62,6 +62,7 @@ import {
   LABELBMFONT_DEBUG_DRAW,
   LABELATLAS_DEBUG_DRAW,
   DRAWNODE_TOTAL_VERTICES,
+  ENABLE_STACKABLE_ACTIONS,
   DEFAULT_ENGINE,
   ENGINE_VERSION
 } from "./platform/config";
@@ -222,7 +223,8 @@ import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-re
 import {
   Node,
   NODE_TAG_INVALID,
-  s_globalOrderOfArrival
+  s_globalOrderOfArrival,
+  setGlobalOrderOfArrival
 } from "./base-nodes/node";
 import { AtlasNode } from "./base-nodes/atlas-node";
 import { AtlasNodeCanvasRenderCmd } from "./base-nodes/atlas-node-canvas-render-cmd";
@@ -436,6 +438,7 @@ cc.formatStr = formatStr;
 cc.AsyncPool = AsyncPool;
 cc.async = Async;
 cc.path = Path;
+cc.Path = Path;
 cc.Loader = Loader;
 cc.loader = Loader.getInstance();
 
@@ -496,6 +499,7 @@ cc.SPRITEBATCHNODE_DEBUG_DRAW = SPRITEBATCHNODE_DEBUG_DRAW;
 cc.LABELBMFONT_DEBUG_DRAW = LABELBMFONT_DEBUG_DRAW;
 cc.LABELATLAS_DEBUG_DRAW = LABELATLAS_DEBUG_DRAW;
 cc.DRAWNODE_TOTAL_VERTICES = DRAWNODE_TOTAL_VERTICES;
+cc.ENABLE_STACKABLE_ACTIONS = ENABLE_STACKABLE_ACTIONS;
 cc.DEFAULT_ENGINE = DEFAULT_ENGINE;
 cc.ENGINE_VERSION = ENGINE_VERSION;
 
@@ -660,8 +664,11 @@ cc.Node._dirtyFlags = dirtyFlags;
 cc.Node.RenderCmd = RenderCmd;
 cc.Node.CanvasRenderCmd = NodeCanvasRenderCmd;
 cc.Node.WebGLRenderCmd = NodeWebGLRenderCmd;
+cc.NodeCanvasRenderCmd = NodeCanvasRenderCmd;
+cc.NodeWebGLRenderCmd = NodeWebGLRenderCmd;
 cc.NODE_TAG_INVALID = NODE_TAG_INVALID;
 cc.s_globalOrderOfArrival = s_globalOrderOfArrival;
+cc.setGlobalOrderOfArrival = setGlobalOrderOfArrival;
 cc.AtlasNode = AtlasNode;
 cc.AtlasNode.CanvasRenderCmd = AtlasNodeCanvasRenderCmd;
 cc.AtlasNode.WebGLRenderCmd = AtlasNodeWebGLRenderCmd;
@@ -680,6 +687,7 @@ cc.TextureCache = TextureCache;
 cc.textureCache = TextureCache.getInstance();
 cc.TextureAtlas = TextureAtlas;
 cc.Texture2D = Texture2D;
+cc.PIXEL_FORMAT_RGBA8888 = PIXEL_FORMAT_RGBA8888;
 
 // Scenes & Layers
 cc.Scene = Scene;
@@ -711,6 +719,7 @@ cc.spriteFrameCache = SpriteFrameCache.getInstance();
 
 // Director, Scheduler, ActionManager
 cc.configuration = Configuration.getInstance();
+cc.Configuration = Configuration;
 cc.Director = Director;
 cc.DisplayLinkDirector = DisplayLinkDirector;
 Object.defineProperty(cc, "g_NumberOfDraws", {
@@ -770,6 +779,7 @@ cc.math.vec3 = function (x, y, z) {
 cc.kmVec3 = Vec3;
 cc.kmMat3 = Matrix3;
 cc.kmMat4 = Matrix4;
+cc.Matrix4 = Matrix4;
 cc.kmPlane = Plane;
 cc.kmQuaternion = Quaternion;
 cc.kmRay2 = Ray2;
@@ -789,6 +799,7 @@ cc.km_mat4_stack_release = km_mat4_stack_release;
 cc.KM_GL_MODELVIEW = KM_GL_MODELVIEW;
 cc.KM_GL_PROJECTION = KM_GL_PROJECTION;
 cc.KM_GL_TEXTURE = KM_GL_TEXTURE;
+cc.KMGLMatrix = KMGLMatrix;
 cc.lazyInitialize = lazyInitialize;
 cc.kmGLFreeAll = kmGLFreeAll;
 cc.kmGLPushMatrix = kmGLPushMatrix;

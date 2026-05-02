@@ -81,10 +81,6 @@ const SocketIO = {
                 window.io = loadedIO;
                 window.SocketIO.io = function() { return loadedIO.apply(this, arguments); };
             }
-            if (typeof cc !== 'undefined') {
-                cc.io = loadedIO;
-                cc.SocketIO.io = function() { return loadedIO.apply(this, arguments); };
-            }
             return loadedIO;
         });
     }
@@ -104,14 +100,6 @@ if (typeof global !== 'undefined') {
         global.io = io;
     }
     global.SocketIO = SocketIO;
-}
-
-// Cocos2d namespace assignment (backward compatibility)
-if (typeof cc !== 'undefined') {
-    if (typeof io === 'function' && !io.loadAsync) {
-        cc.io = io;
-    }
-    cc.SocketIO = SocketIO;
 }
 
 // ES module export

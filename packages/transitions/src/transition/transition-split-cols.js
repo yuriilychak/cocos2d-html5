@@ -1,5 +1,5 @@
 import { Node } from "@aspect/core";
-import { EaseInOut, sequence, CallFunc } from "@aspect/actions";
+import { EaseInOut, Sequence, CallFunc } from "@aspect/actions";
 import { NodeGrid } from "@aspect/node-grid";
 import { splitCols, stopGrid } from "@aspect/actions3d";
 import { TransitionScene } from "./transition-scene";
@@ -23,14 +23,14 @@ export class TransitionSplitCols extends TransitionScene {
     this._gridProxy._performRecursive(Node._stateCallbackType.onEnter);
 
     var split = this.action();
-    var seq = sequence(
+    var seq = new Sequence(
       split,
       new CallFunc(this._switchTargetToInscene, this),
       split.reverse()
     );
 
     this._gridProxy.runAction(
-      sequence(
+      new Sequence(
         this.easeActionWithAction(seq),
         new CallFunc(this.finish, this),
         stopGrid()

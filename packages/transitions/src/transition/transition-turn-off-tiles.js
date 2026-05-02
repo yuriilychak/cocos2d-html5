@@ -1,7 +1,7 @@
 import { Director, Node, Size } from "@aspect/core";
 import { NodeGrid } from "@aspect/node-grid";
 import { turnOffTiles, stopGrid } from "@aspect/actions3d";
-import { sequence, CallFunc } from "@aspect/actions";
+import { Sequence, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
 export class TransitionTurnOffTiles extends TransitionScene {
@@ -29,7 +29,7 @@ export class TransitionTurnOffTiles extends TransitionScene {
     var toff = turnOffTiles(this._duration, new Size(x, y));
     var action = this.easeActionWithAction(toff);
     this._gridProxy.runAction(
-      sequence(action, new CallFunc(this.finish, this), stopGrid())
+      new Sequence(action, new CallFunc(this.finish, this), stopGrid())
     );
   }
 

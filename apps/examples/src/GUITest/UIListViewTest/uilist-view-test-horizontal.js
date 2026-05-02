@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Size, log } from "@aspect/core";
+import { Button, Layout, ListView, ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_Horizontal extends UIMainLayer {
   constructor() {
@@ -47,9 +48,9 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       }
 
       // Create the list view
-      var listView = new ccui.ListView();
+      var listView = new ListView();
       // set list view ex direction
-      listView.setDirection(ccui.ScrollView.DIR_HORIZONTAL);
+      listView.setDirection(ScrollView.DIR_HORIZONTAL);
       listView.setTouchEnabled(true);
       listView.setBounceEnabled(true);
       listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
@@ -65,7 +66,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       this._mainNode.addChild(listView);
 
       // create model
-      var default_button = new ccui.Button();
+      var default_button = new Button();
       default_button.setName("TextButton");
       default_button.setTouchEnabled(true);
       default_button.loadTextures(
@@ -74,7 +75,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
         ""
       );
 
-      var default_item = new ccui.Layout();
+      var default_item = new Layout();
       default_item.setTouchEnabled(true);
       default_item.setContentSize(default_button.getContentSize());
       default_button.x = default_item.width / 2;
@@ -96,7 +97,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
 
       // add custom item
       for (i = 0; i < count / 4; ++i) {
-        var custom_button = new ccui.Button();
+        var custom_button = new Button();
         custom_button.setName("TextButton");
         custom_button.setTouchEnabled(true);
         custom_button.setScale9Enabled(true);
@@ -107,7 +108,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
         );
         custom_button.setContentSize(default_button.getContentSize());
 
-        var custom_item = new ccui.Layout();
+        var custom_item = new Layout();
         custom_item.setContentSize(custom_button.getContentSize());
         custom_button.x = custom_item.width / 2;
         custom_button.y = custom_item.height / 2;
@@ -118,7 +119,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       // insert custom item
       var items_count = listView.getItems().length;
       for (i = 0; i < count / 4; ++i) {
-        var custom_button = new ccui.Button();
+        var custom_button = new Button();
         custom_button.setName("TextButton");
         custom_button.setTouchEnabled(true);
         custom_button.setScale9Enabled(true);
@@ -129,7 +130,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
         );
         custom_button.setContentSize(default_button.getContentSize());
 
-        var custom_item = new ccui.Layout();
+        var custom_item = new Layout();
         custom_item.setContentSize(custom_button.getContentSize());
         custom_button.x = custom_item.width / 2;
         custom_button.y = custom_item.height / 2;
@@ -155,7 +156,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       listView.removeItem(items_count - 1);
 
       // set all items layout gravity
-      listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
+      listView.setGravity(ListView.GRAVITY_CENTER_VERTICAL);
 
       // set items margin
       listView.setItemsMargin(2);
@@ -166,7 +167,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
 
   selectedItemEvent(sender, type) {
     switch (type) {
-      case ccui.ListView.EVENT_SELECTED_ITEM:
+      case ListView.EVENT_SELECTED_ITEM:
         log("select child index = " + sender.getCurSelectedIndex());
         break;
       default:

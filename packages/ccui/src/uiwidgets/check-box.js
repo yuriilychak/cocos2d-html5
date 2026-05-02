@@ -34,16 +34,16 @@ import { Widget } from "../base-classes/widget";
 export class CheckBox extends Widget {
   /**
    * allocates and initializes a UICheckBox.
-   * Constructor of ccui.CheckBox, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * Constructor of CheckBox, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @param {String} backGround
    * @param {String} backGroundSelected
    * @param {String} cross
    * @param {String} backGroundDisabled
    * @param {String} frontCrossDisabled
-   * @param {Number} [texType=ccui.Widget.LOCAL_TEXTURE]
+   * @param {Number} [texType=Widget.LOCAL_TEXTURE]
    * @example
    * // example
-   * var uiCheckBox = new ccui.CheckBox();
+   * var uiCheckBox = new CheckBox();
    */
   constructor(
     backGround,
@@ -156,7 +156,7 @@ export class CheckBox extends Widget {
    * @param {String} cross
    * @param {String} backGroundDisabled
    * @param {String} frontCrossDisabled
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextures(
     backGround,
@@ -179,7 +179,7 @@ export class CheckBox extends Widget {
   /**
    * Loads background texture for checkbox.
    * @param {String} backGround background filename
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextureBackGround(backGround, texType) {
     if (!backGround) return;
@@ -232,7 +232,7 @@ export class CheckBox extends Widget {
   /**
    * Loads selected state of background texture for checkbox.
    * @param {String} backGroundSelected
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextureBackGroundSelected(backGroundSelected, texType) {
     if (!backGroundSelected) return;
@@ -279,7 +279,7 @@ export class CheckBox extends Widget {
   /**
    * Loads cross texture for checkbox.
    * @param {String} cross
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextureFrontCross(cross, texType) {
     if (!cross) return;
@@ -324,7 +324,7 @@ export class CheckBox extends Widget {
   /**
    * Loads disabled state of backGround texture for checkbox.
    * @param {String} backGroundDisabled
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextureBackGroundDisabled(backGroundDisabled, texType) {
     if (!backGroundDisabled) return;
@@ -371,7 +371,7 @@ export class CheckBox extends Widget {
   /**
    * Loads frontCrossDisabled texture for checkbox.
    * @param {String} frontCrossDisabled
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextureFrontCrossDisabled(frontCrossDisabled, texType) {
     if (!frontCrossDisabled) return;
@@ -491,7 +491,7 @@ export class CheckBox extends Widget {
   }
 
   /**
-   * Sets the selected state to ccui.CheckBox
+   * Sets the selected state to CheckBox
    * @param {Boolean} selected
    */
   setSelected(selected) {
@@ -508,7 +508,7 @@ export class CheckBox extends Widget {
   }
 
   /**
-   * Returns the selected state of ccui.CheckBox.
+   * Returns the selected state of CheckBox.
    * @returns {boolean}
    */
   isSelected() {
@@ -551,7 +551,7 @@ export class CheckBox extends Widget {
   }
 
   /**
-   * add event listener to ccui.CheckBox. it would called when checkbox is selected or unselected.
+   * add event listener to CheckBox. it would called when checkbox is selected or unselected.
    * @param {Function} selector
    * @param {Object} [target=]
    * @deprecated since v3.0, please use addEventListener instead.
@@ -590,7 +590,7 @@ export class CheckBox extends Widget {
   /**
    * override "getVirtualRenderer" method of widget.
    * @override
-   * @returns {Node} the renderer of ccui.CheckBox.
+   * @returns {Node} the renderer of CheckBox.
    */
   getVirtualRenderer() {
     return this._backGroundBoxRenderer;
@@ -779,13 +779,13 @@ export class CheckBox extends Widget {
 // Constants
 //CheckBoxEvent type
 /**
- * The selected state of ccui.CheckBox's event.
+ * The selected state of CheckBox's event.
  * @constant
  * @type {number}
  */
 CheckBox.EVENT_SELECTED = 0;
 /**
- * The unselected state of ccui.CheckBox's event.
+ * The unselected state of CheckBox's event.
  * @constant
  * @type {number}
  */

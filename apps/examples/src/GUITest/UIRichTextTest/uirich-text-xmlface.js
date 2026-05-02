@@ -29,6 +29,7 @@
 //
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size } from "@aspect/core";
+import { Button, RichText, Widget } from "@aspect/ccui";
 
 export class UIRichTextXMLFace extends UIMainLayer {
   constructor() {
@@ -43,7 +44,7 @@ export class UIRichTextXMLFace extends UIMainLayer {
       this._bottomDisplayLabel.setString("RichText");
 
       var widgetSize = this._widget.getContentSize();
-      var button = new ccui.Button();
+      var button = new Button();
       button.setTouchEnabled(true);
       button.loadTextures(
         "ccs-res/cocosui/animationbuttonnormal.png",
@@ -61,7 +62,7 @@ export class UIRichTextXMLFace extends UIMainLayer {
       this._mainNode.addChild(button);
 
       // RichText
-      var richText = new ccui.RichText();
+      var richText = new RichText();
       richText.initWithXML(
         "<font size='20' face='fonts/Marker Felt.ttf'>Marker Felt 20.<font face='fonts/arial.ttf'>Arial 20.</font></font><font face='font/Thonburi.ttf' size='24' color='#0000ff'>Thonburi 24 blue</font>"
       );
@@ -80,7 +81,7 @@ export class UIRichTextXMLFace extends UIMainLayer {
     return false;
   }
   touchEvent(sender, type) {
-    if (type == ccui.Widget.TOUCH_ENDED) {
+    if (type == Widget.TOUCH_ENDED) {
       if (this._richText.isIgnoreContentAdaptWithSize()) {
         this._richText.ignoreContentAdaptWithSize(false);
         this._richText.setContentSize(new Size(120, 100));

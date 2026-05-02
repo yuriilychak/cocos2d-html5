@@ -1,3 +1,4 @@
+import { Director } from '@aspect/core';
 import { SCENE_FADE, ADJUST_FACTOR, TRANSITION_ORIENTATION_LEFT_OVER, TRANSITION_ORIENTATION_RIGHT_OVER, TRANSITION_ORIENTATION_UP_OVER, TRANSITION_ORIENTATION_DOWN_OVER } from "./transition/constants";
 import { TransitionScene } from "./transition/transition-scene";
 import { TransitionSceneOriented } from "./transition/transition-scene-oriented";
@@ -33,46 +34,7 @@ import { TransitionProgressOutIn } from "./transition-progress/transition-progre
 
 import { TransitionPageTurn } from "./transition-page-turn";
 
-// cc globals - constants
-cc.SCENE_FADE = SCENE_FADE;
-cc.SCENE_RADIAL = SCENE_RADIAL;
-cc.ADJUST_FACTOR = ADJUST_FACTOR;
-cc.TRANSITION_ORIENTATION_LEFT_OVER = TRANSITION_ORIENTATION_LEFT_OVER;
-cc.TRANSITION_ORIENTATION_RIGHT_OVER = TRANSITION_ORIENTATION_RIGHT_OVER;
-cc.TRANSITION_ORIENTATION_UP_OVER = TRANSITION_ORIENTATION_UP_OVER;
-cc.TRANSITION_ORIENTATION_DOWN_OVER = TRANSITION_ORIENTATION_DOWN_OVER;
-
-// cc globals - classes
-cc.TransitionScene = TransitionScene;
-cc.TransitionSceneOriented = TransitionSceneOriented;
-cc.TransitionRotoZoom = TransitionRotoZoom;
-cc.TransitionJumpZoom = TransitionJumpZoom;
-cc.TransitionMoveInL = TransitionMoveInL;
-cc.TransitionMoveInR = TransitionMoveInR;
-cc.TransitionMoveInT = TransitionMoveInT;
-cc.TransitionMoveInB = TransitionMoveInB;
-cc.TransitionSlideInL = TransitionSlideInL;
-cc.TransitionSlideInR = TransitionSlideInR;
-cc.TransitionSlideInB = TransitionSlideInB;
-cc.TransitionSlideInT = TransitionSlideInT;
-cc.TransitionShrinkGrow = TransitionShrinkGrow;
-cc.TransitionFade = TransitionFade;
-cc.TransitionCrossFade = TransitionCrossFade;
-cc.TransitionTurnOffTiles = TransitionTurnOffTiles;
-cc.TransitionSplitCols = TransitionSplitCols;
-cc.TransitionSplitRows = TransitionSplitRows;
-cc.TransitionFadeTR = TransitionFadeTR;
-cc.TransitionFadeBL = TransitionFadeBL;
-cc.TransitionFadeUp = TransitionFadeUp;
-cc.TransitionFadeDown = TransitionFadeDown;
-cc.TransitionProgress = TransitionProgress;
-cc.TransitionProgressRadialCCW = TransitionProgressRadialCCW;
-cc.TransitionProgressRadialCW = TransitionProgressRadialCW;
-cc.TransitionProgressHorizontal = TransitionProgressHorizontal;
-cc.TransitionProgressVertical = TransitionProgressVertical;
-cc.TransitionProgressInOut = TransitionProgressInOut;
-cc.TransitionProgressOutIn = TransitionProgressOutIn;
-cc.TransitionPageTurn = TransitionPageTurn;
+Director.TransitionSceneClass = TransitionScene;
 
 export {
     SCENE_FADE,

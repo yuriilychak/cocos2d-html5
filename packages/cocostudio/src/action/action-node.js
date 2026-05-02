@@ -30,6 +30,7 @@
  */
 import { Color, NewClass, Node, REPEAT_FOREVER, arrayRemoveObject } from "@aspect/core";
 import { sequence, spawn } from "@aspect/actions";
+import { helper, Layout, Widget } from "@aspect/ccui";
 
 import { ActionFadeFrame } from "./action-frame/action-fade-frame.js";
 import { ActionMoveFrame } from "./action-frame/action-move-frame.js";
@@ -64,9 +65,9 @@ export class ActionNode extends NewClass {
     this.setActionTag(dic["ActionTag"]);
     var actionFrameList = dic["actionframelist"];
 
-    var node = ccui.helper.seekActionWidgetByActionTag(root, dic["ActionTag"]);
+    var node = helper.seekActionWidgetByActionTag(root, dic["ActionTag"]);
     var positionOffset =
-      node instanceof ccui.Widget && !(node instanceof ccui.Layout);
+      node instanceof Widget && !(node instanceof Layout);
 
     for (var i = 0; i < actionFrameList.length; i++) {
       var actionFrameDic = actionFrameList[i];
@@ -152,8 +153,8 @@ export class ActionNode extends NewClass {
   }
 
   _initActionNodeFromRoot(root) {
-    if (root instanceof ccui.Widget) {
-      var widget = ccui.helper.seekActionWidgetByActionTag(
+    if (root instanceof Widget) {
+      var widget = helper.seekActionWidgetByActionTag(
         root,
         this.getActionTag()
       );

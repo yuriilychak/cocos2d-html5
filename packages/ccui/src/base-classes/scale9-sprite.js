@@ -421,7 +421,7 @@ export class Scale9Sprite extends EventHelper(Node) {
         }
 
         if(!file)
-            throw new Error("ccui.Scale9Sprite.initWithFile(): file should be non-null");
+            throw new Error("Scale9Sprite.initWithFile(): file should be non-null");
 
         var texture = TextureCache.getInstance().getTextureForKey(file);
         if (!texture) {
@@ -481,12 +481,12 @@ export class Scale9Sprite extends EventHelper(Node) {
 
     initWithSpriteFrameName(spriteFrameName, capInsets) {
         if(!spriteFrameName)
-            throw new Error("ccui.Scale9Sprite.initWithSpriteFrameName(): spriteFrameName should be non-null");
+            throw new Error("Scale9Sprite.initWithSpriteFrameName(): spriteFrameName should be non-null");
         capInsets = capInsets || new Rect(0, 0, 0, 0);
 
         var frame = SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameName);
         if (frame == null) {
-            log("ccui.Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName");
+            log("Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName");
             return false;
         }
         this.setSpriteFrame(frame);

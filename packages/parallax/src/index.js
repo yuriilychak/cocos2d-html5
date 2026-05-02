@@ -8,8 +8,7 @@ ParallaxNode.CanvasRenderCmd = ParallaxNodeCanvasRenderCmd;
 ParallaxNode.WebGLRenderCmd = ParallaxNodeWebGLRenderCmd;
 
 // cc globals (backward compatibility)
-cc.PointObject = PointObject;
-cc.ParallaxNode = ParallaxNode;
+
 
 // ES module exports
 export { 

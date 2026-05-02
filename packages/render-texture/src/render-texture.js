@@ -70,7 +70,7 @@ export class RenderTexture extends Node {
 
   /**
    * creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid
-   * Constructor of cc.RenderTexture for Canvas
+   * Constructor of RenderTexture for Canvas
    * @param {Number} width
    * @param {Number} height
    * @param {IMAGE_FORMAT_JPEG|IMAGE_FORMAT_PNG|IMAGE_FORMAT_RAWDATA} format
@@ -157,7 +157,7 @@ export class RenderTexture extends Node {
   }
 
   /**
-   * Initializes the instance of cc.RenderTexture
+   * Initializes the instance of RenderTexture
    * @param {Number} width
    * @param {Number} height
    * @param {IMAGE_FORMAT_JPEG|IMAGE_FORMAT_PNG|IMAGE_FORMAT_RAWDATA} [format]

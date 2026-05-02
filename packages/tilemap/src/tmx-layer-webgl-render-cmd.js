@@ -1,5 +1,4 @@
 import {
-  NodeWebGLRenderCmd,
   RendererConfig,
   EGLView,
   Director,
@@ -16,7 +15,7 @@ import {
   TMX_TILE_VERTICAL_FLAG
 } from "./constants";
 
-export class TMXLayerWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = true;

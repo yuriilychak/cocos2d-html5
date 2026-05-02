@@ -25,11 +25,12 @@
  ****************************************************************************/
 
 import { UILoadingBarTest } from "./uiloading-bar-test";
+import { LoadingBar } from "@aspect/ccui";
 
 export class UILoadingBarTest_Left extends UILoadingBarTest {
   createLoadingBar() {
     var widgetSize = this._widget.getContentSize();
-    var loadingBar = new ccui.LoadingBar();
+    var loadingBar = new LoadingBar();
     loadingBar.setName("LoadingBar");
     loadingBar.loadTexture("ccs-res/cocosui/sliderProgress.png");
     loadingBar.setPercent(0);

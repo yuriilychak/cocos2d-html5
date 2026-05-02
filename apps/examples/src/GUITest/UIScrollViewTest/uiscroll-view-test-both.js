@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Size } from "@aspect/core";
+import { ImageView, ScrollView } from "@aspect/ccui";
 
 export class UIScrollViewTest_Both extends UIMainLayer {
   init() {
@@ -44,8 +45,8 @@ export class UIScrollViewTest_Both extends UIMainLayer {
       var background = this._widget.getChildByName("background_Panel");
 
       // Create the scrollview
-      var scrollView = new ccui.ScrollView();
-      scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
+      var scrollView = new ScrollView();
+      scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setTouchEnabled(true);
       scrollView.setBounceEnabled(true);
       scrollView.setBackGroundImageScale9Enabled(true);
@@ -61,7 +62,7 @@ export class UIScrollViewTest_Both extends UIMainLayer {
         (background.height - scrollViewSize.height) / 2;
       this._mainNode.addChild(scrollView);
 
-      var imageView = new ccui.ImageView();
+      var imageView = new ImageView();
       imageView.loadTexture("ccs-res/cocosui/b11.png");
       scrollView.addChild(imageView);
 

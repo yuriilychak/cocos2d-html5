@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Size } from "@aspect/core";
+import { Button, ImageView, ScrollView } from "@aspect/ccui";
 
 export class UIScrollViewTest_Vertical extends UIMainLayer {
   init() {
@@ -44,8 +45,8 @@ export class UIScrollViewTest_Vertical extends UIMainLayer {
       var background = this._widget.getChildByName("background_Panel");
 
       // Create the scrollview
-      var scrollView = new ccui.ScrollView();
-      scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+      var scrollView = new ScrollView();
+      scrollView.setDirection(ScrollView.DIR_VERTICAL);
       scrollView.setTouchEnabled(true);
       scrollView.setContentSize(new Size(280, 150));
 
@@ -57,7 +58,7 @@ export class UIScrollViewTest_Vertical extends UIMainLayer {
         (background.height - scrollView.height) / 2;
       this._mainNode.addChild(scrollView);
 
-      var imageView = new ccui.ImageView();
+      var imageView = new ImageView();
       imageView.loadTexture("ccs-res/cocosui/ccicon.png");
 
       var innerWidth = scrollView.width;
@@ -65,7 +66,7 @@ export class UIScrollViewTest_Vertical extends UIMainLayer {
 
       scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
-      var button = new ccui.Button();
+      var button = new Button();
       button.setTouchEnabled(true);
       button.loadTextures(
         "ccs-res/cocosui/animationbuttonnormal.png",
@@ -76,7 +77,7 @@ export class UIScrollViewTest_Vertical extends UIMainLayer {
       button.y = scrollView.getInnerContainerSize().height - button.height / 2;
       scrollView.addChild(button);
 
-      var textButton = new ccui.Button();
+      var textButton = new Button();
       textButton.setTouchEnabled(true);
       textButton.loadTextures(
         "ccs-res/cocosui/backtotopnormal.png",
@@ -88,7 +89,7 @@ export class UIScrollViewTest_Vertical extends UIMainLayer {
       textButton.y = button.getBottomBoundary() - button.height;
       scrollView.addChild(textButton);
 
-      var button_scale9 = new ccui.Button();
+      var button_scale9 = new Button();
       button_scale9.setTouchEnabled(true);
       button_scale9.setScale9Enabled(true);
       button_scale9.loadTextures(

@@ -145,11 +145,13 @@ export function createAppConfig({ outputFile = 'dist/cocos2d.min.js' } = {}) {
 }
 
 /**
- * Workspace packages that have no dist/index.js (meta-packages).
- * These are resolved to their src/index.js and inlined in the test bundle.
- * Their own @aspect/* sub-dependencies are resolved as externals (see below).
+ * Workspace packages that are resolved to their src/index.js and inlined
+ * in the test bundle instead of being treated as cc.* externals.
+ * - 'extensions' / 'cocostudio': meta-packages (no dist/index.js)
+ * - 'core' is NOT in this set — it lives in the engine bundle as cc.* globals.
+ * - 'spine' is NOT in this set — it uses a special blockScopeWrap build.
  */
-const META_PACKAGES = new Set(['extensions', 'cocostudio']);
+const INLINE_PACKAGES_EXCLUDE = new Set(['core', 'spine']);
 
 /**
  * Maps @aspect/* package names to their runtime global variable.
@@ -190,15 +192,20 @@ export function createTestsBundleConfig({
           if (!id.startsWith('@aspect/')) return null;
           const pkgName = id.replace('@aspect/', '');
 
-          if (META_PACKAGES.has(pkgName)) {
-            const srcFile = join(rootDir, 'packages', pkgName, 'src', 'index.js');
-            if (existsSync(srcFile)) return srcFile;
+          // core and spine stay as engine-bundle externals
+          if (INLINE_PACKAGES_EXCLUDE.has(pkgName)) {
+            return { id, external: true };
           }
 
-          // All other @aspect/* packages live in the engine bundle → external.
+          // All other @aspect/* packages: inline from src/index.js.
+          // Rollup deduplicates, so shared deps are included only once.
+          const srcFile = join(rootDir, 'packages', pkgName, 'src', 'index.js');
+          if (existsSync(srcFile)) return srcFile;
+
           return { id, external: true };
         }
       },
+      resolve(),
       terser({
         ecma: 2020,
         module: false,
@@ -224,6 +231,8 @@ export function createTestsBundleConfig({
       globals(id) {
         if (!id.startsWith('@aspect/')) return undefined;
         const pkgName = id.replace('@aspect/', '');
+        // Only core and spine are externals; everything else is inlined.
+        if (pkgName === 'core') return 'cc';
         return ASPECT_GLOBALS[pkgName] ?? 'cc';
       }
     }

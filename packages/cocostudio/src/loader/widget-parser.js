@@ -1,20 +1,21 @@
 import { Color, log } from "@aspect/core";
+import { Layout, Text, Button, CheckBox, ImageView, ScrollView, ListView, PageView, LoadingBar, Slider, TextField, TextAtlas, TextBMFont } from "@aspect/ccui";
 import { _ccsLoad } from "./load/utils.js";
 
 var CLASSNAME_MAP = {
-    "Panel": function () { return new ccui.Layout(); },
-    "Label": function () { return new ccui.Text(); },
-    "Button": function () { return new ccui.Button(); },
-    "CheckBox": function () { return new ccui.CheckBox(); },
-    "ImageView": function () { return new ccui.ImageView(); },
-    "ScrollView": function () { return new ccui.ScrollView(); },
-    "ListView": function () { return new ccui.ListView(); },
-    "PageView": function () { return new ccui.PageView(); },
-    "LoadingBar": function () { return new ccui.LoadingBar(); },
-    "Slider": function () { return new ccui.Slider(); },
-    "TextField": function () { return new ccui.TextField(); },
-    "TextAtlas": function () { return new ccui.TextAtlas(); },
-    "TextBMFont": function () { return new ccui.TextBMFont(); }
+    "Panel": function () { return new Layout(); },
+    "Label": function () { return new Text(); },
+    "Button": function () { return new Button(); },
+    "CheckBox": function () { return new CheckBox(); },
+    "ImageView": function () { return new ImageView(); },
+    "ScrollView": function () { return new ScrollView(); },
+    "ListView": function () { return new ListView(); },
+    "PageView": function () { return new PageView(); },
+    "LoadingBar": function () { return new LoadingBar(); },
+    "Slider": function () { return new Slider(); },
+    "TextField": function () { return new TextField(); },
+    "TextAtlas": function () { return new TextAtlas(); },
+    "TextBMFont": function () { return new TextBMFont(); }
 };
 
 function applyCommonAttributes(widget, opts) {

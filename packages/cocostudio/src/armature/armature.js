@@ -37,6 +37,7 @@
  * @property {ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
  */
 import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Game, Node, Point, Rect, RendererConfig, arrayRemoveObject, assert, log } from "@aspect/core";
+import { Widget } from "@aspect/ccui";
 
 import { ArmatureAnimation } from "./animation/armature-animation/armature-animation.js";
 import { Bone } from "./bone.js";
@@ -176,7 +177,7 @@ export class Armature extends Node {
   }
 
   addChild(child, localZOrder, tag) {
-    if (child instanceof ccui.Widget) {
+    if (child instanceof Widget) {
       log(
         "Armature doesn't support to add Widget as its child, it will be fix soon."
       );

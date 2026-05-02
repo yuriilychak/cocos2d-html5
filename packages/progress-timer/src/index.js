@@ -9,6 +9,10 @@ import { TYPE_RADIAL, TYPE_BAR, TEXTURE_COORDS_COUNT, TEXTURE_COORDS } from "./c
 ProgressTimer.CanvasRenderCmd = ProgressTimerCanvasRenderCmd;
 ProgressTimer.WebGLRenderCmd = ProgressTimerWebGLRenderCmd;
 
+// Wire render commands
+ProgressTimer.CanvasRenderCmd = ProgressTimerCanvasRenderCmd;
+ProgressTimer.WebGLRenderCmd = ProgressTimerWebGLRenderCmd;
+
 // Wire static constants
 ProgressTimer.TYPE_RADIAL = TYPE_RADIAL;
 ProgressTimer.TYPE_BAR = TYPE_BAR;

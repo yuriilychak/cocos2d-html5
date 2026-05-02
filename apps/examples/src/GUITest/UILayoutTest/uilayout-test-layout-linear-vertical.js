@@ -26,11 +26,12 @@
 
 import { UILayoutTestBase } from "./uilayout-test-base";
 import { Size } from "@aspect/core";
+import { Layout, LinearLayoutParameter, Margin } from "@aspect/ccui";
 
 export class UILayoutTest_Layout_Linear_Vertical extends UILayoutTestBase {
   createLayout() {
-    var layout = new ccui.Layout();
-    layout.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
+    var layout = new Layout();
+    layout.setLayoutType(Layout.LINEAR_VERTICAL);
     layout.setContentSize(new Size(280, 150));
     return layout;
   }
@@ -38,19 +39,19 @@ export class UILayoutTest_Layout_Linear_Vertical extends UILayoutTestBase {
     return "Layout Layout Linear Vertical";
   }
   setLayoutParameter() {
-    var lp1 = new ccui.LinearLayoutParameter();
+    var lp1 = new LinearLayoutParameter();
     this.button.setLayoutParameter(lp1);
-    lp1.setGravity(ccui.LinearLayoutParameter.CENTER_HORIZONTAL);
-    lp1.setMargin(new ccui.Margin(0, 5, 0, 10));
+    lp1.setGravity(LinearLayoutParameter.CENTER_HORIZONTAL);
+    lp1.setMargin(new Margin(0, 5, 0, 10));
 
-    var lp2 = new ccui.LinearLayoutParameter();
+    var lp2 = new LinearLayoutParameter();
     this.textButton.setLayoutParameter(lp2);
-    lp2.setGravity(ccui.LinearLayoutParameter.CENTER_HORIZONTAL);
-    lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
+    lp2.setGravity(LinearLayoutParameter.CENTER_HORIZONTAL);
+    lp2.setMargin(new Margin(0, 10, 0, 10));
 
-    var lp3 = new ccui.LinearLayoutParameter();
+    var lp3 = new LinearLayoutParameter();
     this.button_scale9.setLayoutParameter(lp3);
-    lp3.setGravity(ccui.LinearLayoutParameter.CENTER_HORIZONTAL);
-    lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
+    lp3.setGravity(LinearLayoutParameter.CENTER_HORIZONTAL);
+    lp3.setMargin(new Margin(0, 10, 0, 10));
   }
 }

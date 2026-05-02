@@ -13,12 +13,6 @@ PhysicsDebugNode.CanvasRenderCmd = PhysicsDebugNodeCanvasRenderCmd;
 PhysicsDebugNode.WebGLRenderCmd = PhysicsDebugNodeWebGLRenderCmd;
 
 // cc globals
-cc.PhysicsSprite = PhysicsSprite;
-cc.PhysicsDebugNode = PhysicsDebugNode;
-cc.__convertVerts = convertVerts;
-cc.ColorForBody = colorForBody;
-cc.DrawShape = drawShape;
-cc.DrawConstraint = drawConstraint;
-cc.CONSTRAINT_COLOR = CONSTRAINT_COLOR;
+
 
 export { PhysicsSprite, PhysicsDebugNode };

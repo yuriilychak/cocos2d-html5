@@ -27,6 +27,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { ScaleTo } from "@aspect/actions";
 import { log } from "@aspect/core";
+import { Button } from "@aspect/ccui";
 
 export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
   init() {
@@ -38,7 +39,7 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("");
 
       // Create the button
-      var button = new ccui.Button(
+      var button = new Button(
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
@@ -55,7 +56,7 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
       this.addChild(button);
 
       // Create the button
-      var button2 = new ccui.Button(
+      var button2 = new Button(
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );

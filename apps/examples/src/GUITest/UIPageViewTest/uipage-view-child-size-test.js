@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
+import { ImageView, PageView, Text } from "@aspect/ccui";
 
 export class UIPageViewChildSizeTest extends UIMainLayer {
   init() {
@@ -45,7 +46,7 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
       var background = this._widget.getChildByName("background_Panel");
 
       // Create the page view
-      var pageView = new ccui.PageView();
+      var pageView = new PageView();
       pageView.setTouchEnabled(true);
       pageView.setContentSize(new Size(240, 130));
       pageView.x =
@@ -59,8 +60,8 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
-        var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
-        var label = new ccui.Text("page " + (i + 1), "Arial", 30);
+        var imageView = new ImageView("ccs-res/cocosui/scrollviewbg.png");
+        var label = new Text("page " + (i + 1), "Arial", 30);
 
         imageView.setScale9Enabled(true);
         label.setColor(new Color(192, 192, 192));
@@ -81,7 +82,7 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
 
   pageViewEvent(sender, type) {
     switch (type) {
-      case ccui.PageView.EVENT_TURNING:
+      case PageView.EVENT_TURNING:
         var pageView = sender;
         this._topDisplayLabel.setString(
           "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1)

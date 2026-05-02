@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, SpriteFrameCache } from "@aspect/core";
+import { Button, ImageView, Widget } from "@aspect/ccui";
 
 export class UIImageViewFlipTest extends UIMainLayer {
   init() {
@@ -37,9 +38,9 @@ export class UIImageViewFlipTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("ImageView flip test");
 
       // Create the imageview
-      var imageView = new ccui.ImageView(
+      var imageView = new ImageView(
         "blocks9r.png",
-        ccui.Widget.PLIST_TEXTURE
+        Widget.PLIST_TEXTURE
       );
       imageView.setScale9Enabled(true);
       imageView.setContentSize(new Size(250, 115));
@@ -52,7 +53,7 @@ export class UIImageViewFlipTest extends UIMainLayer {
 
       this._mainNode.addChild(imageView);
 
-      var toggleButton = new ccui.Button();
+      var toggleButton = new Button();
       toggleButton.setTitleText("Toggle FlipX");
       var ip = imageView.getPosition();
       toggleButton.setPosition(
@@ -64,7 +65,7 @@ export class UIImageViewFlipTest extends UIMainLayer {
         imageView.setFlippedX(!imageView.isFlippedX());
       });
 
-      var toggleScale9 = new ccui.Button();
+      var toggleScale9 = new Button();
       toggleScale9.setTitleText("Toggle Scale9");
       var ip9 = imageView.getPosition();
       toggleScale9.setPosition(

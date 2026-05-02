@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, TEXT_ALIGNMENT_RIGHT } from "@aspect/core";
+import { Button, Text } from "@aspect/ccui";
 export class UITextTest_IgnoreContentSize extends UIMainLayer {
   init() {
     if (super.init()) {
@@ -34,7 +35,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
 
       this._bottomDisplayLabel.setString("");
 
-      var leftText = new ccui.Text("ignore content", "Marker Felt", 10);
+      var leftText = new Text("ignore content", "Marker Felt", 10);
       leftText.setPosition(
         new Point(widgetSize.width / 2 - 50, widgetSize.height / 2)
       );
@@ -47,7 +48,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       leftText.setTouchEnabled(true);
       this._mainNode.addChild(leftText);
 
-      var rightText = new ccui.Text("ignore content", "Marker Felt", 10);
+      var rightText = new Text("ignore content", "Marker Felt", 10);
       rightText.setPosition(
         new Point(widgetSize.width / 2 + 50, widgetSize.height / 2)
       );
@@ -59,7 +60,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       rightText.ignoreContentAdaptWithSize(false);
       this._mainNode.addChild(rightText);
 
-      var halighButton = new ccui.Button();
+      var halighButton = new Button();
       halighButton.setTitleText("Alignment Right");
       halighButton.addClickEventListener(function () {
         leftText.setTextHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);

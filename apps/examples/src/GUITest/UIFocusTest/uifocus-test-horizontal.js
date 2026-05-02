@@ -25,6 +25,7 @@
 
 import { UIFocusTestBase } from "./uifocus-test-base";
 import { Color, Director } from "@aspect/core";
+import { HBox, ImageView, Text, Widget } from "@aspect/ccui";
 
 export class UIFocusTestHorizontal extends UIFocusTestBase {
   constructor() {
@@ -37,7 +38,7 @@ export class UIFocusTestHorizontal extends UIFocusTestBase {
     if (super.init()) {
       var winSize = Director.getInstance().getVisibleSize();
 
-      this._horizontalLayout = new ccui.HBox();
+      this._horizontalLayout = new HBox();
       this._horizontalLayout.setPosition(
         winSize.height / 2 - 20,
         winSize.height / 2 + 40
@@ -51,14 +52,14 @@ export class UIFocusTestHorizontal extends UIFocusTestBase {
 
       var count = 3;
       for (var i = 0; i < count; ++i) {
-        var w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        var w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setTouchEnabled(true);
         w.setTag(i);
         w.addTouchEventListener(this.onImageViewClicked, this);
         this._horizontalLayout.addChild(w);
       }
 
-      this._loopText = new ccui.Text("loop enabled", "Arial", 20);
+      this._loopText = new Text("loop enabled", "Arial", 20);
       this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
       this._loopText.setColor(Color.GREEN);
       this.addChild(this._loopText);
@@ -70,7 +71,7 @@ export class UIFocusTestHorizontal extends UIFocusTestBase {
   }
 
   toggleFocusLoop(ref, touchType) {
-    if (touchType == ccui.Widget.TOUCH_ENDED) {
+    if (touchType == Widget.TOUCH_ENDED) {
       this._horizontalLayout.setLoopFocus(
         !this._horizontalLayout.isLoopFocus()
       );

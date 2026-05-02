@@ -9,12 +9,7 @@ Skeleton.CanvasRenderCmd = SkeletonCanvasRenderCmd;
 Skeleton.WebGLRenderCmd = SkeletonWebGLRenderCmd;
 
 // Backward compatibility
-cc.Skeleton = Skeleton;
-cc.SkeletonAnimation = SkeletonAnimation;
-cc.SkeletonTexture = SkeletonTexture;
-cc.TrackEntryListeners = TrackEntryListeners;
-cc.ANIMATION_EVENT_TYPE = ANIMATION_EVENT_TYPE;
-cc._atlasLoader = _atlasLoader;
+
 
 export {
     Skeleton,

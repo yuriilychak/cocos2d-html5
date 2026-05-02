@@ -27,6 +27,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Color } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
+import { Button, ListView, ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_Magnetic extends UIMainLayer {
   constructor() {
@@ -50,7 +51,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
       // Create the list view
-      this._listView = new ccui.ListView();
+      this._listView = new ListView();
       // set list view ex direction
       this._listView.setDirection(this._getListViewDirection());
       this._listView.setTouchEnabled(true);
@@ -68,7 +69,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
       this._listView.x = widgetSize.width / 2;
       this._listView.y = widgetSize.height / 2;
 
-      this._listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
+      this._listView.setGravity(ListView.GRAVITY_CENTER_VERTICAL);
 
       this._mainNode.addChild(this._listView);
 
@@ -76,7 +77,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
         var pNode = new DrawNode();
 
         var center = new Point(widgetSize.width / 2, widgetSize.height / 2);
-        if (this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL) {
+        if (this._getListViewDirection() == ScrollView.DIR_HORIZONTAL) {
           var halfY = 110;
           pNode.drawSegment(
             new Point(center.x, center.y - halfY),
@@ -98,11 +99,11 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
       }
 
       // Initial magnetic type
-      this._listView.setMagneticType(ccui.ListView.MAGNETIC_NONE);
+      this._listView.setMagneticType(ListView.MAGNETIC_NONE);
       this._topDisplayLabel.setString("MagneticType - NONE");
 
       // Magnetic change button
-      var pButton = new ccui.Button(
+      var pButton = new Button(
         "ccs-res/cocosui/backtotoppressed.png",
         "ccs-res/cocosui/backtotopnormal.png"
       );
@@ -120,33 +121,33 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
           var eCurrentType = this._listView.getMagneticType();
           var eNextType;
           var sString;
-          if (eCurrentType == ccui.ListView.MAGNETIC_NONE) {
-            eNextType = ccui.ListView.MAGNETIC_CENTER;
+          if (eCurrentType == ListView.MAGNETIC_NONE) {
+            eNextType = ListView.MAGNETIC_CENTER;
             sString = "CENTER";
-          } else if (eCurrentType == ccui.ListView.MAGNETIC_CENTER) {
-            eNextType = ccui.ListView.MAGNETIC_BOTH_END;
+          } else if (eCurrentType == ListView.MAGNETIC_CENTER) {
+            eNextType = ListView.MAGNETIC_BOTH_END;
             sString = "BOTH_END";
-          } else if (eCurrentType == ccui.ListView.MAGNETIC_BOTH_END) {
+          } else if (eCurrentType == ListView.MAGNETIC_BOTH_END) {
             if (
-              this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL
+              this._getListViewDirection() == ScrollView.DIR_HORIZONTAL
             ) {
-              eNextType = ccui.ListView.MAGNETIC_LEFT;
+              eNextType = ListView.MAGNETIC_LEFT;
               sString = "LEFT";
             } else {
-              eNextType = ccui.ListView.MAGNETIC_TOP;
+              eNextType = ListView.MAGNETIC_TOP;
               sString = "TOP";
             }
-          } else if (eCurrentType == ccui.ListView.MAGNETIC_LEFT) {
-            eNextType = ccui.ListView.MAGNETIC_RIGHT;
+          } else if (eCurrentType == ListView.MAGNETIC_LEFT) {
+            eNextType = ListView.MAGNETIC_RIGHT;
             sString = "RIGHT";
-          } else if (eCurrentType == ccui.ListView.MAGNETIC_RIGHT) {
-            eNextType = ccui.ListView.MAGNETIC_NONE;
+          } else if (eCurrentType == ListView.MAGNETIC_RIGHT) {
+            eNextType = ListView.MAGNETIC_NONE;
             sString = "NONE";
-          } else if (eCurrentType == ccui.ListView.MAGNETIC_TOP) {
-            eNextType = ccui.ListView.MAGNETIC_BOTTOM;
+          } else if (eCurrentType == ListView.MAGNETIC_TOP) {
+            eNextType = ListView.MAGNETIC_BOTTOM;
             sString = "BOTTOM";
-          } else if (eCurrentType == ccui.ListView.MAGNETIC_BOTTOM) {
-            eNextType = ccui.ListView.MAGNETIC_NONE;
+          } else if (eCurrentType == ListView.MAGNETIC_BOTTOM) {
+            eNextType = ListView.MAGNETIC_NONE;
             sString = "NONE";
           }
           this._listView.setMagneticType(eNextType);
@@ -158,7 +159,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
 
       // Add list items
       for (var i = 0; i < 40; ++i) {
-        var button = new ccui.Button(
+        var button = new Button(
           "ccs-res/cocosui/button.png",
           "ccs-res/cocosui/buttonHighlighted.png"
         );

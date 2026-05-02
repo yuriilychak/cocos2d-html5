@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Button, Widget } from "@aspect/ccui";
 
 export class UIButtonTestSwitchScale9 extends UIMainLayer {
   init() {
@@ -36,7 +37,7 @@ export class UIButtonTestSwitchScale9 extends UIMainLayer {
       this._bottomDisplayLabel.setString("");
 
       // Create the button
-      var button = new ccui.Button(
+      var button = new Button(
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
@@ -53,21 +54,21 @@ export class UIButtonTestSwitchScale9 extends UIMainLayer {
 
   touchEvent(sender, type) {
     switch (type) {
-      case ccui.Widget.TOUCH_BEGAN:
+      case Widget.TOUCH_BEGAN:
         this._topDisplayLabel.setString("Touch Down");
         break;
 
-      case ccui.Widget.TOUCH_MOVED:
+      case Widget.TOUCH_MOVED:
         this._topDisplayLabel.setString("Touch Move");
         break;
 
-      case ccui.Widget.TOUCH_ENDED:
+      case Widget.TOUCH_ENDED:
         this._topDisplayLabel.setString("Touch Up");
         sender.setScale9Enabled(!sender.isScale9Enabled());
         sender.setContentSize(200, 100);
         break;
 
-      case ccui.Widget.TOUCH_CANCELED:
+      case Widget.TOUCH_CANCELED:
         this._topDisplayLabel.setString("Touch Cancelled");
         break;
 

@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Button, Text } from "@aspect/ccui";
 
 export class UIButtonFlipTest extends UIMainLayer {
   init() {
@@ -34,7 +35,7 @@ export class UIButtonFlipTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("");
 
       // Create the button
-      var button = new ccui.Button(
+      var button = new Button(
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
@@ -47,12 +48,12 @@ export class UIButtonFlipTest extends UIMainLayer {
       button.setPressedActionEnabled(true);
       this.addChild(button);
 
-      var titleLabel = new ccui.Text("Button X flipped", "Arial", 20);
+      var titleLabel = new Text("Button X flipped", "Arial", 20);
       titleLabel.setNormalizedPosition(0.3, 0.7);
       this.addChild(titleLabel);
 
       // Create the button
-      var button2 = new ccui.Button(
+      var button2 = new Button(
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
@@ -61,7 +62,7 @@ export class UIButtonFlipTest extends UIMainLayer {
       button2.setFlippedY(true);
       this.addChild(button2);
 
-      titleLabel = new ccui.Text("Button Y flipped", "Arial", 20);
+      titleLabel = new Text("Button Y flipped", "Arial", 20);
       titleLabel.setNormalizedPosition(0.8, 0.7);
       this.addChild(titleLabel);
       return true;

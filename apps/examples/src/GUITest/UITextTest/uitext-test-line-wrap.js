@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Size, TEXT_ALIGNMENT_CENTER } from "@aspect/core";
+import { Text, Widget } from "@aspect/ccui";
 export class UITextTest_LineWrap extends UIMainLayer {
   init() {
     if (super.init()) {
@@ -35,7 +36,7 @@ export class UITextTest_LineWrap extends UIMainLayer {
       this._bottomDisplayLabel.setString("Text line wrap");
 
       // Create the line wrap
-      var text = new ccui.Text(
+      var text = new Text(
         "TextArea Widget can line wrap",
         "AmericanTypewriter",
         32
@@ -46,7 +47,7 @@ export class UITextTest_LineWrap extends UIMainLayer {
       text.setTouchScaleChangeEnabled(true);
       text.setTouchEnabled(true);
       text.addTouchEventListener(function (sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
+        if (type == Widget.TOUCH_ENDED) {
           if (text.width == 280) {
             text.setContentSize(new Size(380, 100));
           } else {

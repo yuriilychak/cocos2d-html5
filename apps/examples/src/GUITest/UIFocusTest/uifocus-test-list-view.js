@@ -25,6 +25,7 @@
 
 import { UIFocusTestBase } from "./uifocus-test-base";
 import { Color, Director } from "@aspect/core";
+import { Button, ListView, ScrollView, Text, Widget } from "@aspect/ccui";
 
 export class UIFocusTestListView extends UIFocusTestBase {
   constructor() {
@@ -37,8 +38,8 @@ export class UIFocusTestListView extends UIFocusTestBase {
     if (super.init()) {
       var winSize = Director.getInstance().getVisibleSize();
 
-      this._listView = new ccui.ListView();
-      this._listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+      this._listView = new ListView();
+      this._listView.setDirection(ScrollView.DIR_VERTICAL);
       this._listView.setBounceEnabled(true);
       this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       this._listView.setBackGroundImageScale9Enabled(true);
@@ -54,7 +55,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
       this._firstFocusedWidget = this._listView;
 
       // create model
-      var default_button = new ccui.Button(
+      var default_button = new Button(
         "ccs-res/cocosui/backtotoppressed.png",
         "ccs-res/cocosui/backtotopnormal.png"
       );
@@ -73,7 +74,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
       for (i = 0; i < count / 4; ++i) {
         this._listView.insertDefaultItem(0);
       }
-      this._loopText = new ccui.Text("loop enabled", "Arial", 20);
+      this._loopText = new Text("loop enabled", "Arial", 20);
       this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
       this._loopText.setColor(Color.GREEN);
       this.addChild(this._loopText);
@@ -85,7 +86,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
   }
 
   toggleFocusLoop(ref, touchType) {
-    if (touchType == ccui.Widget.TOUCH_ENDED) {
+    if (touchType == Widget.TOUCH_ENDED) {
       this._listView.setLoopFocus(!this._listView.isLoopFocus());
       if (this._listView.isLoopFocus()) {
         this._loopText.setString("loop enabled");

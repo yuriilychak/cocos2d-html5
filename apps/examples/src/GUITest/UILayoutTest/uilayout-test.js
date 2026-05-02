@@ -26,10 +26,11 @@
 
 import { UILayoutTestBase } from "./uilayout-test-base";
 import { Size } from "@aspect/core";
+import { Layout } from "@aspect/ccui";
 
 export class UILayoutTest extends UILayoutTestBase {
   createLayout() {
-    var layout = new ccui.Layout();
+    var layout = new Layout();
     layout.setContentSize(new Size(280, 150));
     return layout;
   }

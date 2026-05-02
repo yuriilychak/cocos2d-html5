@@ -13,18 +13,7 @@ import {
   DEFAULT_PADDING
 } from "./constants";
 
-cc.MenuItem = MenuItem;
-cc.MenuItemLabel = MenuItemLabel;
-cc.MenuItemAtlasFont = MenuItemAtlasFont;
-cc.MenuItemFont = MenuItemFont;
-cc.MenuItemSprite = MenuItemSprite;
-cc.MenuItemImage = MenuItemImage;
-cc.MenuItemToggle = MenuItemToggle;
-cc.Menu = Menu;
-cc.MENU_STATE_WAITING = MENU_STATE_WAITING;
-cc.MENU_STATE_TRACKING_TOUCH = MENU_STATE_TRACKING_TOUCH;
-cc.MENU_HANDLER_PRIORITY = MENU_HANDLER_PRIORITY;
-cc.DEFAULT_PADDING = DEFAULT_PADDING;
+
 
 export {
   MenuItem,

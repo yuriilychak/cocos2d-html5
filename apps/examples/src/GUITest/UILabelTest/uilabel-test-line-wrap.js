@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Text } from '@aspect/ccui';
 
 import { TEXT_ALIGNMENT_CENTER } from "@aspect/core";
 export class UILabelTest_LineWrap extends UIMainLayer {
@@ -36,7 +37,7 @@ export class UILabelTest_LineWrap extends UIMainLayer {
       this._bottomDisplayLabel.string = "Label line wrap";
 
       // Create the text area
-      var text = new ccui.Text();
+      var text = new Text();
       text.boundingWidth = 280;
       text.boundingHeight = 150;
       text.attr({

@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { log } from "@aspect/core";
+import { Button } from "@aspect/ccui";
 
 export class UIButtonTextOnly extends UIMainLayer {
   init() {
@@ -35,7 +36,7 @@ export class UIButtonTextOnly extends UIMainLayer {
       this._bottomDisplayLabel.setString("");
 
       // Create the button
-      var button = new ccui.Button();
+      var button = new Button();
       button.setNormalizedPosition(0.5, 0.5);
 
       button.setTitleText("PLAY GAME");

@@ -1,4 +1,5 @@
 import { Director, Loader, Node, Path, log, warn } from "@aspect/core";
+import { helper, Widget } from "@aspect/ccui";
 
 export const _ccsLoad = (function () {
 
@@ -131,7 +132,7 @@ export function loadWithVisibleSize (file, path) {
     var size = Director.getInstance().getVisibleSize();
     if (object.node && size) {
         object.node.setContentSize(size.width, size.height);
-        ccui.helper.doLayout(object.node);
+        helper.doLayout(object.node);
     }
     return object;
 };

@@ -27,6 +27,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
 import { Armature, armatureDataManager } from "@aspect/cocostudio";
+import { Button, RichElementCustomNode, RichElementImage, RichElementText, RichText, Widget } from "@aspect/ccui";
 
 export class UIRichTextTest extends UIMainLayer {
   constructor() {
@@ -41,7 +42,7 @@ export class UIRichTextTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("RichText");
 
       var widgetSize = this._widget.getContentSize();
-      var button = new ccui.Button();
+      var button = new Button();
       button.setTouchEnabled(true);
       button.loadTextures(
         "ccs-res/cocosui/animationbuttonnormal.png",
@@ -59,12 +60,12 @@ export class UIRichTextTest extends UIMainLayer {
       this._mainNode.addChild(button);
 
       // RichText
-      var richText = new ccui.RichText();
+      var richText = new RichText();
       richText.ignoreContentAdaptWithSize(false);
       richText.width = 120;
       richText.height = 100;
 
-      var re1 = new ccui.RichElementText(
+      var re1 = new RichElementText(
         1,
         Color.WHITE,
         255,
@@ -72,7 +73,7 @@ export class UIRichTextTest extends UIMainLayer {
         "Helvetica",
         10
       );
-      var re2 = new ccui.RichElementText(
+      var re2 = new RichElementText(
         2,
         Color.YELLOW,
         255,
@@ -80,7 +81,7 @@ export class UIRichTextTest extends UIMainLayer {
         "Helvetica",
         10
       );
-      var re3 = new ccui.RichElementText(
+      var re3 = new RichElementText(
         3,
         Color.BLUE,
         255,
@@ -88,7 +89,7 @@ export class UIRichTextTest extends UIMainLayer {
         "Helvetica",
         10
       );
-      var re4 = new ccui.RichElementText(
+      var re4 = new RichElementText(
         4,
         Color.GREEN,
         255,
@@ -96,7 +97,7 @@ export class UIRichTextTest extends UIMainLayer {
         "Helvetica",
         10
       );
-      var re5 = new ccui.RichElementText(
+      var re5 = new RichElementText(
         5,
         Color.RED,
         255,
@@ -105,7 +106,7 @@ export class UIRichTextTest extends UIMainLayer {
         10
       );
 
-      var reimg = new ccui.RichElementImage(
+      var reimg = new RichElementImage(
         6,
         Color.WHITE,
         255,
@@ -118,13 +119,13 @@ export class UIRichTextTest extends UIMainLayer {
       var pAr = new Armature("100");
       pAr.getAnimation().play("Animation1");
 
-      var recustom = new ccui.RichElementCustomNode(
+      var recustom = new RichElementCustomNode(
         1,
         Color.WHITE,
         255,
         pAr
       );
-      var re6 = new ccui.RichElementText(
+      var re6 = new RichElementText(
         7,
         Color.ORANGE,
         255,
@@ -151,7 +152,7 @@ export class UIRichTextTest extends UIMainLayer {
     return false;
   }
   touchEvent(sender, type) {
-    if (type == ccui.Widget.TOUCH_ENDED) {
+    if (type == Widget.TOUCH_ENDED) {
       if (this._richText.isIgnoreContentAdaptWithSize()) {
         this._richText.ignoreContentAdaptWithSize(false);
         this._richText.setContentSize(new Size(120, 100));

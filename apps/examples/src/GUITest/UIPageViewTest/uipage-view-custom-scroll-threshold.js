@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
+import { ImageView, Layout, PageView, Slider, Text } from "@aspect/ccui";
 
 export class UIPageViewCustomScrollThreshold extends UIMainLayer {
   init() {
@@ -52,7 +53,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       var background = root.getChildByName("background_Panel");
 
       // Create the page view
-      var pageView = new ccui.PageView();
+      var pageView = new PageView();
       pageView.setContentSize(new Size(240.0, 100.0));
       var backgroundSize = background.getContentSize();
       pageView.setPosition(
@@ -67,10 +68,10 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
-        var layout = new ccui.Layout();
+        var layout = new Layout();
         layout.setContentSize(new Size(240.0, 130.0));
 
-        var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        var imageView = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         imageView.setScale9Enabled(true);
         imageView.setContentSize(new Size(240, 130));
         imageView.setPosition(
@@ -81,7 +82,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
         );
         layout.addChild(imageView);
 
-        var label = new ccui.Text("page " + (i + 1), "Marker Felt", 30);
+        var label = new Text("page " + (i + 1), "Marker Felt", 30);
         label.setColor(new Color(192, 192, 192));
         label.setPosition(
           new Point(
@@ -97,7 +98,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       this._mainNode.addChild(pageView);
       pageView.setName("pageView");
 
-      var slider = new ccui.Slider();
+      var slider = new Slider();
       slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
       slider.loadSlidBallTextures(
         "ccs-res/cocosui/sliderThumb.png",
@@ -117,7 +118,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
   }
 
   sliderEvent(slider, type) {
-    if (type == ccui.Slider.EVENT_PERCENT_CHANGED) {
+    if (type == Slider.EVENT_PERCENT_CHANGED) {
       var percent = slider.getPercent();
       var pageView = this._mainNode.getChildByName("pageView");
       if (percent == 0) percent = 1;

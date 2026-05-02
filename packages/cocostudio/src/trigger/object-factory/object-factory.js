@@ -1,4 +1,4 @@
-import { isFunction } from '@aspect/core';
+import { isFunction } from "@aspect/core";
 
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -30,55 +30,49 @@ import { isFunction } from '@aspect/core';
  * @name objectFactory
  */
 export const objectFactory = {
-    _typeMap: {},
+  _typeMap: {},
 
-    /**
-     * Creates object with class name. if the the class name without register in type map, it returns null.
-     * @param {String} className
-     * @returns {*}
-     */
-    createObject: function (className) {
-        var o = null;
-        var t = this._typeMap[className];
-        if (t) {
-            if(isFunction(t._fun))
-                o = new t._fun();
-            else
-                o = t._fun;
-        }
-        return o;
-    },
-
-    /**
-     * Registers class type in type map.
-     * @param {TInfo} t
-     */
-    registerType: function (t) {
-        this._typeMap[t._className] = t;
-    },
-
-    /**
-     * Creates ccui widget object.
-     * @param {String} name widget name
-     * @returns {ccui.Widget|null}
-     */
-    createGUI: function(name){
-        var object = null;
-        if(name === "Panel")
-            name = "Layout";
-        else if(name === "TextArea")
-            name = "Label";
-        else if(name === "TextButton")
-            name = "Button";
-
-        var t = this._typeMap[name];
-        if(t && t._fun)
-            object = t._fun;
-
-        return object;
-    },
-
-    removeAll: function(){
-        this._typeMap = {};
+  /**
+   * Creates object with class name. if the the class name without register in type map, it returns null.
+   * @param {String} className
+   * @returns {*}
+   */
+  createObject: function (className) {
+    var o = null;
+    var t = this._typeMap[className];
+    if (t) {
+      if (isFunction(t._fun)) o = new t._fun();
+      else o = t._fun;
     }
+    return o;
+  },
+
+  /**
+   * Registers class type in type map.
+   * @param {TInfo} t
+   */
+  registerType: function (t) {
+    this._typeMap[t._className] = t;
+  },
+
+  /**
+   * Creates ccui widget object.
+   * @param {String} name widget name
+   * @returns {Widget|null}
+   */
+  createGUI: function (name) {
+    var object = null;
+    if (name === "Panel") name = "Layout";
+    else if (name === "TextArea") name = "Label";
+    else if (name === "TextButton") name = "Button";
+
+    var t = this._typeMap[name];
+    if (t && t._fun) object = t._fun;
+
+    return object;
+  },
+
+  removeAll: function () {
+    this._typeMap = {};
+  }
 };

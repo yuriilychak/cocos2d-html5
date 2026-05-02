@@ -28,6 +28,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Color } from "@aspect/core";
 import { MoveTo } from "@aspect/actions";
+import { TextField } from "@aspect/ccui";
 
 export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
   init() {
@@ -51,7 +52,7 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
       );
 
       // Create the textfield
-      var textField = new ccui.TextField("input words here", "Arial", 30);
+      var textField = new TextField("input words here", "Arial", 30);
       textField.setPlaceHolder("input text here");
       textField.setPlaceHolderColor(Color.GREEN);
       textField.setTextColor(Color.RED);
@@ -67,7 +68,7 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
   textFieldEvent(textField, type) {
     var widgetSize = this._widget.getContentSize();
     switch (type) {
-      case ccui.TextField.EVENT_ATTACH_WITH_IME:
+      case TextField.EVENT_ATTACH_WITH_IME:
         textField.runAction(
           new MoveTo(
             0.225,
@@ -79,7 +80,7 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
         );
         this._topDisplayLabel.setString("attach with IME");
         break;
-      case ccui.TextField.EVENT_DETACH_WITH_IME:
+      case TextField.EVENT_DETACH_WITH_IME:
         textField.runAction(
           new MoveTo(
             0.175,
@@ -88,10 +89,10 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
         );
         this._topDisplayLabel.setString("detach with IME");
         break;
-      case ccui.TextField.EVENT_INSERT_TEXT:
+      case TextField.EVENT_INSERT_TEXT:
         this._topDisplayLabel.setString("insert words");
         break;
-      case ccui.TextField.EVENT_DELETE_BACKWARD:
+      case TextField.EVENT_DELETE_BACKWARD:
         this._topDisplayLabel.setString("delete word");
         break;
       default:

@@ -1,4 +1,4 @@
-import { LabelTTF, Сolor, isUndefined, RendererConfig } from "@aspect/core";
+import { LabelTTF, Color, isUndefined, RendererConfig } from "@aspect/core";
 import { IMEDispatcher } from "./ime-dispatcher";
 
 export class TextFieldTTF extends LabelTTF {

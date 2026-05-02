@@ -25,6 +25,7 @@
 
 import { UIFocusTestBase } from "./uifocus-test-base";
 import { Color, Director } from "@aspect/core";
+import { HBox, ImageView, LinearLayoutParameter, Margin, Text, VBox, Widget } from "@aspect/ccui";
 
 export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
   constructor() {
@@ -37,7 +38,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
     if (super.init()) {
       var winSize = Director.getInstance().getVisibleSize();
 
-      this._verticalLayout = new ccui.VBox();
+      this._verticalLayout = new VBox();
       this._verticalLayout.setPosition(
         winSize.height / 2 + 80,
         winSize.height - 150
@@ -50,29 +51,29 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
       this._verticalLayout.setTag(-1000);
       this._firstFocusedWidget = this._verticalLayout;
 
-      var upperHBox = new ccui.HBox();
+      var upperHBox = new HBox();
       upperHBox.setTag(-200);
       this._verticalLayout.addChild(upperHBox);
 
-      var params = new ccui.LinearLayoutParameter();
-      params.setMargin(new ccui.Margin(0, 0, 50, 0));
+      var params = new LinearLayoutParameter();
+      params.setMargin(new Margin(0, 0, 50, 0));
 
-      var vparams = new ccui.LinearLayoutParameter();
-      vparams.setMargin(new ccui.Margin(10, 0, 0, 140));
+      var vparams = new LinearLayoutParameter();
+      vparams.setMargin(new Margin(10, 0, 0, 140));
       upperHBox.setLayoutParameter(vparams);
 
       var count = 3,
         i,
         w;
       for (i = 0; i < count; ++i) {
-        var firstVbox = new ccui.VBox();
+        var firstVbox = new VBox();
         firstVbox.setScale(0.5);
         firstVbox.setLayoutParameter(params);
         firstVbox.setTag((i + 1) * 100);
 
         var count1 = 3;
         for (var j = 0; j < count1; ++j) {
-          w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+          w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
           w.setTouchEnabled(true);
           w.setTag(j + firstVbox.getTag() + 1);
           w.addTouchEventListener(this.onImageViewClicked, this);
@@ -81,15 +82,15 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
         upperHBox.addChild(firstVbox);
       }
 
-      var bottomHBox = new ccui.HBox();
+      var bottomHBox = new HBox();
       bottomHBox.setScale(0.5);
       bottomHBox.setTag(600);
       bottomHBox.setLayoutParameter(vparams);
       count = 3;
-      var bottomParams = new ccui.LinearLayoutParameter();
-      bottomParams.setMargin(new ccui.Margin(0, 0, 8, 0));
+      var bottomParams = new LinearLayoutParameter();
+      bottomParams.setMargin(new Margin(0, 0, 8, 0));
       for (i = 0; i < count; ++i) {
-        w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setLayoutParameter(bottomParams);
         w.setTouchEnabled(true);
         w.setTag(i + 601);
@@ -98,7 +99,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
       }
       this._verticalLayout.addChild(bottomHBox);
 
-      this._loopText = new ccui.Text("loop enabled", "Arial", 20);
+      this._loopText = new Text("loop enabled", "Arial", 20);
       this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
       this._loopText.setColor(Color.GREEN);
       this.addChild(this._loopText);
@@ -110,7 +111,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
   }
 
   toggleFocusLoop(ref, touchType) {
-    if (touchType == ccui.Widget.TOUCH_ENDED) {
+    if (touchType == Widget.TOUCH_ENDED) {
       this._verticalLayout.setLoopFocus(!this._verticalLayout.isLoopFocus());
       if (this._verticalLayout.isLoopFocus()) {
         this._loopText.setString("loop enabled");

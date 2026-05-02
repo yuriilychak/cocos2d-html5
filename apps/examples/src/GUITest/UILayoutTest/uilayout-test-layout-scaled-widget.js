@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Color } from "@aspect/core";
+import { ImageView, Layout, Text } from "@aspect/ccui";
 
 export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
   init() {
@@ -33,7 +34,7 @@ export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add the alert
-      var alert = new ccui.Text("Layout Scaled Widget", "Marker Felt", 20);
+      var alert = new Text("Layout Scaled Widget", "Marker Felt", 20);
       alert.setColor(new Color(159, 168, 176));
       alert.setPosition(
         widgetSize.width / 2.0,
@@ -45,8 +46,8 @@ export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
       var background = root.getChildByName("background_Panel");
 
       // Create the layout
-      var layout = new ccui.Layout();
-      layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
+      var layout = new Layout();
+      layout.setLayoutType(Layout.LINEAR_HORIZONTAL);
       layout.setContentSize(280, 150);
       var backgroundSize = background.getContentSize();
       layout.setPosition(
@@ -58,19 +59,19 @@ export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
       this._mainNode.addChild(layout);
 
       // center
-      var imageView_Center1 = new ccui.ImageView(
+      var imageView_Center1 = new ImageView(
         "ccs-res/cocosui/scrollviewbg.png"
       );
       imageView_Center1.scale = 0.5;
       layout.addChild(imageView_Center1);
 
-      var imageView_Center2 = new ccui.ImageView(
+      var imageView_Center2 = new ImageView(
         "ccs-res/cocosui/scrollviewbg.png"
       );
       imageView_Center2.scale = 1.2;
       layout.addChild(imageView_Center2);
 
-      var imageView_Center3 = new ccui.ImageView(
+      var imageView_Center3 = new ImageView(
         "ccs-res/cocosui/scrollviewbg.png"
       );
       imageView_Center3.scale = 0.8;

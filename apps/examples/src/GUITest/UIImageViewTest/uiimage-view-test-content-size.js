@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
+import { ImageView, Text, Widget } from "@aspect/ccui";
 
 export class UIImageViewTest_ContentSize extends UIMainLayer {
   init() {
@@ -34,7 +35,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       this._bottomDisplayLabel.setString("");
-      var alert = new ccui.Text(
+      var alert = new Text(
         "ImageView ContentSize Change",
         "Marker Felt",
         26
@@ -49,7 +50,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
 
       this._mainNode.addChild(alert);
 
-      var status = new ccui.Text(
+      var status = new Text(
         "child ImageView position percent",
         "Marker Felt",
         16
@@ -61,7 +62,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
       this._mainNode.addChild(status, 20);
 
       // Create the imageview
-      var imageView = new ccui.ImageView(
+      var imageView = new ImageView(
         "ccs-res/cocosui/buttonHighlighted.png"
       );
       imageView.setScale9Enabled(true);
@@ -70,22 +71,22 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
         new Point(widgetSize.width / 2, widgetSize.height / 2)
       );
 
-      var imageViewChild = new ccui.ImageView(
+      var imageViewChild = new ImageView(
         "ccs-res/cocosui/buttonHighlighted.png"
       );
       imageViewChild.setScale9Enabled(true);
-      imageViewChild.setSizeType(ccui.Widget.SIZE_PERCENT);
-      imageViewChild.setPositionType(ccui.Widget.POSITION_PERCENT);
+      imageViewChild.setSizeType(Widget.SIZE_PERCENT);
+      imageViewChild.setPositionType(Widget.POSITION_PERCENT);
       imageViewChild.setSizePercent(new Point(0.5, 0.5));
       imageViewChild.setPositionPercent(new Point(0.5, 0.5));
       //imageViewChild.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2));
 
-      var imageViewChild2 = new ccui.ImageView(
+      var imageViewChild2 = new ImageView(
         "ccs-res/cocosui/buttonHighlighted.png"
       );
       imageViewChild2.setScale9Enabled(true);
-      imageViewChild2.setSizeType(ccui.Widget.SIZE_PERCENT);
-      imageViewChild2.setPositionType(ccui.Widget.POSITION_PERCENT);
+      imageViewChild2.setSizeType(Widget.SIZE_PERCENT);
+      imageViewChild2.setPositionType(Widget.POSITION_PERCENT);
       imageViewChild2.setSizePercent(new Point(0.5, 0.5));
       imageViewChild2.setPositionPercent(new Point(0.5, 0.5));
       imageViewChild.addChild(imageViewChild2);
@@ -95,7 +96,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
 
       imageView.setTouchEnabled(true);
       imageView.addTouchEventListener(function (sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
+        if (type == Widget.TOUCH_ENDED) {
           var width = ((Math.random() * 200) | 0) + 50;
           var height = ((Math.random() * 80) | 0) + 30;
           imageView.setContentSize(new Size(width, height));

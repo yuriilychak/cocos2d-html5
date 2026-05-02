@@ -1,4 +1,4 @@
-import { EaseOut, sequence, ScaleTo, CallFunc } from "@aspect/actions";
+import { EaseOut, Sequence, ScaleTo, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
 export class TransitionShrinkGrow extends TransitionScene {
@@ -25,7 +25,7 @@ export class TransitionShrinkGrow extends TransitionScene {
     var scaleIn = new ScaleTo(this._duration, 1.0);
 
     this._inScene.runAction(
-      sequence(
+      new Sequence(
         this.easeActionWithAction(scaleIn),
         new CallFunc(this.finish, this)
       )

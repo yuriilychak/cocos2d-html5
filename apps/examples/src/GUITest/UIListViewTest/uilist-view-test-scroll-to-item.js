@@ -27,6 +27,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Color } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
+import { Button, Layout, ListView, ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_ScrollToItem extends UIMainLayer {
   constructor() {
@@ -50,7 +51,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
       // Create the list view
-      var listView = new ccui.ListView();
+      var listView = new ListView();
       // set list view ex direction
       listView.setDirection(this._getListViewDirection());
       listView.setBounceEnabled(true);
@@ -72,7 +73,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
         var pNode = new DrawNode();
 
         var center = new Point(widgetSize.width / 2, widgetSize.height / 2);
-        if (this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL) {
+        if (this._getListViewDirection() == ScrollView.DIR_HORIZONTAL) {
           var halfY = 110;
           pNode.drawSegment(
             new Point(center.x, center.y - halfY),
@@ -94,7 +95,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
       }
       var NUMBER_OF_ITEMS = 31;
       // Button
-      var pButton = new ccui.Button(
+      var pButton = new Button(
         "ccs-res/cocosui/backtotoppressed.png",
         "ccs-res/cocosui/backtotopnormal.png"
       );
@@ -124,7 +125,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
 
       // Add list items
 
-      var default_button = new ccui.Button();
+      var default_button = new Button();
       default_button.setName("TextButton");
       default_button.setTouchEnabled(true);
       default_button.loadTextures(
@@ -133,7 +134,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
         ""
       );
 
-      var default_item = new ccui.Layout();
+      var default_item = new Layout();
       default_item.setTouchEnabled(true);
       default_item.setContentSize(default_button.getContentSize());
       default_button.x = default_item.width / 2;

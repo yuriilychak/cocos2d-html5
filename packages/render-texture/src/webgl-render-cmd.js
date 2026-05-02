@@ -164,7 +164,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     const node = this._node;
     if (format === PIXEL_FORMAT_A8)
       log(
-        "cc.RenderTexture._initWithWidthAndHeightForWebGL() : only RGB and RGBA formats are valid for a render texture;"
+        "RenderTexture._initWithWidthAndHeightForWebGL() : only RGB and RGBA formats are valid for a render texture;"
       );
 
     const gl = RendererConfig.getInstance().renderContext,
@@ -343,7 +343,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
         this._textureCopy._webTextureObj,
         0
       );
-      //cc.checkGLErrorDebug();
+      //checkGLErrorDebug();
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.framebufferTexture2D(
         gl.FRAMEBUFFER,

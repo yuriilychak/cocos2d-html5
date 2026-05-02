@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { TextBMFont } from "@aspect/ccui";
 
 export class UILabelBMFontTest extends UIMainLayer {
   init() {
@@ -34,7 +35,7 @@ export class UILabelBMFontTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("LabelBMFont");
 
       // Create the LabelBMFont
-      var labelBMFont = new ccui.TextBMFont();
+      var labelBMFont = new TextBMFont();
       labelBMFont.setFntFile("ccs-res/cocosui/bitmapFontTest2.fnt");
       labelBMFont.setString("BMFont");
       labelBMFont.x = this._widget.width / 2;

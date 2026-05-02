@@ -25,17 +25,18 @@
  ****************************************************************************/
 
 import { UILayoutComponentTest } from "./uilayout-component-test";
+import { ImageView, LayoutComponent, helper } from "@aspect/ccui";
 
 export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest {
   init() {
     if (super.init()) {
-      var leftTopSprite = new ccui.ImageView(
+      var leftTopSprite = new ImageView(
         "ccs-res/cocosui/CloseSelected.png"
       );
       leftTopSprite.ignoreContentAdaptWithSize(false);
-      var leftTop = ccui.LayoutComponent.bindLayoutComponent(leftTopSprite);
-      leftTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
-      leftTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
+      var leftTop = LayoutComponent.bindLayoutComponent(leftTopSprite);
+      leftTop.setHorizontalEdge(LayoutComponent.horizontalEdge.LEFT);
+      leftTop.setVerticalEdge(LayoutComponent.verticalEdge.TOP);
       leftTop.setStretchWidthEnabled(true);
       leftTop.setStretchHeightEnabled(true);
       this._baseLayer.addChild(leftTopSprite);
@@ -43,14 +44,14 @@ export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest 
       leftTop.setLeftMargin(0);
       leftTop.setTopMargin(0);
 
-      var leftBottomSprite = new ccui.ImageView(
+      var leftBottomSprite = new ImageView(
         "ccs-res/cocosui/CloseSelected.png"
       );
       leftBottomSprite.ignoreContentAdaptWithSize(false);
       var leftBottom =
-        ccui.LayoutComponent.bindLayoutComponent(leftBottomSprite);
-      leftBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
-      leftBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
+        LayoutComponent.bindLayoutComponent(leftBottomSprite);
+      leftBottom.setHorizontalEdge(LayoutComponent.horizontalEdge.LEFT);
+      leftBottom.setVerticalEdge(LayoutComponent.verticalEdge.BOTTOM);
       leftBottom.setStretchWidthEnabled(true);
       leftBottom.setStretchHeightEnabled(true);
       this._baseLayer.addChild(leftBottomSprite);
@@ -58,13 +59,13 @@ export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest 
       leftBottom.setLeftMargin(0);
       leftBottom.setBottomMargin(0);
 
-      var rightTopSprite = new ccui.ImageView(
+      var rightTopSprite = new ImageView(
         "ccs-res/cocosui/CloseSelected.png"
       );
       rightTopSprite.ignoreContentAdaptWithSize(false);
-      var rightTop = ccui.LayoutComponent.bindLayoutComponent(rightTopSprite);
-      rightTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
-      rightTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
+      var rightTop = LayoutComponent.bindLayoutComponent(rightTopSprite);
+      rightTop.setHorizontalEdge(LayoutComponent.horizontalEdge.RIGHT);
+      rightTop.setVerticalEdge(LayoutComponent.verticalEdge.TOP);
       rightTop.setStretchWidthEnabled(true);
       rightTop.setStretchHeightEnabled(true);
       this._baseLayer.addChild(rightTopSprite);
@@ -72,14 +73,14 @@ export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest 
       rightTop.setTopMargin(0);
       rightTop.setRightMargin(0);
 
-      var rightBottomSprite = new ccui.ImageView(
+      var rightBottomSprite = new ImageView(
         "ccs-res/cocosui/CloseSelected.png"
       );
       rightBottomSprite.ignoreContentAdaptWithSize(false);
       var rightBottom =
-        ccui.LayoutComponent.bindLayoutComponent(rightBottomSprite);
-      rightBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
-      rightBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
+        LayoutComponent.bindLayoutComponent(rightBottomSprite);
+      rightBottom.setHorizontalEdge(LayoutComponent.horizontalEdge.RIGHT);
+      rightBottom.setVerticalEdge(LayoutComponent.verticalEdge.BOTTOM);
       rightBottom.setStretchWidthEnabled(true);
       rightBottom.setStretchHeightEnabled(true);
       this._baseLayer.addChild(rightBottomSprite);
@@ -87,7 +88,7 @@ export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest 
       rightBottom.setBottomMargin(0);
       rightBottom.setRightMargin(0);
 
-      ccui.helper.doLayout(this._baseLayer);
+      helper.doLayout(this._baseLayer);
       return true;
     }
     return false;

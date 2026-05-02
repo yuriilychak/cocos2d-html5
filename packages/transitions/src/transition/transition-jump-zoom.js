@@ -1,5 +1,5 @@
 import { Director, Point } from "@aspect/core";
-import { sequence, JumpBy, ScaleTo, DelayTime, CallFunc } from "@aspect/actions";
+import { Sequence, JumpBy, ScaleTo, DelayTime, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
 export class TransitionJumpZoom extends TransitionScene {
@@ -31,13 +31,13 @@ export class TransitionJumpZoom extends TransitionScene {
     var scaleIn = new ScaleTo(this._duration / 4, 1.0);
     var scaleOut = new ScaleTo(this._duration / 4, 0.5);
 
-    var jumpZoomOut = sequence(scaleOut, jump);
-    var jumpZoomIn = sequence(jump, scaleIn);
+    var jumpZoomOut = new Sequence(scaleOut, jump);
+    var jumpZoomIn = new Sequence(jump, scaleIn);
 
     var delay = new DelayTime(this._duration / 2);
     this._outScene.runAction(jumpZoomOut);
     this._inScene.runAction(
-      sequence(delay, jumpZoomIn, new CallFunc(this.finish, this))
+      new Sequence(delay, jumpZoomIn, new CallFunc(this.finish, this))
     );
   }
 }

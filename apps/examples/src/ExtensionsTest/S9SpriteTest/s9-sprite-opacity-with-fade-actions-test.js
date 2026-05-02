@@ -30,6 +30,7 @@ import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
 import { Color, LayerColor } from "@aspect/core";
 import { DelayTime, FadeIn, FadeOut, FadeTo, sequence } from "@aspect/actions";
+import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
 
     colorLayer.setCascadeOpacityEnabled(true);
 
-    var blocks = new ccui.Scale9Sprite("blocks9.png");
+    var blocks = new Scale9Sprite("blocks9.png");
     blocks.x = winSize.width / 4;
     blocks.y = winSize.height / 4;
 

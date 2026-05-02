@@ -26,19 +26,20 @@
 
 import { UILayoutTestBase } from "./uilayout-test-base";
 import { Point, Size, Color } from "@aspect/core";
+import { Layout, RelativeLayoutParameter, Widget } from "@aspect/ccui";
 
 export class UILayoutTest_Layout_Relative extends UILayoutTestBase {
   createLayout() {
-    var layout = new ccui.Layout();
+    var layout = new Layout();
     layout.ignoreContentAdaptWithSize(false);
-    layout.setLayoutType(ccui.Layout.RELATIVE);
-    layout.sizeType = ccui.Widget.SIZE_PERCENT;
+    layout.setLayoutType(Layout.RELATIVE);
+    layout.sizeType = Widget.SIZE_PERCENT;
     layout.setSizePercent(new Point(0.5, 0.5));
     //layout.setContentSize(new Size(280, 150));
-    layout.setPositionType(ccui.Widget.POSITION_PERCENT);
+    layout.setPositionType(Widget.POSITION_PERCENT);
     layout.setPositionPercent(new Point(0.25, 0.25));
     //layout.setPosition(new Point(winSize.width/2, winSize.height/2));
-    layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+    layout.setBackGroundColorType(Layout.BG_COLOR_SOLID);
     layout.setBackGroundColor(Color.GREEN);
     return layout;
   }
@@ -46,16 +47,16 @@ export class UILayoutTest_Layout_Relative extends UILayoutTestBase {
     return "Layout Layout Relative";
   }
   setLayoutParameter() {
-    var lp1 = new ccui.RelativeLayoutParameter();
+    var lp1 = new RelativeLayoutParameter();
     this.button.setLayoutParameter(lp1);
-    lp1.setAlign(ccui.RelativeLayoutParameter.PARENT_TOP_LEFT);
+    lp1.setAlign(RelativeLayoutParameter.PARENT_TOP_LEFT);
 
-    var lp2 = new ccui.RelativeLayoutParameter();
+    var lp2 = new RelativeLayoutParameter();
     this.textButton.setLayoutParameter(lp2);
-    lp2.setAlign(ccui.RelativeLayoutParameter.CENTER_IN_PARENT);
+    lp2.setAlign(RelativeLayoutParameter.CENTER_IN_PARENT);
 
-    var lp3 = new ccui.RelativeLayoutParameter();
+    var lp3 = new RelativeLayoutParameter();
     this.button_scale9.setLayoutParameter(lp3);
-    lp3.setAlign(ccui.RelativeLayoutParameter.PARENT_RIGHT_BOTTOM);
+    lp3.setAlign(RelativeLayoutParameter.PARENT_RIGHT_BOTTOM);
   }
 }

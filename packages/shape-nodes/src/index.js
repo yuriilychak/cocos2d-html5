@@ -8,8 +8,7 @@ DrawNode.CanvasRenderCmd = DrawNodeCanvasRenderCmd;
 DrawNode.WebGLRenderCmd = DrawNodeWebGLRenderCmd;
 
 // cc globals
-cc.DrawNode = DrawNode;
-cc._DrawNodeElement = DrawNodeElement;
+
 
 export {
   DrawNode,

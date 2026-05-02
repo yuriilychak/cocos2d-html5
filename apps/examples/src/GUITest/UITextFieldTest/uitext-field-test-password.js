@@ -27,6 +27,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { Point } from "@aspect/core";
 import { MoveTo } from "@aspect/actions";
+import { TextField } from "@aspect/ccui";
 
 export class UITextFieldTest_Password extends UIMainLayer {
   init() {
@@ -37,7 +38,7 @@ export class UITextFieldTest_Password extends UIMainLayer {
       this._bottomDisplayLabel.setString("TextField max length");
 
       // Create the textfield
-      var textField = new ccui.TextField();
+      var textField = new TextField();
       textField.setPasswordEnabled(true);
       textField.setPasswordStyleText("*");
       textField.setTouchEnabled(true);
@@ -57,7 +58,7 @@ export class UITextFieldTest_Password extends UIMainLayer {
   textFieldEvent(textField, type) {
     var widgetSize = this._widget.getContentSize();
     switch (type) {
-      case ccui.TextField.EVENT_ATTACH_WITH_IME:
+      case TextField.EVENT_ATTACH_WITH_IME:
         textField.runAction(
           new MoveTo(
             0.225,
@@ -69,7 +70,7 @@ export class UITextFieldTest_Password extends UIMainLayer {
         );
         this._topDisplayLabel.setString("attach with IME IME password");
         break;
-      case ccui.TextField.EVENT_DETACH_WITH_IME:
+      case TextField.EVENT_DETACH_WITH_IME:
         textField.runAction(
           new MoveTo(
             0.175,
@@ -78,10 +79,10 @@ export class UITextFieldTest_Password extends UIMainLayer {
         );
         this._topDisplayLabel.setString("detach with IME password");
         break;
-      case ccui.TextField.EVENT_INSERT_TEXT:
+      case TextField.EVENT_INSERT_TEXT:
         this._topDisplayLabel.setString("insert with IME password");
         break;
-      case ccui.TextField.EVENT_DELETE_BACKWARD:
+      case TextField.EVENT_DELETE_BACKWARD:
         this._topDisplayLabel.setString("delete with IME password");
         break;
       default:

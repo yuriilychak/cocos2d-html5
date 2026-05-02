@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Color } from "@aspect/core";
+import { Button, Text } from "@aspect/ccui";
 
 export class UIButtonDisableDefaultTest extends UIMainLayer {
   init() {
@@ -36,7 +37,7 @@ export class UIButtonDisableDefaultTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("");
 
       // Add the alert
-      var alert = new ccui.Text(
+      var alert = new Text(
         "Left button will turn normal when clicked",
         "Arial",
         20
@@ -49,7 +50,7 @@ export class UIButtonDisableDefaultTest extends UIMainLayer {
       this._mainNode.addChild(alert);
 
       // Create the button
-      var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
+      var button = new Button("ccs-res/cocosui/animationbuttonnormal.png");
       button.setPosition(
         widgetSize.width / 2.0 - 80,
         widgetSize.height / 2.0 + 40
@@ -63,7 +64,7 @@ export class UIButtonDisableDefaultTest extends UIMainLayer {
       this._mainNode.addChild(button);
 
       // Create the button
-      var buttonScale9 = new ccui.Button("ccs-res/cocosui/button.png");
+      var buttonScale9 = new Button("ccs-res/cocosui/button.png");
       // open scale9 render
       buttonScale9.setScale9Enabled(true);
       buttonScale9.setPosition(

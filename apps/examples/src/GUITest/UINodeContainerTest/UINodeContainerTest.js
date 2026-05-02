@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Sprite } from "@aspect/core";
+import { Widget } from "@aspect/ccui";
 
 export class UIWidgetAddNodeTest extends UIMainLayer {
   init() {
@@ -36,7 +37,7 @@ export class UIWidgetAddNodeTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("NodeContainer");
 
       // Create the ui node container
-      var nodeContainer = new ccui.Widget();
+      var nodeContainer = new Widget();
       nodeContainer.x = widgetSize.width / 2;
       nodeContainer.y = widgetSize.height / 2;
       this._mainNode.addChild(nodeContainer);

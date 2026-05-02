@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
+import { ImageView, Layout, ScrollView } from "@aspect/ccui";
 
 export class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
   init() {
@@ -43,11 +44,11 @@ export class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
       var background = this._widget.getChildByName("background_Panel");
 
       // Create the scrollview
-      var scrollView = new ccui.ScrollView();
+      var scrollView = new ScrollView();
       scrollView.setTouchEnabled(true);
       scrollView.setBackGroundColor(Color.GREEN);
-      scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
-      scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
+      scrollView.setBackGroundColorType(Layout.BG_COLOR_SOLID);
+      scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setInnerContainerSize(new Size(480, 320));
       scrollView.setContentSize(new Size(100, 100));
       var scrollViewSize = scrollView.getContentSize();
@@ -62,7 +63,7 @@ export class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
 
       this._mainNode.addChild(scrollView);
 
-      var imageView = new ccui.ImageView();
+      var imageView = new ImageView();
       imageView.loadTexture("ccs-res/cocosui/Hello.png");
       imageView.x = 240;
       imageView.y = 160;

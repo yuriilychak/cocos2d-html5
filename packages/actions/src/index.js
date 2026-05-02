@@ -66,66 +66,16 @@ EaseSineIn.ReversedAction = EaseSineOut;
 EaseSineOut.ReversedAction = EaseSineIn;
 
 
-// These two are used by @aspect/core drawing primitives via cc.* globals
+// Used by @aspect/core drawing primitives via cc.* globals
 // (core cannot import @aspect/actions directly — circular dependency)
 cc.cardinalSplineAt = cardinalSplineAt;
 cc.getControlPointAt = getControlPointAt;
 
-// ─── Sequence & Spawn ────────────────────────────────
-function sequence(tempArray) {
-  var paramArray = tempArray instanceof Array ? tempArray : arguments;
-  if (paramArray.length > 0 && paramArray[paramArray.length - 1] == null)
-    cc.log("parameters should not be ending with null in Javascript");
-
-  var result, current, i, repeat;
-  while (paramArray && paramArray.length > 0) {
-    current = Array.prototype.shift.call(paramArray);
-    repeat = current._timesForRepeat || 1;
-    current._repeatMethod = false;
-    current._timesForRepeat = 1;
-
-    i = 0;
-    if (!result) {
-      result = current;
-      i = 1;
-    }
-
-    for (i; i < repeat; i++) {
-      result = Sequence._actionOneTwo(result, current);
-    }
-  }
-
-  return result;
-}
-
-Sequence._actionOneTwo = function (actionOne, actionTwo) {
-  var sequence = new Sequence();
-  sequence.initWithTwoActions(actionOne, actionTwo);
-  return sequence;
-};
-
-
-function spawn(tempArray) {
-  var paramArray = tempArray instanceof Array ? tempArray : arguments;
-  if (paramArray.length > 0 && paramArray[paramArray.length - 1] == null)
-    cc.log("parameters should not be ending with null in Javascript");
-
-  var prev = paramArray[0];
-  for (var i = 1; i < paramArray.length; i++) {
-    if (paramArray[i] != null)
-      prev = Spawn._actionOneTwo(prev, paramArray[i]);
-  }
-  return prev;
-}
-
-Spawn._actionOneTwo = function (action1, action2) {
-  var pSpawn = new Spawn();
-  pSpawn.initWithTwoActions(action1, action2);
-  return pSpawn;
-};
+// Factory functions for backward compatibility
+export const sequence = (...args) => new Sequence(...args);
+export const spawn = (...args) => new Spawn(...args);
 
 // ─── Re-exports ─────────────────────────────────────
-export { sequence, spawn };
 export {
   easeIn, easeOut, easeInOut,
   easeExponentialIn, easeExponentialOut, easeExponentialInOut,
@@ -144,6 +94,18 @@ export {
   bezierAt, bounceTime,
   cardinalSplineAt, reverseControlPoints, cloneControlPoints,
   getControlPointAt, reverseControlPointsInline
+};
+export {
+  _easeExponentialInObj, _easeExponentialOutObj, _easeExponentialInOutObj,
+  _easeSineInObj, _easeSineOutObj, _easeSineInOutObj,
+  _easeElasticInObj, _easeElasticOutObj,
+  _easeBounceInObj, _easeBounceOutObj, _easeBounceInOutObj,
+  _easeBackInObj, _easeBackOutObj, _easeBackInOutObj,
+  _easeQuadraticActionIn, _easeQuadraticActionOut, _easeQuadraticActionInOut,
+  _easeQuarticActionIn, _easeQuarticActionOut, _easeQuarticActionInOut,
+  _easeQuinticActionIn, _easeQuinticActionOut, _easeQuinticActionInOut,
+  _easeCircleActionIn, _easeCircleActionOut, _easeCircleActionInOut,
+  _easeCubicActionIn, _easeCubicActionOut, _easeCubicActionInOut
 };
 export {
   Action,

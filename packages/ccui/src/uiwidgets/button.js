@@ -54,14 +54,14 @@ import { Scale9Sprite } from "../base-classes/scale9-sprite";
 export class Button extends Widget {
   /**
    * Allocates and initializes a UIButton.
-   * Constructor of ccui.Button. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * Constructor of Button. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @param {String} normalImage
    * @param {String} [selectedImage=""]
    * @param {String} [disableImage=""]
-   * @param {Number} [texType=ccui.Widget.LOCAL_TEXTURE]
+   * @param {Number} [texType=Widget.LOCAL_TEXTURE]
    * @example
    * // example
-   * var uiButton = new ccui.Button();
+   * var uiButton = new Button();
    */
   constructor(normalImage, selectedImage, disableImage, texType) {
     super();
@@ -242,7 +242,7 @@ export class Button extends Widget {
    * @param {String} normal normal state of texture's filename.
    * @param {String} selected  selected state of texture's filename.
    * @param {String} disabled  disabled state of texture's filename.
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextures(normal, selected, disabled, texType) {
     this.loadTextureNormal(normal, texType);
@@ -268,7 +268,7 @@ export class Button extends Widget {
     var frame = SpriteFrameCache.getInstance().getSpriteFrame(name);
     if (frame == null) {
       log(
-        "ccui.Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName"
+        "Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName"
       );
       return null;
     }
@@ -279,7 +279,7 @@ export class Button extends Widget {
   /**
    * Load normal state texture for button.
    * @param {String} normal normal state of texture's filename.
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextureNormal(normal, texType) {
     if (!normal) return;
@@ -349,7 +349,7 @@ export class Button extends Widget {
   /**
    * Load selected state texture for button.
    * @param {String} selected selected state of texture's filename.
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTexturePressed(selected, texType) {
     if (!selected) return;
@@ -395,7 +395,7 @@ export class Button extends Widget {
   /**
    * Load dark state texture for button.
    * @param {String} disabled disabled state of texture's filename.
-   * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+   * @param {Widget.LOCAL_TEXTURE|Widget.PLIST_TEXTURE} texType
    */
   loadTextureDisabled(disabled, texType) {
     if (!disabled) return;
@@ -683,7 +683,7 @@ export class Button extends Widget {
   }
 
   /**
-   * Sets title text to ccui.Button
+   * Sets title text to Button
    * @param {String} text
    */
   setTitleText(text) {
@@ -701,7 +701,7 @@ export class Button extends Widget {
   }
 
   /**
-   * Returns title text of ccui.Button
+   * Returns title text of Button
    * @returns {String} text
    */
   getTitleText() {
@@ -712,7 +712,7 @@ export class Button extends Widget {
   }
 
   /**
-   * Sets title color to ccui.Button.
+   * Sets title color to Button.
    * @param {Color} color
    */
   setTitleColor(color) {
@@ -721,7 +721,7 @@ export class Button extends Widget {
   }
 
   /**
-   * Returns title color of ccui.Button
+   * Returns title color of Button
    * @returns {Color}
    */
   getTitleColor() {
@@ -732,7 +732,7 @@ export class Button extends Widget {
   }
 
   /**
-   * Sets title fontSize to ccui.Button
+   * Sets title fontSize to Button
    * @param {Size} size
    */
   setTitleFontSize(size) {
@@ -743,7 +743,7 @@ export class Button extends Widget {
   }
 
   /**
-   * Returns title fontSize of ccui.Button.
+   * Returns title fontSize of Button.
    * @returns {Number}
    */
   getTitleFontSize() {
@@ -782,7 +782,7 @@ export class Button extends Widget {
   }
 
   /**
-   * Sets title fontName to ccui.Button.
+   * Sets title fontName to Button.
    * @param {String} fontName
    */
   setTitleFontName(fontName) {
@@ -802,7 +802,7 @@ export class Button extends Widget {
   }
 
   /**
-   * Gets title fontName of ccui.Button.
+   * Gets title fontName of Button.
    * @returns {String}
    */
   getTitleFontName() {
@@ -874,32 +874,32 @@ export class Button extends Widget {
 
 // Constants
 /**
- * The normal renderer's zOrder value of ccui.Button.
+ * The normal renderer's zOrder value of Button.
  * @constant
  * @type {number}
  */
 Button.NORMAL_RENDERER_ZORDER = -2;
 /**
- * The pressed renderer's zOrder value ccui.Button.
+ * The pressed renderer's zOrder value Button.
  * @constant
  * @type {number}
  */
 Button.PRESSED_RENDERER_ZORDER = -2;
 /**
- * The disabled renderer's zOrder value of ccui.Button.
+ * The disabled renderer's zOrder value of Button.
  * @constant
  * @type {number}
  */
 Button.DISABLED_RENDERER_ZORDER = -2;
 /**
- * The title renderer's zOrder value of ccui.Button.
+ * The title renderer's zOrder value of Button.
  * @constant
  * @type {number}
  */
 Button.TITLE_RENDERER_ZORDER = -1;
 
 /**
- * the zoom action time step of ccui.Button
+ * the zoom action time step of Button
  * @constant
  * @type {number}
  */

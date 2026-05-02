@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Color, Point, Size, log } from "@aspect/core";
+import { Button, CheckBox, HBox, Layout, LinearLayoutParameter, PageView, Text, VBox, Widget } from "@aspect/ccui";
 
 export class UIPageViewTouchPropagationTest extends UIMainLayer {
   init() {
@@ -50,7 +51,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       var background = root.getChildByName("background_Panel");
 
       // Create the page view
-      var pageView = new ccui.PageView();
+      var pageView = new PageView();
       pageView.setContentSize(new Size(240.0, 130.0));
       pageView.setAnchorPoint(new Point(0.5, 0.5));
       var backgroundSize = background.getContentSize();
@@ -58,18 +59,18 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
         new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
       );
       pageView.setBackGroundColor(Color.GREEN);
-      pageView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+      pageView.setBackGroundColorType(Layout.BG_COLOR_SOLID);
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
-        var outerBox = new ccui.HBox();
+        var outerBox = new HBox();
         outerBox.setContentSize(new Size(240.0, 130.0));
 
         for (var k = 0; k < 2; ++k) {
-          var innerBox = new ccui.VBox();
+          var innerBox = new VBox();
 
           for (var j = 0; j < 3; j++) {
-            var btn = new ccui.Button(
+            var btn = new Button(
               "ccs-res/cocosui/animationbuttonnormal.png",
               "ccs-res/cocosui/animationbuttonpressed.png"
             );
@@ -78,7 +79,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
             innerBox.addChild(btn);
           }
 
-          var parameter = new ccui.LinearLayoutParameter();
+          var parameter = new LinearLayoutParameter();
           parameter.setMargin({ left: 0, top: 0, right: 100, bottom: 0 });
           innerBox.setLayoutParameter(parameter);
 
@@ -90,11 +91,11 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       pageView.addEventListener(this.pageViewEvent, this);
       pageView.setName("pageView");
       pageView.addTouchEventListener(function (sender, type) {
-        if (type == ccui.Widget.TOUCH_BEGAN) {
+        if (type == Widget.TOUCH_BEGAN) {
           log("page view touch began");
-        } else if (type == ccui.Widget.TOUCH_MOVED) {
+        } else if (type == Widget.TOUCH_MOVED) {
           log("page view touch moved");
-        } else if (type == ccui.Widget.TOUCH_ENDED) {
+        } else if (type == Widget.TOUCH_ENDED) {
           log("page view touch ended");
         } else {
           log("page view touch cancelled");
@@ -102,7 +103,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       });
       this._mainNode.addChild(pageView);
 
-      var propagationText = new ccui.Text("Allow Propagation", "Arial", 10);
+      var propagationText = new Text("Allow Propagation", "Arial", 10);
       propagationText.setAnchorPoint(new Point(0, 0.5));
       propagationText.setTextColor(Color.RED);
       propagationText.setPosition(
@@ -110,14 +111,14 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       );
       this._mainNode.addChild(propagationText);
 
-      var swallowTouchText = new ccui.Text("Swallow Touches", "Arial", 10);
+      var swallowTouchText = new Text("Swallow Touches", "Arial", 10);
       swallowTouchText.setAnchorPoint(new Point(0, 0.5));
       swallowTouchText.setTextColor(Color.RED);
       swallowTouchText.setPosition(new Point(20, pageView.getPosition().y));
       this._mainNode.addChild(swallowTouchText);
 
       // Create the checkbox
-      var checkBox1 = new ccui.CheckBox(
+      var checkBox1 = new CheckBox(
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_normal_press.png",
         "ccs-res/cocosui/check_box_active.png",
@@ -134,7 +135,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       this._mainNode.addChild(checkBox1);
 
       // Create the checkbox
-      var checkBox2 = new ccui.CheckBox(
+      var checkBox2 = new CheckBox(
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_normal_press.png",
         "ccs-res/cocosui/check_box_active.png",
@@ -166,7 +167,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
     var ck2 = this._mainNode.getChildByName("swallow");
     var pageView = this._mainNode.getChildByName("pageView");
 
-    if (type == ccui.Widget.TOUCH_BEGAN) {
+    if (type == Widget.TOUCH_BEGAN) {
       if (ck1.isSelected()) {
         btn.setPropagateTouchEvents(true);
         pageView.setPropagateTouchEvents(true);
@@ -183,12 +184,12 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
         pageView.setSwallowTouches(false);
       }
     }
-    if (type == ccui.Widget.TOUCH_ENDED) log("button clicked");
+    if (type == Widget.TOUCH_ENDED) log("button clicked");
   }
 
   pageViewEvent(pageView, type) {
     switch (type) {
-      case ccui.PageView.EVENT_TURNING:
+      case PageView.EVENT_TURNING:
         this._topDisplayLabel.setString(
           "page = " + (pageView.getCurPageIndex() - 0 + 1)
         );

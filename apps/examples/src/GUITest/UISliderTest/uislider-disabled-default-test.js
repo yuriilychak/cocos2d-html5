@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color, Rect } from "@aspect/core";
+import { Slider, Text } from "@aspect/ccui";
 
 export class UISliderDisabledDefaultTest extends UIMainLayer {
   init() {
@@ -36,7 +37,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("");
 
       // Add the alert
-      var alert = new ccui.Text(
+      var alert = new Text(
         "slider ball should be gray.",
         "Marker Felt",
         20
@@ -51,7 +52,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       this._mainNode.addChild(alert);
 
       // Create the slider
-      var slider = new ccui.Slider();
+      var slider = new Slider();
       slider.loadBarTexture("ccs-res/cocosui/slidbar.png");
       slider.loadSlidBallTextureNormal("ccs-res/cocosui/sliderballnormal.png");
       slider.setEnabled(false);
@@ -61,7 +62,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       );
       this._mainNode.addChild(slider);
 
-      var sliderScale9 = new ccui.Slider(
+      var sliderScale9 = new Slider(
         "ccs-res/cocosui/slidbar.png",
         "ccs-res/cocosui/sliderballnormal.png"
       );

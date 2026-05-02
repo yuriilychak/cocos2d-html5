@@ -26,6 +26,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { Color, Director, EventKeyboard, EventListener, EventManager, KEY, log } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
+import { Button, Widget } from "@aspect/ccui";
 
 export class UIFocusTestBase extends UIMainLayer {
   constructor() {
@@ -69,7 +70,7 @@ export class UIFocusTestBase extends UIMainLayer {
       this._dpadMenu.setPosition(0, 0);
       this.addChild(this._dpadMenu);
 
-      this._btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
+      this._btn = new Button("ccs-res/cocosui/switch-mask.png");
       this._btn.setTitleText("Toggle Loop");
       this._btn.setPosition(60, winSize.height - 50);
       this._btn.setTitleColor(Color.RED);
@@ -78,7 +79,7 @@ export class UIFocusTestBase extends UIMainLayer {
       this.addChild(this._btn);
 
       //call this method to enable Dpad focus navigation
-      ccui.Widget.enableDpadNavigation(true);
+      Widget.enableDpadNavigation(true);
 
       this._eventListener = EventListener.create({
         event: EventListener.FOCUS, //TODO Need add focus event in JSB
@@ -122,7 +123,7 @@ export class UIFocusTestBase extends UIMainLayer {
   }
 
   onImageViewClicked(widget, touchType) {
-    if (touchType == ccui.Widget.TOUCH_ENDED) {
+    if (touchType == Widget.TOUCH_ENDED) {
       if (widget.isFocusEnabled()) {
         widget.setFocusEnabled(false);
         widget.setColor(Color.YELLOW);

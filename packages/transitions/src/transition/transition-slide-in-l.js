@@ -1,5 +1,5 @@
 import { Director, Point } from "@aspect/core";
-import { EaseInOut, sequence, MoveBy, CallFunc } from "@aspect/actions";
+import { EaseInOut, Sequence, MoveBy, CallFunc } from "@aspect/actions";
 import { ADJUST_FACTOR } from "./constants";
 import { TransitionScene } from "./transition-scene";
 
@@ -20,7 +20,7 @@ export class TransitionSlideInL extends TransitionScene {
     var inA = this.action();
     var outA = this.action();
 
-    var inAction = sequence(
+    var inAction = new Sequence(
       this.easeActionWithAction(inA),
       new CallFunc(this.finish, this)
     );

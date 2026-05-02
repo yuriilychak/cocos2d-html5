@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { ImageView } from "@aspect/ccui";
 
 export class UIImageViewTest extends UIMainLayer {
     init() {
@@ -35,7 +36,7 @@ export class UIImageViewTest extends UIMainLayer {
 
             var widgetSize = this._widget.getContentSize();
             // Create the imageview
-            var imageView = new ccui.ImageView("ccs-res/cocosui/ccicon.png");
+            var imageView = new ImageView("ccs-res/cocosui/ccicon.png");
             imageView.x = widgetSize.width / 2;
 	        imageView.y = widgetSize.height / 2 + imageView.height / 4;
             this._mainNode.addChild(imageView);

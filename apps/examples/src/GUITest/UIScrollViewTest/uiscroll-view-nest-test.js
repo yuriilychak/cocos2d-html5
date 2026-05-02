@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
+import { Button, ImageView, Layout, ScrollView } from "@aspect/ccui";
 
 export class UIScrollViewNestTest extends UIMainLayer {
   init() {
@@ -48,9 +49,9 @@ export class UIScrollViewNestTest extends UIMainLayer {
       var background = root.getChildByName("background_Panel");
 
       // Create the scrollview by vertical
-      var scrollView = new ccui.ScrollView();
+      var scrollView = new ScrollView();
       scrollView.setContentSize(new Size(280.0, 150.0));
-      scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
+      scrollView.setDirection(ScrollView.DIR_BOTH);
       var backgroundSize = background.getContentSize();
       scrollView.setPosition(
         new Point(
@@ -62,7 +63,7 @@ export class UIScrollViewNestTest extends UIMainLayer {
       );
       this._mainNode.addChild(scrollView);
 
-      var imageView = new ccui.ImageView("ccs-res/cocosui/ccicon.png");
+      var imageView = new ImageView("ccs-res/cocosui/ccicon.png");
 
       var innerWidth = scrollView.getContentSize().width;
       var innerHeight =
@@ -70,7 +71,7 @@ export class UIScrollViewNestTest extends UIMainLayer {
 
       scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
-      var button = new ccui.Button(
+      var button = new Button(
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
@@ -83,7 +84,7 @@ export class UIScrollViewNestTest extends UIMainLayer {
       );
       scrollView.addChild(button);
 
-      var titleButton = new ccui.Button(
+      var titleButton = new Button(
         "ccs-res/cocosui/backtotopnormal.png",
         "ccs-res/cocosui/backtotoppressed.png"
       );
@@ -96,7 +97,7 @@ export class UIScrollViewNestTest extends UIMainLayer {
       );
       scrollView.addChild(titleButton);
 
-      var button_scale9 = new ccui.Button(
+      var button_scale9 = new Button(
         "ccs-res/cocosui/button.png",
         "ccs-res/cocosui/buttonHighlighted.png"
       );
@@ -118,17 +119,17 @@ export class UIScrollViewNestTest extends UIMainLayer {
       scrollView.addChild(imageView);
 
       // Create the scrollview by horizontal
-      var sc = new ccui.ScrollView();
+      var sc = new ScrollView();
       sc.setBackGroundColor(Color.GREEN);
-      sc.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+      sc.setBackGroundColorType(Layout.BG_COLOR_SOLID);
       sc.setBounceEnabled(true);
-      sc.setDirection(ccui.ScrollView.DIR_BOTH);
+      sc.setDirection(ScrollView.DIR_BOTH);
       sc.setInnerContainerSize(new Size(480, 320));
       sc.setContentSize(new Size(100, 100));
       sc.setPropagateTouchEvents(false);
       sc.setPosition(new Point(180, 100));
       sc.scrollToPercentBothDirection(new Point(50, 50), 1, true);
-      var iv = new ccui.ImageView("ccs-res/cocosui/Hello.png");
+      var iv = new ImageView("ccs-res/cocosui/Hello.png");
       iv.setPosition(new Point(240, 160));
       sc.addChild(iv);
       scrollView.addChild(sc);

@@ -41,31 +41,7 @@ function _load(config) {
     engineDir = config[CONFIG_KEY.engineDir],
     loader = Loader.getInstance();
 
-  if (cc.NewClass) {
-    _afterEngineLoaded(config);
-  } else {
-    var ccModulesPath = Path.join(engineDir, "moduleConfig.json");
-    loader.loadJson(ccModulesPath, function (err, modulesJson) {
-      if (err) throw new Error(err);
-      var modules = config["modules"] || [];
-      var moduleMap = modulesJson["module"];
-      var jsList = [];
-      if (
-        Sys.getInstance().capabilities["opengl"] &&
-        modules.indexOf("base4webgl") < 0
-      )
-        modules.splice(0, 0, "base4webgl");
-      else if (modules.indexOf("core") < 0) modules.splice(0, 0, "core");
-      for (var i = 0, li = modules.length; i < li; i++) {
-        var arr = _getJsListOfModule(moduleMap, modules[i], engineDir);
-        if (arr) jsList = jsList.concat(arr);
-      }
-      Loader.getInstance().loadJsWithImg(jsList, function (err) {
-        if (err) throw err;
-        _afterEngineLoaded(config);
-      });
-    });
-  }
+  _afterEngineLoaded(config);
 }
 
 function _windowLoaded() {

@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Color } from "@aspect/core";
+import { Button, Layout, Widget } from "@aspect/ccui";
 
 export class UIButtonTestRemoveSelf extends UIMainLayer {
   init() {
@@ -39,10 +40,10 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
 
       var widgetSize = this._widget.getContentSize();
 
-      var layout = new ccui.Layout();
+      var layout = new Layout();
       layout.setContentSize(widgetSize.width * 0.6, widgetSize.height * 0.6);
       layout.setBackGroundColor(Color.GREEN);
-      layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+      layout.setBackGroundColorType(Layout.BG_COLOR_SOLID);
       layout.setBackGroundColorOpacity(100);
       layout.setPosition(widgetSize.width / 2, widgetSize.height / 2);
       layout.setAnchorPoint(0.5, 0.5);
@@ -50,7 +51,7 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
       this._mainNode.addChild(layout);
 
       // Create the button
-      var button = new ccui.Button(
+      var button = new Button(
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
@@ -64,21 +65,21 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
 
   touchEvent(sender, type) {
     switch (type) {
-      case ccui.Widget.TOUCH_BEGAN:
+      case Widget.TOUCH_BEGAN:
         this._topDisplayLabel.setString("Touch Down");
         break;
 
-      case ccui.Widget.TOUCH_MOVED:
+      case Widget.TOUCH_MOVED:
         this._topDisplayLabel.setString("Touch Move");
         break;
 
-      case ccui.Widget.TOUCH_ENDED:
+      case Widget.TOUCH_ENDED:
         this._topDisplayLabel.setString("Touch Up");
         var layout = this._mainNode.getChildByTag(12);
         layout.removeFromParent(true);
         break;
 
-      case ccui.Widget.TOUCH_CANCELED:
+      case Widget.TOUCH_CANCELED:
         this._topDisplayLabel.setString("Touch Cancelled");
         break;
 

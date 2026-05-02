@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { Button, Widget } from "@aspect/ccui";
 
 export class UIButtonTest_PressedAction extends UIMainLayer {
   init() {
@@ -35,7 +36,7 @@ export class UIButtonTest_PressedAction extends UIMainLayer {
 
       var widgetSize = this._widget.getContentSize();
       // Create the button
-      var button = new ccui.Button();
+      var button = new Button();
       button.setTouchEnabled(true);
       button.setPressedActionEnabled(true);
       button.loadTextures(
@@ -54,16 +55,16 @@ export class UIButtonTest_PressedAction extends UIMainLayer {
 
   touchEvent(sender, type) {
     switch (type) {
-      case ccui.Widget.TOUCH_BEGAN:
+      case Widget.TOUCH_BEGAN:
         this._topDisplayLabel.setString("Touch Down");
         break;
-      case ccui.Widget.TOUCH_MOVED:
+      case Widget.TOUCH_MOVED:
         this._topDisplayLabel.setString("Touch Move");
         break;
-      case ccui.Widget.TOUCH_ENDED:
+      case Widget.TOUCH_ENDED:
         this._topDisplayLabel.setString("Touch Up");
         break;
-      case ccui.Widget.TOUCH_CANCELED:
+      case Widget.TOUCH_CANCELED:
         this._topDisplayLabel.setString("Touch Cancelled");
         break;
       default:

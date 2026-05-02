@@ -1,7 +1,7 @@
 import { Director, log } from "@aspect/core";
 import { RenderTexture } from "@aspect/render-texture";
 import { ProgressFromTo } from "@aspect/progress-timer";
-import { sequence, CallFunc } from "@aspect/actions";
+import { Sequence, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "../transition/transition-scene";
 import { SCENE_RADIAL } from "./constants";
 
@@ -46,7 +46,7 @@ export class TransitionProgress extends TransitionScene {
 
     var pNode = this._progressTimerNodeWithRenderTexture(texture);
 
-    var layerAction = sequence(
+    var layerAction = new Sequence(
       new ProgressFromTo(this._duration, this._from, this._to),
       new CallFunc(this.finish, this));
     pNode.runAction(layerAction);

@@ -27,6 +27,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { LabelTTF, Size } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
+import { Button, ScrollView, Text } from "@aspect/ccui";
 
 export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
   constructor() {
@@ -54,8 +55,8 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       var background = this._widget.getChildByName("background_Panel");
 
       // Create the scrollview
-      var scrollView = (this._scrollView = new ccui.ScrollView());
-      scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+      var scrollView = (this._scrollView = new ScrollView());
+      scrollView.setDirection(ScrollView.DIR_VERTICAL);
       scrollView.setTouchEnabled(true);
       scrollView.setContentSize(new Size(280, 150));
 
@@ -101,7 +102,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
     var n = this._itemNumber / 2;
     if (scrollView.getChildren()) scrollView.removeAllChildren(true);
     var Texts = [];
-    var start = new ccui.Text("---start---", "Thonburi", 10);
+    var start = new Text("---start---", "Thonburi", 10);
     var innerWidth = scrollView.width;
     var innerHeight = n * start.height;
     scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
@@ -112,7 +113,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
     scrollView.addChild(start);
 
     for (var i = 1; i < n; i++) {
-      var text = new ccui.Text("This is a test label: " + i, "Thonburi", 10);
+      var text = new Text("This is a test label: " + i, "Thonburi", 10);
       text.x = innerWidth / 2;
       text.y = Texts[i - 1].getBottomBoundary() - text.height / 2;
       Texts[i] = text;
@@ -127,7 +128,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
     var innerWidth = scrollView.width;
 
     for (var j = 0; j < n; j++) {
-      var button = new ccui.Button();
+      var button = new Button();
       button.setTouchEnabled(true);
       button.loadTextures(
         "ccs-res/cocosui/animationbuttonnormal.png",
@@ -153,7 +154,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
     var innerWidth = scrollView.width;
 
     for (var j = 0; j < n; j++) {
-      var button_scale9 = new ccui.Button();
+      var button_scale9 = new Button();
       button_scale9.setTouchEnabled(true);
       button_scale9.setScale9Enabled(true);
       button_scale9.loadTextures(

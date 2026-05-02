@@ -1,5 +1,4 @@
 import {
-  NodeCanvasRenderCmd,
   Node,
   RendererConfig,
   Point,
@@ -12,7 +11,7 @@ import { TYPE_BAR, TYPE_RADIAL } from "./constants";
 /**
  * ProgressTimer's rendering objects of Canvas
  */
-export class ProgressTimerCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = true;

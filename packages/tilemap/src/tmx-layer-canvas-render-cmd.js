@@ -1,5 +1,4 @@
 import {
-  NodeCanvasRenderCmd,
   RendererConfig,
   Director,
   incrementGLDraws
@@ -14,7 +13,7 @@ import {
   TMX_TILE_VERTICAL_FLAG
 } from "./constants";
 
-export class TMXLayerCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderable) {
     super(renderable);
     this._needDraw = true;

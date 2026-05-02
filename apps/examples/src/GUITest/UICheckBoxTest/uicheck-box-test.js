@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
+import { CheckBox } from "@aspect/ccui";
 
 export class UICheckBoxTest extends UIMainLayer {
   init() {
@@ -35,7 +36,7 @@ export class UICheckBoxTest extends UIMainLayer {
 
       var widgetSize = this._widget.getContentSize();
       // Create the checkbox
-      var checkBox = new ccui.CheckBox();
+      var checkBox = new CheckBox();
       checkBox.setTouchEnabled(true);
       checkBox.loadTextures(
         "ccs-res/cocosui/check_box_normal.png",
@@ -56,10 +57,10 @@ export class UICheckBoxTest extends UIMainLayer {
 
   selectedStateEvent(sender, type) {
     switch (type) {
-      case ccui.CheckBox.EVENT_UNSELECTED:
+      case CheckBox.EVENT_UNSELECTED:
         this._topDisplayLabel.setString("Unselected");
         break;
-      case ccui.CheckBox.EVENT_SELECTED:
+      case CheckBox.EVENT_SELECTED:
         this._topDisplayLabel.setString("Selected");
         break;
 

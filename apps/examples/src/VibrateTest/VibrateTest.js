@@ -28,6 +28,7 @@ import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
 import { Device, Director, LabelTTF } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
+import { Slider } from "@aspect/ccui";
 
 export class VibrateTest extends BaseTestLayer {
   constructor() {
@@ -67,7 +68,7 @@ export class VibrateTest extends BaseTestLayer {
     this.addChild(this._durationLabel);
 
     // Create the slider
-    var durationSlider = new ccui.Slider();
+    var durationSlider = new Slider();
     durationSlider.setPercent(0);
     durationSlider.setTouchEnabled(true);
     durationSlider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
@@ -87,7 +88,7 @@ export class VibrateTest extends BaseTestLayer {
   }
   durationSliderEvent(sender, type) {
     switch (type) {
-      case ccui.Slider.EVENT_PERCENT_CHANGED:
+      case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = slider.getPercent();
         this._duration = (percent / 100.0) * 1.9 + 0.1; // from 0.1ms to 2s

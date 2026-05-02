@@ -25,9 +25,10 @@
  ****************************************************************************/
 
 import { UIListViewTest_Magnetic } from "./uilist-view-test-magnetic";
+import { ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_MagneticVertical extends UIListViewTest_Magnetic {
   _getListViewDirection() {
-    return ccui.ScrollView.DIR_VERTICAL;
+    return ScrollView.DIR_VERTICAL;
   }
 }

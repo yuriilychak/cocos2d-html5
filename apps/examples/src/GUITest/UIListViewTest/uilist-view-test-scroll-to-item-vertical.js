@@ -25,9 +25,10 @@
  ****************************************************************************/
 
 import { UIListViewTest_ScrollToItem } from "./uilist-view-test-scroll-to-item";
+import { ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_ScrollToItemVertical extends UIListViewTest_ScrollToItem {
   _getListViewDirection() {
-    return ccui.ScrollView.DIR_VERTICAL;
+    return ScrollView.DIR_VERTICAL;
   }
 }

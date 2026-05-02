@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, log } from "@aspect/core";
+import { Button, HBox, LinearLayoutParameter, PageView, VBox } from "@aspect/ccui";
 
 export class UIPageViewButtonTest extends UIMainLayer {
   init() {
@@ -50,7 +51,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
       var background = root.getChildByName("background_Panel");
 
       // Create the page view
-      var pageView = new ccui.PageView();
+      var pageView = new PageView();
       pageView.setContentSize(new Size(240.0, 130.0));
       var backgroundSize = background.getContentSize();
       pageView.setPosition(
@@ -66,14 +67,14 @@ export class UIPageViewButtonTest extends UIMainLayer {
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
-        var outerBox = new ccui.HBox();
+        var outerBox = new HBox();
         outerBox.setContentSize(new Size(240.0, 130.0));
 
         for (var k = 0; k < 2; ++k) {
-          var innerBox = new ccui.VBox();
+          var innerBox = new VBox();
 
           for (var j = 0; j < 3; j++) {
-            var btn = new ccui.Button(
+            var btn = new Button(
               "ccs-res/cocosui/animationbuttonnormal.png",
               "ccs-res/cocosui/animationbuttonpressed.png"
             );
@@ -82,7 +83,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
             innerBox.addChild(btn);
           }
 
-          var parameter = new ccui.LinearLayoutParameter();
+          var parameter = new LinearLayoutParameter();
           parameter.setMargin({ left: 0, top: 0, right: 100, bottom: 0 });
           innerBox.setLayoutParameter(parameter);
 
@@ -105,7 +106,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
 
   pageViewEvent(pageView, type) {
     switch (type) {
-      case ccui.PageView.EVENT_TURNING:
+      case PageView.EVENT_TURNING:
         this._topDisplayLabel.setString(
           "page = " + pageView.getCurPageIndex() + 1
         );

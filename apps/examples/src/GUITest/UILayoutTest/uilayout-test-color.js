@@ -26,11 +26,12 @@
 
 import { UILayoutTestBase } from "./uilayout-test-base";
 import { Size, Color } from "@aspect/core";
+import { Layout } from "@aspect/ccui";
 
 export class UILayoutTest_Color extends UILayoutTestBase {
   createLayout() {
-    var layout = new ccui.Layout();
-    layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+    var layout = new Layout();
+    layout.setBackGroundColorType(Layout.BG_COLOR_SOLID);
     layout.setBackGroundColor(new Color(128, 128, 128));
     layout.setContentSize(new Size(280, 150));
     return layout;

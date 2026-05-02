@@ -26,10 +26,11 @@
 
 import { UILayoutTestBase } from "./uilayout-test-base";
 import { Size } from "@aspect/core";
+import { Layout } from "@aspect/ccui";
 
 export class UILayoutTest_BackGroundImage_Scale9 extends UILayoutTestBase {
   createLayout() {
-    var layout = new ccui.Layout();
+    var layout = new Layout();
     layout.setBackGroundImageScale9Enabled(true);
     layout.setBackGroundImage("ccs-res/cocosui/green_edit.png");
     layout.setContentSize(new Size(280, 150));

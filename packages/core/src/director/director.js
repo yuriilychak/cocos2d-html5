@@ -80,6 +80,7 @@ export class Director extends NewClass {
 
   constructor() {
     super();
+    this.TransitionSceneClass = null;
     this._landscape = false;
     this._nextDeltaTimeZero = false;
     this._paused = false;
@@ -442,12 +443,12 @@ export class Director extends NewClass {
   setNextScene() {
     var runningIsTransition = false,
       newIsTransition = false;
-    if (cc.TransitionScene) {
+    if (this.TransitionSceneClass) {
       runningIsTransition = this._runningScene
-        ? this._runningScene instanceof cc.TransitionScene
+        ? this._runningScene instanceof this.TransitionSceneClass
         : false;
       newIsTransition = this._nextScene
-        ? this._nextScene instanceof cc.TransitionScene
+        ? this._nextScene instanceof this.TransitionSceneClass
         : false;
     }
 

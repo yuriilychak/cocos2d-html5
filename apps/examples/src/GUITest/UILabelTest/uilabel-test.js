@@ -24,6 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+ import { Text } from "@aspect/ccui";
 import { UIMainLayer } from "../uimain-layer";
 
 export class UILabelTest extends UIMainLayer {
@@ -34,7 +35,7 @@ export class UILabelTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("Label");
 
       // Create the label
-      var text = new ccui.Text();
+      var text = new Text();
       text.attr({
         string: "Label",
         font: "30px AmericanTypewriter",

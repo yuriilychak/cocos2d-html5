@@ -1,6 +1,6 @@
 import { Director, LayerColor, Color, ONE, SRC_ALPHA, ONE_MINUS_SRC_ALPHA } from "@aspect/core";
 import { RenderTexture } from "@aspect/render-texture";
-import { sequence, FadeTo, CallFunc } from "@aspect/actions";
+import { Sequence, FadeTo, CallFunc } from "@aspect/actions";
 import { SCENE_FADE } from "./constants";
 import { TransitionScene } from "./transition-scene";
 
@@ -49,7 +49,7 @@ export class TransitionCrossFade extends TransitionScene {
     inTexture.sprite.opacity = 255;
     outTexture.sprite.opacity = 255;
 
-    var layerAction = sequence(
+    var layerAction = new Sequence(
       new FadeTo(this._duration, 0),
       new CallFunc(this.hideOutShowIn, this),
       new CallFunc(this.finish, this)

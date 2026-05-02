@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Size } from "@aspect/core";
+import { ImageView } from "@aspect/ccui";
 
 export class UIImageViewTest_Scale9 extends UIMainLayer {
   init() {
@@ -36,7 +37,7 @@ export class UIImageViewTest_Scale9 extends UIMainLayer {
       this._bottomDisplayLabel.setString("ImageView scale9 render");
 
       // Create the imageview
-      var imageView = new ccui.ImageView();
+      var imageView = new ImageView();
       imageView.setScale9Enabled(true);
       imageView.loadTexture("ccs-res/cocosui/buttonHighlighted.png");
       imageView.setContentSize(new Size(200, 85));

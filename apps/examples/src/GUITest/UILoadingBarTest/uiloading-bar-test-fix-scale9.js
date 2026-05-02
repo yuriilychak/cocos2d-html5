@@ -26,18 +26,19 @@
 
 import { UILoadingBarTest } from "./uiloading-bar-test";
 import { Size, Rect } from "@aspect/core";
+import { LoadingBar } from "@aspect/ccui";
 
 export class UILoadingBarTest_Fix_Scale9 extends UILoadingBarTest {
   createLoadingBar() {
     var widgetSize = this._widget.getContentSize();
-    var loadingBar = new ccui.LoadingBar();
+    var loadingBar = new LoadingBar();
     loadingBar.setName("LoadingBar");
     loadingBar.setScale9Enabled(true);
     loadingBar.loadTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
     loadingBar.setPercent(40);
     loadingBar.setCapInsets(new Rect(0, 0, 0, 0));
     loadingBar.setContentSize(new Size(300, 30));
-    loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
+    loadingBar.setDirection(LoadingBar.TYPE_RIGHT);
     loadingBar.x = widgetSize.width / 2;
     loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
     this._mainNode.addChild(loadingBar);

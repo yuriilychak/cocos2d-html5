@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
+import { CheckBox, Text } from "@aspect/ccui";
 
 export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
   init() {
@@ -34,7 +35,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the checkbox events will be displayed
-      this._displayValueLabel = new ccui.Text("No Event", "Marker Felt", 32);
+      this._displayValueLabel = new Text("No Event", "Marker Felt", 32);
       this._displayValueLabel.setAnchorPoint(new Point(0.5, -1));
       this._displayValueLabel.setPosition(
         new Point(widgetSize.width / 2, widgetSize.height / 2)
@@ -43,7 +44,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       this._bottomDisplayLabel.setString("");
 
       // Add the alert
-      var alert = new ccui.Text(
+      var alert = new Text(
         "Only left two can be clicked!",
         "Marker Felt",
         20
@@ -58,7 +59,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       this._mainNode.addChild(alert);
 
       // Create the checkbox
-      var checkBox = new ccui.CheckBox(
+      var checkBox = new CheckBox(
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_active.png"
       );
@@ -69,7 +70,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       this._mainNode.addChild(checkBox);
 
       // Create the checkbox
-      var checkBox2 = new ccui.CheckBox(
+      var checkBox2 = new CheckBox(
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_active.png"
       );
@@ -83,7 +84,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       this._mainNode.addChild(checkBox2);
 
       // Create the checkbox
-      var checkBoxDisabled = new ccui.CheckBox(
+      var checkBoxDisabled = new CheckBox(
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_active.png"
       );
@@ -94,7 +95,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       checkBoxDisabled.setBright(false);
       this._mainNode.addChild(checkBoxDisabled);
 
-      var checkBoxDisabled2 = new ccui.CheckBox(
+      var checkBoxDisabled2 = new CheckBox(
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_active.png"
       );

@@ -3,12 +3,9 @@ import { TextFieldTTF } from "./text-field-ttf";
 
 export { IMEDispatcher, TextFieldTTF };
 
-cc.IMEDispatcher = IMEDispatcher;
-cc.TextFieldTTF = TextFieldTTF;
-
 const imeDispatcher = IMEDispatcher.getInstance();
 
-cc.imeDispatcher = imeDispatcher;
+export { imeDispatcher };
 
 document.body
   ? imeDispatcher.init()

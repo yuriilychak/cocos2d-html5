@@ -37,6 +37,7 @@ import { TestScene } from "../../test-scene";
 import { s_image_icon } from "../../resources";
 import { Director, EventManager, Game, Layer, Sprite, Sys, log, visibleRect } from "@aspect/core";
 import { winSize } from "../../constants";
+import { LoadingBar } from "@aspect/ccui";
 
 export class AssetsManagerLoaderScene extends TestScene {
   constructor() {
@@ -140,14 +141,14 @@ export class AssetsManagerLoaderScene extends TestScene {
     icon.y = winSize.height / 2;
     layer.addChild(icon);
 
-    this._loadingBar = new ccui.LoadingBar(
+    this._loadingBar = new LoadingBar(
       "ccs-res/cocosui/sliderProgress.png"
     );
     this._loadingBar.x = visibleRect.center.x;
     this._loadingBar.y = visibleRect.top.y - 40;
     layer.addChild(this._loadingBar);
 
-    this._fileLoadingBar = new ccui.LoadingBar(
+    this._fileLoadingBar = new LoadingBar(
       "ccs-res/cocosui/sliderProgress.png"
     );
     this._fileLoadingBar.x = visibleRect.center.x;

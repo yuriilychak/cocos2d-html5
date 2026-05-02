@@ -1,5 +1,4 @@
 import {
-    NodeWebGLRenderCmd,
     Node,
     RendererConfig,
     glBlendFunc,
@@ -21,7 +20,7 @@ const MAX_VERTEX_COUNT = 8;
 /**
  * ProgressTimer's rendering objects of WebGL
  */
-export class ProgressTimerWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     constructor(renderableObject) {
         super(renderableObject);
         this._needDraw = true;

@@ -27,6 +27,7 @@
 import { UISceneManager, GUITestScene } from "./UISceneManager";
 import { Color, Director, LabelTTF, Layer, Node } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
+import { Text, Widget } from "@aspect/ccui";
 import { winSize } from "../constants";
 import { load } from "@aspect/cocostudio";
 
@@ -106,7 +107,7 @@ export class UIMainLayer extends Layer {
 
     //add topDisplayLabel
     var widgetSize = widget.getContentSize();
-    var topDisplayText = new ccui.Text();
+    var topDisplayText = new Text();
     topDisplayText.attr({
       string: "",
       fontName: "Marker Felt",
@@ -119,7 +120,7 @@ export class UIMainLayer extends Layer {
     mainNode.addChild(topDisplayText);
 
     //add bottomDisplayLabel
-    var bottomDisplayText = new ccui.Text();
+    var bottomDisplayText = new Text();
     bottomDisplayText.attr({
       string: "INIT",
       fontName: "Marker Felt",
@@ -146,19 +147,19 @@ export class UIMainLayer extends Layer {
   }
 
   previousCallback(sender, type) {
-    if (type == ccui.Widget.TOUCH_ENDED) {
+    if (type == Widget.TOUCH_ENDED) {
       Director.getInstance().runScene(UISceneManager.getInstance().previousUIScene());
     }
   }
 
   restartCallback(sender, type) {
-    if (type == ccui.Widget.TOUCH_ENDED) {
+    if (type == Widget.TOUCH_ENDED) {
       Director.getInstance().runScene(UISceneManager.getInstance().currentUIScene());
     }
   }
 
   nextCallback(sender, type) {
-    if (type == ccui.Widget.TOUCH_ENDED) {
+    if (type == Widget.TOUCH_ENDED) {
       Director.getInstance().runScene(UISceneManager.getInstance().nextUIScene());
     }
   }

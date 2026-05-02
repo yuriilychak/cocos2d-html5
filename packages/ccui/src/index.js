@@ -76,7 +76,6 @@ Widget.ImageViewClass = ImageView;
 LayoutComponent.WidgetClass = Widget;
 LayoutComponent.PageViewClass = PageView;
 
-
 // ES module exports
 export {
     ProtectedNode,

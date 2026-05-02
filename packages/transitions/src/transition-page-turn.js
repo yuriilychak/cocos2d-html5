@@ -1,7 +1,7 @@
 import { Director, Node, Size } from "@aspect/core";
 import { NodeGrid } from "@aspect/node-grid";
 import { pageTurn3D, reverseTime, stopGrid } from "@aspect/actions3d";
-import { sequence, CallFunc, Show } from "@aspect/actions";
+import { Sequence, CallFunc, Show } from "@aspect/actions";
 import { TransitionScene } from "./transition/transition-scene";
 
 export class TransitionPageTurn extends TransitionScene {
@@ -48,14 +48,14 @@ export class TransitionPageTurn extends TransitionScene {
       gridProxy.setTarget(this._outScene);
       gridProxy._performRecursive(Node._stateCallbackType.onEnter);
       gridProxy.runAction(
-        sequence(action, new CallFunc(this.finish, this), stopGrid())
+        new Sequence(action, new CallFunc(this.finish, this), stopGrid())
       );
     } else {
       gridProxy.setTarget(this._inScene);
       gridProxy._performRecursive(Node._stateCallbackType.onEnter);
       this._inScene.visible = false;
       gridProxy.runAction(
-        sequence(action, new CallFunc(this.finish, this), stopGrid())
+        new Sequence(action, new CallFunc(this.finish, this), stopGrid())
       );
       this._inScene.runAction(new Show());
     }

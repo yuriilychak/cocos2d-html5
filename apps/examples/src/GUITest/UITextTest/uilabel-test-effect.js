@@ -27,6 +27,7 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Color } from "@aspect/core";
+import { Text } from "@aspect/ccui";
 
 export class UILabelTest_Effect extends UIMainLayer {
   init() {
@@ -35,7 +36,7 @@ export class UILabelTest_Effect extends UIMainLayer {
 
       this._bottomDisplayLabel.setString("");
 
-      var alert = new ccui.Text();
+      var alert = new Text();
       alert.setString("Label Effect");
       alert.setFontName("Marker Felt");
       alert.setFontSize(30);
@@ -47,7 +48,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       this._mainNode.addChild(alert);
 
       // create the shadow only label
-      var shadow_label = new ccui.Text();
+      var shadow_label = new Text();
 
       shadow_label.enableShadow(Color.GRAY, new Point(10, -10));
       shadow_label.setString("Shadow");
@@ -59,7 +60,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       this._mainNode.addChild(shadow_label);
 
       // create the stroke only label
-      var glow_label = new ccui.Text();
+      var glow_label = new Text();
       glow_label.setFontName("Marker Felt");
       glow_label.setString("Glow");
       glow_label.enableGlow(Color.RED);
@@ -67,7 +68,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       this._mainNode.addChild(glow_label);
 
       // create the label stroke and shadow
-      var outline_label = new ccui.Text();
+      var outline_label = new Text();
       outline_label.enableOutline(Color.BLUE, 2);
       outline_label.setString("Outline");
       outline_label.setPosition(

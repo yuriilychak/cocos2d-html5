@@ -23,23 +23,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Event from './event';
+import Event from "./event";
 
 /**
  * Focus change event for UI widget
  */
 export default class EventFocus extends Event {
-    /**
-     * Constructor function.
-     * @param {ccui.Widget} widgetLoseFocus
-     * @param {ccui.Widget} widgetGetFocus
-     */
-    constructor(widgetLoseFocus, widgetGetFocus) {
-        super(Event.FOCUS);
-        this._widgetGetFocus = null;
-        this._widgetLoseFocus = null;
+  /**
+   * Constructor function.
+   * @param {Widget} widgetLoseFocus
+   * @param {Widget} widgetGetFocus
+   */
+  constructor(widgetLoseFocus, widgetGetFocus) {
+    super(Event.FOCUS);
+    this._widgetGetFocus = null;
+    this._widgetLoseFocus = null;
 
-        this._widgetGetFocus = widgetGetFocus;
-        this._widgetLoseFocus = widgetLoseFocus;
-    }
+    this._widgetGetFocus = widgetGetFocus;
+    this._widgetLoseFocus = widgetLoseFocus;
+  }
 }

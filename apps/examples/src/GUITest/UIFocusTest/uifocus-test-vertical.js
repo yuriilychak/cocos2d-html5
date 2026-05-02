@@ -25,6 +25,7 @@
 
 import { UIFocusTestBase } from "./uifocus-test-base";
 import { Color, Director } from "@aspect/core";
+import { ImageView, Text, VBox, Widget } from "@aspect/ccui";
 
 export class UIFocusTestVertical extends UIFocusTestBase {
   constructor() {
@@ -37,7 +38,7 @@ export class UIFocusTestVertical extends UIFocusTestBase {
     if (super.init()) {
       var winSize = Director.getInstance().getVisibleSize();
 
-      this._verticalLayout = new ccui.VBox();
+      this._verticalLayout = new VBox();
       this._verticalLayout.setPosition(
         winSize.width / 2 - 50,
         winSize.height - 80
@@ -52,14 +53,14 @@ export class UIFocusTestVertical extends UIFocusTestBase {
 
       var count = 3;
       for (var i = 0; i < count; ++i) {
-        var w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        var w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setTouchEnabled(true);
         w.setTag(i);
         w.addTouchEventListener(this.onImageViewClicked, this);
         this._verticalLayout.addChild(w);
       }
 
-      this._loopText = new ccui.Text("loop enabled", "Arial", 20);
+      this._loopText = new Text("loop enabled", "Arial", 20);
       this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
       this._loopText.setColor(Color.GREEN);
       this.addChild(this._loopText);
@@ -71,7 +72,7 @@ export class UIFocusTestVertical extends UIFocusTestBase {
   }
 
   toggleFocusLoop(ref, touchType) {
-    if (touchType == ccui.Widget.TOUCH_ENDED) {
+    if (touchType == Widget.TOUCH_ENDED) {
       this._verticalLayout.setLoopFocus(!this._verticalLayout.isLoopFocus());
       if (this._verticalLayout.isLoopFocus()) {
         this._loopText.setString("loop enabled");

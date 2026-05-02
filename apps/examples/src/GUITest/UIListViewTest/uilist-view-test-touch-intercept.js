@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Size } from "@aspect/core";
+import { Button, Layout, ListView, ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_TouchIntercept extends UIMainLayer {
     init() {
@@ -42,9 +43,9 @@ export class UIListViewTest_TouchIntercept extends UIMainLayer {
             this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
             // Create the list view
-            var listView = new ccui.ListView();
+            var listView = new ListView();
             // set list view ex direction
-            listView.setDirection(ccui.ScrollView.DIR_NONE);
+            listView.setDirection(ScrollView.DIR_NONE);
             listView.setBounceEnabled(true);
             listView.setTouchEnabled(false);
             listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
@@ -55,11 +56,11 @@ export class UIListViewTest_TouchIntercept extends UIMainLayer {
             this._mainNode.addChild(listView);
 
             // create model
-            var default_button = new ccui.Button();
+            var default_button = new Button();
             default_button.setName("Title Button");
             default_button.loadTextures("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png", "");
 
-            var default_item = new ccui.Layout();
+            var default_item = new Layout();
             default_item.setTouchEnabled(true);
             default_item.setContentSize(default_button.getContentSize());
             default_item.width = listView.width;

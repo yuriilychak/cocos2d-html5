@@ -1,4 +1,4 @@
-import { director, log } from "@aspect/core";
+import { Director, log } from "@aspect/core";
 import { Dialog } from "./dialog";
 
 const INT_MAX = Number.MAX_VALUE;
@@ -55,8 +55,8 @@ export class NetworkErrorDialog {
       }
 
       networkDialog.setConfig(config);
-      if (director.getRunningScene()) {
-        director.getRunningScene().addChild(networkDialog, INT_MAX);
+      if (Director.getInstance().getRunningScene()) {
+        Director.getInstance().getRunningScene().addChild(networkDialog, INT_MAX);
       } else {
         log("Current scene is null we can't show dialog");
       }

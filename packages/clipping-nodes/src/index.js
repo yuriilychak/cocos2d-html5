@@ -6,8 +6,6 @@ import { ClippingNodeWebGLRenderCmd } from "./clipping-node-webgl-render-cmd";
 ClippingNode.CanvasRenderCmd = ClippingNodeCanvasRenderCmd;
 ClippingNode.WebGLRenderCmd = ClippingNodeWebGLRenderCmd;
 
-// Backward compatibility
-cc.ClippingNode = ClippingNode;
 
 export {
   ClippingNode,

@@ -26,11 +26,12 @@
 
 import { UILayoutTestBase } from "./uilayout-test-base";
 import { Size, Color } from "@aspect/core";
+import { Layout } from "@aspect/ccui";
 
 export class UILayoutTest_Gradient extends UILayoutTestBase {
   createLayout() {
-    var layout = new ccui.Layout();
-    layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
+    var layout = new Layout();
+    layout.setBackGroundColorType(Layout.BG_COLOR_GRADIENT);
     layout.setBackGroundColor(
       new Color(64, 64, 64),
       new Color(192, 192, 192)

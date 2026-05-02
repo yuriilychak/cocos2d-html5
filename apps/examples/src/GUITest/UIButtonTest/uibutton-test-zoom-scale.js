@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { log } from "@aspect/core";
+import { Button, Slider } from "@aspect/ccui";
 
 export class UIButtonTestZoomScale extends UIMainLayer {
   init() {
@@ -37,7 +38,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
       this._bottomDisplayLabel.setString("");
 
       // Create the button
-      var button = new ccui.Button(
+      var button = new Button(
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
@@ -52,7 +53,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
       this._mainNode.addChild(button);
       button.setZoomScale(-0.5);
 
-      var slider = new ccui.Slider();
+      var slider = new Slider();
       slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
       slider.loadSlidBallTextures(
         "ccs-res/cocosui/sliderThumb.png",
@@ -70,7 +71,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
   }
 
   sliderEvent(slider, type) {
-    if (type == ccui.Slider.EVENT_PERCENT_CHANGED) {
+    if (type == Slider.EVENT_PERCENT_CHANGED) {
       var percent = slider.getPercent();
       var btn = this._mainNode.getChildByName("button");
       var zoomScale = percent * 0.01;

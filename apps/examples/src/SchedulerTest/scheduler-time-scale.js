@@ -32,6 +32,7 @@ import { Director, LabelTTF, Point, Scheduler, ActionManager, Sprite, textureCac
 import { JumpBy, Repeat, RotateBy, Sequence, Spawn, Speed } from "@aspect/actions";
 import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 import { winSize } from "../constants";
+import { Slider } from "@aspect/ccui";
 
 export class SchedulerTimeScale extends SchedulerTestLayer {
   constructor() {
@@ -92,7 +93,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     var slider = null;
     var l = null;
 
-    slider = new ccui.Slider();
+    slider = new Slider();
     slider.setTouchEnabled(true);
     slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
     slider.loadSlidBallTextures(
@@ -112,7 +113,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     l.x = slider.x;
     l.y = slider.y + 30;
 
-    slider = new ccui.Slider();
+    slider = new Slider();
     slider.setTouchEnabled(true);
     slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
     slider.loadSlidBallTextures(
@@ -134,7 +135,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
 
   sliderEventForGrossini(sender, type) {
     switch (type) {
-      case ccui.Slider.EVENT_PERCENT_CHANGED:
+      case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = (slider.getPercent() / 100.0) * 5;
         this._newScheduler.setTimeScale(percent);
@@ -146,7 +147,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
 
   sliderEventForGlobal(sender, type) {
     switch (type) {
-      case ccui.Slider.EVENT_PERCENT_CHANGED:
+      case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = (slider.getPercent() / 100.0) * 5;
         Director.getInstance().getScheduler().setTimeScale(percent);

@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Node, Size, log } from "@aspect/core";
+import { Button, Layout, ListView, ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_Vertical extends UIMainLayer {
   constructor() {
@@ -57,9 +58,9 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       }
 
       // Create the list view
-      this.listView = new ccui.ListView();
+      this.listView = new ListView();
       // set list view ex direction
-      this.listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+      this.listView.setDirection(ScrollView.DIR_VERTICAL);
       this.listView.setTouchEnabled(true);
       this.listView.setBounceEnabled(true);
       this.listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
@@ -75,7 +76,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       this._mainNode.addChild(this.listView);
 
       // create model
-      var default_button = new ccui.Button();
+      var default_button = new Button();
       default_button.setName("TextButton");
       default_button.setTouchEnabled(true);
       default_button.loadTextures(
@@ -84,7 +85,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
         ""
       );
 
-      var default_item = new ccui.Layout();
+      var default_item = new Layout();
       default_item.setTouchEnabled(true);
       default_item.setContentSize(default_button.getContentSize());
       default_item.width = this.listView.width;
@@ -95,7 +96,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       // set model
       this.listView.setItemModel(default_item);
       // set all items layout gravity
-      this.listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
+      this.listView.setGravity(ListView.GRAVITY_CENTER_VERTICAL);
 
       for (i = 0; i < this._totalCount; ++i) {
         if (i < this._spawnCount) {
@@ -190,7 +191,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
 
   selectedItemEvent(sender, type) {
     switch (type) {
-      case ccui.ListView.EVENT_SELECTED_ITEM:
+      case ListView.EVENT_SELECTED_ITEM:
         var listViewEx = sender;
         var item = listViewEx.getItem(listViewEx.getCurSelectedIndex());
         log("select child index = " + item.getTag());

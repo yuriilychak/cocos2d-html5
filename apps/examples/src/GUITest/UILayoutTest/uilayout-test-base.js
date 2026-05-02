@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Size } from "@aspect/core";
+import { Button, Layout } from "@aspect/ccui";
 
 export class UILayoutTestBase extends UIMainLayer {
   constructor() {
@@ -62,7 +63,7 @@ export class UILayoutTestBase extends UIMainLayer {
         (backgroundRect.height - layoutRect.height) / 2;
       this._mainNode.addChild(this.layout);
 
-      this.button = new ccui.Button();
+      this.button = new Button();
       this.button.setTouchEnabled(true);
       this.button.loadTextures(
         "ccs-res/cocosui/animationbuttonnormal.png",
@@ -73,7 +74,7 @@ export class UILayoutTestBase extends UIMainLayer {
       this.button.y = layoutRect.height - this.button.height / 2;
       this.layout.addChild(this.button);
 
-      this.textButton = new ccui.Button();
+      this.textButton = new Button();
       this.textButton.setTouchEnabled(true);
       this.textButton.loadTextures(
         "ccs-res/cocosui/backtotopnormal.png",
@@ -85,7 +86,7 @@ export class UILayoutTestBase extends UIMainLayer {
       this.textButton.y = layoutRect.height / 2;
       this.layout.addChild(this.textButton);
 
-      this.button_scale9 = new ccui.Button();
+      this.button_scale9 = new Button();
       this.button_scale9.setTouchEnabled(true);
       this.button_scale9.setScale9Enabled(true);
       this.button_scale9.loadTextures(
@@ -108,7 +109,7 @@ export class UILayoutTestBase extends UIMainLayer {
     return "";
   }
   createLayout() {
-    var layout = new ccui.Layout();
+    var layout = new Layout();
     layout.setContentSize(new Size(280, 150));
     return layout;
   }

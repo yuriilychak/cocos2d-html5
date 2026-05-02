@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
+import { Button, ImageView, Layout, PageView, Text } from "@aspect/ccui";
 
 export class UIPageViewJumpToPageTest extends UIMainLayer {
   init() {
@@ -45,7 +46,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
       var background = this._widget.getChildByName("background_Panel");
 
       // Create the page view
-      var pageView = new ccui.PageView();
+      var pageView = new PageView();
       pageView.setTouchEnabled(true);
       pageView.setContentSize(new Size(240, 130));
       pageView.x =
@@ -59,10 +60,10 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
-        var layout = new ccui.Layout();
+        var layout = new Layout();
         layout.setContentSize(new Size(240.0, 130.0));
 
-        var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+        var imageView = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         imageView.setScale9Enabled(true);
         imageView.setContentSize(new Size(240, 130));
         imageView.setPosition(
@@ -70,7 +71,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
         );
         layout.addChild(imageView);
 
-        var label = new ccui.Text("page " + (i + 1), "Arial", 30);
+        var label = new Text("page " + (i + 1), "Arial", 30);
         label.setColor(new Color(192, 192, 192));
         label.setPosition(
           new Point(layout.width / 2.0, layout.height / 2.0)
@@ -82,7 +83,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
       pageView.setCurrentPageIndex(1);
       //add buttons to jump to specific page
-      var button1 = new ccui.Button();
+      var button1 = new Button();
       button1.setPosition(
         new Point(pageView.x - 50, pageView.y + pageView.height)
       );

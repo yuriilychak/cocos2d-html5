@@ -5,9 +5,9 @@ import { LayoutComponent } from "../layouts/layout-component";
 export const helper = {
   /**
    * Finds a widget whose tag equals to param tag from root widget.
-   * @param {ccui.Widget} root
+   * @param {Widget} root
    * @param {number} tag
-   * @returns {ccui.Widget}
+   * @returns {Widget}
    */
   seekWidgetByTag: function (root, tag) {
     if (!root) return null;
@@ -25,9 +25,9 @@ export const helper = {
 
   /**
    * Finds a widget whose name equals to param name from root widget.
-   * @param {ccui.Widget} root
+   * @param {Widget} root
    * @param {String} name
-   * @returns {ccui.Widget}
+   * @returns {Widget}
    */
   seekWidgetByName: function (root, name) {
     if (!root) return null;
@@ -45,9 +45,9 @@ export const helper = {
   /**
    * Finds a widget whose name equals to param name from root widget.
    * RelativeLayout will call this method to find the widget which is needed.
-   * @param {ccui.Widget} root
+   * @param {Widget} root
    * @param {String} name
-   * @returns {ccui.Widget}
+   * @returns {Widget}
    */
   seekWidgetByRelativeName: function (root, name) {
     if (!root) return null;
@@ -64,9 +64,9 @@ export const helper = {
 
   /**
    * Finds a widget whose action tag equals to param name from root widget.
-   * @param {ccui.Widget} root
+   * @param {Widget} root
    * @param {Number} tag
-   * @returns {ccui.Widget}
+   * @returns {Widget}
    */
   seekActionWidgetByActionTag: function (root, tag) {
     if (!root) return null;

@@ -15,14 +15,7 @@ Codec.GZip = GZip;
 Codec.Base64 = CodecBase64;
 
 // cc globals
-cc.Codec = Codec;
-cc.unzip = unzip;
-cc.unzipBase64 = unzipBase64;
-cc.unzipBase64AsArray = unzipBase64AsArray;
-cc.unzipAsArray = unzipAsArray;
-cc.StringToArray = stringToArray;
-cc.uint8ArrayToUint32Array = uint8ArrayToUint32Array;
-cc.inflate = inflate;
+
 
 export {
   GZip,

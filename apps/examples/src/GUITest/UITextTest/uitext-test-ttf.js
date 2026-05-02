@@ -26,6 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
+import { Text } from "@aspect/ccui";
 
 export class UITextTest_TTF extends UIMainLayer {
   init() {
@@ -35,7 +36,7 @@ export class UITextTest_TTF extends UIMainLayer {
       this._bottomDisplayLabel.setString("Text set TTF font");
 
       // Create the text, and set font with .ttf
-      var text = new ccui.Text("Text", "fonts/A Damn Mess.ttf", 30);
+      var text = new Text("Text", "fonts/A Damn Mess.ttf", 30);
       text.setPosition(
         widgetSize.width / 2,
         widgetSize.height / 2 + text.height / 4
