@@ -34,7 +34,16 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Sys } from "@aspect/core";
-import { CallFunc, FadeIn, FadeOut, MoveBy, RotateBy, ScaleBy, ScaleTo, sequence } from "@aspect/actions";
+import {
+  CallFunc,
+  FadeIn,
+  FadeOut,
+  MoveBy,
+  RotateBy,
+  ScaleBy,
+  ScaleTo,
+  Sequence
+} from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXReadWriteTest extends TileDemo {
@@ -80,7 +89,7 @@ export class TMXReadWriteTest extends TileDemo {
     var scaleback = new ScaleTo(1, 1);
     var finish = new CallFunc(this.onRemoveSprite); // 'this' is optional. Since it is not used, it is not passed.
 
-    var seq0 = sequence(
+    var seq0 = new Sequence(
       move,
       rotate,
       scale,

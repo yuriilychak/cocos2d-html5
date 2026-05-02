@@ -35,71 +35,87 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
 import { LabelTTF, Rect, RendererConfig, Sprite, Sys } from "@aspect/core";
-import { ScaleBy, sequence } from "@aspect/actions";
+import { ScaleBy, Sequence } from "@aspect/actions";
 
 export class SpriteAliased extends SpriteTestDemo {
+  constructor() {
+    //----start24----ctor
+    super();
 
-    constructor() {
-        //----start24----ctor
-        super();
+    this._title = "Sprite Aliased";
 
+    this._subtitle = "You should see pixelated sprites";
+    var sprite1 = new Sprite(
+      s_grossini_dance_atlas,
+      new Rect(85, 121, 85, 121)
+    );
+    sprite1.x = winSize.width / 2 - 100;
+    sprite1.y = winSize.height / 2;
+    this.addChild(sprite1, 0, TAG_SPRITE1);
 
-        this._title = "Sprite Aliased";
+    var sprite2 = new Sprite(
+      s_grossini_dance_atlas,
+      new Rect(85, 121, 85, 121)
+    );
+    sprite2.x = winSize.width / 2 + 100;
+    sprite2.y = winSize.height / 2;
+    this.addChild(sprite2, 0, TAG_SPRITE2);
 
+    var scale = new ScaleBy(2, 5);
+    var scale_back = scale.reverse();
+    var seq = new Sequence(scale, scale_back);
+    var repeat = seq.repeatForever();
 
-        this._subtitle = "You should see pixelated sprites";
-        var sprite1 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
-        sprite1.x = winSize.width / 2 - 100;
-        sprite1.y = winSize.height / 2;
-        this.addChild(sprite1, 0, TAG_SPRITE1);
+    var scale2 = new ScaleBy(2, 5);
+    var scale_back2 = scale2.reverse();
+    var seq2 = new Sequence(scale2, scale_back2);
+    var repeat2 = seq2.repeatForever();
 
-        var sprite2 = new Sprite(s_grossini_dance_atlas, new Rect(85, 121, 85, 121));
-        sprite2.x = winSize.width / 2 + 100;
-        sprite2.y = winSize.height / 2;
-        this.addChild(sprite2, 0, TAG_SPRITE2);
-
-        var scale = new ScaleBy(2, 5);
-        var scale_back = scale.reverse();
-        var seq = sequence(scale, scale_back);
-        var repeat = seq.repeatForever();
-
-        var scale2 = new ScaleBy(2, 5);
-        var scale_back2 = scale2.reverse();
-        var seq2 = sequence(scale2, scale_back2);
-        var repeat2 = seq2.repeatForever();
-
-        sprite1.runAction(repeat);
-        sprite2.runAction(repeat2);
-        //----end24----
+    sprite1.runAction(repeat);
+    sprite2.runAction(repeat2);
+    //----end24----
+  }
+  onEnter() {
+    //----start24----onEnter
+    super.onEnter();
+    //
+    // IMPORTANT:
+    // This change will affect every sprite that uses the same texture
+    // So sprite1 and sprite2 will be affected by this change
+    //
+    if (
+      !Sys.getInstance().isNative &&
+      !(
+        "opengl" in Sys.getInstance().capabilities &&
+        RendererConfig.getInstance().isWebGL
+      )
+    ) {
+      var label = new LabelTTF(
+        "Not supported on HTML5-canvas",
+        "Times New Roman",
+        30
+      );
+      this.addChild(label);
+      label.x = winSize.width / 2;
+      label.y = winSize.height / 2;
+    } else {
+      var sprite = this.getChildByTag(TAG_SPRITE1);
+      sprite.texture.setAliasTexParameters();
     }
-    onEnter() {
-        //----start24----onEnter
-        super.onEnter();
-        //
-        // IMPORTANT:
-        // This change will affect every sprite that uses the same texture
-        // So sprite1 and sprite2 will be affected by this change
-        //
-        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities && RendererConfig.getInstance().isWebGL)) {
-            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
-            this.addChild(label);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-        } else {
-            var sprite = this.getChildByTag(TAG_SPRITE1);
-            sprite.texture.setAliasTexParameters();
-        }
 
-        //----end24----
+    //----end24----
+  }
+  onExit() {
+    //----start24----onExit
+    if (
+      Sys.getInstance().isNative ||
+      ("opengl" in Sys.getInstance().capabilities &&
+        RendererConfig.getInstance().isWebGL)
+    ) {
+      var sprite = this.getChildByTag(TAG_SPRITE1);
+      sprite.texture.setAntiAliasTexParameters();
     }
-    onExit() {
-        //----start24----onExit
-        if (Sys.getInstance().isNative || ("opengl" in Sys.getInstance().capabilities && RendererConfig.getInstance().isWebGL)) {
-            var sprite = this.getChildByTag(TAG_SPRITE1);
-            sprite.texture.setAntiAliasTexParameters();
-        }
-        super.onExit();
-        //----end24----
-    }
-
+    super.onExit();
+    //----end24----
+  }
 }

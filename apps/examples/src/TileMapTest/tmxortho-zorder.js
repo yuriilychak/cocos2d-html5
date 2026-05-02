@@ -34,7 +34,7 @@ import { s_pathSister1, s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Sprite } from "@aspect/core";
-import { MoveBy, sequence } from "@aspect/actions";
+import { MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXOrthoZorder extends TileDemo {
@@ -60,7 +60,7 @@ export class TMXOrthoZorder extends TileDemo {
 
     var move = new MoveBy(5, Point.mult(new Point(400, 450), 0.58));
     var back = move.reverse();
-    var seq = sequence(move, back);
+    var seq = new Sequence(move, back);
     this.tamara.runAction(seq.repeatForever());
 
     this.schedule(this.repositionSprite);

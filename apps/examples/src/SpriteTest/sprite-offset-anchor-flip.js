@@ -29,104 +29,120 @@
 // SpriteOffsetAnchorFlip
 //
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
+import {
+  s_grossiniPlist,
+  s_grossini_gray,
+  s_grossini_grayPlist,
+  s_pathR1
+} from "../resources";
 import { winSize } from "../constants";
-import { Animate, DelayTime, FlipY, sequence } from "@aspect/actions";
+import { Animate, DelayTime, FlipY, Sequence } from "@aspect/actions";
 import { Animation, Sprite, SpriteFrameCache } from "@aspect/core";
 export class SpriteOffsetAnchorFlip extends SpriteTestDemo {
+  constructor() {
+    //----start45----ctor
+    super();
 
+    this._title = "Sprite offset + anchor + flip";
 
-    constructor() {
-        //----start45----ctor
-        super();
+    this._subtitle = "issue #1078";
 
+    this.testDuration = 1.5;
 
+    this.pixel = { 0: 255, 1: 204, 2: 153, 3: 255 };
+    SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+    SpriteFrameCache.getInstance().addSpriteFrames(
+      s_grossini_grayPlist,
+      s_grossini_gray
+    );
 
-        this._title = "Sprite offset + anchor + flip";
+    for (var i = 0; i < 3; i++) {
+      //
+      // Animation using Sprite batch
+      //
+      var sprite = new Sprite("#grossini_dance_01.png");
+      sprite.x = (winSize.width / 4) * (i + 1);
+      sprite.y = winSize.height / 2;
 
+      var point = new Sprite(s_pathR1);
+      point.scale = 0.25;
+      point.x = sprite.x;
+      point.y = sprite.y;
+      this.addChild(point, 1);
 
+      switch (i) {
+        case 0:
+          sprite.anchorX = 0;
+          sprite.anchorY = 0;
+          break;
+        case 1:
+          sprite.anchorX = 0.5;
+          sprite.anchorY = 0.5;
+          break;
+        case 2:
+          sprite.anchorX = 1;
+          sprite.anchorY = 1;
+          break;
+      }
 
-        this._subtitle = "issue #1078";
+      point.x = sprite.x;
+      point.y = sprite.y;
 
+      var animFrames = [];
+      var tmp = "";
+      for (var j = 1; j <= 14; j++) {
+        tmp = "grossini_dance_" + (j < 10 ? "0" + j : j) + ".png";
+        var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
+        animFrames.push(frame);
+      }
 
+      var animation = new Animation(animFrames, 0.3);
+      sprite.runAction(new Animate(animation).repeatForever());
 
-        this.testDuration = 1.5;
+      animFrames = null;
 
+      var flip = new FlipY(true);
+      var flip_back = new FlipY(false);
+      var delay = new DelayTime(1);
+      var delay1 = new DelayTime(1);
+      var seq = new Sequence(delay, flip, delay1, flip_back);
+      sprite.runAction(seq.repeatForever());
 
-
-        this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
-
-        for (var i = 0; i < 3; i++) {
-            //
-            // Animation using Sprite batch
-            //
-            var sprite = new Sprite("#grossini_dance_01.png");
-            sprite.x = winSize.width / 4 * (i + 1);
-            sprite.y = winSize.height / 2;
-
-            var point = new Sprite(s_pathR1);
-            point.scale = 0.25;
-	        point.x = sprite.x;
-	        point.y = sprite.y;
-            this.addChild(point, 1);
-
-            switch (i) {
-                case 0:
-                    sprite.anchorX = 0;
-                    sprite.anchorY = 0;
-                    break;
-                case 1:
-                    sprite.anchorX = 0.5;
-                    sprite.anchorY = 0.5;
-                    break;
-                case 2:
-                    sprite.anchorX = 1;
-                    sprite.anchorY = 1;
-                    break;
-            }
-
-	        point.x = sprite.x;
-	        point.y = sprite.y;
-
-            var animFrames = [];
-            var tmp = "";
-            for (var j = 1; j <= 14; j++) {
-                tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
-                animFrames.push(frame);
-            }
-
-            var animation = new Animation(animFrames, 0.3);
-            sprite.runAction(new Animate(animation).repeatForever());
-
-            animFrames = null;
-
-            var flip = new FlipY(true);
-            var flip_back = new FlipY(false);
-            var delay = new DelayTime(1);
-            var delay1 = new DelayTime(1);
-            var seq = sequence(delay, flip, delay1, flip_back);
-            sprite.runAction(seq.repeatForever());
-
-            this.addChild(sprite, 0);
-        }
-        //----end45----
+      this.addChild(sprite, 0);
     }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(winSize.width / 4 + 40, winSize.height / 2 + 18, 5, 5);
-        var ret2 = this.readPixels(winSize.width / 4 * 2, winSize.height / 2 - 44, 5, 5);
-        var ret3 = this.readPixels(winSize.width / 4 * 3 - 45, winSize.height / 2 - 105, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no", "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    //----end45----
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes", pixel3: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(
+      winSize.width / 4 + 40,
+      winSize.height / 2 + 18,
+      5,
+      5
+    );
+    var ret2 = this.readPixels(
+      (winSize.width / 4) * 2,
+      winSize.height / 2 - 44,
+      5,
+      5
+    );
+    var ret3 = this.readPixels(
+      (winSize.width / 4) * 3 - 45,
+      winSize.height / 2 - 105,
+      5,
+      5
+    );
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel) ? "yes" : "no",
+      pixel3: this.containsPixel(ret3, this.pixel) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

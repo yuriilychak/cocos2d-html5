@@ -34,83 +34,103 @@ import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { Director, LabelTTF, Point, RendererConfig, Sprite, Sys } from "@aspect/core";
-import { DelayTime, MoveBy, sequence } from "@aspect/actions";
+import {
+  Director,
+  LabelTTF,
+  Point,
+  RendererConfig,
+  Sprite,
+  Sys
+} from "@aspect/core";
+import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXOrthoVertexZ extends TMXFixBugLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.tamara = null;
+    this.tamara = null;
 
-        this.testDuration = 5.2;
+    this.testDuration = 5.2;
 
-        this.pixel = {"0":119, "1":205, "2":73, "3":255};
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-vertexz.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.pixel = { 0: 119, 1: 205, 2: 73, 3: 255 };
+    var map = new TMXTiledMap(
+      s_resprefix + "TileMaps/orthogonal-test-vertexz.tmx"
+    );
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
-        // can use any Sprite and it will work OK.
-        var layer = map.getLayer("trees");
-        this.tamara = layer.getTileAt(new Point(0, 11));
-        this.log("vertexZ: " + this.tamara.vertexZ);
+    // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
+    // can use any Sprite and it will work OK.
+    var layer = map.getLayer("trees");
+    this.tamara = layer.getTileAt(new Point(0, 11));
+    this.log("vertexZ: " + this.tamara.vertexZ);
 
-        var move = new MoveBy(5, Point.mult(new Point(400, 450), 0.55));
-        var back = move.reverse();
-        var delay = new DelayTime(0.5);
-        var seq = sequence(move, delay, back);
-        this.tamara.runAction(seq.repeatForever());
+    var move = new MoveBy(5, Point.mult(new Point(400, 450), 0.55));
+    var back = move.reverse();
+    var delay = new DelayTime(0.5);
+    var seq = new Sequence(move, delay, back);
+    this.tamara.runAction(seq.repeatForever());
 
-        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
-            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
-            this.addChild(label);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-        }
-
-        this.schedule(this.repositionSprite);
-
-        this.log("DEPTH BUFFER MUST EXIST IN ORDER");
-    }
-    title() {
-        return "TMX Ortho vertexZ";
-    }
-    subtitle() {
-        return "Sprite should hide behind the trees";
-    }
-    onEnter() {
-        super.onEnter();
-        director.setProjection(Director.PROJECTION_2D);
-        director.setDepthTest(true);
-    }
-    onExit() {
-        director.setProjection(Director.PROJECTION_DEFAULT);
-        director.setDepthTest(false);
-        super.onExit();
-    }
-    repositionSprite(dt) {
-        if (Sys.getInstance().isNative) {
-            this.tamara.vertexZ = -(this.tamara.y + 81) / 81;
-        }
-        else {
-            // tile height is 101x81
-            // map size: 12x12
-            var layer = this.tamara.parent;
-            this.tamara.vertexZ = layer.vertexZ + RendererConfig.getInstance().renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
-        }
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(266, 331, 5, 5);
-        var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
+    if (
+      !Sys.getInstance().isNative &&
+      !("opengl" in Sys.getInstance().capabilities)
+    ) {
+      var label = new LabelTTF(
+        "Not supported on HTML5-canvas",
+        "Times New Roman",
+        30
+      );
+      this.addChild(label);
+      label.x = winSize.width / 2;
+      label.y = winSize.height / 2;
     }
 
+    this.schedule(this.repositionSprite);
+
+    this.log("DEPTH BUFFER MUST EXIST IN ORDER");
+  }
+  title() {
+    return "TMX Ortho vertexZ";
+  }
+  subtitle() {
+    return "Sprite should hide behind the trees";
+  }
+  onEnter() {
+    super.onEnter();
+    director.setProjection(Director.PROJECTION_2D);
+    director.setDepthTest(true);
+  }
+  onExit() {
+    director.setProjection(Director.PROJECTION_DEFAULT);
+    director.setDepthTest(false);
+    super.onExit();
+  }
+  repositionSprite(dt) {
+    if (Sys.getInstance().isNative) {
+      this.tamara.vertexZ = -(this.tamara.y + 81) / 81;
+    } else {
+      // tile height is 101x81
+      // map size: 12x12
+      var layer = this.tamara.parent;
+      this.tamara.vertexZ =
+        layer.vertexZ +
+        (RendererConfig.getInstance().renderer.assignedZStep *
+          Math.floor(12 - this.tamara.y / 81)) /
+          12;
+    }
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(266, 331, 5, 5);
+    var ret = {
+      pixel: this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

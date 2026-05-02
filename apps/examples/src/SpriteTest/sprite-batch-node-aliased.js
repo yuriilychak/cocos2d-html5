@@ -30,79 +30,99 @@
 // SpriteBatchNodeAliased
 //
 //------------------------------------------------------------------
-import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
+import {
+  TAG_SPRITE1,
+  TAG_SPRITE2,
+  TAG_SPRITE_BATCH_NODE
+} from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { LabelTTF, Rect, RendererConfig, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
-import { ScaleBy, sequence } from "@aspect/actions";
+import {
+  LabelTTF,
+  Rect,
+  RendererConfig,
+  Sprite,
+  SpriteBatchNode,
+  Sys
+} from "@aspect/core";
+import { ScaleBy, Sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeAliased extends SpriteTestDemo {
+  constructor() {
+    //----start25----ctor
+    super();
 
-    constructor() {
-        //----start25----ctor
-        super();
+    this._title = "SpriteBatchNode Aliased";
 
+    this._subtitle = "You should see pixelated sprites";
+    var batch = new SpriteBatchNode(s_grossini_dance_atlas, 10);
+    this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
-        this._title = "SpriteBatchNode Aliased";
+    var sprite1 = new Sprite(batch.texture, new Rect(85, 121, 85, 121));
+    sprite1.x = winSize.width / 2 - 100;
+    sprite1.y = winSize.height / 2;
+    batch.addChild(sprite1, 0, TAG_SPRITE1);
 
+    var sprite2 = new Sprite(batch.texture, new Rect(85, 121, 85, 121));
+    sprite2.x = winSize.width / 2 + 100;
+    sprite2.y = winSize.height / 2;
+    batch.addChild(sprite2, 0, TAG_SPRITE2);
 
-        this._subtitle = "You should see pixelated sprites";
-        var batch = new SpriteBatchNode(s_grossini_dance_atlas, 10);
-        this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
+    var scale = new ScaleBy(2, 5);
+    var scale_back = scale.reverse();
+    var seq = new Sequence(scale, scale_back);
+    var repeat = seq.repeatForever();
 
-        var sprite1 = new Sprite(batch.texture, new Rect(85, 121, 85, 121));
-        sprite1.x = winSize.width / 2 - 100;
-        sprite1.y = winSize.height / 2;
-        batch.addChild(sprite1, 0, TAG_SPRITE1);
+    var scale2 = new ScaleBy(2, 5);
+    var scale_back2 = scale2.reverse();
+    var seq2 = new Sequence(scale2, scale_back2);
+    var repeat2 = seq2.repeatForever();
 
-        var sprite2 = new Sprite(batch.texture, new Rect(85, 121, 85, 121));
-        sprite2.x = winSize.width / 2 + 100;
-        sprite2.y = winSize.height / 2;
-        batch.addChild(sprite2, 0, TAG_SPRITE2);
-
-        var scale = new ScaleBy(2, 5);
-        var scale_back = scale.reverse();
-        var seq = sequence(scale, scale_back);
-        var repeat = seq.repeatForever();
-
-        var scale2 = new ScaleBy(2, 5);
-        var scale_back2 = scale2.reverse();
-        var seq2 = sequence(scale2, scale_back2);
-        var repeat2 = seq2.repeatForever();
-
-        sprite1.runAction(repeat);
-        sprite2.runAction(repeat2);
-        //----end25----
+    sprite1.runAction(repeat);
+    sprite2.runAction(repeat2);
+    //----end25----
+  }
+  onEnter() {
+    //----start25----onEnter
+    super.onEnter();
+    //
+    // IMPORTANT:
+    // This change will affect every sprite that uses the same texture
+    // So sprite1 and sprite2 will be affected by this change
+    //
+    if (
+      !Sys.getInstance().isNative &&
+      !(
+        "opengl" in Sys.getInstance().capabilities &&
+        RendererConfig.getInstance().isWebGL
+      )
+    ) {
+      var label = new LabelTTF(
+        "Not supported on HTML5-canvas",
+        "Times New Roman",
+        30
+      );
+      this.addChild(label);
+      label.x = winSize.width / 2;
+      label.y = winSize.height / 2;
+    } else {
+      var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
+      sprite.texture.setAliasTexParameters();
     }
-    onEnter() {
-        //----start25----onEnter
-        super.onEnter();
-        //
-        // IMPORTANT:
-        // This change will affect every sprite that uses the same texture
-        // So sprite1 and sprite2 will be affected by this change
-        //
-        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities && RendererConfig.getInstance().isWebGL)) {
-            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
-            this.addChild(label);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-        } else {
-            var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-            sprite.texture.setAliasTexParameters();
-        }
-        //----end25----
-
+    //----end25----
+  }
+  onExit() {
+    //----start25----onExit
+    if (
+      Sys.getInstance().isNative ||
+      ("opengl" in Sys.getInstance().capabilities &&
+        RendererConfig.getInstance().isWebGL)
+    ) {
+      var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
+      sprite.texture.setAntiAliasTexParameters();
     }
-    onExit() {
-        //----start25----onExit
-        if (Sys.getInstance().isNative || ("opengl" in Sys.getInstance().capabilities && RendererConfig.getInstance().isWebGL)) {
-            var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-            sprite.texture.setAntiAliasTexParameters();
-        }
-        super.onExit();
-        //----end25----
-    }
-
+    super.onExit();
+    //----end25----
+  }
 }

@@ -34,81 +34,99 @@ import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { Director, LabelTTF, Point, RendererConfig, Sprite, Sys } from "@aspect/core";
-import { DelayTime, MoveBy, sequence } from "@aspect/actions";
+import {
+  Director,
+  LabelTTF,
+  Point,
+  RendererConfig,
+  Sprite,
+  Sys
+} from "@aspect/core";
+import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXIsoVertexZ extends TMXFixBugLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.tamara = null;
+    this.tamara = null;
 
-        this.testDuration = 5.2;
+    this.testDuration = 5.2;
 
-        this.pixel = {"0":255, "1":255, "2":255, "3":255};
-        var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test-vertexz.tmx");
-        this.addChild(map, 0, TAG_TILE_MAP);
+    this.pixel = { 0: 255, 1: 255, 2: 255, 3: 255 };
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test-vertexz.tmx");
+    this.addChild(map, 0, TAG_TILE_MAP);
 
-        map.x = -map.width / 2;
-        map.y = 0;
+    map.x = -map.width / 2;
+    map.y = 0;
 
-        // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
-        // can use any Sprite and it will work OK.
-        var layer = map.getLayer("Trees");
-        this.tamara = layer.getTileAt(new Point(29, 29));
+    // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
+    // can use any Sprite and it will work OK.
+    var layer = map.getLayer("Trees");
+    this.tamara = layer.getTileAt(new Point(29, 29));
 
-        var move = new MoveBy(5, Point.mult(new Point(300, 250), 0.75));
-        var back = move.reverse();
-        var delay = new DelayTime(0.5);
-        var seq = sequence(move, delay, back);
-        this.tamara.runAction(seq.repeatForever());
+    var move = new MoveBy(5, Point.mult(new Point(300, 250), 0.75));
+    var back = move.reverse();
+    var delay = new DelayTime(0.5);
+    var seq = new Sequence(move, delay, back);
+    this.tamara.runAction(seq.repeatForever());
 
-        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
-            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
-            this.addChild(label);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-        }
-
-        this.schedule(this.repositionSprite);
-    }
-    title() {
-        return "TMX Iso VertexZ";
-    }
-    subtitle() {
-        return "Sprite should hide behind the trees";
-    }
-    onEnter() {
-        super.onEnter();
-        director.setProjection(Director.PROJECTION_2D);
-        director.setDepthTest(true);
-    }
-    onExit() {
-        director.setProjection(Director.PROJECTION_DEFAULT);
-        director.setDepthTest(false);
-        super.onExit();
-    }
-    repositionSprite(dt) {
-        if (Sys.getInstance().isNative) {
-            this.tamara.vertexZ = -(this.tamara.y + 32) / 16;
-        }
-        else {
-            var layer = this.tamara.parent;
-            this.tamara.vertexZ = layer.vertexZ + RendererConfig.getInstance().renderer.assignedZStep * Math.floor(30 - this.tamara.y / 32) / 30;
-        }
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(224, 246, 4, 4);
-        var ret = {"pixel":this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
+    if (
+      !Sys.getInstance().isNative &&
+      !("opengl" in Sys.getInstance().capabilities)
+    ) {
+      var label = new LabelTTF(
+        "Not supported on HTML5-canvas",
+        "Times New Roman",
+        30
+      );
+      this.addChild(label);
+      label.x = winSize.width / 2;
+      label.y = winSize.height / 2;
     }
 
+    this.schedule(this.repositionSprite);
+  }
+  title() {
+    return "TMX Iso VertexZ";
+  }
+  subtitle() {
+    return "Sprite should hide behind the trees";
+  }
+  onEnter() {
+    super.onEnter();
+    director.setProjection(Director.PROJECTION_2D);
+    director.setDepthTest(true);
+  }
+  onExit() {
+    director.setProjection(Director.PROJECTION_DEFAULT);
+    director.setDepthTest(false);
+    super.onExit();
+  }
+  repositionSprite(dt) {
+    if (Sys.getInstance().isNative) {
+      this.tamara.vertexZ = -(this.tamara.y + 32) / 16;
+    } else {
+      var layer = this.tamara.parent;
+      this.tamara.vertexZ =
+        layer.vertexZ +
+        (RendererConfig.getInstance().renderer.assignedZStep *
+          Math.floor(30 - this.tamara.y / 32)) /
+          30;
+    }
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(224, 246, 4, 4);
+    var ret = {
+      pixel: this.containsPixel(ret1, this.pixel, false) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

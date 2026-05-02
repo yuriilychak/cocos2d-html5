@@ -27,7 +27,7 @@
 
 import { s_back, s_power, s_resprefix } from "../resources";
 import { Point, Sprite } from "@aspect/core";
-import { DelayTime, MoveBy, sequence } from "@aspect/actions";
+import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 import { ParallaxNode } from "@aspect/parallax";
@@ -111,7 +111,7 @@ export class Parallax1 extends ParallaxDemo {
     var delay = new DelayTime(2.0);
     var goDown = goUp.reverse();
     var goLeft = goRight.reverse();
-    var seq = sequence(goUp, goRight, delay, goDown, goLeft);
+    var seq = new Sequence(goUp, goRight, delay, goDown, goLeft);
     this._parentNode.runAction(seq.repeatForever());
 
     this.addChild(this._parentNode);

@@ -37,10 +37,28 @@ import {
   s_pressSendScore,
   s_sendScore
 } from "../resources";
-import { Color, Director, EventListener, EventManager, Layer, Point, Rect, Sprite, SpriteFrame, SpriteFrameCache, log } from "@aspect/core";
+import {
+  Color,
+  Director,
+  EventListener,
+  EventManager,
+  Layer,
+  Point,
+  Rect,
+  Sprite,
+  SpriteFrame,
+  SpriteFrameCache,
+  log
+} from "@aspect/core";
 import { LabelAtlas, LabelBMFont } from "@aspect/labels";
-import { MoveBy, TintBy, easeElasticOut, sequence } from "@aspect/actions";
-import { Menu, MenuItemFont, MenuItemImage, MenuItemLabel, MenuItemSprite } from "@aspect/menus";
+import { MoveBy, TintBy, easeElasticOut, Sequence } from "@aspect/actions";
+import {
+  Menu,
+  MenuItemFont,
+  MenuItemImage,
+  MenuItemLabel,
+  MenuItemSprite
+} from "@aspect/menus";
 
 export class MenuLayerMainMenu extends Layer {
   constructor() {
@@ -52,10 +70,7 @@ export class MenuLayerMainMenu extends Layer {
     this._touchListener = null;
 
     // Font Item
-    var spriteNormal = new Sprite(
-      s_menuItem,
-      new Rect(0, 23 * 2, 115, 23)
-    );
+    var spriteNormal = new Sprite(s_menuItem, new Rect(0, 23 * 2, 115, 23));
     var spriteSelected = new Sprite(s_menuItem, new Rect(0, 23, 115, 23));
     var spriteDisabled = new Sprite(s_menuItem, new Rect(0, 0, 115, 23));
 
@@ -68,10 +83,7 @@ export class MenuLayerMainMenu extends Layer {
     );
 
     // Image Item
-    var sendScoreSF = new SpriteFrame(
-      s_sendScore,
-      new Rect(0, 0, 145, 26)
-    );
+    var sendScoreSF = new SpriteFrame(s_sendScore, new Rect(0, 0, 145, 26));
     SpriteFrameCache.getInstance().addSpriteFrame(sendScoreSF, "send_score_sf");
     var item2 = new MenuItemImage(
       "#send_score_sf",
@@ -127,19 +139,10 @@ export class MenuLayerMainMenu extends Layer {
 
     var color_action = new TintBy(0.5, 0, -255, -255);
     var color_back = color_action.reverse();
-    var seq = sequence(color_action, color_back);
+    var seq = new Sequence(color_action, color_back);
     item8.runAction(seq.repeatForever());
 
-    var menu = new Menu(
-      item1,
-      item2,
-      item3,
-      item4,
-      item5,
-      item7,
-      item8,
-      item9
-    );
+    var menu = new Menu(item1, item2, item3, item4, item5, item7, item8, item9);
     menu.alignItemsVertically();
 
     // elastic effect

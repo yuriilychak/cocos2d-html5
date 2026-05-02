@@ -34,84 +34,104 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
-import { Animation, Point, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
-import { Animate, MoveBy, RotateBy, ScaleBy, sequence } from "@aspect/actions";
+import {
+  Animation,
+  Point,
+  Sprite,
+  SpriteBatchNode,
+  SpriteFrameCache
+} from "@aspect/core";
+import { Animate, MoveBy, RotateBy, ScaleBy, Sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeChildren extends SpriteTestDemo {
+  constructor() {
+    //----start29----ctor
+    super();
 
-    constructor() {
-        //----start29----ctor
-        super();
+    this._title = "SpriteBatchNode Grand Children";
 
+    this.testDuration = 0.5;
 
-        this._title = "SpriteBatchNode Grand Children";
+    this.pixel = { 0: 255, 1: 204, 2: 153, 3: 255 };
+    // parents
+    var batch = new SpriteBatchNode(s_grossini, 50);
+    this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
+    SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
 
-        this.testDuration = 0.5;
+    var sprite1 = new Sprite(
+      SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png")
+    );
+    sprite1.x = winSize.width / 3;
+    sprite1.y = winSize.height / 2;
 
+    var sprite2 = new Sprite(
+      SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_02.png")
+    );
+    sprite2.x = 50;
+    sprite2.y = 50;
 
-        this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        // parents
-        var batch = new SpriteBatchNode(s_grossini, 50);
-        this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
+    var sprite3 = new Sprite(
+      SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_03.png")
+    );
+    sprite3.x = -50;
+    sprite3.y = -50;
 
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+    batch.addChild(sprite1);
+    sprite1.addChild(sprite2);
+    sprite1.addChild(sprite3);
 
-        var sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
-        sprite1.x = winSize.width / 3;
-        sprite1.y = winSize.height / 2;
-
-        var sprite2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_02.png"));
-        sprite2.x = 50;
-        sprite2.y = 50;
-
-        var sprite3 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_03.png"));
-        sprite3.x = -50;
-        sprite3.y = -50;
-
-        batch.addChild(sprite1);
-        sprite1.addChild(sprite2);
-        sprite1.addChild(sprite3);
-
-        // BEGIN NEW CODE
-        var animFrames = [];
-        var str = "";
-        for (var i = 1; i < 15; i++) {
-            str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
-            animFrames.push(frame);
-        }
-
-        var animation = new Animation(animFrames, 0.2);
-        sprite1.runAction(new Animate(animation).repeatForever());
-        // END NEW CODE
-
-        var action = new MoveBy(2, new Point(200, 0));
-        var action_back = action.reverse();
-        var action_rot = new RotateBy(2, 360);
-        var action_s = new ScaleBy(2, 2);
-        var action_s_back = action_s.reverse();
-
-        var seq2 = action_rot.reverse();
-        sprite2.runAction(seq2.repeatForever());
-
-        sprite1.runAction(action_rot.repeatForever());
-        sprite1.runAction(sequence(action, action_back).repeatForever());
-        sprite1.runAction(sequence(action_s, action_s_back).repeatForever());
-        //----end29----
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(winSize.width / 3 - 47, winSize.height / 2 + 107, 5, 5);
-        var ret2 = this.readPixels(winSize.width / 3 + 95, winSize.height / 2 - 5, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no"};
-        return JSON.stringify(ret);
+    // BEGIN NEW CODE
+    var animFrames = [];
+    var str = "";
+    for (var i = 1; i < 15; i++) {
+      str = "grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
+      var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
+      animFrames.push(frame);
     }
 
+    var animation = new Animation(animFrames, 0.2);
+    sprite1.runAction(new Animate(animation).repeatForever());
+    // END NEW CODE
+
+    var action = new MoveBy(2, new Point(200, 0));
+    var action_back = action.reverse();
+    var action_rot = new RotateBy(2, 360);
+    var action_s = new ScaleBy(2, 2);
+    var action_s_back = action_s.reverse();
+
+    var seq2 = action_rot.reverse();
+    sprite2.runAction(seq2.repeatForever());
+
+    sprite1.runAction(action_rot.repeatForever());
+    sprite1.runAction(new Sequence(action, action_back).repeatForever());
+    sprite1.runAction(new Sequence(action_s, action_s_back).repeatForever());
+    //----end29----
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(
+      winSize.width / 3 - 47,
+      winSize.height / 2 + 107,
+      5,
+      5
+    );
+    var ret2 = this.readPixels(
+      winSize.width / 3 + 95,
+      winSize.height / 2 - 5,
+      5,
+      5
+    );
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

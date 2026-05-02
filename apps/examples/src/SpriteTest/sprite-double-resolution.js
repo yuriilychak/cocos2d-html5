@@ -29,73 +29,65 @@ import { DoubleSprite } from "./double-sprite";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniDance08, s_pathGrossini } from "../resources";
 import { winSize } from "../constants";
-import { ScaleBy, sequence } from "@aspect/actions";
+import { ScaleBy, Sequence } from "@aspect/actions";
 import { Sprite } from "@aspect/core";
 
 export class SpriteDoubleResolution extends SpriteTestDemo {
+  constructor() {
+    //----start52----ctor
+    super();
 
+    this._title = "Sprite Double resolution";
 
-    constructor() {
-        //----start52----ctor
-        super();
+    this._subtitle = "Retina Display. SD (left) should be equal to HD (right)";
 
+    //
+    // LEFT: SD sprite
+    //
+    // there is no HD resolution file of grossini_dance_08.
+    var spriteSD = new DoubleSprite(s_grossiniDance08);
+    this.addChild(spriteSD);
+    spriteSD.x = winSize.width / 4;
+    spriteSD.y = winSize.height / 2;
 
+    var child1_left = new DoubleSprite(s_grossiniDance08);
+    spriteSD.addChild(child1_left);
+    child1_left.x = -30;
+    child1_left.y = 0;
 
-        this._title = "Sprite Double resolution";
+    var child1_right = new Sprite(s_pathGrossini);
+    spriteSD.addChild(child1_right);
+    child1_left.x = spriteSD.height;
+    child1_left.y = 0;
 
+    //
+    // RIGHT: HD sprite
+    //
+    // there is an HD version of grossini.png
+    var spriteHD = new Sprite(s_pathGrossini);
+    this.addChild(spriteHD);
+    spriteHD.x = (winSize.width / 4) * 3;
+    spriteHD.y = winSize.height / 2;
 
+    var child2_left = new DoubleSprite(s_grossiniDance08);
+    spriteHD.addChild(child2_left);
+    child2_left.x = -30;
+    child2_left.y = 0;
 
-        this._subtitle = "Retina Display. SD (left) should be equal to HD (right)";
+    var child2_right = new Sprite(s_pathGrossini);
+    spriteHD.addChild(child2_right);
+    child2_left.x = spriteHD.height;
+    child2_left.y = 0;
 
-        //
-        // LEFT: SD sprite
-        //
-        // there is no HD resolution file of grossini_dance_08.
-        var spriteSD = new DoubleSprite(s_grossiniDance08);
-        this.addChild(spriteSD);
-        spriteSD.x = winSize.width / 4;
-        spriteSD.y = winSize.height / 2;
+    // Actions
+    var scale = new ScaleBy(2, 0.5);
+    var scale_back = scale.reverse();
+    var seq = new Sequence(scale, scale_back);
 
-        var child1_left = new DoubleSprite(s_grossiniDance08);
-        spriteSD.addChild(child1_left);
-        child1_left.x = -30;
-        child1_left.y = 0;
+    var seq_copy = seq.clone();
 
-        var child1_right = new Sprite(s_pathGrossini);
-        spriteSD.addChild(child1_right);
-        child1_left.x = spriteSD.height;
-        child1_left.y = 0;
-
-        //
-        // RIGHT: HD sprite
-        //
-        // there is an HD version of grossini.png
-        var spriteHD = new Sprite(s_pathGrossini);
-        this.addChild(spriteHD);
-        spriteHD.x = winSize.width / 4 * 3;
-        spriteHD.y = winSize.height / 2;
-
-        var child2_left = new DoubleSprite(s_grossiniDance08);
-        spriteHD.addChild(child2_left);
-        child2_left.x = -30;
-        child2_left.y = 0;
-
-        var child2_right = new Sprite(s_pathGrossini);
-        spriteHD.addChild(child2_right);
-        child2_left.x = spriteHD.height;
-        child2_left.y = 0;
-
-
-        // Actions
-        var scale = new ScaleBy(2, 0.5);
-        var scale_back = scale.reverse();
-        var seq = sequence(scale, scale_back);
-
-        var seq_copy = seq.clone();
-
-        spriteSD.runAction(seq);
-        spriteHD.runAction(seq_copy);
-        //----end52----
-    }
-
+    spriteSD.runAction(seq);
+    spriteHD.runAction(seq_copy);
+    //----end52----
+  }
 }

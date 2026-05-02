@@ -28,57 +28,58 @@
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
 import { Layer, Point, Sprite } from "@aspect/core";
-import { JumpBy, RotateBy, sequence } from "@aspect/actions";
+import { JumpBy, RotateBy, Sequence } from "@aspect/actions";
 
 export class SpriteLayer extends Layer {
-    constructor() {
-        super();
-        this.init();
-    }
+  constructor() {
+    super();
+    this.init();
+  }
 
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        var x, y;
+    var x, y;
 
-        var size = director.getWinSize();
-        x = size.width;
-        y = size.height;
+    var size = director.getWinSize();
+    x = size.width;
+    y = size.height;
 
-        var sprite = new Sprite(s_pathGrossini);
-        var spriteSister1 = new Sprite(s_pathSister1);
-        var spriteSister2 = new Sprite(s_pathSister2);
+    var sprite = new Sprite(s_pathGrossini);
+    var spriteSister1 = new Sprite(s_pathSister1);
+    var spriteSister2 = new Sprite(s_pathSister2);
 
-        sprite.scale = 1.5;
-        spriteSister1.scale = 1.5;
-        spriteSister2.scale = 1.5;
+    sprite.scale = 1.5;
+    spriteSister1.scale = 1.5;
+    spriteSister2.scale = 1.5;
 
-        sprite.x = x / 2;
-        sprite.y = y / 2;
-        spriteSister1.x = 40;
-        spriteSister1.y = y / 2;
-        spriteSister2.x = x - 40;
-        spriteSister2.y = y / 2;
+    sprite.x = x / 2;
+    sprite.y = y / 2;
+    spriteSister1.x = 40;
+    spriteSister1.y = y / 2;
+    spriteSister2.x = x - 40;
+    spriteSister2.y = y / 2;
 
-        var rot = new RotateBy(16, -3600);
+    var rot = new RotateBy(16, -3600);
 
-        this.addChild(sprite);
-        this.addChild(spriteSister1);
-        this.addChild(spriteSister2);
+    this.addChild(sprite);
+    this.addChild(spriteSister1);
+    this.addChild(spriteSister2);
 
-        sprite.runAction(rot);
+    sprite.runAction(rot);
 
-        var jump1 = new JumpBy(4, new Point(-400, 0), 100, 4);
-        var jump2 = jump1.reverse();
+    var jump1 = new JumpBy(4, new Point(-400, 0), 100, 4);
+    var jump2 = jump1.reverse();
 
-        var rot1 = new RotateBy(4, 360 * 2);
-        var rot2 = rot1.reverse();
+    var rot1 = new RotateBy(4, 360 * 2);
+    var rot2 = rot1.reverse();
 
-        spriteSister1.runAction(sequence(jump2, jump1).repeat(5));
-        spriteSister2.runAction(sequence(jump1.clone(), jump2.clone()).repeat(5));
+    spriteSister1.runAction(new Sequence(jump2, jump1).repeat(5));
+    spriteSister2.runAction(
+      new Sequence(jump1.clone(), jump2.clone()).repeat(5)
+    );
 
-        spriteSister1.runAction(sequence(rot1, rot2).repeat(5));
-        spriteSister2.runAction(sequence(rot2.clone(), rot1.clone()).repeat(5));
-    }
-
+    spriteSister1.runAction(new Sequence(rot1, rot2).repeat(5));
+    spriteSister2.runAction(new Sequence(rot2.clone(), rot1.clone()).repeat(5));
+  }
 }

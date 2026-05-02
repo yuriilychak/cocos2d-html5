@@ -29,106 +29,128 @@
 // SpriteOffsetAnchorSkewScale
 //
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
+import {
+  s_grossiniPlist,
+  s_grossini_gray,
+  s_grossini_grayPlist,
+  s_pathR1
+} from "../resources";
 import { winSize } from "../constants";
-import { Animate, ScaleBy, SkewBy, sequence } from "@aspect/actions";
+import { Animate, ScaleBy, SkewBy, Sequence } from "@aspect/actions";
 import { Animation, Sprite, SpriteFrameCache } from "@aspect/core";
 export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
+  constructor() {
+    //----start43----ctor
+    super();
 
-    constructor() {
-        //----start43----ctor
-        super();
+    this._title = "Sprite anchor + skew + scale";
 
+    this.testDuration = 2;
 
-        this._title = "Sprite anchor + skew + scale";
+    this.pixel = { 0: 255, 1: 204, 2: 153, 3: 255 };
+    SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+    SpriteFrameCache.getInstance().addSpriteFrames(
+      s_grossini_grayPlist,
+      s_grossini_gray
+    );
 
+    for (var i = 0; i < 3; i++) {
+      //
+      // Animation using Sprite batch
+      //
+      var sprite = new Sprite(
+        SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png")
+      );
+      sprite.x = (winSize.width / 4) * (i + 1);
+      sprite.y = winSize.height / 2;
 
-        this.testDuration = 2;
+      var point = new Sprite(s_pathR1);
+      point.scale = 0.25;
+      point.x = sprite.x;
+      point.y = sprite.y;
+      this.addChild(point, 1);
 
+      switch (i) {
+        case 0:
+          sprite.anchorX = 0;
+          sprite.anchorY = 0;
+          break;
+        case 1:
+          sprite.anchorX = 0.5;
+          sprite.anchorY = 0.5;
+          break;
+        case 2:
+          sprite.anchorX = 1;
+          sprite.anchorY = 1;
+          break;
+      }
 
-        this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+      point.x = sprite.x;
+      point.y = sprite.y;
 
-        for (var i = 0; i < 3; i++) {
-            //
-            // Animation using Sprite batch
-            //
-            var sprite = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
-            sprite.x = winSize.width / 4 * (i + 1);
-            sprite.y = winSize.height / 2;
+      var animFrames = [];
+      var tmp = "";
+      for (var j = 1; j <= 14; j++) {
+        tmp = "grossini_dance_" + (j < 10 ? "0" + j : j) + ".png";
+        var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
+        animFrames.push(frame);
+      }
 
-            var point = new Sprite(s_pathR1);
-            point.scale = 0.25;
-	        point.x = sprite.x;
-	        point.y = sprite.y;
-            this.addChild(point, 1);
+      var animation = new Animation(animFrames, 0.3);
+      sprite.runAction(new Animate(animation).repeatForever());
 
-            switch (i) {
-                case 0:
-                    sprite.anchorX = 0;
-                    sprite.anchorY = 0;
-                    break;
-                case 1:
-                    sprite.anchorX = 0.5;
-                    sprite.anchorY = 0.5;
-                    break;
-                case 2:
-                    sprite.anchorX = 1;
-                    sprite.anchorY = 1;
-                    break;
-            }
+      animFrames = null;
 
-	        point.x = sprite.x;
-	        point.y = sprite.y;
+      // Skew
+      var skewX = new SkewBy(2, 45, 0);
+      var skewX_back = skewX.reverse();
+      var skewY = new SkewBy(2, 0, 45);
+      var skewY_back = skewY.reverse();
 
-            var animFrames = [];
-            var tmp = "";
-            for (var j = 1; j <= 14; j++) {
-                tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
-                animFrames.push(frame);
-            }
+      var seq_skew = new Sequence(skewX, skewX_back, skewY, skewY_back);
+      sprite.runAction(seq_skew.repeatForever());
 
-            var animation = new Animation(animFrames, 0.3);
-            sprite.runAction(new Animate(animation).repeatForever());
+      // Scale
+      var scale = new ScaleBy(2, 2);
+      var scale_back = scale.reverse();
+      var seq_scale = new Sequence(scale, scale_back);
+      sprite.runAction(seq_scale.repeatForever());
 
-            animFrames = null;
-
-            // Skew
-            var skewX = new SkewBy(2, 45, 0);
-            var skewX_back = skewX.reverse();
-            var skewY = new SkewBy(2, 0, 45);
-            var skewY_back = skewY.reverse();
-
-            var seq_skew = sequence(skewX, skewX_back, skewY, skewY_back);
-            sprite.runAction(seq_skew.repeatForever());
-
-            // Scale
-            var scale = new ScaleBy(2, 2);
-            var scale_back = scale.reverse();
-            var seq_scale = sequence(scale, scale_back);
-            sprite.runAction(seq_scale.repeatForever());
-
-            this.addChild(sprite, 0);
-        }
-        //----end43----
+      this.addChild(sprite, 0);
     }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(winSize.width / 4 + 121, winSize.height / 2 + 99, 5, 5);
-        var ret2 = this.readPixels(winSize.width / 4 * 2 - 83, winSize.height / 2 - 21, 5, 5);
-        var ret3 = this.readPixels(winSize.width / 4 * 3 - 286, winSize.height / 2 - 140, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no",
-            "pixel3":this.containsPixel(ret3, this.pixel) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    //----end43----
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes", pixel3: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(
+      winSize.width / 4 + 121,
+      winSize.height / 2 + 99,
+      5,
+      5
+    );
+    var ret2 = this.readPixels(
+      (winSize.width / 4) * 2 - 83,
+      winSize.height / 2 - 21,
+      5,
+      5
+    );
+    var ret3 = this.readPixels(
+      (winSize.width / 4) * 3 - 286,
+      winSize.height / 2 - 140,
+      5,
+      5
+    );
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel) ? "yes" : "no",
+      pixel3: this.containsPixel(ret3, this.pixel) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }
