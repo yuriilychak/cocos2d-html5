@@ -29,6 +29,7 @@ import { Rect } from "../cocoa/geometry/rect";
 import { error, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { Color } from "../platform/types/color";
+import { contentScaleFactor } from "../platform/macro/utils";
 
 export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   constructor(renderable) {
@@ -126,7 +127,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
       // Some call sites pass rects in points. Accept those by checking scaled coordinates.
       if (exceedsWidth || exceedsHeight) {
-        var scale = cc.contentScaleFactor();
+        var scale = contentScaleFactor();
         if (scale > 1) {
           var scaledX = _x * scale,
             scaledY = _y * scale;
@@ -275,7 +276,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
   _setTextureCoords(rect, needConvert = true) {
     const locTextureRect = this._textureCoord,
-      scaleFactor = needConvert ? cc.contentScaleFactor() : 1;
+      scaleFactor = needConvert ? contentScaleFactor() : 1;
     locTextureRect.renderX = locTextureRect.x = 0 | (rect.x * scaleFactor);
     locTextureRect.renderY = locTextureRect.y = 0 | (rect.y * scaleFactor);
     locTextureRect.width = 0 | (rect.width * scaleFactor);

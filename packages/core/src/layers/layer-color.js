@@ -30,6 +30,7 @@ import { Color } from "../platform/types/color";
 import Game from "../boot/game";
 import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from "./renderer";
 import { RendererConfig } from "../renderer/renderer-config";
+import { Director } from "../director/director";
 
 /**
  * LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
@@ -55,7 +56,7 @@ export class LayerColor extends Layer {
   }
 
   init(color, width, height) {
-    var winSize = cc.director.getWinSize();
+    var winSize = Director.getInstance().getWinSize();
     color = color || new Color(0, 0, 0, 255);
     width = width === undefined ? winSize.width : width;
     height = height === undefined ? winSize.height : height;

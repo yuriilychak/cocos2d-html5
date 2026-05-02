@@ -25,6 +25,7 @@
 import { RendererConfig } from "./renderer-config";
 import { Color } from "../platform/types/color";
 import Sys from "../boot/sys";
+import { arrayRemoveObject } from "../platform/macro/utils";
 import {
   BATCH_VERTEX_COUNT,
   VERTEX_ATTRIB_COLOR,
@@ -187,7 +188,7 @@ var rendererWebGL = {
     }
 
     var locIDs = this._cacheInstanceIds;
-    cc.arrayRemoveObject(locIDs, instanceID);
+    arrayRemoveObject(locIDs, instanceID);
   },
 
   /**

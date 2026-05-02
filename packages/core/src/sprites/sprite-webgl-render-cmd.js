@@ -28,6 +28,7 @@ import { Point } from "../cocoa/geometry/point";
 import { log, error, _LogInfos } from "../boot/debugger";
 import ShaderCache from "../shaders/CCShaderCache";
 import { RendererConfig } from "../renderer/renderer-config";
+import { rectPointsToPixels, contentScaleFactor } from "../platform/macro/utils";
 import {
   BLEND_DST,
   ONE,
@@ -120,7 +121,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     let locRect = this._rect;
     if (!locRect) {
       locRect = new Rect(0, 0, sender.width, sender.height);
-    } else if (cc.Rect.equalToZero(locRect)) {
+    } else if (Rect.equalToZero(locRect)) {
       locRect.width = sender.width;
       locRect.height = sender.height;
     }
@@ -139,7 +140,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   _setTextureCoords(rect, needConvert) {
     if (needConvert === undefined) needConvert = true;
-    if (needConvert) rect = cc.rectPointsToPixels(rect);
+    if (needConvert) rect = rectPointsToPixels(rect);
     const node = this._node;
 
     const tex = node._batchNode ? node.textureAtlas.texture : node._texture;
@@ -290,7 +291,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
       // Some call sites pass rects in points. Accept those by checking scaled coordinates.
       if (exceedsWidth || exceedsHeight) {
-        var scale = cc.contentScaleFactor ? cc.contentScaleFactor() : 1;
+        var scale = contentScaleFactor();
         if (scale > 1) {
           var scaledX = _x * scale,
             scaledY = _y * scale;

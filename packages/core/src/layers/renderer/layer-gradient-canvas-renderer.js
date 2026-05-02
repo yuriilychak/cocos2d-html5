@@ -26,6 +26,7 @@ import { RendererConfig } from "../../renderer/renderer-config";
 import LayerColorCanvasRenderer from "./layer-color-canvas-renderer";
 import { Node } from "../../base-nodes/node";
 import { Point } from "../../cocoa/geometry/point";
+import { Color } from "../../platform/types/color";
 
 /**
  * LayerGradient's Canvas render command
@@ -117,13 +118,13 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
       locEndColor = node._endColor;
     const startOpacity = node._startOpacity / 255,
       endOpacity = node._endOpacity / 255;
-    this._startStopStr = cc.Color.toRgba(
+    this._startStopStr = Color.toRgba(
       Math.round(locStartColor.r),
       Math.round(locStartColor.g),
       Math.round(locStartColor.b),
       startOpacity.toFixed(4) * 255
       );
-    this._endStopStr = cc.Color.toRgba(
+    this._endStopStr = Color.toRgba(
       Math.round(locEndColor.r),
       Math.round(locEndColor.g),
       Math.round(locEndColor.b),

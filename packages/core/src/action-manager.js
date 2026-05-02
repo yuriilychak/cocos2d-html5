@@ -27,6 +27,7 @@
 import { NewClass } from './platform/class';
 import { log, assert, _LogInfos } from './boot/debugger';
 import { ACTION_TAG_INVALID } from "./platform/macro/constants";
+import { Director } from "./director/director";
 
 /**
  * @example
@@ -229,7 +230,7 @@ export class ActionManager extends NewClass {
     }
 
     purgeSharedManager() {
-        cc.director.getScheduler().unscheduleUpdate(this);
+        Director.getInstance().getScheduler().unscheduleUpdate(this);
     }
 
     _removeActionAtIndex(index, element) {

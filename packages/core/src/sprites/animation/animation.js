@@ -29,6 +29,7 @@ import { AnimationFrame } from "./animation-frame";
 import { SpriteFrame } from "../sprite-frame";
 import { Rect } from "../../cocoa/geometry/rect";
 import TextureCache from "../../textures/texture-cache";
+import { arrayVerifyType } from "../../platform/macro/utils";
 
 /**
  * <p>
@@ -155,7 +156,7 @@ export class Animation extends NewClass {
    * @param {Number} [loops=1]
    */
   initWithAnimationFrames(arrayOfAnimationFrames, delayPerUnit, loops) {
-    cc.arrayVerifyType(arrayOfAnimationFrames, AnimationFrame);
+    arrayVerifyType(arrayOfAnimationFrames, AnimationFrame);
 
     this._delayPerUnit = delayPerUnit;
     this._loops = loops === undefined ? 1 : loops;
@@ -289,7 +290,7 @@ export class Animation extends NewClass {
    * @param {Number} [loops=1]
    */
   initWithSpriteFrames(frames, delay, loops) {
-    cc.arrayVerifyType(frames, SpriteFrame);
+    arrayVerifyType(frames, SpriteFrame);
     this._loops = loops === undefined ? 1 : loops;
     this._delayPerUnit = delay || 0;
     this._totalDelayUnits = 0;

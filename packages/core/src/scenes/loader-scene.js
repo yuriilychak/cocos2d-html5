@@ -28,7 +28,7 @@ import { Node } from "../base-nodes/node";
 import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
 import { visibleRect } from "../platform/visible-rect";
-
+import { contentScaleFactor } from "../platform/macro/utils";
 import EventManager from "../event-manager/event-manager";
 import { Director } from "../director/director";
 import Loader from "../boot/loader";
@@ -95,7 +95,7 @@ export class LoaderScene extends Scene {
     texture2d.initWithElement(img);
     texture2d.handleLoadedTexture();
     var logo = (self._logo = new Sprite(texture2d));
-    logo.setScale(cc.contentScaleFactor());
+    logo.setScale(contentScaleFactor());
     logo.x = centerPos.x;
     logo.y = centerPos.y;
     self._bgLayer.addChild(logo, 10);
@@ -160,6 +160,6 @@ LoaderScene.preload = function (resources, cb, target) {
   }
   _cc.loaderScene.initWithResources(resources, cb, target);
 
-  cc.director.runScene(_cc.loaderScene);
+  Director.getInstance().runScene(_cc.loaderScene);
   return _cc.loaderScene;
 };

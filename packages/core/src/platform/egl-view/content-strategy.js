@@ -28,6 +28,7 @@ import { NewClass } from "../class";
 import { Rect } from "../../cocoa/geometry/rect";
 import Game from "../../boot/game";
 import { RendererConfig } from "../../renderer/renderer-config";
+import { Director } from "../../director/director";
 
 /**
  * <p>ContentStrategy class is the root strategy class of content's scale strategy,
@@ -193,7 +194,7 @@ class FixedHeight extends ContentStrategy {
   }
 
   postApply(view) {
-    cc.director._winSizeInPoints = view.getVisibleSize();
+    Director.getInstance()._winSizeInPoints = view.getVisibleSize();
   }
 }
 
@@ -217,7 +218,7 @@ class FixedWidth extends ContentStrategy {
   }
 
   postApply(view) {
-    cc.director._winSizeInPoints = view.getVisibleSize();
+    Director.getInstance()._winSizeInPoints = view.getVisibleSize();
   }
 }
 

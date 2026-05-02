@@ -77,9 +77,9 @@ export const LabelRenderMixin = (Base) =>
       super(renderable);
       this._fontClientHeight = 18;
       this._fontStyleStr = "";
-      this._shadowColorStr = cc.Color.toRgba(128, 128, 128, 128);
+      this._shadowColorStr = Color.toRgba(128, 128, 128, 128);
       this._strokeColorStr = "";
-      this._fillColorStr = cc.Color.toRgba();
+      this._fillColorStr = Color.toRgba();
 
       this._labelCanvas = null;
       this._labelContext = null;

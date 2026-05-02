@@ -40,6 +40,7 @@ import { ResolutionPolicy } from "./resolution-policy";
 import { DENSITYDPI_HIGH } from "./constants";
 import { log, _LogInfos } from "../../boot/debugger";
 import { RendererConfig } from "../../renderer/renderer-config";
+import { Director } from "../../director/director";
 import {
   ORIENTATION_AUTO,
   ORIENTATION_LANDSCAPE,
@@ -184,9 +185,9 @@ export class EGLView extends NewClass {
     __BrowserGetter.init(this);
 
     _t._frame =
-      cc.container.parentNode === d.body
+      Game.getInstance().container.parentNode === d.body
         ? d.documentElement
-        : cc.container.parentNode;
+        : Game.getInstance().container.parentNode;
     _t._frameSize = new Size(0, 0);
     _t._initFrameSize();
 
@@ -404,16 +405,16 @@ export class EGLView extends NewClass {
     ) {
       locFrameSize.width = w;
       locFrameSize.height = h;
-      cc.container.style["-webkit-transform"] = "rotate(0deg)";
-      cc.container.style.transform = "rotate(0deg)";
+      Game.getInstance().container.style["-webkit-transform"] = "rotate(0deg)";
+      Game.getInstance().container.style.transform = "rotate(0deg)";
       this._isRotated = false;
     } else {
       locFrameSize.width = h;
       locFrameSize.height = w;
-      cc.container.style["-webkit-transform"] = "rotate(90deg)";
-      cc.container.style.transform = "rotate(90deg)";
-      cc.container.style["-webkit-transform-origin"] = "0px 0px 0px";
-      cc.container.style.transformOrigin = "0px 0px 0px";
+      Game.getInstance().container.style["-webkit-transform"] = "rotate(90deg)";
+      Game.getInstance().container.style.transform = "rotate(90deg)";
+      Game.getInstance().container.style["-webkit-transform-origin"] = "0px 0px 0px";
+      Game.getInstance().container.style.transformOrigin = "0px 0px 0px";
       this._isRotated = true;
     }
   }
@@ -572,7 +573,7 @@ export class EGLView extends NewClass {
   setFrameZoomFactor(zoomFactor) {
     this._frameZoomFactor = zoomFactor;
     this.centerWindow();
-    cc.director.setProjection(cc.director.getProjection());
+    Director.getInstance().setProjection(Director.getInstance().getProjection());
   }
 
   /**
@@ -635,7 +636,7 @@ export class EGLView extends NewClass {
     this._frame.style.width = width + "px";
     this._frame.style.height = height + "px";
     this._resizeEvent();
-    cc.director.setProjection(cc.director.getProjection());
+    Director.getInstance().setProjection(Director.getInstance().getProjection());
   }
 
   /**
@@ -787,7 +788,7 @@ export class EGLView extends NewClass {
     }
 
     // reset director's member variables to fit visible rect
-    var director = cc.director;
+    var director = Director.getInstance();
     director._winSizeInPoints.width = this._designResolutionSize.width;
     director._winSizeInPoints.height = this._designResolutionSize.height;
     policy.postApply(this);

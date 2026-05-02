@@ -36,6 +36,7 @@ import {
 import { AffineTransform } from "../cocoa/affine-transform";
 import ShaderCache from "../shaders/CCShaderCache";
 import { EGLView } from "../platform/egl-view/egl-view";
+import { radiansToDegrees } from "../platform/macro/utils";
 
 /**
  * Layer's WebGL render command
@@ -225,7 +226,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     const angle =
         Math.PI + Point.angleSigned(new Point(0, -1), node._alongVector),
       locAnchor = new Point(contentSize.width / 2, contentSize.height / 2);
-    const degrees = Math.round(cc.radiansToDegrees(angle));
+    const degrees = Math.round(radiansToDegrees(angle));
     let transMat = AffineTransform.make(1, 0, 0, 1, locAnchor.x, locAnchor.y);
     transMat = AffineTransform.rotate(transMat, angle);
     let a, b;

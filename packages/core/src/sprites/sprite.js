@@ -36,6 +36,7 @@ import SpriteFrameCache from "./sprite-frame-cache";
 import AnimationCache from "./animation-cache";
 import { RendererConfig } from "../renderer/renderer-config";
 import { BLEND_DST, BLEND_SRC } from "../platform/macro/constants";
+import { sizePointsToPixels, rectPointsToPixels, pointPointsToPixels } from "../platform/macro/utils.js";
 
 /**
  * <p>Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -741,10 +742,10 @@ export class Sprite extends EventHelper(Node) {
   getSpriteFrame() {
     return new cc.SpriteFrame(
       this._texture,
-      cc.rectPointsToPixels(this._rect),
+      rectPointsToPixels(this._rect),
       this._rectRotated,
-      cc.pointPointsToPixels(this._unflippedOffsetPositionFromCenter),
-      cc.sizePointsToPixels(this._contentSize)
+      pointPointsToPixels(this._unflippedOffsetPositionFromCenter),
+      sizePointsToPixels(this._contentSize)
     );
   }
 

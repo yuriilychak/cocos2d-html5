@@ -241,6 +241,7 @@ export default class Game extends EventHelper(NewClass) {
       this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
 
       cc.view = EGLView.getInstance();
+      // @deprecated use Director.getInstance() instead
       cc.director = Director.getInstance();
       if (Director.getInstance().setOpenGLView) Director.getInstance().setOpenGLView(EGLView.getInstance());
       cc.winSize = Director.getInstance().getWinSize();
@@ -446,7 +447,6 @@ export default class Game extends EventHelper(NewClass) {
 
       this.canvas = localCanvas = element;
       this.container =
-        cc.container =
         localContainer =
           document.createElement("DIV");
       if (localCanvas.parentNode)
@@ -459,13 +459,14 @@ export default class Game extends EventHelper(NewClass) {
       height = height || element.clientHeight;
       this.canvas = localCanvas = document.createElement("CANVAS");
       this.container =
-        cc.container =
         localContainer =
           document.createElement("DIV");
       element.appendChild(localContainer);
     }
     localContainer.setAttribute("id", "Cocos2dGameContainer");
     localContainer.appendChild(localCanvas);
+    // @deprecated use Game.getInstance().container instead
+    cc.container = this.container;
     this.frame =
       localContainer.parentNode === document.body
         ? document.documentElement

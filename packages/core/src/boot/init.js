@@ -34,6 +34,7 @@ cc._drawingUtil = null;
 
 /**
  * The element contains the game canvas
+ * @deprecated Use Game.getInstance().container instead
  * @type {HTMLDivElement}
  */
 cc.container = null;

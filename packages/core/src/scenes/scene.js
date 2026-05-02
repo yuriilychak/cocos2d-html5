@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Node } from '../base-nodes/node';
+import { Director } from '../director/director';
 
 /**
  * Scene is a subclass of Node that is used only as an abstract concept.
@@ -37,6 +38,6 @@ export class Scene extends Node {
         this._className = "Scene";
         this._ignoreAnchorPointForPosition = true;
         this.setAnchorPoint(0.5, 0.5);
-        this.setContentSize(cc.director.getWinSize());
+        this.setContentSize(Director.getInstance().getWinSize());
     }
 }

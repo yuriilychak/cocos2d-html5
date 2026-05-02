@@ -81,14 +81,14 @@ export class ContainerStrategy extends NewClass {
 
   _fixContainer() {
     // Add container to document body
-    document.body.insertBefore(cc.container, document.body.firstChild);
+    document.body.insertBefore(Game.getInstance().container, document.body.firstChild);
     // Set body's width height to window's size, and forbid overflow, so that game will be centered
     var bs = document.body.style;
     bs.width = window.innerWidth + "px";
     bs.height = window.innerHeight + "px";
     bs.overflow = "hidden";
     // Body size solution doesn't work on all mobile browser so this is the aleternative: fixed container
-    var contStyle = cc.container.style;
+    var contStyle = Game.getInstance().container.style;
     contStyle.position = "fixed";
     contStyle.left = contStyle.top = "0px";
     // Reposition body
@@ -103,7 +103,7 @@ export class ContainerStrategy extends NewClass {
 class EqualToFrame extends ContainerStrategy {
   apply(view) {
     var frameH = view._frameSize.height,
-      containerStyle = cc.container.style;
+      containerStyle = Game.getInstance().container.style;
     this._setupContainer(view, view._frameSize.width, view._frameSize.height);
     // Setup container's margin and padding
     if (view._isRotated) {
@@ -120,7 +120,7 @@ class ProportionalToFrame extends ContainerStrategy {
   apply(view, designedResolution) {
     var frameW = view._frameSize.width,
       frameH = view._frameSize.height,
-      containerStyle = cc.container.style,
+      containerStyle = Game.getInstance().container.style,
       designW = designedResolution.width,
       designH = designedResolution.height,
       scaleX = frameW / designW,

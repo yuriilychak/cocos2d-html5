@@ -31,6 +31,7 @@ import { Rect } from "../../cocoa/geometry/rect";
 import { RendererConfig } from "../../renderer/renderer-config";
 import { Size } from "../../cocoa/geometry/size";
 import { log, _LogInfos } from "../../boot/debugger";
+import { Director } from "../../director/director";
 
 /**
  * <p>
@@ -177,7 +178,7 @@ export function incrementGLDraws(addNumber) {
  * @function
  */
 export function contentScaleFactor() {
-  return cc.director._contentScaleFactor;
+  return Director.getInstance()._contentScaleFactor;
 }
 
 /**

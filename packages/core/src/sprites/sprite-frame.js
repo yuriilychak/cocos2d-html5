@@ -33,7 +33,7 @@ import { Size } from "../cocoa/geometry/size";
 import { error, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import { RendererConfig } from "../renderer/renderer-config";
-import { rectPixelsToPoints } from "../platform/macro/utils";
+import { rectPixelsToPoints, rectPointsToPixels } from "../platform/macro/utils";
 
 /**
  * <p>
@@ -167,7 +167,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
     this._rect.y = rect.y;
     this._rect.width = rect.width;
     this._rect.height = rect.height;
-    this._rectInPixels = cc.rectPointsToPixels(this._rect);
+    this._rectInPixels = rectPointsToPixels(this._rect);
   }
 
   /**
@@ -272,7 +272,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
                 h = sender.height;
               this._rect.width = w;
               this._rect.height = h;
-              this._rectInPixels = cc.rectPointsToPixels(this._rect);
+              this._rectInPixels = rectPointsToPixels(this._rect);
               this._originalSizeInPixels.width = this._rectInPixels.width;
               this._originalSizeInPixels.height = this._rectInPixels.height;
               this._originalSize.width = w;
@@ -357,7 +357,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
    * @return {Boolean}
    */
   initWithTexture(texture, rect, rotated, offset, originalSize) {
-    if (arguments.length === 2) rect = cc.rectPointsToPixels(rect);
+    if (arguments.length === 2) rect = rectPointsToPixels(rect);
 
     offset = offset || new Point(0, 0);
     originalSize = originalSize || rect;

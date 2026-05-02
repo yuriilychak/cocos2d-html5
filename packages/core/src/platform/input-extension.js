@@ -33,6 +33,7 @@
 import EventManager from '../event-manager/event-manager';
 import Sys from '../boot/sys';
 import Game from '../boot/game';
+import { Director } from '../director/director';
 
 export function initInputExtension(_p) {
 
@@ -47,7 +48,7 @@ export function initInputExtension(_p) {
             return;
 
         _t._accelEnabled = isEnable;
-        var scheduler = cc.director.getScheduler();
+        var scheduler = Director.getInstance().getScheduler();
         if(_t._accelEnabled){
             _t._accelCurTime = 0;
             _t._registerAccelerometerEvent();

@@ -33,6 +33,7 @@ import CanvasTextureRenderer from "./texture-2d-canvas-renderer";
 import WebGLTextureRenderer from "./texture-2d-webgl-renderer";
 import { log, _LogInfos } from "../boot/debugger";
 import { RendererConfig } from "../renderer/renderer-config";
+import { contentScaleFactor } from "../platform/macro/utils";
 
 export {
   ALIGN_CENTER,
@@ -124,7 +125,7 @@ export class Texture2D extends EventHelper(NewClass) {
   }
 
   getContentSize() {
-    var locScaleFactor = cc.contentScaleFactor();
+    var locScaleFactor = contentScaleFactor();
     return new Size(
       this._contentSize.width / locScaleFactor,
       this._contentSize.height / locScaleFactor
@@ -132,11 +133,11 @@ export class Texture2D extends EventHelper(NewClass) {
   }
 
   _getWidth() {
-    return this._contentSize.width / cc.contentScaleFactor();
+    return this._contentSize.width / contentScaleFactor();
   }
 
   _getHeight() {
-    return this._contentSize.height / cc.contentScaleFactor();
+    return this._contentSize.height / contentScaleFactor();
   }
 
   getContentSizeInPixels() {

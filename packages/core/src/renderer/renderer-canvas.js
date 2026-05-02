@@ -27,6 +27,7 @@ import { Color } from "../platform/types/color";
 import { log } from "../boot/debugger";
 import Game from "../boot/game";
 import { EGLView } from "../platform/egl-view/egl-view";
+import { arrayRemoveObject } from "../platform/macro/utils";
 
 var rendererCanvas = {
   childrenOrderDirty: true,
@@ -268,7 +269,7 @@ var rendererCanvas = {
     }
 
     var locIDs = this._cacheInstanceIds;
-    cc.arrayRemoveObject(locIDs, instanceID);
+    arrayRemoveObject(locIDs, instanceID);
   },
 
   resetFlag: function () {
