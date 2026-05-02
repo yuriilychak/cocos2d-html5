@@ -413,7 +413,8 @@ import {
   kmGLTranslatef,
   kmGLRotatef,
   kmGLScalef,
-  kmGLGetMatrix
+  kmGLGetMatrix,
+  KMGLMatrix
 } from "./kazmath";
 
 // ======================================================================
@@ -788,10 +789,6 @@ cc.km_mat4_stack_release = km_mat4_stack_release;
 cc.KM_GL_MODELVIEW = KM_GL_MODELVIEW;
 cc.KM_GL_PROJECTION = KM_GL_PROJECTION;
 cc.KM_GL_TEXTURE = KM_GL_TEXTURE;
-cc.modelview_matrix_stack = new Matrix4Stack();
-cc.projection_matrix_stack = new Matrix4Stack();
-cc.texture_matrix_stack = new Matrix4Stack();
-cc.current_stack = null;
 cc.lazyInitialize = lazyInitialize;
 cc.kmGLFreeAll = kmGLFreeAll;
 cc.kmGLPushMatrix = kmGLPushMatrix;
@@ -871,7 +868,7 @@ cc.SHADEREX_SWITCHMASK_FRAG = SHADEREX_SWITCHMASK_FRAG;
 // ======================================================================
 initInputExtension(inputManager);
 initBinaryLoader();
-cc.lazyInitialize();
+KMGLMatrix.getInstance().lazyInitialize();
 
 // ======================================================================
 // Named re-exports for direct imports from other packages
@@ -937,7 +934,8 @@ export {
   kmGLLoadIdentity,
   kmGLMultMatrix,
   kmGLPushMatrix,
-  kmGLPopMatrix
+  kmGLPopMatrix,
+  KMGLMatrix
 } from "./kazmath";
 export {
   ACTION_TAG_INVALID,

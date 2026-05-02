@@ -27,6 +27,7 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Color } from "../platform/types/color";
 import { RendererConfig } from "../renderer/renderer-config";
 import { AffineTransform } from "../cocoa/affine-transform";
+import { Region } from "../renderer/dirty-region";
 import {
   ONE,
   ONE_MINUS_SRC_ALPHA,
@@ -601,8 +602,8 @@ export class CanvasRenderCmd extends RenderCmd {
     super(renderable);
     this._cachedParent = null;
     this._cacheDirty = false;
-    this._currentRegion = new cc.Region();
-    this._oldRegion = new cc.Region();
+    this._currentRegion = new Region();
+    this._oldRegion = new Region();
     this._regionFlag = 0;
     this._canUseDirtyRegion = false;
   }

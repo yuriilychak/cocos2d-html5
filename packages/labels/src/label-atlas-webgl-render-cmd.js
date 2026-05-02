@@ -4,7 +4,8 @@ import {
   contentScaleFactor,
   FIX_ARTIFACTS_BY_STRECHING_TEXEL,
   LABELATLAS_DEBUG_DRAW,
-  log
+  log,
+  Game
 } from "@aspect/core";
 
 export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
@@ -53,7 +54,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
         new Point(s.width + posX, s.height + posY),
         new Point(posX, posY + s.height)
       ];
-      cc.game.drawingUtil.drawPoly(vertices, 4, true);
+      Game.getInstance().drawingUtil.drawPoly(vertices, 4, true);
     }
   }
 

@@ -17,7 +17,12 @@ import {
   TEXT_ALIGNMENT_LEFT,
   TEXT_ALIGNMENT_CENTER,
   TEXT_ALIGNMENT_RIGHT,
-  LabelTTF
+  LabelTTF,
+  Loader,
+  Path,
+  SpriteFrameCache,
+  textureCache,
+  Configuration
 } from "@aspect/core";
 
 export class LabelBMFont extends EventHelper(SpriteBatchNode) {
@@ -176,10 +181,10 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
     var texture;
     if (fntFile) {
-      var newConf = cc.loader.getRes(fntFile);
+      var newConf = Loader.getInstance().getRes(fntFile);
       if (!newConf) {
         newConf =
-          FntFrameCache[fntFile] || FntFrameCache[cc.path.basename(fntFile)];
+          FntFrameCache[fntFile] || FntFrameCache[Path.basename(fntFile)];
         if (!newConf) {
           log(
             "cc.LabelBMFont.initWithString(): Impossible to create font. Please check file"
@@ -192,15 +197,15 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       self._fntFile = fntFile;
       var spriteFrameBaseName = newConf.atlasName;
       var spriteFrame =
-        cc.spriteFrameCache.getSpriteFrame(spriteFrameBaseName) ||
-        cc.spriteFrameCache.getSpriteFrame(
-          cc.path.basename(spriteFrameBaseName)
+        SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameBaseName) ||
+        SpriteFrameCache.getInstance().getSpriteFrame(
+          Path.basename(spriteFrameBaseName)
         );
       if (spriteFrame) {
         texture = spriteFrame.getTexture();
         this._spriteFrame = spriteFrame;
       } else {
-        texture = cc.textureCache.addImage(newConf.atlasName);
+        texture = textureCache.addImage(newConf.atlasName);
       }
       var locIsLoaded = texture.isLoaded();
       self._textureLoaded = locIsLoaded;
@@ -699,7 +704,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   setFntFile(fntFile) {
     var self = this;
     if (fntFile != null && fntFile !== self._fntFile) {
-      var newConf = cc.loader.getRes(fntFile);
+      var newConf = Loader.getInstance().getRes(fntFile);
 
       if (!newConf) {
         log(
@@ -711,7 +716,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       self._fntFile = fntFile;
       self._config = newConf;
 
-      var texture = cc.textureCache.addImage(newConf.atlasName);
+      var texture = textureCache.addImage(newConf.atlasName);
       var locIsLoaded = texture.isLoaded();
       self._textureLoaded = locIsLoaded;
       if (!locIsLoaded) {
@@ -885,7 +890,7 @@ const _fntLoader = {
     var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
     fnt.commonHeight = commonObj["lineHeight"];
     if (RendererConfig.isWebGL) {
-      var texSize = cc.configuration.getMaxTextureSize();
+      var texSize = Configuration.getInstance().getMaxTextureSize();
       if (
         commonObj["scaleW"] > texSize.width ||
         commonObj["scaleH"] > texSize.height
@@ -902,10 +907,10 @@ const _fntLoader = {
     if (pageObj["id"] !== 0)
       log("cc.LabelBMFont._parseImageFileName() : file could not be found");
     if (!useAtlas) {
-      fnt.atlasName = cc.path.changeBasename(url, pageObj["file"]);
+      fnt.atlasName = Path.changeBasename(url, pageObj["file"]);
     } else {
-      fnt.atlasName = cc.path.join(
-        cc.path.dirname(useAtlas.path) + pageObj["file"]
+      fnt.atlasName = Path.join(
+        Path.dirname(useAtlas.path) + pageObj["file"]
       );
     }
 
@@ -965,8 +970,8 @@ const _fntLoader = {
             var frameName = self._parseStrToObj(frameNameStr[0]);
             if (frameName && frameName.name) {
               fnt = {};
-              var realFntPathKey = cc.path.join(
-                cc.path.dirname(url),
+              var realFntPathKey = Path.join(
+                Path.dirname(url),
                 frameName.name
               );
               FntFrameCache[realFntPathKey] = this._parseFntContent(
@@ -994,13 +999,13 @@ const _fntLoader = {
    */
   load: function (realUrl, url, res, cb) {
     var self = this;
-    cc.loader.loadTxt(realUrl, function (err, txt) {
+    Loader.getInstance().loadTxt(realUrl, function (err, txt) {
       if (err) return cb(err);
       cb(null, self.parseFnt(txt, url));
     });
   }
 };
-cc.loader.register(["fnt"], _fntLoader);
+Loader.getInstance().register(["fnt"], _fntLoader);
 
 /**
  * cc.Label compatibility shim (matches cocos2d-x v3 API)

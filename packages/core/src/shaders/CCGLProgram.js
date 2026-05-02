@@ -47,6 +47,7 @@ import {
   KM_GL_PROJECTION,
   kmGLGetMatrix
 } from "../kazmath/gl/matrix";
+import { KMGLMatrix } from "../kazmath/gl/km-gl-matrix";
 import Matrix4, { kmMat4Multiply, getMat4MultiplyValue } from "../kazmath/mat4";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 
@@ -894,8 +895,8 @@ export default class GLProgram extends NewClass {
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_MVPMATRIX_S],
       getMat4MultiplyValue(
-        cc.projection_matrix_stack.top,
-        cc.modelview_matrix_stack.top
+        KMGLMatrix.getInstance().projectionStack.top,
+        KMGLMatrix.getInstance().modelViewStack.top
       )
     );
   }
@@ -903,8 +904,8 @@ export default class GLProgram extends NewClass {
   setUniformForModelViewProjectionMatrixWithMat4(swapMat4) {
     kmMat4Multiply(
       swapMat4,
-      cc.projection_matrix_stack.top,
-      cc.modelview_matrix_stack.top
+      KMGLMatrix.getInstance().projectionStack.top,
+      KMGLMatrix.getInstance().modelViewStack.top
     );
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_MVPMATRIX_S],
@@ -915,11 +916,11 @@ export default class GLProgram extends NewClass {
   setUniformForModelViewAndProjectionMatrixWithMat4() {
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_MVMATRIX_S],
-      cc.modelview_matrix_stack.top.mat
+      KMGLMatrix.getInstance().modelViewStack.top.mat
     );
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_PMATRIX_S],
-      cc.projection_matrix_stack.top.mat
+      KMGLMatrix.getInstance().projectionStack.top.mat
     );
   }
 
@@ -931,12 +932,12 @@ export default class GLProgram extends NewClass {
     );
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_PMATRIX_S],
-      cc.projection_matrix_stack.top.mat
+      KMGLMatrix.getInstance().projectionStack.top.mat
     );
   }
 
   _updateProjectionUniform() {
-    let stack = cc.projection_matrix_stack;
+    const stack = KMGLMatrix.getInstance().projectionStack;
     if (stack.lastUpdated !== this._projectionUpdated) {
       this._glContext.uniformMatrix4fv(
         this._uniforms[UNIFORM_PMATRIX_S],

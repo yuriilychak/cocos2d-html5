@@ -25,3 +25,4 @@ export {
     kmGLMultMatrix, kmGLTranslatef, kmGLRotatef,
     kmGLScalef, kmGLGetMatrix
 } from './gl/matrix';
+export { KMGLMatrix } from './gl/km-gl-matrix';

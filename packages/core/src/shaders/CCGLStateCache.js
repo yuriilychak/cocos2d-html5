@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { RendererConfig } from "../renderer/renderer-config";
+import { KMGLMatrix } from "../kazmath/gl/km-gl-matrix";
 
 // GL State Cache functions
 
@@ -33,7 +34,7 @@ import { RendererConfig } from "../renderer/renderer-config";
  * @function
  */
 export function glInvalidateStateCache() {
-  cc.kmGLFreeAll();
+  KMGLMatrix.getInstance().freeAll();
   cc._currentProjectionMatrix = -1;
   cc._currentShaderProgram = -1;
   for (let i = 0; i < cc.MAX_ACTIVETEXTURE; i++) {

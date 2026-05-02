@@ -1,4 +1,4 @@
-import { Node, RendererConfig, CustomRenderCmd } from "@aspect/core";
+import { Node, RendererConfig, CustomRenderCmd, KMGLMatrix } from "@aspect/core";
 
 export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderable) {
@@ -17,7 +17,7 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (parentCmd)
       this._curLevel = parentCmd._curLevel + 1;
 
-    const currentStack = cc.current_stack;
+    const currentStack = KMGLMatrix.getInstance().currentStack;
     currentStack.stack.push(currentStack.top);
     this._syncStatus(parentCmd);
     currentStack.top = this._stackMatrix;

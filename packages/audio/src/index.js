@@ -1,3 +1,4 @@
+import { Game } from "@aspect/core";
 import "./audio-support.js";
 import { Audio } from "./audio.js";
 import { WebAudio } from "./web-audio.js";
@@ -10,6 +11,7 @@ Audio.WebAudio = WebAudio;
 // cc globals
 cc.Audio = Audio;
 export const audioEngine = new AudioEngine();
+Game.getInstance().audioEngine = audioEngine;
 cc.audioEngine = audioEngine;
 
 export { Audio, WebAudio, AudioEngine };

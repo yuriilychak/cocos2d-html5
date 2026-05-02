@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Point, pointEqualToPoint, RendererConfig } from "@aspect/core";
+import { Node, Point, pointEqualToPoint, RendererConfig, log } from "@aspect/core";
 import { PointObject } from "./point-object";
 
 /**
@@ -77,7 +77,7 @@ export class ParallaxNode extends Node {
      */
     addChild(child, z, ratio, offset) {
         if (arguments.length === 3) {
-            cc.log("ParallaxNode: use addChild(child, z, ratio, offset) instead");
+            log("ParallaxNode: use addChild(child, z, ratio, offset) instead");
             return;
         }
         if(!child)

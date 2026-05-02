@@ -133,6 +133,8 @@ export default class Game extends EventHelper(NewClass) {
    */
   onStart = null;
 
+  audioEngine = null;
+
   /**
    * Callback when game exits.
    * @type {Function|null}
@@ -169,8 +171,8 @@ export default class Game extends EventHelper(NewClass) {
   pause() {
     if (this._paused) return;
     this._paused = true;
-    if (cc.audioEngine) {
-      cc.audioEngine._pausePlaying();
+    if (this.audioEngine) {
+      this.audioEngine._pausePlaying();
     }
     if (this._intervalId) window.cancelAnimationFrame(this._intervalId);
     this._intervalId = 0;
@@ -182,8 +184,8 @@ export default class Game extends EventHelper(NewClass) {
   resume() {
     if (!this._paused) return;
     this._paused = false;
-    if (cc.audioEngine) {
-      cc.audioEngine._resumePlaying();
+    if (this.audioEngine) {
+      this.audioEngine._resumePlaying();
     }
     this._runMainLoop();
   }
@@ -200,7 +202,7 @@ export default class Game extends EventHelper(NewClass) {
    */
   restart() {
     Director.getInstance().popToSceneStackLevel(0);
-    cc.audioEngine && cc.audioEngine.end();
+    this.audioEngine && this.audioEngine.end();
     this.onStart();
   }
 

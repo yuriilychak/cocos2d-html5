@@ -1,7 +1,7 @@
 import { LabelBMFont } from "./label-bmfont";
 import { LabelBMFontCanvasRenderCmd } from "./label-bmfont-canvas-render-cmd";
 import { LabelBMFontWebGLRenderCmd } from "./label-bmfont-webgl-render-cmd";
-import { RendererConfig, Point, Texture2D, color, log, warn, contentScaleFactor, TEXT_ALIGNMENT_LEFT } from "@aspect/core";
+import { RendererConfig, Point, Texture2D, color, log, warn, contentScaleFactor, TEXT_ALIGNMENT_LEFT, Loader, Path, SpriteFrameCache, textureCache } from "@aspect/core";
 
 export class LabelAtlas extends LabelBMFont {
     _className = "LabelAtlas";
@@ -57,13 +57,13 @@ export class LabelAtlas extends LabelBMFont {
         self._string = theString;
 
         if (itemWidth === undefined) {
-            var dict = cc.loader.getRes(charMapFile);
+            var dict = Loader.getInstance().getRes(charMapFile);
             if (!dict || parseInt(dict["version"], 10) !== 1) {
                 log("cc.LabelAtlas.initWithString(): Unsupported version. Upgrade cocos2d version");
                 return false;
             }
 
-            textureFilename = cc.path.changeBasename(charMapFile, dict["textureFilename"]);
+            textureFilename = Path.changeBasename(charMapFile, dict["textureFilename"]);
             var locScaleFactor = contentScaleFactor();
             width = parseInt(dict["itemWidth"], 10) / locScaleFactor;
             height = parseInt(dict["itemHeight"], 10) / locScaleFactor;
@@ -79,12 +79,12 @@ export class LabelAtlas extends LabelBMFont {
         if (charMapFile) {
             self._fntFile = "dummy_fnt_file:" + textureFilename;
             var spriteFrameBaseName = textureFilename;
-            var spriteFrame = cc.spriteFrameCache.getSpriteFrame(spriteFrameBaseName) || cc.spriteFrameCache.getSpriteFrame(cc.path.basename(spriteFrameBaseName));
+            var spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameBaseName) || SpriteFrameCache.getInstance().getSpriteFrame(Path.basename(spriteFrameBaseName));
             if(spriteFrame) {
                 texture = spriteFrame.getTexture();
                 this._spriteFrame = spriteFrame;
             } else {
-                texture = cc.textureCache.addImage(textureFilename);
+                texture = textureCache.addImage(textureFilename);
             }
 
             var newConf = this._createFntConfig(texture, width, height, startChar);

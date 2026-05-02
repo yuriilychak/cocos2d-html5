@@ -1,6 +1,15 @@
-import { NewClass, Point, Sys, KEY, arrayRemoveObject } from "@aspect/core";
+import { NewClass, Point, Sys, KEY, arrayRemoveObject, Game } from "@aspect/core";
 
 export class IMEDispatcher extends NewClass {
+  static _instance = null;
+
+  static getInstance() {
+    if (!IMEDispatcher._instance) {
+      IMEDispatcher._instance = new IMEDispatcher();
+    }
+    return IMEDispatcher._instance;
+  }
+
   _domInputControl = null;
   _delegateWithIme = null;
   _delegateList = [];
@@ -209,7 +218,7 @@ export class IMEDispatcher extends NewClass {
 
     this._delegateWithIme = null;
     delegate.didDetachWithIME();
-    cc._canvas.focus();
+    Game.getInstance().canvas.focus();
     return true;
   }
 

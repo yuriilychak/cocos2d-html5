@@ -6,7 +6,7 @@ export { IMEDispatcher, TextFieldTTF };
 cc.IMEDispatcher = IMEDispatcher;
 cc.TextFieldTTF = TextFieldTTF;
 
-const imeDispatcher = new IMEDispatcher();
+const imeDispatcher = IMEDispatcher.getInstance();
 
 cc.imeDispatcher = imeDispatcher;
 

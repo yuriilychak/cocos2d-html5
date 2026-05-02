@@ -7,6 +7,7 @@ import {
   KM_GL_MODELVIEW,
   kmGLMatrixMode,
   kmGLPopMatrix,
+  KMGLMatrix,
   ONE,
   ONE_MINUS_SRC_ALPHA,
   SRC_ALPHA,
@@ -142,8 +143,8 @@ export class SkeletonWebGLRenderCmd extends NodeWebGLRenderCmd {
       mat[5] = wt.d;
       mat[13] = wt.ty;
       kmGLMatrixMode(KM_GL_MODELVIEW);
-      cc.current_stack.stack.push(cc.current_stack.top);
-      cc.current_stack.top = this._matrix;
+      KMGLMatrix.getInstance().currentStack.stack.push(KMGLMatrix.getInstance().currentStack.top);
+      KMGLMatrix.getInstance().currentStack.top = this._matrix;
       const drawingUtil = Game.getInstance().drawingUtil;
 
       if (node._debugSlots && debugSlotsInfo && debugSlotsInfo.length > 0) {

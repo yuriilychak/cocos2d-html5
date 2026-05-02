@@ -1,4 +1,5 @@
 import { LabelTTF, Сolor, isUndefined, RendererConfig } from "@aspect/core";
+import { IMEDispatcher } from "./ime-dispatcher";
 
 export class TextFieldTTF extends LabelTTF {
   delegate = null;
@@ -46,12 +47,12 @@ export class TextFieldTTF extends LabelTTF {
 
   onEnter() {
     super.onEnter();
-    cc.imeDispatcher.addDelegate(this);
+    IMEDispatcher.getInstance().addDelegate(this);
   }
 
   onExit() {
     super.onExit();
-    cc.imeDispatcher.removeDelegate(this);
+    IMEDispatcher.getInstance().removeDelegate(this);
   }
 
   /**
@@ -214,7 +215,7 @@ export class TextFieldTTF extends LabelTTF {
    * @return {Boolean}
    */
   attachWithIME() {
-    return cc.imeDispatcher.attachDelegateWithIME(this);
+    return IMEDispatcher.getInstance().attachDelegateWithIME(this);
   }
 
   /**
@@ -222,7 +223,7 @@ export class TextFieldTTF extends LabelTTF {
    * @return {Boolean}
    */
   detachWithIME() {
-    return cc.imeDispatcher.detachDelegateWithIME(this);
+    return IMEDispatcher.getInstance().detachDelegateWithIME(this);
   }
 
   /**
@@ -290,7 +291,7 @@ export class TextFieldTTF extends LabelTTF {
    *  Remove delegate
    */
   removeDelegate() {
-    cc.imeDispatcher.removeDelegate(this);
+    IMEDispatcher.getInstance().removeDelegate(this);
   }
 
   _tipMessage = "please enter your word:";

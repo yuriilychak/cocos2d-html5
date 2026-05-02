@@ -1,4 +1,4 @@
-import { Node, RendererConfig } from "@aspect/core";
+import { Node, RendererConfig, Rect } from "@aspect/core";
 
 export class NodeGrid extends Node {
   grid = null;
@@ -7,7 +7,7 @@ export class NodeGrid extends Node {
 
   constructor(rect) {
     super();
-    if (rect === undefined) rect = new cc.Rect();
+    if (rect === undefined) rect = new Rect();
     this._gridRect = rect;
   }
 

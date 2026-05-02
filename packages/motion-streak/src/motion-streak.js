@@ -8,7 +8,8 @@ import {
   vertexLineToPolygon,
   RendererConfig,
   Color,
-  log
+  log,
+  textureCache
 } from "@aspect/core";
 
 /**
@@ -132,7 +133,7 @@ export class MotionStreak extends Node {
         "cc.MotionStreak.initWithFade(): Invalid filename or texture"
       );
 
-    if (isString(texture)) texture = cc.textureCache.addImage(texture);
+    if (isString(texture)) texture = textureCache.addImage(texture);
 
     super.setPosition(new Point(0, 0));
     this.anchorX = 0;

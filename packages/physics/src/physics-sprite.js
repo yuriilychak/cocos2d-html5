@@ -1,4 +1,4 @@
-import { Sprite, RendererConfig, Texture2D, radiansToDegrees, degreesToRadians } from "@aspect/core";
+import { Sprite, RendererConfig, Texture2D, radiansToDegrees, degreesToRadians, isString, isObject, SpriteFrameCache, SpriteFrame } from "@aspect/core";
 
 export class PhysicsSprite extends Sprite {
   constructor(fileName, rect) {
@@ -9,18 +9,18 @@ export class PhysicsSprite extends Sprite {
 
     if (fileName === undefined) {
       PhysicsSprite.prototype.init.call(this);
-    } else if (cc.isString(fileName)) {
+    } else if (isString(fileName)) {
       if (fileName[0] === "#") {
         var frameName = fileName.substr(1, fileName.length - 1);
-        var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
+        var spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(frameName);
         this.initWithSpriteFrame(spriteFrame);
       } else {
         this.init(fileName, rect);
       }
-    } else if (cc.isObject(fileName)) {
+    } else if (isObject(fileName)) {
       if (fileName instanceof Texture2D) {
         this.initWithTexture(fileName, rect);
-      } else if (fileName instanceof cc.SpriteFrame) {
+      } else if (fileName instanceof SpriteFrame) {
         this.initWithSpriteFrame(fileName);
       }
     }
