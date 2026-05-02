@@ -49,6 +49,7 @@ import {
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { RendererConfig } from "../renderer/renderer-config";
+import { Profiler } from "../utils/profiler";
 
 export const defaultFPS = 60;
 
@@ -512,13 +513,11 @@ export class Director extends NewClass {
   }
 
   isDisplayStats() {
-    return cc.profiler ? cc.profiler.isShowingStats() : false;
+    return Profiler.getInstance().isShowingStats();
   }
 
   setDisplayStats(displayStats) {
-    if (cc.profiler) {
-      displayStats ? cc.profiler.showStats() : cc.profiler.hideStats();
-    }
+    displayStats ? Profiler.getInstance().showStats() : Profiler.getInstance().hideStats();
   }
 
   getSecondsPerFrame() {

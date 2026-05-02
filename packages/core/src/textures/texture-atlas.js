@@ -189,7 +189,7 @@ export class TextureAtlas extends NewClass {
    * @return {String}
    */
   description() {
-    return "<cc.TextureAtlas | totalQuads =" + this._totalQuads + ">";
+    return "<TextureAtlas | totalQuads =" + this._totalQuads + ">";
   }
 
   _setupIndices() {

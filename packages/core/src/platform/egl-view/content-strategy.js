@@ -95,8 +95,8 @@ export class ContentStrategy extends NewClass {
 
 class ExactFit extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = cc._canvas.width,
-      containerH = cc._canvas.height,
+    var containerW = Game.getInstance().canvas.width,
+      containerH = Game.getInstance().canvas.height,
       scaleX = containerW / designedResolution.width,
       scaleY = containerH / designedResolution.height;
 
@@ -113,8 +113,8 @@ class ExactFit extends ContentStrategy {
 
 class ShowAll extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = cc._canvas.width,
-      containerH = cc._canvas.height,
+    var containerW = Game.getInstance().canvas.width,
+      containerH = Game.getInstance().canvas.height,
       designW = designedResolution.width,
       designH = designedResolution.height,
       scaleX = containerW / designW,
@@ -144,8 +144,8 @@ class ShowAll extends ContentStrategy {
 
 class NoBorder extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = cc._canvas.width,
-      containerH = cc._canvas.height,
+    var containerW = Game.getInstance().canvas.width,
+      containerH = Game.getInstance().canvas.height,
       designW = designedResolution.width,
       designH = designedResolution.height,
       scaleX = containerW / designW,
@@ -175,8 +175,8 @@ class NoBorder extends ContentStrategy {
 
 class FixedHeight extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = cc._canvas.width,
-      containerH = cc._canvas.height,
+    var containerW = Game.getInstance().canvas.width,
+      containerH = Game.getInstance().canvas.height,
       designH = designedResolution.height,
       scale = containerH / designH,
       contentW = containerW,
@@ -199,8 +199,8 @@ class FixedHeight extends ContentStrategy {
 
 class FixedWidth extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = cc._canvas.width,
-      containerH = cc._canvas.height,
+    var containerW = Game.getInstance().canvas.width,
+      containerH = Game.getInstance().canvas.height,
       designW = designedResolution.width,
       scale = containerW / designW,
       contentW = containerW,

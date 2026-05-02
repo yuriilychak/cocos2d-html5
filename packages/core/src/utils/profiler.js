@@ -7,166 +7,172 @@ import { Director } from "../director/director";
 import EventManager from "../event-manager/event-manager";
 import { RendererConfig } from "../renderer/renderer-config";
 
-var _showFPS = false;
-var _inited = false;
-var _frames = 0,
-  _frameRate = 0,
-  _lastSPF = 0,
-  _accumDt = 0;
-var _afterVisitListener = null,
-  _FPSLabel = document.createElement("div"),
-  _SPFLabel = document.createElement("div"),
-  _drawsLabel = document.createElement("div"),
-  _fps = document.createElement("div");
+export class Profiler {
+  static _instance = null;
+  static LEVEL_DET_FACTOR = 0.6;
+  static LEVELS = [0, 10, 20, 30];
 
-var LEVEL_DET_FACTOR = 0.6,
-  _levelDetCycle = 10;
-var LEVELS = [0, 10, 20, 30];
-var _fpsCount = [0, 0, 0, 0];
-var _currLevel = 3,
-  _analyseCount = 0,
-  _totalFPS = 0;
+  static getInstance() {
+    if (!Profiler._instance) {
+      Profiler._instance = new Profiler();
+    }
+    return Profiler._instance;
+  }
 
-_fps.id = "fps";
-_fps.style.position = "absolute";
-_fps.style.padding = "3px";
-_fps.style.textAlign = "left";
-_fps.style.backgroundColor = "rgb(0, 0, 34)";
-_fps.style.bottom = DIRECTOR_STATS_POSITION.y + "px";
-_fps.style.left = DIRECTOR_STATS_POSITION.x + "px";
-_fps.style.width = "45px";
-_fps.style.height = "80px";
+  constructor() {
+    this.onFrameRateChange = null;
 
-var labels = [_drawsLabel, _SPFLabel, _FPSLabel];
-for (var i = 0; i < 3; ++i) {
-  var style = labels[i].style;
-  style.color = "rgb(0, 255, 255)";
-  style.font = "bold 12px Helvetica, Arial";
-  style.lineHeight = "20px";
-  style.width = "100%";
-  _fps.appendChild(labels[i]);
-}
+    this._showFPS = false;
+    this._inited = false;
+    this._frames = 0;
+    this._frameRate = 0;
+    this._lastSPF = 0;
+    this._accumDt = 0;
+    this._afterVisitListener = null;
 
-var analyseFPS = function (fps) {
-  var lastId = LEVELS.length - 1,
-    i = lastId,
-    ratio,
-    average = 0;
-  _analyseCount++;
-  _totalFPS += fps;
+    this._levelDetCycle = 10;
+    this._fpsCount = [0, 0, 0, 0];
+    this._currLevel = 3;
+    this._analyseCount = 0;
+    this._totalFPS = 0;
 
-  for (; i >= 0; i--) {
-    if (fps >= LEVELS[i]) {
-      _fpsCount[i]++;
-      break;
+    this._FPSLabel = document.createElement("div");
+    this._SPFLabel = document.createElement("div");
+    this._drawsLabel = document.createElement("div");
+    this._fps = document.createElement("div");
+
+    this._fps.id = "fps";
+    this._fps.style.position = "absolute";
+    this._fps.style.padding = "3px";
+    this._fps.style.textAlign = "left";
+    this._fps.style.backgroundColor = "rgb(0, 0, 34)";
+    this._fps.style.bottom = DIRECTOR_STATS_POSITION.y + "px";
+    this._fps.style.left = DIRECTOR_STATS_POSITION.x + "px";
+    this._fps.style.width = "45px";
+    this._fps.style.height = "80px";
+
+    const labels = [this._drawsLabel, this._SPFLabel, this._FPSLabel];
+    for (let i = 0; i < 3; ++i) {
+      const style = labels[i].style;
+      style.color = "rgb(0, 255, 255)";
+      style.font = "bold 12px Helvetica, Arial";
+      style.lineHeight = "20px";
+      style.width = "100%";
+      this._fps.appendChild(labels[i]);
     }
   }
 
-  if (_analyseCount >= _levelDetCycle) {
-    average = _totalFPS / _levelDetCycle;
-    for (i = lastId; i > 0; i--) {
-      ratio = _fpsCount[i] / _levelDetCycle;
-      // Determined level
-      if (ratio >= LEVEL_DET_FACTOR && average >= LEVELS[i]) {
-        // Level changed
-        if (i != _currLevel) {
-          _currLevel = i;
-          profiler.onFrameRateChange &&
-            profiler.onFrameRateChange(average.toFixed(2));
-        }
+  _analyseFPS = (fps) => {
+    const lastId = Profiler.LEVELS.length - 1;
+    let i = lastId;
+    let average = 0;
+    this._analyseCount++;
+    this._totalFPS += fps;
+
+    for (; i >= 0; i--) {
+      if (fps >= Profiler.LEVELS[i]) {
+        this._fpsCount[i]++;
         break;
       }
-      // If no level determined, that means the framerate is not stable
     }
 
-    _changeCount = 0;
-    _analyseCount = 0;
-    _totalFPS = 0;
-    for (i = lastId; i > 0; i--) {
-      _fpsCount[i] = 0;
+    if (this._analyseCount >= this._levelDetCycle) {
+      average = this._totalFPS / this._levelDetCycle;
+      for (i = lastId; i > 0; i--) {
+        const ratio = this._fpsCount[i] / this._levelDetCycle;
+        if (ratio >= Profiler.LEVEL_DET_FACTOR && average >= Profiler.LEVELS[i]) {
+          if (i !== this._currLevel) {
+            this._currLevel = i;
+            this.onFrameRateChange && this.onFrameRateChange(average.toFixed(2));
+          }
+          break;
+        }
+      }
+
+      this._analyseCount = 0;
+      this._totalFPS = 0;
+      for (i = lastId; i > 0; i--) {
+        this._fpsCount[i] = 0;
+      }
     }
+  };
+
+  _afterVisit = () => {
+    this._lastSPF = Director.getInstance().getSecondsPerFrame();
+    this._frames++;
+    this._accumDt += Director.getInstance().getDeltaTime();
+
+    if (this._accumDt > DIRECTOR_FPS_INTERVAL) {
+      this._frameRate = this._frames / this._accumDt;
+      this._frames = 0;
+      this._accumDt = 0;
+
+      if (this.onFrameRateChange) {
+        this._analyseFPS(this._frameRate);
+      }
+
+      if (this._showFPS) {
+        const rendererConfig = RendererConfig.getInstance();
+        const mode = rendererConfig.isCanvas ? "\n canvas" : "\n webgl";
+        this._SPFLabel.innerHTML = this._lastSPF.toFixed(3);
+        this._FPSLabel.innerHTML = this._frameRate.toFixed(1).toString() + mode;
+        this._drawsLabel.innerHTML = (0 | rendererConfig.numberOfDraws).toString();
+      }
+    }
+  };
+
+  getSecondsPerFrame() {
+    return this._lastSPF;
   }
-};
 
-var afterVisit = function () {
-  _lastSPF = cc.director.getSecondsPerFrame();
-  _frames++;
-  _accumDt += cc.director.getDeltaTime();
-
-  if (_accumDt > DIRECTOR_FPS_INTERVAL) {
-    _frameRate = _frames / _accumDt;
-    _frames = 0;
-    _accumDt = 0;
-
-    if (profiler.onFrameRateChange) {
-      analyseFPS(_frameRate);
-    }
-
-    if (_showFPS) {
-      var rendererConfig = RendererConfig.getInstance();
-      var mode = rendererConfig.isCanvas ? "\n canvas" : "\n webgl";
-      _SPFLabel.innerHTML = _lastSPF.toFixed(3);
-      _FPSLabel.innerHTML = _frameRate.toFixed(1).toString() + mode;
-      _drawsLabel.innerHTML = (0 | rendererConfig.numberOfDraws).toString();
-    }
+  getFrameRate() {
+    return this._frameRate;
   }
-};
 
-var profiler = {
-  onFrameRateChange: null,
-
-  getSecondsPerFrame: function () {
-    return _lastSPF;
-  },
-  getFrameRate: function () {
-    return _frameRate;
-  },
-
-  setProfileDuration: function (duration) {
+  setProfileDuration(duration) {
     if (!isNaN(duration) && duration > 0) {
-      _levelDetCycle = duration / DIRECTOR_FPS_INTERVAL;
+      this._levelDetCycle = duration / DIRECTOR_FPS_INTERVAL;
     }
-  },
+  }
 
-  resumeProfiling: function () {
-    EventManager.getInstance().addListener(_afterVisitListener, 1);
-  },
+  resumeProfiling() {
+    EventManager.getInstance().addListener(this._afterVisitListener, 1);
+  }
 
-  stopProfiling: function () {
-    EventManager.getInstance().removeListener(_afterVisitListener);
-  },
+  stopProfiling() {
+    EventManager.getInstance().removeListener(this._afterVisitListener);
+  }
 
-  isShowingStats: function () {
-    return _showFPS;
-  },
+  isShowingStats() {
+    return this._showFPS;
+  }
 
-  showStats: function () {
-    if (!_inited) {
+  showStats() {
+    if (!this._inited) {
       this.init();
     }
 
-    if (_fps.parentElement === null) {
-      cc.container.appendChild(_fps);
+    if (this._fps.parentElement === null) {
+      Game.getInstance().container.appendChild(this._fps);
     }
-    _showFPS = true;
-  },
+    this._showFPS = true;
+  }
 
-  hideStats: function () {
-    _showFPS = false;
-    if (_fps.parentElement === cc.container) {
-      cc.container.removeChild(_fps);
-    }
-  },
-
-  init: function () {
-    if (!_inited) {
-      _afterVisitListener = EventManager.getInstance().addCustomListener(
-        Director.EVENT_AFTER_VISIT,
-        afterVisit
-      );
-      _inited = true;
+  hideStats() {
+    this._showFPS = false;
+    if (this._fps.parentElement === Game.getInstance().container) {
+      Game.getInstance().container.removeChild(this._fps);
     }
   }
-};
 
-export { profiler };
+  init() {
+    if (!this._inited) {
+      this._afterVisitListener = EventManager.getInstance().addCustomListener(
+        Director.EVENT_AFTER_VISIT,
+        this._afterVisit
+      );
+      this._inited = true;
+    }
+  }
+}
+

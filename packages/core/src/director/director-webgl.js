@@ -23,6 +23,7 @@ import {
   BLEND_DST,
   BLEND_SRC
 } from "../platform/macro/constants";
+import Game from "../boot/game";
 
 /**
  * OpenGL projection protocol
@@ -137,8 +138,8 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
   setOpenGLView(openGLView) {
     var director = this._director;
-    director._winSizeInPoints.width = cc._canvas.width;
-    director._winSizeInPoints.height = cc._canvas.height;
+    director._winSizeInPoints.width = Game.getInstance().canvas.width;
+    director._winSizeInPoints.height = Game.getInstance().canvas.height;
     director._openGLView = openGLView || cc.view;
 
     var conf = cc.configuration;

@@ -207,7 +207,7 @@ import {
   loadBinarySync,
   initBinaryLoader
 } from "./utils/binary-loader";
-import { profiler } from "./utils/profiler";
+import { Profiler } from "./utils/profiler";
 
 // ======================================================================
 // Base Nodes
@@ -636,7 +636,7 @@ cc._convertResponseBodyToText = _convertResponseBodyToText;
 cc.loadBinary = loadBinary;
 cc._str2Uint8Array = _str2Uint8Array;
 cc.loadBinarySync = loadBinarySync;
-cc.profiler = profiler;
+cc.profiler = Profiler.getInstance();
 
 // Base Nodes
 cc.CustomRenderCmd = CustomRenderCmd;

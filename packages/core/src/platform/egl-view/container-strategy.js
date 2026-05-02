@@ -184,7 +184,7 @@ class ProportionalToWindow extends ProportionalToFrame {
  */
 class OriginalContainer extends ContainerStrategy {
   apply(view) {
-    this._setupContainer(view, cc._canvas.width, cc._canvas.height);
+    this._setupContainer(view, Game.getInstance().canvas.width, Game.getInstance().canvas.height);
   }
 }
 

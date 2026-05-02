@@ -32,6 +32,7 @@
  */
 import EventManager from '../event-manager/event-manager';
 import Sys from '../boot/sys';
+import Game from '../boot/game';
 
 export function initInputExtension(_p) {
 
@@ -70,12 +71,12 @@ export function initInputExtension(_p) {
     };
 
     _p._registerKeyboardEvent = function(){
-        cc._canvas.addEventListener("keydown", function (e) {
+        Game.getInstance().canvas.addEventListener("keydown", function (e) {
             EventManager.getInstance().dispatchEvent(new cc.EventKeyboard(e.keyCode, true));
             e.stopPropagation();
             e.preventDefault();
         }, false);
-        cc._canvas.addEventListener("keyup", function (e) {
+        Game.getInstance().canvas.addEventListener("keyup", function (e) {
             EventManager.getInstance().dispatchEvent(new cc.EventKeyboard(e.keyCode, false));
             e.stopPropagation();
             e.preventDefault();

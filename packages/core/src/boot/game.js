@@ -442,7 +442,7 @@ export default class Game extends EventHelper(NewClass) {
       width = width || element.width;
       height = height || element.height;
 
-      this.canvas = cc._canvas = localCanvas = element;
+      this.canvas = localCanvas = element;
       this.container =
         cc.container =
         localContainer =
@@ -455,7 +455,7 @@ export default class Game extends EventHelper(NewClass) {
       }
       width = width || element.clientWidth;
       height = height || element.clientHeight;
-      this.canvas = cc._canvas = localCanvas = document.createElement("CANVAS");
+      this.canvas = localCanvas = document.createElement("CANVAS");
       this.container =
         cc.container =
         localContainer =

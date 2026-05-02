@@ -190,8 +190,8 @@ export class EGLView extends NewClass {
     _t._frameSize = new Size(0, 0);
     _t._initFrameSize();
 
-    var w = cc._canvas.width,
-      h = cc._canvas.height;
+    var w = Game.getInstance().canvas.width,
+      h = Game.getInstance().canvas.height;
     _t._designResolutionSize = new Size(w, h);
     _t._originalDesignResolutionSize = new Size(w, h);
     _t._viewPortRect = new Rect(0, 0, w, h);
@@ -610,7 +610,7 @@ export class EGLView extends NewClass {
    * @return {Size}
    */
   getCanvasSize() {
-    return new Size(cc._canvas.width, cc._canvas.height);
+    return new Size(Game.getInstance().canvas.width, Game.getInstance().canvas.height);
   }
 
   /**
@@ -780,8 +780,8 @@ export class EGLView extends NewClass {
 
       vb.x = -vp.x / this._scaleX;
       vb.y = -vp.y / this._scaleY;
-      vb.width = cc._canvas.width / this._scaleX;
-      vb.height = cc._canvas.height / this._scaleY;
+      vb.width = Game.getInstance().canvas.width / this._scaleX;
+      vb.height = Game.getInstance().canvas.height / this._scaleY;
       RendererConfig.getInstance().renderContext.setOffset &&
         RendererConfig.getInstance().renderContext.setOffset(vp.x, -vp.y);
     }

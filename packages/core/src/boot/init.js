@@ -33,12 +33,6 @@ _p = null;
 cc._drawingUtil = null;
 
 /**
- * Main canvas of game engine
- * @type {HTMLCanvasElement}
- */
-cc._canvas = null;
-
-/**
  * The element contains the game canvas
  * @type {HTMLDivElement}
  */
