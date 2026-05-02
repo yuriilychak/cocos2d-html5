@@ -29,6 +29,7 @@
 //
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
+import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
 import { ShaderCache, Sys, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS } from "@aspect/core";
 export class TexImage2DTest extends OpenGLTestLayer {
@@ -36,7 +37,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
     super();
 
     if ("opengl" in Sys.getInstance().capabilities) {
-      var glnode = new cc.GLNode();
+      var glnode = new GLNode();
       this.addChild(glnode, 10);
       this.glnode = glnode;
       glnode.x = winSize.width / 2;

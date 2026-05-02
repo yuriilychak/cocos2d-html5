@@ -69,7 +69,7 @@ export function loadAnalyticsPlugin() {
   }
 
   var pluginManager = plugin.PluginManager.getInstance();
-  if (cc.LANGUAGE_CHINESE == langType) {
+  if (Sys.getInstance().LANGUAGE_CHINESE == langType) {
     g_pAnalytics = pluginManager.loadPlugin("AnalyticsUmeng");
     s_strAppKey = umengKey;
   } else {
@@ -132,7 +132,7 @@ export class AnalyticsTestLayer extends PluginXTest {
     super();
     this._title = "Plugin-x Test";
     this._subtitle =
-      cc.LANGUAGE_CHINESE == Sys.getInstance().language ? "umeng" : "flurry"; //Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
+      Sys.getInstance().LANGUAGE_CHINESE == Sys.getInstance().language ? "umeng" : "flurry"; //Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
   }
 
   onEnter() {

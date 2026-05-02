@@ -29,7 +29,7 @@
 //
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
-import "./glnode-polyfill";
+import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
 import { ShaderCache, Sys, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION } from "@aspect/core";
 export class GLNodeCCAPITest extends OpenGLTestLayer {
@@ -37,7 +37,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
     super();
 
     if ("opengl" in Sys.getInstance().capabilities) {
-      var glnode = new cc.GLNode();
+      var glnode = new GLNode();
       this.addChild(glnode, 10);
       this.glnode = glnode;
 

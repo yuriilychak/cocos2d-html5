@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { LabelTTF, ONE, ONE_MINUS_SRC_ALPHA, RendererConfig, SRC_ALPHA, Size, Sprite, ZERO, textureCache } from "@aspect/core";
+import { LabelTTF, ONE, ONE_MINUS_SRC_ALPHA, RendererConfig, SRC_ALPHA, Size, Sprite, ZERO, textureCache, DST_COLOR, ONE_MINUS_DST_COLOR, DST_ALPHA, ONE_MINUS_DST_ALPHA, SRC_COLOR, ONE_MINUS_SRC_COLOR } from "@aspect/core";
 export class SpriteBlendFuncTest extends SpriteTestDemo {
   //webgl only
 
@@ -40,16 +40,16 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     var destFactors = [
         ZERO,
         ONE,
-        cc.DST_COLOR,
-        cc.ONE_MINUS_DST_COLOR,
-        cc.DST_ALPHA,
-        cc.ONE_MINUS_DST_ALPHA
+        DST_COLOR,
+        ONE_MINUS_DST_COLOR,
+        DST_ALPHA,
+        ONE_MINUS_DST_ALPHA
       ],
       srcFactors = [
         ZERO,
         ONE,
-        cc.SRC_COLOR,
-        cc.ONE_MINUS_SRC_COLOR,
+        SRC_COLOR,
+        ONE_MINUS_SRC_COLOR,
         SRC_ALPHA,
         ONE_MINUS_SRC_ALPHA
       ];

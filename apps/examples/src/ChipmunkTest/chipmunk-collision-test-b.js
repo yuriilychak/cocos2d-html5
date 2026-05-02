@@ -39,6 +39,7 @@ import {
 import { winSize } from "../constants";
 import { Point, log } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
+import { PhysicsSprite } from "@aspect/physics";
 
 export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
   constructor() {
@@ -102,7 +103,7 @@ export class ChipmunkCollisionTestB extends ChipmunkBaseLayer {
     cp.shapeSetCollisionType(shape, collision_type);
     cp.spaceAddShape(this.space, shape);
 
-    var sprite = new cc.PhysicsSprite(file);
+    var sprite = new PhysicsSprite(file);
     sprite.setBody(body);
     return sprite;
   }

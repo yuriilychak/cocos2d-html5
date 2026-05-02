@@ -28,7 +28,7 @@ import { ControlScene } from "../CCControlScene";
 import { Director, LabelTTF, Node, Scene, Sprite } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
-import { CONTROL_EVENT_VALUE_CHANGED } from "@aspect/gui";
+import { CONTROL_EVENT_VALUE_CHANGED, ControlStepper } from "@aspect/gui";
 export class ControlStepperTest extends ControlScene {
   constructor() {
     super();
@@ -89,7 +89,7 @@ export class ControlStepperTest extends ControlScene {
     var minusSprite = new Sprite("extensions/stepper-minus.png");
     var plusSprite = new Sprite("extensions/stepper-plus.png");
 
-    return new cc.ControlStepper(minusSprite, plusSprite);
+    return new ControlStepper(minusSprite, plusSprite);
   }
 
   valueChanged(sender, controlEvent) {

@@ -36,7 +36,7 @@ import { Color, Director, EventManager, LabelTTF, LayerColor, visibleRect } from
 import { Scale9Sprite } from "@aspect/ccui";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
-import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
+import { CONTROL_EVENT_TOUCH_UP_INSIDE, CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
 export class PauseResumeTargetTest extends EventDispatcherTestDemo {
   constructor() {
     //----start11----ctor
@@ -101,7 +101,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
           EventManager.getInstance().resumeTarget(_this, true);
           sprite3.getListener().setEnabled(true);
         },
-        cc.CONTROL_EVENT_TOUCH_UP_INSIDE
+        CONTROL_EVENT_TOUCH_UP_INSIDE
       );
 
       // Add the black background

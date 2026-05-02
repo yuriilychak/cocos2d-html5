@@ -31,7 +31,7 @@ import { Color, Director, Layer, Scene, Size, log } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
-import { EditBox } from "@aspect/editbox";
+import { EditBox, EDITBOX_INPUT_FLAG_PASSWORD } from "@aspect/editbox";
 export class EditBoxTestLayer extends Layer {
   constructor() {
     super();
@@ -67,7 +67,7 @@ export class EditBoxTestLayer extends Layer {
     this._box2.setString("EditBox Sample");
     this._box2.x = 220;
     this._box2.y = 190;
-    this._box2.setInputFlag(cc.EDITBOX_INPUT_FLAG_PASSWORD);
+    this._box2.setInputFlag(EDITBOX_INPUT_FLAG_PASSWORD);
     this._box2.setFontColor(new Color(255, 250, 0));
     this._box2.setPlaceHolder("please enter password");
     this._box2.setPlaceholderFontColor(new Color(255, 255, 255));

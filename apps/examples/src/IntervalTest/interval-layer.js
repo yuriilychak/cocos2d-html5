@@ -30,6 +30,7 @@ import { director } from "../constants";
 import { Color, LayerGradient, Point, Sprite, textureCache } from "@aspect/core";
 import { JumpBy, sequence } from "@aspect/actions";
 import { Menu, MenuItemFont } from "@aspect/menus";
+import { Label } from "@aspect/labels";
 import { ParticleSun } from "../ParticleTest/ParticleExamples";
 
 export class IntervalLayer extends LayerGradient {
@@ -103,11 +104,11 @@ export class IntervalLayer extends LayerGradient {
         this.addChild(sun);
 
         // timers, font "fonts/bitmapFontTest4.fnt"
-        this.label0 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label1 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label2 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label3 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label4 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label0 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label1 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label2 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label3 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label4 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
 
         this.scheduleUpdate();
         this.schedule(this.step1);

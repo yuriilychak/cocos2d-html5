@@ -33,6 +33,7 @@ import { ControlPotentiometerTest } from "./CCControlPotentiometerTest/CCControl
 import { ControlSliderTest } from "./CCControlSliderTest/CCControlSliderTest";
 import { ControlStepperTest } from "./CCControlStepperTest/CCControlStepperTest";
 import { ControlSwitchTest } from "./CCControlSwitchTest/CCControlSwitchTest";
+import { NewClass } from "@aspect/core";
 
 export var controTestItemNames = [
   {
@@ -85,7 +86,7 @@ export var controTestItemNames = [
   }
 ];
 
-export class ControlSceneManager extends cc.NewClass {
+export class ControlSceneManager extends NewClass {
   constructor() {
     super();
 

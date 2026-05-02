@@ -1,4 +1,4 @@
-import { LabelBMFont } from "./label-bmfont";
+import { LabelBMFont, Label } from "./label-bmfont";
 import { LabelBMFontCanvasRenderCmd } from "./label-bmfont-canvas-render-cmd";
 import { LabelBMFontWebGLRenderCmd } from "./label-bmfont-webgl-render-cmd";
 import { LabelAtlas } from "./label-atlas";
@@ -13,4 +13,6 @@ cc.LabelAtlas = LabelAtlas;
 cc.LabelAtlas.CanvasRenderCmd = LabelAtlasCanvasRenderCmd;
 cc.LabelAtlas.WebGLRenderCmd = LabelAtlasWebGLRenderCmd;
 
-export { LabelBMFont, LabelAtlas };
+cc.Label = Label;
+
+export { LabelBMFont, LabelAtlas, Label };

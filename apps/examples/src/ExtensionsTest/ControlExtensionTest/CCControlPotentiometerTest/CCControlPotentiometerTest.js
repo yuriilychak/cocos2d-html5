@@ -29,7 +29,7 @@ import { ControlScene } from "../CCControlScene";
 import { Director, LabelTTF, Node, Scene } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
-import { CONTROL_EVENT_VALUE_CHANGED } from "@aspect/gui";
+import { CONTROL_EVENT_VALUE_CHANGED, ControlPotentiometer } from "@aspect/gui";
 export class ControlPotentiometerTest extends ControlScene {
   constructor() {
     super();
@@ -64,7 +64,7 @@ export class ControlPotentiometerTest extends ControlScene {
       layer.addChild(this._displayValueLabel);
 
       // Add the slider
-      var potentiometer = new cc.ControlPotentiometer(
+      var potentiometer = new ControlPotentiometer(
         "extensions/potentiometerTrack.png",
         "extensions/potentiometerProgress.png",
         "extensions/potentiometerButton.png"

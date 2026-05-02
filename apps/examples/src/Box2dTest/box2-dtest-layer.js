@@ -27,7 +27,7 @@
 
 import { PTM_RATIO, TAG_SPRITE_MANAGER } from "./box2d-test-constants";
 import { s_pathBlock } from "../resources";
-import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, Point, Rect, Sprite, SpriteBatchNode } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, Point, Rect, Sprite, SpriteBatchNode, radiansToDegrees } from "@aspect/core";
 
 export class Box2DTestLayer extends LayerColor {
   constructor() {
@@ -188,7 +188,7 @@ export class Box2DTestLayer extends LayerColor {
       if (sprite) {
         sprite.x = b.GetPosition().x * PTM_RATIO;
         sprite.y = b.GetPosition().y * PTM_RATIO;
-        sprite.rotation = -1 * cc.radiansToDegrees(b.GetAngle());
+        sprite.rotation = -1 * radiansToDegrees(b.GetAngle());
       }
     }
     //----end0----

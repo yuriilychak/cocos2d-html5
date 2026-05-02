@@ -29,7 +29,7 @@ import { ControlScene } from "../CCControlScene";
 import { Director, LabelTTF, Node, Scene, Sprite } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
-import { CONTROL_EVENT_VALUE_CHANGED } from "@aspect/gui";
+import { CONTROL_EVENT_VALUE_CHANGED, ControlSwitch } from "@aspect/gui";
 export class ControlSwitchTest extends ControlScene {
   init() {
     if (super.init()) {
@@ -59,7 +59,7 @@ export class ControlSwitchTest extends ControlScene {
       layer.addChild(this._displayValueLabel);
 
       // Create the switch
-      var switchControl = new cc.ControlSwitch(
+      var switchControl = new ControlSwitch(
         new Sprite("extensions/switch-mask.png"),
         new Sprite("extensions/switch-on.png"),
         new Sprite("extensions/switch-off.png"),

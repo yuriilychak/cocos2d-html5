@@ -34,7 +34,7 @@ import { winSize } from "../constants";
 import { Color, EventListener, EventManager, EventMouse, Point, Sprite, Sys, log } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
-import { RenderTexture } from "@aspect/render-texture";
+import { RenderTexture, IMAGE_FORMAT_JPEG } from "@aspect/render-texture";
 export class RenderTextureSave extends RenderTextureBaseLayer {
     constructor() {
         super();
@@ -101,7 +101,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
         var nameJPG = "image-" + this._counter + ".jpg";
 
         // You can only save one file at a time (in one frame)
-        this._target.saveToFile(nameJPG, cc.IMAGE_FORMAT_JPEG, false);
+        this._target.saveToFile(nameJPG, IMAGE_FORMAT_JPEG, false);
         //this._target.saveToFile(namePNG, IMAGE_FORMAT_PNG);
 
         log("images saved!");

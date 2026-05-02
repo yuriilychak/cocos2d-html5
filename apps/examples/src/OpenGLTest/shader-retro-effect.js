@@ -37,15 +37,15 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { LabelBMFont } from "@aspect/labels";
-import { GLProgram, Sys, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS } from "@aspect/core";
+import { GLProgram, Sys, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ATTRIBUTE_NAME_POSITION, ATTRIBUTE_NAME_TEX_COORD } from "@aspect/core";
 export class ShaderRetroEffect extends OpenGLTestLayer {
     constructor() {
         super();
 
         if( 'opengl' in Sys.getInstance().capabilities ) {
             var program = new GLProgram(ccbjs + "Shaders/example_ColorBars.vsh", ccbjs + "Shaders/example_ColorBars.fsh");
-            program.addAttribute(cc.ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-            program.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+            program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
+            program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
             program.link();
             program.updateUniforms();
 

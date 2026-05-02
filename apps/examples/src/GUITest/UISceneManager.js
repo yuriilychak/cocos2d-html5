@@ -132,7 +132,7 @@ import { UIVideoPlayerTest } from "./UIVideoPlayerTest/UIVideoPlayerTest";
 import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest";
 import { TestScene } from "../test-scene";
 import { winSize } from "../constants";
-import { Director, EventListener, EventManager, EventMouse, LabelTTF, Sys } from "@aspect/core";
+import { Director, EventListener, EventManager, EventMouse, LabelTTF, NewClass, Sys } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
 
 var currentTestingArray = null;
@@ -831,7 +831,7 @@ if (
 }
 
 var guiTestScene = null;
-export class GUITestScene extends cc.NewClass {
+export class GUITestScene extends NewClass {
   runThisTest() {
     var guiTestScene = new listScene();
     Director.getInstance().runScene(guiTestScene);

@@ -33,7 +33,7 @@
 import { LayerTest } from "./layer-test";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Color, LabelTTF, LayerColor, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Sprite, Sys, ZERO } from "@aspect/core";
+import { Color, LabelTTF, LayerColor, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Sprite, Sys, ZERO } from "@aspect/core";
 import { TAG_LAYER } from "./layer-test-constants";
 export class LayerTestBlend extends LayerTest {
 
@@ -80,7 +80,7 @@ export class LayerTestBlend extends LayerTest {
             src = SRC_ALPHA;
             dst = ONE_MINUS_SRC_ALPHA;
         } else {
-            src = cc.ONE_MINUS_DST_COLOR;
+            src = ONE_MINUS_DST_COLOR;
             dst = ZERO;
         }
         layer.setBlendFunc( src, dst );

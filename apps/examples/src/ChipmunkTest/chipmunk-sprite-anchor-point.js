@@ -32,6 +32,7 @@ import { v } from "./chipmunk-test-helpers";
 import { s_pathGrossini } from "../resources";
 import { winSize } from "../constants";
 import { ScaleBy, sequence } from "@aspect/actions";
+import { PhysicsSprite } from "@aspect/physics";
 
 export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
   constructor() {
@@ -101,7 +102,7 @@ export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
     this.space.addShape(shape);
 
     // create sprite
-    var sprite = new cc.PhysicsSprite(s_pathGrossini);
+    var sprite = new PhysicsSprite(s_pathGrossini);
 
     // associate sprite with body
     sprite.setBody(body);

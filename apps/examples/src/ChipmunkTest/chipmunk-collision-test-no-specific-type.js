@@ -33,6 +33,7 @@ import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 import { s_pathGrossini } from "../resources";
 import { winSize } from "../constants";
 import { Point, log } from "@aspect/core";
+import { PhysicsSprite } from "@aspect/physics";
 
 export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
   constructor() {
@@ -75,7 +76,7 @@ export class ChipmunkCollisionTest_no_specific_type extends ChipmunkBaseLayer {
     shape.setFriction(0.5);
     this.space.addShape(shape);
 
-    var sprite = new cc.PhysicsSprite(file);
+    var sprite = new PhysicsSprite(file);
     sprite.setBody(body);
     return sprite;
   }

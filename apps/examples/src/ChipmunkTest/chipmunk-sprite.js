@@ -31,6 +31,7 @@ import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 import { s_pathGrossini, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
 import { EventListener, EventManager, Sprite, Sys, rand } from "@aspect/core";
+import { PhysicsSprite } from "@aspect/physics";
 
 export class ChipmunkSprite extends ChipmunkBaseLayer {
   constructor() {
@@ -102,7 +103,7 @@ export class ChipmunkSprite extends ChipmunkBaseLayer {
     shape.setFriction(0.5);
     this.space.addShape(shape);
 
-    var sprite = new cc.PhysicsSprite(s_pathGrossini);
+    var sprite = new PhysicsSprite(s_pathGrossini);
     sprite.setBody(body);
     return sprite;
   }

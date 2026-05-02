@@ -29,6 +29,7 @@
 //
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
+import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
 import { Color, LayerColor, Sys } from "@aspect/core";
 
@@ -40,7 +41,7 @@ export class GLClearTest extends OpenGLTestLayer {
       var blue = new LayerColor(new Color(0, 0, 255, 255));
       this.addChild(blue, 1);
 
-      var node = new cc.GLNode();
+      var node = new GLNode();
       node.init();
       node.draw = function () {
         gl.clear(gl.COLOR_BUFFER_BIT);

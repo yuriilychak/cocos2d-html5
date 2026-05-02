@@ -28,9 +28,9 @@
 // ShaderNode
 //
 //------------------------------------------------------------------
-import "./glnode-polyfill";
+import { GLNode } from "./glnode-polyfill";
 import { EGLView, GLProgram, Sys, VERTEX_ATTRIB_POSITION } from "@aspect/core";
-export class ShaderNode extends cc.GLNode {
+export class ShaderNode extends GLNode {
   constructor(vertexShader, framentShader) {
     super();
     this.init();

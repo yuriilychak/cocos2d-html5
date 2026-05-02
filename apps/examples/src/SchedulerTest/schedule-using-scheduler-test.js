@@ -30,7 +30,7 @@
 */
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { director } from "../constants";
-import { log } from "@aspect/core";
+import { log, REPEAT_FOREVER } from "@aspect/core";
 
 export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
   constructor() {
@@ -50,7 +50,7 @@ export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
     scheduler.scheduleUpdate(this, priority, paused);
 
     var interval = 0.25; // every 1/4 of second
-    var repeat = cc.REPEAT_FOREVER; // how many repeats. REPEAT_FOREVER means forever
+    var repeat = REPEAT_FOREVER; // how many repeats. REPEAT_FOREVER means forever
     var delay = 2; // start after 2 seconds;
     paused = false; // not paused. queue it now.
     scheduler.schedule(

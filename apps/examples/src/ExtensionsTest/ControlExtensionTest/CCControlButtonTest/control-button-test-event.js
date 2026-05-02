@@ -34,7 +34,18 @@ import {
 import { Color, Director, LabelTTF, Scene } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
-import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
+import {
+    CONTROL_EVENT_TOUCH_CANCEL,
+    CONTROL_EVENT_TOUCH_DOWN,
+    CONTROL_EVENT_TOUCH_DRAG_ENTER,
+    CONTROL_EVENT_TOUCH_DRAG_EXIT,
+    CONTROL_EVENT_TOUCH_DRAG_INSIDE,
+    CONTROL_EVENT_TOUCH_DRAG_OUTSIDE,
+    CONTROL_EVENT_TOUCH_UP_INSIDE,
+    CONTROL_EVENT_TOUCH_UP_OUTSIDE,
+    CONTROL_STATE_HIGHLIGHTED,
+    ControlButton
+} from "@aspect/gui";
 export class ControlButtonTest_Event extends ControlScene {
   constructor() {
     super();
@@ -90,42 +101,42 @@ export class ControlButtonTest_Event extends ControlScene {
       controlButton.addTargetWithActionForControlEvents(
         this,
         this.touchDownAction,
-        cc.CONTROL_EVENT_TOUCH_DOWN
+        CONTROL_EVENT_TOUCH_DOWN
       );
       controlButton.addTargetWithActionForControlEvents(
         this,
         this.touchDragInsideAction,
-        cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE
+        CONTROL_EVENT_TOUCH_DRAG_INSIDE
       );
       controlButton.addTargetWithActionForControlEvents(
         this,
         this.touchDragOutsideAction,
-        cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE
+        CONTROL_EVENT_TOUCH_DRAG_OUTSIDE
       );
       controlButton.addTargetWithActionForControlEvents(
         this,
         this.touchDragEnterAction,
-        cc.CONTROL_EVENT_TOUCH_DRAG_ENTER
+        CONTROL_EVENT_TOUCH_DRAG_ENTER
       );
       controlButton.addTargetWithActionForControlEvents(
         this,
         this.touchDragExitAction,
-        cc.CONTROL_EVENT_TOUCH_DRAG_EXIT
+        CONTROL_EVENT_TOUCH_DRAG_EXIT
       );
       controlButton.addTargetWithActionForControlEvents(
         this,
         this.touchUpInsideAction,
-        cc.CONTROL_EVENT_TOUCH_UP_INSIDE
+        CONTROL_EVENT_TOUCH_UP_INSIDE
       );
       controlButton.addTargetWithActionForControlEvents(
         this,
         this.touchUpOutsideAction,
-        cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE
+        CONTROL_EVENT_TOUCH_UP_OUTSIDE
       );
       controlButton.addTargetWithActionForControlEvents(
         this,
         this.touchCancelAction,
-        cc.CONTROL_EVENT_TOUCH_CANCEL
+        CONTROL_EVENT_TOUCH_CANCEL
       );
       return true;
     }

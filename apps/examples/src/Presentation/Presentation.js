@@ -40,6 +40,7 @@ import { TransitionSlideInL, TransitionSlideInR } from "@aspect/transitions";
 import { Menu, MenuItemFont } from "@aspect/menus";
 import { ParticleFireworks, ParticleMeteor, ParticleSun } from "../ParticleTest/ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
+import { PhysicsSprite } from "@aspect/physics";
 
 export var presentationSceneIdx = -1;
 export var centerPos = new Point(0, 0); // will be updated later
@@ -392,7 +393,7 @@ export class ChipmunkPage extends PresentationBaseLayer {
     shape.setFriction(0.5);
     this.space.addShape(shape);
 
-    var sprite = new cc.PhysicsSprite(s_pathGrossini);
+    var sprite = new PhysicsSprite(s_pathGrossini);
     sprite.setBody(body.handle);
     return sprite;
   }

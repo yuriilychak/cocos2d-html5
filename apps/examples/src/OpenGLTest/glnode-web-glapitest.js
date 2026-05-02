@@ -29,7 +29,7 @@
 //
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
-import "./glnode-polyfill";
+import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
 import { Sys, log } from "@aspect/core";
 
@@ -100,7 +100,7 @@ export class GLNodeWebGLAPITest extends OpenGLTestLayer {
 
       this.initBuffers();
 
-      var glnode = new cc.GLNode();
+      var glnode = new GLNode();
       this.addChild(glnode, 10);
       this.glnode = glnode;
 
