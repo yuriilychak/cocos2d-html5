@@ -76,66 +76,6 @@ Widget.ImageViewClass = ImageView;
 LayoutComponent.WidgetClass = Widget;
 LayoutComponent.PageViewClass = PageView;
 
-// cc globals (backward compatibility)
-cc.ProtectedNode = ProtectedNode;
-cc.Scale9Sprite = Scale9Sprite;
-cc.Layout = Layout;
-cc.LayoutParameter = LayoutParameter;
-cc.LinearLayoutParameter = LinearLayoutParameter;
-cc.RelativeLayoutParameter = RelativeLayoutParameter;
-cc.Margin = Margin;
-
-// ccui namespace
-if (!cc.ccui) cc.ccui = {};
-const ccui = cc.ccui;
-
-ccui.ProtectedNode = ProtectedNode;
-ccui.Scale9Sprite = Scale9Sprite;
-ccui.Widget = Widget;
-ccui.FocusNavigationController = FocusNavigationController;
-ccui.LAYOUT_COMPONENT_NAME = LAYOUT_COMPONENT_NAME;
-
-ccui.Margin = Margin;
-ccui.MarginZero = MarginZero;
-ccui.LayoutParameter = LayoutParameter;
-ccui.LinearLayoutParameter = LinearLayoutParameter;
-ccui.RelativeLayoutParameter = RelativeLayoutParameter;
-
-ccui.Layout = Layout;
-ccui.LayoutComponent = LayoutComponent;
-ccui.getLayoutManager = getLayoutManager;
-ccui.linearVerticalLayoutManager = linearVerticalLayoutManager;
-ccui.linearHorizontalLayoutManager = linearHorizontalLayoutManager;
-ccui.relativeLayoutManager = relativeLayoutManager;
-
-ccui.HBox = HBox;
-ccui.VBox = VBox;
-ccui.RelativeBox = RelativeBox;
-
-ccui.helper = helper;
-
-ccui.Button = Button;
-ccui.CheckBox = CheckBox;
-ccui.ImageView = ImageView;
-ccui.LoadingBar = LoadingBar;
-ccui.Slider = Slider;
-ccui.Text = Text;
-ccui.TextAtlas = TextAtlas;
-ccui.TextBMFont = TextBMFont;
-ccui.TextField = TextField;
-ccui.VideoPlayer = VideoPlayer;
-ccui.WebView = WebView;
-ccui.RichElement = RichElement;
-ccui.RichElementText = RichElementText;
-ccui.RichElementImage = RichElementImage;
-ccui.RichElementCustomNode = RichElementCustomNode;
-ccui.RichText = RichText;
-
-ccui.ScrollViewBar = ScrollViewBar;
-ccui.ScrollView = ScrollView;
-ccui.ListView = ListView;
-ccui.PageView = PageView;
-ccui.PageViewIndicator = PageViewIndicator;
 
 // ES module exports
 export {

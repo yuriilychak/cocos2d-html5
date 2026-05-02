@@ -27,12 +27,6 @@ ParticleSystem.WebGLRenderCmd = ParticleSystemWebGLRenderCmd;
 ParticleBatchNode.CanvasRenderCmd = ParticleBatchNodeCanvasRenderCmd;
 ParticleBatchNode.WebGLRenderCmd = ParticleBatchNodeWebGLRenderCmd;
 
-cc.Particle = Particle;
-cc.ParticleSystem = ParticleSystem;
-cc.ParticleBatchNode = ParticleBatchNode;
-cc.PARTICLE_DEFAULT_CAPACITY = PARTICLE_DEFAULT_CAPACITY;
-cc.PNGReader = PNGReader;
-cc.tiffReader = tiffReader;
 
 export {
   Particle,

@@ -15,12 +15,6 @@ ProgressTimer.TYPE_BAR = TYPE_BAR;
 ProgressTimer.TEXTURE_COORDS_COUNT = TEXTURE_COORDS_COUNT;
 ProgressTimer.TEXTURE_COORDS = TEXTURE_COORDS;
 
-// cc globals
-cc.ProgressTimer = ProgressTimer;
-cc.ProgressTo = ProgressTo;
-cc.ProgressFromTo = ProgressFromTo;
-cc.progressTo = (duration, percent) => new ProgressTo(duration, percent);
-cc.progressFromTo = (duration, fromPercentage, toPercentage) => new ProgressFromTo(duration, fromPercentage, toPercentage);
 
 export {
     ProgressTimer,

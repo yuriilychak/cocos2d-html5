@@ -39,40 +39,6 @@ import {
 GScrollView.CanvasRenderCmd = GuiScrollViewCanvasRenderCmd;
 GScrollView.WebGLRenderCmd = GuiScrollViewWebGLRenderCmd;
 
-// cc globals (backward compat)
-cc.CONTROL_EVENT_TOTAL_NUMBER = 9;
-cc.Control = Control;
-cc.Invocation = Invocation;
-cc.RGBA = RGBA;
-cc.HSV = HSV;
-cc.ControlUtils = ControlUtils;
-cc.ControlButton = ControlButton;
-cc.ControlSaturationBrightnessPicker = ControlSaturationBrightnessPicker;
-cc.ControlHuePicker = ControlHuePicker;
-cc.ControlColourPicker = ControlColourPicker;
-cc.ControlSlider = ControlSlider;
-cc.ControlStepper = ControlStepper;
-cc.ControlSwitch = ControlSwitch;
-cc.ControlSwitchSprite = ControlSwitchSprite;
-cc.ControlPotentiometer = ControlPotentiometer;
-cc.Spacer = Spacer;
-cc.MenuPassive = MenuPassive;
-cc.SortableObject = SortableObject;
-cc.SortedObject = SortedObject;
-cc.ArrayForObjectSorting = ArrayForObjectSorting;
-cc.SCROLLVIEW_DIRECTION_NONE = SCROLLVIEW_DIRECTION_NONE;
-cc.SCROLLVIEW_DIRECTION_HORIZONTAL = SCROLLVIEW_DIRECTION_HORIZONTAL;
-cc.SCROLLVIEW_DIRECTION_VERTICAL = SCROLLVIEW_DIRECTION_VERTICAL;
-cc.SCROLLVIEW_DIRECTION_BOTH = SCROLLVIEW_DIRECTION_BOTH;
-cc.convertDistanceFromPointToInch = convertDistanceFromPointToInch;
-cc.ScrollViewDelegate = ScrollViewDelegate;
-cc.ScrollView = GScrollView;
-cc.TABLEVIEW_FILL_TOPDOWN = TABLEVIEW_FILL_TOPDOWN;
-cc.TABLEVIEW_FILL_BOTTOMUP = TABLEVIEW_FILL_BOTTOMUP;
-cc.TableViewCell = TableViewCell;
-cc.TableViewDelegate = TableViewDelegate;
-cc.TableViewDataSource = TableViewDataSource;
-cc.TableView = TableView;
 
 export {
     // control-extension constants

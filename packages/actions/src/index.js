@@ -66,167 +66,10 @@ EaseSineIn.ReversedAction = EaseSineOut;
 EaseSineOut.ReversedAction = EaseSineIn;
 
 
-// ─── Utils ────────────────────────────────────────────
-cc.bezierAt = bezierAt;
-cc._bounceTime = bounceTime;
+// These two are used by @aspect/core drawing primitives via cc.* globals
+// (core cannot import @aspect/actions directly — circular dependency)
 cc.cardinalSplineAt = cardinalSplineAt;
-cc.reverseControlPoints = reverseControlPoints;
-cc.cloneControlPoints = cloneControlPoints;
 cc.getControlPointAt = getControlPointAt;
-cc.reverseControlPointsInline = reverseControlPointsInline;
-
-// ─── Ease Singletons ─────────────────────────────────
-cc._easeExponentialInObj = _easeExponentialInObj;
-cc._easeExponentialOutObj = _easeExponentialOutObj;
-cc._easeExponentialInOutObj = _easeExponentialInOutObj;
-cc._easeSineInObj = _easeSineInObj;
-cc._easeSineOutObj = _easeSineOutObj;
-cc._easeSineInOutObj = _easeSineInOutObj;
-cc._easeElasticInObj = _easeElasticInObj;
-cc._easeElasticOutObj = _easeElasticOutObj;
-cc._easeBounceInObj = _easeBounceInObj;
-cc._easeBounceOutObj = _easeBounceOutObj;
-cc._easeBounceInOutObj = _easeBounceInOutObj;
-cc._easeBackInObj = _easeBackInObj;
-cc._easeBackOutObj = _easeBackOutObj;
-cc._easeBackInOutObj = _easeBackInOutObj;
-cc._easeQuadraticActionIn = _easeQuadraticActionIn;
-cc._easeQuadraticActionOut = _easeQuadraticActionOut;
-cc._easeQuadraticActionInOut = _easeQuadraticActionInOut;
-cc._easeQuarticActionIn = _easeQuarticActionIn;
-cc._easeQuarticActionOut = _easeQuarticActionOut;
-cc._easeQuarticActionInOut = _easeQuarticActionInOut;
-cc._easeQuinticActionIn = _easeQuinticActionIn;
-cc._easeQuinticActionOut = _easeQuinticActionOut;
-cc._easeQuinticActionInOut = _easeQuinticActionInOut;
-cc._easeCircleActionIn = _easeCircleActionIn;
-cc._easeCircleActionOut = _easeCircleActionOut;
-cc._easeCircleActionInOut = _easeCircleActionInOut;
-cc._easeCubicActionIn = _easeCubicActionIn;
-cc._easeCubicActionOut = _easeCubicActionOut;
-cc._easeCubicActionInOut = _easeCubicActionInOut;
-
-// ─── Ease Factories ──────────────────────────────────
-cc.easeIn = easeIn;
-cc.easeOut = easeOut;
-cc.easeInOut = easeInOut;
-cc.easeExponentialIn = easeExponentialIn;
-cc.easeExponentialOut = easeExponentialOut;
-cc.easeExponentialInOut = easeExponentialInOut;
-cc.easeSineIn = easeSineIn;
-cc.easeSineOut = easeSineOut;
-cc.easeSineInOut = easeSineInOut;
-cc.easeElasticIn = easeElasticIn;
-cc.easeElasticOut = easeElasticOut;
-cc.easeElasticInOut = easeElasticInOut;
-cc.easeBounceIn = easeBounceIn;
-cc.easeBounceOut = easeBounceOut;
-cc.easeBounceInOut = easeBounceInOut;
-cc.easeBackIn = easeBackIn;
-cc.easeBackOut = easeBackOut;
-cc.easeBackInOut = easeBackInOut;
-cc.easeBezierAction = easeBezierAction;
-cc.easeQuadraticActionIn = easeQuadraticActionIn;
-cc.easeQuadraticActionOut = easeQuadraticActionOut;
-cc.easeQuadraticActionInOut = easeQuadraticActionInOut;
-cc.easeQuarticActionIn = easeQuarticActionIn;
-cc.easeQuarticActionOut = easeQuarticActionOut;
-cc.easeQuarticActionInOut = easeQuarticActionInOut;
-cc.easeQuinticActionIn = easeQuinticActionIn;
-cc.easeQuinticActionOut = easeQuinticActionOut;
-cc.easeQuinticActionInOut = easeQuinticActionInOut;
-cc.easeCircleActionIn = easeCircleActionIn;
-cc.easeCircleActionOut = easeCircleActionOut;
-cc.easeCircleActionInOut = easeCircleActionInOut;
-cc.easeCubicActionIn = easeCubicActionIn;
-cc.easeCubicActionOut = easeCubicActionOut;
-cc.easeCubicActionInOut = easeCubicActionInOut;
-
-// ─── Classes ─────────────────────────────────────────
-cc.Action = Action;
-cc.FiniteTimeAction = FiniteTimeAction;
-cc.Speed = Speed;
-cc.Follow = Follow;
-cc.ActionInterval = ActionInterval;
-cc.Sequence = Sequence;
-cc.Repeat = Repeat;
-cc.RepeatForever = RepeatForever;
-cc.Spawn = Spawn;
-cc.RotateTo = RotateTo;
-cc.RotateBy = RotateBy;
-cc.MoveBy = MoveBy;
-cc.MoveTo = MoveTo;
-cc.SkewTo = SkewTo;
-cc.SkewBy = SkewBy;
-cc.JumpBy = JumpBy;
-cc.JumpTo = JumpTo;
-cc.BezierBy = BezierBy;
-cc.BezierTo = BezierTo;
-cc.ScaleTo = ScaleTo;
-cc.ScaleBy = ScaleBy;
-cc.Blink = Blink;
-cc.FadeTo = FadeTo;
-cc.FadeIn = FadeIn;
-cc.FadeOut = FadeOut;
-cc.TintTo = TintTo;
-cc.TintBy = TintBy;
-cc.DelayTime = DelayTime;
-cc.ReverseTime = ReverseTime;
-cc.Animate = Animate;
-cc.TargetedAction = TargetedAction;
-cc.ActionInstant = ActionInstant;
-cc.Show = Show;
-cc.Hide = Hide;
-cc.ToggleVisibility = ToggleVisibility;
-cc.RemoveSelf = RemoveSelf;
-cc.FlipX = FlipX;
-cc.FlipY = FlipY;
-cc.Place = Place;
-cc.CallFunc = CallFunc;
-cc.ActionEase = ActionEase;
-cc.EaseRateAction = EaseRateAction;
-cc.EaseIn = EaseIn;
-cc.EaseOut = EaseOut;
-cc.EaseInOut = EaseInOut;
-cc.EaseExponentialIn = EaseExponentialIn;
-cc.EaseExponentialOut = EaseExponentialOut;
-cc.EaseExponentialInOut = EaseExponentialInOut;
-cc.EaseSineIn = EaseSineIn;
-cc.EaseSineOut = EaseSineOut;
-cc.EaseSineInOut = EaseSineInOut;
-cc.EaseElastic = EaseElastic;
-cc.EaseElasticIn = EaseElasticIn;
-cc.EaseElasticOut = EaseElasticOut;
-cc.EaseElasticInOut = EaseElasticInOut;
-cc.EaseBounce = EaseBounce;
-cc.EaseBounceIn = EaseBounceIn;
-cc.EaseBounceOut = EaseBounceOut;
-cc.EaseBounceInOut = EaseBounceInOut;
-cc.EaseBackIn = EaseBackIn;
-cc.EaseBackOut = EaseBackOut;
-cc.EaseBackInOut = EaseBackInOut;
-cc.EaseBezierAction = EaseBezierAction;
-cc.EaseQuadraticActionIn = EaseQuadraticActionIn;
-cc.EaseQuadraticActionOut = EaseQuadraticActionOut;
-cc.EaseQuadraticActionInOut = EaseQuadraticActionInOut;
-cc.EaseQuarticActionIn = EaseQuarticActionIn;
-cc.EaseQuarticActionOut = EaseQuarticActionOut;
-cc.EaseQuarticActionInOut = EaseQuarticActionInOut;
-cc.EaseQuinticActionIn = EaseQuinticActionIn;
-cc.EaseQuinticActionOut = EaseQuinticActionOut;
-cc.EaseQuinticActionInOut = EaseQuinticActionInOut;
-cc.EaseCircleActionIn = EaseCircleActionIn;
-cc.EaseCircleActionOut = EaseCircleActionOut;
-cc.EaseCircleActionInOut = EaseCircleActionInOut;
-cc.EaseCubicActionIn = EaseCubicActionIn;
-cc.EaseCubicActionOut = EaseCubicActionOut;
-cc.EaseCubicActionInOut = EaseCubicActionInOut;
-cc.CardinalSplineTo = CardinalSplineTo;
-cc.CardinalSplineBy = CardinalSplineBy;
-cc.CatmullRomTo = CatmullRomTo;
-cc.CatmullRomBy = CatmullRomBy;
-cc.ActionTweenDelegate = ActionTweenDelegate;
-cc.ActionTween = ActionTween;
 
 // ─── Sequence & Spawn ────────────────────────────────
 function sequence(tempArray) {
@@ -261,7 +104,6 @@ Sequence._actionOneTwo = function (actionOne, actionTwo) {
   return sequence;
 };
 
-cc.sequence = sequence;
 
 function spawn(tempArray) {
   var paramArray = tempArray instanceof Array ? tempArray : arguments;
@@ -281,8 +123,6 @@ Spawn._actionOneTwo = function (action1, action2) {
   pSpawn.initWithTwoActions(action1, action2);
   return pSpawn;
 };
-
-cc.spawn = spawn;
 
 // ─── Re-exports ─────────────────────────────────────
 export { sequence, spawn };

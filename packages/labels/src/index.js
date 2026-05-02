@@ -7,15 +7,10 @@ import { LabelAtlasWebGLRenderCmd } from "./label-atlas-webgl-render-cmd";
 
 export const LabelAutomaticWidth = -1;
 
-cc.LabelBMFont = LabelBMFont;
-cc.LabelBMFont.CanvasRenderCmd = LabelBMFontCanvasRenderCmd;
-cc.LabelBMFont.WebGLRenderCmd = LabelBMFontWebGLRenderCmd;
+LabelBMFont.CanvasRenderCmd = LabelBMFontCanvasRenderCmd;
+LabelBMFont.WebGLRenderCmd = LabelBMFontWebGLRenderCmd;
 
-cc.LabelAtlas = LabelAtlas;
-cc.LabelAtlas.CanvasRenderCmd = LabelAtlasCanvasRenderCmd;
-cc.LabelAtlas.WebGLRenderCmd = LabelAtlasWebGLRenderCmd;
-
-cc.Label = Label;
-cc.LabelAutomaticWidth = LabelAutomaticWidth;
+LabelAtlas.CanvasRenderCmd = LabelAtlasCanvasRenderCmd;
+LabelAtlas.WebGLRenderCmd = LabelAtlasWebGLRenderCmd;
 
 export { LabelBMFont, LabelAtlas, Label };
