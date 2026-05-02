@@ -23,6 +23,8 @@ export const _ccsLoad = (function () {
         if (!type) {
             if (json["Content"] && json["Content"]["Content"])
                 parse = parser["timeline"];
+            else if (json["widgetTree"])
+                parse = parser["node"];
         } else {
             parse = parser[type];
         }

@@ -28,6 +28,7 @@ import { UISceneManager, GUITestScene } from "./UISceneManager";
 import { Color, Director, LabelTTF, Layer, Node } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
 import { winSize } from "../constants";
+import { load } from "@aspect/cocostudio";
 
 export class UIMainLayer extends Layer {
   constructor() {
@@ -48,7 +49,6 @@ export class UIMainLayer extends Layer {
   init() {
     super.init();
 
-    var winSize = winSize;
     var mainNode = new Node();
     var scale = winSize.height / 320;
     mainNode.attr({
@@ -61,7 +61,7 @@ export class UIMainLayer extends Layer {
     this.addChild(mainNode);
 
     var widget;
-    var json = ccs.load("ccs-res/cocosui/UITest/UITest.json");
+    var json = load("ccs-res/cocosui/UITest/UITest.json");
     widget = json.node;
 
     // If the JSON couldn't be parsed (legacy widgetTree format not yet

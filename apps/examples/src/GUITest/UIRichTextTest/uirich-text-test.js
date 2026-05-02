@@ -26,6 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
+import { Armature, armatureDataManager } from "@aspect/cocostudio";
 
 export class UIRichTextTest extends UIMainLayer {
   constructor() {
@@ -111,10 +112,10 @@ export class UIRichTextTest extends UIMainLayer {
         "ccs-res/cocosui/sliderballnormal.png"
       );
 
-      ccs.armatureDataManager.addArmatureFileInfo(
+      armatureDataManager.addArmatureFileInfo(
         "ccs-res/cocosui/100/100.ExportJson"
       );
-      var pAr = new ccs.Armature("100");
+      var pAr = new Armature("100");
       pAr.getAnimation().play("Animation1");
 
       var recustom = new ccui.RichElementCustomNode(

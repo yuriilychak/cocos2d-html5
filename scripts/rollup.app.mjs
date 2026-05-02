@@ -149,7 +149,7 @@ export function createAppConfig({ outputFile = 'dist/cocos2d.min.js' } = {}) {
  * These are resolved to their src/index.js and inlined in the test bundle.
  * Their own @aspect/* sub-dependencies are resolved as externals (see below).
  */
-const META_PACKAGES = new Set(['extensions']);
+const META_PACKAGES = new Set(['extensions', 'cocostudio']);
 
 /**
  * Maps @aspect/* package names to their runtime global variable.
