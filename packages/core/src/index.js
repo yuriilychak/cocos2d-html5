@@ -240,7 +240,21 @@ import {
   ALIGN_BOTTOM,
   ALIGN_BOTTOM_LEFT,
   ALIGN_LEFT,
-  ALIGN_TOP_LEFT
+  ALIGN_TOP_LEFT,
+  PIXEL_FORMAT_RGBA8888,
+  PIXEL_FORMAT_RGB888,
+  PIXEL_FORMAT_RGB565,
+  PIXEL_FORMAT_A8,
+  PIXEL_FORMAT_I8,
+  PIXEL_FORMAT_AI88,
+  PIXEL_FORMAT_RGBA4444,
+  PIXEL_FORMAT_RGB5A1,
+  PIXEL_FORMAT_PVRTC4,
+  PIXEL_FORMAT_PVRTC2,
+  PIXEL_FORMAT_DEFAULT,
+  defaultPixelFormat,
+  PIXEL_FORMAT_NAMES,
+  PIXEL_FORMAT_BITS
 } from "./textures/constants";
 import TextureCache from "./textures/texture-cache";
 import { TextureAtlas } from "./textures/texture-atlas";
@@ -889,6 +903,22 @@ export {
   SRC_ALPHA
 } from "./platform/macro/constants";
 export { Texture2D } from "./textures/texture-2d";
+export {
+  PIXEL_FORMAT_RGBA8888,
+  PIXEL_FORMAT_RGB888,
+  PIXEL_FORMAT_RGB565,
+  PIXEL_FORMAT_A8,
+  PIXEL_FORMAT_I8,
+  PIXEL_FORMAT_AI88,
+  PIXEL_FORMAT_RGBA4444,
+  PIXEL_FORMAT_RGB5A1,
+  PIXEL_FORMAT_PVRTC4,
+  PIXEL_FORMAT_PVRTC2,
+  PIXEL_FORMAT_DEFAULT,
+  defaultPixelFormat,
+  PIXEL_FORMAT_NAMES,
+  PIXEL_FORMAT_BITS
+} from "./textures/constants";
 // Export TextureCache class and singleton instance
 export { default as TextureCache } from "./textures/texture-cache";
 export const textureCache = TextureCache.getInstance();

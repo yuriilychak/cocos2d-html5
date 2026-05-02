@@ -25,6 +25,7 @@
 
 import { NewClass } from "../platform/class";
 import { Point } from "../cocoa/geometry/point";
+import { EGLView } from "../platform/egl-view/egl-view";
 
 /**
  * The touch event class
@@ -144,7 +145,7 @@ export default class Touch extends NewClass {
     this._id = id;
     if (!this._startPointCaptured) {
       this._startPoint = new Point(this._point);
-      cc.view._convertPointWithScale(this._startPoint);
+      EGLView.getInstance()._convertPointWithScale(this._startPoint);
       this._startPointCaptured = true;
     }
   }

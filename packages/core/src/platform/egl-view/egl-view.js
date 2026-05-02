@@ -78,7 +78,7 @@ switch (__BrowserGetter.adaptationType) {
     break;
   case __sys.BROWSER_TYPE_CHROME:
     __BrowserGetter.__defineGetter__("target-densitydpi", function () {
-      return cc.view._targetDensityDPI;
+      return EGLView.getInstance()._targetDensityDPI;
     });
     break;
   case __sys.BROWSER_TYPE_MIUI:
@@ -239,7 +239,7 @@ export class EGLView extends NewClass {
     if (this.setDesignResolutionSize) {
       view = this;
     } else {
-      view = cc.view;
+      view = EGLView.getInstance();
     }
     if (view._orientationChanging) {
       return;
@@ -283,13 +283,13 @@ export class EGLView extends NewClass {
   }
 
   _orientationChange() {
-    cc.view._orientationChanging = true;
+    EGLView.getInstance()._orientationChanging = true;
     if (__sys.isMobile) {
       Game.getInstance().container.style.display = "none";
     }
     setTimeout(function () {
-      cc.view._orientationChanging = false;
-      cc.view._resizeEvent();
+      EGLView.getInstance()._orientationChanging = false;
+      EGLView.getInstance()._resizeEvent();
     }, 300);
   }
 

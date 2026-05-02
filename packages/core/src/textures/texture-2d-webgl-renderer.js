@@ -10,6 +10,19 @@ import {
   VERTEX_ATTRIB_POSITION,
   VERTEX_ATTRIB_TEX_COORDS
 } from "../platform/macro/constants";
+import {
+  PIXEL_FORMAT_RGBA8888,
+  PIXEL_FORMAT_RGB888,
+  PIXEL_FORMAT_RGB565,
+  PIXEL_FORMAT_A8,
+  PIXEL_FORMAT_I8,
+  PIXEL_FORMAT_AI88,
+  PIXEL_FORMAT_RGBA4444,
+  PIXEL_FORMAT_RGB5A1,
+  PIXEL_FORMAT_DEFAULT,
+  PIXEL_FORMAT_NAMES,
+  PIXEL_FORMAT_BITS
+} from "./constants";
 
 export default class WebGLTextureRenderer {
   constructor(texture) {
@@ -76,7 +89,7 @@ export default class WebGLTextureRenderer {
 
     t._pixelsWide = t._contentSize.width = pixelsWide;
     t._pixelsHigh = t._contentSize.height = pixelsHigh;
-    this._pixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
+    this._pixelFormat = PIXEL_FORMAT_RGBA8888;
     this._maxS = 1;
     this._maxT = 1;
 
@@ -157,12 +170,11 @@ export default class WebGLTextureRenderer {
 
   initWithData(data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
     var t = this._texture;
-    var tex2d = cc.Texture2D;
     var gl = RendererConfig.getInstance().renderContext;
     var format = gl.RGBA,
       type = gl.UNSIGNED_BYTE;
 
-    var bitsPerPixel = cc.Texture2D._B[pixelFormat];
+    var bitsPerPixel = PIXEL_FORMAT_BITS[pixelFormat];
 
     var bytesPerRow = (pixelsWide * bitsPerPixel) / 8;
     if (bytesPerRow % 8 === 0) {
@@ -184,28 +196,28 @@ export default class WebGLTextureRenderer {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
     switch (pixelFormat) {
-      case tex2d.PIXEL_FORMAT_RGBA8888:
+      case PIXEL_FORMAT_RGBA8888:
         format = gl.RGBA;
         break;
-      case tex2d.PIXEL_FORMAT_RGB888:
+      case PIXEL_FORMAT_RGB888:
         format = gl.RGB;
         break;
-      case tex2d.PIXEL_FORMAT_RGBA4444:
+      case PIXEL_FORMAT_RGBA4444:
         type = gl.UNSIGNED_SHORT_4_4_4_4;
         break;
-      case tex2d.PIXEL_FORMAT_RGB5A1:
+      case PIXEL_FORMAT_RGB5A1:
         type = gl.UNSIGNED_SHORT_5_5_5_1;
         break;
-      case tex2d.PIXEL_FORMAT_RGB565:
+      case PIXEL_FORMAT_RGB565:
         type = gl.UNSIGNED_SHORT_5_6_5;
         break;
-      case tex2d.PIXEL_FORMAT_AI88:
+      case PIXEL_FORMAT_AI88:
         format = gl.LUMINANCE_ALPHA;
         break;
-      case tex2d.PIXEL_FORMAT_A8:
+      case PIXEL_FORMAT_A8:
         format = gl.ALPHA;
         break;
-      case tex2d.PIXEL_FORMAT_I8:
+      case PIXEL_FORMAT_I8:
         format = gl.LUMINANCE;
         break;
       default:
@@ -462,12 +474,12 @@ export default class WebGLTextureRenderer {
   }
 
   stringForFormat() {
-    return cc.Texture2D._M[this._pixelFormat];
+    return PIXEL_FORMAT_NAMES[this._pixelFormat];
   }
 
   bitsPerPixelForFormat(format) {
     format = format || this._pixelFormat;
-    var value = cc.Texture2D._B[format];
+    var value = PIXEL_FORMAT_BITS[format];
     if (value != null) return value;
     log(_LogInfos.Texture2D_bitsPerPixelForFormat, format);
     return -1;
@@ -475,29 +487,28 @@ export default class WebGLTextureRenderer {
 
   _initPremultipliedATextureWithImage(uiImage, width, height) {
     var t = this._texture;
-    var tex2d = cc.Texture2D;
     var tempData = uiImage.getData();
     var inPixel32 = null;
     var inPixel8 = null;
     var outPixel16 = null;
     var hasAlpha = uiImage.hasAlpha();
     var imageSize = new Size(uiImage.getWidth(), uiImage.getHeight());
-    var pixelFormat = tex2d.defaultPixelFormat;
+    var pixelFormat = PIXEL_FORMAT_DEFAULT;
     var bpp = uiImage.getBitsPerComponent();
 
     if (!hasAlpha) {
       if (bpp >= 8) {
-        pixelFormat = tex2d.PIXEL_FORMAT_RGB888;
+        pixelFormat = PIXEL_FORMAT_RGB888;
       } else {
         log(_LogInfos.Texture2D__initPremultipliedATextureWithImage);
-        pixelFormat = tex2d.PIXEL_FORMAT_RGB565;
+        pixelFormat = PIXEL_FORMAT_RGB565;
       }
     }
 
     var i,
       length = width * height;
 
-    if (pixelFormat === tex2d.PIXEL_FORMAT_RGB565) {
+    if (pixelFormat === PIXEL_FORMAT_RGB565) {
       if (hasAlpha) {
         tempData = new Uint16Array(width * height);
         inPixel32 = uiImage.getData();
@@ -519,7 +530,7 @@ export default class WebGLTextureRenderer {
             (((inPixel8[i] & 0xff) >> 3) << 0);
         }
       }
-    } else if (pixelFormat === tex2d.PIXEL_FORMAT_RGBA4444) {
+    } else if (pixelFormat === PIXEL_FORMAT_RGBA4444) {
       tempData = new Uint16Array(width * height);
       inPixel32 = uiImage.getData();
 
@@ -530,7 +541,7 @@ export default class WebGLTextureRenderer {
           ((((inPixel32[i] >> 16) & 0xff) >> 4) << 4) |
           ((((inPixel32[i] >> 24) & 0xff) >> 4) << 0);
       }
-    } else if (pixelFormat === tex2d.PIXEL_FORMAT_RGB5A1) {
+    } else if (pixelFormat === PIXEL_FORMAT_RGB5A1) {
       tempData = new Uint16Array(width * height);
       inPixel32 = uiImage.getData();
 
@@ -541,7 +552,7 @@ export default class WebGLTextureRenderer {
           ((((inPixel32[i] >> 16) & 0xff) >> 3) << 1) |
           ((((inPixel32[i] >> 24) & 0xff) >> 7) << 0);
       }
-    } else if (pixelFormat === tex2d.PIXEL_FORMAT_A8) {
+    } else if (pixelFormat === PIXEL_FORMAT_A8) {
       tempData = new Uint8Array(width * height);
       inPixel32 = uiImage.getData();
 
@@ -550,7 +561,7 @@ export default class WebGLTextureRenderer {
       }
     }
 
-    if (hasAlpha && pixelFormat === tex2d.PIXEL_FORMAT_RGB888) {
+    if (hasAlpha && pixelFormat === PIXEL_FORMAT_RGB888) {
       inPixel32 = uiImage.getData();
       tempData = new Uint8Array(width * height * 3);
 

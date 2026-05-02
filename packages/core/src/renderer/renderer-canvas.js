@@ -26,6 +26,7 @@ import { RendererConfig } from "./renderer-config";
 import { Color } from "../platform/types/color";
 import { log } from "../boot/debugger";
 import Game from "../boot/game";
+import { EGLView } from "../platform/egl-view/egl-view";
 
 var rendererCanvas = {
   childrenOrderDirty: true,
@@ -157,8 +158,8 @@ var rendererCanvas = {
     var wrapper = ctxWrapper || RendererConfig.getInstance().renderContext;
     var ctx = wrapper.getContext();
 
-    var scaleX = cc.view.getScaleX(),
-      scaleY = cc.view.getScaleY();
+    var scaleX = EGLView.getInstance().getScaleX(),
+      scaleY = EGLView.getInstance().getScaleY();
     wrapper.setViewScale(scaleX, scaleY);
     wrapper.computeRealOffsetY();
     var dirtyList = this._dirtyRegion.getDirtyRegions();

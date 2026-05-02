@@ -24,6 +24,7 @@ import {
   BLEND_SRC
 } from "../platform/macro/constants";
 import Game from "../boot/game";
+import { EGLView } from "../platform/egl-view/egl-view";
 
 /**
  * OpenGL projection protocol
@@ -140,7 +141,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     var director = this._director;
     director._winSizeInPoints.width = Game.getInstance().canvas.width;
     director._winSizeInPoints.height = Game.getInstance().canvas.height;
-    director._openGLView = openGLView || cc.view;
+    director._openGLView = openGLView || EGLView.getInstance();
 
     var conf = cc.configuration;
     conf.gatherGPUInfo();

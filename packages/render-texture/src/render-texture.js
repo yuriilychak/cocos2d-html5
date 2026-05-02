@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, RendererConfig, Texture2D, Color, log } from "@aspect/core";
+import { Node, RendererConfig, Texture2D, Color, log, PIXEL_FORMAT_RGBA8888 } from "@aspect/core";
 
 export const IMAGE_FORMAT_JPEG = 0;
 export const IMAGE_FORMAT_PNG = 1;
@@ -80,11 +80,11 @@ export class RenderTexture extends Node {
     super();
     this._cascadeColorEnabled = true;
     this._cascadeOpacityEnabled = true;
-    this._pixelFormat = Texture2D.PIXEL_FORMAT_RGBA8888;
+    this._pixelFormat = PIXEL_FORMAT_RGBA8888;
     this._clearColor = new Color(0, 0, 0, 255);
 
     if (width !== undefined && height !== undefined) {
-      format = format || Texture2D.PIXEL_FORMAT_RGBA8888;
+      format = format || PIXEL_FORMAT_RGBA8888;
       depthStencilFormat = depthStencilFormat || 0;
       this.initWithWidthAndHeight(width, height, format, depthStencilFormat);
     }

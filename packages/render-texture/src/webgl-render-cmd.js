@@ -40,7 +40,8 @@ import {
   kmGLPopMatrix,
   kmGLMultMatrix,
   KM_GL_PROJECTION,
-  KM_GL_MODELVIEW
+  KM_GL_MODELVIEW,
+  PIXEL_FORMAT_A8
 } from "@aspect/core";
 
 const NodeWebGLRenderCmd = Node.WebGLRenderCmd;
@@ -161,7 +162,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   initWithWidthAndHeight(width, height, format, depthStencilFormat) {
     const node = this._node;
-    if (format === Texture2D.PIXEL_FORMAT_A8)
+    if (format === PIXEL_FORMAT_A8)
       log(
         "cc.RenderTexture._initWithWidthAndHeightForWebGL() : only RGB and RGBA formats are valid for a render texture;"
       );

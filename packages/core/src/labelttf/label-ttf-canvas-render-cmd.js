@@ -28,6 +28,7 @@ import Game from "../boot/game";
 import { FontDefinition } from "../platform/types/font-definition";
 import { Texture2D } from "../textures/texture-2d";
 import { RendererConfig } from "../renderer/renderer-config";
+import { EGLView } from "../platform/egl-view/egl-view";
 import {
   Color,
   TEXT_ALIGNMENT_CENTER,
@@ -97,7 +98,7 @@ export const LabelRenderMixin = (Base) =>
         this._fontClientHeight =
           LabelTTF.__getFontHeightByDiv(fontNameOrFontDef);
       } else {
-        const deviceFontSize = fontSize * cc.view.getDevicePixelRatio();
+        const deviceFontSize = fontSize * EGLView.getInstance().getDevicePixelRatio();
         this._fontStyleStr =
           fontStyle +
           " " +
@@ -158,7 +159,7 @@ export const LabelRenderMixin = (Base) =>
     getLocalBB() {
       const node = this._node;
       localBB.x = localBB.y = 0;
-      const pixelRatio = cc.view.getDevicePixelRatio();
+      const pixelRatio = EGLView.getInstance().getDevicePixelRatio();
       localBB.width = node._getWidth() * pixelRatio;
       localBB.height = node._getHeight() * pixelRatio;
       return localBB;
@@ -166,7 +167,7 @@ export const LabelRenderMixin = (Base) =>
 
     _updateTTF() {
       const node = this._node;
-      const pixelRatio = cc.view.getDevicePixelRatio();
+      const pixelRatio = EGLView.getInstance().getDevicePixelRatio();
       const locDimensionsWidth = node._dimensions.width * pixelRatio;
       let i, strLength;
       const locLineWidth = this._lineWidths;
@@ -281,7 +282,7 @@ export const LabelRenderMixin = (Base) =>
 
     _saveStatus() {
       const node = this._node;
-      const scale = cc.view.getDevicePixelRatio();
+      const scale = EGLView.getInstance().getDevicePixelRatio();
       const locStrokeShadowOffsetX = node._strokeShadowOffsetX,
         locStrokeShadowOffsetY = node._strokeShadowOffsetY;
       const locContentSizeHeight =
@@ -602,8 +603,8 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
   }
 
   rendering(ctx) {
-    const scaleX = cc.view.getScaleX(),
-      scaleY = cc.view.getScaleY();
+    const scaleX = EGLView.getInstance().getScaleX(),
+      scaleY = EGLView.getInstance().getScaleY();
     const wrapper = ctx || RendererConfig.getInstance().renderContext,
       context = wrapper.getContext();
     if (!context) return;

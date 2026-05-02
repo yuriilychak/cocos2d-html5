@@ -3,6 +3,7 @@ import { Point } from '../cocoa/geometry/point';
 import EventManager from '../event-manager/event-manager';
 import { RendererConfig } from '../renderer/renderer-config';
 import Game from '../boot/game';
+import { EGLView } from '../platform/egl-view/egl-view';
 
 export class DirectorCanvasRenderer extends DirectorRenderer {
     setProjection(projection) {
@@ -20,7 +21,7 @@ export class DirectorCanvasRenderer extends DirectorRenderer {
         var director = this._director;
         director._winSizeInPoints.width = Game.getInstance().canvas.width;
         director._winSizeInPoints.height = Game.getInstance().canvas.height;
-        director._openGLView = openGLView || cc.view;
+        director._openGLView = openGLView || EGLView.getInstance();
         if (EventManager.getInstance())
             EventManager.getInstance().setEnabled(true);
     }

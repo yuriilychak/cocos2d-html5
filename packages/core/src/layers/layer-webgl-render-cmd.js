@@ -35,6 +35,7 @@ import {
 } from "../platform/macro/constants";
 import { AffineTransform } from "../cocoa/affine-transform";
 import ShaderCache from "../shaders/CCShaderCache";
+import { EGLView } from "../platform/egl-view/egl-view";
 
 /**
  * Layer's WebGL render command
@@ -310,7 +311,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
 
     const clippingRect = this._getClippingRect();
     context.enable(context.SCISSOR_TEST);
-    cc.view.setScissorInPoints(
+    EGLView.getInstance().setScissorInPoints(
       clippingRect.x,
       clippingRect.y,
       clippingRect.width,

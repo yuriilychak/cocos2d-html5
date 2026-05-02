@@ -33,6 +33,7 @@ import EventCustom from "../event-manager/event/event-custom";
 import { Node } from "../base-nodes/node";
 import Game from "../boot/game";
 import EventManager from "../event-manager/event-manager";
+import { EGLView } from "../platform/egl-view/egl-view";
 import TextureCache from "../textures/texture-cache";
 import SpriteFrameCache from "../sprites/sprite-frame-cache";
 import AnimationCache from "../sprites/animation-cache";
@@ -184,7 +185,7 @@ export class Director extends NewClass {
 
   convertToGL(uiPoint) {
     var docElem = document.documentElement;
-    var view = cc.view;
+    var view = EGLView.getInstance();
     var box = docElem.getBoundingClientRect();
     box.left += window.pageXOffset - docElem.clientLeft;
     box.top += window.pageYOffset - docElem.clientTop;
@@ -197,7 +198,7 @@ export class Director extends NewClass {
 
   convertToUI(glPoint) {
     var docElem = document.documentElement;
-    var view = cc.view;
+    var view = EGLView.getInstance();
     var box = docElem.getBoundingClientRect();
     box.left += window.pageXOffset - docElem.clientLeft;
     box.top += window.pageYOffset - docElem.clientTop;

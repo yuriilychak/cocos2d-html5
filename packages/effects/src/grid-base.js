@@ -46,7 +46,8 @@ import {
   kmGLMultMatrix,
   KM_GL_PROJECTION,
   KM_GL_MODELVIEW,
-  Matrix4
+  Matrix4,
+  PIXEL_FORMAT_RGBA8888
 } from "@aspect/core";
 import { Grabber } from "./grabber.js";
 
@@ -213,7 +214,7 @@ export class GridBase extends NewClass {
       // we only use rgba8888
       texture.initWithData(
         data,
-        Texture2D.PIXEL_FORMAT_RGBA8888,
+        PIXEL_FORMAT_RGBA8888,
         POTWide,
         POTHigh,
         winSize
