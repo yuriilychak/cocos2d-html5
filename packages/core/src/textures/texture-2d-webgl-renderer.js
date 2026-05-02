@@ -23,6 +23,7 @@ import {
   PIXEL_FORMAT_NAMES,
   PIXEL_FORMAT_BITS
 } from "./constants";
+import { Configuration } from "../configuration";
 
 export default class WebGLTextureRenderer {
   constructor(texture) {
@@ -374,7 +375,7 @@ export default class WebGLTextureRenderer {
     var imageWidth = uiImage.getWidth();
     var imageHeight = uiImage.getHeight();
 
-    var maxTextureSize = cc.configuration.getMaxTextureSize();
+    var maxTextureSize = Configuration.getInstance().getMaxTextureSize();
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) {
       log(
         _LogInfos.Texture2D_initWithImage_2,

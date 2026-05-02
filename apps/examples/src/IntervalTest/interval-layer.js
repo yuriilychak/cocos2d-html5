@@ -27,169 +27,140 @@
 
 import { s_fire, s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Color, LayerGradient, Point, Sprite, textureCache } from "@aspect/core";
-import { JumpBy, sequence } from "@aspect/actions";
+import {
+  Color,
+  LayerGradient,
+  Point,
+  Sprite,
+  textureCache
+} from "@aspect/core";
+import { JumpBy, Sequence } from "@aspect/actions";
 import { Menu, MenuItemFont } from "@aspect/menus";
 import { Label } from "@aspect/labels";
 import { ParticleSun } from "../ParticleTest/ParticleExamples";
 
 export class IntervalLayer extends LayerGradient {
+  constructor() {
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
+    this.label0 = null;
 
+    this.label1 = null;
 
-    constructor() {
-        super(new Color(0,0,0,255), new Color(98,99,117,255));
+    this.label2 = null;
 
+    this.label3 = null;
 
+    this.label4 = null;
 
+    this.time0 = null;
 
-        this.label0 = null;
+    this.time1 = null;
 
+    this.time2 = null;
 
+    this.time3 = null;
 
+    this.time4 = null;
 
-        this.label1 = null;
+    this.time0 = this.time1 = this.time2 = this.time3 = this.time4 = 0.0;
 
+    var s = director.getWinSize();
+    // sun
+    var sun = new ParticleSun();
+    sun.texture = textureCache.addImage(s_fire);
+    sun.x = s.width - 32;
+    sun.y = s.height - 32;
 
+    sun.setTotalParticles(130);
+    sun.setLife(0.6);
+    this.addChild(sun);
 
+    // timers, font "fonts/bitmapFontTest4.fnt"
+    this.label0 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+    this.label1 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+    this.label2 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+    this.label3 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+    this.label4 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
 
-        this.label2 = null;
+    this.scheduleUpdate();
+    this.schedule(this.step1);
+    this.schedule(this.step2, 0);
+    this.schedule(this.step3, 1.0);
+    this.schedule(this.step4, 2.0);
 
+    this.label0.x = (s.width * 1) / 6;
+    this.label0.y = s.height / 2;
+    this.label1.x = (s.width * 2) / 6;
+    this.label1.y = s.height / 2;
+    this.label2.x = (s.width * 3) / 6;
+    this.label2.y = s.height / 2;
+    this.label3.x = (s.width * 4) / 6;
+    this.label3.y = s.height / 2;
+    this.label4.x = (s.width * 5) / 6;
+    this.label4.y = s.height / 2;
 
+    this.addChild(this.label0);
+    this.addChild(this.label1);
+    this.addChild(this.label2);
+    this.addChild(this.label3);
+    this.addChild(this.label4);
 
+    // Sprite
+    var sprite = new Sprite(s_pathGrossini);
+    sprite.x = 40;
+    sprite.y = 50;
 
-        this.label3 = null;
+    var jump = new JumpBy(3, new Point(s.width - 80, 0), 50, 4);
 
+    this.addChild(sprite);
+    sprite.runAction(new Sequence(jump, jump.reverse()).repeatForever());
 
+    // pause button
+    var item1 = new MenuItemFont("Pause", this.onPause, this);
+    var menu = new Menu(item1);
+    menu.x = s.width / 2;
+    menu.y = s.height - 50;
 
+    this.addChild(menu);
+  }
 
-        this.label4 = null;
-
-
-
-
-        this.time0 = null;
-
-
-
-
-        this.time1 = null;
-
-
-
-
-        this.time2 = null;
-
-
-
-
-        this.time3 = null;
-
-
-
-
-        this.time4 = null;
-
-        this.time0 = this.time1 = this.time2 = this.time3 = this.time4 = 0.0;
-
-        var s = director.getWinSize();
-        // sun
-        var sun = new ParticleSun();
-        sun.texture = textureCache.addImage(s_fire);
-        sun.x = s.width - 32;
-        sun.y = s.height - 32;
-
-        sun.setTotalParticles(130);
-        sun.setLife(0.6);
-        this.addChild(sun);
-
-        // timers, font "fonts/bitmapFontTest4.fnt"
-        this.label0 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label1 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label2 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label3 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-        this.label4 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
-
-        this.scheduleUpdate();
-        this.schedule(this.step1);
-        this.schedule(this.step2, 0);
-        this.schedule(this.step3, 1.0);
-        this.schedule(this.step4, 2.0);
-
-        this.label0.x = s.width * 1 / 6;
-        this.label0.y = s.height / 2;
-        this.label1.x = s.width * 2 / 6;
-        this.label1.y = s.height / 2;
-        this.label2.x = s.width * 3 / 6;
-        this.label2.y = s.height / 2;
-        this.label3.x = s.width * 4 / 6;
-        this.label3.y = s.height / 2;
-        this.label4.x = s.width * 5 / 6;
-        this.label4.y = s.height / 2;
-
-        this.addChild(this.label0);
-        this.addChild(this.label1);
-        this.addChild(this.label2);
-        this.addChild(this.label3);
-        this.addChild(this.label4);
-
-        // Sprite
-        var sprite = new Sprite(s_pathGrossini);
-        sprite.x = 40;
-        sprite.y = 50;
-
-        var jump = new JumpBy(3, new Point(s.width - 80, 0), 50, 4);
-
-        this.addChild(sprite);
-        sprite.runAction(sequence(jump, jump.reverse()).repeatForever());
-
-        // pause button
-        var item1 = new MenuItemFont("Pause", this.onPause, this);
-        var menu = new Menu(item1);
-        menu.x = s.width / 2;
-        menu.y = s.height - 50;
-
-        this.addChild(menu);
-
+  onPause(sender) {
+    if (director.isPaused()) {
+      director.resume();
+    } else {
+      director.pause();
     }
+  }
 
-    onPause(sender) {
-        if (director.isPaused()) {
-            director.resume();
-        } else {
-            director.pause();
-        }
+  onExit() {
+    if (director.isPaused()) {
+      director.resume();
     }
+    super.onExit();
+  }
 
-    onExit() {
-        if (director.isPaused()) {
-            director.resume();
-        }
-        super.onExit();
-    }
+  step1(dt) {
+    this.time1 += dt;
+    this.label1.setString(this.time1.toFixed(1));
+  }
+  step2(dt) {
+    this.time2 += dt;
+    this.label2.setString(this.time2.toFixed(1));
+  }
+  step3(dt) {
+    this.time3 += dt;
+    this.label3.setString(this.time3.toFixed(1));
+  }
+  step4(dt) {
+    this.time4 += dt;
+    this.label4.setString(this.time4.toFixed(1));
+  }
+  update(dt) {
+    this.time0 += dt;
 
-    step1(dt) {
-        this.time1 += dt;
-        this.label1.setString(this.time1.toFixed(1));
-    }
-    step2(dt) {
-        this.time2 += dt;
-        this.label2.setString(this.time2.toFixed(1));
-    }
-    step3(dt) {
-        this.time3 += dt;
-        this.label3.setString(this.time3.toFixed(1));
-    }
-    step4(dt) {
-        this.time4 += dt;
-        this.label4.setString(this.time4.toFixed(1));
-    }
-    update(dt) {
-        this.time0 += dt;
+    this.label0.setString(this.time0.toFixed(1));
+  }
 
-        this.label0.setString(this.time0.toFixed(1));
-    }
-
-    //CREATE_NODE(IntervalLayer);
-
+  //CREATE_NODE(IntervalLayer);
 }

@@ -29,7 +29,7 @@
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_pathR1, s_streak } from "../resources";
 import { Color, Director, Point, Sprite } from "@aspect/core";
-import { MoveBy, RotateBy, TintTo, sequence } from "@aspect/actions";
+import { MoveBy, RotateBy, TintTo, Sequence } from "@aspect/actions";
 
 import { MotionStreak } from "@aspect/motion-streak";
 export class MotionStreakTest1 extends MotionStreakTest {
@@ -65,11 +65,10 @@ export class MotionStreakTest1 extends MotionStreakTest {
 
     var action1 = a1.repeatForever();
     var motion = new MoveBy(2, new Point(100, 0));
-    this._root.runAction(sequence(motion, motion.reverse()).repeatForever());
+    this._root.runAction(new Sequence(motion, motion.reverse()).repeatForever());
     this._root.runAction(action1);
 
-    var colorAction = cc
-      .sequence(
+    var colorAction = new Sequence(
         new TintTo(0.2, 255, 0, 0),
         new TintTo(0.2, 0, 255, 0),
         new TintTo(0.2, 0, 0, 255),

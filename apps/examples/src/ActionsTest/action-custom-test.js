@@ -30,7 +30,39 @@ import { createCustomAction } from "./actions-test-helpers";
 import { CustomMoveBy } from "./custom-move-by";
 import { s_pathGrossini } from "../resources";
 import { Animation, LabelTTF, Layer, Point, Sprite, log } from "@aspect/core";
-import { Animate, BezierBy, BezierTo, Blink, CallFunc, DelayTime, FadeIn, FadeOut, FadeTo, FlipX, FlipY, Hide, JumpBy, JumpTo, MoveBy, MoveTo, Place, Repeat, RepeatForever, RotateBy, RotateTo, ScaleBy, ScaleTo, Sequence, Show, SkewBy, SkewTo, Spawn, TintBy, TintTo, sequence, spawn } from "@aspect/actions";
+import {
+  Animate,
+  BezierBy,
+  BezierTo,
+  Blink,
+  CallFunc,
+  DelayTime,
+  FadeIn,
+  FadeOut,
+  FadeTo,
+  FlipX,
+  FlipY,
+  Hide,
+  JumpBy,
+  JumpTo,
+  MoveBy,
+  MoveTo,
+  Place,
+  Repeat,
+  RepeatForever,
+  RotateBy,
+  RotateTo,
+  ScaleBy,
+  ScaleTo,
+  Show,
+  SkewBy,
+  SkewTo,
+  Spawn,
+  TintBy,
+  TintTo,
+  Sequence,
+  spawn
+} from "@aspect/actions";
 import { Menu, MenuItemLabel } from "@aspect/menus";
 import { winSize } from "../constants";
 

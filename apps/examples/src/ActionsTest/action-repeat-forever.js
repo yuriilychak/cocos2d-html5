@@ -55,8 +55,7 @@ export class ActionRepeatForever extends ActionsDemo {
   }
   repeatForever(sender) {
     sender.runAction(
-      cc
-        .sequence(
+      new Sequence(
           new RotateBy(2, 90).easing(easeElasticInOut(0.5)),
           new RotateBy(0.5, 90)
         )

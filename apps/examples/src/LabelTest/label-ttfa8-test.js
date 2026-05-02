@@ -30,7 +30,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
 import { Color, LabelTTF, LayerColor } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
-import { FadeIn, FadeOut, sequence } from "@aspect/actions";
+import { FadeIn, FadeOut, Sequence } from "@aspect/actions";
 
 export class LabelTTFA8Test extends AtlasDemo {
   constructor() {
@@ -50,7 +50,7 @@ export class LabelTTFA8Test extends AtlasDemo {
 
     var fadeOut = new FadeOut(2);
     var fadeIn = new FadeIn(2);
-    var seq = sequence(fadeOut, fadeIn);
+    var seq = new Sequence(fadeOut, fadeIn);
     var forever = seq.repeatForever();
     label1.runAction(forever);
     //----end22----

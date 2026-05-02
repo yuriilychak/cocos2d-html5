@@ -28,8 +28,13 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Size } from "@aspect/core";
-import { DelayTime, sequence } from "@aspect/actions";
-import { ReuseGrid, ShakyTiles3D, ShuffleTiles, TurnOffTiles } from "@aspect/actions3d";
+import { DelayTime, Sequence } from "@aspect/actions";
+import {
+  ReuseGrid,
+  ShakyTiles3D,
+  ShuffleTiles,
+  TurnOffTiles
+} from "@aspect/actions3d";
 
 export class Effect2 extends EffectAdvanceTextLayer {
   title() {
@@ -58,7 +63,7 @@ export class Effect2 extends EffectAdvanceTextLayer {
     var delay = new DelayTime(1);
 
     target.runAction(
-      sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon)
+      new Sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon)
     );
   }
 }

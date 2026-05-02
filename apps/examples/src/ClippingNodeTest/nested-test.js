@@ -27,7 +27,7 @@
 
 import { BaseClippingNodeTest } from "./base-clipping-node-test";
 import { s_pathGrossini } from "../resources";
-import { DelayTime, RotateBy, Show, sequence } from "@aspect/actions";
+import { DelayTime, RotateBy, Show, Sequence } from "@aspect/actions";
 import { Sprite } from "@aspect/core";
 
 import { ClippingNode } from "@aspect/clipping-nodes";
@@ -72,7 +72,7 @@ export class NestedTest extends BaseClippingNodeTest {
         y: clipper.height / 2,
         visible: false
       });
-      stencil.runAction(sequence(new DelayTime(i), new Show()));
+      stencil.runAction(new Sequence(new DelayTime(i), new Show()));
       clipper.stencil = stencil;
 
       clipper.addChild(stencil);

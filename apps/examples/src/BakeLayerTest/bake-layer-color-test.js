@@ -28,7 +28,7 @@
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini } from "../resources";
 import { Color, Layer, LayerGradient, Point, Sprite } from "@aspect/core";
-import { MoveBy, RotateBy, sequence } from "@aspect/actions";
+import { MoveBy, RotateBy, Sequence } from "@aspect/actions";
 import { Menu, MenuItemFont } from "@aspect/menus";
 import { winSize } from "../constants";
 
@@ -88,7 +88,7 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     this._bakeLayer = bakeLayer;
     bakeLayer.bake();
     bakeLayer.runAction(
-      sequence(
+      new Sequence(
         new MoveBy(2, new Point(100, 100)),
         new MoveBy(2, new Point(-100, -100))
       )

@@ -27,8 +27,15 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { EventListener, EventManager, Rect, Sprite, Sys, log } from "@aspect/core";
-import { CallFunc, DelayTime, sequence } from "@aspect/actions";
+import {
+  EventListener,
+  EventManager,
+  Rect,
+  Sprite,
+  Sys,
+  log
+} from "@aspect/core";
+import { CallFunc, DelayTime, Sequence } from "@aspect/actions";
 
 export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
   constructor() {
@@ -89,7 +96,7 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     EventManager.getInstance().addListener(listener1, this._sprite);
 
     this.runAction(
-      sequence(
+      new Sequence(
         new DelayTime(5.0),
         new CallFunc(function () {
           this._spriteSaved = true;

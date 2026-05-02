@@ -26,6 +26,7 @@ import {
 import Game from "../boot/game";
 import { EGLView } from "../platform/egl-view/egl-view";
 import { GLStateCache } from "../shaders/CCGLStateCache";
+import { Configuration } from "../configuration";
 
 /**
  * OpenGL projection protocol
@@ -144,7 +145,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     director._winSizeInPoints.height = Game.getInstance().canvas.height;
     director._openGLView = openGLView || EGLView.getInstance();
 
-    var conf = cc.configuration;
+    var conf = Configuration.getInstance();
     conf.gatherGPUInfo();
     conf.dumpInfo();
 

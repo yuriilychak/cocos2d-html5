@@ -29,104 +29,121 @@
 // SpriteBatchNodeOffsetAnchorSkew
 //
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
+import {
+  s_grossini,
+  s_grossiniPlist,
+  s_grossini_gray,
+  s_grossini_grayPlist,
+  s_pathR1
+} from "../resources";
 import { winSize } from "../constants";
-import { Animate, SkewBy, sequence } from "@aspect/actions";
-import { Animation, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
+import { Animate, SkewBy, Sequence } from "@aspect/actions";
+import {
+  Animation,
+  Sprite,
+  SpriteBatchNode,
+  SpriteFrameCache
+} from "@aspect/core";
 export class SpriteBatchNodeOffsetAnchorSkew extends SpriteTestDemo {
+  constructor() {
+    //----start42----ctor
+    super();
 
+    this._title = "SpriteBatchNode offset + anchor + skew";
 
-    constructor() {
-        //----start42----ctor
-        super();
+    this.testDuration = 2;
 
+    this.pixel = { 0: 255, 1: 204, 2: 153, 3: 255 };
+    SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+    SpriteFrameCache.getInstance().addSpriteFrames(
+      s_grossini_grayPlist,
+      s_grossini_gray
+    );
 
+    var spritebatch = new SpriteBatchNode(s_grossini);
+    this.addChild(spritebatch);
 
-        this._title = "SpriteBatchNode offset + anchor + skew";
+    for (var i = 0; i < 3; i++) {
+      //
+      // Animation using Sprite batch
+      //
+      var sprite = new Sprite("#grossini_dance_01.png");
+      sprite.x = (winSize.width / 4) * (i + 1);
+      sprite.y = winSize.height / 2;
 
+      var point = new Sprite(s_pathR1);
+      point.scale = 0.25;
+      point.x = sprite.x;
+      point.y = sprite.y;
+      this.addChild(point, 200);
 
+      switch (i) {
+        case 0:
+          sprite.anchorX = 0;
+          sprite.anchorY = 0;
+          break;
+        case 1:
+          sprite.anchorX = 0.5;
+          sprite.anchorY = 0.5;
+          break;
+        case 2:
+          sprite.anchorX = 1;
+          sprite.anchorY = 1;
+          break;
+      }
 
-        this.testDuration = 2;
+      point.x = sprite.x;
+      point.y = sprite.y;
 
+      var animFrames = [];
+      var tmp = "";
+      for (var j = 1; j <= 14; j++) {
+        tmp = "grossini_dance_" + (j < 10 ? "0" + j : j) + ".png";
+        var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
+        animFrames.push(frame);
+      }
 
+      var animation = new Animation(animFrames, 0.3);
+      sprite.runAction(new Animate(animation).repeatForever());
 
-        this.pixel = {"0":255, "1":204, "2":153, "3":255};
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+      animFrames = null;
 
-        var spritebatch = new SpriteBatchNode(s_grossini);
-        this.addChild(spritebatch);
+      var skewX = new SkewBy(2, 45, 0);
+      var skewX_back = skewX.reverse();
+      var skewY = new SkewBy(2, 0, 45);
+      var skewY_back = skewY.reverse();
 
-        for (var i = 0; i < 3; i++) {
-            //
-            // Animation using Sprite batch
-            //
-            var sprite = new Sprite("#grossini_dance_01.png");
-            sprite.x = winSize.width / 4 * (i + 1);
-            sprite.y = winSize.height / 2;
+      var seq_skew = new Sequence(skewX, skewX_back, skewY, skewY_back);
+      sprite.runAction(seq_skew.repeatForever());
 
-            var point = new Sprite(s_pathR1);
-            point.scale = 0.25;
-	        point.x = sprite.x;
-	        point.y = sprite.y;
-            this.addChild(point, 200);
-
-            switch (i) {
-                case 0:
-                    sprite.anchorX = 0;
-                    sprite.anchorY = 0;
-                    break;
-                case 1:
-                    sprite.anchorX = 0.5;
-                    sprite.anchorY = 0.5;
-                    break;
-                case 2:
-                    sprite.anchorX = 1;
-                    sprite.anchorY = 1;
-                    break;
-            }
-
-	        point.x = sprite.x;
-	        point.y = sprite.y;
-
-            var animFrames = [];
-            var tmp = "";
-            for (var j = 1; j <= 14; j++) {
-                tmp = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
-                animFrames.push(frame);
-            }
-
-            var animation = new Animation(animFrames, 0.3);
-            sprite.runAction(new Animate(animation).repeatForever());
-
-            animFrames = null;
-
-            var skewX = new SkewBy(2, 45, 0);
-            var skewX_back = skewX.reverse();
-            var skewY = new SkewBy(2, 0, 45);
-            var skewY_back = skewY.reverse();
-
-            var seq_skew = sequence(skewX, skewX_back, skewY, skewY_back);
-            sprite.runAction(seq_skew.repeatForever());
-
-            spritebatch.addChild(sprite, i);
-        }
-        //----end42----
+      spritebatch.addChild(sprite, i);
     }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret1 = this.readPixels(winSize.width / 4 + 142, winSize.height / 2 + 98, 5, 5);
-        var ret2 = this.readPixels(winSize.width / 4 * 2 + 50, winSize.height / 2 + 43, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-
+    //----end42----
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pixel1: "yes", pixel2: "yes" };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret1 = this.readPixels(
+      winSize.width / 4 + 142,
+      winSize.height / 2 + 98,
+      5,
+      5
+    );
+    var ret2 = this.readPixels(
+      (winSize.width / 4) * 2 + 50,
+      winSize.height / 2 + 43,
+      5,
+      5
+    );
+    var ret = {
+      pixel1: this.containsPixel(ret1, this.pixel) ? "yes" : "no",
+      pixel2: this.containsPixel(ret2, this.pixel) ? "yes" : "no"
+    };
+    return JSON.stringify(ret);
+  }
 }

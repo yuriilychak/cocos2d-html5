@@ -32,7 +32,7 @@ import {
 } from "./clipping-node-test-constants";
 import { s_pathGrossini } from "../resources";
 import { Color, Director, Point, Sprite } from "@aspect/core";
-import { RotateBy, ScaleBy, sequence } from "@aspect/actions";
+import { RotateBy, ScaleBy, Sequence } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
 import { ClippingNode } from "@aspect/clipping-nodes";
@@ -77,7 +77,7 @@ export class BasicTest extends BaseClippingNodeTest {
 
   actionScale() {
     var scale = new ScaleBy(1.33, 1.5);
-    return sequence(scale, scale.reverse()).repeatForever();
+    return new Sequence(scale, scale.reverse()).repeatForever();
   }
 
   shape() {

@@ -35,7 +35,7 @@ import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
 import { LabelTTF, Point, Sprite } from "@aspect/core";
-import { CallFunc, MoveBy, sequence } from "@aspect/actions";
+import { CallFunc, MoveBy, Sequence } from "@aspect/actions";
 
 export class RemoveTest extends ActionManagerTest {
   constructor() {
@@ -58,7 +58,7 @@ export class RemoveTest extends ActionManagerTest {
 
     var move = new MoveBy(2, new Point(200, 0));
     var callback = new CallFunc(this.stopAction, this);
-    var sequence = sequence(move, callback);
+    var sequence = new Sequence(move, callback);
     sequence.tag = TAG_SEQUENCE;
 
     var child = new Sprite(s_pathGrossini);

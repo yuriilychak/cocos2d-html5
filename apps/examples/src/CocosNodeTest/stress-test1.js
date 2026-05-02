@@ -29,74 +29,70 @@ import { TAG_SPRITE1 } from "./cocos-node-test-constants";
 import { TestNodeDemo } from "./test-node-demo";
 import { s_fire, s_pathSister1 } from "../resources";
 import { autoTestEnabled, winSize } from "../constants";
-import { CallFunc, RotateBy, sequence } from "@aspect/actions";
+import { CallFunc, RotateBy, Sequence } from "@aspect/actions";
 import { Sprite, textureCache } from "@aspect/core";
 import { ParticleSun } from "../ParticleTest/ParticleExamples";
 
 export class StressTest1 extends TestNodeDemo {
-    constructor() {
-        //----start4----ctor
-        super();
+  constructor() {
+    //----start4----ctor
+    super();
 
-        this.testDuration = 3.2;
+    this.testDuration = 3.2;
 
-        this.testPass = false;
+    this.testPass = false;
 
-        var sp1 = new Sprite(s_pathSister1);
-        this.addChild(sp1, 0, TAG_SPRITE1);
-        this.width = 0
-	    this.height = 0;
+    var sp1 = new Sprite(s_pathSister1);
+    this.addChild(sp1, 0, TAG_SPRITE1);
+    this.width = 0;
+    this.height = 0;
 
-        sp1.x = winSize.width / 2;
-        sp1.y = winSize.height / 2;
+    sp1.x = winSize.width / 2;
+    sp1.y = winSize.height / 2;
 
-        this.schedule(this.onShouldNotCrash, 1.0);
-        //----end4----
+    this.schedule(this.onShouldNotCrash, 1.0);
+    //----end4----
+  }
+  onShouldNotCrash(dt) {
+    //----start4----onShouldNotCrash
+    this.unschedule(this.onShouldNotCrash);
+
+    // if the node has timers, it crashes
+    var explosion = new ParticleSun();
+    explosion.texture = textureCache.addImage(s_fire);
+
+    explosion.x = winSize.width / 2;
+    explosion.y = winSize.height / 2;
+
+    this.runAction(
+      new Sequence(new RotateBy(2, 360), new CallFunc(this.onRemoveMe, this))
+    );
+
+    this.addChild(explosion);
+    //----end4----
+  }
+  onRemoveMe(node) {
+    //----start4----onRemoveMe
+    if (autoTestEnabled) {
+      this.testPass = true;
+      return;
     }
-    onShouldNotCrash(dt) {
-        //----start4----onShouldNotCrash
-        this.unschedule(this.onShouldNotCrash);
-
-        // if the node has timers, it crashes
-        var explosion = new ParticleSun();
-        explosion.texture = textureCache.addImage(s_fire);
-
-        explosion.x = winSize.width / 2;
-        explosion.y = winSize.height / 2;
-
-        this.runAction(
-            sequence(
-                new RotateBy(2, 360),
-                new CallFunc(this.onRemoveMe, this)
-            )
-        );
-
-        this.addChild(explosion);
-        //----end4----
-    }
-    onRemoveMe(node) {
-        //----start4----onRemoveMe
-        if (autoTestEnabled) {
-            this.testPass = true;
-            return;
-        }
-        this.parent.removeChild(node, true);
-        this.onNextCallback(this);
-        //----end4----
-    }
-    title() {
-        return "stress test #1: no crashes";
-    }
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = {"pass":true};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret = {"pass":this.testPass};
-        return JSON.stringify(ret);
-    }
-
+    this.parent.removeChild(node, true);
+    this.onNextCallback(this);
+    //----end4----
+  }
+  title() {
+    return "stress test #1: no crashes";
+  }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = { pass: true };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret = { pass: this.testPass };
+    return JSON.stringify(ret);
+  }
 }

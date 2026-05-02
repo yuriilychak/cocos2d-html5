@@ -127,4 +127,16 @@ export default class Spawn extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
+
+  /**
+   * Creates a Spawn from exactly two actions.
+   * @param {FiniteTimeAction} action1
+   * @param {FiniteTimeAction} action2
+   * @return {Spawn}
+   */
+  static _actionOneTwo(action1, action2) {
+    var spawn = new Spawn();
+    spawn.initWithTwoActions(action1, action2);
+    return spawn;
+  }
 }

@@ -33,7 +33,7 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
-import { DelayTime, MoveBy, easeInOut, sequence } from "@aspect/actions";
+import { DelayTime, MoveBy, easeInOut, Sequence } from "@aspect/actions";
 
 export class SpriteEaseInOut extends EaseSpriteDemo {
   onEnter() {
@@ -53,19 +53,19 @@ export class SpriteEaseInOut extends EaseSpriteDemo {
 
     var delay = new DelayTime(0.1);
 
-    var seq1 = sequence(
+    var seq1 = new Sequence(
       move_ease_inout1,
       delay,
       move_ease_inout_back1,
       delay.clone()
     );
-    var seq2 = sequence(
+    var seq2 = new Sequence(
       move_ease_inout2,
       delay.clone(),
       move_ease_inout_back2,
       delay.clone()
     );
-    var seq3 = sequence(
+    var seq3 = new Sequence(
       move_ease_inout3,
       delay.clone(),
       move_ease_inout_back3,

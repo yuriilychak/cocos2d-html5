@@ -31,109 +31,120 @@
 //
 //------------------------------------------------------------------
 import { AtlasDemo } from "./atlas-demo";
-import { TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2, TAG_BITMAP_ATLAS3 } from "./label-test-constants";
+import {
+  TAG_BITMAP_ATLAS1,
+  TAG_BITMAP_ATLAS2,
+  TAG_BITMAP_ATLAS3
+} from "./label-test-constants";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
 import { Color, LayerColor } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
-import { DelayTime, FadeOut, sequence } from "@aspect/actions";
+import { DelayTime, FadeOut, Sequence } from "@aspect/actions";
 
 export class BMFontOpacityColorAlignmentTest extends AtlasDemo {
-    constructor() {
-        //----start3----ctor
-        super();
+  constructor() {
+    //----start3----ctor
+    super();
 
-        this.time = 0;
+    this.time = 0;
 
-        this.testDuration = 1.1;
-        var col = new LayerColor(new Color(128, 128, 128, 255));
-        this.addChild(col, -10);
+    this.testDuration = 1.1;
+    var col = new LayerColor(new Color(128, 128, 128, 255));
+    this.addChild(col, -10);
 
-        var label1 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
+    var label1 = new LabelBMFont(
+      "Test",
+      s_resprefix + "fonts/bitmapFontTest2.fnt"
+    );
 
-        // testing anchors
-        label1.anchorX = 0;
-        label1.anchorY = 0;
-        this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
-        var fade = new FadeOut(1.0);
-        var fade_in = fade.reverse();
-        var seq = sequence(fade, new DelayTime(0.25), fade_in);
-        var repeat = seq.repeatForever();
-        label1.runAction(repeat);
+    // testing anchors
+    label1.anchorX = 0;
+    label1.anchorY = 0;
+    this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
+    var fade = new FadeOut(1.0);
+    var fade_in = fade.reverse();
+    var seq = new Sequence(fade, new DelayTime(0.25), fade_in);
+    var repeat = seq.repeatForever();
+    label1.runAction(repeat);
 
-        // VERY IMPORTANT
-        // color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
-        // If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
-        // Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-        var label2 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
-        // testing anchors
-        label2.anchorX = 0.5;
-        label2.anchorY = 0.5;
-        label2.color = Color.RED;
-        this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
-        label2.runAction(repeat.clone());
+    // VERY IMPORTANT
+    // color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
+    // If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
+    // Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
+    var label2 = new LabelBMFont(
+      "Test",
+      s_resprefix + "fonts/bitmapFontTest2.fnt"
+    );
+    // testing anchors
+    label2.anchorX = 0.5;
+    label2.anchorY = 0.5;
+    label2.color = Color.RED;
+    this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
+    label2.runAction(repeat.clone());
 
-        var label3 = new LabelBMFont("Test", s_resprefix + "fonts/bitmapFontTest2.fnt");
-        // testing anchors
-        label3.anchorX = 1;
-        label3.anchorY = 1;
-        this.addChild(label3, 0, TAG_BITMAP_ATLAS3);
+    var label3 = new LabelBMFont(
+      "Test",
+      s_resprefix + "fonts/bitmapFontTest2.fnt"
+    );
+    // testing anchors
+    label3.anchorX = 1;
+    label3.anchorY = 1;
+    this.addChild(label3, 0, TAG_BITMAP_ATLAS3);
 
-        var s = director.getWinSize();
-        label1.x = 0;
-        label1.y = 0;
-        label2.x = s.width / 2;
-        label2.y = s.height / 2;
-        label3.x = s.width;
-        label3.y = s.height;
+    var s = director.getWinSize();
+    label1.x = 0;
+    label1.y = 0;
+    label2.x = s.width / 2;
+    label2.y = s.height / 2;
+    label3.x = s.width;
+    label3.y = s.height;
 
-        this.schedule(this.step);
-        //----end3----
+    this.schedule(this.step);
+    //----end3----
+  }
+  step(dt) {
+    //----start3----step
+    this.time += dt;
+    //var string;
+    var string = this.time.toFixed(2) + "Test j";
+
+    var label1 = this.getChildByTag(TAG_BITMAP_ATLAS1);
+    label1.setString(string);
+
+    var label2 = this.getChildByTag(TAG_BITMAP_ATLAS2);
+    label2.setString(string);
+
+    var label3 = this.getChildByTag(TAG_BITMAP_ATLAS3);
+    label3.setString(string);
+    //----end3----
+  }
+
+  title() {
+    return "LabelBMFont";
+  }
+  subtitle() {
+    return "Testing alignment. Testing opacity + tint";
+  }
+
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    // yellow, red, green, blue, yellow
+    var ret = [0, { r: 255, g: 255, b: 255 }, 0, { r: 255, g: 0, b: 0 }];
+    return JSON.stringify(ret);
+  }
+
+  getCurrentResult() {
+    var ret = [];
+    var tags = [TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2];
+
+    for (var i in tags) {
+      var t = tags[i];
+      ret.push(this.getChildByTag(t).opacity);
+      ret.push(this.getChildByTag(t).color);
     }
-    step(dt) {
-        //----start3----step
-        this.time += dt;
-        //var string;
-        var string = this.time.toFixed(2) + "Test j";
-
-        var label1 = this.getChildByTag(TAG_BITMAP_ATLAS1);
-        label1.setString(string);
-
-        var label2 = this.getChildByTag(TAG_BITMAP_ATLAS2);
-        label2.setString(string);
-
-        var label3 = this.getChildByTag(TAG_BITMAP_ATLAS3);
-        label3.setString(string);
-        //----end3----
-    }
-
-    title() {
-        return "LabelBMFont";
-    }
-    subtitle() {
-        return "Testing alignment. Testing opacity + tint";
-    }
-
-
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        // yellow, red, green, blue, yellow
-        var ret = [0,{"r":255,"g":255,"b":255},0,{"r":255,"g":0,"b":0}];
-        return JSON.stringify(ret);
-    }
-
-    getCurrentResult() {
-        var ret = [];
-        var tags = [TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2];
-
-        for( var i in tags ) {
-            var t = tags[i];
-            ret.push( this.getChildByTag(t).opacity );
-            ret.push( this.getChildByTag(t).color );
-        }
-        return JSON.stringify(ret);
-    }
-
+    return JSON.stringify(ret);
+  }
 }

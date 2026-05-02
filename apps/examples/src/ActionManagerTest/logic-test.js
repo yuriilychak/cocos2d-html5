@@ -34,7 +34,7 @@ import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled } from "../constants";
 import { Point, Sprite } from "@aspect/core";
-import { CallFunc, MoveBy, ScaleTo, sequence } from "@aspect/actions";
+import { CallFunc, MoveBy, ScaleTo, Sequence } from "@aspect/actions";
 
 export class LogicTest extends ActionManagerTest {
   constructor() {
@@ -55,7 +55,7 @@ export class LogicTest extends ActionManagerTest {
     grossini.y = 200;
 
     grossini.runAction(
-      sequence(
+      new Sequence(
         new MoveBy(1, new Point(150, 0)),
         new CallFunc(this.onBugMe, this)
       )

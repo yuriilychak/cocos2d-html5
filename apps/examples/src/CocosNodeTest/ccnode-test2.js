@@ -28,7 +28,7 @@
 import { TestNodeDemo } from "./test-node-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { DelayTime, RotateBy, ScaleBy, sequence } from "@aspect/actions";
+import { DelayTime, RotateBy, ScaleBy, Sequence } from "@aspect/actions";
 import { Sprite } from "@aspect/core";
 
 export class CCNodeTest2 extends TestNodeDemo {
@@ -65,9 +65,8 @@ export class CCNodeTest2 extends TestNodeDemo {
     var a2 = new ScaleBy(2, 2);
     var delay = new DelayTime(0.2);
 
-    var action1 = sequence(a1, a2, delay, a2.reverse()).repeatForever();
-    var action2 = cc
-      .sequence(a1.clone(), a2.clone(), delay.clone(), a2.reverse())
+    var action1 = new Sequence(a1, a2, delay, a2.reverse()).repeatForever();
+    var action2 = new Sequence(a1.clone(), a2.clone(), delay.clone(), a2.reverse())
       .repeatForever();
 
     sp2.anchorX = 0;

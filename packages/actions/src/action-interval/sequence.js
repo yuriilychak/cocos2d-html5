@@ -164,4 +164,16 @@ export default class Sequence extends ActionInterval {
     this._reverseEaseList(action);
     return action;
   }
+
+  /**
+   * Creates a Sequence from exactly two actions.
+   * @param {FiniteTimeAction} actionOne
+   * @param {FiniteTimeAction} actionTwo
+   * @return {Sequence}
+   */
+  static _actionOneTwo(actionOne, actionTwo) {
+    var sequence = new Sequence();
+    sequence.initWithTwoActions(actionOne, actionTwo);
+    return sequence;
+  }
 }

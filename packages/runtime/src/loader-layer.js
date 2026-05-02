@@ -12,9 +12,9 @@ import {
   log,
   visibleRect,
   EGLView,
-  Scale9Sprite,
   ResolutionPolicy
 } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 import { MoveBy, ScaleTo, DelayTime, easeIn, easeOut } from "@aspect/actions";
 import { runtime } from "./network-utils";
 

@@ -33,7 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { director, winSize } from "../constants";
 import { Point } from "@aspect/core";
-import { BezierBy, BezierTo, DelayTime } from "@aspect/actions";
+import { BezierBy, BezierTo, DelayTime, Sequence } from "@aspect/actions";
 
 export class ActionBezier extends ActionsDemo {
   constructor() {
@@ -66,8 +66,7 @@ export class ActionBezier extends ActionsDemo {
     ];
 
     var bezierForward = new BezierBy(2, controlPoints);
-    var rep = new cc
-      .Sequence(bezierForward, delay, bezierForward.reverse(), delay.clone())
+    var rep = new Sequence(bezierForward, delay, bezierForward.reverse(), delay.clone())
       .repeatForever();
 
     // sprite 2

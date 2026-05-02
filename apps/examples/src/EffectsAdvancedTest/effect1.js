@@ -28,7 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Director, Point, Size } from "@aspect/core";
-import { DelayTime, sequence } from "@aspect/actions";
+import { DelayTime, Sequence } from "@aspect/actions";
 import { Lens3D, ReuseGrid, Waves3D } from "@aspect/actions3d";
 
 export class Effect1 extends EffectAdvanceTextLayer {
@@ -57,6 +57,6 @@ export class Effect1 extends EffectAdvanceTextLayer {
     var reuse = new ReuseGrid(1);
     var delay = new DelayTime(8);
 
-    target.runAction(sequence(lens, delay, reuse, waves));
+    target.runAction(new Sequence(lens, delay, reuse, waves));
   }
 }

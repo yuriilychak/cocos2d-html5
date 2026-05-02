@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { EffectsBaseLayer } from "./effects-base-layer";
-import { DelayTime, sequence } from "@aspect/actions";
+import { DelayTime, Sequence } from "@aspect/actions";
 import { FlipX3D } from "@aspect/actions3d";
 
 export class FlipXTest extends EffectsBaseLayer {
@@ -38,6 +38,6 @@ export class FlipXTest extends EffectsBaseLayer {
     var a = new FlipX3D(duration);
     var delay = new DelayTime(2);
     var r = a.reverse();
-    return sequence(a, delay, r);
+    return new Sequence(a, delay, r);
   }
 }

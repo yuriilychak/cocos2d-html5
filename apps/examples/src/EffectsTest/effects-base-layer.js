@@ -28,87 +28,93 @@
 //
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { effectsTestSceneIdx } from "./effects-test-constants";
-import { arrayOfEffectsTest, nextEffectsTest, previousEffectsTest, restartEffectsTest } from "./effects-test-helpers";
+import {
+  arrayOfEffectsTest,
+  nextEffectsTest,
+  previousEffectsTest,
+  restartEffectsTest
+} from "./effects-test-helpers";
 import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
 import { Color, LayerGradient, Node, Point, Sprite } from "@aspect/core";
-import { MoveBy, ScaleBy, sequence } from "@aspect/actions";
+import { MoveBy, ScaleBy, Sequence } from "@aspect/actions";
 
 import { NodeGrid } from "@aspect/node-grid";
 export class EffectsBaseLayer extends BaseTestLayer {
-    code() {
-        return "";
-    }
-    // callbacks
-    onRestartCallback(sender) {
-        var s = new EffectsTestScene();
-        s.addChild(restartEffectsTest());
-        director.runScene(s);
-    }
-    onNextCallback(sender) {
-        var s = new EffectsTestScene();
-        s.addChild(nextEffectsTest());
-        director.runScene(s);
-    }
-    onBackCallback(sender) {
-        var s = new EffectsTestScene();
-        s.addChild(previousEffectsTest());
-        director.runScene(s);
-    }
-    onEnter() {
-        super.onEnter();
+  code() {
+    return "";
+  }
+  // callbacks
+  onRestartCallback(sender) {
+    var s = new EffectsTestScene();
+    s.addChild(restartEffectsTest());
+    director.runScene(s);
+  }
+  onNextCallback(sender) {
+    var s = new EffectsTestScene();
+    s.addChild(nextEffectsTest());
+    director.runScene(s);
+  }
+  onBackCallback(sender) {
+    var s = new EffectsTestScene();
+    s.addChild(previousEffectsTest());
+    director.runScene(s);
+  }
+  onEnter() {
+    super.onEnter();
 
-        var node = new Node();
+    var node = new Node();
 
-        //Whether to demonstrate the effects inside a smaller rect
-        var nodeGrid = new NodeGrid();
-        nodeGrid.addChild(node);
-        nodeGrid.runAction(this.getEffect(3));
-        this.addChild( nodeGrid );
+    //Whether to demonstrate the effects inside a smaller rect
+    var nodeGrid = new NodeGrid();
+    nodeGrid.addChild(node);
+    nodeGrid.runAction(this.getEffect(3));
+    this.addChild(nodeGrid);
 
-        // back gradient
-        var gradient = new LayerGradient( new Color(255,0,0,255), new Color(255,255,0,255));
-        node.addChild( gradient );
+    // back gradient
+    var gradient = new LayerGradient(
+      new Color(255, 0, 0, 255),
+      new Color(255, 255, 0, 255)
+    );
+    node.addChild(gradient);
 
-        // back image
-        var bg = new Sprite(s_back3);
-        bg.x = winSize.width/2;
-        bg.y = winSize.height/2;
-        node.addChild( bg );
+    // back image
+    var bg = new Sprite(s_back3);
+    bg.x = winSize.width / 2;
+    bg.y = winSize.height / 2;
+    node.addChild(bg);
 
-        var sister1 = new Sprite(s_pathSister1);
-        sister1.x = winSize.width/3;
-        sister1.y = winSize.height/2;
-        node.addChild( sister1, 1 );
+    var sister1 = new Sprite(s_pathSister1);
+    sister1.x = winSize.width / 3;
+    sister1.y = winSize.height / 2;
+    node.addChild(sister1, 1);
 
-        var sister2 = new Sprite(s_pathSister2);
-        sister2.x = winSize.width*2/3;
-        sister2.y = winSize.height/2;
-        node.addChild( sister2, 1 );
+    var sister2 = new Sprite(s_pathSister2);
+    sister2.x = (winSize.width * 2) / 3;
+    sister2.y = winSize.height / 2;
+    node.addChild(sister2, 1);
 
-        var sc = new ScaleBy(2, 5);
-        var sc_back = sc.reverse();
-        var seq = sequence( sc, sc_back );
-        var repeat = seq.repeatForever();
+    var sc = new ScaleBy(2, 5);
+    var sc_back = sc.reverse();
+    var seq = new Sequence(sc, sc_back);
+    var repeat = seq.repeatForever();
 
-        sister1.runAction( repeat );
-        sister2.runAction( repeat.clone() );
-    }
+    sister1.runAction(repeat);
+    sister2.runAction(repeat.clone());
+  }
 
-    getEffect(duration) {
-        // override me
-        return new MoveBy(2, new Point(10,10) );
-    }
+  getEffect(duration) {
+    // override me
+    return new MoveBy(2, new Point(10, 10));
+  }
 
-    // automation
-    numberOfPendingTests() {
-        return ( (arrayOfEffectsTest.length-1) - effectsTestSceneIdx );
-    }
+  // automation
+  numberOfPendingTests() {
+    return arrayOfEffectsTest.length - 1 - effectsTestSceneIdx;
+  }
 
-    getTestNumber() {
-        return effectsTestSceneIdx;
-    }
-
-
+  getTestNumber() {
+    return effectsTestSceneIdx;
+  }
 }

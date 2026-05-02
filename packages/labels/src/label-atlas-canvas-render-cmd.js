@@ -17,7 +17,7 @@ export class LabelAtlasCanvasRenderCmd extends AtlasNode.CanvasRenderCmd {
         const locString = node._string || "";
         const n = locString.length;
         const texture = this._textureToRender;
-        const locItemWidth = node._itemWidth, locItemHeight = node._itemHeight;     //needn't multiply cc.contentScaleFactor(), because sprite's draw will do this
+        const locItemWidth = node._itemWidth, locItemHeight = node._itemHeight;     //needn't multiply contentScaleFactor(), because sprite's draw will do this
 
         let i, cr = -1;
         for (i = 0; i < n; i++) {

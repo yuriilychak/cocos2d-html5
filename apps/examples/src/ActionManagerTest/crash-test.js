@@ -33,7 +33,7 @@
 import { NOT_CRASHED_CONST } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini } from "../resources";
-import { CallFunc, DelayTime, FadeOut, RotateBy, sequence } from "@aspect/actions";
+import { CallFunc, DelayTime, FadeOut, RotateBy, Sequence } from "@aspect/actions";
 import { Sprite } from "@aspect/core";
 
 export class CrashTest extends ActionManagerTest {
@@ -51,14 +51,14 @@ export class CrashTest extends ActionManagerTest {
 
     //Sum of all action's duration is 1.5 second.
     child.runAction(new RotateBy(1.5, 90));
-    // child.runAction(sequence(
+    // child.runAction(new Sequence(
     //     new DelayTime(1.4),
     //     new FadeOut(1.1))
     // );
 
     //After 1.5 second, self will be removed.
     this.runAction(
-      sequence(
+      new Sequence(
         new DelayTime(1.4),
         new CallFunc(this.onRemoveThis, this)
       )

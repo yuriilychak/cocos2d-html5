@@ -74,7 +74,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
       itemHeightInPixels = node._itemHeight * contentScaleFactor();
     }
     if (n > locTextureAtlas.getCapacity())
-      log("cc.LabelAtlas._updateAtlasValues(): Invalid String length");
+      log("LabelAtlas._updateAtlasValues(): Invalid String length");
     const quads = locTextureAtlas.quads;
     const locItemWidth = node._itemWidth;
     const locItemHeight = node._itemHeight;

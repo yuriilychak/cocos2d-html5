@@ -32,7 +32,7 @@ import {
   s_pathBlock
 } from "../resources";
 import { AffineTransform, Color, EventListener, EventManager, Node, Point, Rect, Size, Sprite } from "@aspect/core";
-import { RotateBy, ScaleBy, ScaleTo, sequence } from "@aspect/actions";
+import { RotateBy, ScaleBy, ScaleTo, Sequence } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
 import { ClippingNode } from "@aspect/clipping-nodes";
@@ -152,7 +152,7 @@ export class HoleDemo extends BaseClippingNodeTest {
 
     this._holesStencil.addChild(holeStencil);
     this._outerClipper.runAction(
-      sequence(new ScaleBy(0.05, 0.95), new ScaleTo(0.125, 1))
+      Sequence(new ScaleBy(0.05, 0.95), new ScaleTo(0.125, 1))
     );
   }
 }

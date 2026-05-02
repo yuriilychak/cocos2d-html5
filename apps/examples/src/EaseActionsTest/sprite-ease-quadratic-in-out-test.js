@@ -31,7 +31,7 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
-import { DelayTime, MoveBy, easeQuadraticActionInOut } from "@aspect/actions";
+import { DelayTime, MoveBy, easeQuadraticActionInOut, Sequence } from "@aspect/actions";
 
 export class SpriteEaseQuadraticInOutTest extends EaseSpriteDemo {
   onEnter() {
@@ -46,11 +46,9 @@ export class SpriteEaseQuadraticInOutTest extends EaseSpriteDemo {
 
     var delay = new DelayTime(0.25);
 
-    var seq1 = cc
-      .sequence(move, delay, move_back, delay.clone())
+    var seq1 = new Sequence(move, delay, move_back, delay.clone())
       .repeatForever();
-    var seq2 = cc
-      .sequence(move_ease, delay.clone(), move_ease_back, delay.clone())
+    var seq2 = new Sequence(move_ease, delay.clone(), move_ease_back, delay.clone())
       .repeatForever();
 
     this.positionForTwo();

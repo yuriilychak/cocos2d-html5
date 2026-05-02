@@ -31,7 +31,7 @@ import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 import { v } from "./chipmunk-test-helpers";
 import { s_pathGrossini } from "../resources";
 import { winSize } from "../constants";
-import { ScaleBy, sequence } from "@aspect/actions";
+import { ScaleBy, Sequence } from "@aspect/actions";
 import { PhysicsSprite } from "@aspect/physics";
 
 export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
@@ -71,7 +71,7 @@ export class ChipmunkSpriteAnchorPoint extends ChipmunkBaseLayer {
     // scale sprite
     var scaledown = new ScaleBy(0.5, 0.5);
     var scaleup = scaledown.reverse();
-    var seq = sequence(scaledown, scaleup);
+    var seq = new Sequence(scaledown, scaleup);
     var repeat = seq.repeatForever();
 
     sprite1.runAction(repeat);

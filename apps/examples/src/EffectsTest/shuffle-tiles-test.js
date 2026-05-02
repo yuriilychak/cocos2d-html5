@@ -25,7 +25,7 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
-import { DelayTime, sequence } from "@aspect/actions";
+import { DelayTime, Sequence } from "@aspect/actions";
 import { ShuffleTiles } from "@aspect/actions3d";
 
 export class ShuffleTilesTest extends EffectsBaseLayer {
@@ -39,7 +39,7 @@ export class ShuffleTilesTest extends EffectsBaseLayer {
     var action = new ShuffleTiles(duration, new Size(16, 12), 25);
     var delay = new DelayTime(2);
     var back = action.reverse();
-    var seq = sequence(action, delay, back);
+    var seq = new Sequence(action, delay, back);
     return seq;
   }
 }

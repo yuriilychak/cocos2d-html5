@@ -109,8 +109,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @param {String} str
    * @param {String} fntFile
    * @param {Number} [width=-1]
-   * @param {Number} [alignment=cc.TEXT_ALIGNMENT_LEFT]
-   * @param {Point} [imageOffset=new cc.Point(0,0)]
+   * @param {Number} [alignment=TEXT_ALIGNMENT_LEFT]
+   * @param {Point} [imageOffset=new Point(0,0)]
    */
   constructor(str, fntFile, width, alignment, imageOffset) {
     super();
@@ -130,7 +130,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   }
 
   /**
-   * Conforms to cc.RGBAProtocol protocol.
+   * Conforms to RGBAProtocol protocol.
    * @return {Boolean}
    */
   isOpacityModifyRGB() {
@@ -138,7 +138,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   }
 
   /**
-   * Set whether to support cc.RGBAProtocol protocol
+   * Set whether to support RGBAProtocol protocol
    * @param {Boolean} opacityModifyRGB
    */
   setOpacityModifyRGB(opacityModifyRGB) {
@@ -168,8 +168,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @param {String} str
    * @param {String} fntFile
    * @param {Number} [width=-1]
-   * @param {Number} [alignment=cc.TEXT_ALIGNMENT_LEFT]
-   * @param {Point} [imageOffset=new cc.Point(0,0)]
+   * @param {Number} [alignment=TEXT_ALIGNMENT_LEFT]
+   * @param {Point} [imageOffset=new Point(0,0)]
    * @return {Boolean}
    */
   initWithString(str, fntFile, width, alignment, imageOffset) {
@@ -177,7 +177,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       theString = str || "";
 
     if (self._config)
-      log("cc.LabelBMFont.initWithString(): re-init is no longer supported");
+      log("LabelBMFont.initWithString(): re-init is no longer supported");
 
     var texture;
     if (fntFile) {
@@ -187,7 +187,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
           FntFrameCache[fntFile] || FntFrameCache[Path.basename(fntFile)];
         if (!newConf) {
           log(
-            "cc.LabelBMFont.initWithString(): Impossible to create font. Please check file"
+            "LabelBMFont.initWithString(): Impossible to create font. Please check file"
           );
           return false;
         }
@@ -708,7 +708,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
       if (!newConf) {
         log(
-          "cc.LabelBMFont.setFntFile() : Impossible to create font. Please check file"
+          "LabelBMFont.setFntFile() : Impossible to create font. Please check file"
         );
         return;
       }
@@ -896,16 +896,16 @@ const _fntLoader = {
         commonObj["scaleH"] > texSize.height
       )
         log(
-          "cc.LabelBMFont._parseCommonArguments(): page can't be larger than supported"
+          "LabelBMFont._parseCommonArguments(): page can't be larger than supported"
         );
     }
     if (commonObj["pages"] !== 1)
-      log("cc.LabelBMFont._parseCommonArguments(): only supports 1 page");
+      log("LabelBMFont._parseCommonArguments(): only supports 1 page");
 
     //page
     var pageObj = self._parseStrToObj(fntStr.match(self.PAGE_EXP)[0]);
     if (pageObj["id"] !== 0)
-      log("cc.LabelBMFont._parseImageFileName() : file could not be found");
+      log("LabelBMFont._parseImageFileName() : file could not be found");
     if (!useAtlas) {
       fnt.atlasName = Path.changeBasename(url, pageObj["file"]);
     } else {
@@ -1008,7 +1008,7 @@ const _fntLoader = {
 Loader.getInstance().register(["fnt"], _fntLoader);
 
 /**
- * cc.Label compatibility shim (matches cocos2d-x v3 API)
+ * Label compatibility shim (matches cocos2d-x v3 API)
  */
 export const Label = {
   createWithBMFont: function (

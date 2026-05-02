@@ -28,8 +28,15 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { s_pathFog, s_pathGrossini } from "../resources";
-import { Color, LayerColor, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Size, Sprite } from "@aspect/core";
-import { DelayTime, sequence } from "@aspect/actions";
+import {
+  Color,
+  LayerColor,
+  ONE_MINUS_SRC_ALPHA,
+  SRC_ALPHA,
+  Size,
+  Sprite
+} from "@aspect/core";
+import { DelayTime, Sequence } from "@aspect/actions";
 import { Shaky3D } from "@aspect/actions3d";
 
 import { NodeGrid } from "@aspect/node-grid";
@@ -45,7 +52,7 @@ export class Issue631 extends EffectAdvanceTextLayer {
   onEnter() {
     super.onEnter();
 
-    var effect = sequence(
+    var effect = new Sequence(
       new DelayTime(2.0),
       new Shaky3D(5.0, new Size(5, 5), 16, false)
     );

@@ -30,51 +30,50 @@ import { TestNodeDemo } from "./test-node-demo";
 import { s_fire, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
 import { Layer, Point, Sprite, textureCache } from "@aspect/core";
-import { MoveBy, easeInOut, sequence } from "@aspect/actions";
+import { MoveBy, easeInOut, Sequence } from "@aspect/actions";
 import { ParticleFire } from "../ParticleTest/ParticleExamples";
 
 export class StressTest2 extends TestNodeDemo {
-    constructor() {
-        //----start5----ctor
-        super();
+  constructor() {
+    //----start5----ctor
+    super();
 
-        var sublayer = new Layer();
+    var sublayer = new Layer();
 
-        var sp1 = new Sprite(s_pathSister1);
-        sp1.x = 80;
-        sp1.y = winSize.height / 2;
+    var sp1 = new Sprite(s_pathSister1);
+    sp1.x = 80;
+    sp1.y = winSize.height / 2;
 
-        var move = new MoveBy(3, new Point(350, 0));
-        var move_ease_inout3 = move.clone().easing(easeInOut(2.0));
-        var move_ease_inout_back3 = move_ease_inout3.reverse();
-        var seq3 = sequence(move_ease_inout3, move_ease_inout_back3);
-        sp1.runAction(seq3.repeatForever());
-        sublayer.addChild(sp1, 1);
+    var move = new MoveBy(3, new Point(350, 0));
+    var move_ease_inout3 = move.clone().easing(easeInOut(2.0));
+    var move_ease_inout_back3 = move_ease_inout3.reverse();
+    var seq3 = new Sequence(move_ease_inout3, move_ease_inout_back3);
+    sp1.runAction(seq3.repeatForever());
+    sublayer.addChild(sp1, 1);
 
-        var fire = new ParticleFire();
-        fire.texture = textureCache.addImage(s_fire);
-        fire.x = 80;
-        fire.y = winSize.height / 2 - 50;
+    var fire = new ParticleFire();
+    fire.texture = textureCache.addImage(s_fire);
+    fire.x = 80;
+    fire.y = winSize.height / 2 - 50;
 
-        var copy_seq3 = seq3.clone();
+    var copy_seq3 = seq3.clone();
 
-        fire.runAction(copy_seq3.repeatForever());
-        sublayer.addChild(fire, 2);
+    fire.runAction(copy_seq3.repeatForever());
+    sublayer.addChild(fire, 2);
 
-        this.schedule(this.shouldNotLeak, 6.0);
+    this.schedule(this.shouldNotLeak, 6.0);
 
-        this.addChild(sublayer, 0, TAG_SPRITE1);
-        //----end5----
-    }
-    shouldNotLeak(dt) {
-        //----start5----shouleNotLeak
-        this.unschedule(this.shouldNotLeak);
-        var sublayer = this.getChildByTag(TAG_SPRITE1);
-        sublayer.removeAllChildren();
-        //----end5----
-    }
-    title() {
-        return "stress test #2: no leaks";
-    }
-
+    this.addChild(sublayer, 0, TAG_SPRITE1);
+    //----end5----
+  }
+  shouldNotLeak(dt) {
+    //----start5----shouleNotLeak
+    this.unschedule(this.shouldNotLeak);
+    var sublayer = this.getChildByTag(TAG_SPRITE1);
+    sublayer.removeAllChildren();
+    //----end5----
+  }
+  title() {
+    return "stress test #2: no leaks";
+  }
 }

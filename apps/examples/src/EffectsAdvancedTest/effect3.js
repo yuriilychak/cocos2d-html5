@@ -28,7 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Point, Size } from "@aspect/core";
-import { MoveBy, sequence } from "@aspect/actions";
+import { MoveBy, Sequence } from "@aspect/actions";
 import { Shaky3D, Waves } from "@aspect/actions3d";
 
 export class Effect3 extends EffectAdvanceTextLayer {
@@ -51,6 +51,6 @@ export class Effect3 extends EffectAdvanceTextLayer {
 
     // moving background. Testing issue #244
     var move = new MoveBy(3, new Point(200, 0));
-    bg.runAction(sequence(move, move.reverse()).repeatForever());
+    bg.runAction(new Sequence(move, move.reverse()).repeatForever());
   }
 }

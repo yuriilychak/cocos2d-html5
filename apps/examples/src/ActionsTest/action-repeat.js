@@ -51,8 +51,7 @@ export class ActionRepeat extends ActionsDemo {
     var action1 = new Sequence(new Place(new Point(60, 60)), a1).repeat(
       3
     );
-    var action2 = cc
-      .sequence(a1.clone(), a1.reverse(), new DelayTime(0.25))
+    var action2 = new Sequence(a1.clone(), a1.reverse(), new DelayTime(0.25))
       .repeatForever();
 
     this._kathia.runAction(action1);

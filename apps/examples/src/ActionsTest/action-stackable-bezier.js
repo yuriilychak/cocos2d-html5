@@ -59,8 +59,7 @@ export class ActionStackableBezier extends ActionsDemo {
     ];
 
     var bezierForward = new BezierBy(3, controlPoints);
-    var repeat = cc
-      .sequence(bezierForward, bezierForward.reverse())
+    var repeat = new Sequence(bezierForward, bezierForward.reverse())
       .repeatForever();
     this._grossini.runAction(repeat);
     //----end35----

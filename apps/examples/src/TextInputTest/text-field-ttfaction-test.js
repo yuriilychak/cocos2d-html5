@@ -34,7 +34,7 @@ import {
   TEXT_INPUT_FONT_SIZE
 } from "./text-input-test-constants";
 import { Color, Director, LabelTTF, Point, log } from "@aspect/core";
-import { CallFunc, FadeIn, FadeOut, MoveTo, RotateBy, ScaleTo, sequence, spawn } from "@aspect/actions";
+import { CallFunc, FadeIn, FadeOut, MoveTo, RotateBy, ScaleTo, Sequence, Spawn } from "@aspect/actions";
 
 import { TextFieldTTF } from "@aspect/text-input";
 export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
@@ -76,8 +76,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     super.onEnter();
 
     this._charLimit = 20;
-    this._textFieldAction = cc
-      .sequence(new FadeOut(0.25), new FadeIn(0.25))
+    this._textFieldAction = new Sequence(new FadeOut(0.25), new FadeIn(0.25))
       .repeatForever();
     this._action = false;
 
@@ -146,8 +145,8 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     label.y = Director.getInstance().getWinSize().height - label.height * 2;
     label.scale = 8;
 
-    var seq = sequence(
-      spawn(
+    var seq = new Sequence(
+      new Spawn(
         new MoveTo(duration, new Point(endX, endY)),
         new ScaleTo(duration, 1),
         new FadeOut(duration)
@@ -184,8 +183,8 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     label.x = beginX;
     label.y = beginY;
 
-    var seq = sequence(
-      spawn(
+    var seq = new Sequence(
+      new Spawn(
         new MoveTo(duration, endPos),
         new RotateBy(rotateDuration, Math.random() % 2 ? 360 : -360).repeat(
           repeatTime

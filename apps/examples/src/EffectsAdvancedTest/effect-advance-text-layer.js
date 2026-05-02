@@ -27,122 +27,148 @@
 
 import { EffectAdvanceScene } from "./effect-advance-scene";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
-import { backEffectAdvanceAction, nextEffectAdvanceAction, restartEffectAdvanceAction } from "./effects-advanced-test-helpers";
-import { s_back3, s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_pathSister1, s_pathSister2 } from "../resources";
+import {
+  backEffectAdvanceAction,
+  nextEffectAdvanceAction,
+  restartEffectAdvanceAction
+} from "./effects-advanced-test-helpers";
+import {
+  s_back3,
+  s_pathB1,
+  s_pathB2,
+  s_pathF1,
+  s_pathF2,
+  s_pathR1,
+  s_pathR2,
+  s_pathSister1,
+  s_pathSister2
+} from "../resources";
 import { winSize } from "../constants";
-import { Color, Director, LabelTTF, Layer, LayerGradient, Sprite, visibleRect } from "@aspect/core";
-import { ScaleBy, sequence } from "@aspect/actions";
+import {
+  Color,
+  Director,
+  LabelTTF,
+  Layer,
+  LayerGradient,
+  Sprite,
+  visibleRect
+} from "@aspect/core";
+import { ScaleBy, Sequence } from "@aspect/actions";
 import { Menu, MenuItemImage } from "@aspect/menus";
 
 import { NodeGrid } from "@aspect/node-grid";
 export class EffectAdvanceTextLayer extends Layer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._atlas = null;
 
+    this._title = null;
 
-        this._atlas = null;
+    this.rootNode = null;
+    this.init();
+  }
 
+  onEnter() {
+    super.onEnter();
 
-        this._title = null;
+    // back gradient
+    this.rootNode = new LayerGradient(
+      new Color(0, 0, 0, 255),
+      new Color(98, 99, 117, 255)
+    );
+    var nodeGrid = new NodeGrid();
+    nodeGrid.addChild(this.rootNode);
+    this.addChild(nodeGrid, 0, EffectsAdvancedTest.TAG_BACKGROUND);
 
+    var bg = new Sprite(s_back3);
+    //this.addChild(bg, 0, EffectsAdvancedTest.TAG_BACKGROUND);
+    this.rootNode.addChild(bg);
+    bg.x = winSize.width / 2;
+    bg.y = winSize.height / 2;
 
-        this.rootNode = null;
-        this.init();
+    var grossini = new Sprite(s_pathSister2);
+    var grossiniGrid = new NodeGrid();
+    grossiniGrid.addChild(grossini);
+    this.rootNode.addChild(grossiniGrid, 1, EffectsAdvancedTest.TAG_SPRITE1);
+    grossini.x = winSize.width / 3;
+    grossini.y = winSize.height / 2;
+    var sc = new ScaleBy(2, 5);
+    var sc_back = sc.reverse();
+    grossini.runAction(new Sequence(sc, sc_back).repeatForever());
+
+    var tamara = new Sprite(s_pathSister1);
+    var tamaraGrid = new NodeGrid();
+    tamaraGrid.addChild(tamara);
+    this.rootNode.addChild(tamaraGrid, 1, EffectsAdvancedTest.TAG_SPRITE2);
+    tamara.x = (winSize.width * 2) / 3;
+    tamara.y = winSize.height / 2;
+    var sc2 = new ScaleBy(2, 5);
+    var sc2_back = sc2.reverse();
+    tamara.runAction(new Sequence(sc2, sc2_back).repeatForever());
+
+    var label = new LabelTTF(this.title(), "Arial", 28);
+    label.x = visibleRect.center.x;
+    label.y = visibleRect.top.y - 80;
+    this.addChild(label);
+    label.tag = EffectsAdvancedTest.TAG_LABEL;
+
+    var strSubtitle = this.subtitle();
+    if (strSubtitle != "") {
+      var subtitleLabel = new LabelTTF(strSubtitle, "Arial", 16);
+      this.addChild(subtitleLabel, 101);
+      subtitleLabel.x = visibleRect.center.x;
+      subtitleLabel.y = visibleRect.top.y - 80;
     }
 
-    onEnter() {
-        super.onEnter();
+    var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
+    var item2 = new MenuItemImage(
+      s_pathR1,
+      s_pathR2,
+      this.restartCallback,
+      this
+    );
+    var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
 
-        // back gradient
-        this.rootNode = new LayerGradient(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
-	    var nodeGrid = new NodeGrid();
-	    nodeGrid.addChild(this.rootNode);
-        this.addChild(nodeGrid, 0, EffectsAdvancedTest.TAG_BACKGROUND);
+    var menu = new Menu(item1, item2, item3);
 
-        var bg = new Sprite(s_back3);
-        //this.addChild(bg, 0, EffectsAdvancedTest.TAG_BACKGROUND);
-	    this.rootNode.addChild(bg);
-        bg.x = winSize.width / 2;
-        bg.y = winSize.height / 2;
+    menu.x = 0;
+    menu.y = 0;
+    var centerx = visibleRect.center.x,
+      bottomy = visibleRect.bottom.y;
+    item1.x = centerx - item2.width * 2;
+    item1.y = bottomy + item2.height / 2;
+    item2.x = centerx;
+    item2.y = bottomy + item2.height / 2;
+    item3.x = centerx + item2.width * 2;
+    item3.y = bottomy + item2.height / 2;
 
-        var grossini = new Sprite(s_pathSister2);
-	    var grossiniGrid = new NodeGrid();
-	    grossiniGrid.addChild(grossini);
-	    this.rootNode.addChild(grossiniGrid, 1, EffectsAdvancedTest.TAG_SPRITE1);
-        grossini.x = winSize.width / 3;
-        grossini.y = winSize.height / 2;
-        var sc = new ScaleBy(2, 5);
-        var sc_back = sc.reverse();
-        grossini.runAction(sequence(sc, sc_back).repeatForever());
+    this.addChild(menu, 1);
+  }
 
-        var tamara = new Sprite(s_pathSister1);
-	    var tamaraGrid = new NodeGrid();
-	    tamaraGrid.addChild(tamara);
-	    this.rootNode.addChild(tamaraGrid, 1, EffectsAdvancedTest.TAG_SPRITE2);
-        tamara.x = winSize.width * 2 / 3;
-        tamara.y = winSize.height / 2;
-        var sc2 = new ScaleBy(2, 5);
-        var sc2_back = sc2.reverse();
-        tamara.runAction(sequence(sc2, sc2_back).repeatForever());
+  title() {
+    return "No title";
+  }
 
-        var label = new LabelTTF(this.title(), "Arial", 28);
-        label.x = visibleRect.center.x;
-        label.y = visibleRect.top.y - 80;
-        this.addChild(label);
-        label.tag = EffectsAdvancedTest.TAG_LABEL;
+  subtitle() {
+    return "";
+  }
 
-        var strSubtitle = this.subtitle();
-        if (strSubtitle != "") {
-            var subtitleLabel = new LabelTTF(strSubtitle, "Arial", 16);
-            this.addChild(subtitleLabel, 101);
-            subtitleLabel.x = visibleRect.center.x;
-            subtitleLabel.y = visibleRect.top.y - 80;
-        }
+  restartCallback(sender) {
+    var scene = new EffectAdvanceScene();
+    scene.addChild(restartEffectAdvanceAction());
+    Director.getInstance().runScene(scene);
+  }
 
-        var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
-        var item2 = new MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
+  nextCallback(sender) {
+    var scene = new EffectAdvanceScene();
+    scene.addChild(nextEffectAdvanceAction());
+    Director.getInstance().runScene(scene);
+  }
 
-        var menu = new Menu(item1, item2, item3);
-
-        menu.x = 0;
-        menu.y = 0;
-	    var centerx = visibleRect.center.x, bottomy = visibleRect.bottom.y;
-        item1.x = centerx - item2.width * 2;
-        item1.y = bottomy + item2.height / 2;
-        item2.x = centerx;
-        item2.y = bottomy + item2.height / 2;
-        item3.x = centerx + item2.width * 2;
-        item3.y = bottomy + item2.height / 2;
-
-        this.addChild(menu, 1);
-    }
-
-    title() {
-        return "No title";
-    }
-
-    subtitle() {
-        return "";
-    }
-
-    restartCallback(sender) {
-        var scene = new EffectAdvanceScene();
-        scene.addChild(restartEffectAdvanceAction());
-        Director.getInstance().runScene(scene);
-    }
-
-    nextCallback(sender) {
-        var scene = new EffectAdvanceScene();
-        scene.addChild(nextEffectAdvanceAction());
-        Director.getInstance().runScene(scene);
-    }
-
-    backCallback(sender) {
-        var scene = new EffectAdvanceScene();
-        scene.addChild(backEffectAdvanceAction());
-        Director.getInstance().runScene(scene);
-    }
-
+  backCallback(sender) {
+    var scene = new EffectAdvanceScene();
+    scene.addChild(backEffectAdvanceAction());
+    Director.getInstance().runScene(scene);
+  }
 }

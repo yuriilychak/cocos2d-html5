@@ -1,13 +1,13 @@
 import { 
   Layer, 
   director, 
-  Scale9Sprite, 
   Point, 
   LabelTTF, 
   Size, 
   Color, 
   log 
 } from "@aspect/core";
+import { Scale9Sprite } from "@aspect/ccui";
 import { EaseIn, EaseOut, ScaleTo, sequence } from "@aspect/actions";
 import { Menu, MenuItemSprite } from "@aspect/menus";
 

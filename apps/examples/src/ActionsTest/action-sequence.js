@@ -33,7 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
 import { Point } from "@aspect/core";
-import { MoveBy, RotateBy, Sequence, sequence } from "@aspect/actions";
+import { MoveBy, RotateBy, Sequence } from "@aspect/actions";
 
 export class ActionSequence extends ActionsDemo {
   constructor() {

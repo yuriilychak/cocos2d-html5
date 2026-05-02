@@ -32,7 +32,7 @@ export const IMAGE_FORMAT_PNG = 1;
 export const IMAGE_FORMAT_RAWDATA = 9;
 
 /**
- * cc.RenderTexture is a generic rendering target. To render things into it,<br/>
+ * RenderTexture is a generic rendering target. To render things into it,<br/>
  * simply construct a render target, call begin on it, call visit on any cocos<br/>
  * scenes or objects to render them, and call end. For convenience, render texture<br/>
  * adds a sprite as it's display child with the results, so you can simply add<br/>

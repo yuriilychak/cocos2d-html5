@@ -29,7 +29,7 @@
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
 import { Color, LayerColor } from "@aspect/core";
-import { DelayTime, FadeIn, FadeOut, FadeTo, sequence } from "@aspect/actions";
+import { DelayTime, FadeIn, FadeOut, FadeTo, Sequence } from "@aspect/actions";
 import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
@@ -58,7 +58,7 @@ export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
     var fadeInAction = new FadeIn(0.8);
 
     colorLayer.runAction(
-      sequence(
+      new Sequence(
         fadeToAction,
         delay,
         fadeOutAction,

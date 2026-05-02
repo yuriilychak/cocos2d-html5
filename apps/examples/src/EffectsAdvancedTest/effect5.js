@@ -28,7 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Size } from "@aspect/core";
-import { DelayTime, sequence } from "@aspect/actions";
+import { DelayTime, Sequence } from "@aspect/actions";
 import { Liquid, StopGrid } from "@aspect/actions3d";
 
 export class Effect5 extends EffectAdvanceTextLayer {
@@ -40,7 +40,7 @@ export class Effect5 extends EffectAdvanceTextLayer {
     super.onEnter();
 
     var effect = new Liquid(2, new Size(32, 24), 1, 20);
-    var stopEffect = sequence(effect, new DelayTime(2), new StopGrid());
+    var stopEffect = new Sequence(effect, new DelayTime(2), new StopGrid());
 
     var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
     bg.runAction(stopEffect);

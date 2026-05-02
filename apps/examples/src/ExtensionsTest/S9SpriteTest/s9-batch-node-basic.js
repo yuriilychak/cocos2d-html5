@@ -30,7 +30,7 @@
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
 import { Point, Rect, SpriteBatchNode, log } from "@aspect/core";
-import { MoveBy, sequence } from "@aspect/actions";
+import { MoveBy, Sequence } from "@aspect/actions";
 import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9BatchNodeBasic extends S9SpriteTestDemo {
@@ -71,6 +71,6 @@ export class S9BatchNodeBasic extends S9SpriteTestDemo {
 
     var moveBy = new MoveBy(1, new Point(80, 80));
     var moveByBack = moveBy.reverse();
-    blocks.runAction(sequence(moveBy, moveByBack));
+    blocks.runAction(new Sequence(moveBy, moveByBack));
   }
 }

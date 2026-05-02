@@ -25,7 +25,7 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
-import { DelayTime, sequence } from "@aspect/actions";
+import { DelayTime, Sequence } from "@aspect/actions";
 import { FadeOutBLTiles } from "@aspect/actions3d";
 
 export class FadeOutBLTilesTest extends EffectsBaseLayer {
@@ -39,7 +39,7 @@ export class FadeOutBLTilesTest extends EffectsBaseLayer {
     var action = new FadeOutBLTiles(duration, new Size(16, 12));
     var delay = new DelayTime(0.5);
     var back = action.reverse();
-    var seq = sequence(action, delay, back);
+    var seq = new Sequence(action, delay, back);
     return seq;
   }
 }

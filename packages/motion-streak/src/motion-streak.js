@@ -13,7 +13,7 @@ import {
 } from "@aspect/core";
 
 /**
- * cc.MotionStreak manages a Ribbon based on it's motion in absolute space.
+ * MotionStreak manages a Ribbon based on it's motion in absolute space.
  * @property {Texture2D} texture                         - Texture used for the motion streak.
  * @property {Boolean}   fastMode                        - Indicate whether use fast mode.
  * @property {Boolean}   startingPositionInitialized     - Indicate whether starting position initialized.
@@ -96,12 +96,12 @@ export class MotionStreak extends Node {
   }
 
   getOpacity() {
-    log("cc.MotionStreak.getOpacity has not been supported.");
+    log("MotionStreak.getOpacity has not been supported.");
     return 0;
   }
 
   setOpacity(opacity) {
-    log("cc.MotionStreak.setOpacity has not been supported.");
+    log("MotionStreak.setOpacity has not been supported.");
   }
 
   setOpacityModifyRGB(value) {}
@@ -130,7 +130,7 @@ export class MotionStreak extends Node {
   initWithFade(fade, minSeg, stroke, color, texture) {
     if (!texture)
       throw new Error(
-        "cc.MotionStreak.initWithFade(): Invalid filename or texture"
+        "MotionStreak.initWithFade(): Invalid filename or texture"
       );
 
     if (isString(texture)) texture = textureCache.addImage(texture);

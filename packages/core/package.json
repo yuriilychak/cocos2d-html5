@@ -9,7 +9,7 @@
     "src/"
   ],
   "scripts": {
-    "build": "rollup -c ../../scripts/rollup.package.mjs"
+    "build": "rollup -c rollup.config.mjs"
   },
   "dependencies": {}
 }

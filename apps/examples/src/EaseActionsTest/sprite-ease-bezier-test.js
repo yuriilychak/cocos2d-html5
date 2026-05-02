@@ -31,7 +31,7 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { director } from "../constants";
 import { Point } from "@aspect/core";
-import { BezierBy, BezierTo, easeBezierAction } from "@aspect/actions";
+import { BezierBy, BezierTo, easeBezierAction, Sequence } from "@aspect/actions";
 
 export class SpriteEaseBezierTest extends EaseSpriteDemo {
   onEnter() {
@@ -63,8 +63,7 @@ export class SpriteEaseBezierTest extends EaseSpriteDemo {
     );
 
     var bezierEaseBack = bezierEaseForward.reverse();
-    var bezierEaseTo = cc
-      .sequence(bezierEaseForward, bezierEaseBack)
+    var bezierEaseTo = new Sequence(bezierEaseForward, bezierEaseBack)
       .repeatForever();
 
     // sprite 2

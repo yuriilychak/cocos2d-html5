@@ -33,38 +33,37 @@ import { sequence } from "@aspect/actions";
 
 import { ProgressTimer, ProgressTo } from "@aspect/progress-timer";
 export class SpriteProgressToVertical extends SpriteDemo {
-    onEnter() {
-        //----start2----onEnter
-        super.onEnter();
+  onEnter() {
+    //----start2----onEnter
+    super.onEnter();
 
-        var to1 = sequence(new ProgressTo(2, 100), new ProgressTo(0, 0));
-        var to2 = sequence(new ProgressTo(2, 100), new ProgressTo(0, 0));
+    var to1 = new Sequence(new ProgressTo(2, 100), new ProgressTo(0, 0));
+    var to2 = new Sequence(new ProgressTo(2, 100), new ProgressTo(0, 0));
 
-        var left = new ProgressTimer(new Sprite(s_pathSister1));
-        left.type = ProgressTimer.TYPE_BAR;
-        //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        left.midPoint = new Point(0, 0);
-        //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        left.barChangeRate = new Point(0, 1);
-        this.addChild(left);
-        left.x = 200;
-        left.y = winSize.height / 2;
-        left.runAction(to1.repeatForever());
+    var left = new ProgressTimer(new Sprite(s_pathSister1));
+    left.type = ProgressTimer.TYPE_BAR;
+    //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
+    left.midPoint = new Point(0, 0);
+    //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+    left.barChangeRate = new Point(0, 1);
+    this.addChild(left);
+    left.x = 200;
+    left.y = winSize.height / 2;
+    left.runAction(to1.repeatForever());
 
-        var right = new ProgressTimer(new Sprite(s_pathSister2));
-        right.type = ProgressTimer.TYPE_BAR;
-        //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-        right.midPoint = new Point(0, 1);
-        //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-        right.barChangeRate = new Point(0, 1);
-        this.addChild(right);
-        right.x = winSize.width - 200;
-        right.y = winSize.height / 2;
-        right.runAction(to2.repeatForever());
-        //----end2----
-    }
-    title() {
-        return "ProgressTo Vertical";
-    }
-
+    var right = new ProgressTimer(new Sprite(s_pathSister2));
+    right.type = ProgressTimer.TYPE_BAR;
+    //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
+    right.midPoint = new Point(0, 1);
+    //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+    right.barChangeRate = new Point(0, 1);
+    this.addChild(right);
+    right.x = winSize.width - 200;
+    right.y = winSize.height / 2;
+    right.runAction(to2.repeatForever());
+    //----end2----
+  }
+  title() {
+    return "ProgressTo Vertical";
+  }
 }

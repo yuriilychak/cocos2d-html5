@@ -9,7 +9,7 @@
  * Classes from @aspect/core (Node, NodeCanvasRenderCmd, etc.) are still
  * accessible inside the block because block scope does not break lexical
  * lookup of outer-scope bindings. Spine classes are exposed to the outer
- * scope via the `sp` / `cc.sp` namespace objects.
+ * scope via the `sp` / `sp` namespace objects.
  */
 import { join } from "path";
 import MagicString from "magic-string";

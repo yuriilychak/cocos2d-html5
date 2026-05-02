@@ -37,7 +37,7 @@ import {
 import { LayerTest } from "./layer-test";
 import { autoTestEnabled, director } from "../constants";
 import { Color, LayerColor } from "@aspect/core";
-import { DelayTime, FadeOut, TintBy, sequence } from "@aspect/actions";
+import { DelayTime, FadeOut, TintBy, Sequence } from "@aspect/actions";
 
 export class LayerTest2 extends LayerTest {
   constructor() {
@@ -70,19 +70,11 @@ export class LayerTest2 extends LayerTest {
     var actionFadeBack = actionFade.reverse();
 
     if (autoTestEnabled) {
-      var seq1 = sequence(
-        actionTint,
-        new DelayTime(0.25),
-        actionTintBack
-      );
-      var seq2 = sequence(
-        actionFade,
-        new DelayTime(0.25),
-        actionFadeBack
-      );
+      var seq1 = new Sequence(actionTint, new DelayTime(0.25), actionTintBack);
+      var seq2 = new Sequence(actionFade, new DelayTime(0.25), actionFadeBack);
     } else {
-      var seq1 = sequence(actionTint, actionTintBack);
-      var seq2 = sequence(actionFade, actionFadeBack);
+      var seq1 = new Sequence(actionTint, actionTintBack);
+      var seq2 = new Sequence(actionFade, actionFadeBack);
     }
 
     layer1.runAction(seq1);
