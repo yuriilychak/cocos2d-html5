@@ -34,8 +34,9 @@ import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { Director, LabelTTF, Point, Sprite, Sys } from "@aspect/core";
+import { Director, LabelTTF, Point, RendererConfig, Sprite, Sys } from "@aspect/core";
 import { DelayTime, MoveBy, sequence } from "@aspect/actions";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXIsoVertexZ extends TMXFixBugLayer {
     constructor() {
@@ -46,7 +47,7 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
         this.testDuration = 5.2;
 
         this.pixel = {"0":255, "1":255, "2":255, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-vertexz.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test-vertexz.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         map.x = -map.width / 2;
@@ -94,7 +95,7 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
         }
         else {
             var layer = this.tamara.parent;
-            this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(30 - this.tamara.y / 32) / 30;
+            this.tamara.vertexZ = layer.vertexZ + RendererConfig.getInstance().renderer.assignedZStep * Math.floor(30 - this.tamara.y / 32) / 30;
         }
     }
     //

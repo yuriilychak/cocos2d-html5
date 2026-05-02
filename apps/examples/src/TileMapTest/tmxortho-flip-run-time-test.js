@@ -35,6 +35,7 @@ import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point } from "@aspect/core";
 import { ScaleBy } from "@aspect/actions";
+import { TMXTiledMap, TMX_TILE_VERTICAL_FLAG, TMX_TILE_HORIZONTAL_FLAG } from "@aspect/tilemap";
 
 export class TMXOrthoFlipRunTimeTest extends TileDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     this.pixel = { 0: 41, 1: 42, 2: 54, 3: 255 };
 
     this.pixel1 = null;
-    var map = new cc.TMXTiledMap(
+    var map = new TMXTiledMap(
       s_resprefix + "TileMaps/ortho-rotation-test.tmx"
     );
     this.addChild(map, 0, TAG_TILE_MAP);
@@ -72,10 +73,10 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     var flags = layer.getTileFlagsAt(tileCoord);
     var GID = layer.getTileGIDAt(tileCoord);
     // Vertical
-    if ((flags & cc.TMX_TILE_VERTICAL_FLAG) >>> 0) {
-      flags = (flags & (~cc.TMX_TILE_VERTICAL_FLAG >>> 0)) >>> 0;
+    if ((flags & TMX_TILE_VERTICAL_FLAG) >>> 0) {
+      flags = (flags & (~TMX_TILE_VERTICAL_FLAG >>> 0)) >>> 0;
     } else {
-      flags = (flags | cc.TMX_TILE_VERTICAL_FLAG) >>> 0;
+      flags = (flags | TMX_TILE_VERTICAL_FLAG) >>> 0;
     }
     layer.setTileGID(GID, tileCoord, flags);
 
@@ -83,18 +84,18 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     flags = layer.getTileFlagsAt(tileCoord);
     GID = layer.getTileGIDAt(tileCoord);
     // Vertical
-    if ((flags & cc.TMX_TILE_VERTICAL_FLAG) >>> 0)
-      flags = (flags & (~cc.TMX_TILE_VERTICAL_FLAG >>> 0)) >>> 0;
-    else flags = (flags | cc.TMX_TILE_VERTICAL_FLAG) >>> 0;
+    if ((flags & TMX_TILE_VERTICAL_FLAG) >>> 0)
+      flags = (flags & (~TMX_TILE_VERTICAL_FLAG >>> 0)) >>> 0;
+    else flags = (flags | TMX_TILE_VERTICAL_FLAG) >>> 0;
     layer.setTileGID(GID, tileCoord, flags);
 
     tileCoord = new Point(2, 8);
     flags = layer.getTileFlagsAt(tileCoord);
     GID = layer.getTileGIDAt(tileCoord);
     // Horizontal
-    if ((flags & cc.TMX_TILE_HORIZONTAL_FLAG) >>> 0)
-      flags = (flags & (~cc.TMX_TILE_HORIZONTAL_FLAG >>> 0)) >>> 0;
-    else flags = (flags | cc.TMX_TILE_HORIZONTAL_FLAG) >>> 0;
+    if ((flags & TMX_TILE_HORIZONTAL_FLAG) >>> 0)
+      flags = (flags & (~TMX_TILE_HORIZONTAL_FLAG >>> 0)) >>> 0;
+    else flags = (flags | TMX_TILE_HORIZONTAL_FLAG) >>> 0;
     layer.setTileGID(GID, tileCoord, flags);
   }
   //

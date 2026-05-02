@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Color, LayerColor } from "@aspect/core";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXHexTest extends TileDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class TMXHexTest extends TileDemo {
     var color = new LayerColor(new Color(64, 64, 64, 255));
     this.addChild(color, -1);
 
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/hexa-test.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/hexa-test.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
   }
   title() {

@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { ScaleBy } from "@aspect/actions";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXOrthoFlipTest extends TileDemo {
   constructor() {
@@ -42,7 +43,7 @@ export class TMXOrthoFlipTest extends TileDemo {
     this.testDuration = 2.2;
 
     this.pixel = { 0: 41, 1: 42, 2: 54, 3: 255 };
-    var map = new cc.TMXTiledMap(
+    var map = new TMXTiledMap(
       s_resprefix + "TileMaps/ortho-rotation-test.tmx"
     );
     this.addChild(map, 0, TAG_TILE_MAP);

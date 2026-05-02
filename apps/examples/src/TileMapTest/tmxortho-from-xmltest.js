@@ -35,6 +35,7 @@ import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { ScaleBy } from "@aspect/actions";
 import { Sys, log } from "@aspect/core";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXOrthoFromXMLTest extends TileDemo {
   constructor() {
@@ -49,7 +50,7 @@ export class TMXOrthoFromXMLTest extends TileDemo {
     var resources = s_resprefix + "TileMaps";
     var filePath = s_resprefix + "TileMaps/orthogonal-test1.tmx";
     var xmlStr = cc.loader.getRes(filePath);
-    var map = new cc.TMXTiledMap(xmlStr, resources);
+    var map = new TMXTiledMap(xmlStr, resources);
     this.addChild(map, 0, TAG_TILE_MAP);
 
     log("ContentSize: " + map.width + ", " + map.height);

@@ -30,6 +30,7 @@ import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Color } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXGIDObjectsTest extends TileDemo {
   constructor() {
@@ -42,7 +43,7 @@ export class TMXGIDObjectsTest extends TileDemo {
     drawNode.setDrawColor(new Color(255, 255, 255, 255));
     this.addChild(drawNode);
 
-    var map = new cc.TMXTiledMap(
+    var map = new TMXTiledMap(
       s_resprefix + "TileMaps/test-object-layer.tmx"
     );
     this.addChild(map, 0, TAG_TILE_MAP);

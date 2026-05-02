@@ -34,8 +34,9 @@ import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { Director, LabelTTF, Point, Sprite, Sys } from "@aspect/core";
+import { Director, LabelTTF, Point, RendererConfig, Sprite, Sys } from "@aspect/core";
 import { DelayTime, MoveBy, sequence } from "@aspect/actions";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXOrthoVertexZ extends TMXFixBugLayer {
     constructor() {
@@ -46,7 +47,7 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
         this.testDuration = 5.2;
 
         this.pixel = {"0":119, "1":205, "2":73, "3":255};
-        var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-vertexz.tmx");
+        var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test-vertexz.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
         // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
@@ -96,7 +97,7 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
             // tile height is 101x81
             // map size: 12x12
             var layer = this.tamara.parent;
-            this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
+            this.tamara.vertexZ = layer.vertexZ + RendererConfig.getInstance().renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
         }
     }
     //

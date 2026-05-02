@@ -35,6 +35,7 @@ import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Sprite } from "@aspect/core";
 import { DelayTime, MoveBy, sequence } from "@aspect/actions";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXIsoZorder extends TileDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class TMXIsoZorder extends TileDemo {
     this.testDuration = 5.2;
 
     this.pixel = { 0: 255, 1: 255, 2: 255, 3: 255 };
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-zorder.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test-zorder.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
     map.x = -map.width / 2;

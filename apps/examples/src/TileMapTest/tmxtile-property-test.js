@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXTilePropertyTest extends TileDemo {
   constructor() {
@@ -41,7 +42,7 @@ export class TMXTilePropertyTest extends TileDemo {
     this.testDuration = 0.25;
 
     this.propertiesList = [];
-    var map = new cc.TMXTiledMap(
+    var map = new TMXTiledMap(
       s_resprefix + "TileMaps/ortho-tile-property.tmx"
     );
     this.addChild(map, 0, TAG_TILE_MAP);

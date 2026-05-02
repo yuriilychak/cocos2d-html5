@@ -34,6 +34,7 @@ import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Sys } from "@aspect/core";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXBug987 extends TileDemo {
   constructor() {
@@ -46,7 +47,7 @@ export class TMXBug987 extends TileDemo {
     this.pixel2 = { 0: 255, 1: 208, 2: 148, 3: 255 };
 
     this.pixel3 = { 0: 182, 1: 182, 2: 146, 3: 255 };
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test6.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test6.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
     this.log("ContentSize:" + map.width + "," + map.height);

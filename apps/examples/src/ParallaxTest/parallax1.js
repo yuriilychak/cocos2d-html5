@@ -28,6 +28,7 @@
 import { s_back, s_power, s_resprefix } from "../resources";
 import { Point, Sprite } from "@aspect/core";
 import { DelayTime, MoveBy, sequence } from "@aspect/actions";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class Parallax1 extends ParallaxDemo {
   constructor() {
@@ -53,7 +54,7 @@ export class Parallax1 extends ParallaxDemo {
 
     // Middle layer: a Tile map atlas
     //var tilemap = TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
-    this._tilemap = new cc.TMXTiledMap(
+    this._tilemap = new TMXTiledMap(
       s_resprefix + "TileMaps/orthogonal-test2.tmx"
     );
 

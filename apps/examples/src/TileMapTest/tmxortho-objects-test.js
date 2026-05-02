@@ -35,6 +35,7 @@ import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Color } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXOrthoObjectsTest extends TileDemo {
   constructor() {
@@ -45,7 +46,7 @@ export class TMXOrthoObjectsTest extends TileDemo {
     drawNode.setLineWidth(3);
     drawNode.setDrawColor(new Color(255, 255, 255, 255));
 
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-objects.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/ortho-objects.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
     var group = map.getObjectGroup("Object Group 1");

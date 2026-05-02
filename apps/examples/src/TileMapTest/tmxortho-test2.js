@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXOrthoTest2 extends TileDemo {
   constructor() {
@@ -48,7 +49,7 @@ export class TMXOrthoTest2 extends TileDemo {
     //
     // it should not flicker. No artifacts should appear
     //
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
   }
   title() {

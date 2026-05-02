@@ -28,6 +28,7 @@
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
 import { EventListener, EventManager, Point, Sprite, Sys } from "@aspect/core";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class Parallax2 extends ParallaxDemo {
   constructor() {
@@ -78,7 +79,7 @@ export class Parallax2 extends ParallaxDemo {
 
     // Middle layer: a Tile map atlas
     //var tilemap = TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
-    var tilemap = new cc.TMXTiledMap(
+    var tilemap = new TMXTiledMap(
       s_resprefix + "TileMaps/orthogonal-test2.tmx"
     );
 

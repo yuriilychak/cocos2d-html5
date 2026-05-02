@@ -35,6 +35,7 @@ import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Color, LayerColor, Point } from "@aspect/core";
 import { MoveTo } from "@aspect/actions";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXIsoTest extends TileDemo {
   constructor() {
@@ -44,7 +45,7 @@ export class TMXIsoTest extends TileDemo {
     var color = new LayerColor(new Color(64, 64, 64, 255));
     this.addChild(color, -1);
 
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
     // move map to the center of the screen

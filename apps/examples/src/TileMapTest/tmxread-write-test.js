@@ -35,6 +35,7 @@ import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point, Sys } from "@aspect/core";
 import { CallFunc, FadeIn, FadeOut, MoveBy, RotateBy, ScaleBy, ScaleTo, sequence } from "@aspect/actions";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXReadWriteTest extends TileDemo {
   constructor() {
@@ -48,7 +49,7 @@ export class TMXReadWriteTest extends TileDemo {
 
     this.pixel2 = { 0: 192, 1: 144, 2: 16, 3: 255 };
 
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
     var layer = map.getLayer("Layer 0");

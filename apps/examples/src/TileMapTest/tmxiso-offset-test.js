@@ -28,6 +28,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXIsoOffsetTest extends TileDemo {
   constructor() {
@@ -36,7 +37,7 @@ export class TMXIsoOffsetTest extends TileDemo {
     this.testDuration = 0.25;
 
     this.pixel = { 0: 168, 1: 168, 2: 168, 3: 255 };
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/tile_iso_offset.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/tile_iso_offset.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
   }
   title() {

@@ -33,6 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
+import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXBug787 extends TileDemo {
   constructor() {
@@ -41,7 +42,7 @@ export class TMXBug787 extends TileDemo {
     this.testDuration = 0.25;
 
     this.pixel = { 0: 255, 1: 255, 2: 255, 3: 255 };
-    var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/iso-test-bug787.tmx");
+    var map = new TMXTiledMap(s_resprefix + "TileMaps/iso-test-bug787.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
     map.scale = 0.25;
