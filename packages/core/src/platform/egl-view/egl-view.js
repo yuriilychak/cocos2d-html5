@@ -792,8 +792,6 @@ export class EGLView extends NewClass {
     director._winSizeInPoints.width = this._designResolutionSize.width;
     director._winSizeInPoints.height = this._designResolutionSize.height;
     policy.postApply(this);
-    cc.winSize.width = director._winSizeInPoints.width;
-    cc.winSize.height = director._winSizeInPoints.height;
 
     if (RendererConfig.getInstance().isWebGL) {
       // reset director's member variables to fit visible rect

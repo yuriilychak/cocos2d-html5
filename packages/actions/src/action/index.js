@@ -1,7 +1,7 @@
 export {
   bezierAt, bounceTime,
-  cardinalSplineAt, reverseControlPoints, cloneControlPoints,
-  getControlPointAt, reverseControlPointsInline
+  reverseControlPoints, cloneControlPoints,
+  reverseControlPointsInline
 } from './utils';
 export { default as Action } from './action';
 export { default as FiniteTimeAction } from './finite-time-action';

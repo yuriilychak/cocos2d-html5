@@ -16,7 +16,7 @@ import {
   warn,
   Node
 } from "@aspect/core";
-import { cardinalSplineAt, getControlPointAt } from "@aspect/actions";
+import { cardinalSplineAt, getControlPointAt } from "@aspect/core";
 // 9600 vertices by default configurable in ccConfig
 // 5 floats per vertex: 2 position + 1 color (uint32) + 2 uv
 var _sharedBuffer = null;

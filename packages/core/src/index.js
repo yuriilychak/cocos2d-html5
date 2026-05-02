@@ -886,6 +886,7 @@ KMGLMatrix.getInstance().lazyInitialize();
 // ======================================================================
 export { Point, pointEqualToPoint } from "./cocoa/geometry/point";
 export { Size } from "./cocoa/geometry/size";
+export { cardinalSplineAt, getControlPointAt } from "./cocoa/geometry/spline-utils";
 export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
 export {
   rand,

@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { Node } from "../base-nodes/node";
+import { Director } from "../director/director";
 import Game from "../boot/game";
 import { RendererConfig } from "../renderer/renderer-config";
 import { LayerCanvasRenderer, LayerWebGLRenderer } from "./renderer";
@@ -40,7 +41,7 @@ export class Layer extends Node {
 
     this._ignoreAnchorPointForPosition = true;
     this.setAnchorPoint(0.5, 0.5);
-    this.setContentSize(cc.winSize);
+    this.setContentSize(Director.getInstance().getWinSize());
     this._cascadeColorEnabled = false;
     this._cascadeOpacityEnabled = false;
   }

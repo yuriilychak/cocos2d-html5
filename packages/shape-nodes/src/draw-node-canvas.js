@@ -6,7 +6,7 @@ import {
   ONE_MINUS_SRC_ALPHA,
   Color
 } from "@aspect/core";
-import { cardinalSplineAt, getControlPointAt } from "@aspect/actions";
+import { cardinalSplineAt, getControlPointAt } from "@aspect/core";
 import { DrawNodeElement } from "./draw-node-element";
 
 export class DrawNodeCanvas {

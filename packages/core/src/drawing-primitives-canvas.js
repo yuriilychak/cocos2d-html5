@@ -27,6 +27,7 @@
 import { RendererConfig } from "./renderer/renderer-config";
 import { NewClass } from "./platform/class";
 import { Point } from "./cocoa/geometry/point";
+import { cardinalSplineAt, getControlPointAt } from "./cocoa/geometry/spline-utils";
 import { Color } from "./platform/types/color";
 
 export const PI2 = Math.PI * 2;
@@ -223,11 +224,11 @@ export class DrawingPrimitiveCanvas extends NewClass {
         lt = (dt - deltaT * p) / deltaT;
       }
 
-      var newPos = cc.CardinalSplineAt(
-        cc.getControlPointAt(config, p - 1),
-        cc.getControlPointAt(config, p - 0),
-        cc.getControlPointAt(config, p + 1),
-        cc.getControlPointAt(config, p + 2),
+      var newPos = cardinalSplineAt(
+        getControlPointAt(config, p - 1),
+        getControlPointAt(config, p - 0),
+        getControlPointAt(config, p + 1),
+        getControlPointAt(config, p + 2),
         tension,
         lt
       );

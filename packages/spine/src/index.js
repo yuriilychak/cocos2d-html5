@@ -8,8 +8,6 @@ import { SkeletonWebGLRenderCmd } from "./skeleton-webgl-render-cmd";
 Skeleton.CanvasRenderCmd = SkeletonCanvasRenderCmd;
 Skeleton.WebGLRenderCmd = SkeletonWebGLRenderCmd;
 
-// Backward compatibility
-
 
 export {
     Skeleton,

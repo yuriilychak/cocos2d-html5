@@ -18,7 +18,8 @@ function stripExportsPlugin() {
     name: "strip-exports",
     renderChunk(code) {
       const s = new MagicString(code);
-      const regex = /^export\s*\{[^}]*\}\s*;?/gm;
+      // Match both plain `export { ... };` and re-export `export { ... } from '...';`
+      const regex = /^export\s*\{[^}]*\}\s*(?:from\s*['"][^'"]*['"]\s*)?;?[ \t]*\n?/gm;
       let match;
 
       while ((match = regex.exec(code)) !== null) {

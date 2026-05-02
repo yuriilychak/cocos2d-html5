@@ -147,11 +147,9 @@ export function createAppConfig({ outputFile = 'dist/cocos2d.min.js' } = {}) {
 /**
  * Workspace packages that are resolved to their src/index.js and inlined
  * in the test bundle instead of being treated as cc.* externals.
- * - 'extensions' / 'cocostudio': meta-packages (no dist/index.js)
  * - 'core' is NOT in this set — it lives in the engine bundle as cc.* globals.
- * - 'spine' is NOT in this set — it uses a special blockScopeWrap build.
  */
-const INLINE_PACKAGES_EXCLUDE = new Set(['core', 'spine']);
+const INLINE_PACKAGES_EXCLUDE = new Set(['core']);
 
 /**
  * Maps @aspect/* package names to their runtime global variable.
@@ -171,7 +169,7 @@ const ASPECT_GLOBALS = {
  * Supports direct `import { X } from "@aspect/pkg"` in source files:
  * - Meta-packages (no dist) are resolved to their src and inlined.
  * - All other @aspect/* packages (already in engine bundle) are treated as
- *   externals mapped to their runtime global (sp, ccs, cc).
+ *   externals mapped to their runtime global (ccs, cc).
  *
  * Use this for apps that have migrated to a real ES module entry
  * (typically `src/index.js`).
@@ -192,7 +190,7 @@ export function createTestsBundleConfig({
           if (!id.startsWith('@aspect/')) return null;
           const pkgName = id.replace('@aspect/', '');
 
-          // core and spine stay as engine-bundle externals
+          // Only core stays as engine-bundle external; everything else is inlined.
           if (INLINE_PACKAGES_EXCLUDE.has(pkgName)) {
             return { id, external: true };
           }

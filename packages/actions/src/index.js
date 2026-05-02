@@ -1,9 +1,10 @@
 import {
   bezierAt, bounceTime,
-  cardinalSplineAt, reverseControlPoints, cloneControlPoints,
-  getControlPointAt, reverseControlPointsInline,
+  reverseControlPoints, cloneControlPoints,
+  reverseControlPointsInline,
   Action, FiniteTimeAction, Speed, Follow
 } from './action';
+import { cardinalSplineAt, getControlPointAt } from '@aspect/core';
 import {
   ActionInterval, Sequence, Repeat, RepeatForever, Spawn,
   RotateTo, RotateBy, MoveBy, MoveTo, SkewTo, SkewBy,
@@ -65,11 +66,6 @@ EaseExponentialOut.ReversedAction = EaseExponentialIn;
 EaseSineIn.ReversedAction = EaseSineOut;
 EaseSineOut.ReversedAction = EaseSineIn;
 
-
-// Used by @aspect/core drawing primitives via cc.* globals
-// (core cannot import @aspect/actions directly — circular dependency)
-cc.cardinalSplineAt = cardinalSplineAt;
-cc.getControlPointAt = getControlPointAt;
 
 // Factory functions for backward compatibility
 export const sequence = (...args) => new Sequence(...args);

@@ -1,11 +1,9 @@
 import ActionInterval from "../action-interval/action-interval";
 import {
-  cardinalSplineAt,
-  getControlPointAt,
   cloneControlPoints,
   reverseControlPoints
 } from "../action/utils";
-import { Point, ENABLE_STACKABLE_ACTIONS } from "@aspect/core";
+import { cardinalSplineAt, getControlPointAt, Point, ENABLE_STACKABLE_ACTIONS } from "@aspect/core";
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}

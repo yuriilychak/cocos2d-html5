@@ -26,6 +26,7 @@
 
 import { NewClass } from "./platform/class";
 import { Point } from "./cocoa/geometry/point";
+import { cardinalSplineAt, getControlPointAt } from "./cocoa/geometry/spline-utils";
 import {
   SHADER_POSITION_UCOLOR,
   VERTEX_ATTRIB_POSITION
@@ -478,11 +479,11 @@ export class DrawingPrimitiveWebGL extends NewClass {
         lt = (dt - deltaT * p) / deltaT;
       }
 
-      var newPos = cc.cardinalSplineAt(
-        cc.getControlPointAt(config, p - 1),
-        cc.getControlPointAt(config, p),
-        cc.getControlPointAt(config, p + 1),
-        cc.getControlPointAt(config, p + 2),
+      var newPos = cardinalSplineAt(
+        getControlPointAt(config, p - 1),
+        getControlPointAt(config, p),
+        getControlPointAt(config, p + 1),
+        getControlPointAt(config, p + 2),
         tension,
         lt
       );
