@@ -32,6 +32,7 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
+import { Texture2D } from "../textures/texture-2d";
 import { RendererConfig } from "../renderer/renderer-config";
 
 /**
@@ -208,7 +209,7 @@ export default class SpriteFrameCache {
     if (!texture) {
       var texturePath = Path.changeBasename(url, meta.image || ".png");
       texture = TextureCache.getInstance().addImage(texturePath);
-    } else if (texture instanceof cc.Texture2D) {
+    } else if (texture instanceof Texture2D) {
       //do nothing
     } else if (cc.isString(texture)) {
       //string
@@ -254,7 +255,7 @@ export default class SpriteFrameCache {
               tempElement,
               spriteFrame.getRectInPixels()
             );
-            var tempTexture = new cc.Texture2D();
+            var tempTexture = new Texture2D();
             tempTexture.initWithElement(tempElement);
             tempTexture.handleLoadedTexture();
             spriteFrame.setTexture(tempTexture);

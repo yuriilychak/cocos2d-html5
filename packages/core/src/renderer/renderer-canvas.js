@@ -28,6 +28,7 @@ import { log } from "../boot/debugger";
 import Game from "../boot/game";
 import { EGLView } from "../platform/egl-view/egl-view";
 import { arrayRemoveObject } from "../platform/macro/utils";
+import { isUndefined } from "../boot/utils";
 
 var rendererCanvas = {
   childrenOrderDirty: true,
@@ -230,8 +231,8 @@ var rendererCanvas = {
    */
   _renderingToCacheCanvas: function (ctx, instanceID, scaleX, scaleY) {
     if (!ctx) log("The context of RenderTexture is invalid.");
-    scaleX = cc.isUndefined(scaleX) ? 1 : scaleX;
-    scaleY = cc.isUndefined(scaleY) ? 1 : scaleY;
+    scaleX = isUndefined(scaleX) ? 1 : scaleX;
+    scaleY = isUndefined(scaleY) ? 1 : scaleY;
     instanceID = instanceID || this._currentID;
     var i,
       locCmds = this._cacheToCanvasCmds[instanceID],

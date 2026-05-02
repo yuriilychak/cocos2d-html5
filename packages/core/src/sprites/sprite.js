@@ -32,6 +32,7 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
+import { Texture2D } from "../textures/texture-2d";
 import SpriteFrameCache from "./sprite-frame-cache";
 import AnimationCache from "./animation-cache";
 import { RendererConfig } from "../renderer/renderer-config";
@@ -432,7 +433,7 @@ export class Sprite extends EventHelper(Node) {
         Sprite.prototype.init.call(this, fileName, rect);
       }
     } else if (typeof fileName === "object") {
-      if (fileName instanceof cc.Texture2D) {
+      if (fileName instanceof Texture2D) {
         // Init  with texture and rect
         this.initWithTexture(fileName, rect, rotated);
       } else if (fileName instanceof cc.SpriteFrame) {
@@ -443,7 +444,7 @@ export class Sprite extends EventHelper(Node) {
         fileName instanceof HTMLCanvasElement
       ) {
         // Init with a canvas or image element
-        var texture2d = new cc.Texture2D();
+        var texture2d = new Texture2D();
         texture2d.initWithElement(fileName);
         texture2d.handleLoadedTexture();
         this.initWithTexture(texture2d);

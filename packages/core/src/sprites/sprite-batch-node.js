@@ -27,6 +27,7 @@
 import { Node } from "../base-nodes/node";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
+import { Texture2D } from "../textures/texture-2d";
 import {
   BLEND_DST,
   BLEND_SRC
@@ -72,7 +73,7 @@ export class SpriteBatchNode extends Node {
     if (cc.isString(fileImage)) {
       texture2D = TextureCache.getInstance().getTextureForKey(fileImage);
       if (!texture2D) texture2D = TextureCache.getInstance().addImage(fileImage);
-    } else if (fileImage instanceof cc.Texture2D) texture2D = fileImage;
+    } else if (fileImage instanceof Texture2D) texture2D = fileImage;
 
     texture2D && this.initWithTexture(texture2D);
   }

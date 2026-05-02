@@ -24,6 +24,7 @@
 
 import { Sprite } from "./sprite";
 import { Rect } from "../cocoa/geometry/rect";
+import { Texture2D } from "../textures/texture-2d";
 
 /**
  * BakeSprite is a type of sprite that will be cached.
@@ -41,7 +42,7 @@ export class BakeSprite extends Sprite {
       canvasElement.getContext("2d")
     );
 
-    var texture = new cc.Texture2D();
+    var texture = new Texture2D();
     texture.initWithElement(canvasElement);
     texture.handleLoadedTexture();
     this.setTexture(texture);

@@ -32,6 +32,7 @@ import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { error, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
+import { Texture2D } from "../textures/texture-2d";
 import { RendererConfig } from "../renderer/renderer-config";
 import { rectPixelsToPoints, rectPointsToPixels } from "../platform/macro/utils";
 
@@ -258,7 +259,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
                 tempElement,
                 this.getRect()
               );
-              var tempTexture = new cc.Texture2D();
+              var tempTexture = new Texture2D();
               tempTexture.initWithElement(tempElement);
               tempTexture.handleLoadedTexture();
               this.setTexture(tempTexture);
@@ -366,7 +367,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
     if (typeof texture === "string") {
       this._texture = null;
       this._textureFilename = texture;
-    } else if (texture instanceof cc.Texture2D) {
+    } else if (texture instanceof Texture2D) {
       this.setTexture(texture);
     }
 
