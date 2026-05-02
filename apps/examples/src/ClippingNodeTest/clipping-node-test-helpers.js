@@ -37,8 +37,7 @@ import { ShapeTest } from "./shape-test";
 import { SpriteInvertedTest } from "./sprite-inverted-test";
 import { SpriteNoAlphaTest } from "./sprite-no-alpha-test";
 import { SpriteTest } from "./sprite-test";
-import { Color, Sys } from "@aspect/core";
-
+import { Color, RendererConfig, Sys } from "@aspect/core";
 export let _stencilBits = -1;
 
 export var _alphaThreshold = 0.05;
@@ -58,7 +57,7 @@ export var _planeColor = [
 
 export var arrayOfClippingNodeTest = [ScrollViewDemo, ShapeTest, SpriteTest];
 
-if (!Sys.getInstance().isNative && !cc.rendererConfig.isCanvas) {
+if (!Sys.getInstance().isNative && !RendererConfig.getInstance().isCanvas) {
   arrayOfClippingNodeTest.push(
     ShapeInvertedTest,
     SpriteNoAlphaTest,

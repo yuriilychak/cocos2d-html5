@@ -26,16 +26,17 @@
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { winSize } from "../constants";
 import { Point, Size } from "@aspect/core";
+import { Ripple3D } from "@aspect/actions3d";
 
 export class Ripple3DTest extends EffectsBaseLayer {
   title() {
     return "Ripple3D";
   }
   code() {
-    return "a = ripple3D(duration, gridSize, position, radius, waves, amplitude)";
+    return "a = new Ripple3D(duration, gridSize, position, radius, waves, amplitude)";
   }
   getEffect(duration) {
-    return cc.ripple3D(
+    return new Ripple3D(
       duration,
       new Size(32, 24),
       new Point(winSize.width / 2, winSize.height / 2),

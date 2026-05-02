@@ -41,10 +41,10 @@ import {
   winSize
 } from "./constants";
 import { LINE_SPACE, curPos, testNames } from "./tests-main-helpers";
-import { Color, Director, EventListener, EventManager, Game, LabelTTF, Sys } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, EventMouse, Game, LabelTTF, LayerGradient, RendererConfig, Sys } from "@aspect/core";
 import { Menu, MenuItemFont, MenuItemImage, MenuItemLabel, MenuItemToggle } from "@aspect/menus";
 
-export class TestController extends cc.LayerGradient {
+export class TestController extends LayerGradient {
   constructor() {
     super(new Color(0, 0, 0, 255), new Color(0x46, 0x82, 0xb4, 255));
 
@@ -106,7 +106,7 @@ export class TestController extends cc.LayerGradient {
 
       // enable disable
       if (!Sys.getInstance().isNative) {
-        if (!cc.rendererConfig.isCanvas) {
+        if (!RendererConfig.getInstance().isCanvas) {
           menuItem.enabled =
             (testNames[i].platforms & PLATFORM_HTML5) |
             (testNames[i].platforms & PLATFORM_HTML5_WEBGL);
@@ -159,7 +159,7 @@ export class TestController extends cc.LayerGradient {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+            if (event.getButton() == EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().moveMenu(event.getDelta());
           },
           onMouseScroll: function (event) {

@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-cc.TAG_LAYER = 1;
+export const TAG_LAYER = 1;
 
 export let layerTestSceneIdx = -1;
 

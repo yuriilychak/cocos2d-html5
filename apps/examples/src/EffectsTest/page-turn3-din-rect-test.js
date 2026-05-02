@@ -28,15 +28,17 @@ import { nextEffectsTest, previousEffectsTest, restartEffectsTest } from "./effe
 import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, Node, Rect, Size, Sprite } from "@aspect/core";
+import { Color, LayerGradient, Node, Rect, Size, Sprite } from "@aspect/core";
 import { ScaleBy, sequence } from "@aspect/actions";
+import { PageTurn3D } from "@aspect/actions3d";
 
+import { NodeGrid } from "@aspect/node-grid";
 export class PageTurn3DInRectTest extends BaseTestLayer {
     title() {
         return "PageTurn3DInRectTest";
     }
     code() {
-        return "a = pageTurn3D(duration, gridSize)";
+        return "a = new PageTurn3D(duration, gridSize)";
     }
     // callbacks
     onRestartCallback(sender) {
@@ -63,13 +65,13 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
             visiableSize.height*0.1,
             visiableSize.width*0.4,
             visiableSize.height*0.4);
-        var gridNodeTarget = new cc.NodeGrid(gridRect);
+        var gridNodeTarget = new NodeGrid(gridRect);
 
         gridNodeTarget.runAction(this.getEffect(3));
         this.addChild( gridNodeTarget );
 
         // back gradient
-        var background = new cc.LayerGradient( new Color(255,0,0,255), new Color(255,255,0,255));
+        var background = new LayerGradient( new Color(255,0,0,255), new Color(255,255,0,255));
         gridNodeTarget.addChild( background );
 
         // back image
@@ -98,7 +100,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     }
 
     getEffect(duration) {
-        var action = cc.pageTurn3D(duration, new Size(15,10));
+        var action = new PageTurn3D(duration, new Size(15,10));
         return action;
     }
 

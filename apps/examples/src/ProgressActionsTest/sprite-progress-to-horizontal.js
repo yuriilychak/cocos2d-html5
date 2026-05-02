@@ -29,18 +29,19 @@ import { SpriteDemo } from "./sprite-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
 import { Point, Sprite } from "@aspect/core";
-import { sequence } from "@aspect/actions";
+import { Sequence } from "@aspect/actions";
 
+import { ProgressTimer, ProgressTo } from "@aspect/progress-timer";
 export class SpriteProgressToHorizontal extends SpriteDemo {
     onEnter() {
         //----start1----onEnter
         super.onEnter();
 
-        var to1 = sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
-        var to2 = sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
+        var to1 = new Sequence(new ProgressTo(2, 100), new ProgressTo(0, 0));
+        var to2 = new Sequence(new ProgressTo(2, 100), new ProgressTo(0, 0));
 
-        var left = new cc.ProgressTimer(new Sprite(s_pathSister1));
-        left.type = cc.ProgressTimer.TYPE_BAR;
+        var left = new ProgressTimer(new Sprite(s_pathSister1));
+        left.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the left since the midpoint is 0 for the x
         left.midPoint = new Point(0, 0);
         //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
@@ -50,8 +51,8 @@ export class SpriteProgressToHorizontal extends SpriteDemo {
         left.y = winSize.height / 2;
         left.runAction(to1.repeatForever());
 
-        var right = new cc.ProgressTimer(new Sprite(s_pathSister2));
-        right.type = cc.ProgressTimer.TYPE_BAR;
+        var right = new ProgressTimer(new Sprite(s_pathSister2));
+        right.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the left since the midpoint is 1 for the x
         right.midPoint = new Point(1, 0);
         //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change

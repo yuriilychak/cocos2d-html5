@@ -31,10 +31,11 @@ import {
   s_hole_stencil_png,
   s_pathBlock
 } from "../resources";
-import { Color, EventListener, EventManager, Node, Point, Rect, Size, Sprite } from "@aspect/core";
+import { AffineTransform, Color, EventListener, EventManager, Node, Point, Rect, Size, Sprite } from "@aspect/core";
 import { RotateBy, ScaleBy, ScaleTo, sequence } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
+import { ClippingNode } from "@aspect/clipping-nodes";
 export class HoleDemo extends BaseClippingNodeTest {
   constructor() {
     super();
@@ -62,11 +63,11 @@ export class HoleDemo extends BaseClippingNodeTest {
       new Color(255, 255, 255, 0)
     );
 
-    this._outerClipper = new cc.ClippingNode();
-    var transform = cc.AffineTransform.makeIdentity();
-    transform = cc.AffineTransform.scale(transform, target.scale, target.scale);
+    this._outerClipper = new ClippingNode();
+    var transform = AffineTransform.makeIdentity();
+    transform = AffineTransform.scale(transform, target.scale, target.scale);
 
-    var ocsize = cc.AffineTransform.applyToSize(
+    var ocsize = AffineTransform.applyToSize(
       new Size(target.width, target.height),
       transform
     );
@@ -80,7 +81,7 @@ export class HoleDemo extends BaseClippingNodeTest {
 
     this._outerClipper.stencil = stencil;
 
-    var holesClipper = new cc.ClippingNode();
+    var holesClipper = new ClippingNode();
     holesClipper.inverted = true;
     holesClipper.alphaThreshold = 0.05;
 

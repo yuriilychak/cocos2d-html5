@@ -34,7 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_family, s_grossini_familyPlist } from "../resources";
 import { winSize } from "../constants";
 import { RotateBy } from "@aspect/actions";
-import { Node, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Node, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
 
@@ -90,7 +90,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         // Children + Scale using SpriteBatchNode
         // Test 2
         //
-        aParent = new cc.SpriteBatchNode(s_grossini_family);
+        aParent = new SpriteBatchNode(s_grossini_family);
         sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = 3 * winSize.width / 4;
         sprite1.y = winSize.height / 4;
@@ -134,7 +134,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         // Children + Scale using Sprite
         // Test 4
         //
-        aParent = new cc.SpriteBatchNode(s_grossini_family);
+        aParent = new SpriteBatchNode(s_grossini_family);
         sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = 3 * winSize.width / 4;
         sprite1.y = 2 * winSize.height / 3;

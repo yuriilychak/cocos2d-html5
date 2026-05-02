@@ -27,7 +27,7 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { Color, LabelTTF, LayerColor, Size } from "@aspect/core";
+import { Color, LabelTTF, LayerColor, Size, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_RIGHT, VERTICAL_TEXT_ALIGNMENT_BOTTOM, VERTICAL_TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class LabelTTFTest extends AtlasDemo {
@@ -77,8 +77,8 @@ export class LabelTTFTest extends AtlasDemo {
     this.addChild(menu);
 
     this._label = null;
-    this._horizAlign = cc.TEXT_ALIGNMENT_LEFT;
-    this._vertAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    this._horizAlign = TEXT_ALIGNMENT_LEFT;
+    this._vertAlign = VERTICAL_TEXT_ALIGNMENT_TOP;
 
     this.updateAlignment();
     //----end19----
@@ -110,27 +110,27 @@ export class LabelTTFTest extends AtlasDemo {
     //----end19----
   }
   setAlignmentLeft(sender) {
-    this._horizAlign = cc.TEXT_ALIGNMENT_LEFT;
+    this._horizAlign = TEXT_ALIGNMENT_LEFT;
     this.updateAlignment();
   }
   setAlignmentCenter(sender) {
-    this._horizAlign = cc.TEXT_ALIGNMENT_CENTER;
+    this._horizAlign = TEXT_ALIGNMENT_CENTER;
     this.updateAlignment();
   }
   setAlignmentRight(sender) {
-    this._horizAlign = cc.TEXT_ALIGNMENT_RIGHT;
+    this._horizAlign = TEXT_ALIGNMENT_RIGHT;
     this.updateAlignment();
   }
   setAlignmentTop(sender) {
-    this._vertAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    this._vertAlign = VERTICAL_TEXT_ALIGNMENT_TOP;
     this.updateAlignment();
   }
   setAlignmentMiddle(sender) {
-    this._vertAlign = cc.VERTICAL_TEXT_ALIGNMENT_CENTER;
+    this._vertAlign = VERTICAL_TEXT_ALIGNMENT_CENTER;
     this.updateAlignment();
   }
   setAlignmentBottom(sender) {
-    this._vertAlign = cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM;
+    this._vertAlign = VERTICAL_TEXT_ALIGNMENT_BOTTOM;
     this.updateAlignment();
   }
   getCurrentAlignment() {
@@ -138,24 +138,24 @@ export class LabelTTFTest extends AtlasDemo {
     var vertical = null;
     var horizontal = null;
     switch (this._vertAlign) {
-      case cc.VERTICAL_TEXT_ALIGNMENT_TOP:
+      case VERTICAL_TEXT_ALIGNMENT_TOP:
         vertical = "Top";
         break;
-      case cc.VERTICAL_TEXT_ALIGNMENT_CENTER:
+      case VERTICAL_TEXT_ALIGNMENT_CENTER:
         vertical = "Middle";
         break;
-      case cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM:
+      case VERTICAL_TEXT_ALIGNMENT_BOTTOM:
         vertical = "Bottom";
         break;
     }
     switch (this._horizAlign) {
-      case cc.TEXT_ALIGNMENT_LEFT:
+      case TEXT_ALIGNMENT_LEFT:
         horizontal = "Left";
         break;
-      case cc.TEXT_ALIGNMENT_CENTER:
+      case TEXT_ALIGNMENT_CENTER:
         horizontal = "Center";
         break;
-      case cc.TEXT_ALIGNMENT_RIGHT:
+      case TEXT_ALIGNMENT_RIGHT:
         horizontal = "Right";
         break;
     }

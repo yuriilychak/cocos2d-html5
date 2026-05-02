@@ -25,9 +25,10 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
-import { Director, EventListener, EventManager, Sprite } from "@aspect/core";
+import { Director, EventListener, EventManager, RendererConfig, Sprite, Texture2D } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
+import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
   constructor() {
     super();
@@ -53,10 +54,10 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
         this._spriteDraw.getScale() *
         0.5;
 
-    this._rend = new cc.RenderTexture(
+    this._rend = new RenderTexture(
       winSize.width,
       winSize.height,
-      cc.Texture2D.PIXEL_FORMAT_RGBA4444,
+      Texture2D.PIXEL_FORMAT_RGBA4444,
       gl.DEPTH24_STENCIL8_OES
     );
     this._rend.x = winSize.width * 0.5;
@@ -72,7 +73,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
   }
 
   releaseMask() {
-    var gl = cc.rendererConfig.renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     gl.stencilFunc(gl.NOTEQUAL, 1, 0xff);
     gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
     gl.disable(gl.STENCIL_TEST);
@@ -80,7 +81,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
   }
 
   maskTest(sender) {
-    var gl = cc.rendererConfig.renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
 
     gl.clear(gl.STENCIL_BUFFER_BIT);
     this._rend.beginWithClear(0, 0, 0, 0, 0, 0);

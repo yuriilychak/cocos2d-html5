@@ -27,8 +27,7 @@
 
 import { TestNodeDemo } from "./test-node-demo";
 import { s_back1 } from "../resources";
-import { Director, Sprite } from "@aspect/core";
-
+import { Director, ONE, Sprite, ZERO } from "@aspect/core";
 export class NodeNonOpaqueTest extends TestNodeDemo {
   constructor() {
     //----start14----ctor
@@ -37,7 +36,7 @@ export class NodeNonOpaqueTest extends TestNodeDemo {
     var background;
     for (var i = 0; i < 50; i++) {
       background = new Sprite(s_back1);
-      background.setBlendFunc(cc.ONE, cc.ZERO);
+      background.setBlendFunc(ONE, ZERO);
       background.x = winSize.width / 2;
       background.y = winSize.height / 2;
       this.addChild(background);

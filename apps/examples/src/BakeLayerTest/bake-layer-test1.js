@@ -30,6 +30,7 @@ import { s_pathGrossini } from "../resources";
 import { Layer, Point, Sprite } from "@aspect/core";
 import { MoveBy, RotateBy, sequence } from "@aspect/actions";
 import { Menu, MenuItemFont } from "@aspect/menus";
+import { winSize } from "../constants";
 
 export class BakeLayerTest1 extends BakeLayerBaseTest {
   title() {
@@ -41,7 +42,7 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
 
     this._bakeLayer = null;
 
-    var winSize = cc.winSize;
+    var winSize = winSize;
     var bakeItem = new MenuItemFont("bake", this.onBake, this);
     var unbakeItem = new MenuItemFont("unbake", this.onUnbake, this);
     var runActionItem = new MenuItemFont(

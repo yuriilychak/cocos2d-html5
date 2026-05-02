@@ -27,8 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { EventListener, EventManager, Sprite, log, visibleRect } from "@aspect/core";
-
+import { EventListener, EventManager, Sprite, inputManager, log, visibleRect } from "@aspect/core";
 export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
   onEnter() {
     //----start5----onEnter
@@ -37,7 +36,7 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
     var origin = director.getVisibleOrigin();
     var size = director.getVisibleSize();
 
-    cc.inputManager.setAccelerometerEnabled(true);
+    inputManager.setAccelerometerEnabled(true);
 
     var sprite = new Sprite("Images/ball.png");
     sprite.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
@@ -72,7 +71,7 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
 
   onExit() {
     //----start5----onEnter
-    cc.inputManager.setAccelerometerEnabled(false);
+    inputManager.setAccelerometerEnabled(false);
     super.onExit();
     //----end----
   }

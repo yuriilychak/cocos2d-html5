@@ -34,8 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_blue, s_grossini_bluePlist, s_grossini_gray, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
-
+import { Animation, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 export class SpriteFrameTest extends SpriteTestDemo {
     constructor() {
         super();
@@ -67,7 +66,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
         this._sprite1.x = winSize.width / 2 - 80;
         this._sprite1.y = winSize.height / 2;
 
-        var spritebatch = new cc.SpriteBatchNode(s_grossini);
+        var spritebatch = new SpriteBatchNode(s_grossini);
         spritebatch.addChild(this._sprite1);
         this.addChild(spritebatch);
 
@@ -80,7 +79,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
             animFrames.push(frame);
         }
 
-        var animation = new cc.Animation(animFrames, 0.3);
+        var animation = new Animation(animFrames, 0.3);
         this._sprite1.runAction(new Animate(animation).repeatForever());
 
         // to test issue #732, uncomment the following line
@@ -110,7 +109,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
 
         // append frames from another batch
         moreFrames = moreFrames.concat(animFrames);
-        var animMixed = new cc.Animation(moreFrames, 0.3);
+        var animMixed = new Animation(moreFrames, 0.3);
 
         this._sprite2.runAction(new Animate(animMixed).repeatForever());
 

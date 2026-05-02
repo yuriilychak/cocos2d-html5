@@ -26,8 +26,7 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
-import { LabelTTF, Layer, log } from "@aspect/core";
-
+import { LabelTTF, Layer, Loader, TEXT_ALIGNMENT_LEFT, log } from "@aspect/core";
 export class XHRTestLayer extends Layer {
   constructor() {
     super();
@@ -48,7 +47,7 @@ export class XHRTestLayer extends Layer {
   ensureLeftAligned(label) {
     label.anchorX = 0;
     label.anchorY = 1;
-    label.textAlign = cc.TEXT_ALIGNMENT_LEFT;
+    label.textAlign = TEXT_ALIGNMENT_LEFT;
   }
 
   streamXHREventsToLabel(xhr, label, textbox, method, title) {
@@ -90,7 +89,7 @@ export class XHRTestLayer extends Layer {
     responseLabel.x = 10;
     responseLabel.y = winSize.height / 2;
 
-    var xhr = cc.loader.getXMLHttpRequest();
+    var xhr = Loader.getInstance().getXMLHttpRequest();
     this.streamXHREventsToLabel(
       xhr,
       statusGetLabel,
@@ -125,7 +124,7 @@ export class XHRTestLayer extends Layer {
     responseLabel.x = (winSize.width / 10) * 3;
     responseLabel.y = winSize.height / 2;
 
-    var xhr = cc.loader.getXMLHttpRequest();
+    var xhr = Loader.getInstance().getXMLHttpRequest();
     this.streamXHREventsToLabel(
       xhr,
       statusPostLabel,
@@ -159,7 +158,7 @@ export class XHRTestLayer extends Layer {
     responseLabel.x = (winSize.width / 10) * 7;
     responseLabel.y = winSize.height / 2;
 
-    var xhr = cc.loader.getXMLHttpRequest();
+    var xhr = Loader.getInstance().getXMLHttpRequest();
     this.streamXHREventsToLabel(
       xhr,
       statusPostLabel,

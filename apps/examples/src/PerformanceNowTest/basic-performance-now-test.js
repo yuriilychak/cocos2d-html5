@@ -29,6 +29,7 @@
 //------------------------------------------------------------------
 import { PerformanceNowBaseLayer } from "./performance-now-base-layer";
 import { LabelTTF } from "@aspect/core";
+import { winSize } from "../constants";
 
 export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
   onEnter() {
@@ -39,8 +40,8 @@ export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
       );
       this.addChild(currentPerformanceNow);
       currentPerformanceNow.attr({
-        x: cc.winSize.width / 2,
-        y: cc.winSize.height / 2
+        x: winSize.width / 2,
+        y: winSize.height / 2
       });
     } else {
       var errLabel = new LabelTTF(
@@ -48,8 +49,8 @@ export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
       );
       this.addChild(errLabel);
       errLabel.attr({
-        x: cc.winSize.width / 2,
-        y: cc.winSize.height / 2
+        x: winSize.width / 2,
+        y: winSize.height / 2
       });
     }
   }

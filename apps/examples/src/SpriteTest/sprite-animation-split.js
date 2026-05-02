@@ -33,7 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_dragon_animation } from "../resources";
 import { winSize } from "../constants";
-import { Rect, Sprite, SpriteFrame } from "@aspect/core";
+import { Animation, Rect, Sprite, SpriteFrame, textureCache } from "@aspect/core";
 import { Animate, DelayTime, FlipX, sequence } from "@aspect/actions";
 
 export class SpriteAnimationSplit extends SpriteTestDemo {
@@ -53,7 +53,7 @@ export class SpriteAnimationSplit extends SpriteTestDemo {
 
 
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
-        var texture = cc.textureCache.addImage(s_dragon_animation);
+        var texture = textureCache.addImage(s_dragon_animation);
 
         // manually add frames to the frame cache
         var frame0 = new SpriteFrame(texture, new Rect(132 * 0, 132 * 0, 132, 132));
@@ -79,7 +79,7 @@ export class SpriteAnimationSplit extends SpriteTestDemo {
         animFrames.push(frame4);
         animFrames.push(frame5);
 
-        var animation = new cc.Animation(animFrames, 0.2);
+        var animation = new Animation(animFrames, 0.2);
         var animate = new Animate(animation);
         var delay = new DelayTime(0.5);
         var seq = sequence(animate,

@@ -34,8 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_ghosts, s_ghostsPlist } from "../resources";
 import { winSize } from "../constants";
 import { RotateBy } from "@aspect/actions";
-import { Sprite, SpriteFrameCache, Sys } from "@aspect/core";
-
+import { RendererConfig, Sprite, SpriteBatchNode, SpriteFrameCache, Sys } from "@aspect/core";
 export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
 
@@ -66,8 +65,8 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
         //
         // SpriteBatchNode: 3 levels of children
         //
-        var aParent = new cc.SpriteBatchNode(s_ghosts);
-        if ("opengl" in Sys.getInstance().capabilities && cc.rendererConfig.isWebGL)
+        var aParent = new SpriteBatchNode(s_ghosts);
+        if ("opengl" in Sys.getInstance().capabilities && RendererConfig.getInstance().isWebGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 

@@ -28,8 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_pathBlock } from "../resources";
 import { winSize } from "../constants";
-import { Rect, Sprite } from "@aspect/core";
-
+import { LINEAR, REPEAT, Rect, Sprite } from "@aspect/core";
 export class SpriteWithRepeatingTexture extends SpriteTestDemo {
 
 
@@ -51,7 +50,7 @@ export class SpriteWithRepeatingTexture extends SpriteTestDemo {
 
         block.setTextureRect(new Rect(0,0, 320,240));
         block.setPosition(x, y);
-        block.getTexture().setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);
+        block.getTexture().setTexParameters(LINEAR, LINEAR, REPEAT, REPEAT);
         this.addChild(block);
         //----end58----
     }

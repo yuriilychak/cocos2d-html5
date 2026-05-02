@@ -31,6 +31,7 @@ import { Color, Director, Layer, Scene, Size, log } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
+import { EditBox } from "@aspect/editbox";
 export class EditBoxTestLayer extends Layer {
   constructor() {
     super();
@@ -47,7 +48,7 @@ export class EditBoxTestLayer extends Layer {
   }
 
   init() {
-    this._box1 = new cc.EditBox(
+    this._box1 = new EditBox(
       new Size(170, 50),
       new Scale9Sprite("extensions/green_edit.png"),
       new Scale9Sprite("extensions/orange_edit.png")
@@ -59,7 +60,7 @@ export class EditBoxTestLayer extends Layer {
     this._box1.setDelegate(this);
     this.addChild(this._box1);
 
-    this._box2 = new cc.EditBox(
+    this._box2 = new EditBox(
       new Size(130, 50),
       new Scale9Sprite("extensions/green_edit.png")
     );
@@ -73,7 +74,7 @@ export class EditBoxTestLayer extends Layer {
     this._box2.setDelegate(this);
     this.addChild(this._box2);
 
-    this._box3 = new cc.EditBox(
+    this._box3 = new EditBox(
       new Size(65, 50),
       new Scale9Sprite("extensions/orange_edit.png")
     );
@@ -86,7 +87,7 @@ export class EditBoxTestLayer extends Layer {
     this._box3.setTouchEnabled(true);
     this.addChild(this._box3);
 
-    this._box4 = new cc.EditBox(
+    this._box4 = new EditBox(
       new Size(180, 50),
       new Scale9Sprite("extensions/yellow_edit.png")
     );

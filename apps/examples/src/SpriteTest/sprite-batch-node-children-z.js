@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
+import { Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteBatchNodeChildrenZ extends SpriteTestDemo {
 
@@ -68,7 +68,7 @@ export class SpriteBatchNodeChildrenZ extends SpriteTestDemo {
         SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
 
         // test 1
-        batch = new cc.SpriteBatchNode(s_grossini, 50);
+        batch = new SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
@@ -88,7 +88,7 @@ export class SpriteBatchNodeChildrenZ extends SpriteTestDemo {
         sprite1.addChild(sprite3, -2);
 
         // test 2
-        batch = new cc.SpriteBatchNode(s_grossini, 50);
+        batch = new SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
@@ -108,7 +108,7 @@ export class SpriteBatchNodeChildrenZ extends SpriteTestDemo {
         sprite1.addChild(sprite3, 2);
 
         // test 3
-        batch = new cc.SpriteBatchNode(s_grossini, 50);
+        batch = new SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
@@ -128,7 +128,7 @@ export class SpriteBatchNodeChildrenZ extends SpriteTestDemo {
         batch.addChild(sprite3, -5);
 
         // test 4
-        batch = new cc.SpriteBatchNode(s_grossini, 50);
+        batch = new SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));

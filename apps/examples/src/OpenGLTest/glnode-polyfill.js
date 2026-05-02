@@ -1,4 +1,4 @@
-import { Node } from "@aspect/core";
+import { Node, kmGLPopMatrix, kmGLPushMatrix } from "@aspect/core";
 // GLNode polyfill — required by ShaderNode and tests that instantiate
 // `new GLNode()`. Imported for side effects from any file that needs it.
 cc.GLNode = cc.GLNode || class GLNode extends Node {
@@ -20,12 +20,12 @@ cc.GLNode = cc.GLNode || class GLNode extends Node {
             this._matrix.mat[13] = wt.ty;
 
             cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
-            cc.kmGLPushMatrix();
+            kmGLPushMatrix();
             cc.kmGLLoadMatrix(this._matrix);
 
             this._node.draw(ctx);
 
-            cc.kmGLPopMatrix();
+            kmGLPopMatrix();
         };
     }
     draw(ctx) {

@@ -29,7 +29,7 @@
 // S9BatchNodeScaledNoInsets
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
-import { Rect, log } from "@aspect/core";
+import { Rect, SpriteBatchNode, log } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9BatchNodeScaledNoInsets extends S9SpriteTestDemo {
@@ -47,7 +47,7 @@ export class S9BatchNodeScaledNoInsets extends S9SpriteTestDemo {
     log("S9BatchNodeScaledNoInsets ...");
 
     // scaled without insets
-    var batchNode_scaled = new cc.SpriteBatchNode("Images/blocks9.png");
+    var batchNode_scaled = new SpriteBatchNode("Images/blocks9.png");
     log("batchNode_scaled created with : " + "Images/blocks9.png");
 
     var blocks_scaled = new Scale9Sprite();

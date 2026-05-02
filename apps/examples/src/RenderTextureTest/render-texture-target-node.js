@@ -25,9 +25,10 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
-import { Color, Director, LayerColor, Sprite } from "@aspect/core";
+import { Color, Director, LayerColor, RendererConfig, Sprite } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
+import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureTargetNode extends RenderTextureBaseLayer {
   constructor() {
     super();
@@ -74,7 +75,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
 
     /* Create the render texture */
     //var renderTexture = new RenderTexture(winSize.width, winSize.height, TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
-    var renderTexture = new cc.RenderTexture(winSize.width, winSize.height);
+    var renderTexture = new RenderTexture(winSize.width, winSize.height);
     this._renderTexture = renderTexture;
 
     renderTexture.x = winSize.width / 2;
@@ -84,7 +85,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     renderTexture.addChild(this._sprite1);
     renderTexture.addChild(this._sprite2);
     renderTexture.clearColorVal = new Color(0, 0, 0, 0);
-    renderTexture.clearFlags = cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
+    renderTexture.clearFlags = RendererConfig.getInstance().renderContext.COLOR_BUFFER_BIT;
 
     /* add the render texture to the scene */
     this.addChild(renderTexture);
@@ -125,7 +126,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
   touched(sender) {
     if (this._renderTexture.clearFlags == 0)
       this._renderTexture.clearFlags =
-        cc.rendererConfig.renderContext.COLOR_BUFFER_BIT;
+        RendererConfig.getInstance().renderContext.COLOR_BUFFER_BIT;
     else {
       this._renderTexture.clearFlags = 0;
       this._renderTexture.clearColorVal = new Color(

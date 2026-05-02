@@ -28,7 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_starsGrayscale } from "../resources";
 import { director } from "../constants";
-import { Point, Color } from "@aspect/core";
+import { Color, Point, textureCache } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 export class RadiusMode2 extends ParticleDemo {
@@ -41,7 +41,7 @@ export class RadiusMode2 extends ParticleDemo {
 
         this._emitter = new ParticleSystem(100);
         this.addChild(this._emitter, 10);
-        this._emitter.texture = cc.textureCache.addImage(s_starsGrayscale);
+        this._emitter.texture = textureCache.addImage(s_starsGrayscale);
 
         // duration
         this._emitter.duration = ParticleSystem.DURATION_INFINITY;

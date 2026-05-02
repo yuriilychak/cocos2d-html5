@@ -30,6 +30,7 @@ import { Point, Sprite } from "@aspect/core";
 import { DelayTime, MoveBy, sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 
+import { ParallaxNode } from "@aspect/parallax";
 export class Parallax1 extends ParallaxDemo {
   constructor() {
     super();
@@ -74,7 +75,7 @@ export class Parallax1 extends ParallaxDemo {
     this._background.anchorY = 0;
 
     // create a void node, a parent node
-    this._parentNode = new cc.ParallaxNode();
+    this._parentNode = new ParallaxNode();
 
     // NOW add the 3 layers to the 'void' node
 

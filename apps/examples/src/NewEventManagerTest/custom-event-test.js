@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { EventListener, EventManager, LabelTTF } from "@aspect/core";
+import { EventCustom, EventListener, EventManager, LabelTTF } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class CustomEventTest extends EventDispatcherTestDemo {
@@ -71,7 +71,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       sender
     ) {
       ++selfPointer._item1Count;
-      var event = new cc.EventCustom("game_custom_event1");
+      var event = new EventCustom("game_custom_event1");
       event.setUserData(selfPointer._item1Count.toString());
       EventManager.getInstance().dispatchEvent(event);
     });
@@ -99,7 +99,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       sender
     ) {
       ++selfPointer._item2Count;
-      var event = new cc.EventCustom("game_custom_event2");
+      var event = new EventCustom("game_custom_event2");
       event.setUserData(selfPointer._item2Count.toString());
       EventManager.getInstance().dispatchEvent(event);
     });

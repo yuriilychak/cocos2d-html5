@@ -24,6 +24,7 @@
 
 import { PerformanceNowBaseLayer } from "./performance-now-base-layer";
 import { LabelTTF } from "@aspect/core";
+import { winSize } from "../constants";
 
 export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
   constructor() {
@@ -34,8 +35,8 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
       );
       this.addChild(errLabel);
       errLabel.attr({
-        x: cc.winSize.width / 2,
-        y: cc.winSize.height / 2
+        x: winSize.width / 2,
+        y: winSize.height / 2
       });
       return;
     }
@@ -54,8 +55,8 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
       "Result that values are montonically increasing : " + monotonicIncrease
     );
     label.attr({
-      x: cc.winSize.width / 2,
-      y: cc.winSize.height / 2 + 50
+      x: winSize.width / 2,
+      y: winSize.height / 2 + 50
     });
     this.addChild(label);
 
@@ -63,10 +64,10 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
       "Result Values : " + JSON.stringify(performanceValues)
     );
     values.attr({
-      x: cc.winSize.width / 2,
-      y: cc.winSize.height / 2 - 50
+      x: winSize.width / 2,
+      y: winSize.height / 2 - 50
     });
-    values.setDimensions(cc.winSize.width / 2, 100);
+    values.setDimensions(winSize.width / 2, 100);
     this.addChild(values);
   }
 

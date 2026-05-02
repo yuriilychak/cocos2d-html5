@@ -29,6 +29,7 @@ import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Size } from "@aspect/core";
 import { DelayTime, sequence } from "@aspect/actions";
+import { ReuseGrid, ShakyTiles3D, ShuffleTiles, TurnOffTiles } from "@aspect/actions3d";
 
 export class Effect2 extends EffectAdvanceTextLayer {
   title() {
@@ -44,16 +45,16 @@ export class Effect2 extends EffectAdvanceTextLayer {
     //     ShakyTiles is TiledGrid3D and it's size is (15,10)
     //     Shuffletiles is TiledGrid3D and it's size is (15,10)
     //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-    var shaky = cc.shakyTiles3D(5, new Size(15, 10), 4, false);
-    var shuffle = cc.shuffleTiles(0, new Size(15, 10), 3);
-    var turnoff = cc.turnOffTiles(0, new Size(15, 10), 3);
+    var shaky = new ShakyTiles3D(5, new Size(15, 10), 4, false);
+    var shuffle = new ShuffleTiles(0, new Size(15, 10), 3);
+    var turnoff = new TurnOffTiles(0, new Size(15, 10), 3);
     var turnon = turnoff.reverse();
 
     // reuse 2 times:
     //   1 for shuffle
     //   2 for turn off
     //   turnon tiles will use a new grid
-    var reuse = cc.reuseGrid(2);
+    var reuse = new ReuseGrid(2);
     var delay = new DelayTime(1);
 
     target.runAction(

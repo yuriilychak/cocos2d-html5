@@ -33,7 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
+import { Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
 
@@ -59,7 +59,7 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
         // SpriteBatchNode
         //
         // parents
-        var aParent = new cc.SpriteBatchNode(s_grossini, 50);
+        var aParent = new SpriteBatchNode(s_grossini, 50);
         this.addChild(aParent, 0);
 
         // anchor (0,0)

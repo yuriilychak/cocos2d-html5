@@ -36,6 +36,7 @@ import { Color, Director, EventManager, LabelTTF, LayerColor, visibleRect } from
 import { Scale9Sprite } from "@aspect/ccui";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
+import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
 export class PauseResumeTargetTest extends EventDispatcherTestDemo {
   constructor() {
     //----start11----ctor
@@ -78,14 +79,14 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
       var titleButton = new LabelTTF("Close Dialog", "Marker Felt", 26);
       titleButton.color = new Color(159, 168, 176);
 
-      var controlButton = new cc.ControlButton(titleButton, backgroundButton);
+      var controlButton = new ControlButton(titleButton, backgroundButton);
       controlButton.setBackgroundSpriteForState(
         backgroundHighlightedButton,
-        cc.CONTROL_STATE_HIGHLIGHTED
+        CONTROL_STATE_HIGHLIGHTED
       );
       controlButton.setTitleColorForState(
         Color.WHITE,
-        cc.CONTROL_STATE_HIGHLIGHTED
+        CONTROL_STATE_HIGHLIGHTED
       );
 
       controlButton.anchorX = 0.5;

@@ -34,6 +34,7 @@ import {
 import { Color, Director, LabelTTF, Scene } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
+import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
 export class ControlButtonTest_Event extends ControlScene {
   constructor() {
     super();
@@ -61,14 +62,14 @@ export class ControlButtonTest_Event extends ControlScene {
       var titleButton = new LabelTTF("Touch Me!", "Marker Felt", 30);
       titleButton.color = new Color(159, 168, 176);
 
-      var controlButton = new cc.ControlButton(titleButton, backgroundButton);
+      var controlButton = new ControlButton(titleButton, backgroundButton);
       controlButton.setBackgroundSpriteForState(
         backgroundHighlightedButton,
-        cc.CONTROL_STATE_HIGHLIGHTED
+        CONTROL_STATE_HIGHLIGHTED
       );
       controlButton.setTitleColorForState(
         Color.WHITE,
-        cc.CONTROL_STATE_HIGHLIGHTED
+        CONTROL_STATE_HIGHLIGHTED
       );
 
       controlButton.anchorX = 0.5;

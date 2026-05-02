@@ -30,7 +30,7 @@
 import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 import { s_pathGrossini, s_pathSister1 } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventManager, Sprite, Sys } from "@aspect/core";
+import { EventListener, EventManager, Sprite, Sys, rand } from "@aspect/core";
 
 export class ChipmunkSprite extends ChipmunkBaseLayer {
   constructor() {
@@ -113,8 +113,8 @@ export class ChipmunkSprite extends ChipmunkBaseLayer {
 
     this.scheduleUpdate();
     for (var i = 0; i < 10; i++) {
-      var variancex = cc.randomMinus1To1() * 5;
-      var variancey = cc.randomMinus1To1() * 5;
+      var variancex = randomMinus1To1() * 5;
+      var variancey = randomMinus1To1() * 5;
       this.addSprite(
         cp.v(winSize.width / 2 + variancex, winSize.height / 2 + variancey)
       );

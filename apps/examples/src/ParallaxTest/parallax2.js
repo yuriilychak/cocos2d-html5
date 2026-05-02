@@ -27,9 +27,10 @@
 
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
-import { EventListener, EventManager, Point, Sprite, Sys } from "@aspect/core";
+import { EventListener, EventManager, EventMouse, Point, Sprite, Sys } from "@aspect/core";
 import { TMXTiledMap } from "@aspect/tilemap";
 
+import { ParallaxNode } from "@aspect/parallax";
 export class Parallax2 extends ParallaxDemo {
   constructor() {
     super();
@@ -58,7 +59,7 @@ export class Parallax2 extends ParallaxDemo {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
+            if (event.getButton() == EventMouse.BUTTON_LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
               node.x += event.getDeltaX();
               node.y += event.getDeltaY();
@@ -99,7 +100,7 @@ export class Parallax2 extends ParallaxDemo {
     background.anchorY = 0;
 
     // create a void node, a parent node
-    var voidNode = new cc.ParallaxNode();
+    var voidNode = new ParallaxNode();
     // NOW add the 3 layers to the 'void' node
 
     // background image is moved at a ratio of 0.4x, 0.5y

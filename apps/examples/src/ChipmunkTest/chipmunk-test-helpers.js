@@ -45,7 +45,7 @@ import { PyramidStack } from "./pyramid-stack";
 import { PyramidTopple } from "./pyramid-topple";
 import { Query } from "./query";
 import { s_hole_stencil_png } from "../resources";
-import { Sprite, Sys } from "@aspect/core";
+import { Sprite, SpriteBatchNode, Sys } from "@aspect/core";
 
 //
 // Base class for Chipmunk Demo
@@ -162,7 +162,7 @@ export var LogoSmash = (function () {
       // but it is implemented in JSB :)
       if (Sys.getInstance().isNative) space.useSpatialHash(2.0, 10000);
 
-      var batch = new cc.SpriteBatchNode(s_hole_stencil_png);
+      var batch = new SpriteBatchNode(s_hole_stencil_png);
       this.addChild(batch);
 
       var body;

@@ -26,8 +26,7 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
-import { LabelTTF, Layer, Size } from "@aspect/core";
-
+import { LabelTTF, Layer, Size, TEXT_ALIGNMENT_CENTER } from "@aspect/core";
 export class ScriptTestTempLayer extends Layer {
   constructor() {
     super();
@@ -37,9 +36,9 @@ export class ScriptTestTempLayer extends Layer {
       "Verdana",
       32,
       new Size(winSize.width, 50),
-      cc.TEXT_ALIGNMENT_CENTER
+      TEXT_ALIGNMENT_CENTER
     );
-    var size = cc.winSize;
+    var size = winSize;
     labelTest.setPosition(size.width / 2, size.height / 4);
     this.addChild(labelTest);
   }

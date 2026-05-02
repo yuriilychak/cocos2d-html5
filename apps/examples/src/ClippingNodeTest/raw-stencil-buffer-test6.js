@@ -27,20 +27,19 @@
 
 import { _alphaThreshold } from "./clipping-node-test-helpers";
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
-import { Color, Director, Point } from "@aspect/core";
-
+import { Color, Director, Point, RendererConfig, SHADER_POSITION_TEXTURECOLORALPHATEST, ShaderCache, UNIFORM_ALPHA_TEST_VALUE_S, glUseProgram } from "@aspect/core";
 export class RawStencilBufferTest6 extends RawStencilBufferTest {
   subtitle() {
     return "6:ManualClear,AlphaTest:ENABLE";
   }
 
   setup() {
-    cc.rendererConfig.renderContext.stencilMask(~0);
+    RendererConfig.getInstance().renderContext.stencilMask(~0);
     super.setup();
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = cc.rendererConfig.renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     var planeMask = 0x1 << plane;
     gl.stencilMask(planeMask);
     gl.stencilFunc(gl.NEVER, 0, planeMask);
@@ -55,14 +54,14 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
     gl.disable(gl.DEPTH_TEST);
     gl.depthMask(false);
 
-    var program = cc.shaderCache.programForKey(
-      cc.SHADER_POSITION_TEXTURECOLORALPHATEST
+    var program = ShaderCache.getInstance().programForKey(
+      SHADER_POSITION_TEXTURECOLORALPHATEST
     );
     var alphaValueLocation = gl.getUniformLocation(
       program.getProgram(),
-      cc.UNIFORM_ALPHA_TEST_VALUE_S
+      UNIFORM_ALPHA_TEST_VALUE_S
     );
-    cc.glUseProgram(program.getProgram());
+    glUseProgram(program.getProgram());
     program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     this._sprite.shaderProgram = program;
 
@@ -70,7 +69,7 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    var gl = cc.rendererConfig.renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     gl.depthMask(true);
     //gl.enable(gl.DEPTH_TEST);
     super.setupStencilForDrawingOnPlane(plane);

@@ -29,8 +29,7 @@
 //
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
-import { Director, EventListener, EventManager, LabelTTF, Sys, log } from "@aspect/core";
-
+import { Director, EventListener, EventManager, KEY, LabelTTF, Sys, log } from "@aspect/core";
 export class KeyboardTest extends EventTest {
   init() {
     super.init();
@@ -67,12 +66,12 @@ export class KeyboardTest extends EventTest {
     }
   }
   getKeyStr(keycode) {
-    if (keycode == cc.KEY.none) {
+    if (keycode == KEY.none) {
       return "";
     }
 
-    for (var keyTemp in cc.KEY) {
-      if (cc.KEY[keyTemp] == keycode) {
+    for (var keyTemp in KEY) {
+      if (KEY[keyTemp] == keycode) {
         return keyTemp;
       }
     }

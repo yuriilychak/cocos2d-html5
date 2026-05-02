@@ -33,8 +33,8 @@
 import { LayerTest } from "./layer-test";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Color, LabelTTF, LayerColor, Sprite, Sys } from "@aspect/core";
-
+import { Color, LabelTTF, LayerColor, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Sprite, Sys, ZERO } from "@aspect/core";
+import { TAG_LAYER } from "./layer-test-constants";
 export class LayerTestBlend extends LayerTest {
 
     constructor() {
@@ -50,7 +50,7 @@ export class LayerTestBlend extends LayerTest {
 
         this.addChild(sister1);
         this.addChild(sister2);
-        this.addChild(layer1, 100, cc.TAG_LAYER);
+        this.addChild(layer1, 100, TAG_LAYER);
 
         sister1.x = winSize.width/3;
 
@@ -71,17 +71,17 @@ export class LayerTestBlend extends LayerTest {
     }
     onNewBlend(dt) {
         //----start2----onNewBlend
-        var layer = this.getChildByTag(cc.TAG_LAYER);
+        var layer = this.getChildByTag(TAG_LAYER);
 
         var src;
         var dst;
 
         if (this._blend) {
-            src = cc.SRC_ALPHA;
-            dst = cc.ONE_MINUS_SRC_ALPHA;
+            src = SRC_ALPHA;
+            dst = ONE_MINUS_SRC_ALPHA;
         } else {
             src = cc.ONE_MINUS_DST_COLOR;
-            dst = cc.ZERO;
+            dst = ZERO;
         }
         layer.setBlendFunc( src, dst );
         this._blend = ! this._blend;

@@ -31,6 +31,7 @@ import { s_pathR1, s_streak } from "../resources";
 import { Color, Director, Point, Sprite } from "@aspect/core";
 import { MoveBy, RotateBy, TintTo, sequence } from "@aspect/actions";
 
+import { MotionStreak } from "@aspect/motion-streak";
 export class MotionStreakTest1 extends MotionStreakTest {
   constructor() {
     super();
@@ -55,7 +56,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
     this._target.y = 0;
 
     // create the streak object and add it to the scene
-    this._streak = new cc.MotionStreak(2, 3, 32, Color.GREEN, s_streak);
+    this._streak = new MotionStreak(2, 3, 32, Color.GREEN, s_streak);
     this.addChild(this._streak);
     // schedule an update on each frame so we can synchronize the streak with the target
     this.schedule(this.onUpdate);

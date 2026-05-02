@@ -33,8 +33,7 @@ import {
   _set_stencilBits
 } from "./clipping-node-test-helpers";
 import { s_pathGrossini } from "../resources";
-import { Color, Director, Point, Sprite, log } from "@aspect/core";
-
+import { Color, Director, Point, RendererConfig, Sprite, kmGLPopMatrix, kmGLPushMatrix, log } from "@aspect/core";
 export class RawStencilBufferTest extends BaseClippingNodeTest {
   constructor() {
     super();
@@ -55,8 +54,8 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
 
   setup() {
     _set_stencilBits(
-      cc.rendererConfig.renderContext.getParameter(
-        cc.rendererConfig.renderContext.STENCIL_BITS
+      RendererConfig.getInstance().renderContext.getParameter(
+        RendererConfig.getInstance().renderContext.STENCIL_BITS
       )
     );
     if (_stencilBits < 3)
@@ -70,7 +69,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   draw(ctx) {
-    var gl = ctx || cc.rendererConfig.renderContext;
+    var gl = ctx || RendererConfig.getInstance().renderContext;
     var winPoint = Point.fromSize(Director.getInstance().getWinSize());
     var planeSize = Point.mult(winPoint, 1.0 / _PLANE_COUNT);
 
@@ -95,10 +94,10 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
         new Color(255, 255, 255, 255)
       );
 
-      cc.kmGLPushMatrix();
+      kmGLPushMatrix();
       this.transform();
       this._sprite.visit();
-      cc.kmGLPopMatrix();
+      kmGLPopMatrix();
 
       this.setupStencilForDrawingOnPlane(i);
       //checkGLErrorDebug();
@@ -109,10 +108,10 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
         _planeColor[i]
       );
 
-      cc.kmGLPushMatrix();
+      kmGLPushMatrix();
       this.transform();
       this._sprite.visit();
-      cc.kmGLPopMatrix();
+      kmGLPopMatrix();
     }
 
     gl.disable(gl.STENCIL_TEST);
@@ -120,7 +119,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = cc.rendererConfig.renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     var planeMask = 0x1 << plane;
     gl.stencilMask(planeMask);
     gl.clearStencil(0x0);
@@ -131,7 +130,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    var gl = cc.rendererConfig.renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     var planeMask = 0x1 << plane;
     var equalOrLessPlanesMask = planeMask | (planeMask - 1);
     gl.stencilFunc(gl.EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);

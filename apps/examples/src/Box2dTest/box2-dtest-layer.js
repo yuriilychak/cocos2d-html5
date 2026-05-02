@@ -27,7 +27,7 @@
 
 import { PTM_RATIO, TAG_SPRITE_MANAGER } from "./box2d-test-constants";
 import { s_pathBlock } from "../resources";
-import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, Point, Rect, Sprite } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, Point, Rect, Sprite, SpriteBatchNode } from "@aspect/core";
 
 export class Box2DTestLayer extends LayerColor {
   constructor() {
@@ -115,7 +115,7 @@ export class Box2DTestLayer extends LayerColor {
     this.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
     // Set up sprite batch
-    var mgr = new cc.SpriteBatchNode(s_pathBlock, 150);
+    var mgr = new SpriteBatchNode(s_pathBlock, 150);
     this.addChild(mgr, 0, TAG_SPRITE_MANAGER);
 
     this.addNewSpriteWithCoords(

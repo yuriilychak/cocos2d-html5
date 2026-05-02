@@ -38,7 +38,8 @@ import {
   s_lookup_html5_plist,
   s_lookup_mobile_plist
 } from "../resources";
-import { Color, Sprite, SpriteFrameCache, Sys, log } from "@aspect/core";
+import { Color, Loader, Sprite, SpriteFrameCache, Sys, log } from "@aspect/core";
+import { winSize } from "../constants";
 
 export class LoaderTestLayer extends BaseTestLayer {
   constructor() {
@@ -49,8 +50,8 @@ export class LoaderTestLayer extends BaseTestLayer {
 
     this._subtitle = "";
 
-    var winSize = cc.winSize;
-    cc.loader.load(s_helloWorld, function (err, results) {
+    var winSize = winSize;
+    Loader.getInstance().load(s_helloWorld, function (err, results) {
       if (err) {
         log("Failed to load %s.", s_helloWorld);
         return;
@@ -63,7 +64,7 @@ export class LoaderTestLayer extends BaseTestLayer {
       bg.y = winSize.height / 2;
     });
 
-    cc.loader.load([s_ghostsPlist, s_ghosts], function (err, results) {
+    Loader.getInstance().load([s_ghostsPlist, s_ghosts], function (err, results) {
       if (err) {
         log("Failed to load %s, %s .", s_ghostsPlist, s_ghosts);
         return;
@@ -89,7 +90,7 @@ export class LoaderTestLayer extends BaseTestLayer {
       str = s_lookup_html5_plist;
     }
 
-    cc.loader.loadAliases(str, function () {
+    Loader.getInstance().loadAliases(str, function () {
       var sprite = new Sprite("grossini.bmp");
       self.addChild(sprite, 100);
       sprite.x = winSize.width / 2;

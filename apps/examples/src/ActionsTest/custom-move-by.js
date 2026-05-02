@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color } from "@aspect/core";
+import { Color, rand } from "@aspect/core";
 import { MoveBy } from "@aspect/actions";
 
 
@@ -37,7 +37,7 @@ export class CustomMoveBy extends MoveBy {
     if (this.getTarget()) {
       // rand color
       this.getTarget().setColor(
-        new Color(cc.rand() % 255, cc.rand() % 255, cc.rand() % 255)
+        new Color(rand() % 255, rand() % 255, rand() % 255)
       );
     }
   }

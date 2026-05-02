@@ -30,15 +30,16 @@
 //------------------------------------------------------------------
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
+import { Shaky3D } from "@aspect/actions3d";
 
 export class Shaky3DTest extends EffectsBaseLayer {
   title() {
     return "Shaky 3D";
   }
   code() {
-    return "a = shaky3D(duration, gridSize, range, shakeZ)";
+    return "a = new Shaky3D(duration, gridSize, range, shakeZ)";
   }
   getEffect(duration) {
-    return cc.shaky3D(duration, new Size(15, 10), 5, false);
+    return new Shaky3D(duration, new Size(15, 10), 5, false);
   }
 }

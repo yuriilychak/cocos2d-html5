@@ -27,32 +27,32 @@
 
 import { _alphaThreshold } from "./clipping-node-test-helpers";
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
-
+import { RendererConfig, SHADER_POSITION_TEXTURECOLORALPHATEST, ShaderCache, UNIFORM_ALPHA_TEST_VALUE_S, glUseProgram } from "@aspect/core";
 export class RawStencilBufferTest5 extends RawStencilBufferTest {
   subtitle() {
     return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = cc.rendererConfig.renderContext;
+    var gl = RendererConfig.getInstance().renderContext;
     super.setupStencilForClippingOnPlane(plane);
     gl.disable(gl.DEPTH_TEST);
     gl.depthMask(false);
 
-    var program = cc.shaderCache.programForKey(
-      cc.SHADER_POSITION_TEXTURECOLORALPHATEST
+    var program = ShaderCache.getInstance().programForKey(
+      SHADER_POSITION_TEXTURECOLORALPHATEST
     );
     var alphaValueLocation = gl.getUniformLocation(
       program.getProgram(),
-      cc.UNIFORM_ALPHA_TEST_VALUE_S
+      UNIFORM_ALPHA_TEST_VALUE_S
     );
-    cc.glUseProgram(program.getProgram());
+    glUseProgram(program.getProgram());
     program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     this._sprite.shaderProgram = program;
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    cc.rendererConfig.renderContext.depthMask(true);
+    RendererConfig.getInstance().renderContext.depthMask(true);
     //rendererConfig.renderContext.enable(rendererConfig.renderContext.DEPTH_TEST);
     super.setupStencilForDrawingOnPlane(plane);
   }

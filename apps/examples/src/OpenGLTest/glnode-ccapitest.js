@@ -31,8 +31,7 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import "./glnode-polyfill";
 import { winSize } from "../constants";
-import { Sys } from "@aspect/core";
-
+import { ShaderCache, Sys, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION } from "@aspect/core";
 export class GLNodeCCAPITest extends OpenGLTestLayer {
   constructor() {
     super();
@@ -42,19 +41,19 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
       this.addChild(glnode, 10);
       this.glnode = glnode;
 
-      this.shader = cc.shaderCache.getProgram("ShaderPositionColor");
+      this.shader = ShaderCache.getInstance().getProgram("ShaderPositionColor");
       this.initBuffers();
 
       glnode.draw = function () {
         this.shader.use();
         this.shader.setUniformsForBuiltins();
-        gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
-        gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
+        gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
+        gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
 
         // Draw fullscreen Square
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
         gl.vertexAttribPointer(
-          cc.VERTEX_ATTRIB_POSITION,
+          VERTEX_ATTRIB_POSITION,
           2,
           gl.FLOAT,
           false,
@@ -64,7 +63,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexColorBuffer);
         gl.vertexAttribPointer(
-          cc.VERTEX_ATTRIB_COLOR,
+          VERTEX_ATTRIB_COLOR,
           4,
           gl.FLOAT,
           false,
@@ -77,7 +76,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
         // Draw fullscreen Triangle
         gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
         gl.vertexAttribPointer(
-          cc.VERTEX_ATTRIB_POSITION,
+          VERTEX_ATTRIB_POSITION,
           2,
           gl.FLOAT,
           false,
@@ -87,7 +86,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
         gl.vertexAttribPointer(
-          cc.VERTEX_ATTRIB_COLOR,
+          VERTEX_ATTRIB_COLOR,
           4,
           gl.FLOAT,
           false,

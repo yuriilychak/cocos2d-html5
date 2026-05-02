@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { TextureCacheTestBase } from "./texture-cache-test-base";
-import { Director, LabelTTF, Sprite } from "@aspect/core";
+import { Director, LabelTTF, Sprite, textureCache } from "@aspect/core";
 
 export class TextureCacheTest extends TextureCacheTestBase {
   constructor() {
@@ -56,7 +56,7 @@ export class TextureCacheTest extends TextureCacheTestBase {
     this.addChild(this._labelLoading);
     this.addChild(this._labelPercent);
 
-    var texCache = cc.textureCache;
+    var texCache = textureCache;
     // load textures
     texCache.addImageAsync("Images/HelloWorld.png", this.loadingCallBack, this);
     texCache.addImageAsync("Images/grossini.png", this.loadingCallBack, this);

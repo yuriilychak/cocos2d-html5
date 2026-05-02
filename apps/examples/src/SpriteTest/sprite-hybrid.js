@@ -35,7 +35,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
 import { RotateBy } from "@aspect/actions";
-import { Node, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Node, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteHybrid extends SpriteTestDemo {
 
@@ -62,7 +62,7 @@ export class SpriteHybrid extends SpriteTestDemo {
         this.firstPixel2 = false;
         // parents
         var parent1 = new Node();
-        var parent2 = new cc.SpriteBatchNode(s_grossini, 50);
+        var parent2 = new SpriteBatchNode(s_grossini, 50);
 
         this.addChild(parent1, 0, TAG_NODE);
         this.addChild(parent2, 0, TAG_SPRITE_BATCH_NODE);

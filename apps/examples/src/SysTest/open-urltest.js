@@ -26,6 +26,7 @@
 
 import { SysTestBase } from "./sys-test-base";
 import { EventListener, EventManager, LabelTTF, Sys } from "@aspect/core";
+import { winSize } from "../constants";
 
 export class OpenURLTest extends SysTestBase {
   getTitle() {
@@ -41,7 +42,7 @@ export class OpenURLTest extends SysTestBase {
       22
     );
     this.addChild(label);
-    label.setPosition(cc.winSize.width / 2, cc.winSize.height / 2);
+    label.setPosition(winSize.width / 2, winSize.height / 2);
 
     EventManager.getInstance().addListener(
       {

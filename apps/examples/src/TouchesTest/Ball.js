@@ -25,8 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Director, Point, Rect, Sprite } from "@aspect/core";
-
+import { Director, Point, Rect, Sprite, Texture2D } from "@aspect/core";
 export class Ball extends Sprite {
     constructor() {
         super();
@@ -99,7 +98,7 @@ export class Ball extends Sprite {
 Ball.ballWithTexture = function (texture) {
     var ball = new Ball();
     ball.initWithTexture(texture);
-    if (texture instanceof cc.Texture2D)
+    if (texture instanceof Texture2D)
         ball.setRadius(texture.width / 2);
     else if ((texture instanceof HTMLImageElement) || (texture instanceof HTMLCanvasElement))
         ball.setRadius(texture.width / 2);

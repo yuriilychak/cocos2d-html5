@@ -30,6 +30,7 @@ import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Lens3DTarget } from "./lens3-dtarget";
 import { Director, Point, Size } from "@aspect/core";
 import { CallFunc, JumpBy, sequence } from "@aspect/actions";
+import { Lens3D } from "@aspect/actions3d";
 
 export class Effect4 extends EffectAdvanceTextLayer {
   title() {
@@ -40,7 +41,7 @@ export class Effect4 extends EffectAdvanceTextLayer {
     super.onEnter();
 
     var bgNodeGrid = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-    var lens = cc.lens3D(10, new Size(32, 24), new Point(100, 180), 150);
+    var lens = new Lens3D(10, new Size(32, 24), new Point(100, 180), 150);
     var move = new JumpBy(5, new Point(380, 0), 100, 4);
     var move_back = move.reverse();
     var seq = sequence(move, move_back);

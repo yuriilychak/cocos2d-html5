@@ -27,8 +27,7 @@
 
 import { winSize } from "../constants";
 import { TextureCacheTestBase } from "./texture-cache-test-base";
-import { LabelTTF, Sprite, Sys, log } from "@aspect/core";
-
+import { LabelTTF, Loader, Sprite, Sys, Texture2D, log, textureCache } from "@aspect/core";
 export class RemoteTextureTest extends TextureCacheTestBase {
   constructor() {
     super();
@@ -60,22 +59,22 @@ export class RemoteTextureTest extends TextureCacheTestBase {
     ];
 
     for (var i = 0; i < imageUrlArray.length; i++) {
-      cc.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
+      textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
     }
 
-    cc.loader.loadImg(
+    Loader.getInstance().loadImg(
       "http://www.cocos2d-x.org/no_such_file.jpg",
       this.failLoaded.bind(this)
     );
   }
 
   texLoaded(texture) {
-    if (texture instanceof cc.Texture2D) {
+    if (texture instanceof Texture2D) {
       log("Remote texture loaded");
 
       var sprite = new Sprite(texture);
-      sprite.x = cc.winSize.width / 2;
-      sprite.y = cc.winSize.height / 2;
+      sprite.x = winSize.width / 2;
+      sprite.y = winSize.height / 2;
       this.addChild(sprite);
     } else {
       log("Fail to load remote texture");

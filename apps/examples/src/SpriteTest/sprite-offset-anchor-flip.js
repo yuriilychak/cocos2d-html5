@@ -32,8 +32,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, DelayTime, FlipY, sequence } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
-
+import { Animation, Sprite, SpriteFrameCache } from "@aspect/core";
 export class SpriteOffsetAnchorFlip extends SpriteTestDemo {
 
 
@@ -99,7 +98,7 @@ export class SpriteOffsetAnchorFlip extends SpriteTestDemo {
                 animFrames.push(frame);
             }
 
-            var animation = new cc.Animation(animFrames, 0.3);
+            var animation = new Animation(animFrames, 0.3);
             sprite.runAction(new Animate(animation).repeatForever());
 
             animFrames = null;

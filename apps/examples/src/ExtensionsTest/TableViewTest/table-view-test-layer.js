@@ -31,6 +31,7 @@ import { s_image_icon } from "../../resources";
 import { Director, LabelTTF, Layer, Size, Sprite, log } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
+import { TableView } from "@aspect/gui";
 export class TableViewTestLayer extends Layer {
   constructor() {
     super();
@@ -40,7 +41,7 @@ export class TableViewTestLayer extends Layer {
   init() {
     var winSize = Director.getInstance().getWinSize();
 
-    var tableView = new cc.TableView(this, new Size(600, 60));
+    var tableView = new TableView(this, new Size(600, 60));
     tableView.setDirection(cc.SCROLLVIEW_DIRECTION_HORIZONTAL);
     tableView.x = 20;
     tableView.y = winSize.height / 2 - 150;
@@ -48,7 +49,7 @@ export class TableViewTestLayer extends Layer {
     this.addChild(tableView);
     tableView.reloadData();
 
-    tableView = new cc.TableView(this, new Size(60, 350));
+    tableView = new TableView(this, new Size(60, 350));
     tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL);
     tableView.x = winSize.width - 150;
     tableView.y = winSize.height / 2 - 150;

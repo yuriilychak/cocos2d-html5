@@ -26,8 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
-import { Point, Size } from "@aspect/core";
-
+import { Point, Size, TEXT_ALIGNMENT_RIGHT } from "@aspect/core";
 export class UITextTest_IgnoreContentSize extends UIMainLayer {
   init() {
     if (super.init()) {
@@ -63,8 +62,8 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       var halighButton = new ccui.Button();
       halighButton.setTitleText("Alignment Right");
       halighButton.addClickEventListener(function () {
-        leftText.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_RIGHT);
-        rightText.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_RIGHT);
+        leftText.setTextHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);
+        rightText.setTextHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);
       });
       halighButton.setPosition(
         new Point(widgetSize.width / 2 - 50, widgetSize.height / 2 - 50)

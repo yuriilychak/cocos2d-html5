@@ -25,8 +25,7 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { LoaderTestLayer } from "./loader-test-layer";
-import { Color, Director, LabelTTF } from "@aspect/core";
-
+import { Color, Director, LabelTTF, Loader } from "@aspect/core";
 export class LoaderCycleLayer extends BaseTestLayer {
   constructor() {
     super();
@@ -57,16 +56,16 @@ export class LoaderCycleLayer extends BaseTestLayer {
   }
 
   regLoad() {
-    cc.loader.register(["_test1"], {
+    Loader.getInstance().register(["_test1"], {
       load: function (realUrl, url, res, cb) {
-        cc.loader.cache[url] = {};
+        Loader.getInstance().cache[url] = {};
         setTimeout(function () {
-          cb && cb(null, cc.loader.cache[url]);
-          return cc.loader.cache[url];
+          cb && cb(null, Loader.getInstance().cache[url]);
+          return Loader.getInstance().cache[url];
         }, Math.random() * 1000);
       }
     });
-    cc.loader.register(["_test2"], {
+    Loader.getInstance().register(["_test2"], {
       load: function (realUrl, url, res, cb) {
         cb && cb({}, null);
         return null;
@@ -98,10 +97,10 @@ export class LoaderCycleLayer extends BaseTestLayer {
   test(cb) {
     this.clearRes();
     var layer = this;
-    cc.loader.load(layer.list, function () {
+    Loader.getInstance().load(layer.list, function () {
       var num = 0;
       layer.list.forEach(function (item) {
-        if (!cc.loader.getRes(item)) {
+        if (!Loader.getInstance().getRes(item)) {
           num++;
         }
       });
@@ -111,7 +110,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
   clearRes() {
     this.list.forEach(function (item) {
-      cc.loader.release(item);
+      Loader.getInstance().release(item);
     });
   }
 

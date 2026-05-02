@@ -25,8 +25,9 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { PluginXTest } from "./PluginXTest";
-import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, log } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, Loader, log } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
+import { winSize } from "../../constants";
 
 TAG_SETSERVERMODE = 0;
 TAG_GETPRODUCTLIST = 1;
@@ -71,14 +72,14 @@ export class IAPTestLayer extends PluginXTest {
       var item = new MenuItemLabel(text, this.menuCallBack, this);
       item.tag = s_IAPFunctionItem[i].tag;
       item.x = 200;
-      item.y = cc.winSize.height - 200 - i * 50;
+      item.y = winSize.height - 200 - i * 50;
 
       var resultLabel = new LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
       resultLabel.color = new Color(125, 125, 125);
       resultLabel.anchorX = 0;
       resultLabel.tag = s_IAPResultItem[i].tag;
       resultLabel.x = 300;
-      resultLabel.y = cc.winSize.height - 200 - i * 50;
+      resultLabel.y = winSize.height - 200 - i * 50;
       payMenu.addChild(item);
       this.addChild(resultLabel);
     }
@@ -96,8 +97,8 @@ export class IAPTestLayer extends PluginXTest {
     var label = new LabelTTF("loading", "Arial", 16);
     this.toastLayer.addChild(label);
     this.toastLayer.setTag(TAG_TOAST);
-    label.x = cc.winSize.width / 2;
-    label.y = cc.winSize.height / 2;
+    label.x = winSize.width / 2;
+    label.y = winSize.height / 2;
     this.toastLayer.setColor(new Color(100, 100, 100, 100));
   }
   addTouch(bool) {
@@ -205,7 +206,7 @@ export class IAPTestLayer extends PluginXTest {
   }
   postServerData(data) {
     var that = this;
-    var xhr = cc.loader.getXMLHttpRequest();
+    var xhr = Loader.getInstance().getXMLHttpRequest();
 
     //replace to your own server address
     xhr.open("POST", "http://localhost/");

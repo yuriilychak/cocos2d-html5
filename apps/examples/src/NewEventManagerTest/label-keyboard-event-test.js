@@ -27,8 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { EventListener, EventManager, LabelTTF, Sys } from "@aspect/core";
-
+import { EventListener, EventManager, KEY, LabelTTF, Sys } from "@aspect/core";
 export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
   onEnter() {
     //----start4----onEnter
@@ -79,10 +78,10 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
   }
 
   getNativeKeyName(keyCode) {
-    var allCode = Object.getOwnPropertyNames(cc.KEY);
+    var allCode = Object.getOwnPropertyNames(KEY);
     var keyName = "";
     for (var x in allCode) {
-      if (cc.KEY[allCode[x]] == keyCode) {
+      if (KEY[allCode[x]] == keyCode) {
         keyName = allCode[x];
         break;
       }

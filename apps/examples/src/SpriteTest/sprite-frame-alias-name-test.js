@@ -34,8 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_aliases, s_grossini_aliasesPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
-
+import { Animation, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 export class SpriteFrameAliasNameTest extends SpriteTestDemo {
     constructor() {
         super();
@@ -72,7 +71,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
 
-        var spriteBatch = new cc.SpriteBatchNode(s_grossini_aliases);
+        var spriteBatch = new SpriteBatchNode(s_grossini_aliases);
         spriteBatch.addChild(sprite);
         this.addChild(spriteBatch);
 
@@ -85,7 +84,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
             animFrames.push(frame);
         }
 
-        var animation = new cc.Animation(animFrames, 0.3);
+        var animation = new Animation(animFrames, 0.3);
         // 14 frames * 1sec = 14 seconds
         sprite.runAction(new Animate(animation).repeatForever());
         this.testSprite = sprite;

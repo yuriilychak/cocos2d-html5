@@ -28,9 +28,11 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { s_pathFog, s_pathGrossini } from "../resources";
-import { Color, LayerColor, Size, Sprite } from "@aspect/core";
+import { Color, LayerColor, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Size, Sprite } from "@aspect/core";
 import { DelayTime, sequence } from "@aspect/actions";
+import { Shaky3D } from "@aspect/actions3d";
 
+import { NodeGrid } from "@aspect/node-grid";
 export class Issue631 extends EffectAdvanceTextLayer {
   title() {
     return "Testing Opacity";
@@ -45,7 +47,7 @@ export class Issue631 extends EffectAdvanceTextLayer {
 
     var effect = sequence(
       new DelayTime(2.0),
-      cc.shaky3D(5.0, new Size(5, 5), 16, false)
+      new Shaky3D(5.0, new Size(5, 5), 16, false)
     );
 
     // cleanup
@@ -64,8 +66,8 @@ export class Issue631 extends EffectAdvanceTextLayer {
     var layer2 = new LayerColor(new Color(0, 255, 0, 255));
     var fog = new Sprite(s_pathFog);
 
-    fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
-    var nodeGrid = new cc.NodeGrid();
+    fog.setBlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
+    var nodeGrid = new NodeGrid();
     layer2.addChild(fog, 1);
     nodeGrid.addChild(layer2);
     this.addChild(nodeGrid, 1);

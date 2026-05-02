@@ -25,7 +25,7 @@
 
 import { PluginXTest } from "./PluginXTest";
 import { director } from "../../constants";
-import { Director, LabelTTF, Point, Size, Sys, log } from "@aspect/core";
+import { Director, LabelTTF, Point, Size, Sys, TEXT_ALIGNMENT_CENTER, log } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export var g_pAnalytics = null;
@@ -162,7 +162,7 @@ export class AnalyticsTestLayer extends PluginXTest {
       "Arial",
       24,
       new Size(size.width, 0),
-      cc.TEXT_ALIGNMENT_CENTER
+      TEXT_ALIGNMENT_CENTER
     );
     pLabel.setPosition(new Point(size.width / 2, yPos - 100));
     this.addChild(pLabel);

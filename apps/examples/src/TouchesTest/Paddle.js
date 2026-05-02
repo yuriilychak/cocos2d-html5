@@ -25,8 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventListener, EventManager, Rect, Sprite, assert } from "@aspect/core";
-
+import { EventListener, EventManager, Rect, Sprite, Texture2D, assert } from "@aspect/core";
 export var PADDLE_STATE_GRABBED = 0;
 export var PADDLE_STATE_UNGRABBED = 1;
 
@@ -56,7 +55,7 @@ export class Paddle extends Sprite {
         if (super.initWithTexture(aTexture)) {
             this._state = PADDLE_STATE_UNGRABBED;
         }
-        if (aTexture instanceof cc.Texture2D) {
+        if (aTexture instanceof Texture2D) {
             this._rect = new Rect(0, 0, aTexture.width, aTexture.height);
         } else if ((aTexture instanceof HTMLImageElement) || (aTexture instanceof HTMLCanvasElement)) {
             this._rect = new Rect(0, 0, aTexture.width, aTexture.height);

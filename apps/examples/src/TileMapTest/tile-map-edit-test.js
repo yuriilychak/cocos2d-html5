@@ -29,6 +29,7 @@ import { s_levelMapTga, s_tilesPng } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { Point } from "@aspect/core";
+import { Tile } from "@aspect/actions3d";
 
 export class TileMapEditTest extends TileDemo {
   constructor() {

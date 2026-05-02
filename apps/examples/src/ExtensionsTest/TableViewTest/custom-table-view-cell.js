@@ -25,7 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-export class CustomTableViewCell extends cc.TableViewCell {
+import { TableViewCell } from "@aspect/gui";
+
+export class CustomTableViewCell extends TableViewCell {
     draw(ctx) {
         super.draw(ctx);
     }

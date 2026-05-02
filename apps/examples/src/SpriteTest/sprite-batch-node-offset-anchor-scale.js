@@ -34,8 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, ScaleBy, sequence } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
-
+import { Animation, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
 
 
@@ -54,7 +53,7 @@ export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
 
         this.pixel = {"0":153, "1":0, "2":153, "3":255};
         //----start9----ctor
-        var batch = new cc.SpriteBatchNode(s_grossini);
+        var batch = new SpriteBatchNode(s_grossini);
         this.addChild(batch);
 
         SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
@@ -100,7 +99,7 @@ export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
                 animFrames.push(frame);
             }
 
-            var animation = new cc.Animation(animFrames, 0.3);
+            var animation = new Animation(animFrames, 0.3);
             sprite.runAction(new Animate(animation).repeatForever());
 
             var scale = new ScaleBy(2, 2);

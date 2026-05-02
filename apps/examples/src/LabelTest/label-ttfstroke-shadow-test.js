@@ -32,8 +32,7 @@
 //------------------------------------------------------------------
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { Color, LabelTTF, Point, Size } from "@aspect/core";
-
+import { Color, FontDefinition, LabelTTF, Point, Size, TEXT_ALIGNMENT_LEFT, VERTICAL_TEXT_ALIGNMENT_TOP } from "@aspect/core";
 export class LabelTTFStrokeShadowTest extends AtlasDemo {
   constructor() {
     //----start26----ctor
@@ -66,11 +65,11 @@ export class LabelTTFStrokeShadowTest extends AtlasDemo {
     var posY_5 = s.height / 7;
 
     // font definition
-    var fontDefRedShadow = new cc.FontDefinition();
+    var fontDefRedShadow = new FontDefinition();
     fontDefRedShadow.fontName = "Arial";
     fontDefRedShadow.fontSize = 32;
-    fontDefRedShadow.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-    fontDefRedShadow.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    fontDefRedShadow.textAlign = TEXT_ALIGNMENT_LEFT;
+    fontDefRedShadow.verticalAlign = VERTICAL_TEXT_ALIGNMENT_TOP;
     fontDefRedShadow.fillStyle = redColor;
     fontDefRedShadow.boundingWidth = blockSize.width;
     fontDefRedShadow.boundingHeight = blockSize.height;
@@ -87,11 +86,11 @@ export class LabelTTFStrokeShadowTest extends AtlasDemo {
     this._labelShadow.y = posY_5;
 
     // font definition
-    var fontDefBlueStroke = new cc.FontDefinition();
+    var fontDefBlueStroke = new FontDefinition();
     fontDefBlueStroke.fontName = "Arial";
     fontDefBlueStroke.fontSize = 32;
-    fontDefBlueStroke.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-    fontDefBlueStroke.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    fontDefBlueStroke.textAlign = TEXT_ALIGNMENT_LEFT;
+    fontDefBlueStroke.verticalAlign = VERTICAL_TEXT_ALIGNMENT_TOP;
     fontDefBlueStroke.fillStyle = blueColor;
     fontDefBlueStroke.boundingWidth = blockSize.width;
     fontDefBlueStroke.boundingHeight = blockSize.height;
@@ -106,11 +105,11 @@ export class LabelTTFStrokeShadowTest extends AtlasDemo {
     this._labelStroke.y = posY_5 * 2;
 
     // font definition
-    var fontDefRedStrokeShadow = new cc.FontDefinition();
+    var fontDefRedStrokeShadow = new FontDefinition();
     fontDefRedStrokeShadow.fontName = "Arial";
     fontDefRedStrokeShadow.fontSize = 32;
-    fontDefRedStrokeShadow.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-    fontDefRedStrokeShadow.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    fontDefRedStrokeShadow.textAlign = TEXT_ALIGNMENT_LEFT;
+    fontDefRedStrokeShadow.verticalAlign = VERTICAL_TEXT_ALIGNMENT_TOP;
     fontDefRedStrokeShadow.fillStyle = blueColor;
     fontDefRedStrokeShadow.boundingWidth = blockSize.width;
     fontDefRedStrokeShadow.boundingHeight = blockSize.height;

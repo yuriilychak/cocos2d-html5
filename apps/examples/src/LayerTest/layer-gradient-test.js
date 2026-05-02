@@ -27,9 +27,10 @@
 
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventManager, LabelTTF, Point, Sys } from "@aspect/core";
+import { Color, EventListener, EventManager, EventMouse, LabelTTF, LayerGradient, Point, Sys } from "@aspect/core";
 import { Menu, MenuItemLabel, MenuItemToggle } from "@aspect/menus";
 
+import { TAG_LAYER } from "./layer-test-constants";
 export class LayerGradientTest extends LayerTest {
   constructor() {
     //----start7----onEnter
@@ -40,12 +41,12 @@ export class LayerGradientTest extends LayerTest {
     this.pixel1 = { 0: 255, 1: 0, 2: 0, 3: 255 };
 
     this.pixel2 = { 0: 0, 1: 255, 2: 0, 3: 255 };
-    var layer1 = new cc.LayerGradient(
+    var layer1 = new LayerGradient(
       new Color(255, 0, 0, 255),
       new Color(0, 255, 0, 255),
       new Point(0.9, 0.9)
     );
-    this.addChild(layer1, 0, cc.TAG_LAYER);
+    this.addChild(layer1, 0, TAG_LAYER);
 
     if ("touches" in Sys.getInstance().capabilities) {
       EventManager.getInstance().addListener(
@@ -68,7 +69,7 @@ export class LayerGradientTest extends LayerTest {
             event.getCurrentTarget().updateGradient(event.getLocation());
           },
           onMouseMove: function (event) {
-            if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+            if (event.getButton() == EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().updateGradient(event.getLocation());
           }
         },
@@ -112,7 +113,7 @@ export class LayerGradientTest extends LayerTest {
 
   onToggleItem(sender) {
     //----start7----onToggleItem
-    var gradient = this.getChildByTag(cc.TAG_LAYER);
+    var gradient = this.getChildByTag(TAG_LAYER);
     gradient.setCompressedInterpolation(!gradient.isCompressedInterpolation());
     //----end7----
   }

@@ -30,6 +30,7 @@ import { s_pathGrossini } from "../resources";
 import { DelayTime, RotateBy, Show, sequence } from "@aspect/actions";
 import { Sprite } from "@aspect/core";
 
+import { ClippingNode } from "@aspect/clipping-nodes";
 export class NestedTest extends BaseClippingNodeTest {
   title() {
     return "Nested Test";
@@ -47,7 +48,7 @@ export class NestedTest extends BaseClippingNodeTest {
     for (var i = 0; i < depth; i++) {
       var size = 225 - i * (225 / (depth * 2));
 
-      var clipper = new cc.ClippingNode();
+      var clipper = new ClippingNode();
       clipper.attr({
         width: size,
         height: size,

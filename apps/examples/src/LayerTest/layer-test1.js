@@ -32,8 +32,9 @@
 //------------------------------------------------------------------
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventManager, LayerColor, Sys } from "@aspect/core";
+import { Color, EventListener, EventManager, EventMouse, LayerColor, Sys } from "@aspect/core";
 
+import { TAG_LAYER } from "./layer-test-constants";
 export class LayerTest1 extends LayerTest {
   constructor() {
     super();
@@ -59,7 +60,7 @@ export class LayerTest1 extends LayerTest {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+            if (event.getButton() == EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().updateSize(event.getLocation());
           }
         },
@@ -75,7 +76,7 @@ export class LayerTest1 extends LayerTest {
     layer.setContentSize(200, 200);
     layer.x = s.width / 2;
     layer.y = s.height / 2;
-    this.addChild(layer, 1, cc.TAG_LAYER);
+    this.addChild(layer, 1, TAG_LAYER);
     //----end0----
   }
   title() {
@@ -84,7 +85,7 @@ export class LayerTest1 extends LayerTest {
 
   updateSize(location) {
     //----start0----updateSize
-    var l = this.getChildByTag(cc.TAG_LAYER);
+    var l = this.getChildByTag(TAG_LAYER);
 
     l.width = Math.abs(location.x - winSize.width / 2) * 2;
     l.height = Math.abs(location.y - winSize.height / 2) * 2;

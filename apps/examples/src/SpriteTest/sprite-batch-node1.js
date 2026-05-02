@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventManager, Point, Rect, Sprite, Sys } from "@aspect/core";
+import { EventListener, EventManager, Point, Rect, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
 import { Blink, FadeOut, RotateBy, ScaleBy, TintBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNode1 extends SpriteTestDemo {
@@ -85,7 +85,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
                 }
             }, this);
 
-        var batchNode = new cc.SpriteBatchNode(s_grossini_dance_atlas, 50);
+        var batchNode = new SpriteBatchNode(s_grossini_dance_atlas, 50);
         this.addChild(batchNode, 0, TAG_SPRITE_BATCH_NODE);
         this.addNewSpriteWithCoords(new Point(winSize.width / 2, winSize.height / 2));
         //----end1----

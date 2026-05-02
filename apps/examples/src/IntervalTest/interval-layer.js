@@ -27,12 +27,12 @@
 
 import { s_fire, s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Color, Point, Sprite } from "@aspect/core";
+import { Color, LayerGradient, Point, Sprite, textureCache } from "@aspect/core";
 import { JumpBy, sequence } from "@aspect/actions";
 import { Menu, MenuItemFont } from "@aspect/menus";
 import { ParticleSun } from "../ParticleTest/ParticleExamples";
 
-export class IntervalLayer extends cc.LayerGradient {
+export class IntervalLayer extends LayerGradient {
 
 
 
@@ -94,7 +94,7 @@ export class IntervalLayer extends cc.LayerGradient {
         var s = director.getWinSize();
         // sun
         var sun = new ParticleSun();
-        sun.texture = cc.textureCache.addImage(s_fire);
+        sun.texture = textureCache.addImage(s_fire);
         sun.x = s.width - 32;
         sun.y = s.height - 32;
 

@@ -30,6 +30,7 @@ import { MotionStreakTest } from "./motion-streak-test";
 import { s_image_icon } from "../resources";
 import { Color, Director, Point } from "@aspect/core";
 
+import { MotionStreak } from "@aspect/motion-streak";
 export class Issue1358 extends MotionStreakTest {
   constructor() {
     super();
@@ -51,7 +52,7 @@ export class Issue1358 extends MotionStreakTest {
 
     // ask director the the window size
     var size = Director.getInstance().getWinSize();
-    this._streak = new cc.MotionStreak(
+    this._streak = new MotionStreak(
       2.0,
       1.0,
       50.0,

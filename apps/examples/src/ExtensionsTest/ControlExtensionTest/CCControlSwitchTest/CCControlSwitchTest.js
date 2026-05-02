@@ -29,6 +29,7 @@ import { ControlScene } from "../CCControlScene";
 import { Director, LabelTTF, Node, Scene, Sprite } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
+import { CONTROL_EVENT_VALUE_CHANGED } from "@aspect/gui";
 export class ControlSwitchTest extends ControlScene {
   init() {
     if (super.init()) {
@@ -73,7 +74,7 @@ export class ControlSwitchTest extends ControlScene {
       switchControl.addTargetWithActionForControlEvents(
         this,
         this.valueChanged,
-        cc.CONTROL_EVENT_VALUECHANGED
+        CONTROL_EVENT_VALUE_CHANGED
       );
 
       // Set the layer size
@@ -83,7 +84,7 @@ export class ControlSwitchTest extends ControlScene {
       layer.anchorY = 0.5;
 
       // Update the value label
-      this.valueChanged(switchControl, cc.CONTROL_EVENT_VALUECHANGED);
+      this.valueChanged(switchControl, CONTROL_EVENT_VALUE_CHANGED);
       return true;
     }
     return false;

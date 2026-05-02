@@ -32,8 +32,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, ScaleBy, SkewBy, sequence } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
-
+import { Animation, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
 
 
@@ -56,7 +55,7 @@ export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
         SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
         SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
-        var spritebatch = new cc.SpriteBatchNode(s_grossini);
+        var spritebatch = new SpriteBatchNode(s_grossini);
         this.addChild(spritebatch);
 
         for (var i = 0; i < 3; i++) {
@@ -99,7 +98,7 @@ export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
                 animFrames.push(frame);
             }
 
-            var animation = new cc.Animation(animFrames, 0.3);
+            var animation = new Animation(animFrames, 0.3);
             sprite.runAction(new Animate(animation).repeatForever());
 
             animFrames = null;

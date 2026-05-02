@@ -29,7 +29,7 @@
 // S9BatchNodeScaleWithCapInsets
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
-import { Rect, log } from "@aspect/core";
+import { Rect, SpriteBatchNode, log } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9BatchNodeScaleWithCapInsets extends S9SpriteTestDemo {
@@ -45,7 +45,7 @@ export class S9BatchNodeScaleWithCapInsets extends S9SpriteTestDemo {
 
     log("S9BatchNodeScaleWithCapInsets ...");
 
-    var batchNode_scaled_with_insets = new cc.SpriteBatchNode(
+    var batchNode_scaled_with_insets = new SpriteBatchNode(
       "Images/blocks9.png"
     );
     log(

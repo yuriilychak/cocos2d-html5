@@ -26,16 +26,17 @@
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
 import { DelayTime, sequence } from "@aspect/actions";
+import { ShuffleTiles } from "@aspect/actions3d";
 
 export class ShuffleTilesTest extends EffectsBaseLayer {
   title() {
     return "ShuffleTiles";
   }
   code() {
-    return "a = shuffleTiles(duration, gridSize, seed)";
+    return "a = new ShuffleTiles(duration, gridSize, seed)";
   }
   getEffect(duration) {
-    var action = cc.shuffleTiles(duration, new Size(16, 12), 25);
+    var action = new ShuffleTiles(duration, new Size(16, 12), 25);
     var delay = new DelayTime(2);
     var back = action.reverse();
     var seq = sequence(action, delay, back);

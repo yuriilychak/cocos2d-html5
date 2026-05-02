@@ -25,15 +25,16 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
+import { Waves3D } from "@aspect/actions3d";
 
 export class Waves3DTest extends EffectsBaseLayer {
   title() {
     return "Waves 3D";
   }
   code() {
-    return "a = waves3D(duration, gridSize, range, shakeZ)";
+    return "a = new Waves3D(duration, gridSize, range, shakeZ)";
   }
   getEffect(duration) {
-    return cc.waves3D(duration, new Size(15, 10), 5, 40);
+    return new Waves3D(duration, new Size(15, 10), 5, 40);
   }
 }

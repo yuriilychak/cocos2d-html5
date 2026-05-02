@@ -28,8 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_ghosts, s_ghostsPlist } from "../resources";
 import { winSize } from "../constants";
-import { Sprite, SpriteFrameCache, Sys } from "@aspect/core";
-
+import { RendererConfig, Sprite, SpriteBatchNode, SpriteFrameCache, Sys } from "@aspect/core";
 export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
 
     constructor() {
@@ -55,11 +54,11 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
         //
         // SpriteBatchNode: 3 levels of children
         //
-        var aParent = new cc.SpriteBatchNode(s_ghosts);
+        var aParent = new SpriteBatchNode(s_ghosts);
 
         this._batchNode = aParent;
         //[[aParent texture] generateMipmap];
-        if ("opengl" in Sys.getInstance().capabilities && cc.rendererConfig.isWebGL)
+        if ("opengl" in Sys.getInstance().capabilities && RendererConfig.getInstance().isWebGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 

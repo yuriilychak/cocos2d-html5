@@ -29,9 +29,10 @@ import { ActionsDemo } from "./actions-demo";
 import { createCustomAction } from "./actions-test-helpers";
 import { CustomMoveBy } from "./custom-move-by";
 import { s_pathGrossini } from "../resources";
-import { LabelTTF, Layer, Point, Sprite, log } from "@aspect/core";
+import { Animation, LabelTTF, Layer, Point, Sprite, log } from "@aspect/core";
 import { Animate, BezierBy, BezierTo, Blink, CallFunc, DelayTime, FadeIn, FadeOut, FadeTo, FlipX, FlipY, Hide, JumpBy, JumpTo, MoveBy, MoveTo, Place, Repeat, RepeatForever, RotateBy, RotateTo, ScaleBy, ScaleTo, Sequence, Show, SkewBy, SkewTo, Spawn, TintBy, TintTo, sequence, spawn } from "@aspect/actions";
 import { Menu, MenuItemLabel } from "@aspect/menus";
+import { winSize } from "../constants";
 
 export class ActionCustomTest extends ActionsDemo {
   constructor() {
@@ -61,7 +62,7 @@ export class ActionCustomTest extends ActionsDemo {
     );
     var buttonTemp = new Menu(label1, label2);
     buttonTemp.alignItemsVerticallyWithPadding(10);
-    buttonTemp.setPosition(new Point(100, cc.winSize.height / 2 + 100));
+    buttonTemp.setPosition(new Point(100, winSize.height / 2 + 100));
     this.addChild(buttonTemp);
 
     this.createActionInterval();
@@ -208,15 +209,15 @@ export class ActionCustomTest extends ActionsDemo {
     var bezierBy = new (createCustomAction(BezierBy))(5, [
       spriteTemp.getPosition(),
       new Point(0, spriteTemp.getPosition().y),
-      new Point(cc.winSize.x, spriteTemp.getPosition().y),
+      new Point(winSize.x, spriteTemp.getPosition().y),
       spriteTemp.getPosition()
     ]);
     spriteTemp.runAction(bezierBy);
 
     spriteTemp = this.addandCreateSpriteTemp("BezierTo");
     var bezierTo = new (createCustomAction(BezierTo))(5, [
-      new Point(0, cc.winSize.height / 2),
-      new Point(300, -cc.winSize.height / 2),
+      new Point(0, winSize.height / 2),
+      new Point(300, -winSize.height / 2),
       new Point(300, 100)
     ]);
     spriteTemp.runAction(bezierTo);
@@ -265,7 +266,7 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp.runAction(tintBy);
 
     spriteTemp = this.addandCreateSpriteTemp("Animate");
-    var animation = new cc.Animation();
+    var animation = new Animation();
     for (var i = 1; i < 15; i++) {
       var frameName =
         "Images/grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
@@ -282,7 +283,7 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp.setPosition(this._spritePos);
     var spriteContentSize = spriteTemp.getContentSize();
     this._spritePos.y += spriteContentSize.height;
-    if (this._spritePos.y > cc.winSize.height - spriteContentSize.height) {
+    if (this._spritePos.y > winSize.height - spriteContentSize.height) {
       this._spritePos.x += spriteContentSize.width;
       this._spritePos.y = 50;
     }

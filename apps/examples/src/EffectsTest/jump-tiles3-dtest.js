@@ -25,16 +25,17 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
+import { JumpTiles3D } from "@aspect/actions3d";
 
 export class JumpTiles3DTest extends EffectsBaseLayer {
   title() {
     return "JumpTiles3D";
   }
   code() {
-    return "a = jumpTiles3D(duration, gridSize, jumps, amplitude)";
+    return "a = new JumpTiles3D(duration, gridSize, jumps, amplitude)";
   }
   getEffect(duration) {
-    var action = cc.jumpTiles3D(duration, new Size(16, 12), 2, 30);
+    var action = new JumpTiles3D(duration, new Size(16, 12), 2, 30);
     return action;
   }
 }

@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas, s_grossini_dance_atlas_mono } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventManager, Node, Point, Rect, Sprite, Sys } from "@aspect/core";
+import { EventListener, EventManager, Node, Point, Rect, Sprite, Sys, textureCache } from "@aspect/core";
 import { Blink, FadeOut, RotateBy, ScaleBy, TintBy, sequence } from "@aspect/actions";
 
 export class SpriteNewTexture extends SpriteTestDemo {
@@ -79,8 +79,8 @@ export class SpriteNewTexture extends SpriteTestDemo {
         var node = new Node();
         this.addChild(node, 0, TAG_SPRITE_BATCH_NODE);
 
-        this._texture1 = cc.textureCache.addImage(s_grossini_dance_atlas);
-        this._texture2 = cc.textureCache.addImage(s_grossini_dance_atlas_mono);
+        this._texture1 = textureCache.addImage(s_grossini_dance_atlas);
+        this._texture2 = textureCache.addImage(s_grossini_dance_atlas_mono);
 
         this._usingTexture1 = true;
 

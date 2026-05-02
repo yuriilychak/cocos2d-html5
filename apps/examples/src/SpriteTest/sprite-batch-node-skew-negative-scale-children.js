@@ -29,7 +29,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { SkewBy, sequence } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
+import { Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
 
@@ -56,7 +56,7 @@ export class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
         cache.addSpriteFrames(s_grossiniPlist);
         cache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
-        var spritebatch = new cc.SpriteBatchNode(s_grossini);
+        var spritebatch = new SpriteBatchNode(s_grossini);
         this.addChild(spritebatch);
 
         for (var i = 0; i < 2; i++) {

@@ -25,16 +25,17 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
+import { WavesTiles3D } from "@aspect/actions3d";
 
 export class WavesTiles3DTest extends EffectsBaseLayer {
   title() {
     return "WavesTiles3D";
   }
   code() {
-    return "a = wavesTiles3D(duration, gridSize, waves, amplitude)";
+    return "a = new WavesTiles3D(duration, gridSize, waves, amplitude)";
   }
   getEffect(duration) {
-    var action = cc.wavesTiles3D(duration, new Size(16, 12), 4, 120);
+    var action = new WavesTiles3D(duration, new Size(16, 12), 4, 120);
     return action;
   }
 }

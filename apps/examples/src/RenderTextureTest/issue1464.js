@@ -34,6 +34,7 @@ import { winSize } from "../constants";
 import { LabelTTF, Sprite, Sys } from "@aspect/core";
 import { DelayTime, FadeOut, sequence } from "@aspect/actions";
 
+import { RenderTexture } from "@aspect/render-texture";
 export class Issue1464 extends RenderTextureBaseLayer {
 
     constructor() {
@@ -57,7 +58,7 @@ export class Issue1464 extends RenderTextureBaseLayer {
         var sprite = new Sprite(s_grossini);
 
         // create a render texture
-        var rend = new cc.RenderTexture( winSize.width/2, winSize.height/2 );
+        var rend = new RenderTexture( winSize.width/2, winSize.height/2 );
         rend.x = winSize.width/2;
         rend.y = winSize.height/2 ;
         this.addChild( rend, 1 );

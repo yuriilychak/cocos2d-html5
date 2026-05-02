@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
-import { Point, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Animation, Point, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 import { Animate, MoveBy, RotateBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeChildren extends SpriteTestDemo {
@@ -52,7 +52,7 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
         // parents
-        var batch = new cc.SpriteBatchNode(s_grossini, 50);
+        var batch = new SpriteBatchNode(s_grossini, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
@@ -82,7 +82,7 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
             animFrames.push(frame);
         }
 
-        var animation = new cc.Animation(animFrames, 0.2);
+        var animation = new Animation(animFrames, 0.2);
         sprite1.runAction(new Animate(animation).repeatForever());
         // END NEW CODE
 

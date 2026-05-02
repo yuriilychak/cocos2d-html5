@@ -35,8 +35,7 @@ import { TAG_BITMAP_ATLAS1, TAG_BITMAP_ATLAS2, TAG_BITMAP_ATLAS3 } from "./label
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
 import { LabelBMFont } from "@aspect/labels";
-import { log } from "@aspect/core";
-
+import { TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_RIGHT, log } from "@aspect/core";
 export class BMFontMultiLine2Test extends AtlasDemo {
     constructor() {
         //----start10----ctor
@@ -48,7 +47,7 @@ export class BMFontMultiLine2Test extends AtlasDemo {
         var label1 = new LabelBMFont("Multi line\n\nAligned to the left", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label1.anchorX = 0;
         label1.anchorY = 0;
-        label1.textAlign = cc.TEXT_ALIGNMENT_LEFT;
+        label1.textAlign = TEXT_ALIGNMENT_LEFT;
         label1.boundingWidth = 400;
         this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
         log("content size:" + label1.width + "," + label1.height);
@@ -58,7 +57,7 @@ export class BMFontMultiLine2Test extends AtlasDemo {
         var label2 = new LabelBMFont("Error\n\nSome error message", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
-        label2.textAlign = cc.TEXT_ALIGNMENT_CENTER;
+        label2.textAlign = TEXT_ALIGNMENT_CENTER;
         label2.boundingWidth = 290;
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         log("content size:" + label2.width + "," + label2.height);
@@ -67,7 +66,7 @@ export class BMFontMultiLine2Test extends AtlasDemo {
         var label3 = new LabelBMFont("Multi line\n\nAligned to the right", s_resprefix + "fonts/bitmapFontTest3.fnt");
         label3.anchorX = 1;
         label3.anchorY = 1;
-        label3.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
+        label3.textAlign = TEXT_ALIGNMENT_RIGHT;
         label3.boundingWidth = 400;
         this.addChild(label3, 0, TAG_BITMAP_ATLAS3);
         log("content size:" + label3.width + "," + label3.height);

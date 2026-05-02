@@ -28,6 +28,7 @@
 import { ControlScene } from "../CCControlScene";
 import { Director, LabelTTF, Scene } from "@aspect/core";
 
+import { CONTROL_EVENT_VALUE_CHANGED } from "@aspect/gui";
 export class ControlSliderTest extends ControlScene {
   constructor() {
     super();
@@ -68,7 +69,7 @@ export class ControlSliderTest extends ControlScene {
       slider.addTargetWithActionForControlEvents(
         this,
         this.upperValueChanged,
-        cc.CONTROL_EVENT_VALUECHANGED
+        CONTROL_EVENT_VALUE_CHANGED
       );
 
       var restrictSlider = new cc.ControlSlider(
@@ -91,7 +92,7 @@ export class ControlSliderTest extends ControlScene {
       restrictSlider.addTargetWithActionForControlEvents(
         this,
         this.lowerValueChanged,
-        cc.CONTROL_EVENT_VALUECHANGED
+        CONTROL_EVENT_VALUE_CHANGED
       );
 
       this.addChild(slider);

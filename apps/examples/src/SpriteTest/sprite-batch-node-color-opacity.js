@@ -34,7 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE3, TAG_SPRITE4, TAG_SPRITE5, TAG_SP
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { Rect, Sprite } from "@aspect/core";
+import { Rect, Sprite, SpriteBatchNode } from "@aspect/core";
 import { DelayTime, FadeOut, TintBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
@@ -69,7 +69,7 @@ export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
         this.pixel4 = {"0":255, "1":204, "2":153, "3":255};
         // small capacity. Testing resizing.
         // Don't use capacity=1 in your real game. It is expensive to resize the capacity
-        var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
+        var batch = new SpriteBatchNode(s_grossini_dance_atlas, 1);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         var sprite1 = new Sprite(batch.texture, new Rect(0, 121, 85, 121));

@@ -30,10 +30,11 @@ import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { backEffectAdvanceAction, nextEffectAdvanceAction, restartEffectAdvanceAction } from "./effects-advanced-test-helpers";
 import { s_back3, s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
-import { Color, Director, LabelTTF, Layer, Sprite, visibleRect } from "@aspect/core";
+import { Color, Director, LabelTTF, Layer, LayerGradient, Sprite, visibleRect } from "@aspect/core";
 import { ScaleBy, sequence } from "@aspect/actions";
 import { Menu, MenuItemImage } from "@aspect/menus";
 
+import { NodeGrid } from "@aspect/node-grid";
 export class EffectAdvanceTextLayer extends Layer {
 
     constructor() {
@@ -54,8 +55,8 @@ export class EffectAdvanceTextLayer extends Layer {
         super.onEnter();
 
         // back gradient
-        this.rootNode = new cc.LayerGradient(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
-	    var nodeGrid = new cc.NodeGrid();
+        this.rootNode = new LayerGradient(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
+	    var nodeGrid = new NodeGrid();
 	    nodeGrid.addChild(this.rootNode);
         this.addChild(nodeGrid, 0, EffectsAdvancedTest.TAG_BACKGROUND);
 
@@ -66,7 +67,7 @@ export class EffectAdvanceTextLayer extends Layer {
         bg.y = winSize.height / 2;
 
         var grossini = new Sprite(s_pathSister2);
-	    var grossiniGrid = new cc.NodeGrid();
+	    var grossiniGrid = new NodeGrid();
 	    grossiniGrid.addChild(grossini);
 	    this.rootNode.addChild(grossiniGrid, 1, EffectsAdvancedTest.TAG_SPRITE1);
         grossini.x = winSize.width / 3;
@@ -76,7 +77,7 @@ export class EffectAdvanceTextLayer extends Layer {
         grossini.runAction(sequence(sc, sc_back).repeatForever());
 
         var tamara = new Sprite(s_pathSister1);
-	    var tamaraGrid = new cc.NodeGrid();
+	    var tamaraGrid = new NodeGrid();
 	    tamaraGrid.addChild(tamara);
 	    this.rootNode.addChild(tamaraGrid, 1, EffectsAdvancedTest.TAG_SPRITE2);
         tamara.x = winSize.width * 2 / 3;

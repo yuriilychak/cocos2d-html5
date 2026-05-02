@@ -31,18 +31,19 @@ import { winSize } from "../constants";
 import { Point, Sprite } from "@aspect/core";
 import { sequence } from "@aspect/actions";
 
+import { ProgressTimer, ProgressTo } from "@aspect/progress-timer";
 export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
     onEnter() {
         //----start3----onEnter
         super.onEnter();
 
-        var action = sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
+        var action = sequence(new ProgressTo(2, 100), new ProgressTo(0, 0));
 
         /**
          *  Our image on the left should be a radial progress indicator, clockwise
          */
-        var left = new cc.ProgressTimer(new Sprite(s_pathBlock));
-        left.type = cc.ProgressTimer.TYPE_RADIAL;
+        var left = new ProgressTimer(new Sprite(s_pathBlock));
+        left.type = ProgressTimer.TYPE_RADIAL;
         this.addChild(left);
         left.midPoint = new Point(0.25, 0.75);
         left.x = 200;
@@ -52,8 +53,8 @@ export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
         /**
          *  Our image on the left should be a radial progress indicator, counter clockwise
          */
-        var right = new cc.ProgressTimer(new Sprite(s_pathBlock));
-        right.type = cc.ProgressTimer.TYPE_RADIAL;
+        var right = new ProgressTimer(new Sprite(s_pathBlock));
+        right.type = ProgressTimer.TYPE_RADIAL;
         right.midPoint = new Point(0.75, 0.25);
         /**
          *  Note the reverse property (default=NO) is only added to the right image. That's how

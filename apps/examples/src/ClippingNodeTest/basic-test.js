@@ -35,6 +35,7 @@ import { Color, Director, Point, Sprite } from "@aspect/core";
 import { RotateBy, ScaleBy, sequence } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
+import { ClippingNode } from "@aspect/clipping-nodes";
 export class BasicTest extends BaseClippingNodeTest {
   title() {
     return "Basic Test";
@@ -103,7 +104,7 @@ export class BasicTest extends BaseClippingNodeTest {
   }
 
   clipper() {
-    return new cc.ClippingNode();
+    return new ClippingNode();
   }
 
   content() {

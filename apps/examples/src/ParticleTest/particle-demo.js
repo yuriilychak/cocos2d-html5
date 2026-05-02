@@ -31,7 +31,7 @@ import { backParticleAction, nextParticleAction, particleSceneArr } from "./part
 import { ParticleTestScene } from "./particle-test-scene";
 import { s_MovementMenuItem, s_back3, s_fpsImages, s_shapeModeMenuItem, s_textureModeMenuItem } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, Point, Rect, Sprite, Sys } from "@aspect/core";
+import { Color, EventListener, EventManager, EventMouse, Point, Rect, Sprite, Sys } from "@aspect/core";
 import { LabelAtlas } from "@aspect/labels";
 import { MoveBy, sequence } from "@aspect/actions";
 import { Menu, MenuItemSprite } from "@aspect/menus";
@@ -78,7 +78,7 @@ export class ParticleDemo extends BaseTestLayer {
                     event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                    if(event.getButton() == EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
                 }
             }, this);

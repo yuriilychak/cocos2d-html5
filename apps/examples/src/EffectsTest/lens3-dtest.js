@@ -26,16 +26,17 @@
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { winSize } from "../constants";
 import { Point, Size } from "@aspect/core";
+import { Lens3D } from "@aspect/actions3d";
 
 export class Lens3DTest extends EffectsBaseLayer {
   title() {
     return "Lens3D";
   }
   code() {
-    return "a = lens3D(duration, gridSize, position, radius)";
+    return "a = new Lens3D(duration, gridSize, position, radius)";
   }
   getEffect(duration) {
-    return cc.lens3D(
+    return new Lens3D(
       duration,
       new Size(15, 10),
       new Point(winSize.width / 2, winSize.height / 2),

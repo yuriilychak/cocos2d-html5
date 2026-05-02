@@ -31,12 +31,13 @@ import { winSize } from "../constants";
 import { LabelTTF, Point, Sprite } from "@aspect/core";
 import { FadeTo, TintTo, sequence } from "@aspect/actions";
 
+import { ProgressFromTo, ProgressTimer } from "@aspect/progress-timer";
 export class SpriteProgressBarTintAndFade extends SpriteDemo {
     onEnter() {
         //----start5----onEnter
         super.onEnter();
 
-        var to = cc.progressFromTo(6, 0, 100);
+        var to = new ProgressFromTo(6, 0, 100);
         var tint = sequence(
             new TintTo(1, 255, 0, 0),
             new TintTo(1, 0, 255, 0),
@@ -45,8 +46,8 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
 
         var fade = sequence(new FadeTo(1.0, 0), new FadeTo(1.0, 255));
 
-        var left = new cc.ProgressTimer(new Sprite(s_pathSister1));
-        left.type = cc.ProgressTimer.TYPE_BAR;
+        var left = new ProgressTimer(new Sprite(s_pathSister1));
+        left.type = ProgressTimer.TYPE_BAR;
 
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         left.midPoint = new Point(0.5, 0.5);
@@ -60,8 +61,8 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
 
         left.addChild(new LabelTTF("Tint", "Marker Felt", 20.0));
 
-        var middle = new cc.ProgressTimer(new Sprite(s_pathSister2));
-        middle.type = cc.ProgressTimer.TYPE_BAR;
+        var middle = new ProgressTimer(new Sprite(s_pathSister2));
+        middle.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         middle.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
@@ -74,8 +75,8 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
 
         middle.addChild(new LabelTTF("Fade", "Marker Felt", 20.0));
 
-        var right = new cc.ProgressTimer(new Sprite(s_pathSister2));
-        right.type = cc.ProgressTimer.TYPE_BAR;
+        var right = new ProgressTimer(new Sprite(s_pathSister2));
+        right.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         right.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change

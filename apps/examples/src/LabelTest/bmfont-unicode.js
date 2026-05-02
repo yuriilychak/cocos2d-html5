@@ -31,6 +31,7 @@ import { s_resprefix } from "../resources";
 import { winSize } from "../constants";
 import { LabelBMFont } from "@aspect/labels";
 
+import { TEXT_ALIGNMENT_LEFT } from "@aspect/core";
 export class BMFontUnicode extends AtlasDemo {
     constructor() {
         //----start13----ctor
@@ -39,7 +40,7 @@ export class BMFontUnicode extends AtlasDemo {
         var japanese = "良い一日を";
         var spanish = "Buen día";
 
-        var label1 = new LabelBMFont(spanish, s_resprefix + "fonts/arial-unicode-26.fnt", 200, cc.TEXT_ALIGNMENT_LEFT);
+        var label1 = new LabelBMFont(spanish, s_resprefix + "fonts/arial-unicode-26.fnt", 200, TEXT_ALIGNMENT_LEFT);
         this.addChild(label1);
         label1.x = winSize.width / 2;
         label1.y = winSize.height / 4;

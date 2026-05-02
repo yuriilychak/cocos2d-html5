@@ -34,7 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE_LEFT, TAG_SPRITE_RIGHT } from "./s
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_ghosts, s_ghostsPlist } from "../resources";
 import { winSize } from "../constants";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
+import { Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
@@ -67,7 +67,7 @@ export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
         //
         // SpriteBatchNode: 3 levels of children
         //
-        var aParent = new cc.SpriteBatchNode(s_ghosts);
+        var aParent = new SpriteBatchNode(s_ghosts);
         this.addChild(aParent, 0, TAG_SPRITE1);
 
         // parent

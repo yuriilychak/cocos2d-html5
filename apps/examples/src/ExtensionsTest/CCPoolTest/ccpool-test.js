@@ -33,6 +33,7 @@ import { winSize } from "../../constants";
 import { Color, Director, LabelTTF, Layer, Point, visibleRect } from "@aspect/core";
 import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
 
+import { Pool } from "@aspect/ccpool";
 export class CCPoolTest extends Layer {
   constructor() {
     super();
@@ -142,7 +143,7 @@ export class CCPoolTest extends Layer {
     for (var i = 0; i < 150; i++) {
       var sp = MySprite.create(1, 2, 3);
       this.addChild(sp);
-      cc.pool.putInPool(sp);
+      Pool.getInstance().putInPool(sp);
     }
     this.timeStart("use Pool");
     for (var i = 0; i < 150; i++) {
@@ -159,7 +160,7 @@ export class CCPoolTest extends Layer {
           this.datalist2[i].removeFromParent(true);
         }
         this.datalist2 = [];
-        cc.pool.drainAllPools();
+        Pool.getInstance().drainAllPools();
       },
       0,
       1,

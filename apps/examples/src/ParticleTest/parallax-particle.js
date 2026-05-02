@@ -27,10 +27,11 @@
 
 import { ParticleDemo } from "./particle-demo";
 import { s_back3, s_fire } from "../resources";
-import { Point, Sprite } from "@aspect/core";
+import { Point, Sprite, textureCache } from "@aspect/core";
 import { MoveBy, sequence } from "@aspect/actions";
 import { ParticleFlower, ParticleSun } from "./ParticleExamples";
 
+import { ParallaxNode } from "@aspect/parallax";
 export class ParallaxParticle extends ParticleDemo {
   onEnter() {
     super.onEnter();
@@ -39,7 +40,7 @@ export class ParallaxParticle extends ParticleDemo {
     this._background = null;
 
     //TODO
-    var p = new cc.ParallaxNode();
+    var p = new ParallaxNode();
     this.addChild(p, 5);
 
     var p1 = new Sprite(s_back3);
@@ -49,7 +50,7 @@ export class ParallaxParticle extends ParticleDemo {
     p.addChild(p2, 2, new Point(1.5, 1), new Point(0, 50));
 
     this._emitter = new ParticleFlower();
-    this._emitter.texture = cc.textureCache.addImage(s_fire);
+    this._emitter.texture = textureCache.addImage(s_fire);
 
     p1.addChild(this._emitter, 10);
     this._emitter.x = 250;
@@ -57,7 +58,7 @@ export class ParallaxParticle extends ParticleDemo {
 
     var par = new ParticleSun();
     p2.addChild(par, 10);
-    par.texture = cc.textureCache.addImage(s_fire);
+    par.texture = textureCache.addImage(s_fire);
 
     var move = new MoveBy(4, new Point(300, 0));
     var move_back = move.reverse();

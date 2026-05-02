@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { autoTestEnabled } from "../constants";
-import { Sys, log } from "@aspect/core";
+import { ShaderCache, Sys, log } from "@aspect/core";
 
 export class GLGetUniformTest extends OpenGLTestLayer {
   constructor() {
@@ -50,7 +50,7 @@ export class GLGetUniformTest extends OpenGLTestLayer {
     return "tests texParameter()\n See the Console";
   }
   runTest() {
-    var shader = cc.shaderCache.getProgram("ShaderPositionTextureColor");
+    var shader = ShaderCache.getInstance().getProgram("ShaderPositionTextureColor");
     var program = shader.getProgram();
     shader.use();
 

@@ -28,10 +28,10 @@
 import { DenshionTests } from "./cocos-denshion-test-constants";
 import { director, winSize } from "../constants";
 import { LINE_SPACE } from "../tests-main-helpers";
-import { Color, EventListener, EventManager, LabelTTF, Point, Sys } from "@aspect/core";
+import { Color, EventListener, EventManager, EventMouse, LabelTTF, LayerGradient, Point, Sys } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
 
-export class CocosDenshionTest extends cc.LayerGradient {
+export class CocosDenshionTest extends LayerGradient {
   constructor() {
     super(new Color(0, 0, 0, 255), new Color(148, 80, 120, 255));
 
@@ -72,7 +72,7 @@ export class CocosDenshionTest extends cc.LayerGradient {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+            if (event.getButton() == EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().moveMenu(event.getDelta());
           }
         },

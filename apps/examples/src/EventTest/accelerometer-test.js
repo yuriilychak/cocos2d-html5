@@ -31,8 +31,7 @@
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventManager, Sprite, Sys, log } from "@aspect/core";
-
+import { EventListener, EventManager, Sprite, Sys, inputManager, log } from "@aspect/core";
 export class AccelerometerTest extends EventTest {
     constructor() {
         super();
@@ -45,8 +44,8 @@ export class AccelerometerTest extends EventTest {
         if( 'accelerometer' in Sys.getInstance().capabilities ) {
             var self = this;
             // call is called 30 times per second
-            cc.inputManager.setAccelerometerInterval(1/30);
-            cc.inputManager.setAccelerometerEnabled(true);
+            inputManager.setAccelerometerInterval(1/30);
+            inputManager.setAccelerometerEnabled(true);
             EventManager.getInstance().addListener({
                 event: EventListener.ACCELERATION,
                 callback: function(accelEvent, event){
@@ -92,7 +91,7 @@ export class AccelerometerTest extends EventTest {
     onExit(){
         super.onExit();
         if( 'accelerometer' in Sys.getInstance().capabilities )
-            cc.inputManager.setAccelerometerEnabled(false);
+            inputManager.setAccelerometerEnabled(false);
     }
 
     subtitle() {

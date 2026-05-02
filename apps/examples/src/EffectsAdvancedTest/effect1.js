@@ -29,6 +29,7 @@ import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Director, Point, Size } from "@aspect/core";
 import { DelayTime, sequence } from "@aspect/actions";
+import { Lens3D, ReuseGrid, Waves3D } from "@aspect/actions3d";
 
 export class Effect1 extends EffectAdvanceTextLayer {
   title() {
@@ -45,15 +46,15 @@ export class Effect1 extends EffectAdvanceTextLayer {
     //     Lens3D is Grid3D and it's size is (15,10)
     //     Waves3D is Grid3D and it's size is (15,10)
     var size = Director.getInstance().getWinSize();
-    var lens = cc.lens3D(
+    var lens = new Lens3D(
       0.0,
       new Size(15, 10),
       new Point(size.width / 2, size.height / 2),
       240
     );
-    var waves = cc.waves3D(10, new Size(15, 10), 18, 15);
+    var waves = new Waves3D(10, new Size(15, 10), 18, 15);
 
-    var reuse = cc.reuseGrid(1);
+    var reuse = new ReuseGrid(1);
     var delay = new DelayTime(8);
 
     target.runAction(sequence(lens, delay, reuse, waves));

@@ -25,15 +25,16 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
+import { Liquid } from "@aspect/actions3d";
 
 export class LiquidTest extends EffectsBaseLayer {
   title() {
     return "Liquid";
   }
   code() {
-    return "a = liquid(duration, gridSize, waves, amplitude)";
+    return "a = new Liquid(duration, gridSize, waves, amplitude)";
   }
   getEffect(duration) {
-    return cc.liquid(duration, new Size(16, 12), 4, 20);
+    return new Liquid(duration, new Size(16, 12), 4, 20);
   }
 }

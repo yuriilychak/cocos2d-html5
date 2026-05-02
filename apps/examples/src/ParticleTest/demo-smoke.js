@@ -28,6 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { ParticleSmoke } from "./ParticleExamples";
+import { textureCache } from "@aspect/core";
 
 export class DemoSmoke extends ParticleDemo {
   onEnter() {
@@ -35,7 +36,7 @@ export class DemoSmoke extends ParticleDemo {
 
     this._emitter = new ParticleSmoke();
     this._background.addChild(this._emitter, 10);
-    this._emitter.texture = cc.textureCache.addImage(s_fire);
+    this._emitter.texture = textureCache.addImage(s_fire);
 
     this.setEmitterPosition();
   }

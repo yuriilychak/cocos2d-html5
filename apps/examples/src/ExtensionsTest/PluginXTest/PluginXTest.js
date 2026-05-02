@@ -38,6 +38,7 @@ import {
 import { Director, LabelTTF, Layer, Rect, Sprite } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 import { Menu, MenuItemFont, MenuItemImage } from "@aspect/menus";
+import { winSize } from "../../constants";
 
 export class PluginXTest extends Layer {
   getSceneTitleLabel() {
@@ -52,7 +53,7 @@ export class PluginXTest extends Layer {
 
     this._sceneTitleLabel = null;
     // Get the sceensize
-    var screensize = cc.winSize;
+    var screensize = winSize;
 
     var pBackItem = new MenuItemFont(
       "Back",

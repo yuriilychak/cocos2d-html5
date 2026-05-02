@@ -25,16 +25,17 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { DelayTime, sequence } from "@aspect/actions";
+import { SplitRows } from "@aspect/actions3d";
 
 export class SplitRowsTest extends EffectsBaseLayer {
   title() {
     return "SplitRows";
   }
   code() {
-    return "a = splitRows(duration, rows)";
+    return "a = new SplitRows(duration, rows)";
   }
   getEffect(duration) {
-    var action = cc.splitRows(duration, 9);
+    var action = new SplitRows(duration, 9);
     var delay = new DelayTime(0.5);
     var back = action.reverse();
     var seq = sequence(action, delay, back);

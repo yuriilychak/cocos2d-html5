@@ -29,8 +29,7 @@
 //
 //------------------------------------------------------------------
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
-import { Color, log } from "@aspect/core";
-
+import { Color, Path, log } from "@aspect/core";
 export class PathTestLayer extends BaseTestLayer {
   constructor() {
     super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
@@ -90,7 +89,7 @@ export class PathTestLayer extends BaseTestLayer {
         "path.join('" +
           obj.join("','") +
           "') ---> " +
-          cc.path.join.apply(cc.path, obj)
+          Path.join.apply(Path, obj)
       );
     }
     log("-----------path.join end------------");
@@ -100,7 +99,7 @@ export class PathTestLayer extends BaseTestLayer {
     log("-----------path.extname begin----------");
     for (var i = 0, li = args.length; i < li; i++) {
       var obj = args[i];
-      log("path.extname('" + obj + "') ---> " + cc.path.extname(obj));
+      log("path.extname('" + obj + "') ---> " + Path.extname(obj));
     }
     log("-----------path.extname end------------");
   }
@@ -113,7 +112,7 @@ export class PathTestLayer extends BaseTestLayer {
         "path.basename('" +
           obj.join("','") +
           "') ---> " +
-          cc.path.basename.apply(cc.path, obj)
+          Path.basename.apply(Path, obj)
       );
     }
     log("-----------path.basename end------------");
@@ -123,7 +122,7 @@ export class PathTestLayer extends BaseTestLayer {
     log("-----------path.dirname begin----------");
     for (var i = 0, li = args.length; i < li; i++) {
       var obj = args[i];
-      log("path.dirname('" + obj + "') ---> " + cc.path.dirname(obj));
+      log("path.dirname('" + obj + "') ---> " + Path.dirname(obj));
     }
     log("-----------path.dirname end------------");
   }
@@ -136,7 +135,7 @@ export class PathTestLayer extends BaseTestLayer {
         "path.changeExtname('" +
           obj.join("','") +
           "') ---> " +
-          cc.path.changeExtname.apply(cc.path, obj)
+          Path.changeExtname.apply(Path, obj)
       );
     }
     log("-----------path.changeExtname end------------");
@@ -154,7 +153,7 @@ export class PathTestLayer extends BaseTestLayer {
         "path.changeBasename(" +
           str +
           ") ---> " +
-          cc.path.changeBasename.apply(cc.path, obj)
+          Path.changeBasename.apply(Path, obj)
       );
     }
     log("-----------path.changeBasename end------------");

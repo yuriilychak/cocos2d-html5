@@ -26,7 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
-import { Point, Color } from "@aspect/core";
+import { Color, Point, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_LEFT, VERTICAL_TEXT_ALIGNMENT_TOP } from "@aspect/core";
 import { MoveTo } from "@aspect/actions";
 
 export class UITextFieldTest_LineWrap extends UIMainLayer {
@@ -59,8 +59,8 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
       //textField.getVirtualRenderer().setLineBreakWithoutSpace(true);
       textField.setContentSize(240, 120);
       textField.setString("input words here");
-      textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
-      textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+      textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
+      textField.setTextVerticalAlignment(TEXT_ALIGNMENT_CENTER);
       textField.setPosition(widgetSize.width / 2, widgetSize.height / 2);
       textField.addEventListener(this.textFieldEvent, this);
       this._mainNode.addChild(textField);
@@ -78,8 +78,8 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
             new Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
           )
         );
-        textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT);
-        textField.setTextVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_LEFT);
+        textField.setTextVerticalAlignment(VERTICAL_TEXT_ALIGNMENT_TOP);
         this._topDisplayLabel.setString("attach with IME");
         break;
       case ccui.TextField.EVENT_DETACH_WITH_IME:
@@ -89,8 +89,8 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
             new Point(widgetSize.width / 2, widgetSize.height / 2)
           )
         );
-        textField.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
-        textField.setTextVerticalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+        textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
+        textField.setTextVerticalAlignment(TEXT_ALIGNMENT_CENTER);
         this._topDisplayLabel.setString("detach with IME");
         break;
       case ccui.TextField.EVENT_INSERT_TEXT:

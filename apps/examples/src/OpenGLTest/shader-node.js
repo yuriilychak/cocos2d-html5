@@ -29,8 +29,7 @@
 //
 //------------------------------------------------------------------
 import "./glnode-polyfill";
-import { EGLView, Sys } from "@aspect/core";
-
+import { EGLView, GLProgram, Sys, VERTEX_ATTRIB_POSITION } from "@aspect/core";
 export class ShaderNode extends cc.GLNode {
   constructor(vertexShader, framentShader) {
     super();
@@ -42,8 +41,8 @@ export class ShaderNode extends cc.GLNode {
       this.anchorX = 0.5;
       this.anchorY = 0.5;
 
-      this.shader = new cc.GLProgram(vertexShader, framentShader);
-      this.shader.addAttribute("aVertex", cc.VERTEX_ATTRIB_POSITION);
+      this.shader = new GLProgram(vertexShader, framentShader);
+      this.shader.addAttribute("aVertex", VERTEX_ATTRIB_POSITION);
       this.shader.link();
       this.shader.updateUniforms();
 
@@ -75,11 +74,11 @@ export class ShaderNode extends cc.GLNode {
     this.shader.setUniformLocationF32(this.uniformCenter, centerx, centery);
     this.shader.setUniformLocationF32(this.uniformResolution, 256, 256);
 
-    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
 
     // Draw fullscreen Square
     gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
-    gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, null);

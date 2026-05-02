@@ -29,8 +29,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_animationsPlist, s_grossiniPlist, s_grossini_bluePlist, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate, sequence } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
-
+import { AnimationCache, Sprite, SpriteFrameCache } from "@aspect/core";
 export class AnimationCacheFile extends SpriteTestDemo {
 
 
@@ -79,9 +78,9 @@ export class AnimationCacheFile extends SpriteTestDemo {
         frameCache.addSpriteFrames(s_grossini_bluePlist);
 
         // Purge previously loaded animation
-        if(cc.animationCache._clear)
-	        cc.animationCache._clear();
-        var animCache = cc.animationCache;
+        if(AnimationCache.getInstance()._clear)
+	        AnimationCache.getInstance()._clear();
+        var animCache = AnimationCache.getInstance();
 
         // Add an animation to the Cache
         // XXX API-FIX XXX

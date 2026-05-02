@@ -29,7 +29,7 @@ import { AtlasDemo } from "./atlas-demo";
 import { ArrowsMax, ArrowsMin, CenterAlign, LeftAlign, LineBreaks, LineBreaksExample, LongSentences, LongSentencesExample, Mixed, MixedExample, RightAlign, alignmentItemPadding, chineseExampleText, chineseMixEnglish, chineseMixEnglishText, chineseText, menuItemPaddingCenter, mixAllLanguage, mixAllLanguageText } from "./label-test-helpers";
 import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventManager, Point, Rect, Sprite, Sys } from "@aspect/core";
+import { Color, EventListener, EventManager, EventMouse, Point, Rect, Sprite, Sys, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_RIGHT } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
@@ -75,7 +75,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         var size = director.getWinSize();
 
         // create and initialize a Label
-        this.labelShouldRetain = new LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, cc.TEXT_ALIGNMENT_CENTER, new Point(0, 0));
+        this.labelShouldRetain = new LabelBMFont(LongSentencesExample, s_resprefix + "fonts/markerFelt.fnt", size.width / 2, TEXT_ALIGNMENT_CENTER, new Point(0, 0));
         this.arrowsBarShouldRetain = new Sprite(s_resprefix + "Images/arrowsBar.png");
         this.arrowsShouldRetain = new Sprite(s_resprefix + "Images/arrows.png");
 
@@ -220,13 +220,13 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
 
         switch (item.tag) {
             case LeftAlign:
-                this.labelShouldRetain.textAlign = cc.TEXT_ALIGNMENT_LEFT;
+                this.labelShouldRetain.textAlign = TEXT_ALIGNMENT_LEFT;
                 break;
             case CenterAlign:
-                this.labelShouldRetain.textAlign = cc.TEXT_ALIGNMENT_CENTER;
+                this.labelShouldRetain.textAlign = TEXT_ALIGNMENT_CENTER;
                 break;
             case RightAlign:
-                this.labelShouldRetain.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
+                this.labelShouldRetain.textAlign = TEXT_ALIGNMENT_RIGHT;
                 break;
             default:
                 break;
@@ -264,7 +264,7 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         }
     }
     onMouseMove(event) {
-        if(!event.getButton || event.getButton() != cc.EventMouse.BUTTON_LEFT)
+        if(!event.getButton || event.getButton() != EventMouse.BUTTON_LEFT)
             return;
 
         var location = event.getLocation();

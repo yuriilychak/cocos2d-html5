@@ -28,7 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { director } from "../constants";
-import { Color, Point, Sys } from "@aspect/core";
+import { Color, Point, Sys, textureCache } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 export class DemoModernArt extends ParticleDemo {
@@ -83,7 +83,7 @@ export class DemoModernArt extends ParticleDemo {
         this._emitter.endSizeVar = 8.0;
 
         // texture
-        this._emitter.texture = cc.textureCache.addImage(s_fire);
+        this._emitter.texture = textureCache.addImage(s_fire);
         this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
         // additive

@@ -39,7 +39,7 @@ import {
   director,
   winSize
 } from "../constants";
-import { Color, Director, LabelTTF, Scene, Sys, log } from "@aspect/core";
+import { Color, Director, LabelTTF, LayerGradient, RendererConfig, Scene, Sys, log } from "@aspect/core";
 import { Menu, MenuItemImage } from "@aspect/menus";
 
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
@@ -50,7 +50,7 @@ export const BASE_TEST_MENU_TAG = 10;
 export const BASE_TEST_TITLE_TAG = 11;
 export const BASE_TEST_SUBTITLE_TAG = 12;
 
-export class BaseTestLayer extends cc.LayerGradient {
+export class BaseTestLayer extends LayerGradient {
   constructor(colorA, colorB) {
     // default gradient colors
     var a = new Color(98, 99, 117, 255);
@@ -319,7 +319,7 @@ export class BaseTestLayer extends cc.LayerGradient {
       return array;
     } else {
       // implement a canvas-html5 readpixels
-      return cc.rendererConfig.renderContext.getImageData(
+      return RendererConfig.getInstance().renderContext.getImageData(
         x,
         winSize.height - y - h,
         w,

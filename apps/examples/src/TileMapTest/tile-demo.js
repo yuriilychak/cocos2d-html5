@@ -40,7 +40,7 @@ import {
   restartTileMapTest
 } from "./tile-map-test-helpers";
 import { TileMapTestScene } from "./tile-map-test-scene";
-import { EventListener, EventManager, Sys } from "@aspect/core";
+import { EventListener, EventManager, EventMouse, Sys } from "@aspect/core";
 
 export class TileDemo extends BaseTestLayer {
   constructor() {
@@ -66,7 +66,7 @@ export class TileDemo extends BaseTestLayer {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
+            if (event.getButton() == EventMouse.BUTTON_LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
               node.x += event.getDeltaX();
               node.y += event.getDeltaY();

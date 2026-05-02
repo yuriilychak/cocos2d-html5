@@ -35,7 +35,7 @@ import {
 import { TestScene } from "../test-scene";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventManager, LabelTTF, Point, Sprite, Sys } from "@aspect/core";
+import { Color, EventListener, EventManager, LabelTTF, Point, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
 import { TransitionSlideInL, TransitionSlideInR } from "@aspect/transitions";
 import { Menu, MenuItemFont } from "@aspect/menus";
 import { ParticleFireworks, ParticleMeteor, ParticleSun } from "../ParticleTest/ParticleExamples";
@@ -315,7 +315,7 @@ export class ChipmunkPage extends PresentationBaseLayer {
     super();
 
     // batch node
-    this.batch = new cc.SpriteBatchNode(s_pathGrossini, 50);
+    this.batch = new SpriteBatchNode(s_pathGrossini, 50);
     this.addChild(this.batch);
 
     this.addSprite = function (pos) {

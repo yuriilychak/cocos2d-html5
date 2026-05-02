@@ -27,7 +27,7 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { LabelTTF, Size } from "@aspect/core";
+import { LabelTTF, Size, TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 
 export class LabelTTFMultiline extends AtlasDemo {
@@ -44,8 +44,8 @@ export class LabelTTFMultiline extends AtlasDemo {
       "Arial",
       32,
       new Size(s.width / 2, 200),
-      cc.TEXT_ALIGNMENT_CENTER,
-      cc.VERTICAL_TEXT_ALIGNMENT_TOP
+      TEXT_ALIGNMENT_CENTER,
+      VERTICAL_TEXT_ALIGNMENT_TOP
     );
     center.setDimensions(s.width / 2, 200);
     center.x = s.width / 2;

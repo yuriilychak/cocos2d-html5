@@ -35,23 +35,22 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { RotateTo, sequence } from "@aspect/actions";
-import { Sprite, Sys } from "@aspect/core";
-
+import { GLProgram, Sprite, Sys, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS } from "@aspect/core";
 export class ShaderOutlineEffect extends OpenGLTestLayer {
     constructor() {
         super();
 
         if( 'opengl' in Sys.getInstance().capabilities ) {
             if(Sys.getInstance().isNative){
-                this.shader = new cc.GLProgram(ccbjs + "Shaders/example_Outline_noMVP.vsh", ccbjs + "Shaders/example_Outline.fsh");
+                this.shader = new GLProgram(ccbjs + "Shaders/example_Outline_noMVP.vsh", ccbjs + "Shaders/example_Outline.fsh");
                 this.shader.link();
                 this.shader.updateUniforms();
             }
             else{
-                this.shader = new cc.GLProgram(ccbjs + "Shaders/example_Outline.vsh", ccbjs + "Shaders/example_Outline.fsh");
-                this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
-                this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
-                this.shader.addAttribute(cc.ATTRIBUTE_NAME_COLOR, cc.VERTEX_ATTRIB_COLOR);
+                this.shader = new GLProgram(ccbjs + "Shaders/example_Outline.vsh", ccbjs + "Shaders/example_Outline.fsh");
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
 
                 this.shader.link();
                 this.shader.updateUniforms();

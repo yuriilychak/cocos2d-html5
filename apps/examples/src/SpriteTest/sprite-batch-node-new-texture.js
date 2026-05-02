@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas, s_grossini_dance_atlas_mono } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventManager, Point, Rect, Sprite, Sys } from "@aspect/core";
+import { EventListener, EventManager, Point, Rect, Sprite, SpriteBatchNode, Sys, textureCache } from "@aspect/core";
 import { Blink, FadeOut, RotateBy, ScaleBy, TintBy, sequence } from "@aspect/actions";
 
 export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
@@ -72,11 +72,11 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
                }
            }, this);
 
-        var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 50);
+        var batch = new SpriteBatchNode(s_grossini_dance_atlas, 50);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         this._texture1 = batch.texture;
-        this._texture2 = cc.textureCache.addImage(s_grossini_dance_atlas_mono);
+        this._texture2 = textureCache.addImage(s_grossini_dance_atlas_mono);
 
         for (var i = 0; i < 30; i++) {
             this.addNewSprite();

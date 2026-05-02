@@ -33,8 +33,7 @@ import {
 } from "./render-texture-test-constants";
 import { RenderTextureTestDepthStencil } from "./render-texture-test-depth-stencil";
 import { RenderTextureZbuffer } from "./render-texture-zbuffer";
-import { Sys } from "@aspect/core";
-
+import { RendererConfig, Sys } from "@aspect/core";
 //
 // Flow control
 //
@@ -42,7 +41,7 @@ export var arrayOfRenderTextureTest = [RenderTextureSave, Issue1464];
 
 if (
   "opengl" in Sys.getInstance().capabilities &&
-  cc.rendererConfig.isWebGL &&
+  RendererConfig.getInstance().isWebGL &&
   !Sys.getInstance().isNative
 ) {
   arrayOfRenderTextureTest.push(RenderTextureIssue937);

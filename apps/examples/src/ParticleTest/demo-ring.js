@@ -29,6 +29,7 @@ import { ParticleDemo } from "./particle-demo";
 import { s_stars1 } from "../resources";
 import { ParticleFlower } from "./ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
+import { textureCache } from "@aspect/core";
 
 export class DemoRing extends ParticleDemo {
   onEnter() {
@@ -38,7 +39,7 @@ export class DemoRing extends ParticleDemo {
 
     this._background.addChild(this._emitter, 10);
 
-    this._emitter.texture = cc.textureCache.addImage(s_stars1);
+    this._emitter.texture = textureCache.addImage(s_stars1);
     this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
 
     this._emitter.lifeVar = 0;

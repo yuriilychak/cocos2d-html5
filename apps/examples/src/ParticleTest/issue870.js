@@ -28,7 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_particles, s_resprefix } from "../resources";
 import { director } from "../constants";
-import { Color, Rect } from "@aspect/core";
+import { Color, Rect, textureCache } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 export class Issue870 extends ParticleDemo {
@@ -45,7 +45,7 @@ export class Issue870 extends ParticleDemo {
         this._background = null;
 
         var system = new ParticleSystem(s_resprefix + "Particles/SpinningPeas.plist");
-        system.setTextureWithRect(cc.textureCache.addImage(s_particles), new Rect(0, 0, 32, 32));
+        system.setTextureWithRect(textureCache.addImage(s_particles), new Rect(0, 0, 32, 32));
         this.addChild(system, 10);
         this._emitter = system;
         this._emitter.drawMode = ParticleSystem.TEXTURE_MODE;

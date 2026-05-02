@@ -30,8 +30,7 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { winSize } from "../constants";
-import { Sys } from "@aspect/core";
-
+import { ShaderCache, Sys, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS } from "@aspect/core";
 export class TexImage2DTest extends OpenGLTestLayer {
   constructor() {
     super();
@@ -47,7 +46,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
       glnode.anchorX = 0.5;
       glnode.anchorY = 0.5;
 
-      this.shader = cc.shaderCache.getProgram("ShaderPositionTexture");
+      this.shader = ShaderCache.getInstance().getProgram("ShaderPositionTexture");
       this.initGL();
 
       glnode.draw = function () {
@@ -55,13 +54,13 @@ export class TexImage2DTest extends OpenGLTestLayer {
         this.shader.setUniformsForBuiltins();
 
         gl.bindTexture(gl.TEXTURE_2D, this.my_texture);
-        gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
-        gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
+        gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+        gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
 
         // Draw fullscreen Square
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
         gl.vertexAttribPointer(
-          cc.VERTEX_ATTRIB_POSITION,
+          VERTEX_ATTRIB_POSITION,
           2,
           gl.FLOAT,
           false,
@@ -71,7 +70,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexTextureBuffer);
         gl.vertexAttribPointer(
-          cc.VERTEX_ATTRIB_TEX_COORDS,
+          VERTEX_ATTRIB_TEX_COORDS,
           2,
           gl.FLOAT,
           false,

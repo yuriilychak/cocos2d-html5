@@ -28,9 +28,10 @@
 // SchedulerTimeScale
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { s_stars1 } from "../resources";
-import { Director, LabelTTF, Point, Sprite } from "@aspect/core";
+import { Director, LabelTTF, Point, Sprite, textureCache } from "@aspect/core";
 import { JumpBy, Repeat, RotateBy, Sequence, Spawn, Speed } from "@aspect/actions";
 import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
+import { winSize } from "../constants";
 
 export class SchedulerTimeScale extends SchedulerTestLayer {
   constructor() {
@@ -45,7 +46,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     this._newScheduler = new cc.Scheduler();
     this._newActionManager = new cc.ActionManager();
 
-    var s = cc.winSize;
+    var s = winSize;
 
     // rotate and jump
     var jump1 = new JumpBy(4, new Point(-s.width + 80, 0), 100, 4);
@@ -85,7 +86,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     this._newScheduler.scheduleUpdate(this._newActionManager, 0, false);
 
     var emitter = new ParticleFireworks();
-    emitter.setTexture(cc.textureCache.addImage(s_stars1));
+    emitter.setTexture(textureCache.addImage(s_stars1));
     this.addChild(emitter);
 
     var slider = null;
@@ -100,8 +101,8 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
       ""
     );
     slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
-    slider.x = cc.winSize.width / 2.0;
-    slider.y = (cc.winSize.height / 3.0) * 2;
+    slider.x = winSize.width / 2.0;
+    slider.y = (winSize.height / 3.0) * 2;
     slider.addEventListener(this.sliderEventForGrossini, this);
     this.addChild(slider);
     slider.setPercent(20);
@@ -120,8 +121,8 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
       ""
     );
     slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
-    slider.x = cc.winSize.width / 2.0;
-    slider.y = cc.winSize.height / 3.0;
+    slider.x = winSize.width / 2.0;
+    slider.y = winSize.height / 3.0;
     slider.addEventListener(this.sliderEventForGlobal, this);
     this.addChild(slider);
     slider.setPercent(20);

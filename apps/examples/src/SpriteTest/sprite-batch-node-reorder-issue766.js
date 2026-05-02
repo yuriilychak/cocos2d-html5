@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_piece } from "../resources";
-import { Rect, Sprite } from "@aspect/core";
+import { Rect, Sprite, SpriteBatchNode } from "@aspect/core";
 
 export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
   constructor() {
@@ -56,7 +56,7 @@ export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
     this.pixel1 = { 0: 0, 1: 0, 2: 0, 3: 255 };
 
     this.pixel2 = { 0: 255, 1: 255, 2: 255, 3: 255 };
-    this._batchNode = new cc.SpriteBatchNode(s_piece, 15);
+    this._batchNode = new SpriteBatchNode(s_piece, 15);
     this.addChild(this._batchNode, 1, 0);
 
     this._sprite1 = this.makeSpriteZ(2);

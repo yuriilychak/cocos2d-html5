@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { Rect, Sprite } from "@aspect/core";
+import { Rect, Sprite, SpriteBatchNode } from "@aspect/core";
 import { RotateBy, ScaleBy, sequence } from "@aspect/actions";
 
 export class Sprite6 extends SpriteTestDemo {
@@ -53,7 +53,7 @@ export class Sprite6 extends SpriteTestDemo {
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
         // small capacity. Testing resizing
         // Don't use capacity=1 in your real game. It is expensive to resize the capacity
-        var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
+        var batch = new SpriteBatchNode(s_grossini_dance_atlas, 1);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
         batch.ignoreAnchorPointForPosition(true);
 

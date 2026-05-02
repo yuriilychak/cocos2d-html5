@@ -36,6 +36,7 @@ import { AssetsManagerTestScene } from "./assets-manager-test-scene";
 import { TestScene } from "../../test-scene";
 import { s_image_icon } from "../../resources";
 import { Director, EventManager, Game, Layer, Sprite, Sys, log, visibleRect } from "@aspect/core";
+import { winSize } from "../../constants";
 
 export class AssetsManagerLoaderScene extends TestScene {
   constructor() {
@@ -135,8 +136,8 @@ export class AssetsManagerLoaderScene extends TestScene {
     this.addChild(layer);
 
     var icon = new Sprite(s_image_icon);
-    icon.x = cc.winSize.width / 2;
-    icon.y = cc.winSize.height / 2;
+    icon.x = winSize.width / 2;
+    icon.y = winSize.height / 2;
     layer.addChild(icon);
 
     this._loadingBar = new ccui.LoadingBar(

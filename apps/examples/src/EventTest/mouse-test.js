@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
-import { Color, EventListener, EventManager, Sprite, Sys, log } from "@aspect/core";
+import { Color, EventListener, EventManager, EventMouse, Sprite, Sys, log } from "@aspect/core";
 
 export class MouseTest extends EventTest {
   init() {
@@ -53,9 +53,9 @@ export class MouseTest extends EventTest {
           onMouseDown: function (event) {
             var pos = event.getLocation(),
               target = event.getCurrentTarget();
-            if (event.getButton() === cc.EventMouse.BUTTON_RIGHT)
+            if (event.getButton() === EventMouse.BUTTON_RIGHT)
               log("onRightMouseDown at: " + pos.x + " " + pos.y);
-            else if (event.getButton() === cc.EventMouse.BUTTON_LEFT)
+            else if (event.getButton() === EventMouse.BUTTON_LEFT)
               log("onLeftMouseDown at: " + pos.x + " " + pos.y);
             target.sprite.x = pos.x;
             target.sprite.y = pos.y;

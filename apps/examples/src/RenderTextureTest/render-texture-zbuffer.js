@@ -25,9 +25,10 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_circle_plist, s_circle_png } from "../resources";
-import { Color, Director, EventListener, EventManager, LabelTTF, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, LabelTTF, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 import { FadeTo, Hide, sequence } from "@aspect/actions";
 
+import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureZbuffer extends RenderTextureBaseLayer {
   constructor() {
     super();
@@ -83,7 +84,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     label3.vertexZ = -50;
 
     SpriteFrameCache.getInstance().addSpriteFrames(s_circle_plist);
-    this.mgr = new cc.SpriteBatchNode(s_circle_png, 9);
+    this.mgr = new SpriteBatchNode(s_circle_png, 9);
     this.addChild(this.mgr);
     this.sp1 = new Sprite("#circle.png");
     this.sp2 = new Sprite("#circle.png");
@@ -187,7 +188,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
 
   renderScreenShot() {
     var winSize = Director.getInstance().getWinSize();
-    var texture = new cc.RenderTexture(winSize.width, winSize.width);
+    var texture = new RenderTexture(winSize.width, winSize.width);
     if (!texture) return;
 
     texture.anchorX = 0;

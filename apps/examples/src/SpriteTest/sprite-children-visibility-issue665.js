@@ -33,7 +33,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
-import { Node, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Node, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
 
 export class SpriteChildrenVisibilityIssue665 extends SpriteTestDemo {
 
@@ -62,7 +62,7 @@ export class SpriteChildrenVisibilityIssue665 extends SpriteTestDemo {
         // SpriteBatchNode
         //
         // parents
-        var aParent = new cc.SpriteBatchNode(s_grossini, 50);
+        var aParent = new SpriteBatchNode(s_grossini, 50);
         aParent.x = winSize.width / 3;
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);

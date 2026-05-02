@@ -29,6 +29,7 @@ import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Point, Size } from "@aspect/core";
 import { MoveBy, sequence } from "@aspect/actions";
+import { Shaky3D, Waves } from "@aspect/actions3d";
 
 export class Effect3 extends EffectAdvanceTextLayer {
   title() {
@@ -42,8 +43,8 @@ export class Effect3 extends EffectAdvanceTextLayer {
     var target1 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE1);
     var target2 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE2);
 
-    var waves = cc.waves(5, new Size(15, 10), 5, 20, true, false);
-    var shaky = cc.shaky3D(5, new Size(15, 10), 4, false);
+    var waves = new Waves(5, new Size(15, 10), 5, 20, true, false);
+    var shaky = new Shaky3D(5, new Size(15, 10), 4, false);
 
     target1.runAction(waves.repeatForever());
     target2.runAction(shaky.repeatForever());

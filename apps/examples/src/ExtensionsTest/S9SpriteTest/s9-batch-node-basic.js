@@ -29,7 +29,7 @@
 // S9BatchNodeBasic
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { winSize } from "../../constants";
-import { Point, Rect, log } from "@aspect/core";
+import { Point, Rect, SpriteBatchNode, log } from "@aspect/core";
 import { MoveBy, sequence } from "@aspect/actions";
 import { Scale9Sprite } from "@aspect/ccui";
 
@@ -46,7 +46,7 @@ export class S9BatchNodeBasic extends S9SpriteTestDemo {
 
     log("S9BatchNodeBasic ...");
 
-    var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
+    var batchNode = new SpriteBatchNode("Images/blocks9.png");
     log("batchNode created with : " + "Images/blocks9.png");
 
     var blocks = new Scale9Sprite();

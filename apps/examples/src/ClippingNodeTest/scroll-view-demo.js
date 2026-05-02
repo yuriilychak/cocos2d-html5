@@ -35,6 +35,7 @@ import { Color, EventListener, EventManager, Point, Rect, Sprite } from "@aspect
 import { RotateBy } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
+import { ClippingNode } from "@aspect/clipping-nodes";
 export class ScrollViewDemo extends BaseClippingNodeTest {
   constructor() {
     super();
@@ -51,7 +52,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
   }
 
   setup() {
-    var clipper = new cc.ClippingNode();
+    var clipper = new ClippingNode();
     clipper.tag = TAG_CLIPPERNODE;
     clipper.width = 200;
     clipper.height = 200;

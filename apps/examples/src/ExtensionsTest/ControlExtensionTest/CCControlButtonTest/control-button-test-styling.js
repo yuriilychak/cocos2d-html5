@@ -34,6 +34,7 @@ import {
 import { Color, Director, LabelTTF, Node, Scene, Size } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
+import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
 export class ControlButtonTest_Styling extends ControlScene {
   init() {
     if (super.init()) {
@@ -94,7 +95,7 @@ export class ControlButtonTest_Styling extends ControlScene {
 
     titleButton.color = new Color(159, 168, 176);
 
-    var button = new cc.ControlButton(
+    var button = new ControlButton(
       titleButton,
       backgroundButton,
       null,
@@ -103,9 +104,9 @@ export class ControlButtonTest_Styling extends ControlScene {
     );
     button.setBackgroundSpriteForState(
       backgroundHighlightedButton,
-      cc.CONTROL_STATE_HIGHLIGHTED
+      CONTROL_STATE_HIGHLIGHTED
     );
-    button.setTitleColorForState(Color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
+    button.setTitleColorForState(Color.WHITE, CONTROL_STATE_HIGHLIGHTED);
 
     return button;
   }

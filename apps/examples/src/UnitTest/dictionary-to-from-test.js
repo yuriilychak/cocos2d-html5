@@ -30,8 +30,7 @@
 //------------------------------------------------------------------
 import { s_animations2Plist, s_grossiniPlist } from "../resources";
 import { UnitTestBase } from "./unit-test-base";
-import { SpriteFrameCache } from "@aspect/core";
-
+import { AnimationCache, SpriteFrameCache } from "@aspect/core";
 export class DictionaryToFromTest extends UnitTestBase {
   constructor() {
     super();
@@ -50,7 +49,7 @@ export class DictionaryToFromTest extends UnitTestBase {
     frameCache.addSpriteFrames(s_grossiniPlist);
 
     // Purge previously loaded animation
-    var animCache = cc.animationCache;
+    var animCache = AnimationCache.getInstance();
     animCache.addAnimations(s_animations2Plist);
 
     var normal = animCache.getAnimation("dance_1");

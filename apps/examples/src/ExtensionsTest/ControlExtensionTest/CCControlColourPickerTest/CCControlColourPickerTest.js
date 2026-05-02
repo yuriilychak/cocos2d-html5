@@ -29,6 +29,7 @@ import { ControlScene } from "../CCControlScene";
 import { Color, Director, LabelTTF, Node, Scene } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
+import { CONTROL_EVENT_VALUE_CHANGED } from "@aspect/gui";
 export class ControlColourPickerTest extends ControlScene {
   constructor() {
     super();
@@ -59,7 +60,7 @@ export class ControlColourPickerTest extends ControlScene {
       colourPicker.addTargetWithActionForControlEvents(
         this,
         this.colourValueChanged,
-        cc.CONTROL_EVENT_VALUECHANGED
+        CONTROL_EVENT_VALUE_CHANGED
       );
 
       layer_width += colourPicker.width;
@@ -87,7 +88,7 @@ export class ControlColourPickerTest extends ControlScene {
       layer.anchorY = 0.5;
 
       // Update the color text
-      this.colourValueChanged(colourPicker, cc.CONTROL_EVENT_VALUECHANGED);
+      this.colourValueChanged(colourPicker, CONTROL_EVENT_VALUE_CHANGED);
       return true;
     }
     return false;

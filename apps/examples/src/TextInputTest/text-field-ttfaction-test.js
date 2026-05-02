@@ -36,6 +36,7 @@ import {
 import { Color, Director, LabelTTF, Point, log } from "@aspect/core";
 import { CallFunc, FadeIn, FadeOut, MoveTo, RotateBy, ScaleTo, sequence, spawn } from "@aspect/actions";
 
+import { TextFieldTTF } from "@aspect/text-input";
 export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
   constructor() {
     super();
@@ -83,7 +84,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     // add CCTextFieldTTF
     var winSize = Director.getInstance().getWinSize();
 
-    this._textField = new cc.TextFieldTTF(
+    this._textField = new TextFieldTTF(
       "<click here for input>",
       TEXT_INPUT_FONT_NAME,
       TEXT_INPUT_FONT_SIZE

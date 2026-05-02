@@ -31,9 +31,10 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
 import { winSize } from "../constants";
-import { Color, EventListener, EventManager, Point, Sprite, Sys, log } from "@aspect/core";
+import { Color, EventListener, EventManager, EventMouse, Point, Sprite, Sys, log } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
+import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureSave extends RenderTextureBaseLayer {
     constructor() {
         super();
@@ -61,7 +62,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
                     event.getCurrentTarget()._lastLocation = event.getLocation();
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                    if(event.getButton() == EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().drawInLocation(event.getLocation());
                 }
             }, this);
@@ -77,7 +78,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
         this.addChild(menu, 10);
 
         // create a render texture
-        var target = new cc.RenderTexture(winSize.width, winSize.height, 2);
+        var target = new RenderTexture(winSize.width, winSize.height, 2);
         target.x = winSize.width / 2;
         target.y = winSize.height / 2;
         this.addChild(target, 1);

@@ -30,17 +30,18 @@ import { s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
 import { Point, Sprite, SpriteFrameCache } from "@aspect/core";
 
+import { ProgressFromTo, ProgressTimer } from "@aspect/progress-timer";
 export class SpriteProgressWithSpriteFrame extends SpriteDemo {
     onEnter() {
         //----start6----onEnter
         super.onEnter();
 
-        var to = cc.progressFromTo(6, 0, 100);
+        var to = new ProgressFromTo(6, 0, 100);
 
         SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
 
-        var left = new cc.ProgressTimer(new Sprite("#grossini_dance_01.png"));
-        left.type = cc.ProgressTimer.TYPE_BAR;
+        var left = new ProgressTimer(new Sprite("#grossini_dance_01.png"));
+        left.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         left.midpoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
@@ -50,8 +51,8 @@ export class SpriteProgressWithSpriteFrame extends SpriteDemo {
         left.y = winSize.height / 2;
         left.runAction(to.clone().repeatForever());
 
-        var middle = new cc.ProgressTimer(new Sprite("#grossini_dance_02.png"));
-        middle.type = cc.ProgressTimer.TYPE_BAR;
+        var middle = new ProgressTimer(new Sprite("#grossini_dance_02.png"));
+        middle.type = ProgressTimer.TYPE_BAR;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         middle.midpoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
@@ -61,8 +62,8 @@ export class SpriteProgressWithSpriteFrame extends SpriteDemo {
         middle.y = winSize.height / 2;
         middle.runAction(to.clone().repeatForever());
 
-        var right = new cc.ProgressTimer(new Sprite("#grossini_dance_03.png"));
-        right.type = cc.ProgressTimer.TYPE_RADIAL;
+        var right = new ProgressTimer(new Sprite("#grossini_dance_03.png"));
+        right.type = ProgressTimer.TYPE_RADIAL;
         //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
         right.midPoint = new Point(0.5, 0.5);
         //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change

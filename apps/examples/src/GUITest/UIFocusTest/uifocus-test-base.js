@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Color, Director, EventListener, EventManager, log } from "@aspect/core";
+import { Color, Director, EventKeyboard, EventListener, EventManager, KEY, log } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class UIFocusTestBase extends UIMainLayer {
@@ -91,19 +91,19 @@ export class UIFocusTestBase extends UIMainLayer {
   }
 
   onLeftKeyPressed() {
-    var event = new cc.EventKeyboard(cc.KEY.dpadLeft, false);
+    var event = new EventKeyboard(KEY.dpadLeft, false);
     EventManager.getInstance().dispatchEvent(event);
   }
   onRightKeyPressed() {
-    var event = new cc.EventKeyboard(cc.KEY.dpadRight, false);
+    var event = new EventKeyboard(KEY.dpadRight, false);
     EventManager.getInstance().dispatchEvent(event);
   }
   onUpKeyPressed() {
-    var event = new cc.EventKeyboard(cc.KEY.dpadUp, false);
+    var event = new EventKeyboard(KEY.dpadUp, false);
     EventManager.getInstance().dispatchEvent(event);
   }
   onDownKeyPressed() {
-    var event = new cc.EventKeyboard(cc.KEY.dpadDown, false);
+    var event = new EventKeyboard(KEY.dpadDown, false);
     EventManager.getInstance().dispatchEvent(event);
   }
   onFocusChanged(widgetLostFocus, widgetGetFocus) {

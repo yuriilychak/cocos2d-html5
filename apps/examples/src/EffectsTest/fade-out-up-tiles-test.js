@@ -26,16 +26,17 @@
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
 import { DelayTime, sequence } from "@aspect/actions";
+import { FadeOutUpTiles } from "@aspect/actions3d";
 
 export class FadeOutUpTilesTest extends EffectsBaseLayer {
   title() {
     return "FadeOutUpTilesTest";
   }
   code() {
-    return "a = fadeOutUpTiles(duration, gridSize)";
+    return "a = new FadeOutUpTiles(duration, gridSize)";
   }
   getEffect(duration) {
-    var action = cc.fadeOutUpTiles(duration, new Size(16, 12));
+    var action = new FadeOutUpTiles(duration, new Size(16, 12));
     var delay = new DelayTime(0.5);
     var back = action.reverse();
     var seq = sequence(action, delay, back);

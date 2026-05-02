@@ -27,6 +27,7 @@
 
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
 
+import { RendererConfig } from "@aspect/core";
 export class RawStencilBufferTest2 extends RawStencilBufferTest {
   subtitle() {
     return "2:DepthMask:FALSE";
@@ -34,11 +35,11 @@ export class RawStencilBufferTest2 extends RawStencilBufferTest {
 
   setupStencilForClippingOnPlane(plane) {
     super.setupStencilForClippingOnPlane(plane);
-    cc.rendererConfig.renderContext.depthMask(false);
+    RendererConfig.getInstance().renderContext.depthMask(false);
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    cc.rendererConfig.renderContext.depthMask(true);
+    RendererConfig.getInstance().renderContext.depthMask(true);
     super.setupStencilForDrawingOnPlane(plane);
   }
 }

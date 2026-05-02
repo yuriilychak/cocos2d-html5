@@ -27,9 +27,10 @@
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
 import { s_pathGrossini } from "../resources";
-import { Color, Layer, Point, Sprite } from "@aspect/core";
+import { Color, Layer, LayerGradient, Point, Sprite } from "@aspect/core";
 import { MoveBy, RotateBy, sequence } from "@aspect/actions";
 import { Menu, MenuItemFont } from "@aspect/menus";
+import { winSize } from "../constants";
 
 export class BakeLayerColorTest extends BakeLayerBaseTest {
   title() {
@@ -43,7 +44,7 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
 
     this._actionSprite = null;
 
-    var winSize = cc.winSize;
+    var winSize = winSize;
     var bakeItem = new MenuItemFont("bake", this.onBake, this);
     var unbakeItem = new MenuItemFont("unbake", this.onUnbake, this);
     var runActionItem = new MenuItemFont(
@@ -62,7 +63,7 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     rootLayer.setPosition(20, 20);
     this.addChild(rootLayer);
 
-    var bakeLayer = new cc.LayerGradient(
+    var bakeLayer = new LayerGradient(
       new Color(128, 0, 128, 255),
       new Color(0, 0, 128, 255)
     );

@@ -34,8 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_bluePlist, s_grossini_grayPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate, sequence } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
-
+import { Animation, AnimationCache, Sprite, SpriteFrameCache } from "@aspect/core";
 export class AnimationCacheTest extends SpriteTestDemo {
 
 
@@ -95,10 +94,10 @@ export class AnimationCacheTest extends SpriteTestDemo {
             animFrames.push(animFrame);
         }
 
-        var animation = new cc.Animation(animFrames, 0.2);
+        var animation = new Animation(animFrames, 0.2);
 
         // Add an animation to the Cache
-        cc.animationCache.addAnimation(animation, "dance");
+        AnimationCache.getInstance().addAnimation(animation, "dance");
 
         //
         // create animation "dance gray"
@@ -110,10 +109,10 @@ export class AnimationCacheTest extends SpriteTestDemo {
             animFrames.push(frame);
         }
 
-        animation = new cc.Animation(animFrames, 0.2);
+        animation = new Animation(animFrames, 0.2);
 
         // Add an animation to the Cache
-        cc.animationCache.addAnimation(animation, "dance_gray");
+        AnimationCache.getInstance().addAnimation(animation, "dance_gray");
 
         //
         // create animation "dance blue"
@@ -125,12 +124,12 @@ export class AnimationCacheTest extends SpriteTestDemo {
             animFrames.push(frame);
         }
 
-        animation = new cc.Animation(animFrames, 0.2);
+        animation = new Animation(animFrames, 0.2);
 
         // Add an animation to the Cache
-        cc.animationCache.addAnimation(animation, "dance_blue");
+        AnimationCache.getInstance().addAnimation(animation, "dance_blue");
 
-        var animCache = cc.animationCache;
+        var animCache = AnimationCache.getInstance();
 
         var normal = animCache.getAnimation("dance");
         normal.setRestoreOriginalFrame(true);

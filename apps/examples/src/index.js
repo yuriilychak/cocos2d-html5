@@ -28,8 +28,7 @@
 import { TestController } from "./test-controller";
 import { _initGlobals } from "./constants";
 import { g_resources } from "./resources";
-import { Director, EGLView, Game, Scene } from "@aspect/core";
-
+import { Director, EGLView, Game, Loader, Scene } from "@aspect/core";
 const projectConfig = {
   debugMode: 1,
   noCache: false,
@@ -45,7 +44,7 @@ Game.getInstance().onStart = function () {
   EGLView.getInstance().setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
   EGLView.getInstance().resizeWithBrowserSize(true);
 
-  cc.loader.resPath = "res";
+  Loader.getInstance().resPath = "res";
 
   cc.LoaderScene.preload(
     g_resources,

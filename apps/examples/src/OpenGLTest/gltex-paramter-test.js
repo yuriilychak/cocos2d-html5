@@ -31,7 +31,7 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { s_pathGrossini } from "../resources";
 import { autoTestEnabled } from "../constants";
-import { Sys, log } from "@aspect/core";
+import { Sys, log, textureCache } from "@aspect/core";
 
 export class GLTexParamterTest extends OpenGLTestLayer {
 
@@ -54,7 +54,7 @@ export class GLTexParamterTest extends OpenGLTestLayer {
     }
     getTexValues() {
         if(!Sys.getInstance().isNative){
-            var texture2d = cc.textureCache.getTextureForKey(s_pathGrossini);
+            var texture2d = textureCache.getTextureForKey(s_pathGrossini);
             gl.bindTexture(gl.TEXTURE_2D, texture2d.getName());
         } else {
             gl.bindTexture(gl.TEXTURE_2D, null);

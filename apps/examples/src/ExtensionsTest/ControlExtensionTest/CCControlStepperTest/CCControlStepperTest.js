@@ -28,6 +28,7 @@ import { ControlScene } from "../CCControlScene";
 import { Director, LabelTTF, Node, Scene, Sprite } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
+import { CONTROL_EVENT_VALUE_CHANGED } from "@aspect/gui";
 export class ControlStepperTest extends ControlScene {
   constructor() {
     super();
@@ -66,7 +67,7 @@ export class ControlStepperTest extends ControlScene {
       stepper.addTargetWithActionForControlEvents(
         this,
         this.valueChanged,
-        cc.CONTROL_EVENT_VALUECHANGED
+        CONTROL_EVENT_VALUE_CHANGED
       );
       layer.addChild(stepper);
 
@@ -79,7 +80,7 @@ export class ControlStepperTest extends ControlScene {
       layer.anchorY = 0.5;
 
       // Update the value label
-      this.valueChanged(stepper, cc.CONTROL_EVENT_VALUECHANGED);
+      this.valueChanged(stepper, CONTROL_EVENT_VALUE_CHANGED);
       return true;
     }
     return false;

@@ -31,6 +31,7 @@ import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { ScaleBy, sequence } from "@aspect/actions";
 import { Sys } from "@aspect/core";
+import { Tile } from "@aspect/actions3d";
 
 export class TileMapTest extends TileDemo {
   constructor() {

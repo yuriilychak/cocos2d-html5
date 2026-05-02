@@ -27,8 +27,7 @@
 
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
-import { LabelTTF, Size } from "@aspect/core";
-
+import { LabelTTF, Size, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_RIGHT } from "@aspect/core";
 export class LabelTTFAlignment extends AtlasDemo {
   constructor() {
     //----start24----ctor
@@ -39,7 +38,7 @@ export class LabelTTFAlignment extends AtlasDemo {
       "Arial",
       12,
       new Size(256, 32),
-      cc.TEXT_ALIGNMENT_LEFT
+      TEXT_ALIGNMENT_LEFT
     );
     ttf0.x = s.width / 2;
     ttf0.y = (s.height / 6) * 2;
@@ -52,7 +51,7 @@ export class LabelTTFAlignment extends AtlasDemo {
       "Arial",
       12,
       new Size(256, 32),
-      cc.TEXT_ALIGNMENT_CENTER
+      TEXT_ALIGNMENT_CENTER
     );
     ttf1.x = s.width / 2;
     ttf1.y = (s.height / 6) * 3;
@@ -65,7 +64,7 @@ export class LabelTTFAlignment extends AtlasDemo {
       "Arial",
       12,
       new Size(256, 32),
-      cc.TEXT_ALIGNMENT_RIGHT
+      TEXT_ALIGNMENT_RIGHT
     );
     ttf2.x = s.width / 2;
     ttf2.y = (s.height / 6) * 4;

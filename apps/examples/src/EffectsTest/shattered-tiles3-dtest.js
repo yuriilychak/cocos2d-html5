@@ -25,15 +25,16 @@
 
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { Size } from "@aspect/core";
+import { ShatteredTiles3D } from "@aspect/actions3d";
 
 export class ShatteredTiles3DTest extends EffectsBaseLayer {
   title() {
     return "ShatteredTiles3D";
   }
   code() {
-    return "a = shatteredTiles3D(duration, gridSize, range, shatterZ)";
+    return "a = new ShatteredTiles3D(duration, gridSize, range, shatterZ)";
   }
   getEffect(duration) {
-    return cc.shatteredTiles3D(duration, new Size(16, 12), 5, false);
+    return new ShatteredTiles3D(duration, new Size(16, 12), 5, false);
   }
 }

@@ -27,7 +27,7 @@
  ****************************************************************************/
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Director, LabelTTF, Layer, Scene, Size, Sys, log } from "@aspect/core";
+import { Director, LabelTTF, Layer, Scene, Size, Sys, TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP, log } from "@aspect/core";
 import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
 
 export var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket;
@@ -89,8 +89,8 @@ export class WebSocketTestLayer extends Layer {
       "Arial",
       14,
       new Size(160, 100),
-      cc.TEXT_ALIGNMENT_CENTER,
-      cc.VERTICAL_TEXT_ALIGNMENT_TOP
+      TEXT_ALIGNMENT_CENTER,
+      VERTICAL_TEXT_ALIGNMENT_TOP
     );
     this._sendTextStatus.anchorX = 0;
     this._sendTextStatus.anchorY = 0;
@@ -104,8 +104,8 @@ export class WebSocketTestLayer extends Layer {
       "Arial",
       14,
       new Size(160, 100),
-      cc.TEXT_ALIGNMENT_CENTER,
-      cc.VERTICAL_TEXT_ALIGNMENT_TOP
+      TEXT_ALIGNMENT_CENTER,
+      VERTICAL_TEXT_ALIGNMENT_TOP
     );
     this._sendBinaryStatus.anchorX = 0;
     this._sendBinaryStatus.anchorY = 0;
@@ -119,8 +119,8 @@ export class WebSocketTestLayer extends Layer {
       "Arial",
       14,
       new Size(160, 100),
-      cc.TEXT_ALIGNMENT_CENTER,
-      cc.VERTICAL_TEXT_ALIGNMENT_TOP
+      TEXT_ALIGNMENT_CENTER,
+      VERTICAL_TEXT_ALIGNMENT_TOP
     );
     this._errorStatus.anchorX = 0;
     this._errorStatus.anchorY = 0;

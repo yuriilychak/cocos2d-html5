@@ -27,6 +27,7 @@
 import { UISceneManager, GUITestScene } from "./UISceneManager";
 import { Color, Director, LabelTTF, Layer, Node } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
+import { winSize } from "../constants";
 
 export class UIMainLayer extends Layer {
   constructor() {
@@ -47,7 +48,7 @@ export class UIMainLayer extends Layer {
   init() {
     super.init();
 
-    var winSize = cc.winSize;
+    var winSize = winSize;
     var mainNode = new Node();
     var scale = winSize.height / 320;
     mainNode.attr({

@@ -132,7 +132,7 @@ import { UIVideoPlayerTest } from "./UIVideoPlayerTest/UIVideoPlayerTest";
 import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest";
 import { TestScene } from "../test-scene";
 import { winSize } from "../constants";
-import { Director, EventListener, EventManager, LabelTTF, Sys } from "@aspect/core";
+import { Director, EventListener, EventManager, EventMouse, LabelTTF, Sys } from "@aspect/core";
 import { Menu, MenuItemLabel } from "@aspect/menus";
 
 var currentTestingArray = null;
@@ -896,7 +896,7 @@ var listScene = class listScene extends TestScene {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+            if (event.getButton() == EventMouse.BUTTON_LEFT)
               event.getCurrentTarget().moveMenu(event.getDelta());
           },
           onMouseScroll: function (event) {

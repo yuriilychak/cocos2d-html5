@@ -32,8 +32,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, SkewBy, sequence } from "@aspect/actions";
-import { Sprite, SpriteFrameCache } from "@aspect/core";
-
+import { Animation, Sprite, SpriteFrameCache } from "@aspect/core";
 export class SpriteOffsetAnchorSkew extends SpriteTestDemo {
 
 
@@ -95,7 +94,7 @@ export class SpriteOffsetAnchorSkew extends SpriteTestDemo {
                 animFrames.push(frame);
             }
 
-            var animation = new cc.Animation(animFrames, 0.3);
+            var animation = new Animation(animFrames, 0.3);
             sprite.runAction(new Animate(animation).repeatForever());
 
             var skewX = new SkewBy(2, 45, 0);

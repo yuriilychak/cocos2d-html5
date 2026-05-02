@@ -34,7 +34,7 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { Rect, Sprite } from "@aspect/core";
+import { Rect, Sprite, SpriteBatchNode } from "@aspect/core";
 
 export class SpriteBatchNodeReorderIssue744 extends SpriteTestDemo {
 
@@ -56,7 +56,7 @@ export class SpriteBatchNodeReorderIssue744 extends SpriteTestDemo {
 
         // Testing issue #744
         // http://code.google.com/p/cocos2d-iphone/issues/detail?id=744
-        var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 15);
+        var batch = new SpriteBatchNode(s_grossini_dance_atlas, 15);
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         var sprite = new Sprite(batch.texture, new Rect(0, 0, 85, 121));

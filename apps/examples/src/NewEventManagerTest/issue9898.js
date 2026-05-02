@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Director, EventListener, EventManager, Node } from "@aspect/core";
+import { Director, EventCustom, EventListener, EventManager, Node } from "@aspect/core";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class Issue9898 extends EventDispatcherTestDemo {
@@ -53,7 +53,7 @@ export class Issue9898 extends EventDispatcherTestDemo {
       eventName: "Issue9898",
       callback: function (event) {
         EventManager.getInstance().removeListener(_listener);
-        event = new cc.EventCustom("Issue9898");
+        event = new EventCustom("Issue9898");
         EventManager.getInstance().dispatchEvent(event);
       }
     });
@@ -61,7 +61,7 @@ export class Issue9898 extends EventDispatcherTestDemo {
     var menuItem = new MenuItemFont("Dispatch Custom Event1", function (
       sender
     ) {
-      var event = new cc.EventCustom("Issue9898");
+      var event = new EventCustom("Issue9898");
       EventManager.getInstance().dispatchEvent(event);
     });
     menuItem.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);

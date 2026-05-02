@@ -26,16 +26,17 @@
 import { EffectsBaseLayer } from "./effects-base-layer";
 import { winSize } from "../constants";
 import { Point, Size } from "@aspect/core";
+import { Twirl } from "@aspect/actions3d";
 
 export class TwirlTest extends EffectsBaseLayer {
   title() {
     return "Twirl";
   }
   code() {
-    return "a = twirl(duration, gridSize, position, twirls, amplitude)";
+    return "a = new Twirl(duration, gridSize, position, twirls, amplitude)";
   }
   getEffect(duration) {
-    return cc.twirl(
+    return new Twirl(
       duration,
       new Size(12, 8),
       new Point(winSize.width / 2, winSize.height / 2),

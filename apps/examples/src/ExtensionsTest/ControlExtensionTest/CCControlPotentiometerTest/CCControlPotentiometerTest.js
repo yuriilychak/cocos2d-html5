@@ -29,6 +29,7 @@ import { ControlScene } from "../CCControlScene";
 import { Director, LabelTTF, Node, Scene } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
+import { CONTROL_EVENT_VALUE_CHANGED } from "@aspect/gui";
 export class ControlPotentiometerTest extends ControlScene {
   constructor() {
     super();
@@ -75,7 +76,7 @@ export class ControlPotentiometerTest extends ControlScene {
       potentiometer.addTargetWithActionForControlEvents(
         this,
         this.valueChanged,
-        cc.CONTROL_EVENT_VALUECHANGED
+        CONTROL_EVENT_VALUE_CHANGED
       );
 
       layer.addChild(potentiometer);
@@ -89,7 +90,7 @@ export class ControlPotentiometerTest extends ControlScene {
       layer.anchorY = 0.5;
 
       // Update the value label
-      this.valueChanged(potentiometer, cc.CONTROL_EVENT_VALUECHANGED);
+      this.valueChanged(potentiometer, CONTROL_EVENT_VALUE_CHANGED);
 
       return true;
     }

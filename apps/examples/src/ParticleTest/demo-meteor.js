@@ -29,6 +29,7 @@ import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { ParticleMeteor } from "./ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
+import { textureCache } from "@aspect/core";
 
 export class DemoMeteor extends ParticleDemo {
   onEnter() {
@@ -37,7 +38,7 @@ export class DemoMeteor extends ParticleDemo {
     this._emitter = new ParticleMeteor();
     this._background.addChild(this._emitter, 10);
 
-    this._emitter.texture = cc.textureCache.addImage(s_fire);
+    this._emitter.texture = textureCache.addImage(s_fire);
     this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
     this.setEmitterPosition();

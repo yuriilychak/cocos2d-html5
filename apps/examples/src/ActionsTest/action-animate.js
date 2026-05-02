@@ -34,6 +34,7 @@ import { ActionsDemo } from "./actions-demo";
 import { s_animations2Plist } from "../resources";
 import { Animate, Sequence } from "@aspect/actions";
 
+import { Animation, AnimationCache } from "@aspect/core";
 export class ActionAnimate extends ActionsDemo {
   onEnter() {
     //----start44----onEnter
@@ -43,7 +44,7 @@ export class ActionAnimate extends ActionsDemo {
     //
     // Manual animation
     //
-    var animation = new cc.Animation();
+    var animation = new Animation();
     for (var i = 1; i < 15; i++) {
       var frameName =
         "Images/grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
@@ -59,7 +60,7 @@ export class ActionAnimate extends ActionsDemo {
     // File animation
     //
     // With 2 loops and reverse
-    var animCache = cc.animationCache;
+    var animCache = AnimationCache.getInstance();
 
     animCache.addAnimations(s_animations2Plist);
     var animation2 = animCache.getAnimation("dance_1");

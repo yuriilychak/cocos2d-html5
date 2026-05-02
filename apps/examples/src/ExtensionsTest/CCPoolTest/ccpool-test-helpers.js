@@ -31,6 +31,7 @@ import { CCPoolTest } from "./ccpool-test";
 import { MySprite } from "./my-sprite";
 import { Director, Scene } from "@aspect/core";
 
+import { Pool } from "@aspect/ccpool";
 CCPoolTest.create = function () {
   var retObj = new CCPoolTest();
   if (retObj && retObj.init()) {
@@ -51,7 +52,7 @@ MySprite.create = function (f1, f2, f3) {
 };
 
 MySprite.reCreate = function (f1, f2, f3) {
-  var pool = cc.pool;
+  var pool = Pool.getInstance();
   if (pool.hasObject(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
   return MySprite.create(f1, f2, f3);
 };

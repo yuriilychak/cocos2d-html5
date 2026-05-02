@@ -26,8 +26,7 @@
  ****************************************************************************/
 
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { LabelTTF, Size, Sprite } from "@aspect/core";
-
+import { LabelTTF, ONE, ONE_MINUS_SRC_ALPHA, RendererConfig, SRC_ALPHA, Size, Sprite, ZERO, textureCache } from "@aspect/core";
 export class SpriteBlendFuncTest extends SpriteTestDemo {
   //webgl only
 
@@ -39,20 +38,20 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       (this._subtitle = ""));
 
     var destFactors = [
-        cc.ZERO,
-        cc.ONE,
+        ZERO,
+        ONE,
         cc.DST_COLOR,
         cc.ONE_MINUS_DST_COLOR,
         cc.DST_ALPHA,
         cc.ONE_MINUS_DST_ALPHA
       ],
       srcFactors = [
-        cc.ZERO,
-        cc.ONE,
+        ZERO,
+        ONE,
         cc.SRC_COLOR,
         cc.ONE_MINUS_SRC_COLOR,
-        cc.SRC_ALPHA,
-        cc.ONE_MINUS_SRC_ALPHA
+        SRC_ALPHA,
+        ONE_MINUS_SRC_ALPHA
       ];
     var destTitles = [
         "ZERO",
@@ -73,7 +72,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
 
     var sourceImg = "Images/dot.png",
       destImg = "Images/wood.jpg";
-    var sourceTexture = cc.textureCache.addImage(sourceImg);
+    var sourceTexture = textureCache.addImage(sourceImg);
     sourceTexture.handleLoadedTexture(true);
     var sourceSprite = new Sprite(sourceImg);
     var destSprite = new Sprite(destImg);
@@ -84,7 +83,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     this.addChild(sourceSprite);
     this.addChild(destSprite);
 
-    if (cc.rendererConfig.isCanvas) {
+    if (RendererConfig.getInstance().isCanvas) {
       var info = new LabelTTF(
         "support is not complete on canvas",
         "Arial",
