@@ -353,6 +353,10 @@ export class Node extends NewClass {
     return this.isRunning();
   }
 
+  get isSprite() {
+    return false;
+  }
+
   get ignoreAnchor() {
     return this.isIgnoreAnchorPointForPosition();
   }
@@ -2641,6 +2645,7 @@ export class Node extends NewClass {
   };
   static _performStacks = [[]];
   static _performing = 0;
+  static _dirtyFlags = dirtyFlags;
 
   static transformChildTree(root) {
     let index = 1;
