@@ -191,6 +191,24 @@ All packages use **Modern mode**: ES module resolution via Rollup from `src/inde
 3. Concatenates each package's `dist/index.js` in order
 4. Emits one minified bundle via `@rollup/plugin-terser`
 
+### Platform Build Modes (per app)
+
+Each app under `apps/` supports three deployment targets using the same JS bundles:
+
+| Script | Mode | Description |
+|---|---|---|
+| `build` / `build:web` | **Web** | Outputs `dist/*.min.js` — serve or deploy as static files |
+| `dev:electron` | **Desktop (dev)** | Builds JS then opens Electron window |
+| `build:desktop` | **Desktop (release)** | Packages native app via `electron-builder` → `dist-desktop/` |
+| `build:mobile` | **Mobile (prepare)** | Syncs `dist/` + assets to `cordova/www/` |
+| `run:android` | **Mobile (Android)** | Prepares + builds + runs on Android via Cordova |
+| `run:ios` | **Mobile (iOS)** | Prepares + builds + runs on iOS via Cordova |
+
+Files added per app:
+- `electron/main.cjs` — Electron main process (window size matches canvas)
+- `cordova/config.xml` — Cordova project config (orientation, platform versions)
+- `scripts/cordova-sync.mjs` — copies `dist/`, `res/`, `index.html` into `cordova/www/`
+
 ### Import Convention (Modern packages)
 
 ```js

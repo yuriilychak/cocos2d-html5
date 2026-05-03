@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.cocos2d.mygame" version="1.0.0"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+    <name>My Cocos2d Game</name>
+    <description>A Cocos2d-HTML5 game</description>
+    <author email="dev@example.com" href="https://github.com/yuriilychak/cocos2d-html5">
+        Cocos2d-html5
+    </author>
+
+    <content src="index.html"/>
+
+    <allow-navigation href="*"/>
+    <allow-intent href="http://*/*"/>
+    <allow-intent href="https://*/*"/>
+
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="Orientation" value="portrait"/>
+    <preference name="Fullscreen" value="true"/>
+    <preference name="BackupWebStorage" value="none"/>
+
+    <platform name="android">
+        <preference name="android-minSdkVersion" value="21"/>
+        <preference name="android-targetSdkVersion" value="34"/>
+    </platform>
+
+    <platform name="ios">
+        <preference name="deployment-target" value="13.0"/>
+    </platform>
+
+</widget>

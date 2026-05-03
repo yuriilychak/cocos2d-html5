@@ -3,6 +3,12 @@ node_modules/
 
 # Build outputs
 dist/
+dist-desktop/
+
+# Cordova generated dirs (www/ is populated by cordova-sync.mjs)
+cordova/www/
+cordova/platforms/
+cordova/plugins/
 
 # Turborepo
 .turbo/
