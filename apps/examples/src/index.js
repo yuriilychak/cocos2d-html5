@@ -46,7 +46,7 @@ Game.getInstance().onStart = function () {
 
   Loader.getInstance().resPath = "res";
 
-  LoaderScene.preload(
+  LoaderScene.getInstance().preload(
     g_resources,
     function () {
       _initGlobals();

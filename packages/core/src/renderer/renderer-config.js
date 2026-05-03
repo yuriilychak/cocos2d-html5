@@ -97,4 +97,6 @@ export class RendererConfig {
       this._supportRender = true;
     }
   }
+  
+  static ENABLE_IMAGE_POOL = true;
 }

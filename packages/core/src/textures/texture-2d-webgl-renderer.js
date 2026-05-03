@@ -96,7 +96,7 @@ export default class WebGLTextureRenderer {
 
     this._hasPremultipliedAlpha = premultiplied;
     this._hasMipmaps = false;
-    if (window.ENABLE_IMAEG_POOL) {
+    if (RendererConfig.ENABLE_IMAGE_POOL) {
       t._htmlElementObj = null;
     }
 

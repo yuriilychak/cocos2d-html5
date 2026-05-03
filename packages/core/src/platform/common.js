@@ -45,7 +45,7 @@ export function associateWithNative(jsObj, superclass) {
  EventManager.getInstance().addListener({
         event: cc.EventListener.KEYBOARD,
         onKeyPressed:  function(keyCode, event){
-            if (cc.KEY["a"] == keyCode) {
+            if (KEY["a"] == keyCode) {
                 log("A is pressed");
             }
         }

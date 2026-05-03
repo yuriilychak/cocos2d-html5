@@ -27,6 +27,7 @@ import Loader from '../boot/loader';
 import Path from '../boot/path';
 import TextureCache from '../textures/texture-cache';
 import { isString } from '../boot/utils';
+import { plistParser } from './sax-parser';
 
 export const _txtLoader = {
     load: function (realUrl, url, res, cb) {
@@ -80,7 +81,7 @@ export const _plistLoader = {
         Loader.getInstance().loadTxt(realUrl, function (err, txt) {
             if (err)
                 return cb(err);
-            cb(null, cc.plistParser.parse(txt));
+            cb(null, plistParser.parse(txt));
         });
     }
 };

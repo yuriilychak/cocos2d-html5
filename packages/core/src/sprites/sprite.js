@@ -33,6 +33,7 @@ import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
+import { SpriteFrame } from "./sprite-frame";
 import SpriteFrameCache from "./sprite-frame-cache";
 import AnimationCache from "./animation-cache";
 import { RendererConfig } from "../renderer/renderer-config";
@@ -288,14 +289,14 @@ export class Sprite extends EventHelper(Node) {
     var locRect = this._rect;
     if (!locRect) {
       this._rect = new Rect(rect.x, rect.y, rect.width, rect.height);
-      this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+      this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
       return;
     }
     locRect.x = rect.x;
     locRect.y = rect.y;
     locRect.width = rect.width;
     locRect.height = rect.height;
-    this._renderCmd.setDirtyFlag(cc.Node._dirtyFlags.transformDirty);
+    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
 
   //
@@ -436,7 +437,7 @@ export class Sprite extends EventHelper(Node) {
       if (fileName instanceof Texture2D) {
         // Init  with texture and rect
         this.initWithTexture(fileName, rect, rotated);
-      } else if (fileName instanceof cc.SpriteFrame) {
+      } else if (fileName instanceof SpriteFrame) {
         // Init with a sprite frame
         this.initWithSpriteFrame(fileName);
       } else if (
@@ -741,7 +742,7 @@ export class Sprite extends EventHelper(Node) {
    * @return {SpriteFrame}
    */
   getSpriteFrame() {
-    return new cc.SpriteFrame(
+    return new SpriteFrame(
       this._texture,
       rectPointsToPixels(this._rect),
       this._rectRotated,

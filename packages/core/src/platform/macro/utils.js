@@ -25,7 +25,6 @@
  ****************************************************************************/
 
 import { RAD, DEG } from "./constants";
-import Game from "../../boot/game";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
 import { RendererConfig } from "../../renderer/renderer-config";
@@ -289,7 +288,7 @@ export function NextPOT(x) {
  * @function
  */
 export function checkGLErrorDebug() {
-  if (cc.renderMode === Game.RENDER_TYPE_WEBGL) {
+  if (RendererConfig.getInstance().isWebGL) {
     var _error = RendererConfig.getInstance().renderContext.getError();
     if (_error) {
       log(_LogInfos.checkGLErrorDebug, _error);

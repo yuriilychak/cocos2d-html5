@@ -188,7 +188,7 @@ export class TestController extends LayerGradient {
 
     var testCase = testNames[idx];
     var res = testCase.resource || [];
-    LoaderScene.preload(
+    LoaderScene.getInstance().preload(
       res,
       function () {
         var scene = testCase.testScene();

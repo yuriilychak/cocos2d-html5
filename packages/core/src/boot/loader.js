@@ -430,7 +430,7 @@ export default class Loader {
         delete this._queue[url];
       }
 
-      if (window.ENABLE_IMAEG_POOL && RendererConfig.getInstance().isWebGL) {
+      if (RendererConfig.ENABLE_IMAGE_POOL && RendererConfig.getInstance().isWebGL) {
         imagePool.put(img);
       }
     };

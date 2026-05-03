@@ -1,79 +1,87 @@
 import Game from "./game";
 import Loader from "./loader";
 import Path from "./path";
-import Sys from "./sys";
+import { initDebugSetting } from "./debugger";
+import { ENGINE_VERSION } from "../platform/config";
 import { RendererConfig } from "../renderer/renderer-config";
 
-var _jsAddedCache = {},
-  _engineInitCalled = false,
-  _engineLoadedCallback = null;
+export class Engine {
+  static #instance = null;
 
-function _getJsListOfModule(moduleMap, moduleName, dir) {
-  if (_jsAddedCache[moduleName]) return null;
-  dir = dir || "";
-  var jsList = [];
-  var tempList = moduleMap[moduleName];
-  if (!tempList) throw new Error("can not find module [" + moduleName + "]");
-  for (var i = 0, li = tempList.length; i < li; i++) {
-    var item = tempList[i];
-    if (_jsAddedCache[item]) continue;
-    var extname = Path.extname(item);
-    if (!extname) {
-      var arr = _getJsListOfModule(moduleMap, item, dir);
-      if (arr) jsList = jsList.concat(arr);
-    } else if (extname.toLowerCase() === ".js")
-      jsList.push(Path.join(dir, item));
-    _jsAddedCache[item] = 1;
-  }
-  return jsList;
-}
+  #jsAddedCache = {};
+  #engineInitCalled = false;
+  #engineLoadedCallback = null;
+  loaded = false;
 
-function _afterEngineLoaded(config) {
-  if (cc._initDebugSetting)
-    cc._initDebugSetting(config[Game.CONFIG_KEY.debugMode]);
-  cc._engineLoaded = true;
-  console.log(cc.ENGINE_VERSION);
-  if (_engineLoadedCallback) _engineLoadedCallback();
-}
-
-function _load(config) {
-  var CONFIG_KEY = Game.CONFIG_KEY,
-    engineDir = config[CONFIG_KEY.engineDir],
-    loader = Loader.getInstance();
-
-  _afterEngineLoaded(config);
-}
-
-function _windowLoaded() {
-  this.removeEventListener("load", _windowLoaded, false);
-  _load(Game.getInstance().config);
-}
-
-export function initEngine(config, cb) {
-  var game = Game.getInstance();
-
-  if (_engineInitCalled) {
-    var previousCallback = _engineLoadedCallback;
-    _engineLoadedCallback = function () {
-      previousCallback && previousCallback();
-      cb && cb();
-    };
-    return;
+  static getInstance() {
+    if (!Engine.#instance) {
+      Engine.#instance = new Engine();
+    }
+    return Engine.#instance;
   }
 
-  _engineLoadedCallback = cb;
-
-  if (!game.config && config) {
-    game.config = config;
-  } else if (!game.config) {
-    game._loadConfig();
+  #getJsListOfModule(moduleMap, moduleName, dir) {
+    if (this.#jsAddedCache[moduleName]) return null;
+    dir = dir || "";
+    var jsList = [];
+    var tempList = moduleMap[moduleName];
+    if (!tempList) throw new Error("can not find module [" + moduleName + "]");
+    for (var i = 0, li = tempList.length; i < li; i++) {
+      var item = tempList[i];
+      if (this.#jsAddedCache[item]) continue;
+      var extname = Path.extname(item);
+      if (!extname) {
+        var arr = this.#getJsListOfModule(moduleMap, item, dir);
+        if (arr) jsList = jsList.concat(arr);
+      } else if (extname.toLowerCase() === ".js")
+        jsList.push(Path.join(dir, item));
+      this.#jsAddedCache[item] = 1;
+    }
+    return jsList;
   }
-  config = game.config;
 
-  RendererConfig.getInstance().determineRenderType(config);
+  #afterEngineLoaded(config) {
+    initDebugSetting(config[Game.CONFIG_KEY.debugMode]);
+    this.loaded = true;
+    console.log(ENGINE_VERSION);
+    if (this.#engineLoadedCallback) this.#engineLoadedCallback();
+  }
 
-  document.body
-    ? _load(config)
-    : window.addEventListener("load", _windowLoaded, false);
-  _engineInitCalled = true;
+  #load(config) {
+    this.#afterEngineLoaded(config);
+  }
+
+  #boundWindowLoaded = () => {
+    window.removeEventListener("load", this.#boundWindowLoaded, false);
+    this.#load(Game.getInstance().config);
+  };
+
+  init(config, cb) {
+    var game = Game.getInstance();
+
+    if (this.#engineInitCalled) {
+      var previousCallback = this.#engineLoadedCallback;
+      this.#engineLoadedCallback = function () {
+        previousCallback && previousCallback();
+        cb && cb();
+      };
+      return;
+    }
+
+    this.#engineLoadedCallback = cb;
+
+    if (!game.config && config) {
+      game.config = config;
+    } else if (!game.config) {
+      game._loadConfig();
+    }
+    config = game.config;
+
+    RendererConfig.getInstance().determineRenderType(config);
+
+    document.body
+      ? this.#load(config)
+      : window.addEventListener("load", this.#boundWindowLoaded, false);
+    this.#engineInitCalled = true;
+  }
 }

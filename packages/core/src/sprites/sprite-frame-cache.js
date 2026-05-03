@@ -33,6 +33,8 @@ import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
+import { SpriteFrame } from "./sprite-frame";
+import { Sprite } from './sprite';
 import { RendererConfig } from "../renderer/renderer-config";
 import { isString } from "../boot/utils";
 
@@ -226,7 +228,7 @@ export default class SpriteFrameCache {
       var frame = frames[key];
       var spriteFrame = spriteFrames[key];
       if (!spriteFrame) {
-        spriteFrame = new cc.SpriteFrame(
+        spriteFrame = new SpriteFrame(
           texture,
           new Rect(frame.rect),
           frame.rotated,
@@ -252,7 +254,7 @@ export default class SpriteFrameCache {
           var locTexture = spriteFrame.getTexture();
           if (locTexture.isLoaded()) {
             var tempElement = spriteFrame.getTexture().getHtmlElementObj();
-            tempElement = cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas(
+            tempElement = Sprite.CanvasRenderCmd._cutRotateImageToCanvas(
               tempElement,
               spriteFrame.getRectInPixels()
             );

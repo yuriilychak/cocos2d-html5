@@ -15,7 +15,7 @@ import { rendererWebGL } from "../renderer/renderer-webgl";
 import Loader from "./loader";
 import Path from "./path";
 import { log } from "./debugger";
-import { initEngine } from "./engine";
+import { Engine } from "./engine";
 import { create3DContext } from "./sys";
 import { isUndefined } from "./utils";
 import { RendererConfig } from "../renderer/renderer-config";
@@ -235,7 +235,7 @@ export default class Game extends EventHelper(NewClass) {
     if (this._prepareCalled) {
       return;
     }
-    if (cc._engineLoaded) {
+    if (Engine.getInstance().loaded) {
       this._prepareCalled = true;
 
       this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
@@ -264,7 +264,7 @@ export default class Game extends EventHelper(NewClass) {
       return;
     }
 
-    initEngine(this.config, () => {
+    Engine.getInstance().init(this.config, () => {
       this.prepare(cb);
     });
   }

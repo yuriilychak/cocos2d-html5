@@ -44,6 +44,8 @@ import { Sprite } from "../sprites/sprite";
  * var lc = new LoaderScene();
  */
 export class LoaderScene extends Scene {
+  static #instance = null;
+
   constructor() {
     super();
     this._interval = null;
@@ -52,6 +54,20 @@ export class LoaderScene extends Scene {
     this._className = "LoaderScene";
     this.cb = null;
     this.target = null;
+  }
+
+  static getInstance() {
+    if (!LoaderScene.#instance) {
+      LoaderScene.#instance = new LoaderScene();
+      LoaderScene.#instance.init();
+      EventManager.getInstance().addCustomListener(
+        Director.EVENT_PROJECTION_CHANGED,
+        function () {
+          LoaderScene.#instance._updateTransform();
+        }
+      );
+    }
+    return LoaderScene.#instance;
   }
 
   init() {
@@ -144,22 +160,10 @@ export class LoaderScene extends Scene {
     this._logo &&
       this._logo._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
-}
 
-LoaderScene.preload = function (resources, cb, target) {
-  var _cc = cc;
-  if (!_cc.loaderScene) {
-    _cc.loaderScene = new LoaderScene();
-    _cc.loaderScene.init();
-    EventManager.getInstance().addCustomListener(
-      Director.EVENT_PROJECTION_CHANGED,
-      function () {
-        _cc.loaderScene._updateTransform();
-      }
-    );
+  preload(resources, cb, target) {
+    this.initWithResources(resources, cb, target);
+    Director.getInstance().runScene(this);
+    return this;
   }
-  _cc.loaderScene.initWithResources(resources, cb, target);
-
-  Director.getInstance().runScene(_cc.loaderScene);
-  return _cc.loaderScene;
-};
+}

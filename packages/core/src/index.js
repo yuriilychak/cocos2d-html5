@@ -8,11 +8,11 @@ import {
   Loader,
   Sys,
   Game,
+  Engine,
   _LogInfos,
   log,
   warn,
   assert,
-  initDebugSetting,
   _loadingImage,
   _fpsImage,
   _loaderImage,
@@ -43,7 +43,7 @@ import {
 import * as macroConstants from "./platform/macro/constants";
 import * as macroUtils from "./platform/macro/utils";
 import { SAXParser } from "./platform/sax-parser/sax-parser";
-import { PlistParser } from "./platform/sax-parser/plist-parser";
+import { plistParser } from "./platform/sax-parser";
 import {
   _txtLoader,
   _jsonLoader,
@@ -256,7 +256,6 @@ import {
 
 // Boot — Debugger (used internally)
 cc._LogInfos = _LogInfos;
-cc._initDebugSetting = initDebugSetting;
 
 // Boot — Base64 images (used internally)
 cc._loadingImage = _loadingImage;
@@ -264,15 +263,13 @@ cc._fpsImage = _fpsImage;
 cc._loaderImage = _loaderImage;
 
 // Platform — Foundation (used internally)
-cc.KEY = KEY;
 cc.ENGINE_VERSION = ENGINE_VERSION;
 
 // Platform — Macro constants & utils
 Object.assign(cc, macroConstants);
 Object.assign(cc, macroUtils);
 
-// Platform — SAX/Plist
-cc.plistParser = new PlistParser();
+// Platform — SAX/Plist (plistParser singleton shared with loaders.js)
 
 // Platform — Loaders
 Loader.getInstance().register(
@@ -293,10 +290,6 @@ Loader.getInstance().register(
 );
 Loader.getInstance().register(["csb"], _csbLoader);
 
-// Platform — Types (used internally in font-definition.js)
-cc.TEXT_ALIGNMENT_CENTER = TEXT_ALIGNMENT_CENTER;
-cc.VERTICAL_TEXT_ALIGNMENT_TOP = VERTICAL_TEXT_ALIGNMENT_TOP;
-
 // Types (used internally in WebGL render commands)
 cc.V3F_C4B_T2F_Quad = V3F_C4B_T2F_Quad;
 
@@ -305,7 +298,6 @@ cc.EventListener = EventListener;
 
 // Renderer & Utils (used internally)
 cc.CanvasContextWrapper = CanvasContextWrapper;
-cc.DirtyRegion = DirtyRegion;
 cc._convertResponseBodyToText = _convertResponseBodyToText;
 
 // Base Nodes
@@ -319,12 +311,11 @@ cc.AtlasNode = AtlasNode;
 cc.AtlasNode.CanvasRenderCmd = AtlasNodeCanvasRenderCmd;
 cc.AtlasNode.WebGLRenderCmd = AtlasNodeWebGLRenderCmd;
 
-// Sprites (BakeSprite and SpriteFrame used in other core files)
+// Sprites (BakeSprite used in other core files)
 cc.Sprite = Sprite;
 cc.Sprite.CanvasRenderCmd = SpriteCanvasRenderCmd;
 cc.Sprite.WebGLRenderCmd = SpriteWebGLRenderCmd;
 cc.BakeSprite = BakeSprite;
-cc.SpriteFrame = SpriteFrame;
 
 Object.defineProperty(cc, "g_NumberOfDraws", {
   configurable: true,
@@ -531,7 +522,7 @@ export { BLEND_SRC, BLEND_DST, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY, DST_COL
 export { OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA } from "./platform/config";
 export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
 export { rectPointsToPixels } from "./platform/macro/utils";
-export { Path, Game, Loader } from "./boot";
+export { Path, Game, Loader, Engine } from "./boot";
 export { EGLView } from "./platform/egl-view/egl-view";
 export { AffineTransform } from "./cocoa/affine-transform";
 export { TextureAtlas } from "./textures/texture-atlas";
@@ -558,3 +549,5 @@ export { LayerMultiplex } from "./layers/layer-multiplex";
 export { Device } from "./platform/device";
 export { isArray, isNumber } from "./boot/utils";
 export { vertexLineToPolygon } from "./support/vertex";
+export { plistParser } from "./platform/sax-parser";
+export { DirtyRegion } from "./renderer/dirty-region";

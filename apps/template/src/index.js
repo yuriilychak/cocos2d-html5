@@ -41,7 +41,7 @@ game.onStart = function () {
     ResolutionPolicy.SHOW_ALL
   );
 
-  LoaderScene.preload(
+  LoaderScene.getInstance().preload(
     g_resources,
     function () {
       Director.getInstance().runScene(new MyScene());

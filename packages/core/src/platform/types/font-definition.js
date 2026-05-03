@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color } from './color';
+import { Color, TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP } from './color';
 
 /**
  * Common usage:
@@ -50,8 +50,8 @@ export var FontDefinition = function (properties) {
     var _t = this;
     _t.fontName = "Arial";
     _t.fontSize = 12;
-    _t.textAlign = cc.TEXT_ALIGNMENT_CENTER;
-    _t.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    _t.textAlign = TEXT_ALIGNMENT_CENTER;
+    _t.verticalAlign = VERTICAL_TEXT_ALIGNMENT_TOP;
     _t.fillStyle = new Color(255, 255, 255, 255);
     _t.boundingWidth = 0;
     _t.boundingHeight = 0;

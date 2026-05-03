@@ -19,11 +19,6 @@ if (!_p.AudioContext) {
 }
 /** @expose */
 _p.mozAudioContext;
-_p = Object.prototype;
-/** @expose */
-_p._super;
-/** @expose */
-_p.ctor;
 _p = null;
 
 /**
@@ -39,30 +34,3 @@ cc._drawingUtil = null;
  */
 cc.container = null;
 cc._gameDiv = null;
-
-window.ENABLE_IMAEG_POOL = true;
-
-cc._engineLoaded = false;
-
-// Function.prototype.bind polyfill
-Function.prototype.bind =
-  Function.prototype.bind ||
-  function (oThis) {
-    if (typeof this !== "function") {
-      throw new TypeError(
-        "Function.prototype.bind - what is trying to be bound is not callable"
-      );
-    }
-    var aArgs = Array.prototype.slice.call(arguments, 1),
-      fToBind = this,
-      FNOP = function () {},
-      fBound = function () {
-        return fToBind.apply(
-          this instanceof FNOP && oThis ? this : oThis,
-          aArgs.concat(Array.prototype.slice.call(arguments))
-        );
-      };
-    FNOP.prototype = this.prototype;
-    fBound.prototype = new FNOP();
-    return fBound;
-  };
