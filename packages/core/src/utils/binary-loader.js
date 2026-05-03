@@ -66,7 +66,7 @@ export function loadBinary(url, cb) {
         xhr.setRequestHeader("Accept-Charset", "x-user-defined");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var fileContents = cc._convertResponseBodyToText(xhr["responseBody"]);
+                var fileContents = _convertResponseBodyToText(xhr["responseBody"]);
                 cb(null, _str2Uint8Array(fileContents));
             } else cb(errInfo);
         };
@@ -113,7 +113,7 @@ export function loadBinarySync(url) {
             return null;
         }
 
-        var fileContents = cc._convertResponseBodyToText(req["responseBody"]);
+        var fileContents = _convertResponseBodyToText(req["responseBody"]);
         if (fileContents) {
             arrayInfo = _str2Uint8Array(fileContents);
         }
@@ -167,7 +167,5 @@ export function initBinaryLoader() {
         myVBScript.type = "text/vbscript";
         myVBScript.textContent = IEBinaryToArray_ByteStr_Script;
         document.body.appendChild(myVBScript);
-
-        cc._convertResponseBodyToText = _convertResponseBodyToText;
     }
 }

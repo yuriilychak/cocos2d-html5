@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { V3F_C4B_T2F_Quad } from "../platform/types/vertex";
+
 var VERTICES_SIZE = 888;
 
 var GlobalVertexBuffer = function (gl, byteLength) {
@@ -30,7 +32,7 @@ var GlobalVertexBuffer = function (gl, byteLength) {
     this.vertexBuffer = gl.createBuffer();
 
     this.size = VERTICES_SIZE;
-    this.byteLength = byteLength || VERTICES_SIZE * 4 * cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
+    this.byteLength = byteLength || VERTICES_SIZE * 4 * V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT;
 
     // buffer data and views
     this.data = new ArrayBuffer(this.byteLength);

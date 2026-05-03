@@ -27,6 +27,7 @@ import LayerCanvasRenderer from "./layer-canvas-renderer";
 import { Rect } from "../../cocoa/geometry/rect";
 import { AffineTransform } from "../../cocoa/affine-transform";
 import { Color } from "../../platform/types/color";
+import { CustomRenderCmd, CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-canvas-render-cmd";
 
 /**
  * LayerColor's Canvas render command
@@ -36,7 +37,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     super(renderable);
     this._needDraw = true;
     this._blendFuncStr = "source-over";
-    this._bakeRenderCmd = new cc.CustomRenderCmd(this, this._bakeRendering);
+    this._bakeRenderCmd = new CustomRenderCmd(this, this._bakeRendering);
   }
 
   unbake() {
@@ -69,7 +70,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
 
   updateBlendFunc(blendFunc) {
     this._blendFuncStr =
-      cc.Node.CanvasRenderCmd._getCompositeOperationByBlendFunc(blendFunc);
+      NodeCanvasRenderCmd._getCompositeOperationByBlendFunc(blendFunc);
   }
 
   _updateSquareVertices() {}

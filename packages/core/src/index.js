@@ -119,7 +119,7 @@ import { CanvasContextWrapper } from "./renderer/renderer-canvas";
 import { DirtyRegion } from "./renderer/dirty-region";
 import { RendererConfig } from "./renderer/renderer-config";
 import { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
-import { _convertResponseBodyToText, initBinaryLoader } from "./utils/binary-loader";
+import { initBinaryLoader } from "./utils/binary-loader";
 
 
 // ======================================================================
@@ -255,15 +255,12 @@ import {
 // ======================================================================
 
 // Boot — Debugger (used internally)
-cc._LogInfos = _LogInfos;
+Loader.getInstance()._LogInfos = _LogInfos;
 
 // Boot — Base64 images (used internally)
-cc._loadingImage = _loadingImage;
-cc._fpsImage = _fpsImage;
-cc._loaderImage = _loaderImage;
-
-// Platform — Foundation (used internally)
-cc.ENGINE_VERSION = ENGINE_VERSION;
+Loader.getInstance()._loadingImage = _loadingImage;
+Loader.getInstance()._fpsImage = _fpsImage;
+Loader.getInstance()._loaderImage = _loaderImage;
 
 // Platform — Macro constants & utils
 Object.assign(cc, macroConstants);
@@ -290,15 +287,8 @@ Loader.getInstance().register(
 );
 Loader.getInstance().register(["csb"], _csbLoader);
 
-// Types (used internally in WebGL render commands)
-cc.V3F_C4B_T2F_Quad = V3F_C4B_T2F_Quad;
-
 // Events (used internally)
 cc.EventListener = EventListener;
-
-// Renderer & Utils (used internally)
-cc.CanvasContextWrapper = CanvasContextWrapper;
-cc._convertResponseBodyToText = _convertResponseBodyToText;
 
 // Base Nodes
 cc.CustomRenderCmd = CustomRenderCmd;
@@ -315,7 +305,6 @@ cc.AtlasNode.WebGLRenderCmd = AtlasNodeWebGLRenderCmd;
 cc.Sprite = Sprite;
 cc.Sprite.CanvasRenderCmd = SpriteCanvasRenderCmd;
 cc.Sprite.WebGLRenderCmd = SpriteWebGLRenderCmd;
-cc.BakeSprite = BakeSprite;
 
 Object.defineProperty(cc, "g_NumberOfDraws", {
   configurable: true,
@@ -551,3 +540,4 @@ export { isArray, isNumber } from "./boot/utils";
 export { vertexLineToPolygon } from "./support/vertex";
 export { plistParser } from "./platform/sax-parser";
 export { DirtyRegion } from "./renderer/dirty-region";
+export { _convertResponseBodyToText } from "./utils/binary-loader";

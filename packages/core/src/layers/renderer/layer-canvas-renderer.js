@@ -27,6 +27,7 @@ import { Node } from "../../base-nodes/node";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
 import { RendererConfig } from "../../renderer/renderer-config";
+import { BakeSprite } from "../../sprites/bake-sprite";
 
 /**
  * Layer's Canvas render command
@@ -106,7 +107,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
         children[i]._renderCmd._setCachedParent(this);
 
       if (!this._bakeSprite) {
-        this._bakeSprite = new cc.BakeSprite();
+        this._bakeSprite = new BakeSprite();
         this._bakeSprite.setAnchorPoint(0, 0);
       }
     }

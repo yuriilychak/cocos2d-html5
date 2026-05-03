@@ -53,6 +53,7 @@ export default class Game extends EventHelper(NewClass) {
   static RENDER_TYPE_CANVAS = 0;
   static RENDER_TYPE_WEBGL = 1;
   static RENDER_TYPE_OPENGL = 2;
+  static _isContextMenuEnable = false;
 
   static CONFIG_KEY = {
     width: "width",
@@ -104,6 +105,7 @@ export default class Game extends EventHelper(NewClass) {
 
   _lastTime = null;
   _frameTime = null;
+  _gameDiv = null;
 
   /**
    * The outer frame of the game canvas, parent of container
@@ -142,6 +144,8 @@ export default class Game extends EventHelper(NewClass) {
   onStop = null;
 
   drawingUtil = null;
+
+  glExt = null;
 
   /**
    * Set frameRate of game.
@@ -464,8 +468,6 @@ export default class Game extends EventHelper(NewClass) {
     }
     localContainer.setAttribute("id", "Cocos2dGameContainer");
     localContainer.appendChild(localCanvas);
-    // @deprecated use Game.getInstance().container instead
-    cc.container = this.container;
     this.frame =
       localContainer.parentNode === document.body
         ? document.documentElement
@@ -477,7 +479,7 @@ export default class Game extends EventHelper(NewClass) {
     localCanvas.setAttribute("tabindex", 99);
 
     if (RendererConfig.getInstance().isWebGL) {
-      this._renderContext = cc.webglContext = create3DContext(localCanvas, {
+      this._renderContext = create3DContext(localCanvas, {
         stencil: true,
         alpha: false
       });
@@ -487,10 +489,10 @@ export default class Game extends EventHelper(NewClass) {
       win.gl = this._renderContext;
       RendererConfig.getInstance().setRenderer(rendererWebGL);
       RendererConfig.getInstance().renderer.init();
-      this.drawingUtil = cc._drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
-      cc.glExt = {};
-      cc.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
-      cc.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
+      this.drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
+      this.glExt = {};
+      this.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
+      this.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
     } else {
       RendererConfig.getInstance().setRenderType(Game.RENDER_TYPE_CANVAS);
       RendererConfig.getInstance().setRenderer(rendererCanvas);
@@ -498,14 +500,14 @@ export default class Game extends EventHelper(NewClass) {
         localCanvas.getContext("2d")
       );
       RendererConfig.getInstance().initRenderContext(this._renderContext);
-      this.drawingUtil = cc._drawingUtil = DrawingPrimitiveCanvas
+      this.drawingUtil = DrawingPrimitiveCanvas
         ? new DrawingPrimitiveCanvas(this._renderContext)
         : null;
     }
 
-    cc._gameDiv = localContainer;
+    this._gameDiv = localContainer;
     this.canvas.oncontextmenu = function () {
-      if (!cc._isContextMenuEnable) return false;
+      if (!Game._isContextMenuEnable) return false;
     };
 
     this.dispatchEvent(Game.EVENT_RENDERER_INITED, true);

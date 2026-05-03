@@ -81,9 +81,9 @@ export class LoaderScene extends Scene {
 
     var fontSize = 24,
       lblHeight = -logoHeight / 2 + 100;
-    if (cc._loaderImage) {
+    if (Loader.getInstance()._loaderImage) {
       Loader.getInstance().loadImg(
-        cc._loaderImage,
+        Loader.getInstance()._loaderImage,
         { isCrossOrigin: false },
         function (err, img) {
           logoWidth = img.width;

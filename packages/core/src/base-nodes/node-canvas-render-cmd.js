@@ -28,6 +28,7 @@ import { Color } from "../platform/types/color";
 import { RendererConfig } from "../renderer/renderer-config";
 import { AffineTransform } from "../cocoa/affine-transform";
 import { Region } from "../renderer/dirty-region";
+import { Node } from "./node";
 import {
   ONE,
   ONE_MINUS_SRC_ALPHA,
@@ -72,47 +73,6 @@ export const dirtyFlags = {
 };
 
 const ONE_DEGREE = Math.PI / 180;
-
-function transformChildTree(root) {
-  let index = 1;
-  let children, child, curr, parentCmd, i, len;
-  let stack = cc.Node._performStacks[cc.Node._performing];
-  if (!stack) {
-    stack = [];
-    cc.Node._performStacks.push(stack);
-  }
-  stack.length = 0;
-  cc.Node._performing++;
-  stack[0] = root;
-  while (index) {
-    index--;
-    curr = stack[index];
-    // Avoid memory leak
-    stack[index] = null;
-    if (!curr) continue;
-    children = curr._children;
-    if (children && children.length > 0) {
-      parentCmd = curr._renderCmd;
-      for (i = 0, len = children.length; i < len; ++i) {
-        child = children[i];
-        stack[index] = child;
-        index++;
-        child._renderCmd.transform(parentCmd);
-      }
-    }
-    const pChildren = curr._protectedChildren;
-    if (pChildren && pChildren.length > 0) {
-      parentCmd = curr._renderCmd;
-      for (i = 0, len = pChildren.length; i < len; ++i) {
-        child = pChildren[i];
-        stack[index] = child;
-        index++;
-        child._renderCmd.transform(parentCmd);
-      }
-    }
-  }
-  cc.Node._performing--;
-}
 
 //-------------------------Base -------------------------
 export class RenderCmd {
@@ -334,7 +294,7 @@ export class RenderCmd {
     }
 
     if (recursive) {
-      transformChildTree(node);
+      Node.transformChildTree(node);
     }
 
     this._cacheDirty = true;

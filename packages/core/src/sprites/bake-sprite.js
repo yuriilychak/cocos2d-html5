@@ -25,6 +25,7 @@
 import { Sprite } from "./sprite";
 import { Rect } from "../cocoa/geometry/rect";
 import { Texture2D } from "../textures/texture-2d";
+import { CanvasContextWrapper } from "../renderer/renderer-canvas";
 
 /**
  * BakeSprite is a type of sprite that will be cached.
@@ -38,7 +39,7 @@ export class BakeSprite extends Sprite {
     var canvasElement = document.createElement("canvas");
     canvasElement.width = canvasElement.height = 10;
     this._cacheCanvas = canvasElement;
-    this._cacheContext = new cc.CanvasContextWrapper(
+    this._cacheContext = new CanvasContextWrapper(
       canvasElement.getContext("2d")
     );
 

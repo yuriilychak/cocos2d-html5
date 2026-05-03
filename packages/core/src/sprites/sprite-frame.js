@@ -34,7 +34,8 @@ import { error, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
 import { RendererConfig } from "../renderer/renderer-config";
-import { rectPixelsToPoints, rectPointsToPixels } from "../platform/macro/utils";
+import { rectPixelsToPoints, rectPointsToPixels, _pointPixelsToPointsOut, _sizePixelsToPointsOut } from "../platform/macro/utils";
+import { SpriteCanvasRenderCmd } from "./sprite-canvas-render-cmd";
 
 /**
  * <p>
@@ -186,7 +187,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
   setOffsetInPixels(offsetInPixels) {
     this._offsetInPixels.x = offsetInPixels.x;
     this._offsetInPixels.y = offsetInPixels.y;
-    cc._pointPixelsToPointsOut(this._offsetInPixels, this._offset);
+    _pointPixelsToPointsOut(this._offsetInPixels, this._offset);
   }
 
   /**
@@ -255,7 +256,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
             this._textureLoaded = true;
             if (this._rotated && RendererConfig.getInstance().isCanvas) {
               var tempElement = sender.getHtmlElementObj();
-              tempElement = cc.Sprite.CanvasRenderCmd._cutRotateImageToCanvas(
+              tempElement = SpriteCanvasRenderCmd._cutRotateImageToCanvas(
                 tempElement,
                 this.getRect()
               );
@@ -395,10 +396,10 @@ export class SpriteFrame extends EventHelper(NewClass) {
 
     this._offsetInPixels.x = offset.x;
     this._offsetInPixels.y = offset.y;
-    cc._pointPixelsToPointsOut(offset, this._offset);
+    _pointPixelsToPointsOut(offset, this._offset);
     this._originalSizeInPixels.width = originalSize.width;
     this._originalSizeInPixels.height = originalSize.height;
-    cc._sizePixelsToPointsOut(originalSize, this._originalSize);
+    _sizePixelsToPointsOut(originalSize, this._originalSize);
     this._rotated = rotated;
     return true;
   }
@@ -417,10 +418,10 @@ SpriteFrame._frameWithTextureForCanvas = function (
   spriteFrame._rect = rectPixelsToPoints(rect);
   spriteFrame._offsetInPixels.x = offset.x;
   spriteFrame._offsetInPixels.y = offset.y;
-  cc._pointPixelsToPointsOut(spriteFrame._offsetInPixels, spriteFrame._offset);
+  _pointPixelsToPointsOut(spriteFrame._offsetInPixels, spriteFrame._offset);
   spriteFrame._originalSizeInPixels.width = originalSize.width;
   spriteFrame._originalSizeInPixels.height = originalSize.height;
-  cc._sizePixelsToPointsOut(
+  _sizePixelsToPointsOut(
     spriteFrame._originalSizeInPixels,
     spriteFrame._originalSize
   );

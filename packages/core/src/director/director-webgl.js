@@ -27,6 +27,7 @@ import Game from "../boot/game";
 import { EGLView } from "../platform/egl-view/egl-view";
 import { GLStateCache } from "../shaders/CCGLStateCache";
 import { Configuration } from "../configuration";
+import { Loader } from "../boot";
 
 /**
  * OpenGL projection protocol
@@ -53,8 +54,8 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     director._fpsImage.addEventListener("load", () => {
       director._fpsImageLoaded = true;
     });
-    if (cc._fpsImage) {
-      director._fpsImage.src = cc._fpsImage;
+    if (Loader.getInstance()._fpsImage) {
+      director._fpsImage.src = Loader.getInstance()._fpsImage;
     }
 
     EventManager.getInstance().addCustomListener(

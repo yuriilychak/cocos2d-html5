@@ -2630,15 +2630,56 @@ export class Node extends NewClass {
 
     return ret;
   }
+
+  static _stateCallbackType = {
+    onEnter: 1,
+    onExit: 2,
+    cleanup: 3,
+    onEnterTransitionDidFinish: 4,
+    onExitTransitionDidStart: 5,
+    max: 6
+  };
+  static _performStacks = [[]];
+  static _performing = 0;
+
+  static transformChildTree(root) {
+    let index = 1;
+    let children, child, curr, parentCmd, i, len;
+    let stack = Node._performStacks[Node._performing];
+    if (!stack) {
+      stack = [];
+      Node._performStacks.push(stack);
+    }
+    stack.length = 0;
+    Node._performing++;
+    stack[0] = root;
+    while (index) {
+      index--;
+      curr = stack[index];
+      stack[index] = null;
+      if (!curr) continue;
+      children = curr._children;
+      if (children && children.length > 0) {
+        parentCmd = curr._renderCmd;
+        for (i = 0, len = children.length; i < len; ++i) {
+          child = children[i];
+          stack[index] = child;
+          index++;
+          child._renderCmd.transform(parentCmd);
+        }
+      }
+      const pChildren = curr._protectedChildren;
+      if (pChildren && pChildren.length > 0) {
+        parentCmd = curr._renderCmd;
+        for (i = 0, len = pChildren.length; i < len; ++i) {
+          child = pChildren[i];
+          stack[index] = child;
+          index++;
+          child._renderCmd.transform(parentCmd);
+        }
+      }
+    }
+    Node._performing--;
+  }
 }
 
-Node._stateCallbackType = {
-  onEnter: 1,
-  onExit: 2,
-  cleanup: 3,
-  onEnterTransitionDidFinish: 4,
-  onExitTransitionDidStart: 5,
-  max: 6
-};
-Node._performStacks = [[]];
-Node._performing = 0;

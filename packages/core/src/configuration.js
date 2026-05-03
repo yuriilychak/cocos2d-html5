@@ -27,6 +27,8 @@
 import Loader from "./boot/loader";
 import { log, assert, _LogInfos } from "./boot/debugger";
 import { RendererConfig } from "./renderer/renderer-config";
+import { ENGINE_VERSION } from "./platform/config";
+import { checkGLErrorDebug } from "./platform/macro/utils";
 
 /**
  * Class that contains some openGL variables
@@ -65,7 +67,7 @@ export class Configuration {
 
   _init() {
     const locValueDict = this._valueDict;
-    locValueDict["cocos2d.x.version"] = cc.ENGINE_VERSION;
+    locValueDict["cocos2d.x.version"] = ENGINE_VERSION;
     locValueDict["cocos2d.x.compiled_with_profiler"] = false;
     locValueDict["cocos2d.x.compiled_with_gl_state_cache"] = true;
     this._inited = true;
@@ -179,7 +181,7 @@ export class Configuration {
     locValueDict["gl.supports_vertex_array_object"] =
       this._supportsShareableVAO;
 
-    cc.checkGLErrorDebug();
+    checkGLErrorDebug();
   }
 
   loadConfigFile(url) {

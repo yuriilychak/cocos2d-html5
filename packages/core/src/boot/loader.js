@@ -7,6 +7,8 @@ import Sys from "./sys";
 import { error, log } from "./debugger";
 import { RendererConfig } from "../renderer/renderer-config";
 
+const _isNodeJs = typeof process !== "undefined" && process.versions != null && process.versions.node != null;
+
 var imagePool = new ImagePool();
 
 /**
@@ -30,6 +32,14 @@ export default class Loader {
   _queue = {};
   _urlRegExp = new RegExp("^(?:https?|ftp)://\\S*$", "i");
   _noCacheRex = /\?/;
+
+  _loadingImage = null;
+
+  _fpsImage = null;
+
+  _loaderImage = null;
+
+  _LogInfos = {};
 
   /**
    * Root path of resources.
@@ -187,7 +197,7 @@ export default class Loader {
     if (!jsLoadingImg) {
       jsLoadingImg = document.createElement("img");
 
-      if (cc._loadingImage) jsLoadingImg.src = cc._loadingImage;
+      if (this._loadingImage) jsLoadingImg.src = this._loadingImage;
 
       var canvasNode = d.getElementById(Game.getInstance().config["id"]);
       canvasNode.style.backgroundColor = "transparent";
@@ -218,7 +228,7 @@ export default class Loader {
    * @param {function} [cb] arguments are : err, txt
    */
   loadTxt(url, cb) {
-    if (!cc._isNodeJs) {
+    if (!_isNodeJs) {
       var xhr = this.getXMLHttpRequest(),
         errInfo = "load " + url + " failed!";
       xhr.open("GET", url, true);
@@ -430,7 +440,10 @@ export default class Loader {
         delete this._queue[url];
       }
 
-      if (RendererConfig.ENABLE_IMAGE_POOL && RendererConfig.getInstance().isWebGL) {
+      if (
+        RendererConfig.ENABLE_IMAGE_POOL &&
+        RendererConfig.getInstance().isWebGL
+      ) {
         imagePool.put(img);
       }
     };
@@ -584,7 +597,7 @@ export default class Loader {
     if (!(resources instanceof Array)) resources = [resources];
     var asyncPool = new AsyncPool(
       resources,
-      cc.CONCURRENCY_HTTP_REQUEST_COUNT,
+      Sys.isMobile ? 20 : 0,
       (value, index, AsyncPoolCallback, aPool) => {
         this._loadResIterator(value, index, (err, ...rest) => {
           if (option.trigger)

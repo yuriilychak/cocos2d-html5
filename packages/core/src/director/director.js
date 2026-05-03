@@ -51,6 +51,7 @@ import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { RendererConfig } from "../renderer/renderer-config";
 import { Profiler } from "../utils/profiler";
+import { checkGLErrorDebug } from "../platform/macro/utils";
 
 export const defaultFPS = 60;
 
@@ -332,7 +333,7 @@ export class Director extends NewClass {
 
     this.purgeCachedData();
 
-    cc.checkGLErrorDebug();
+    checkGLErrorDebug();
   }
 
   pushScene(scene) {
