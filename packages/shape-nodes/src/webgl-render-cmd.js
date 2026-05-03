@@ -1,6 +1,6 @@
-import { NodeWebGLRenderCmd, Matrix4, glBlendFunc } from "@aspect/core";
+import { Node, Matrix4, glBlendFunc } from "@aspect/core";
 
-export class DrawNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class DrawNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = true;

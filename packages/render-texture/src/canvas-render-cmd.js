@@ -25,7 +25,6 @@
 import {
   Color,
   Node,
-  NodeCanvasRenderCmd,
   CanvasContextWrapper,
   contentScaleFactor,
   Texture2D,
@@ -36,7 +35,7 @@ import {
   log
 } from "@aspect/core";
 
-export class RenderTextureCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = false;

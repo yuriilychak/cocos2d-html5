@@ -1,6 +1,6 @@
 import {
   Game,
-  NodeWebGLRenderCmd,
+  Node,
   Point,
   RendererConfig,
   Matrix4,
@@ -24,7 +24,7 @@ import {
   Utils
 } from "@esotericsoftware/spine-core";
 
-export class SkeletonWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = true;

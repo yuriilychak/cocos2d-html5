@@ -1,7 +1,7 @@
-import { NodeCanvasRenderCmd } from '@aspect/core';
+import { Node } from '@aspect/core';
 import { editBoxImpl } from './edit-box-impl';
 
-export class EditBoxCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class EditBoxCanvasRenderCmd extends Node.CanvasRenderCmd {
     constructor(node) {
         super(node);
         this.initializeRenderCmd(node);

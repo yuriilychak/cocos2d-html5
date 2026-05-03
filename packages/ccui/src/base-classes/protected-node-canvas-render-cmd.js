@@ -1,6 +1,6 @@
-import { NodeCanvasRenderCmd, Node, Color } from '@aspect/core';
+import { Node, Color } from '@aspect/core';
 
-export class ProtectedNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class ProtectedNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
     constructor(renderable) {
         super(renderable);
         this._cachedParent = null;

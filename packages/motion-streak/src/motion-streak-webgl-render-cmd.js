@@ -1,5 +1,5 @@
 import {
-  NodeWebGLRenderCmd,
+  Node,
   RendererConfig,
   ShaderCache,
   glBlendFunc,
@@ -11,7 +11,7 @@ import {
   Matrix4
 } from "@aspect/core";
 
-export class MotionStreakWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = true;

@@ -22,9 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NodeCanvasRenderCmd } from "@aspect/core";
+import { Node } from "@aspect/core";
 
-export class ParticleBatchNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class ParticleBatchNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderable) {
     super(renderable);
     this._needDraw = false;

@@ -1,6 +1,6 @@
-import { NodeWebGLRenderCmd, Node, Color } from '@aspect/core';
+import { Node, Color } from '@aspect/core';
 
-export class ProtectedNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     constructor(renderable) {
         super(renderable);
     }

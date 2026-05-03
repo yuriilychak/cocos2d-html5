@@ -30,6 +30,7 @@ import Game from "../boot/game";
 import { EGLView } from "../platform/egl-view/egl-view";
 import { arrayRemoveObject } from "../platform/macro/utils";
 import { isUndefined } from "../boot/utils";
+import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
 
 var rendererCanvas = {
   childrenOrderDirty: true,
@@ -79,7 +80,7 @@ var rendererCanvas = {
     var dirtyRegion = this._dirtyRegion;
     var dirtryRegionCount = 0;
     var result = true;
-    var localStatus = cc.Node.CanvasRenderCmd.RegionStatus;
+    var localStatus = NodeCanvasRenderCmd.RegionStatus;
     for (i = 0, len = locCmds.length; i < len; i++) {
       var cmd = locCmds[i];
       var regionFlag = cmd._regionFlag;

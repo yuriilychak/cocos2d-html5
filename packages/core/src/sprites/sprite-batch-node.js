@@ -25,7 +25,6 @@
  ****************************************************************************/
 
 import { Node } from "../base-nodes/node";
-import { Sprite } from "./sprite";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
@@ -155,7 +154,7 @@ export class SpriteBatchNode extends Node {
    */
   updateQuadFromSprite(sprite, index) {
     assert(sprite, _LogInfos.CCSpriteBatchNode_updateQuadFromSprite_2);
-    if (!(sprite instanceof Sprite)) {
+    if (!sprite.isSprite) {
       log(_LogInfos.CCSpriteBatchNode_updateQuadFromSprite);
       return;
     }
@@ -266,7 +265,7 @@ export class SpriteBatchNode extends Node {
   }
 
   _isValidChild(child) {
-    if (!(child instanceof Sprite)) {
+    if (!child.isSprite) {
       log(_LogInfos.Sprite_addChild_4);
       return false;
     }

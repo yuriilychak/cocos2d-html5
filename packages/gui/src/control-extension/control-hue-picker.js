@@ -60,8 +60,8 @@ export class ControlHuePicker extends Control {
 
     initWithTargetAndPos(target, pos) {
         if (super.init()) {
-            this._background = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("huePickerBackground.png"), target, pos, new Point(0.0, 0.0));
-            this._slider = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("colourPicker.png"), target, pos, new Point(0.5, 0.5));
+            this._background = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#huePickerBackground.png"), target, pos, new Point(0.0, 0.0));
+            this._slider = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#colourPicker.png"), target, pos, new Point(0.5, 0.5));
             this._slider.setPosition(pos.x, pos.y + this._background.getBoundingBox().height * 0.5);
             this._startPos = pos;
             this._hue = 0.0;

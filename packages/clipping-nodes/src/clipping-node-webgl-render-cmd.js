@@ -1,8 +1,7 @@
 import {
-  NodeWebGLRenderCmd,
+  Node,
   CustomRenderCmd,
   RendererConfig,
-  Node,
   ShaderCache,
   glUseProgram,
   setProgramForNode,
@@ -21,7 +20,7 @@ function setProgram(node, program) {
     setProgram(children[i], program);
 }
 
-export class ClippingNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderable) {
     super(renderable);
     this._needDraw = false;

@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 import {
-  NodeWebGLRenderCmd,
+  Node,
   Rect,
   Matrix4,
   RendererConfig,
@@ -47,7 +47,7 @@ import {
 } from "@aspect/core";
 import { Particle } from "./particle-system/particle";
 
-export class ParticleSystemWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderable) {
     super(renderable);
     this._needDraw = true;

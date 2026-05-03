@@ -70,7 +70,7 @@ export class ControlColourPicker extends Control {
             this._hsv.h = 0; this._hsv.s = 0; this._hsv.v = 0;
 
             this._background = ControlUtils.addSpriteToTargetWithPosAndAnchor(
-                new Sprite("menuColourPanelBackground.png"),
+                new Sprite("#menuColourPanelBackground.png"),
                 spriteSheet, new Point(0, 0), new Point(0.5, 0.5)
             );
 

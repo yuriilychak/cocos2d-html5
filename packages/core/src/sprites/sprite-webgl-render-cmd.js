@@ -61,7 +61,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
   updateBlendFunc(blendFunc) {}
 
   setDirtyFlag(dirtyFlag) {
-    cc.Node.WebGLRenderCmd.prototype.setDirtyFlag.call(this, dirtyFlag);
+    NodeWebGLRenderCmd.prototype.setDirtyFlag.call(this, dirtyFlag);
     this._dirty = true;
   }
 
@@ -74,14 +74,14 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     const l = locChildren ? locChildren.length : 0;
     for (let i = 0; i < l; i++) {
       child = locChildren[i];
-      child instanceof cc.Sprite && child._renderCmd.setDirtyRecursively(value);
+      child.isSprite && child._renderCmd.setDirtyRecursively(value);
     }
   }
 
   _setBatchNodeForAddChild(child) {
     const node = this._node;
     if (node._batchNode) {
-      if (!(child instanceof cc.Sprite)) {
+      if (!child.isSprite) {
         log(_LogInfos.Sprite_addChild);
         return false;
       }

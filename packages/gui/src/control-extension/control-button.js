@@ -55,11 +55,11 @@ export class ControlButton extends Control {
         this._titleLabelDispatchTable = {};
         this._backgroundSpriteDispatchTable = {};
 
-        if (fontSize !== undefined)
+        if (fontSize != null)
             this.initWithTitleAndFontNameAndFontSize(label, backgroundSprite, fontSize);
-        else if (backgroundSprite !== undefined)
+        else if (backgroundSprite != null)
             this.initWithLabelAndBackgroundSprite(label, backgroundSprite);
-        else if (label !== undefined)
+        else if (label != null)
             this.initWithBackgroundSprite(label);
         else
             this.init();

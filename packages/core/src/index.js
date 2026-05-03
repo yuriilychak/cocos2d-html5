@@ -32,6 +32,9 @@ import { initBinaryLoader } from "./utils/binary-loader";
 // ======================================================================
 // Base Nodes
 // ======================================================================
+import { Node } from "./base-nodes/node";
+import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./base-nodes/node-canvas-render-cmd";
+import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
 import { AtlasNode } from "./base-nodes/atlas-node";
 import { AtlasNodeCanvasRenderCmd } from "./base-nodes/atlas-node-canvas-render-cmd";
 import { AtlasNodeWebGLRenderCmd } from "./base-nodes/atlas-node-webgl-render-cmd";
@@ -96,6 +99,8 @@ Loader.getInstance().register(
 Loader.getInstance().register(["csb"], _csbLoader);
 
 // Render command wiring
+Node.CanvasRenderCmd = NodeCanvasRenderCmd;
+Node.WebGLRenderCmd = NodeWebGLRenderCmd;
 Sprite.CanvasRenderCmd = SpriteCanvasRenderCmd;
 Sprite.WebGLRenderCmd = SpriteWebGLRenderCmd;
 AtlasNode.CanvasRenderCmd = AtlasNodeCanvasRenderCmd;

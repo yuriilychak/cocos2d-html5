@@ -1,6 +1,5 @@
 import {
   Game,
-  NodeCanvasRenderCmd,
   Node,
   Sprite,
   Point,
@@ -14,7 +13,7 @@ import {
   Utils
 } from "@esotericsoftware/spine-core";
 
-export class SkeletonCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = true;
@@ -81,7 +80,7 @@ export class SkeletonCanvasRenderCmd extends NodeCanvasRenderCmd {
   updateStatus() {
     this.originUpdateStatus();
     this._updateCurrentRegions();
-    this._regionFlag = NodeCanvasRenderCmd.RegionStatus.DirtyDouble;
+    this._regionFlag = Node.CanvasRenderCmd.RegionStatus.DirtyDouble;
     this._dirtyFlag &= ~Node._dirtyFlags.contentDirty;
   }
 

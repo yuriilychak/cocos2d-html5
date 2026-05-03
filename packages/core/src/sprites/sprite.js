@@ -98,6 +98,10 @@ import { sizePointsToPixels, rectPointsToPixels, pointPointsToPixels } from "../
  * @property {V3F_C4B_T2F_Quad}  quad                - <@readonly> The quad (tex coords, vertex coords and color) information.
  */
 export class Sprite extends EventHelper(Node) {
+  get isSprite() {
+    return true;
+  }
+
   constructor(fileName, rect, rotated) {
     super();
     var self = this;

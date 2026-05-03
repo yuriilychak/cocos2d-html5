@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 import {
-  NodeWebGLRenderCmd,
+  Node,
   Matrix4,
   ShaderCache,
   glBlendFuncForParticle,
   SHADER_POSITION_TEXTURECOLOR
 } from "@aspect/core";
 
-export class ParticleBatchNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class ParticleBatchNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderable) {
     super(renderable);
     this._needDraw = true;

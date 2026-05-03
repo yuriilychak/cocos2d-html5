@@ -5,7 +5,7 @@
 Cocos2d-HTML5 is a cross-platform 2D game engine written in JavaScript, based on Cocos2d-X. The codebase is organized as a monorepo with:
 
 - **Core architecture**: Modular packages using ES modules with `@aspect/*` namespacing
-- **Build system**: Turbo + Rollup with both modern (ES modules) and legacy (file concatenation) modes
+- **Build system**: Turbo + Rollup with ES modules built via Rollup per package
 - **Target platforms**: Web browsers (Canvas/WebGL), mobile browsers, Facebook Instant Games
 
 ## Build Commands
@@ -44,23 +44,14 @@ The codebase is split into focused packages under `packages/`:
 - **`audio`**: Audio system
 - **Other packages**: UI components, physics, networking, etc.
 
-### Build Modes
+### Build System
 
-The build system supports two modes per package:
+All packages use **Modern mode**: ES module resolution via Rollup from `src/index.js`.
 
-1. **Modern mode** (ES modules): When `src/index.js` exists
-   - Uses standard ES module resolution via Rollup
-   - Supports `@aspect/*` imports between packages
-   - Preferred for new development
-
-2. **Legacy mode**: When only `files.mjs` exists
-   - Concatenates files in specified order
-   - Uses global `cc.*` namespace
-   - Being gradually migrated to modern mode
+The app bundler (`scripts/rollup.app.mjs`) resolves all workspace dependencies transitively, topologically orders them, concatenates each package's `dist/index.js`, and emits a single minified bundle.
 
 ### Import Patterns
 
-Modern packages use scoped imports:
 ```javascript
 // Import from other aspect packages
 import { Node, Sprite } from "@aspect/core";
@@ -71,17 +62,12 @@ cc.MyClass = MyClass;
 export { MyClass };
 ```
 
-Legacy packages use global namespace:
-```javascript
-cc.MyClass = class MyClass extends cc.Node { ... };
-```
-
 ## Key Conventions
 
 ### File Naming
-- **Modern packages**: kebab-case, no `CC` prefix (`progress-timer.js` not `CCProgressTimer.js`)
+- **kebab-case**, no `CC` prefix (`progress-timer.js` not `CCProgressTimer.js`)
 - **Render commands**: Separate files (`progress-timer-canvas-render-cmd.js`)
-- **Class files**: One class per file when possible
+- **Class files**: One class per file when possible; multiple related classes → subfolder
 
 ### Render Command Pattern
 Render commands are separate from their main classes to avoid circular dependencies:
@@ -92,6 +78,8 @@ import { MyClassCanvasRenderCmd } from "./my-class-canvas-render-cmd";
 
 MyClass.CanvasRenderCmd = MyClassCanvasRenderCmd;
 ```
+
+Render command base classes are accessed via `Node.CanvasRenderCmd` / `Node.WebGLRenderCmd` sub-properties — **never** imported directly from `@aspect/core` (stripped by the build plugin).
 
 ### Singleton Access
 Use getInstance() pattern for singletons:
@@ -106,18 +94,6 @@ cc.director
 cc.textureCache
 ```
 
-### ES Module Migration
-
-When migrating from legacy to modern:
-
-1. **Strip IIFE wrappers**: `(function() { ... })()` → direct exports
-2. **Replace cc.* references** with imports from appropriate `@aspect/*` packages
-3. **Handle render commands**: Keep separate, wire in `src/index.js`
-4. **Maintain backward compatibility**: Assign to `cc.*` globals
-5. **Use static properties**: After class body, not inside
-
-See `MIGRATION.md` for detailed migration steps.
-
 ### Testing
 
 The codebase uses `apps/examples` as the primary test suite with various test scenarios. No separate unit test framework is currently used.
@@ -127,18 +103,17 @@ The codebase uses `apps/examples` as the primary test suite with various test sc
 1. **Package development**: Work in individual packages under `packages/`
 2. **Testing**: Use `npm run dev` to run examples server and test changes
 3. **Building**: Use `npm run build` to ensure all packages build correctly
-4. **Legacy migration**: Follow `MIGRATION.md` to convert packages to modern mode
 
 ## Common Patterns
 
-### Class Definition (Modern)
+### Class Definition
 ```javascript
 export class MyClass extends Node {
   constructor() {
     super();
     // initialization
   }
-  
+
   static CONSTANT = "value";
 }
 
@@ -172,8 +147,8 @@ cc.MyClass = MyClass;
 The engine uses a **Command Pattern** based rendering system that supports both Canvas and WebGL backends:
 
 ```
-Game Loop → Director.mainLoop() → Director.drawScene() → 
-Scene.visit() → Node.visit() → Renderer.pushRenderCommand() → 
+Game Loop → Director.mainLoop() → Director.drawScene() →
+Scene.visit() → Node.visit() → Renderer.pushRenderCommand() →
 Renderer.rendering()
 ```
 
@@ -202,9 +177,9 @@ Each node has a render command created by `_createRenderCmd()`:
 ```javascript
 _createRenderCmd() {
   if (RendererConfig.getInstance().isCanvas)
-    return new NodeCanvasRenderCmd(this);
-  else 
-    return new NodeWebGLRenderCmd(this);
+    return new Node.CanvasRenderCmd(this);
+  else
+    return new Node.WebGLRenderCmd(this);
 }
 ```
 
@@ -256,11 +231,11 @@ _uploadBufferData(cmd) {
 Nodes track what has changed using dirty flags:
 
 ```javascript
-dirtyFlags = {
+Node._dirtyFlags = {
   transformDirty: 1 << 0,   // Position/rotation/scale changed
-  visibleDirty: 1 << 1,     // Visibility changed  
-  colorDirty: 1 << 2,       // Color changed
-  opacityDirty: 1 << 3,     // Opacity changed
+  visibleDirty:   1 << 1,   // Visibility changed
+  colorDirty:     1 << 2,   // Color changed
+  opacityDirty:   1 << 3,   // Opacity changed
   // ... more flags
 };
 ```
@@ -285,9 +260,3 @@ dirtyFlags = {
 - **`Node`**: Base class with render command integration
 - **Render Commands**: `CanvasRenderCmd`, `WebGLRenderCmd` for backend-specific rendering
 - **Renderers**: `rendererCanvas`, `rendererWebGL` implementing rendering logic
-
-## Package Status
-
-- **Modern (ES modules)**: ~25+ packages migrated
-- **Legacy (file concat)**: ~7 packages remaining
-- **Priority**: New development should use modern mode only

@@ -1,5 +1,5 @@
 import {
-  NodeCanvasRenderCmd,
+  Node,
   RendererConfig,
   SRC_ALPHA,
   ONE,
@@ -7,7 +7,7 @@ import {
 } from "@aspect/core";
 import { DrawNode } from "./draw-node";
 
-export class DrawNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = true;

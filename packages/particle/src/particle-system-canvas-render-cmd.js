@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 import {
-  NodeCanvasRenderCmd,
+  Node,
   Point,
   Rect,
   Game,
@@ -40,7 +40,7 @@ const SHAPE_MODE = 0;
 const STAR_SHAPE = 0;
 const BALL_SHAPE = 1;
 
-export class ParticleSystemCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderable) {
     super(renderable);
     this._needDraw = true;

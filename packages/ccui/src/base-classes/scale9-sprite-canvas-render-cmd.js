@@ -1,7 +1,7 @@
-import { NodeCanvasRenderCmd, Node, RendererConfig, incrementGLDraws } from '@aspect/core';
+import { Node, RendererConfig, incrementGLDraws } from '@aspect/core';
 import { Scale9Sprite } from './scale9-sprite';
 
-export class Scale9SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
     constructor(renderable) {
         super(renderable);
         this._needDraw = true;

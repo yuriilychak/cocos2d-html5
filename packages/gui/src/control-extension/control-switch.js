@@ -145,7 +145,7 @@ export class ControlSwitchSprite extends Sprite {
 
     initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
         if (super.init()) {
-            this.setSpriteFrame(maskSprite.displayFrame());
+            this.setSpriteFrame(maskSprite.getSpriteFrame());
             this._onPosition = 0;
             this._offPosition = -onSprite.getContentSize().width + thumbSprite.getContentSize().width / 2;
             this._sliderXPosition = this._onPosition;

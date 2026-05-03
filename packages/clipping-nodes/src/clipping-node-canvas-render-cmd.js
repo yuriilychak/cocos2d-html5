@@ -1,7 +1,7 @@
-import { NodeCanvasRenderCmd, CustomRenderCmd, RendererConfig, Node } from "@aspect/core";
+import { Node, CustomRenderCmd, RendererConfig } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
 
-export class ClippingNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
+export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderable) {
     super(renderable);
     this._needDraw = false;

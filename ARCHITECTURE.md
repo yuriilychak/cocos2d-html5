@@ -40,7 +40,6 @@ Packages are organized in four tiers:
 | `@aspect/motion-streak` |
 | `@aspect/node-grid` |
 | `@aspect/parallax` |
-| `@aspect/parallax` |
 | `@aspect/render-texture` |
 | `@aspect/shape-nodes` |
 | `@aspect/spine` |
@@ -181,14 +180,9 @@ clean  → no cache
 dev    → persistent (dev server)
 ```
 
-### Per-Package Build Modes
+### Per-Package Build (`scripts/rollup.package.mjs`)
 
-The build system (`scripts/rollup.package.mjs`) auto-selects mode:
-
-| Condition | Mode | How |
-|---|---|---|
-| `src/index.js` exists | **Modern** | Standard ES module resolution via Rollup |
-| Only `files.mjs` exists | **Legacy** | File concatenation in declared order |
+All packages use **Modern mode**: ES module resolution via Rollup from `src/index.js`.
 
 ### App Bundling (`scripts/rollup.app.mjs`)
 
@@ -210,17 +204,6 @@ cc.MyClass = MyClass;
 // Named export
 export { MyClass };
 ```
-
----
-
-## Migration Status
-
-| Status | Count | Packages |
-|---|---|---|
-| ✅ Modern (ES modules) | 30 | actions, actions3d, audio, box2d, ccpool, ccui, chipmunk, clipping-nodes, compression, core, editbox, effects, gui, labels, menus, motion-streak, node-grid, parallax, particle, physics, progress-timer, render-texture, runtime, shape-nodes, socketio, spine, text-input, tilemap, transitions, (+ meta: cocos2d, extensions, external) |
-| ⚠️ Legacy (file concat) | 3 | **cocostudio**, **particle**, **tilemap** |
-
-> See [`MIGRATION.md`](./MIGRATION.md) for the step-by-step migration guide.
 
 ---
 

@@ -1,7 +1,7 @@
-import { NodeWebGLRenderCmd, Node, ShaderCache, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from '@aspect/core';
+import { Node, ShaderCache, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from '@aspect/core';
 import { Scale9Sprite } from './scale9-sprite';
 
-export class Scale9SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
+export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
     constructor(renderable) {
         super(renderable);
         this._needDraw = true;
