@@ -2,69 +2,63 @@ Cocos2d-html5
 ==================
 
 [Cocos2d-html5][1] is a cross-platform 2D game engine written in JavaScript, based on [Cocos2d-X][2] and licensed under MIT.
-It incorporates the same high level api as “Cocos2d JS-binding engine” and compatible with Cocos2d-X.
-It currently supports canvas and WebGL renderer.
-
--------------
-
-#### Cocos2d-html5 has evolved to [Cocos Creator][11], new generation of Cocos game engine with a full featured editor and content creation friendly workflow. It supports all major platforms allowing games to be quickly released for the web, iOS, Android, Windows, Mac, and various mini-game platforms. A pure JavaScript-developed engine runtime is available on the web and mini-game platforms for better performance and smaller packages. On other native platforms, C++ is used to implement the underlying framework, providing greater operational efficiency. The latest repository is maintained in here [Engine of Cocos Creator][9].
+It incorporates the same high level API as the "Cocos2d JS-binding engine" and is compatible with Cocos2d-X.
+It currently supports Canvas and WebGL renderers.
 
 -------------
 
 Cross Platform
 -------------
-   * Popular browsers:  Chrome 14+, Safari 5.0+, IE9+, Firefox 3.5+.
-   * Mobile platforms: Mobile browsers,Facebook Instant Games and Mini Games.
+   * Popular browsers: Chrome 14+, Safari 5.0+, IE9+, Firefox 3.5+.
+   * Mobile platforms: Mobile browsers, Facebook Instant Games and Mini Games.
    * Native App: Same piece of code can run on "Cocos2d JS-Binding Engine" without or with little modification.
 
-Documentation
+Fork Changes
 ------------------
-   * Website: [www.cocos2d-x.org][3]
-   * Cocos Creator download: [Cocos Creator][10]
 
-Contact us
-------------------
-   * Forum: [http://forum.cocos2d-x.org][5]
-   * Twitter: [http://www.twitter.com/cocos2dhtml5][6]
-   * Sina Microblog: [http://t.sina.com.cn/cocos2dhtml5][7]
+This fork modernises the original Cocos2d-HTML5 codebase:
+
+* **ES module monorepo** — the engine is split into focused `@aspect/*` packages under `packages/`, each built independently with Rollup. All packages use standard ES module syntax (`import`/`export`).
+* **Turborepo build pipeline** — parallel, incremental builds with correct dependency ordering via `turbo.json`.
+* **Direct imports replace `cc.*` globals** — all internal `cc.*` references replaced with named ES module imports. The `cc.*` namespace is still populated for backward compatibility with user code.
+* **Singleton pattern** — legacy global accessors replaced with `getInstance()` singletons: `Director.getInstance()`, `TextureCache.getInstance()`, `RendererConfig.getInstance()`, etc.
+* **Render command inheritance** — subclasses extend `Node.CanvasRenderCmd` / `Node.WebGLRenderCmd` (wired in `core/src/index.js`) to avoid circular dependencies.
+* **`isSprite` getter** — `Node.isSprite` returns `false`; overridden to `true` in `Sprite`, replacing `instanceof Sprite` checks.
+* **Profiler as a class** — `Profiler` refactored to a proper ES class with static constants.
 
 Build
 ------------------
 
-The engine is built with npm and Rollup. Requires Node.js 18+.
+The engine is an **npm workspace monorepo** built with [Turborepo][turbo] and [Rollup][rollup]. Requires Node.js 18+.
 
 ```bash
-# Install dependencies
+# Install all workspace dependencies
 npm install
 
-# Build both full and core bundles (output in lib/)
+# Build all packages and apps (Turborepo, incremental)
 npm run build
 
-# Build only the full engine bundle
-npm run build:full
-
-# Build only the core bundle
-npm run build:core
-
-# Remove build artifacts
+# Remove all build artifacts
 npm run clean
 
-# Start a dev server for the template project (http://localhost:8080/template/)
+# Start dev server for examples (http://localhost:8080)
 npm run dev
+
+# Build a single package
+cd packages/core && npm run build
 ```
 
-**Build outputs:**
-   * `lib/cocos2d-js-v3.15-min.js` — Full engine + extensions (minified, with source map)
-   * `lib/cocos2d-js-v3.15-core-min.js` — Core engine only (minified, with source map)
-   
+**Build outputs** (under `apps/examples/dist/`):
+   * `cocos2d.min.js` — Full engine bundle (all packages concatenated, minified)
+   * `tests.min.js` — Examples/tests bundle
+
+**Package structure:**
+
+Each package under `packages/<name>/` contains:
+   * `src/index.js` — entry point; imports all classes, wires render commands, assigns `cc.*` globals
+   * `dist/index.js` — Rollup output consumed by the app bundler
+
 [1]: http://www.cocos2d-x.org "Cocos2d-html5"
 [2]: http://www.cocos2d-x.org "Cocos2d-X"
-[3]: http://www.cocos2d-x.org "www.cocos2d-x.org"
-[4]: http://www.cocos2d-x.org/wiki/Reference "API References"
-[5]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
-[6]: http://www.twitter.com/cocos2dhtml5 "http://www.twitter.com/cocos2dhtml5"
-[7]: http://t.sina.com.cn/cocos2dhtml5 "http://t.sina.com.cn/cocos2dhtml5"
-[8]: http://bower.io "http://bower.io"
-[9]: https://github.com/cocos-creator/engine
-[10]: http://cocos2d-x.org/download
-[11]: https://www.cocos.com/en/products#CocosCreator "https://www.cocos.com"
+[turbo]: https://turbo.build "Turborepo"
+[rollup]: https://rollupjs.org "Rollup"
