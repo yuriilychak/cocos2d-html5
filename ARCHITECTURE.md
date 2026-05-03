@@ -218,9 +218,6 @@ Files added per app:
 import { Node, Sprite } from "@aspect/core";
 import { sequence, MoveBy } from "@aspect/actions";
 
-// Backward compatibility (must be present in src/index.js)
-cc.MyClass = MyClass;
-
 // Named export
 export { MyClass };
 ```
