@@ -5,10 +5,10 @@ node_modules/
 dist/
 dist-desktop/
 
-# Cordova generated dirs (www/ is populated by cordova-sync.mjs)
-cordova/www/
-cordova/platforms/
-cordova/plugins/
+# Capacitor generated native project dirs and web bundle
+www/
+android/
+ios/
 
 # Turborepo
 .turbo/

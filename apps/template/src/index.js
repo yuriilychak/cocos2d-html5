@@ -4,6 +4,8 @@ import {
   EGLView,
   Loader,
   ResolutionPolicy,
+  ContainerStrategy,
+  ContentStrategy,
   LoaderScene,
   Director,
   Game
@@ -38,8 +40,9 @@ game.onStart = function () {
   EGLView.getInstance().setDesignResolutionSize(
     designSize.width,
     designSize.height,
-    ResolutionPolicy.SHOW_ALL
+    new ResolutionPolicy(ContainerStrategy.EQUAL_TO_FRAME, ContentStrategy.SHOW_ALL)
   );
+  EGLView.getInstance().resizeWithBrowserSize(true);
 
   LoaderScene.getInstance().preload(
     g_resources,

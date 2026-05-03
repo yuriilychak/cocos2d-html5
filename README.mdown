@@ -11,7 +11,7 @@ Cross Platform
 -------------
    * **Web** — Chrome 60+, Safari 10+, Firefox 55+, Edge 79+ (Canvas and WebGL).
    * **Desktop** — Windows, macOS, Linux via [Electron][electron] (`npm run build:desktop`).
-   * **Mobile** — Android and iOS via [Cordova][cordova] (`npm run run:android` / `npm run run:ios`).
+   * **Mobile** — Android and iOS via [Capacitor][capacitor] (`npm run run:android` / `npm run run:ios`).
    * **Mobile browsers** — Mobile Chrome/Safari, Facebook Instant Games, WeChat Mini Games.
 
 Fork Changes
@@ -66,17 +66,19 @@ Each package under `packages/<name>/` contains:
 | `npm run build` / `npm run build:web` | Web | `dist/` — serve or deploy as static files |
 | `npm run dev:electron` | Desktop (dev) | Opens Electron window directly |
 | `npm run build:desktop` | Desktop (release) | Packaged native app in `dist-desktop/` via electron-builder |
-| `npm run build:mobile` | Mobile (prepare) | Syncs `dist/` + assets into `cordova/www/` |
+| `npm run build:mobile` | Mobile (prepare) | Syncs `dist/` + assets into `www/` and runs `cap sync` |
 | `npm run run:android` | Mobile (Android) | Builds and runs on Android device/emulator |
 | `npm run run:ios` | Mobile (iOS) | Builds and runs on iOS device/simulator |
+| `npm run open:android` | Mobile (Android IDE) | Opens Android project in Android Studio |
+| `npm run open:ios` | Mobile (iOS IDE) | Opens iOS project in Xcode |
 
 **Prerequisites for non-web modes:**
    * Desktop: `electron` and `electron-builder` are installed automatically via `npm install`
-   * Mobile: requires [Cordova CLI](https://cordova.apache.org/), Android SDK or Xcode
+   * Mobile: requires Android SDK (for Android) or Xcode (for iOS); [Capacitor CLI][capacitor] is installed automatically via `npm install`
 
 [1]: http://www.cocos2d-x.org "Cocos2d-html5"
 [2]: http://www.cocos2d-x.org "Cocos2d-X"
 [turbo]: https://turbo.build "Turborepo"
 [rollup]: https://rollupjs.org "Rollup"
 [electron]: https://www.electronjs.org "Electron"
-[cordova]: https://cordova.apache.org "Apache Cordova"
+[capacitor]: https://capacitorjs.com "Capacitor"

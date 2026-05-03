@@ -9,9 +9,11 @@
     "dev": "serve . -l 8080 --no-clipboard",
     "dev:electron": "npm run build && electron electron/main.cjs",
     "build:desktop": "npm run build && electron-builder",
-    "build:mobile": "npm run build && node scripts/cordova-sync.mjs",
-    "run:android": "npm run build:mobile && cd cordova && npx cordova run android",
-    "run:ios": "npm run build:mobile && cd cordova && npx cordova run ios"
+    "build:mobile": "npm run build && node scripts/cap-sync.mjs && npx cap sync",
+    "run:android": "npm run build:mobile && npx cap run android",
+    "run:ios": "npm run build:mobile && npx cap run ios",
+    "open:android": "npx cap open android",
+    "open:ios": "npx cap open ios"
   },
   "dependencies": {
     "@aspect/cocos2d": "*",
@@ -21,6 +23,10 @@
     "@aspect/tilemap": "*"
   },
   "devDependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
     "electron": "^33.0.0",
     "electron-builder": "^25.0.0"
   },

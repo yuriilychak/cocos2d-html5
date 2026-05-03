@@ -200,14 +200,16 @@ Each app under `apps/` supports three deployment targets using the same JS bundl
 | `build` / `build:web` | **Web** | Outputs `dist/*.min.js` — serve or deploy as static files |
 | `dev:electron` | **Desktop (dev)** | Builds JS then opens Electron window |
 | `build:desktop` | **Desktop (release)** | Packages native app via `electron-builder` → `dist-desktop/` |
-| `build:mobile` | **Mobile (prepare)** | Syncs `dist/` + assets to `cordova/www/` |
-| `run:android` | **Mobile (Android)** | Prepares + builds + runs on Android via Cordova |
-| `run:ios` | **Mobile (iOS)** | Prepares + builds + runs on iOS via Cordova |
+| `build:mobile` | **Mobile (prepare)** | Syncs `dist/` + assets to `www/` and runs `cap sync` |
+| `run:android` | **Mobile (Android)** | Prepares + builds + runs on Android via Capacitor |
+| `run:ios` | **Mobile (iOS)** | Prepares + builds + runs on iOS via Capacitor |
+| `open:android` | **Mobile (Android IDE)** | Opens the Android project in Android Studio |
+| `open:ios` | **Mobile (iOS IDE)** | Opens the iOS project in Xcode |
 
 Files added per app:
 - `electron/main.cjs` — Electron main process (window size matches canvas)
-- `cordova/config.xml` — Cordova project config (orientation, platform versions)
-- `scripts/cordova-sync.mjs` — copies `dist/`, `res/`, `index.html` into `cordova/www/`
+- `capacitor.config.json` — Capacitor project config (appId, appName, webDir)
+- `scripts/cap-sync.mjs` — copies `dist/`, `res/`, `index.html` into `www/` before `cap sync`
 
 ### Import Convention (Modern packages)
 

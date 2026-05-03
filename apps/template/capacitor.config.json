@@ -1,0 +1,8 @@
+{
+  "appId": "org.cocos2d.mygame",
+  "appName": "My Cocos2d Game",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

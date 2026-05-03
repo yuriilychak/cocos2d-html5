@@ -1,5 +1,7 @@
 html {
   -ms-touch-action: none;
+  height: 100%;
+  overflow: hidden;
 }
 
 body, canvas, div {
@@ -22,16 +24,13 @@ body {
   padding: 0;
   border: 0;
   margin: 0;
+  overflow: hidden;
 
   cursor: default;
   color: #888;
   background-color: #333;
 
-  text-align: center;
   font-family: Helvetica, Verdana, Arial, sans-serif;
-
-  display: flex;
-  flex-direction: column;
 }
 
 #Cocos2dGameContainer {
@@ -40,13 +39,9 @@ body {
   overflow: hidden;
   left: 0px;
   top: 0px;
-
-  display: -webkit-box;
-  -webkit-box-orient: horizontal;
-  -webkit-box-align: center;
-  -webkit-box-pack: center;
 }
 
 canvas {
   background-color: rgba(0, 0, 0, 0);
+  display: block;
 }

@@ -1,0 +1,8 @@
+{
+  "appId": "org.cocos2d.examples",
+  "appName": "Cocos2d Examples",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
