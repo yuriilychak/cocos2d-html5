@@ -25,6 +25,7 @@
 import {
   Color,
   Node,
+  NodeCanvasRenderCmd,
   CanvasContextWrapper,
   contentScaleFactor,
   Texture2D,
@@ -34,8 +35,6 @@ import {
   RendererConfig,
   log
 } from "@aspect/core";
-
-const NodeCanvasRenderCmd = Node.CanvasRenderCmd;
 
 export class RenderTextureCanvasRenderCmd extends NodeCanvasRenderCmd {
   constructor(renderableObject) {

@@ -1,4 +1,4 @@
-import { Node, RendererConfig, Rect } from "@aspect/core";
+import { Node, NodeCanvasRenderCmd, RendererConfig, Rect } from "@aspect/core";
 
 export class NodeGrid extends Node {
   grid = null;
@@ -48,6 +48,6 @@ export class NodeGrid extends Node {
     if (RendererConfig.getInstance().isWebGL)
       return new this.constructor.WebGLRenderCmd(this);
     else
-      return new Node.CanvasRenderCmd(this);
+      return new NodeCanvasRenderCmd(this);
   }
 }
