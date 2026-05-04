@@ -3,8 +3,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 450;
+const CANVAS_WIDTH = 1280;
+const CANVAS_HEIGHT = 720;
 
 function createWindow() {
     const win = new BrowserWindow({

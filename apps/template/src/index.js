@@ -28,11 +28,11 @@ game.onStart = function () {
   if (!Sys.getInstance().isNative && document.getElementById("cocosLoading"))
     document.body.removeChild(document.getElementById("cocosLoading"));
 
-  let designSize = new Size(480, 800);
+  let designSize = new Size(1280, 720);
   const screenSize = EGLView.getInstance().getFrameSize();
 
   if (!Sys.getInstance().isNative && screenSize.height < 800) {
-    designSize = new Size(320, 480);
+    designSize = new Size(960, 540);
     Loader.getInstance().resPath = "res/Normal";
   } else {
     Loader.getInstance().resPath = "res/HD";
@@ -40,7 +40,10 @@ game.onStart = function () {
   EGLView.getInstance().setDesignResolutionSize(
     designSize.width,
     designSize.height,
-    new ResolutionPolicy(ContainerStrategy.EQUAL_TO_FRAME, ContentStrategy.SHOW_ALL)
+    new ResolutionPolicy(
+      ContainerStrategy.EQUAL_TO_FRAME,
+      ContentStrategy.NO_BORDER
+    )
   );
   EGLView.getInstance().resizeWithBrowserSize(true);
 

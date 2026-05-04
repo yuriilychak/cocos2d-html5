@@ -28,7 +28,18 @@
 import { TestController } from "./test-controller";
 import { _initGlobals } from "./constants";
 import { g_resources } from "./resources";
-import { ContentStrategy, ContainerStrategy, Director, EGLView, Game, Loader, LoaderScene, ResolutionPolicy, Scene, ORIENTATION_LANDSCAPE } from "@aspect/core";
+import {
+  ContentStrategy,
+  ContainerStrategy,
+  Director,
+  EGLView,
+  Game,
+  Loader,
+  LoaderScene,
+  ResolutionPolicy,
+  Scene,
+  ORIENTATION_LANDSCAPE
+} from "@aspect/core";
 const projectConfig = {
   debugMode: 1,
   noCache: false,
@@ -42,9 +53,12 @@ Game.getInstance().onStart = function () {
   EGLView.getInstance().enableRetina(true);
   EGLView.getInstance().setOrientation(ORIENTATION_LANDSCAPE);
   EGLView.getInstance().setDesignResolutionSize(
-    800,
-    450,
-    new ResolutionPolicy(ContainerStrategy.EQUAL_TO_FRAME, ContentStrategy.SHOW_ALL)
+    1280,
+    720,
+    new ResolutionPolicy(
+      ContainerStrategy.EQUAL_TO_FRAME,
+      ContentStrategy.NO_BORDER
+    )
   );
   EGLView.getInstance().resizeWithBrowserSize(true);
 
